@@ -4,8 +4,9 @@
   "description": "Development source for MOS Hub and Neso",
   "main": "index.js",
   "scripts": {
-    "build": "webpack",
-    "dev-server": "webpack-dev-server"
+	"build": "webpack",
+	"build-watch": "webpack --watch",
+	"dev-server": "webpack-dev-server"
   },
   "repository": {
     "type": "git",
@@ -31,6 +32,7 @@
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "sass-loader": "^6.0.6",
+    "sp-pnp-js": "^3.0.7",
     "style-loader": "^0.18.2",
     "webpack": "^3.1.0",
     "webpack-dev-server": "^2.5.1"
