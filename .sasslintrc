@@ -1,0 +1,12 @@
+{
+	"rules": {
+		"indentation": [
+			1,
+			{
+				"size": "tab"
+			}
+		],
+		"no-ids": false,
+		"class-name-format": false
+	}
+}

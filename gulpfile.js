@@ -47,10 +47,6 @@ const gulpSPSaveCredentials = {
 // 
 // });
 
-/* gulp.task('git', () => {
-
-}); */
-
 
 // run webpack dev-server and refresh local browser on changes
 // webpack dev-server compiles to cache, does not write a file
