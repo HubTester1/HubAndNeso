@@ -5,8 +5,13 @@
   "main": "/dist/index.html",
   "browserslist": [
     "> 1%",
-    "ie > 10"
+    "ie > 9"
   ],
+  "babel": {
+	"presets": [
+		"env"
+	]
+  },
   "scripts": {
     "build-dev-5": "NODE_ENV=development webpack --config webpack/v5.dev.config.js",
     "build-watch-dev-5": "NODE_ENV=development webpack --config webpack/v5.dev.config.js --watch",

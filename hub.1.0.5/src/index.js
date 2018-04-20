@@ -6,7 +6,6 @@ import { DefaultButton } from 'office-ui-fabric-react/lib/Button';
 // import pnp from 'sp-pnp-js';
 import './styles/styles.sass';
 
-
 /* pnp.sp.web.lists.get().then((r) => {
 	// eslint-disable-next-line no-console
 	console.log(r);
