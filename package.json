@@ -13,10 +13,12 @@
 	]
   },
   "scripts": {
-    "build-dev-5": "NODE_ENV=development webpack --config webpack/v5.dev.config.js",
-    "build-watch-dev-5": "NODE_ENV=development webpack --config webpack/v5.dev.config.js --watch",
-    "start-5": "NODE_ENV=development webpack-dev-server --config webpack/v5.dev.config.js"
-  },
+	"build-dev-5": "NODE_ENV=development webpack --config webpack/v5.dev.config.js",
+	"build-watch-dev-5": "NODE_ENV=development webpack --config webpack/v5.dev.config.js --watch",
+	"start-5": "NODE_ENV=development webpack-dev-server --config webpack/v5.dev.config.js",
+	
+	"build-dev-4": "NODE_ENV=development webpack --config webpack/v4.dev.config.js"
+},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/HubTester1/HubAndNeso.git"
