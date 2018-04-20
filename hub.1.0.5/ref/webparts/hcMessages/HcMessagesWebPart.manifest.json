@@ -1,0 +1,28 @@
+// metadata about the webpart for SharePoint
+// 		also includes default property values
+{
+  "$schema": "https://dev.office.com/json-schemas/spfx/client-side-web-part-manifest.schema.json",
+  "id": "f226d209-64b9-4530-b5e9-ca4db705b799",
+  "alias": "HcMessagesWebPart",
+  "componentType": "WebPart",
+
+  // The "*" signifies that the version should be taken from the package.json
+  "version": "*",
+  "manifestVersion": 2,
+
+  // If true, the component can only be installed on sites where Custom Script is allowed.
+  // Components that allow authors to embed arbitrary script code should set this to true.
+  // https://support.office.com/en-us/article/Turn-scripting-capabilities-on-or-off-1f2c515f-5d7e-448a-9fd7-835da935584f
+  "requiresCustomScript": false,
+
+  "preconfiguredEntries": [{
+    "groupId": "5c03119e-3074-46fd-976b-c60198311f70", // Other
+    "group": { "default": "IIT Only" },
+    "title": { "default": "IIT Only - hcMessages" },
+    "description": { "default": "Messages app for Hub Central" },
+    "officeFabricIconFontName": "Page",
+    "properties": {
+      "description": "hcMessages"
+    }
+  }]
+}
