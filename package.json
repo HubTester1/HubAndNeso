@@ -3,10 +3,14 @@
   "version": "1.0.5",
   "description": "Development source for MOS Hub and Neso",
   "main": "/dist/index.html",
+  "browserslist": [
+    "> 1%",
+    "ie > 10"
+  ],
   "scripts": {
-    "build": "webpack",
-    "build-watch": "webpack --watch",
-    "dev-server": "webpack-dev-server"
+    "build-dev-5": "NODE_ENV=development webpack --config webpack/v5.dev.config.js",
+    "build-watch-dev-5": "NODE_ENV=development webpack --config webpack/v5.dev.config.js --watch",
+    "start-5": "NODE_ENV=development webpack-dev-server --config webpack/v5.dev.config.js"
   },
   "repository": {
     "type": "git",
@@ -20,13 +24,13 @@
   "homepage": "https://github.com/HubTester1/HubAndNeso#readme",
   "dependencies": {
     "add": "^2.0.6",
-    "dotenv": "^5.0.1",
     "office-ui-fabric-react": "^5.82.2",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "sp-pnp-js": "^3.0.7"
   },
   "devDependencies": {
+    "autoprefixer": "^8.3.0",
     "babel-cli": "^6.24.1",
     "babel-core": "^6.25.0",
     "babel-eslint": "^8.2.3",
@@ -35,6 +39,8 @@
     "babel-preset-env": "^1.5.2",
     "babel-preset-react": "^6.24.1",
     "css-loader": "^0.28.4",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "dotenv": "^5.0.1",
     "eslint": "^4.14.0",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-babel": "^5.0.0",
@@ -43,17 +49,17 @@
     "eslint-plugin-react": "^7.5.1",
     "gulp": "^3.9.1",
     "gulp-cached": "^1.1.1",
-    "gulp-changed": "^3.2.0",
-    "gulp-notify": "^3.2.0",
     "gulp-plumber": "^1.2.0",
     "gulp-spsave": "^3.1.0",
-    "gulp-util": "^3.0.8",
+    "html-webpack-plugin": "^3.2.0",
     "node-sass": "^4.5.3",
+    "postcss-loader": "^2.1.4",
     "sass-lint": "^1.12.1",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.18.2",
     "webpack": "^3.1.0",
     "webpack-dev-server": "^2.5.1",
+    "webpack-merge": "^4.1.2",
     "webpack-stream": "^4.0.3"
   }
 }
