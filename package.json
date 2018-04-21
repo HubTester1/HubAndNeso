@@ -30,10 +30,11 @@
   "homepage": "https://github.com/HubTester1/HubAndNeso#readme",
   "dependencies": {
     "add": "^2.0.6",
+    "axios": "^0.18.0",
     "office-ui-fabric-react": "^5.82.2",
     "react": "^16.0.0",
-	"react-dom": "^16.0.0",
-	"shortid": "^2.2.8",
+    "react-dom": "^16.0.0",
+    "shortid": "^2.2.8",
     "sp-pnp-js": "^3.0.7"
   },
   "devDependencies": {
