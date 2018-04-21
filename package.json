@@ -8,17 +8,16 @@
     "ie > 9"
   ],
   "babel": {
-	"presets": [
-		"env"
-	]
+    "presets": [
+      "env"
+    ]
   },
   "scripts": {
-	"build-dev-5": "NODE_ENV=development webpack --config webpack/v5.dev.config.js",
-	"build-watch-dev-5": "NODE_ENV=development webpack --config webpack/v5.dev.config.js --watch",
-	"start-5": "NODE_ENV=development webpack-dev-server --config webpack/v5.dev.config.js",
-	
-	"build-dev-4": "NODE_ENV=development webpack --config webpack/v4.dev.config.js"
-},
+    "build-dev-5": "NODE_ENV=development webpack --config webpack/v5.dev.config.js",
+    "build-watch-dev-5": "NODE_ENV=development webpack --config webpack/v5.dev.config.js --watch",
+    "start-5": "NODE_ENV=development webpack-dev-server --config webpack/v5.dev.config.js",
+    "build-dev-4": "NODE_ENV=development webpack --config webpack/v4.dev.config.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/HubTester1/HubAndNeso.git"
@@ -33,7 +32,8 @@
     "add": "^2.0.6",
     "office-ui-fabric-react": "^5.82.2",
     "react": "^16.0.0",
-    "react-dom": "^16.0.0",
+	"react-dom": "^16.0.0",
+	"shortid": "^2.2.8",
     "sp-pnp-js": "^3.0.7"
   },
   "devDependencies": {
@@ -46,7 +46,6 @@
     "babel-preset-env": "^1.5.2",
     "babel-preset-react": "^6.24.1",
     "css-loader": "^0.28.4",
-    "extract-text-webpack-plugin": "^3.0.2",
     "dotenv": "^5.0.1",
     "eslint": "^4.14.0",
     "eslint-config-airbnb": "^16.1.0",
@@ -54,6 +53,7 @@
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.5.1",
+    "extract-text-webpack-plugin": "^3.0.2",
     "gulp": "^3.9.1",
     "gulp-cached": "^1.1.1",
     "gulp-plumber": "^1.2.0",
