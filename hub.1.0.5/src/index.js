@@ -6,7 +6,10 @@ import * as ReactDOM from 'react-dom';
 import './sass/main.sass';
 
 import HcTopCommandBar from './components/HcTopCommandBar/HcTopCommandBar';
+import HcStaffLookup from './components/HcStaffLookup/HcStaffLookup';
+import HcGetItDone from './components/HcGetItDone/HcGetItDone';
 import HcPushedItems from './components/HcPushedItems/HcPushedItems';
+import HcMessages from './components/HcMessages/HcMessages';
 
 // ----- COMPONENT
 
@@ -29,10 +32,10 @@ import HcPushedItems from './components/HcPushedItems/HcPushedItems';
 const HcContainer = () => (
 	<div>
 		<HcTopCommandBar />
-		<p>hcGetItDone here</p>
-		<p>hcStaffLookup here</p>
+		<HcGetItDone />
+		<HcStaffLookup />
 		<HcPushedItems />
-		<p>hcMessage here</p>
+		<HcMessages />		
 		<p>hcOrganization here</p>
 		<p>hcCalendarsSchedules here</p>
 	</div>
