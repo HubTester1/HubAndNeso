@@ -25,6 +25,7 @@
 			"tab"
 		],
 		"no-tabs": "off",
+		"linebreak-style": "off",
 		"react/jsx-filename-extension": "off",
 		"react/jsx-indent-props": "off",
 		"react/jsx-indent": "off",
