@@ -151,17 +151,14 @@ module.exports = {
 						// make a copy of the file to read
 						const newPositionsFilePathAndName =
 							module.exports.ReturnNewHRPositionsFilePathAndName(settings.excel.filePathAndName);
-							console.log(`newPositionsFilePathAndName = ${newPositionsFilePathAndName}`);
 						fse
 							.copy(settings.excel.filePathAndName, newPositionsFilePathAndName, { overwrite: true })
 							.then(() => {
-								console.log('file copied');
 								// set up empty array to be used if either 
 								// 		no data is in the designated worksheet or said worksheet does not exist
 								let hrPositions = [];
 								// get data from all of the worksheet
 								const allWorksheets = excel.parse(fse.readFileSync(newPositionsFilePathAndName));
-								console.log('got worksheets');
 								// iterate over the worksheets
 								allWorksheets.forEach((worksheet) => {
 									// if the name of this worksheet matches the designated worksheet
@@ -170,7 +167,6 @@ module.exports = {
 										hrPositions = worksheet.data;
 									}
 								});
-								console.log('got the hr data');
 								// resolve this promise with a message
 								resolve({
 									error: false,
@@ -180,7 +176,7 @@ module.exports = {
 								fse
 									.remove(newPositionsFilePathAndName)
 									.then(() => {
-										console.log('FILE REMOVED');
+										// 
 									})
 									.catch((err) => {
 										// construct a custom error
