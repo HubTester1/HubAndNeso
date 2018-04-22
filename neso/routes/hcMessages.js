@@ -32,6 +32,14 @@ router.get('/messages', (req, res, next) => {
 		.catch((error) => { res.json(error); });
 });
 
+// for POST requests for /addMessage
+router.post('/addMessage', (req, res) => {
+	// get a promise to insert the email (request body) into the queue
+	hcMessages.ReceiveMessage(req.body)
+		// if the promise is resolved with the result, then respond with the result as JSON
+		.then((result) => { res.json(result); });
+});
+
 // ----- EXPORT EXPRESS ROUTER
 
 module.exports = router;

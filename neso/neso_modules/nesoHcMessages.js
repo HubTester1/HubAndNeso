@@ -47,4 +47,12 @@ module.exports = {
 				.catch((error) => { reject(error); });
 		})),
 
+	ReceiveMessage: incomingMessage =>
+		// return a new promise
+		new Promise(((resolve, reject) => {
+			// preserve function parameter
+			const message = incomingMessage;
+			console.log(message);
+			resolve({ error: false });
+		})),
 };
