@@ -13,7 +13,7 @@ export default class HcMessagesNewMessageForm extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			newMessageTag: undefined,
+			newMessageTag: { key: undefined },
 			newMessageSubject: undefined,
 			newMessageBody: undefined,
 			newMessageImage: undefined,
@@ -22,19 +22,19 @@ export default class HcMessagesNewMessageForm extends React.Component {
 			newMessageSubjectError: undefined,
 			newMessageBodyError: undefined,
 			newMessageImageError: undefined,
-			newMessageExpirationDateError: undefined,
 			newMessageIsInvalid: undefined,
 		};
 		this.handleChangedTag = this.handleChangedTag.bind(this);
 		this.handleChangedSubject = this.handleChangedSubject.bind(this);
 		this.handleChangedBody = this.handleChangedBody.bind(this);
 		this.handleChangedImage = this.handleChangedImage.bind(this);
+		this.handleChangedExpirationDate = this.handleChangedExpirationDate.bind(this);
 		this.handleAddMessage = this.handleAddMessage.bind(this);
 	}
 	handleChangedTag(value) {
-		if (value.text) {
+		if (value) {
 			this.setState(() => ({
-				newMessageTag: value.text,
+				newMessageTag: value,
 				newMessageTagError: undefined,
 			}));
 		} else {
@@ -83,14 +83,54 @@ export default class HcMessagesNewMessageForm extends React.Component {
 			}));
 		}
 	}
-	handleAddMessage() {
-		if (!this.state.newMessageTag || !this.state.newMessageSubject || 
-			!this.state.newMessageBody || !this.state.newMessageImage) {
+	handleChangedExpirationDate(value) {
+		if (value) {
 			this.setState(() => ({
-				newMessageIsInvalid: true,
+				newMessageExpirationDate: value,
 			}));
 		} else {
-			console.log("you're valid, good buddy");
+			this.setState(() => ({
+				newMessageExpirationDate: undefined,
+			}));
+		}
+	}
+	handleAddMessage() {
+		const newErrors = {
+			newMessageTagError: undefined,
+			newMessageSubjectError: undefined,
+			newMessageBodyError: undefined,
+			newMessageImageError: undefined,
+			newMessageIsInvalid: undefined,
+		};
+
+		if (!this.state.newMessageTag) {
+			newErrors.newMessageTagError = 'Cannot be blank';
+		}
+
+		if (!this.state.newMessageSubject) {
+			newErrors.newMessageSubjectError = 'Cannot be blank';
+		}
+
+		if (!this.state.newMessageBody) {
+			newErrors.newMessageBodyError = 'Cannot be blank';
+		}
+
+		if (!this.state.newMessageImage) {
+			newErrors.newMessageImageError = 'Cannot be blank';
+		}
+
+		if (!this.state.newMessageTag || !this.state.newMessageSubject || 
+			!this.state.newMessageBody || !this.state.newMessageImage) {
+			newErrors.newMessageIsInvalid = true;
+			this.setState(() => ({
+				newMessageTagError: newErrors.newMessageTagError,
+				newMessageSubjectError: newErrors.newMessageSubjectError,
+				newMessageBodyError: newErrors.newMessageBodyError,
+				newMessageImageError: newErrors.newMessageImageError,
+				newMessageIsInvalid: newErrors.newMessageIsInvalid,
+			}));
+		} else {
+			console.log('gonna send, good buddy');
 		}
 	}
 
@@ -101,6 +141,7 @@ export default class HcMessagesNewMessageForm extends React.Component {
 	}
 
 	render() {
+		console.log(this.state);
 		return (
 			<div id="hc-messages-new-message-form" className="mos-react-component-root">
 				<h3>New Message</h3>
@@ -108,6 +149,7 @@ export default class HcMessagesNewMessageForm extends React.Component {
 					<HcMessagesTagDropdown
 						tagsArray={this.props.tagsArray}
 						onChanged={this.handleChangedTag}
+						selectedKey={this.state.newMessageTag.key}
 					/>
 					<div className="mos-react-form-field-error">
 						{this.state.newMessageTagError}
@@ -116,6 +158,7 @@ export default class HcMessagesNewMessageForm extends React.Component {
 				<div className={this.returnFormFieldContainerClassNameString('newMessageSubjectError')}>
 					<TextField
 						label="Subject"
+						value={this.state.newMessageSubject}
 						onChanged={this.handleChangedSubject}
 					/>
 					<div className="mos-react-form-field-error">
@@ -127,6 +170,7 @@ export default class HcMessagesNewMessageForm extends React.Component {
 						label="Body"
 						multiline
 						rows={6}
+						value={this.state.newMessageBody}
 						onChanged={this.handleChangedBody}
 					/>
 					<div className="mos-react-form-field-error">
@@ -136,6 +180,7 @@ export default class HcMessagesNewMessageForm extends React.Component {
 				<div className={this.returnFormFieldContainerClassNameString('newMessageImageError')}>
 					<TextField
 						label="Image - replace with file input"
+						value={this.state.newMessageImage}
 						onChanged={this.handleChangedImage}
 					/>
 					<div className="mos-react-form-field-error">
@@ -143,7 +188,10 @@ export default class HcMessagesNewMessageForm extends React.Component {
 					</div>
 				</div>
 				<div className={this.returnFormFieldContainerClassNameString(null)}>
-					<HcMessagesExpirationDate />
+					<HcMessagesExpirationDate 
+						value={this.state.newMessageExpirationDate}
+						onSelectDate={this.handleChangedExpirationDate}
+					/>
 					<div className="mos-react-form-field-error">
 						{this.state.newMessageExpirationDateError}
 					</div>

@@ -24,6 +24,7 @@ export default class HcMessagesTagDropdown extends React.Component {
 					ariaLabel="Message category"
 					// required
 					options={this.returnTagDropdownOptions()}
+					selectedKey={this.props.selectedKey}
 					onChanged={this.props.onChanged}
 				// onFocus={this._log('onFocus called')}
 				// onBlur={this._log('onBlur called')}
