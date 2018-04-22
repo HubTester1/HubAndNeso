@@ -32,12 +32,14 @@ import HcMessages from './components/HcMessages/HcMessages';
 const HcContainer = () => (
 	<div>
 		<HcTopCommandBar />
+		{/* 
 		<HcGetItDone />
 		<HcStaffLookup />
 		<HcPushedItems />
+ */}
 		<HcMessages />		
-		<p>hcOrganization here</p>
-		<p>hcCalendarsSchedules here</p>
+		{/* <p>hcOrganization here</p>
+		<p>hcCalendarsSchedules here</p> */}
 	</div>
 );
 

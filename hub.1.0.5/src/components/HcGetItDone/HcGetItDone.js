@@ -3,7 +3,7 @@
 
 import * as React from 'react';
 import HcGetItDoneData from './HcGetItDoneData';
-// import HcPushedItemsLink from './HcPushedItemsLink';
+import HcGetItDoneLink from './HcGetItDoneLink';
 
 // ----- COMPONENT
 
@@ -23,8 +23,19 @@ export default class HcGetItDone extends React.Component {
 
 	render() {
 		return (
-			<div id="hc-pushed-items" className="mos-react-component-root">
-				<h2>Please Be Aware</h2>
+			<div id="hc-get-it-done" className="mos-react-component-root">
+				<h2>Get it Done</h2>
+				<ul>
+					{
+						this.state.listItemsArray.map((listItemValue, listItemIndex) => (
+							<HcGetItDoneLink
+								key={listItemValue.key}
+								listItemId={listItemValue.key}
+								listItemContent={listItemValue}
+							/>
+						))
+					}
+				</ul>
 			</div>
 		);
 	}

@@ -6,8 +6,9 @@ import * as React from 'react';
 // ----- COMPONENT
 
 const HcPushedDocsLink = props => (
-	<li id={`hc-pushed-items-item_${props.listItemId}`} className="hc-pushed-items-item mos-react-component-root">
-		<a href={props.listItemContent.url} className={`hc-pushed-items-item-link ${props.listItemContent.type}`}>{props.listItemContent.anchorText}</a>
+	<li id={`hc-get-it-done-item_${props.listItemKey}`} className="hc-get-it-done-item mos-react-component-root">
+		<p><a href={props.listItemContent.url} className={`hc-get-it-done-item-link ${props.listItemContent.type}`}>{props.listItemContent.anchorText}</a></p>
+		<p>{props.listItemContent.description}</p>
 	</li>
 );
 

@@ -8,6 +8,8 @@ module.exports = {
 
 	ReplaceAll: (needle, replacementNeedle, haystack) => haystack.replace(new RegExp(needle, 'g'), replacementNeedle),
 
+	ReturnArrayElementExists: (testArray, testElement) => testArray.indexOf(testElement) > -1,
+
 	ReturnFormattedDateTime: ({
 		incomingDateTimeString, incomingFormat, incomingReturnFormat, determineYearDisplayDynamically,
 	}) => {

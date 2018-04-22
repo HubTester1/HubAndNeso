@@ -3,36 +3,46 @@
 
 import * as React from 'react';
 import HcMessagesData from './HcMessagesData';
-// import HcPushedItemsLink from './HcPushedItemsLink';
+import HcMessagesCommandBar from './components/HcMessagesCommandBar/HcMessagesCommandBar';
+import HcMessagesList from './components/HcMessagesList/HcMessagesList';
+import HcMessagesNewMessageForm from './components/HcMessagesNewMessageForm/HcMessagesNewMessageForm';
 
 // ----- COMPONENT
 
-export default class HcGetItDone extends React.Component {
+export default class HcMessages extends React.Component {
 	state = {
-		listItemsArray: [],
+		messagesArray: [],
+		tagsArray: [],
 	};
 
 	componentDidMount() {
-		HcMessagesData.ReturnNesoMessagesCategoriesForHcMessages()
-			.then((allMessageCategories) => {
-				// console.log(allMessageCategories);
-				/* this.setState(() => ({
-					listItemsArray: allPushedItemsData,
-				})); */
+		HcMessagesData.ReturnNesoMessagesTagsForHcMessages()
+			.then((allMessageTags) => {
+				console.log(allMessageTags);
+				this.setState(() => ({
+					tagsArray: allMessageTags,
+				}));
 			});
 		HcMessagesData.ReturnNesoMessagesMessagesForHcMessages()
 			.then((allMessageMessages) => {
-				// console.log(allMessageMessages);
-				/* this.setState(() => ({
-					listItemsArray: allPushedItemsData,
-				})); */
+				console.log(allMessageMessages);
+				this.setState(() => ({
+					messagesArray: allMessageMessages,
+				}));
 			});
 	}
 
 	render() {
 		return (
-			<div id="hc-pushed-items" className="mos-react-component-root">
+			<div id="hc-messages" className="mos-react-component-root">
 				<h2>Messages</h2>
+				<HcMessagesCommandBar
+					tagsArray={this.state.tagsArray}
+				/>
+				<HcMessagesNewMessageForm
+					tagsArray={this.state.tagsArray}
+				/>
+				<HcMessagesList messagesArray={this.state.messagesArray} />
 			</div>
 		);
 	}

@@ -9,7 +9,7 @@ const shortid = require('shortid');
 // ----- DATA
 
 export default class HcMessagesData {
-	static ReturnNesoMessagesCategoriesForHcMessages() {
+	static ReturnNesoMessagesTagsForHcMessages() {
 		// return a new promise
 		return new Promise(((resolve, reject) => {
 			// if environment is sharepoint
@@ -19,31 +19,31 @@ export default class HcMessagesData {
 					.ReturnNesoData('https://neso.mos.org/hcMessages/settings')
 					// if the promise is resolved with the settings
 					.then((settingsResults) => {
-						// set up var to receive all categories
-						const allMessagesCategories = [];
+						// set up var to receive all tags
+						const allMessageTags = [];
 						// iterate over the results and push them to allListItems
-						settingsResults[0].categories.forEach((categoryValue) => {
-							const categoryFormatted = {
+						settingsResults[0].tags.forEach((tagValue) => {
+							const tagFormatted = {
 								name: '',
 								camlName: '',
 								key: '',
 							};
-							if (categoryValue.name) {
-								categoryFormatted.name = categoryValue.name;
-								categoryFormatted.camlName = categoryValue.camlName;
-								categoryFormatted.key = shortid.generate();
+							if (tagValue.name) {
+								tagFormatted.name = tagValue.name;
+								tagFormatted.camlName = tagValue.camlName;
+								tagFormatted.key = shortid.generate();
 
-								allMessagesCategories.push(categoryFormatted);
+								allMessageTags.push(tagFormatted);
 							}
 						});
 						// sort allListItems by name properties
-						allMessagesCategories.sort((a, b) => {
+						allMessageTags.sort((a, b) => {
 							if (a.name < b.name) return -1;
 							if (a.name > b.name) return 1;
 							return 0;
 						});
 						// resolve this promise with the requested items
-						resolve(allMessagesCategories);
+						resolve(allMessageTags);
 					});
 			} else {
 				// resolve the promise with mock data
@@ -123,12 +123,12 @@ export default class HcMessagesData {
 					.ReturnNesoData('https://neso.mos.org/hcMessages/messages')
 					// if the promise is resolved with the settings
 					.then((messagesResults) => {
-						// set up var to receive all categories
+						// set up var to receive all messages
 						const allMessagesMessages = [];
 						// iterate over the results and push them to allListItems
 						messagesResults.forEach((messageValues) => {
 							const messageFormatted = {
-								category: '',
+								tag: '',
 								subject: '',
 								created: '',
 								modified: '',
@@ -140,7 +140,7 @@ export default class HcMessagesData {
 								key: '',
 							};
 							if (messageValues.messageBody) {
-								messageFormatted.category = messageValues.messageCategory;
+								messageFormatted.tag = messageValues.messageTag;
 								messageFormatted.subject = messageValues.messageSubject;
 								messageFormatted.created = messageValues.messageCreated;
 								messageFormatted.modified = messageValues.messageModified;
@@ -167,7 +167,7 @@ export default class HcMessagesData {
 				// resolve the promise with mock data
 				resolve([
 					{
-						category: 'Announcements',
+						tag: 'Announcements',
 						subject: 'Message Subject 1',
 						created: '2018-04-05',
 						modified: '2018-04-05',
@@ -181,7 +181,7 @@ export default class HcMessagesData {
 						key: 'SknGU_zCOnz',
 					},
 					{
-						category: 'Events',
+						tag: 'Events',
 						subject: 'This is a great Message Subject 2',
 						created: '2018-04-05',
 						modified: '2018-04-05',
@@ -195,7 +195,7 @@ export default class HcMessagesData {
 						key: 'ry6M8_MCunz',
 					},
 					{
-						category: 'Announcements',
+						tag: 'Announcements',
 						subject: 'What an even better Message Subject 3',
 						created: '2018-04-05',
 						modified: '2018-04-05',
@@ -209,7 +209,7 @@ export default class HcMessagesData {
 						key: 'rJRGUuGROnz',
 					},
 					{
-						category: 'Events',
+						tag: 'Events',
 						subject: 'Message Subject 4',
 						created: '2018-04-05',
 						modified: '2018-04-05',
@@ -223,7 +223,7 @@ export default class HcMessagesData {
 						key: 'HykXUOGCunG',
 					},
 					{
-						category: 'Announcements',
+						tag: 'Announcements',
 						subject: 'This is a great Message Subject 5',
 						created: '2018-04-05',
 						modified: '2018-04-05',
@@ -236,7 +236,7 @@ export default class HcMessagesData {
 						key: 'HklmIufAOhz',
 					},
 					{
-						category: 'Events',
+						tag: 'Events',
 						subject: 'What an even better Message Subject 6',
 						created: '2018-04-05',
 						modified: '2018-04-05',
@@ -249,7 +249,7 @@ export default class HcMessagesData {
 						key: 'Skbm8OzAunf',
 					},
 					{
-						category: 'Announcements',
+						tag: 'Announcements',
 						subject: 'Message Subject 7',
 						created: '2018-04-05',
 						modified: '2018-04-05',
@@ -262,7 +262,7 @@ export default class HcMessagesData {
 						key: 'ryG7L_GCd2M',
 					},
 					{
-						category: 'Events',
+						tag: 'Events',
 						subject: 'This is a great Message Subject 8',
 						created: '2018-04-05',
 						modified: '2018-04-05',
@@ -275,7 +275,7 @@ export default class HcMessagesData {
 						key: 'BJXQ8OG0dhz',
 					},
 					{
-						category: 'Announcements',
+						tag: 'Announcements',
 						subject: 'What an even better Message Subject 9',
 						created: '2018-04-05',
 						modified: '2018-04-05',
@@ -288,7 +288,7 @@ export default class HcMessagesData {
 						key: 'SJNQUdfROnf',
 					},
 					{
-						category: 'Events',
+						tag: 'Events',
 						subject: 'Message Subject 10',
 						created: '2018-04-05',
 						modified: '2018-04-05',
