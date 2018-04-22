@@ -33,9 +33,15 @@ export default class HcMessagesNewMessageForm extends React.Component {
 	}
 	handleChangedTag(value) {
 		if (value) {
+			let newMessageIsInvalidRealTimeCheck;
+			if (!this.state.newMessageSubject ||
+				!this.state.newMessageBody || !this.state.newMessageImage) {
+				newMessageIsInvalidRealTimeCheck = true;
+			}
 			this.setState(() => ({
 				newMessageTag: value,
 				newMessageTagError: undefined,
+				newMessageIsInvalid: newMessageIsInvalidRealTimeCheck,
 			}));
 		} else {
 			this.setState(() => ({
@@ -46,9 +52,15 @@ export default class HcMessagesNewMessageForm extends React.Component {
 	}
 	handleChangedSubject(value) {
 		if (value) {
+			let newMessageIsInvalidRealTimeCheck;
+			if (!this.state.newMessageTag.text || 
+				!this.state.newMessageBody || !this.state.newMessageImage) {
+				newMessageIsInvalidRealTimeCheck = true;
+			}
 			this.setState(() => ({
 				newMessageSubject: value,
 				newMessageSubjectError: undefined,
+				newMessageIsInvalid: newMessageIsInvalidRealTimeCheck,
 			}));
 		} else {
 			this.setState(() => ({
@@ -59,9 +71,15 @@ export default class HcMessagesNewMessageForm extends React.Component {
 	}
 	handleChangedBody(value) {
 		if (value) {
+			let newMessageIsInvalidRealTimeCheck;
+			if (!this.state.newMessageTag.text || !this.state.newMessageSubject ||
+				!this.state.newMessageImage) {
+				newMessageIsInvalidRealTimeCheck = true;
+			}
 			this.setState(() => ({
 				newMessageBody: value,
 				newMessageBodyError: undefined,
+				newMessageIsInvalid: newMessageIsInvalidRealTimeCheck,
 			}));
 		} else {
 			this.setState(() => ({
@@ -72,9 +90,15 @@ export default class HcMessagesNewMessageForm extends React.Component {
 	}
 	handleChangedImage(value) {
 		if (value) {
+			let newMessageIsInvalidRealTimeCheck;
+			if (!this.state.newMessageTag.text || !this.state.newMessageSubject ||
+				!this.state.newMessageBody) {
+				newMessageIsInvalidRealTimeCheck = true;
+			}
 			this.setState(() => ({
 				newMessageImage: value,
 				newMessageImageError: undefined,
+				newMessageIsInvalid: newMessageIsInvalidRealTimeCheck,
 			}));
 		} else {
 			this.setState(() => ({
@@ -103,7 +127,7 @@ export default class HcMessagesNewMessageForm extends React.Component {
 			newMessageIsInvalid: undefined,
 		};
 
-		if (!this.state.newMessageTag) {
+		if (!this.state.newMessageTag.text) {
 			newErrors.newMessageTagError = 'Cannot be blank';
 		}
 
@@ -119,7 +143,7 @@ export default class HcMessagesNewMessageForm extends React.Component {
 			newErrors.newMessageImageError = 'Cannot be blank';
 		}
 
-		if (!this.state.newMessageTag || !this.state.newMessageSubject || 
+		if (!this.state.newMessageTag.text || !this.state.newMessageSubject || 
 			!this.state.newMessageBody || !this.state.newMessageImage) {
 			newErrors.newMessageIsInvalid = true;
 			this.setState(() => ({
