@@ -18,14 +18,12 @@ export default class HcMessages extends React.Component {
 	componentDidMount() {
 		HcMessagesData.ReturnNesoMessagesTagsForHcMessages()
 			.then((allMessageTags) => {
-				console.log(allMessageTags);
 				this.setState(() => ({
 					tagsArray: allMessageTags,
 				}));
 			});
 		HcMessagesData.ReturnNesoMessagesMessagesForHcMessages()
 			.then((allMessageMessages) => {
-				console.log(allMessageMessages);
 				this.setState(() => ({
 					messagesArray: allMessageMessages,
 				}));
