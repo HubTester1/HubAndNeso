@@ -39,6 +39,7 @@ export default class HcMessages extends React.Component {
 				/>
 				<HcMessagesNewMessageForm
 					tagsArray={this.state.tagsArray}
+					onClick={this.handleNewMessage}
 				/>
 				<HcMessagesList messagesArray={this.state.messagesArray} />
 			</div>

@@ -52,6 +52,7 @@ module.exports = {
 		new Promise(((resolve, reject) => {
 			// preserve function parameter
 			const message = incomingMessage;
+			// eslint-disable-next-line
 			console.log(message);
 			resolve({ error: false });
 		})),

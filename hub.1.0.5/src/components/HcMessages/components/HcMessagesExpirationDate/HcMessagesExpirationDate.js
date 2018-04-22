@@ -79,6 +79,7 @@ class HcMessagesExpirationDate extends React.Component {
 					label="Expiration Date"
 					firstDayOfWeek={firstDayOfWeek}
 					strings={DayPickerStrings}
+					onSelectDate={this.props.onSelectDate}
 				// 	placeholder='Select a date...'
 				// 	// tslint:disable:jsx-no-lambda
 				// 	onAfterMenuDismiss={() => console.log('onAfterMenuDismiss called')}
