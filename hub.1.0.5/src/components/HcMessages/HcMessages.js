@@ -20,6 +20,8 @@ export default class HcMessages extends React.Component {
 		this.addMessageToList = this.addMessageToList.bind(this);
 		this.handleClickNewMessageButton = this.handleClickNewMessageButton.bind(this);
 		this.handleClickHideNewMessageButton = this.handleClickHideNewMessageButton.bind(this);
+		this.handleClickTagFilterMenuLabel = this.handleClickTagFilterMenuLabel.bind(this);
+		this.handleClickTagFilterMenuItem = this.handleClickTagFilterMenuItem.bind(this);
 	}
 	componentDidMount() {
 		HcMessagesData.ReturnNesoMessagesTagsForHcMessages()
@@ -63,6 +65,14 @@ export default class HcMessages extends React.Component {
 			showNewMessageForm: false,
 		}));
 	}
+	handleClickTagFilterMenuLabel(e) {
+		e.preventDefault();
+	}
+	handleClickTagFilterMenuItem(e, menuItem) {
+		e.preventDefault();
+		console.log(menuItem);
+	}
+
 	render() {
 		return (
 			<div id="hc-messages" className="mos-react-component-root">
@@ -72,6 +82,8 @@ export default class HcMessages extends React.Component {
 					handleClickNewMessageButton={this.handleClickNewMessageButton}
 					handleClickHideNewMessageButton={this.handleClickHideNewMessageButton}
 					showingNewMessageForm={this.state.showNewMessageForm}
+					handleClickTagFilterMenuLabel={this.handleClickTagFilterMenuLabel}
+					handleClickTagFilterMenuItem={this.handleClickTagFilterMenuItem}
 				/>
 				<HcMessagesNewMessageForm
 					show={this.state.showNewMessageForm}

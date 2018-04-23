@@ -31,9 +31,10 @@ export default class HcMessagesCommandBar extends React.Component {
 			hideShowButton,
 			{
 				key: 'tagFilter',
-				name: 'Category Filter',
+				name: 'Category',
 				icon: 'Filter',
 				items: this.returnTagFilterItems(),
+				onClick: this.props.handleClickTagFilterMenuLabel,
 			},
 		];
 	}
@@ -41,6 +42,7 @@ export default class HcMessagesCommandBar extends React.Component {
 		return this.props.tagsArray.map(tagObject => ({
 			key: tagObject.camlName,
 			name: tagObject.name,
+			onClick: this.props.handleClickTagFilterMenuItem,
 		}));
 	}
 	render() {

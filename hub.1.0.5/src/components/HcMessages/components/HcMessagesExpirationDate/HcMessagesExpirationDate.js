@@ -67,16 +67,15 @@ const DayPickerStrings = {
 
 
 class HcMessagesExpirationDate extends React.Component {
-	/* eslint-disable */
 	state = {
 		firstDayOfWeek: DayOfWeek.Sunday,
 	};
 	onFormatDate(date) {
 		return MOSUtilities.ReturnFormattedDateTime({
-			incomingDateTimeString: `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`,
+			incomingDateTimeString: `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate() + 1}`,
 			incomingReturnFormat: 'MMMM D, YYYY',
 			determineYearDisplayDynamically: 1,
-		})
+		});
 	}
 	render() {
 		const { firstDayOfWeek } = this.state;
