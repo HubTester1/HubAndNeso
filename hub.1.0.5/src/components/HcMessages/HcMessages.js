@@ -10,11 +10,14 @@ import HcMessagesNewMessageForm from './components/HcMessagesNewMessageForm/HcMe
 // ----- COMPONENT
 
 export default class HcMessages extends React.Component {
-	state = {
-		messagesArray: [],
-		tagsArray: [],
-	};
-
+	constructor(props) {
+		super(props);
+		this.state = {
+			messagesArray: [],
+			tagsArray: [],
+		};
+		this.addMessageToList = this.addMessageToList.bind(this);
+	}
 	componentDidMount() {
 		HcMessagesData.ReturnNesoMessagesTagsForHcMessages()
 			.then((allMessageTags) => {
@@ -29,7 +32,29 @@ export default class HcMessages extends React.Component {
 				}));
 			});
 	}
-
+	addMessageToList(newMessageProperties) {
+		this.setState((prevState) => {
+			const previousMessagesArray = prevState.messagesArray;
+			const newMessageArray = [{
+				body: newMessageProperties.newMessageBody,
+				created: newMessageProperties.newMessageCreated,
+				creator: newMessageProperties.newMessageCreator,
+				image: newMessageProperties.newMessageImage,
+				subject: newMessageProperties.newMessageSubject,
+				tag: newMessageProperties.newMessageTag.text,
+				key: newMessageProperties.newMessageKey,
+			}, ...previousMessagesArray];
+			console.log('received properties');
+			console.log(newMessageProperties);
+			console.log('previousMessagesArray');
+			console.log(previousMessagesArray);
+			console.log('newMessageArray');
+			console.log(newMessageArray);
+			return {
+				messagesArray: newMessageArray,
+			};
+		});
+	}
 	render() {
 		return (
 			<div id="hc-messages" className="mos-react-component-root">
@@ -39,7 +64,7 @@ export default class HcMessages extends React.Component {
 				/>
 				<HcMessagesNewMessageForm
 					tagsArray={this.state.tagsArray}
-					onClick={this.handleNewMessage}
+					addMessageToList={this.addMessageToList}
 				/>
 				<HcMessagesList messagesArray={this.state.messagesArray} />
 			</div>

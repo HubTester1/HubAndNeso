@@ -5,7 +5,9 @@ import * as React from 'react';
 import { TextField } from 'office-ui-fabric-react/lib/TextField';
 import HcMessagesTagDropdown from '../HcMessagesTagDropdown/HcMessagesTagDropdown';
 import HcMessagesExpirationDate from '../HcMessagesExpirationDate/HcMessagesExpirationDate';
+import NesoHTTPClient from '../../../../services/NesoHTTPClient';
 
+const shortid = require('shortid');
 
 // ----- COMPONENT
 
@@ -23,6 +25,10 @@ export default class HcMessagesNewMessageForm extends React.Component {
 			newMessageBodyError: undefined,
 			newMessageImageError: undefined,
 			newMessageIsInvalid: undefined,
+			newMessageSaveAttempted: false,
+			newMessageSaveFailure: undefined,
+			newMessageSaveSuccess: undefined,
+			newMessageIITNotificationFailure: undefined,
 		};
 		this.handleChangedTag = this.handleChangedTag.bind(this);
 		this.handleChangedSubject = this.handleChangedSubject.bind(this);
@@ -33,9 +39,10 @@ export default class HcMessagesNewMessageForm extends React.Component {
 	}
 	handleChangedTag(value) {
 		if (value) {
+			console.log(this.state.newMessageSaveAttempted);
 			let newMessageIsInvalidRealTimeCheck;
-			if (!this.state.newMessageSubject ||
-				!this.state.newMessageBody || !this.state.newMessageImage) {
+			if (this.state.newMessageSaveAttempted && (!this.state.newMessageSubject ||
+				!this.state.newMessageBody || !this.state.newMessageImage)) {
 				newMessageIsInvalidRealTimeCheck = true;
 			}
 			this.setState(() => ({
@@ -53,8 +60,8 @@ export default class HcMessagesNewMessageForm extends React.Component {
 	handleChangedSubject(value) {
 		if (value) {
 			let newMessageIsInvalidRealTimeCheck;
-			if (!this.state.newMessageTag.text || 
-				!this.state.newMessageBody || !this.state.newMessageImage) {
+			if (this.state.newMessageSaveAttempted && (!this.state.newMessageTag.text || 
+				!this.state.newMessageBody || !this.state.newMessageImage)) {
 				newMessageIsInvalidRealTimeCheck = true;
 			}
 			this.setState(() => ({
@@ -72,8 +79,8 @@ export default class HcMessagesNewMessageForm extends React.Component {
 	handleChangedBody(value) {
 		if (value) {
 			let newMessageIsInvalidRealTimeCheck;
-			if (!this.state.newMessageTag.text || !this.state.newMessageSubject ||
-				!this.state.newMessageImage) {
+			if (this.state.newMessageSaveAttempted && (!this.state.newMessageTag.text || !this.state.newMessageSubject ||
+				!this.state.newMessageImage)) {
 				newMessageIsInvalidRealTimeCheck = true;
 			}
 			this.setState(() => ({
@@ -91,8 +98,8 @@ export default class HcMessagesNewMessageForm extends React.Component {
 	handleChangedImage(value) {
 		if (value) {
 			let newMessageIsInvalidRealTimeCheck;
-			if (!this.state.newMessageTag.text || !this.state.newMessageSubject ||
-				!this.state.newMessageBody) {
+			if (this.state.newMessageSaveAttempted && (!this.state.newMessageTag.text || !this.state.newMessageSubject ||
+				!this.state.newMessageBody)) {
 				newMessageIsInvalidRealTimeCheck = true;
 			}
 			this.setState(() => ({
@@ -152,10 +159,94 @@ export default class HcMessagesNewMessageForm extends React.Component {
 				newMessageBodyError: newErrors.newMessageBodyError,
 				newMessageImageError: newErrors.newMessageImageError,
 				newMessageIsInvalid: newErrors.newMessageIsInvalid,
+				newMessageSaveAttempted: true,
 			}));
 		} else {
-			console.log('gonna send, good buddy');
+			// construct message object
+			const newMessageProperties = {
+				newMessageTag: this.state.newMessageTag,
+				newMessageSubject: this.state.newMessageSubject,
+				newMessageBody: this.state.newMessageBody,
+				newMessageImage: this.state.newMessageImage,
+				newMessageExpirationDate: this.state.newMessageExpirationDate,
+				newMessageKey: shortid.generate(),
+				newMessageCreated: '2018-04-19',
+				newMessageCreator: {
+					account: 'jbaker',
+					displayName: 'James Baker',
+				},
+			};
+
+
+			// temp - for local
+			// Add message to the db
+			this.props.addMessageToList(newMessageProperties);
+
+			NesoHTTPClient.SendNesoJSONAndReceiveResponse(
+				'https://neso.mos.org:3001/hcMessages/addMessage', 
+				newMessageProperties,
+			)
+				.then((response) => {
+					// response.data.error
+					console.log(response);
+					/* if (!response.data.error) {
+						this.props.addMessageToList(newMessageProperties);
+					} */
+				})
+				.catch((error) => {
+					console.log(error);
+				});
 		}
+	}
+	resetNewMessageState() {
+		this.setState(() => ({
+			newMessageTag: { key: undefined },
+			newMessageSubject: undefined,
+			newMessageBody: undefined,
+			newMessageImage: undefined,
+			newMessageExpirationDate: undefined,
+			newMessageTagError: undefined,
+			newMessageSubjectError: undefined,
+			newMessageBodyError: undefined,
+			newMessageImageError: undefined,
+			newMessageIsInvalid: undefined,
+			newMessageSaveAttempted: false,
+			newMessageSaveFailure: undefined,
+			newMessageSaveSuccess: undefined,
+			newMessageIITNotificationFailure: undefined,
+		}));
+	}
+
+	handleSaveError() {
+		NesoHTTPClient.SendNesoJSONAndReceiveResponse(
+			'https://neso.mos.org/email/send',
+			{
+				to: 'hubhelp@mos.org',
+				from: 'The Hub <noreply@mos.org>',
+				subject: 'HcMessages Save Error',
+				html: JSON.stringify(this.state),
+				system: 'hub',
+				type: 'HcMessages Save Error',
+				event: 'HcMessages Save Error',
+			},
+		)
+			.then((response) => {
+				this.setState(() => ({
+					newMessageSaveFailure: true,
+				}));
+			})
+			.catch((error) => {
+				this.setState(() => ({
+					newMessageSaveFailure: true,
+					newMessageIITNotificationFailure: true,
+				}));
+			});
+	}
+
+	handleSaveSuccess() {
+		this.setState(() => ({
+			newMessageSaveSuccess: true,
+		}));
 	}
 
 	returnFormFieldContainerClassNameString(errorPropertyName) {
@@ -165,7 +256,6 @@ export default class HcMessagesNewMessageForm extends React.Component {
 	}
 
 	render() {
-		console.log(this.state);
 		return (
 			<div id="hc-messages-new-message-form" className="mos-react-component-root">
 				<h3>New Message</h3>
@@ -226,6 +316,21 @@ export default class HcMessagesNewMessageForm extends React.Component {
 						'' }
 				</div>
 				<button type="button" onClick={this.handleAddMessage}>Save</button>
+				<div id="new-message-save-failure-message">{
+					this.state.newMessageSaveFailure ?
+						'<span class="urgent">Yikes!</span> We had a problem saving your information.' :
+						''}
+				</div>
+				<div id="new-message-iit-notification-failure-message">{
+					this.state.newMessageIITNotificationFailure ?
+						'<span class="urgent">Oh no!</span> We couldn\'t notify IIT, either. Are you connected to the Internet?' :
+						''}
+				</div>
+				<div id="new-message-save-success-message">{
+					this.state.newMessageSaveSuccess ?
+						'Your message was saved.' :
+						''}
+				</div>
 			</div>
 		);
 	}
