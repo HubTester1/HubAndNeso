@@ -5,7 +5,7 @@ import * as React from 'react';
 import { TextField } from 'office-ui-fabric-react/lib/TextField';
 import HcMessagesTagDropdown from '../HcMessagesTagDropdown/HcMessagesTagDropdown';
 import HcMessagesExpirationDate from '../HcMessagesExpirationDate/HcMessagesExpirationDate';
-import NesoHTTPClient from '../../../../services/NesoHTTPClient';
+import HcMessagesData from '../../HcMessagesData';
 
 const shortid = require('shortid');
 
@@ -39,10 +39,9 @@ export default class HcMessagesNewMessageForm extends React.Component {
 	}
 	handleChangedTag(value) {
 		if (value) {
-			console.log(this.state.newMessageSaveAttempted);
 			let newMessageIsInvalidRealTimeCheck;
 			if (this.state.newMessageSaveAttempted && (!this.state.newMessageSubject ||
-				!this.state.newMessageBody || !this.state.newMessageImage)) {
+				!this.state.newMessageBody)) {
 				newMessageIsInvalidRealTimeCheck = true;
 			}
 			this.setState(() => ({
@@ -61,7 +60,7 @@ export default class HcMessagesNewMessageForm extends React.Component {
 		if (value) {
 			let newMessageIsInvalidRealTimeCheck;
 			if (this.state.newMessageSaveAttempted && (!this.state.newMessageTag.text || 
-				!this.state.newMessageBody || !this.state.newMessageImage)) {
+				!this.state.newMessageBody)) {
 				newMessageIsInvalidRealTimeCheck = true;
 			}
 			this.setState(() => ({
@@ -79,8 +78,8 @@ export default class HcMessagesNewMessageForm extends React.Component {
 	handleChangedBody(value) {
 		if (value) {
 			let newMessageIsInvalidRealTimeCheck;
-			if (this.state.newMessageSaveAttempted && (!this.state.newMessageTag.text || !this.state.newMessageSubject ||
-				!this.state.newMessageImage)) {
+			if (this.state.newMessageSaveAttempted && 
+				(!this.state.newMessageTag.text || !this.state.newMessageSubject)) {
 				newMessageIsInvalidRealTimeCheck = true;
 			}
 			this.setState(() => ({
@@ -98,19 +97,18 @@ export default class HcMessagesNewMessageForm extends React.Component {
 	handleChangedImage(value) {
 		if (value) {
 			let newMessageIsInvalidRealTimeCheck;
-			if (this.state.newMessageSaveAttempted && (!this.state.newMessageTag.text || !this.state.newMessageSubject ||
+			if (this.state.newMessageSaveAttempted && 
+				(!this.state.newMessageTag.text || !this.state.newMessageSubject ||
 				!this.state.newMessageBody)) {
 				newMessageIsInvalidRealTimeCheck = true;
 			}
 			this.setState(() => ({
 				newMessageImage: value,
-				newMessageImageError: undefined,
 				newMessageIsInvalid: newMessageIsInvalidRealTimeCheck,
 			}));
 		} else {
 			this.setState(() => ({
 				newMessageImage: undefined,
-				newMessageImageError: 'Cannot be blank',
 			}));
 		}
 	}
@@ -130,7 +128,6 @@ export default class HcMessagesNewMessageForm extends React.Component {
 			newMessageTagError: undefined,
 			newMessageSubjectError: undefined,
 			newMessageBodyError: undefined,
-			newMessageImageError: undefined,
 			newMessageIsInvalid: undefined,
 		};
 
@@ -146,18 +143,13 @@ export default class HcMessagesNewMessageForm extends React.Component {
 			newErrors.newMessageBodyError = 'Cannot be blank';
 		}
 
-		if (!this.state.newMessageImage) {
-			newErrors.newMessageImageError = 'Cannot be blank';
-		}
-
 		if (!this.state.newMessageTag.text || !this.state.newMessageSubject || 
-			!this.state.newMessageBody || !this.state.newMessageImage) {
+			!this.state.newMessageBody) {
 			newErrors.newMessageIsInvalid = true;
 			this.setState(() => ({
 				newMessageTagError: newErrors.newMessageTagError,
 				newMessageSubjectError: newErrors.newMessageSubjectError,
 				newMessageBodyError: newErrors.newMessageBodyError,
-				newMessageImageError: newErrors.newMessageImageError,
 				newMessageIsInvalid: newErrors.newMessageIsInvalid,
 				newMessageSaveAttempted: true,
 			}));
@@ -176,25 +168,20 @@ export default class HcMessagesNewMessageForm extends React.Component {
 					displayName: 'James Baker',
 				},
 			};
-
-
-			// temp - for local
-			// Add message to the db
-			this.props.addMessageToList(newMessageProperties);
-
-			NesoHTTPClient.SendNesoJSONAndReceiveResponse(
+			// send message to Neso
+			HcMessagesData.SendNesoMessagesMessage(
 				'https://neso.mos.org:3001/hcMessages/addMessage', 
 				newMessageProperties,
 			)
 				.then((response) => {
-					// response.data.error
-					console.log(response);
-					/* if (!response.data.error) {
-						this.props.addMessageToList(newMessageProperties);
-					} */
+					if (!response.data.error) {
+						this.handleSaveSuccess(newMessageProperties);
+					} else {
+						this.handleSaveError();
+					}
 				})
 				.catch((error) => {
-					console.log(error);
+					this.handleSaveError();
 				});
 		}
 	}
@@ -218,18 +205,7 @@ export default class HcMessagesNewMessageForm extends React.Component {
 	}
 
 	handleSaveError() {
-		NesoHTTPClient.SendNesoJSONAndReceiveResponse(
-			'https://neso.mos.org/email/send',
-			{
-				to: 'hubhelp@mos.org',
-				from: 'The Hub <noreply@mos.org>',
-				subject: 'HcMessages Save Error',
-				html: JSON.stringify(this.state),
-				system: 'hub',
-				type: 'HcMessages Save Error',
-				event: 'HcMessages Save Error',
-			},
-		)
+		HcMessagesData.SendSaveErrorEmail(this.state)
 			.then((response) => {
 				this.setState(() => ({
 					newMessageSaveFailure: true,
@@ -243,7 +219,9 @@ export default class HcMessagesNewMessageForm extends React.Component {
 			});
 	}
 
-	handleSaveSuccess() {
+	handleSaveSuccess(newMessageProperties) {
+		this.props.addMessageToList(newMessageProperties);
+		this.resetNewMessageState();
 		this.setState(() => ({
 			newMessageSaveSuccess: true,
 		}));

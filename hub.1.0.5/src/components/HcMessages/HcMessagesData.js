@@ -304,4 +304,58 @@ export default class HcMessagesData {
 			}
 		}));
 	}
+
+	static SendSaveErrorEmail(stateData) {
+		// return a new promise
+		return new Promise(((resolve, reject) => {
+			// if environment is sharepoint
+			if (EnvironmentDetector.ReturnIsSPO()) {
+				// get a promise to send the email
+				NesoHTTPClient.SendNesoJSONAndReceiveResponse(
+					'https://neso.mos.org/email/send',
+					{
+						to: 'hubhelp@mos.org',
+						from: 'The Hub <noreply@mos.org>',
+						subject: 'HcMessages Save Error',
+						html: JSON.stringify(stateData),
+						system: 'hub',
+						type: 'HcMessages Save Error',
+						event: 'HcMessages Save Error',
+					},
+				)
+					.then((response) => {
+						resolve(response);
+					})
+					.catch((error) => {
+						reject(error);
+					});
+			} else {
+				// resolve the promise with mock data
+				resolve({ name: 'mock response', data: { error: false } });
+			}
+		}));
+	}
+
+	static SendNesoMessagesMessage(newMessageProperties) {
+		// return a new promise
+		return new Promise(((resolve, reject) => {
+			// if environment is sharepoint
+			if (EnvironmentDetector.ReturnIsSPO()) {
+				// get a promise to send the email
+				NesoHTTPClient.SendNesoJSONAndReceiveResponse(
+					'https://neso.mos.org:3001/hcMessages/addMessage',
+					newMessageProperties,
+				)
+					.then((response) => {
+						resolve(response);
+					})
+					.catch((error) => {
+						reject(error);
+					});
+			} else {
+				// resolve the promise with mock data
+				resolve({ name: 'mock response', data: { error: false } });
+			}
+		}));
+	}
 }

@@ -34,7 +34,6 @@ export default class HcMessages extends React.Component {
 	}
 	addMessageToList(newMessageProperties) {
 		this.setState((prevState) => {
-			const previousMessagesArray = prevState.messagesArray;
 			const newMessageArray = [{
 				body: newMessageProperties.newMessageBody,
 				created: newMessageProperties.newMessageCreated,
@@ -43,13 +42,7 @@ export default class HcMessages extends React.Component {
 				subject: newMessageProperties.newMessageSubject,
 				tag: newMessageProperties.newMessageTag.text,
 				key: newMessageProperties.newMessageKey,
-			}, ...previousMessagesArray];
-			console.log('received properties');
-			console.log(newMessageProperties);
-			console.log('previousMessagesArray');
-			console.log(previousMessagesArray);
-			console.log('newMessageArray');
-			console.log(newMessageArray);
+			}, ...prevState.messagesArray];
 			return {
 				messagesArray: newMessageArray,
 			};
