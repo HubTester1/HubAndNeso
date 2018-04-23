@@ -112,7 +112,6 @@ export default class HcMessagesData {
 			}
 		}));
 	}
-
 	static ReturnNesoMessagesMessagesForHcMessages() {
 		// return a new promise
 		return new Promise(((resolve, reject) => {
@@ -304,7 +303,6 @@ export default class HcMessagesData {
 			}
 		}));
 	}
-
 	static SendSaveErrorEmail(stateData) {
 		// return a new promise
 		return new Promise(((resolve, reject) => {
@@ -335,7 +333,6 @@ export default class HcMessagesData {
 			}
 		}));
 	}
-
 	static SendNesoMessagesMessage(newMessageProperties) {
 		// return a new promise
 		return new Promise(((resolve, reject) => {

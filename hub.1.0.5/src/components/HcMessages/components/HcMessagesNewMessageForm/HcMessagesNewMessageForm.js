@@ -173,10 +173,7 @@ export default class HcMessagesNewMessageForm extends React.Component {
 				newMessageCreator: newMessageCreatorObject,
 			};
 			// send message to Neso
-			HcMessagesData.SendNesoMessagesMessage(
-				'https://neso.mos.org:3001/hcMessages/addMessage', 
-				newMessageProperties,
-			)
+			HcMessagesData.SendNesoMessagesMessage(newMessageProperties)
 				.then((response) => {
 					if (!response.data.error) {
 						this.handleSaveSuccess(newMessageProperties);
