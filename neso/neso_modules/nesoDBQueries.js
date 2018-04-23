@@ -41,10 +41,53 @@ module.exports = {
 		// return a new promise
 		new Promise(((resolve, reject) => {
 			const orderFlag = (order === 'descending') ? -1 : 1;
-			const sortObject = { sort: { field: orderFlag } };
+			// note: sortObject MUST be constructed in the following way; 
+			// 		attempts to "optimize" the next two lines result in errors
+			const sortObject = {};
+			sortObject[field] = orderFlag;
 			// use nesoDBConnection object to query db
 			nesoDBConnection.get(collection)
-				.find({}, sortObject, (error, docs) => {
+				.find({}, { sort: sortObject }, (error, docs) => {
+					// if there was an error
+					if (error) {
+						// construct a custom error
+						const errorToReport = {
+							error: true,
+							mongoDBError: true,
+							mongoDBErrorDetails: error,
+						};
+						// add error to Twitter
+						nesoErrors.ProcessError(errorToReport);
+						// reject this promise with the error
+						reject(errorToReport);
+						// if there was NOT an error
+					} else {
+						// resolve the promise and return the docs
+						resolve({
+							error: false,
+							mongoDBError: false,
+							docs,
+						});
+					}
+				});
+		})),
+
+	ReturnSpecifiedDocsFromCollectionSorted: (collection, queryField, queryValue, sortField, order) =>
+		// return a new promise
+		new Promise(((resolve, reject) => {
+			// note: queryObject MUST be constructed in the following way; 
+			// 		attempts to "optimize" the next two lines result in errors
+			const queryObject = {};
+			queryObject[queryField] = queryValue;
+
+			const orderFlag = (order === 'descending') ? -1 : 1;
+			// note: sortObject MUST be constructed in the following way; 
+			// 		attempts to "optimize" the next two lines result in errors
+			const sortObject = {};
+			sortObject[sortField] = orderFlag;
+			// use nesoDBConnection object to query db
+			nesoDBConnection.get(collection)
+				.find(queryObject, { sort: sortObject }, (error, docs) => {
 					// if there was an error
 					if (error) {
 						// construct a custom error

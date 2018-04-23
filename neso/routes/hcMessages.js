@@ -32,7 +32,7 @@ router.get('/messages', (req, res, next) => {
 		.catch((error) => { res.json(error); });
 });
 
-// for GET request for /check
+// for GET request for /descending
 router.get('/descending', (req, res, next) => {
 	// get a promise to retrieve health status data
 	hcMessages.ReturnHcMessagesDescending()
@@ -42,8 +42,8 @@ router.get('/descending', (req, res, next) => {
 		.catch((error) => { res.json(error); });
 });
 
-// for GET request for /check
-router.get('/tagged/:tag', (req, res, next) => {
+// for GET request for /descending
+router.get('/descending/tagged/:tag', (req, res, next) => {
 	// get a promise to retrieve health status data
 	hcMessages.ReturnHcMessagesDescendingWithSpecifiedTag(req.params.tag)
 		// if the promise is resolved with the docs, then respond with the docs as JSON
