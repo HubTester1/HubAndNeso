@@ -119,7 +119,198 @@ export default class HcMessagesData {
 			if (EnvironmentDetector.ReturnIsSPO()) {
 				// get a promise to retrieve the settings
 				NesoHTTPClient
-					.ReturnNesoData('https://neso.mos.org/hcMessages/messages')
+					.ReturnNesoData('https://neso.mos.org:3001/hcMessages/descending')
+					// if the promise is resolved with the settings
+					.then((messagesResults) => {
+						// set up var to receive all messages
+						const allMessagesMessages = [];
+						// iterate over the results and push them to allListItems
+						messagesResults.forEach((messageValues) => {
+							const messageFormatted = {
+								tag: '',
+								subject: '',
+								created: '',
+								modified: '',
+								creator: '',
+								body: '',
+								image: '',
+								expiration: '',
+
+								key: '',
+							};
+							if (messageValues.messageBody) {
+								messageFormatted.tag = messageValues.messageTag;
+								messageFormatted.subject = messageValues.messageSubject;
+								messageFormatted.created = messageValues.messageCreated;
+								messageFormatted.modified = messageValues.messageModified;
+								messageFormatted.creator = messageValues.messageCreator;
+								messageFormatted.body = messageValues.messageBody;
+								messageFormatted.image = messageValues.messageImage;
+								messageFormatted.expiration = messageValues.messageExpiration;
+
+								messageFormatted.key = shortid.generate();
+
+								allMessagesMessages.push(messageFormatted);
+							}
+						});
+						// sort allListItems by name properties
+						allMessagesMessages.sort((a, b) => {
+							if (a.name < b.name) return -1;
+							if (a.name > b.name) return 1;
+							return 0;
+						});
+						// resolve this promise with the requested items
+						resolve(allMessagesMessages);
+					});
+			} else {
+				// resolve the promise with mock data
+				resolve([
+					{
+						tag: 'Announcements',
+						subject: 'Message Subject 1',
+						created: '2018-04-05',
+						modified: '2018-04-05',
+						creator: {
+							displayName: 'Sheryl White Vincent',
+							account: 'swvincent',
+						},
+						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
+						image: 'https://images.unsplash.com/photo-1518495230660-7ae273cd1366?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=12731bebedfafc5e9c8957292b387103&auto=format&fit=crop&w=400&q=80',
+						expiration: '2018-10-05',
+						key: 'SknGU_zCOnz',
+					},
+					{
+						tag: 'Events',
+						subject: 'This is a great Message Subject 2',
+						created: '2018-04-05',
+						modified: '2018-04-05',
+						creator: {
+							displayName: 'James Baker',
+							account: 'jbaker',
+						},
+						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
+						image: 'https://images.unsplash.com/photo-1471513671800-b09c87e1497c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=263d1948dcd0e71c59c4929e8fcf3f46&auto=format&fit=crop&w=400&q=80',
+						expiration: '2018-10-05',
+						key: 'ry6M8_MCunz',
+					},
+					{
+						tag: 'Announcements',
+						subject: 'What an even better Message Subject 3',
+						created: '2018-04-05',
+						modified: '2018-04-05',
+						creator: {
+							displayName: 'Jeannette Amazeen-Thomas',
+							account: 'jthomas',
+						},
+						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
+						image: 'https://images.unsplash.com/photo-1444465693019-aa0b6392460d?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=f085fc9ac3af45f1498607ab047305c0&auto=format&fit=crop&w=400&q=80',
+						expiration: '2018-10-05',
+						key: 'rJRGUuGROnz',
+					},
+					{
+						tag: 'Events',
+						subject: 'Message Subject 4',
+						created: '2018-04-05',
+						modified: '2018-04-05',
+						creator: {
+							displayName: 'Kathryn Bartholomew',
+							account: 'kbartholomew',
+						},
+						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
+						image: 'https://images.unsplash.com/photo-1446080501695-8e929f879f2b?ixlib=rb-0.3.5&s=86ca1d4b7444404d412fb12a4f25c5de&auto=format&fit=crop&w=400&q=80',
+						expiration: '2018-10-05',
+						key: 'HykXUOGCunG',
+					},
+					{
+						tag: 'Announcements',
+						subject: 'This is a great Message Subject 5',
+						created: '2018-04-05',
+						modified: '2018-04-05',
+						creator: {
+							displayName: 'Jason Barone-Cichocki',
+							account: 'jbcichocki',
+						},
+						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
+						expiration: '2018-10-05',
+						key: 'HklmIufAOhz',
+					},
+					{
+						tag: 'Events',
+						subject: 'What an even better Message Subject 6',
+						created: '2018-04-05',
+						modified: '2018-04-05',
+						creator: {
+							displayName: 'Jason Barone-Cichocki',
+							account: 'jbcichocki',
+						},
+						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
+						expiration: '2018-10-05',
+						key: 'Skbm8OzAunf',
+					},
+					{
+						tag: 'Announcements',
+						subject: 'Message Subject 7',
+						created: '2018-04-05',
+						modified: '2018-04-05',
+						creator: {
+							displayName: 'Kathryn Bartholomew',
+							account: 'kbartholomew',
+						},
+						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
+						expiration: '2018-10-05',
+						key: 'ryG7L_GCd2M',
+					},
+					{
+						tag: 'Events',
+						subject: 'This is a great Message Subject 8',
+						created: '2018-04-05',
+						modified: '2018-04-05',
+						creator: {
+							displayName: 'Jeannette Amazeen-Thomas',
+							account: 'jthomas',
+						},
+						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
+						expiration: '2018-10-05',
+						key: 'BJXQ8OG0dhz',
+					},
+					{
+						tag: 'Announcements',
+						subject: 'What an even better Message Subject 9',
+						created: '2018-04-05',
+						modified: '2018-04-05',
+						creator: {
+							displayName: 'James Baker',
+							account: 'jbaker',
+						},
+						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
+						expiration: '2018-10-05',
+						key: 'SJNQUdfROnf',
+					},
+					{
+						tag: 'Events',
+						subject: 'Message Subject 10',
+						created: '2018-04-05',
+						modified: '2018-04-05',
+						creator: {
+							displayName: 'Sheryl White Vincent',
+							account: 'swvincent',
+						},
+						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
+						expiration: '2018-10-05',
+						key: 'BJHQL_G0O2M',
+					},
+				]);
+			}
+		}));
+	}
+	static ReturnNesoMessagesMessagesWithSpecifiedTagForHcMessages(tag) {
+		// return a new promise
+		return new Promise(((resolve, reject) => {
+			// if environment is sharepoint
+			if (EnvironmentDetector.ReturnIsSPO()) {
+				// get a promise to retrieve the settings
+				NesoHTTPClient
+					.ReturnNesoData(`https://neso.mos.org:3001/hcMessages/descending/tagged/${tag}`)
 					// if the promise is resolved with the settings
 					.then((messagesResults) => {
 						// set up var to receive all messages

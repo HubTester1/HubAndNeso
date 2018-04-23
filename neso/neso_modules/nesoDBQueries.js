@@ -37,6 +37,38 @@ module.exports = {
 			});
 		})),
 
+	ReturnAllDocsFromCollectionSorted: (collection, field, order) =>
+		// return a new promise
+		new Promise(((resolve, reject) => {
+			const orderFlag = (order === 'descending') ? -1 : 1;
+			const sortObject = { sort: { field: orderFlag } };
+			// use nesoDBConnection object to query db
+			nesoDBConnection.get(collection)
+				.find({}, sortObject, (error, docs) => {
+					// if there was an error
+					if (error) {
+						// construct a custom error
+						const errorToReport = {
+							error: true,
+							mongoDBError: true,
+							mongoDBErrorDetails: error,
+						};
+						// add error to Twitter
+						nesoErrors.ProcessError(errorToReport);
+						// reject this promise with the error
+						reject(errorToReport);
+						// if there was NOT an error
+					} else {
+						// resolve the promise and return the docs
+						resolve({
+							error: false,
+							mongoDBError: false,
+							docs,
+						});
+					}
+				});
+		})),
+
 	ReturnAllSpecifiedDocsFromCollection: (collection, query, projection) =>
 		// return a new promise
 		new Promise(((resolve, reject) => {
@@ -277,6 +309,5 @@ module.exports = {
 					});
 				}
 			});
-		}))
-	,
+		})),
 };

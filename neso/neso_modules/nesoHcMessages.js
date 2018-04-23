@@ -47,6 +47,28 @@ module.exports = {
 				.catch((error) => { reject(error); });
 		})),
 
+	ReturnHcMessagesDescending: () =>
+		// return a new promise
+		new Promise(((resolve, reject) => {
+			// get a promise to retrieve all documents from the hcMessages document collection
+			nesoDBQueries.ReturnAllDocsFromCollectionSorted('hcMessages', 'messageModified', 'descending')
+				// if the promise is resolved with the docs, then resolve this promise with the docs
+				.then((result) => { resolve(result); })
+				// if the promise is rejected with an error, then reject this promise with an error
+				.catch((error) => { reject(error); });
+		})),
+
+	ReturnHcMessagesDescendingWithSpecifiedTag: () =>
+		// return a new promise
+		new Promise(((resolve, reject) => {
+			// get a promise to retrieve all documents from the hcMessages document collection
+			nesoDBQueries.ReturnDocsFromCollectionSorted('hcMessages', 'messageModified', 'descending')
+				// if the promise is resolved with the docs, then resolve this promise with the docs
+				.then((result) => { resolve(result); })
+				// if the promise is rejected with an error, then reject this promise with an error
+				.catch((error) => { reject(error); });
+		})),
+
 	ReceiveMessage: incomingMessage =>
 		// return a new promise
 		new Promise(((resolve, reject) => {

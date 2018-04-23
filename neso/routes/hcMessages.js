@@ -12,7 +12,7 @@ router.get('/', (req, res, next) => {
 	res.send("Ain't nothin' here.");
 });
 
-// for GET request for /check
+// for GET request for /settings
 router.get('/settings', (req, res, next) => {
 	// get a promise to retrieve health status data
 	hcMessages.ReturnHcMessagesSettingsData()
@@ -22,10 +22,30 @@ router.get('/settings', (req, res, next) => {
 		.catch((error) => { res.json(error); });
 });
 
-// for GET request for /check
+// for GET request for /messages
 router.get('/messages', (req, res, next) => {
 	// get a promise to retrieve health status data
 	hcMessages.ReturnHcMessages()
+		// if the promise is resolved with the docs, then respond with the docs as JSON
+		.then((result) => { res.json(result); })
+		// if the promise is rejected with an error, then respond with the error as JSON
+		.catch((error) => { res.json(error); });
+});
+
+// for GET request for /check
+router.get('/descending', (req, res, next) => {
+	// get a promise to retrieve health status data
+	hcMessages.ReturnHcMessagesDescending()
+		// if the promise is resolved with the docs, then respond with the docs as JSON
+		.then((result) => { res.json(result); })
+		// if the promise is rejected with an error, then respond with the error as JSON
+		.catch((error) => { res.json(error); });
+});
+
+// for GET request for /check
+router.get('/tagged/:tag', (req, res, next) => {
+	// get a promise to retrieve health status data
+	hcMessages.ReturnHcMessagesDescendingWithSpecifiedTag(req.params.tag)
 		// if the promise is resolved with the docs, then respond with the docs as JSON
 		.then((result) => { res.json(result); })
 		// if the promise is rejected with an error, then respond with the error as JSON
