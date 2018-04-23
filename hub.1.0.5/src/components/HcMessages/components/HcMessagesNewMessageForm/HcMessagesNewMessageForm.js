@@ -6,6 +6,7 @@ import { TextField } from 'office-ui-fabric-react/lib/TextField';
 import HcMessagesTagDropdown from '../HcMessagesTagDropdown/HcMessagesTagDropdown';
 import HcMessagesExpirationDate from '../HcMessagesExpirationDate/HcMessagesExpirationDate';
 import HcMessagesData from '../../HcMessagesData';
+import MOSUtilities from '../../../../services/MOSUtilities';
 
 const shortid = require('shortid');
 
@@ -155,6 +156,10 @@ export default class HcMessagesNewMessageForm extends React.Component {
 			}));
 		} else {
 			// construct message object
+			const newMessageCreatorObject = {
+				account: this.props.uData.account,
+				displayName: this.props.uData.displayName,
+			};
 			const newMessageProperties = {
 				newMessageTag: this.state.newMessageTag,
 				newMessageSubject: this.state.newMessageSubject,
@@ -162,11 +167,10 @@ export default class HcMessagesNewMessageForm extends React.Component {
 				newMessageImage: this.state.newMessageImage,
 				newMessageExpirationDate: this.state.newMessageExpirationDate,
 				newMessageKey: shortid.generate(),
-				newMessageCreated: '2018-04-19',
-				newMessageCreator: {
-					account: 'jbaker',
-					displayName: 'James Baker',
-				},
+				newMessageCreated: MOSUtilities.ReturnFormattedDateTime({
+					incomingDateTimeString: 'nowLocal',
+				}),
+				newMessageCreator: newMessageCreatorObject,
 			};
 			// send message to Neso
 			HcMessagesData.SendNesoMessagesMessage(
@@ -185,7 +189,7 @@ export default class HcMessagesNewMessageForm extends React.Component {
 				});
 		}
 	}
-	resetNewMessageState() {
+	resetNewMessageStateAndSetSaveSuccess() {
 		this.setState(() => ({
 			newMessageTag: { key: undefined },
 			newMessageSubject: undefined,
@@ -199,11 +203,10 @@ export default class HcMessagesNewMessageForm extends React.Component {
 			newMessageIsInvalid: undefined,
 			newMessageSaveAttempted: false,
 			newMessageSaveFailure: undefined,
-			newMessageSaveSuccess: undefined,
 			newMessageIITNotificationFailure: undefined,
+			newMessageSaveSuccess: true,
 		}));
 	}
-
 	handleSaveError() {
 		HcMessagesData.SendSaveErrorEmail(this.state)
 			.then((response) => {
@@ -218,21 +221,15 @@ export default class HcMessagesNewMessageForm extends React.Component {
 				}));
 			});
 	}
-
 	handleSaveSuccess(newMessageProperties) {
 		this.props.addMessageToList(newMessageProperties);
-		this.resetNewMessageState();
-		this.setState(() => ({
-			newMessageSaveSuccess: true,
-		}));
+		this.resetNewMessageStateAndSetSaveSuccess();
 	}
-
 	returnFormFieldContainerClassNameString(errorPropertyName) {
 		return errorPropertyName && this.state[errorPropertyName] ? 
 			'mos-react-form-field contains-errors' : 
 			'mos-react-form-field';
 	}
-
 	render() {
 		return (
 			<div id="hc-messages-new-message-form" className="mos-react-component-root">

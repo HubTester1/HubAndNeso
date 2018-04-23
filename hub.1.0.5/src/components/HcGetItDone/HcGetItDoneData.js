@@ -5,7 +5,6 @@ import { Web } from 'sp-pnp-js';
 import EnvironmentDetector from '../../services/EnvironmentDetector';
 import NesoHTTPClient from '../../services/NesoHTTPClient';
 
-
 const shortid = require('shortid');
 
 // ----- DATA

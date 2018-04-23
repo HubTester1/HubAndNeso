@@ -10,7 +10,7 @@ const path = require('path');
 
 module.exports = merge(baseConfig, {
 	entry: {
-		index: './hub.1.0.5/src/index.js',
+		index: './hub.1.0.5/src/HcContainer.js',
 	},
 	output: {
 		path: path.join(__dirname, '../hub.1.0.5/dist'),
