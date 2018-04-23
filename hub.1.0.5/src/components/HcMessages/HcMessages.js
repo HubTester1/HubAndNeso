@@ -15,8 +15,11 @@ export default class HcMessages extends React.Component {
 		this.state = {
 			messagesArray: [],
 			tagsArray: [],
+			showNewMessageForm: false,
 		};
 		this.addMessageToList = this.addMessageToList.bind(this);
+		this.handleClickNewMessageButton = this.handleClickNewMessageButton.bind(this);
+		this.handleClickHideNewMessageButton = this.handleClickHideNewMessageButton.bind(this);
 	}
 	componentDidMount() {
 		HcMessagesData.ReturnNesoMessagesTagsForHcMessages()
@@ -48,14 +51,30 @@ export default class HcMessages extends React.Component {
 			};
 		});
 	}
+	handleClickNewMessageButton(e) {
+		e.preventDefault();
+		this.setState(() => ({
+			showNewMessageForm: true,
+		}));
+	}
+	handleClickHideNewMessageButton(e) {
+		e.preventDefault();
+		this.setState(() => ({
+			showNewMessageForm: false,
+		}));
+	}
 	render() {
 		return (
 			<div id="hc-messages" className="mos-react-component-root">
 				<h2>Messages</h2>
 				<HcMessagesCommandBar
 					tagsArray={this.state.tagsArray}
+					handleClickNewMessageButton={this.handleClickNewMessageButton}
+					handleClickHideNewMessageButton={this.handleClickHideNewMessageButton}
+					showingNewMessageForm={this.state.showNewMessageForm}
 				/>
 				<HcMessagesNewMessageForm
+					show={this.state.showNewMessageForm}
 					tagsArray={this.state.tagsArray}
 					addMessageToList={this.addMessageToList}
 					uData={this.props.uData}

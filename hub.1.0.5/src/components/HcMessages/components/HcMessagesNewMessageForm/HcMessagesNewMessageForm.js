@@ -231,82 +231,85 @@ export default class HcMessagesNewMessageForm extends React.Component {
 			'mos-react-form-field';
 	}
 	render() {
-		return (
-			<div id="hc-messages-new-message-form" className="mos-react-component-root">
-				<h3>New Message</h3>
-				<div className={this.returnFormFieldContainerClassNameString('newMessageTagError')}>
-					<HcMessagesTagDropdown
-						tagsArray={this.props.tagsArray}
-						onChanged={this.handleChangedTag}
-						selectedKey={this.state.newMessageTag.key}
-					/>
-					<div className="mos-react-form-field-error">
-						{this.state.newMessageTagError}
+		if (this.props.show) {
+			return (
+				<div id="hc-messages-new-message-form" className="mos-react-component-root">
+					<h3>New Message</h3>
+					<div className={this.returnFormFieldContainerClassNameString('newMessageTagError')}>
+						<HcMessagesTagDropdown
+							tagsArray={this.props.tagsArray}
+							onChanged={this.handleChangedTag}
+							selectedKey={this.state.newMessageTag.key}
+						/>
+						<div className="mos-react-form-field-error">
+							{this.state.newMessageTagError}
+						</div>
+					</div>
+					<div className={this.returnFormFieldContainerClassNameString('newMessageSubjectError')}>
+						<TextField
+							label="Subject"
+							value={this.state.newMessageSubject}
+							onChanged={this.handleChangedSubject}
+						/>
+						<div className="mos-react-form-field-error">
+							{this.state.newMessageSubjectError}
+						</div>
+					</div>
+					<div className={this.returnFormFieldContainerClassNameString('newMessageBodyError')}>
+						<TextField
+							label="Body"
+							multiline
+							rows={6}
+							value={this.state.newMessageBody}
+							onChanged={this.handleChangedBody}
+						/>
+						<div className="mos-react-form-field-error">
+							{this.state.newMessageBodyError}
+						</div>
+					</div>
+					<div className={this.returnFormFieldContainerClassNameString('newMessageImageError')}>
+						<TextField
+							label="Image - replace with file input"
+							value={this.state.newMessageImage}
+							onChanged={this.handleChangedImage}
+						/>
+						<div className="mos-react-form-field-error">
+							{this.state.newMessageImageError}
+						</div>
+					</div>
+					<div className={this.returnFormFieldContainerClassNameString(null)}>
+						<HcMessagesExpirationDate 
+							value={this.state.newMessageExpirationDate}
+							onSelectDate={this.handleChangedExpirationDate}
+						/>
+						<div className="mos-react-form-field-error">
+							{this.state.newMessageExpirationDateError}
+						</div>
+					</div>
+					<div id="validation-error-message">{
+						this.state.newMessageIsInvalid ? 
+							'The highlighted fields contain errors. Please make changes and try again' : 
+							'' }
+					</div>
+					<button type="button" onClick={this.handleAddMessage}>Save</button>
+					<div id="new-message-save-failure-message">{
+						this.state.newMessageSaveFailure ?
+							'<span class="urgent">Yikes!</span> We had a problem saving your information.' :
+							''}
+					</div>
+					<div id="new-message-iit-notification-failure-message">{
+						this.state.newMessageIITNotificationFailure ?
+							'<span class="urgent">Oh no!</span> We couldn\'t notify IIT, either. Are you connected to the Internet?' :
+							''}
+					</div>
+					<div id="new-message-save-success-message">{
+						this.state.newMessageSaveSuccess ?
+							'Your message was saved.' :
+							''}
 					</div>
 				</div>
-				<div className={this.returnFormFieldContainerClassNameString('newMessageSubjectError')}>
-					<TextField
-						label="Subject"
-						value={this.state.newMessageSubject}
-						onChanged={this.handleChangedSubject}
-					/>
-					<div className="mos-react-form-field-error">
-						{this.state.newMessageSubjectError}
-					</div>
-				</div>
-				<div className={this.returnFormFieldContainerClassNameString('newMessageBodyError')}>
-					<TextField
-						label="Body"
-						multiline
-						rows={6}
-						value={this.state.newMessageBody}
-						onChanged={this.handleChangedBody}
-					/>
-					<div className="mos-react-form-field-error">
-						{this.state.newMessageBodyError}
-					</div>
-				</div>
-				<div className={this.returnFormFieldContainerClassNameString('newMessageImageError')}>
-					<TextField
-						label="Image - replace with file input"
-						value={this.state.newMessageImage}
-						onChanged={this.handleChangedImage}
-					/>
-					<div className="mos-react-form-field-error">
-						{this.state.newMessageImageError}
-					</div>
-				</div>
-				<div className={this.returnFormFieldContainerClassNameString(null)}>
-					<HcMessagesExpirationDate 
-						value={this.state.newMessageExpirationDate}
-						onSelectDate={this.handleChangedExpirationDate}
-					/>
-					<div className="mos-react-form-field-error">
-						{this.state.newMessageExpirationDateError}
-					</div>
-				</div>
-				<div id="validation-error-message">{
-					this.state.newMessageIsInvalid ? 
-						'The highlighted fields contain errors. Please make changes and try again' : 
-						'' }
-				</div>
-				<button type="button" onClick={this.handleAddMessage}>Save</button>
-				<div id="new-message-save-failure-message">{
-					this.state.newMessageSaveFailure ?
-						'<span class="urgent">Yikes!</span> We had a problem saving your information.' :
-						''}
-				</div>
-				<div id="new-message-iit-notification-failure-message">{
-					this.state.newMessageIITNotificationFailure ?
-						'<span class="urgent">Oh no!</span> We couldn\'t notify IIT, either. Are you connected to the Internet?' :
-						''}
-				</div>
-				<div id="new-message-save-success-message">{
-					this.state.newMessageSaveSuccess ?
-						'Your message was saved.' :
-						''}
-				</div>
-			</div>
-		);
+			);
+		} 
+		return (null);
 	}
 }

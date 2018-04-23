@@ -3,6 +3,7 @@
 
 import * as React from 'react';
 import { DatePicker, DayOfWeek } from 'office-ui-fabric-react/lib/DatePicker';
+import MOSUtilities from '../../../../services/MOSUtilities';
 
 // ----- COMPONENT
 
@@ -66,11 +67,17 @@ const DayPickerStrings = {
 
 
 class HcMessagesExpirationDate extends React.Component {
+	/* eslint-disable */
 	state = {
 		firstDayOfWeek: DayOfWeek.Sunday,
 	};
-
-
+	onFormatDate(date) {
+		return MOSUtilities.ReturnFormattedDateTime({
+			incomingDateTimeString: `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`,
+			incomingReturnFormat: 'MMMM D, YYYY',
+			determineYearDisplayDynamically: 1,
+		})
+	}
 	render() {
 		const { firstDayOfWeek } = this.state;
 		return (
@@ -81,10 +88,7 @@ class HcMessagesExpirationDate extends React.Component {
 					strings={DayPickerStrings}
 					onSelectDate={this.props.onSelectDate}
 					value={this.props.value}
-				// 	placeholder='Select a date...'
-				// 	// tslint:disable:jsx-no-lambda
-				// 	onAfterMenuDismiss={() => console.log('onAfterMenuDismiss called')}
-				// // tslint:enable:jsx-no-lambda
+					formatDate={this.onFormatDate}
 				/>
 			</div>
 		);

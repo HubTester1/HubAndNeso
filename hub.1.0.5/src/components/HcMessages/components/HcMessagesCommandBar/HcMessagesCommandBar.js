@@ -11,13 +11,25 @@ import { initializeIcons } from '@uifabric/icons';
 
 export default class HcMessagesCommandBar extends React.Component {
 	returnCommanBarItems() {
-		return [
+		const hideShowButton = 
+		this.props.showingNewMessageForm ?
+			{
+				key: 'hideNewMessage',
+				name: 'Hide New Message',
+				icon: 'ChevronUpMed',
+				ariaLabel: 'Hide the new message form',
+				onClick: this.props.handleClickHideNewMessageButton,
+			} : 
 			{
 				key: 'newMessage',
 				name: 'New',
 				icon: 'Add',
 				ariaLabel: 'Add a message',
-			}, {
+				onClick: this.props.handleClickNewMessageButton,
+			};
+		return [
+			hideShowButton,
+			{
 				key: 'tagFilter',
 				name: 'Category Filter',
 				icon: 'Filter',

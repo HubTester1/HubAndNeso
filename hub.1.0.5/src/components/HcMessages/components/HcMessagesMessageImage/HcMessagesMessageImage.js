@@ -12,8 +12,10 @@ const HcMessagesMessageImage = (props) => {
 				<img src={props.messageContent.image} />
 			</div>
 		);
-	}
-	return (null);
+	} 
+		return (null);
+	
+	
 };
 
 export default HcMessagesMessageImage;
