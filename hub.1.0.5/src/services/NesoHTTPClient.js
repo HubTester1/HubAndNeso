@@ -11,7 +11,7 @@ export default class NesoHttpClient {
 				// if the promise is rejected with an error, then reject this promise with an error
 				.catch((error) => { reject(error); });
 		}));
-	}	
+	}
 	static SendNesoJSONAndReceiveResponse(endpoint, jsonObject) {
 		// return a new promise
 		return new Promise(((resolve, reject) => {
@@ -22,5 +22,5 @@ export default class NesoHttpClient {
 				// if the promise is rejected with an error, then reject this promise with an error
 				.catch((error) => { reject(error); });
 		}));
-	}	
+	}
 }

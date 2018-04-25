@@ -8,9 +8,9 @@ import MOSUtilities from '../../../../services/MOSUtilities';
 
 // ----- COMPONENT
 
-const HcMessagesMessage = (props) => {
-	console.log(props.messageContent);
-	return (
+const HcMessagesMessage = props => 
+	// console.log(props.messageContent);
+	(
 		<li id={`hc-messages-message_${props.messageId}`} className="hc-messages-message mos-react-component-root">
 			<h3 className="hc-messages-message-subject">
 				{props.messageContent.subject}
@@ -31,7 +31,6 @@ const HcMessagesMessage = (props) => {
 			<div className="hc-messages-message-body">{props.messageContent.body}</div>
 			<p className="hc-messages-message-tags">#{props.messageContent.tags[0]}</p>
 		</li>
-	); 
-};
+	);
 
 export default HcMessagesMessage;

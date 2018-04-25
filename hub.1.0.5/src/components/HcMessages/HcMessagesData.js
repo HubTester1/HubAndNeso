@@ -3,6 +3,8 @@
 
 import EnvironmentDetector from '../../services/EnvironmentDetector';
 import NesoHTTPClient from '../../services/NesoHTTPClient';
+import { Web } from 'sp-pnp-js';
+
 
 const shortid = require('shortid');
 
@@ -11,7 +13,7 @@ const shortid = require('shortid');
 export default class HcMessagesData {
 	static ReturnNesoMessagesTagsForHcMessages() {
 		// return a new promise
-		return new Promise(((resolve, reject) => {
+		return new Promise((resolve, reject) => {
 			// if environment is sharepoint
 			if (EnvironmentDetector.ReturnIsSPO()) {
 				// get a promise to retrieve the settings
@@ -110,7 +112,7 @@ export default class HcMessagesData {
 					},
 				]);
 			}
-		}));
+		});
 	}
 	static ReturnNesoMessagesMessagesForHcMessages() {
 		// return a new promise
@@ -527,8 +529,10 @@ export default class HcMessagesData {
 	static SendNesoMessagesMessage(newMessageProperties) {
 		// return a new promise
 		return new Promise(((resolve, reject) => {
+			console.log('sending');
 			// if environment is sharepoint
 			if (EnvironmentDetector.ReturnIsSPO()) {
+				console.log('in SP');
 				// get a promise to send the email
 				NesoHTTPClient.SendNesoJSONAndReceiveResponse(
 					'https://neso.mos.org:3001/hcMessages/addMessage',
@@ -546,4 +550,28 @@ export default class HcMessagesData {
 			}
 		}));
 	}
+	static ReturnNesoNextMessageID() {
+		// return a new promise
+		return new Promise((resolve, reject) => {
+			// get a promise to retrieve the settings
+			NesoHTTPClient
+				.ReturnNesoData('https://neso.mos.org:3001/hcMessages/nextMessageID')
+				// if the promise is resolved with the ID
+				.then((nextMessageIDResults) => {
+					// resolve this promise with the requested items
+					resolve(nextMessageIDResults);
+				});
+		});
+	}
+	/* static UploadMessagesFiles(filesArray) {
+		// set up results object (messageID, array (name, success flag, and dest url)
+		const resultsObject = {};
+		// get new ID from Neso
+
+		// create new folder with that ID
+
+		// for each image in array,
+		const web = new Web('https://bmos.sharepoint.com');
+		filesArray.forEach(fileValue);
+	} */
 }

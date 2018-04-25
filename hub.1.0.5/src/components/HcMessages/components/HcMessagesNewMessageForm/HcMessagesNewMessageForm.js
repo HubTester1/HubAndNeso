@@ -4,6 +4,7 @@
 import * as React from 'react';
 import { TextField } from 'office-ui-fabric-react/lib/TextField';
 import HcMessagesTagDropdown from '../HcMessagesTagDropdown/HcMessagesTagDropdown';
+import HcMessagesFiles from '../HcMessagesFiles/HcMessagesFiles';
 import HcMessagesExpirationDate from '../HcMessagesExpirationDate/HcMessagesExpirationDate';
 import HcMessagesData from '../../HcMessagesData';
 import MOSUtilities from '../../../../services/MOSUtilities';
@@ -21,6 +22,7 @@ export default class HcMessagesNewMessageForm extends React.Component {
 			newMessageBody: undefined,
 			newMessageImage: undefined,
 			newMessageExpirationDate: undefined,
+			newMessageID: undefined,
 			newMessageTagError: undefined,
 			newMessageSubjectError: undefined,
 			newMessageBodyError: undefined,
@@ -124,6 +126,23 @@ export default class HcMessagesNewMessageForm extends React.Component {
 			}));
 		}
 	}
+	retrieveMessageID() {
+		// return a promise to return the message ID
+		return new Promise((resolve, reject) => {
+			// if the message ID is already in state
+			if (this.state.newMessageID) {
+				// resolve this promise with the message ID
+				resolve(this.state.newMessageID);
+			// if the message ID is NOT in state
+			} else {
+				// get a new message ID
+				HcMessagesData.ReturnNesoNextMessageID()
+					.then((newMessageIDResults) => {
+						resolve(newMessageIDResults.nextMessageID);
+					});
+			}
+		});
+	}
 	handleAddMessage() {
 		const newErrors = {
 			newMessageTagError: undefined,
@@ -156,32 +175,47 @@ export default class HcMessagesNewMessageForm extends React.Component {
 			}));
 		} else {
 			// construct message object
-			const newMessageCreatorObject = {
-				account: this.props.uData.account,
-				displayName: this.props.uData.displayName,
-			};
-			const newMessageProperties = {
-				newMessageTag: this.state.newMessageTag,
-				newMessageSubject: this.state.newMessageSubject,
-				newMessageBody: this.state.newMessageBody,
-				newMessageImage: this.state.newMessageImage,
-				newMessageExpirationDate: this.state.newMessageExpirationDate,
-				newMessageKey: shortid.generate(),
-				newMessageCreated: MOSUtilities.ReturnFormattedDateTime({
-					incomingDateTimeString: 'nowLocal',
-				}),
-				newMessageCreator: newMessageCreatorObject,
-			};
-			// send message to Neso
-			HcMessagesData.SendNesoMessagesMessage(newMessageProperties)
-				.then((response) => {
-					if (!response.data.error) {
-						this.handleSaveSuccess(newMessageProperties);
-					} else {
-						this.handleSaveError();
-					}
+			// get a promise to retrieve a message ID
+			this.retrieveMessageID()
+				// if the message ID was retrieved
+				.then((newMessageIDResult) => {
+					console.log(this.state);
+					const newMessageCreatorObject = {
+						account: this.props.uData.account,
+						displayName: this.props.uData.displayName,
+					};
+					const newMessageProperties = {
+						newMessageID: newMessageIDResult,
+						newMessageTags: [this.state.newMessageTag.text],
+						newMessageSubject: this.state.newMessageSubject,
+						newMessageBody: this.state.newMessageBody,
+						newMessageImage: this.state.newMessageImage,
+						newMessageExpirationDate: this.state.newMessageExpirationDate,
+						newMessageKey: shortid.generate(),
+						newMessageCreated: MOSUtilities.ReturnFormattedDateTime({
+							incomingDateTimeString: 'nowLocal',
+						}),
+						newMessageCreator: newMessageCreatorObject,
+					};
+					console.log('newMessageProperties');
+					console.log(newMessageProperties);
+
+					// send message to Neso
+					HcMessagesData.SendNesoMessagesMessage(newMessageProperties)
+						.then((response) => {
+							console.log('send got response');
+							if (!response.data.error) {
+								this.handleSaveSuccess(newMessageProperties);
+							} else {
+								this.handleSaveError();
+							}
+						})
+						.catch((error) => {
+							console.log('send got error');
+							this.handleSaveError();
+						});
 				})
-				.catch((error) => {
+				.catch((newMessageIDError) => {
 					this.handleSaveError();
 				});
 		}
@@ -193,6 +227,7 @@ export default class HcMessagesNewMessageForm extends React.Component {
 			newMessageBody: undefined,
 			newMessageImage: undefined,
 			newMessageExpirationDate: undefined,
+			newMessageID: undefined,
 			newMessageTagError: undefined,
 			newMessageSubjectError: undefined,
 			newMessageBodyError: undefined,
@@ -264,7 +299,7 @@ export default class HcMessagesNewMessageForm extends React.Component {
 							{this.state.newMessageBodyError}
 						</div>
 					</div>
-					<div className={this.returnFormFieldContainerClassNameString('newMessageImageError')}>
+					{/* <div className={this.returnFormFieldContainerClassNameString('newMessageImageError')}>
 						<TextField
 							label="Image - replace with file input"
 							value={this.state.newMessageImage}
@@ -273,7 +308,13 @@ export default class HcMessagesNewMessageForm extends React.Component {
 						<div className="mos-react-form-field-error">
 							{this.state.newMessageImageError}
 						</div>
-					</div>
+					</div> */}
+					{/* <div className={this.returnFormFieldContainerClassNameString('newMessageImageError')}>
+						<HcMessagesFiles />
+						<div className="mos-react-form-field-error">
+							{this.state.newMessageImageError}
+						</div>
+					</div> */}
 					<div className={this.returnFormFieldContainerClassNameString(null)}>
 						<HcMessagesExpirationDate 
 							value={this.state.newMessageExpirationDate}
@@ -288,7 +329,7 @@ export default class HcMessagesNewMessageForm extends React.Component {
 							'The highlighted fields contain errors. Please make changes and try again' : 
 							'' }
 					</div>
-					<button type="button" onClick={this.handleAddMessage}>Save</button>
+					<a onClick={this.handleAddMessage}>Save</a>
 					<div id="new-message-save-failure-message">{
 						this.state.newMessageSaveFailure ?
 							'<span class="urgent">Yikes!</span> We had a problem saving your information.' :

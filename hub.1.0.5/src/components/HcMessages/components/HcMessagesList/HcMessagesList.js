@@ -6,18 +6,21 @@ import HcMessagesMessage from '../HcMessagesMessage/HcMessagesMessage';
 
 // ----- COMPONENT
 
-const HcMessagesList = props => (
-	<ul id="hc-messages-list" className="mos-react-component-root">
-		{
-			props.messagesArray.map((messageValue, messageIndex) => (
-				<HcMessagesMessage
-					key={messageValue.key}
-					messageId={messageValue.key}
-					messageContent={messageValue}
-				/>
-			))
-		}
-	</ul>
-);
+const HcMessagesList = (props) => {
+	console.log(props.messagesArray);
+	return (
+		<ul id="hc-messages-list" className="mos-react-component-root">
+			{
+				props.messagesArray.map((messageValue, messageIndex) => (
+					<HcMessagesMessage
+						key={messageValue.key}
+						messageId={messageValue.key}
+						messageContent={messageValue}
+					/>
+				))
+			}
+		</ul>
+	);
+};
 
 export default HcMessagesList;
