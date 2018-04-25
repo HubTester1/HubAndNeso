@@ -69,8 +69,18 @@ export default class HcMessages extends React.Component {
 		e.preventDefault();
 	}
 	handleClickTagFilterMenuItem(e, menuItem) {
+		// must prevent default or else *#@^$#%^ SP page will try to submit a form (because
+		// 		a button has been clicked inside a form tag); unfortunately, this also
+		// 		prevents the menu from closing
 		e.preventDefault();
-		console.log(menuItem);
+		HcMessagesData.ReturnNesoMessagesMessagesWithSpecifiedTagForHcMessages(menuItem.name)
+			.then((specifiedMessages) => {
+				this.setState(() => ({
+					messagesArray: specifiedMessages,
+				}));
+			});
+		// return true to close the menu
+		return true;
 	}
 
 	render() {

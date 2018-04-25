@@ -127,7 +127,7 @@ export default class HcMessagesData {
 						// iterate over the results and push them to allListItems
 						messagesResults.forEach((messageValues) => {
 							const messageFormatted = {
-								tag: '',
+								tags: '',
 								subject: '',
 								created: '',
 								modified: '',
@@ -139,7 +139,7 @@ export default class HcMessagesData {
 								key: '',
 							};
 							if (messageValues.messageBody) {
-								messageFormatted.tag = messageValues.messageTag;
+								messageFormatted.tags = messageValues.messageTags;
 								messageFormatted.subject = messageValues.messageSubject;
 								messageFormatted.created = messageValues.messageCreated;
 								messageFormatted.modified = messageValues.messageModified;
@@ -166,7 +166,7 @@ export default class HcMessagesData {
 				// resolve the promise with mock data
 				resolve([
 					{
-						tag: 'Announcements',
+						tags: ['Announcements'],
 						subject: 'Message Subject 1',
 						created: '2018-04-05',
 						modified: '2018-04-05',
@@ -180,7 +180,7 @@ export default class HcMessagesData {
 						key: 'SknGU_zCOnz',
 					},
 					{
-						tag: 'Events',
+						tags: ['Events'],
 						subject: 'This is a great Message Subject 2',
 						created: '2018-04-05',
 						modified: '2018-04-05',
@@ -194,7 +194,7 @@ export default class HcMessagesData {
 						key: 'ry6M8_MCunz',
 					},
 					{
-						tag: 'Announcements',
+						tags: ['Announcements'],
 						subject: 'What an even better Message Subject 3',
 						created: '2018-04-05',
 						modified: '2018-04-05',
@@ -208,7 +208,7 @@ export default class HcMessagesData {
 						key: 'rJRGUuGROnz',
 					},
 					{
-						tag: 'Events',
+						tags: ['Events'],
 						subject: 'Message Subject 4',
 						created: '2018-04-05',
 						modified: '2018-04-05',
@@ -222,7 +222,7 @@ export default class HcMessagesData {
 						key: 'HykXUOGCunG',
 					},
 					{
-						tag: 'Announcements',
+						tags: ['Announcements'],
 						subject: 'This is a great Message Subject 5',
 						created: '2018-04-05',
 						modified: '2018-04-05',
@@ -235,7 +235,7 @@ export default class HcMessagesData {
 						key: 'HklmIufAOhz',
 					},
 					{
-						tag: 'Events',
+						tags: ['Events'],
 						subject: 'What an even better Message Subject 6',
 						created: '2018-04-05',
 						modified: '2018-04-05',
@@ -248,7 +248,7 @@ export default class HcMessagesData {
 						key: 'Skbm8OzAunf',
 					},
 					{
-						tag: 'Announcements',
+						tags: ['Announcements'],
 						subject: 'Message Subject 7',
 						created: '2018-04-05',
 						modified: '2018-04-05',
@@ -261,7 +261,7 @@ export default class HcMessagesData {
 						key: 'ryG7L_GCd2M',
 					},
 					{
-						tag: 'Events',
+						tags: ['Events'],
 						subject: 'This is a great Message Subject 8',
 						created: '2018-04-05',
 						modified: '2018-04-05',
@@ -274,7 +274,7 @@ export default class HcMessagesData {
 						key: 'BJXQ8OG0dhz',
 					},
 					{
-						tag: 'Announcements',
+						tags: ['Announcements'],
 						subject: 'What an even better Message Subject 9',
 						created: '2018-04-05',
 						modified: '2018-04-05',
@@ -287,7 +287,7 @@ export default class HcMessagesData {
 						key: 'SJNQUdfROnf',
 					},
 					{
-						tag: 'Events',
+						tags: ['Events'],
 						subject: 'Message Subject 10',
 						created: '2018-04-05',
 						modified: '2018-04-05',
@@ -318,7 +318,7 @@ export default class HcMessagesData {
 						// iterate over the results and push them to allListItems
 						messagesResults.forEach((messageValues) => {
 							const messageFormatted = {
-								tag: '',
+								tags: '',
 								subject: '',
 								created: '',
 								modified: '',
@@ -330,7 +330,7 @@ export default class HcMessagesData {
 								key: '',
 							};
 							if (messageValues.messageBody) {
-								messageFormatted.tag = messageValues.messageTag;
+								messageFormatted.tags = messageValues.messageTags;
 								messageFormatted.subject = messageValues.messageSubject;
 								messageFormatted.created = messageValues.messageCreated;
 								messageFormatted.modified = messageValues.messageModified;
@@ -357,7 +357,7 @@ export default class HcMessagesData {
 				// resolve the promise with mock data
 				resolve([
 					{
-						tag: 'Announcements',
+						tags: ['Announcements'],
 						subject: 'Message Subject 1',
 						created: '2018-04-05',
 						modified: '2018-04-05',
@@ -371,7 +371,7 @@ export default class HcMessagesData {
 						key: 'SknGU_zCOnz',
 					},
 					{
-						tag: 'Events',
+						tags: ['Events'],
 						subject: 'This is a great Message Subject 2',
 						created: '2018-04-05',
 						modified: '2018-04-05',
@@ -385,7 +385,7 @@ export default class HcMessagesData {
 						key: 'ry6M8_MCunz',
 					},
 					{
-						tag: 'Announcements',
+						tags: ['Announcements'],
 						subject: 'What an even better Message Subject 3',
 						created: '2018-04-05',
 						modified: '2018-04-05',
@@ -399,7 +399,7 @@ export default class HcMessagesData {
 						key: 'rJRGUuGROnz',
 					},
 					{
-						tag: 'Events',
+						tags: ['Events'],
 						subject: 'Message Subject 4',
 						created: '2018-04-05',
 						modified: '2018-04-05',
@@ -413,7 +413,7 @@ export default class HcMessagesData {
 						key: 'HykXUOGCunG',
 					},
 					{
-						tag: 'Announcements',
+						tags: ['Announcements'],
 						subject: 'This is a great Message Subject 5',
 						created: '2018-04-05',
 						modified: '2018-04-05',
@@ -426,7 +426,7 @@ export default class HcMessagesData {
 						key: 'HklmIufAOhz',
 					},
 					{
-						tag: 'Events',
+						tags: ['Events'],
 						subject: 'What an even better Message Subject 6',
 						created: '2018-04-05',
 						modified: '2018-04-05',
@@ -439,7 +439,7 @@ export default class HcMessagesData {
 						key: 'Skbm8OzAunf',
 					},
 					{
-						tag: 'Announcements',
+						tags: ['Announcements'],
 						subject: 'Message Subject 7',
 						created: '2018-04-05',
 						modified: '2018-04-05',
@@ -452,7 +452,7 @@ export default class HcMessagesData {
 						key: 'ryG7L_GCd2M',
 					},
 					{
-						tag: 'Events',
+						tags: ['Events'],
 						subject: 'This is a great Message Subject 8',
 						created: '2018-04-05',
 						modified: '2018-04-05',
@@ -465,7 +465,7 @@ export default class HcMessagesData {
 						key: 'BJXQ8OG0dhz',
 					},
 					{
-						tag: 'Announcements',
+						tags: ['Announcements'],
 						subject: 'What an even better Message Subject 9',
 						created: '2018-04-05',
 						modified: '2018-04-05',
@@ -478,7 +478,7 @@ export default class HcMessagesData {
 						key: 'SJNQUdfROnf',
 					},
 					{
-						tag: 'Events',
+						tags: ['Events'],
 						subject: 'Message Subject 10',
 						created: '2018-04-05',
 						modified: '2018-04-05',
