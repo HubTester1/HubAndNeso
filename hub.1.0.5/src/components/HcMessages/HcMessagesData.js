@@ -11,6 +11,9 @@ const shortid = require('shortid');
 // ----- DATA
 
 export default class HcMessagesData {
+	constructor() {
+		this.UploadMessagesFiles = this.UploadMessagesFiles.bind(this);
+	}
 	static ReturnNesoMessagesTagsForHcMessages() {
 		// return a new promise
 		return new Promise((resolve, reject) => {
@@ -549,15 +552,28 @@ export default class HcMessagesData {
 				});
 		});
 	}
-	/* static UploadMessagesFiles(filesArray) {
+	static UploadMessagesFiles(messageID, filesArray) {
+		console.log('messageID');
+		console.log(messageID);
+		console.log('filesArray');
+		console.log(filesArray);
+
 		// set up results object (messageID, array (name, success flag, and dest url)
-		const resultsObject = {};
+		// const resultsObject = {};
 		// get new ID from Neso
 
 		// create new folder with that ID
 
 		// for each image in array,
-		const web = new Web('https://bmos.sharepoint.com');
+		/* const web = new Web('https://bmos.sharepoint.com');
 		filesArray.forEach(fileValue);
-	} */
+
+		const file = acceptedFiles[0];
+		web.getFolderByServerRelativeUrl('/HcMessagesFiles')
+			.files.add(file.name, file, true)
+			.then((_) => {
+				console.log('file done');
+				console.log(_);
+			}); */
+	}
 }

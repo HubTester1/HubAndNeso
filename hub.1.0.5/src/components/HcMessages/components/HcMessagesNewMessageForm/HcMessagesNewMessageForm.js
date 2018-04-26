@@ -39,8 +39,9 @@ export default class HcMessagesNewMessageForm extends React.Component {
 		this.handleChangedImage = this.handleChangedImage.bind(this);
 		this.handleChangedExpirationDate = this.handleChangedExpirationDate.bind(this);
 		this.handleAddMessage = this.handleAddMessage.bind(this);
-		this.returnAndConditionallySetMessageID = this.returnAndConditionallySetMessageID.bind(this);
 	}
+
+	
 	returnNewMessageSaveAttemptedAndNewMessageIsInvalid() {
 		if (this.state.newMessageSaveAttempted && (!this.state.newMessageTags[0].text || 
 			!this.state.newMessageSubject || !this.state.newMessageBody)) {
@@ -99,28 +100,6 @@ export default class HcMessagesNewMessageForm extends React.Component {
 			}));
 		}
 	}
-	handleChangedImage(value) {
-		if (value) {
-			this.setState(() => ({
-				newMessageImage: value,
-			}));
-		} else {
-			this.setState(() => ({
-				newMessageImage: undefined,
-			}));
-		}
-	}
-	handleChangedExpirationDate(value) {
-		if (value) {
-			this.setState(() => ({
-				newMessageExpirationDate: value,
-			}));
-		} else {
-			this.setState(() => ({
-				newMessageExpirationDate: undefined,
-			}));
-		}
-	}
 	returnAndConditionallySetMessageID() {
 		// return a promise to return the message ID
 		return new Promise((resolve, reject) => {
@@ -128,7 +107,7 @@ export default class HcMessagesNewMessageForm extends React.Component {
 			if (this.state.newMessageID) {
 				// resolve this promise with the message ID
 				resolve(this.state.newMessageID);
-			// if the message ID is NOT in state
+				// if the message ID is NOT in state
 			} else {
 				// get a new message ID
 				HcMessagesData.ReturnNesoNextMessageID()
@@ -140,6 +119,46 @@ export default class HcMessagesNewMessageForm extends React.Component {
 					});
 			}
 		});
+	}
+	handleChangedImage(acceptedFiles, rejectedFiles) {
+		this.returnAndConditionallySetMessageID()
+			.then((messageID) => {
+				HcMessagesData.UploadMessagesFiles(messageID, acceptedFiles)
+					.then((response) => {
+						// set state for user feedback
+						/* this.setState({
+							filePreview: acceptedFiles[0].preview,
+						}); */
+					})
+					.catch((error) => {
+						console.log('upload message error');
+						console.log(error);
+					});
+			})
+			.catch((error) => {
+			});
+
+		/* if (value) {
+			this.setState(() => ({
+				newMessageImage: value,
+			}));
+		} else {
+			this.setState(() => ({
+				newMessageImage: undefined,
+			}));
+		} */
+	}
+
+	handleChangedExpirationDate(value) {
+		if (value) {
+			this.setState(() => ({
+				newMessageExpirationDate: value,
+			}));
+		} else {
+			this.setState(() => ({
+				newMessageExpirationDate: undefined,
+			}));
+		}
 	}
 	handleAddMessage() {
 		const newErrors = {
@@ -292,19 +311,8 @@ export default class HcMessagesNewMessageForm extends React.Component {
 							{this.state.newMessageBodyError}
 						</div>
 					</div>
-					{/* <div className={this.returnFormFieldContainerClassNameString('newMessageImageError')}>
-						<TextField
-							label="Image - replace with file input"
-							value={this.state.newMessageImage}
-							onChanged={this.handleChangedImage}
-						/>
-						<div className="mos-react-form-field-error">
-							{this.state.newMessageImageError}
-						</div>
-					</div> */}
 					<div className={this.returnFormFieldContainerClassNameString('newMessageImageError')}>
 						<HcMessagesFiles
-							returnAndConditionallySetMessageID={this.returnAndConditionallySetMessageID}
 							handleChangedImage={this.handleChangedImage}
 						/>
 						<div className="mos-react-form-field-error">
