@@ -553,27 +553,38 @@ export default class HcMessagesData {
 		});
 	}
 	static UploadMessagesFiles(messageID, filesArray) {
-		console.log('messageID');
-		console.log(messageID);
-		console.log('filesArray');
-		console.log(filesArray);
+		// return a promise to upload the fies
+		return new Promise((resolve, reject) => {
+			// set up results object (messageID, array (name, success flag, and dest url)
+			const resultsObject = {};
 
-		// set up results object (messageID, array (name, success flag, and dest url)
-		// const resultsObject = {};
-		// get new ID from Neso
+			console.log('messageID');
+			console.log(messageID);
+			console.log('filesArray');
+			console.log(filesArray);
 
-		// create new folder with that ID
+			// create new folder with that ID
+			const web = new Web('https://bmos.sharepoint.com');
+			web.lists.getByTitle('HcMessagesFiles').rootFolder.folders.add(messageID)
+				.then((response) => {
+					console.log('SP folder creation SUCCESS');
+					console.log(response);
+					// for each image in array,
+					/* 
+					filesArray.forEach(fileValue);
 
-		// for each image in array,
-		/* const web = new Web('https://bmos.sharepoint.com');
-		filesArray.forEach(fileValue);
-
-		const file = acceptedFiles[0];
-		web.getFolderByServerRelativeUrl('/HcMessagesFiles')
-			.files.add(file.name, file, true)
-			.then((_) => {
-				console.log('file done');
-				console.log(_);
-			}); */
+					const file = acceptedFiles[0];
+					web.getFolderByServerRelativeUrl('/HcMessagesFiles')
+						.files.add(file.name, file, true)
+						.then((_) => {
+							console.log('file done');
+							console.log(_);
+						}); */
+				})
+				.catch((error) => {
+					console.log('SP folder creation error');
+					console.log(error);
+				});
+		});
 	}
 }
