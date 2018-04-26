@@ -104,7 +104,7 @@ module.exports = {
 			// preserve function parameter
 			const incomingMessageCopy = incomingMessage;
 			const messageToInsert = {
-				messageTags: [incomingMessageCopy.newMessageTag],
+				messageTags: incomingMessageCopy.newMessageTags,
 				messageSubject: incomingMessageCopy.newMessageSubject,
 				messageBody: incomingMessageCopy.newMessageBody,
 				messageImage: incomingMessageCopy.newMessageImage,

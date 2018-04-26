@@ -8,27 +8,23 @@ import { Dropdown } from 'office-ui-fabric-react/lib/Dropdown';
 
 export default class HcMessagesTagDropdown extends React.Component {
 	returnTagDropdownOptions() {
-		return this.props.tagsArray.map(tagObject => ({
+		const tagsArray = this.props.tagsArray.map(tagObject => ({
 			key: tagObject.camlName,
 			text: tagObject.name,
 		}));
+		tagsArray.unshift({ key: '', text: '' });
+		return tagsArray;
 	}
 
 	render() {
 		return (
 			<div className="hc-messages-tag-dropdown mos-react-component-root">
 				<Dropdown
-					// placeHolder='Select an Option'
 					label="Category"
-					// id='Basicdrop1'
 					ariaLabel="Message category"
-					// required
 					options={this.returnTagDropdownOptions()}
 					selectedKey={this.props.selectedKey}
 					onChanged={this.props.onChanged}
-				// onFocus={this._log('onFocus called')}
-				// onBlur={this._log('onBlur called')}
-				// componentRef={this._basicDropdown}
 				/>
 			</div>
 		);

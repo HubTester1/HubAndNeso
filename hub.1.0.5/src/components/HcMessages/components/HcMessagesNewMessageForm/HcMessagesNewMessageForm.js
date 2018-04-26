@@ -17,13 +17,13 @@ export default class HcMessagesNewMessageForm extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			newMessageTag: { key: undefined },
-			newMessageSubject: undefined,
-			newMessageBody: undefined,
+			newMessageTags: [{ key: '' }],
+			newMessageSubject: '',
+			newMessageBody: '',
 			newMessageImage: undefined,
-			newMessageExpirationDate: undefined,
+			newMessageExpirationDate: '',
 			newMessageID: undefined,
-			newMessageTagError: undefined,
+			newMessageTagsError: undefined,
 			newMessageSubjectError: undefined,
 			newMessageBodyError: undefined,
 			newMessageImageError: undefined,
@@ -33,39 +33,43 @@ export default class HcMessagesNewMessageForm extends React.Component {
 			newMessageSaveSuccess: undefined,
 			newMessageIITNotificationFailure: undefined,
 		};
-		this.handleChangedTag = this.handleChangedTag.bind(this);
+		this.handleChangedTags = this.handleChangedTags.bind(this);
 		this.handleChangedSubject = this.handleChangedSubject.bind(this);
 		this.handleChangedBody = this.handleChangedBody.bind(this);
 		this.handleChangedImage = this.handleChangedImage.bind(this);
 		this.handleChangedExpirationDate = this.handleChangedExpirationDate.bind(this);
 		this.handleAddMessage = this.handleAddMessage.bind(this);
 	}
-	handleChangedTag(value) {
-		if (value) {
-			let newMessageIsInvalidRealTimeCheck;
-			if (this.state.newMessageSaveAttempted && (!this.state.newMessageSubject ||
-				!this.state.newMessageBody)) {
-				newMessageIsInvalidRealTimeCheck = true;
-			}
+	returnNewMessageSaveAttemptedAndNewMessageIsInvalid() {
+		if (this.state.newMessageSaveAttempted && (!this.state.newMessageTags[0].text || 
+			!this.state.newMessageSubject || !this.state.newMessageBody)) {
+			return true;
+		} 
+		return false;
+	}
+	handleChangedTags(value) {
+		const newMessageIsInvalidRealTimeCheck 
+			= this.returnNewMessageSaveAttemptedAndNewMessageIsInvalid();
+		if (value && value.key) {
+			console.log('tag value');
+			console.log(value);
 			this.setState(() => ({
-				newMessageTag: value,
-				newMessageTagError: undefined,
+				newMessageTags: [value],
+				newMessageTagsError: undefined,
 				newMessageIsInvalid: newMessageIsInvalidRealTimeCheck,
 			}));
 		} else {
 			this.setState(() => ({
-				newMessageTag: undefined,
-				newMessageTagError: 'Cannot be blank',
+				newMessageTags: [{ key: '' }],
+				newMessageTagsError: 'Cannot be blank',
+				newMessageIsInvalid: newMessageIsInvalidRealTimeCheck,
 			}));
 		}
 	}
 	handleChangedSubject(value) {
+		const newMessageIsInvalidRealTimeCheck
+			= this.returnNewMessageSaveAttemptedAndNewMessageIsInvalid();
 		if (value) {
-			let newMessageIsInvalidRealTimeCheck;
-			if (this.state.newMessageSaveAttempted && (!this.state.newMessageTag.text || 
-				!this.state.newMessageBody)) {
-				newMessageIsInvalidRealTimeCheck = true;
-			}
 			this.setState(() => ({
 				newMessageSubject: value,
 				newMessageSubjectError: undefined,
@@ -75,16 +79,14 @@ export default class HcMessagesNewMessageForm extends React.Component {
 			this.setState(() => ({
 				newMessageSubject: undefined,
 				newMessageSubjectError: 'Cannot be blank',
+				newMessageIsInvalid: newMessageIsInvalidRealTimeCheck,
 			}));
 		}
 	}
 	handleChangedBody(value) {
+		const newMessageIsInvalidRealTimeCheck
+			= this.returnNewMessageSaveAttemptedAndNewMessageIsInvalid();
 		if (value) {
-			let newMessageIsInvalidRealTimeCheck;
-			if (this.state.newMessageSaveAttempted && 
-				(!this.state.newMessageTag.text || !this.state.newMessageSubject)) {
-				newMessageIsInvalidRealTimeCheck = true;
-			}
 			this.setState(() => ({
 				newMessageBody: value,
 				newMessageBodyError: undefined,
@@ -94,20 +96,14 @@ export default class HcMessagesNewMessageForm extends React.Component {
 			this.setState(() => ({
 				newMessageBody: undefined,
 				newMessageBodyError: 'Cannot be blank',
+				newMessageIsInvalid: newMessageIsInvalidRealTimeCheck,
 			}));
 		}
 	}
 	handleChangedImage(value) {
 		if (value) {
-			let newMessageIsInvalidRealTimeCheck;
-			if (this.state.newMessageSaveAttempted && 
-				(!this.state.newMessageTag.text || !this.state.newMessageSubject ||
-				!this.state.newMessageBody)) {
-				newMessageIsInvalidRealTimeCheck = true;
-			}
 			this.setState(() => ({
 				newMessageImage: value,
-				newMessageIsInvalid: newMessageIsInvalidRealTimeCheck,
 			}));
 		} else {
 			this.setState(() => ({
@@ -126,6 +122,8 @@ export default class HcMessagesNewMessageForm extends React.Component {
 			}));
 		}
 	}
+
+
 	retrieveMessageID() {
 		// return a promise to return the message ID
 		return new Promise((resolve, reject) => {
@@ -145,14 +143,14 @@ export default class HcMessagesNewMessageForm extends React.Component {
 	}
 	handleAddMessage() {
 		const newErrors = {
-			newMessageTagError: undefined,
+			newMessageTagsError: undefined,
 			newMessageSubjectError: undefined,
 			newMessageBodyError: undefined,
 			newMessageIsInvalid: undefined,
 		};
 
-		if (!this.state.newMessageTag.text) {
-			newErrors.newMessageTagError = 'Cannot be blank';
+		if (!this.state.newMessageTags[0].text) {
+			newErrors.newMessageTagsError = 'Cannot be blank';
 		}
 
 		if (!this.state.newMessageSubject) {
@@ -163,11 +161,11 @@ export default class HcMessagesNewMessageForm extends React.Component {
 			newErrors.newMessageBodyError = 'Cannot be blank';
 		}
 
-		if (!this.state.newMessageTag.text || !this.state.newMessageSubject || 
+		if (!this.state.newMessageTags[0].text || !this.state.newMessageSubject || 
 			!this.state.newMessageBody) {
 			newErrors.newMessageIsInvalid = true;
 			this.setState(() => ({
-				newMessageTagError: newErrors.newMessageTagError,
+				newMessageTagsError: newErrors.newMessageTagsError,
 				newMessageSubjectError: newErrors.newMessageSubjectError,
 				newMessageBodyError: newErrors.newMessageBodyError,
 				newMessageIsInvalid: newErrors.newMessageIsInvalid,
@@ -179,14 +177,13 @@ export default class HcMessagesNewMessageForm extends React.Component {
 			this.retrieveMessageID()
 				// if the message ID was retrieved
 				.then((newMessageIDResult) => {
-					console.log(this.state);
 					const newMessageCreatorObject = {
 						account: this.props.uData.account,
 						displayName: this.props.uData.displayName,
 					};
 					const newMessageProperties = {
 						newMessageID: newMessageIDResult,
-						newMessageTags: [this.state.newMessageTag.text],
+						newMessageTags: [this.state.newMessageTags[0].text],
 						newMessageSubject: this.state.newMessageSubject,
 						newMessageBody: this.state.newMessageBody,
 						newMessageImage: this.state.newMessageImage,
@@ -197,13 +194,10 @@ export default class HcMessagesNewMessageForm extends React.Component {
 						}),
 						newMessageCreator: newMessageCreatorObject,
 					};
-					console.log('newMessageProperties');
-					console.log(newMessageProperties);
 
 					// send message to Neso
 					HcMessagesData.SendNesoMessagesMessage(newMessageProperties)
 						.then((response) => {
-							console.log('send got response');
 							if (!response.data.error) {
 								this.handleSaveSuccess(newMessageProperties);
 							} else {
@@ -211,7 +205,6 @@ export default class HcMessagesNewMessageForm extends React.Component {
 							}
 						})
 						.catch((error) => {
-							console.log('send got error');
 							this.handleSaveError();
 						});
 				})
@@ -222,13 +215,13 @@ export default class HcMessagesNewMessageForm extends React.Component {
 	}
 	resetNewMessageStateAndSetSaveSuccess() {
 		this.setState(() => ({
-			newMessageTag: { key: undefined },
-			newMessageSubject: undefined,
-			newMessageBody: undefined,
+			newMessageTags: [{ key: '' }],
+			newMessageSubject: '',
+			newMessageBody: '',
 			newMessageImage: undefined,
-			newMessageExpirationDate: undefined,
+			newMessageExpirationDate: '',
 			newMessageID: undefined,
-			newMessageTagError: undefined,
+			newMessageTagsError: undefined,
 			newMessageSubjectError: undefined,
 			newMessageBodyError: undefined,
 			newMessageImageError: undefined,
@@ -254,6 +247,7 @@ export default class HcMessagesNewMessageForm extends React.Component {
 			});
 	}
 	handleSaveSuccess(newMessageProperties) {
+		console.log('handling save success');
 		this.props.addMessageToList(newMessageProperties);
 		this.resetNewMessageStateAndSetSaveSuccess();
 	}
@@ -267,14 +261,14 @@ export default class HcMessagesNewMessageForm extends React.Component {
 			return (
 				<div id="hc-messages-new-message-form" className="mos-react-component-root">
 					<h3>New Message</h3>
-					<div className={this.returnFormFieldContainerClassNameString('newMessageTagError')}>
+					<div className={this.returnFormFieldContainerClassNameString('newMessageTagsError')}>
 						<HcMessagesTagDropdown
 							tagsArray={this.props.tagsArray}
-							onChanged={this.handleChangedTag}
-							selectedKey={this.state.newMessageTag.key}
+							onChanged={this.handleChangedTags}
+							selectedKey={this.state.newMessageTags[0].key}
 						/>
 						<div className="mos-react-form-field-error">
-							{this.state.newMessageTagError}
+							{this.state.newMessageTagsError}
 						</div>
 					</div>
 					<div className={this.returnFormFieldContainerClassNameString('newMessageSubjectError')}>

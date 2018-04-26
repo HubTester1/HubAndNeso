@@ -129,7 +129,7 @@ export default class HcMessagesData {
 						// iterate over the results and push them to allListItems
 						messagesResults.forEach((messageValues) => {
 							const messageFormatted = {
-								tags: '',
+								tags: [],
 								subject: '',
 								created: '',
 								modified: '',
@@ -154,12 +154,6 @@ export default class HcMessagesData {
 
 								allMessagesMessages.push(messageFormatted);
 							}
-						});
-						// sort allListItems by name properties
-						allMessagesMessages.sort((a, b) => {
-							if (a.name < b.name) return -1;
-							if (a.name > b.name) return 1;
-							return 0;
 						});
 						// resolve this promise with the requested items
 						resolve(allMessagesMessages);
@@ -320,7 +314,7 @@ export default class HcMessagesData {
 						// iterate over the results and push them to allListItems
 						messagesResults.forEach((messageValues) => {
 							const messageFormatted = {
-								tags: '',
+								tags: [],
 								subject: '',
 								created: '',
 								modified: '',
@@ -345,12 +339,6 @@ export default class HcMessagesData {
 
 								allMessagesMessages.push(messageFormatted);
 							}
-						});
-						// sort allListItems by name properties
-						allMessagesMessages.sort((a, b) => {
-							if (a.name < b.name) return -1;
-							if (a.name > b.name) return 1;
-							return 0;
 						});
 						// resolve this promise with the requested items
 						resolve(allMessagesMessages);
@@ -529,10 +517,8 @@ export default class HcMessagesData {
 	static SendNesoMessagesMessage(newMessageProperties) {
 		// return a new promise
 		return new Promise(((resolve, reject) => {
-			console.log('sending');
 			// if environment is sharepoint
 			if (EnvironmentDetector.ReturnIsSPO()) {
-				console.log('in SP');
 				// get a promise to send the email
 				NesoHTTPClient.SendNesoJSONAndReceiveResponse(
 					'https://neso.mos.org:3001/hcMessages/addMessage',

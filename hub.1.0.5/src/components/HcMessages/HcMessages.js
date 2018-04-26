@@ -45,7 +45,7 @@ export default class HcMessages extends React.Component {
 				creator: newMessageProperties.newMessageCreator,
 				image: newMessageProperties.newMessageImage,
 				subject: newMessageProperties.newMessageSubject,
-				tag: newMessageProperties.newMessageTag.text,
+				tags: [newMessageProperties.newMessageTags[0]],
 				key: newMessageProperties.newMessageKey,
 			}, ...prevState.messagesArray];
 			return {
