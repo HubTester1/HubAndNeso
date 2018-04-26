@@ -1,10 +1,9 @@
 
 // ----- IMPORTS
 
+import { Web } from 'sp-pnp-js';
 import EnvironmentDetector from '../../services/EnvironmentDetector';
 import NesoHTTPClient from '../../services/NesoHTTPClient';
-import { Web } from 'sp-pnp-js';
-
 
 const shortid = require('shortid');
 
@@ -555,35 +554,64 @@ export default class HcMessagesData {
 	static UploadMessagesFiles(messageID, filesArray) {
 		// return a promise to upload the fies
 		return new Promise((resolve, reject) => {
-			// set up results object (messageID, array (name, success flag, and dest url)
-			const resultsObject = {};
-
-			console.log('messageID');
-			console.log(messageID);
-			console.log('filesArray');
-			console.log(filesArray);
-
-			// create new folder with that ID
-			const web = new Web('https://bmos.sharepoint.com');
-			web.lists.getByTitle('HcMessagesFiles').rootFolder.folders.add(messageID)
-				.then((response) => {
-					console.log('SP folder creation SUCCESS');
-					console.log(response);
-					// for each image in array,
-					/* 
-					filesArray.forEach(fileValue);
-
-					const file = acceptedFiles[0];
-					web.getFolderByServerRelativeUrl('/HcMessagesFiles')
-						.files.add(file.name, file, true)
-						.then((_) => {
-							console.log('file done');
-							console.log(_);
-						}); */
+			// get promise to create new folder named for the message ID
+			const spWeb = new Web('https://bmos.sharepoint.com');
+			spWeb.lists.getByTitle('HcMessagesFiles').rootFolder.folders.add(messageID)
+				// if the folder was created
+				.then((folderResponse) => {
+					// set up file upload promise container
+					const fileUploadPromises = [];
+					// for each file in filesArray
+					filesArray.forEach((fileValue) => {
+						// push an upload promise to the container
+						fileUploadPromises.push(this.UploadOneMessageFile(messageID, fileValue));
+					});
+					// when all of the upload promises have been resolved
+					Promise.all(fileUploadPromises)
+						.then((fileUploadResults) => {
+							// resolve the top level promise with the file upload results
+							resolve({
+								error: 'check',
+								fileUploadResults,
+							});
+						});
 				})
+				// if the folder was not created
 				.catch((error) => {
-					console.log('SP folder creation error');
-					console.log(error);
+					// reject the top level promise with 
+					reject({
+						error: true,
+						spFileCreationError: true,
+					});
+				});
+		});
+	}
+	static UploadOneMessageFile(folder, file) {
+		// return a promise to upload the single fie
+		return new Promise((resolve, reject) => {
+			// upload the file
+			const spWeb = new Web('https://bmos.sharepoint.com');
+			spWeb.getFolderByServerRelativeUrl(`/HcMessagesFiles/${folder}`)
+				.files.add(file.name, file, true)
+				// if the upload was successful
+				.then((fileResponse) => {
+					// resolve the top level promise with info about the file and its upload
+					resolve({
+						name: file.name,
+						size: file.size,
+						url: fileResponse.data.ServerRelativeUrl,
+						error: false,
+						key: shortid.generate(),
+					});
+				})
+				// if there was an error
+				.catch((fileError) => {
+					// then resolve the top level promise with info about the file and its upload
+					reject({
+						name: file.name,
+						error: true,
+						key: shortid.generate(),
+					});
 				});
 		});
 	}

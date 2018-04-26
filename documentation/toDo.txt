@@ -1,0 +1,34 @@
+
+
+images
+----------------
+re-instate images in messages, update data in db, appropriately
+for quark-migrated messages, render images from diff location with quark ID
+Validation - in case any image uploads were unsuccessful - field and form levels
+add label to dropzone
+handleDropRejected
+delete image
+
+
+other messages
+---------------
+If selected category is All, get all messages
+validate against empty tag key throughout - not what's done already
+optimize error handling
+re-label? and show required for form fields
+
+
+
+
+
+date wrong on iPhone
+
+
+
+
+Staff Lookup
+
+
+Get it Done alt view with command bar (tabs)
+
+Organization views with tabs

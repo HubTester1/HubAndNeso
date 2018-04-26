@@ -20,13 +20,14 @@ export default class HcMessagesNewMessageForm extends React.Component {
 			newMessageTags: [{ key: '' }],
 			newMessageSubject: '',
 			newMessageBody: '',
-			newMessageImage: undefined,
+			newMessageImages: [],
 			newMessageExpirationDate: '',
 			newMessageID: undefined,
+			newMessageImagesAreUploading: false,
 			newMessageTagsError: undefined,
 			newMessageSubjectError: undefined,
 			newMessageBodyError: undefined,
-			newMessageImageError: undefined,
+			newMessageImagesError: undefined,
 			newMessageIsInvalid: undefined,
 			newMessageSaveAttempted: false,
 			newMessageSaveFailure: undefined,
@@ -120,15 +121,27 @@ export default class HcMessagesNewMessageForm extends React.Component {
 			}
 		});
 	}
+	setImagesAreProcessingInState(booleanValue) {
+		this.setState({ newMessageImagesAreUploading: booleanValue });
+	}
 	handleChangedImage(acceptedFiles, rejectedFiles) {
+		this.setImagesAreProcessingInState(true);
 		this.returnAndConditionallySetMessageID()
 			.then((messageID) => {
 				HcMessagesData.UploadMessagesFiles(messageID, acceptedFiles)
-					.then((response) => {
+					.then((fileUploadResults) => {
 						// set state for user feedback
-						/* this.setState({
-							filePreview: acceptedFiles[0].preview,
-						}); */
+						if (fileUploadResults.error === 'check') {
+							this.setState((prevState) => {
+								const previousFileArray = prevState.newMessageImages;
+								const currentFileArray 
+									= [...fileUploadResults.fileUploadResults, ...previousFileArray];
+								return {
+									newMessageImagesAreUploading: false,
+									newMessageImages: currentFileArray,
+								};
+							});
+						}
 					})
 					.catch((error) => {
 						console.log('upload message error');
@@ -140,11 +153,11 @@ export default class HcMessagesNewMessageForm extends React.Component {
 
 		/* if (value) {
 			this.setState(() => ({
-				newMessageImage: value,
+				newMessageImages: value,
 			}));
 		} else {
 			this.setState(() => ({
-				newMessageImage: undefined,
+				newMessageImages: undefined,
 			}));
 		} */
 	}
@@ -160,7 +173,8 @@ export default class HcMessagesNewMessageForm extends React.Component {
 			}));
 		}
 	}
-	handleAddMessage() {
+	handleAddMessage(e) {
+		e.preventDefault();
 		const newErrors = {
 			newMessageTagsError: undefined,
 			newMessageSubjectError: undefined,
@@ -205,7 +219,7 @@ export default class HcMessagesNewMessageForm extends React.Component {
 						newMessageTags: [this.state.newMessageTags[0].text],
 						newMessageSubject: this.state.newMessageSubject,
 						newMessageBody: this.state.newMessageBody,
-						newMessageImage: this.state.newMessageImage,
+						newMessageImages: this.state.newMessageImages,
 						newMessageExpirationDate: this.state.newMessageExpirationDate,
 						newMessageKey: shortid.generate(),
 						newMessageCreated: MOSUtilities.ReturnFormattedDateTime({
@@ -237,13 +251,13 @@ export default class HcMessagesNewMessageForm extends React.Component {
 			newMessageTags: [{ key: '' }],
 			newMessageSubject: '',
 			newMessageBody: '',
-			newMessageImage: undefined,
+			newMessageImages: [],
 			newMessageExpirationDate: '',
 			newMessageID: undefined,
 			newMessageTagsError: undefined,
 			newMessageSubjectError: undefined,
 			newMessageBodyError: undefined,
-			newMessageImageError: undefined,
+			newMessageImagesError: undefined,
 			newMessageIsInvalid: undefined,
 			newMessageSaveAttempted: false,
 			newMessageSaveFailure: undefined,
@@ -311,14 +325,18 @@ export default class HcMessagesNewMessageForm extends React.Component {
 							{this.state.newMessageBodyError}
 						</div>
 					</div>
-					<div className={this.returnFormFieldContainerClassNameString('newMessageImageError')}>
+					<div className={this.returnFormFieldContainerClassNameString('newMessageImagesError')}>
 						<HcMessagesFiles
 							handleChangedImage={this.handleChangedImage}
+							newMessageImagesAreUploading={this.state.newMessageImagesAreUploading}
+							newMessageImages={this.state.newMessageImages}
 						/>
 						<div className="mos-react-form-field-error">
-							{this.state.newMessageImageError}
+							{this.state.newMessageImagesError}
 						</div>
 					</div>
+
+
 					<div className={this.returnFormFieldContainerClassNameString(null)}>
 						<HcMessagesExpirationDate 
 							value={this.state.newMessageExpirationDate}
@@ -333,7 +351,7 @@ export default class HcMessagesNewMessageForm extends React.Component {
 							'The highlighted fields contain errors. Please make changes and try again' : 
 							'' }
 					</div>
-					<a onClick={this.handleAddMessage}>Save</a>
+					<button onClick={this.handleAddMessage}>Save</button>
 					<div id="new-message-save-failure-message">{
 						this.state.newMessageSaveFailure ?
 							'<span class="urgent">Yikes!</span> We had a problem saving your information.' :

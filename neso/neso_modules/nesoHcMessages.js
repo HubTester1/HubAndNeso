@@ -3,10 +3,6 @@
 
 const nesoDBQueries = require('./nesoDBQueries');
 
-const nesoDBConnection = require('./nesoDBConnection');
-const { ObjectID } = require('mongodb');
-
-
 // ----- DEFINE HEALTH FUNCTIONS
 
 module.exports = {
@@ -103,12 +99,21 @@ module.exports = {
 		new Promise(((resolve, reject) => {
 			// preserve function parameter
 			const incomingMessageCopy = incomingMessage;
+			// weed out some unnecessary image data
+			const imageDataToKeep = [];
+			incomingMessageCopy.newMessageImages.forEach((imageValue) => {
+				imageDataToKeep.push({
+					name: imageValue.name,
+					size: imageValue.size,
+					url: imageValue.url,
+				});
+			});
 			const messageToInsert = {
 				messageID: incomingMessageCopy.newMessageID,
 				messageTags: incomingMessageCopy.newMessageTags,
 				messageSubject: incomingMessageCopy.newMessageSubject,
 				messageBody: incomingMessageCopy.newMessageBody,
-				messageImage: incomingMessageCopy.newMessageImage,
+				messageImages: imageDataToKeep,
 				messageExpiration: incomingMessageCopy.newMessageExpirationDate,
 				messageCreated: incomingMessageCopy.newMessageCreated,
 				messageCreator: incomingMessageCopy.newMessageCreator,

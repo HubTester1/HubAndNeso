@@ -8,7 +8,7 @@ import MOSUtilities from '../../../../services/MOSUtilities';
 
 // ----- COMPONENT
 
-const HcMessagesMessage = (props) => 
+const HcMessagesMessage = props => 
 	// console.log(props.messageContent);
 	 (
 		<li id={`hc-messages-message_${props.messageId}`} className="hc-messages-message mos-react-component-root">
@@ -18,9 +18,9 @@ const HcMessagesMessage = (props) =>
 			<HcMessagesMessageCreator
 				creator={props.messageContent.creator}
 			/>
-			<HcMessagesMessageImage
+			{/* <HcMessagesMessageImage
 				messageContent={props.messageContent}
-			/>
+			/> */}
 			<p className="hc-messages-message-created">
 				{MOSUtilities.ReturnFormattedDateTime({
 					incomingDateTimeString: props.messageContent.created,
@@ -29,9 +29,8 @@ const HcMessagesMessage = (props) =>
 				})}
 			</p>
 			<div className="hc-messages-message-body">{props.messageContent.body}</div>
-			{/* currently only one tag per message */}
+			{/* note: currently only one tag per message */}
 			<p className="hc-messages-message-tags">#{props.messageContent.tags[0]}</p>
 		</li>
-	)
-;
+	);
 export default HcMessagesMessage;
