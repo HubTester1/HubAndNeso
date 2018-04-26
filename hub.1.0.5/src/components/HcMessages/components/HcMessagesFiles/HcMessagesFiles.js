@@ -7,12 +7,16 @@ import HcMessagesData from '../../HcMessagesData';
 
 // ----- COMPONENT
 
+
+/* eslint-disable */
+
 export default class HcMessagesFiles extends React.Component {
 	state = {
 		filePreviews: [],
 	};
+	
 	handleFileDrop(acceptedFiles, rejectedFiles) {
-		HcMessagesData.ReturnNesoNextMessageID()
+		this.props.returnAndConditionallySetMessageID()
 			.then((messageID) => {
 				console.log('messageID');
 				console.log(messageID);

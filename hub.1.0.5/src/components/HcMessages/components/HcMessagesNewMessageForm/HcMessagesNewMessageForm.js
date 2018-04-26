@@ -39,6 +39,7 @@ export default class HcMessagesNewMessageForm extends React.Component {
 		this.handleChangedImage = this.handleChangedImage.bind(this);
 		this.handleChangedExpirationDate = this.handleChangedExpirationDate.bind(this);
 		this.handleAddMessage = this.handleAddMessage.bind(this);
+		this.returnAndConditionallySetMessageID = this.returnAndConditionallySetMessageID.bind(this);
 	}
 	returnNewMessageSaveAttemptedAndNewMessageIsInvalid() {
 		if (this.state.newMessageSaveAttempted && (!this.state.newMessageTags[0].text || 
@@ -51,8 +52,6 @@ export default class HcMessagesNewMessageForm extends React.Component {
 		const newMessageIsInvalidRealTimeCheck 
 			= this.returnNewMessageSaveAttemptedAndNewMessageIsInvalid();
 		if (value && value.key) {
-			console.log('tag value');
-			console.log(value);
 			this.setState(() => ({
 				newMessageTags: [value],
 				newMessageTagsError: undefined,
@@ -122,9 +121,7 @@ export default class HcMessagesNewMessageForm extends React.Component {
 			}));
 		}
 	}
-
-
-	retrieveMessageID() {
+	returnAndConditionallySetMessageID() {
 		// return a promise to return the message ID
 		return new Promise((resolve, reject) => {
 			// if the message ID is already in state
@@ -136,6 +133,9 @@ export default class HcMessagesNewMessageForm extends React.Component {
 				// get a new message ID
 				HcMessagesData.ReturnNesoNextMessageID()
 					.then((newMessageIDResults) => {
+						this.setState({
+							newMessageID: newMessageIDResults.nextMessageID,
+						});
 						resolve(newMessageIDResults.nextMessageID);
 					});
 			}
@@ -174,7 +174,7 @@ export default class HcMessagesNewMessageForm extends React.Component {
 		} else {
 			// construct message object
 			// get a promise to retrieve a message ID
-			this.retrieveMessageID()
+			this.returnAndConditionallySetMessageID()
 				// if the message ID was retrieved
 				.then((newMessageIDResult) => {
 					const newMessageCreatorObject = {
@@ -247,7 +247,6 @@ export default class HcMessagesNewMessageForm extends React.Component {
 			});
 	}
 	handleSaveSuccess(newMessageProperties) {
-		console.log('handling save success');
 		this.props.addMessageToList(newMessageProperties);
 		this.resetNewMessageStateAndSetSaveSuccess();
 	}
@@ -303,12 +302,15 @@ export default class HcMessagesNewMessageForm extends React.Component {
 							{this.state.newMessageImageError}
 						</div>
 					</div> */}
-					{/* <div className={this.returnFormFieldContainerClassNameString('newMessageImageError')}>
-						<HcMessagesFiles />
+					<div className={this.returnFormFieldContainerClassNameString('newMessageImageError')}>
+						<HcMessagesFiles
+							returnAndConditionallySetMessageID={this.returnAndConditionallySetMessageID}
+							handleChangedImage={this.handleChangedImage}
+						/>
 						<div className="mos-react-form-field-error">
 							{this.state.newMessageImageError}
 						</div>
-					</div> */}
+					</div>
 					<div className={this.returnFormFieldContainerClassNameString(null)}>
 						<HcMessagesExpirationDate 
 							value={this.state.newMessageExpirationDate}
