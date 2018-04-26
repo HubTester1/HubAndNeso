@@ -24,3 +24,10 @@ coverage
 .vs
 bin
 obj
+
+# Misc
+q.txt
+reactApp.js
+nesoActiveDirectory.js
+nesoActiveDirectoryTwo.js
+activeDirectory.js
