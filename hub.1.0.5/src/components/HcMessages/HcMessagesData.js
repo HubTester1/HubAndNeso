@@ -548,6 +548,9 @@ export default class HcMessagesData {
 				.then((nextMessageIDResults) => {
 					// resolve this promise with the requested items
 					resolve(nextMessageIDResults);
+				})
+				.catch((nesoAxiosError) => {
+					reject(nesoAxiosError); 
 				});
 		});
 	}

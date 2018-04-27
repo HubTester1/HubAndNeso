@@ -8,8 +8,14 @@ export default class NesoHttpClient {
 			axios.get(endpoint)
 				// if the promise is resolved with the docs, then resolve this promise with the docs
 				.then((result) => { resolve(result.data.docs); })
-				// if the promise is rejected with an error, then reject this promise with an error
-				.catch((error) => { reject(error); });
+				// if the promise is rejected with an error
+				.catch((returnedError) => {
+					// reject this promise with an error
+					reject({
+						error: true,
+						nesoAxiosError: returnedError,
+					});
+				});
 		}));
 	}
 	static SendNesoJSONAndReceiveResponse(endpoint, jsonObject) {
@@ -19,8 +25,14 @@ export default class NesoHttpClient {
 			axios.post(endpoint, jsonObject)
 				// if the promise is resolved with the docs, then resolve this promise with the docs
 				.then((result) => { resolve(result); })
-				// if the promise is rejected with an error, then reject this promise with an error
-				.catch((error) => { reject(error); });
+				// if the promise is rejected with an error
+				.catch((returnedError) => {
+					// reject this promise with an error
+					reject({
+						error: true,
+						nesoAxiosError: returnedError,
+					});
+				});
 		}));
 	}
 }

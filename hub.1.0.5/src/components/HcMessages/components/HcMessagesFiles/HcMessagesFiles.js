@@ -11,17 +11,24 @@ import HcMessageFilePreview from '../HcMessageFilePreview/HcMessageFilePreview';
 /* eslint react/prefer-stateless-function: 0 */
 export default class HcMessagesFiles extends React.Component {
 	render() {
+		const dropzoneInputProps = { id: 'hc-messages-images-file-input' };
 		return (
 			<div className="hc-messages-images mos-react-component-root">
 				{!this.props.newMessageImagesAreUploading && 
-					<Dropzone
-						onDrop={this.props.handleChangedImage}
-						accept="image/jpeg,image/jpg,image/png,image/gif"
-						multiple
-						// onDropRejected={handleDropRejected}
-					>
-						Drag a file here or click or tap to upload.
-					</Dropzone>
+					<div className="hc-messages-images-file-input-container">
+						{/* note: eslint isn't recognizing that Dropzone is associate with this label */}
+						{/* eslint-disable jsx-a11y/label-has-for */}
+						<label htmlFor="hc-messages-images-file-input">Images</label>
+						<Dropzone
+							onDrop={this.props.handleChangedImage}
+							accept="image/jpeg,image/jpg,image/png,image/gif"
+							multiple
+							name="hc-messages-images-file-input"
+							inputProps={dropzoneInputProps}
+						>
+					Drag images here, or click or tap here to browse
+						</Dropzone>
+					</div>
 				}
 				{this.props.newMessageImagesAreUploading && 
 					<div>

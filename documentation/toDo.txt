@@ -2,9 +2,10 @@
 
 images
 ----------------
-Validation - in case any image uploads were unsuccessful - field and form levels
-add label to dropzone
-handleDropRejected
+if an image upload was unsuccessful, force user to delete it
+	don't show dzone until errors are cleared (can't have them lingering forever, need an event to clear them)
+	upon user deleting, check if any other image errors and reset base image error so message can be saved
+Can't save message with image errors
 delete image
 
 
@@ -16,7 +17,7 @@ optimize error handling
 re-label? and show required for form fields
 edit message - only if I'm the creator
 delete message - only if I'm the creator
-
+if no expiration date, set to 180 days in future
 
 
 
@@ -25,6 +26,21 @@ Staff Lookup
 Get it Done alt view with command bar (tabs)
 
 Organization views with tabs
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 messages migration - plan
