@@ -18,9 +18,15 @@ const HcMessagesMessage = props =>
 			<HcMessagesMessageCreator
 				creator={props.messageContent.creator}
 			/>
-			{/* <HcMessagesMessageImage
-				messageContent={props.messageContent}
-			/> */}
+			{
+				props.messageContent.messageImages.map(imageValue => (
+					<HcMessagesMessageImage
+						key={imageValue.key}
+						imageID={imageValue.key}
+						imageContent={imageValue}
+					/>
+				))
+			}
 			<p className="hc-messages-message-created">
 				{MOSUtilities.ReturnFormattedDateTime({
 					incomingDateTimeString: props.messageContent.created,

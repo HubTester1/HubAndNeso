@@ -20,7 +20,7 @@ export default class HcMessagesData {
 			if (EnvironmentDetector.ReturnIsSPO()) {
 				// get a promise to retrieve the settings
 				NesoHTTPClient
-					.ReturnNesoData('https://neso.mos.org/hcMessages/settings')
+					.ReturnNesoData('https://neso.mos.org:3001/hcMessages/settings')
 					// if the promise is resolved with the settings
 					.then((settingsResults) => {
 						// set up var to receive all tags
@@ -137,7 +137,7 @@ export default class HcMessagesData {
 								modified: '',
 								creator: '',
 								body: '',
-								image: '',
+								images: [],
 								expiration: '',
 
 								key: '',
@@ -149,7 +149,7 @@ export default class HcMessagesData {
 								messageFormatted.modified = messageValues.messageModified;
 								messageFormatted.creator = messageValues.messageCreator;
 								messageFormatted.body = messageValues.messageBody;
-								messageFormatted.image = messageValues.messageImage;
+								messageFormatted.images = messageValues.messageImages;
 								messageFormatted.expiration = messageValues.messageExpiration;
 
 								messageFormatted.key = shortid.generate();
@@ -493,7 +493,7 @@ export default class HcMessagesData {
 			if (EnvironmentDetector.ReturnIsSPO()) {
 				// get a promise to send the email
 				NesoHTTPClient.SendNesoJSONAndReceiveResponse(
-					'https://neso.mos.org/email/send',
+					'https://neso.mos.org:3001/email/send',
 					{
 						to: 'hubhelp@mos.org',
 						from: 'The Hub <noreply@mos.org>',

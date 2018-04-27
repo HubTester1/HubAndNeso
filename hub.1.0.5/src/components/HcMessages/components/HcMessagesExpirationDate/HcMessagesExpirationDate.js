@@ -72,7 +72,7 @@ class HcMessagesExpirationDate extends React.Component {
 	};
 	onFormatDate(date) {
 		return MOSUtilities.ReturnFormattedDateTime({
-			incomingDateTimeString: `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate() + 1}`,
+			incomingDateTimeString: date,
 			incomingReturnFormat: 'MMMM D, YYYY',
 			determineYearDisplayDynamically: 1,
 		});
