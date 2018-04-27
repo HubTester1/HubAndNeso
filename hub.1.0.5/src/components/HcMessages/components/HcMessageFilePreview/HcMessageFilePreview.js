@@ -69,10 +69,7 @@ export default class HcMessagesFilePreview extends React.Component {
 						id={`hc-messages-images-image-preview_${this.props.imageId}`}
 						className="hc-messages-images-image-preview specific-image"
 						style={imagePreviewStyles}
-					>
-						{/* REMOVE */}
-						<p> . </p><p> . </p><p> . </p>
-					</div>
+					/>
 					{/* file data text */}
 					<div
 						id={`hc-messages-images-image-file-name-and-size_${this.props.imageId}`}

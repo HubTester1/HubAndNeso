@@ -322,7 +322,7 @@ export default class HcMessagesData {
 								modified: '',
 								creator: '',
 								body: '',
-								image: '',
+								images: [],
 								expiration: '',
 
 								key: '',
@@ -334,7 +334,7 @@ export default class HcMessagesData {
 								messageFormatted.modified = messageValues.messageModified;
 								messageFormatted.creator = messageValues.messageCreator;
 								messageFormatted.body = messageValues.messageBody;
-								messageFormatted.image = messageValues.messageImage;
+								messageFormatted.images = messageValues.messageImages;
 								messageFormatted.expiration = messageValues.messageExpiration;
 
 								messageFormatted.key = shortid.generate();

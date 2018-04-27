@@ -8,7 +8,7 @@ import MOSUtilities from '../../../../services/MOSUtilities';
 
 // ----- COMPONENT
 
-const HcMessagesMessage = props => 
+const HcMessagesMessage = (props) => 
 	// console.log(props.messageContent);
 	 (
 		<li id={`hc-messages-message_${props.messageId}`} className="hc-messages-message mos-react-component-root">
@@ -18,8 +18,8 @@ const HcMessagesMessage = props =>
 			<HcMessagesMessageCreator
 				creator={props.messageContent.creator}
 			/>
-			{
-				props.messageContent.messageImages.map(imageValue => (
+			{props.messageContent.images && 
+				props.messageContent.images.map(imageValue => (
 					<HcMessagesMessageImage
 						key={imageValue.key}
 						imageID={imageValue.key}
@@ -38,5 +38,7 @@ const HcMessagesMessage = props =>
 			{/* note: currently only one tag per message */}
 			<p className="hc-messages-message-tags">#{props.messageContent.tags[0]}</p>
 		</li>
-	);
+	)
+;
+
 export default HcMessagesMessage;

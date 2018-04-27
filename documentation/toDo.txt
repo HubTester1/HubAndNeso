@@ -2,8 +2,6 @@
 
 images
 ----------------
-re-instate images in messages, update data in db, appropriately
-for quark-migrated messages, render images from diff location with quark ID
 Validation - in case any image uploads were unsuccessful - field and form levels
 add label to dropzone
 handleDropRejected
@@ -16,19 +14,30 @@ If selected category is All, get all messages
 validate against empty tag key throughout - not what's done already
 optimize error handling
 re-label? and show required for form fields
-
-
-
-
-
-date wrong on iPhone
+edit message - only if I'm the creator
+delete message - only if I'm the creator
 
 
 
 
 Staff Lookup
 
-
 Get it Done alt view with command bar (tabs)
 
 Organization views with tabs
+
+
+messages migration - plan
+-------------------
+db data
+	get and record a messageID
+	output to HTML Table and copy to spreasheet?
+	output to CSV?
+	import CSV to mongo
+images
+	use db data to determine current image location
+	get a messageID
+	copy image to a new location on quark with a parent folder corresponding to messageID
+	record new Hub location in data
+	copy all image copies to Hub
+
