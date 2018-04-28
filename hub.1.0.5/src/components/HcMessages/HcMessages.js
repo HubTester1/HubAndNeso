@@ -15,7 +15,7 @@ export default class HcMessages extends React.Component {
 		this.state = {
 			messagesArray: [],
 			tagsArray: [],
-			showNewMessageForm: true, // ============================================== REVERT
+			showNewMessageForm: false, // ============================================== REVERT
 		};
 		this.addMessageToList = this.addMessageToList.bind(this);
 		this.handleClickNewMessageButton = this.handleClickNewMessageButton.bind(this);
@@ -73,12 +73,24 @@ export default class HcMessages extends React.Component {
 		// 		a button has been clicked inside a form tag); unfortunately, this also
 		// 		prevents the menu from closing
 		e.preventDefault();
-		HcMessagesData.ReturnNesoMessagesMessagesWithSpecifiedTagForHcMessages(menuItem.name)
-			.then((specifiedMessages) => {
-				this.setState(() => ({
-					messagesArray: specifiedMessages,
-				}));
-			});
+		console.log(menuItem);
+
+		if (menuItem.name === 'All') {
+			HcMessagesData.ReturnNesoMessagesMessagesForHcMessages()
+				.then((allMessageMessages) => {
+					this.setState(() => ({
+						messagesArray: allMessageMessages,
+					}));
+				});
+		} else {
+			HcMessagesData.ReturnNesoMessagesMessagesWithSpecifiedTagForHcMessages(menuItem.name)
+				.then((specifiedMessages) => {
+					console.log(specifiedMessages);
+					this.setState(() => ({
+						messagesArray: specifiedMessages,
+					}));
+				});
+		}
 		// return true to close the menu
 		return true;
 	}

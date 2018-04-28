@@ -39,11 +39,20 @@ export default class HcMessagesCommandBar extends React.Component {
 		];
 	}
 	returnTagFilterItems() {
-		return this.props.tagsArray.map(tagObject => ({
+		const tagFilterItemsGenerated = this.props.tagsArray.map(tagObject => ({
 			key: tagObject.camlName,
 			name: tagObject.name,
 			onClick: this.props.handleClickTagFilterMenuItem,
 		}));
+		const tagFilterItems = [
+			{
+				key: 'all',
+				name: 'All',
+				onClick: this.props.handleClickTagFilterMenuItem,
+			},
+			...tagFilterItemsGenerated,
+		];
+		return tagFilterItems;
 	}
 	render() {
 		return (

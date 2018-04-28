@@ -17,6 +17,7 @@ export default class HcMessagesNewMessageForm extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			// done
 			newMessageID: undefined,
 			newMessageTags: [{ key: '' }],
 			newMessageSubject: '',
@@ -29,15 +30,18 @@ export default class HcMessagesNewMessageForm extends React.Component {
 			newMessageSubjectError: undefined,
 			newMessageBodyError: undefined,
 
-
+			// need to consider
 			newMessageImagesError: undefined,
-			newMessageImageUploadsImpossible: undefined, 
 			newMessageImageSomeOrAllUploadsFailedWarning: undefined,
 			newMessageImagesWrongTypesError: undefined,
 			newMessageIsInvalid: undefined,
 
-			
+
+			// irrelevant to validation
 			newMessageSaveAttempted: false,
+		
+			// not validation but preventing saving
+			newMessageImageUploadsImpossible: undefined, 
 			newMessageSaveFailure: undefined,
 			newMessageSaveSuccess: undefined,
 			newMessageIITNotificationFailure: undefined,
