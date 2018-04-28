@@ -4,38 +4,72 @@
 /* eslint no-underscore-dangle: 0 */
 /* eslint max-len: 0 */
 
-// ----- IMPORTS
 
 import * as React from 'react';
-import { NormalPeoplePicker } from 'office-ui-fabric-react/lib/Pickers';
-import { assign } from 'office-ui-fabric-react/lib/Utilities';
+// import { IOfficeUiFabricPeoplePickerProps } from './IOfficeUiFabricPeoplePickerProps';
+import {
+	// CompactPeoplePicker,
+	// IBasePickerSuggestionsProps,
+	NormalPeoplePicker,
+} from 'office-ui-fabric-react/lib/Pickers';
+import {
+	assign,
+	// autobind,
+} from 'office-ui-fabric-react/lib/Utilities';
 import { people } from './PeoplePickerExampleData';
-import HcStaffLookupData from '../../HcStaffLookupData';
-import EnvironmentDetector from '../../../../services/EnvironmentDetector';
+// import { IContextualMenuItem } from 'office-ui-fabric-react/lib/ContextualMenu';
+/* import {
+	SPHttpClient,
+	SPHttpClientBatch,
+	SPHttpClientResponse,
+} from '@microsoft/sp-http';
+import {
+	Environment,
+	EnvironmentType,
+} from '@microsoft/sp-core-library';
+import { Promise } from 'es6-promise'; */
+// import * as lodash from 'lodash';
+/* import {
+	IClientPeoplePickerSearchUser,
+	IEnsurableSharePointUser,
+	IEnsureUser,
+	IOfficeUiFabricPeoplePickerState,
+	SharePointUserPersona,
+} from '../models/OfficeUiFabricPeoplePicker'; */
+// import { IPersonaWithMenu } from 'office-ui-fabric-react/lib/components/pickers/PeoplePicker/PeoplePickerItems/PeoplePickerItem.Props';
 
-// ----- COMPONENT
+const suggestionProps = {
+	suggestionsHeaderText: 'Suggested People',
+	noResultsFoundText: 'No results found',
+	loadingText: 'Loading',
+};
 
 export default class OfficeUiFabricPeoplePicker extends React.Component {
-	peopleList;
+	_peopleList;
 	contextualMenuItems = [
 		{
 			key: 'newItem',
 			icon: 'circlePlus',
 			name: 'New',
-		}, {
+		},
+		{
 			key: 'upload',
 			icon: 'upload',
 			name: 'Upload',
-		}, {
+		},
+		{
 			key: 'divider_1',
 			name: '-',
-		}, {
+		},
+		{
 			key: 'rename',
 			name: 'Rename',
-		}, {
+		},
+		{
 			key: 'properties',
 			name: 'Properties',
-		}, {
+		},
+		{
 			key: 'disabled',
 			name: 'Disabled item',
 			disabled: true,
@@ -43,32 +77,24 @@ export default class OfficeUiFabricPeoplePicker extends React.Component {
 	];
 	constructor() {
 		super();
-		// set up container for all of the 
-		this.peopleList = [];
-
+		this._peopleList = [];
 		people.forEach((persona) => {
 			const target = {};
 			assign(target, persona, { menuItems: this.contextualMenuItems });
-			this.peopleList.push(target);
+			this._peopleList.push(target);
 		});
-		console.log(this.peopleList);
 		this.state = {
+			// currentPicker: 1,
 			delayResults: false,
 			selectedItems: [],
 		};
 		this._onFilterChanged = this._onFilterChanged.bind(this);
-		this._onChange = this._onChange.bind(this);
 	}
 
 	render() {
-		const suggestionProps = {
-			suggestionsHeaderText: 'Suggested People',
-			noResultsFoundText: 'No results found',
-			loadingText: 'Loading',
-		};
 		return (
 			<NormalPeoplePicker
-				onChange={this._onChange}
+				onChange={this._onChange.bind(this)}
 				onResolveSuggestions={this._onFilterChanged}
 				getTextFromItem={persona => persona.primaryText}
 				pickerSuggestionsProps={suggestionProps}
@@ -100,7 +126,7 @@ export default class OfficeUiFabricPeoplePicker extends React.Component {
 		// 
 		if (filterText) {
 			if (filterText.length > 2) {
-				return this._searchPeople(filterText, this.peopleList);
+				return this._searchPeople(filterText, this._peopleList);
 			}
 		}
 		return [];
@@ -111,7 +137,7 @@ export default class OfficeUiFabricPeoplePicker extends React.Component {
 	 * Returns fake people results for the Mock mode
 	 */
 	searchPeopleFromMock() {
-		this.peopleList = [
+		this._peopleList = [
 			{
 				imageUrl: './images/persona-female.png',
 				imageInitials: 'PV',
@@ -145,17 +171,20 @@ export default class OfficeUiFabricPeoplePicker extends React.Component {
 				optionalText: 'Available at 4:00pm',
 			},
 		];
-		return this.peopleList;
+		return this._peopleList;
 	}
 
-
+	/**
+	 * @function
+	 * Returns people results after a REST API call
+	 */
 	_searchPeople(terms, results) {
-		// if environment is SharePoint
-		if (EnvironmentDetector.ReturnIsSPO()) {
-			HcStaffLookupData.ReturnPeoplePickerOptions();
-			
-			/* const userRequestUrl = 'https://bmos.sharepoint.com/_api/SP.UI.ApplicationPages.ClientPeoplePickerWebServiceInterface.clientPeoplePickerSearchUser';
-			let principalType = 0;
+		/* if (DEBUG && Environment.type === EnvironmentType.Local) { */
+		// If the running environment is local, load the data from the mock
+		return this.searchPeopleFromMock();
+		/* } else {
+			const userRequestUrl = `${this.props.siteUrl}/_api/SP.UI.ApplicationPages.ClientPeoplePickerWebServiceInterface.clientPeoplePickerSearchUser`;
+			let principalType: number = 0;
 			if (this.props.principalTypeUser === true) {
 				principalType += 1;
 			}
@@ -168,17 +197,13 @@ export default class OfficeUiFabricPeoplePicker extends React.Component {
 			if (this.props.principalTypeDistributionList === true) {
 				principalType += 2;
 			}
-
-			console.log('principalType');
-			console.log(principalType);
-
 			const userQueryParams = {
 				'queryParams': {
 					'AllowEmailAddresses': true,
 					'AllowMultipleEntities': false,
 					'AllUrlZones': false,
 					'MaximumEntitySuggestions': this.props.numberOfItems,
-					'PrincipalSource': 1,
+					'PrincipalSource': 15,
 					// PrincipalType controls the type of entities that are returned in the results.
 					// Choices are All - 15, Distribution List - 2 , Security Groups - 4, SharePoint Groups - 8, User - 1.
 					// These values can be combined (example: 13 is security + SP groups + users)
@@ -187,13 +212,13 @@ export default class OfficeUiFabricPeoplePicker extends React.Component {
 				}
 			};
 
-			return new Promise((resolve, reject) =>
+			return new Promise<SharePointUserPersona[]>((resolve, reject) =>
 				this.props.spHttpClient.post(userRequestUrl,
 					SPHttpClient.configurations.v1, { body: JSON.stringify(userQueryParams) })
 					.then((response: SPHttpClientResponse) => {
 						return response.json();
 					})
-					.then((response: { value: string }) => {
+					.then((response: { value }) => {
 						let userQueryResults: IClientPeoplePickerSearchUser[] = JSON.parse(response.value);
 						let persons = userQueryResults.map(p => new SharePointUserPersona(p as IEnsurableSharePointUser));
 						return persons;
@@ -224,17 +249,12 @@ export default class OfficeUiFabricPeoplePicker extends React.Component {
 						}));
 					}, (error: any): void => {
 						reject(this._peopleList = []);
-					})); */
-
-
-		// if environment is NOT SharePoint
-		} else {
-			return this.searchPeopleFromMock();
-		}
+					}));
+		} */
 	}
 
-	/* _filterPersonasByText(filterText) {
-		return this.peopleList.filter(item => this._doesTextStartWith(item.primaryText, filterText));
+	_filterPersonasByText(filterText) {
+		return this._peopleList.filter(item => this._doesTextStartWith(item.primaryText, filterText));
 	}
 
 	_removeDuplicates(personas, possibleDupes) {
@@ -249,7 +269,7 @@ export default class OfficeUiFabricPeoplePicker extends React.Component {
 	_filterPromise(personasToReturn) {
 		if (this.state.delayResults) {
 			return this._convertResultsToPromise(personasToReturn);
-		} 
+		}
 		return personasToReturn;
 	}
 	_convertResultsToPromise(results) {
@@ -257,5 +277,5 @@ export default class OfficeUiFabricPeoplePicker extends React.Component {
 	}
 	_doesTextStartWith(text, filterText) {
 		return text.toLowerCase().indexOf(filterText.toLowerCase()) === 0;
-	} */
+	}
 }

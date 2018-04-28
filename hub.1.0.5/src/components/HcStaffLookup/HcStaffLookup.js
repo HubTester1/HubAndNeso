@@ -5,9 +5,7 @@ import * as React from 'react';
 import { assign } from 'office-ui-fabric-react/lib/Utilities';
 import HcStaffLookupPicker from './components/HcStaffLookupPicker/HcStaffLookupPicker';
 
-
 // ----- COMPONENT
-
 
 export default class HcStaffLookup extends React.Component {
 	constructor(props) {
@@ -70,6 +68,7 @@ export default class HcStaffLookup extends React.Component {
 				<HcStaffLookupPicker
 					peopleOptions={this.state.peopleOptions}
 					setSelectedPersonas={this.setSelectedPersonas}
+					principalTypeUser
 				/>
 			</div>
 		);
