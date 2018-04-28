@@ -38,7 +38,7 @@ export default class HcMessagesFiles extends React.Component {
 					</div>
 				}
 				{
-					this.props.newMessageImagesWrongTypesError &&
+					this.props.newMessageImagesWrongTypesWarning &&
 
 					<div id="mos-react-form-field-error-wrong-image-type" className="mos-react-form-field-error-message">
 						<span className="urgent">Oops!</span> No images were uploaded. Only JPG, JPEG, GIF, and PNG files are allowed.

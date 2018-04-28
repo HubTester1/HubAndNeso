@@ -31,14 +31,9 @@ export default class HcMessagesNewMessageForm extends React.Component {
 			newMessageBodyError: undefined,
 
 			// need to consider
-			newMessageImagesError: undefined,
 			newMessageImageSomeOrAllUploadsFailedWarning: undefined,
-			newMessageImagesWrongTypesError: undefined,
+			newMessageImagesWrongTypesWarning: undefined,
 			newMessageIsInvalid: undefined,
-
-
-			// irrelevant to validation
-			newMessageSaveAttempted: false,
 		
 			// not validation but preventing saving
 			newMessageImageUploadsImpossible: undefined, 
@@ -56,61 +51,42 @@ export default class HcMessagesNewMessageForm extends React.Component {
 	setImagesAreProcessingInState(booleanValue) {
 		this.setState({ newMessageImagesAreUploading: booleanValue });
 	}
-	returnNewMessageSaveAttemptedAndNewMessageIsInvalid() {
-		if (this.state.newMessageSaveAttempted && (!this.state.newMessageTags[0].text || 
-			!this.state.newMessageSubject || !this.state.newMessageBody)) {
-			return true;
-		} 
-		return false;
-	}
 	handleChangedTags(value) {
-		const newMessageIsInvalidRealTimeCheck 
-			= this.returnNewMessageSaveAttemptedAndNewMessageIsInvalid();
 		if (value && value.key) {
 			this.setState(() => ({
 				newMessageTags: [value],
 				newMessageTagsError: undefined,
-				newMessageIsInvalid: newMessageIsInvalidRealTimeCheck,
 			}));
 		} else {
 			this.setState(() => ({
 				newMessageTags: [{ key: '' }],
 				newMessageTagsError: 'Cannot be blank',
-				newMessageIsInvalid: newMessageIsInvalidRealTimeCheck,
 			}));
 		}
 	}
 	handleChangedSubject(value) {
-		const newMessageIsInvalidRealTimeCheck
-			= this.returnNewMessageSaveAttemptedAndNewMessageIsInvalid();
 		if (value) {
 			this.setState(() => ({
 				newMessageSubject: value,
 				newMessageSubjectError: undefined,
-				newMessageIsInvalid: newMessageIsInvalidRealTimeCheck,
 			}));
 		} else {
 			this.setState(() => ({
 				newMessageSubject: undefined,
 				newMessageSubjectError: 'Cannot be blank',
-				newMessageIsInvalid: newMessageIsInvalidRealTimeCheck,
 			}));
 		}
 	}
 	handleChangedBody(value) {
-		const newMessageIsInvalidRealTimeCheck
-			= this.returnNewMessageSaveAttemptedAndNewMessageIsInvalid();
 		if (value) {
 			this.setState(() => ({
 				newMessageBody: value,
 				newMessageBodyError: undefined,
-				newMessageIsInvalid: newMessageIsInvalidRealTimeCheck,
 			}));
 		} else {
 			this.setState(() => ({
 				newMessageBody: undefined,
 				newMessageBodyError: 'Cannot be blank',
-				newMessageIsInvalid: newMessageIsInvalidRealTimeCheck,
 			}));
 		}
 	}
@@ -209,14 +185,12 @@ export default class HcMessagesNewMessageForm extends React.Component {
 				});
 		// if 1+ files of the wrong type were submitted for upload (some were reject by Dropzone)
 		} else {
-			// set state to indicate an images error and an images wrong type error
+			// set state to indicate an images wrong type error
 			this.setState(() => ({
-				newMessageImagesError: true,
-				newMessageImagesWrongTypesError: true,
+				newMessageImagesWrongTypesWarning: true,
 			}));
 		}
 	}
-
 	handleChangedExpirationDate(value) {
 		if (value) {
 			this.setState(() => ({
@@ -228,7 +202,7 @@ export default class HcMessagesNewMessageForm extends React.Component {
 			}));
 		}
 	}
-	validateNewMessageForm() {
+	setAndReturnMessageFormIsInvalid() {
 		// set up new errors; default to no errors
 		const newErrors = {
 			newMessageTagsError: undefined,
@@ -265,17 +239,15 @@ export default class HcMessagesNewMessageForm extends React.Component {
 			newMessageBodyError: newErrors.newMessageBodyError,
 			newMessageIsInvalid: newErrors.newMessageIsInvalid,
 		}));
+		// return to caller
+		return newErrors.newMessageIsInvalid;
 	}
 
 	handleAddMessage(e) {
 		// prevent submitting using the SP form tag
 		e.preventDefault();
-		// set state to indicate that a message save is / has been attempted
-		this.setState(() => ({
-			newMessageSaveAttempted: true,
-		}));
-		// if the form is is valid
-		if (!this.state.newMessageIsInvalid) {
+		// if the form is not invalid
+		if (!this.setAndReturnMessageFormIsInvalid()) {
 			// get a promise to retrieve a message ID
 			this.returnAndConditionallySetMessageID()
 				// if the message ID was retrieved
@@ -329,12 +301,10 @@ export default class HcMessagesNewMessageForm extends React.Component {
 			newMessageTagsError: undefined,
 			newMessageSubjectError: undefined,
 			newMessageBodyError: undefined,
-			newMessageImagesError: undefined,
 			newMessageImageUploadsImpossible: undefined,
 			newMessageImageSomeOrAllUploadsFailedWarning: undefined,
-			newMessageImagesWrongTypesError: undefined,
+			newMessageImagesWrongTypesWarning: undefined,
 			newMessageIsInvalid: undefined,
-			newMessageSaveAttempted: false,
 			newMessageSaveFailure: undefined,
 			newMessageSaveSuccess: undefined,
 			newMessageIITNotificationFailure: undefined,
@@ -400,12 +370,12 @@ export default class HcMessagesNewMessageForm extends React.Component {
 							{this.state.newMessageBodyError}
 						</div>
 					</div>
-					<div className={this.returnFormFieldContainerClassNameString('newMessageImagesError')}>
+					<div className="mos-react-form-field">
 						<HcMessagesFiles
 							handleChangedImage={this.handleChangedImage}
 							newMessageImagesAreUploading={this.state.newMessageImagesAreUploading}
 							newMessageImages={this.state.newMessageImages}
-							newMessageImagesWrongTypesError={this.state.newMessageImagesWrongTypesError}
+							newMessageImagesWrongTypesWarning={this.state.newMessageImagesWrongTypesWarning}
 							newMessageImageSomeOrAllUploadsFailedWarning={
 								this.state.newMessageImageSomeOrAllUploadsFailedWarning
 							}
@@ -429,7 +399,7 @@ export default class HcMessagesNewMessageForm extends React.Component {
 						</div>
 					}
 					{
-						this.state.newMessageIsInvalid &&
+						!this.state.newMessageIsInvalid &&
 
 						<div id="form-entries-invalid-error-message" className="mos-react-form-error-message">
 							The highlighted fields contain errors. Please make changes and try again.

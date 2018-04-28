@@ -23,7 +23,7 @@ const HcMessagesList = (props) => {
 			</ul>
 		);
 	} 
-	return ('Sorry, I can&apos;t find any messages with that tag.');
+	return ('Sorry, I can\'t find any messages with that tag.');
 };
 
 export default HcMessagesList;
