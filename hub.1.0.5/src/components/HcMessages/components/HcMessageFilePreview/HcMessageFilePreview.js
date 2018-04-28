@@ -6,7 +6,6 @@ import MOSUtilities from '../../../../services/MOSUtilities';
 
 // ----- COMPONENT
 
-
 export default class HcMessagesFilePreview extends React.Component {
 	constructor(props) {
 		super(props);

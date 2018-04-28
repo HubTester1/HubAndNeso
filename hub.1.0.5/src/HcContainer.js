@@ -41,11 +41,11 @@ class HcContainer extends React.Component {
 		return (
 			<div>
 				<HcTopCommandBar />
+				<HcStaffLookup />
 				<HcMessages
 					uData={this.state.uData}
 				/>		
 				<HcGetItDone />
-				<HcStaffLookup />
 				<HcPushedItems />
 				{/* <p>HcOrganization here</p>
 				<p>HcCalendarsSchedules here</p> */}

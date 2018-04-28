@@ -15,7 +15,7 @@ export default class HcMessages extends React.Component {
 		this.state = {
 			messagesArray: [],
 			tagsArray: [],
-			showNewMessageForm: true,
+			showNewMessageForm: false,
 		};
 		this.addMessageToList = this.addMessageToList.bind(this);
 		this.handleClickNewMessageButton = this.handleClickNewMessageButton.bind(this);
