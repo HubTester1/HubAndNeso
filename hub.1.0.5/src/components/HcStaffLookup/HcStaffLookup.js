@@ -1,67 +1,32 @@
-
+/* eslint-disable */
 // ----- IMPORTS
 
 import * as React from 'react';
 import { assign } from 'office-ui-fabric-react/lib/Utilities';
 import HcStaffLookupPicker from './components/HcStaffLookupPicker/HcStaffLookupPicker';
+import HcContainerData from '../../HcContainerData';
 
 // ----- COMPONENT
 
 export default class HcStaffLookup extends React.Component {
 	constructor(props) {
 		super(props);
-		const basePeopleData = [
-			{
-				imageUrl: './images/persona-female.png',
-				imageInitials: 'PV',
-				primaryText: 'Annie Lindqvist',
-				secondaryText: 'Designer',
-				tertiaryText: 'In a meeting',
-				optionalText: 'Available at 4:00pm',
-			},
-			{
-				imageUrl: './images/persona-male.png',
-				imageInitials: 'AR',
-				primaryText: 'Aaron Reid',
-				secondaryText: 'Designer',
-				tertiaryText: 'In a meeting',
-				optionalText: 'Available at 4:00pm',
-			},
-			{
-				imageUrl: './images/persona-male.png',
-				imageInitials: 'AL',
-				primaryText: 'Alex Lundberg',
-				secondaryText: 'Software Developer',
-				tertiaryText: 'In a meeting',
-				optionalText: 'Available at 4:00pm',
-			},
-			{
-				imageUrl: './images/persona-male.png',
-				imageInitials: 'RK',
-				primaryText: 'Roko Kolar',
-				secondaryText: 'Financial Analyst',
-				tertiaryText: 'In a meeting',
-				optionalText: 'Available at 4:00pm',
-			},
-		];
-		const peopleOptions = [];
-		basePeopleData.forEach((persona) => {
-			const target = {};
-			assign(target, persona);
-			peopleOptions.push(target);
-		});
 		this.state = {
-			selectedPersonas: [],
-			peopleOptions,
+			personas: [],
 		};
 		this.setSelectedPersonas = this.setSelectedPersonas.bind(this);
 	}
-	setSelectedPersonas(personData) {
+	setSelectedPersonas(personaPickerData) {
+		console.log(personaPickerData);
+		const newPersonaData = HcContainerData.ReturnUserDataUsingEmail(personaPickerData[0]._user.EntityData.Email);
 		this.setState(prevState => ({
-			selectedPersonas: [personData, ...prevState.selectedPersonas],
+			personas: [newPersonaData, ...prevState.personas],
 		}));
 	}
 	render() {
+		console.log('parent state personas');
+		console.log(this.state.personas);
+
 		return (
 			<div id="hc-staff-lookup" className="mos-react-component-root">
 				<h2>Staff Lookup</h2>

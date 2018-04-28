@@ -8,15 +8,52 @@
 
 import * as React from 'react';
 import { NormalPeoplePicker } from 'office-ui-fabric-react/lib/Pickers';
+import { assign } from 'office-ui-fabric-react/lib/Utilities';
 import { HttpClient } from 'sp-pnp-js';
 
+import { people } from './PeoplePickerExampleData';
 import EnvironmentDetector from '../../../../services/EnvironmentDetector';
 
 // ----- COMPONENT
 
 export default class OfficeUiFabricPeoplePicker extends React.Component {
+	peopleList;
+	contextualMenuItems = [
+		{
+			key: 'newItem',
+			icon: 'circlePlus',
+			name: 'New',
+		}, {
+			key: 'upload',
+			icon: 'upload',
+			name: 'Upload',
+		}, {
+			key: 'divider_1',
+			name: '-',
+		}, {
+			key: 'rename',
+			name: 'Rename',
+		}, {
+			key: 'properties',
+			name: 'Properties',
+		}, {
+			key: 'disabled',
+			name: 'Disabled item',
+			disabled: true,
+		},
+	];
+
+
 	constructor() {
 		super();
+		// set up container for all of the... idk
+		this.peopleList = [];
+
+		people.forEach((persona) => {
+			const target = {};
+			assign(target, persona, { menuItems: this.contextualMenuItems });
+			this.peopleList.push(target);
+		});
 		this.state = {
 			pickedPeople: [],
 		};
@@ -48,16 +85,18 @@ export default class OfficeUiFabricPeoplePicker extends React.Component {
 		If used in conjunction with resolveDelay this will ony kick off after the delay throttle.)
 	*/
 	_onFilterChanged(filterText, currentPersonas, limitResults) {
+		// 
 		if (filterText) {
-			console.log('this.state.pickedPeople');
-			console.log(this.state.pickedPeople);
-			return this._searchPeople(filterText, this.state.pickedPeople);
+			// if (filterText.length > 2) {
+			return this._searchPeople(filterText, this.peopleList);
+			// }
 		}
 		return [];
 	}
 
-	
-	// called when a person is picked
+	/* 
+		called when a person is picked
+	*/
 	_onChange(pickedPeopleReturnedFromPicker) {
 		this.setState({
 			pickedPeople: pickedPeopleReturnedFromPicker,
@@ -109,7 +148,7 @@ export default class OfficeUiFabricPeoplePicker extends React.Component {
 						}));
 						resolve(persons);
 					});
-					
+
 
 				/* .then((persons) => {
 						const batch = this.props.spHttpClient.beginBatch();
@@ -139,8 +178,8 @@ export default class OfficeUiFabricPeoplePicker extends React.Component {
 						reject(this._peopleList = []);
 					})); */
 			});
-		// if environment is NOT SharePoint
-		} 
+			// if environment is NOT SharePoint
+		}
 		return this.searchPeopleFromMock();
 	}
 	searchPeopleFromMock() {
