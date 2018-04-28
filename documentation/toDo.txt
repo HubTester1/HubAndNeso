@@ -1,44 +1,114 @@
 
 
-images
-----------------
-if an image upload was unsuccessful, force user to delete it
-	don't show dzone until errors are cleared (can't have them lingering forever, need an event to clear them)
-	upon user deleting, check if any other image errors and reset base image error so message can be saved
-Can't save message with image errors
-delete image
-
-
-other messages
+Messages
 ---------------
+Validation redo
 If selected category is All, get all messages
-validate against empty tag key throughout - not what's done already
-optimize error handling
-re-label? and show required for form fields
-edit message - only if I'm the creator
-delete message - only if I'm the creator
-if no expiration date, set to 180 days in future
+
+
 
 
 
 Staff Lookup
-
-Get it Done alt view with command bar (tabs)
-
-Organization views with tabs
+---------------
+Construct
 
 
+Get it Done
+---------------
+alt view with command bar (tabs)
 
 
-
-
-
-
-
-
+Organization
+---------------
+views with tabs
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+=============================
+
+Next Week
+
+messages
+------------------
+delete image
+edit message - only if I'm the creator
+delete message - only if I'm the creator
+if no expiration date, set to 180 days in future
+re-label? and show required for form fields
+
+
+
+=============================
+
+Later
 
 
 

@@ -28,11 +28,15 @@ export default class HcMessagesNewMessageForm extends React.Component {
 			newMessageTagsError: undefined,
 			newMessageSubjectError: undefined,
 			newMessageBodyError: undefined,
+
+
 			newMessageImagesError: undefined,
 			newMessageImageUploadsImpossible: undefined, 
 			newMessageImageSomeOrAllUploadsFailedWarning: undefined,
 			newMessageImagesWrongTypesError: undefined,
 			newMessageIsInvalid: undefined,
+
+			
 			newMessageSaveAttempted: false,
 			newMessageSaveFailure: undefined,
 			newMessageSaveSuccess: undefined,
@@ -220,43 +224,59 @@ export default class HcMessagesNewMessageForm extends React.Component {
 			}));
 		}
 	}
-	handleAddMessage(e) {
-		e.preventDefault();
+	validateNewMessageForm() {
+		// set up new errors; default to no errors
 		const newErrors = {
 			newMessageTagsError: undefined,
 			newMessageSubjectError: undefined,
 			newMessageBodyError: undefined,
 			newMessageIsInvalid: undefined,
 		};
-
+		// if there's no tag
 		if (!this.state.newMessageTags[0].text) {
+			// prepare tag error
 			newErrors.newMessageTagsError = 'Cannot be blank';
 		}
-
+		// if there's no subject
 		if (!this.state.newMessageSubject) {
+			// prepare subject error
 			newErrors.newMessageSubjectError = 'Cannot be blank';
 		}
-
+		// if there's no body
 		if (!this.state.newMessageBody) {
+			// prepare body error
 			newErrors.newMessageBodyError = 'Cannot be blank';
 		}
 
-		if (!this.state.newMessageTags[0].text || !this.state.newMessageSubject || 
-			!this.state.newMessageBody) {
+		// if there's no tag, subject, or body; if there is a messageID error
+		if (!this.state.newMessageTags[0].text || !this.state.newMessageSubject ||
+			!this.state.newMessageBody || this.state.newMessageIDError) {
+			// prepare form validation error
 			newErrors.newMessageIsInvalid = true;
-			this.setState(() => ({
-				newMessageTagsError: newErrors.newMessageTagsError,
-				newMessageSubjectError: newErrors.newMessageSubjectError,
-				newMessageBodyError: newErrors.newMessageBodyError,
-				newMessageIsInvalid: newErrors.newMessageIsInvalid,
-				newMessageSaveAttempted: true,
-			}));
-		} else {
-			// construct message object
+		}
+		// set state to indicate errors
+		this.setState(() => ({
+			newMessageTagsError: newErrors.newMessageTagsError,
+			newMessageSubjectError: newErrors.newMessageSubjectError,
+			newMessageBodyError: newErrors.newMessageBodyError,
+			newMessageIsInvalid: newErrors.newMessageIsInvalid,
+		}));
+	}
+
+	handleAddMessage(e) {
+		// prevent submitting using the SP form tag
+		e.preventDefault();
+		// set state to indicate that a message save is / has been attempted
+		this.setState(() => ({
+			newMessageSaveAttempted: true,
+		}));
+		// if the form is is valid
+		if (!this.state.newMessageIsInvalid) {
 			// get a promise to retrieve a message ID
 			this.returnAndConditionallySetMessageID()
 				// if the message ID was retrieved
 				.then((newMessageIDResult) => {
+					// use the message ID + other message properties to construct a new message object
 					const newMessageCreatorObject = {
 						account: this.props.uData.account,
 						displayName: this.props.uData.displayName,
@@ -274,7 +294,6 @@ export default class HcMessagesNewMessageForm extends React.Component {
 						}),
 						newMessageCreator: newMessageCreatorObject,
 					};
-
 					// send message to Neso
 					HcMessagesData.SendNesoMessagesMessage(newMessageProperties)
 						.then((response) => {
@@ -295,21 +314,26 @@ export default class HcMessagesNewMessageForm extends React.Component {
 	}
 	resetNewMessageStateAndSetSaveSuccess() {
 		this.setState(() => ({
+			newMessageID: undefined,
 			newMessageTags: [{ key: '' }],
 			newMessageSubject: '',
 			newMessageBody: '',
 			newMessageImages: [],
 			newMessageExpirationDate: '',
-			newMessageID: undefined,
+			newMessageImagesAreUploading: false,
+			newMessageIDError: undefined,
 			newMessageTagsError: undefined,
 			newMessageSubjectError: undefined,
 			newMessageBodyError: undefined,
 			newMessageImagesError: undefined,
+			newMessageImageUploadsImpossible: undefined,
+			newMessageImageSomeOrAllUploadsFailedWarning: undefined,
+			newMessageImagesWrongTypesError: undefined,
 			newMessageIsInvalid: undefined,
 			newMessageSaveAttempted: false,
 			newMessageSaveFailure: undefined,
+			newMessageSaveSuccess: undefined,
 			newMessageIITNotificationFailure: undefined,
-			newMessageSaveSuccess: true,
 		}));
 	}
 	handleSaveError() {
