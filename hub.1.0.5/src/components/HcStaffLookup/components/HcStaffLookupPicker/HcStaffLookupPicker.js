@@ -9,8 +9,10 @@
 import * as React from 'react';
 import { NormalPeoplePicker } from 'office-ui-fabric-react/lib/Pickers';
 import { assign } from 'office-ui-fabric-react/lib/Utilities';
+import { HttpClient } from 'sp-pnp-js';
+
 import { people } from './PeoplePickerExampleData';
-import HcStaffLookupData from '../../HcStaffLookupData';
+// import HcStaffLookupData from '../../HcStaffLookupData';
 import EnvironmentDetector from '../../../../services/EnvironmentDetector';
 
 // ----- COMPONENT
@@ -58,6 +60,41 @@ export default class OfficeUiFabricPeoplePicker extends React.Component {
 		};
 		this._onFilterChanged = this._onFilterChanged.bind(this);
 		this._onChange = this._onChange.bind(this);
+	}
+
+	ReturnPeoplePickerOptions() {
+		return new Promise((resolve, reject) => {
+			const client = new HttpClient();
+			const searchString = 'andrew';
+			const endpointUrl = `${_spPageContextInfo.webServerRelativeUrl}${
+				'/_api/SP.UI.ApplicationPages.ClientPeoplePickerWebServiceInterface.clientPeoplePickerSearchUser'
+					.replace(/\/\//g, '/')}`;
+
+			client.post(endpointUrl, {
+				headers: {
+					Accept: 'application/json; odata=verbose',
+				},
+				body: JSON.stringify({
+					queryParams: {
+						__metadata: {
+							type: 'SP.UI.ApplicationPages.ClientPeoplePickerQueryParameters',
+						},
+						AllowEmailAddresses: true,
+						AllowMultipleEntities: false,
+						AllUrlZones: false,
+						MaximumEntitySuggestions: 50,
+						PrincipalSource: 15,
+						PrincipalType: 15,
+						QueryString: searchString,
+					},
+				}),
+			})
+				.then(response => response.json())
+				.then((data) => {
+					console.log(JSON.parse(data.d.ClientPeoplePickerSearchUser));
+					resolve(JSON.parse(data.d.ClientPeoplePickerSearchUser));
+				});
+		});
 	}
 
 	render() {
@@ -152,7 +189,7 @@ export default class OfficeUiFabricPeoplePicker extends React.Component {
 	_searchPeople(terms, results) {
 		// if environment is SharePoint
 		if (EnvironmentDetector.ReturnIsSPO()) {
-			HcStaffLookupData.ReturnPeoplePickerOptions();
+			this.ReturnPeoplePickerOptions();
 			
 			/* const userRequestUrl = 'https://bmos.sharepoint.com/_api/SP.UI.ApplicationPages.ClientPeoplePickerWebServiceInterface.clientPeoplePickerSearchUser';
 			let principalType = 0;
