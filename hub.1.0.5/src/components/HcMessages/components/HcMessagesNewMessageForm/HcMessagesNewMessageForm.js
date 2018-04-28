@@ -17,7 +17,6 @@ export default class HcMessagesNewMessageForm extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			// done
 			newMessageID: undefined,
 			newMessageTags: [{ key: '' }],
 			newMessageSubject: '',
@@ -29,13 +28,9 @@ export default class HcMessagesNewMessageForm extends React.Component {
 			newMessageTagsError: undefined,
 			newMessageSubjectError: undefined,
 			newMessageBodyError: undefined,
-
-			// need to consider
 			newMessageImageSomeOrAllUploadsFailedWarning: undefined,
 			newMessageImagesWrongTypesWarning: undefined,
 			newMessageIsInvalid: undefined,
-		
-			// not validation but preventing saving
 			newMessageImageUploadsImpossible: undefined, 
 			newMessageSaveFailure: undefined,
 			newMessageSaveSuccess: undefined,
@@ -48,8 +43,45 @@ export default class HcMessagesNewMessageForm extends React.Component {
 		this.handleChangedExpirationDate = this.handleChangedExpirationDate.bind(this);
 		this.handleAddMessage = this.handleAddMessage.bind(this);
 	}
-	setImagesAreProcessingInState(booleanValue) {
-		this.setState({ newMessageImagesAreUploading: booleanValue });
+	setAndReturnMessageFormIsInvalid() {
+		// set up new errors; default to no errors
+		const newErrors = {
+			newMessageTagsError: undefined,
+			newMessageSubjectError: undefined,
+			newMessageBodyError: undefined,
+			newMessageIsInvalid: undefined,
+		};
+		// if there's no tag
+		if (!this.state.newMessageTags[0].text) {
+			// prepare tag error
+			newErrors.newMessageTagsError = 'Cannot be blank';
+		}
+		// if there's no subject
+		if (!this.state.newMessageSubject) {
+			// prepare subject error
+			newErrors.newMessageSubjectError = 'Cannot be blank';
+		}
+		// if there's no body
+		if (!this.state.newMessageBody) {
+			// prepare body error
+			newErrors.newMessageBodyError = 'Cannot be blank';
+		}
+
+		// if there's no tag, subject, or body; if there is a messageID error
+		if (!this.state.newMessageTags[0].text || !this.state.newMessageSubject ||
+			!this.state.newMessageBody || this.state.newMessageIDError) {
+			// prepare form validation error
+			newErrors.newMessageIsInvalid = true;
+		}
+		// set state to indicate errors
+		this.setState(() => ({
+			newMessageTagsError: newErrors.newMessageTagsError,
+			newMessageSubjectError: newErrors.newMessageSubjectError,
+			newMessageBodyError: newErrors.newMessageBodyError,
+			newMessageIsInvalid: newErrors.newMessageIsInvalid,
+		}));
+		// return to caller
+		return newErrors.newMessageIsInvalid;
 	}
 	handleChangedTags(value) {
 		if (value && value.key) {
@@ -119,8 +151,12 @@ export default class HcMessagesNewMessageForm extends React.Component {
 	handleChangedImage(acceptedFiles, rejectedFiles) {
 		// if all files submitted for upload are of the right type (none were rejected by Dropzone)
 		if (!rejectedFiles[0]) {
-			// set state to indicate that images are processing
-			this.setImagesAreProcessingInState(true);
+			// set state to indicate that images are processing and unset warnings
+			this.setState({
+				newMessageImagesAreUploading: true,
+				newMessageImageSomeOrAllUploadsFailedWarning: undefined,
+				newMessageImagesWrongTypesWarning: undefined,
+			});
 			// note: will use messageID as folder name for uploaded files
 			// get a promise to get a new messageID
 			this.returnAndConditionallySetMessageID()
@@ -160,15 +196,16 @@ export default class HcMessagesNewMessageForm extends React.Component {
 								};
 							});
 							// set state to indicate that images are no longer processing
-							this.setImagesAreProcessingInState(false);
+							this.setState({
+								newMessageImagesAreUploading: false,
+							});
 						})
 						// if the promise to upload the files was rejected with an error
 						// note: could be because a folder couldn't be created, or some other reason
 						.catch((error) => {
-							// set state to indicate that images are no longer processing
-							this.setImagesAreProcessingInState(false);
-							// set state to indicate image upload error
+							// set state to indicate that images are no longer processing and image upload error
 							this.setState({
+								newMessageImagesAreUploading: false,
 								newMessageImageUploadsImpossible: true,
 							});
 						});
@@ -177,9 +214,8 @@ export default class HcMessagesNewMessageForm extends React.Component {
 				// note: messageIDError already set
 				.catch((error) => {
 					// set state to indicate that images are no longer processing
-					this.setImagesAreProcessingInState(false);
-					// set state to indicate image upload error
 					this.setState({
+						newMessageImagesAreUploading: false,
 						newMessageImageUploadsImpossible: true,
 					});
 				});
@@ -202,47 +238,6 @@ export default class HcMessagesNewMessageForm extends React.Component {
 			}));
 		}
 	}
-	setAndReturnMessageFormIsInvalid() {
-		// set up new errors; default to no errors
-		const newErrors = {
-			newMessageTagsError: undefined,
-			newMessageSubjectError: undefined,
-			newMessageBodyError: undefined,
-			newMessageIsInvalid: undefined,
-		};
-		// if there's no tag
-		if (!this.state.newMessageTags[0].text) {
-			// prepare tag error
-			newErrors.newMessageTagsError = 'Cannot be blank';
-		}
-		// if there's no subject
-		if (!this.state.newMessageSubject) {
-			// prepare subject error
-			newErrors.newMessageSubjectError = 'Cannot be blank';
-		}
-		// if there's no body
-		if (!this.state.newMessageBody) {
-			// prepare body error
-			newErrors.newMessageBodyError = 'Cannot be blank';
-		}
-
-		// if there's no tag, subject, or body; if there is a messageID error
-		if (!this.state.newMessageTags[0].text || !this.state.newMessageSubject ||
-			!this.state.newMessageBody || this.state.newMessageIDError) {
-			// prepare form validation error
-			newErrors.newMessageIsInvalid = true;
-		}
-		// set state to indicate errors
-		this.setState(() => ({
-			newMessageTagsError: newErrors.newMessageTagsError,
-			newMessageSubjectError: newErrors.newMessageSubjectError,
-			newMessageBodyError: newErrors.newMessageBodyError,
-			newMessageIsInvalid: newErrors.newMessageIsInvalid,
-		}));
-		// return to caller
-		return newErrors.newMessageIsInvalid;
-	}
-
 	handleAddMessage(e) {
 		// prevent submitting using the SP form tag
 		e.preventDefault();
@@ -301,12 +296,12 @@ export default class HcMessagesNewMessageForm extends React.Component {
 			newMessageTagsError: undefined,
 			newMessageSubjectError: undefined,
 			newMessageBodyError: undefined,
-			newMessageImageUploadsImpossible: undefined,
 			newMessageImageSomeOrAllUploadsFailedWarning: undefined,
 			newMessageImagesWrongTypesWarning: undefined,
 			newMessageIsInvalid: undefined,
+			newMessageImageUploadsImpossible: undefined,
 			newMessageSaveFailure: undefined,
-			newMessageSaveSuccess: undefined,
+			newMessageSaveSuccess: true,
 			newMessageIITNotificationFailure: undefined,
 		}));
 	}
