@@ -541,81 +541,117 @@ export default class HcMessagesData {
 	static ReturnNesoNextMessageID() {
 		// return a new promise
 		return new Promise((resolve, reject) => {
-			// get a promise to retrieve the settings
-			NesoHTTPClient
-				.ReturnNesoData('https://neso.mos.org:3001/hcMessages/nextMessageID')
-				// if the promise is resolved with the ID
-				.then((nextMessageIDResults) => {
-					// resolve this promise with the requested items
-					resolve(nextMessageIDResults);
-				})
-				.catch((nesoAxiosError) => {
-					reject(nesoAxiosError); 
-				});
+			// if environment is sharepoint
+			if (EnvironmentDetector.ReturnIsSPO()) {
+				// get a promise to retrieve the settings
+				NesoHTTPClient
+					.ReturnNesoData('https://neso.mos.org:3001/hcMessages/nextMessageID')
+					// if the promise is resolved with the ID
+					.then((nextMessageIDResults) => {
+						// resolve this promise with the requested items
+						resolve(nextMessageIDResults);
+					})
+					.catch((nesoAxiosError) => {
+						reject(nesoAxiosError); 
+					});
+			} else {
+				resolve({ nextMessageID: 37 });
+			}
 		});
 	}
 	static UploadMessagesFiles(messageID, filesArray) {
 		// return a promise to upload the fies
 		return new Promise((resolve, reject) => {
-			// get promise to create new folder named for the message ID
-			const spWeb = new Web('https://bmos.sharepoint.com');
-			spWeb.lists.getByTitle('HcMessagesFiles').rootFolder.folders.add(messageID)
-				// if the folder was created
-				.then((folderResponse) => {
-					// set up file upload promise container
-					const fileUploadPromises = [];
-					// for each file in filesArray
-					filesArray.forEach((fileValue) => {
-						// push an upload promise to the container
-						fileUploadPromises.push(this.UploadOneMessageFile(messageID, fileValue));
-					});
-					// when all of the upload promises have been resolved
-					Promise.all(fileUploadPromises)
-						.then((fileUploadResults) => {
-							// resolve the top level promise with the file upload results
-							resolve({
-								error: 'check',
-								fileUploadResults,
-							});
+			// if environment is sharepoint
+			if (EnvironmentDetector.ReturnIsSPO()) {
+				// get promise to create new folder named for the message ID
+				const spWeb = new Web('https://bmos.sharepoint.com');
+				spWeb.lists.getByTitle('HcMessagesFiles').rootFolder.folders.add(messageID)
+					// if the folder was created
+					.then((folderResponse) => {
+						// set up file upload promise container
+						const fileUploadPromises = [];
+						// for each file in filesArray
+						filesArray.forEach((fileValue) => {
+							// push an upload promise to the container
+							fileUploadPromises.push(this.UploadOneMessageFile(messageID, fileValue));
 						});
-				})
-				// if the folder was not created
-				.catch((error) => {
-					// reject the top level promise with 
-					reject({
-						error: true,
-						spFileCreationError: true,
+						// when all of the upload promises have been resolved
+						Promise.all(fileUploadPromises)
+							.then((fileUploadResults) => {
+								// resolve the top level promise with the file upload results
+								resolve({
+									error: 'check',
+									fileUploadResults,
+								});
+							});
+					})
+					// if the folder was not created
+					.catch((error) => {
+						// reject the top level promise with 
+						reject({
+							error: true,
+							spFileCreationError: true,
+						});
 					});
+			} else {
+				// set up file upload promise container
+				const fileUploadPromises = [];
+				// for each file in filesArray
+				filesArray.forEach((fileValue) => {
+					// push an upload promise to the container
+					fileUploadPromises.push(this.UploadOneMessageFile(messageID, fileValue));
 				});
+				// when all of the upload promises have been resolved
+				Promise.all(fileUploadPromises)
+					.then((fileUploadResults) => {
+						// resolve the top level promise with the file upload results
+						resolve({
+							error: 'check',
+							fileUploadResults,
+						});
+					});
+			}
 		});
 	}
 	static UploadOneMessageFile(folder, file) {
 		// return a promise to upload the single fie
 		return new Promise((resolve, reject) => {
-			// upload the file
-			const spWeb = new Web('https://bmos.sharepoint.com');
-			spWeb.getFolderByServerRelativeUrl(`/HcMessagesFiles/${folder}`)
-				.files.add(file.name, file, true)
-				// if the upload was successful
-				.then((fileResponse) => {
-					// resolve the top level promise with info about the file and its upload
-					resolve({
-						name: file.name,
-						size: file.size,
-						url: fileResponse.data.ServerRelativeUrl,
-						error: false,
-						key: shortid.generate(),
+			// if environment is sharepoint
+			if (EnvironmentDetector.ReturnIsSPO()) {
+				// upload the file
+				const spWeb = new Web('https://bmos.sharepoint.com');
+				spWeb.getFolderByServerRelativeUrl(`/HcMessagesFiles/${folder}`)
+					.files.add(file.name, file, true)
+					// if the upload was successful
+					.then((fileResponse) => {
+						// resolve the top level promise with info about the file and its upload
+						resolve({
+							name: file.name,
+							size: file.size,
+							url: fileResponse.data.ServerRelativeUrl,
+							error: false,
+							key: shortid.generate(),
+						});
+					})
+					// if there was an error
+					.catch((fileError) => {
+						// then resolve the top level promise with info about the file and its upload
+						reject({
+							name: file.name,
+							error: true,
+							key: shortid.generate(),
+						});
 					});
-				})
-				// if there was an error
-				.catch((fileError) => {
-					// then resolve the top level promise with info about the file and its upload
-					reject({
-						name: file.name,
-						error: true,
-						key: shortid.generate(),
-					});
+			} else {
+				resolve({
+					name: file.name,
+					size: file.size,
+					url: 'https://bmos.sharepoint.com/HcMessagesFiles/1/pic1.jpg',
+					error: false,
+					key: shortid.generate(),
 				});
+			}
 		});
 	}
 }

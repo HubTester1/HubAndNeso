@@ -26,16 +26,54 @@ export default class HcMessagesFiles extends React.Component {
 							name="hc-messages-images-file-input"
 							inputProps={dropzoneInputProps}
 						>
-					Drag images here, or click or tap here to browse
+							Drag images here, or click or tap here to browse
 						</Dropzone>
 					</div>
 				}
-				{this.props.newMessageImagesAreUploading && 
+				{
+					this.props.newMessageImagesAreUploading && 
+					
 					<div>
 						------ Files are uploading -----
 					</div>
 				}
-				{!this.props.newMessageImagesAreUploading && this.props.newMessageImages[0] && 
+				{
+					this.props.newMessageImagesWrongTypesError &&
+
+					<div id="mos-react-form-field-error-wrong-image-type" className="mos-react-form-field-error-message">
+						<span className="urgent">Oops!</span> No images were uploaded. Only JPG, JPEG, GIF, and PNG files are allowed.
+					</div>
+				}
+				{
+					this.props.newMessageImageSomeOrAllUploadsFailedWarning &&
+					!this.props.newMessageImageUploadsImpossible &&
+					this.props.newMessageImages[0] &&
+
+					<div id="some-image-uploads-failed-message" className="mos-react-form-field-warning-message">
+						<span className="urgent">Hmmm...</span> Successful uploads can be previewed here, 
+						but at least one of your uploads failed.
+					</div>
+				}
+				{
+					this.props.newMessageImageSomeOrAllUploadsFailedWarning &&
+					!this.props.newMessageImageUploadsImpossible &&
+					!this.props.newMessageImages[0] &&
+
+					<div id="some-image-uploads-failed-message" className="mos-react-form-field-warning-message">
+						<span className="urgent">On no!</span> None of your images could be uploaded.
+					</div>
+				}
+				{
+					this.props.newMessageImageUploadsImpossible &&
+
+					<div id="image-uploads-are-not-possible-message" className="mos-react-form-field-error-message">
+						<span className="urgent">Whoopsie!</span> We can&apos;t save your images right now. Please try later.
+					</div>
+				}
+				{
+					!this.props.newMessageImagesAreUploading && 
+					this.props.newMessageImages[0] && 
+
 					this.props.newMessageImages.map(imageValue => (
 						<HcMessageFilePreview
 							key={imageValue.key}

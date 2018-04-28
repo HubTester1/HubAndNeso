@@ -29,7 +29,8 @@ export default class HcMessagesNewMessageForm extends React.Component {
 			newMessageSubjectError: undefined,
 			newMessageBodyError: undefined,
 			newMessageImagesError: undefined,
-			newMessageImageUploadError: undefined,
+			newMessageImageUploadsImpossible: undefined, 
+			newMessageImageSomeOrAllUploadsFailedWarning: undefined,
 			newMessageImagesWrongTypesError: undefined,
 			newMessageIsInvalid: undefined,
 			newMessageSaveAttempted: false,
@@ -43,6 +44,9 @@ export default class HcMessagesNewMessageForm extends React.Component {
 		this.handleChangedImage = this.handleChangedImage.bind(this);
 		this.handleChangedExpirationDate = this.handleChangedExpirationDate.bind(this);
 		this.handleAddMessage = this.handleAddMessage.bind(this);
+	}
+	setImagesAreProcessingInState(booleanValue) {
+		this.setState({ newMessageImagesAreUploading: booleanValue });
 	}
 	returnNewMessageSaveAttemptedAndNewMessageIsInvalid() {
 		if (this.state.newMessageSaveAttempted && (!this.state.newMessageTags[0].text || 
@@ -128,9 +132,6 @@ export default class HcMessagesNewMessageForm extends React.Component {
 			}
 		});
 	}
-	setImagesAreProcessingInState(booleanValue) {
-		this.setState({ newMessageImagesAreUploading: booleanValue });
-	}
 	handleChangedImage(acceptedFiles, rejectedFiles) {
 		// if all files submitted for upload are of the right type (none were rejected by Dropzone)
 		if (!rejectedFiles[0]) {
@@ -147,15 +148,31 @@ export default class HcMessagesNewMessageForm extends React.Component {
 						// note: here, results could contain errors; results are for
 						// 		one upload attempt per file
 						.then((fileUploadResults) => {
+							const uploadsSucceeded = [];
+							const uploadsFailed = [];
+							let newMessageImageSomeOrAllUploadsFailedWarningValue = false;
+							fileUploadResults.fileUploadResults.forEach((resultValue) => {
+								if (!resultValue.error) {
+									uploadsSucceeded.push(resultValue);
+								} else {
+									uploadsFailed.push(resultValue);
+								}
+							});
+
+							if (uploadsFailed[0]) {
+								newMessageImageSomeOrAllUploadsFailedWarningValue = true;
+							}
 							// set state to reflect results of all image uploads to this point
 							// note: accounts for the possibility of multiple rounds of uploads
 							this.setState((prevState) => {
 								const previousFileArray = prevState.newMessageImages;
 								const currentFileArray 
-									= [...fileUploadResults.fileUploadResults, ...previousFileArray];
+									= [...uploadsSucceeded, ...previousFileArray];
 								return {
 									// newMessageImagesAreUploading: false,
 									newMessageImages: currentFileArray,
+									newMessageImageSomeOrAllUploadsFailedWarning: 
+										newMessageImageSomeOrAllUploadsFailedWarningValue,
 								};
 							});
 							// set state to indicate that images are no longer processing
@@ -168,7 +185,7 @@ export default class HcMessagesNewMessageForm extends React.Component {
 							this.setImagesAreProcessingInState(false);
 							// set state to indicate image upload error
 							this.setState({
-								newMessageImageUploadError: true,
+								newMessageImageUploadsImpossible: true,
 							});
 						});
 				})
@@ -179,7 +196,7 @@ export default class HcMessagesNewMessageForm extends React.Component {
 					this.setImagesAreProcessingInState(false);
 					// set state to indicate image upload error
 					this.setState({
-						newMessageImageUploadError: true,
+						newMessageImageUploadsImpossible: true,
 					});
 				});
 		// if 1+ files of the wrong type were submitted for upload (some were reject by Dropzone)
@@ -360,20 +377,12 @@ export default class HcMessagesNewMessageForm extends React.Component {
 							handleChangedImage={this.handleChangedImage}
 							newMessageImagesAreUploading={this.state.newMessageImagesAreUploading}
 							newMessageImages={this.state.newMessageImages}
+							newMessageImagesWrongTypesError={this.state.newMessageImagesWrongTypesError}
+							newMessageImageSomeOrAllUploadsFailedWarning={
+								this.state.newMessageImageSomeOrAllUploadsFailedWarning
+							}
+							newMessageImageUploadsImpossible={this.state.newMessageImageUploadsImpossible}
 						/>
-						{
-							this.state.newMessageImagesWrongTypesError &&
-
-							<div id="mos-react-form-field-error-wrong-image-type" className="mos-react-form-field-error">
-								<span className="urgent">Oops!</span> No images were uploaded. Only JPG, JPEG, GIF, and PNG files are allowed.
-							</div>
-						}
-						{
-							this.state.newMessageImageUploadError &&
-							<div id="new-message-id-error-message" className="message-error-message">
-								<span className="urgent">Whoopsie!</span> We can&apos;t save your images right now. Please try later.
-							</div>
-						}
 					</div>
 					<div className={this.returnFormFieldContainerClassNameString(null)}>
 						<HcMessagesExpirationDate 
@@ -386,31 +395,36 @@ export default class HcMessagesNewMessageForm extends React.Component {
 					</div>
 					{
 						this.state.newMessageIDError && 
-						<div id="new-message-id-error-message" className="message-error-message">
+
+						<div id="new-message-id-error-message" className="mos-react-form-error-message">
 							<span className="urgent">Whoopsie!</span> We can&apos;t save your stuff right now. Please try later.
 						</div>
 					}
 					{
 						this.state.newMessageIsInvalid &&
-						<div id="form-entries-invalid-error-message" className="message-error-message">
+
+						<div id="form-entries-invalid-error-message" className="mos-react-form-error-message">
 							The highlighted fields contain errors. Please make changes and try again.
 						</div>
 					}
 					{
 						this.state.newMessageSaveFailure &&
-						<div id="new-message-save-failure-error-message" className="message-error-message">
+
+						<div id="new-message-save-failure-error-message" className="mos-react-form-error-message">
 							<span className="urgent">Yikes!</span> We had a problem saving your information.
 						</div>
 					}
 					{
 						this.state.newMessageIITNotificationFailure &&
-						<div id="new-message-iit-notification-failure-error-message" className="message-error-message">
+
+						<div id="new-message-iit-notification-failure-error-message" className="mos-react-form-error-message">
 							<span className="urgent">Oh no!</span> We couldn&apos;t notify IIT, either. Are you connected to the Internet?
 						</div>
 					}
 					<button onClick={this.handleAddMessage}>Save</button>
 					{
 						this.state.newMessageSaveSuccess &&
+
 						<div id="new-message-save-success-message" className="message-success-message">
 							Your message was saved.
 						</div>
