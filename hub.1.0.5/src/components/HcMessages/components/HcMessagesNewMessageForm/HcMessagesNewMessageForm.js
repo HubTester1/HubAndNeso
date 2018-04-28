@@ -343,6 +343,7 @@ export default class HcMessagesNewMessageForm extends React.Component {
 							tagsArray={this.props.tagsArray}
 							onChanged={this.handleChangedTags}
 							selectedKey={this.state.newMessageTags[0].key}
+							tabindex="1"
 						/>
 						<div className="mos-react-form-field-error">
 							{this.state.newMessageTagsError}
@@ -353,6 +354,7 @@ export default class HcMessagesNewMessageForm extends React.Component {
 							label="Subject"
 							value={this.state.newMessageSubject}
 							onChanged={this.handleChangedSubject}
+							required
 						/>
 						<div className="mos-react-form-field-error">
 							{this.state.newMessageSubjectError}
@@ -362,9 +364,11 @@ export default class HcMessagesNewMessageForm extends React.Component {
 						<TextField
 							label="Body"
 							multiline
-							rows={6}
+							rows={3}
+							autoAdjustHeight
 							value={this.state.newMessageBody}
 							onChanged={this.handleChangedBody}
+							required
 						/>
 						<div className="mos-react-form-field-error">
 							{this.state.newMessageBodyError}

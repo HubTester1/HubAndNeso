@@ -1,11 +1,5 @@
 
 
-Messages
----------------
-Validation redo
-
-
-
 Staff Lookup
 ---------------
 Construct
@@ -107,7 +101,7 @@ re-label? and show required for form fields
 
 Later
 
-
+message form elements - file input is not keyboard-focusable
 
 
 messages migration - plan
