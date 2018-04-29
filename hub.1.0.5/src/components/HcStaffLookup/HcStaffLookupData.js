@@ -7,45 +7,197 @@
 // ----- IMPORTS
 
 import { HttpClient } from 'sp-pnp-js';
+import shortid from 'shortid';
+
+import NesoHTTPClient from '../../services/NesoHTTPClient';
+import MOSUtilities from '../../services/MOSUtilities';
+import EnvironmentDetector from '../../services/EnvironmentDetector';
 
 // ----- DATA
 
 export default class HcStaffLookupData {
-	constructor() {
-		this.ReturnPeoplePickerOptions = this.ReturnPeoplePickerOptions.bind(this);
-	}
-	ReturnPeoplePickerOptions() {
+	static ReturnPersonaDataUsingPeoplePickerData(peoplePickerData) {
+		// return a promise to return the persona data
 		return new Promise((resolve, reject) => {
-			const client = new HttpClient();
-			const searchString = 'andrew';
-			const endpointUrl = `${_spPageContextInfo.webServerRelativeUrl}${ 
-				'https://bmos.sharepoint.com/_api/SP.UI.ApplicationPages.ClientPeoplePickerWebServiceInterface.clientPeoplePickerSearchUser'
-					.replace(/\/\//g, '/')}`;
-
-			client.post(endpointUrl, {
-				headers: {
-					Accept: 'application/json; odata=verbose',
-				},
-				body: JSON.stringify({
-					queryParams: {
-						__metadata: {
-							type: 'SP.UI.ApplicationPages.ClientPeoplePickerQueryParameters',
-						},
-						AllowEmailAddresses: true,
-						AllowMultipleEntities: false,
-						AllUrlZones: false,
-						MaximumEntitySuggestions: 50,
-						PrincipalSource: 15,
-						PrincipalType: 15,
-						QueryString: searchString,
-					},
-				}),
-			})
-				.then(response => response.json())
-				.then((data) => {
-					console.log(JSON.parse(data.d.ClientPeoplePickerSearchUser));
-					resolve(JSON.parse(data.d.ClientPeoplePickerSearchUser));
+			// extract the account value
+			const account = MOSUtilities.ReplaceAll('@mos.org', '', peoplePickerData[0]._user.Key
+				.substr(peoplePickerData[0]._user.Key.lastIndexOf('|') + 1));
+			// get a promise to get the relevant person's full set of data using account
+			NesoHTTPClient.ReturnNesoData(`https://neso.mos.org/activeDirectory/user/${account}`)
+				// if the promise was resolved with the full set of data
+				.then((response) => {
+					if (response !== null) {
+						// extract the persona data from the full set of data
+						const personaData = {
+							key: shortid.generate(),
+							displayName: response.displayName,
+							firstInitial: response.firstName.slice(0, 1).toUpperCase(),
+							lastInitial: response.lastName.slice(0, 1).toUpperCase(),
+							title: response.title,
+							department: response.department,
+							officePhone: response.officePhone,
+							email: response.email,
+							photoURL: peoplePickerData[0].imageUrl,
+						};
+						if (response.mobilePhone) {
+							personaData.mobilePhone = response.mobilePhone;
+						}
+						if (peoplePickerData[0]._user.EntityData.ObjectId) {
+							personaData.profileToken = peoplePickerData[0]._user.EntityData.ObjectId;
+						}
+						// resolve this promise with the persona data
+						resolve(personaData);
+					} else {
+						reject({
+							error: true,
+							personNotFound: true,
+						});
+					}
+				})
+				// if the promse was not resolved with the full set of data
+				.catch((error) => {
+					reject(error);
 				});
 		});
 	}
+	static ReturnPeoplePickerOptions(terms, results) {
+		// if environment is SharePoint
+		if (EnvironmentDetector.ReturnIsSPO()) {
+			return new Promise((resolve, reject) => {
+				const client = new HttpClient();
+				const searchString = terms;
+				const endpointUrl = 'https://bmos.sharepoint.com/_api/SP.UI.ApplicationPages.ClientPeoplePickerWebServiceInterface.clientPeoplePickerSearchUser';
+				client.post(endpointUrl, {
+					headers: {
+						Accept: 'application/json; odata=verbose',
+					},
+					body: JSON.stringify({
+						queryParams: {
+							__metadata: {
+								type: 'SP.UI.ApplicationPages.ClientPeoplePickerQueryParameters',
+							},
+							AllowEmailAddresses: true,
+							AllowMultipleEntities: false,
+							AllUrlZones: false,
+							MaximumEntitySuggestions: 50,
+							PrincipalSource: 15,
+							// PrincipalType controls the type of entities that are returned in the results.
+							// Choices are All - 15, Distribution List - 2 , Security Groups - 4, SharePoint Groups - 8, User - 1.
+							// These values can be combined (example: 13 is security + SP groups + users)
+							PrincipalType: 15,
+							QueryString: searchString,
+						},
+					}),
+				})
+					.then(response => response.json())
+					.then((data) => {
+						const userQueryResults = JSON.parse(data.d.ClientPeoplePickerSearchUser);
+						const persons = userQueryResults.map(personData => ({
+							_user: personData,
+							primaryText: personData.DisplayText,
+							secondaryText: personData.EntityData.Title,
+							// tertiaryText: personData.EntityData.Department,
+							imageShouldFadeIn: true,
+							imageUrl: `/_layouts/15/userphoto.aspx?size=S&accountname=${personData.Key.substr(personData.Key.lastIndexOf('|') + 1)}`,
+						}));
+						resolve(persons);
+					});
+
+
+				/* .then((persons) => {
+						const batch = this.props.spHttpClient.beginBatch();
+						const ensureUserUrl = `${this.props.siteUrl}/_api/web/ensureUser`;
+						const batchPromises: Promise<IEnsureUser>[] = persons.map(p => {
+							var userQuery = JSON.stringify({ logonName: p.User.Key });
+							return batch.post(ensureUserUrl, SPHttpClientBatch.configurations.v1, {
+								body: userQuery
+							})
+								.then((response: SPHttpClientResponse) => response.json())
+								.then((json: IEnsureUser) => json);
+						});
+
+						var users = batch.execute().then(() => Promise.all(batchPromises).then(values => {
+							values.forEach(v => {
+								let userPersona = lodash.find(persons, o => o.User.Key == v.LoginName);
+								if (userPersona && userPersona.User) {
+									let user = userPersona.User;
+									lodash.assign(user, v);
+									userPersona.User = user;
+								}
+							});
+
+							resolve(persons);
+						}));
+					}, (error: any): void => {
+						reject(this._peopleList = []);
+					})); */
+			});
+		}
+		// if environment is NOT SharePoint
+		return this.searchPeopleFromMock();
+	}
+	static searchPeopleFromMock() {
+		this.peopleList = [
+			{
+				imageUrl: './images/persona-female.png',
+				imageInitials: 'PV',
+				primaryText: 'Annie Lindqvist',
+				secondaryText: 'Designer',
+				tertiaryText: 'In a meeting',
+				optionalText: 'Available at 4:00pm',
+			},
+			{
+				imageUrl: './images/persona-male.png',
+				imageInitials: 'AR',
+				primaryText: 'Aaron Reid',
+				secondaryText: 'Designer',
+				tertiaryText: 'In a meeting',
+				optionalText: 'Available at 4:00pm',
+			},
+			{
+				imageUrl: './images/persona-male.png',
+				imageInitials: 'AL',
+				primaryText: 'Alex Lundberg',
+				secondaryText: 'Software Developer',
+				tertiaryText: 'In a meeting',
+				optionalText: 'Available at 4:00pm',
+			},
+			{
+				imageUrl: './images/persona-male.png',
+				imageInitials: 'RK',
+				primaryText: 'Roko Kolar',
+				secondaryText: 'Financial Analyst',
+				tertiaryText: 'In a meeting',
+				optionalText: 'Available at 4:00pm',
+			},
+		];
+		return this.peopleList;
+	}
+
+
+	/* _filterPersonasByText(filterText) {
+		return this.peopleList.filter(item => this._doesTextStartWith(item.primaryText, filterText));
+	}
+
+	_removeDuplicates(personas, possibleDupes) {
+		return personas.filter(persona => !this._listContainsPersona(persona, possibleDupes));
+	}
+	_listContainsPersona(persona, personas) {
+		if (!personas || !personas.length || personas.length === 0) {
+			return false;
+		}
+		return personas.filter(item => item.primaryText === persona.primaryText).length > 0;
+	}
+	_filterPromise(personasToReturn) {
+		if (this.state.delayResults) {
+			return this._convertResultsToPromise(personasToReturn);
+		} 
+		return personasToReturn;
+	}
+	_convertResultsToPromise(results) {
+		return new Promise((resolve, reject) => setTimeout(() => resolve(results), 2000));
+	}
+	_doesTextStartWith(text, filterText) {
+		return text.toLowerCase().indexOf(filterText.toLowerCase()) === 0;
+	} */
 }

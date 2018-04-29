@@ -1,10 +1,10 @@
-/* eslint-disable */
+
 // ----- IMPORTS
 
 import * as React from 'react';
-import { assign } from 'office-ui-fabric-react/lib/Utilities';
+import HcStaffLookupData from './HcStaffLookupData';
 import HcStaffLookupPicker from './components/HcStaffLookupPicker/HcStaffLookupPicker';
-import HcContainerData from '../../HcContainerData';
+import HcStaffLookupPersonaCard from './components/HcStaffLookupPersonaCard/HcStaffLookupPersonaCard';
 
 // ----- COMPONENT
 
@@ -14,27 +14,40 @@ export default class HcStaffLookup extends React.Component {
 		this.state = {
 			personas: [],
 		};
-		this.setSelectedPersonas = this.setSelectedPersonas.bind(this);
+		this.setSelectedPersonasFromPeoplePickerData = 
+			this.setSelectedPersonasFromPeoplePickerData.bind(this);
 	}
-	setSelectedPersonas(personaPickerData) {
-		console.log(personaPickerData);
-		const newPersonaData = HcContainerData.ReturnUserDataUsingEmail(personaPickerData[0]._user.EntityData.Email);
-		this.setState(prevState => ({
-			personas: [newPersonaData, ...prevState.personas],
-		}));
+	setSelectedPersonasFromPeoplePickerData(peoplePickerData) {
+		HcStaffLookupData.ReturnPersonaDataUsingPeoplePickerData(peoplePickerData)
+			.then((newPersonaData) => {
+				this.setState(prevState => ({
+					personas: [newPersonaData, ...prevState.personas],
+				}));
+			});
 	}
 	render() {
-		console.log('parent state personas');
-		console.log(this.state.personas);
-
 		return (
 			<div id="hc-staff-lookup" className="mos-react-component-root">
 				<h2>Staff Lookup</h2>
 				<HcStaffLookupPicker
 					peopleOptions={this.state.peopleOptions}
-					setSelectedPersonas={this.setSelectedPersonas}
+					setSelectedPersonasFromPeoplePickerData={this.setSelectedPersonasFromPeoplePickerData}
 					principalTypeUser
 				/>
+				{
+					this.state.personas[0] && 
+					<h3>Staff Lookup Results</h3>
+				}
+				{
+					this.state.personas[0] && 
+						this.state.personas.map(personaValue => (
+							<HcStaffLookupPersonaCard
+								key={personaValue.key}
+								personaId={personaValue.key}
+								personaContent={personaValue}
+							/>
+						))
+				}
 			</div>
 		);
 	}

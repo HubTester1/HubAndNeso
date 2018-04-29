@@ -1,56 +1,91 @@
 
+/* eslint class-methods-use-this: 0 */
+/* eslint no-underscore-dangle: 0 */
+/* eslint max-len: 0 */
 
-let dialogHeader = '<span id="persona-card-dialog-header"> \n' +
-	'	<span id="avatar" \n';
+// ----- IMPORTS
 
-if (userProfileValues.PictureURL != '') {
-	dialogHeader += `		 style="background-image: url('${userProfileValues.PictureURL}')"> \n`;
-} else {
-	userProfileValues.firstInitial = userProfileValues.FirstName.slice(0, 1).toUpperCase();
-	userProfileValues.lastInitial = userProfileValues.LastName.slice(0, 1).toUpperCase();
-	dialogHeader += `		 ><span id="avatar-initials">${userProfileValues.firstInitial}${userProfileValues.lastInitial}</span> \n`;
-}
+import * as React from 'react';
 
-dialogHeader += '	</span> \n' +
-	'	<span id="name_title_department"> \n';
+// ----- COMPONENT
 
-if (typeof (userProfileValues.PreferredName) !== 'undefined' && userProfileValues.PreferredName != '') {
-	dialogHeader += `		 <span id="name">${userProfileValues.PreferredName}</span> \n`;
-}
+const HcStaffLookupPersonaCard = (props) => {
+	let photoStyleObject = {};
+	if (props.personaContent.photoURL) {
+		photoStyleObject = {
+			backgroundImage: `url(${props.personaContent.photoURL})`,
+		};
+	}
+	return (
+		<div id={`hc-staff-lookup-persona_${props.personaId}`} className="hc-staff-lookup-persona mos-react-component-root">
+			<span id="persona-card-dialog-header">
+				{
+					props.personaContent.photoURL &&
+						<span id="avatar" style={photoStyleObject} />
+				}
+				{
+					!props.personaContent.photoURL &&
+						<span id="avatar">
+							<span id="avatar-initials">{props.personaContent.firstInitial}{props.personaContent.lastInitial}
+							</span>
+						</span>
+				}
+				<span id="name_title_department">
+					{
+						props.personaContent.displayName &&
+						<span id="name">{props.personaContent.displayName}</span>
+					}
+					{
+						props.personaContent.title &&
+						<span id="title">{props.personaContent.title}</span>
+					}
+					{
+						props.personaContent.department &&
+						<span id="department">{props.personaContent.department}</span>
+					}
+				</span>
+			</span>
+			<ul id="persona-card-dialog-body">
+				{
+					props.personaContent.officePhone &&
+						props.personaContent.mobilePhone &&
+						<li id="phone-numbers">
+							<ul>
+								<li id="business-phone-number">Business: {props.personaContent.officePhone}</li>
+								<li id="mobile-phone-number">Mobile: {props.personaContent.mobilePhone}</li>
+							</ul>
+						</li>
+				}
+				{
+					props.personaContent.officePhone &&
+						<li id="business-phone-number">Business: {props.personaContent.officePhone}</li>
+				}
+				{
+					props.personaContent.mobilePhone &&
+						<li id="business-phone-number">Business: {props.personaContent.mobilePhone}</li>
+				}
+				{
+					props.personaContent.email &&
+						<li id="email">
+							<a href={`mailto:${props.personaContent.email}`}>
+								{props.personaContent.email}
+							</a>
+						</li>
+				}
+				{
+					props.personaContent.profileToken &&
+						<li id="profile">
+							<a 
+								href={`https://bmos-my.sharepoint.com/_layouts/15/me.aspx?u=${props.personaContent.profileToken}`}
+								target="_blank"
+							>
+								Profile
+							</a>
+						</li>
+				}
+			</ul>
+		</div>
+	);
+};
 
-if (typeof (userProfileValues.Title) !== 'undefined' && userProfileValues.Title != '') {
-	dialogHeader += `		 <span id="title">${userProfileValues.Title}</span> \n`;
-}
-
-if (typeof (userProfileValues.Department) !== 'undefined' && userProfileValues.Department != '') {
-	dialogHeader += `		 <span id="department">${userProfileValues.Department}</span> \n`;
-}
-
-dialogHeader += '	</span></span> \n';
-
-$("div[aria-describedby='persona-card-dialog'] div.ui-dialog-titlebar span.ui-dialog-title").append(dialogHeader);
-
-// create and insert body
-
-let dialogBody = '<ul id="persona-card-dialog-body"> \n';
-
-if (typeof (userProfileValues.WorkPhone) !== 'undefined' && typeof (userProfileValues.CellPhone) !== 'undefined' && userProfileValues.WorkPhone != '' && userProfileValues.CellPhone != '') {
-	dialogBody += `${'	<li id="phone-numbers">\n' +
-		'		 <ul>\n' +
-		'			  <li id="business-phone-number">Business: '}${userProfileValues.WorkPhone}</li> \n` +
-		`			  <li id="mobile-phone-number">Mobile: ${userProfileValues.CellPhone}</li> \n` +
-		'		 </ul>\n' +
-		'	</li> \n';
-} else if (typeof (userProfileValues.WorkPhone) !== 'undefined' && userProfileValues.WorkPhone != '') {
-	dialogBody += `	<li id="business-phone-number">Business: ${userProfileValues.WorkPhone}</li> \n`;
-} else if (typeof (userProfileValues.WorkPhone) !== 'undefined' && userProfileValues.WorkPhone != '') {
-	dialogBody += `	<li id="mobile-phone-number">Mobile: ${userProfileValues.CellPhone}</li> \n`;
-}
-
-if (typeof (userProfileValues.WorkEmail) !== 'undefined' && userProfileValues.WorkEmail != '') {
-	dialogBody += `	<li id="email"><a href="mailto:${userProfileValues.WorkEmail}">${userProfileValues.WorkEmail}</a></li> \n`;
-}
-
-if (typeof (userProfileValues['SPS-PersonalSiteCapabilities']) !== 'undefined' && userProfileValues['SPS-PersonalSiteCapabilities'] != '') {
-	dialogBody += `	<li id="profile"><a href="https://bmos-my.sharepoint.com/_layouts/15/me.aspx?u=${userProfileValues['msOnline-ObjectId']}" target="_blank">Profile</a></li> \n`;
-}
+export default HcStaffLookupPersonaCard;
