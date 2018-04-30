@@ -19,7 +19,6 @@ export default class HcGetItDone extends React.Component {
 	componentDidMount() {
 		HcGetItDoneData.ReturnAllGetItDoneData()
 			.then((allGetItDoneItemsData) => {
-				console.log(allGetItDoneItemsData);
 				this.setState(() => ({
 					listItemsAlphaArray: allGetItDoneItemsData.allListItemsAlpha,
 					listItemsGroupedArray: allGetItDoneItemsData.allListItemsGrouped,
@@ -41,11 +40,11 @@ export default class HcGetItDone extends React.Component {
 
 					<div id="hc-get-it-done-body">
 						<HcGetItDoneCommandBar />
-						<HcGetItDoneViewByAlpha
-							listItemsAlphaArray={this.state.listItemsAlphaArray}
-						/>
 						<HcGetItDoneViewByGroup
 							listItemsGroupedArray={this.state.listItemsGroupedArray}
+						/>
+						<HcGetItDoneViewByAlpha
+							listItemsAlphaArray={this.state.listItemsAlphaArray}
 						/>
 					</div>
 				}

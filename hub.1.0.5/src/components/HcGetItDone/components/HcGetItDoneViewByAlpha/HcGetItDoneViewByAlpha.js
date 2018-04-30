@@ -2,7 +2,7 @@
 // ----- IMPORTS
 
 import * as React from 'react';
-import HcGetItDoneLink from '../HcGetItDoneLink/HcGetItDoneLink';
+import HcGetItDoneLinkListItem from '../HcGetItDoneLinkListItem/HcGetItDoneLinkListItem';
 
 // ----- COMPONENT
 
@@ -13,7 +13,7 @@ export default class HcGetItDoneViewByAlpha extends React.Component {
 				<ul>
 					{
 						this.props.listItemsAlphaArray.map((listItemValue, listItemIndex) => (
-							<HcGetItDoneLink
+							<HcGetItDoneLinkListItem
 								key={listItemValue.key}
 								listItemId={listItemValue.key}
 								listItemContent={listItemValue}

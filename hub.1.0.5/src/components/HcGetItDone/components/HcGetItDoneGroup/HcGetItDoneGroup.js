@@ -4,25 +4,39 @@
 // ----- IMPORTS
 
 import * as React from 'react';
-// import HcGetItDoneLink from '../HcGetItDoneLink/HcGetItDoneLink';
+import HcGetItDoneLinkListItem from '../HcGetItDoneLinkListItem/HcGetItDoneLinkListItem';
+import HcGetItDoneLinkDiv from '../HcGetItDoneLinkDiv/HcGetItDoneLinkDiv';
 
 // ----- COMPONENT
 
 export default class HcGetItDoneViewByGroup extends React.Component {
 	render() {
-		// console.log(this.props.listItemsGroupedArray);
-		// extract into array from object its "child" / first level keys;
-		// 		these keys correspond to group names
-		const groupKeys = Object.keys(this.props.listItemsGroupedArray);
-		// sort groups alphabetically
-		groupKeys.sort();
-		// return render
 		return (
-			<div id="hc-get-it-done-view-by-group" className="mos-react-component-root">
+			<div id={`hc-get-it-done-group_${this.props.groupId}`} className="hc-get-it-done-group mos-react-component-root">
+				<h3>{this.props.groupContent.name}</h3>
 				{
-					/* groupKeys.map((groupValue) => {
+					this.props.groupContent.items[1] && 
 
-					}) */
+					<ul>
+						{
+							this.props.groupContent.items.map(itemValue => (
+								<HcGetItDoneLinkListItem
+									key={itemValue.key}
+									listItemId={itemValue.key}
+									listItemContent={itemValue}
+								/>
+							))
+						}
+					</ul>
+				}
+				{
+					!this.props.groupContent.items[1] &&
+
+					<HcGetItDoneLinkDiv
+						key={this.props.groupContent.items[0].key}
+						listItemId={this.props.groupContent.items[0].key}
+						listItemContent={this.props.groupContent.items[0]}
+					/>
 				}
 			</div>
 		);
