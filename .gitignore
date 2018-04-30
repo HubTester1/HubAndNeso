@@ -26,7 +26,7 @@ bin
 obj
 
 # Misc
-q.txt
+*.txt
 reactApp.js
 nesoActiveDirectory.js
 nesoActiveDirectoryTwo.js
