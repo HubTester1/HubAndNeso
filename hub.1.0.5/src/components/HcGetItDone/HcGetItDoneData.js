@@ -51,7 +51,7 @@ export default class HcGetItDoneData {
 									itemFormatted.url = itemValue.ServerRedirectedEmbedUrl;
 									itemFormatted.anchorText = itemValue.FileLeafRef.toString();
 									itemFormatted.description = itemValue.Title;
-									itemFormatted.department = 'HR';
+									itemFormatted.groups = ['HR'];
 									itemFormatted.type = 'file';
 									itemFormatted.key = shortid.generate();
 
@@ -61,7 +61,7 @@ export default class HcGetItDoneData {
 									itemFormatted.url = itemValue.URL;
 									itemFormatted.anchorText = itemValue.Name;
 									itemFormatted.description = itemValue.Description;
-									itemFormatted.department = itemValue.Department;
+									itemFormatted.groups = itemValue.Groups;
 									itemFormatted.type = 'swf';
 									itemFormatted.key = shortid.generate();
 

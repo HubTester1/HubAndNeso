@@ -3,20 +3,24 @@
 
 import * as React from 'react';
 import HcGetItDoneData from './HcGetItDoneData';
-import HcGetItDoneLink from './HcGetItDoneLink';
+import HcGetItDoneCommandBar from './components/HcGetItDoneCommandBar/HcGetItDoneCommandBar';
+import HcGetItDoneViewByAlpha from './components/HcGetItDoneViewByAlpha/HcGetItDoneViewByAlpha';
+import HcGetItDoneViewByGroup from './components/HcGetItDoneViewByGroup/HcGetItDoneViewByGroup';
 
 // ----- COMPONENT
 
 export default class HcGetItDone extends React.Component {
 	state = {
-		listItemsArray: [],
+		listItemsAlphaArray: [],
+		listItemsGroupedArray: [],
 	};
 
 	componentDidMount() {
 		HcGetItDoneData.ReturnAllGetItDoneData()
 			.then((allPushedItemsData) => {
 				this.setState(() => ({
-					listItemsArray: allPushedItemsData,
+					listItemsAlphaArray: allPushedItemsData,
+					listItemsGroupedArray: allPushedItemsData,
 				}));
 			});
 	}
@@ -25,17 +29,13 @@ export default class HcGetItDone extends React.Component {
 		return (
 			<div id="hc-get-it-done" className="mos-react-component-root">
 				<h2>Get it Done</h2>
-				<ul>
-					{
-						this.state.listItemsArray.map((listItemValue, listItemIndex) => (
-							<HcGetItDoneLink
-								key={listItemValue.key}
-								listItemId={listItemValue.key}
-								listItemContent={listItemValue}
-							/>
-						))
-					}
-				</ul>
+				<HcGetItDoneCommandBar />
+				<HcGetItDoneViewByAlpha
+					listItemsAlphaArray={this.state.listItemsAlphaArray}
+				/>
+				<HcGetItDoneViewByGroup
+					listItemsGroupedArray={this.state.listItemsGroupedArray}
+				/>
 			</div>
 		);
 	}
