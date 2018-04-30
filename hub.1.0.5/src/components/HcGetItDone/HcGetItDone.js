@@ -13,14 +13,21 @@ export default class HcGetItDone extends React.Component {
 	state = {
 		listItemsAlphaArray: [],
 		listItemsGroupedArray: [],
+		queryError: false,
 	};
 
 	componentDidMount() {
 		HcGetItDoneData.ReturnAllGetItDoneData()
-			.then((allPushedItemsData) => {
+			.then((allGetItDoneItemsData) => {
+				console.log(allGetItDoneItemsData);
 				this.setState(() => ({
-					listItemsAlphaArray: allPushedItemsData,
-					listItemsGroupedArray: allPushedItemsData,
+					listItemsAlphaArray: allGetItDoneItemsData.allListItemsAlpha,
+					listItemsGroupedArray: allGetItDoneItemsData.allListItemsGrouped,
+				}));
+			})
+			.catch((error) => {
+				this.setState(() => ({
+					queryError: true,
 				}));
 			});
 	}
@@ -29,13 +36,24 @@ export default class HcGetItDone extends React.Component {
 		return (
 			<div id="hc-get-it-done" className="mos-react-component-root">
 				<h2>Get it Done</h2>
-				<HcGetItDoneCommandBar />
-				<HcGetItDoneViewByAlpha
-					listItemsAlphaArray={this.state.listItemsAlphaArray}
-				/>
-				<HcGetItDoneViewByGroup
-					listItemsGroupedArray={this.state.listItemsGroupedArray}
-				/>
+				{
+					!this.state.queryError &&
+
+					<div id="hc-get-it-done-body">
+						<HcGetItDoneCommandBar />
+						<HcGetItDoneViewByAlpha
+							listItemsAlphaArray={this.state.listItemsAlphaArray}
+						/>
+						<HcGetItDoneViewByGroup
+							listItemsGroupedArray={this.state.listItemsGroupedArray}
+						/>
+					</div>
+				}
+				{
+					this.state.queryError &&
+
+					<p id="hc-get-it-done-body">I can&apos;t show you this information right now.</p>
+				}
 			</div>
 		);
 	}
