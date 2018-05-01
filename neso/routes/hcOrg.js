@@ -2,7 +2,7 @@
 // ----- PULL IN MODULES, GET EXPRESS ROUTER
 
 const router = require('express').Router();
-const nesoActiveDirectory = require('../neso_modules/nesoActiveDirectory');
+const nesoHcOrg = require('../neso_modules/nesoHcOrg');
 
 // ----- CONFIG EXPRESS ROUTER
 
@@ -12,47 +12,46 @@ router.get('/', (req, res, next) => {
 	res.send("Ain't nothin' here.");
 });
 
-// for GET request for /depts
-router.get('/depts', (req, res, next) => {
-	// get a promise to retrieve department data
-	nesoActiveDirectory.ReturnADDepartments()
+// for GET request for /check
+router.get('/settings', (req, res, next) => {
+	// get a promise to retrieve health status data
+	nesoHcOrg.ReturnHcOrgSettings()
 		// if the promise is resolved with the docs, then respond with the docs as JSON
 		.then((result) => { res.json(result); })
 		// if the promise is rejected with an error, then respond with the error as JSON
 		.catch((error) => { res.json(error); });
 });
 
-
-// for GET request for /user/:userID
-router.get('/user/:userID', (req, res, next) => {
+// for GET request for /teams
+router.get('/teams', (req, res, next) => {
 	// get a promise to retrieve user data
-	nesoActiveDirectory.ReturnOneADUserByUserID(req.params.userID)
+	nesoHcOrg.ReturnTeamsAll()
 		// if the promise is resolved with the docs, then respond with the docs as JSON
 		.then((result) => { res.json(result); })
 		// if the promise is rejected with an error, then respond with the error as JSON
 		.catch((error) => { res.json(error); });
 });
 
-// for GET request for /user/:userID
-router.get('/users/:mgrUserID', (req, res, next) => {
-	// get a promise to retrieve user data
-	nesoActiveDirectory.ReturnAllADUsersWithSpecifiedManager(req.params.mgrUserID)
+// for GET request for /all
+router.get('/all', (req, res, next) => {
+	// get a promise to retrieve health status data
+	nesoHcOrg.ReturnAllHcOrgData()
 		// if the promise is resolved with the docs, then respond with the docs as JSON
 		.then((result) => { res.json(result); })
 		// if the promise is rejected with an error, then respond with the error as JSON
 		.catch((error) => { res.json(error); });
 });
 
-// for GET request for /divDept
+
+// for GET request for /all
 router.get('/divDept', (req, res, next) => {
-	// get a promise to retrieve user data
-	nesoActiveDirectory.ReturnADUsersByDivisionDepartmentData()
+	// get a promise to retrieve health status data
+	nesoHcOrg.ReturnDivDeptsWTeams()
 		// if the promise is resolved with the docs, then respond with the docs as JSON
 		.then((result) => { res.json(result); })
 		// if the promise is rejected with an error, then respond with the error as JSON
 		.catch((error) => { res.json(error); });
 });
-
 
 // ----- EXPORT EXPRESS ROUTER
 

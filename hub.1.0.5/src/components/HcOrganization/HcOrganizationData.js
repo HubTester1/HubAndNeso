@@ -146,15 +146,10 @@ export default class HcGetItDoneData {
 							});
 						});
 
-						console.log('divDeptTempHolder');
-						console.log(divDeptTempHolder);
-
-
 						// note: what we're doing next is essentially converting an object to an array
 
 						// extract into array from object its "child" / first level keys;
 						// 		these keys correspond to division names
-						// eslint-disable-next-line
 						divDeptTempHolderDivKeys = Object.keys(divDeptTempHolder);
 						// sort division key alphabetically
 						divDeptTempHolderDivKeys.sort();

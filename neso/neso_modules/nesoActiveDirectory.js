@@ -1094,7 +1094,10 @@ module.exports = {
 			nesoDBQueries.ReturnAllDocsFromCollection('adUsersByDivisionDepartment')
 				// if the promise is resolved with the docs, then resolve this promise with the docs
 				.then((result) => {
-					resolve(result);
+					resolve({
+						error: false,
+						adUsersByDivisionDepartment: result.docs,
+					});
 				})
 				// if the promise is rejected with an error, then reject this promise with an error
 				.catch((error) => {
@@ -1150,21 +1153,5 @@ module.exports = {
 					reject(error);
 				});
 		})),
-
-	ReturnTeamsBasic: () =>
-		// return a new promise
-		new Promise(((resolve, reject) => {
-			// get a promise to retrieve all documents from the adUsers document collection
-			nesoDBQueries.ReturnAllDocsFromCollection('hcTeamsBasic')
-				// if the promise is resolved with the docs, then resolve this promise with the docs
-				.then((result) => {
-					resolve(result);
-				})
-				// if the promise is rejected with an error, then reject this promise with an error
-				.catch((error) => {
-					reject(error);
-				});
-		})),
-
 
 };

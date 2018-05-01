@@ -40,6 +40,7 @@ const activeDirectory = require('./routes/activeDirectory');
 const hubSync = require('./routes/hubSync');
 const hcMessages = require('./routes/hcMessages');
 const hcGetItDone = require('./routes/hcGetItDone');
+const hcOrg = require('./routes/hcOrg');
 
 // ----- INSTANTIATE, CONFIG EXPRESS APP
 
@@ -152,6 +153,7 @@ app.use('/hrPositions', cors(nesoCORS.RequestingDomainWhitelistedForEmailAPI), h
 app.use('/activeDirectory', cors(nesoCORS.RequestingDomainWhitelistedForEmailAPI), activeDirectory);
 app.use('/hcMessages', cors(nesoCORS.RequestingDomainWhitelistedForHcMessagesAPI), hcMessages);
 app.use('/hcGetItDone', cors(nesoCORS.RequestingDomainWhitelistedForHcGetItDoneAPI), hcGetItDone);
+app.use('/hcOrg', cors(nesoCORS.RequestingDomainWhitelistedForHcGetItDoneAPI), hcOrg);
 
 // STATIC LOCATIONS ---
 
@@ -183,7 +185,34 @@ app.use((err, req, res, next) => {
 
 // CRON ---
 
+// nesoActiveDirectory.ProcessADUsersByDivisionDepartmentData()
+// 	// if the promise is resolved with the docs, then respond with the docs as JSON
+// 	.then((result) => {
+// 		console.log('Processed Active Directory Users By Division Department data:');
+// 		console.log(result);
+// 	})
+// 	// if the promise is rejected with an error, then respond with the error as JSON
+// 	.catch((error) => {
+// 		// eslint-disable-next-line no-console
+// 		console.log('ERROR - Processing Active Directory Users By Division Department data:');
+// 		console.log(error);
+// 	});
 
+
+// nesoActiveDirectory.ProcessADUsersByDivisionDepartmentDataTwo()
+// 	// if the promise is resolved with the docs, then respond with the docs as JSON
+// 	.then((result) => {
+// 		console.log('Processed Active Directory Users By Division Department TWOOOOOOOO data:');
+// 		console.log(result);
+// 	})
+// 	// if the promise is rejected with an error, then respond with the error as JSON
+// 	.catch((error) => {
+// 		console.log('ERROR - Processing Active Directory Users By Division Department TWOOOOOOOO data:');
+// 		console.log(error);
+// 	});
+
+
+/*
 // schedule for once per minute
 cron.schedule('* * * * *', () => {
 	// get a promise to process the email queue
@@ -284,7 +313,7 @@ cron.schedule(process.env.adUserByDivisionDepartmentProcessingCronSchedule, () =
 			console.log(`Real time was ${nesoUtilities.ReturnFormattedDateTime('nowLocal', null, null)}`);
 			console.log(`Cron schedule was ${process.env.adUserProcessingCronSchedule}`);
 		});
-});
+}); */
 
 // PROCESS ---
 
