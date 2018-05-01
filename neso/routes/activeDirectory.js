@@ -43,6 +43,26 @@ router.get('/users/:mgrUserID', (req, res, next) => {
 		.catch((error) => { res.json(error); });
 });
 
+// for GET request for /divDept
+router.get('/divDept', (req, res, next) => {
+	// get a promise to retrieve user data
+	nesoActiveDirectory.ReturnADUsersByDivisionDepartmentData()
+		// if the promise is resolved with the docs, then respond with the docs as JSON
+		.then((result) => { res.json(result); })
+		// if the promise is rejected with an error, then respond with the error as JSON
+		.catch((error) => { res.json(error); });
+});
+
+// for GET request for /teams
+router.get('/teams', (req, res, next) => {
+	// get a promise to retrieve user data
+	nesoActiveDirectory.ReturnTeamsBasic()
+		// if the promise is resolved with the docs, then respond with the docs as JSON
+		.then((result) => { res.json(result); })
+		// if the promise is rejected with an error, then respond with the error as JSON
+		.catch((error) => { res.json(error); });
+});
+
 
 // ----- EXPORT EXPRESS ROUTER
 

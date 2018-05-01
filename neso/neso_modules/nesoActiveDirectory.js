@@ -166,7 +166,7 @@ module.exports = {
 				});
 		})),
 
-	ReturnNewADUsersFilePathAndName: currentFilePathAndName => 
+	ReturnNewADUsersFilePathAndName: currentFilePathAndName =>
 		`${currentFilePathAndName.slice(0, currentFilePathAndName.length - 4)}Copy.csv`,
 
 	ReturnAllADUsersFromCSV: () =>
@@ -179,7 +179,7 @@ module.exports = {
 					// try to resolve this promise with the ad users data
 					try {
 						// make a copy of the file to read
-						const newUsersFilePathAndName = 
+						const newUsersFilePathAndName =
 							module.exports.ReturnNewADUsersFilePathAndName(settings.csv.usersFilePathAndName);
 						fse
 							.copy(settings.csv.usersFilePathAndName, newUsersFilePathAndName, { overwrite: true })
@@ -298,7 +298,7 @@ module.exports = {
 								// reject this promise with an error
 								reject(errorToReport);
 							});
-					// if there was an error
+						// if there was an error
 					} catch (exception) {
 						// console.log(exception);
 						// construct a custom error
@@ -570,7 +570,7 @@ module.exports = {
 												const {
 													adDepartments,
 												} =
-												returnAllADDepartmentsFromADUsersByDivisionDepartmentResult;
+													returnAllADDepartmentsFromADUsersByDivisionDepartmentResult;
 												// get a promise to add ad users from csv to the database
 												module.exports
 													.AddAllADDepartmentsToDatabase(adDepartments)
@@ -901,7 +901,7 @@ module.exports = {
 										const {
 											adUsersByDivisionDepartment,
 										} =
-										returnAllADUsersByDivisionDepartmentFromADUsersResult;
+											returnAllADUsersByDivisionDepartmentFromADUsersResult;
 										// get a promise to delete all ad users from the database
 										module.exports.DeleteAllADUsersByDivisionDepartmentFromDatabase()
 											// if the promise to delete all ad users from the database was resolved
@@ -1150,5 +1150,21 @@ module.exports = {
 					reject(error);
 				});
 		})),
+
+	ReturnTeamsBasic: () =>
+		// return a new promise
+		new Promise(((resolve, reject) => {
+			// get a promise to retrieve all documents from the adUsers document collection
+			nesoDBQueries.ReturnAllDocsFromCollection('hcTeamsBasic')
+				// if the promise is resolved with the docs, then resolve this promise with the docs
+				.then((result) => {
+					resolve(result);
+				})
+				// if the promise is rejected with an error, then reject this promise with an error
+				.catch((error) => {
+					reject(error);
+				});
+		})),
+
 
 };

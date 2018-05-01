@@ -13,6 +13,7 @@ import HcStaffLookup from './components/HcStaffLookup/HcStaffLookup';
 import HcGetItDone from './components/HcGetItDone/HcGetItDone';
 import HcPushedItems from './components/HcPushedItems/HcPushedItems';
 import HcMessages from './components/HcMessages/HcMessages';
+import HcOrganization from './components/HcOrganization/HcOrganization';
 // eslint-disable-next-line
 import { initializeIcons } from '@uifabric/icons';
 
@@ -45,14 +46,14 @@ class HcContainer extends React.Component {
 		return (
 			<div>
 				<HcTopCommandBar />
+				<HcOrganization />
 				<HcGetItDone />
 				<HcStaffLookup />
 				<HcMessages
 					uData={this.state.uData}
 				/>		
 				<HcPushedItems />
-				{/* <p>HcOrganization here</p>
-				<p>HcCalendarsSchedules here</p> */}
+				{/* <p>HcCalendarsSchedules here</p> */}
 			</div>
 		);
 	}

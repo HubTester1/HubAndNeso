@@ -30,13 +30,13 @@ export default class HcOrganization extends React.Component {
 		this.handleClickShowMission = this.handleClickShowMission.bind(this);
 	}
 	componentDidMount() {
-		HcOrganizationData.ReturnAllGetItDoneData()
+		HcOrganizationData.ReturnAllOrganizationData()
 			.then((allOrganizationData) => {
-				this.setState(() => ({
+				/* this.setState(() => ({
 					groupsArray: allOrganizationData.groupsArray,
 					otherContactsArray: allOrganizationData.otherContactsArray,
 					mission: allOrganizationData.mission,
-				}));
+				})); */
 			})
 			.catch((error) => {
 				this.setState(() => ({

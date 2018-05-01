@@ -2,7 +2,7 @@
 // ----- IMPORTS
 
 import { Web } from 'sp-pnp-js';
-import shortID from 'shortid';
+// import shortID from 'shortid';
 import EnvironmentDetector from '../../services/EnvironmentDetector';
 import NesoHTTPClient from '../../services/NesoHTTPClient';
 
@@ -13,13 +13,34 @@ export default class HcGetItDoneData {
 		const hrDocsWeb = new Web('https://bmos.sharepoint.com');
 		return hrDocsWeb.lists.getByTitle('HR Docs').items
 			.select('FileLeafRef', 'ServerRedirectedEmbedUrl', 'Title', 'HRISKey')
-			.filter("HRISKey neq ''")
+			.filter('HRISKey ne null')
 			.get();
 	}
 
 	static ReturnNesoDataForADUsersByDivDept() {
-		return NesoHTTPClient
-			.ReturnNesoData('https://neso.mos.org:3001/activeDirectory/divDept');
+		return new Promise((resolve, reject) => {
+			NesoHTTPClient
+				.ReturnNesoData('https://neso.mos.org:3001/activeDirectory/divDept')
+				.then((response) => {
+					resolve(response);
+				})
+				.catch((error) => {
+					reject(error);
+				});
+		});
+	}
+
+	static ReturnNesoDataForTeams() {
+		return new Promise((resolve, reject) => {
+			NesoHTTPClient
+				.ReturnNesoData('https://neso.mos.org:3001/activeDirectory/teams')
+				.then((response) => {
+					resolve(response);
+				})
+				.catch((error) => {
+					reject(error);
+				});
+		});
 	}
 
 	static ReturnAllOrganizationData() {
@@ -31,11 +52,43 @@ export default class HcGetItDoneData {
 				const listItemQueryPromises = [
 					this.ReturnHRDocsForHcOrganization(),
 					this.ReturnNesoDataForADUsersByDivDept(),
+					this.ReturnNesoDataForTeams(),
 				];
 				// wait for all queries to be completed
 				Promise.all(listItemQueryPromises)
 					// if the promise is resolved with the settings
 					.then((resultsReturnArray) => {
+						console.log(resultsReturnArray);
+						let orgChartsReturn;
+						let divDeptReturn;
+						let teamsReturn;
+						let otherContactsReturn;
+						let missionReturn;
+						
+						resultsReturnArray.forEach((resultValue) => {
+							if (resultValue[0].ServerRedirectedEmbedUrl) {
+								orgChartsReturn = resultValue;
+							}
+							if (resultValue[0].Advancement) {
+								divDeptReturn = resultValue;
+							}
+							if (resultValue[0].adKey) {
+								teamsReturn = resultValue;
+							}
+						});
+
+						console.log('orgChartsReturn');
+						console.log(orgChartsReturn);
+						console.log('divDeptReturn');
+						console.log(divDeptReturn);
+						console.log('teamsReturn');
+						console.log(teamsReturn);
+
+
+
+
+
+
 						/* // set up var to receive all list items
 						const allListItemsAlpha = [];
 						const allListItemsGroupedTempHolder = {};
@@ -119,6 +172,7 @@ export default class HcGetItDoneData {
 						resolve(resultsReturnArray);
 					})
 					.catch((queryError) => {
+						console.log(queryError);
 						reject({
 							error: true,
 							queryError,

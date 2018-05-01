@@ -7,7 +7,7 @@ export default class NesoHttpClient {
 			// get a promise to retrieve the data
 			axios.get(endpoint)
 				// if the promise is resolved with the docs, then resolve this promise with the docs
-				.then((result) => { resolve(result.data.docs); })
+				.then((result) => { console.log('in service');console.log(result); resolve(result.data.docs); })
 				// if the promise is rejected with an error
 				.catch((returnedError) => {
 					// reject this promise with an error
