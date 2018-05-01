@@ -59,20 +59,23 @@ export default class HcGetItDoneData {
 					// if the promise is resolved with the settings
 					.then((resultsReturnArray) => {
 						console.log(resultsReturnArray);
+						const finalReturn = [];
 						let orgChartsReturn;
 						let divDeptReturn;
 						let teamsReturn;
 						let otherContactsReturn;
 						let missionReturn;
+						let divisionKeys;
+						let deptKeys;
 						
 						resultsReturnArray.forEach((resultValue) => {
 							if (resultValue[0].ServerRedirectedEmbedUrl) {
 								orgChartsReturn = resultValue;
 							}
 							if (resultValue[0].Advancement) {
-								divDeptReturn = resultValue;
+								divDeptReturn = resultValue[0];
 							}
-							if (resultValue[0].adKey) {
+							if (resultValue[0].pageToken) {
 								teamsReturn = resultValue;
 							}
 						});
@@ -84,10 +87,57 @@ export default class HcGetItDoneData {
 						console.log('teamsReturn');
 						console.log(teamsReturn);
 
+						// extract an array of all divisions
+						divisionKeys = Object.keys(divDeptReturn);
 
+						divisionKeys.forEach((divisionKey) => {
+							// add division to final
+							finalReturn[divisionKey] = {};
+							finalReturn[divisionKey].depts = [];
+							// if there's an org chart for this division
+							orgChartsReturn.forEach((orgChart) => {
+								if (orgChart.HRISKey === divisionKey) {
+									finalReturn[divisionKey].orgChart = 
+										orgChart.ServerRedirectedEmbedUrl;
+								}
+							});
+							// if this division has a presence on The Hub
+							teamsReturn.forEach((team) => {
+								if (team.adKey === divisionKey) {
+									finalReturn[divisionKey].hubPageToken = team.pageToken;
+								}
+							});
+							// extract an array of the departments in this division
+							deptKeys = Object.keys(divDeptReturn[divisionKey]);
+							// for each department in this division
+							deptKeys.forEach((deptKey) => {
+								// add department to final
+								finalReturn[divisionKey].depts[deptKey] = {};
+								// if this department has a presence on The Hub
+								teamsReturn.forEach((team) => {
+									if (typeof (team.adKey) === 'string') {
+										if (team.adKey === deptKey) {
+											finalReturn[divisionKey].depts[deptKey].hubPageToken =
+												team.pageToken;
+										}
+									}
+									if (typeof (team.adKey) === 'object') {
+										team.adKey.forEach((adKeyElement) => {
+											if (team.adKeyElement === deptKey) {
+												finalReturn[divisionKey].depts[deptKey].hubPageToken =
+													team.pageToken;
+											}
+										});
+									}
+								});
+								// add members to department
+								finalReturn[divisionKey].depts[deptKey].members = 
+									divDeptReturn[divisionKey][deptKey].members;
+							});
+						});
 
-
-
+						console.log('finalReturn');
+						console.log(finalReturn);
 
 						/* // set up var to receive all list items
 						const allListItemsAlpha = [];
