@@ -13,6 +13,10 @@ import HcStaffLookup from './components/HcStaffLookup/HcStaffLookup';
 import HcGetItDone from './components/HcGetItDone/HcGetItDone';
 import HcPushedItems from './components/HcPushedItems/HcPushedItems';
 import HcMessages from './components/HcMessages/HcMessages';
+// eslint-disable-next-line
+import { initializeIcons } from '@uifabric/icons';
+
+initializeIcons();
 
 // ----- COMPONENT
 

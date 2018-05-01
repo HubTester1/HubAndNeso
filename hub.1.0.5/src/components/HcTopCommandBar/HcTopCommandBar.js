@@ -4,14 +4,10 @@
 import * as React from 'react';
 import { Fabric } from 'office-ui-fabric-react/lib/Fabric';
 import { CommandBar } from 'office-ui-fabric-react/lib/CommandBar';
-// eslint-disable-next-line
-import { initializeIcons } from '@uifabric/icons';
-
-initializeIcons();
 
 // ----- COMPONENT
 
-const HcTopCommandBar = () => (
+const HcTopCommandBar = props => (
 	<div id="hc-top-command-bar" className="mos-react-component-root">
 		<Fabric>
 			<CommandBar

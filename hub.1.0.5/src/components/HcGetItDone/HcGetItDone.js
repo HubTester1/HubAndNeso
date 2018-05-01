@@ -10,12 +10,18 @@ import HcGetItDoneViewByGroup from './components/HcGetItDoneViewByGroup/HcGetItD
 // ----- COMPONENT
 
 export default class HcGetItDone extends React.Component {
-	state = {
-		listItemsAlphaArray: [],
-		listItemsGroupedArray: [],
-		queryError: false,
-	};
-
+	constructor(props) {
+		super(props);
+		this.state = {
+			showViewByAlpha: false,
+			showViewByGroup: true,
+			listItemsAlphaArray: [],
+			listItemsGroupedArray: [],
+			queryError: false,
+		};
+		this.handleClickViewByAlphaButton = this.handleClickViewByAlphaButton.bind(this);
+		this.handleClickViewByGroupButton = this.handleClickViewByGroupButton.bind(this);
+	}
 	componentDidMount() {
 		HcGetItDoneData.ReturnAllGetItDoneData()
 			.then((allGetItDoneItemsData) => {
@@ -30,7 +36,20 @@ export default class HcGetItDone extends React.Component {
 				}));
 			});
 	}
-
+	handleClickViewByAlphaButton(e) {
+		e.preventDefault();
+		this.setState(() => ({
+			showViewByAlpha: true,
+			showViewByGroup: false,
+		}));
+	}
+	handleClickViewByGroupButton(e) {
+		e.preventDefault();
+		this.setState(() => ({
+			showViewByAlpha: false,
+			showViewByGroup: true,
+		}));
+	}
 	render() {
 		return (
 			<div id="hc-get-it-done" className="mos-react-component-root">
@@ -39,13 +58,24 @@ export default class HcGetItDone extends React.Component {
 					!this.state.queryError &&
 
 					<div id="hc-get-it-done-body">
-						<HcGetItDoneCommandBar />
-						<HcGetItDoneViewByGroup
-							listItemsGroupedArray={this.state.listItemsGroupedArray}
+						<HcGetItDoneCommandBar
+							handleClickViewByGroupButton={this.handleClickViewByGroupButton}
+							handleClickViewByAlphaButton={this.handleClickViewByAlphaButton}
 						/>
-						<HcGetItDoneViewByAlpha
-							listItemsAlphaArray={this.state.listItemsAlphaArray}
-						/>
+						{
+							this.state.showViewByGroup &&
+
+							<HcGetItDoneViewByGroup
+								listItemsGroupedArray={this.state.listItemsGroupedArray}
+							/>
+						}
+						{
+							this.state.showViewByAlpha &&
+
+							<HcGetItDoneViewByAlpha
+								listItemsAlphaArray={this.state.listItemsAlphaArray}
+							/>
+						}
 					</div>
 				}
 				{
