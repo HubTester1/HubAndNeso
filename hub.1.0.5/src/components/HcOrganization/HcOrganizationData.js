@@ -2,7 +2,7 @@
 // ----- IMPORTS
 
 import { Web } from 'sp-pnp-js';
-// import shortID from 'shortid';
+import shortID from 'shortid';
 import EnvironmentDetector from '../../services/EnvironmentDetector';
 import NesoHTTPClient from '../../services/NesoHTTPClient';
 
@@ -59,7 +59,6 @@ export default class HcGetItDoneData {
 					// if the promise is resolved with the settings
 					.then((resultsReturnArray) => {
 						console.log(resultsReturnArray);
-						const finalReturn = [];
 						let orgChartsReturn;
 						let divDeptReturn;
 						let teamsReturn;
@@ -67,6 +66,18 @@ export default class HcGetItDoneData {
 						let missionReturn;
 						let divisionKeys;
 						let deptKeys;
+
+						const divDeptTempHolder = {};
+						let divDeptTempHolderDivKeys;
+						let divDeptTempHolderDeptKeys;
+						let divDeptFinal;
+
+						const finalResolution = {
+							divDept: [],
+							otherContacts: [],
+							mission: '',
+						};
+
 						
 						resultsReturnArray.forEach((resultValue) => {
 							if (resultValue[0].ServerRedirectedEmbedUrl) {
@@ -92,19 +103,24 @@ export default class HcGetItDoneData {
 
 						divisionKeys.forEach((divisionKey) => {
 							// add division to final
-							finalReturn[divisionKey] = {};
-							finalReturn[divisionKey].depts = [];
+							divDeptTempHolder[divisionKey] = {};
+							divDeptTempHolder[divisionKey].depts = {};
 							// if there's an org chart for this division
 							orgChartsReturn.forEach((orgChart) => {
 								if (orgChart.HRISKey === divisionKey) {
-									finalReturn[divisionKey].orgChart = 
+									divDeptTempHolder[divisionKey].orgChart = 
 										orgChart.ServerRedirectedEmbedUrl;
 								}
 							});
 							// if this division has a presence on The Hub
 							teamsReturn.forEach((team) => {
-								if (team.adKey === divisionKey) {
-									finalReturn[divisionKey].hubPageToken = team.pageToken;
+								if (team.adKey) {
+									team.adKey.forEach((adKeyElement) => {
+										if (adKeyElement.trim() === divisionKey.trim()) {
+											divDeptTempHolder[divisionKey].hubScreenToken =
+												team.pageToken;
+										}
+									});
 								}
 							});
 							// extract an array of the departments in this division
@@ -112,114 +128,100 @@ export default class HcGetItDoneData {
 							// for each department in this division
 							deptKeys.forEach((deptKey) => {
 								// add department to final
-								finalReturn[divisionKey].depts[deptKey] = {};
+								divDeptTempHolder[divisionKey].depts[deptKey] = {};
 								// if this department has a presence on The Hub
 								teamsReturn.forEach((team) => {
-									if (typeof (team.adKey) === 'string') {
-										if (team.adKey === deptKey) {
-											finalReturn[divisionKey].depts[deptKey].hubPageToken =
-												team.pageToken;
-										}
-									}
-									if (typeof (team.adKey) === 'object') {
+									if (team.adKey) {
 										team.adKey.forEach((adKeyElement) => {
-											if (team.adKeyElement === deptKey) {
-												finalReturn[divisionKey].depts[deptKey].hubPageToken =
+											if (adKeyElement.trim() === deptKey.trim()) {
+												divDeptTempHolder[divisionKey].depts[deptKey].hubScreenToken =
 													team.pageToken;
 											}
 										});
 									}
 								});
 								// add members to department
-								finalReturn[divisionKey].depts[deptKey].members = 
+								divDeptTempHolder[divisionKey].depts[deptKey].members = 
 									divDeptReturn[divisionKey][deptKey].members;
 							});
 						});
 
-						console.log('finalReturn');
-						console.log(finalReturn);
+						console.log('divDeptTempHolder');
+						console.log(divDeptTempHolder);
 
-						/* // set up var to receive all list items
-						const allListItemsAlpha = [];
-						const allListItemsGroupedTempHolder = {};
-						let allListItemsGroupedTempHolderKeys;
-						const allListItemsGrouped = [];
-						// iterate over the results and push them to allListItemsAlpha
-						resultsReturnArray.forEach((listValue) => {
-							listValue.forEach((itemValue) => {
-								const itemFormatted = {
-									url: '',
-									anchorText: '',
-									type: '',
-								};
-								if (itemValue.ServerRedirectedEmbedUrl) {
-									itemFormatted.url = itemValue.ServerRedirectedEmbedUrl;
-									itemFormatted.anchorText = itemValue.FileLeafRef.toString();
-									itemFormatted.description = itemValue.Title;
-									itemFormatted.groups = ['HR'];
-									itemFormatted.type = 'file';
-									itemFormatted.key = shortID.generate();
-
-									allListItemsAlpha.push(itemFormatted);
-								}
-								if (itemValue.URL) {
-									itemFormatted.url = itemValue.URL;
-									itemFormatted.anchorText = itemValue.Name;
-									itemFormatted.description = itemValue.Description;
-									itemFormatted.groups = itemValue.Groups;
-									itemFormatted.type = 'swf';
-									itemFormatted.key = shortID.generate();
-
-									allListItemsAlpha.push(itemFormatted);
-								}
-							});
-						});
-
-						// sort allListItemsAlpha by anchorText properties
-						allListItemsAlpha.sort((a, b) => {
-							if (a.anchorText < b.anchorText) return -1;
-							if (a.anchorText > b.anchorText) return 1;
-							return 0;
-						});
-
-						// for each item in allListItemsAlpha
-						allListItemsAlpha.forEach((itemValue) => {
-							// for each group in the item
-							itemValue.groups.forEach((groupValue) => {
-								// if this group isn't already in the container, add it with 
-								// 		a key and an empty items array
-								if (!allListItemsGroupedTempHolder[groupValue]) {
-									allListItemsGroupedTempHolder[groupValue] = {};
-									allListItemsGroupedTempHolder[groupValue].key = shortID.generate();
-									allListItemsGroupedTempHolder[groupValue].items = [];
-								}
-								// add the item to the group
-								allListItemsGroupedTempHolder[groupValue].items.push(itemValue);
-							});
-						});
 
 						// note: what we're doing next is essentially converting an object to an array
 
 						// extract into array from object its "child" / first level keys;
-						// 		these keys correspond to group names
+						// 		these keys correspond to division names
 						// eslint-disable-next-line
-						allListItemsGroupedTempHolderKeys = Object.keys(allListItemsGroupedTempHolder);
-						// sort groups key alphabetically
-						allListItemsGroupedTempHolderKeys.sort();
-						// for each group key
-						allListItemsGroupedTempHolderKeys.forEach((keyValue) => {
-							allListItemsGrouped.push({
-								name: keyValue,
-								key: allListItemsGroupedTempHolder[keyValue].key,
-								items: allListItemsGroupedTempHolder[keyValue].items,
-							});
+						divDeptTempHolderDivKeys = Object.keys(divDeptTempHolder);
+						// sort division key alphabetically
+						divDeptTempHolderDivKeys.sort();
+						// for each division key
+						divDeptTempHolderDivKeys.forEach((divKeyValue) => {
+							// if it's not the mongo id (i.e., it's actually a division)
+							if (divKeyValue !== '_id') {
+								// create a division object with name and react key and empty depts array
+								const divObject = {
+									name: divKeyValue,
+									key: shortID.generate(),
+									depts: [],
+								};
+								// is this division has a hubScreenToken
+								if (divDeptTempHolder[divKeyValue].hubScreenToken) {
+									// add it to the division object
+									divObject.hubScreenToken = divDeptTempHolder[divKeyValue].hubScreenToken;
+								}
+								// if this division has an orgChart
+								if (divDeptTempHolder[divKeyValue].orgChart) {
+									// add it to the division object
+									divObject.orgChart = divDeptTempHolder[divKeyValue].orgChart;
+								}
+								// extract into array from object its "child" / first level keys;
+								// 		these keys correspond to department names
+								divDeptTempHolderDeptKeys = Object.keys(divDeptTempHolder[divKeyValue].depts);
+								// for each department key
+								divDeptTempHolderDeptKeys.forEach((deptKeyValue) => {
+									// create a department object with name and react key and an empty members array
+									const deptObject = {
+										name: deptKeyValue,
+										key: shortID.generate(),
+										members: [],
+									};
+									// is this department has a hubScreenToken
+									if (divDeptTempHolder[divKeyValue].depts[deptKeyValue].hubScreenToken) {
+									// add it to the department object
+										deptObject.hubScreenToken =
+											divDeptTempHolder[divKeyValue].depts[deptKeyValue].hubScreenToken;
+									}
+									// for each member in this department
+									divDeptTempHolder[divKeyValue].depts[deptKeyValue]
+										.members.forEach((member) => {
+											// create a member object
+											const memberObject = {
+												account: member.account,
+												displayName: member.displayName,
+												title: member.title,
+												email: member.email,
+												officePhone: member.officePhone,
+												mobilePhone: member.mobilePhone,
+											};
+											deptObject.members.push(memberObject);
+										});
+									// push the department object to the depts array of the division object
+									divObject.depts.push(deptObject);
+								});
+								// push the division object to the finalResolution divDept array
+								finalResolution.divDept.push(divObject);
+							}
 						});
-						// resolve this promise with the requested items
-						resolve({
-							allListItemsAlpha,
-							allListItemsGrouped,
-						}); */
-						resolve(resultsReturnArray);
+
+						console.log('finalResolution');
+						console.log(finalResolution);
+
+
+						resolve(divDeptReturn);
 					})
 					.catch((queryError) => {
 						console.log(queryError);

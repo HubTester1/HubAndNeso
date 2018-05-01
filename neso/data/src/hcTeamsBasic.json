@@ -1,0 +1,166 @@
+[
+   {
+      "name": "Board of Trustees and Overseers",
+      "type": "Division",
+      "pageToken": "Board of Trustees and Overseers"
+   },
+   {
+      "adKey": ["Advancement"],
+      "name": "Advancement",
+      "type": "Division",
+      "pageToken": "Advancement"
+   },
+   {
+      "adKey": ["Data Management Services"],
+      "name": "Data Management Systems",
+      "type": "Department",
+      "pageToken": "Data Management Systems"
+   },
+   {
+      "adKey": ["Finance & Systems Services"],
+      "name": "Finance and System Services",
+      "type": "Division",
+      "pageToken": "Finance and System Services"
+   },
+   {
+      "adKey": ["Accounting"],
+      "name": "Accounting",
+      "type": "Department",
+      "pageToken": "Accounting"
+   },
+   {
+      "adKey": ["IIT- Infrastructure", "Interactive Media"],
+      "name": "IIT (Information and Interactive Technologies)",
+      "type": "Department",
+      "pageToken": "Information and Interactive Technologies"
+   },
+   {
+      "adKey": ["Human Resources & Volunteer Services"],
+      "name": "Human Resources and Volunteer Services",
+      "type": "Division",
+      "pageToken": "Human Resources and Volunteer Services"
+   },
+   {
+      "adKey": ["Marketing & External Affairs"],
+      "name": "Marketing and External Affairs",
+      "type": "Division",
+      "pageToken": "Marketing and External Affairs"
+   },
+   {
+      "adKey": ["Community Outreach"],
+      "name": "Community Outreach",
+      "type": "Department",
+      "pageToken": "Community Outreach"
+   },
+   {
+      "adKey": ["Collections"],
+      "name": "Collections",
+      "type": "Department",
+      "pageToken": "Collections"
+   },
+   {
+      "adKey": ["Education & Enrichment Programs"],
+      "name": "Education and Enrichment Programs",
+      "type": "Department",
+      "pageToken": "Education and Enrichment Programs"
+   },
+   {
+      "adKey": ["Facilities"],
+      "name": "Environmental Health and Safety",
+      "type": "Department",
+      "pageToken": "Environmental Health and Safety"
+   },
+   {
+      "adKey": ["Event and Conference Services", "ECS Non-Profit", "ECS Corporate"],
+      "name": "Event and Conference Services",
+      "type": "Department",
+      "pageToken": "Event and Conference Services"
+   },
+   {
+      "adKey": ["Exhibit Project Management"],
+      "name": "Exhibit Project Management",
+      "type": "Department",
+      "pageToken": "Exhibit Project Management"
+   },
+   {
+      "adKey": ["Human Resources"],
+      "name": "Human Resources",
+      "type": "Department",
+      "pageToken": "Human Resources"
+   },
+   {
+      "adKey": ["Marketing"],
+      "name": "Marketing",
+      "type": "Department",
+      "pageToken": "Marketing"
+   },
+   {
+      "adKey": ["Marketing Communications"],
+      "name": "Marketing Communications",
+      "type": "Department",
+      "pageToken": "Marketing Communications"
+   },
+   {
+      "adKey": ["Media Relations and Social Media"],
+      "name": "Media Relations and Social Media",
+      "type": "Department",
+      "pageToken": "Media Relations and Social Media"
+   },
+   {
+      "adKey": ["Public Safety", "Public Safety Administration"],
+      "name": "Public Safety",
+      "type": "Department",
+      "pageToken": "Public Safety"
+   },
+   {
+      "adKey": ["Volunteer Services"],
+      "name": "Volunteer Services",
+      "type": "Department",
+      "pageToken": "Volunteer Services"
+   },
+   {
+      "name": "Wellness",
+      "type": "Team",
+      "pageToken": "Wellness"
+   },
+   {
+      "name": "Yawkey Gallery, Advancement",
+      "type": "Team",
+      "pageToken": "Yawkey Gallery, Advancement"
+   },
+   {
+      "name": "Accessibility",
+      "type": "Team",
+      "pageToken": "Accessibility"
+   },
+   {
+      "name": "GPC (Grants Planning Committee)",
+      "type": "Team",
+      "pageToken": "GPC (Grants Planning Committee)"
+   },
+   {
+      "name": "Information Security Governance Team",
+      "type": "Team",
+      "pageToken": "Information Security Governance Team"
+   },
+   {
+      "name": "JM Working Group",
+      "type": "Team",
+      "pageToken": "JM Working Group"
+   },
+   {
+      "name": "Maya: Hidden Worlds Revealed Project Team",
+      "type": "Team",
+      "pageToken": "%27Maya%20-%20Hidden%20Worlds%20Revealed%27%20Project%20Team"
+   },
+   {
+      "name": "Tessitura",
+      "type": "Team",
+      "pageToken": "Tessitura"
+   },
+   {
+      "name": "The Science Behind the Stars",
+      "type": "Team",
+      "pageToken": "The Science Behind the Stars"
+   }
+]
