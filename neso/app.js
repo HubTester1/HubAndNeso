@@ -28,6 +28,7 @@ const nesoUtilities = require('./neso_modules/nesoUtilities');
 const nesoEmail = require('./neso_modules/nesoEmail');
 const nesoHRPositions = require('./neso_modules/nesoHRPositions');
 const nesoActiveDirectory = require('./neso_modules/nesoActiveDirectory');
+const nesoHcOrg = require('./neso_modules/nesoHcOrg');
 const nesoHubSync = require('./neso_modules/nesoHubSync');
 
 // NESO (MOS) ROUTES ---
@@ -184,6 +185,34 @@ app.use((err, req, res, next) => {
 
 
 // CRON ---
+
+nesoHcOrg.ProcessHcOrgDivDeptWTeamsData()
+	// if the promise is resolved with the docs, then respond with the docs as JSON
+	.then((result) => {
+		console.log('Processed HcOrg DivDept data:');
+		console.log(result);
+	})
+	// if the promise is rejected with an error, then respond with the error as JSON
+	.catch((error) => {
+		// eslint-disable-next-line no-console
+		console.log('ERROR - Processing HcOrg DivDept data data:');
+		console.log(error);
+	});
+
+
+nesoHcOrg.ProcessNonDivDeptTeamsData()
+	// if the promise is resolved with the docs, then respond with the docs as JSON
+	.then((result) => {
+		console.log('Processed HcOrg NONDivDept data:');
+		console.log(result);
+	})
+	// if the promise is rejected with an error, then respond with the error as JSON
+	.catch((error) => {
+		// eslint-disable-next-line no-console
+		console.log('ERROR - Processing HcOrg NONDivDept data data:');
+		console.log(error);
+	});
+
 
 // nesoActiveDirectory.ProcessADUsersByDivisionDepartmentData()
 // 	// if the promise is resolved with the docs, then respond with the docs as JSON

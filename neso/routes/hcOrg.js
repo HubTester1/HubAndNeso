@@ -23,9 +23,9 @@ router.get('/settings', (req, res, next) => {
 });
 
 // for GET request for /teams
-router.get('/teams', (req, res, next) => {
+router.get('/allTeams', (req, res, next) => {
 	// get a promise to retrieve user data
-	nesoHcOrg.ReturnTeamsAll()
+	nesoHcOrg.ReturnAllTeams()
 		// if the promise is resolved with the docs, then respond with the docs as JSON
 		.then((result) => { res.json(result); })
 		// if the promise is rejected with an error, then respond with the error as JSON
@@ -33,7 +33,7 @@ router.get('/teams', (req, res, next) => {
 });
 
 // for GET request for /all
-router.get('/all', (req, res, next) => {
+router.get('/allOrg', (req, res, next) => {
 	// get a promise to retrieve health status data
 	nesoHcOrg.ReturnAllHcOrgData()
 		// if the promise is resolved with the docs, then respond with the docs as JSON
@@ -42,11 +42,20 @@ router.get('/all', (req, res, next) => {
 		.catch((error) => { res.json(error); });
 });
 
-
 // for GET request for /all
-router.get('/divDept', (req, res, next) => {
+router.get('/divDeptTeams', (req, res, next) => {
 	// get a promise to retrieve health status data
 	nesoHcOrg.ReturnDivDeptsWTeams()
+		// if the promise is resolved with the docs, then respond with the docs as JSON
+		.then((result) => { res.json(result); })
+		// if the promise is rejected with an error, then respond with the error as JSON
+		.catch((error) => { res.json(error); });
+});
+
+// for GET request for /all
+router.get('/nonDivDeptTeams', (req, res, next) => {
+	// get a promise to retrieve health status data
+	nesoHcOrg.ReturnNonDivDeptTeams()
 		// if the promise is resolved with the docs, then respond with the docs as JSON
 		.then((result) => { res.json(result); })
 		// if the promise is rejected with an error, then respond with the error as JSON

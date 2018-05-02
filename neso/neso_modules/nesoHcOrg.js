@@ -1,11 +1,10 @@
 
-/* eslint-disable no-multiple-empty-lines */
-/* eslint-disable padded-blocks */
-
 // ----- PULL IN MODULES
 
+const shortID = require('shortid');
 const nesoDBQueries = require('./nesoDBQueries');
 const nesoActiveDirectory = require('./nesoActiveDirectory');
+const nesoErrors = require('./nesoErrors');
 
 // ----- DEFINE HEALTH FUNCTIONS
 
@@ -93,16 +92,34 @@ module.exports = {
 				});
 		})),
 
-	ReturnTeamsAll: () =>
+	ReturnAllTeams: () =>
 		// return a new promise
 		new Promise(((resolve, reject) => {
 			// get a promise to retrieve all documents from the adUsers document collection
-			nesoDBQueries.ReturnAllDocsFromCollection('hcTeamsAll')
+			nesoDBQueries.ReturnAllDocsFromCollection('hcOrgTeamsAll')
 				// if the promise is resolved with the docs, then resolve this promise with the docs
 				.then((result) => {
 					resolve({
 						error: false,
-						hcTeamsAll: result.docs,
+						hcOrgTeamsAll: result.docs,
+					});
+				})
+				// if the promise is rejected with an error, then reject this promise with an error
+				.catch((error) => {
+					reject(error);
+				});
+		})),
+
+	ReturnDivDeptsWTeams: () =>
+		// return a new promise
+		new Promise(((resolve, reject) => {
+			// get a promise to retrieve all documents from the adUsers document collection
+			nesoDBQueries.ReturnAllDocsFromCollection('hcOrgDivDeptWTeams')
+				// if the promise is resolved with the docs, then resolve this promise with the docs
+				.then((result) => {
+					resolve({
+						error: false,
+						divDeptWTeams: result.docs,
 					});
 				})
 				// if the promise is rejected with an error, then reject this promise with an error
@@ -147,11 +164,11 @@ module.exports = {
 				});
 		})),
 
-	ReturnXTeams: () =>
+	ReturnNonDivDeptTeams: () =>
 		// return a new promise
 		new Promise(((resolve, reject) => {
 			// get a promise to retrieve all documents from the adUsers document collection
-			nesoDBQueries.ReturnAllDocsFromCollection('hcOrgXTeams')
+			nesoDBQueries.ReturnAllDocsFromCollection('hcOrgNonDivDeptTeams')
 				// if the promise is resolved with the docs, then resolve this promise with the docs
 				.then((result) => {
 					resolve({
@@ -165,42 +182,228 @@ module.exports = {
 				});
 		})),
 
-	ReturnDivDeptsWTeams: () =>
+	ConstructAndReturnDivDeptsWTeams: () =>
 		new Promise(((resolve, reject) => {
 			const queries = [
 				nesoActiveDirectory.ReturnADUsersByDivisionDepartmentData(),
-				module.exports.ReturnTeamsAll(),
+				module.exports.ReturnAllTeams(),
 			];
 			Promise.all(queries)
 				.then((resultsReturnArray) => {
-					
-					/* let divDeptReturn;
+					// set up vars
+					let divDeptReturn;
 					let teamsReturn;
 					let divisionKeys;
 					let deptKeys;
-
 					const divDeptTempHolder = {};
 					let divDeptTempHolderDivKeys;
 					let divDeptTempHolderDeptKeys;
-					let divDeptFinal;					
-					
+					const divDeptFinal = [];
+					// extract the data
 					resultsReturnArray.forEach((resultValue) => {
-						if (resultValue[0].ServerRedirectedEmbedUrl) {
-							orgChartsReturn = resultValue;
+						if (resultValue.adUsersByDivisionDepartment) {
+							divDeptReturn = resultValue.adUsersByDivisionDepartment[0];
 						}
-						if (resultValue[0].Advancement) {
-							divDeptReturn = resultValue[0];
+						if (resultValue.hcOrgTeamsAll) {
+							teamsReturn = resultValue.hcOrgTeamsAll;
 						}
-						if (resultValue[0].pageToken) {
-							teamsReturn = resultValue;
+					});
+					// extract an array of all divisions
+					divisionKeys = Object.keys(divDeptReturn);
+					divisionKeys.forEach((divisionKey) => {
+						if (divisionKey !== '_id') {
+							// add division to temp holder
+							divDeptTempHolder[divisionKey] = {};
+							divDeptTempHolder[divisionKey].depts = {};
+							// if this division has a presence on The Hub
+							teamsReturn.forEach((team) => {
+								if (team.adKey) {
+									team.adKey.forEach((adKeyElement) => {
+										if (adKeyElement.trim() === divisionKey.trim()) {
+											divDeptTempHolder[divisionKey].hubScreenToken =
+												team.pageToken;
+										}
+									});
+								}
+							});
+							// extract an array of the departments in this division
+							deptKeys = Object.keys(divDeptReturn[divisionKey]);
+							// for each department in this division
+							deptKeys.forEach((deptKey) => {
+								// add department to final
+								divDeptTempHolder[divisionKey].depts[deptKey] = {};
+								// if this department has a presence on The Hub
+								teamsReturn.forEach((team) => {
+									if (team.adKey) {
+										team.adKey.forEach((adKeyElement) => {
+											if (adKeyElement.trim() === deptKey.trim()) {
+												divDeptTempHolder[divisionKey].depts[deptKey].hubScreenToken =
+													team.pageToken;
+											}
+										});
+									}
+								});
+								// add members to department
+								divDeptTempHolder[divisionKey].depts[deptKey].members =
+									divDeptReturn[divisionKey][deptKey].members;
+							});
 						}
-					}); */
-					
-					
-					
-					
-					
-					resolve(resultsReturnArray);
+					});
+					// note: what we're doing next is essentially converting an object to an array
+					// extract into array from object its "child" / first level keys;
+					// 		these keys correspond to division names
+					divDeptTempHolderDivKeys = Object.keys(divDeptTempHolder);
+					// sort division key alphabetically
+					divDeptTempHolderDivKeys.sort();
+					// for each division key
+					divDeptTempHolderDivKeys.forEach((divKeyValue) => {
+						// if it's not the mongo id (i.e., it's actually a division)
+						if (divKeyValue !== '_id') {
+							// create a division object with name and react key and empty depts array
+							const divObject = {
+								name: divKeyValue,
+								reactKey: shortID.generate(),
+								depts: [],
+							};
+							// is this division has a hubScreenToken
+							if (divDeptTempHolder[divKeyValue].hubScreenToken) {
+								// add it to the division object
+								divObject.hubScreenToken = divDeptTempHolder[divKeyValue].hubScreenToken;
+							}
+							// if this division has an orgChart
+							if (divDeptTempHolder[divKeyValue].orgChart) {
+								// add it to the division object
+								divObject.orgChart = divDeptTempHolder[divKeyValue].orgChart;
+							}
+							// extract into array from object its "child" / first level keys;
+							// 		these keys correspond to department names
+							divDeptTempHolderDeptKeys = Object.keys(divDeptTempHolder[divKeyValue].depts);
+							// for each department key
+							divDeptTempHolderDeptKeys.forEach((deptKeyValue) => {
+								// create a department object with name and react key and an empty members array
+								const deptObject = {
+									name: deptKeyValue,
+									reactKey: shortID.generate(),
+									members: [],
+								};
+								// is this department has a hubScreenToken
+								if (divDeptTempHolder[divKeyValue].depts[deptKeyValue].hubScreenToken) {
+									// add it to the department object
+									deptObject.hubScreenToken =
+										divDeptTempHolder[divKeyValue].depts[deptKeyValue].hubScreenToken;
+								}
+								// for each member in this department
+								divDeptTempHolder[divKeyValue].depts[deptKeyValue]
+									.members.forEach((member) => {
+										// create a member object
+										const memberObject = {
+											account: member.account,
+											displayName: member.displayName,
+											title: member.title,
+											email: member.email,
+											officePhone: member.officePhone,
+											mobilePhone: member.mobilePhone,
+										};
+										deptObject.members.push(memberObject);
+									});
+								// push the department object to the depts array of the division object
+								divObject.depts.push(deptObject);
+							});
+							// push the division object to the divDeptFinal divDept array
+							divDeptFinal.push(divObject);
+						}
+					});
+					// resolve this promise with the data
+					resolve(divDeptFinal);
+				})
+				.then((error) => {
+					reject(error);
+				});
+		})),
+
+	ConstructAndReturnNonDivDeptTeams: () =>
+		// return a new promise
+		new Promise((resolve, reject) => {
+			// get a promise to retrieve all docs from the hcOrgTeamsAll collection
+			module.exports.ReturnAllTeams()
+				// if the promise is resolved with a result
+				.then((result) => {
+					// then construct a relevantTeams object
+					const relevantTeams = [];
+					result.hcOrgTeamsAll.forEach((teamValue) => {
+						if (teamValue.type === 'Team') {
+							relevantTeams.push({
+								name: teamValue.name,
+								pageToken: teamValue.pageToken,
+							});
+						}
+					});
+					resolve(relevantTeams);
+				})
+				// if the promise is rejected with an error
+				.catch((error) => {
+					// reject this promise with the error
+					reject(error);
+				});
+		}),
+
+	DeleteDivDeptsWTeamsFromDatabase: () =>
+		// return a new promise
+		new Promise(((resolve, reject) => {
+			// get a promise to retrieve all documents from the adDepartments document collection
+			nesoDBQueries.DeleteAllDocsFromCollection('hcOrgDivDeptWTeams')
+				// if the promise is resolved with the docs, then resolve this promise with the docs
+				.then((result) => {
+					resolve(result);
+				})
+				// if the promise is rejected with an error, then reject this promise with an error
+				.catch((error) => {
+					reject(error);
+				});
+		})),
+
+	DeleteNonDivDeptTeamsFromDatabase: () =>
+		// return a new promise
+		new Promise(((resolve, reject) => {
+			// get a promise to retrieve all documents from the adDepartments document collection
+			nesoDBQueries.DeleteAllDocsFromCollection('hcOrgDivDeptWTeams')
+				// if the promise is resolved with the docs, then resolve this promise with the docs
+				.then((result) => {
+					resolve(result);
+				})
+				// if the promise is rejected with an error, then reject this promise with an error
+				.catch((error) => {
+					reject(error);
+				});
+		})),
+
+	AddDivDeptsWTeamsToDatabase: divDeptsWTeamsArray =>
+		// return a new promise
+		new Promise(((resolve, reject) => {
+			// get a promise to retrieve all documents from the emailQueue document collection
+			nesoDBQueries.InsertDocIntoCollection(divDeptsWTeamsArray, 'hcOrgDivDeptWTeams')
+				// if the promise is resolved with the result, then resolve this promise with the result
+				.then((result) => {
+					resolve(result);
+				})
+				// if the promise is rejected with an error, then reject this promise with an error
+				.catch((error) => {
+					reject(error);
+				});
+		})),
+
+	AddNonDivDeptTeamsToDatabase: nonDivDeptTeamsArray =>
+		// return a new promise
+		new Promise(((resolve, reject) => {
+			// get a promise to retrieve all documents from the emailQueue document collection
+			nesoDBQueries.InsertDocIntoCollection(nonDivDeptTeamsArray, 'hcOrgNonDivDeptTeams')
+				// if the promise is resolved with the result, then resolve this promise with the result
+				.then((result) => {
+					resolve(result);
+				})
+				// if the promise is rejected with an error, then reject this promise with an error
+				.catch((error) => {
+					reject(error);
 				});
 		})),
 
@@ -219,21 +422,20 @@ module.exports = {
 						})
 							// if the promise to set dataProcessingNow to true was resolved
 							.then((replaceOneHcOrgSettingResult) => {
-								// ------------------- RESTART HERE ----------------------------
 								// get a promise to get all ad users from csv
-								module.exports.ReturnDivDeptsWTeams()
-									// if the promise to get all ad users from csv was resolved with the ad users
-									.then((returnAllActiveDirectoryUsersFromCSVResult) => {
-										// extract the data from the result
-										const adUsers = returnAllActiveDirectoryUsersFromCSVResult.activeDirectoryUsers;
+								module.exports.ConstructAndReturnDivDeptsWTeams()
+								
+								
+								// if the promise to get all ad users from csv was resolved with the ad users
+									.then((returnDivDeptsWTeamsArray) => {
 										// get a promise to delete all ad users from the database
-										module.exports.DeleteAllADUsersFromDatabase()
+										module.exports.DeleteDivDeptsWTeamsFromDatabase()
 											// if the promise to delete all ad users from the database was resolved
-											.then((deleteAllActiveDirectoryUsersFromDatabaseResult) => {
+											.then((deleteDivDeptsWTeamsFromDatabaseResults) => {
 												// get a promise to add ad users from csv to the database
-												module.exports.AddAllADUsersToDatabase(adUsers)
+												module.exports.AddDivDeptsWTeamsToDatabase(returnDivDeptsWTeamsArray)
 													// if the promise to add ad users from csv to the database was resolved
-													.then((addAllActiveDirectoryUsersToDatabaseResult) => {
+													.then((addDivDeptsWTeamsToDatabaseResult) => {
 														// get a promise to set dataProcessingNow to false
 														module.exports.ReplaceOneHcOrgSetting({
 															dataProcessingNow: false,
@@ -255,7 +457,7 @@ module.exports = {
 													})
 													// if the promise to add ad users from 
 													//		csv to the database was rejected with an error
-													.catch((addAllActiveDirectoryUsersToDatabaseError) => {
+													.catch((addDivDeptsWTeamsToDatabaseError) => {
 														// get a promise to set dataProcessingNow to false
 														module.exports.ReplaceOneHcOrgSetting({
 															dataProcessingNow: false,
@@ -264,18 +466,18 @@ module.exports = {
 															//		to false was resolved with the result
 															.then((replaceOneHcOrgSettingSecondResult) => {
 																// reject this promise with the error
-																reject(addAllActiveDirectoryUsersToDatabaseError);
+																reject(addDivDeptsWTeamsToDatabaseError);
 															})
 															// if the promise to add ad users from 
 															// 		csv to the database was rejected with an error
-															.catch((replaceOneADSettingError) => {
+															.catch((replaceOneHcOrgSettingError) => {
 																// construct a custom error
 																const errorToReport = {
 																	error: true,
 																	mongoDBError: true,
 																	errorCollection: [
-																		addAllActiveDirectoryUsersToDatabaseError.mongoDBErrorDetails,
-																		replaceOneADSettingError.mongoDBErrorDetails,
+																		addDivDeptsWTeamsToDatabaseError.mongoDBErrorDetails,
+																		replaceOneHcOrgSettingError.mongoDBErrorDetails,
 																	],
 																};
 																// process error
@@ -287,7 +489,7 @@ module.exports = {
 											})
 											// if the promise to delete all ad users from 
 											// 		the database was rejected with an error
-											.catch((deleteAllActiveDirectoryUsersFromDatabaseError) => {
+											.catch((deleteDivDeptsWTeamsFromDatabaseError) => {
 												// get a promise to set dataProcessingNow to false
 												module.exports.ReplaceOneHcOrgSetting({
 													dataProcessingNow: false,
@@ -296,7 +498,7 @@ module.exports = {
 													// 		to false was resolved with the result
 													.then((replaceOneHcOrgSettingSecondResult) => {
 														// reject this promise with the error
-														reject(deleteAllActiveDirectoryUsersFromDatabaseError);
+														reject(deleteDivDeptsWTeamsFromDatabaseError);
 													})
 													// if the promise to add ad users from csv 
 													// 		to the database was rejected with an error
@@ -306,7 +508,7 @@ module.exports = {
 															error: true,
 															mongoDBError: true,
 															errorCollection: [
-																deleteAllActiveDirectoryUsersFromDatabaseError.mongoDBErrorDetails,
+																deleteDivDeptsWTeamsFromDatabaseError.mongoDBErrorDetails,
 																replaceOneADSettingError.mongoDBErrorDetails,
 															],
 														};
@@ -318,7 +520,7 @@ module.exports = {
 											});
 									})
 									// if the promise to get all ad users from csv was rejected with an error
-									.catch((returnAllActiveDirectoryUsersFromCSVError) => {
+									.catch((returnDivDeptsWTeamsError) => {
 										// get a promise to set dataProcessingNow to false
 										module.exports.ReplaceOneHcOrgSetting({
 											dataProcessingNow: false,
@@ -327,7 +529,7 @@ module.exports = {
 											// 		to false was resolved with the result
 											.then((replaceOneHcOrgSettingSecondResult) => {
 												// reject this promise with the error
-												reject(returnAllActiveDirectoryUsersFromCSVError);
+												reject(returnDivDeptsWTeamsError);
 											})
 											// if the promise to add ad users from csv 
 											// 		to the database was rejected with an error
@@ -337,7 +539,7 @@ module.exports = {
 													error: true,
 													mongoDBError: true,
 													errorCollection: [
-														returnAllActiveDirectoryUsersFromCSVError.mongoDBErrorDetails,
+														returnDivDeptsWTeamsError.mongoDBErrorDetails,
 														replaceOneADSettingError.mongoDBErrorDetails,
 													],
 												};
@@ -369,20 +571,99 @@ module.exports = {
 				});
 		})),
 
+	ProcessNonDivDeptTeamsData: () => 
+		// return a new promise
+		new Promise((resolve, reject) => {
+			// get a promise to construct and return non-division, non-department teams
+			module.exports.ConstructAndReturnNonDivDeptTeams()
+				// if the promise is resolved with a result
+				.then((returnArrayOfNonDivDeptTeams) => {
+					// get a promise to delete all ad users from the database
+					module.exports.DeleteNonDivDeptTeamsFromDatabase()
+						// if the promise to delete all ad users from the database was resolved
+						.then((deleteNonDivDeptTeamsFromDatabaseResults) => {
+							// get a promise to add ad users from csv to the database
+							module.exports.AddNonDivDeptTeamsToDatabase(returnArrayOfNonDivDeptTeams)
+								// if the promise to add ad users from csv to the database was resolved
+								.then((addNonDivDeptTeamsToDatabaseResult) => {
+									resolve({ error: false });
+								})
+								// if the promise to add ad users from 
+								//		csv to the database was rejected with an error
+								.catch((addNonDivDeptTeamsToDatabaseError) => {
+									// construct a custom error
+									const errorToReport = {
+										error: true,
+										mongoDBError: true,
+										addNonDivDeptTeamsToDatabaseError,
+									};
+									// process error
+									nesoErrors.ProcessError(errorToReport);
+									// reject this promise with the error
+									reject(errorToReport);
+								});
+						})
+						// if the promise to delete all ad users from 
+						// 		the database was rejected with an error
+						.catch((deleteNonDivDeptTeamsFromDatabaseError) => {
+							// construct a custom error
+							const errorToReport = {
+								error: true,
+								mongoDBError: true,
+								deleteNonDivDeptTeamsFromDatabaseError,
+							};
+							// process error
+							nesoErrors.ProcessError(errorToReport);
+							// reject this promise with the error
+							reject(errorToReport);
+						});
+				})
+				// if the promise is rejected with an error
+				.catch((returnNonDivDeptTeamsError) => {
+					// construct a custom error
+					const errorToReport = {
+						error: true,
+						mongoDBError: true,
+						returnNonDivDeptTeamsError,
+					};
+					// process error
+					nesoErrors.ProcessError(errorToReport);
+					// reject this promise with the error
+					reject(errorToReport);
+				});
+		}),
+
+
 	ReturnAllHcOrgData: () =>
 		new Promise(((resolve, reject) => {
 			const queries = [
 				module.exports.ReturnDivDeptsWTeams(),
 				module.exports.ReturnMiscContacts(),
 				module.exports.ReturnMission(),
-				module.exports.ReturnXTeams(),
+				module.exports.ReturnNonDivDeptTeams(),
 			];
 			Promise.all(queries)
 				.then((allQueryResults) => {
-					resolve({
+					// extract data from results and construct an object to return
+					const resolution = {
 						error: false,
-						data: allQueryResults,
+						docs: {},
+					};
+					allQueryResults.forEach((resultValue) => {
+						if (resultValue.divDeptWTeams) {
+							resolution.docs.divDeptWTeams = resultValue.divDeptWTeams;
+						}
+						if (resultValue.miscContacts) {
+							resolution.docs.miscContacts = resultValue.miscContacts;
+						}
+						if (resultValue.mission) {
+							resolution.docs.mission = resultValue.mission;
+						}
+						if (resultValue.xTeams) {
+							resolution.docs.xTeams = resultValue.xTeams;
+						}
 					});
+					resolve(resolution);
 				})
 				.catch((error) => {
 					reject(error);
