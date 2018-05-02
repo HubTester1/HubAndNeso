@@ -348,7 +348,7 @@ module.exports = {
 		// return a new promise
 		new Promise(((resolve, reject) => {
 			// get a promise to retrieve all documents from the adDepartments document collection
-			nesoDBQueries.DeleteAllDocsFromCollection('hcOrgDivDeptWTeams')
+			nesoDBQueries.DeleteAllDocsFromCollection('hcOrgNonDivDeptTeams')
 				// if the promise is resolved with the docs, then resolve this promise with the docs
 				.then((result) => {
 					resolve(result);

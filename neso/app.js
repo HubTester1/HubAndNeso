@@ -183,65 +183,8 @@ app.use((err, req, res, next) => {
 	res.render('error', { title: 'Error' });
 });
 
-
 // CRON ---
 
-nesoHcOrg.ProcessHcOrgDivDeptWTeamsData()
-	// if the promise is resolved with the docs, then respond with the docs as JSON
-	.then((result) => {
-		console.log('Processed HcOrg DivDept data:');
-		console.log(result);
-	})
-	// if the promise is rejected with an error, then respond with the error as JSON
-	.catch((error) => {
-		// eslint-disable-next-line no-console
-		console.log('ERROR - Processing HcOrg DivDept data data:');
-		console.log(error);
-	});
-
-
-nesoHcOrg.ProcessNonDivDeptTeamsData()
-	// if the promise is resolved with the docs, then respond with the docs as JSON
-	.then((result) => {
-		console.log('Processed HcOrg NONDivDept data:');
-		console.log(result);
-	})
-	// if the promise is rejected with an error, then respond with the error as JSON
-	.catch((error) => {
-		// eslint-disable-next-line no-console
-		console.log('ERROR - Processing HcOrg NONDivDept data data:');
-		console.log(error);
-	});
-
-
-// nesoActiveDirectory.ProcessADUsersByDivisionDepartmentData()
-// 	// if the promise is resolved with the docs, then respond with the docs as JSON
-// 	.then((result) => {
-// 		console.log('Processed Active Directory Users By Division Department data:');
-// 		console.log(result);
-// 	})
-// 	// if the promise is rejected with an error, then respond with the error as JSON
-// 	.catch((error) => {
-// 		// eslint-disable-next-line no-console
-// 		console.log('ERROR - Processing Active Directory Users By Division Department data:');
-// 		console.log(error);
-// 	});
-
-
-// nesoActiveDirectory.ProcessADUsersByDivisionDepartmentDataTwo()
-// 	// if the promise is resolved with the docs, then respond with the docs as JSON
-// 	.then((result) => {
-// 		console.log('Processed Active Directory Users By Division Department TWOOOOOOOO data:');
-// 		console.log(result);
-// 	})
-// 	// if the promise is rejected with an error, then respond with the error as JSON
-// 	.catch((error) => {
-// 		console.log('ERROR - Processing Active Directory Users By Division Department TWOOOOOOOO data:');
-// 		console.log(error);
-// 	});
-
-
-/*
 // schedule for once per minute
 cron.schedule('* * * * *', () => {
 	// get a promise to process the email queue
@@ -342,7 +285,39 @@ cron.schedule(process.env.adUserByDivisionDepartmentProcessingCronSchedule, () =
 			console.log(`Real time was ${nesoUtilities.ReturnFormattedDateTime('nowLocal', null, null)}`);
 			console.log(`Cron schedule was ${process.env.adUserProcessingCronSchedule}`);
 		});
-}); */
+});
+
+// schedule as specified in environment
+cron.schedule(process.env.adUserByDivisionDepartmentTeamsProcessingCronSchedule, () => {
+	nesoHcOrg.ProcessHcOrgDivDeptWTeamsData()
+		// if the promise is resolved with the docs, then respond with the docs as JSON
+		.then((result) => {
+			console.log('Processed HcOrg DivDept data:');
+			console.log(result);
+		})
+		// if the promise is rejected with an error, then respond with the error as JSON
+		.catch((error) => {
+			// eslint-disable-next-line no-console
+			console.log('ERROR - Processing HcOrg DivDept data data:');
+			console.log(error);
+		});
+});
+
+// schedule as specified in environment
+cron.schedule(process.env.nonDivisionDepartmentTeamsProcessingCronSchedule, () => {
+	nesoHcOrg.ProcessNonDivDeptTeamsData()
+		// if the promise is resolved with the docs, then respond with the docs as JSON
+		.then((result) => {
+			console.log('Processed HcOrg NONDivDept data:');
+			console.log(result);
+		})
+		// if the promise is rejected with an error, then respond with the error as JSON
+		.catch((error) => {
+			// eslint-disable-next-line no-console
+			console.log('ERROR - Processing HcOrg NONDivDept data data:');
+			console.log(error);
+		});
+});
 
 // PROCESS ---
 
