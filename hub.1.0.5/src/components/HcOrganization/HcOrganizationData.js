@@ -5,11 +5,12 @@ import { Web } from 'sp-pnp-js';
 import shortID from 'shortid';
 import EnvironmentDetector from '../../services/EnvironmentDetector';
 import NesoHTTPClient from '../../services/NesoHTTPClient';
+import ReturnHcOrganizationMockData from './HcOrganizationMockData';
 
 // ----- DATA
 
 export default class HcGetItDoneData {
-	static ReturnHRDocsForHcOrganization() {
+	static ReturnHRDocsForHcOrg() {
 		const hrDocsWeb = new Web('https://bmos.sharepoint.com');
 		return hrDocsWeb.lists.getByTitle('HR Docs').items
 			.select('FileLeafRef', 'ServerRedirectedEmbedUrl', 'Title', 'HRISKey')
@@ -17,23 +18,18 @@ export default class HcGetItDoneData {
 			.get();
 	}
 
-	static ReturnNesoDataForADUsersByDivDept() {
-		return new Promise((resolve, reject) => {
-			NesoHTTPClient
-				.ReturnNesoData('https://neso.mos.org:3001/activeDirectory/divDept')
-				.then((response) => {
-					resolve(response);
-				})
-				.catch((error) => {
-					reject(error);
-				});
-		});
+	static ReturnHubDocsForHcOrg() {
+		const hrDocsWeb = new Web('https://bmos.sharepoint.com');
+		return hrDocsWeb.lists.getByTitle('HubDocs').items
+			.select('FileLeafRef', 'ServerRedirectedEmbedUrl', 'Title', 'HcOrgName')
+			.filter('HcOrgName ne null')
+			.get();
 	}
 
-	static ReturnNesoDataForTeams() {
+	static ReturnNesoDataForHcOrg() {
 		return new Promise((resolve, reject) => {
 			NesoHTTPClient
-				.ReturnNesoData('https://neso.mos.org:3001/activeDirectory/teams')
+				.ReturnNesoData('https://neso.mos.org:3001/hcOrg/allOrg')
 				.then((response) => {
 					resolve(response);
 				})
@@ -50,184 +46,90 @@ export default class HcGetItDoneData {
 			if (EnvironmentDetector.ReturnIsSPO()) {
 				// collect data async from multiple sources
 				const listItemQueryPromises = [
-					this.ReturnHRDocsForHcOrganization(),
-					this.ReturnNesoDataForADUsersByDivDept(),
-					this.ReturnNesoDataForTeams(),
+					this.ReturnHRDocsForHcOrg(),
+					this.ReturnHubDocsForHcOrg(),
+					this.ReturnNesoDataForHcOrg(),
 				];
-				// wait for all queries to be completed
+				// wait for the promises for all queries
 				Promise.all(listItemQueryPromises)
-					// if the promise is resolved with the settings
+					// if the promises are resolved with the data
 					.then((resultsReturnArray) => {
-						console.log(resultsReturnArray);
+						// set up vars
 						let orgChartsReturn;
-						let divDeptReturn;
-						let teamsReturn;
+						let divDeptWTeamsReturn;
+						let nonDivDeptWTeamsReturn;
 						let otherContactsReturn;
-						let missionReturn;
-						let divisionKeys;
-						let deptKeys;
-
-						const divDeptTempHolder = {};
-						let divDeptTempHolderDivKeys;
-						let divDeptTempHolderDeptKeys;
-						let divDeptFinal;
-
 						const finalResolution = {
-							divDept: [],
+							divDeptWTeams: [],
+							nonDivDeptTeams: [],
 							otherContacts: [],
-							mission: '',
 						};
-
-						
+						// extract data from the queries
 						resultsReturnArray.forEach((resultValue) => {
-							if (resultValue[0].ServerRedirectedEmbedUrl) {
-								orgChartsReturn = resultValue;
+							if (resultValue[0] && resultValue[0]['odata.type']) {
+								if (resultValue[0]['odata.type'] === 'SP.Data.HRDocsItem') {
+									orgChartsReturn = resultValue;
+								}
+								if (resultValue[0]['odata.type'] === 'SP.Data.HubDocsItem') {
+									otherContactsReturn = resultValue;
+								}
 							}
-							if (resultValue[0].Advancement) {
-								divDeptReturn = resultValue[0];
-							}
-							if (resultValue[0].pageToken) {
-								teamsReturn = resultValue;
+							if (resultValue.divDeptWTeams) {
+								divDeptWTeamsReturn = resultValue.divDeptWTeams;
+								nonDivDeptWTeamsReturn = resultValue.nonDivDeptTeams;
 							}
 						});
-
-						console.log('orgChartsReturn');
-						console.log(orgChartsReturn);
-						console.log('divDeptReturn');
-						console.log(divDeptReturn);
-						console.log('teamsReturn');
-						console.log(teamsReturn);
-
-						// extract an array of all divisions
-						divisionKeys = Object.keys(divDeptReturn);
-
-						divisionKeys.forEach((divisionKey) => {
-							// add division to final
-							divDeptTempHolder[divisionKey] = {};
-							divDeptTempHolder[divisionKey].depts = {};
-							// if there's an org chart for this division
+						// note: we're going to mash up the org charts and the divDeptWTeams
+						// note: in divDeptWReturn, divs and depts already have keys for react
+						// for each division
+						divDeptWTeamsReturn.forEach((division) => {
+							// preserve parameter
+							const divisionCopy = division;
+							// for each org chart
 							orgChartsReturn.forEach((orgChart) => {
-								if (orgChart.HRISKey === divisionKey) {
-									divDeptTempHolder[divisionKey].orgChart = 
-										orgChart.ServerRedirectedEmbedUrl;
+								// if this org chart is for this division
+								if (orgChart.HRISKey === divisionCopy.name) {
+									divisionCopy.orgChart = orgChart.ServerRedirectedEmbedUrl;
 								}
 							});
-							// if this division has a presence on The Hub
-							teamsReturn.forEach((team) => {
-								if (team.adKey) {
-									team.adKey.forEach((adKeyElement) => {
-										if (adKeyElement.trim() === divisionKey.trim()) {
-											divDeptTempHolder[divisionKey].hubScreenToken =
-												team.pageToken;
-										}
-									});
-								}
-							});
-							// extract an array of the departments in this division
-							deptKeys = Object.keys(divDeptReturn[divisionKey]);
-							// for each department in this division
-							deptKeys.forEach((deptKey) => {
-								// add department to final
-								divDeptTempHolder[divisionKey].depts[deptKey] = {};
-								// if this department has a presence on The Hub
-								teamsReturn.forEach((team) => {
-									if (team.adKey) {
-										team.adKey.forEach((adKeyElement) => {
-											if (adKeyElement.trim() === deptKey.trim()) {
-												divDeptTempHolder[divisionKey].depts[deptKey].hubScreenToken =
-													team.pageToken;
-											}
-										});
-									}
-								});
-								// add members to department
-								divDeptTempHolder[divisionKey].depts[deptKey].members = 
-									divDeptReturn[divisionKey][deptKey].members;
-							});
+							// push this copy of the division (with or without org chart) 
+							// 		to the final array
+							finalResolution.divDeptWTeams.push(divisionCopy);
 						});
-
-						// note: what we're doing next is essentially converting an object to an array
-
-						// extract into array from object its "child" / first level keys;
-						// 		these keys correspond to division names
-						divDeptTempHolderDivKeys = Object.keys(divDeptTempHolder);
-						// sort division key alphabetically
-						divDeptTempHolderDivKeys.sort();
-						// for each division key
-						divDeptTempHolderDivKeys.forEach((divKeyValue) => {
-							// if it's not the mongo id (i.e., it's actually a division)
-							if (divKeyValue !== '_id') {
-								// create a division object with name and react key and empty depts array
-								const divObject = {
-									name: divKeyValue,
-									key: shortID.generate(),
-									depts: [],
-								};
-								// is this division has a hubScreenToken
-								if (divDeptTempHolder[divKeyValue].hubScreenToken) {
-									// add it to the division object
-									divObject.hubScreenToken = divDeptTempHolder[divKeyValue].hubScreenToken;
-								}
-								// if this division has an orgChart
-								if (divDeptTempHolder[divKeyValue].orgChart) {
-									// add it to the division object
-									divObject.orgChart = divDeptTempHolder[divKeyValue].orgChart;
-								}
-								// extract into array from object its "child" / first level keys;
-								// 		these keys correspond to department names
-								divDeptTempHolderDeptKeys = Object.keys(divDeptTempHolder[divKeyValue].depts);
-								// for each department key
-								divDeptTempHolderDeptKeys.forEach((deptKeyValue) => {
-									// create a department object with name and react key and an empty members array
-									const deptObject = {
-										name: deptKeyValue,
-										key: shortID.generate(),
-										members: [],
-									};
-									// is this department has a hubScreenToken
-									if (divDeptTempHolder[divKeyValue].depts[deptKeyValue].hubScreenToken) {
-									// add it to the department object
-										deptObject.hubScreenToken =
-											divDeptTempHolder[divKeyValue].depts[deptKeyValue].hubScreenToken;
-									}
-									// for each member in this department
-									divDeptTempHolder[divKeyValue].depts[deptKeyValue]
-										.members.forEach((member) => {
-											// create a member object
-											const memberObject = {
-												account: member.account,
-												displayName: member.displayName,
-												title: member.title,
-												email: member.email,
-												officePhone: member.officePhone,
-												mobilePhone: member.mobilePhone,
-											};
-											deptObject.members.push(memberObject);
-										});
-									// push the department object to the depts array of the division object
-									divObject.depts.push(deptObject);
-								});
-								// push the division object to the finalResolution divDept array
-								finalResolution.divDept.push(divObject);
-							}
+						// add a react key to each item
+						otherContactsReturn.forEach((otherContact) => {
+							// preserve parameter
+							const otherContactCopy = otherContact;
+							// generate a key for this item
+							otherContactCopy.reactKey = shortID.generate();
+							// push this copy of the item to finalResolution
+							finalResolution.otherContacts.push(otherContactCopy);
 						});
-
-						console.log('finalResolution');
-						console.log(finalResolution);
-
-
-						resolve(divDeptReturn);
+						// add a react key to each item
+						nonDivDeptWTeamsReturn.forEach((team) => {
+							// preserve parameter
+							const teamCopy = team;
+							// generate a key for this item
+							teamCopy.reactKey = shortID.generate();
+							// push this copy of the item to finalResolution
+							finalResolution.nonDivDeptTeams.push(teamCopy);
+						});
+						// resolve this promise with finalResolution
+						resolve(finalResolution);
 					})
+					// if any single promise is rejected with an error
 					.catch((queryError) => {
-						console.log(queryError);
+						// reject this promise with the first error (because that's all we get)
 						reject({
 							error: true,
 							queryError,
 						});
 					});
 			} else {
+				const hcOrgMockData = ReturnHcOrganizationMockData();
+				console.log(hcOrgMockData);
 				// resolve the promise with mock data
-				resolve({});
+				resolve(hcOrgMockData);
 			}
 		}));
 	}

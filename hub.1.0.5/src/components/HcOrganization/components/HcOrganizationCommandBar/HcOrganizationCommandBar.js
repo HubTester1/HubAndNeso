@@ -34,10 +34,10 @@ const HcGetItDoneCommandBar = props => (
 							ariaLabel: 'Other Contacts',
 							onClick: props.handleClickOtherContacts,
 						}, {
-							key: 'mission',
-							name: 'Mission',
+							key: 'missionVision',
+							name: 'Mission & Vision',
 							icon: 'TextDocument',
-							ariaLabel: 'Mission',
+							ariaLabel: 'Mission and Vision',
 							onClick: props.handleClickShowMission,
 						},
 					]
