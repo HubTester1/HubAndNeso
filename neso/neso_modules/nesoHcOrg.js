@@ -128,24 +128,6 @@ module.exports = {
 				});
 		})),
 
-	ReturnMiscContacts: () =>
-		// return a new promise
-		new Promise(((resolve, reject) => {
-			// get a promise to retrieve all documents from the adUsers document collection
-			nesoDBQueries.ReturnAllDocsFromCollection('hcOrgMiscContacts')
-				// if the promise is resolved with the docs, then resolve this promise with the docs
-				.then((result) => {
-					resolve({
-						error: false,
-						miscContacts: result.docs,
-					});
-				})
-				// if the promise is rejected with an error, then reject this promise with an error
-				.catch((error) => {
-					reject(error);
-				});
-		})),
-
 	ReturnMission: () =>
 		// return a new promise
 		new Promise(((resolve, reject) => {
@@ -173,7 +155,7 @@ module.exports = {
 				.then((result) => {
 					resolve({
 						error: false,
-						xTeams: result.docs,
+						nonDivDeptTeams: result.docs,
 					});
 				})
 				// if the promise is rejected with an error, then reject this promise with an error
@@ -638,8 +620,6 @@ module.exports = {
 		new Promise(((resolve, reject) => {
 			const queries = [
 				module.exports.ReturnDivDeptsWTeams(),
-				module.exports.ReturnMiscContacts(),
-				module.exports.ReturnMission(),
 				module.exports.ReturnNonDivDeptTeams(),
 			];
 			Promise.all(queries)
@@ -653,14 +633,8 @@ module.exports = {
 						if (resultValue.divDeptWTeams) {
 							resolution.docs.divDeptWTeams = resultValue.divDeptWTeams;
 						}
-						if (resultValue.miscContacts) {
-							resolution.docs.miscContacts = resultValue.miscContacts;
-						}
-						if (resultValue.mission) {
-							resolution.docs.mission = resultValue.mission;
-						}
-						if (resultValue.xTeams) {
-							resolution.docs.xTeams = resultValue.xTeams;
+						if (resultValue.nonDivDeptTeams) {
+							resolution.docs.nonDivDeptTeams = resultValue.nonDivDeptTeams;
 						}
 					});
 					resolve(resolution);
