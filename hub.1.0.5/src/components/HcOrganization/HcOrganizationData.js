@@ -57,7 +57,6 @@ export default class HcGetItDoneData {
 						// set up vars
 						let orgChartsReturn;
 						let divDeptWTeamsReturn;
-						let nonDivDeptWTeamsReturn;
 						let otherContactsReturn;
 						const finalResolution = {
 							divDeptWTeams: [],
@@ -76,7 +75,7 @@ export default class HcGetItDoneData {
 							}
 							if (resultValue.divDeptWTeams) {
 								divDeptWTeamsReturn = resultValue.divDeptWTeams;
-								nonDivDeptWTeamsReturn = resultValue.nonDivDeptTeams;
+								finalResolution.nonDivDeptTeams = resultValue.nonDivDeptTeams;
 							}
 						});
 						// note: we're going to mash up the org charts and the divDeptWTeams
@@ -105,15 +104,6 @@ export default class HcGetItDoneData {
 							// push this copy of the item to finalResolution
 							finalResolution.otherContacts.push(otherContactCopy);
 						});
-						// add a react key to each item
-						nonDivDeptWTeamsReturn.forEach((team) => {
-							// preserve parameter
-							const teamCopy = team;
-							// generate a key for this item
-							teamCopy.reactKey = shortID.generate();
-							// push this copy of the item to finalResolution
-							finalResolution.nonDivDeptTeams.push(teamCopy);
-						});
 						// resolve this promise with finalResolution
 						resolve(finalResolution);
 					})
@@ -126,10 +116,8 @@ export default class HcGetItDoneData {
 						});
 					});
 			} else {
-				const hcOrgMockData = ReturnHcOrganizationMockData();
-				console.log(hcOrgMockData);
 				// resolve the promise with mock data
-				resolve(hcOrgMockData);
+				resolve(ReturnHcOrganizationMockData());
 			}
 		}));
 	}

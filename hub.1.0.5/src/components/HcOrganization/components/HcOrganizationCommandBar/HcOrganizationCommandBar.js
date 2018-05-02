@@ -16,11 +16,11 @@ const HcGetItDoneCommandBar = props => (
 				items={
 					[
 						{
-							key: 'groups',
-							name: 'Groups',
+							key: 'teams',
+							name: 'Divisions, Departments, & Other Teams',
 							icon: 'Group',
-							ariaLabel: 'Groups',
-							onClick: props.handleClickShowGroups,
+							ariaLabel: 'Divisions, Departments, and Other Teams',
+							onClick: props.handleClickShowTeams,
 						}, {
 							key: 'staffLookup',
 							name: 'Staff Lookup',

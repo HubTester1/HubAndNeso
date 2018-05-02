@@ -4,7 +4,7 @@
 import * as React from 'react';
 import HcOrganizationData from './HcOrganizationData';
 import HcOrganizationCommandBar from './components/HcOrganizationCommandBar/HcOrganizationCommandBar';
-import HcOrganizationGroups from './components/HcOrganizationGroups/HcOrganizationGroups';
+import HcOrganizationTeams from './components/HcOrganizationTeams/HcOrganizationTeams';
 import HcStaffLookup from '../HcStaffLookup/HcStaffLookup';
 import HcOrganizationOtherContacts from './components/HcOrganizationOtherContacts/HcOrganizationOtherContacts';
 import HcOrganizationMission from './components/HcOrganizationMission/HcOrganizationMission';
@@ -15,16 +15,16 @@ export default class HcOrganization extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			showGroups: true,
+			showTeams: true,
 			showStaffLookup: false,
 			showOtherContacts: false,
 			showMission: false,
-			groupsArray: [],
+			divDeptWTeamsArray: [],
+			nonDivDeptTeamsArray: [],
 			otherContactsArray: [],
-			mission: '',
 			queryError: false,
 		};
-		this.handleClickShowGroups = this.handleClickShowGroups.bind(this);
+		this.handleClickShowTeams = this.handleClickShowTeams.bind(this);
 		this.handleClickShowStaffLookup = this.handleClickShowStaffLookup.bind(this);
 		this.handleClickOtherContacts = this.handleClickOtherContacts.bind(this);
 		this.handleClickShowMission = this.handleClickShowMission.bind(this);
@@ -32,11 +32,13 @@ export default class HcOrganization extends React.Component {
 	componentDidMount() {
 		HcOrganizationData.ReturnAllOrganizationData()
 			.then((allOrganizationData) => {
-				/* this.setState(() => ({
-					groupsArray: allOrganizationData.groupsArray,
-					otherContactsArray: allOrganizationData.otherContactsArray,
-					mission: allOrganizationData.mission,
-				})); */
+				console.log('allOrganizationData');
+				console.log(allOrganizationData);
+				this.setState(() => ({
+					divDeptWTeamsArray: allOrganizationData.divDeptWTeams,
+					nonDivDeptTeamsArray: allOrganizationData.nonDivDeptTeams,
+					otherContactsArray: allOrganizationData.otherContacts,
+				}));
 			})
 			.catch((error) => {
 				this.setState(() => ({
@@ -44,10 +46,10 @@ export default class HcOrganization extends React.Component {
 				}));
 			});
 	}
-	handleClickShowGroups(e) {
+	handleClickShowTeams(e) {
 		e.preventDefault();
 		this.setState(() => ({
-			showGroups: true,
+			showTeams: true,
 			showStaffLookup: false,
 			showOtherContacts: false,
 			showMission: false,
@@ -56,7 +58,7 @@ export default class HcOrganization extends React.Component {
 	handleClickShowStaffLookup(e) {
 		e.preventDefault();
 		this.setState(() => ({
-			showGroups: false,
+			showTeams: false,
 			showStaffLookup: true,
 			showOtherContacts: false,
 			showMission: false,
@@ -65,7 +67,7 @@ export default class HcOrganization extends React.Component {
 	handleClickOtherContacts(e) {
 		e.preventDefault();
 		this.setState(() => ({
-			showGroups: false,
+			showTeams: false,
 			showStaffLookup: false,
 			showOtherContacts: true,
 			showMission: false,
@@ -74,7 +76,7 @@ export default class HcOrganization extends React.Component {
 	handleClickShowMission(e) {
 		e.preventDefault();
 		this.setState(() => ({
-			showGroups: false,
+			showTeams: false,
 			showStaffLookup: false,
 			showOtherContacts: false,
 			showMission: true,
@@ -89,16 +91,17 @@ export default class HcOrganization extends React.Component {
 
 					<div id="hc-organization-body">
 						<HcOrganizationCommandBar
-							handleClickShowGroups={this.handleClickShowGroups}
+							handleClickShowTeams={this.handleClickShowTeams}
 							handleClickShowStaffLookup={this.handleClickShowStaffLookup}
 							handleClickOtherContacts={this.handleClickOtherContacts}
 							handleClickShowMission={this.handleClickShowMission}
 						/>
 						{
-							this.state.showGroups &&
+							this.state.showTeams &&
 
-							<HcOrganizationGroups
-								groupsArray={this.state.groupsArray}
+							<HcOrganizationTeams
+								divDeptWTeamsArray={this.state.divDeptWTeamsArray}
+								nonDivDeptTeamsArray={this.state.nonDivDeptTeamsArray}
 							/>
 						}
 						{
@@ -116,9 +119,7 @@ export default class HcOrganization extends React.Component {
 						{
 							this.state.showMission &&
 
-							<HcOrganizationMission
-								mission={this.state.mission}
-							/>
+							<HcOrganizationMission />
 						}
 					</div>
 				}

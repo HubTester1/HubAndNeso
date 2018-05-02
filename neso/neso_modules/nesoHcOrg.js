@@ -285,6 +285,7 @@ module.exports = {
 											email: member.email,
 											officePhone: member.officePhone,
 											mobilePhone: member.mobilePhone,
+											reactKey: shortID.generate(),
 										};
 										deptObject.members.push(memberObject);
 									});
@@ -317,6 +318,7 @@ module.exports = {
 							relevantTeams.push({
 								name: teamValue.name,
 								pageToken: teamValue.pageToken,
+								reactKey: shortID.generate(),
 							});
 						}
 					});

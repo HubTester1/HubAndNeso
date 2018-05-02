@@ -200,7 +200,6 @@ cron.schedule('* * * * *', () => {
 			console.log(error);
 		});
 });
-
 // schedule as specified in environment
 cron.schedule(process.env.hrPositionsProcessingCronSchedule1, () => {
 	// get a promise to process HR Position Directory data
@@ -222,7 +221,6 @@ cron.schedule(process.env.hrPositionsProcessingCronSchedule1, () => {
 			console.log(`Cron schedule was ${process.env.hrPositionsProcessingCronSchedule1}`);
 		});
 });
-
 // schedule as specified in environment
 cron.schedule(process.env.hrPositionsProcessingCronSchedule2, () => {
 	// get a promise to process HR Position Directory data
@@ -244,7 +242,6 @@ cron.schedule(process.env.hrPositionsProcessingCronSchedule2, () => {
 			console.log(`Cron schedule was ${process.env.hrPositionsProcessingCronSchedule2}`);
 		});
 });
-
 // schedule as specified in environment
 cron.schedule(process.env.adUserProcessingCronSchedule, () => {
 	nesoActiveDirectory.ProcessADUsersData()
@@ -265,7 +262,6 @@ cron.schedule(process.env.adUserProcessingCronSchedule, () => {
 			console.log(`Cron schedule was ${process.env.adUserProcessingCronSchedule}`);
 		});
 });
-
 // schedule as specified in environment
 cron.schedule(process.env.adUserByDivisionDepartmentProcessingCronSchedule, () => {
 	nesoActiveDirectory.ProcessADUsersByDivisionDepartmentData()
@@ -286,14 +282,13 @@ cron.schedule(process.env.adUserByDivisionDepartmentProcessingCronSchedule, () =
 			console.log(`Cron schedule was ${process.env.adUserProcessingCronSchedule}`);
 		});
 });
-
 // schedule as specified in environment
 cron.schedule(process.env.adUserByDivisionDepartmentTeamsProcessingCronSchedule, () => {
 	nesoHcOrg.ProcessHcOrgDivDeptWTeamsData()
 		// if the promise is resolved with the docs, then respond with the docs as JSON
 		.then((result) => {
-			console.log('Processed HcOrg DivDept data:');
-			console.log(result);
+			// console.log('Processed HcOrg DivDept data:');
+			// console.log(result);
 		})
 		// if the promise is rejected with an error, then respond with the error as JSON
 		.catch((error) => {
@@ -302,14 +297,13 @@ cron.schedule(process.env.adUserByDivisionDepartmentTeamsProcessingCronSchedule,
 			console.log(error);
 		});
 });
-
 // schedule as specified in environment
 cron.schedule(process.env.nonDivisionDepartmentTeamsProcessingCronSchedule, () => {
 	nesoHcOrg.ProcessNonDivDeptTeamsData()
 		// if the promise is resolved with the docs, then respond with the docs as JSON
 		.then((result) => {
-			console.log('Processed HcOrg NONDivDept data:');
-			console.log(result);
+			// console.log('Processed HcOrg NONDivDept data:');
+			// console.log(result);
 		})
 		// if the promise is rejected with an error, then respond with the error as JSON
 		.catch((error) => {
