@@ -1,6 +1,6 @@
 
 /* eslint class-methods-use-this: 0 */
-/* eslint no-underscore-dangle: 0 */
+/* eslint react/prefer-stateless-function: 0 */
 /* eslint max-len: 0 */
 
 // ----- IMPORTS
@@ -9,55 +9,91 @@ import * as React from 'react';
 
 // ----- COMPONENT
 
-export default class HcStaffLookupPersonaCard extends React.Component {
-	render() {
-		return (
-			<div id={`hc-staff-lookup-persona_${this.props.personaId}`} className="hc-staff-lookup-persona mos-react-component-root">
-				<span id="persona-card-dialog-header">
-					{/* <span id="avatar">
-				<span id="avatar-initials">{this.props.memberContent.firstInitial}{this.props.memberContent.lastInitial}
-				</span>
-			</span> */}
-					<span id="name_title_department">
-						{
-							this.props.memberContent.displayName &&
-						<span id="name">{this.props.memberContent.displayName}</span>
-						}
-						{
-							this.props.memberContent.title &&
-						<span id="title">{this.props.memberContent.title}</span>
-						}
+const HcOrgTeamsMemberPersonaCard = (props) => {
+	let photoStyleObject = {};
+	if (props.memberContent.photoURL) {
+		photoStyleObject = {
+			backgroundImage: `url(${props.memberContent.photoURL})`,
+		};
+	}
+	return (
+		<div id={`hc-organization-teams-member-persona_${props.personaId}`} className="hc-organization-teams-member-persona mos-react-component-root">
+			<span className="persona-card-dialog-header">
+				{
+					props.memberContent.photoURL &&
+					<span className="avatar" style={photoStyleObject} />
+				}
+				{
+					!props.memberContent.photoURL &&
+					<span className="avatar">
+						<span className="avatar-initials">{props.memberContent.firstInitial}{props.memberContent.lastInitial}
+						</span>
 					</span>
-				</span>
-				<ul id="persona-card-dialog-body">
+				}
+				<span className="name_title_department">
 					{
-						this.props.memberContent.officePhone &&
-					this.props.memberContent.mobilePhone &&
-					<li id="phone-numbers">
+						props.memberContent.displayName &&
+						<span className="name">{props.memberContent.displayName}</span>
+					}
+					{
+						props.memberContent.title &&
+						<span className="title">{props.memberContent.title}</span>
+					}
+				</span>
+			</span>
+			<ul className="persona-card-dialog-body">
+				{
+					props.memberContent.uiMessage &&
+
+					<p className="ui-message">{props.memberContent.uiMessage}</p>
+				}
+				{
+					props.memberContent.officePhone &&
+					props.memberContent.mobilePhone &&
+
+					<li className="phone-numbers">
 						<ul>
-							<li id="business-phone-number">Business: {this.props.memberContent.officePhone}</li>
-							<li id="mobile-phone-number">Mobile: {this.props.memberContent.mobilePhone}</li>
+							<li className="business-phone-number">Business: {props.memberContent.officePhone}</li>
+							<li className="mobile-phone-number">Mobile: {props.memberContent.mobilePhone}</li>
 						</ul>
 					</li>
-					}
-					{
-						this.props.memberContent.officePhone &&
-					<li id="business-phone-number">Business: {this.props.memberContent.officePhone}</li>
-					}
-					{
-						this.props.memberContent.mobilePhone &&
-					<li id="business-phone-number">Business: {this.props.memberContent.mobilePhone}</li>
-					}
-					{
-						this.props.memberContent.email &&
-					<li id="email">
-						<a href={`mailto:${this.props.memberContent.email}`}>
-							{this.props.memberContent.email}
+				}
+				{
+					props.memberContent.officePhone &&
+					!props.memberContent.mobilePhone &&
+
+					<li className="business-phone-number">Business: {props.memberContent.officePhone}</li>
+				}
+				{
+					!props.memberContent.officePhone &&
+					props.memberContent.mobilePhone &&
+
+					<li className="business-phone-number">Business: {props.memberContent.mobilePhone}</li>
+				}
+				{
+					props.memberContent.email &&
+
+					<li className="email">
+						<a href={`mailto:${props.memberContent.email}`}>
+							{props.memberContent.email}
 						</a>
 					</li>
-					}
-				</ul>
-			</div>
-		);
-	}
-}
+				}
+				{
+					props.memberContent.profileToken &&
+
+					<li className="profile">
+						<a
+							href={`https://bmos-my.sharepoint.com/_layouts/15/me.aspx?u=${props.memberContent.profileToken}`}
+							target="_blank"
+						>
+							Profile
+						</a>
+					</li>
+				}
+			</ul>
+		</div>
+	);
+};
+
+export default HcOrgTeamsMemberPersonaCard;

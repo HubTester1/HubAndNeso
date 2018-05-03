@@ -35,13 +35,13 @@ export default class HcStaffLookupData {
 							key: shortid.generate(),
 							account: response.account,
 							displayName: response.displayName,
-							firstInitial: response.firstName.slice(0, 1).toUpperCase(),
-							lastInitial: response.lastName.slice(0, 1).toUpperCase(),
+							firstInitial: response.firstInitial,
+							lastInitial: response.lastInitial,
 							title: response.title,
 							department: response.department,
 							officePhone: response.officePhone,
 							email: response.email,
-							photoURL: lastPersonInPicker.imageUrl,
+							photoURL: `/_layouts/15/userphoto.aspx?size=S&accountname=${response.account}@mos.org`,							
 						};
 						if (response.mobilePhone) {
 							personaData.mobilePhone = response.mobilePhone;

@@ -1,9 +1,4 @@
 
-Staff Lookup - Solo and in Org
----------------
-
-
-
 divDept
 ---------------
 initials and photos - homogeneity with staff lookup
@@ -17,8 +12,6 @@ delete image
 edit message - only if I'm the creator
 delete message - only if I'm the creator
 if no expiration date, set to 180 days in future
-
-
 
 
 Other Contacts

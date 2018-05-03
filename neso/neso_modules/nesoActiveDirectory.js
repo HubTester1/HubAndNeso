@@ -249,6 +249,8 @@ module.exports = {
 														employeeID: adUserRaw.employeeID,
 														firstName: adUserRaw.givenName,
 														lastName: adUserRaw.sn,
+														firstInitial: adUserRaw.givenName.slice(0, 1).toUpperCase(),
+														lastInitial: adUserRaw.sn.slice(0, 1).toUpperCase(),
 														displayName: adUserRaw.displayName,
 														title: adUserRaw.title,
 														email: adUserRaw.mail,

@@ -281,10 +281,15 @@ module.exports = {
 										const memberObject = {
 											account: member.account,
 											displayName: member.displayName,
+											firstName: member.firstName,
+											lastName: member.lastName,
+											firstInitial: member.firstInitial,
+											lastInitial: member.lastInitial,
 											title: member.title,
 											email: member.email,
 											officePhone: member.officePhone,
 											mobilePhone: member.mobilePhone,
+											photoURL: `/_layouts/15/userphoto.aspx?size=S&accountname=${member.account}@mos.org`,
 											reactKey: shortID.generate(),
 										};
 										deptObject.members.push(memberObject);
