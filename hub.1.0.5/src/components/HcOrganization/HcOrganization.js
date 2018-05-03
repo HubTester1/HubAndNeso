@@ -32,8 +32,6 @@ export default class HcOrganization extends React.Component {
 	componentDidMount() {
 		HcOrganizationData.ReturnAllOrganizationData()
 			.then((allOrganizationData) => {
-				console.log('allOrganizationData');
-				console.log(allOrganizationData);
 				this.setState(() => ({
 					divDeptWTeamsArray: allOrganizationData.divDeptWTeams,
 					nonDivDeptTeamsArray: allOrganizationData.nonDivDeptTeams,
