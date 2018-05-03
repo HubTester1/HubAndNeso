@@ -1,10 +1,13 @@
 
 Staff Lookup - Solo and in Org
 ---------------
-If there are multiple people in picker, querying for the first one
-If query for user data gets no result, show message in place of persona card
 
 
+
+divDept
+---------------
+initials and photos - homogeneity with staff lookup
+	note: photo URL format: /_layouts/15/userphoto.aspx?size=S&accountname=ksimmons@mos.org
 
 Messages
 ------------------

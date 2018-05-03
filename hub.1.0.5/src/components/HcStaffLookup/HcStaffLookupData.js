@@ -22,19 +22,18 @@ export default class HcStaffLookupData {
 			// get the last array element; we handle one at a time, 
 			// 		so the others have been handled already
 			const lastPersonInPicker = peoplePickerData[peoplePickerData.length - 1];
-			console.log('lastPersonInPicker');
-			console.log(lastPersonInPicker);
 			// extract the account value
-			const account = MOSUtilities.ReplaceAll('@mos.org', '', lastPersonInPicker._user.Key
+			const lastPersonInPickerAccount = MOSUtilities.ReplaceAll('@mos.org', '', lastPersonInPicker._user.Key
 				.substr(lastPersonInPicker._user.Key.lastIndexOf('|') + 1));
-			// get a promise to get the relevant person's full set of data using account
-			NesoHTTPClient.ReturnNesoData(`https://neso.mos.org:3001/activeDirectory/user/${account}`)
+			// get a promise to get the relevant person's full set of data using lastPersonInPickerAccount
+			NesoHTTPClient.ReturnNesoData(`https://neso.mos.org:3001/activeDirectory/user/${lastPersonInPickerAccount}`)
 				// if the promise was resolved with the full set of data
 				.then((response) => {
 					if (response !== null) {
 						// extract the persona data from the full set of data
 						const personaData = {
 							key: shortid.generate(),
+							account: response.account,
 							displayName: response.displayName,
 							firstInitial: response.firstName.slice(0, 1).toUpperCase(),
 							lastInitial: response.lastName.slice(0, 1).toUpperCase(),
@@ -53,15 +52,28 @@ export default class HcStaffLookupData {
 						// resolve this promise with the persona data
 						resolve(personaData);
 					} else {
-						reject({
-							error: true,
-							personNotFound: true,
-						});
+						// construct a placeholder persona
+						const personaData = {
+							key: shortid.generate(),
+							account: lastPersonInPickerAccount,
+							displayName: lastPersonInPicker._user.DisplayText,
+							uiMessage: 'Sorry, I can\'t find much information about this person',
+						};
+						// respond with placeholder persona
+						resolve(personaData);
 					}
 				})
 				// if the promse was not resolved with the full set of data
 				.catch((error) => {
-					reject(error);
+					// construct a placeholder persona
+					const personaData = {
+						key: shortid.generate(),
+						account: lastPersonInPickerAccount,
+						displayName: lastPersonInPicker._user.DisplayText,
+						uiMessage: 'Sorry, I can\'t find much information about this person',
+					};
+					// respond with placeholder persona
+					resolve(personaData);
 				});
 		});
 	}
