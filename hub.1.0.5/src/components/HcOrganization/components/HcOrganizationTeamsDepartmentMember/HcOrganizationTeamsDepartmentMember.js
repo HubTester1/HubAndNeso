@@ -8,11 +8,17 @@ import HcOrganizationTeamsMemberPersonaCard from '../HcOrganizationTeamsMemberPe
 export default class HcOrganizationTeamsDepartmentMember extends React.Component {
 	constructor(props) {
 		super(props);
+		this.state = {
+			showPersona: false,
+		};
 		this.handleMemberClick = this.handleMemberClick.bind(this);
 	}
 	handleMemberClick(e) {
 		e.preventDefault();
-		this.props.onMemberClick(this.props.memberContent);
+		// this.props.onMemberClick(this.props.memberContent);
+		this.setState(prevState => ({
+			showPersona: !prevState.showPersona,
+		}));
 	}
 	render() {
 		return (
@@ -22,11 +28,15 @@ export default class HcOrganizationTeamsDepartmentMember extends React.Component
 				>
 					{this.props.memberContent.displayName}
 				</button>
-				<HcOrganizationTeamsMemberPersonaCard
-					memberAccount={this.props.memberContent.account}
-					memberContent={this.props.memberContent}
-					personas={this.props.personas}
-				/>
+				{
+					this.state.showPersona && 
+					
+					<HcOrganizationTeamsMemberPersonaCard
+						memberAccount={this.props.memberContent.account}
+						memberContent={this.props.memberContent}
+						personas={this.props.personas}
+					/>
+				}
 			</li>
 		);
 	}

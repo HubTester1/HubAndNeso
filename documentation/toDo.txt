@@ -1,18 +1,8 @@
 
-
-Staff Lookup
+Staff Lookup - Solo and in Org
 ---------------
-Construct
+If there are multiple people in picker, then the same persona is rendered multiple times
 
-
-Get it Done
----------------
-alt view with command bar (tabs)
-
-
-Organization
----------------
-views with tabs
 
 
 
@@ -93,7 +83,7 @@ delete image
 edit message - only if I'm the creator
 delete message - only if I'm the creator
 if no expiration date, set to 180 days in future
-re-label? and show required for form fields
+
 
 
 =============================
@@ -101,7 +91,6 @@ re-label? and show required for form fields
 Later
 
 message form elements - file input is not keyboard-focusable
-prep teamsBasic json so that updates can easily be made and imported
 
 
 

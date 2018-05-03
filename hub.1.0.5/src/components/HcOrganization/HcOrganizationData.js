@@ -44,7 +44,8 @@ export default class HcGetItDoneData {
 		return new Promise(((resolve, reject) => {
 			// if environment is sharepoint
 			if (EnvironmentDetector.ReturnIsSPO()) {
-				// collect data async from multiple sources
+				resolve(ReturnHcOrganizationMockData());
+				/* // collect data async from multiple sources
 				const listItemQueryPromises = [
 					this.ReturnHRDocsForHcOrg(),
 					this.ReturnHubDocsForHcOrg(),
@@ -114,7 +115,7 @@ export default class HcGetItDoneData {
 							error: true,
 							queryError,
 						});
-					});
+					}); */
 			} else {
 				// resolve the promise with mock data
 				resolve(ReturnHcOrganizationMockData());

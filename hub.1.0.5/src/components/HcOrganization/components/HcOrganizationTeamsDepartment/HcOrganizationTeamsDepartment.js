@@ -9,7 +9,7 @@ import HcOrganizationTeamsDepartmentMember from '../HcOrganizationTeamsDepartmen
 // ----- COMPONENT
 
 export default class HcOrganizationTeamsDepartment extends React.Component {
-	constructor(props) {
+	/* constructor(props) {
 		super(props);
 		this.state = {
 			personas: [],
@@ -20,7 +20,7 @@ export default class HcOrganizationTeamsDepartment extends React.Component {
 		this.setState(prevState => ({
 			personas: [personaData, ...prevState.personas],
 		}));
-	}
+	} */
 	render() {
 		return (
 			<li id={`hc-organization-teams-department_${this.props.departmentId}`} className="hc-organization-teams-department mos-react-component-root">
@@ -45,8 +45,8 @@ export default class HcOrganizationTeamsDepartment extends React.Component {
 								key={memberValue.reactKey}
 								memberId={memberValue.reactKey}
 								memberContent={memberValue}
-								personas={this.state.personas}
-								onMemberClick={this.setSelectedPersonas}
+								// personas={this.state.personas}
+								// onMemberClick={this.setSelectedPersonas}
 							/>
 						))
 					}
