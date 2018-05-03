@@ -23,7 +23,7 @@ export default class HcStaffLookupData {
 			const account = MOSUtilities.ReplaceAll('@mos.org', '', peoplePickerData[0]._user.Key
 				.substr(peoplePickerData[0]._user.Key.lastIndexOf('|') + 1));
 			// get a promise to get the relevant person's full set of data using account
-			NesoHTTPClient.ReturnNesoData(`https://neso.mos.org/activeDirectory/user/${account}`)
+			NesoHTTPClient.ReturnNesoData(`https://neso.mos.org:3001/activeDirectory/user/${account}`)
 				// if the promise was resolved with the full set of data
 				.then((response) => {
 					if (response !== null) {

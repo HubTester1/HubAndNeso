@@ -11,8 +11,10 @@ import HcOrganizationTeamsOtherTeam from '../HcOrganizationTeamsOtherTeam/HcOrga
 // ----- COMPONENT
 
 export default class HcOrganizationTeams extends React.Component {
+	constructor(props) {
+		super(props);
+	}
 	render() {
-		console.log(this.props);
 		return (
 			<div id="hc-organization-teams" className="mos-react-component-root">
 				<h3>Divisions, Departments, and Their Members</h3>

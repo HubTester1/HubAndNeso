@@ -4,7 +4,6 @@
 // ----- IMPORTS
 
 import * as React from 'react';
-import { HoverCard } from 'office-ui-fabric-react/lib/HoverCard';
 import HcOrganizationTeamsDepartmentMember from '../HcOrganizationTeamsDepartmentMember/HcOrganizationTeamsDepartmentMember';
 
 // ----- COMPONENT
@@ -12,17 +11,15 @@ import HcOrganizationTeamsDepartmentMember from '../HcOrganizationTeamsDepartmen
 export default class HcOrganizationTeamsDepartment extends React.Component {
 	constructor(props) {
 		super(props);
-		this.showMemberPersona = this.showMemberPersona.bind(this);
+		this.state = {
+			personas: [],
+		};
+		this.setSelectedPersonas = this.setSelectedPersonas.bind(this);
 	}
-	showMemberPersona(personaData) {
-		console.log(personaData); // expandingCardProps={expandingCardProps} 
-		return (
-			<HoverCard id="myID1" instantOpenOnClick>
-				<div className="HoverCard-item">
-					{personaData.account}
-				</div>
-			</HoverCard>
-		);
+	setSelectedPersonas(personaData) {
+		this.setState(prevState => ({
+			personas: [personaData, ...prevState.personas],
+		}));
 	}
 	render() {
 		return (
@@ -48,7 +45,8 @@ export default class HcOrganizationTeamsDepartment extends React.Component {
 								key={memberValue.reactKey}
 								memberId={memberValue.reactKey}
 								memberContent={memberValue}
-								onMemberClick={this.showMemberPersona}
+								personas={this.state.personas}
+								onMemberClick={this.setSelectedPersonas}
 							/>
 						))
 					}

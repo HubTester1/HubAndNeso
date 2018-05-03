@@ -46,9 +46,9 @@ class HcContainer extends React.Component {
 		return (
 			<div>
 				<HcTopCommandBar />
+				<HcStaffLookup />
 				<HcOrganization />
 				<HcGetItDone />
-				<HcStaffLookup />
 				<HcMessages
 					uData={this.state.uData}
 				/>		
