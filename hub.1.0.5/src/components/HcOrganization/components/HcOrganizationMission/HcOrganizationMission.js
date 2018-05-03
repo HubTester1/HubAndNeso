@@ -12,7 +12,7 @@ export default class HcOrganizationMission extends React.Component {
 	render() {
 		return (
 			<div id="hc-organization-mission" className="mos-react-component-root">
-				<h2>The Museum&apos;s Mission</h2>
+				<h3>The Museum&apos;s Mission</h3>
 
 				<p>
 					The Museum’s mission is to play a leading role in transforming 
@@ -47,7 +47,7 @@ export default class HcOrganizationMission extends React.Component {
 				</p>
 
 
-				<h2>The Museum&apos;s Vision</h2>
+				<h3>The Museum&apos;s Vision</h3>
 
 				<p>
 					The Museum of Science believes that everyone has a role to play 

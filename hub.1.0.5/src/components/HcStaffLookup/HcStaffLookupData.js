@@ -19,9 +19,14 @@ export default class HcStaffLookupData {
 	static ReturnPersonaDataUsingPeoplePickerData(peoplePickerData) {
 		// return a promise to return the persona data
 		return new Promise((resolve, reject) => {
+			// get the last array element; we handle one at a time, 
+			// 		so the others have been handled already
+			const lastPersonInPicker = peoplePickerData[peoplePickerData.length - 1];
+			console.log('lastPersonInPicker');
+			console.log(lastPersonInPicker);
 			// extract the account value
-			const account = MOSUtilities.ReplaceAll('@mos.org', '', peoplePickerData[0]._user.Key
-				.substr(peoplePickerData[0]._user.Key.lastIndexOf('|') + 1));
+			const account = MOSUtilities.ReplaceAll('@mos.org', '', lastPersonInPicker._user.Key
+				.substr(lastPersonInPicker._user.Key.lastIndexOf('|') + 1));
 			// get a promise to get the relevant person's full set of data using account
 			NesoHTTPClient.ReturnNesoData(`https://neso.mos.org:3001/activeDirectory/user/${account}`)
 				// if the promise was resolved with the full set of data
@@ -37,13 +42,13 @@ export default class HcStaffLookupData {
 							department: response.department,
 							officePhone: response.officePhone,
 							email: response.email,
-							photoURL: peoplePickerData[0].imageUrl,
+							photoURL: lastPersonInPicker.imageUrl,
 						};
 						if (response.mobilePhone) {
 							personaData.mobilePhone = response.mobilePhone;
 						}
-						if (peoplePickerData[0]._user.EntityData.ObjectId) {
-							personaData.profileToken = peoplePickerData[0]._user.EntityData.ObjectId;
+						if (lastPersonInPicker._user.EntityData.ObjectId) {
+							personaData.profileToken = lastPersonInPicker._user.EntityData.ObjectId;
 						}
 						// resolve this promise with the persona data
 						resolve(personaData);

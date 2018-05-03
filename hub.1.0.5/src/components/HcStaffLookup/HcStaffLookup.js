@@ -18,6 +18,8 @@ export default class HcStaffLookup extends React.Component {
 			this.setSelectedPersonasFromPeoplePickerData.bind(this);
 	}
 	setSelectedPersonasFromPeoplePickerData(peoplePickerData) {
+		console.log('peoplePickerData');
+		console.log(peoplePickerData);
 		HcStaffLookupData.ReturnPersonaDataUsingPeoplePickerData(peoplePickerData)
 			.then((newPersonaData) => {
 				this.setState(prevState => ({
@@ -26,6 +28,8 @@ export default class HcStaffLookup extends React.Component {
 			});
 	}
 	render() {
+		console.log('personas on render');
+		console.log(this.state.personas);
 		return (
 			<div id="hc-staff-lookup" className="mos-react-component-root">
 				<h2>Staff Lookup</h2>

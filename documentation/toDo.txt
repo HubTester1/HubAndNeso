@@ -1,15 +1,15 @@
 
 Staff Lookup - Solo and in Org
 ---------------
-In SP (not local), no persona card
-If there are multiple people in picker, then the same persona is rendered multiple times
-
+If there are multiple people in picker, querying for the first one
+If query for user data gets no result, show message in place of persona card
 
 
 
 Messages
 ------------------
 pagination
+image optimization
 delete image
 edit message - only if I'm the creator
 delete message - only if I'm the creator
