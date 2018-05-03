@@ -1,88 +1,94 @@
 
 Staff Lookup - Solo and in Org
 ---------------
+In SP (not local), no persona card
 If there are multiple people in picker, then the same persona is rendered multiple times
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-=============================
-
-Next Week
-
-messages
+Messages
 ------------------
+pagination
 delete image
 edit message - only if I'm the creator
 delete message - only if I'm the creator
 if no expiration date, set to 180 days in future
+
+
+
+
+Other Contacts
+---------------
+Translators has no ServerRecirectedEmbedUrl
+	resolve when pulling live data
+	update in mock data
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
