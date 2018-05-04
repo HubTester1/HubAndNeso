@@ -26,6 +26,16 @@ const HcMessagesMessage = props =>
 					determineYearDisplayDynamically: 1,
 				})}
 			</p>
+			{
+				props.messageContent.images &&
+				props.messageContent.images.map(imageValue => (
+					<HcMessagesMessageImage
+						key={imageValue.key}
+						imageID={imageValue.key}
+						imageContent={imageValue}
+					/>
+				))
+			}
 			<div className="hc-messages-message-body">{props.messageContent.body}</div>
 			{/* note: currently only one tag per message */}
 			<p className="hc-messages-message-tags">#{props.messageContent.tags[0]}</p>
@@ -33,14 +43,3 @@ const HcMessagesMessage = props =>
 	);
 export default HcMessagesMessage;
 
-
-// {
-// 	props.messageContent.images &&
-// 	props.messageContent.images.map(imageValue => (
-// 		<HcMessagesMessageImage
-// 			key={imageValue.key}
-// 			imageID={imageValue.key}
-// 			imageContent={imageValue}
-// 		/>
-// 	))
-// }

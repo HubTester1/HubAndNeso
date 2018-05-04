@@ -1,9 +1,4 @@
 
-divDept
----------------
-initials and photos - homogeneity with staff lookup
-	note: photo URL format: /_layouts/15/userphoto.aspx?size=S&accountname=ksimmons@mos.org
-
 Messages
 ------------------
 pagination

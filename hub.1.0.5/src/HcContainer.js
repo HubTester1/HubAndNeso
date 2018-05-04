@@ -47,12 +47,12 @@ class HcContainer extends React.Component {
 			<div>
 				<HcTopCommandBar />
 				<HcStaffLookup />
-				<HcOrganization />
+				<HcPushedItems />
 				<HcGetItDone />
+				<HcOrganization />
 				<HcMessages
 					uData={this.state.uData}
 				/>		
-				<HcPushedItems />
 				{/* <p>HcCalendarsSchedules here</p> */}
 			</div>
 		);
