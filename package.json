@@ -36,6 +36,7 @@
     "react-dom": "^16.0.0",
     "react-dropzone": "^4.2.9",
     "react-js-pagination": "^3.0.2",
+    "react-modal": "^3.4.4",
     "react-responsive": "^4.1.0",
     "react-responsive-modal": "^3.0.0",
     "react-truncate": "^2.3.0",

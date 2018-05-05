@@ -26,6 +26,7 @@
 		],
 		"no-tabs": "off",
 		"prefer-promise-reject-errors": "off",
+		"class-methods-use-this": "off",
 		"linebreak-style": "off",
 		"react/jsx-filename-extension": "off",
 		"react/jsx-indent-props": "off",

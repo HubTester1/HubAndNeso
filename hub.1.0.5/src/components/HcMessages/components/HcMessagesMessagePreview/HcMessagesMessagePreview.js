@@ -3,10 +3,10 @@
 
 import * as React from 'react';
 import Truncate from 'react-truncate';
-import Modal from 'react-responsive-modal';
+import Modal from 'react-modal';
 import { DefaultButton } from 'office-ui-fabric-react/lib/Button';
 import HcMessagesMessage from '../HcMessagesMessage/HcMessagesMessage';
-// import HcMessagesMessageImage from '../HcMessagesMessageImage/HcMessagesMessageImage';
+import HcMessagesMessageImagePreview from '../HcMessagesMessageImagePreview/HcMessagesMessageImagePreview';
 // import MOSUtilities from '../../../../services/MOSUtilities';
 
 // ----- COMPONENT
@@ -15,24 +15,48 @@ export default class HcMessagesMessagePreview extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			open: false,
+			modalIsOpen: false,
 		};
-		this.onCloseModal = this.onCloseModal.bind(this);
+		this.openModal = this.openModal.bind(this);
+		this.afterOpenModal = this.afterOpenModal.bind(this);
+		this.closeModal = this.closeModal.bind(this);
+	}
+	openModal() {
+		this.setState({ modalIsOpen: true });
 	}
 
-	onOpenModal = () => {
-		this.setState({ open: true });
-	};
+	afterOpenModal() {
+		console.log('after open modal');
+	}
 
-	onCloseModal = () => {
-		this.setState({ open: false });
-	};
+	closeModal() {
+		this.setState({ modalIsOpen: false });
+	}
 	render() {
+		const customStyles = {
+			content: {
+				top: '50%',
+				left: '50%',
+				right: 'auto',
+				bottom: 'auto',
+				marginRight: '-50%',
+				transform: 'translate(-50%, -50%)',
+			},
+		};
 		return (
 			<li id={`hc-messages-message-preview_${this.props.messageId}`} className="hc-messages-message-preview mos-react-component-root">
 				<h3 className="hc-messages-message-subject">
 					{this.props.messageContent.subject}
 				</h3>
+				{
+					this.props.messageContent.images &&
+
+					<HcMessagesMessageImagePreview
+						key={this.props.messageContent.images[0].key}
+						imageID={this.props.messageContent.images[0].key}
+						imageContent={this.props.messageContent.images[0]}
+					/>
+				}
 				<Truncate
 					lines={1} 
 					ellipsis={
@@ -40,16 +64,22 @@ export default class HcMessagesMessagePreview extends React.Component {
 							<DefaultButton
 								iconProps={{ iconName: 'Fullscreen' }}
 								text="Full message"
-								onClick={this.onOpenModal}
+								onClick={this.openModal}
 							/>
 						</span>
 					}
 				>
 					<div className="hc-messages-message-body">{this.props.messageContent.body}</div>
 				</Truncate>
-				<Modal open={this.state.open} onClose={this.onCloseModal} center>
+				<Modal
+					isOpen={this.state.modalIsOpen}
+					onAfterOpen={this.afterOpenModal}
+					onRequestClose={this.closeModal}
+					style={customStyles}
+					contentLabel="Example Modal"
+					ariaHideApp={false}
+				>
 					<HcMessagesMessage
-						key={this.props.key}
 						messageId={this.props.messageId}
 						messageContent={this.props.messageContent}
 					/>
