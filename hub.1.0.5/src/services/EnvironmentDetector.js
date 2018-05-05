@@ -1,5 +1,4 @@
 
-
 module.exports = {
 	ReturnIsSPO: () => window.location.hostname.indexOf('sharepoint') > -1,
 	ReturnIsHCScreen: () => window.location.pathname.toLowerCase().indexOf('app.aspx') > -1 ||

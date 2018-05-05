@@ -38,17 +38,60 @@ module.exports = {
 			});
 		})),
 
+	ReturnLimitedDocsFromCollectionSorted: (collection, field, order, limit) =>
+		// return a new promise
+		new Promise(((resolve, reject) => {
+			const orderFlag = (order === 'descending') ? -1 : 1;
+			// note: sortObject and projectionObject MUST be constructed in the following way;
+			// 		attempts to "optimize" the relevant lines result in errors
+			const sortObject = {};
+			sortObject[field] = orderFlag;
+			const projectionObject = {};
+			projectionObject.sort = sortObject;
+			if (limit) {
+				projectionObject.limit = limit;
+			}
+			// use nesoDBConnection object to query db
+			nesoDBConnection.get(collection)
+				.find({}, projectionObject, (error, docs) => {
+					// if there was an error
+					if (error) {
+						// construct a custom error
+						const errorToReport = {
+							error: true,
+							mongoDBError: true,
+							mongoDBErrorDetails: error,
+						};
+						// add error to Twitter
+						nesoErrors.ProcessError(errorToReport);
+						// reject this promise with the error
+						reject(errorToReport);
+						// if there was NOT an error
+					} else {
+						// resolve the promise and return the docs
+						resolve({
+							error: false,
+							mongoDBError: false,
+							docs,
+						});
+					}
+				});
+		})),
+
+
 	ReturnAllDocsFromCollectionSorted: (collection, field, order) =>
 		// return a new promise
 		new Promise(((resolve, reject) => {
 			const orderFlag = (order === 'descending') ? -1 : 1;
-			// note: sortObject MUST be constructed in the following way; 
-			// 		attempts to "optimize" the next two lines result in errors
+			// note: sortObject and projectionObject MUST be constructed in the following way;
+			// 		attempts to "optimize" the relevant lines result in errors
 			const sortObject = {};
 			sortObject[field] = orderFlag;
+			const projectionObject = {};
+			projectionObject.sort = sortObject;
 			// use nesoDBConnection object to query db
 			nesoDBConnection.get(collection)
-				.find({}, { sort: sortObject }, (error, docs) => {
+				.find({}, projectionObject, (error, docs) => {
 					// if there was an error
 					if (error) {
 						// construct a custom error

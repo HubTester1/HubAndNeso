@@ -24,18 +24,30 @@ export default class HcMessages extends React.Component {
 		this.handleClickTagFilterMenuItem = this.handleClickTagFilterMenuItem.bind(this);
 	}
 	componentDidMount() {
-		HcMessagesData.ReturnNesoMessagesTagsForHcMessages()
-			.then((allMessageTags) => {
-				this.setState(() => ({
-					tagsArray: allMessageTags,
-				}));
-			});
-		HcMessagesData.ReturnNesoMessagesMessagesForHcMessages()
-			.then((allMessageMessages) => {
-				this.setState(() => ({
-					messagesArray: allMessageMessages,
-				}));
-			});
+		if (this.props.allOrTop === 'all') {
+			console.log('this is all');
+			HcMessagesData.ReturnHcMessagesTags()
+				.then((allMessageTags) => {
+					this.setState(() => ({
+						tagsArray: allMessageTags,
+					}));
+				});
+			HcMessagesData.ReturnHcMessagesAllMessages()
+				.then((allMessageMessages) => {
+					this.setState(() => ({
+						messagesArray: allMessageMessages,
+					}));
+				});
+		}
+		if (this.props.allOrTop === 'top') {
+			console.log('this is top');
+			HcMessagesData.ReturnHcMessagesTopMessages()
+				.then((allMessageMessages) => {
+					this.setState(() => ({
+						messagesArray: allMessageMessages,
+					}));
+				});
+		}
 	}
 	addMessageToList(newMessageProperties) {
 		this.setState((prevState) => {
@@ -75,14 +87,14 @@ export default class HcMessages extends React.Component {
 		e.preventDefault();
 
 		if (menuItem.name === 'All') {
-			HcMessagesData.ReturnNesoMessagesMessagesForHcMessages()
+			HcMessagesData.ReturnHcMessagesAllMessages()
 				.then((allMessageMessages) => {
 					this.setState(() => ({
 						messagesArray: allMessageMessages,
 					}));
 				});
 		} else {
-			HcMessagesData.ReturnNesoMessagesMessagesWithSpecifiedTagForHcMessages(menuItem.name)
+			HcMessagesData.ReturnHcMessagesAllMessagesWSpecifiedTag(menuItem.name)
 				.then((specifiedMessages) => {
 					this.setState(() => ({
 						messagesArray: specifiedMessages,
@@ -94,25 +106,32 @@ export default class HcMessages extends React.Component {
 	}
 
 	render() {
-		return (
-			<div id="hc-messages" className="mos-react-component-root">
-				<h2>Messages</h2>
-				<HcMessagesCommandBar
-					tagsArray={this.state.tagsArray}
-					handleClickNewMessageButton={this.handleClickNewMessageButton}
-					handleClickHideNewMessageButton={this.handleClickHideNewMessageButton}
-					showingNewMessageForm={this.state.showNewMessageForm}
-					handleClickTagFilterMenuLabel={this.handleClickTagFilterMenuLabel}
-					handleClickTagFilterMenuItem={this.handleClickTagFilterMenuItem}
-				/>
-				<HcMessagesNewMessageForm
-					show={this.state.showNewMessageForm}
-					tagsArray={this.state.tagsArray}
-					addMessageToList={this.addMessageToList}
-					uData={this.props.uData}
-				/>
-				<HcMessagesList messagesArray={this.state.messagesArray} />
-			</div>
-		);
+		return (this.props.allOrTop === 'all') ?
+			(
+				<div id="hc-messages-all" className="mos-react-component-root">
+					<h2>Messages</h2>
+					<HcMessagesCommandBar
+						tagsArray={this.state.tagsArray}
+						handleClickNewMessageButton={this.handleClickNewMessageButton}
+						handleClickHideNewMessageButton={this.handleClickHideNewMessageButton}
+						showingNewMessageForm={this.state.showNewMessageForm}
+						handleClickTagFilterMenuLabel={this.handleClickTagFilterMenuLabel}
+						handleClickTagFilterMenuItem={this.handleClickTagFilterMenuItem}
+					/>
+					<HcMessagesNewMessageForm
+						show={this.state.showNewMessageForm}
+						tagsArray={this.state.tagsArray}
+						addMessageToList={this.addMessageToList}
+						uData={this.props.uData}
+					/>
+					<HcMessagesList messagesArray={this.state.messagesArray} />
+				</div>
+			) :
+			(
+				<div id="hc-messages-top" className="mos-react-component-root">
+					<h2>Latest Messages</h2>
+					<HcMessagesList messagesArray={this.state.messagesArray} />
+				</div>
+			);
 	}
 }

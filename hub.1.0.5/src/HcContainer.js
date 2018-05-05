@@ -3,10 +3,11 @@
 
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import './sass/main.sass';
+import MediaQuery from 'react-responsive';
 
 import EnvironmentDetector from './services/EnvironmentDetector';
 import MOSUtilities from './services/MOSUtilities';
+import ScreenSizes from './services/ScreenSizes';
 
 import HcContainerData from './HcContainerData';
 import HcTopCommandBar from './components/HcTopCommandBar/HcTopCommandBar';
@@ -15,6 +16,9 @@ import HcGetItDone from './components/HcGetItDone/HcGetItDone';
 import HcPushedItems from './components/HcPushedItems/HcPushedItems';
 import HcMessages from './components/HcMessages/HcMessages';
 import HcOrganization from './components/HcOrganization/HcOrganization';
+
+import './sass/main.sass';
+
 // eslint-disable-next-line
 import { initializeIcons } from '@uifabric/icons';
 
@@ -50,13 +54,25 @@ class HcContainer extends React.Component {
 			return (
 				<div>
 					<HcTopCommandBar />
-					<HcStaffLookup />
-					<HcPushedItems />
+					<MediaQuery minDeviceWidth={ScreenSizes.ReturnMediumMin()}>
+						<div id="hc-staff-lookup-and-top-messages">
+							<HcStaffLookup />
+							<HcMessages
+								uData={this.state.uData}
+								allOrTop="top"
+							/>
+						</div>
+					</MediaQuery>
+					<MediaQuery maxDeviceWidth={ScreenSizes.ReturnSmallMax()}>
+						<HcStaffLookup />
+					</MediaQuery>
 					<HcGetItDone />
-					<HcOrganization />
 					<HcMessages
 						uData={this.state.uData}
-					/>		
+						allOrTop="all"
+					/>
+					<HcPushedItems />
+					<HcOrganization />
 					{/* <p>HcCalendarsSchedules here</p> */}
 				</div>
 			);

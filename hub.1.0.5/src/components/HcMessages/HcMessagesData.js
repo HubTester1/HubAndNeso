@@ -13,7 +13,7 @@ export default class HcMessagesData {
 	constructor() {
 		this.UploadMessagesFiles = this.UploadMessagesFiles.bind(this);
 	}
-	static ReturnNesoMessagesTagsForHcMessages() {
+	static ReturnHcMessagesTags() {
 		// return a new promise
 		return new Promise((resolve, reject) => {
 			// if environment is sharepoint
@@ -116,7 +116,7 @@ export default class HcMessagesData {
 			}
 		});
 	}
-	static ReturnNesoMessagesMessagesForHcMessages() {
+	static ReturnHcMessagesAllMessages() {
 		// return a new promise
 		return new Promise(((resolve, reject) => {
 			// if environment is sharepoint
@@ -301,7 +301,102 @@ export default class HcMessagesData {
 			}
 		}));
 	}
-	static ReturnNesoMessagesMessagesWithSpecifiedTagForHcMessages(tag) {
+
+	static ReturnHcMessagesTopMessages() {
+		// return a new promise
+		return new Promise(((resolve, reject) => {
+			// if environment is sharepoint
+			if (EnvironmentDetector.ReturnIsSPO()) {
+				// get a promise to retrieve the settings
+				NesoHTTPClient
+					.ReturnNesoData('https://neso.mos.org:3001/hcMessages/descending/limit3')
+					// if the promise is resolved with the settings
+					.then((messagesResults) => {
+						// set up var to receive all messages
+						const allMessagesMessages = [];
+						// iterate over the results and push them to allListItems
+						messagesResults.forEach((messageValues) => {
+							const messageFormatted = {
+								tags: [],
+								subject: '',
+								created: '',
+								modified: '',
+								creator: '',
+								body: '',
+								images: [],
+								expiration: '',
+
+								key: '',
+							};
+							if (messageValues.messageBody) {
+								messageFormatted.tags = messageValues.messageTags;
+								messageFormatted.subject = messageValues.messageSubject;
+								messageFormatted.created = messageValues.messageCreated;
+								messageFormatted.modified = messageValues.messageModified;
+								messageFormatted.creator = messageValues.messageCreator;
+								messageFormatted.body = messageValues.messageBody;
+								messageFormatted.images = messageValues.messageImages;
+								messageFormatted.expiration = messageValues.messageExpiration;
+
+								messageFormatted.key = shortid.generate();
+
+								allMessagesMessages.push(messageFormatted);
+							}
+						});
+						// resolve this promise with the requested items
+						resolve(allMessagesMessages);
+					});
+			} else {
+				// resolve the promise with mock data
+				resolve([
+					{
+						tags: ['Announcements'],
+						subject: 'Message Subject 1',
+						created: '2018-04-05',
+						modified: '2018-04-05',
+						creator: {
+							displayName: 'Sheryl White Vincent',
+							account: 'swvincent',
+						},
+						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
+						image: 'https://images.unsplash.com/photo-1518495230660-7ae273cd1366?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=12731bebedfafc5e9c8957292b387103&auto=format&fit=crop&w=400&q=80',
+						expiration: '2018-10-05',
+						key: 'SknGU_zCOnz',
+					},
+					{
+						tags: ['Events'],
+						subject: 'This is a great Message Subject 2',
+						created: '2018-04-05',
+						modified: '2018-04-05',
+						creator: {
+							displayName: 'James Baker',
+							account: 'jbaker',
+						},
+						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
+						image: 'https://images.unsplash.com/photo-1471513671800-b09c87e1497c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=263d1948dcd0e71c59c4929e8fcf3f46&auto=format&fit=crop&w=400&q=80',
+						expiration: '2018-10-05',
+						key: 'ry6M8_MCunz',
+					},
+					{
+						tags: ['Announcements'],
+						subject: 'What an even better Message Subject 3',
+						created: '2018-04-05',
+						modified: '2018-04-05',
+						creator: {
+							displayName: 'Jeannette Amazeen-Thomas',
+							account: 'jthomas',
+						},
+						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
+						image: 'https://images.unsplash.com/photo-1444465693019-aa0b6392460d?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=f085fc9ac3af45f1498607ab047305c0&auto=format&fit=crop&w=400&q=80',
+						expiration: '2018-10-05',
+						key: 'rJRGUuGROnz',
+					},
+				]);
+			}
+		}));
+	}
+
+	static ReturnHcMessagesAllMessagesWSpecifiedTag(tag) {
 		// return a new promise
 		return new Promise(((resolve, reject) => {
 			// if environment is sharepoint

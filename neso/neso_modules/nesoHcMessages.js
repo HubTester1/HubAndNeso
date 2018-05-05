@@ -83,6 +83,17 @@ module.exports = {
 				.catch((error) => { reject(error); });
 		})),
 
+	ReturnHcMessagesDescendingLimit3: () =>
+		// return a new promise
+		new Promise(((resolve, reject) => {
+			// get a promise to retrieve all documents from the hcMessages document collection
+			nesoDBQueries.ReturnLimitedDocsFromCollectionSorted('hcMessages', 'messageModified', 'descending', 3)
+				// if the promise is resolved with the docs, then resolve this promise with the docs
+				.then((result) => { resolve(result); })
+				// if the promise is rejected with an error, then reject this promise with an error
+				.catch((error) => { reject(error); });
+		})),
+
 	ReturnHcMessagesDescendingWithSpecifiedTag: tag =>
 		// return a new promise
 		new Promise(((resolve, reject) => {
