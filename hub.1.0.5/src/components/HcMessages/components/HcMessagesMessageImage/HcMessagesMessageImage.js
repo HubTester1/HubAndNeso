@@ -2,6 +2,8 @@
 // ----- IMPORTS
 
 import * as React from 'react';
+import './HcMessagesMessageImage.sass';
+
 
 // ----- COMPONENT
 

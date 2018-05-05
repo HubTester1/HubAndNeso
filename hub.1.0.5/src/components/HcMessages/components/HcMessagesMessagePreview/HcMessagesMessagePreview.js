@@ -41,8 +41,12 @@ export default class HcMessagesMessagePreview extends React.Component {
 				bottom: 'auto',
 				marginRight: '-50%',
 				transform: 'translate(-50%, -50%)',
+				width: '80vw',
+				height: '80vh',
+				overlfow: 'scroll',
 			},
 		};
+		Modal.setAppElement('#s4-bodyContainer');
 		return (
 			<li id={`hc-messages-message-preview_${this.props.messageId}`} className="hc-messages-message-preview mos-react-component-root">
 				<h3 className="hc-messages-message-subject">

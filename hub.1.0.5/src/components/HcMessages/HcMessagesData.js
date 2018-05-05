@@ -20,7 +20,7 @@ export default class HcMessagesData {
 			if (EnvironmentDetector.ReturnIsSPO()) {
 				// get a promise to retrieve the settings
 				NesoHTTPClient
-					.ReturnNesoData('https://neso.mos.org:3001/hcMessages/settings')
+					.ReturnNesoData('https://neso.mos.org/hcMessages/settings')
 					// if the promise is resolved with the settings
 					.then((settingsResults) => {
 						// set up var to receive all tags
@@ -123,7 +123,7 @@ export default class HcMessagesData {
 			if (EnvironmentDetector.ReturnIsSPO()) {
 				// get a promise to retrieve the settings
 				NesoHTTPClient
-					.ReturnNesoData('https://neso.mos.org:3001/hcMessages/descending')
+					.ReturnNesoData('https://neso.mos.org/hcMessages/descending')
 					// if the promise is resolved with the settings
 					.then((messagesResults) => {
 						// set up var to receive all messages
@@ -149,10 +149,17 @@ export default class HcMessagesData {
 								messageFormatted.modified = messageValues.messageModified;
 								messageFormatted.creator = messageValues.messageCreator;
 								messageFormatted.body = messageValues.messageBody;
-								messageFormatted.images = messageValues.messageImages;
+								messageFormatted.images = [];
 								messageFormatted.expiration = messageValues.messageExpiration;
 
 								messageFormatted.key = shortid.generate();
+
+								messageValues.messageImages.forEach((imageValue) => {
+									const imageValueCopy = imageValue;
+									imageValueCopy.imageKey = shortid.generate();
+									imageValueCopy.previewKey = shortid.generate();
+									messageFormatted.images.push(imageValueCopy);
+								});
 
 								allMessagesMessages.push(messageFormatted);
 							}
@@ -182,17 +189,17 @@ export default class HcMessagesData {
 								name: 'pic1.jpg',
 								size: '65 kb',
 								key: '1-pic1',
-								url: '/HcMessagesFiles/1/pic1.jpg',
+								url: '/img/1/pic1.jpg',
 							},
 							{
 								name: 'pic7.jpg',
 								size: '65 kb',
 								key: '1-pic7',
-								url: '/HcMessagesFiles/1/pic7.jpg',
+								url: '/img/1/pic7.jpg',
 							},
 						],
 						expiration: '2018-10-05',
-						key: 'BJLlY0Dqo6f',
+						key: 'BkgttssTf',
 					},
 					{
 						tags: [
@@ -211,11 +218,11 @@ export default class HcMessagesData {
 								name: 'pic2.jpg',
 								size: '65 kb',
 								key: '2-pic2',
-								url: '/HcMessagesFiles/2/pic2.jpg',
+								url: '/img/2/pic2.jpg',
 							},
 						],
 						expiration: '2018-10-05',
-						key: 'SkDeFCPcspG',
+						key: 'BygeKYjjaM',
 					},
 					{
 						tags: [
@@ -234,11 +241,11 @@ export default class HcMessagesData {
 								name: 'pic3.jpg',
 								size: '65 kb',
 								key: '3-pic3',
-								url: '/HcMessagesFiles/3/pic3.jpg',
+								url: '/img/3/pic3.jpg',
 							},
 						],
 						expiration: '2018-10-05',
-						key: 'BJugFAP9i6z',
+						key: 'SyWgKFiiTf',
 					},
 					{
 						tags: [
@@ -253,7 +260,7 @@ export default class HcMessagesData {
 						},
 						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
 						expiration: '2018-10-05',
-						key: 'S1FgY0Pqj6z',
+						key: 'rkzgtKisTM',
 					},
 					{
 						tags: [
@@ -272,11 +279,11 @@ export default class HcMessagesData {
 								name: 'pic5.jpg',
 								size: '65 kb',
 								key: '5-pic5',
-								url: '/HcMessagesFiles/5/pic5.jpg',
+								url: '/img/5/pic5.jpg',
 							},
 						],
 						expiration: '2018-10-05',
-						key: 'rkqxKCP9oTz',
+						key: 'SymgKYoopz',
 					},
 					{
 						tags: [
@@ -291,7 +298,7 @@ export default class HcMessagesData {
 						},
 						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
 						expiration: '2018-10-05',
-						key: 'HJilKCv9i6f',
+						key: 'HyNgKFjoaf',
 					},
 					{
 						tags: [
@@ -306,7 +313,7 @@ export default class HcMessagesData {
 						},
 						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
 						expiration: '2018-10-05',
-						key: 'SJhxtCv9ipG',
+						key: 'SkrltFioaf',
 					},
 					{
 						tags: [
@@ -321,7 +328,7 @@ export default class HcMessagesData {
 						},
 						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
 						expiration: '2018-10-05',
-						key: 'SJpxKAvcj6f',
+						key: 'BkUlYYjoaG',
 					},
 					{
 						tags: [
@@ -336,7 +343,7 @@ export default class HcMessagesData {
 						},
 						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
 						expiration: '2018-10-05',
-						key: 'ryClK0wcj6f',
+						key: 'HywxFYji6f',
 					},
 					{
 						tags: [
@@ -351,577 +358,12 @@ export default class HcMessagesData {
 						},
 						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
 						expiration: '2018-10-05',
-						key: 'ryJZF0Pqs6z',
-					},
-					{
-						tags: [
-							'Announcements',
-						],
-						subject: 'Message Subject 1',
-						created: '2018-04-05',
-						modified: '2018-04-05',
-						creator: {
-							displayName: 'Sheryl White Vincent',
-							account: 'swvincent',
-						},
-						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
-						images: [
-							{
-								name: 'pic1.jpg',
-								size: '65 kb',
-								key: '1-pic1',
-								url: '/HcMessagesFiles/1/pic1.jpg',
-							},
-							{
-								name: 'pic7.jpg',
-								size: '65 kb',
-								key: '1-pic7',
-								url: '/HcMessagesFiles/1/pic7.jpg',
-							},
-						],
-						expiration: '2018-10-05',
-						key: 'BJLlY0Dqo6f',
-					},
-					{
-						tags: [
-							'Events',
-						],
-						subject: 'This is a great Message Subject 2',
-						created: '2018-04-05',
-						modified: '2018-04-05',
-						creator: {
-							displayName: 'James Baker',
-							account: 'jbaker',
-						},
-						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
-						images: [
-							{
-								name: 'pic2.jpg',
-								size: '65 kb',
-								key: '2-pic2',
-								url: '/HcMessagesFiles/2/pic2.jpg',
-							},
-						],
-						expiration: '2018-10-05',
-						key: 'SkDeFCPcspG',
-					},
-					{
-						tags: [
-							'Announcements',
-						],
-						subject: 'What an even better Message Subject 3',
-						created: '2018-04-05',
-						modified: '2018-04-05',
-						creator: {
-							displayName: 'Jeannette Amazeen-Thomas',
-							account: 'jthomas',
-						},
-						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
-						images: [
-							{
-								name: 'pic3.jpg',
-								size: '65 kb',
-								key: '3-pic3',
-								url: '/HcMessagesFiles/3/pic3.jpg',
-							},
-						],
-						expiration: '2018-10-05',
-						key: 'BJugFAP9i6z',
-					},
-					{
-						tags: [
-							'Events',
-						],
-						subject: 'Message Subject 4',
-						created: '2018-04-05',
-						modified: '2018-04-05',
-						creator: {
-							displayName: 'Kathryn Bartholomew',
-							account: 'kbartholomew',
-						},
-						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
-						expiration: '2018-10-05',
-						key: 'S1FgY0Pqj6z',
-					},
-					{
-						tags: [
-							'Announcements',
-						],
-						subject: 'This is a great Message Subject 5',
-						created: '2018-04-05',
-						modified: '2018-04-05',
-						creator: {
-							displayName: 'Jason Barone-Cichocki',
-							account: 'jbcichocki',
-						},
-						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
-						images: [
-							{
-								name: 'pic5.jpg',
-								size: '65 kb',
-								key: '5-pic5',
-								url: '/HcMessagesFiles/5/pic5.jpg',
-							},
-						],
-						expiration: '2018-10-05',
-						key: 'rkqxKCP9oTz',
-					},
-					{
-						tags: [
-							'Events',
-						],
-						subject: 'What an even better Message Subject 6',
-						created: '2018-04-05',
-						modified: '2018-04-05',
-						creator: {
-							displayName: 'Jason Barone-Cichocki',
-							account: 'jbcichocki',
-						},
-						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
-						expiration: '2018-10-05',
-						key: 'HJilKCv9i6f',
-					},
-					{
-						tags: [
-							'Announcements',
-						],
-						subject: 'Message Subject 7',
-						created: '2018-04-05',
-						modified: '2018-04-05',
-						creator: {
-							displayName: 'Kathryn Bartholomew',
-							account: 'kbartholomew',
-						},
-						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
-						expiration: '2018-10-05',
-						key: 'SJhxtCv9ipG',
-					},
-					{
-						tags: [
-							'Events',
-						],
-						subject: 'This is a great Message Subject 8',
-						created: '2018-04-05',
-						modified: '2018-04-05',
-						creator: {
-							displayName: 'Jeannette Amazeen-Thomas',
-							account: 'jthomas',
-						},
-						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
-						expiration: '2018-10-05',
-						key: 'SJpxKAvcj6f',
-					},
-					{
-						tags: [
-							'Announcements',
-						],
-						subject: 'What an even better Message Subject 9',
-						created: '2018-04-05',
-						modified: '2018-04-05',
-						creator: {
-							displayName: 'James Baker',
-							account: 'jbaker',
-						},
-						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
-						expiration: '2018-10-05',
-						key: 'ryClK0wcj6f',
-					},
-					{
-						tags: [
-							'Events',
-						],
-						subject: 'Message Subject 10',
-						created: '2018-04-05',
-						modified: '2018-04-05',
-						creator: {
-							displayName: 'Sheryl White Vincent',
-							account: 'swvincent',
-						},
-						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
-						expiration: '2018-10-05',
-						key: 'ryJZF0Pqs6z',
-					},
-					{
-						tags: [
-							'Announcements',
-						],
-						subject: 'Message Subject 1',
-						created: '2018-04-05',
-						modified: '2018-04-05',
-						creator: {
-							displayName: 'Sheryl White Vincent',
-							account: 'swvincent',
-						},
-						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
-						images: [
-							{
-								name: 'pic1.jpg',
-								size: '65 kb',
-								key: '1-pic1',
-								url: '/HcMessagesFiles/1/pic1.jpg',
-							},
-							{
-								name: 'pic7.jpg',
-								size: '65 kb',
-								key: '1-pic7',
-								url: '/HcMessagesFiles/1/pic7.jpg',
-							},
-						],
-						expiration: '2018-10-05',
-						key: 'BJLlY0Dqo6f',
-					},
-					{
-						tags: [
-							'Events',
-						],
-						subject: 'This is a great Message Subject 2',
-						created: '2018-04-05',
-						modified: '2018-04-05',
-						creator: {
-							displayName: 'James Baker',
-							account: 'jbaker',
-						},
-						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
-						images: [
-							{
-								name: 'pic2.jpg',
-								size: '65 kb',
-								key: '2-pic2',
-								url: '/HcMessagesFiles/2/pic2.jpg',
-							},
-						],
-						expiration: '2018-10-05',
-						key: 'SkDeFCPcspG',
-					},
-					{
-						tags: [
-							'Announcements',
-						],
-						subject: 'What an even better Message Subject 3',
-						created: '2018-04-05',
-						modified: '2018-04-05',
-						creator: {
-							displayName: 'Jeannette Amazeen-Thomas',
-							account: 'jthomas',
-						},
-						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
-						images: [
-							{
-								name: 'pic3.jpg',
-								size: '65 kb',
-								key: '3-pic3',
-								url: '/HcMessagesFiles/3/pic3.jpg',
-							},
-						],
-						expiration: '2018-10-05',
-						key: 'BJugFAP9i6z',
-					},
-					{
-						tags: [
-							'Events',
-						],
-						subject: 'Message Subject 4',
-						created: '2018-04-05',
-						modified: '2018-04-05',
-						creator: {
-							displayName: 'Kathryn Bartholomew',
-							account: 'kbartholomew',
-						},
-						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
-						expiration: '2018-10-05',
-						key: 'S1FgY0Pqj6z',
-					},
-					{
-						tags: [
-							'Announcements',
-						],
-						subject: 'This is a great Message Subject 5',
-						created: '2018-04-05',
-						modified: '2018-04-05',
-						creator: {
-							displayName: 'Jason Barone-Cichocki',
-							account: 'jbcichocki',
-						},
-						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
-						images: [
-							{
-								name: 'pic5.jpg',
-								size: '65 kb',
-								key: '5-pic5',
-								url: '/HcMessagesFiles/5/pic5.jpg',
-							},
-						],
-						expiration: '2018-10-05',
-						key: 'rkqxKCP9oTz',
-					},
-					{
-						tags: [
-							'Events',
-						],
-						subject: 'What an even better Message Subject 6',
-						created: '2018-04-05',
-						modified: '2018-04-05',
-						creator: {
-							displayName: 'Jason Barone-Cichocki',
-							account: 'jbcichocki',
-						},
-						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
-						expiration: '2018-10-05',
-						key: 'HJilKCv9i6f',
-					},
-					{
-						tags: [
-							'Announcements',
-						],
-						subject: 'Message Subject 7',
-						created: '2018-04-05',
-						modified: '2018-04-05',
-						creator: {
-							displayName: 'Kathryn Bartholomew',
-							account: 'kbartholomew',
-						},
-						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
-						expiration: '2018-10-05',
-						key: 'SJhxtCv9ipG',
-					},
-					{
-						tags: [
-							'Events',
-						],
-						subject: 'This is a great Message Subject 8',
-						created: '2018-04-05',
-						modified: '2018-04-05',
-						creator: {
-							displayName: 'Jeannette Amazeen-Thomas',
-							account: 'jthomas',
-						},
-						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
-						expiration: '2018-10-05',
-						key: 'SJpxKAvcj6f',
-					},
-					{
-						tags: [
-							'Announcements',
-						],
-						subject: 'What an even better Message Subject 9',
-						created: '2018-04-05',
-						modified: '2018-04-05',
-						creator: {
-							displayName: 'James Baker',
-							account: 'jbaker',
-						},
-						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
-						expiration: '2018-10-05',
-						key: 'ryClK0wcj6f',
-					},
-					{
-						tags: [
-							'Events',
-						],
-						subject: 'Message Subject 10',
-						created: '2018-04-05',
-						modified: '2018-04-05',
-						creator: {
-							displayName: 'Sheryl White Vincent',
-							account: 'swvincent',
-						},
-						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
-						expiration: '2018-10-05',
-						key: 'ryJZF0Pqs6z',
-					},
-					{
-						tags: [
-							'Announcements',
-						],
-						subject: 'Message Subject 1',
-						created: '2018-04-05',
-						modified: '2018-04-05',
-						creator: {
-							displayName: 'Sheryl White Vincent',
-							account: 'swvincent',
-						},
-						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
-						images: [
-							{
-								name: 'pic1.jpg',
-								size: '65 kb',
-								key: '1-pic1',
-								url: '/HcMessagesFiles/1/pic1.jpg',
-							},
-							{
-								name: 'pic7.jpg',
-								size: '65 kb',
-								key: '1-pic7',
-								url: '/HcMessagesFiles/1/pic7.jpg',
-							},
-						],
-						expiration: '2018-10-05',
-						key: 'BJLlY0Dqo6f',
-					},
-					{
-						tags: [
-							'Events',
-						],
-						subject: 'This is a great Message Subject 2',
-						created: '2018-04-05',
-						modified: '2018-04-05',
-						creator: {
-							displayName: 'James Baker',
-							account: 'jbaker',
-						},
-						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
-						images: [
-							{
-								name: 'pic2.jpg',
-								size: '65 kb',
-								key: '2-pic2',
-								url: '/HcMessagesFiles/2/pic2.jpg',
-							},
-						],
-						expiration: '2018-10-05',
-						key: 'SkDeFCPcspG',
-					},
-					{
-						tags: [
-							'Announcements',
-						],
-						subject: 'What an even better Message Subject 3',
-						created: '2018-04-05',
-						modified: '2018-04-05',
-						creator: {
-							displayName: 'Jeannette Amazeen-Thomas',
-							account: 'jthomas',
-						},
-						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
-						images: [
-							{
-								name: 'pic3.jpg',
-								size: '65 kb',
-								key: '3-pic3',
-								url: '/HcMessagesFiles/3/pic3.jpg',
-							},
-						],
-						expiration: '2018-10-05',
-						key: 'BJugFAP9i6z',
-					},
-					{
-						tags: [
-							'Events',
-						],
-						subject: 'Message Subject 4',
-						created: '2018-04-05',
-						modified: '2018-04-05',
-						creator: {
-							displayName: 'Kathryn Bartholomew',
-							account: 'kbartholomew',
-						},
-						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
-						expiration: '2018-10-05',
-						key: 'S1FgY0Pqj6z',
-					},
-					{
-						tags: [
-							'Announcements',
-						],
-						subject: 'This is a great Message Subject 5',
-						created: '2018-04-05',
-						modified: '2018-04-05',
-						creator: {
-							displayName: 'Jason Barone-Cichocki',
-							account: 'jbcichocki',
-						},
-						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
-						images: [
-							{
-								name: 'pic5.jpg',
-								size: '65 kb',
-								key: '5-pic5',
-								url: '/HcMessagesFiles/5/pic5.jpg',
-							},
-						],
-						expiration: '2018-10-05',
-						key: 'rkqxKCP9oTz',
-					},
-					{
-						tags: [
-							'Events',
-						],
-						subject: 'What an even better Message Subject 6',
-						created: '2018-04-05',
-						modified: '2018-04-05',
-						creator: {
-							displayName: 'Jason Barone-Cichocki',
-							account: 'jbcichocki',
-						},
-						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
-						expiration: '2018-10-05',
-						key: 'HJilKCv9i6f',
-					},
-					{
-						tags: [
-							'Announcements',
-						],
-						subject: 'Message Subject 7',
-						created: '2018-04-05',
-						modified: '2018-04-05',
-						creator: {
-							displayName: 'Kathryn Bartholomew',
-							account: 'kbartholomew',
-						},
-						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
-						expiration: '2018-10-05',
-						key: 'SJhxtCv9ipG',
-					},
-					{
-						tags: [
-							'Events',
-						],
-						subject: 'This is a great Message Subject 8',
-						created: '2018-04-05',
-						modified: '2018-04-05',
-						creator: {
-							displayName: 'Jeannette Amazeen-Thomas',
-							account: 'jthomas',
-						},
-						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
-						expiration: '2018-10-05',
-						key: 'SJpxKAvcj6f',
-					},
-					{
-						tags: [
-							'Announcements',
-						],
-						subject: 'What an even better Message Subject 9',
-						created: '2018-04-05',
-						modified: '2018-04-05',
-						creator: {
-							displayName: 'James Baker',
-							account: 'jbaker',
-						},
-						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
-						expiration: '2018-10-05',
-						key: 'ryClK0wcj6f',
-					},
-					{
-						tags: [
-							'Events',
-						],
-						subject: 'Message Subject 10',
-						created: '2018-04-05',
-						modified: '2018-04-05',
-						creator: {
-							displayName: 'Sheryl White Vincent',
-							account: 'swvincent',
-						},
-						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
-						expiration: '2018-10-05',
-						key: 'ryJZF0Pqs6z',
+						key: 'HyuxttsjTf',
 					},
 				]);
 			}
 		}));
 	}
-
 	static ReturnHcMessagesTopMessages() {
 		// return a new promise
 		return new Promise(((resolve, reject) => {
@@ -929,7 +371,7 @@ export default class HcMessagesData {
 			if (EnvironmentDetector.ReturnIsSPO()) {
 				// get a promise to retrieve the settings
 				NesoHTTPClient
-					.ReturnNesoData('https://neso.mos.org:3001/hcMessages/descending/limit3')
+					.ReturnNesoData('https://neso.mos.org/hcMessages/descending/limit3')
 					// if the promise is resolved with the settings
 					.then((messagesResults) => {
 						// set up var to receive all messages
@@ -986,17 +428,17 @@ export default class HcMessagesData {
 								name: 'pic1.jpg',
 								size: '65 kb',
 								key: '1-pic1',
-								url: '/HcMessagesFiles/1/pic1.jpg',
+								url: '/img/1/pic1.jpg',
 							},
 							{
 								name: 'pic7.jpg',
 								size: '65 kb',
 								key: '1-pic7',
-								url: '/HcMessagesFiles/1/pic7.jpg',
+								url: '/img/1/pic7.jpg',
 							},
 						],
 						expiration: '2018-10-05',
-						key: 'BJLlY0Dqo6f',
+						key: 'BkgttssTf',
 					},
 					{
 						tags: [
@@ -1015,11 +457,11 @@ export default class HcMessagesData {
 								name: 'pic2.jpg',
 								size: '65 kb',
 								key: '2-pic2',
-								url: '/HcMessagesFiles/2/pic2.jpg',
+								url: '/img/2/pic2.jpg',
 							},
 						],
 						expiration: '2018-10-05',
-						key: 'SkDeFCPcspG',
+						key: 'BygeKYjjaM',
 					},
 					{
 						tags: [
@@ -1038,17 +480,16 @@ export default class HcMessagesData {
 								name: 'pic3.jpg',
 								size: '65 kb',
 								key: '3-pic3',
-								url: '/HcMessagesFiles/3/pic3.jpg',
+								url: '/img/3/pic3.jpg',
 							},
 						],
 						expiration: '2018-10-05',
-						key: 'BJugFAP9i6z',
+						key: 'SyWgKFiiTf',
 					},
 				]);
 			}
 		}));
 	}
-
 	static ReturnHcMessagesAllMessagesWSpecifiedTag(tag) {
 		// return a new promise
 		return new Promise(((resolve, reject) => {
@@ -1056,7 +497,7 @@ export default class HcMessagesData {
 			if (EnvironmentDetector.ReturnIsSPO()) {
 				// get a promise to retrieve the settings
 				NesoHTTPClient
-					.ReturnNesoData(`https://neso.mos.org:3001/hcMessages/descending/tagged/${tag}`)
+					.ReturnNesoData(`https://neso.mos.org/hcMessages/descending/tagged/${tag}`)
 					// if the promise is resolved with the settings
 					.then((messagesResults) => {
 						// set up var to receive all messages
@@ -1113,17 +554,17 @@ export default class HcMessagesData {
 								name: 'pic1.jpg',
 								size: '65 kb',
 								key: '1-pic1',
-								url: '/HcMessagesFiles/1/pic1.jpg',
+								url: '/img/1/pic1.jpg',
 							},
 							{
 								name: 'pic7.jpg',
 								size: '65 kb',
 								key: '1-pic7',
-								url: '/HcMessagesFiles/1/pic7.jpg',
+								url: '/img/1/pic7.jpg',
 							},
 						],
 						expiration: '2018-10-05',
-						key: 'BJLlY0Dqo6f',
+						key: 'BkgttssTf',
 					},
 					{
 						tags: [
@@ -1142,11 +583,11 @@ export default class HcMessagesData {
 								name: 'pic2.jpg',
 								size: '65 kb',
 								key: '2-pic2',
-								url: '/HcMessagesFiles/2/pic2.jpg',
+								url: '/img/2/pic2.jpg',
 							},
 						],
 						expiration: '2018-10-05',
-						key: 'SkDeFCPcspG',
+						key: 'BygeKYjjaM',
 					},
 					{
 						tags: [
@@ -1165,11 +606,11 @@ export default class HcMessagesData {
 								name: 'pic3.jpg',
 								size: '65 kb',
 								key: '3-pic3',
-								url: '/HcMessagesFiles/3/pic3.jpg',
+								url: '/img/3/pic3.jpg',
 							},
 						],
 						expiration: '2018-10-05',
-						key: 'BJugFAP9i6z',
+						key: 'SyWgKFiiTf',
 					},
 					{
 						tags: [
@@ -1184,7 +625,7 @@ export default class HcMessagesData {
 						},
 						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
 						expiration: '2018-10-05',
-						key: 'S1FgY0Pqj6z',
+						key: 'rkzgtKisTM',
 					},
 					{
 						tags: [
@@ -1203,11 +644,11 @@ export default class HcMessagesData {
 								name: 'pic5.jpg',
 								size: '65 kb',
 								key: '5-pic5',
-								url: '/HcMessagesFiles/5/pic5.jpg',
+								url: '/img/5/pic5.jpg',
 							},
 						],
 						expiration: '2018-10-05',
-						key: 'rkqxKCP9oTz',
+						key: 'SymgKYoopz',
 					},
 					{
 						tags: [
@@ -1222,7 +663,7 @@ export default class HcMessagesData {
 						},
 						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
 						expiration: '2018-10-05',
-						key: 'HJilKCv9i6f',
+						key: 'HyNgKFjoaf',
 					},
 					{
 						tags: [
@@ -1237,7 +678,7 @@ export default class HcMessagesData {
 						},
 						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
 						expiration: '2018-10-05',
-						key: 'SJhxtCv9ipG',
+						key: 'SkrltFioaf',
 					},
 					{
 						tags: [
@@ -1252,7 +693,7 @@ export default class HcMessagesData {
 						},
 						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
 						expiration: '2018-10-05',
-						key: 'SJpxKAvcj6f',
+						key: 'BkUlYYjoaG',
 					},
 					{
 						tags: [
@@ -1267,7 +708,7 @@ export default class HcMessagesData {
 						},
 						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
 						expiration: '2018-10-05',
-						key: 'ryClK0wcj6f',
+						key: 'HywxFYji6f',
 					},
 					{
 						tags: [
@@ -1282,7 +723,7 @@ export default class HcMessagesData {
 						},
 						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
 						expiration: '2018-10-05',
-						key: 'ryJZF0Pqs6z',
+						key: 'HyuxttsjTf',
 					},
 				]);
 			}
@@ -1295,7 +736,7 @@ export default class HcMessagesData {
 			if (EnvironmentDetector.ReturnIsSPO()) {
 				// get a promise to send the email
 				NesoHTTPClient.SendNesoJSONAndReceiveResponse(
-					'https://neso.mos.org:3001/email/send',
+					'https://neso.mos.org/email/send',
 					{
 						to: 'hubhelp@mos.org',
 						from: 'The Hub <noreply@mos.org>',
@@ -1325,7 +766,7 @@ export default class HcMessagesData {
 			if (EnvironmentDetector.ReturnIsSPO()) {
 				// get a promise to send the email
 				NesoHTTPClient.SendNesoJSONAndReceiveResponse(
-					'https://neso.mos.org:3001/hcMessages/addMessage',
+					'https://neso.mos.org/hcMessages/addMessage',
 					newMessageProperties,
 				)
 					.then((response) => {
@@ -1347,7 +788,7 @@ export default class HcMessagesData {
 			if (EnvironmentDetector.ReturnIsSPO()) {
 				// get a promise to retrieve the settings
 				NesoHTTPClient
-					.ReturnNesoData('https://neso.mos.org:3001/hcMessages/nextMessageID')
+					.ReturnNesoData('https://neso.mos.org/hcMessages/nextMessageID')
 					// if the promise is resolved with the ID
 					.then((nextMessageIDResults) => {
 						// resolve this promise with the requested items

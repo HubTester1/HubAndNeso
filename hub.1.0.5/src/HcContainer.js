@@ -58,7 +58,7 @@ class HcContainer extends React.Component {
 						allOrTop="all"
 					/>
 					<HcTopCommandBar />
-					<MediaQuery minDeviceWidth={ScreenSizes.ReturnMediumMin()}>
+					{/* <MediaQuery minDeviceWidth={ScreenSizes.ReturnMediumMin()}>
 						<div id="hc-staff-lookup-and-top-messages">
 							<HcStaffLookup />
 							<HcMessages
@@ -66,7 +66,7 @@ class HcContainer extends React.Component {
 								allOrTop="top"
 							/>
 						</div>
-					</MediaQuery>
+					</MediaQuery> */}
 					<MediaQuery maxDeviceWidth={ScreenSizes.ReturnSmallMax()}>
 						<HcStaffLookup />
 					</MediaQuery>
