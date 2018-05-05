@@ -25,7 +25,6 @@ export default class HcMessages extends React.Component {
 	}
 	componentDidMount() {
 		if (this.props.allOrTop === 'all') {
-			console.log('this is all');
 			HcMessagesData.ReturnHcMessagesTags()
 				.then((allMessageTags) => {
 					this.setState(() => ({
@@ -40,7 +39,6 @@ export default class HcMessages extends React.Component {
 				});
 		}
 		if (this.props.allOrTop === 'top') {
-			console.log('this is top');
 			HcMessagesData.ReturnHcMessagesTopMessages()
 				.then((allMessageMessages) => {
 					this.setState(() => ({

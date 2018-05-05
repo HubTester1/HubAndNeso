@@ -53,6 +53,10 @@ class HcContainer extends React.Component {
 		if (EnvironmentDetector.ReturnIsHCScreen()) {
 			return (
 				<div>
+					<HcMessages
+						uData={this.state.uData}
+						allOrTop="all"
+					/>
 					<HcTopCommandBar />
 					<MediaQuery minDeviceWidth={ScreenSizes.ReturnMediumMin()}>
 						<div id="hc-staff-lookup-and-top-messages">
@@ -67,10 +71,10 @@ class HcContainer extends React.Component {
 						<HcStaffLookup />
 					</MediaQuery>
 					<HcGetItDone />
-					<HcMessages
+					{/* <HcMessages
 						uData={this.state.uData}
 						allOrTop="all"
-					/>
+					/> */}
 					<HcPushedItems />
 					<HcOrganization />
 					{/* <p>HcCalendarsSchedules here</p> */}
