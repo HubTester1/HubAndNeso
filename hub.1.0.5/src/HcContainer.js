@@ -10,7 +10,7 @@ import MOSUtilities from './services/MOSUtilities';
 import ScreenSizes from './services/ScreenSizes';
 
 import HcContainerData from './HcContainerData';
-import HcTopCommandBar from './components/HcTopCommandBar/HcTopCommandBar';
+import HcHeader from './components/HcHeader/HcHeader';
 import HcStaffLookup from './components/HcStaffLookup/HcStaffLookup';
 import HcGetItDone from './components/HcGetItDone/HcGetItDone';
 import HcPushedItems from './components/HcPushedItems/HcPushedItems';
@@ -53,7 +53,7 @@ class HcContainer extends React.Component {
 		if (EnvironmentDetector.ReturnIsHCScreen()) {
 			return (
 				<div>
-					<HcTopCommandBar />
+					<HcHeader />
 					<MediaQuery minDeviceWidth={ScreenSizes.ReturnMediumMin()}>
 						<div id="hc-staff-lookup-and-top-messages">
 							<HcStaffLookup />
