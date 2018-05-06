@@ -15,7 +15,7 @@ const HcHeader = props => (
 				<h1 id="brand-header">
 					<span className="brand-text">The Hub</span>
 					<BrandHorizontal
-						textColor="white"
+						textColor="#333"
 					/>
 				</h1>
 			</a>

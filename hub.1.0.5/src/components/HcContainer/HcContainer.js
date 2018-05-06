@@ -5,19 +5,19 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import MediaQuery from 'react-responsive';
 
-import EnvironmentDetector from './services/EnvironmentDetector';
-import MOSUtilities from './services/MOSUtilities';
-import ScreenSizes from './services/ScreenSizes';
+import EnvironmentDetector from '../../services/EnvironmentDetector';
+import MOSUtilities from '../../services/MOSUtilities';
+import ScreenSizes from '../../services/ScreenSizes';
 
 import HcContainerData from './HcContainerData';
-import HcHeader from './components/HcHeader/HcHeader';
-import HcStaffLookup from './components/HcStaffLookup/HcStaffLookup';
-import HcGetItDone from './components/HcGetItDone/HcGetItDone';
-import HcPushedItems from './components/HcPushedItems/HcPushedItems';
-import HcMessages from './components/HcMessages/HcMessages';
-import HcOrganization from './components/HcOrganization/HcOrganization';
+import HcHeader from '../../components/HcHeader/HcHeader';
+import HcStaffLookup from '../../components/HcStaffLookup/HcStaffLookup';
+import HcGetItDone from '../../components/HcGetItDone/HcGetItDone';
+import HcPushedItems from '../../components/HcPushedItems/HcPushedItems';
+import HcMessages from '../../components/HcMessages/HcMessages';
+import HcOrganization from '../../components/HcOrganization/HcOrganization';
 
-import './sass/main.sass';
+// import './sass/main.sass';
 
 // eslint-disable-next-line
 import { initializeIcons } from '@uifabric/icons';

@@ -2,7 +2,7 @@
 // ----- IMPORTS
 
 import pnp from 'sp-pnp-js';
-import EnvironmentDetector from './services/EnvironmentDetector';
+import EnvironmentDetector from '../../services/EnvironmentDetector';
 
 // ----- DATA
 

@@ -7,6 +7,17 @@
 			}
 		],
 		"no-ids": false,
-		"class-name-format": false
+		"class-name-format": false,
+		"no-important": false,
+		"property-sort-order": [
+			"display",
+			"width",
+			"height",
+			"text-indent",
+			"margin",
+			"padding",
+			"white-space",
+			"overflow"
+		]
 	}
 }

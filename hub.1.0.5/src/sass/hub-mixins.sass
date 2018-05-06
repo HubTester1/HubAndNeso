@@ -1,0 +1,104 @@
+
+// ------------------
+// ROWS & COLUMNS
+// ------------------
+
+=row
+	display: table
+	table-layout: fixed
+	border-collapse: collapse
+
+=col
+	display: table-cell
+	vertical-align: top
+
+// ------------------
+// HIDDEN
+// ------------------
+
+=block-hidden
+	display: block !important
+	width: 0 !important
+	height: 0
+	padding: 0 !important
+	text-indent: 100%
+	white-space: nowrap
+	overflow: hidden
+
+=inline-hidden
+	display: inline-block
+	width: 0
+	height: 0
+	text-indent: 100%
+	white-space: nowrap
+	overflow: hidden
+
+=colulm-hidden
+	display: table-cell
+	width: 0
+	height: 0
+	text-indent: 100%
+	white-space: nowrap
+	overflow: hidden
+
+
+
+// ------------------
+// LINK
+// ------------------
+
+=link-text
+	text-decoration: none
+	color: $interactive-default !important
+	transition: color 250ms
+
+=link-text-active
+	text-decoration: none
+	color: $interactive-active !important
+
+
+
+// ------------------
+// POSITION
+// ------------------
+
+=vertical-align-middle
+	position: relative
+	top: 50%
+	transform: translateY(-50%)
+
+	
+// ------------------
+// GRID ELEMENT COLORING
+// ------------------
+
+=grid-element-darkened-1
+	background-color: $grey2
+	color: $grey13
+
+	a
+		color: $blue5 !important
+
+		&:hover
+			color: $blue6 !important
+
+=grid-element-darkened-2
+	background-color: $grey3
+	color: $grey14
+
+	a
+		color: $blue6 !important
+
+		&:hover
+			color: $blue7 !important
+
+=grid-element-darkened-3
+	background-color: $grey4
+	color: $grey15
+
+	a
+		color: $blue7 !important
+
+		&:hover
+			color: $blue8 !important
+
