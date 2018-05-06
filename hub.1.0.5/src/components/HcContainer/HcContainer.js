@@ -17,7 +17,7 @@ import HcPushedItems from '../../components/HcPushedItems/HcPushedItems';
 import HcMessages from '../../components/HcMessages/HcMessages';
 import HcOrganization from '../../components/HcOrganization/HcOrganization';
 
-// import './sass/main.sass';
+import './HcContainer.sass';
 
 // eslint-disable-next-line
 import { initializeIcons } from '@uifabric/icons';
@@ -54,6 +54,9 @@ class HcContainer extends React.Component {
 			return (
 				<div>
 					<HcHeader />
+					<MediaQuery maxDeviceWidth={ScreenSizes.ReturnSmallMax()}>
+						<HcStaffLookup />
+					</MediaQuery>
 					<MediaQuery minDeviceWidth={ScreenSizes.ReturnMediumMin()}>
 						<div id="hc-staff-lookup-and-top-messages">
 							<HcStaffLookup />
@@ -62,9 +65,6 @@ class HcContainer extends React.Component {
 								allOrTop="top"
 							/>
 						</div>
-					</MediaQuery>
-					<MediaQuery maxDeviceWidth={ScreenSizes.ReturnSmallMax()}>
-						<HcStaffLookup />
 					</MediaQuery>
 					<HcGetItDone />
 					<HcMessages

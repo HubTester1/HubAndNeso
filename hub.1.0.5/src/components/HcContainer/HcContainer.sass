@@ -1,0 +1,73 @@
+
+// ----- IMPORTS
+
+@import '../../sass/hub-vars'
+@import '../../sass/hub-mixins'
+@import '../../sass/temp'
+
+// ----- GLOBAL
+
+html
+	font-size: 10px
+	box-sizing: border-box
+
+body
+	font-family: 'Segoe UI', 'Segoe', 'San Francisco', Roboto, Helvetica Neue, Helvetica, Arial, sans-serif
+	color: $text-on-white
+	margin: 0
+
+div#suiteBarDelta
+
+	div#suiteBarTop
+
+		div#O365_NavHeader
+			background-color: $black
+
+div#s4-bodyContainer
+	background-color: $white
+
+div#s4-workspace
+	font-family: 'Segoe UI', 'Segoe', 'San Francisco', Roboto, Helvetica Neue, Helvetica, Arial, sans-serif
+	color: $text-on-white
+	font-size: 1.8rem
+
+	h1
+		font-size: 7.2rem
+
+	h2
+		font-size: 5.1rem !important
+
+	h3
+		font-size: 3.6rem !important
+
+	h4
+		font-size: 2.5rem !important
+
+	ul,
+	ol
+		list-style-position: inside
+		margin: 0 0 1rem 0
+		padding: 0
+
+	ul ul,
+	ol ol
+		margin: 0 0 1rem 2rem
+		padding: 0
+
+	ul li,
+	ol li
+		list-style-position: outside
+		vertical-align: text-top
+		margin-left: 1.6rem
+
+	ul li
+		list-style-type: square
+		list-style-image: url('https://www.mos.org/sites/dev-elvis.mos.org/themes/mos_responsive/img/icons/bullet.png')
+
+	a,
+	a:visited
+		+link-text
+
+		&:hover,
+		&:active
+			+link-text-active
