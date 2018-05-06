@@ -2,15 +2,18 @@
 // ----- IMPORTS
 
 import * as React from 'react';
+import MediaQuery from 'react-responsive';
 import Pagination from 'react-js-pagination';
 import HcMessagesData from './HcMessagesData';
 import HcMessagesCommandBar from './components/HcMessagesCommandBar/HcMessagesCommandBar';
 import HcMessagesList from './components/HcMessagesList/HcMessagesList';
 import HcMessagesNewMessageForm from './components/HcMessagesNewMessageForm/HcMessagesNewMessageForm';
+import ScreenSizes from '../../services/ScreenSizes';
 
 // ----- COMPONENT
 
-const messagesPerPage = 5;
+const messagesPerPageSmallScreen = 8;
+const messagesPerPageLargeScreen = 16;
 const startingPageNumber = 1;
 
 export default class HcMessages extends React.Component {
@@ -18,7 +21,8 @@ export default class HcMessages extends React.Component {
 		super(props);
 		this.state = {
 			messagesArray: [],
-			messagesThisPage: [],
+			messagesThisPageSmallScreen: [],
+			messagesThisPageLargeScreen: [],
 			activePage: startingPageNumber,
 			tagsArray: [],
 			showNewMessageForm: false,
@@ -40,9 +44,12 @@ export default class HcMessages extends React.Component {
 				});
 			HcMessagesData.ReturnHcMessagesAllMessages()
 				.then((allMessageMessages) => {
+					const messagesThisPage = 
+						this.returnMessagesThisPage(startingPageNumber, allMessageMessages);
 					this.setState(() => ({
 						messagesArray: allMessageMessages,
-						messagesThisPage: this.returnMessagesThisPage(startingPageNumber, allMessageMessages),
+						messagesThisPageSmallScreen: messagesThisPage.messagesThisPageSmallScreen,
+						messagesThisPageLargeScreen: messagesThisPage.messagesThisPageLargeScreen,
 					}));
 				});
 		}
@@ -56,28 +63,25 @@ export default class HcMessages extends React.Component {
 		}
 	}
 	handlePageChange(pageNumber) {
+		const messagesThisPage =
+			this.returnMessagesThisPage(pageNumber, this.state.messagesArray);
 		this.setState({
 			activePage: pageNumber,
-			messagesThisPage: this.returnMessagesThisPage(pageNumber, this.state.messagesArray),
+			messagesThisPageSmallScreen: messagesThisPage.messagesThisPageSmallScreen,
+			messagesThisPageLargeScreen: messagesThisPage.messagesThisPageLargeScreen,
 		});
 	}
 	returnMessagesThisPage(pageNumber, messagePool) {
-		console.log('firing');
-		console.log('messagePool');
-		console.log(messagePool);
 		// preserve function parameter; subtract 1, because pages logically start with 1
 		// 		 but technically with 0
 		const pageNumberCopy = pageNumber - 1;
-		console.log('pageNumberCopy');
-		console.log(pageNumberCopy);
-		console.log('pageNumberCopy * messagesPerPage');
-		console.log(pageNumberCopy * messagesPerPage);
-		console.log('(pageNumberCopy + 1) * messagesPerPage');
-		console.log((pageNumberCopy + 1) * messagesPerPage);
-
-		// return corresponding section of array
-		return messagePool
-			.slice(pageNumberCopy * messagesPerPage, (pageNumberCopy + 1) * messagesPerPage);
+		// return corresponding sections of array
+		return {
+			messagesThisPageSmallScreen: messagePool
+				.slice(pageNumberCopy * messagesPerPageSmallScreen, (pageNumberCopy + 1) * messagesPerPageSmallScreen),
+			messagesThisPageLargeScreen: messagePool
+				.slice(pageNumberCopy * messagesPerPageLargeScreen, (pageNumberCopy + 1) * messagesPerPageLargeScreen),
+		};
 	}
 	addMessageToList(newMessageProperties) {
 		this.setState((prevState) => {
@@ -90,9 +94,12 @@ export default class HcMessages extends React.Component {
 				tags: [newMessageProperties.newMessageTags[0]],
 				key: newMessageProperties.newMessageKey,
 			}, ...prevState.messagesArray];
+			const messagesThisPage =
+				this.returnMessagesThisPage(startingPageNumber, newMessageArray);
 			return {
 				messagesArray: newMessageArray,
-				messagesThisPage: this.returnMessagesThisPage(startingPageNumber, newMessageArray),
+				messagesThisPageSmallScreen: messagesThisPage.messagesThisPageSmallScreen,
+				messagesThisPageLargeScreen: messagesThisPage.messagesThisPageLargeScreen,
 			};
 		});
 	}
@@ -120,24 +127,29 @@ export default class HcMessages extends React.Component {
 		if (menuItem.name === 'All') {
 			HcMessagesData.ReturnHcMessagesAllMessages()
 				.then((allMessageMessages) => {
+					const messagesThisPage =
+						this.returnMessagesThisPage(startingPageNumber, allMessageMessages);
 					this.setState(() => ({
 						messagesArray: allMessageMessages,
-						messagesThisPage: this.returnMessagesThisPage(startingPageNumber, allMessageMessages),
+						messagesThisPageSmallScreen: messagesThisPage.messagesThisPageSmallScreen,
+						messagesThisPageLargeScreen: messagesThisPage.messagesThisPageLargeScreen,
 					}));
 				});
 		} else {
 			HcMessagesData.ReturnHcMessagesAllMessagesWSpecifiedTag(menuItem.name)
 				.then((specifiedMessages) => {
+					const messagesThisPage = 
+						this.returnMessagesThisPage(startingPageNumber, specifiedMessages);
 					this.setState(() => ({
 						messagesArray: specifiedMessages,
-						messagesThisPage: this.returnMessagesThisPage(startingPageNumber, specifiedMessages),
+						messagesThisPageSmallScreen: messagesThisPage.messagesThisPageSmallScreen,
+						messagesThisPageLargeScreen: messagesThisPage.messagesThisPageLargeScreen,
 					}));
 				});
 		}
 		// return true to close the menu
 		return true;
 	}
-
 	render() {
 		return (this.props.allOrTop === 'all') ?
 			(
@@ -157,16 +169,36 @@ export default class HcMessages extends React.Component {
 						addMessageToList={this.addMessageToList}
 						uData={this.props.uData}
 					/>
-					<HcMessagesList
-						messagesThisPage={this.state.messagesThisPage}
-					/>
-					<Pagination
-						activePage={this.state.activePage}
-						itemsCountPerPage={messagesPerPage}
-						totalItemsCount={this.state.messagesArray.length}
-						pageRangeDisplayed={5}
-						onChange={this.handlePageChange}
-					/>
+					<MediaQuery maxDeviceWidth={ScreenSizes.ReturnSmallMax()}>
+						<HcMessagesList
+							messagesThisPage={this.state.messagesThisPageSmallScreen}
+						/>
+						<Pagination
+							activePage={this.state.activePage}
+							itemsCountPerPage={messagesPerPageSmallScreen}
+							totalItemsCount={this.state.messagesArray.length}
+							pageRangeDisplayed={
+								((this.state.messagesArray.length / messagesPerPageSmallScreen) + 1) > 3 ? 
+									3 :
+									(this.state.messagesArray.length / messagesPerPageSmallScreen) + 1
+							}
+							onChange={this.handlePageChange}
+						/>
+					</MediaQuery>
+					<MediaQuery minDeviceWidth={ScreenSizes.ReturnMediumMin()}>
+						<HcMessagesList
+							messagesThisPage={this.state.messagesThisPageLargeScreen}
+						/>
+						<Pagination
+							activePage={this.state.activePage}
+							itemsCountPerPage={messagesPerPageLargeScreen}
+							totalItemsCount={this.state.messagesArray.length}
+							pageRangeDisplayed={
+								(this.state.messagesArray.length / messagesPerPageLargeScreen) + 1
+							}
+							onChange={this.handlePageChange}
+						/>
+					</MediaQuery>
 				</div>
 			) :
 			(

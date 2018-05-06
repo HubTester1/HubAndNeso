@@ -6,9 +6,6 @@ import HcMessagesMessagePreview from '../HcMessagesMessagePreview/HcMessagesMess
 
 // ----- COMPONENT
 export default class HcMessagesList extends React.Component {
-	constructor(props) {
-		super(props);
-	}
 	render() {
 		if (this.props.messagesThisPage[0]) {
 			return (
