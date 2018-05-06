@@ -204,7 +204,7 @@ export default class HcMessages extends React.Component {
 			(
 				<div id="hc-messages-top" className="mos-react-component-root">
 					<h2>Latest Messages</h2>
-					<HcMessagesList messagesArray={this.state.messagesArray} />
+					<HcMessagesList messagesThisPage={this.state.messagesArray} />
 				</div>
 			);
 	}
