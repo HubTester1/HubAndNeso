@@ -143,29 +143,10 @@ export default class HcMessagesData {
 								key: '',
 							};
 							if (messageValues.messageBody) {
-								messageFormatted.tags = messageValues.messageTags;
-								messageFormatted.subject = messageValues.messageSubject;
-								messageFormatted.created = messageValues.messageCreated;
-								messageFormatted.modified = messageValues.messageModified;
-								messageFormatted.creator = messageValues.messageCreator;
-								messageFormatted.body = messageValues.messageBody;
-								messageFormatted.images = [];
-								messageFormatted.expiration = messageValues.messageExpiration;
-
-								messageFormatted.key = shortid.generate();
-
-								messageValues.messageImages.forEach((imageValue) => {
-									const imageValueCopy = imageValue;
-									imageValueCopy.imageKey = shortid.generate();
-									imageValueCopy.previewKey = shortid.generate();
-									messageFormatted.images.push(imageValueCopy);
-								});
-
-								allMessagesMessages.push(messageFormatted);
+								allMessagesMessages
+									.push(this.ReturnFormattedMessage(messageValues, messageFormatted));
 							}
 						});
-						console.log('allMessagesMessages');
-						console.log(allMessagesMessages);
 						// resolve this promise with the requested items
 						resolve(allMessagesMessages);
 					});
@@ -188,18 +169,20 @@ export default class HcMessagesData {
 							{
 								name: 'pic1.jpg',
 								size: '65 kb',
-								key: '1-pic1',
 								url: '/img/1/pic1.jpg',
+								imageKey: 'H1jz0w3jaz',
+								previewKey: 'ry3GCP3s6G',
 							},
 							{
 								name: 'pic7.jpg',
 								size: '65 kb',
-								key: '1-pic7',
 								url: '/img/1/pic7.jpg',
+								imageKey: 'r1TzRD3jTf',
+								previewKey: 'Hk0fAD2oaM',
 							},
 						],
 						expiration: '2018-10-05',
-						key: 'BkgttssTf',
+						key: 'B19f0P3spf',
 					},
 					{
 						tags: [
@@ -217,12 +200,13 @@ export default class HcMessagesData {
 							{
 								name: 'pic2.jpg',
 								size: '65 kb',
-								key: '2-pic2',
 								url: '/img/2/pic2.jpg',
+								imageKey: 'B1llMADhipz',
+								previewKey: 'SkZlGCv3saM',
 							},
 						],
 						expiration: '2018-10-05',
-						key: 'BygeKYjjaM',
+						key: 'H1JgfRPhiTz',
 					},
 					{
 						tags: [
@@ -240,12 +224,13 @@ export default class HcMessagesData {
 							{
 								name: 'pic3.jpg',
 								size: '65 kb',
-								key: '3-pic3',
 								url: '/img/3/pic3.jpg',
+								imageKey: 'rymxf0P3jpM',
+								previewKey: 'H14gf0w3sTG',
 							},
 						],
 						expiration: '2018-10-05',
-						key: 'SyWgKFiiTf',
+						key: 'ByMxf0P2ipM',
 					},
 					{
 						tags: [
@@ -259,8 +244,9 @@ export default class HcMessagesData {
 							account: 'kbartholomew',
 						},
 						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
+						images: [],
 						expiration: '2018-10-05',
-						key: 'rkzgtKisTM',
+						key: 'ryHxGCDhjaM',
 					},
 					{
 						tags: [
@@ -274,16 +260,9 @@ export default class HcMessagesData {
 							account: 'jbcichocki',
 						},
 						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
-						images: [
-							{
-								name: 'pic5.jpg',
-								size: '65 kb',
-								key: '5-pic5',
-								url: '/img/5/pic5.jpg',
-							},
-						],
+						images: [],
 						expiration: '2018-10-05',
-						key: 'SymgKYoopz',
+						key: 'H1IlGCwhoaM',
 					},
 					{
 						tags: [
@@ -297,8 +276,9 @@ export default class HcMessagesData {
 							account: 'jbcichocki',
 						},
 						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
+						images: [],
 						expiration: '2018-10-05',
-						key: 'HyNgKFjoaf',
+						key: 'HyPgM0whj6f',
 					},
 					{
 						tags: [
@@ -312,8 +292,9 @@ export default class HcMessagesData {
 							account: 'kbartholomew',
 						},
 						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
+						images: [],
 						expiration: '2018-10-05',
-						key: 'SkrltFioaf',
+						key: 'Sk_eGAv2jaM',
 					},
 					{
 						tags: [
@@ -327,8 +308,9 @@ export default class HcMessagesData {
 							account: 'jthomas',
 						},
 						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
+						images: [],
 						expiration: '2018-10-05',
-						key: 'BkUlYYjoaG',
+						key: 'SytefCPnjpG',
 					},
 					{
 						tags: [
@@ -342,8 +324,9 @@ export default class HcMessagesData {
 							account: 'jbaker',
 						},
 						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
+						images: [],
 						expiration: '2018-10-05',
-						key: 'HywxFYji6f',
+						key: 'S19gG0w2jaf',
 					},
 					{
 						tags: [
@@ -357,12 +340,35 @@ export default class HcMessagesData {
 							account: 'swvincent',
 						},
 						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
+						images: [],
 						expiration: '2018-10-05',
-						key: 'HyuxttsjTf',
+						key: 'SyixM0vniaz',
 					},
 				]);
 			}
 		}));
+	}
+	static ReturnFormattedMessage(messageValues, messageFormatted) {
+		const messageFormattedCopy = messageFormatted;
+		messageFormattedCopy.tags = messageValues.messageTags;
+		messageFormattedCopy.subject = messageValues.messageSubject;
+		messageFormattedCopy.created = messageValues.messageCreated;
+		messageFormattedCopy.modified = messageValues.messageModified;
+		messageFormattedCopy.creator = messageValues.messageCreator;
+		messageFormattedCopy.body = messageValues.messageBody;
+		messageFormattedCopy.expiration = messageValues.messageExpiration;
+
+		messageFormattedCopy.key = shortid.generate();
+
+		if (messageValues.messageImages && messageValues.messageImages[0]) {
+			messageValues.messageImages.forEach((imageValue) => {
+				const imageValueCopy = imageValue;
+				imageValueCopy.imageKey = shortid.generate();
+				imageValueCopy.previewKey = shortid.generate();
+				messageFormattedCopy.images.push(imageValueCopy);
+			});
+		}
+		return messageFormattedCopy;
 	}
 	static ReturnHcMessagesTopMessages() {
 		// return a new promise
@@ -391,18 +397,8 @@ export default class HcMessagesData {
 								key: '',
 							};
 							if (messageValues.messageBody) {
-								messageFormatted.tags = messageValues.messageTags;
-								messageFormatted.subject = messageValues.messageSubject;
-								messageFormatted.created = messageValues.messageCreated;
-								messageFormatted.modified = messageValues.messageModified;
-								messageFormatted.creator = messageValues.messageCreator;
-								messageFormatted.body = messageValues.messageBody;
-								messageFormatted.images = messageValues.messageImages;
-								messageFormatted.expiration = messageValues.messageExpiration;
-
-								messageFormatted.key = shortid.generate();
-
-								allMessagesMessages.push(messageFormatted);
+								allMessagesMessages
+									.push(this.ReturnFormattedMessage(messageValues, messageFormatted));
 							}
 						});
 						// resolve this promise with the requested items
@@ -427,18 +423,20 @@ export default class HcMessagesData {
 							{
 								name: 'pic1.jpg',
 								size: '65 kb',
-								key: '1-pic1',
 								url: '/img/1/pic1.jpg',
+								imageKey: 'H1jz0w3jaz',
+								previewKey: 'ry3GCP3s6G',
 							},
 							{
 								name: 'pic7.jpg',
 								size: '65 kb',
-								key: '1-pic7',
 								url: '/img/1/pic7.jpg',
+								imageKey: 'r1TzRD3jTf',
+								previewKey: 'Hk0fAD2oaM',
 							},
 						],
 						expiration: '2018-10-05',
-						key: 'BkgttssTf',
+						key: 'B19f0P3spf',
 					},
 					{
 						tags: [
@@ -456,12 +454,13 @@ export default class HcMessagesData {
 							{
 								name: 'pic2.jpg',
 								size: '65 kb',
-								key: '2-pic2',
 								url: '/img/2/pic2.jpg',
+								imageKey: 'B1llMADhipz',
+								previewKey: 'SkZlGCv3saM',
 							},
 						],
 						expiration: '2018-10-05',
-						key: 'BygeKYjjaM',
+						key: 'H1JgfRPhiTz',
 					},
 					{
 						tags: [
@@ -479,12 +478,13 @@ export default class HcMessagesData {
 							{
 								name: 'pic3.jpg',
 								size: '65 kb',
-								key: '3-pic3',
 								url: '/img/3/pic3.jpg',
+								imageKey: 'rymxf0P3jpM',
+								previewKey: 'H14gf0w3sTG',
 							},
 						],
 						expiration: '2018-10-05',
-						key: 'SyWgKFiiTf',
+						key: 'ByMxf0P2ipM',
 					},
 				]);
 			}
@@ -517,18 +517,8 @@ export default class HcMessagesData {
 								key: '',
 							};
 							if (messageValues.messageBody) {
-								messageFormatted.tags = messageValues.messageTags;
-								messageFormatted.subject = messageValues.messageSubject;
-								messageFormatted.created = messageValues.messageCreated;
-								messageFormatted.modified = messageValues.messageModified;
-								messageFormatted.creator = messageValues.messageCreator;
-								messageFormatted.body = messageValues.messageBody;
-								messageFormatted.images = messageValues.messageImages;
-								messageFormatted.expiration = messageValues.messageExpiration;
-
-								messageFormatted.key = shortid.generate();
-
-								allMessagesMessages.push(messageFormatted);
+								allMessagesMessages
+									.push(this.ReturnFormattedMessage(messageValues, messageFormatted));
 							}
 						});
 						// resolve this promise with the requested items
@@ -553,18 +543,20 @@ export default class HcMessagesData {
 							{
 								name: 'pic1.jpg',
 								size: '65 kb',
-								key: '1-pic1',
 								url: '/img/1/pic1.jpg',
+								imageKey: 'H1jz0w3jaz',
+								previewKey: 'ry3GCP3s6G',
 							},
 							{
 								name: 'pic7.jpg',
 								size: '65 kb',
-								key: '1-pic7',
 								url: '/img/1/pic7.jpg',
+								imageKey: 'r1TzRD3jTf',
+								previewKey: 'Hk0fAD2oaM',
 							},
 						],
 						expiration: '2018-10-05',
-						key: 'BkgttssTf',
+						key: 'B19f0P3spf',
 					},
 					{
 						tags: [
@@ -582,12 +574,13 @@ export default class HcMessagesData {
 							{
 								name: 'pic2.jpg',
 								size: '65 kb',
-								key: '2-pic2',
 								url: '/img/2/pic2.jpg',
+								imageKey: 'B1llMADhipz',
+								previewKey: 'SkZlGCv3saM',
 							},
 						],
 						expiration: '2018-10-05',
-						key: 'BygeKYjjaM',
+						key: 'H1JgfRPhiTz',
 					},
 					{
 						tags: [
@@ -605,12 +598,13 @@ export default class HcMessagesData {
 							{
 								name: 'pic3.jpg',
 								size: '65 kb',
-								key: '3-pic3',
 								url: '/img/3/pic3.jpg',
+								imageKey: 'rymxf0P3jpM',
+								previewKey: 'H14gf0w3sTG',
 							},
 						],
 						expiration: '2018-10-05',
-						key: 'SyWgKFiiTf',
+						key: 'ByMxf0P2ipM',
 					},
 					{
 						tags: [
@@ -624,8 +618,9 @@ export default class HcMessagesData {
 							account: 'kbartholomew',
 						},
 						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
+						images: [],
 						expiration: '2018-10-05',
-						key: 'rkzgtKisTM',
+						key: 'ryHxGCDhjaM',
 					},
 					{
 						tags: [
@@ -639,16 +634,9 @@ export default class HcMessagesData {
 							account: 'jbcichocki',
 						},
 						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
-						images: [
-							{
-								name: 'pic5.jpg',
-								size: '65 kb',
-								key: '5-pic5',
-								url: '/img/5/pic5.jpg',
-							},
-						],
+						images: [],
 						expiration: '2018-10-05',
-						key: 'SymgKYoopz',
+						key: 'H1IlGCwhoaM',
 					},
 					{
 						tags: [
@@ -662,8 +650,9 @@ export default class HcMessagesData {
 							account: 'jbcichocki',
 						},
 						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
+						images: [],
 						expiration: '2018-10-05',
-						key: 'HyNgKFjoaf',
+						key: 'HyPgM0whj6f',
 					},
 					{
 						tags: [
@@ -677,8 +666,9 @@ export default class HcMessagesData {
 							account: 'kbartholomew',
 						},
 						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
+						images: [],
 						expiration: '2018-10-05',
-						key: 'SkrltFioaf',
+						key: 'Sk_eGAv2jaM',
 					},
 					{
 						tags: [
@@ -692,8 +682,9 @@ export default class HcMessagesData {
 							account: 'jthomas',
 						},
 						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
+						images: [],
 						expiration: '2018-10-05',
-						key: 'BkUlYYjoaG',
+						key: 'SytefCPnjpG',
 					},
 					{
 						tags: [
@@ -707,8 +698,9 @@ export default class HcMessagesData {
 							account: 'jbaker',
 						},
 						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
+						images: [],
 						expiration: '2018-10-05',
-						key: 'HywxFYji6f',
+						key: 'S19gG0w2jaf',
 					},
 					{
 						tags: [
@@ -722,8 +714,9 @@ export default class HcMessagesData {
 							account: 'swvincent',
 						},
 						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
+						images: [],
 						expiration: '2018-10-05',
-						key: 'HyuxttsjTf',
+						key: 'SyixM0vniaz',
 					},
 				]);
 			}
@@ -864,7 +857,7 @@ export default class HcMessagesData {
 			if (EnvironmentDetector.ReturnIsSPO()) {
 				// upload the file
 				const spWeb = new Web('https://bmos.sharepoint.com');
-				spWeb.getFolderByServerRelativeUrl(`/HcMessagesFiles/${folder}`)
+				spWeb.getFolderByServerRelativeUrl(`/img/${folder}`)
 					.files.add(file.name, file, true)
 					// if the upload was successful
 					.then((fileResponse) => {
@@ -890,7 +883,7 @@ export default class HcMessagesData {
 				resolve({
 					name: file.name,
 					size: file.size,
-					url: 'https://bmos.sharepoint.com/HcMessagesFiles/1/pic1.jpg',
+					url: 'https://bmos.sharepoint.com/img/1/pic1.jpg',
 					error: false,
 					key: shortid.generate(),
 				});

@@ -4,10 +4,12 @@
 import * as React from 'react';
 import Truncate from 'react-truncate';
 import Modal from 'react-modal';
+import MediaQuery from 'react-responsive';
+
 import { DefaultButton } from 'office-ui-fabric-react/lib/Button';
 import HcMessagesMessage from '../HcMessagesMessage/HcMessagesMessage';
 import HcMessagesMessageImagePreview from '../HcMessagesMessageImagePreview/HcMessagesMessageImagePreview';
-// import MOSUtilities from '../../../../services/MOSUtilities';
+import ScreenSizes from '../../../../services/ScreenSizes';
 
 // ----- COMPONENT
 
@@ -15,25 +17,32 @@ export default class HcMessagesMessagePreview extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			modalIsOpen: false,
+			showModalFull: false,
+			showInlineFull: false,
 		};
-		this.openModal = this.openModal.bind(this);
-		this.afterOpenModal = this.afterOpenModal.bind(this);
-		this.closeModal = this.closeModal.bind(this);
+		this.handleOpenModalClick = this.handleOpenModalClick.bind(this);
+		this.handleAfterModalOpens = this.handleAfterModalOpens.bind(this);
+		this.handleCloseModalClick = this.handleCloseModalClick.bind(this);
+		this.handleOpenInlineFullClick = this.handleOpenInlineFullClick.bind(this);
+		this.handleCloseInlineFullClick = this.handleCloseInlineFullClick.bind(this);
 	}
-	openModal() {
-		this.setState({ modalIsOpen: true });
+	handleOpenModalClick() {
+		this.setState({ showModalFull: true });
 	}
-
-	afterOpenModal() {
+	handleAfterModalOpens() {
 		console.log('after open modal');
 	}
-
-	closeModal() {
-		this.setState({ modalIsOpen: false });
+	handleCloseModalClick() {
+		this.setState({ showModalFull: false });
+	}
+	handleOpenInlineFullClick() {
+		this.setState({ showInlineFull: true });
+	}
+	handleCloseInlineFullClick() {
+		this.setState({ showInlineFull: false });
 	}
 	render() {
-		const customStyles = {
+		const modalStyles = {
 			content: {
 				top: '50%',
 				left: '50%',
@@ -49,69 +58,86 @@ export default class HcMessagesMessagePreview extends React.Component {
 		Modal.setAppElement('#s4-bodyContainer');
 		return (
 			<li id={`hc-messages-message-preview_${this.props.messageId}`} className="hc-messages-message-preview mos-react-component-root">
-				<h3 className="hc-messages-message-subject">
-					{this.props.messageContent.subject}
-				</h3>
 				{
+					!this.state.showInlineFull &&
+
+					<h3 className="hc-messages-message-subject">
+						{this.props.messageContent.subject}
+					</h3>
+				}
+				{
+					!this.state.showInlineFull &&
 					this.props.messageContent.images &&
+					this.props.messageContent.images[0] &&
 
 					<HcMessagesMessageImagePreview
-						key={this.props.messageContent.images[0].key}
-						imageID={this.props.messageContent.images[0].key}
+						imageID={this.props.messageContent.images[0].previewKey}
 						imageContent={this.props.messageContent.images[0]}
 					/>
 				}
-				<Truncate
-					lines={1} 
-					ellipsis={
-						<span>... 
-							<DefaultButton
-								iconProps={{ iconName: 'Fullscreen' }}
-								text="Full message"
-								onClick={this.openModal}
-							/>
-						</span>
-					}
-				>
-					<div className="hc-messages-message-body">{this.props.messageContent.body}</div>
-				</Truncate>
-				<Modal
-					isOpen={this.state.modalIsOpen}
-					onAfterOpen={this.afterOpenModal}
-					onRequestClose={this.closeModal}
-					style={customStyles}
-					contentLabel="Example Modal"
-					ariaHideApp={false}
-				>
+				{
+					!this.state.showInlineFull &&
+
+					<div className="hc-messages-message-preview-truncated-body">
+						<MediaQuery minDeviceWidth={ScreenSizes.ReturnMediumMin()}>
+							<Truncate
+								lines={1}
+								ellipsis={
+									<span>...
+										<DefaultButton
+											iconProps={{ iconName: 'Fullscreen' }}
+											text="Full message"
+											onClick={this.handleOpenModalClick}
+										/>
+									</span>
+								}
+							>
+								<div className="hc-messages-message-body">{this.props.messageContent.body}</div>
+							</Truncate>
+							<Modal
+								isOpen={this.state.showModalFull}
+								onAfterOpen={this.handleAfterModalOpens}
+								onRequestClose={this.handleCloseModalClick}
+								style={modalStyles}
+								contentLabel="Example Modal"
+								ariaHideApp={false}
+							>
+								<HcMessagesMessage
+									messageId={this.props.messageId}
+									messageContent={this.props.messageContent}
+									handleCloseModalClick={this.handleCloseModalClick}
+									handleCloseInlineFullClick={this.handleCloseInlineFullClick}
+								/>
+							</Modal>
+						</MediaQuery>
+						<MediaQuery maxDeviceWidth={ScreenSizes.ReturnSmallMax()}>
+							<Truncate
+								lines={1}
+								ellipsis={
+									<span>...
+										<DefaultButton
+											iconProps={{ iconName: 'ChevronDown' }}
+											text="Full message"
+											onClick={this.handleOpenInlineFullClick}
+										/>
+									</span>
+								}
+							>
+								<div className="hc-messages-message-body">{this.props.messageContent.body}</div>
+							</Truncate>
+						</MediaQuery>
+					</div>
+				}
+				{
+					this.state.showInlineFull &&
+
 					<HcMessagesMessage
 						messageId={this.props.messageId}
 						messageContent={this.props.messageContent}
+						handleCloseModalClick={this.handleCloseModalClick}
+						handleCloseInlineFullClick={this.handleCloseInlineFullClick}
 					/>
-				</Modal>
-				{/* <HcMessagesMessageCreator
-				creator={this.props.messageContent.creator}
-			/>
-
-			<p className="hc-messages-message-created">
-				{MOSUtilities.ReturnFormattedDateTime({
-					incomingDateTimeString: this.props.messageContent.created,
-					incomingReturnFormat: 'MMMM D, YYYY',
-					determineYearDisplayDynamically: 1,
-				})}
-			</p>
-			{
-				this.props.messageContent.images &&
-				this.props.messageContent.images.map(imageValue => (
-					<HcMessagesMessageImage
-						key={imageValue.key}
-						imageID={imageValue.key}
-						imageContent={imageValue}
-					/>
-				))
-			}
-			<div className="hc-messages-message-body">{this.props.messageContent.body}</div> */}
-				{/* note: currently only one tag per message */}
-				{/* <p className="hc-messages-message-tags">#{this.props.messageContent.tags[0]}</p> */}
+				}
 			</li>
 		);
 	}
