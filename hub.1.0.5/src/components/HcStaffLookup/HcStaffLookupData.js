@@ -77,6 +77,7 @@ export default class HcStaffLookupData {
 				});
 		});
 	}
+	
 	static ReturnPeoplePickerOptions(terms, results) {
 		// if environment is SharePoint
 		if (EnvironmentDetector.ReturnIsSPO()) {
