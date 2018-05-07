@@ -21,7 +21,7 @@ import './HcHeaderLarge.sass';
 export default class HcHeader extends React.Component {
 	render() {
 		return (
-			<header className="hc-header mos-react-component-root">
+			<header id="hc-header" className="mos-react-component-root">
 				<MediaQuery maxDeviceWidth={ScreenSizes.ReturnSmallMax()}>
 					<Hamburger />
 				</MediaQuery>
