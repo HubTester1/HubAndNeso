@@ -1,4 +1,6 @@
 
+/* eslint-disable react/prefer-stateless-function */
+
 // ----- IMPORTS
 
 import * as React from 'react';
@@ -6,30 +8,28 @@ import MediaQuery from 'react-responsive';
 
 import ScreenSizes from '../../services/ScreenSizes';
 
-import BrandHorizontal from '../Brands/BrandHorizontal';
-import HcTopCommandBar from '../HcTopCommandBar/HcTopCommandBar';
+import Hamburger from '../Hamburger/Hamburger';
+import BrandHorizontalH1Link from '../Brands/BrandHorizontalH1Link';
+import HcNavLarge from '../HcNavLarge/HcNavLarge';
+
+import './HcHeader.sass';
+import './HcHeaderSmall.sass';
+import './HcHeaderLarge.sass';
 
 // ----- COMPONENT
 
-const HcHeader = props => (
-	<header id="hc-header" className="mos-react-component-root">
-		<div id="brand-container">
-			<a id="brand-link" href="/">
-				<h1 id="brand-header">
-					<span className="brand-text">The Hub</span>
-					<BrandHorizontal
-						textColor="#fff"
-					/>
-				</h1>
-			</a>
-		</div>
-		<MediaQuery maxDeviceWidth={ScreenSizes.ReturnSmallMax()}>
-			<p>Hamburger</p>
-		</MediaQuery>
-		<MediaQuery minDeviceWidth={ScreenSizes.ReturnMediumMin()}>
-			<HcTopCommandBar />
-		</MediaQuery>
-	</header>
-);
-
-export default HcHeader;
+export default class HcHeader extends React.Component {
+	render() {
+		return (
+			<header className="hc-header mos-react-component-root">
+				<MediaQuery maxDeviceWidth={ScreenSizes.ReturnSmallMax()}>
+					<Hamburger />
+				</MediaQuery>
+				<BrandHorizontalH1Link />
+				<MediaQuery minDeviceWidth={ScreenSizes.ReturnMediumMin()}>
+					<HcNavLarge />
+				</MediaQuery>
+			</header>
+		);
+	}
+}

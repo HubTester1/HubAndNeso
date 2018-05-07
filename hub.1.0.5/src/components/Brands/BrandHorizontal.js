@@ -6,7 +6,7 @@ import * as React from 'react';
 // ----- COMPONENT
 
 const BrandHorizontal = props => (
-	<div className="brand-svg-container svg-container mos-react-component-root">
+	<div className="svg-logo-container mos-react-component-root">
 		<svg width="308" height="115" viewBox="0 0 308 115" version="1.1" xmlns="http://www.w3.org/2000/svg">
 			<g fill="none">
 				<path d="M 33.7641 0L 63.0047 56.0145L 4.52353 56.0145L 33.7641 0Z" transform="matrix(-0.672054 0.388011 -0.351472 -0.608767 62.6038 42.3992)" fill="#FEBE00" />

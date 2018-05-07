@@ -17,8 +17,6 @@ import HcPushedItems from '../../components/HcPushedItems/HcPushedItems';
 import HcMessages from '../../components/HcMessages/HcMessages';
 import HcOrganization from '../../components/HcOrganization/HcOrganization';
 
-import './HcContainer.sass';
-
 // eslint-disable-next-line
 import { initializeIcons } from '@uifabric/icons';
 

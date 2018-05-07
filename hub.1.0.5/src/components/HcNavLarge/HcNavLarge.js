@@ -7,8 +7,8 @@ import { CommandBar } from 'office-ui-fabric-react/lib/CommandBar';
 
 // ----- COMPONENT
 
-const HcTopCommandBar = props => (
-	<div id="hc-top-command-bar" className="mos-react-component-root">
+const HcNavLarge = props => (
+	<div className="hc-top-command-bar mos-react-component-root">
 		<Fabric>
 			<CommandBar
 				isSearchBoxVisible={false}
@@ -46,4 +46,4 @@ const HcTopCommandBar = props => (
 	</div>
 );
 
-export default HcTopCommandBar;
+export default HcNavLarge;
