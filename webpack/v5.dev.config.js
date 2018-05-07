@@ -26,6 +26,17 @@ module.exports = merge(baseConfig, {
 				include: path.join(__dirname, '../hub.1.0.5/src'),
 				test: /\.sass$/,
 				loader: 'style-loader!css-loader!postcss-loader!sass-loader',
+			}, {
+				include: path.join(__dirname, '../hub.1.0.5/src'),
+				test: /\.(jpg|png)$/,
+				use: {
+					loader: 'file-loader',
+					options: {
+						name: '[name].[ext]',
+						outputPath: 'img/',
+						publicPath: 'img/',
+					},
+				},
 			},
 		],
 	},

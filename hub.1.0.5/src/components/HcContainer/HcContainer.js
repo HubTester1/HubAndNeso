@@ -21,6 +21,7 @@ import HcOrganization from '../../components/HcOrganization/HcOrganization';
 import { initializeIcons } from '@uifabric/icons';
 
 import '../../sass/temp.sass';
+import './HcContainer.sass';
 
 initializeIcons();
 
@@ -52,20 +53,22 @@ class HcContainer extends React.Component {
 	render() {
 		if (EnvironmentDetector.ReturnIsHCScreen()) {
 			return (
-				<div>
-					<HcHeader />
-					<MediaQuery maxDeviceWidth={ScreenSizes.ReturnSmallMax()}>
-						<HcStaffLookup />
-					</MediaQuery>
-					<MediaQuery minDeviceWidth={ScreenSizes.ReturnMediumMin()}>
-						<div id="hc-staff-lookup-and-top-messages">
+				<div className="hc-container mos-react-component-root">
+					<div className="hc-header-and-hero-container">
+						<HcHeader />
+						<MediaQuery maxDeviceWidth={ScreenSizes.ReturnSmallMax()}>
 							<HcStaffLookup />
-							<HcMessages
-								uData={this.state.uData}
-								allOrTop="top"
-							/>
-						</div>
-					</MediaQuery>
+						</MediaQuery>
+						<MediaQuery minDeviceWidth={ScreenSizes.ReturnMediumMin()}>
+							<div id="hc-staff-lookup-and-top-messages">
+								<HcStaffLookup />
+								<HcMessages
+									uData={this.state.uData}
+									allOrTop="top"
+								/>
+							</div>
+						</MediaQuery>
+					</div>
 					<HcGetItDone />
 					<HcMessages
 						uData={this.state.uData}
