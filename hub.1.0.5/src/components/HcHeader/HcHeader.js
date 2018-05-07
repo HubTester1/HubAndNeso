@@ -9,7 +9,7 @@ import MediaQuery from 'react-responsive';
 import ScreenSizes from '../../services/ScreenSizes';
 
 import Hamburger from '../Hamburger/Hamburger';
-import BrandHorizontalH1Link from '../Brands/BrandHorizontalH1Link';
+import BrandLogoOnlyH1Link from '../Brands/BrandLogoOnlyH1Link';
 import HcNavLarge from '../HcNavLarge/HcNavLarge';
 
 import './HcHeader.sass';
@@ -25,7 +25,7 @@ export default class HcHeader extends React.Component {
 				<MediaQuery maxDeviceWidth={ScreenSizes.ReturnSmallMax()}>
 					<Hamburger />
 				</MediaQuery>
-				<BrandHorizontalH1Link />
+				<BrandLogoOnlyH1Link />
 				<MediaQuery minDeviceWidth={ScreenSizes.ReturnMediumMin()}>
 					<HcNavLarge />
 				</MediaQuery>

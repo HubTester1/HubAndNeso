@@ -3,22 +3,22 @@
 
 import * as React from 'react';
 
-import BrandHorizontal from './BrandHorizontal';
+import BrandLogoOnly from './BrandLogoOnly';
 import './BrandHorizontalH1Link.sass';
 
 // ----- COMPONENT
 
-const BrandHorizontalH1Link = props => (
+const BrandLogoOnlyH1Link = props => (
 	<div className="brand">
 		<a className="brand__link" href="/">
 			<h1 className="brand__link__header">
 				<span className="brand__link__header__text">The Hub</span>
 				<span className="brand__link__header__image">
-					<BrandHorizontal />
+					<BrandLogoOnly />
 				</span>
 			</h1>
 		</a>
 	</div>
 );
 
-export default BrandHorizontalH1Link;
+export default BrandLogoOnlyH1Link;

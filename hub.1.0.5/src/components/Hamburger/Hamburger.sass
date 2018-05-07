@@ -9,8 +9,9 @@
 
 .hamburger__button
 	display: inline-block
-	padding: 15px 15px
-	transition-property: opacity, filter
+	min-width: 0
+	padding: 15px
+	transition-property: background-color, filter
 	transition-duration: .15s
 	transition-timing-function: linear
 	font: inherit
@@ -23,13 +24,13 @@
 	cursor: pointer
 	
 	&:hover
-		opacity: .7
+		background-color: $interactive-active
 
 	.hamburger__lines
 		display: inline-block
 		position: relative
-		width: 40px
-		height: 24px
+		width: 26px
+		height: 20px
 
 		.hamburger__lines__contents
 			display: block
@@ -42,10 +43,9 @@
 		.hamburger__lines__contents::before,
 		.hamburger__lines__contents::after
 			position: absolute
-			width: 40px
-			height: 4px
-			background-color: $black
-			border-radius: 4px
+			width: 26px
+			height: 1px
+			background-color: $white
 			transition-property: transform
 			transition-duration: .15s
 			transition-timing-function: ease
@@ -56,11 +56,11 @@
 			display: block
 
 		.hamburger__lines__contents::before
-			top: 10px
+			top: 9px
 			transition: opacity .125s .275s ease
 
 		.hamburger__lines__contents::after
-			top: 20px
+			top: 18px
 			transition: transform .275s cubic-bezier(.68, -.55, .265, 1.55)
 
 
@@ -68,11 +68,12 @@
 
 
 .hamburger__button.is-active
+	background-color: $interactive-active
 
 	.hamburger__lines
 
 		.hamburger__lines__contents
-			transform: translate3d(0, 10px, 0) rotate(135deg)
+			transform: translate3d(0, 9px, 0) rotate(135deg)
 			transition-delay: .075s
 
 		.hamburger__lines__contents::before
@@ -80,5 +81,5 @@
 			opacity: 0
 
 		.hamburger__lines__contents::after
-			transform: translate3d(0, -20px, 0) rotate(-270deg)
+			transform: translate3d(0, -18px, 0) rotate(-270deg)
 			transition-delay: .075s

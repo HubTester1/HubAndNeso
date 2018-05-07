@@ -20,6 +20,8 @@ import HcOrganization from '../../components/HcOrganization/HcOrganization';
 // eslint-disable-next-line
 import { initializeIcons } from '@uifabric/icons';
 
+import '../../sass/temp.sass';
+
 initializeIcons();
 
 // ----- COMPONENT
