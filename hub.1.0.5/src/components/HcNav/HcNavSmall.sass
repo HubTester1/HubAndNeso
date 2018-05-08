@@ -6,4 +6,29 @@
 
 // ----- DECLARATIONS
 
-// @media screen and (max-width: $small-screen-maximum-width)
+@media screen and (max-width: $small-screen-maximum-width)
+
+	nav#hc-navigation
+		padding-top: 5rem
+
+	ul#hc-navigation__items
+		list-style: none
+
+		li.hc-navigation__items__item
+			list-style: none
+			margin-left: 0
+
+			button.hc-navigation__items__item__button
+				width: 100%
+				height: 5rem
+				border: 0
+				margin-left: 0
+				padding: 0 5rem
+				text-align: left
+				text-transform: uppercase
+				background-color: transparent
+				color: $blue1
+
+				&:hover
+					border: 0
+					background-color: $blue8

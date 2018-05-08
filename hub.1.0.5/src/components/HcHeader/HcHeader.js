@@ -17,18 +17,39 @@ import './HcHeaderMediumLarge.sass';
 // ----- COMPONENT
 
 export default class HcHeader extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			showSmallNav: true,
+		};
+		this.handleHamburgerClick = this.handleHamburgerClick.bind(this);
+	}
+	handleHamburgerClick() {
+		this.setState(prevState => ({
+			showSmallNav: !prevState.showSmallNav,
+		}));
+	}
 	render() {
 		return (
-			<header id="hc-header" className="mos-react-component-root">
+			<header 
+				id="hc-header" 
+				className={`mos-react-component-root${this.state.showSmallNav ? ' showing-small-nav' : ''}`}
+			>
 				{
 					this.props.headerType === 'small' &&
 
 					<div>
-						<Hamburger />
-						<BrandLogoOnlyH1Link />
-						<HcNav
-							navType="small"
+						<Hamburger
+							showSmallNav={this.handleHamburgerClick}
 						/>
+						<BrandLogoOnlyH1Link />
+						{
+							this.state.showSmallNav &&
+
+							<HcNav
+								navType="small"
+							/>
+						}
 					</div>
 				}
 				{

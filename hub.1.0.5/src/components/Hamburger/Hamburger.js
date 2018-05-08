@@ -11,11 +11,12 @@ export default class Hamburger extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			hamburgerIsActive: false,
+			hamburgerIsActive: true,
 		};
 		this.handleHamburgerClick = this.handleHamburgerClick.bind(this);
 	}
 	handleHamburgerClick() {
+		this.props.showSmallNav();
 		this.setState(prevState => ({
 			hamburgerIsActive: !prevState.hamburgerIsActive,
 		}));
@@ -24,7 +25,7 @@ export default class Hamburger extends React.Component {
 		return (
 			<div className="hamburger">
 				<button
-					className={`hamburger__button ${this.state.hamburgerIsActive ? ' is-active' : ''}`}
+					className={`hamburger__button${this.state.hamburgerIsActive ? ' is-active' : ''}`}
 					type="button"
 					onClick={this.handleHamburgerClick}
 				>
