@@ -26,7 +26,7 @@ export default class HcStaffLookupData {
 			const lastPersonInPickerAccount = MOSUtilities.ReplaceAll('@mos.org', '', lastPersonInPicker._user.Key
 				.substr(lastPersonInPicker._user.Key.lastIndexOf('|') + 1));
 			// get a promise to get the relevant person's full set of data using lastPersonInPickerAccount
-			NesoHTTPClient.ReturnNesoData(`https://neso.mos.org:3001/activeDirectory/user/${lastPersonInPickerAccount}`)
+			NesoHTTPClient.ReturnNesoData(`https://neso.mos.org/activeDirectory/user/${lastPersonInPickerAccount}`)
 				// if the promise was resolved with the full set of data
 				.then((response) => {
 					if (response !== null) {
@@ -102,7 +102,7 @@ export default class HcStaffLookupData {
 							// PrincipalType controls the type of entities that are returned in the results.
 							// Choices are All - 15, Distribution List - 2 , Security Groups - 4, SharePoint Groups - 8, User - 1.
 							// These values can be combined (example: 13 is security + SP groups + users)
-							PrincipalType: 15,
+							PrincipalType: 1,
 							QueryString: searchString,
 						},
 					}),

@@ -58,11 +58,13 @@ class HcContainer extends React.Component {
 					<div id="hc-header-and-hero-container" className="hc-header-and-hero-container">
 						<MediaQuery maxDeviceWidth={ScreenSizes.ReturnSmallMax()}>
 							<HcHeaderSmall />
-							<HcStaffLookup />
+							<div id="hero-container">
+								<HcStaffLookup />
+							</div>
 						</MediaQuery>
 						<MediaQuery minDeviceWidth={ScreenSizes.ReturnMediumMin()}>
 							<HcHeaderLarge />
-							<div id="hc-staff-lookup-and-top-messages">
+							<div id="hero-container">
 								<HcStaffLookup />
 								<HcMessages
 									uData={this.state.uData}
