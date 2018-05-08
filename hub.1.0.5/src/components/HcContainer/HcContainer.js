@@ -10,7 +10,8 @@ import MOSUtilities from '../../services/MOSUtilities';
 import ScreenSizes from '../../services/ScreenSizes';
 
 import HcContainerData from './HcContainerData';
-import HcHeader from '../../components/HcHeader/HcHeader';
+import HcHeaderSmall from '../../components/HcHeaderSmall/HcHeaderSmall';
+import HcHeaderLarge from '../../components/HcHeaderLarge/HcHeaderLarge';
 import HcStaffLookup from '../../components/HcStaffLookup/HcStaffLookup';
 import HcGetItDone from '../../components/HcGetItDone/HcGetItDone';
 import HcPushedItems from '../../components/HcPushedItems/HcPushedItems';
@@ -53,13 +54,14 @@ class HcContainer extends React.Component {
 	render() {
 		if (EnvironmentDetector.ReturnIsHCScreen()) {
 			return (
-				<div className="hc-container mos-react-component-root">
-					<div className="hc-header-and-hero-container">
-						<HcHeader />
+				<div id="hc-container" className="hc-container mos-react-component-root">
+					<div id="hc-header-and-hero-container" className="hc-header-and-hero-container">
 						<MediaQuery maxDeviceWidth={ScreenSizes.ReturnSmallMax()}>
+							<HcHeaderSmall />
 							<HcStaffLookup />
 						</MediaQuery>
 						<MediaQuery minDeviceWidth={ScreenSizes.ReturnMediumMin()}>
+							<HcHeaderLarge />
 							<div id="hc-staff-lookup-and-top-messages">
 								<HcStaffLookup />
 								<HcMessages

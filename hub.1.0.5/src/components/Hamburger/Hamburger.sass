@@ -9,7 +9,7 @@
 .hamburger__button
 	display: inline-block
 	min-width: 0
-	padding: 15px
+	padding: 1.6rem 1.2rem
 	transition-property: background-color, filter
 	transition-duration: .15s
 	transition-timing-function: linear
@@ -29,12 +29,12 @@
 		display: inline-block
 		position: relative
 		width: 26px
-		height: 20px
+		height: 18px
 
 		.hamburger__lines__contents
 			display: block
-			top: 2px
-			margin-top: -2px
+			// top: 2px
+			// margin-top: -2px
 			transition-duration: .275s
 			transition-timing-function: cubic-bezier(.68, -.55, .265, 1.55)
 
@@ -55,11 +55,11 @@
 			display: block
 
 		.hamburger__lines__contents::before
-			top: 9px
+			top: 8px
 			transition: opacity .125s .275s ease
 
 		.hamburger__lines__contents::after
-			top: 18px
+			top: 16px
 			transition: transform .275s cubic-bezier(.68, -.55, .265, 1.55)
 
 .hamburger__button.is-active
@@ -68,7 +68,7 @@
 	.hamburger__lines
 
 		.hamburger__lines__contents
-			transform: translate3d(0, 9px, 0) rotate(135deg)
+			transform: translate3d(0, 8px, 0) rotate(135deg)
 			transition-delay: .075s
 
 		.hamburger__lines__contents::before
@@ -76,5 +76,5 @@
 			opacity: 0
 
 		.hamburger__lines__contents::after
-			transform: translate3d(0, -18px, 0) rotate(-270deg)
+			transform: translate3d(0, -16px, 0) rotate(-270deg)
 			transition-delay: .075s
