@@ -10,9 +10,8 @@ import MOSUtilities from '../../services/MOSUtilities';
 import ScreenSizes from '../../services/ScreenSizes';
 
 import HcContainerData from './HcContainerData';
-import HcHeaderSmall from '../../components/HcHeaderSmall/HcHeaderSmall';
-import HcHeaderLarge from '../../components/HcHeaderLarge/HcHeaderLarge';
-import HcStaffLookup from '../../components/HcStaffLookup/HcStaffLookup';
+import HcHeader from '../../components/HcHeader/HcHeader';
+import HcHero from '../../components/HcHero/HcHero';
 import HcGetItDone from '../../components/HcGetItDone/HcGetItDone';
 import HcPushedItems from '../../components/HcPushedItems/HcPushedItems';
 import HcMessages from '../../components/HcMessages/HcMessages';
@@ -57,20 +56,21 @@ class HcContainer extends React.Component {
 				<div id="hc-container" className="hc-container mos-react-component-root">
 					<div id="hc-header-and-hero-container" className="hc-header-and-hero-container">
 						<MediaQuery maxDeviceWidth={ScreenSizes.ReturnSmallMax()}>
-							<HcHeaderSmall />
-							<div id="hero-container">
-								<HcStaffLookup />
-							</div>
+							<HcHeader
+								headerType="small"
+							/>
+							<HcHero
+								heroType="small"
+							/>
 						</MediaQuery>
 						<MediaQuery minDeviceWidth={ScreenSizes.ReturnMediumMin()}>
-							<HcHeaderLarge />
-							<div id="hero-container">
-								<HcStaffLookup />
-								<HcMessages
-									uData={this.state.uData}
-									allOrTop="top"
-								/>
-							</div>
+							<HcHeader
+								headerType="large"
+							/>
+							<HcHero
+								heroType="large"
+								uData={this.state.uData}
+							/>
 						</MediaQuery>
 					</div>
 					<HcGetItDone />
