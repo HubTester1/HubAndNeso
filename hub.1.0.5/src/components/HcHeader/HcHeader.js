@@ -8,11 +8,11 @@ import * as React from 'react';
 import Hamburger from '../Hamburger/Hamburger';
 import BrandLogoOnlyH1Link from '../Brands/BrandLogoOnlyH1Link';
 import BrandHorizontalH1Link from '../Brands/BrandHorizontalH1Link';
-import HcNavLarge from '../HcNavLarge/HcNavLarge';
+import HcNav from '../HcNav/HcNav';
 
 import './HcHeader.sass';
 import './HcHeaderSmall.sass';
-import './HcHeaderLarge.sass';
+import './HcHeaderMediumLarge.sass';
 
 // ----- COMPONENT
 
@@ -26,6 +26,9 @@ export default class HcHeader extends React.Component {
 					<div>
 						<Hamburger />
 						<BrandLogoOnlyH1Link />
+						<HcNav
+							navType="small"
+						/>
 					</div>
 				}
 				{
@@ -33,7 +36,9 @@ export default class HcHeader extends React.Component {
 
 					<div>
 						<BrandHorizontalH1Link />
-						<HcNavLarge />
+						<HcNav
+							navType="large"
+						/>
 					</div>
 				}
 			</header>

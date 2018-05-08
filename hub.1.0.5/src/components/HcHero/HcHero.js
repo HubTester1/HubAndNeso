@@ -8,7 +8,7 @@ import HcMessages from '../HcMessages/HcMessages';
 
 import './HcHero.sass';
 import './HcHeroSmall.sass';
-import './HcHeroLarge.sass';
+import './HcHeroMediumLarge.sass';
 
 // ----- COMPONENT
 

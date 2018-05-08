@@ -6,42 +6,44 @@
 
 // ----- DECLARATIONS
 
-header#hc-header
-	position: relative
-	width: 100%
-	height: 5rem
-	background-color: $black-70-percent
+@media screen and (max-width: $small-screen-maximum-width)
 
-	div.hamburger
-		position: absolute;
-		left: 0
-		top: 0
-		width: 5rem
+	header#hc-header
+		position: relative
+		width: 100%
 		height: 5rem
-	
-	div.brand
-		position: absolute
-		left: 50%
-		top: 0
-		width: 3rem
-		height: 5rem
-		margin-left: -1.5rem
-		text-align: center
+		background-color: $black-70-percent
 
-		a.brand__link
-			display: inline-block
-			padding: 1rem 0
+		div.hamburger
+			position: absolute;
+			left: 0
+			top: 0
+			width: 5rem
+			height: 5rem
 		
-		h1.brand__link__header
-			font-size: 0
+		div.brand
+			position: absolute
+			left: 50%
+			top: 0
+			width: 3rem
+			height: 5rem
+			margin-left: -1.5rem
+			text-align: center
 
-		span.brand__link__header__text
-			+inline-hidden
+			a.brand__link
+				display: inline-block
+				padding: 1rem 0
+			
+			h1.brand__link__header
+				font-size: 0
 
-		span.brand__link__header__image
+			span.brand__link__header__text
+				+inline-hidden
 
-			svg
-				height: 3rem
+			span.brand__link__header__image
 
-				path.letterforms
-					fill: $white
+				svg
+					height: 3rem
+
+					path.letterforms
+						fill: $white
