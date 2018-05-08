@@ -9,4 +9,11 @@
 @media screen and (max-width: $small-screen-maximum-width)
 
 	div#hero-container
-		padding-top: 16rem
+		padding-top: 6rem
+		transition: padding-top 1s cubic-bezier(.3, .8, .5, .9)
+
+	div#hc-container.showing-small-nav div#hero-container
+		padding-top: 100vh
+
+
+

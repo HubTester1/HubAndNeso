@@ -11,7 +11,7 @@ export default class Hamburger extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			hamburgerIsActive: true,
+			hamburgerIsActive: false,
 		};
 		this.handleHamburgerClick = this.handleHamburgerClick.bind(this);
 	}

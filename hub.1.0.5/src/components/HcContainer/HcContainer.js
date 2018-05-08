@@ -28,9 +28,14 @@ initializeIcons();
 // ----- COMPONENT
 
 class HcContainer extends React.Component {
-	state = {
-		uData: {},
-	};
+	constructor(props) {
+		super(props);
+		this.state = {
+			showSmallNav: false,
+			uData: {},
+		};
+		this.handleHamburgerClick = this.handleHamburgerClick.bind(this);
+	}
 	componentDidMount() {
 		if (EnvironmentDetector.ReturnIsHCScreen()) {
 			HcContainerData.ReturnUData()
@@ -50,14 +55,27 @@ class HcContainer extends React.Component {
 				});
 		}
 	}
+	handleHamburgerClick() {
+		this.setState(prevState => ({
+			showSmallNav: !prevState.showSmallNav,
+		}));
+	}
 	render() {
 		if (EnvironmentDetector.ReturnIsHCScreen()) {
 			return (
-				<div id="hc-container" className="hc-container mos-react-component-root">
-					<div id="hc-header-and-hero-container" className="hc-header-and-hero-container">
+				<div
+					id="hc-container"
+					className={`mos-react-component-root${this.state.showSmallNav ? ' showing-small-nav' : ''}`}
+				>
+					<div
+						id="hc-header-and-hero-container" 
+						className="hc-header-and-hero-container"
+					>
 						<MediaQuery maxDeviceWidth={ScreenSizes.ReturnSmallMax()}>
 							<HcHeader
 								headerType="small"
+								handleHamburgerClick={this.handleHamburgerClick}
+								showSmallNav={this.state.showSmallNav}
 							/>
 							<HcHero
 								heroType="small"
