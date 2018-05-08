@@ -75,7 +75,6 @@ class HcContainer extends React.Component {
 							<HcHeader
 								headerType="small"
 								handleHamburgerClick={this.handleHamburgerClick}
-								showSmallNav={this.state.showSmallNav}
 							/>
 							<HcHero
 								heroType="small"

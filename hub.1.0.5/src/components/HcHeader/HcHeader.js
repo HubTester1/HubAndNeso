@@ -31,13 +31,7 @@ export default class HcHeader extends React.Component {
 							showSmallNav={this.props.handleHamburgerClick}
 						/>
 						<BrandLogoOnlyH1Link />
-						{/* {
-							this.props.showSmallNav && */}
-
-						<HcNav
-							navType="small"
-						/>
-						{/* } */}
+						<HcNav />
 					</div>
 				}
 				{
@@ -45,9 +39,7 @@ export default class HcHeader extends React.Component {
 
 					<div>
 						<BrandHorizontalH1Link />
-						<HcNav
-							navType="large"
-						/>
+						<HcNav />
 					</div>
 				}
 			</header>
