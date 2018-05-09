@@ -59,8 +59,8 @@ export default class HcStaffLookup extends React.Component {
 								}
 							});
 						});
-						console.log('allDesiredPersonas');
-						console.log(allDesiredPersonas);
+						// console.log('allDesiredPersonas');
+						// console.log(allDesiredPersonas);
 						this.setState(prevState => ({
 							personas: allDesiredPersonas,
 						}));
@@ -116,17 +116,22 @@ export default class HcStaffLookup extends React.Component {
 				/>
 				{
 					this.state.personas[0] && 
-					<h3>Staff Lookup Results</h3>
-				}
-				{
-					this.state.personas[0] && 
-						this.state.personas.map(personaValue => (
-							<HcStaffLookupPersonaCard
-								key={personaValue.key}
-								personaId={personaValue.key}
-								personaContent={personaValue}
-							/>
-						))
+
+					<div className="persona-cards">
+						<h3 className="persona-cards__header">Staff Lookup Results</h3>
+						<ul className="persona-cards__list">
+							{
+								this.state.personas[0] && 
+									this.state.personas.map(personaValue => (
+										<HcStaffLookupPersonaCard
+											key={personaValue.key}
+											personaId={personaValue.key}
+											personaContent={personaValue}
+										/>
+									))
+							}
+						</ul>
+					</div>
 				}
 			</div>
 		);
