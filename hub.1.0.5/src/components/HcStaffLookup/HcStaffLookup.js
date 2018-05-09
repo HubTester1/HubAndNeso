@@ -78,8 +78,9 @@ export default class HcStaffLookup extends React.Component {
 						title: 'Intranet Solutions Project Manager',
 						department: 'Interactive Media',
 						officePhone: '617-589-3142',
+						mobilePhone: '617-388-1222',
 						email: 'jbaker@mos.org',
-						photoURL: '/_layouts/15/userphoto.aspx?size=S&accountname=jbaker@mos.org',
+						// photoURL: '/_layouts/15/userphoto.aspx?size=S&accountname=jbaker@mos.org',
 						profileToken: '7d6ba153-665d-4da2-8ca1-2b7ea0598f5f',
 					},
 					{
