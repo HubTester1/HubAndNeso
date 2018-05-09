@@ -29,18 +29,25 @@ div#hero-container
 				div.ms-PickerPersona-container.is-selected.personaContainerIsSelected
 					background-color: $grey2
 
-					div.ms-Persona-primaryText
-						color: $grey12
+				div.ms-Persona-primaryText
+					color: $grey12
 
 				// div.ms-PickerPersona-container
 				// 	background-color: $grey2
 
 				button.ms-Button.ms-PickerItem-removeButton
-					
+					width: 2.6rem
+					font-size: 0
 					color: $text-on-interactive-default
 					background-color: $interactive-default
+					transition: background-color .25s
+					border: 0
+
+					&:hover
+						background-color: $interactive-active
 
 			input.ms-BasePicker-input
+				border: 0
 				color: $grey12
 				background-color: $white
 
