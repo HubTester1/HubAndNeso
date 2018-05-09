@@ -105,5 +105,4 @@ class HcContainer extends React.Component {
 	}
 }
 
-
 ReactDOM.render(<HcContainer />, document.getElementById('s4-bodyContainer'));
