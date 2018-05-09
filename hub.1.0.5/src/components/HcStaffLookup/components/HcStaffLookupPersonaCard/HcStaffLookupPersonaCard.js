@@ -18,18 +18,7 @@ const HcStaffLookupPersonaCard = (props) => {
 	}
 	return (
 		<li id={`hc-staff-lookup-persona_${props.personaId}`} className="hc-staff-lookup-persona mos-react-component-root">
-			<span className="persona-card-dialog-header">
-				{
-					props.personaContent.photoURL &&
-					<span className="avatar" style={photoStyleObject} />
-				}
-				{
-					!props.personaContent.photoURL &&
-					<span className="avatar">
-						<span className="avatar-initials">{props.personaContent.firstInitial}{props.personaContent.lastInitial}
-						</span>
-					</span>
-				}
+			<div className="persona-card-dialog-header">
 				<span className="name_title_department">
 					{
 						props.personaContent.displayName &&
@@ -44,7 +33,7 @@ const HcStaffLookupPersonaCard = (props) => {
 						<p className="department">{props.personaContent.department}</p>
 					}
 				</span>
-			</span>
+			</div>
 			<ul className="persona-card-dialog-body">
 				{
 					props.personaContent.uiMessage &&
@@ -96,6 +85,17 @@ const HcStaffLookupPersonaCard = (props) => {
 					</li>
 				}
 			</ul>
+			{
+				props.personaContent.photoURL &&
+				<span className="avatar" style={photoStyleObject} />
+			}
+			{
+				!props.personaContent.photoURL &&
+				<span className="avatar">
+					<span className="avatar-initials">{props.personaContent.firstInitial}{props.personaContent.lastInitial}
+					</span>
+				</span>
+			}
 		</li>
 	);
 };
