@@ -57,7 +57,7 @@
 
 						p.name
 							padding: 2rem 2rem 1rem 0
-							font-size: $large-screen-type-scale-factor-m
+							font-size: $large-screen-type-scale-factor-l
 							color: $dark-purple
 
 						p.title,
@@ -72,11 +72,43 @@
 					ul.persona-card-dialog-body
 						+column
 						width: 30%
-						padding: 2rem
+						padding: 0
 						margin: 0
 
-				li.hc-staff-lookup-persona:nth-child(even)
-					margin-right: 0
+						li.phone-numbers,
+						li.email,
+						li.profile
+							list-style: none
+							padding: 2rem
+							text-align: center
+							background-color: $light-pink
+
+						p.ui-message
+							padding: 2rem
+							text-align: center
+							background-color: $light-pink
+
+						
+						li.phone-numbers,
+						li.email
+							margin-bottom: 1rem
+
+						li.phone-numbers
+
+							span.phone-number-label
+								display: block
+								font-size: $large-screen-type-scale-factor-xs
+
+							span.phone-number-separator
+								+inline-hidden
+
+							li.office-phone-number,
+							li.mobile-phone-number
+								list-style: none
+							
+
+				// li.hc-staff-lookup-persona:nth-child(even)
+				// 	margin-right: 0
 
 
 

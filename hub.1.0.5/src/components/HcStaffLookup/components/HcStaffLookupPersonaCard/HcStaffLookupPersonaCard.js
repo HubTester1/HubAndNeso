@@ -6,6 +6,7 @@
 // ----- IMPORTS
 
 import * as React from 'react';
+import { Icon } from 'office-ui-fabric-react/lib/Icon';
 
 // ----- COMPONENT
 
@@ -16,7 +17,6 @@ const HcStaffLookupPersonaCard = (props) => {
 			backgroundImage: `url(${props.personaContent.photoURL})`,
 		};
 	}
-	console.log(props);
 	return (
 		<li id={`hc-staff-lookup-persona_${props.personaId}`} className="hc-staff-lookup-persona mos-react-component-root">
 			<div className="persona-card-dialog-header">
@@ -56,24 +56,29 @@ const HcStaffLookupPersonaCard = (props) => {
 					props.personaContent.officePhone &&
 					props.personaContent.mobilePhone &&
 
-					<li className="phone-numbers">
+					<li className="phone-numbers office-and-mobile-phone-number">
 						<ul>
-							<li className="business-phone-number">Business: {props.personaContent.officePhone}</li>
-							<li className="mobile-phone-number">Mobile: {props.personaContent.mobilePhone}</li>
+							<li className="office-phone-number"><span className="phone-number-label">Office</span><span className="phone-number-separator">: </span>{props.personaContent.officePhone}</li>
+							<li className="mobile-phone-number"><span className="phone-number-label">Mobile</span><span className="phone-number-separator">: </span>{props.personaContent.mobilePhone}</li>
 						</ul>
+						<Icon iconName="Phone" className="section-icon--phone" />
 					</li>
 				}
 				{
 					props.personaContent.officePhone &&
 					!props.personaContent.mobilePhone &&
 
-					<li className="business-phone-number">Business: {props.personaContent.officePhone}</li>
+					<li className="phone-numbers office-phone-number"><span className="phone-number-label">Office</span><span className="phone-number-separator">: </span>{props.personaContent.officePhone}
+						<Icon iconName="Phone" className="section-icon--phone" />
+					</li>
 				}
 				{
 					!props.personaContent.officePhone &&
 					props.personaContent.mobilePhone &&
 
-					<li className="business-phone-number">Business: {props.personaContent.mobilePhone}</li>
+					<li className="phone-numbers mobile-phone-number"><span className="phone-number-label">Mobile</span><span className="phone-number-separator">: </span>{props.personaContent.mobilePhone}
+						<Icon iconName="Phone" className="section-icon--phone" />
+					</li>
 				}
 				{
 					props.personaContent.email &&
@@ -82,6 +87,7 @@ const HcStaffLookupPersonaCard = (props) => {
 						<a href={`mailto:${props.personaContent.email}`}>
 							{props.personaContent.email}
 						</a>
+						<Icon iconName="Mail" className="section-icon--phone" />
 					</li>
 				}
 				{
@@ -94,6 +100,7 @@ const HcStaffLookupPersonaCard = (props) => {
 						>
 							Profile
 						</a>
+						<Icon iconName="DelveLogo" className="section-icon--phone" />
 					</li>
 				}
 			</ul>
