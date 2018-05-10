@@ -31,31 +31,25 @@
 				li.hc-staff-lookup-persona
 					+row
 					width: 100%
-					// display: inline-block
-					// width: calc(50% - .5rem)
-					// margin: 0 1rem 1rem 0
 					margin: 1rem 0
 					background-color: $white
-					// box-shadow: 5px 5px 115px -14px $black
-					// box-shadow: -30px 0 30px -30px rgba(0,0,0,.2)
 
 					div.persona-card-dialog-header
 						+column
+						vertical-align: middle
 						width: 70%
 						padding: 2rem
 						text-align: center
-						// background-image: linear-gradient(to bottom,  $purple 0%, $pink 100%)
-						// color: $white
 						
 						span.avatar
 							+font-weight-light
 							display: inline-block
 							vertical-align: top
-							width: 10rem
-							height: 10rem
-							font-size: 5rem
-							line-height: 5rem
-							padding: 2.3rem 0 2.7rem
+							width: 7rem
+							height: 7rem
+							font-size: 4rem
+							line-height: 4rem
+							padding: 1.3rem 0 1.7rem
 							border-radius: 50%
 							color: $white
 							background-color: $purple
@@ -75,8 +69,34 @@
 							color: $dark-pink
 							font-size: $large-screen-type-size-xs
 					
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 					ul.persona-card-dialog-body
 						+column
+						vertical-align: middle
 						width: 30%
 						padding: 0
 						margin: 0
@@ -89,7 +109,19 @@
 							margin-left: 0
 							padding: 2rem
 							text-align: center
-							background-color: $light-pink
+							background-color: $light-peach
+							color: $text-on-light-peach
+						
+						i.section-icon--phone,
+						i.section-icon--email,
+						i.section-icon--profile
+							display: block
+							margin-top: .5rem
+							color: $dark-purple
+
+						li.phone-numbers,
+						li.email
+							margin-bottom: 1rem
 
 						li.phone-numbers
 
@@ -98,19 +130,8 @@
 
 								li.mobile-phone-number,
 								li.office-phone-number
+									list-style: none
 									margin: 0
-
-						p.ui-message
-							padding: 2rem
-							text-align: center
-							background-color: $light-pink
-
-						
-						li.phone-numbers,
-						li.email
-							margin-bottom: 1rem
-
-						li.phone-numbers
 
 							span.phone-number-label
 								display: block
@@ -119,19 +140,20 @@
 							span.phone-number-separator
 								+inline-hidden
 
-						li.office-phone-number,
-						li.mobile-phone-number
-							list-style: none
-							
-						i.section-icon--phone,
-						i.section-icon--email,
-						i.section-icon--profile
-							display: block
-							margin-top: .5rem
-				// li.hc-staff-lookup-persona:nth-child(even)
-				// 	margin-right: 0
+						li.email,
+						li.profile
 
+							a
+								color: $blue6 !important
 
+								&:hover
+									color: $blue7 !important
+
+						p.ui-message
+							padding: 2rem
+							text-align: center
+							background-color: $light-peach
+							color: $text-on-light-peach
 
 
 

@@ -97,7 +97,6 @@ export default class HcStaffLookup extends React.Component {
 						lastInitial: 'L',
 						title: 'Human Resources Intern',
 						department: 'Human Resources',
-						officePhone: '617-589-4226',
 						email: 'slesperance@mos.org',
 						photoURL: '/_layouts/15/userphoto.aspx?size=S&accountname=slesperance@mos.org',
 						profileToken: 'b6056842-2858-4917-9251-1f55ed8c4b59',

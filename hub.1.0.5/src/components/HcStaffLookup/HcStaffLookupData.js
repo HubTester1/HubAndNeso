@@ -41,7 +41,7 @@ export default class HcStaffLookupData {
 							department: response.department,
 							officePhone: response.officePhone,
 							email: response.email,
-							photoURL: `/_layouts/15/userphoto.aspx?size=S&accountname=${response.account}@mos.org`,							
+							photoURL: `/_layouts/15/userphoto.aspx?size=M&accountname=${response.account}@mos.org`,							
 						};
 						if (response.mobilePhone) {
 							personaData.mobilePhone = response.mobilePhone;
