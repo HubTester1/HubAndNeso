@@ -87,7 +87,7 @@ const HcStaffLookupPersonaCard = (props) => {
 						<a href={`mailto:${props.personaContent.email}`}>
 							{props.personaContent.email}
 						</a>
-						<Icon iconName="Mail" className="section-icon--phone" />
+						<Icon iconName="Mail" className="section-icon--email" />
 					</li>
 				}
 				{
@@ -100,7 +100,7 @@ const HcStaffLookupPersonaCard = (props) => {
 						>
 							Profile
 						</a>
-						<Icon iconName="DelveLogo" className="section-icon--phone" />
+						<Icon iconName="DelveLogo" className="section-icon--profile" />
 					</li>
 				}
 			</ul>
