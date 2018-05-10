@@ -15,8 +15,8 @@ const HcNavLarge = props => (
 		<ul id="hc-navigation__items">
 			<li className="hc-navigation__items__item">
 				<DefaultButton
-					iconProps={{ iconName: 'Up' }}
-					text="Top"
+					iconProps={{ iconName: 'Home' }}
+					text="Home"
 					className="hc-navigation__items__item__button"
 					// onClick={this.doSomething}
 				/>

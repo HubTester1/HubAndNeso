@@ -10,6 +10,10 @@ import HcMessagesList from './components/HcMessagesList/HcMessagesList';
 import HcMessagesNewMessageForm from './components/HcMessagesNewMessageForm/HcMessagesNewMessageForm';
 import ScreenSizes from '../../services/ScreenSizes';
 
+import './HcMessages.sass';
+import './HcMessagesSmall.sass';
+import './HcMessagesMediumLarge.sass';
+
 // ----- COMPONENT
 
 const messagesPerPageSmallScreen = 8;
