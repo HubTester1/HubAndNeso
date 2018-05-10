@@ -8,6 +8,9 @@ import HcStaffLookupPersonaCard from './components/HcStaffLookupPersonaCard/HcSt
 import MOSUtilities from '../../services/MOSUtilities';
 import EnvironmentDetector from '../../services/EnvironmentDetector';
 
+import './HcStaffLookup.sass';
+import './HcStaffLookupSmall.sass';
+import './HcStaffLookupMediumLarge.sass';
 
 // ----- COMPONENT
 

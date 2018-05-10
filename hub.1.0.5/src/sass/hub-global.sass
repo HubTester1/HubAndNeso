@@ -6,6 +6,8 @@
 
 // ----- DECLARATIONS
 
+// HTML & BODY
+
 html
 	font-size: 10px
 	box-sizing: border-box
@@ -20,6 +22,8 @@ body
 	margin: 0
 	height: 100%
 
+// OFFICE 365 SUITE BAR
+
 div#suiteBarDelta
 
 	div#suiteBarTop
@@ -33,6 +37,8 @@ div#suiteBarDelta
 			button.ms-bgc-tdr-h:hover,
 			button.ms-bgc-tp:hover
 				background-color: $interactive-active
+
+// TYPE, LISTS, & LINKS
 
 div#s4-bodyContainer
 	+font-weight-regular
@@ -88,3 +94,41 @@ div#s4-bodyContainer
 		&:hover,
 		&:active
 			+link-text-active
+
+// PEOPLE PICKER
+
+div#s4-bodyContainer
+
+	div.ms-BasePicker.ms-PeoplePicker
+		box-sizing: border-box
+		border: 0
+		background-color: $white
+
+		div.ms-BasePicker-text
+			border: 0
+
+			div.ms-PickerPersona-container
+				color: $grey12
+				background-color: $grey2
+
+			div.ms-PickerPersona-container.is-selected.personaContainerIsSelected
+				background-color: $grey2
+
+			div.ms-Persona-primaryText
+				color: $grey12
+
+			button.ms-Button.ms-PickerItem-removeButton
+				width: 2.6rem
+				font-size: 0
+				color: $text-on-interactive-default
+				background-color: $interactive-default
+				transition: background-color .25s
+				border: 0
+
+				&:hover
+					background-color: $interactive-active
+
+		input.ms-BasePicker-input
+			border: 0
+			color: $grey12
+			background-color: $white
