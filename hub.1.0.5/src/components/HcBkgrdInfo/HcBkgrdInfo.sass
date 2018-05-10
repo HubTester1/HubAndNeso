@@ -10,7 +10,7 @@
 
 	div#hc-background-info-container
 		flex-shrink: 0
-		
+
 		button.hc-background-info__button
 			margin-left: 0
 			border: 0
@@ -22,8 +22,19 @@
 				background-color: $blue8
 				color: $text-on-blue8
 
+		div#hc-background-info__information
+			+font-weight-semilight
+			padding: 2rem
+			background: $white-90-percent
+			color: $grey15
 
+			a#photo-source-link,
+			a#photographer-link
+				color: $blue5 !important
+				transition: color .25s
 
+				&:hover
+					color: $blue6
 
 
 

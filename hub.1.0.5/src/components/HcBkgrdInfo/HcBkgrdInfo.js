@@ -32,7 +32,7 @@ export default class HcBkgrdInfo extends React.Component {
 
 						<DefaultButton
 							iconProps={{ iconName: 'ChevronDown' }}
-							text="About this image"
+							text="About this background image"
 							className="hc-background-info__button"
 							onClick={this.handleAboutButtonClick}
 						/>
@@ -42,7 +42,7 @@ export default class HcBkgrdInfo extends React.Component {
 
 						<DefaultButton
 							iconProps={{ iconName: 'ChevronUp' }}
-							text="About this image"
+							text="About this background image"
 							className="hc-background-info__button"
 							onClick={this.handleAboutButtonClick}
 						/>
@@ -53,14 +53,16 @@ export default class HcBkgrdInfo extends React.Component {
 						<div id="hc-background-info__information">
 							<p>
 								<a
+									id="photo-source-link"
 									href="https://unsplash.com/photos/W8KTS-mhFUE"
 									target="_blank"
 									rel="noopener noreferrer"
 								>
 									Photo
 								</a>
-								&quot;Milky Way&quot; by 
+								&nbsp;&quot;Milky Way&quot; by&nbsp;
 								<a 
+									id="photographer-link"
 									href="https://unsplash.com/@billy_huy" 
 									target="_blank" 
 									rel="noopener noreferrer"
@@ -69,7 +71,7 @@ export default class HcBkgrdInfo extends React.Component {
 								</a>
 							</p>
 							<p>
-								More than anything, this photograph was really the 
+								&quot;More than anything, this photograph was really the 
 								result of a series of little accidents. After abandoning 
 								a hike halfway through due to lack of sunlight, we 
 								subsequently began to make our way back home. As we 
@@ -78,7 +80,7 @@ export default class HcBkgrdInfo extends React.Component {
 								whatever reason, I peered out the window and into 
 								the heavens first. At that point, I began screaming 
 								like a madman telling everyone to look up. Amazed, 
-								we pulled into the next rest stop.
+								we pulled into the next rest stop.&quot;
 							</p>
 						</div>
 					}
