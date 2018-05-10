@@ -166,12 +166,47 @@
 			h2
 				color: $white
 
+			ul#hc-messages-list
+				background-color: $grey2
+				padding: 2rem
 
+				li.hc-messages-message-preview
+					list-style: none
+					padding-bottom: 2rem
 
+					h3.hc-messages-message-subject
+						+font-weight-regular
+						font-size: $medium-screen-type-size-m
+					
+					div.hc-messages-message-preview-truncated-body
+						+font-weight-semilight
 
+					button.hc-messages-message-full-message-button
+						display: block
+						font-size: $medium-screen-type-size-xs
+						text-transform: uppercase
+						margin: 1rem 0 0 0
+						border: 0
+						// border: 1px solid $interactive-default
+						background-color: $white
+						color: $interactive-default
+						// transition-property: border-color, color
+						// transition-duration: .25s
 
-
-
+						&:hover
+							// border-color: $interactive-active
+							color: $interactive-active
+						
+						i
+							font-size: $medium-screen-type-size-xs
+					
+	div.hc-messages-message-full-message-modal
+		position: fixed
+		top: 0
+		right: 0
+		bottom: 0
+		left: 10rem
+		background-color: $white
 
 
 

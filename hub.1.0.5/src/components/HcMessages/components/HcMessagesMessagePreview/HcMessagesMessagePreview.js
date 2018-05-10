@@ -30,7 +30,7 @@ export default class HcMessagesMessagePreview extends React.Component {
 		this.setState({ showModalFull: true });
 	}
 	handleAfterModalOpens() {
-		console.log('after open modal');
+		// console.log('after open modal');
 	}
 	handleCloseModalClick() {
 		this.setState({ showModalFull: false });
@@ -42,19 +42,6 @@ export default class HcMessagesMessagePreview extends React.Component {
 		this.setState({ showInlineFull: false });
 	}
 	render() {
-		const modalStyles = {
-			content: {
-				top: '50%',
-				left: '50%',
-				right: 'auto',
-				bottom: 'auto',
-				marginRight: '-50%',
-				transform: 'translate(-50%, -50%)',
-				width: '80vw',
-				height: '80vh',
-				overlfow: 'scroll',
-			},
-		};
 		Modal.setAppElement('#s4-bodyContainer');
 		return (
 			<li id={`hc-messages-message-preview_${this.props.messageId}`} className="hc-messages-message-preview mos-react-component-root">
@@ -66,14 +53,14 @@ export default class HcMessagesMessagePreview extends React.Component {
 					</h3>
 				}
 				{
-					!this.state.showInlineFull &&
+					/* !this.state.showInlineFull &&
 					this.props.messageContent.images &&
 					this.props.messageContent.images[0] &&
 
 					<HcMessagesMessageImagePreview
 						imageID={this.props.messageContent.images[0].previewKey}
 						imageContent={this.props.messageContent.images[0]}
-					/>
+					/> */
 				}
 				{
 					!this.state.showInlineFull &&
@@ -81,10 +68,11 @@ export default class HcMessagesMessagePreview extends React.Component {
 					<div className="hc-messages-message-preview-truncated-body">
 						<MediaQuery minDeviceWidth={ScreenSizes.ReturnMediumMin()}>
 							<Truncate
-								lines={1}
+								lines={2}
 								ellipsis={
 									<span>...
 										<DefaultButton
+											className="hc-messages-message-full-message-button"
 											iconProps={{ iconName: 'Fullscreen' }}
 											text="Full message"
 											onClick={this.handleOpenModalClick}
@@ -95,11 +83,11 @@ export default class HcMessagesMessagePreview extends React.Component {
 								<div className="hc-messages-message-body">{this.props.messageContent.body}</div>
 							</Truncate>
 							<Modal
+								className="hc-messages-message-full-message-modal"
 								isOpen={this.state.showModalFull}
 								onAfterOpen={this.handleAfterModalOpens}
 								onRequestClose={this.handleCloseModalClick}
-								style={modalStyles}
-								contentLabel="Example Modal"
+								contentLabel="More"
 								ariaHideApp={false}
 							>
 								<HcMessagesMessage

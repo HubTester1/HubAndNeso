@@ -51,7 +51,7 @@ export default class HcBkgrdInfo extends React.Component {
 						this.state.showBkgrdInfo &&
 
 						<div id="hc-background-info__information">
-							<p>
+							<h3>
 								<a
 									id="photo-source-link"
 									href="https://unsplash.com/photos/W8KTS-mhFUE"
@@ -69,7 +69,7 @@ export default class HcBkgrdInfo extends React.Component {
 								>
 									Billy Huynh
 								</a>
-							</p>
+							</h3>
 							<p>
 								&quot;More than anything, this photograph was really the 
 								result of a series of little accidents. After abandoning 
