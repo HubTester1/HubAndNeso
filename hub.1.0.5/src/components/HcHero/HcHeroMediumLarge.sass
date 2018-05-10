@@ -8,17 +8,21 @@
 
 @media screen and (min-width: $medium-screen-minimum-width)
 
-	div#hero-container
-		+row
+	div#staff-lookup-and-background-info-and-top-messages
+		+flex-row
 
-		div#hc-staff-lookup,
-		div#hc-messages-top
-			+column
+		// div#staff-lookup-and-background-info,
+		// div#hc-messages-top
+		// 	+column
 
-		div#hc-staff-lookup
-			width: 67%
+		div#staff-lookup-and-background-info
+			+flex-column
+			width: 60%
 			padding: 0 2.5rem 5rem 5rem
 
+		div#hc-staff-lookup
+			flex: 1 0 auto
+			
 			h2
 				color: $white
 
@@ -69,31 +73,6 @@
 							color: $dark-pink
 							font-size: $large-screen-type-size-xs
 					
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 					ul.persona-card-dialog-body
 						+column
 						vertical-align: middle
@@ -181,7 +160,7 @@
 
 
 		div#hc-messages-top
-			width: 33%
+			width: 40%
 			padding: 0 5rem 5rem 2.5rem
 
 			h2

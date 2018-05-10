@@ -4,6 +4,7 @@
 import * as React from 'react';
 import HcStaffLookup from '../HcStaffLookup/HcStaffLookup';
 import HcMessages from '../HcMessages/HcMessages';
+import HcBkgrdInfo from '../HcBkgrdInfo/HcBkgrdInfo';
 
 
 import './HcHero.sass';
@@ -14,14 +15,28 @@ import './HcHeroMediumLarge.sass';
 
 const HcHero = props => (
 	<div id="hero-container">
-		<HcStaffLookup />
+
 		{
 			props.heroType === 'large' &&
 
-			<HcMessages
-				uData={props.uData}
-				allOrTop="top"
-			/>
+			<div id="staff-lookup-and-background-info-and-top-messages">
+				<div id="staff-lookup-and-background-info">
+					<HcStaffLookup />
+					<HcBkgrdInfo />
+				</div>
+				<HcMessages
+					uData={props.uData}
+					allOrTop="top"
+				/>
+			</div>
+		}
+		{
+			props.heroType === 'small' &&
+
+			<div id="staff-lookup-and-background-info">
+				<HcStaffLookup />
+				<HcBkgrdInfo />
+			</div>
 		}
 	</div>
 );

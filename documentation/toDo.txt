@@ -3,6 +3,7 @@ Staff Lookup
 ------------------
 no non-real profile photos
 when the last person is deleted from peoplepicker, the last persona card is not deleted
+if no initials and no photo, then no circle
 
 
 
