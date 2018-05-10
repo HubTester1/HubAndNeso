@@ -15,14 +15,23 @@ $small-screen-maximum-width: 	767px
 // --- BASE SIZES
 
 $small-screen-type-base:		1.7rem
-$medium-screen-type-base:		1.8rem
-$large-screen-type-base:		2rem
+$medium-screen-type-base:		1.7rem
+$large-screen-type-base:		1.7rem
 
 // --- SMALL SCREEN TYPE SCALE FACTORS
 
-$small-screen-type-scale-factor-xxl:		2
-$small-screen-type-scale-factor-xl:			1.625
-$small-screen-type-scale-factor-l:			1.375
+// $small-screen-type-scale-factor-xxl:		2
+// $small-screen-type-scale-factor-xl:			1.625
+// $small-screen-type-scale-factor-l:			1.375
+// $small-screen-type-scale-factor-m:			1.125
+// $small-screen-type-scale-factor-s:			1
+// $small-screen-type-scale-factor-xs:			.67
+
+$small-screen-type-scale-factor-xxl:		3
+$small-screen-type-scale-factor-xl:			2.25
+$small-screen-type-scale-factor-l:			1.75
+$small-screen-type-scale-factor-l-minus:	1.5
+$small-screen-type-scale-factor-m-plus:		1.25
 $small-screen-type-scale-factor-m:			1.125
 $small-screen-type-scale-factor-s:			1
 $small-screen-type-scale-factor-xs:			.67
@@ -32,6 +41,8 @@ $small-screen-type-scale-factor-xs:			.67
 $medium-screen-type-scale-factor-xxl:		3
 $medium-screen-type-scale-factor-xl:		2.25
 $medium-screen-type-scale-factor-l:			1.75
+$medium-screen-type-scale-factor-l-minus:	1.5
+$medium-screen-type-scale-factor-m-plus:	1.25
 $medium-screen-type-scale-factor-m:			1.125
 $medium-screen-type-scale-factor-s:			1
 $medium-screen-type-scale-factor-xs:		.67
@@ -41,36 +52,44 @@ $medium-screen-type-scale-factor-xs:		.67
 $large-screen-type-scale-factor-xxl:		3
 $large-screen-type-scale-factor-xl:			2.25
 $large-screen-type-scale-factor-l:			1.75
+$large-screen-type-scale-factor-l-minus:	1.5
+$large-screen-type-scale-factor-m-plus:		1.25
 $large-screen-type-scale-factor-m:			1.125
 $large-screen-type-scale-factor-s:			1
 $large-screen-type-scale-factor-xs:			.67
 
 // --- SMALL SCREEN TYPE SIZES
 
-$small-screen-type-scale-factor-xxl:	($small-screen-type-scale-factor-xxl * $small-screen-type-base)
-$small-screen-type-scale-factor-xl: 	($small-screen-type-scale-factor-xl * $small-screen-type-base)
-$small-screen-type-scale-factor-l: 		($small-screen-type-scale-factor-l * $small-screen-type-base)
-$small-screen-type-scale-factor-m: 		($small-screen-type-scale-factor-m * $small-screen-type-base)
-$small-screen-type-scale-factor-s: 		($small-screen-type-scale-factor-s * $small-screen-type-base)
-$small-screen-type-scale-factor-xs: 	($small-screen-type-scale-factor-xs * $small-screen-type-base)
+$small-screen-type-size-xxl:		($small-screen-type-scale-factor-xxl * $small-screen-type-base)
+$small-screen-type-size-xl: 		($small-screen-type-scale-factor-xl * $small-screen-type-base)
+$small-screen-type-size-l: 			($small-screen-type-scale-factor-l * $small-screen-type-base)
+$small-screen-type-size-l-minus:	($small-screen-type-scale-factor-l-minus * $small-screen-type-base)
+$small-screen-type-size-m-plus:		($small-screen-type-scale-factor-m-plus * $small-screen-type-base)
+$small-screen-type-size-m: 			($small-screen-type-scale-factor-m * $small-screen-type-base)
+$small-screen-type-size-s: 			($small-screen-type-scale-factor-s * $small-screen-type-base)
+$small-screen-type-size-xs: 		($small-screen-type-scale-factor-xs * $small-screen-type-base)
 
 // --- MEDIUM SCREEN TYPE SIZES
 
-$medium-screen-type-scale-factor-xxl:	($medium-screen-type-scale-factor-xxl * $medium-screen-type-base)
-$medium-screen-type-scale-factor-xl: 	($medium-screen-type-scale-factor-xl * $medium-screen-type-base)
-$medium-screen-type-scale-factor-l: 	($medium-screen-type-scale-factor-l * $medium-screen-type-base)
-$medium-screen-type-scale-factor-m: 	($medium-screen-type-scale-factor-m * $medium-screen-type-base)
-$medium-screen-type-scale-factor-s: 	($medium-screen-type-scale-factor-s * $medium-screen-type-base)
-$medium-screen-type-scale-factor-xs: 	($medium-screen-type-scale-factor-xs * $medium-screen-type-base)
+$medium-screen-type-size-xxl:		($medium-screen-type-scale-factor-xxl * $medium-screen-type-base)
+$medium-screen-type-size-xl: 		($medium-screen-type-scale-factor-xl * $medium-screen-type-base)
+$medium-screen-type-size-l: 		($medium-screen-type-scale-factor-l * $medium-screen-type-base)
+$medium-screen-type-size-l-minus:	($medium-screen-type-scale-factor-l-minus * $medium-screen-type-base)
+$medium-screen-type-size-m-plus:	($medium-screen-type-scale-factor-m-plus * $medium-screen-type-base)
+$medium-screen-type-size-m: 		($medium-screen-type-scale-factor-m * $medium-screen-type-base)
+$medium-screen-type-size-s: 		($medium-screen-type-scale-factor-s * $medium-screen-type-base)
+$medium-screen-type-size-xs: 		($medium-screen-type-scale-factor-xs * $medium-screen-type-base)
 
 // --- LARGE SCREEN TYPE SIZES
 
-$large-screen-type-scale-factor-xxl:	($large-screen-type-scale-factor-xxl * $large-screen-type-base)
-$large-screen-type-scale-factor-xl: 	($large-screen-type-scale-factor-xl * $large-screen-type-base)
-$large-screen-type-scale-factor-l: 		($large-screen-type-scale-factor-l * $large-screen-type-base)
-$large-screen-type-scale-factor-m: 		($large-screen-type-scale-factor-m * $large-screen-type-base)
-$large-screen-type-scale-factor-s: 		($large-screen-type-scale-factor-s * $large-screen-type-base)
-$large-screen-type-scale-factor-xs: 	($large-screen-type-scale-factor-xs * $large-screen-type-base)
+$large-screen-type-size-xxl:		($large-screen-type-scale-factor-xxl * $large-screen-type-base)
+$large-screen-type-size-xl: 		($large-screen-type-scale-factor-xl * $large-screen-type-base)
+$large-screen-type-size-l: 			($large-screen-type-scale-factor-l * $large-screen-type-base)
+$large-screen-type-size-l-minus:	($large-screen-type-scale-factor-l-minus * $large-screen-type-base)
+$large-screen-type-size-m-plus:		($large-screen-type-scale-factor-m-plus * $large-screen-type-base)
+$large-screen-type-size-m: 			($large-screen-type-scale-factor-m * $large-screen-type-base)
+$large-screen-type-size-s: 			($large-screen-type-scale-factor-s * $large-screen-type-base)
+$large-screen-type-size-xs: 		($large-screen-type-scale-factor-xs * $large-screen-type-base)
 
 // --- LINE HEIGHT FACTORS
 
@@ -83,6 +102,8 @@ $bottom-padding-factor:					.33
 $small-screen-top-padding-xxl:			$small-screen-type-scale-factor-xxl * $total-line-height-factor * $top-padding-factor
 $small-screen-top-padding-xl: 			$small-screen-type-scale-factor-xl * $total-line-height-factor * $top-padding-factor
 $small-screen-top-padding-l: 			$small-screen-type-scale-factor-l * $total-line-height-factor * $top-padding-factor
+$small-screen-top-padding-l-minus:		$small-screen-type-scale-factor-l-minus * $total-line-height-factor * $top-padding-factor
+$small-screen-top-padding-m-plus:		$small-screen-type-scale-factor-m-plus * $total-line-height-factor * $top-padding-factor
 $small-screen-top-padding-m: 			$small-screen-type-scale-factor-m * $total-line-height-factor * $top-padding-factor
 $small-screen-top-padding-s: 			$small-screen-type-scale-factor-s * $total-line-height-factor * $top-padding-factor
 $small-screen-top-padding-xs: 			$small-screen-type-scale-factor-xs * $total-line-height-factor * $top-padding-factor
@@ -92,6 +113,8 @@ $small-screen-top-padding-xs: 			$small-screen-type-scale-factor-xs * $total-lin
 $medium-screen-top-padding-xxl:			$medium-screen-type-scale-factor-xxl * $total-line-height-factor * $top-padding-factor
 $medium-screen-top-padding-xl: 			$medium-screen-type-scale-factor-xl * $total-line-height-factor * $top-padding-factor
 $medium-screen-top-padding-l: 			$medium-screen-type-scale-factor-l * $total-line-height-factor * $top-padding-factor
+$medium-screen-top-padding-l-minus:		$medium-screen-type-scale-factor-l-minus * $total-line-height-factor * $top-padding-factor
+$medium-screen-top-padding-m-plus:		$medium-screen-type-scale-factor-m-plus * $total-line-height-factor * $top-padding-factor
 $medium-screen-top-padding-m: 			$medium-screen-type-scale-factor-m * $total-line-height-factor * $top-padding-factor
 $medium-screen-top-padding-s: 			$medium-screen-type-scale-factor-s * $total-line-height-factor * $top-padding-factor
 $medium-screen-top-padding-xs: 			$medium-screen-type-scale-factor-xs * $total-line-height-factor * $top-padding-factor
@@ -101,6 +124,8 @@ $medium-screen-top-padding-xs: 			$medium-screen-type-scale-factor-xs * $total-l
 $large-screen-top-padding-xxl:			$large-screen-type-scale-factor-xxl * $total-line-height-factor * $top-padding-factor
 $large-screen-top-padding-xl: 			$large-screen-type-scale-factor-xl * $total-line-height-factor * $top-padding-factor
 $large-screen-top-padding-l: 			$large-screen-type-scale-factor-l * $total-line-height-factor * $top-padding-factor
+$large-screen-top-padding-l-minus:		$large-screen-type-scale-factor-l-minus * $total-line-height-factor * $top-padding-factor
+$large-screen-top-padding-m-plus:		$large-screen-type-scale-factor-l-minus * $total-line-height-factor * $top-padding-factor
 $large-screen-top-padding-m: 			$large-screen-type-scale-factor-m * $total-line-height-factor * $top-padding-factor
 $large-screen-top-padding-s: 			$large-screen-type-scale-factor-s * $total-line-height-factor * $top-padding-factor
 $large-screen-top-padding-xs: 			$large-screen-type-scale-factor-xs * $total-line-height-factor * $top-padding-factor
@@ -110,6 +135,8 @@ $large-screen-top-padding-xs: 			$large-screen-type-scale-factor-xs * $total-lin
 $small-screen-bottom-padding-xxl:			$small-screen-type-scale-factor-xxl * $total-line-height-factor * $bottom-padding-factor
 $small-screen-bottom-padding-xl: 			$small-screen-type-scale-factor-xl * $total-line-height-factor * $bottom-padding-factor
 $small-screen-bottom-padding-l: 			$small-screen-type-scale-factor-l * $total-line-height-factor * $bottom-padding-factor
+$small-screen-bottom-padding-l-minus:		$small-screen-type-scale-factor-l-minus * $total-line-height-factor * $bottom-padding-factor
+$small-screen-bottom-padding-m-plus:		$small-screen-type-scale-factor-m-plus * $total-line-height-factor * $bottom-padding-factor
 $small-screen-bottom-padding-m: 			$small-screen-type-scale-factor-m * $total-line-height-factor * $bottom-padding-factor
 $small-screen-bottom-padding-s: 			$small-screen-type-scale-factor-s * $total-line-height-factor * $bottom-padding-factor
 $small-screen-bottom-padding-xs: 			$small-screen-type-scale-factor-xs * $total-line-height-factor * $bottom-padding-factor
@@ -119,6 +146,8 @@ $small-screen-bottom-padding-xs: 			$small-screen-type-scale-factor-xs * $total-
 $medium-screen-bottom-padding-xxl:			$medium-screen-type-scale-factor-xxl * $total-line-height-factor * $bottom-padding-factor
 $medium-screen-bottom-padding-xl: 			$medium-screen-type-scale-factor-xl * $total-line-height-factor * $bottom-padding-factor
 $medium-screen-bottom-padding-l: 			$medium-screen-type-scale-factor-l * $total-line-height-factor * $bottom-padding-factor
+$medium-screen-bottom-padding-l-minus:		$medium-screen-type-scale-factor-l-minus * $total-line-height-factor * $bottom-padding-factor
+$medium-screen-bottom-padding-m-plus:		$medium-screen-type-scale-factor-m-plus * $total-line-height-factor * $bottom-padding-factor
 $medium-screen-bottom-padding-m: 			$medium-screen-type-scale-factor-m * $total-line-height-factor * $bottom-padding-factor
 $medium-screen-bottom-padding-s: 			$medium-screen-type-scale-factor-s * $total-line-height-factor * $bottom-padding-factor
 $medium-screen-bottom-padding-xs: 			$medium-screen-type-scale-factor-xs * $total-line-height-factor * $bottom-padding-factor
@@ -128,6 +157,8 @@ $medium-screen-bottom-padding-xs: 			$medium-screen-type-scale-factor-xs * $tota
 $large-screen-bottom-padding-xxl:			$large-screen-type-scale-factor-xxl * $total-line-height-factor * $bottom-padding-factor
 $large-screen-bottom-padding-xl: 			$large-screen-type-scale-factor-xl * $total-line-height-factor * $bottom-padding-factor
 $large-screen-bottom-padding-l: 			$large-screen-type-scale-factor-l * $total-line-height-factor * $bottom-padding-factor
+$large-screen-bottom-padding-l-minus:		$large-screen-type-scale-factor-l-minus * $total-line-height-factor * $bottom-padding-factor
+$large-screen-bottom-padding-m-plus:		$large-screen-type-scale-factor-l-minus * $total-line-height-factor * $bottom-padding-factor
 $large-screen-bottom-padding-m: 			$large-screen-type-scale-factor-m * $total-line-height-factor * $bottom-padding-factor
 $large-screen-bottom-padding-s: 			$large-screen-type-scale-factor-s * $total-line-height-factor * $bottom-padding-factor
 $large-screen-bottom-padding-xs: 			$large-screen-type-scale-factor-xs * $total-line-height-factor * $bottom-padding-factor
