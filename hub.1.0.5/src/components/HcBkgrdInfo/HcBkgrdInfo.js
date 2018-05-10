@@ -31,7 +31,7 @@ export default class HcBkgrdInfo extends React.Component {
 						!this.state.showBkgrdInfo &&
 
 						<DefaultButton
-							iconProps={{ iconName: 'ChevronDown' }}
+							iconProps={{ iconName: 'ChevronUp' }}
 							text="About this background image"
 							className="hc-background-info__button"
 							onClick={this.handleAboutButtonClick}
@@ -41,7 +41,7 @@ export default class HcBkgrdInfo extends React.Component {
 						this.state.showBkgrdInfo &&
 
 						<DefaultButton
-							iconProps={{ iconName: 'ChevronUp' }}
+							iconProps={{ iconName: 'ChevronDown' }}
 							text="About this background image"
 							className="hc-background-info__button"
 							onClick={this.handleAboutButtonClick}

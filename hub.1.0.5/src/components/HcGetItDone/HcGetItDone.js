@@ -7,6 +7,10 @@ import HcGetItDoneCommandBar from './components/HcGetItDoneCommandBar/HcGetItDon
 import HcGetItDoneViewByAlpha from './components/HcGetItDoneViewByAlpha/HcGetItDoneViewByAlpha';
 import HcGetItDoneViewByGroup from './components/HcGetItDoneViewByGroup/HcGetItDoneViewByGroup';
 
+import './HcGetItDone.sass';
+import './HcGetItDoneSmall.sass';
+import './HcGetItDoneMediumLarge.sass';
+
 // ----- COMPONENT
 
 export default class HcGetItDone extends React.Component {
