@@ -2,6 +2,12 @@
 // ----- IMPORTS
 
 import * as React from 'react';
+import {
+	AccordionItem,
+	AccordionItemTitle,
+	AccordionItemBody,
+} from 'react-accessible-accordion';
+
 import MediaQuery from 'react-responsive';
 import Pagination from 'react-js-pagination';
 import HcMessagesData from './HcMessagesData';
@@ -214,18 +220,40 @@ export default class HcMessages extends React.Component {
 		);
 	}
 	render() {
-		return (this.props.allOrTop === 'all') ?
-			(
+		if (this.props.allOrTop === 'all' && this.props.screenType === 'medium') {
+			return (
 				<div id="hc-messages-all" className="mos-react-component-root" name="hc-messages-all">
 					<h2>Messages</h2>
 					{this.returnHcMessagesAllBody()}
 				</div>
-			) :
-			(
-				<div id="hc-messages-top" className="mos-react-component-root">
-					<h2>Latest Messages</h2>
-					<HcMessagesList messagesThisPage={this.state.messagesArray} />
-				</div>
 			);
+		}
+		if (this.props.allOrTop === 'all' && this.props.screenType === 'small') {
+			return (
+				<AccordionItem
+					id="hc-messages-all"
+					className="hc-messages-all mos-react-component-root accordion__item"
+					hideBodyClassName="accordion__item--hidden"
+					name="hc-messages-all"
+				>
+					<AccordionItemTitle
+						className="hc-messages-all__title accordion__title"
+					>
+						<h2>Messages</h2>
+					</AccordionItemTitle>
+					<AccordionItemBody
+						className="hc-messages-all__body accordion__body"
+					>
+						{this.returnHcMessagesAllBody()}
+					</AccordionItemBody>
+				</AccordionItem>
+			);
+		}
+		return (
+			<div id="hc-messages-top" className="mos-react-component-root">
+				<h2>Latest Messages</h2>
+				<HcMessagesList messagesThisPage={this.state.messagesArray} />
+			</div>
+		);
 	}
 }
