@@ -61,7 +61,7 @@ export default class HcNav extends React.Component {
 							iconProps={{ iconName: 'Home' }}
 							text="Home"
 							className="hc-navigation__items__item__button"
-							onClick={this.scrollToTop}
+							onClick={this.scrollToHome}
 						/>
 					</li>
 					<li className="hc-navigation__items__item">
