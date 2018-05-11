@@ -28,6 +28,7 @@ export default class HcOrganizationTeams extends React.Component {
 				<h3>Divisions, Departments, and Their Members</h3>
 				<Accordion
 					className="hc-organization__teams__divisions accordion"
+					accordion={false}
 				>
 					<ul>
 						{
