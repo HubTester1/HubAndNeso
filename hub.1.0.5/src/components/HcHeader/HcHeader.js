@@ -4,7 +4,7 @@
 // ----- IMPORTS
 
 import * as React from 'react';
-
+import Sticky from 'react-stickynode';
 import Hamburger from '../Hamburger/Hamburger';
 import BrandLogoOnlyH1Link from '../Brands/BrandLogoOnlyH1Link';
 import BrandHorizontalH1Link from '../Brands/BrandHorizontalH1Link';
@@ -19,30 +19,35 @@ import './HcHeaderMediumLarge.sass';
 export default class HcHeader extends React.Component {
 	render() {
 		return (
-			<header 
-				id="hc-header" 
-				className="mos-react-component-root"
+			<Sticky
+				activeClass="header-is-stuck"
+				releasedClass="header-is-unstuck"
 			>
-				{
-					this.props.headerType === 'small' &&
+				<header 
+					id="hc-header" 
+					className="mos-react-component-root"
+				>
+					{
+						this.props.headerType === 'small' &&
 
-					<div id="hamburger-and-brand-container">
-						<Hamburger
-							showSmallNav={this.props.handleHamburgerClick}
-						/>
-						<BrandLogoOnlyH1Link />
-						<HcNav />
-					</div>
-				}
-				{
-					this.props.headerType === 'large' &&
+						<div id="hamburger-and-brand-container">
+							<Hamburger
+								showSmallNav={this.props.handleHamburgerClick}
+							/>
+							<BrandLogoOnlyH1Link />
+							<HcNav />
+						</div>
+					}
+					{
+						this.props.headerType === 'large' &&
 
-					<div>
-						<BrandHorizontalH1Link />
-						<HcNav />
-					</div>
-				}
-			</header>
+						<div>
+							<BrandHorizontalH1Link />
+							<HcNav />
+						</div>
+					}
+				</header>
+			</Sticky>
 		);
 	}
 }
