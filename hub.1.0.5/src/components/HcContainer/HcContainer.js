@@ -16,6 +16,7 @@ import HcGetItDone from '../../components/HcGetItDone/HcGetItDone';
 import HcPushedItems from '../../components/HcPushedItems/HcPushedItems';
 import HcMessages from '../../components/HcMessages/HcMessages';
 import HcOrganization from '../../components/HcOrganization/HcOrganization';
+import HcCalendarsSchedules from '../../components/HcCalendarsSchedules/HcCalendarsSchedules';
 
 // eslint-disable-next-line
 import { initializeIcons } from '@uifabric/icons';
@@ -67,7 +68,6 @@ class HcContainer extends React.Component {
 					id="hc-container"
 					className={`mos-react-component-root${this.state.showSmallNav ? ' showing-small-nav' : ''}`}
 				>
-					<HcOrganization />
 					<div
 						id="hc-header-and-hero-container" 
 						className="hc-header-and-hero-container"
@@ -98,7 +98,7 @@ class HcContainer extends React.Component {
 					/>
 					<HcPushedItems />
 					<HcOrganization />
-					{/* <p>HcCalendarsSchedules here</p> */}
+					<HcCalendarsSchedules />
 				</div>
 			);
 		}

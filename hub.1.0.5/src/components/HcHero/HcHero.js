@@ -14,8 +14,7 @@ import './HcHeroMediumLarge.sass';
 // ----- COMPONENT
 
 const HcHero = props => (
-	<div id="hero-container">
-
+	<div id="hero-container" className="mos-react-component-root">
 		{
 			props.heroType === 'large' &&
 
