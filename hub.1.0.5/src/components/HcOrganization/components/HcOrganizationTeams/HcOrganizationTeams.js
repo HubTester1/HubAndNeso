@@ -1,12 +1,20 @@
 
 /* eslint-disable react/prefer-stateless-function */
+/* eslint-disable no-useless-constructor */
+/* eslint-disable no-unused-vars */
 
 // ----- IMPORTS
 
 import * as React from 'react';
+import {
+	Accordion,
+	AccordionItem,
+	AccordionItemTitle,
+	AccordionItemBody,
+} from 'react-accessible-accordion';
+
 import HcOrganizationTeamsDivision from '../HcOrganizationTeamsDivision/HcOrganizationTeamsDivision';
 import HcOrganizationTeamsOtherTeam from '../HcOrganizationTeamsOtherTeam/HcOrganizationTeamsOtherTeam';
-
 
 // ----- COMPONENT
 
@@ -18,7 +26,8 @@ export default class HcOrganizationTeams extends React.Component {
 		return (
 			<div id="hc-organization-teams" className="mos-react-component-root">
 				<h3>Divisions, Departments, and Their Members</h3>
-				<ul>
+				{/* <ul> */}
+				<Accordion>
 					{
 						this.props.divDeptWTeamsArray.map(divisionValue => (
 							<HcOrganizationTeamsDivision
@@ -28,7 +37,8 @@ export default class HcOrganizationTeams extends React.Component {
 							/>
 						))
 					}
-				</ul>
+				</Accordion>
+				{/* </ul> */}
 				<h3>Other Teams</h3>
 				<ul>
 					{

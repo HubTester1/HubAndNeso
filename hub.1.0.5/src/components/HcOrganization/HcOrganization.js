@@ -9,6 +9,10 @@ import HcStaffLookup from '../HcStaffLookup/HcStaffLookup';
 import HcOrganizationOtherContacts from './components/HcOrganizationOtherContacts/HcOrganizationOtherContacts';
 import HcOrganizationMission from './components/HcOrganizationMission/HcOrganizationMission';
 
+import './HcOrganization.sass';
+import './HcOrganizationMediumLarge.sass';
+import './HcOrganizationSmall.sass';
+
 // ----- COMPONENT
 
 export default class HcOrganization extends React.Component {

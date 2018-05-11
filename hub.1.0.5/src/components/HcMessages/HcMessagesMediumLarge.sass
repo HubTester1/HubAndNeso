@@ -59,6 +59,10 @@
 
 	div#hc-messages-all
 		padding: 5rem
+		background-image: linear-gradient(to bottom right, $green, $yellow)
+
+		h2
+			color: $white
 
 		ul#hc-messages-list
 			padding-top: 1rem
@@ -70,12 +74,67 @@
 				break-inside: avoid
 				page-break-inside: avoid
 				padding: 2rem
-				background-color: $grey1
+				background-color: $white-80-percent
 				margin: 0 1rem 1rem 0
 
+				h3.hc-messages-message-subject
+					+font-weight-regular
+					font-size: $medium-screen-type-size-m
+				
+				div.hc-messages-message-preview-truncated-body
+					+font-weight-semilight
 
+				button.hc-messages-message-full-message-button
+					display: block
+					font-size: $medium-screen-type-size-xs
+					text-transform: uppercase
+					margin: 1rem 0 0 0
+					border: 0
+					background-color: $white
+					color: $interactive-default
+					transition: color .25s
 
+					&:hover
+						color: $interactive-active
+					
+					i
+						font-size: $medium-screen-type-size-xs
 
+		ul.pagination
+			display: block
+			text-align: center
+
+			> li
+				display: inline-block
+				margin: 0
+
+				> a
+					display: inline-block
+					padding: 1rem 2rem
+					color: $text-on-interactive-default !important
+					background-color: $interactive-default
+					transition-property: color, background-color
+					transition-duration: .25s
+
+					&:hover
+						color: $text-on-interactive-active !important
+						background-color: $interactive-active
+
+			> li.disabled a
+				color: $white !important
+				background-color: $grey9
+
+				&:hover
+					color: $white !important
+					background-color: $grey9
+
+			> li.active a
+				color: $text-on-interactive-active !important
+				background-color: $interactive-active
+
+				&:hover
+					color: $text-on-interactive-active !important
+					background-color: $interactive-active
 
 
 

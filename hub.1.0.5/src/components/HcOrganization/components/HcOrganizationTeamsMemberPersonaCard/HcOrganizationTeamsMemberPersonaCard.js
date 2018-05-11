@@ -1,11 +1,17 @@
 
-/* eslint class-methods-use-this: 0 */
-/* eslint react/prefer-stateless-function: 0 */
-/* eslint max-len: 0 */
+/* eslint-disable react/prefer-stateless-function */
+/* eslint-disable no-useless-constructor */
+/* eslint-disable no-unused-vars */
 
 // ----- IMPORTS
 
 import * as React from 'react';
+import {
+	Accordion,
+	AccordionItem,
+	AccordionItemTitle,
+	AccordionItemBody,
+} from 'react-accessible-accordion';
 
 // ----- COMPONENT
 
@@ -17,7 +23,9 @@ const HcOrgTeamsMemberPersonaCard = (props) => {
 		};
 	}
 	return (
-		<div id={`hc-organization-teams-member-persona_${props.personaId}`} className="hc-organization-teams-member-persona mos-react-component-root">
+		<AccordionItemBody>
+			{/* <div id={`hc-organization-teams-member-persona_${props.personaId}`} 
+				className="hc-organization-teams-member-persona mos-react-component-root"> */}
 			<span className="persona-card-dialog-header">
 				{
 					props.memberContent.photoURL &&
@@ -92,7 +100,8 @@ const HcOrgTeamsMemberPersonaCard = (props) => {
 					</li>
 				}
 			</ul>
-		</div>
+			{/* </div> */}
+		</AccordionItemBody>
 	);
 };
 

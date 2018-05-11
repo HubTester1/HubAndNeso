@@ -67,6 +67,7 @@ class HcContainer extends React.Component {
 					id="hc-container"
 					className={`mos-react-component-root${this.state.showSmallNav ? ' showing-small-nav' : ''}`}
 				>
+					<HcOrganization />
 					<div
 						id="hc-header-and-hero-container" 
 						className="hc-header-and-hero-container"

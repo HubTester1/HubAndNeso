@@ -1,9 +1,17 @@
 
-/* eslint-disable class-methods-use-this */
+/* eslint-disable react/prefer-stateless-function */
+/* eslint-disable no-useless-constructor */
+/* eslint-disable no-unused-vars */
 
 // ----- IMPORTS
 
 import * as React from 'react';
+import {
+	Accordion,
+	AccordionItem,
+	AccordionItemTitle,
+	AccordionItemBody,
+} from 'react-accessible-accordion';
 import HcOrganizationTeamsDepartmentMember from '../HcOrganizationTeamsDepartmentMember/HcOrganizationTeamsDepartmentMember';
 
 // ----- COMPONENT
@@ -23,20 +31,22 @@ export default class HcOrganizationTeamsDepartment extends React.Component {
 	} */
 	render() {
 		return (
-			<li id={`hc-organization-teams-department_${this.props.departmentId}`} className="hc-organization-teams-department mos-react-component-root">
+			<Accordion>
+				{/* <li id={`hc-organization-teams-department_${this.props.departmentId}`} 
+					className="hc-organization-teams-department mos-react-component-root"> */}
 				<h5>{this.props.departmentContent.name}</h5>
 				{
 					this.props.departmentContent.hubScreenToken &&
 
-			<p>
-				<a
-					href={`https://bmos.sharepoint.com/SitePages/${this.props.departmentContent.hubScreenToken}.aspx`}
-					target="_blank"
-					className="hc-organization-teams-department-hub-team-link"
-				>
-					On The Hub
-				</a>
-			</p>
+					<p>
+						<a
+							href={`https://bmos.sharepoint.com/SitePages/${this.props.departmentContent.hubScreenToken}.aspx`}
+							target="_blank"
+							className="hc-organization-teams-department-hub-team-link"
+						>
+							On The Hub
+						</a>
+					</p>
 				}
 				<ul>
 					{
@@ -51,7 +61,8 @@ export default class HcOrganizationTeamsDepartment extends React.Component {
 						))
 					}
 				</ul>
-			</li>
+				{/* </li> */}
+			</Accordion>
 		);
 	}
 }
