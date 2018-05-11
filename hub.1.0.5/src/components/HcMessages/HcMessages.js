@@ -81,10 +81,18 @@ export default class HcMessages extends React.Component {
 		const pageNumberCopy = pageNumber - 1;
 		// return corresponding sections of array
 		return {
-			messagesThisPageSmallScreen: messagePool
-				.slice(pageNumberCopy * messagesPerPageSmallScreen, (pageNumberCopy + 1) * messagesPerPageSmallScreen),
-			messagesThisPageLargeScreen: messagePool
-				.slice(pageNumberCopy * messagesPerPageLargeScreen, (pageNumberCopy + 1) * messagesPerPageLargeScreen),
+			messagesThisPageSmallScreen: 
+				messagePool
+					.slice(
+						pageNumberCopy * messagesPerPageSmallScreen, 
+						(pageNumberCopy + 1) * messagesPerPageSmallScreen,
+					),
+			messagesThisPageLargeScreen: 
+				messagePool
+					.slice(
+						pageNumberCopy * messagesPerPageLargeScreen, 
+						(pageNumberCopy + 1) * messagesPerPageLargeScreen,
+					),
 		};
 	}
 	addMessageToList(newMessageProperties) {
