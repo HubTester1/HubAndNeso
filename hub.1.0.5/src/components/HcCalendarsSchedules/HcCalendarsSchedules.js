@@ -10,7 +10,7 @@ import './HcCalendarsSchedulesSmall.sass';
 // ----- COMPONENT
 
 const HcCalendarsSchedules = props => (
-	<div id="hc-calendars-and-schedules" className="mos-react-component-root">
+	<div id="hc-calendars-and-schedules" className="mos-react-component-root" name="hc-calendars-and-schedules">
 		<h2>Calendars & Schedules</h2>
 		<ul>
 			<li>

@@ -8,7 +8,8 @@ import MediaQuery from 'react-responsive';
 
 import { DefaultButton } from 'office-ui-fabric-react/lib/Button';
 import HcMessagesMessage from '../HcMessagesMessage/HcMessagesMessage';
-// import HcMessagesMessageImagePreview from '../HcMessagesMessageImagePreview/HcMessagesMessageImagePreview';
+// import HcMessagesMessageImagePreview from 
+// '../HcMessagesMessageImagePreview/HcMessagesMessageImagePreview';
 import ScreenSizes from '../../../../services/ScreenSizes';
 
 // ----- COMPONENT

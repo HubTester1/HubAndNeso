@@ -56,7 +56,7 @@ export default class HcGetItDone extends React.Component {
 	}
 	render() {
 		return (
-			<div id="hc-get-it-done" className="mos-react-component-root">
+			<div id="hc-get-it-done" className="mos-react-component-root" name="hc-get-it-done">
 				<h2>Get it Done</h2>
 				{
 					!this.state.queryError &&

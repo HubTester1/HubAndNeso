@@ -86,7 +86,7 @@ export default class HcOrganization extends React.Component {
 	}
 	render() {
 		return (
-			<div id="hc-organization" className="mos-react-component-root">
+			<div id="hc-organization" className="mos-react-component-root" name="hc-organization">
 				<h2>Organization, Teams, & Staff</h2>
 				{
 					!this.state.queryError &&

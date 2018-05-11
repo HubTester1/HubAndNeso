@@ -165,7 +165,7 @@ export default class HcMessages extends React.Component {
 	render() {
 		return (this.props.allOrTop === 'all') ?
 			(
-				<div id="hc-messages-all" className="mos-react-component-root">
+				<div id="hc-messages-all" className="mos-react-component-root" name="hc-messages-all">
 					<h2>Messages</h2>
 					<HcMessagesCommandBar
 						tagsArray={this.state.tagsArray}
