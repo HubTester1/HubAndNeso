@@ -37,6 +37,7 @@ export default class HcMessages extends React.Component {
 		this.handleClickTagFilterMenuLabel = this.handleClickTagFilterMenuLabel.bind(this);
 		this.handleClickTagFilterMenuItem = this.handleClickTagFilterMenuItem.bind(this);
 		this.handlePageChange = this.handlePageChange.bind(this);
+		this.returnHcMessagesAllBody = this.returnHcMessagesAllBody.bind(this);
 	}
 	componentDidMount() {
 		if (this.props.allOrTop === 'all') {
@@ -162,55 +163,62 @@ export default class HcMessages extends React.Component {
 		// return true to close the menu
 		return true;
 	}
+	returnHcMessagesAllBody() {
+		return (
+			<div id="hc-messages-all-body">
+				<HcMessagesCommandBar
+					tagsArray={this.state.tagsArray}
+					handleClickNewMessageButton={this.handleClickNewMessageButton}
+					handleClickHideNewMessageButton={this.handleClickHideNewMessageButton}
+					showingNewMessageForm={this.state.showNewMessageForm}
+					handleClickTagFilterMenuLabel={this.handleClickTagFilterMenuLabel}
+					handleClickTagFilterMenuItem={this.handleClickTagFilterMenuItem}
+				/>
+				<HcMessagesNewMessageForm
+					show={this.state.showNewMessageForm}
+					tagsArray={this.state.tagsArray}
+					addMessageToList={this.addMessageToList}
+					uData={this.props.uData}
+				/>
+				<MediaQuery maxWidth={ScreenSizes.ReturnSmallMax()}>
+					<HcMessagesList
+						messagesThisPage={this.state.messagesThisPageSmallScreen}
+					/>
+					<Pagination
+						activePage={this.state.activePage}
+						itemsCountPerPage={messagesPerPageSmallScreen}
+						totalItemsCount={this.state.messagesArray.length}
+						pageRangeDisplayed={
+							((this.state.messagesArray.length / messagesPerPageSmallScreen) + 1) > 3 ?
+								3 :
+								(this.state.messagesArray.length / messagesPerPageSmallScreen) + 1
+						}
+						onChange={this.handlePageChange}
+					/>
+				</MediaQuery>
+				<MediaQuery minWidth={ScreenSizes.ReturnMediumMin()}>
+					<HcMessagesList
+						messagesThisPage={this.state.messagesThisPageLargeScreen}
+					/>
+					<Pagination
+						activePage={this.state.activePage}
+						itemsCountPerPage={messagesPerPageLargeScreen}
+						totalItemsCount={this.state.messagesArray.length}
+						pageRangeDisplayed={
+							(this.state.messagesArray.length / messagesPerPageLargeScreen) + 1
+						}
+						onChange={this.handlePageChange}
+					/>
+				</MediaQuery>
+			</div>
+		);
+	}
 	render() {
 		return (this.props.allOrTop === 'all') ?
 			(
 				<div id="hc-messages-all" className="mos-react-component-root" name="hc-messages-all">
 					<h2>Messages</h2>
-					<HcMessagesCommandBar
-						tagsArray={this.state.tagsArray}
-						handleClickNewMessageButton={this.handleClickNewMessageButton}
-						handleClickHideNewMessageButton={this.handleClickHideNewMessageButton}
-						showingNewMessageForm={this.state.showNewMessageForm}
-						handleClickTagFilterMenuLabel={this.handleClickTagFilterMenuLabel}
-						handleClickTagFilterMenuItem={this.handleClickTagFilterMenuItem}
-					/>
-					<HcMessagesNewMessageForm
-						show={this.state.showNewMessageForm}
-						tagsArray={this.state.tagsArray}
-						addMessageToList={this.addMessageToList}
-						uData={this.props.uData}
-					/>
-					<MediaQuery maxWidth={ScreenSizes.ReturnSmallMax()}>
-						<HcMessagesList
-							messagesThisPage={this.state.messagesThisPageSmallScreen}
-						/>
-						<Pagination
-							activePage={this.state.activePage}
-							itemsCountPerPage={messagesPerPageSmallScreen}
-							totalItemsCount={this.state.messagesArray.length}
-							pageRangeDisplayed={
-								((this.state.messagesArray.length / messagesPerPageSmallScreen) + 1) > 3 ? 
-									3 :
-									(this.state.messagesArray.length / messagesPerPageSmallScreen) + 1
-							}
-							onChange={this.handlePageChange}
-						/>
-					</MediaQuery>
-					<MediaQuery minWidth={ScreenSizes.ReturnMediumMin()}>
-						<HcMessagesList
-							messagesThisPage={this.state.messagesThisPageLargeScreen}
-						/>
-						<Pagination
-							activePage={this.state.activePage}
-							itemsCountPerPage={messagesPerPageLargeScreen}
-							totalItemsCount={this.state.messagesArray.length}
-							pageRangeDisplayed={
-								(this.state.messagesArray.length / messagesPerPageLargeScreen) + 1
-							}
-							onChange={this.handlePageChange}
-						/>
-					</MediaQuery>
+					{this.returnHcMessagesAllBody()}
 				</div>
 			) :
 			(

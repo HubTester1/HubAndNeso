@@ -2,6 +2,12 @@
 // ----- IMPORTS
 
 import * as React from 'react';
+import {
+	AccordionItem,
+	AccordionItemTitle,
+	AccordionItemBody,
+} from 'react-accessible-accordion';
+
 import HcOrganizationData from './HcOrganizationData';
 import HcOrganizationCommandBar from './components/HcOrganizationCommandBar/HcOrganizationCommandBar';
 import HcOrganizationTeams from './components/HcOrganizationTeams/HcOrganizationTeams';
@@ -32,6 +38,7 @@ export default class HcOrganization extends React.Component {
 		this.handleClickShowStaffLookup = this.handleClickShowStaffLookup.bind(this);
 		this.handleClickOtherContacts = this.handleClickOtherContacts.bind(this);
 		this.handleClickShowMission = this.handleClickShowMission.bind(this);
+		this.returnHcOrganizationBody = this.returnHcOrganizationBody.bind(this);
 	}
 	componentDidMount() {
 		HcOrganizationData.ReturnAllOrganizationData()
@@ -84,46 +91,71 @@ export default class HcOrganization extends React.Component {
 			showMission: true,
 		}));
 	}
+	returnHcOrganizationBody() {
+		return (
+			<div id="hc-organization-body">
+				<HcOrganizationCommandBar
+					handleClickShowTeams={this.handleClickShowTeams}
+					handleClickShowStaffLookup={this.handleClickShowStaffLookup}
+					handleClickOtherContacts={this.handleClickOtherContacts}
+					handleClickShowMission={this.handleClickShowMission}
+				/>
+				{
+					this.state.showTeams &&
+
+					<HcOrganizationTeams
+						divDeptWTeamsArray={this.state.divDeptWTeamsArray}
+						nonDivDeptTeamsArray={this.state.nonDivDeptTeamsArray}
+					/>
+				}
+				{
+					this.state.showStaffLookup &&
+
+					<HcStaffLookup />
+				}
+				{
+					this.state.showOtherContacts &&
+
+					<HcOrganizationOtherContacts
+						otherContactsArray={this.state.otherContactsArray}
+					/>
+				}
+				{
+					this.state.showMission &&
+
+					<HcOrganizationMission />
+				}
+			</div>
+		);
+	}
 	render() {
+		if (this.props.screenType === 'small') {
+			return (
+				<AccordionItem
+					id="hc-organization"
+					className="hc-organization mos-react-component-root accordion__item"
+					hideBodyClassName="accordion__item--hidden"
+					name="hc-organization"
+				>
+					<AccordionItemTitle
+						className="hc-organization__title accordion__title"
+					>
+						<h2>Organization, Teams, & Staff</h2>
+					</AccordionItemTitle>
+					<AccordionItemBody
+						className="hc-organization__body accordion__body"
+					>
+						{this.returnHcOrganizationBody()}
+					</AccordionItemBody>
+				</AccordionItem>
+			);
+		}
 		return (
 			<div id="hc-organization" className="mos-react-component-root" name="hc-organization">
 				<h2>Organization, Teams, & Staff</h2>
 				{
 					!this.state.queryError &&
-
-					<div id="hc-organization-body">
-						<HcOrganizationCommandBar
-							handleClickShowTeams={this.handleClickShowTeams}
-							handleClickShowStaffLookup={this.handleClickShowStaffLookup}
-							handleClickOtherContacts={this.handleClickOtherContacts}
-							handleClickShowMission={this.handleClickShowMission}
-						/>
-						{
-							this.state.showTeams &&
-
-							<HcOrganizationTeams
-								divDeptWTeamsArray={this.state.divDeptWTeamsArray}
-								nonDivDeptTeamsArray={this.state.nonDivDeptTeamsArray}
-							/>
-						}
-						{
-							this.state.showStaffLookup &&
-
-							<HcStaffLookup />
-						}
-						{
-							this.state.showOtherContacts &&
-
-							<HcOrganizationOtherContacts
-								otherContactsArray={this.state.otherContactsArray}
-							/>
-						}
-						{
-							this.state.showMission &&
-
-							<HcOrganizationMission />
-						}
-					</div>
+					this.returnHcOrganizationBody()
 				}
 				{
 					this.state.queryError &&

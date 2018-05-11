@@ -4,6 +4,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import MediaQuery from 'react-responsive';
+import { Accordion } from 'react-accessible-accordion';
 
 import EnvironmentDetector from '../../services/EnvironmentDetector';
 import MOSUtilities from '../../services/MOSUtilities';
@@ -91,14 +92,49 @@ class HcContainer extends React.Component {
 							/>
 						</MediaQuery>
 					</div>
-					<HcGetItDone />
-					<HcMessages
-						uData={this.state.uData}
-						allOrTop="all"
-					/>
-					<HcPushedItems />
-					<HcOrganization />
-					<HcCalendarsSchedules />
+					<MediaQuery maxWidth={ScreenSizes.ReturnSmallMax()}>
+						<Accordion
+							className="hc-sections-container accordion"
+							accordion={false}
+						>
+							<HcGetItDone
+								screenType="small"
+							/>
+							<HcMessages
+								uData={this.state.uData}
+								allOrTop="all"
+								screenType="small"
+							/>
+							<HcPushedItems
+								screenType="small"
+							/>
+							<HcOrganization
+								screenType="small"
+							/>
+							<HcCalendarsSchedules
+								screenType="small"
+							/>
+						</Accordion>
+					</MediaQuery>
+					<MediaQuery minWidth={ScreenSizes.ReturnMediumMin()}>
+						<HcGetItDone
+							screenType="medium"
+						/>
+						<HcMessages
+							uData={this.state.uData}
+							allOrTop="all"
+							screenType="medium"
+						/>
+						<HcPushedItems
+							screenType="medium"
+						/>
+						<HcOrganization
+							screenType="medium"
+						/>
+						<HcCalendarsSchedules
+							screenType="medium"
+						/>
+					</MediaQuery>
 				</div>
 			);
 		}
