@@ -17,6 +17,9 @@ export default class HcNav extends React.Component {
 		super(props);
 		this.scrollToHome = this.scrollToHome.bind(this);
 		this.scrollToGetItDone = this.scrollToGetItDone.bind(this);
+		this.scrollToMessages = this.scrollToMessages.bind(this);
+		this.scrollToOrganization = this.scrollToOrganization.bind(this);
+		this.scrollToCalendarsSchedules = this.scrollToCalendarsSchedules.bind(this);
 	}
 	scrollToHome() {
 		scroll.scrollToTop();
@@ -28,8 +31,28 @@ export default class HcNav extends React.Component {
 			smooth: 'easeInOutQuart',
 		});
 	}
+	scrollToMessages() {
+		scroller.scrollTo('hc-messages-all', {
+			duration: 1000,
+			delay: 0,
+			smooth: 'easeInOutQuart',
+		});
+	}
+	scrollToOrganization() {
+		scroller.scrollTo('hc-organization', {
+			duration: 1250,
+			delay: 0,
+			smooth: 'easeInOutQuart',
+		});
+	}
+	scrollToCalendarsSchedules() {
+		scroller.scrollTo('hc-calendars-and-schedules', {
+			duration: 1500,
+			delay: 0,
+			smooth: 'easeInOutQuart',
+		});
+	}
 	render() {
-		console.log('m1');
 		return (
 			<nav id="hc-navigation" className="mos-react-component-root">
 				<ul id="hc-navigation__items">
@@ -42,28 +65,19 @@ export default class HcNav extends React.Component {
 						/>
 					</li>
 					<li className="hc-navigation__items__item">
-						{/* <Link
-							activeClass="active"
-							className="test2"
-							to="hc-get-it-done"
-							spy
-							smooth
-							duration={500}
-						> */}
 						<DefaultButton
 							iconProps={{ iconName: 'FormLibrary' }}
 							text="Get it Done"
 							className="hc-navigation__items__item__button"
 							onClick={this.scrollToGetItDone}
 						/>
-						{/* </Link> */}
 					</li>
 					<li className="hc-navigation__items__item">
 						<DefaultButton
 							iconProps={{ iconName: 'Message' }}
 							text="Messages"
 							className="hc-navigation__items__item__button"
-						// onClick={this.doSomething}
+							onClick={this.scrollToMessages}
 						/>
 					</li>
 					<li className="hc-navigation__items__item">
@@ -71,7 +85,7 @@ export default class HcNav extends React.Component {
 							iconProps={{ iconName: 'People' }}
 							text="Organization, Teams, & Staff"
 							className="hc-navigation__items__item__button"
-						// onClick={this.doSomething}
+							onClick={this.scrollToOrganization}
 						/>
 					</li>
 					<li className="hc-navigation__items__item">
@@ -79,7 +93,7 @@ export default class HcNav extends React.Component {
 							iconProps={{ iconName: 'Calendar' }}
 							text="Calendars & Schedules"
 							className="hc-navigation__items__item__button"
-						// onClick={this.doSomething}
+							onClick={this.scrollToCalendarsSchedules}
 						/>
 					</li>
 				</ul>
