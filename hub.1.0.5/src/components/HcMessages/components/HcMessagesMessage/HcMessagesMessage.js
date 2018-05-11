@@ -14,7 +14,7 @@ import ScreenSizes from '../../../../services/ScreenSizes';
 
 const HcMessagesMessage = props => (
 	<div id={`hc-messages-message_${props.messageId}`} className="hc-messages-message mos-react-component-root">
-		<MediaQuery minDeviceWidth={ScreenSizes.ReturnMediumMin()}>
+		<MediaQuery minWidth={ScreenSizes.ReturnMediumMin()}>
 			<div className="hc-messages-message-control">
 				<DefaultButton
 					iconProps={{ iconName: 'ChromeClose' }}
@@ -23,7 +23,7 @@ const HcMessagesMessage = props => (
 				/>
 			</div>
 		</MediaQuery>
-		<MediaQuery maxDeviceWidth={ScreenSizes.ReturnSmallMax()}>
+		<MediaQuery maxWidth={ScreenSizes.ReturnSmallMax()}>
 			<div className="hc-messages-message-control">
 				<DefaultButton
 					iconProps={{ iconName: 'ChevronUp' }}
@@ -59,7 +59,7 @@ const HcMessagesMessage = props => (
 		<div className="hc-messages-message-body">{props.messageContent.body}</div>
 		{/* note: currently only one tag per message */}
 		<p className="hc-messages-message-tags">#{props.messageContent.tags[0]}</p>
-		<MediaQuery minDeviceWidth={ScreenSizes.ReturnMediumMin()}>
+		<MediaQuery minWidth={ScreenSizes.ReturnMediumMin()}>
 			<div className="hc-messages-message-control">
 				<DefaultButton
 					iconProps={{ iconName: 'ChromeClose' }}
@@ -68,7 +68,7 @@ const HcMessagesMessage = props => (
 				/>
 			</div>
 		</MediaQuery>
-		<MediaQuery maxDeviceWidth={ScreenSizes.ReturnSmallMax()}>
+		<MediaQuery maxWidth={ScreenSizes.ReturnSmallMax()}>
 			<div className="hc-messages-message-control">
 				<DefaultButton
 					iconProps={{ iconName: 'ChevronUp' }}

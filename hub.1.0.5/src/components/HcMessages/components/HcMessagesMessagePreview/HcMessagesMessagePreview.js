@@ -66,7 +66,7 @@ export default class HcMessagesMessagePreview extends React.Component {
 					!this.state.showInlineFull &&
 
 					<div className="hc-messages-message-preview-truncated-body">
-						<MediaQuery minDeviceWidth={ScreenSizes.ReturnMediumMin()}>
+						<MediaQuery minWidth={ScreenSizes.ReturnMediumMin()}>
 							<Truncate
 								lines={2}
 								ellipsis={
@@ -98,7 +98,7 @@ export default class HcMessagesMessagePreview extends React.Component {
 								/>
 							</Modal>
 						</MediaQuery>
-						<MediaQuery maxDeviceWidth={ScreenSizes.ReturnSmallMax()}>
+						<MediaQuery maxWidth={ScreenSizes.ReturnSmallMax()}>
 							<Truncate
 								lines={1}
 								ellipsis={

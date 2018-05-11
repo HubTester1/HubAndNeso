@@ -181,7 +181,7 @@ export default class HcMessages extends React.Component {
 						addMessageToList={this.addMessageToList}
 						uData={this.props.uData}
 					/>
-					<MediaQuery maxDeviceWidth={ScreenSizes.ReturnSmallMax()}>
+					<MediaQuery maxWidth={ScreenSizes.ReturnSmallMax()}>
 						<HcMessagesList
 							messagesThisPage={this.state.messagesThisPageSmallScreen}
 						/>
@@ -197,7 +197,7 @@ export default class HcMessages extends React.Component {
 							onChange={this.handlePageChange}
 						/>
 					</MediaQuery>
-					<MediaQuery minDeviceWidth={ScreenSizes.ReturnMediumMin()}>
+					<MediaQuery minWidth={ScreenSizes.ReturnMediumMin()}>
 						<HcMessagesList
 							messagesThisPage={this.state.messagesThisPageLargeScreen}
 						/>
