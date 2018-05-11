@@ -9,10 +9,10 @@
 @media screen and (min-width: $medium-screen-minimum-width)
 	
 	header
-		padding: 5rem 5rem 0 5rem
+		+row
 
 	div.brand
-		padding-bottom: 2rem
+		+column
 
 		h1,
 		div.svg-brand--horizontal
@@ -21,6 +21,9 @@
 		svg
 			height: 5rem
 
+	nav#hc-navigation
+		+column
+	
 	div.sticky-outer-wrapper.header-is-stuck
 
 		div.sticky-inner-wrapper

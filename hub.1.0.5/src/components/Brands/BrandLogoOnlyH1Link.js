@@ -4,7 +4,6 @@
 import * as React from 'react';
 
 import BrandLogoOnly from './BrandLogoOnly';
-import './BrandHorizontalH1Link.sass';
 
 // ----- COMPONENT
 

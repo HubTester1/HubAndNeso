@@ -7,7 +7,7 @@ import * as React from 'react';
 import Sticky from 'react-stickynode';
 import Hamburger from '../Hamburger/Hamburger';
 import BrandLogoOnlyH1Link from '../Brands/BrandLogoOnlyH1Link';
-import BrandHorizontalH1Link from '../Brands/BrandHorizontalH1Link';
+import BrandHorizontalH1ScrollToTop from '../Brands/BrandHorizontalH1ScrollToTop';
 import HcNav from '../HcNav/HcNav';
 
 import './HcHeader.sass';
@@ -42,7 +42,7 @@ export default class HcHeader extends React.Component {
 						this.props.headerType === 'large' &&
 
 						<div>
-							<BrandHorizontalH1Link />
+							<BrandHorizontalH1ScrollToTop />
 							<HcNav />
 						</div>
 					}

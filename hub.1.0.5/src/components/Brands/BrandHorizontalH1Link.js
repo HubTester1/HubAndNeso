@@ -4,7 +4,6 @@
 import * as React from 'react';
 
 import BrandHorizontal from './BrandHorizontal';
-import './BrandHorizontalH1Link.sass';
 
 // ----- COMPONENT
 

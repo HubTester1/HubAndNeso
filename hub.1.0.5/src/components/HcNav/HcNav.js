@@ -3,7 +3,7 @@
 
 import * as React from 'react';
 import { DefaultButton } from 'office-ui-fabric-react/lib/Button';
-import { Link, DirectLink, Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll';
+import { scroller } from 'react-scroll';
 
 import './HcNav.sass';
 import './HcNavSmall.sass';
@@ -15,14 +15,10 @@ import './HcNavMediumLarge.sass';
 export default class HcNav extends React.Component {
 	constructor(props) {
 		super(props);
-		this.scrollToHome = this.scrollToHome.bind(this);
 		this.scrollToGetItDone = this.scrollToGetItDone.bind(this);
 		this.scrollToMessages = this.scrollToMessages.bind(this);
 		this.scrollToOrganization = this.scrollToOrganization.bind(this);
 		this.scrollToCalendarsSchedules = this.scrollToCalendarsSchedules.bind(this);
-	}
-	scrollToHome() {
-		scroll.scrollToTop();
 	}
 	scrollToGetItDone() {
 		scroller.scrollTo('hc-get-it-done', {
@@ -56,14 +52,6 @@ export default class HcNav extends React.Component {
 		return (
 			<nav id="hc-navigation" className="mos-react-component-root">
 				<ul id="hc-navigation__items">
-					<li className="hc-navigation__items__item">
-						<DefaultButton
-							iconProps={{ iconName: 'Home' }}
-							text="Home"
-							className="hc-navigation__items__item__button"
-							onClick={this.scrollToHome}
-						/>
-					</li>
 					<li className="hc-navigation__items__item">
 						<DefaultButton
 							iconProps={{ iconName: 'FormLibrary' }}
