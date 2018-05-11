@@ -17,57 +17,51 @@ import HcOrganizationTeamsDepartmentMember from '../HcOrganizationTeamsDepartmen
 // ----- COMPONENT
 
 export default class HcOrganizationTeamsDepartment extends React.Component {
-	/* constructor(props) {
-		super(props);
-		this.state = {
-			personas: [],
-		};
-		this.setSelectedPersonas = this.setSelectedPersonas.bind(this);
-	}
-	setSelectedPersonas(personaData) {
-		this.setState(prevState => ({
-			personas: [personaData, ...prevState.personas],
-		}));
-	} */
 	render() {
 		return (
-			<AccordionItem>
-				{/* <li id={`hc-organization-teams-department_${this.props.departmentId}`} 
-					className="hc-organization-teams-department mos-react-component-root"> */}
-				<AccordionItemTitle>
-					<h5>{this.props.departmentContent.name}</h5>
-				</AccordionItemTitle>
-				<AccordionItemBody>
-					{
-						this.props.departmentContent.hubScreenToken &&
+			<AccordionItem
+				className="hc-organization__teams__department mos-react-component-root accordion__item"
+				hideBodyClassName="accordion__item--hidden"
+			>
+				<li id={`hc-organization__teams__department_${this.props.departmentId}`}>
+					<AccordionItemTitle
+						className="hc-organization__teams__department-title accordion__title"
+					>
+						<h5>{this.props.departmentContent.name}</h5>
+					</AccordionItemTitle>
+					<AccordionItemBody
+						className="hc-organization__teams__department-body accordion__body"
+					>
+						{
+							this.props.departmentContent.hubScreenToken &&
 
-						<p>
-							<a
-								href={`https://bmos.sharepoint.com/SitePages/${this.props.departmentContent.hubScreenToken}.aspx`}
-								target="_blank"
-								className="hc-organization-teams-department-hub-team-link"
-							>
-								On The Hub
-							</a>
-						</p>
-					}
-					<Accordion>
-						<ul>
-							{
-								this.props.departmentContent.members.map(memberValue => (
-									<HcOrganizationTeamsDepartmentMember
-										key={memberValue.reactKey}
-										memberId={memberValue.reactKey}
-										memberContent={memberValue}
-										// personas={this.state.personas}
-										// onMemberClick={this.setSelectedPersonas}
-									/>
-								))
-							}
-						</ul>
-					</Accordion>
-				</AccordionItemBody>
-				{/* </li> */}
+							<p>
+								<a
+									href={`https://bmos.sharepoint.com/SitePages/${this.props.departmentContent.hubScreenToken}.aspx`}
+									target="_blank"
+									className="hc-organization-teams-department-hub-team-link"
+								>
+									On The Hub
+								</a>
+							</p>
+						}
+						<Accordion
+							className="hc-organization__teams__department-members accordion"
+						>
+							<ul>
+								{
+									this.props.departmentContent.members.map(memberValue => (
+										<HcOrganizationTeamsDepartmentMember
+											key={memberValue.reactKey}
+											memberId={memberValue.reactKey}
+											memberContent={memberValue}
+										/>
+									))
+								}
+							</ul>
+						</Accordion>
+					</AccordionItemBody>
+				</li>
 			</AccordionItem>
 		);
 	}

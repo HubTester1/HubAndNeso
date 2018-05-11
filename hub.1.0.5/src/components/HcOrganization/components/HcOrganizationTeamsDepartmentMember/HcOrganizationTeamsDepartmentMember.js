@@ -16,40 +16,28 @@ import HcOrganizationTeamsMemberPersonaCard from '../HcOrganizationTeamsMemberPe
 
 // ----- COMPONENT
 export default class HcOrganizationTeamsDepartmentMember extends React.Component {
-	/* constructor(props) {
-		super(props);
-		this.state = {
-			showPersona: false,
-		};
-		this.handleMemberClick = this.handleMemberClick.bind(this);
-	}
-	handleMemberClick(e) {
-		e.preventDefault();
-		// this.props.onMemberClick(this.props.memberContent);
-		this.setState(prevState => ({
-			showPersona: !prevState.showPersona,
-		}));
-	} */
 	render() {
 		return (
-			<AccordionItem>
-				{/* <li id={`hc-organization-teams-department-member_${this.props.memberId}`} 
-					className="hc-organization-teams-department-member mos-react-component-root"> */}
-				{/* <button
-					onClick={this.handleMemberClick}
-				>
-					{this.props.memberContent.displayName}
-				</button> */}
-				<AccordionItemTitle>
-					<h3>{this.props.memberContent.displayName}</h3>
-				</AccordionItemTitle>
-					
-				<HcOrganizationTeamsMemberPersonaCard
-					memberAccount={this.props.memberContent.account}
-					memberContent={this.props.memberContent}
-					personas={this.props.personas}
-				/>
-				{/* </li> */}
+			<AccordionItem
+				className="hc-organization__teams__department-member mos-react-component-root accordion__item"
+				hideBodyClassName="accordion__item--hidden"
+			>
+				<li id={`hc-organization__teams__department-member_${this.props.memberId}`}>
+					<AccordionItemTitle
+						className="hc-organization__teams__department-member-title accordion__title"
+					>
+						<h6>{this.props.memberContent.displayName}</h6>
+					</AccordionItemTitle>
+					<AccordionItemBody
+						className="hc-organization__teams__department-member-body accordion__body"
+					>
+						<HcOrganizationTeamsMemberPersonaCard
+							memberAccount={this.props.memberContent.account}
+							memberContent={this.props.memberContent}
+							personas={this.props.personas}
+						/>
+					</AccordionItemBody>
+				</li>
 			</AccordionItem>
 		);
 	}

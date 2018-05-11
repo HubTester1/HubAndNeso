@@ -24,21 +24,24 @@ export default class HcOrganizationTeams extends React.Component {
 	}
 	render() {
 		return (
-			<div id="hc-organization-teams" className="mos-react-component-root">
+			<div id="hc-organization__teams" className="mos-react-component-root">
 				<h3>Divisions, Departments, and Their Members</h3>
-				{/* <ul> */}
-				<Accordion>
-					{
-						this.props.divDeptWTeamsArray.map(divisionValue => (
-							<HcOrganizationTeamsDivision
-								key={divisionValue.reactKey}
-								divisionId={divisionValue.reactKey}
-								divisionContent={divisionValue}
-							/>
-						))
-					}
+				<Accordion
+					className="hc-organization__teams__divisions accordion"
+				>
+					<ul>
+						{
+							this.props.divDeptWTeamsArray.map(divisionValue => (
+								<HcOrganizationTeamsDivision
+									key={divisionValue.reactKey}
+									divisionId={divisionValue.reactKey}
+									divisionContent={divisionValue}
+								/>
+							))
+						}
+					
+					</ul>
 				</Accordion>
-				{/* </ul> */}
 				<h3>Other Teams</h3>
 				<ul>
 					{

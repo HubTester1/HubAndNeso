@@ -23,9 +23,10 @@ const HcOrgTeamsMemberPersonaCard = (props) => {
 		};
 	}
 	return (
-		<AccordionItemBody>
-			{/* <div id={`hc-organization-teams-member-persona_${props.personaId}`} 
-				className="hc-organization-teams-member-persona mos-react-component-root"> */}
+		<div
+			id={`hc-organization-teams-member-persona_${props.personaId}`} 
+			className="mos-react-component-root"
+		>
 			<span className="persona-card-dialog-header">
 				{
 					props.memberContent.photoURL &&
@@ -100,8 +101,7 @@ const HcOrgTeamsMemberPersonaCard = (props) => {
 					</li>
 				}
 			</ul>
-			{/* </div> */}
-		</AccordionItemBody>
+		</div>
 	);
 };
 
