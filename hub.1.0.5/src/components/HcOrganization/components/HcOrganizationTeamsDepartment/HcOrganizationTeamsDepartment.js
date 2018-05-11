@@ -31,38 +31,44 @@ export default class HcOrganizationTeamsDepartment extends React.Component {
 	} */
 	render() {
 		return (
-			<Accordion>
+			<AccordionItem>
 				{/* <li id={`hc-organization-teams-department_${this.props.departmentId}`} 
 					className="hc-organization-teams-department mos-react-component-root"> */}
-				<h5>{this.props.departmentContent.name}</h5>
-				{
-					this.props.departmentContent.hubScreenToken &&
-
-					<p>
-						<a
-							href={`https://bmos.sharepoint.com/SitePages/${this.props.departmentContent.hubScreenToken}.aspx`}
-							target="_blank"
-							className="hc-organization-teams-department-hub-team-link"
-						>
-							On The Hub
-						</a>
-					</p>
-				}
-				<ul>
+				<AccordionItemTitle>
+					<h5>{this.props.departmentContent.name}</h5>
+				</AccordionItemTitle>
+				<AccordionItemBody>
 					{
-						this.props.departmentContent.members.map(memberValue => (
-							<HcOrganizationTeamsDepartmentMember
-								key={memberValue.reactKey}
-								memberId={memberValue.reactKey}
-								memberContent={memberValue}
-								// personas={this.state.personas}
-								// onMemberClick={this.setSelectedPersonas}
-							/>
-						))
+						this.props.departmentContent.hubScreenToken &&
+
+						<p>
+							<a
+								href={`https://bmos.sharepoint.com/SitePages/${this.props.departmentContent.hubScreenToken}.aspx`}
+								target="_blank"
+								className="hc-organization-teams-department-hub-team-link"
+							>
+								On The Hub
+							</a>
+						</p>
 					}
-				</ul>
+					<Accordion>
+						<ul>
+							{
+								this.props.departmentContent.members.map(memberValue => (
+									<HcOrganizationTeamsDepartmentMember
+										key={memberValue.reactKey}
+										memberId={memberValue.reactKey}
+										memberContent={memberValue}
+										// personas={this.state.personas}
+										// onMemberClick={this.setSelectedPersonas}
+									/>
+								))
+							}
+						</ul>
+					</Accordion>
+				</AccordionItemBody>
 				{/* </li> */}
-			</Accordion>
+			</AccordionItem>
 		);
 	}
 }

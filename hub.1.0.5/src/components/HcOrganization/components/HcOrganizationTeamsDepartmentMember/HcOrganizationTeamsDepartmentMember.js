@@ -16,7 +16,7 @@ import HcOrganizationTeamsMemberPersonaCard from '../HcOrganizationTeamsMemberPe
 
 // ----- COMPONENT
 export default class HcOrganizationTeamsDepartmentMember extends React.Component {
-	constructor(props) {
+	/* constructor(props) {
 		super(props);
 		this.state = {
 			showPersona: false,
@@ -29,7 +29,7 @@ export default class HcOrganizationTeamsDepartmentMember extends React.Component
 		this.setState(prevState => ({
 			showPersona: !prevState.showPersona,
 		}));
-	}
+	} */
 	render() {
 		return (
 			<AccordionItem>
@@ -43,15 +43,12 @@ export default class HcOrganizationTeamsDepartmentMember extends React.Component
 				<AccordionItemTitle>
 					<h3>{this.props.memberContent.displayName}</h3>
 				</AccordionItemTitle>
-				{
-					this.state.showPersona && 
 					
-					<HcOrganizationTeamsMemberPersonaCard
-						memberAccount={this.props.memberContent.account}
-						memberContent={this.props.memberContent}
-						personas={this.props.personas}
-					/>
-				}
+				<HcOrganizationTeamsMemberPersonaCard
+					memberAccount={this.props.memberContent.account}
+					memberContent={this.props.memberContent}
+					personas={this.props.personas}
+				/>
 				{/* </li> */}
 			</AccordionItem>
 		);

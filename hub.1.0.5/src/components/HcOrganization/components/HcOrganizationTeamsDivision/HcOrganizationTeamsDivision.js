@@ -49,17 +49,19 @@ export default class HcOrganizationTeamsDivision extends React.Component {
 							</a>
 						</p>
 					}
-					<ul>
-						{
-							this.props.divisionContent.depts.map(departmentValue => (
-								<HcOrganizationTeamsDepartment
-									key={departmentValue.reactKey}
-									departmentId={departmentValue.reactKey}
-									departmentContent={departmentValue}
-								/>
-							))
-						}
-					</ul>
+					<Accordion>
+						<ul>
+							{
+								this.props.divisionContent.depts.map(departmentValue => (
+									<HcOrganizationTeamsDepartment
+										key={departmentValue.reactKey}
+										departmentId={departmentValue.reactKey}
+										departmentContent={departmentValue}
+									/>
+								))
+							}
+						</ul>
+					</Accordion>
 				</AccordionItemBody>
 				{/* </li> */}
 			</AccordionItem>
