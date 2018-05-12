@@ -75,16 +75,28 @@ class HcContainer extends React.Component {
 					>
 						<MediaQuery maxWidth={ScreenSizes.ReturnSmallMax()}>
 							<HcHeader
-								headerType="small"
+								screenType="small"
 								handleHamburgerClick={this.handleHamburgerClick}
 							/>
 							<HcHero
 								heroType="small"
 							/>
 						</MediaQuery>
-						<MediaQuery minWidth={ScreenSizes.ReturnMediumMin()}>
+						<MediaQuery
+							minWidth={ScreenSizes.ReturnMediumMin()}
+							maxWidth={ScreenSizes.ReturnMediumMax()}	
+						>
 							<HcHeader
-								headerType="large"
+								screenType="medium"
+							/>
+							<HcHero
+								heroType="large"
+								uData={this.state.uData}
+							/>
+						</MediaQuery>
+						<MediaQuery minWidth={ScreenSizes.ReturnLargeMin()}>
+							<HcHeader
+								screenType="large"
 							/>
 							<HcHero
 								heroType="large"

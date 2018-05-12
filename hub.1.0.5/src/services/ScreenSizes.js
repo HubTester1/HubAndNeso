@@ -1,7 +1,7 @@
 
 module.exports = {
-	ReturnLargeMin: () => 992,
+	ReturnLargeMin: () => 1025,
 	ReturnMediumMin: () => 768,
-	ReturnMediumMax: () => 991,
+	ReturnMediumMax: () => 1024,
 	ReturnSmallMax: () => 767,
 };

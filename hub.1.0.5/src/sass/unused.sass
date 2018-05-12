@@ -1,0 +1,68 @@
+
+// --- MEDIUM - HEADER (inc logo)
+
+@media screen and (min-width: $medium-screen-minimum-width)
+	
+	header
+		+row
+
+		div.brand
+			+column
+			padding: 2.4rem 0 1.6rem 5rem
+
+			h1,
+			div.svg-brand--horizontal
+				display: inline
+
+			svg
+				height: 4.7rem
+
+		nav#hc-navigation
+			+column
+			padding: 4rem 5rem 1rem 2rem
+		
+	div.sticky-outer-wrapper.active
+
+		div.sticky-inner-wrapper
+			z-index: $z-index-sticky-header
+			// background-color: $black-80-percent
+			background-color: $grey14
+
+			svg
+				height: 4.7rem
+
+
+// --- MEDIUM - NAVIGATION (not inc logo)
+
+@media screen and (min-width: $medium-screen-minimum-width)
+
+	// DEFAULT
+
+	nav#hc-navigation
+
+		ul#hc-navigation__items
+			+row
+			margin-bottom: 0
+
+			li.hc-navigation__items__item
+				+column
+
+				button.hc-navigation__items__item__button
+					+font-weight-semibold
+					min-width: 0
+					border: 0
+					margin: 0 3rem 0 0
+					padding: 0
+					text-align: left
+					font-size: 1.3rem
+					text-transform: uppercase
+					background-color: transparent
+					color: $white
+
+					div.ms-Button-flexContainer
+						height: 3rem
+
+
+	// STUCK
+
+
