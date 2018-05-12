@@ -1005,7 +1005,7 @@ export default class HcMessagesData {
 			if (EnvironmentDetector.ReturnIsSPO()) {
 				// get a promise to retrieve the settings
 				NesoHTTPClient
-					.ReturnNesoData('https://neso.mos.org/hcMessages/descending/limit3')
+					.ReturnNesoData('https://neso.mos.org/hcMessages/descending/limit4')
 					// if the promise is resolved with the settings
 					.then((messagesResults) => {
 						// set up var to receive all messages
@@ -1113,6 +1113,22 @@ export default class HcMessagesData {
 						],
 						expiration: '2018-10-05',
 						key: 'ByMxf0P2ipM',
+					},
+					{
+						tags: [
+							'Events',
+						],
+						subject: 'Message Subject 4',
+						created: '2018-04-05',
+						modified: '2018-04-05',
+						creator: {
+							displayName: 'Kathryn Bartholomew',
+							account: 'kbartholomew',
+						},
+						body: 'This is a great messageBody 1. This is a great messageBody 2. This is a great messageBody 3. This is a great messageBody 4. This is a great messageBody 5. This is a great messageBody 6. This is a great messageBody 7. This is a great messageBody 8. This is a great messageBody 9.',
+						images: [],
+						expiration: '2018-10-05',
+						key: 'ryHxGCDhjaMasdf',
 					},
 				]);
 			}

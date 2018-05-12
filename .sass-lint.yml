@@ -8,15 +8,17 @@ rules:
     - 1
     -
       style: lowercase
-  indentation:
-    - 1
-    -
-      size: tab
+  # indentation:
+  #   - 1
+  #   -
+  #     size: tab
   property-sort-order:
     - 0
   class-name-format:
     - 0
   force-element-nesting:
+    - 0
+  no-mergeable-selectors:
     - 0
   no-qualifying-elements:
     - 0
@@ -29,4 +31,6 @@ rules:
   force-attribute-nesting:
     - 0
   nesting-depth:
+    - 0
+  indentation:
     - 0
