@@ -128,7 +128,9 @@ export default class HcHeader extends React.Component {
 	}
 	render() {
 		return (
-			<Sticky>
+			<Sticky
+				enableTransforms={false}
+			>
 				<header 
 					id="hc-header" 
 					className="mos-react-component-root"

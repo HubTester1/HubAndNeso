@@ -6,6 +6,15 @@
 
 // ----- DECLARATIONS
 
+// --- SMALL - HC CONTAINER
+
+@media screen and (max-width: $small-screen-maximum-width)
+	
+	div.hc-header-and-hero-container
+		background-image: linear-gradient(to bottom right, $blue8-60-percent, $green-20-percent), url('../../img/bkgrd-milky-way.jpg'), url('/sites/hubdev/DevCode5/img/bkgrd-milky-way.jpg')
+
+// linear-gradient(to bottom, $blue8-80-percent, $blue8-10-percent 20%, $blue8-10-percent 100%), linear-gradient(to right, transparent, $blue8-10-percent 50%, $blue8-60-percent 60%, $blue8-60-percent 90%, $blue8-20-percent 100%), 
+
 // --- SMALL - HEADER
 
 @media screen and (max-width: $small-screen-maximum-width)
@@ -15,7 +24,7 @@
 		width: 100%
 		
 		div#hamburger-and-brand-container
-			background-color: $black-70-percent
+			background-color: $grey14-95-percent
 			height: 5rem
 
 		div.hamburger
@@ -29,22 +38,20 @@
 			position: absolute
 			left: 50%
 			top: 0
-			width: 3rem
 			height: 5rem
-			margin-left: -1.5rem
-			text-align: center
+			margin-left: -2.5rem
 
-			a.brand__link
-				display: inline-block
-				padding: 1rem 0
-			
 			h1.brand__link__header
 				font-size: 0
 
-			span.brand__link__header__image
+				button.brand__link__header__image
+					display: inline-block
+					padding: 1rem 0
+					
+					div.svg-brand--logo-only
 
-				svg
-					height: 3rem
+						svg
+							height: 3rem
 
 
 
@@ -136,10 +143,10 @@
 		height: 0
 		overflow: hidden
 		transition: height .25s
-		// transition-delay: .25s
 
 		ul#hc-navigation__items
 			padding: 5rem 0 0 0
+			margin: 0
 			list-style: none
 
 			li.hc-navigation__items__item
@@ -207,9 +214,9 @@
 			nav#hc-navigation
 				position: fixed
 				top: 10rem
-				left: 0
+				width: 100%
 				height: 100%
-				background-color: $white-70-percent
+				background-color: $white
 
 			ul#hc-navigation__items
 
@@ -229,11 +236,6 @@
 
 	div#hero-container
 		padding-top: 6rem
-		transition: padding-top 1s cubic-bezier(.3, .8, .5, .9)
-
-	div#hc-container.showing-small-nav div#hero-container
-		padding-top: 100vh
-
 
 
 
