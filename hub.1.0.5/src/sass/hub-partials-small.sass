@@ -1,0 +1,154 @@
+
+// ----- IMPORTS
+
+@import '../../sass/hub-vars'
+@import '../../sass/hub-mixins'
+
+// ----- DECLARATIONS
+
+// --- SMALL - HEADER
+
+@media screen and (max-width: $small-screen-maximum-width)
+
+	header#hc-header
+		position: relative
+		width: 100%
+		
+		div#hamburger-and-brand-container
+			background-color: $black-70-percent
+			height: 5rem
+
+		div.hamburger
+			position: absolute
+			left: 0
+			top: 0
+			width: 5rem
+			height: 5rem
+		
+		div.brand
+			position: absolute
+			left: 50%
+			top: 0
+			width: 3rem
+			height: 5rem
+			margin-left: -1.5rem
+			text-align: center
+
+			a.brand__link
+				display: inline-block
+				padding: 1rem 0
+			
+			h1.brand__link__header
+				font-size: 0
+
+			span.brand__link__header__image
+
+				svg
+					height: 3rem
+
+
+
+
+// --- SMALL - HAMBURGER
+
+@media screen and (max-width: $small-screen-maximum-width)
+
+	.hamburger__button
+		display: inline-block
+		min-width: 0
+		padding: 1.6rem 1.2rem
+		transition-property: background-color, filter
+		transition-duration: .15s
+		transition-timing-function: linear
+		font-size: 0
+		color: inherit
+		text-transform: none
+		background-color: transparent
+		border: 0
+		margin: 0
+		overflow: visible
+		cursor: pointer
+		
+		&:hover
+			background-color: $interactive-active
+
+		.hamburger__lines
+			display: inline-block
+			position: relative
+			width: 26px
+			height: 18px
+
+			.hamburger__lines__contents
+				display: block
+				// top: 2px
+				// margin-top: -2px
+				transition-duration: .275s
+				transition-timing-function: cubic-bezier(.68, -.55, .265, 1.55)
+
+			.hamburger__lines__contents,
+			.hamburger__lines__contents::before,
+			.hamburger__lines__contents::after
+				position: absolute
+				width: 26px
+				height: 1px
+				background-color: $white
+				transition-property: transform
+				transition-duration: .15s
+				transition-timing-function: ease
+
+			.hamburger__lines__contents::before,
+			.hamburger__lines__contents::after
+				content: ''
+				display: block
+
+			.hamburger__lines__contents::before
+				top: 8px
+				transition: opacity .125s .275s ease
+
+			.hamburger__lines__contents::after
+				top: 16px
+				transition: transform .275s cubic-bezier(.68, -.55, .265, 1.55)
+
+	.hamburger__button.is-active
+		background-color: $interactive-active
+
+		.hamburger__lines
+
+			.hamburger__lines__contents
+				transform: translate3d(0, 8px, 0) rotate(135deg)
+				transition-delay: .075s
+
+			.hamburger__lines__contents::before
+				transition-delay: 0s
+				opacity: 0
+
+			.hamburger__lines__contents::after
+				transform: translate3d(0, -16px, 0) rotate(-270deg)
+				transition-delay: .075s
+
+
+// --- SMALL - HERO
+
+@media screen and (max-width: $small-screen-maximum-width)
+
+	div#hero-container
+		padding-top: 6rem
+		transition: padding-top 1s cubic-bezier(.3, .8, .5, .9)
+
+	div#hc-container.showing-small-nav div#hero-container
+		padding-top: 100vh
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

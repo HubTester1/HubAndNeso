@@ -1,0 +1,42 @@
+
+// ----- IMPORTS
+
+@import '../../sass/hub-vars'
+@import '../../sass/hub-mixins'
+
+// ----- DECLARATIONS
+
+// --- ALL - HC CONTAINER
+
+div.hc-container
+	box-sizing: border-box
+
+div.hc-header-and-hero-container
+	background-image: linear-gradient(to bottom right, $blue8-60-percent, $green-20-percent), url('../../img/bkgrd-milky-way.jpg'), url('/sites/hubdev/DevCode5/img/bkgrd-milky-way.jpg')
+	background-repeat: no-repeat
+	background-size: cover
+	background-position: center
+
+// --- ALL - HEADER
+
+header
+	z-index: $z-index-sticky-header
+
+	h1.brand__link__header
+		padding: 0
+
+	span.brand__link__header__text
+		+inline-hidden
+
+	button.brand__link__header__image
+		margin: 0
+		padding: 0
+		font-size: 0
+		background-color: transparent
+		border: 0
+
+		svg
+			
+			path.letterforms
+				fill: $white
+

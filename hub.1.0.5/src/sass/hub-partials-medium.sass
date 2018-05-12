@@ -1,0 +1,141 @@
+
+// ----- IMPORTS
+
+@import '../../sass/hub-vars'
+@import '../../sass/hub-mixins'
+
+// ----- DECLARATIONS
+
+
+// --- MEDIUM - HEADER
+
+@media screen and (min-width: $medium-screen-minimum-width)
+	
+	header
+		+row
+
+		div.brand
+			+column
+			padding: 2.4rem 0 1.6rem 5rem
+
+			h1,
+			div.svg-brand--horizontal
+				display: inline
+
+			svg
+				height: 4.7rem
+
+		nav#hc-navigation
+			+column
+			padding: 4rem 5rem 1rem 2rem
+		
+	div.sticky-outer-wrapper.active
+
+		div.sticky-inner-wrapper
+			z-index: $z-index-sticky-header
+			// background-color: $black-80-percent
+			background-color: $grey14
+
+			svg
+				height: 4.7rem
+
+
+// --- MEDIUM - BACKGROUND IMAGE INFO
+
+@media screen and (min-width: $medium-screen-minimum-width)
+	
+	div#hc-background-info-container
+		flex-shrink: 0
+
+		button.hc-background-info__button
+			margin-left: 0
+			border: 0
+			background-color: $blue7
+			color: $text-on-blue7
+			transition: background-color .25s
+
+			&:hover
+				background-color: $blue8
+				color: $text-on-blue8
+
+		div#hc-background-info__information
+			+font-weight-semilight
+			padding: 2rem
+			background: $white-90-percent
+			color: $grey15
+
+			h3
+				+font-weight-regular
+				font-size: $medium-screen-type-size-m
+
+			a#photo-source-link,
+			a#photographer-link
+				color: $blue5 !important
+				transition: color .25s
+
+				&:hover
+					color: $blue6
+
+
+// --- MEDIUM - HERO
+
+@media screen and (min-width: $medium-screen-minimum-width)
+
+	div#staff-lookup-and-background-info-and-top-messages
+		+flex-row
+		padding-top: 2rem
+
+		div#staff-lookup-and-background-info
+			+flex-column
+			width: 60%
+			padding: 0 2.5rem 5rem 5rem
+
+
+
+// --- MEDIUM - GET IT DONE
+
+@media screen and (min-width: $medium-screen-minimum-width)
+	
+	div#hc-get-it-done
+		padding: 5rem
+
+		div#hc-get-it-done-view-by-group,
+		div#hc-get-it-done-view-by-alpha > ul
+			padding-top: 1rem
+			column-count: 4
+			column-gap: 0
+
+		div#hc-get-it-done-view-by-alpha > ul > li.hc-get-it-done-item
+			list-style: none
+
+		div#hc-get-it-done-view-by-group div.hc-get-it-done-group,
+		div#hc-get-it-done-view-by-alpha > ul > li.hc-get-it-done-item
+			break-inside: avoid
+			page-break-inside: avoid
+			padding: 2rem
+			background-color: $grey1
+			margin: 0 1rem 1rem 0
+
+		a.hc-get-it-done-item-link
+			color: $interactive-on-light-grey !important
+			transition: color .25s
+
+			&:hover
+				color: $interactive-active-on-light-grey
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

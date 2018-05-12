@@ -19,10 +19,7 @@ import './HcHeaderMediumLarge.sass';
 export default class HcHeader extends React.Component {
 	render() {
 		return (
-			<Sticky
-				activeClass="header-is-stuck"
-				releasedClass="header-is-unstuck"
-			>
+			<Sticky>
 				<header 
 					id="hc-header" 
 					className="mos-react-component-root"
