@@ -27,7 +27,7 @@ export default class HcPushedItems extends React.Component {
 
 	render() {
 		return (
-			<div id="hc-pushed-items" className="mos-react-component-root">
+			<div id="hc-pushed-items" className="mos-react-component-root" name="hc-pushed-items">
 				<h3>Please Be Aware</h3>
 				<ul id="hc-pushed-items-list">
 					{

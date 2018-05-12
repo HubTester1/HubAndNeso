@@ -97,15 +97,15 @@ class HcContainer extends React.Component {
 							className="hc-sections-container accordion"
 							accordion={false}
 						>
+							<HcPushedItems
+								screenType="small"
+							/>
 							<HcGetItDone
 								screenType="small"
 							/>
 							<HcMessages
 								uData={this.state.uData}
 								allOrTop="all"
-								screenType="small"
-							/>
-							<HcPushedItems
 								screenType="small"
 							/>
 							<HcOrganization
@@ -117,15 +117,15 @@ class HcContainer extends React.Component {
 						</Accordion>
 					</MediaQuery>
 					<MediaQuery minWidth={ScreenSizes.ReturnMediumMin()}>
+						<HcPushedItems
+							screenType="medium"
+						/>
 						<HcGetItDone
 							screenType="medium"
 						/>
 						<HcMessages
 							uData={this.state.uData}
 							allOrTop="all"
-							screenType="medium"
-						/>
-						<HcPushedItems
 							screenType="medium"
 						/>
 						<HcOrganization

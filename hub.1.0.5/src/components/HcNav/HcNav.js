@@ -15,10 +15,18 @@ import './HcNavMediumLarge.sass';
 export default class HcNav extends React.Component {
 	constructor(props) {
 		super(props);
+		this.scrollToPushedItems = this.scrollToPushedItems.bind(this);
 		this.scrollToGetItDone = this.scrollToGetItDone.bind(this);
 		this.scrollToMessages = this.scrollToMessages.bind(this);
 		this.scrollToOrganization = this.scrollToOrganization.bind(this);
 		this.scrollToCalendarsSchedules = this.scrollToCalendarsSchedules.bind(this);
+	}
+	scrollToPushedItems() {
+		scroller.scrollTo('hc-pushed-items', {
+			duration: 500,
+			delay: 0,
+			smooth: 'easeInOutQuart',
+		});
 	}
 	scrollToGetItDone() {
 		scroller.scrollTo('hc-get-it-done', {
@@ -52,6 +60,14 @@ export default class HcNav extends React.Component {
 		return (
 			<nav id="hc-navigation" className="mos-react-component-root">
 				<ul id="hc-navigation__items">
+					<li className="hc-navigation__items__item">
+						<DefaultButton
+							iconProps={{ iconName: 'Megaphone' }}
+							text="Please Be Aware"
+							className="hc-navigation__items__item__button"
+							onClick={this.scrollToPushedItems}
+						/>
+					</li>
 					<li className="hc-navigation__items__item">
 						<DefaultButton
 							iconProps={{ iconName: 'FormLibrary' }}
