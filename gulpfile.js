@@ -41,7 +41,10 @@ gulp.task('push-dev', () =>
 		// pipe them into a caching proxy 
 		.pipe(cached('spFiles'))
 		// and then to SP dev location
-		.pipe(spsave(gulpV5DevConfig.ReturnV5SPSaveDevOptions(), gulpBaseConfig.ReturnGulpSPSaveCredentials())));
+		.pipe(spsave(
+			gulpV5DevConfig.ReturnV5SPSaveDevOptions(), 
+			gulpBaseConfig.ReturnGulpSPSaveCredentials(),
+		)));
 
 // build dist file and push dist to dev
 gulp.task('build-push-dev', () =>
@@ -54,7 +57,10 @@ gulp.task('build-push-dev', () =>
 		// to the dist folder
 		.pipe(gulp.dest(`${gulpV5DevConfig.ReturnV5DevDistFolder()}`))
 		// and then to SP dev location
-		.pipe(spsave(gulpV5DevConfig.ReturnV5SPSaveDevOptions(), gulpBaseConfig.ReturnGulpSPSaveCredentials())));
+		.pipe(spsave(
+			gulpV5DevConfig.ReturnV5SPSaveDevOptions(), 
+			gulpBaseConfig.ReturnGulpSPSaveCredentials(),
+		)));
 
 // when src changes, build dist file and push dist to dev
 gulp.task('watch-build-push-dev', () => {
@@ -72,7 +78,10 @@ gulp.task('push-prod', () =>
 		// pipe them into a caching proxy 
 		.pipe(cached('spFiles'))
 		// and then to SP prod location
-		.pipe(spsave(gulpV5ProdConfig.ReturnV5SPSaveProdOptions(), gulpBaseConfig.ReturnGulpSPSaveCredentials())));
+		.pipe(spsave(
+			gulpV5ProdConfig.ReturnV5SPSaveProdOptions(), 
+			gulpBaseConfig.ReturnGulpSPSaveCredentials(),
+		)));
 
 // build dist file and push dist to prod
 gulp.task('build-push-prod', () =>
@@ -85,7 +94,10 @@ gulp.task('build-push-prod', () =>
 		// to the dist folder
 		.pipe(gulp.dest(`${gulpV5DevConfig.ReturnV5DevDistFolder()}`))
 		// and then to SP prod location
-		.pipe(spsave(gulpV5ProdConfig.ReturnV5SPSaveProdOptions(), gulpBaseConfig.ReturnGulpSPSaveCredentials())));
+		.pipe(spsave(
+			gulpV5ProdConfig.ReturnV5SPSaveProdOptions(), 
+			gulpBaseConfig.ReturnGulpSPSaveCredentials(),
+		)));
 
 // when src changes, build dist file and push dist to prod
 gulp.task('watch-build-push-prod', () => {

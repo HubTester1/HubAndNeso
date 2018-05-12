@@ -3,6 +3,7 @@
 
 import * as React from 'react';
 import HcStaffLookup from '../HcStaffLookup/HcStaffLookup';
+import HcPushedItems from '../../components/HcPushedItems/HcPushedItems';
 import HcMessages from '../HcMessages/HcMessages';
 import HcBkgrdInfo from '../HcBkgrdInfo/HcBkgrdInfo';
 
@@ -21,6 +22,7 @@ const HcHero = props => (
 			<div id="staff-lookup-and-background-info-and-top-messages">
 				<div id="staff-lookup-and-background-info">
 					<HcStaffLookup />
+					<HcPushedItems />
 					<HcBkgrdInfo />
 				</div>
 				<HcMessages
@@ -34,6 +36,7 @@ const HcHero = props => (
 
 			<div id="staff-lookup-and-background-info">
 				<HcStaffLookup />
+				<HcPushedItems />
 				<HcBkgrdInfo />
 			</div>
 		}

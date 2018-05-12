@@ -5,6 +5,10 @@ import * as React from 'react';
 import HcPushedItemsData from './HcPushedItemsData';
 import HcPushedItemsLink from './HcPushedItemsLink';
 
+import './HcPushedItems.sass';
+import './HcPushedItemsMediumLarge.sass';
+import './HcPushedItemsSmall.sass';
+
 // ----- COMPONENT
 
 export default class HcPushedItems extends React.Component {
@@ -24,8 +28,8 @@ export default class HcPushedItems extends React.Component {
 	render() {
 		return (
 			<div id="hc-pushed-items" className="mos-react-component-root">
-				<h2>Please Be Aware</h2>
-				<ul>
+				<h3>Please Be Aware</h3>
+				<ul id="hc-pushed-items-list">
 					{
 						this.state.listItemsArray.map((listItemValue, listItemIndex) => (
 							<HcPushedItemsLink
