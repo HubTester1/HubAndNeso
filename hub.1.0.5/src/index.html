@@ -9,8 +9,35 @@
 
 	<link rel="stylesheet" type="text/css" href="/suitebar.css">
 
-	
+	<style>
+		body {
+			margin: 0;
+			padding: 0;
+			overflow: visible;
+		}
 
+		div#s4-ribbonrow,
+		div#s4-titlerow,
+		div#contentRow {
+			display: none !important;
+		}
+
+		div#suiteBarDelta div#suiteBarTop div#O365_NavHeader {
+			background-color: #000;
+			transition: background-color .5s;
+		}
+
+		div#suiteBarDelta div#suiteBarTop div#O365_NavHeader button.ms-bgc-tp {
+			background-color: #000;
+			transition: background-color .5s;
+		}
+
+		div#suiteBarDelta div#suiteBarTop div#O365_NavHeader button.ms-bgc-tdr-h:hover,
+		div#suiteBarDelta div#suiteBarTop div#O365_NavHeader button.ms-bgc-tp:hover {
+			background-color: #000;
+			transition: background-color .5s;
+		}
+	</style>
 
 
 </head>
@@ -19,9 +46,7 @@
 
 	<form method="post" action="/sites/HC6/SitePages/Test.aspx" onsubmit="javascript:return WebForm_OnSubmit();" id="aspnetForm">
 
-	<div id="suiteBarDelta" class="ms-dialogHidden ms-fullWidth noindex">
-
-
+		<div id="suiteBarDelta" class="ms-dialogHidden ms-fullWidth noindex">
 			<div id="suiteMenuData" class="ms-hide">
 
 				<span style="display:none">
@@ -625,6 +650,7 @@
 			<div class="wf-family-o365 o365wf" style="display:none">
 			</div>
 		</div>
+		<div id="react-mount-point"></div>
 		<div id="s4-bodyContainer" class="ms-core-overlay">
 			<div id="s4-bodyContainer">
 				<div id="contentRow">

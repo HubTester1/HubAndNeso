@@ -21,6 +21,7 @@
 
 	header#hc-header
 		position: relative
+		z-index: $z-index-sticky-header
 		width: 100%
 		
 		div#hamburger-and-brand-container
@@ -157,7 +158,7 @@
 				list-style: none
 				margin-top: -2rem
 				margin-left: -2rem
-				opacity: 0
+				// opacity: 0
 				transition-property: opacity, margin-left, margin-top
 				transition-duration: .5s
 
@@ -211,15 +212,20 @@
 			li.hc-navigation__items__item:nth-child(6)
 				transition-delay: .45s
 
+	// show 
+	
 	// handle top position of nav separately 
+	
 	div#hc-container.showing-small-nav
 		
 		header#hc-header
 			
 			nav#hc-navigation
 				position: fixed
+				top: 10rem
 				width: 100%
 				height: 100%
+				z-index: $z-index-sticky-header
 				background-color: $white
 
 			ul#hc-navigation__items
@@ -227,14 +233,15 @@
 				li.hc-navigation__items__item
 					margin-top: 0
 					margin-left: 0
-					opacity: 1
+					// opacity: 1
 
 	// top position of nav here
 
 	// with no scrolling - suite bar is still showing
-	div.sticky-outer-wrapper
+	
+	div#hc-container.showing-small-nav
 		
-		div#hc-container.showing-small-nav
+		div.sticky-outer-wrapper
 		
 			header#hc-header
 				
@@ -242,14 +249,22 @@
 					top: 10rem
 
 	// with no scrolling - suite bar is no longer showing
-	div.sticky-outer-wrapper.active
+	
+	div#hc-container.showing-small-nav
 		
-		div#hc-container.showing-small-nav
-		
+		div.sticky-outer-wrapper.active
+			
 			header#hc-header
 				
 				nav#hc-navigation
+					position: fixed
+					z-index: $z-index-sticky-header
 					top: 5rem
+
+	// when small nav is showing, disable scrolling the content beneath the nav
+
+	body.showing-small-nav
+		overflow: hidden
 
 
 

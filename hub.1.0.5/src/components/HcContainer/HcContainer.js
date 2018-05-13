@@ -58,11 +58,13 @@ class HcContainer extends React.Component {
 		}
 	}
 	handleHamburgerOrNavItemClick() {
+		document.body.classList.toggle('showing-small-nav', !this.state.showSmallNav);
 		this.setState(prevState => ({
 			showSmallNav: !prevState.showSmallNav,
 		}));
 	}
 	render() {
+		console.log('build 200');
 		if (EnvironmentDetector.ReturnIsHCScreen()) {
 			return (
 				<div
