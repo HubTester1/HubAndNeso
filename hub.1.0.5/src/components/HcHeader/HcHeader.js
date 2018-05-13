@@ -33,7 +33,9 @@ export default class HcHeader extends React.Component {
 			this.handleCalendarsSchedulesNavItemClick.bind(this);
 	}
 	handlePushedItemsNavItemClick() {
-		this.props.handleHamburgerOrNavItemClick();
+		if (this.props.screenType === 'small') {
+			this.props.handleHamburgerOrNavItemClick();
+		}
 		scroller.scrollTo('hc-pushed-items', {
 			duration: 500,
 			delay: 0,
@@ -41,7 +43,9 @@ export default class HcHeader extends React.Component {
 		});
 	}
 	handleGetItDoneNavItemClick() {
-		this.props.handleHamburgerOrNavItemClick();
+		if (this.props.screenType === 'small') {
+			this.props.handleHamburgerOrNavItemClick();
+		}
 		scroller.scrollTo('hc-get-it-done', {
 			duration: 500,
 			delay: 0,
@@ -49,7 +53,9 @@ export default class HcHeader extends React.Component {
 		});
 	}
 	handleMessagesNavItemClick() {
-		this.props.handleHamburgerOrNavItemClick();
+		if (this.props.screenType === 'small') {
+			this.props.handleHamburgerOrNavItemClick();
+		}
 		scroller.scrollTo('hc-messages-all', {
 			duration: 1000,
 			delay: 0,
@@ -57,7 +63,9 @@ export default class HcHeader extends React.Component {
 		});
 	}
 	handleOrganizationNavItemClick() {
-		this.props.handleHamburgerOrNavItemClick();
+		if (this.props.screenType === 'small') {
+			this.props.handleHamburgerOrNavItemClick();
+		}
 		scroller.scrollTo('hc-organization', {
 			duration: 1250,
 			delay: 0,
@@ -65,7 +73,9 @@ export default class HcHeader extends React.Component {
 		});
 	}
 	handleCalendarsSchedulesNavItemClick() {
-		this.props.handleHamburgerOrNavItemClick();
+		if (this.props.screenType === 'small') {
+			this.props.handleHamburgerOrNavItemClick();
+		}
 		scroller.scrollTo('hc-calendars-and-schedules', {
 			duration: 1500,
 			delay: 0,
