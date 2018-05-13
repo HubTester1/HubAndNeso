@@ -333,3 +333,106 @@ div#hc-container
 .accordion__title--animated[aria-expanded='true']:hover .accordion__arrow
 	animation-name: move-up
 	animation-duration: 1.5s
+
+
+// PERSONA CARD
+
+div#hc-container
+
+	ul.persona-cards__list
+		padding: 0
+		margin: 0
+
+		li.hc-staff-lookup-persona
+			width: 100%
+			margin: 2rem 0 0 0
+			background-color: $white
+
+			div.persona-card-dialog-header
+				vertical-align: middle
+				padding: 2rem
+				text-align: center
+				
+				span.avatar
+					+font-weight-light
+					display: inline-block
+					vertical-align: top
+					width: 7rem
+					height: 7rem
+					font-size: 4rem
+					line-height: 4rem
+					padding: 1.3rem 0 1.7rem
+					border-radius: 50%
+					color: $white
+					background-color: $purple
+					text-align: center
+
+				p.name
+					padding: 2rem 2rem 1rem 0
+					font-size: $large-screen-type-size-l
+					color: $dark-purple
+
+				p.title,
+				p.department
+					margin-bottom: 0
+					padding: 0 2rem 0 0
+				
+				p.department
+					color: $dark-pink
+					font-size: $large-screen-type-size-xs
+			
+			ul.persona-card-dialog-body
+				padding: 0 0 1rem 0
+				margin: 0
+
+				li.phone-numbers,
+				li.email,
+				li.profile
+					list-style: none
+					word-wrap: break-word
+					width: 100%
+					margin: 0 0 1rem 0
+					padding: 2rem
+					text-align: center
+					background-color: $light-peach
+					color: $text-on-light-peach
+				
+				i.section-icon--phone,
+				i.section-icon--email,
+				i.section-icon--profile
+					display: block
+					margin-top: .5rem
+					color: $dark-purple					
+
+				li.phone-numbers
+
+					ul
+						margin: 0
+
+						li.mobile-phone-number,
+						li.office-phone-number
+							list-style: none
+							margin: 0
+
+					span.phone-number-label
+						display: block
+						font-size: $large-screen-type-size-xs
+
+					span.phone-number-separator
+						+inline-hidden
+
+				li.email,
+				li.profile
+
+					a
+						color: $blue6 !important
+
+						&:hover
+							color: $blue7 !important
+
+				p.ui-message
+					padding: 2rem
+					text-align: center
+					background-color: $light-peach
+					color: $text-on-light-peach
+

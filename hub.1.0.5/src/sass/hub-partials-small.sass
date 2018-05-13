@@ -248,7 +248,7 @@
 				nav#hc-navigation
 					top: 10rem
 
-	// with no scrolling - suite bar is no longer showing
+	// with scrolling - suite bar is no longer showing
 	
 	div#hc-container.showing-small-nav
 		
@@ -266,15 +266,24 @@
 	body.showing-small-nav
 		overflow: hidden
 
-
-
 // --- SMALL - HERO
 
 @media screen and (max-width: $small-screen-maximum-width)
 
 	div#hero-container
-		padding-top: 6rem
+		padding: 5rem 2rem 2rem 2rem
 
+// --- SMALL - STAFF LOOKUP
+
+@media screen and (max-width: $small-screen-maximum-width)
+
+	div#hc-staff-lookup
+		
+		h2
+			color: $white
+
+		h3.persona-cards__header
+			+block-hidden
 
 
 

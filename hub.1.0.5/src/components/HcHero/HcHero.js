@@ -17,12 +17,11 @@ import './HcHeroMediumLarge.sass';
 const HcHero = props => (
 	<div id="hero-container" className="mos-react-component-root">
 		{
-			props.heroType === 'large' &&
+			(props.screenType === 'medium' || props.screenType === 'large') &&
 
 			<div id="staff-lookup-and-background-info-and-top-messages">
 				<div id="staff-lookup-and-background-info">
 					<HcStaffLookup />
-					{/* <HcPushedItems /> */}
 					<HcBkgrdInfo />
 				</div>
 				<HcMessages
@@ -32,12 +31,10 @@ const HcHero = props => (
 			</div>
 		}
 		{
-			props.heroType === 'small' &&
+			props.screenType === 'small' &&
 
 			<div id="staff-lookup-and-background-info">
 				<HcStaffLookup />
-				{/* <HcPushedItems /> */}
-				<HcBkgrdInfo />
 			</div>
 		}
 	</div>

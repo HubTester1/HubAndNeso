@@ -6,10 +6,16 @@
 
 // ----- DECLARATIONS
 
+// --- MEDIUM - HC CONTAINER
+
 @media screen and (min-width: $medium-screen-minimum-width)
 
 	div#hc-container
 		font-size: $medium-screen-type-size-s
+
+// --- MEDIUM - TYPE
+
+@media screen and (min-width: $medium-screen-minimum-width)
 
 	h1
 		font-size: $medium-screen-type-size-xxl
@@ -26,4 +32,37 @@
 	h4
 		font-size: $medium-screen-type-size-m
 		padding: $medium-screen-top-padding-m 0 $medium-screen-bottom-padding-m 0
+
+
+
+// --- MEDIUM - PERSONA CARD
+
+@media screen and (min-width: $medium-screen-minimum-width)
+
+	div#hc-container
+
+		ul.persona-cards__list
+
+			li.hc-staff-lookup-persona
+				+row
+
+				div.persona-card-dialog-header
+					+column
+					width: 60%
+
+
+				ul.persona-card-dialog-body
+					+column
+					font-size: 1.4rem
+					padding: 0
+					vertical-align: middle
+					width: 40%
+
+					li.profile
+						margin: 0
+
+
+
+
+
 

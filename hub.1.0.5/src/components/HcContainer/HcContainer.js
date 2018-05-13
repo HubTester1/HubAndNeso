@@ -64,7 +64,6 @@ class HcContainer extends React.Component {
 		}));
 	}
 	render() {
-		console.log('build 200');
 		if (EnvironmentDetector.ReturnIsHCScreen()) {
 			return (
 				<div
@@ -81,7 +80,7 @@ class HcContainer extends React.Component {
 								handleHamburgerOrNavItemClick={this.handleHamburgerOrNavItemClick}
 							/>
 							<HcHero
-								heroType="small"
+								screenType="small"
 							/>
 						</MediaQuery>
 						<MediaQuery
@@ -92,7 +91,7 @@ class HcContainer extends React.Component {
 								screenType="medium"
 							/>
 							<HcHero
-								heroType="large"
+								screenType="medium"
 								uData={this.state.uData}
 							/>
 						</MediaQuery>
@@ -101,7 +100,7 @@ class HcContainer extends React.Component {
 								screenType="large"
 							/>
 							<HcHero
-								heroType="large"
+								screenType="large"
 								uData={this.state.uData}
 							/>
 						</MediaQuery>

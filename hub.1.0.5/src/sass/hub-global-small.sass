@@ -6,10 +6,17 @@
 
 // ----- DECLARATIONS
 
+
+// --- SMALL - HC CONTAINER
+
 @media screen and (max-width: $small-screen-maximum-width)
 
 	div#hc-container
 		font-size: $small-screen-type-size-s
+
+// --- SMALL - TYPE
+
+@media screen and (max-width: $small-screen-maximum-width)
 
 	h1
 		font-size: $small-screen-type-size-xxl
@@ -26,4 +33,41 @@
 	h4
 		font-size: $small-screen-type-size-l-minus
 		padding: $small-screen-top-padding-m 0 $small-screen-bottom-padding-m 0
+
+
+
+// --- VERY SMALL - PERSONA CARD
+
+@media screen and (max-width: $very-small-screen-maximum-width)
+
+
+	div#hc-container
+
+		ul.persona-cards__list
+
+			li.hc-staff-lookup-persona
+				+row
+
+				div.persona-card-dialog-header
+
+					span.avatar
+						display: none
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
