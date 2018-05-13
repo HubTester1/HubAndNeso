@@ -36,7 +36,7 @@ class HcContainer extends React.Component {
 			showSmallNav: false,
 			uData: {},
 		};
-		this.handleHamburgerClick = this.handleHamburgerClick.bind(this);
+		this.handleHamburgerOrNavItemClick = this.handleHamburgerOrNavItemClick.bind(this);
 	}
 	componentDidMount() {
 		if (EnvironmentDetector.ReturnIsHCScreen()) {
@@ -57,7 +57,7 @@ class HcContainer extends React.Component {
 				});
 		}
 	}
-	handleHamburgerClick() {
+	handleHamburgerOrNavItemClick() {
 		this.setState(prevState => ({
 			showSmallNav: !prevState.showSmallNav,
 		}));
@@ -76,7 +76,7 @@ class HcContainer extends React.Component {
 						<MediaQuery maxWidth={ScreenSizes.ReturnSmallMax()}>
 							<HcHeader
 								screenType="small"
-								handleHamburgerClick={this.handleHamburgerClick}
+								handleHamburgerOrNavItemClick={this.handleHamburgerOrNavItemClick}
 							/>
 							<HcHero
 								heroType="small"
@@ -154,4 +154,4 @@ class HcContainer extends React.Component {
 	}
 }
 
-ReactDOM.render(<HcContainer />, document.getElementById('s4-bodyContainer'));
+ReactDOM.render(<HcContainer />, document.getElementById('react-mount-point'));

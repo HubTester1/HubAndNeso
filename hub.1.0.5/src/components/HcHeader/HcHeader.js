@@ -25,41 +25,47 @@ export default class HcHeader extends React.Component {
 		this.returnMessagesNavItem = this.returnMessagesNavItem.bind(this);
 		this.returnOrganizationNavItem = this.returnOrganizationNavItem.bind(this);
 		this.returnCalendarsSchedulesNavItem = this.returnCalendarsSchedulesNavItem.bind(this);
-		this.scrollToPushedItems = this.scrollToPushedItems.bind(this);
-		this.scrollToGetItDone = this.scrollToGetItDone.bind(this);
-		this.scrollToMessages = this.scrollToMessages.bind(this);
-		this.scrollToOrganization = this.scrollToOrganization.bind(this);
-		this.scrollToCalendarsSchedules = this.scrollToCalendarsSchedules.bind(this);
+		this.handlePushedItemsNavItemClick = this.handlePushedItemsNavItemClick.bind(this);
+		this.handleGetItDoneNavItemClick = this.handleGetItDoneNavItemClick.bind(this);
+		this.handleMessagesNavItemClick = this.handleMessagesNavItemClick.bind(this);
+		this.handleOrganizationNavItemClick = this.handleOrganizationNavItemClick.bind(this);
+		this.handleCalendarsSchedulesNavItemClick = 
+			this.handleCalendarsSchedulesNavItemClick.bind(this);
 	}
-	scrollToPushedItems() {
+	handlePushedItemsNavItemClick() {
+		this.props.handleHamburgerOrNavItemClick();
 		scroller.scrollTo('hc-pushed-items', {
 			duration: 500,
 			delay: 0,
 			smooth: 'easeInOutQuart',
 		});
 	}
-	scrollToGetItDone() {
+	handleGetItDoneNavItemClick() {
+		this.props.handleHamburgerOrNavItemClick();
 		scroller.scrollTo('hc-get-it-done', {
 			duration: 500,
 			delay: 0,
 			smooth: 'easeInOutQuart',
 		});
 	}
-	scrollToMessages() {
+	handleMessagesNavItemClick() {
+		this.props.handleHamburgerOrNavItemClick();
 		scroller.scrollTo('hc-messages-all', {
 			duration: 1000,
 			delay: 0,
 			smooth: 'easeInOutQuart',
 		});
 	}
-	scrollToOrganization() {
+	handleOrganizationNavItemClick() {
+		this.props.handleHamburgerOrNavItemClick();
 		scroller.scrollTo('hc-organization', {
 			duration: 1250,
 			delay: 0,
 			smooth: 'easeInOutQuart',
 		});
 	}
-	scrollToCalendarsSchedules() {
+	handleCalendarsSchedulesNavItemClick() {
+		this.props.handleHamburgerOrNavItemClick();
 		scroller.scrollTo('hc-calendars-and-schedules', {
 			duration: 1500,
 			delay: 0,
@@ -73,7 +79,7 @@ export default class HcHeader extends React.Component {
 					iconProps={{ iconName: 'Megaphone' }}
 					text="Please Be Aware"
 					className="hc-navigation__items__item__button"
-					onClick={this.scrollToPushedItems}
+					onClick={this.handlePushedItemsNavItemClick}
 				/>
 			</li>
 		);
@@ -85,7 +91,7 @@ export default class HcHeader extends React.Component {
 					iconProps={{ iconName: 'FormLibrary' }}
 					text="Get it Done"
 					className="hc-navigation__items__item__button"
-					onClick={this.scrollToGetItDone}
+					onClick={this.handleGetItDoneNavItemClick}
 				/>
 			</li>
 		);
@@ -97,7 +103,7 @@ export default class HcHeader extends React.Component {
 					iconProps={{ iconName: 'Message' }}
 					text="Messages"
 					className="hc-navigation__items__item__button"
-					onClick={this.scrollToMessages}
+					onClick={this.handleMessagesNavItemClick}
 				/>
 			</li>
 		);
@@ -109,7 +115,7 @@ export default class HcHeader extends React.Component {
 					iconProps={{ iconName: 'People' }}
 					text="Organization, Teams, & Staff"
 					className="hc-navigation__items__item__button"
-					onClick={this.scrollToOrganization}
+					onClick={this.handleOrganizationNavItemClick}
 				/>
 			</li>
 		);
@@ -121,7 +127,7 @@ export default class HcHeader extends React.Component {
 					iconProps={{ iconName: 'Calendar' }}
 					text="Calendars & Schedules"
 					className="hc-navigation__items__item__button"
-					onClick={this.scrollToCalendarsSchedules}
+					onClick={this.handleCalendarsSchedulesNavItemClick}
 				/>
 			</li>
 		);
@@ -140,7 +146,7 @@ export default class HcHeader extends React.Component {
 
 						<div id="hamburger-and-brand-container">
 							<Hamburger
-								showSmallNav={this.props.handleHamburgerClick}
+								handleHamburgerOrNavItemClick={this.props.handleHamburgerOrNavItemClick}
 							/>
 							<BrandLogoOnlyH1ScrollToTop />
 							<nav id="hc-navigation" className="mos-react-component-root">
