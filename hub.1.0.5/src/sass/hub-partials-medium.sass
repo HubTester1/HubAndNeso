@@ -133,7 +133,6 @@
 								color: $blue1
 
 
-	
 // --- MEDIUM - BACKGROUND IMAGE INFO
 
 @media screen and (min-width: $medium-screen-minimum-width)
@@ -184,6 +183,22 @@
 			+flex-column
 			width: 60%
 			padding: 0 2.5rem 5rem 5rem
+
+
+// --- MEDIUM - PUSHED ITEMS
+
+@media screen and (min-width: $medium-screen-minimum-width)
+	
+	div#hc-pushed-items
+		padding: 5rem
+
+		ul#hc-pushed-items-list
+			column-count: 4
+			column-gap: 2rem
+
+		li.hc-pushed-items-item
+			break-inside: avoid
+			page-break-inside: avoid
 
 
 // --- MEDIUM - STAFF LOOKUP
@@ -392,6 +407,34 @@
 					background-color: $interactive-active
 
 
+	
+// --- MEDIUM - CALENDARDS & SCHEDULES
+
+@media screen and (min-width: $medium-screen-minimum-width)
+	
+	div#hc-calendars-and-schedules
+		padding: 5rem
+
+		ul#hc-calendars-and-schedules__list-items
+			column-count: 4
+			column-gap: 2rem
+
+			li
+				break-inside: avoid
+				page-break-inside: avoid
+	
+	
+	
+// --- MEDIUM - HC ORG
+
+@media screen and (min-width: $medium-screen-minimum-width)
+	
+	div#hc-organization
+		padding: 5rem
+
+		// TEAMS
+		
+		// div#hc-organization__teams
 
 
 

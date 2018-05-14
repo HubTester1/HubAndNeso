@@ -34,8 +34,6 @@
 		font-size: $small-screen-type-size-l-minus
 		padding: $small-screen-top-padding-m 0 $small-screen-bottom-padding-m 0
 
-
-
 // --- VERY SMALL - PERSONA CARD
 
 @media screen and (max-width: $very-small-screen-maximum-width)
@@ -43,15 +41,27 @@
 
 	div#hc-container
 
-		ul.persona-cards__list
+		div.div.hc-organization-teams-member-persona,
+		li.hc-staff-lookup-persona
+			+row
 
-			li.hc-staff-lookup-persona
-				+row
+			div.persona-card-dialog-header
 
-				div.persona-card-dialog-header
+				span.avatar
+					display: none
 
-					span.avatar
-						display: none
+// --- SMALL - PERSONA CARD INSIDE HC ORG
+
+@media screen and (max-width: $small-screen-maximum-width)
+
+	div#hc-container
+
+		div.hc-organization__teams__department-member-body
+			padding-right: 2rem
+
+			div.hc-organization-teams-member-persona
+				margin: 0
+
 
 
 // --- SMALL - SECTION HEADERS INSIDE ACCORDION
@@ -66,15 +76,22 @@
 
 		div.accordion__title
 
+			h1
+				+font-weight-semilight
+				font-size: $small-screen-type-size-xl
+
 			h2
+				+font-weight-semilight
 				font-size: $small-screen-type-size-l
 
 			h3
+				+font-weight-semilight
 				font-size: $small-screen-type-size-m
 
 			h4,
 			h5,
 			h6
+				+font-weight-semilight
 				font-size: $small-screen-type-size-s
 
 

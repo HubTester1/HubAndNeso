@@ -24,10 +24,10 @@ const HcOrgTeamsMemberPersonaCard = (props) => {
 	}
 	return (
 		<div
-			id={`hc-organization-teams-member-persona_${props.personaId}`} 
-			className="mos-react-component-root"
+			id={`hc-organization-teams-member-persona_${props.memberAccount}`} 
+			className="hc-organization-teams-member-persona mos-react-component-root"
 		>
-			<span className="persona-card-dialog-header">
+			<div className="persona-card-dialog-header">
 				{
 					props.memberContent.photoURL &&
 					<span className="avatar" style={photoStyleObject} />
@@ -42,14 +42,14 @@ const HcOrgTeamsMemberPersonaCard = (props) => {
 				<span className="name_title_department">
 					{
 						props.memberContent.displayName &&
-						<span className="name">{props.memberContent.displayName}</span>
+						<p className="name">{props.memberContent.displayName}</p>
 					}
 					{
 						props.memberContent.title &&
-						<span className="title">{props.memberContent.title}</span>
+						<p className="title">{props.memberContent.title}</p>
 					}
 				</span>
-			</span>
+			</div>
 			<ul className="persona-card-dialog-body">
 				{
 					props.memberContent.uiMessage &&
@@ -71,13 +71,13 @@ const HcOrgTeamsMemberPersonaCard = (props) => {
 					props.memberContent.officePhone &&
 					!props.memberContent.mobilePhone &&
 
-					<li className="business-phone-number">Business: {props.memberContent.officePhone}</li>
+					<li className="phone-numbers">Business: {props.memberContent.officePhone}</li>
 				}
 				{
 					!props.memberContent.officePhone &&
 					props.memberContent.mobilePhone &&
 
-					<li className="business-phone-number">Business: {props.memberContent.mobilePhone}</li>
+					<li className="phone-numbers">Business: {props.memberContent.mobilePhone}</li>
 				}
 				{
 					props.memberContent.email &&
