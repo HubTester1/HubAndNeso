@@ -112,7 +112,9 @@ export default class HcOrganization extends React.Component {
 				{
 					this.state.showStaffLookup &&
 
-					<HcStaffLookup />
+					<HcStaffLookup 
+						inHcOrganization
+					/>
 				}
 				{
 					this.state.showOtherContacts &&

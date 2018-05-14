@@ -105,6 +105,8 @@ class HcContainer extends React.Component {
 							/>
 						</MediaQuery>
 					</div>
+
+
 					<MediaQuery maxWidth={ScreenSizes.ReturnSmallMax()}>
 						<Accordion
 							className="hc-sections-container accordion"

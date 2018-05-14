@@ -111,31 +111,42 @@ export default class HcStaffLookup extends React.Component {
 	render() {
 		return (
 			<div id="hc-staff-lookup" className="mos-react-component-root">
-				<h2>Staff Lookup</h2>
-				<HcStaffLookupPicker
-					peopleOptions={this.state.peopleOptions}
-					setSelectedPersonasFromPeoplePickerData={this.setSelectedPersonasFromPeoplePickerData}
-					principalTypeUser
-				/>
 				{
-					this.state.personas[0] && 
+					this.props.inHcHero &&
 
-					<div className="persona-cards">
-						<h3 className="persona-cards__header">Staff Lookup Results</h3>
-						<ul className="persona-cards__list">
-							{
-								this.state.personas[0] && 
-									this.state.personas.map(personaValue => (
-										<HcStaffLookupPersonaCard
-											key={personaValue.key}
-											personaId={personaValue.key}
-											personaContent={personaValue}
-										/>
-									))
-							}
-						</ul>
-					</div>
+					<h2>Staff Lookup</h2>
 				}
+				{
+					this.props.inHcOrganization &&
+
+					<h3>Staff Lookup</h3>
+				}
+				<div id="hc-staff-lookup__picker-and-personas">
+					<HcStaffLookupPicker
+						peopleOptions={this.state.peopleOptions}
+						setSelectedPersonasFromPeoplePickerData={this.setSelectedPersonasFromPeoplePickerData}
+						principalTypeUser
+					/>
+					{
+						this.state.personas[0] && 
+
+						<div className="persona-cards">
+							<h3 className="persona-cards__header">Staff Lookup Results</h3>
+							<ul className="persona-cards__list">
+								{
+									this.state.personas[0] && 
+										this.state.personas.map(personaValue => (
+											<HcStaffLookupPersonaCard
+												key={personaValue.key}
+												personaId={personaValue.key}
+												personaContent={personaValue}
+											/>
+										))
+								}
+							</ul>
+						</div>
+					}
+				</div>
 			</div>
 		);
 	}

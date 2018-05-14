@@ -21,7 +21,9 @@ const HcHero = props => (
 
 			<div id="staff-lookup-and-background-info-and-top-messages">
 				<div id="staff-lookup-and-background-info">
-					<HcStaffLookup />
+					<HcStaffLookup 
+						inHcHero
+					/>
 					<HcBkgrdInfo />
 				</div>
 				<HcMessages
@@ -34,7 +36,9 @@ const HcHero = props => (
 			props.screenType === 'small' &&
 
 			<div id="staff-lookup-and-background-info">
-				<HcStaffLookup />
+				<HcStaffLookup
+					inHcHero
+				/>
 			</div>
 		}
 	</div>

@@ -16,7 +16,6 @@ import {
 // ----- COMPONENT
 
 const HcOrgTeamsMemberPersonaCard = (props) => {
-	console.log(props.memberContent);
 	let photoStyleObject = {};
 	if (props.memberContent.photoURL) {
 		photoStyleObject = {
