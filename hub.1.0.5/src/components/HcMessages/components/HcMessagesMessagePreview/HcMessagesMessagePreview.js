@@ -105,6 +105,7 @@ export default class HcMessagesMessagePreview extends React.Component {
 								ellipsis={
 									<span>...
 										<DefaultButton
+											className="hc-messages-message-full-message-button"
 											iconProps={{ iconName: 'ChevronDown' }}
 											text="Full message"
 											onClick={this.handleOpenInlineFullClick}

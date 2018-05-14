@@ -131,7 +131,6 @@
 					transform: translate3d(0, -16px, 0) rotate(-270deg)
 					transition-delay: .075s
 
-
 // --- SMALL - NAVIGATION
 
 @media screen and (max-width: $small-screen-maximum-width)
@@ -283,6 +282,41 @@
 				font-size: $small-screen-type-size-l !important
 
 
+// --- SMALL - MESSAGES
+
+@media screen and (max-width: $small-screen-maximum-width)
+
+	// all messages
+
+	div#hc-messages-all
+
+		ul#hc-messages-list
+
+			li.hc-messages-message-preview
+				list-style: none
+				padding: 2rem
+				background-color: $white
+				margin: 2rem 0 0 0
+
+				h3.hc-messages-message-subject
+					+font-weight-regular
+					font-size: $small-screen-type-size-m
+
+				button.hc-messages-message-full-message-button
+					+button
+					+button-colored
+					display: block
+					margin: 1rem 0 0 0 !important
+
+	// inline full
+	
+	
+	
+	
+	
+	
+	
+	
 // --- SMALL - HC ORG
 
 @media screen and (max-width: $small-screen-maximum-width)
@@ -294,8 +328,6 @@
 
 		div.accordion__body.hc-organization__teams__department-member-body
 			padding-right: 2rem
-
-
 
 // --- SMALL - FOOTER
 
