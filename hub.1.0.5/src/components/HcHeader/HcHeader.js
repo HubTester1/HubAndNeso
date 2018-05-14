@@ -163,8 +163,8 @@ export default class HcHeader extends React.Component {
 								<ul id="hc-navigation__items">
 									{this.returnPushedItemsNavItem()}
 									{this.returnGetItDoneNavItem()}
-									{this.returnMessagesNavItem()}
 									{this.returnOrganizationNavItem()}
+									{this.returnMessagesNavItem()}
 									{this.returnCalendarsSchedulesNavItem()}
 								</ul>
 							</nav>
@@ -180,8 +180,8 @@ export default class HcHeader extends React.Component {
 								</li>
 								{this.returnPushedItemsNavItem()}
 								{this.returnGetItDoneNavItem()}
-								{this.returnMessagesNavItem()}
 								{this.returnOrganizationNavItem()}
+								{this.returnMessagesNavItem()}
 								{this.returnCalendarsSchedulesNavItem()}
 							</ul>
 						</nav>
@@ -196,8 +196,8 @@ export default class HcHeader extends React.Component {
 								</li>
 								{this.returnPushedItemsNavItem()}
 								{this.returnGetItDoneNavItem()}
-								{this.returnMessagesNavItem()}
 								{this.returnOrganizationNavItem()}
+								{this.returnMessagesNavItem()}
 								{this.returnCalendarsSchedulesNavItem()}
 							</ul>
 						</nav>

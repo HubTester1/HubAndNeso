@@ -119,12 +119,12 @@ class HcContainer extends React.Component {
 							<HcGetItDone
 								screenType="small"
 							/>
+							<HcOrganization
+								screenType="small"
+							/>
 							<HcMessages
 								uData={this.state.uData}
 								allOrTop="all"
-								screenType="small"
-							/>
-							<HcOrganization
 								screenType="small"
 							/>
 							<HcCalendarsSchedules
@@ -139,18 +139,21 @@ class HcContainer extends React.Component {
 						<HcGetItDone
 							screenType="medium"
 						/>
+						<HcOrganization
+							screenType="medium"
+						/>
 						<HcMessages
 							uData={this.state.uData}
 							allOrTop="all"
-							screenType="medium"
-						/>
-						<HcOrganization
 							screenType="medium"
 						/>
 						<HcCalendarsSchedules
 							screenType="medium"
 						/>
 					</MediaQuery>
+					<footer>
+						&copy; {MOSUtilities.ReturnFormattedDateTime({ incomingDateTimeString: 'nowLocal', incomingReturnFormat: 'YYYY' })} Museum of Science
+					</footer>
 				</div>
 			);
 		}

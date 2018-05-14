@@ -35,7 +35,7 @@
 
 		div.sticky-inner-wrapper
 			z-index: $z-index-sticky-header
-			background-color: $grey14-95-percent
+			background-color: $grey14
 
 // --- MEDIUM - NAVIGATION
 
@@ -234,7 +234,12 @@
 @media screen and (min-width: $medium-screen-minimum-width)
 	
 	div#hc-get-it-done
-		padding: 5rem
+		background-image: linear-gradient(to bottom right, $green, $yellow)
+		// background-image: linear-gradient(to bottom left, $dark-pink, $dark-purple)
+		padding: 5rem 4rem 5rem 5rem
+
+		h2
+			color: $white
 
 		div#hc-get-it-done-view-by-group,
 		div#hc-get-it-done-view-by-alpha > ul
@@ -250,7 +255,7 @@
 			break-inside: avoid
 			page-break-inside: avoid
 			padding: 2rem
-			background-color: $grey1
+			background-color: $white-90-percent
 			margin: 0 1rem 1rem 0
 
 		a.hc-get-it-done-item-link
@@ -264,22 +269,23 @@
 // --- MEDIUM - MESSAGES
 
 @media screen and (min-width: $medium-screen-minimum-width)
+	
+	// full message in modal
+
+	div.hc-messages-message-full-message-modal
+		position: fixed
+		top: 0
+		right: 0
+		bottom: 0
+		left: 10rem
+		background-color: $white
+
+	// top messages
 
 	div#staff-lookup-and-background-info-and-top-messages
-		
-		// full message in modal
-
-		div.hc-messages-message-full-message-modal
-			position: fixed
-			top: 0
-			right: 0
-			bottom: 0
-			left: 10rem
-			background-color: $white
-		
-		// top messages
 			
 		div#hc-messages-top
+			padding: 0 5rem 5rem 0
 			width: 40%
 
 			h2
@@ -287,7 +293,7 @@
 
 			ul#hc-messages-list
 				color: $body-text-on-grey15
-				padding: 0 2rem 2rem 0
+				padding: 0
 				margin: 0
 
 				li.hc-messages-message-preview
@@ -321,9 +327,16 @@
 				li.hc-messages-message-preview:nth-child(4)
 					display: none
 
+				li.hc-messages-message-preview:nth-child(2),
+				li.hc-messages-message-preview:nth-child(4)
+					padding-bottom: 0
+
+	// all messages
+	
 	div#hc-messages-all
-		padding: 5rem
-		background-image: linear-gradient(to bottom right, $green, $yellow)
+		padding: 5rem 4rem 5rem 5rem
+		background-image: linear-gradient(to bottom left, $dark-pink, $dark-purple)
+		// background-image: linear-gradient(to bottom right, $green, $yellow)
 
 		h2
 			color: $white
@@ -457,6 +470,14 @@
 				break-inside: avoid
 				page-break-inside: avoid
 
+
+// --- MEDIUM - FOOTER
+
+@media screen and (min-width: $medium-screen-minimum-width)
+
+	footer
+		font-size: $medium-screen-type-size-s
+		padding: 2rem 5rem
 
 
 
