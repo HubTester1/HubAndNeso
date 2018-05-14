@@ -43,7 +43,10 @@ export default class HcStaffLookupData {
 							email: response.email,
 							photoURL: `/_layouts/15/userphoto.aspx?size=M&accountname=${response.account}@mos.org`,							
 						};
-						if (response.mobilePhone) {
+						if (response.officePhone && response.officePhone !== '-') {
+							personaData.officePhone = response.officePhone;
+						}
+						if (response.mobilePhone && response.mobilePhone !== '-') {
 							personaData.mobilePhone = response.mobilePhone;
 						}
 						if (lastPersonInPicker._user.EntityData.ObjectId) {

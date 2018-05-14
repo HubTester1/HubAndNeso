@@ -42,7 +42,7 @@ export default class HcOrganizationTeamsDepartment extends React.Component {
 								<a
 									href={`https://bmos.sharepoint.com/SitePages/${this.props.departmentContent.hubScreenToken}.aspx`}
 									target="_blank"
-									className="hc-organization-teams-department-hub-team-link"
+									className="hc-organization-teams-department-hub-team-link hub-team-link"
 								>
 									On The Hub
 								</a>

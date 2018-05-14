@@ -153,7 +153,7 @@
 				list-style: none
 				margin-top: -2rem
 				margin-left: -2rem
-				// opacity: 0
+				opacity: 0
 				transition-property: opacity, margin-left, margin-top
 				transition-duration: .5s
 
@@ -228,7 +228,7 @@
 				li.hc-navigation__items__item
 					margin-top: 0
 					margin-left: 0
-					// opacity: 1
+					opacity: 1
 
 	// top position of nav here
 
@@ -267,6 +267,33 @@
 
 	div#hero-container
 		padding: 5rem 2rem 2rem 2rem
+			
+		h2
+			font-size: $small-screen-type-size-l !important
+
+// --- SMALL - HC SECTIONS / ACCORDION
+
+@media screen and (max-width: $small-screen-maximum-width)
+
+	div.hc-sections-container.accordion
+
+		div.accordion__title
+
+			h2
+				font-size: $small-screen-type-size-l !important
+
+
+// --- SMALL - HC ORG
+
+@media screen and (max-width: $small-screen-maximum-width)
+
+	div#hc-organization
+
+		div.accordion__body
+			padding-right: 0
+
+		div.accordion__body.hc-organization__teams__department-member-body
+			padding-right: 2rem
 
 
 
@@ -305,7 +332,6 @@
 
 
 
-		
 
 
 
