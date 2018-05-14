@@ -44,8 +44,9 @@ export default class HcOrganizationTeamsDivision extends React.Component {
 							<a
 								href={this.props.divisionContent.orgChart}
 								target="_blank"
-								className="hc-organization-teams-division-org-chart-link"
+								className="hc-organization-teams-division-org-chart-link org-chart-link"
 							>
+								<i className="ms-Icon ms-Icon--Mail" aria-hidden="true" />
 								Organization Chart
 							</a>
 						</p>
@@ -56,9 +57,9 @@ export default class HcOrganizationTeamsDivision extends React.Component {
 								<a
 									href={`https://bmos.sharepoint.com/SitePages/${this.props.divisionContent.hubScreenToken}.aspx`}
 									target="_blank"
-									className="hc-organization-teams-division-hub-team-link"
+									className="hc-organization-teams-division-hub-team-link hub-team-link"
 								>
-								On The Hub
+									On The Hub
 								</a>
 							</p>
 						}
