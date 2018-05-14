@@ -95,36 +95,40 @@ export default class HcOrganizationTeams extends React.Component {
 		}
 		return (
 			<div id="hc-organization__teams" className="mos-react-component-root">
-				<h3>Divisions, Departments, and Their Members</h3>
-				<Accordion
-					className="hc-organization__teams__divisions accordion"
-					accordion={false}
-				>
+				<div id="hc-organization__teams--divs-depts">
+					<h3>Divisions, Departments, and Their Members</h3>
+					<Accordion
+						className="hc-organization__teams__divisions accordion"
+						accordion={false}
+					>
+						<ul>
+							{
+								this.props.divDeptWTeamsArray.map(divisionValue => (
+									<HcOrganizationTeamsDivision
+										key={divisionValue.reactKey}
+										divisionId={divisionValue.reactKey}
+										divisionContent={divisionValue}
+									/>
+								))
+							}
+					
+						</ul>
+					</Accordion>
+				</div>
+				<div id="hc-organization__teams--other-teams">
+					<h3>Other Teams</h3>
 					<ul>
 						{
-							this.props.divDeptWTeamsArray.map(divisionValue => (
-								<HcOrganizationTeamsDivision
-									key={divisionValue.reactKey}
-									divisionId={divisionValue.reactKey}
-									divisionContent={divisionValue}
+							this.props.nonDivDeptTeamsArray.map(teamValue => (
+								<HcOrganizationTeamsOtherTeam
+									key={teamValue.reactKey}
+									teamId={teamValue.reactKey}
+									teamContent={teamValue}
 								/>
 							))
 						}
-					
 					</ul>
-				</Accordion>
-				<h3>Other Teams</h3>
-				<ul>
-					{
-						this.props.nonDivDeptTeamsArray.map(teamValue => (
-							<HcOrganizationTeamsOtherTeam
-								key={teamValue.reactKey}
-								teamId={teamValue.reactKey}
-								teamContent={teamValue}
-							/>
-						))
-					}
-				</ul>
+				</div>
 			</div>
 		);
 	}

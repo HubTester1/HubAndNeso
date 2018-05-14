@@ -406,7 +406,6 @@
 					color: $text-on-interactive-active !important
 					background-color: $interactive-active
 
-
 	
 // --- MEDIUM - CALENDARDS & SCHEDULES
 
@@ -424,7 +423,6 @@
 				page-break-inside: avoid
 	
 	
-	
 // --- MEDIUM - HC ORG
 
 @media screen and (min-width: $medium-screen-minimum-width)
@@ -434,7 +432,17 @@
 
 		// TEAMS
 		
-		// div#hc-organization__teams
+		div#hc-organization__teams
+			+row
+
+			div#hc-organization__teams--divs-depts
+				+column
+				width: 70%
+				padding-right: 5rem
+
+			div#hc-organization__teams--other-teams
+				+column
+				width: 30%
 
 
 

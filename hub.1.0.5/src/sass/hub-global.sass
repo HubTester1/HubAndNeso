@@ -46,7 +46,7 @@ div#suiteBarDelta
 // TYPE, LISTS, & LINKS
 
 div#hc-container
-	+font-weight-regular
+	+font-weight-light
 	font-family: 'Segoe UI', 'Segoe', Roboto, Helvetica Neue, Helvetica,  Arial, sans-serif
 	color: $text-on-white
 	background-color: $white
@@ -88,7 +88,7 @@ div#hc-container
 	ul,
 	ol
 		list-style-position: inside
-		margin: 0
+		margin: 0 0 1rem 0
 		padding: 0
 
 	ul ul,
@@ -243,7 +243,6 @@ div#hc-container
 		padding: 18px
 		width: 100%
 		text-align: left
-		// border-top: .1rem solid $grey3
 		border-bottom: .1rem solid $grey3
 		transition: color .25s
 
@@ -267,6 +266,9 @@ div#hc-container
 		h6
 			color: $interactive-active
 			transition: color .25s
+
+	.accordion__title[aria-expanded='true']
+		border-bottom: 0
 
 	.accordion__title__text
 		padding-right: 4rem
@@ -389,8 +391,6 @@ div#hc-container
 		animation-name: move-up
 		animation-duration: 1.5s
 
-	// most (not all) MOS modifications to accordion are below
-
 	.accordion ul
 		margin: 0
 
@@ -405,11 +405,34 @@ div#hc-container
 
 // PERSONA CARD
 
+
+
+
+
+// --- SMALL - PERSONA CARD INSIDE HC ORG
+
+@media screen and (max-width: $small-screen-maximum-width)
+
+	div#hc-container
+
+		div.hc-organization__teams__department-member-body
+			padding-right: 2rem
+
+			div.hc-organization-teams-member-persona
+				margin: 0
+
+
+
+
+
 div#hc-container
 
 	ul.persona-cards__list
 		padding: 0
 		margin: 0
+
+	div.hc-organization__teams__department-member-body
+		padding-right: 2rem
 
 	div.hc-organization-teams-member-persona,
 	li.hc-staff-lookup-persona
@@ -504,4 +527,36 @@ div#hc-container
 				text-align: center
 				background-color: $light-peach
 				color: $text-on-light-peach
+
+
+	div.hc-organization-teams-member-persona
+		margin: 0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

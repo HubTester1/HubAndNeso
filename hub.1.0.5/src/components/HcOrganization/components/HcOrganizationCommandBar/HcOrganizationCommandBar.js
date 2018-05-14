@@ -9,7 +9,7 @@ import { CommandBar } from 'office-ui-fabric-react/lib/CommandBar';
 // ----- COMPONENT
 
 const HcGetItDoneCommandBar = props => (
-	<div id="hc-get-it-done-command-bar" className="mos-react-component-root">
+	<div id="hc-organization-command-bar" className="mos-react-component-root">
 		<Fabric>
 			<CommandBar
 				isSearchBoxVisible={false}
