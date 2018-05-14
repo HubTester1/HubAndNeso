@@ -41,25 +41,24 @@
 
 	div#hc-container
 
-		ul.persona-cards__list
+		div.hc-organization-teams-member-persona,
+		li.hc-staff-lookup-persona
+			+row
 
-			li.hc-staff-lookup-persona
-				+row
-
-				div.persona-card-dialog-header
-					+column
-					width: 60%
+			div.persona-card-dialog-header
+				+column
+				width: 60%
 
 
-				ul.persona-card-dialog-body
-					+column
-					font-size: 1.4rem
-					padding: 0
-					vertical-align: middle
-					width: 40%
+			ul.persona-card-dialog-body
+				+column
+				font-size: 1.4rem
+				padding: 0
+				vertical-align: middle
+				width: 40%
 
-					li.profile
-						margin: 0
+				li.profile
+					margin: 0
 
 
 

@@ -16,6 +16,7 @@ import {
 // ----- COMPONENT
 
 const HcOrgTeamsMemberPersonaCard = (props) => {
+	console.log(props.memberContent);
 	let photoStyleObject = {};
 	if (props.memberContent.photoURL) {
 		photoStyleObject = {
@@ -62,7 +63,7 @@ const HcOrgTeamsMemberPersonaCard = (props) => {
 
 					<li className="phone-numbers">
 						<ul>
-							<li className="business-phone-number">Business: {props.memberContent.officePhone}</li>
+							<li className="office-phone-number">Business: {props.memberContent.officePhone}</li>
 							<li className="mobile-phone-number">Mobile: {props.memberContent.mobilePhone}</li>
 						</ul>
 					</li>

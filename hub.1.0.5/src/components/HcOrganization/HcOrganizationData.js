@@ -29,7 +29,7 @@ export default class HcGetItDoneData {
 	static ReturnNesoDataForHcOrg() {
 		return new Promise((resolve, reject) => {
 			NesoHTTPClient
-				.ReturnNesoData('https://neso.mos.org:3001/hcOrg/allOrg')
+				.ReturnNesoData('https://neso.mos.org/hcOrg/allOrg')
 				.then((response) => {
 					resolve(response);
 				})
