@@ -40,9 +40,12 @@ export default class HcPushedItems extends React.Component {
 					name="hc-pushed-items"
 				>
 					<AccordionItemTitle
-						className="hc-pushed-items__title accordion__title"
+						className="hc-pushed-items__title accordion__title accordion__title--animated"
 					>
-						<h2>Please Be Aware</h2>
+						<h2 className="u-position-relative">
+							<div className="accordion__title__text">Please Be Aware</div>
+							<div className="accordion__arrow" role="presentation" />
+						</h2>
 					</AccordionItemTitle>
 					<AccordionItemBody
 						className="hc-pushed-items__body accordion__body"

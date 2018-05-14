@@ -138,9 +138,12 @@ export default class HcOrganization extends React.Component {
 					name="hc-organization"
 				>
 					<AccordionItemTitle
-						className="hc-organization__title accordion__title"
+						className="hc-organization__title accordion__title accordion__title--animated"
 					>
-						<h2>Organization, Teams, & Staff</h2>
+						<h2 className="u-position-relative">
+							<div className="accordion__title__text">Organization, Teams, & Staff</div>
+							<div className="accordion__arrow" role="presentation" />
+						</h2>
 					</AccordionItemTitle>
 					<AccordionItemBody
 						className="hc-organization__body accordion__body"

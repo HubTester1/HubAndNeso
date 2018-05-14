@@ -109,6 +109,7 @@ class HcContainer extends React.Component {
 						<Accordion
 							className="hc-sections-container accordion"
 							accordion={false}
+							role="tablist"
 						>
 							<HcPushedItems
 								screenType="small"

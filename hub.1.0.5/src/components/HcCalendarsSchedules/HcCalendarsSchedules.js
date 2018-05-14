@@ -50,9 +50,12 @@ export default class HcCalendarsSchedules extends React.Component {
 					name="hc-calendars-and-schedules"
 				>
 					<AccordionItemTitle
-						className="hc-calendars-and-schedules__title accordion__title"
+						className="hc-calendars-and-schedules__title accordion__title accordion__title--animated"
 					>
-						<h2>Calendars & Schedules</h2>
+						<h2 className="u-position-relative">
+							<div className="accordion__title__text">Calendars & Schedules</div>
+							<div className="accordion__arrow" role="presentation" />
+						</h2>
 					</AccordionItemTitle>
 					<AccordionItemBody
 						className="hc-calendars-and-schedules__body accordion__body"

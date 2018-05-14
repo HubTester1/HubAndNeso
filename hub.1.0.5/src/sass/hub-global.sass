@@ -176,163 +176,246 @@ div#hc-container
 				span.ms-CommandBarItem-commandText
 					+font-weight-semibold
 
+div#hc-container
+	
+	.accordion__body
+
+		div.ms-CommandBar
+
+			div.ms-CommandBar-primaryCommands
+
+				button.ms-CommandBarItem-link
+					color: $blue7
+					background-color: $blue1
+
+					&:hover
+						color: $blue8
+						background-color: $blue2
+
+					i.ms-CommandBarItem-icon
+						color: $blue7
+
+						&:hover
+							color: $blue8
+							background-color: $blue2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // ACCORDION
 
-
-.u-position-absolute
-	position: absolute
-
-
-.u-position-relative
-	position: relative
+div#hc-container
+	.u-position-absolute
+		position: absolute
 
 
-.accordion
-	border: 1px solid $black-10-percent
-	border-radius: 2px
+	.u-position-relative
+		position: relative
 
 
-.accordion__item + .accordion__item
-	border-top: 1px solid $black-10-percent
+	// .accordion
+		// border: 1px solid $black-10-percent
+		// border-radius: 2px
 
 
-.accordion__item--has-icon
-	position: relative
+	.accordion__item + .accordion__item
+		border-top: 1px solid $grey3
 
 
-.accordion__title
-	background-color: $grey1
-	color: $grey12
-	cursor: pointer
-	padding: 18px
-	width: 100%
-	text-align: left
-	border: 0
+	.accordion__item--has-icon
+		position: relative
 
 
-.accordion__title:hover
-	background-color: $grey3
+	.accordion__title
+		background-color: $white
+		color: $interactive-default
+		cursor: pointer
+		padding: 18px
+		width: 100%
+		text-align: left
+		border: 0
+		transition: color .25s
+
+		h1,
+		h2,
+		h3,
+		h4,
+		h5,
+		h6
+			color: $interactive-default
+			transition: color .25s
+
+	.accordion__title:hover
+		color: $interactive-active
+
+		h1,
+		h2,
+		h3,
+		h4,
+		h5,
+		h6
+			color: $interactive-active
+			transition: color .25s
+
+	.accordion__title__text
+		padding-right: 4rem
+
+	.accordion__body
+		padding: 2rem 0 2rem 2rem
+		display: block
+		background-color: $grey1
+		animation: fadein .35s ease-in
 
 
-.accordion__body
-	padding: 20px
-	display: block
-	animation: fadein .35s ease-in
-
-
-.accordion__body--hidden
-	display: none
-	opacity: 0
-	animation: fadein .35s ease-in
-
-
-.accordion__title > *:last-child,
-.accordion__body > *:last-child
-	margin-bottom: 0
-
-
-.accordion__arrow
-	display: inline-block
-	// position: relative
-	width: 24px
-	height: 12px
-	position: absolute
-	top: 50%
-	right: 0
-	margin-top: -6px
-
-
-.accordion__arrow::after,
-.accordion__arrow::before
-	display: block
-	position: absolute
-	top: 50%
-	width: 10px
-	height: 2px
-	background-color: currentColor
-	content: ''
-
-
-.accordion__arrow::before
-	left: 4px
-	transform: rotate(45deg)
-
-
-[aria-expanded='true'] .accordion__arrow::before,
-[aria-selected='true'] .accordion__arrow::before
-	transform: rotate(-45deg)
-
-
-.accordion__arrow::after
-	right: 4px
-	transform: rotate(-45deg)
-
-
-[aria-expanded='true'] .accordion__arrow::after,
-[aria-selected='true'] .accordion__arrow::after
-	transform: rotate(45deg)
-
-
-.accordion__arrow::before,
-.accordion__arrow::after
-	transition: transform .25s ease
-
-// --- ANIMATION
-
-@keyframes fadein
-	0%
+	.accordion__body--hidden
+		display: none
 		opacity: 0
-	
-
-	100%
-		opacity: 1
-	
+		animation: fadein .35s ease-in
 
 
-@keyframes move-down
-	0%
-		transform: translateY(0)
-	
-	10%
-		transform: translateY(0)
-	
-	20%
-		transform: translateY(5px)
-	
-	30%
-		transform: translateY(0)
-	
-	100%
-		transform: translateY(0)
-	
+	.accordion__title > *:last-child,
+	.accordion__body > *:last-child
+		margin-bottom: 0
 
 
-@keyframes move-up
-	0%
-		transform: translateY(0)
-	
-	10%
-		transform: translateY(0)
-	
-	20%
-		transform: translateY(-5px)
-	
-	30%
-		transform: translateY(0)
-	
-	100%
-		transform: translateY(0)
-	
+	.accordion__arrow
+		display: inline-block
+		// position: relative
+		width: 24px
+		height: 12px
+		position: absolute
+		top: 50%
+		right: 0
+		margin-top: -6px
 
 
-.accordion__title--animated:hover .accordion__arrow
-	animation-name: move-down
-	animation-duration: 1.5s
+	.accordion__arrow::after,
+	.accordion__arrow::before
+		display: block
+		position: absolute
+		top: 50%
+		width: 10px
+		height: 2px
+		background-color: currentColor
+		content: ''
 
 
-.accordion__title--animated[aria-expanded='true']:hover .accordion__arrow
-	animation-name: move-up
-	animation-duration: 1.5s
+	.accordion__arrow::before
+		left: .4rem
+		transform: rotate(45deg)
+
+
+	[aria-expanded='true'] .accordion__arrow::before,
+	[aria-selected='true'] .accordion__arrow::before
+		transform: rotate(-45deg)
+
+
+	.accordion__arrow::after
+		right: .4rem
+		transform: rotate(-45deg)
+
+
+	[aria-expanded='true'] .accordion__arrow::after,
+	[aria-selected='true'] .accordion__arrow::after
+		transform: rotate(45deg)
+
+
+	.accordion__arrow::before,
+	.accordion__arrow::after
+		transition: transform .25s ease
+
+	@keyframes fadein
+		0%
+			opacity: 0
+		
+
+		100%
+			opacity: 1
+		
+
+
+	@keyframes move-down
+		0%
+			transform: translateY(0)
+		
+		10%
+			transform: translateY(0)
+		
+		20%
+			transform: translateY(5px)
+		
+		30%
+			transform: translateY(0)
+		
+		100%
+			transform: translateY(0)
+		
+
+
+	@keyframes move-up
+		0%
+			transform: translateY(0)
+		
+		10%
+			transform: translateY(0)
+		
+		20%
+			transform: translateY(-5px)
+		
+		30%
+			transform: translateY(0)
+		
+		100%
+			transform: translateY(0)
+
+		
+	.accordion__title--animated:hover .accordion__arrow
+		animation-name: move-down
+		animation-duration: 1.5s
+
+
+	.accordion__title--animated[aria-expanded='true']:hover .accordion__arrow
+		animation-name: move-up
+		animation-duration: 1.5s
+
+	// most (not all) MOS modifications to accordion are below
+
+	.accordion ul
+		margin: 0
+
+	.accordion__item
+
+		> li
+			list-style: none
+			margin: 0
+
+	// .accordion__body .accordion__body
+	// 	background-color: $grey3
+
+	// .accordion__body .accordion__body .accordion__body
+	// 	background-color: $grey5
+
+	// .accordion__body .accordion__body .accordion__body .accordion__body
+	// 	background-color: $grey7
+
 
 
 // PERSONA CARD

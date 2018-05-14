@@ -24,9 +24,12 @@ export default class HcOrganizationTeamsDepartmentMember extends React.Component
 			>
 				<li id={`hc-organization__teams__department-member_${this.props.memberId}`}>
 					<AccordionItemTitle
-						className="hc-organization__teams__department-member-title accordion__title"
+						className="hc-organization__teams__department-member-title accordion__title accordion__title--animated"
 					>
-						<h6>{this.props.memberContent.displayName}</h6>
+						<h6 className="u-position-relative">
+							<div className="accordion__title__text">{this.props.memberContent.displayName}</div>
+							<div className="accordion__arrow" role="presentation" />
+						</h6>
 					</AccordionItemTitle>
 					<AccordionItemBody
 						className="hc-organization__teams__department-member-body accordion__body"

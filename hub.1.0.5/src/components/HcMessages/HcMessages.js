@@ -237,9 +237,12 @@ export default class HcMessages extends React.Component {
 					name="hc-messages-all"
 				>
 					<AccordionItemTitle
-						className="hc-messages-all__title accordion__title"
+						className="hc-messages-all__title accordion__title accordion__title--animated"
 					>
-						<h2>Messages</h2>
+						<h2 className="u-position-relative">
+							<div className="accordion__title__text">Messages</div>
+							<div className="accordion__arrow" role="presentation" />
+						</h2>
 					</AccordionItemTitle>
 					<AccordionItemBody
 						className="hc-messages-all__body accordion__body"

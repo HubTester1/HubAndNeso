@@ -30,9 +30,12 @@ export default class HcOrganizationTeamsDivision extends React.Component {
 					id={`hc-organization__teams__division_${this.props.divisionId}`} 
 				>
 					<AccordionItemTitle
-						className="hc-organization__teams__division-title accordion__title"
+						className="hc-organization__teams__division-title accordion__title accordion__title--animated"
 					>
-						<h4>{this.props.divisionContent.name}</h4>
+						<h4 className="u-position-relative">
+							<div className="accordion__title__text">{this.props.divisionContent.name}</div>
+							<div className="accordion__arrow" role="presentation" />
+						</h4>
 					</AccordionItemTitle>
 					<AccordionItemBody
 						className="hc-organization__teams__division-body accordion__body"
