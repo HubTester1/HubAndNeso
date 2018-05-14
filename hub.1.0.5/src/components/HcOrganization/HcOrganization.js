@@ -106,6 +106,7 @@ export default class HcOrganization extends React.Component {
 					<HcOrganizationTeams
 						divDeptWTeamsArray={this.state.divDeptWTeamsArray}
 						nonDivDeptTeamsArray={this.state.nonDivDeptTeamsArray}
+						screenType={this.props.screenType}
 					/>
 				}
 				{
