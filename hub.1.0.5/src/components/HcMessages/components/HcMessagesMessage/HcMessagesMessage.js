@@ -15,13 +15,14 @@ import ScreenSizes from '../../../../services/ScreenSizes';
 const HcMessagesMessage = props => (
 	<div id={`hc-messages-message_${props.messageId}`} className="hc-messages-message mos-react-component-root">
 		<MediaQuery minWidth={ScreenSizes.ReturnMediumMin()}>
-			<div className="hc-messages-message-control">
-				<DefaultButton
-					iconProps={{ iconName: 'ChromeClose' }}
-					text="Back"
-					onClick={props.handleCloseModalClick}
-				/>
-			</div>
+			{/* <div className="hc-messages-message-control"> */}
+			<DefaultButton
+				className="hc-messages-message-control"
+				iconProps={{ iconName: 'ChromeClose' }}
+				text="Back"
+				onClick={props.handleCloseModalClick}
+			/>
+			{/* </div> */}
 		</MediaQuery>
 		<MediaQuery maxWidth={ScreenSizes.ReturnSmallMax()}>
 			{/* <div className="hc-messages-message-control"> */}

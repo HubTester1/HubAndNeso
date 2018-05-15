@@ -271,13 +271,38 @@
 	
 	// full message in modal
 
+	body.ReactModal__Body--open
+		overflow: hidden
+
+	// 	div.ReactModalPortal
+	// 		z-index: $z-index-modal-full-message
+
+	// 		div.ReactModal__Overlay.ReactModal__Overlay--after-open
+	// 			z-index: $z-index-modal-full-message
+
+	// 			div.ReactModal__Content.ReactModal__Content--after-open.hc-messages-message-full-message-modal
+	// 				padding: 5rem
+
+	// 				button.hc-messages-message-control
+	// 					+button
+	// 					+button-colored
+	// 					margin: 0 0 1rem 0 !important
+
+
+
+
+
+
+
+
 	div.hc-messages-message-full-message-modal
-		position: fixed
-		top: 0
-		right: 0
-		bottom: 0
-		left: 10rem
-		background-color: $white
+		overflow-y: auto
+	// 	// position: fixed
+	// 	// top: 0
+	// 	// right: 0
+	// 	// bottom: 0
+	// 	// left: 10rem
+	// 	background-color: $white
 
 	// top messages
 
