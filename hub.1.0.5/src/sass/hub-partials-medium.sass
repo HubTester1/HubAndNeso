@@ -468,15 +468,37 @@
 	// new message form
 
 	div#hc-messages-new-message-form
-		
+		max-width: 80rem
+		padding: 2rem 0 5rem 0
+
 		h3,
 		label.ms-Label,
 		label[for='hc-messages-images-file-input']
 			color: $white
 
+		div.mos-react-form-field
+			padding-bottom: 1rem
+
+		label
+
+			&:after
+				color: $light-yellow
+
+		label[for='hc-messages-images-file-input']
+			padding: .5rem 0
+
+		div.mos-file-input
+			margin-top: 1rem
+			padding: 5rem
+			color: $blue6
+			background-color: $white
+			border: .3rem dashed $blue3
+
 		button
 			+button
 			+button-colored
+			margin-top: 2rem !important
+
 
 	
 // --- MEDIUM - CALENDARDS & SCHEDULES

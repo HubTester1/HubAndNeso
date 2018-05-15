@@ -25,6 +25,7 @@ export default class HcMessagesFiles extends React.Component {
 							multiple
 							name="hc-messages-images-file-input"
 							inputProps={dropzoneInputProps}
+							className="mos-file-input"
 						>
 							Drag images here, or click or tap here to browse
 						</Dropzone>
