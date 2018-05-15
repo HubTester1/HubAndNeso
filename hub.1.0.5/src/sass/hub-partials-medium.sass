@@ -274,19 +274,44 @@
 	body.ReactModal__Body--open
 		overflow: hidden
 
-	// 	div.ReactModalPortal
-	// 		z-index: $z-index-modal-full-message
+		div.ReactModalPortal
+			z-index: $z-index-modal-full-message
 
-	// 		div.ReactModal__Overlay.ReactModal__Overlay--after-open
-	// 			z-index: $z-index-modal-full-message
+			// overlay
 
-	// 			div.ReactModal__Content.ReactModal__Content--after-open.hc-messages-message-full-message-modal
-	// 				padding: 5rem
+			div.ReactModal__Overlay.ReactModal__Overlay--after-open
+				z-index: $z-index-modal-full-message
+				background-color: $white-80-percent !important
 
-	// 				button.hc-messages-message-control
-	// 					+button
-	// 					+button-colored
-	// 					margin: 0 0 1rem 0 !important
+				// message
+				div.ReactModal__Content.ReactModal__Content--after-open.hc-messages-message-full-message-modal
+					position: absolute
+					top: 0
+					right: 0
+					bottom: 0
+					left: 10rem
+					padding: 5rem
+					border: 0
+					overflow: auto
+					WebkitOverflowScrolling: touch
+					outline: none
+					background-color: $light-pink
+
+					button.hc-messages-message-control
+						+button
+						+button-colored
+						margin: 0 0 1rem 0 !important
+
+					p.hc-messages-message-creator,
+					p.hc-messages-message-created,
+					div.hc-messages-message-body,
+					p.hc-messages-message-tags
+						font-size: $medium-screen-type-size-s
+
+					div.hc-messages-message-image-container
+
+						img
+							width: 100%
 
 
 
@@ -295,14 +320,19 @@
 
 
 
-	div.hc-messages-message-full-message-modal
-		overflow-y: auto
-	// 	// position: fixed
-	// 	// top: 0
-	// 	// right: 0
-	// 	// bottom: 0
-	// 	// left: 10rem
-	// 	background-color: $white
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	// top messages
 

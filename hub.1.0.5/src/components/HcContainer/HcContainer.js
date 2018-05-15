@@ -22,7 +22,6 @@ import HcCalendarsSchedules from '../../components/HcCalendarsSchedules/HcCalend
 // eslint-disable-next-line
 import { initializeIcons } from '@uifabric/icons';
 
-import '../../sass/temp.sass';
 import './HcContainer.sass';
 
 initializeIcons();

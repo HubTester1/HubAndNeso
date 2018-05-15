@@ -43,7 +43,17 @@ export default class HcMessagesMessagePreview extends React.Component {
 		this.setState({ showInlineFull: false });
 	}
 	render() {
-		Modal.setAppElement('#s4-bodyContainer');
+		Modal.setAppElement('#react-mount-point');
+		/* const customStyles = {
+			content: {
+				top: '50%',
+				left: '50%',
+				right: 'auto',
+				bottom: 'auto',
+				marginRight: '-50%',
+				transform: 'translate(-50%, -50%)',
+			},
+		}; */
 		return (
 			<li id={`hc-messages-message-preview_${this.props.messageId}`} className="hc-messages-message-preview mos-react-component-root">
 				{
@@ -88,6 +98,7 @@ export default class HcMessagesMessagePreview extends React.Component {
 								isOpen={this.state.showModalFull}
 								onAfterOpen={this.handleAfterModalOpens}
 								onRequestClose={this.handleCloseModalClick}
+								// style={customStyles}
 								contentLabel="More"
 								ariaHideApp={false}
 							>

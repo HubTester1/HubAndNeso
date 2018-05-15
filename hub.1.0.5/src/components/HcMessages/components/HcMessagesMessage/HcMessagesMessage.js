@@ -62,13 +62,14 @@ const HcMessagesMessage = props => (
 		{/* note: currently only one tag per message */}
 		<p className="hc-messages-message-tags">#{props.messageContent.tags[0]}</p>
 		<MediaQuery minWidth={ScreenSizes.ReturnMediumMin()}>
-			<div className="hc-messages-message-control">
-				<DefaultButton
-					iconProps={{ iconName: 'Back' }}
-					text="Back"
-					onClick={props.handleCloseModalClick}
-				/>
-			</div>
+			{/* <div className="hc-messages-message-control"> */}
+			<DefaultButton
+				className="hc-messages-message-control"
+				iconProps={{ iconName: 'Back' }}
+				text="Back"
+				onClick={props.handleCloseModalClick}
+			/>
+			{/* </div> */}
 		</MediaQuery>
 		<MediaQuery maxWidth={ScreenSizes.ReturnSmallMax()}>
 			{/* <div className="hc-messages-message-control"> */}
