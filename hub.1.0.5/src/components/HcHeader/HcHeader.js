@@ -38,6 +38,7 @@ export default class HcHeader extends React.Component {
 		}
 		scroller.scrollTo('hc-pushed-items', {
 			duration: 500,
+			offset: -70,
 			delay: 0,
 			smooth: 'easeInOutQuart',
 		});
@@ -48,6 +49,7 @@ export default class HcHeader extends React.Component {
 		}
 		scroller.scrollTo('hc-get-it-done', {
 			duration: 500,
+			offset: -70,
 			delay: 0,
 			smooth: 'easeInOutQuart',
 		});
@@ -58,6 +60,7 @@ export default class HcHeader extends React.Component {
 		}
 		scroller.scrollTo('hc-messages-all', {
 			duration: 1000,
+			offset: -70,
 			delay: 0,
 			smooth: 'easeInOutQuart',
 		});
@@ -68,6 +71,7 @@ export default class HcHeader extends React.Component {
 		}
 		scroller.scrollTo('hc-organization', {
 			duration: 1250,
+			offset: -70,
 			delay: 0,
 			smooth: 'easeInOutQuart',
 		});
@@ -78,6 +82,7 @@ export default class HcHeader extends React.Component {
 		}
 		scroller.scrollTo('hc-calendars-and-schedules', {
 			duration: 1500,
+			offset: -70,
 			delay: 0,
 			smooth: 'easeInOutQuart',
 		});

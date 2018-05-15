@@ -265,22 +265,40 @@
 @media screen and (max-width: $small-screen-maximum-width)
 
 	div#hero-container
-		padding: 5rem 2rem 2rem 2rem
+		padding: 6rem 2rem 4rem 2rem
 			
 		h2
-			font-size: $small-screen-type-size-l !important
+			+font-weight-semibold
+			font-size: $small-screen-type-size-m !important
 
 // --- SMALL - HC SECTIONS / ACCORDION
 
 @media screen and (max-width: $small-screen-maximum-width)
 
-	div.hc-sections-container.accordion
+	div#hc-container
+		
+		div.hc-sections-container.accordion
 
-		div.accordion__title
+			div.hc-pushed-items__title.accordion__title,
+			div.hc-get-it-done__title.accordion__title,
+			div.hc-organization__title.accordion__title,
+			div.hc-messages-all__title.accordion__title,
+			div.hc-calendars-and-schedules__title.accordion__title
+				padding: 3rem 2rem
+				background-color: $blue7
 
-			h2
-				font-size: $small-screen-type-size-l !important
+				&:hover
+					background-color: $blue8
 
+				h2
+					
+					div.accordion__title__text
+						+font-weight-regular
+						font-size: $small-screen-type-size-m !important
+						color: $white
+					
+					div.accordion__arrow
+						color: $white
 
 // --- SMALL - MESSAGES
 
@@ -309,14 +327,38 @@
 					margin: 1rem 0 0 0 !important
 
 	// inline full
-	
-	
-	
-	
-	
-	
-	
-	
+
+	div#hc-messages-all
+
+		ul#hc-messages-list
+
+			li.hc-messages-message-preview
+
+				div.hc-messages-message-image-container
+
+					img.hc-messages-message-image
+						max-width: 100%
+						margin-bottom: 2rem
+
+				p.hc-messages-message-creator
+					+font-weight-regular
+					margin: 0
+					color: $grey10
+				
+				p.hc-messages-message-created,
+				p.hc-messages-message-tags
+					font-style: italic
+					color: $grey8
+
+				div.hc-messages-message-body
+					padding-bottom: 2rem
+					color: $grey13
+
+				button.hc-messages-message-control
+					+button
+					+button-colored
+					margin: 1rem 0 0 0 !important
+
 // --- SMALL - HC ORG
 
 @media screen and (max-width: $small-screen-maximum-width)

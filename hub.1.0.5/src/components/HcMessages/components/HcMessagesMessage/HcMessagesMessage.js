@@ -25,12 +25,12 @@ const HcMessagesMessage = props => (
 		</MediaQuery>
 		<MediaQuery maxWidth={ScreenSizes.ReturnSmallMax()}>
 			{/* <div className="hc-messages-message-control"> */}
-			<DefaultButton
+			{/* <DefaultButton
 				className="hc-messages-message-control"
-				iconProps={{ iconName: 'ChevronUp' }}
+				iconProps={{ iconName: 'Back' }}
 				text="Back to Preview"
 				onClick={props.handleCloseInlineFullClick}
-			/>
+			/> */}
 			{/* </div> */}
 		</MediaQuery>
 		<h3 className="hc-messages-message-subject">
@@ -63,7 +63,7 @@ const HcMessagesMessage = props => (
 		<MediaQuery minWidth={ScreenSizes.ReturnMediumMin()}>
 			<div className="hc-messages-message-control">
 				<DefaultButton
-					iconProps={{ iconName: 'ChromeClose' }}
+					iconProps={{ iconName: 'Back' }}
 					text="Back"
 					onClick={props.handleCloseModalClick}
 				/>
@@ -73,7 +73,7 @@ const HcMessagesMessage = props => (
 			{/* <div className="hc-messages-message-control"> */}
 			<DefaultButton
 				className="hc-messages-message-control"
-				iconProps={{ iconName: 'ChevronUp' }}
+				iconProps={{ iconName: 'Back' }}
 				text="Back to Preview"
 				onClick={props.handleCloseInlineFullClick}
 			/>
