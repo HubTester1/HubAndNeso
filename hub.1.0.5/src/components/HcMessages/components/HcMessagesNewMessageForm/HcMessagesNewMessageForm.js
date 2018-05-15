@@ -398,7 +398,7 @@ export default class HcMessagesNewMessageForm extends React.Component {
 						</div>
 					}
 					{
-						!this.state.newMessageIsInvalid &&
+						this.state.newMessageIsInvalid &&
 
 						<div id="form-entries-invalid-error-message" className="mos-react-form-error-message">
 							The highlighted fields contain errors. Please make changes and try again.

@@ -295,12 +295,22 @@
 					overflow: auto
 					WebkitOverflowScrolling: touch
 					outline: none
-					background-color: $light-pink
+					background-color: $white
 
 					button.hc-messages-message-control
 						+button
 						+button-colored
 						margin: 0 0 1rem 0 !important
+						
+						i
+							font-size: $medium-screen-type-size-xs
+							margin-right: 1rem
+
+					div.hc-messages-message-image-container
+
+						img
+							max-width: 100%
+							margin-bottom: 2rem
 
 					p.hc-messages-message-creator,
 					p.hc-messages-message-created,
@@ -308,31 +318,19 @@
 					p.hc-messages-message-tags
 						font-size: $medium-screen-type-size-s
 
-					div.hc-messages-message-image-container
+					p.hc-messages-message-creator
+						+font-weight-regular
+						margin: 0
+						color: $grey10
+					
+					p.hc-messages-message-created,
+					p.hc-messages-message-tags
+						font-style: italic
+						color: $grey8
 
-						img
-							width: 100%
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+					div.hc-messages-message-body
+						padding-bottom: 2rem
+						color: $grey13
 
 	// top messages
 
@@ -466,6 +464,19 @@
 				&:hover
 					color: $text-on-interactive-active !important
 					background-color: $interactive-active
+
+	// new message form
+
+	div#hc-messages-new-message-form
+		
+		h3,
+		label.ms-Label,
+		label[for='hc-messages-images-file-input']
+			color: $white
+
+		button
+			+button
+			+button-colored
 
 	
 // --- MEDIUM - CALENDARDS & SCHEDULES

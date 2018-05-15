@@ -65,7 +65,7 @@ const HcMessagesMessage = props => (
 			{/* <div className="hc-messages-message-control"> */}
 			<DefaultButton
 				className="hc-messages-message-control"
-				iconProps={{ iconName: 'Back' }}
+				iconProps={{ iconName: 'ChromeClose' }}
 				text="Back"
 				onClick={props.handleCloseModalClick}
 			/>
