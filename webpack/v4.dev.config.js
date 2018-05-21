@@ -10,18 +10,23 @@ const path = require('path');
 
 module.exports = merge(baseConfig, {
 	entry: {
-		index: './hub.1.0.4/dist/DevCode4/ignore1.js',
+		index: './hub.1.0.4/sass/mos.sass',
 	},
 	output: {
-		path: path.join(__dirname, '../hub.1.0.5/dist/DevCode4/css'),
-		filename: 'ignore2.js',
+		path: path.join(__dirname, '../hub.1.0.4/css'),
+		filename: 'mos.css',
 	},
 	module: {
-		loaders: [
+		rules: [
 			{
-				include: path.join(__dirname, '../hub.1.0.5/dist/DevCode4/sass'),
+				include: path.join(__dirname, '../hub.1.0.4/sass'),
 				test: /\.sass$/,
-				loader: 'postcss-loader!sass-loader',
+				use: [
+					{ loader: 'style-loader' },
+					{ loader: 'css-loader' },
+					{ loader: 'postcss-loader' },
+					{ loader: 'sass-loader' },
+				],
 			},
 		],
 	},

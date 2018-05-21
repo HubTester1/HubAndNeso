@@ -1,0 +1,5072 @@
+﻿html
+	font-size: 10px
+	box-sizing: border-box
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+//			GLOBAL
+////////////////////////////////////////////////////////////////////////////////////////////////
+// ------------------
+// TYPE
+// ------------------
+
+body
+	font-family: "Segoe UI","Segoe", Tahoma, Helvetica Neue, Helvetica, Arial, sans-serif
+	color: $textOnWhite
+
+div#suiteBarDelta div#suiteBarTop div#O365_NavHeader
+	background-color: $black
+
+div#s4-bodyContainer
+	background-color: $white
+
+
+
+// keep out of the ribbon, suitebar, etc.
+div#s4-workspace,
+div.ui-dialog,
+div#printer-content
+	font-family: "Segoe UI","Segoe", Tahoma, Helvetica Neue, Helvetica, Arial, sans-serif
+	color: $textOnWhite
+	font-size: 1.3rem
+
+	h1
+		font-size: 4.5rem
+
+	h2
+		font-size: 2.75rem !important
+
+	h3
+		font-size: 2.25rem !important
+
+	h4
+		font-size: 1.75rem !important
+
+	.ms-rtestate-field h1,
+	h1.ms-rteElement-H1,
+	.ms-rtestate-field h2,
+	h2.ms-rteElement-H2
+		color: $textOnWhite
+
+	ul, ol
+		list-style-position: inside
+		margin: 0 0 1rem 0
+		padding: 0
+
+	ul ul,
+	ol ol
+		margin: 0 0 1rem 2rem
+		padding: 0
+
+	ul li,
+	ol li
+		list-style-position: outside
+		vertical-align: text-top
+		margin-left: 1.6rem
+
+	ul li
+		list-style-type: square
+		list-style-image: url('/sites/hubdev/DevCodeUpdate/css/img/bullet.png')
+
+	a,
+	a:visited,
+	ul.cbs-List,
+	.ms-gb a,
+	.ms-gb2 a,
+	a.ms-listlink,
+	.ms-webpart-titleText > a[href]
+		+linkText
+
+		&:hover,
+		&:active
+			+linkTextActive
+
+	span.ellipsis-menu-imitation
+		font-size: 1.8rem
+		font-weight: bold
+		color: $grey8
+
+	span.look-for-it
+		font-weight: bold
+
+
+// ------------------
+// SUITE BAR, RIBBON, PROMOTED ACTIONS
+// ------------------
+
+ul.ms-core-suiteLinkList li
+	margin: 0
+
+a[id*="site_share_button"]
+	display: none !important
+
+
+
+// ------------------
+// PAGE HEADER
+// ------------------
+
+div#s4-workspace
+
+	div#s4-titlerow
+
+		a,
+		a:link,
+		a:visited,
+		a.ms-core-listMenu-item,
+		a.ms-core-listMenu-item:link,
+		a.ms-core-listMenu-item:visited,
+		a.ms-tv-item:link,
+		a.ms-tv-item:visited,
+		a.ms-tv-header:link,
+		a.ms-tv-header:visited
+			color: $intDefault
+
+			&:hover
+				color: $intActive
+
+		li
+			display: inline-block
+			margin: 0 0 0 2rem
+
+			&:first-child
+				margin: 0
+
+		h1#pageTitle
+			font-family: "Segoe UI"
+
+		h1#pageTitle.ms-core-pageTitle
+			font-size: 4.5rem
+			font-family: "Segoe UI","Segoe", Tahoma, Helvetica Neue, Helvetica, Arial, sans-serif
+			font-weight: 300
+
+			a
+				@extend h1#pageTitle.ms-core-pageTitle
+				color: $intDefault
+
+				&:hover
+					color: $intActive
+
+
+
+// ------------------
+// QUICK LAUNCH
+// ------------------
+
+div#s4-workspace
+
+	div#sideNavBox
+		min-width: 19rem
+		margin-left: 0
+		padding-top: 1rem
+		border-top: .1rem solid $grey11
+		border-right: .1rem solid $grey11
+
+		li
+			list-style-type: none
+			list-style-image: none
+
+		// align link text with header logo
+		a.ms-navedit-editLinksText
+			display: block
+			padding-left: 1.5rem
+
+		// hide the Site Contents link - haven't been successful removing this link through browser or in master page
+		a[href$="viewlsts.aspx"]
+			display: none
+
+		// remove border from calendar pickers
+		.ms-picker-header table.ms-picker-table,
+		.ms-datepickerouter .ms-quickLaunch
+			border: none
+
+		// make all nav links blue, always - with enough use, almost all would be purple otherwise, and *all* purple does not convey useful info
+		.ms-core-listMenu-item,
+		.ms-core-listMenu-item:link,
+		.ms-core-listMenu-item:visited,
+		.ms-tv-item:link,
+		.ms-tv-item:visited,
+		.ms-tv-header:link,
+		.ms-tv-header:visited
+			+linkText
+
+			&:hover
+				+linkTextActive
+
+
+
+// ------------------
+// COLLAPSIBLE
+// ------------------
+
+.collapsible-heading-status
+	+inlineHidden
+
+.collapsible-content
+	overflow: hidden
+
+.collapsible-content-collapsed
+	display: none
+
+
+
+// ------------------
+// MSFT OVERRIDE
+// ------------------
+
+#contentBox
+	min-width: 0
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+//			KNOWLEDGE BASE
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+// --- COMMON
+
+// don't show right border when there's a resizable box, which has its own border
+div#navresizerVerticalBarPositionHelper + div#sideNavBox
+	border-right: none
+
+// make resizable box's border color the interactive color
+div.ms-navresizer-vertical
+	border-color: #80B9E3
+
+// align tag navigation items with other quick launch items
+body.tag-navigation div#ctl00_PlaceHolderLeftNavBar_TreeViewNavigationManagerV4
+	padding-left: 15px
+
+// align search refiners with header logo
+.ms-ref-ctrl
+	padding-left: 20px
+
+#Refinement .ms-disabled.ms-alignCenter
+	margin-right: 19px
+
+div.mos_main.kb-page.help .ms-long,
+div.mos_main.kb-page.cat_tags_meta_sched .ms-long
+	width: 100%
+
+div.mos_main.kb-page.help div.control-section,
+div.mos_main.kb-page.cat_tags_meta_sched div.control-section
+	margin-top: 4rem
+
+div.mos_main.kb-page.help div.label.edit-mode,
+div.mos_main.kb-page.cat_tags_meta_sched div.label.edit-mode
+	font-size: 2rem !important
+	margin-bottom: .5rem
+
+div.mos_main.kb-page.help p.help-note,
+div.mos_main.kb-page.cat_tags_meta_sched p.help-note
+	font-size: 13px
+	max-width: 500px
+	margin-top: .5rem
+	color: #7f7f7f
+	font-style: italic
+
+div.mos_main.kb-page.help input[type="text"],
+div.mos_main.kb-page.cat_tags_meta_sched input[type="text"]
+	-webkit-box-sizing: border-box
+	-moz-box-sizing: border-box
+	-o-box-sizing: border-box
+	-ms-box-sizing: border-box
+	box-sizing: border-box
+
+
+
+// --- div.mos_main.kb-page.cat_tags_meta_sched
+
+// name
+
+div.mos_main.kb-page.cat_tags_meta_sched input#ctl00_PlaceHolderMain_ctl01_ctl00_ctl00_onetidIOFile
+	width: 100%
+
+div.mos_main.kb-page.cat_tags_meta_sched span.ms-fileField-fileExt
+	display: none
+
+// main content
+
+div.mos_main.kb-page.cat_tags_meta_sched div#main-content div#ctl00_PlaceHolderMain_ctl04_RichHtmlField
+	padding: 8px
+	margin: 1px
+	border: #0072bc 1px solid
+
+// tags
+
+div.mos_main.kb-page.cat_tags_meta_sched .ms-taxonomy-fieldeditor-standard.ms-taxonomy-fieldeditor
+	width: 98% !important // fallback if needed
+	width: calc(100% - 25px) !important
+
+// publication schedule
+
+div.mos_main.kb-page.cat_tags_meta_sched div#publication-start,
+div.mos_main.kb-page.cat_tags_meta_sched div#publication-end
+	display: table-cell
+
+
+div.mos_main.kb-page.cat_tags_meta_sched div#publication-start
+	padding-right: 3rem
+
+
+
+// KNOWLEDGE BASE PAGE LAYOUT - WITH & WITHOUT VIDEO
+
+
+// title
+
+div.mos_main.kb-page.help input#ctl00_PlaceHolderMain_ctl01_ctl00_ctl00_TextField,
+div.mos_main.kb-page.help input#ctl00_PlaceHolderMain_ctl10_ctl00_TextField
+	width: 100%
+
+// name
+
+div.mos_main.kb-page.help input#ctl00_PlaceHolderMain_ctl03_ctl00_ctl00_onetidIOFile,
+div.mos_main.kb-page.help input#ctl00_PlaceHolderMain_ctl10_ctl00_TextField
+	width: 100%
+
+div.mos_main.kb-page.help span.ms-fileField-fileExt
+	display: none
+
+// page intro
+
+div.mos_main.kb-page.help div#page-intro div#ctl00_PlaceHolderMain_ctl06_RichHtmlField
+	padding: 8px
+	margin: 1px
+	border: #0072bc 1px solid
+
+// main content
+
+div.mos_main.kb-page.help div#main-content div#ctl00_PlaceHolderMain_ctl11_RichHtmlField,
+div.mos_main.kb-page.help div#main-content div#ctl00_PlaceHolderMain_ctl09_RichHtmlField
+	padding: 8px
+	margin: 1px
+	border: #0072bc 1px solid
+
+// tags
+
+div.mos_main.kb-page.help .ms-taxonomy-fieldeditor-standard.ms-taxonomy-fieldeditor
+	width: 98% !important // fallback if needed
+	width: calc(100% - 25px) !important
+
+// hub-only container
+
+div.hub-only
+	margin-top: 4rem
+	padding: 2rem
+	background: #ededed
+
+// rollup image
+
+div.mos_main.kb-page.help div#rollup-image span#ctl00_PlaceHolderMain_ctl19_ctl00_ctl00_RichImageField_EmptyPanel > div[align="center"],
+div.mos_main.kb-page.help div#rollup-image span#ctl00_PlaceHolderMain_ctl21_ctl00_ctl00_RichImageField_EmptyPanel > div[align="center"]
+	text-align: left
+	padding: 0 !important
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+//			jQUERY UI OVERRIDE
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+// dialog
+div.ui-dialog
+	padding: 0
+	border-color: $grey13
+	box-shadow: .3rem .3rem 7rem 1rem rgba(0,0,0,0.15)
+
+	div.ui-dialog-titlebar.ui-widget-header
+		font-weight: 500
+		border: none
+		background-color: $grey14
+
+	div.ui-dialog-content.ui-widget-content
+		background-color: $white
+
+		a
+			color: $intDefault
+
+			&:hover
+				color: $intActive
+
+	div.ui-resizable-handle.ui-resizable-se.ui-icon.ui-icon-gripsmall-diagonal-se
+		right: 0
+		bottom: 0
+		background: url('/sites/hubprod/Asset%20Library/icon_grip_diagonal_se.png') no-repeat center center
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+//			PERSONA CARD DIALOG
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+div[aria-describedby="persona-card-dialog"]
+
+	div.ui-dialog .ui-dialog-titlebar
+		padding: 1.2rem 0 1.2rem 2rem
+
+	span#persona-card-dialog-header
+		+row
+		width: 100%
+
+		span#avatar
+			+col
+			width: 7.2rem
+			height: 2.4rem
+			padding: 2.2rem 0 2.6rem
+			border-radius: 50%
+			background-color: $darkPurple
+			text-align: center
+
+			span#avatar-initials
+				display: inline-block
+				font-size: 2.4rem
+				line-height: 2.4rem
+				font-weight: 300
+				margin: 0 auto
+				color: $textOnDarkPurple
+
+			img#avatar-image
+				border-radius: 50%
+
+		span#name_title_department
+			+col
+			padding-left: 2rem
+
+			span#name
+				display: block
+				font-size: 2.1rem
+				font-weight: 300
+
+			span#title,
+			span#department
+				display: block
+				font-size: 1.2rem
+				padding-top: .2rem
+				color: $grey5
+
+			span#department
+				padding-top: .5rem
+
+	ul#persona-card-dialog-body
+		font-size: 1.2rem
+		color: $grey6
+
+		li
+			list-style: none
+			margin: 0
+
+			ul
+				margin: 0
+
+		li#business-phone-number,
+		li#mobile-phone-number,
+		li#email,
+		li#profile
+			padding-top: .5rem
+
+		li#phone-numbers,
+		> li#business-phone-number,
+		> li#mobile-phone-number,
+		li#email,
+		li#profile
+
+			&:before
+				+fontIcon
+				+fontIconBefore
+
+		li#phone-numbers,
+		> li#business-phone-number,
+		> li#mobile-phone-number
+
+			&:before
+				+fontIconPhone
+
+		li#email
+
+			&:before
+				+fontIconMail
+
+		li#profile
+
+			&:before
+				+fontIconPerson
+
+		li#phone-numbers
+
+			ul
+				display: inline-block
+
+			&:before
+				vertical-align: top
+				height: 3rem
+				padding-top: 1rem
+
+		> li#business-phone-number,
+		> li#mobile-phone-number,
+		li#email,
+		li#profile
+
+			&:before
+				margin-right: .8rem // necessary to match spacing on li#phone-numbers:before
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+//			BUTTONS
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+// all buttons
+div#s4-workspace a#form-submit-button,
+div#s4-workspace a.overlay-dismiss-button,
+a#exit-sans-save-button,
+div#s4-workspace a.link_exit,
+a.link-tester,
+a.repeat-section-anchor,
+a.remove-section-anchor,
+a.anchor_list-item-chooser,
+a.buttonWithLabel,
+span.sp-peoplepicker-userSpan,
+div.dataTables_paginate a.paginate_button,
+a.button-link,
+div.ui-dialog div.ui-dialog-content.ui-widget-content a.ui-dialog-button,
+div.ui-dialog div.ui-dialog-titlebar.ui-widget-header button.ui-button span.ui-icon.ui-icon-closethick,
+div.ui-dialog div.ui-dialog-content.ui-widget-content div.table-container div.dataTables_wrapper table.dataTable a.anchor_no-href,
+div#remaining-capacities ul#tab-navigation.ui-tabs-nav li a,
+div.fc-toolbar button,
+div.fc-toolbar a,
+ul#timeline-options li a,
+a.id-or-link_list-item-chooser,
+a.show-default-station-times,
+a.hide-default-station-times,
+a.anchor_replace-file,
+a.anchor_cancel-file-replacement,
+button.cafe-button,
+div#s4-workspace div.in-page-persona a.profile,
+div#s4-workspace div#public-community-page_moscars div#call-to-action a,
+div#s4-workspace div#public-community-page_hr div#primary-section_open-enrollment a,
+div#s4-workspace div#app-container.event-av div#container_command-bar div#container_new-request-control a,
+div#s4-workspace div#app-container.event-av div#container_command-bar ul#container_tab-controls li a,
+div#s4-workspace div#app-container.event-av div#container_command-bar div#container_date-filter-controls-and-header a.collapsible-heading-toggle,
+div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#submit-button,
+div#s4-workspace div#public-community-page_open-enrollment div.primary-section a,
+a#standard-printer-button-inside-request
+	+button
+
+	&:hover
+		+buttonActive
+
+// blue buttons
+div#s4-workspace a#form-submit-button,
+div#s4-workspace a.overlay-dismiss-button,
+div#s4-workspace a.link_exit,
+div.ui-dialog div.ui-dialog-content.ui-widget-content a.ui-dialog-button,
+div#timeline div.vis-item,
+div#s4-workspace div.in-page-persona a.profile,
+div#s4-workspace div#public-community-page_moscars div#call-to-action a,
+div#s4-workspace div#public-community-page_hr div#primary-section_open-enrollment a,
+div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#submit-button,
+div#s4-workspace div#public-community-page_open-enrollment div.primary-section a
+	color: $textOnIntDefault !important
+	background-color: $intDefault !important
+
+	&:hover
+		color: $textOnIntActive !important
+		background-color: $intActive !important
+
+// white buttons
+a#exit-sans-save-button,
+a.link-tester,
+a.repeat-section-anchor,
+a.remove-section-anchor,
+a.anchor_list-item-chooser,
+a.buttonWithLabel,
+a.anchor_replace-file,
+a.anchor_cancel-file-replacement,
+span.sp-peoplepicker-userSpan,
+div.ui-dialog div.ui-dialog-content.ui-widget-content div.table-container div.dataTables_wrapper table.dataTable a.anchor_no-href,
+a.id-or-link_list-item-chooser,
+a.show-default-station-times,
+a.hide-default-station-times,
+div#s4-workspace div.targeted-links ul li a
+	color: $intDefault !important
+	border: .1rem solid $intDefault
+	background-color: $textOnIntDefault !important
+
+	&:hover
+		color: $intActive !important
+		border: .1rem solid $intActive
+		background-color: $intLightActive !important
+
+// command bar buttons
+div.dataTables_paginate a.paginate_button,
+a.button-link_new,
+a.button-link_go-forward,
+div#remaining-capacities ul#tab-navigation.ui-tabs-nav li a,
+div.fc-toolbar button,
+div.fc-toolbar a,
+ul#timeline-options li a,
+div#app-container a.button_swf-new-request-with-datatable,
+div#app-container a.button_swf-new-event-with-timeline,
+div#app-container a.button_alternate-view-with-timeline,
+button.cafe-button,
+div#app-container a.command-bar-button,
+div#s4-workspace div#app-container.event-av div#container_command-bar div#container_new-request-control a,
+div#s4-workspace div#app-container.event-av div#container_command-bar ul#container_tab-controls li a,
+div#s4-workspace div#app-container.event-av div#container_command-bar div#container_date-filter-controls-and-header a.collapsible-heading-toggle,
+a#standard-printer-button-inside-request
+	color: $blue5 !important
+	background-color: $blue0 !important
+
+	&:hover
+		color: $blue6 !important
+		background-color: $blue1 !important
+
+// command bar selected button
+div#remaining-capacities ul#tab-navigation.ui-tabs-nav li.ui-tabs-active a,
+div#s4-workspace div#app-container.event-av div#container_command-bar ul#container_tab-controls li.ui-tabs-active a
+	color: $blue6 !important
+	background-color: $blue1 !important
+
+	&:hover
+		color: $blue7 !important
+		background-color: $blue2 !important
+
+// command bar disabled button
+div#mos-display.cafe-weekly-menu-and-schedule div#cafe-toolbar button[disabled]
+	opacity: .35
+	cursor: text
+
+	&:hover
+		color: $blue5 !important
+		background-color: $blue0 !important
+
+
+
+
+
+
+// in-form buttons
+a.link-tester,
+a.repeat-section-anchor,
+a.remove-section-anchor,
+a.anchor_list-item-chooser,
+a.buttonWithLabel,
+span.sp-peoplepicker-userSpan,
+a.id-or-link_list-item-chooser,
+a.show-default-station-times,
+a.hide-default-station-times,
+a.anchor_replace-file,
+a.anchor_cancel-file-replacement
+	+buttonInForm
+
+// in-form buttons under other elements
+a.link-tester,
+a.repeat-section-anchor,
+a.remove-section-anchor,
+a.show-default-station-times,
+a.hide-default-station-times,
+a.anchor_replace-file,
+a.anchor_cancel-file-replacement
+	+buttonUnderOtherElement
+
+// in-form buttons over other elements
+a.show-default-station-times,
+a.hide-default-station-times
+	+buttonOverOtherElement
+
+// form-bottom buttons
+div#s4-workspace a#form-submit-button,
+a#exit-sans-save-button
+	width: 12rem
+	padding: 0.3rem 2rem
+
+// icon before buttons
+a.link-tester,
+a.repeat-section-anchor,
+a.remove-section-anchor,
+a.anchor_list-item-chooser,
+a#Import-from-Event-Request,
+span.sp-peoplepicker-userSpan,
+div.dataTables_paginate a.paginate_button,
+.collapsible-heading a.collapsible-heading-toggle,
+a.button-link_new,
+div.ui-dialog div.ui-dialog-titlebar.ui-widget-header button.ui-button span.ui-icon.ui-icon-closethick,
+div.fc-toolbar button.fc-prevYear-button,
+div.fc-toolbar button.fc-prev-button,
+div.fc-toolbar button.fc-next-button,
+div.fc-toolbar button.fc-nextYear-button,
+a.button-link_new-item,
+div.ui-dialog div.ui-dialog-content.ui-widget-content div.table-container div.dataTables_wrapper table.dataTable a.anchor_no-href,
+a.id-or-link_list-item-chooser,
+a.show-default-station-times,
+a.hide-default-station-times,
+button.cafe-button,
+div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#submit-button,
+a#standard-printer-button-inside-request
+	&:before
+		+fontIcon
+		+fontIconBefore
+
+a.link-tester
+
+	&:before
+		+fontIconCheck
+
+a.repeat-section-anchor,
+a.button-link_new-item
+
+	&:before
+		+fontIconPlus
+
+a.remove-section-anchor,
+div.ui-dialog div.ui-dialog-titlebar.ui-widget-header button.ui-button span.ui-icon.ui-icon-closethick
+
+	&:before
+		+fontIconX
+
+a.anchor_list-item-chooser,
+.collapsible-heading a.collapsible-heading-toggle,
+a.hide-default-station-times
+
+	&:before
+		+fontIconChevronThickUp
+
+a.id-or-link_list-item-chooser
+
+	&:before
+		+fontIconArrowUpRight
+
+.collapsible-heading.collapsible-heading-collapsed a.collapsible-heading-toggle,
+a.show-default-station-times
+
+	&:before
+		+fontIconChevronThickDown
+
+div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#submit-button
+
+	&:before
+		+fontIconRefresh
+
+a#Import-from-Event-Request,
+div.ui-dialog div.ui-dialog-content.ui-widget-content div.table-container div.dataTables_wrapper table.dataTable a.anchor_no-href
+
+	&:before
+		+fontIconDownload
+
+span.sp-peoplepicker-userSpan
+
+	&:before
+		+fontIconPerson
+
+div.dataTables_paginate a.paginate_button.previous,
+div.fc-toolbar button.fc-prev-button,
+button#cafe-button_previous-week
+
+	&:before
+		+fontIconChevronLeft
+
+div.dataTables_paginate a.paginate_button.next,
+div.fc-toolbar button.fc-next-button,
+button#cafe-button_next-week
+
+	&:before
+		+fontIconChevronRight
+
+div.fc-toolbar button.fc-prevYear-button
+
+	&:before
+		+fontIconChevronsLeft
+
+div.fc-toolbar button.fc-nextYear-button
+
+	&:before
+		+fontIconChevronsRight
+
+a#standard-printer-button-inside-request
+
+	&:before
+		+fontIconPrint
+
+// icon after buttons
+span.ms-entity-resolved,
+a.button-link_go-forward
+
+	&:after
+		+fontIcon
+		+fontIconAfter
+
+span.ms-entity-resolved
+
+	&:after
+		+fontIconChevronThickUp
+
+a.button-link_go-forward
+
+	&:after
+		+fontIconArrowRight
+
+// hidden from screen reader buttons
+div#s4-workspace div.cafe-weekly-menu-and-schedule a.button_swf-new-request-with-datatable
+	display: none
+
+// tweaks
+a.repeat-section-anchor
+	margin: 1rem 0 !important
+
+a.remove-section-anchor
+	margin: 0 0 1rem 19.5rem !important
+
+
+div.subsection-container
+
+	div.subsection
+
+		a.remove-section-anchor
+			margin: 1rem 0 1rem 14.2rem !important
+
+a.anchor_list-item-chooser
+	position: relative
+	top: .2rem
+
+span.sp-peoplepicker-userSpan
+	height: 2.6rem
+	padding: 0 0 0 1rem
+	margin-right: .5rem !important
+	margin-top: .5rem !important
+
+	span.ms-entity-resolved
+		text-decoration: none
+		padding-bottom: .4rem
+
+	a.sp-peoplepicker-delImage
+		display: inline-block
+		width: 2.6rem
+		height: 100%
+		margin-left: .5rem
+		background-color: $blue0
+		font-size: 120%
+		font-weight: 600
+		border-bottom: 0.1rem solid $intDefault
+
+	&:hover
+
+		a.sp-peoplepicker-delImage
+			background: $blue1
+			border-bottom: 0.1rem solid $intActive
+
+div.dataTables_paginate a.paginate_button
+	text-indent: -11rem
+	overflow: hidden
+
+	&:before
+		position: relative
+
+div.dataTables_paginate a.paginate_button.previous
+
+	&:before
+		left: 14rem
+
+div.dataTables_paginate a.paginate_button.next
+
+	&:before
+		left: 13rem
+
+div.dataTables_paginate a.paginate_button.disabled
+	display: none
+
+div.ui-dialog div.ui-dialog-titlebar.ui-widget-header button.ui-button
+	width: 1.5rem
+	height: 1.5rem
+	min-width: 1.5rem
+	right: .5rem
+	top: 1.5rem
+	background: transparent
+	border: none
+
+	span.ui-icon.ui-icon-closethick
+		top: 0
+		left: 0
+		width: 1.5rem
+		height: 1.5rem
+
+		&:before
+			position: absolute
+			top: .1rem
+			left: -.1rem
+			width: 1.5rem
+			height: 1.5rem
+			text-indent: 0
+			color: $intDefault !important
+
+			&:hover
+				color: $intActive !important
+
+div.fc-toolbar
+
+	button,
+	a
+		+verticalAlignMiddle
+
+	div.fc-left button
+		margin-top: 1rem !important
+
+	div.fc-right > div > button
+		transform: translateY((-4.25rem + 1rem))
+		// our usual vertical alignment doesn't work here, because it re-positions elements relative to their
+		//		starting position, which is typically the top of the parent; this is positioned at bottom
+		//		for reasons I can't determine and override - probably just how the browser renders it
+		//		with the header descending from the same parent
+		// -4.25rem -> align to top of parent
+		// 1rem drop back down to middle alignment
+
+	button.fc-prevYear-button,
+	button.fc-prev-button,
+	button.fc-next-button,
+	button.fc-nextYear-button
+
+		span.button-text
+			+inlineHidden
+
+ul#timeline-options li h2.collapsible a
+	display: block !important
+	position: relative
+	top: 50%
+
+div.vis-item div.vis-item-content
+	padding: 1px 5px 3px
+
+div.ui-dialog div.ui-dialog-content.ui-widget-content div.table-container div.dataTables_wrapper table.dataTable a.anchor_no-href
+	width: 100%
+
+div#s4-workspace div#public-community-page_open-enrollment div.primary-section a
+	display: block
+	max-width: 300px
+	margin: 1rem 0 2rem !important
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+//			HUB CENTRAL COMMUNITY PAGES
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+// ------------------
+// GLOBAL HUB CENTRAL COMMUNITY PAGES
+// ------------------
+
+// --- LAYOUT
+
+
+
+// not used everywhere
+// replace with legit responsiveness
+
+div#s4-workspace
+
+	table.in-zone-table
+		width: 100%
+
+		tbody tr:first-child
+			vertical-align: top
+
+		tbody > tr > td
+			width: 50%
+
+	div.public-community-page
+
+		div.primary-section
+			margin-bottom: 2.5rem
+
+		div.secondary-sections
+			+row
+
+			div.secondary-section
+				+col
+				width: 50%
+				padding-right: 2.5rem
+
+				div.tertiary-section
+					padding-bottom: 1rem
+
+		div.documents-web-part table table
+
+			thead
+				display: none
+
+
+		div.ms-rtestate-read.ms-rte-wpbox
+
+			div.ms-webpartzone-cell
+				margin-bottom: 0
+
+			table table
+
+				// thead
+				// 	display: none
+
+				tbody
+					// position: relative
+					// top: -1.5rem
+
+					tr td.ms-vb-icon
+						padding-left: 0
+
+
+
+
+// --- COMMUNITY, ARCHIVE DESCRIPTION
+
+div#s4-workspace
+
+	h2.community-description-header,
+	h2.archive-description-header
+		+blockHidden
+
+	div.community-description,
+	div.archive-description
+		font-size: 1.75rem
+		padding-bottom: 3rem
+
+		h3
+			font-size: 2.75rem !important
+
+// --- EDIT LINK
+
+div#s4-workspace
+
+	p.edit-link-container
+		margin-bottom: 0
+
+// --- SWF LINKS
+
+div#s4-workspace
+
+	span.link-explanation
+		display: block
+		padding-left: 1rem
+
+		ul
+			margin: 0
+
+// --- PUBLIC COMMUNITY LINKS
+
+div#s4-workspace
+
+	p.public-community-link_parent
+		margin-top: 2rem
+
+		a.public-community-link
+			+button
+			margin-top: 1rem
+			font-size: 1.75rem
+			color: $textOnIntDefault !important
+			background-color: $intDefault
+
+			&:hover
+				+buttonActive
+				background-color: $intActive
+
+// --- IN-PAGE PERSONAS
+
+div#s4-workspace
+
+	div.in-page-persona
+		+row
+		margin: .5rem 0 1.5rem
+
+
+		span.avatar-container
+			+col
+			width: 7.2rem
+
+			span.avatar
+				display: block
+				position: relative
+				width: 7.2rem
+				height: 7.2rem
+				// width: 7.4rem
+				// height: 2.4rem
+				// padding: 2.2rem 0 2.6rem
+				border-radius: 50%
+				background-color: $darkPurple
+				text-align: center
+
+				span.avatar-initials
+					display: block
+					position: absolute
+					left: 0
+					top: 2.2rem
+					width: 7.2rem
+					font-size: 2.4rem
+					line-height: 2.4rem
+					font-weight: 300
+					margin: 0 auto
+					color: $textOnDarkPurple
+
+				// img.avatar-image
+				// 	border-radius: 50%
+
+				span.avatar-photo
+					display: block
+					position: absolute
+					left: 0
+					top: 0
+					width: 7.2rem
+					height: 7.2rem
+					border-radius: 50%
+					background-repeat: no-repeat
+					background-position: center center
+					background-size: cover
+
+
+		span.name_title
+			+col
+			padding: 1rem 0 0 2rem
+
+			span.name
+				display: block
+				font-size: 2.1rem
+				font-weight: 300
+
+			span.title
+				display: block
+				font-size: 1.2rem
+				padding-top: .2rem
+				color: $grey5
+
+
+
+// --- COMMUNITY CONTACTS
+// --- TARGETED COMMUNITY LINKS
+
+div#s4-workspace
+
+	div.targeted-community-link,
+	div.targeted-links,
+	div.community-contact
+		margin-bottom: 1.5rem
+		padding: 1.5rem 3rem
+
+	div.targeted-community-link,
+	div.targeted-links
+		color: $textOnGreen
+		background-color: $green
+
+		h2
+			color: $textOnGreen !important
+
+		p
+			font-size: 1.5rem
+
+		a
+			+button
+			margin-top: 1rem
+			font-size: 1.5rem
+			text-align: left
+			color: $textOnButtonOnGreen !important
+			background-color: $buttonOnGreen
+
+			&:hover
+				+buttonActive
+				color: $textOnButtonOnGreen !important
+				background-color: $buttonActiveOnGreen
+
+		ul li
+			list-style: none
+			margin-left: 0
+			margin-bottom: .5rem
+
+
+	div.community-contact
+		color: $textOnYellow !important
+		background-color: $yellow
+
+		h2 nobr span,
+		.ms-vb
+			color: $textOnYellow !important
+
+		table table > tbody > tr
+			height: auto
+
+		a
+			text-align: left
+
+
+// --- YAMMER EMBED
+
+div#s4-workspace
+
+	div#embedded-feed
+		height: 600px
+
+
+
+// ------------------
+// INDIVIDUAL HUB COMMUNITY PAGES
+// ------------------
+
+// --- ENVIRONMENTAL HEALTH AND SAFETY
+
+div#public-community-page_msds,
+div#public-community-page_ppeha
+
+	div.primary-section
+		font-size: 1.75rem
+
+
+
+// --- HUMAN RESOURCES, VOLUNTEER SERVICES
+
+
+   // <div class="primary-section" id="primary-section_open-enrollment">
+   //    <h2>2017 Open Enrollment</h2>​​​
+   //    <p id="container_open-enrollment-link">
+   //       <a href="/SitePages/Open%20Enrollment.aspx">Learn about benefit options and make changes</a>​<br/></p>
+   // </div>
+
+
+
+div#s4-workspace
+
+	div#public-community-page_volunteer-services
+
+		p#container_volunteer-services-request-link
+			+killTopSpace
+
+	div#public-community-page_hr
+
+		div.community-description
+			padding: 0
+
+			ul
+				margin: 0
+
+		div#primary-section_open-enrollment
+			margin: 2rem 0 !important
+
+			a,
+			p
+				font-size: 1.75rem
+
+			// p
+			// 	padding: 2rem
+			// 	background-color: $darkPurple
+			// 	color: $textOnDarkPurple
+
+		div.ms-rtestate-read.ms-rte-wpbox,
+		p#container_open-enrollment-link,
+		p#container_benefits-link,
+		p#container_org-charts-and-profiles-link,
+		p#container_moscars-link,
+		p#container_jobs-link,
+		p#e-learning-intro,
+		ol#e-learning-steps
+			+killTopSpace
+
+		div.tertiary-section table.ms-listviewtable thead[role="presentation"]
+			display: none
+
+
+	div#public-community-page_open-enrollment
+
+		div.primary-section
+			font-size: 1.75rem
+
+		h2#header_need-to-know
+			color: $darkPink
+
+		h2#header_important-dates
+			color: $darkGreen
+
+
+
+	div#public-community-page_benefits
+
+		div.primary-section
+			font-size: 1.75rem
+
+		div.secondary-sections
+			+row
+
+			div.secondary-section
+				+col
+
+			div.secondary-section:nth-child(1)
+				width: 70%
+				padding-right: 3%
+
+			div.secondary-section:nth-child(2)
+				width: 25%
+
+	div#public-community-page_moscars
+
+		div#hero-spot
+			font-size: 2.75rem
+			color: $darkPink
+
+		div#call-to-action
+
+			p
+				display: inline-block
+
+				a
+					display: inline-block
+					font-size: 1.75rem
+					padding: 1.5rem
+					background-color: $intDefault
+					color: $buttonOnGreen
+
+		p#section-1,
+		p#section-2
+			font-size: 1.75rem
+
+		p#section-1,
+		p#section-3
+			font-weight: 700
+
+		div#tagline
+			font-size: 1.75rem
+			padding: 1.5rem
+			background-color: $orange
+			color: $textOnOrange
+
+
+
+// --- MARKETING COMMUNICATIONS
+
+@media only screen and (min-width: 1140px)
+
+	div#hub-community_marcom_requests_documents div#marcom-requests,
+	div#hub-community_marcom_requests_documents div#marcom-documents
+		display: inline-block
+		width: 45%
+		vertical-align: top
+
+	div#hub-community_marcom_requests_documents div#marcom-requests
+		padding-right: 2rem
+
+div#business-card-request-instructions
+	max-width: 60rem
+
+// --- ECS
+
+div#ecs-body.for-everyone div#container_ecs-documents
+
+	thead
+		display: none
+
+	tbody td
+		padding: 0
+
+
+
+
+
+// --- WELLNESS
+
+div#wellness-body div.community-description
+	font-size: 1.75rem
+	padding-bottom: 1rem
+
+div#wellness-community-contacts h2,
+div#wellness-community-contacts h3
+	margin-bottom: 0.5rem
+
+@media only screen and (min-width: 1140px)
+
+	img#wellness-logo
+		float: right
+		margin: 0 0 2rem 2rem
+
+	div#wellness-body,
+	div#wellness-aside
+		display: table-cell
+		padding: 0 0 0 1rem
+		vertical-align: top
+
+	div#wellness-body
+		padding: 0 1rem 0 0
+
+	div#wellness-pics-and-gym,
+	div#wellness-harvard-pilgrim
+		display: table-cell
+		width: 45%
+		padding: 0 0 0 1rem
+		vertical-align: top
+
+	div#wellness-pics-and-gym
+		padding: 0 1rem 0 0
+
+	div#wellness-community-contacts
+		max-width: 45rem
+
+	div#wellness-community-contacts div.grouping div.contact
+		display: table-cell
+		width: 20rem
+		padding: 0 0 0 1rem
+		vertical-align: top
+
+	div#wellness-community-contacts div.grouping div.contact:first-child
+		padding: 0 1rem 0 0
+
+// --- ACCESSIBILITY
+
+#mos_accessibility_links thead
+	display: none
+
+// --- ACCOUNTING
+
+#mos_acctg_whats-new
+	padding-right: 1em
+
+	.ms-itmHoverEnabled:hover > *
+		background-color: transparent
+		border: none
+
+#mos_acctg_whats-new thead,
+#mos_acctg_links thead,
+#mos_acctg_docs thead
+	display: none
+
+// --- IIT
+
+table.in-zone-table.about-iit td
+	width: 50%
+
+// --- ISGT
+
+body.isgt div.cbs-Item
+	padding-bottom: 0
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+//			UNCATEGORIZED - MOVE OR ELIM
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+body.adoption-sidebar div#contentBox div.ExternalClass6B1DA4C7C4474A69BB519A083CD3531D table#layoutsTable > tbody > tr > td:first-child,
+body.adoption-sidebar div#contentBox div.ExternalClass9229D48B98B94723B11BC9637373EDDF table#layoutsTable > tbody > tr > td:first-child
+	width: 50% !important
+	padding: 2 rem !important
+
+.callout-box
+	padding: 1.5rem 2rem
+	margin-bottom: 3rem
+	background-color: $grey14
+
+.callout-text
+	font-size: 2.2rem
+
+div.disambiguation span.temp
+	color: $grey10
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+//			TEMPORARY
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+p#matrix-request-notice
+	font-size: 1.75rem
+	padding: 1.5rem
+	background-color: $orange
+	color: $textOnOrange
+
+table.link-report
+
+	th
+		text-align: left
+		background-color: #ccc
+
+	th, td
+		padding: 1rem
+		border: solid 1px #666
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+//			ADOPTION
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+div#s4-workspace
+
+	div#adoption-1
+		background: $darkPink url("https://bmos.sharepoint.com/SiteAssets/bkgrd_adoption-1.png") center bottom / cover no-repeat
+		font-size: 3rem
+		font-weight: 300
+		padding: 2rem
+		color: $white
+
+		ul#calls-to-action
+			font-size: 2rem
+			font-weight: 500
+			margin: 5rem 0 20rem
+			padding: 1rem
+
+			> li
+				margin-bottom: 0.75rem
+
+			li a
+				+linkText
+				color: $buttonOnDarkPink !important
+
+				&:hover
+					+linkTextActive
+					color: $buttonActiveOnDarkPink !important
+
+			li p#apps_lead-in
+				margin: 0
+				color: $buttonOnDarkPink
+
+				&:hover
+					color: $buttonActiveOnDarkPink !important
+					cursor: pointer
+
+			ul#apps-list
+				display: none
+				margin-bottom: 0
+				font-size: 1.5rem
+
+				li
+					margin: 0 0 1rem .7rem
+
+					&:hover
+						cursor: text
+
+					a
+						display: block
+						width: 100%
+						color: #000
+
+						&:hover
+							color: #80E8FF
+
+
+@media screen and (min-width: 2300px)
+	div#adoption-1 ul#calls-to-action
+		background-color: $purple
+		font-weight: normal
+
+		ul#apps-list li
+			color: #fff
+
+		li a,
+		li p#apps_lead-in,
+		ul#apps-list li a
+			color: #FFD800
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+//			GLOBAL COMMUNITIES
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+div#s4-workspace
+
+	div.community-home-default-intro
+		font-size: 1.75rem
+		padding: 1.5rem
+		background-color: $yellow
+		color: $textOnYellow
+		margin-bottom: 1.5rem
+
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+//			GLOBAL COMMUNITIES
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+body.community
+
+	div#yammer-feed-container,
+	section#yammer-feed
+		height: 80rem
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+//			INDIVIDUAL COMMUNITIES
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+// ------------------
+// BOARD
+// ------------------
+
+body.mos_board
+
+	#mos_board_branding
+		background-size: cover
+		background-position: right center
+		background-image: url("/_catalogs/theme/mos_board_bkgrd_brand-banner.jpg")
+		height: 80px
+
+	.ms-breadcrumb-top
+		text-indent: -9999px
+
+	#suiteBarDelta
+		display: none
+
+	#RibbonContainer-TabRowRight
+		display: none !important
+
+	#s4-ribboncont > div
+		display: inline-block
+
+	#mos_log-out
+		width: 70px
+		vertical-align: top
+
+	#mos_log-out a
+		display: inline-block
+		padding: 14px 0 0 20px
+		text-transform: uppercase
+		font-size: 11px
+
+	span#ctl00_PlaceHolderMain_ctl02,
+	a.ms-subtleLink
+		display: none !important
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+//			SWF
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+// ------------------
+// GLOBAL SWF
+// ------------------
+
+// --- SEARCH BOX
+
+body.structured-workflow div#s4-workspace div#DeltaPlaceHolderSearchArea
+	display: none
+
+// --- CONTACT BOX
+
+div#s4-workspace
+
+	div#workflow-contacts
+		padding-left: 3rem
+		padding-top: 2rem
+
+		div.in-page-personas
+			@extend .community-contact
+
+
+// --- MY REQUESTS, ALTERNATE OVERVIEW SCREENS
+
+div#overview-screen-container.my-requests,
+div#overview-screen-container.myReferrals-requests,
+div#overview-screen-container.gpcInitialConceptApprovalViewer-requests,
+div#overview-screen-container.gpcSubmissionApprovalViewer-requests
+	padding-top: 2rem
+
+	div.table-container,
+	div#workflow-contacts
+		+col
+
+
+
+
+
+// --- FORM
+
+div#s4-workspace
+
+	div#request-form,
+	div.overlay-screen
+		width: 64.6rem // sum of other widths
+
+
+
+		// --- HEADERS
+
+		h2
+			padding: 2rem 0 1rem
+
+		h2:nth-child(1),
+		h2:nth-child(2)
+			padding-top: 1rem
+
+		h3
+			padding: 1.5rem 0 .5rem
+
+
+
+		// --- SCAFFOLDING
+
+		div.label-and-control
+			display: table
+
+		div.label,
+		div.field-type-indication,
+		div.control,
+			display: table-cell
+			vertical-align: top
+			padding: 1rem 0
+
+		div.label
+			text-align: right
+			padding: 1.3rem 1rem .7rem
+			width: 15rem
+
+		div.control
+			width: 45rem
+			padding: 1rem
+
+		div.preface
+			width: 64.6rem // sum of other widths
+			padding-bottom: 1rem
+
+		div.field-type-indication
+			width: .6rem
+			text-align: center
+			padding: 1rem .5rem
+
+		div#submit-or-exit
+			margin-top: 4rem
+
+			div#submission-notice
+				margin-bottom: 2rem
+
+				p
+					margin-bottom: 0 !important
+
+				p.alert
+					color: $darkPink
+
+		div.repeat-container:nth-child(even)
+			+gridElementDarkened1
+
+			div.subsection:nth-child(odd)
+				+gridElementDarkened2
+
+			div.subsection:nth-child(even)
+				+gridElementDarkened3
+
+		// subsection
+
+		div.subsection-container
+			margin-left: 19.5rem
+			padding-bottom: 2rem
+
+			div.subsection:nth-child(odd)
+				+gridElementDarkened1
+
+			div.subsection:nth-child(even)
+				+gridElementDarkened2
+
+			div.subsection.odd-visible-subsection
+				+gridElementDarkened1
+
+			div.subsection.even-visible-subsection
+				+gridElementDarkened2
+
+
+
+			div.subsection
+				width: 45rem
+
+				div.label
+					width: 9.5rem
+
+				div.field-type-indication
+					width: .6rem
+
+				div.control
+					width: 30rem
+
+				div.label-and-control.datetime
+
+					input.date-input
+						width: 11rem !important
+
+					select.hours-input,
+					select.minutes-input
+						width: 7.5rem !important
+
+		// table cell
+
+		td
+
+			div.label-and-control
+				display: block
+
+			div.control
+				width: auto
+
+
+
+
+
+
+
+
+
+
+		// --- USER INPUT CONTROLS - SIMPLE, GENERAL
+
+		input[type="text"],
+		input[type="tel"],
+		input[type="url"],
+		input[type="password"],
+		textarea,
+		select,
+		div.sp-peoplepicker-topLevel
+			box-sizing: border-box
+			width: 100% !important
+			height: 3rem
+			padding: .4rem 1rem .4rem
+			border: .1rem solid $grey11
+			background-color: $white
+			color: $grey4
+
+		input[type="file"],
+			width: 100% !important
+			padding: .3rem
+			border: .1rem solid $grey11
+			background-color: $white
+			color: $grey4
+
+		textarea
+			height: 9.6rem
+
+		div.sp-peoplepicker-topLevel
+			height: auto
+			padding: 0 1rem 0.4rem
+
+			span.sp-peoplepicker-initialHelpText
+				top: .6rem
+				left: 1.2rem
+
+			input.sp-peoplepicker-editorInput[type="text"]
+				width: auto !important
+				height: 2.4rem
+				padding: 0
+				border: none
+				margin-top: .5rem
+
+			ul.sp-autoFill-scroll
+				list-style-position: initial
+				margin: 0
+
+				li
+					list-style-position: initial
+					list-style-type: none
+					list-style-image: none
+					margin-left: 1rem
+
+		input.hasDatepicker
+			width: 65% !important
+
+		input[type="radio"]
+			margin-left: 0
+			margin-bottom: .3rem
+
+		div.label-and-control.datetime,
+		div.label-and-control.time
+
+			label
+				+inlineHidden
+
+			input.date-input
+				width: 15rem !important
+
+			select.hours-input,
+			select.minutes-input
+				width: 10rem !important
+
+
+
+		// --- USER INPUT CONTROLS - COMPLEX/UNUSUAL, GENERAL
+
+		// list item chooser
+
+		div.label-and-control.listItemChooser
+
+			input.id-or-link_list-item-chooser
+				width: 5rem !important
+
+			// list item chooser button styles in button section
+
+		// button with label styles in button section
+
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		div.label-and-control.mosFile div.control
+			position: relative
+			// height: 5rem
+
+			
+			// "basic" configurations
+
+			div.mos-drag-and-drop-file-attachment
+
+				// file input
+
+				div.mos-drag-and-drop-file-input
+					// position: absolute
+					// top: 1rem
+					// width: 41rem // 100% minus padding and border; for some reason, calc isn't working
+					height: 1.8rem
+					padding: 1.5rem
+					background-color: $grey14
+					border: .1rem solid $grey12
+					transition: background-color .25s, opacity .5s
+
+					label
+						display: none
+
+					label span.mos-file-selection-prompt
+						color: $intDefault
+						cursor: pointer
+
+					input.mos-file-selector
+						display: none
+
+
+				
+				// file container
+
+				a.mos-drag-and-drop-file-container
+					position: relative
+					// top: 0
+					display: none
+					position: relative
+					color: $grey5 !important
+					width: 100%
+					height: 5rem
+					background-color: $grey13
+					opacity: 0
+					transition: opacity .5s
+
+					div.mos-drag-and-drop-file-upload-icon,
+					div.mos-drag-and-drop-file-preview,
+					div.mos-drag-and-drop-file-name-and-size,
+					div.mos-drag-and-drop-file-control
+						position: absolute
+						top: 0
+
+					div.mos-drag-and-drop-file-upload-icon
+						left: 0
+						width: 4rem
+						height: 4rem
+						padding: .5rem
+						transition: opacity .5s
+
+						&:before
+							+fontIcon
+							+fontIconDocument
+							width: 4rem
+							height: 4rem
+							font-size: 3rem
+							color: $grey10
+							text-align: center
+							+verticalAlignMiddle
+							transition: opacity .5s
+
+					div.mos-drag-and-drop-file-preview
+						left: 0
+						width: 5rem
+						height: 5rem
+						background-repeat: no-repeat
+						background-position: center
+						background-size: cover
+						opacity: 0
+						transition: opacity .5s
+
+						&:before
+							position: absolute
+							top: .5rem
+							left: .5rem
+							display: inline-block
+							width: 4rem
+							height: 4rem
+							content: ''
+							background-repeat: no-repeat
+							background-position: center
+							background-size: cover
+
+					div.mos-drag-and-drop-file-name-and-size
+						left: 5rem
+						width: 35rem
+						padding: .8rem 0 .8rem 1rem
+
+						div.mos-drag-and-drop-file-name
+							height: 1.9rem
+							max-width: 31rem
+							white-space: nowrap
+							overflow: hidden
+							text-overflow: ellipsis
+							+intElementDarkened1
+
+						div.mos-drag-and-drop-file-size
+							height: 1.5rem
+							font-size: 1rem
+							max-width: 31rem
+							white-space: nowrap
+							overflow: hidden
+							text-overflow: ellipsis
+
+					div.mos-drag-and-drop-file-control
+						display: none
+						right: 0rem
+						width: 3rem
+						opacity: 0
+						transition: opacity .5s
+
+
+
+						&:before
+							+fontIcon
+							+fontIconX
+							width: 3rem
+							height: 4rem
+							font-size: 1.4rem
+							font-weight: 900
+							color: $intDefault
+							text-align: center
+							padding-top: .5rem
+
+					div.mos-drag-and-drop-file-progress
+						display: none
+						position: absolute
+						bottom: 0
+						left: 0
+						width: 100%
+						height: .4rem
+						background-color: $grey10
+						transition: opacity .5s
+
+						progress
+							position: absolute
+							top: 0
+							-webkit-appearance: none
+							-moz-appearance: none
+							appearance: none
+							color: $green // for IE10+
+							border: none
+							width: 100%
+							height: .4rem
+
+
+
+
+
+			// populatable
+
+			div.mos-drag-and-drop-file-attachment.populatable
+
+				// file input
+
+				div.mos-drag-and-drop-file-input
+					background-color: white
+					border: .1rem dashed $blue2
+
+					label
+						display: inline
+
+
+
+
+			// states
+
+			// file input
+
+			div.mos-drag-and-drop-file-attachment.dragged-over
+				
+				div.mos-drag-and-drop-file-input
+					background-color: $blue0
+					border: 1px solid $blue2
+
+
+			// file container
+	
+			div.mos-drag-and-drop-file-attachment.attaching
+
+				a.mos-drag-and-drop-file-container
+					display: block
+					opacity: 1
+
+					div.mos-drag-and-drop-file-progress
+						display: block
+						opacity: 1
+
+				div.mos-drag-and-drop-file-input
+					display: none
+					opacity: 0
+
+
+			div.mos-drag-and-drop-file-attachment.attaching.partial-progress
+
+				a.mos-drag-and-drop-file-container
+
+					progress[value]::-moz-progress-bar
+						background-color: $yellow
+
+					progress[value]::-webkit-progress-value
+						background-color: $yellow
+
+
+
+			div.mos-drag-and-drop-file-attachment.attaching.full-progress
+				
+				a.mos-drag-and-drop-file-container
+					background-color: $veryLightGreen
+
+				div.mos-drag-and-drop-file-progress
+					display: block
+
+					progress[value]::-moz-progress-bar
+						background-color: $green
+
+					progress[value]::-webkit-progress-value
+						background-color: $green
+
+
+			
+			div.mos-drag-and-drop-file-attachment.attachment-completed
+				
+				a.mos-drag-and-drop-file-container
+					background-color: $veryLightGreen
+					display: block
+					opacity: 1
+
+					div.mos-drag-and-drop-file-progress
+						display: none
+						opacity: 0
+
+				div.mos-drag-and-drop-file-input
+					display: none
+					opacity: 0
+
+			div.mos-drag-and-drop-file-attachment.attached
+
+				a.mos-drag-and-drop-file-container
+					display: block
+					opacity: 1
+
+					div.mos-drag-and-drop-file-progress
+						display: none
+						opacity: 0
+
+					div.mos-drag-and-drop-file-preview
+						opacity: 1
+
+
+
+
+				div.mos-drag-and-drop-file-input
+					display: none
+					opacity: 0
+
+
+			div.mos-drag-and-drop-file-attachment.replaceable,
+			div.mos-drag-and-drop-file-attachment.attachment-error
+
+				a.mos-drag-and-drop-file-container
+
+					div.mos-drag-and-drop-file-control
+						display: block
+						opacity: 1
+
+
+
+			a.mos-drag-and-drop-file-container
+
+				div.mos-drag-and-drop-file-preview.word-file
+					
+					&:before
+						background-image: url('https://bmos.sharepoint.com/sites/hubprod/Asset%20Library/icon_docx-file_white.svg')
+
+				div.mos-drag-and-drop-file-preview.excel-file
+					
+					&:before
+						background-image: url('https://bmos.sharepoint.com/sites/hubprod/Asset%20Library/icon_xlsx-file_white.svg')
+
+				div.mos-drag-and-drop-file-preview.powerpoint-file
+					
+					&:before
+						background-image: url('https://bmos.sharepoint.com/sites/hubprod/Asset%20Library/icon_pptx-file_white.svg')
+
+				div.mos-drag-and-drop-file-preview.pdf-file
+					
+					&:before
+						background-image: url('https://bmos.sharepoint.com/sites/hubprod/Asset%20Library/icon_pdf-file_white.svg')
+
+				div.mos-drag-and-drop-file-preview.psd-file
+					
+					&:before
+						background-image: url('https://bmos.sharepoint.com/sites/hubprod/Asset%20Library/icon_psd-file_white.svg')
+
+				div.mos-drag-and-drop-file-preview.tiff-file
+					
+					&:before
+						background-image: url('https://bmos.sharepoint.com/sites/hubprod/Asset%20Library/icon_tiff-file_white.svg')
+
+				div.mos-drag-and-drop-file-preview.ai-file
+					
+					&:before
+						background-image: url('https://bmos.sharepoint.com/sites/hubprod/Asset%20Library/icon_ai-file_white.svg')
+
+				div.mos-drag-and-drop-file-preview.eps-file
+					
+					&:before
+						background-image: url('https://bmos.sharepoint.com/sites/hubprod/Asset%20Library/icon_eps-file_white.svg')
+
+				div.mos-drag-and-drop-file-preview.svg-file
+					
+					&:before
+						background-image: url('https://bmos.sharepoint.com/sites/hubprod/Asset%20Library/icon_svg-file_white.svg')
+
+				div.mos-drag-and-drop-file-preview.text-file
+					
+					&:before
+						background-image: url('https://bmos.sharepoint.com/sites/hubprod/Asset%20Library/icon_text-file_white.svg')
+
+				div.mos-drag-and-drop-file-preview.generic-file
+					
+					&:before
+						background-image: url('https://bmos.sharepoint.com/sites/hubprod/Asset%20Library/icon_generic-file_white.svg')
+
+
+
+
+		// error configuration
+
+		div.label-and-control.mosFile.contains-errors div.control
+			position: relative
+			height: 6.7rem
+
+			div.mos-drag-and-drop-file-attachment 
+
+				// file input
+
+				div.mos-drag-and-drop-file-input
+					position: absolute
+					top: 1rem
+					width: 41rem // 100% minus padding and border; for some reason, calc isn't working
+					height: 1.8rem
+					padding: 1.5rem
+					background-color: white
+					border: .1rem dashed $darkPink
+
+
+			// error message placement
+
+			div.error-message
+				position: absolute
+				top: 6rem
+
+
+			div.mos-drag-and-drop-file-attachment.attachment-error
+				
+				a.mos-drag-and-drop-file-container
+					background-color: $white
+					border: .1rem solid $darkPink
+					display: block
+					opacity: 1
+
+					div.mos-drag-and-drop-file-progress
+						display: none
+						opacity: 0
+
+					div.mos-drag-and-drop-file-control
+						cursor: pointer
+
+				div.mos-drag-and-drop-file-input,
+				div.help-text
+					display: none
+					opacity: 0
+
+
+		div.subsection-container
+
+			div.subsection
+
+				div.label-and-control.mosFile div.control
+
+					div.mos-drag-and-drop-file-attachment
+
+						// file input
+
+						div.mos-drag-and-drop-file-input
+							height: 3.8rem
+
+							label span.mos-file-selection-prompt
+								display: block
+
+						a.mos-drag-and-drop-file-container
+
+								div.mos-drag-and-drop-file-name-and-size
+									width: 20rem
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		// --- USER INPUT CONTROLS - DISABLED + READONLY
+
+		input[type="password"][disabled],
+		input[type="text"][disabled],
+		input[type="url"][disabled],
+		input[type="tel"][disabled],
+		input[type="file"][disabled],
+		textarea[disabled],
+		select[disabled],
+		input[type="password"][readonly],
+		input[type="text"][readonly],
+		input[type="url"][readonly],
+		input[type="tel"][readonly],
+		input[type="file"][readonly],
+		textarea[readonly],
+		select[readonly],
+		.sp-peoplepicker-topLevelDisabled,
+		.ms-inputBoxDisabled,
+		div.mos_people-picker-disabled
+			color: $grey5
+			border-color: $grey12
+			background-color: $grey14
+			cursor: default
+
+		div.sp-peoplepicker-topLevel.mos_people-picker-disabled
+
+			span.sp-peoplepicker-userSpan
+
+				span.ms-entity-resolved
+					padding: .2rem 1rem 0 0
+
+				a.sp-peoplepicker-delImage
+					display: none
+
+
+
+		// --- MESSAGING
+
+		.urgent
+			color: $darkPink !important
+
+			h2
+				color: $darkPink !important
+
+
+		span.field-type-indicator span.message
+			+inlineHidden
+
+		span.field-type-indicator.field-required:before
+			content: "*"
+
+		span.field-type-indicator.field-required
+			color: $darkPink
+			font-size: 1.5rem
+			font-weight: bold
+
+		div.help-text
+			font-style: italic
+			color: $grey7
+
+		div.help-text.emphasis,
+		div#submit-or-exit div#submission-notice p.submission-notice-addition.emphasis
+			padding: .5rem
+			background-color: $yellow
+			color: $grey1
+
+		div#submit-or-exit div#submission-notice p.submission-notice-addition.emphasis
+			padding: 1rem
+			margin-bottom: 1rem !important
+
+		div.label-and-control.contains-errors div.help-text.emphasis
+			color: $grey2
+
+		div.label-and-control.datePicker div.help-text
+			box-sizing: border-box
+			width: 65% !important
+
+		div.error-message
+			text-align: left
+			color: $darkPink
+
+		div.label-and-control.contains-errors
+			background-color: $veryLightPink
+
+			input[type="password"],
+			input[type="text"],
+			input[type="tel"],
+			input[type="url"],
+			input[type="file"],
+			select,
+			textarea,
+			.sp-peoplepicker-topLevel,
+			.sp-peoplepicker-autoFillContainer,
+			.ms-inputBox
+				border-color: $darkPink
+
+			div.help-text
+				color: $grey5
+
+
+
+		// --- SPECIFIC FIELDS / SECTIONS
+
+		// approval notification history
+
+		table#table_approval-notification-history
+			width: 100%
+			margin-bottom: 2rem
+
+			th,
+			td
+				padding: .75rem 2rem 1.25rem
+				text-align: left
+
+				input
+					padding: 0
+					border: none
+					background-color: transparent
+
+			th
+				font-weight: 500
+
+			thead tr
+				+gridElementDarkened1
+
+			tbody tr:nth-child(even)
+				+gridElementDarkened2
+
+		// historical admin notes
+
+		div#label-and-control_Historical-Admin-Notes,
+		div#label-and-control_Historical-PID-Comments,
+		div#label-and-control_Historical-Other-Preservable-Notes
+
+			label
+				+blockHidden
+
+			textarea#Historical-Admin-Notes,
+			textarea#Historical-PID-Comments,
+			textarea#Historical-Other-Preservable-Notes
+				background-color: $white
+				border-color: $white
+				resize: none
+
+		// component group admin only
+
+		div#component-group-admin-only
+			display: none !important
+			background-color: $yellow
+			padding: 2rem
+			margin-top: 4rem
+
+
+
+// --- HIDDEN
+
+// hide from all users, including screen readers
+
+div#app-container textarea.hidden-cloned-textarea
+	box-sizing: border-box
+	width: 45rem
+	padding: .4rem 1rem .4rem
+	border: .1rem solid $grey11
+	visibility: hidden
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+div#s4-workspace div.repeating-content-container div.repeat-container:first-child a.remove-section-anchor
+	display: none
+
+div#request-form
+	opacity: 0
+
+	h1.hidden,
+	h2.hidden,
+	h3.hidden,
+	h4.hidden,
+	h5.hidden,
+	h6.hidden,
+	a.hidden,
+	div.hidden,
+	span.hidden,
+	p.hidden,
+	ul.hidden,
+	div.label-and-control.hidden,
+	div.help-text.hidden
+		display: none !important
+
+// hide from sighted users only
+div#request-form
+
+	// td div.label,
+	// div#label-and-control_Request-Total div.label,
+	// div#label-and-control_Request-Total div.field-type-indication
+	// 	+blockHidden
+
+
+// --- SWF SCREENS
+
+div.screen-container.hidden
+	display: none
+
+div#printer-content
+
+	h1
+		font-size: 4rem
+		padding: 1rem 0 0
+
+	h2,
+	h3,
+	h4
+		padding: 1rem 0
+
+
+
+
+
+
+
+
+
+// --- OVERLAYS
+
+div#s4-workspace
+
+	div#overlays-screen-container
+		position: fixed
+		top: 0
+		right: 0
+		bottom: 0
+		left: 0
+		width: 100%
+		text-align: center
+		z-index: $zindexOverlaysContainer
+		background-color: $white
+
+	div.overlay-screen
+		position: fixed
+		top: 0
+		right: 0
+		bottom: 0
+		left: 0
+		width: 100%
+		text-align: center
+		z-index: $zindexOverlay
+
+		&:before
+			display: inline-block !important
+			vertical-align: middle
+			content: ''
+			height: 100%
+			margin-right: -0.25rem
+
+		div.screen-content
+			display: inline-block
+			min-width: 20rem
+			max-width: 35rem
+			white-space: normal
+			vertical-align: middle
+
+			p
+				font-size: 3.5rem
+				line-height: 4rem
+				color: $grey6
+				text-rendering: optimizelegibility
+
+			a,
+			input[type="button"]
+				margin: 2rem auto 0
+
+	div.overlay-screen#wait-while-working
+
+		div.screen-content
+			position: absolute
+			left: 0
+			top: 40%
+			max-width: 100%
+			width: 100%
+
+			div.message
+				position: relative
+
+			div#waiting-animation
+
+				div
+					width: 1rem
+					height: .95rem
+					position: absolute
+					left: -1rem
+					top: 5rem
+					background-color: $pink
+					border-radius: 50%
+					animation: move 2.5s infinite cubic-bezier(.2,.64,.81,.23)
+
+				div:nth-child(2)
+					animation-delay: 100ms
+					background-color: $orange
+
+				div:nth-child(3)
+					animation-delay: 200ms
+					background-color: $purple
+
+				div:nth-child(4)
+					animation-delay: 300ms
+					background-color: $green
+
+			@keyframes move
+				0%
+					left: 0%
+				75%
+					left: 100%
+				100%
+					left: 100%
+
+	div.overlay-screen#mos-form-submission-confirmation.contains-additional-message
+
+		p
+			font-size: 2rem
+			line-height: 2.5rem
+
+		ul
+			text-align: left
+
+	div.overlay-screen#mos-form-sumbission-errors div.screen-content
+		max-width: 64.6rem // sum of other widths
+
+		p
+			font-size: 2rem
+			line-height: 2.5rem
+
+		div#label-and-control_Error-Example
+			margin: 2rem 0
+
+		input[type="button"]
+			margin: 4rem auto 0
+
+	div.overlay-screen#last-modified-mismatch div.screen-content
+
+		p
+			font-size: 2rem
+			line-height: 2.5rem
+
+	div.overlay-screen#maintenance-mode
+		background-image: url(/sites/hubprod/Asset%20Library/sweet-kitty-action_1920.jpg)
+		background-position: right top
+		background-repeat: no-repeat
+		background-attachment: fixed
+		background-size: cover
+		background-color: $intDefault
+		text-align: left
+
+		&:before
+			margin-left: 20%
+
+		div.screen-content
+			padding: 5rem
+			background-color: rgba(255,216,0,.9)
+
+			a
+				display: block
+				margin-bottom: 2rem
+
+				img
+					width: 30rem
+
+			p
+				line-height: 4.5rem
+				color: $grey3
+
+
+
+// --- DATATABLES
+
+div#s4-workspace,
+div.ui-dialog
+
+	p.message_no-requests-found
+		margin-bottom: 4rem
+
+	div.ui-dialog-titlebar.ui-widget-header
+
+		span.list-dialog-header
+			font-size: 2.75rem !important
+			font-weight: 300
+
+		thead tr
+			text-align: left
+
+	div.table-container div.dataTables_wrapper
+		margin-bottom: 4rem
+
+		div.dataTables_filter
+			display: block
+			float: none
+			margin: 1rem 0
+			padding: .2rem 0
+			width: 25rem
+			border: .1rem solid $grey11
+			font-weight: 500
+			text-align: left
+
+			&:after
+				+fontIcon
+				+fontIconAfter
+				+fontIconSearch
+				position: relative
+				left: 18.5rem
+
+			label
+				position: relative
+				color: $white
+
+				input
+					position: absolute
+					left: .4rem
+					top: -.2rem
+					width: 22.2rem
+					color: $grey4
+					border: none
+
+		table.dataTable
+			border-spacing: 0
+
+			thead
+
+				th
+					padding: .8rem 2.4rem .8rem .8rem
+					font-weight: 500
+					border: none
+
+				th.sorting,
+				th.sorting_asc_disabled,
+				th.sorting_desc_disabled
+					background: none
+
+				th.sorting_asc,
+				th.sorting_desc
+					padding: .8rem 2.4rem
+
+					&:before
+						+fontIcon
+						+fontIconBefore
+
+				th.sorting_asc
+
+					&:before
+
+						+fontIconArrowUp2
+
+				th.sorting_desc
+
+					&:before
+
+						+fontIconArrowDown2
+
+			tbody
+
+				td
+					padding: .8rem
+
+					a.link_request-id
+						display: block
+						padding: .5rem 0
+						width: 100%
+						text-align: center
+						cursor: pointer
+
+						&:after
+							+fontIcon
+							+fontIconAfter
+							+fontIconArrowRight
+							font-size: 1rem
+
+				tr.group
+					font-size: 1.7rem
+					font-weight: 300
+
+				tr.odd
+					+gridElementDarkened1
+
+					td.sorting_1
+						+gridElementDarkened2
+
+				tr.even
+					// no darkening
+
+					td.sorting_1
+						+gridElementDarkened1
+
+		div.dataTables_paginate
+			float: none
+			text-align: left
+			margin-top: 1rem
+
+// set magnifying glass into search box - different positions for page and dialog box
+div#s4-workspace div.table-container div.dataTables_wrapper	div.dataTables_filter:after,
+div.ui-dialog div.table-container div.dataTables_wrapper	div.dataTables_filter:after
+	+fontIcon
+	+fontIconAfter
+	+fontIconSearch
+	position: relative
+
+div#s4-workspace div.table-container div.dataTables_wrapper	div.dataTables_filter:after
+	left: 18.5rem
+
+div.ui-dialog div.table-container div.dataTables_wrapper	div.dataTables_filter:after
+	left: 18rem
+
+// datatables inside dialog boxes should fill container
+div.ui-dialog div.table-container div.dataTables_wrapper table.dataTable
+	width: 100% !important
+	font-size: 1.3rem
+
+
+
+// div#s4-workspace,
+// div.ui-dialog
+
+		// table.dataTable.stripe
+
+			// tbody
+
+			// 	tr.odd,
+			// 	tr.odd
+			// 		background-color: #f9f9f9
+
+			// 	tr.odd.selected,
+			// 	tr.odd.selected
+			// 		background-color: #abb9d3
+
+		// table.dataTable.hover,
+		// table.dataTable.display
+
+			// tbody
+
+			// 	tr:hover,
+			// 	tr.odd:hover,
+			// 	tr.even:hover
+			// 		background-color: #f5f5f5
+
+			// 	tr:hover.selected,
+			// 	tr.odd:hover.selected,
+			// 	tr.even:hover.selected,
+			// 	tr:hover.selected,
+			// 	tr.odd:hover.selected,
+			// 	tr.even:hover.selected
+			// 		background-color: #a9b7d1
+
+		// table.dataTable.order-column,
+		// table.dataTable.display
+
+			// tbody
+
+			// 	tr>.sorting_1,
+			// 	tr>.sorting_2,
+			// 	tr>.sorting_3
+			// 		background-color: #f9f9f9
+
+			// 	tr.selected>.sorting_1,
+			// 	tr.selected>.sorting_2,
+			// 	tr.selected>.sorting_3
+			// 		background-color: #acbad4
+
+			// 	tr.odd>.sorting_1,
+			// 	tr.odd>.sorting_1
+			// 		background-color: #f1f1f1
+
+			// 	tr.odd>.sorting_2,
+			// 	tr.odd>.sorting_2
+			// 		background-color: #f3f3f3
+
+			// 	tr.odd>.sorting_3,
+			// 	tr.odd>.sorting_3
+			// 		background-color: #f5f5f5
+
+			// 	tr.odd.selected>.sorting_1,
+			// 	tr.odd.selected>.sorting_1
+			// 		background-color: #a6b3cd
+
+			// 	tr.odd.selected>.sorting_2,
+			// 	tr.odd.selected>.sorting_2
+			// 		background-color: #a7b5ce
+
+			// 	tr.odd.selected>.sorting_3,
+			// 	tr.odd.selected>.sorting_3
+			// 		background-color: #a9b6d0
+
+			// 	tr.even>.sorting_1,
+			// 	tr.even>.sorting_1
+			// 		background-color: #f9f9f9
+
+			// 	tr.even>.sorting_2,
+			// 	tr.even>.sorting_2
+			// 		background-color: #fbfbfb
+
+			// 	tr.even>.sorting_3,
+			// 	tr.even>.sorting_3
+			// 		background-color: #fdfdfd
+
+			// 	tr.even.selected>.sorting_1,
+			// 	tr.even.selected>.sorting_1
+			// 		background-color: #acbad4
+
+			// 	tr.even.selected>.sorting_2,
+			// 	tr.even.selected>.sorting_2
+			// 		background-color: #adbbd6
+
+			// 	tr.even.selected>.sorting_3,
+			// 	tr.even.selected>.sorting_3
+			// 		background-color: #afbdd8
+
+		// table.dataTable.display,
+		// table.dataTable.order-column.hover
+
+			// tbody
+
+			// 	tr:hover>.sorting_1,
+			// 	tr.odd:hover>.sorting_1,
+			// 	tr.even:hover>.sorting_1
+			// 		background-color: #eaeaea
+
+			// 	tr:hover>.sorting_2,
+			// 	tr.odd:hover>.sorting_2,
+			// 	tr.even:hover>.sorting_2
+			// 		background-color: #ebebeb
+
+			// 	tr:hover>.sorting_3,
+			// 	tr.odd:hover>.sorting_3,
+			// 	tr.even:hover>.sorting_3
+			// 		background-color: #eee
+
+			// 	tr:hover.selected>.sorting_1,
+			// 	tr.odd:hover.selected>.sorting_1,
+			// 	tr.even:hover.selected>.sorting_1
+			// 		background-color: #a1aec7
+
+
+			// 	tr:hover.selected>.sorting_2,
+			// 	tr.odd:hover.selected>.sorting_2,
+			// 	tr.even:hover.selected>.sorting_2
+			// 		background-color: #a2afc8
+
+			// 	tr:hover.selected>.sorting_3,
+			// 	tr.odd:hover.selected>.sorting_3,
+			// 	tr.even:hover.selected>.sorting_3
+			// 		background-color: #a4b2cb
+
+		// div.dataTables_info
+		// 	clear: none
+		// 	float: none
+		// 	color: #151515
+//
+	// span.table-title-parenthetical-note
+	// 	display: block
+	// 	color: #888
+	// 	font-size: 2.25rem !important
+
+
+
+// --- DOCUMENTATION
+div#swf-documentation
+
+	div#preface
+
+		span.label
+			font-weight: 700
+
+	table
+		border-spacing: 0
+		margin-top: 1rem
+		margin-bottom: 1rem
+
+		thead
+
+			th
+				padding: .8rem 2.4rem .8rem .8rem
+				font-weight: 500
+				border: none
+				+gridElementDarkened3
+
+		tbody
+
+			td
+				padding: .8rem
+
+			tr.odd
+				+gridElementDarkened1
+
+				td:first-child
+					+gridElementDarkened2
+
+			tr.even
+				// no darkening
+
+				td:first-child
+					+gridElementDarkened1
+
+	.data-connection
+		color: $darkGreen
+
+	.system-connection
+		color: $purple
+
+
+
+
+
+
+
+
+// ------------------
+// TEMP
+// ------------------
+
+// remove below when community contacts are all handled via script
+div#s4-workspace div.community-contact
+
+	a[href^="https://bmos-my"]
+		+button
+		color: $textOnIntDefault !important
+		background-color: $intDefault !important
+
+		&:hover
+			color: $textOnIntActive !important
+			background-color: $intActive !important
+// remove above when community contacts are all handled via script
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ------------------
+// INDIVIDUAL SWF
+// ------------------
+
+
+
+// --- GPC CONFIGURATION
+
+div#app-container.gpc-configuration
+
+	div#request-form
+
+		h2#header_this-request,
+		div#requirement-legend,
+		div#label-and-control_Request-ID,
+		div#label-and-control_Request-Date,
+		div#label-and-control_Requested-For,
+		div#label-and-control_Requester-Cancellation,
+		div#container_about-the-requester
+			display: none
+
+
+
+// --- GPC INITIAL APPROVAL REQUESTS
+
+div#app-container.gpc-initial-concept-approval
+
+	div#request-form
+
+		input#MOS-Direct-Costs,
+		input#IDC,
+		input#Total-MOS-Budget,
+		input#Total-Project-Budget
+			text-align: right
+
+div#printer-content div#gpc-initial-concept-approval
+
+	table.layout-table > tbody > tr > td
+		width: 50%
+
+	td#budget-summary
+
+		table
+			margin-top: 10px
+			margin-bottom: 10px
+			border-top: solid 1px $grey9
+			border-collapse: collapse
+
+			td
+				padding: 0 1rem
+				border-bottom: solid 1px $grey9
+				border-right: solid 1px $grey9
+
+				&:first-child
+					border-left: solid 1px $grey9
+
+			td.content
+				text-align: right
+
+
+
+// --- GPC SUBMISSION APPROVAL REQUESTS
+
+div#app-container.gpc-submission-approval
+
+	div#request-form
+
+		input#MOS-Direct-Costs,
+		input#IDC,
+		input#Total-MOS-Budget,
+		input#Total-Project-Budget,
+		input#Cost-Share
+			text-align: right
+
+		div#container_project-needs
+
+			div#radio-button-set-fake-labels
+
+				div#fake-label_yes
+					margin-left: 48.5rem
+
+				div.radio-button-set-fake-label
+					display: inline-block
+
+					&:before
+						display: inline-block
+						width: 4.35rem
+						text-align: center
+
+				div#fake-label_yes:before
+					content: "Yes"
+
+				div#fake-label_no:before
+					content: "No"
+
+				div#fake-label_not-applicable:before
+					content: "N/A"
+
+
+			div.label-and-control.radio
+
+				div.label
+					width: 45rem
+
+				div.control
+					width: 15rem
+
+					div.choice-container
+						display: inline-block
+						width: 4rem
+						text-align: center
+
+						input
+							margin-left: auto
+							margin-right: auto
+
+						label
+							display: none
+
+
+div#printer-content div#gpc-submission-approval
+
+	table.layout-table > tbody > tr > td
+		width: 50%
+
+	td#project-budget
+
+		table
+			margin-top: 10px
+			margin-bottom: 10px
+			border-top: solid 1px $grey9
+			border-collapse: collapse
+
+			td
+				padding: 0 1rem
+				border-bottom: solid 1px $grey9
+				border-right: solid 1px $grey9
+
+				&:first-child
+					border-left: solid 1px $grey9
+
+			td.content
+				text-align: right
+
+
+// --- PROMO REQUESTS
+
+ul#digital-promotion-requests_preface strong
+	display: block
+
+
+
+// --- NETWORK ACCESS REQUEST
+
+div#app-container.network-access
+
+	div#overlays-screen-container
+
+		div#mos-form-submission-confirmation.contains-additional-message
+
+			div.section-content
+				text-align: left
+
+				div#mos-form-submission-confirmation-additional-message
+					max-width: 50rem
+
+					h2
+						font-size: 2.25rem !important
+
+					div.single-message
+						margin-bottom: 2rem
+
+						p
+							font-size: 1.6rem
+							line-height: 2.2rem
+
+			a.link_exit
+				margin: 4rem 0 0 0
+
+
+
+// --- OVERNIGHT PARKING REQUEST
+
+div#app-container.overnight-parking div#request-form ul#terms-and-conditions
+	margin: 10px 0px 0px 22.4rem
+
+
+
+// --- EVENT AV
+
+div#s4-workspace div#app-container.event-av
+
+	div#container_command-bar-and-tables.ui-tabs.ui-widget.ui-widget-content.ui-corner-all
+		padding: 0
+		border: none
+		color: inherit
+		background-color: transparent
+
+		div.ui-tabs-panel
+			padding: 0
+
+	div#container_command-bar
+		+gridElementDarkened1
+		display: inline-block
+
+		h2#header_command-bar
+			+blockHidden
+
+		div#container_new-request-control,
+		ul#container_tab-controls,
+		div#container_date-filter-controls-and-header,
+			+col
+
+		ul#container_tab-controls
+			background-color: transparent
+			border: none
+
+			li
+				+col
+				list-style: none
+				margin: 0
+				border: none
+				padding: 0
+
+		div#container_date-filter-controls-and-header div#text_date-filter-controls a.collapsible-heading-toggle
+			display: block
+
+	div#container_date-filter-controls
+		padding: 1.5rem 1.5rem 0 0
+		font-weight: 600
+
+		div.container_date-filter-control
+			padding: 0 0 1.5rem 1.5rem
+
+			label.date-selector-label
+				display: inline-block
+				width: 10.5rem
+
+			input.date-selector
+				width: 13rem
+
+			a#submit-button
+				margin-left: 11rem !important
+
+	div.table-container
+		margin-top: 2rem
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// --- PUCK QUICK PICK
+
+div#s4-workspace div#app-container.puck-quick-pick
+
+	div#request-form
+
+		thead
+
+			th.th_item
+				text-align: left
+				padding-right: 1rem
+
+			th.td_price
+				padding-right: 2rem
+
+			th.th_quantity
+				padding-left: 2.6rem
+
+			th.th_subtotal
+				padding-left: 1rem
+
+		tbody
+
+			th.th_item
+				text-align: left
+				width: 43.3rem
+				padding-right: 1rem
+				font-weight: 400
+
+			td.td_price
+				padding-right: 1rem
+
+			input.quantity-input,
+			input.subtotal-input
+				width: 5rem !important
+
+			td.td_quantity,
+			td.td_subtotal
+
+				div.label
+					+blockHidden
+
+			td.td_subtotal
+
+				div.field-type-indication
+					+blockHidden
+
+
+
+// --- PUCK CATERING
+
+div#s4-workspace div#app-container.puck-catering
+
+	div#request-form
+
+		input.quantity-input,
+		input.subsection-quantity-input,
+		input.subtotal-input
+			width: 6rem !important
+
+		h4#header_Boxed-Lunch,
+		h4#header_Upscale-Sandwich-Buffet,
+		h4#header_Delicatessen-Buffet,
+		table#table_Upscale-Sandwich-Buffet thead,
+		table#table_Delicatessen-Buffet thead
+			+blockHidden
+
+		thead
+
+			th.th_item
+				text-align: left
+
+			th.th_item,
+			th.td_price
+				padding-right: 1rem
+
+			th.th_quantity
+				padding-left: 2.6rem
+
+			th.th_subtotal
+				padding-left: 1rem
+
+		tbody
+
+			th.th_item
+				text-align: left
+
+			th.th_item
+				width: 41.3rem
+				padding-right: 1rem
+				font-weight: 400
+
+				p:nth-child(2),
+				p:nth-child(3),
+				ul
+					font-style: italic
+					color: $grey7
+
+			td.td_quantity,
+			td.td_price
+				padding-right: 1rem
+
+			td.td_quantity,
+			td.td_checkbox,
+			td.td_subtotal
+
+				div.label
+					+blockHidden
+
+			td.td_quantity
+
+				input,
+				div.help-text
+					display: inline-block
+
+				div.help-text
+					font-style: normal
+					color: $textOnWhite
+
+			td.td_checkbox,
+			td.td_subtotal
+
+				div.field-type-indication
+					+blockHidden
+
+		div#parent_primary-category_breakfast
+
+			tbody
+
+				th.th_item
+					width: 32.2rem
+
+				td.td_price
+					width: 6rem
+
+				td.td_quantity
+					width: 14.9rem
+
+		div#parent_primary-category_lunch
+
+			tbody
+
+				th.th_item
+					width: 37rem
+
+				td.td_price
+					width: 11rem
+
+				td.td_checkbox
+					width: 5.8rem
+
+					label
+						+blockHidden
+
+					div.control
+						width: 5.8rem
+
+						div.choice-container
+							text-align: center
+
+			div#Boxed-Lunch-Sandwich-Options div.subsection div.control
+
+				input,
+				div.help-text
+					display: inline-block
+
+				div.help-text
+					font-style: normal
+					color: $textOnWhite
+
+		div#parent_primary-category_snacks,
+		div#parent_primary-category_beverages
+
+			tbody
+
+				th.th_item
+					width: 34rem
+
+				td.td_price
+					width: 11rem
+
+
+
+// --- CAFE DEFAULTS
+
+div#app-container.cafe-defaults
+
+	div#request-form
+
+		h2,
+		div#label-and-control_Request-ID,
+		div#label-and-control_Request-Date,
+		div#label-and-control_Requested-For,
+		div#label-and-control_Requester-Name,
+		div#label-and-control_Requester-Department,
+		div#label-and-control_Requester-Email,
+		div#label-and-control_Requester-Phone,
+		div#submission-notice,
+		a#exit-sans-save-button
+			display: none !important
+
+		div.repeat-container:nth-child(odd) div.even-time-set
+			+gridElementDarkened2
+
+		div.repeat-container:nth-child(even) div.even-time-set
+			+gridElementDarkened3
+
+
+
+// --- CAFE WEEKLY MENU & SCHEDULE - REQUEST
+
+div#app-container.cafe-weekly-menu-and-schedule
+
+	div#request-form
+
+		h2#header_this-request,
+		div#label-and-control_Request-Nickname,
+		div#label-and-control_Self-or-Other,
+		div#requirement-legend
+			display: none
+
+		a.show-default-station-times,
+		a.hide-default-station-times,
+		a#repeat-station
+			margin-left: 19.5rem !important
+
+		div.repeat-container:nth-child(odd) div.even-time-set
+			+gridElementDarkened2
+
+		div.repeat-container:nth-child(even) div.even-time-set
+			+gridElementDarkened3
+
+
+
+// --- CAFE WEEKLY MENU & SCHEDULE - DISPLAY
+
+div#mos-display.cafe-weekly-menu-and-schedule
+
+	h2#header_legend
+		+blockHidden
+
+	ul#legend-items
+		padding: 0
+
+		li.legend-item
+			display: inline-block
+			font-size: 1.75rem
+			list-style: none
+			margin: 0 2.25rem 0 0
+
+		span.color-indicator
+			display: inline-block
+			height: .5rem
+			width: 2rem
+			margin-right: .75rem
+			position: relative
+			top: 50%
+			transform: translateY(-50%)
+
+		span.special-menu-item
+			background-color: $orange
+
+	div#cafe-toolbar
+		height: 4.5rem
+		margin-bottom: 1rem
+		text-align: center
+
+		button
+			+verticalAlignMiddle
+			transform: translateY(-3.25rem)
+
+		h2
+			display: inline-block
+			font-size: 3.75rem !important
+			line-height: 3.75rem !important
+			padding: .25rem 3rem .5rem
+
+	table#cafe-view
+		table-layout: fixed
+		width: 100%
+
+		thead
+
+			th.day
+				text-align: center
+				background-color: $grey12
+
+		tbody
+
+			td
+				vertical-align: top
+
+			td.station-name
+				padding: 1rem
+				font-size: 2.25rem
+				font-weight: 300
+
+			td.day
+				padding: 1rem 0 .5rem .5rem
+				text-align: center
+
+			td.day.today
+				background-color: $yellow
+
+			div.station-day-hours
+				margin-bottom: .5rem
+
+			div.station-day-special
+				padding: 0 .5rem
+				color: $textOnOrange
+				background-color: $orange
+
+			tr:nth-child(odd)
+
+				td.station-name
+					//color: $black
+					background-color: $grey13
+
+				td.day
+					background-color: $grey14
+
+			tr:nth-child(even)
+
+				td.station-name
+					//color: $black
+					background-color: $grey14
+
+				td.day
+					background-color: $white
+
+
+
+// --- EVENT REQUEST
+
+div#app-container.function div#overlays-screen-container div#mos-form-submission-confirmation.contains-additional-message div.section-content
+
+	max-width: 600px
+
+	p,
+	h2
+		text-align: left
+
+	ul
+		margin-bottom: 0
+
+	ul li
+		margin-bottom: 5px
+
+
+
+// --- MUSEUM-WIDE EVENT CALENDAR
+
+div#app-container.museum-wide-event-calendar
+
+	div#request-form
+
+		input#X-Days,
+		input#X-Weeks,
+		input#X-Months-For-Same-Day,
+		input#Day-of-Month-for-X-Months,
+		input#X-Months-For-Same-Week,
+		input#Date-for-Same-Date-Each-Year,
+		input#Qty-Occurrences
+			width: 3rem !important
+
+		div#x-days_help-note,
+		div#x-weeks_help-note,
+		div#x-months-for-same-day_help-note,
+		div#day-of-month-for-x-months_help-note,
+		div#x-months-for-same-week_help-note,
+			display: inline-block
+			margin-left: .3rem
+			font-style: normal
+			color: $grey4
+
+		div#Days-of-Week-for-X-Weeks div.choice-container
+			display: inline-block
+			margin-right: 1.5rem
+
+		select#Ordinal-For-Day-of-Week-For-X-Months-For-Same-Week,
+		select#Ordinal-For-Same-Week-Each-Year
+			width: 7.5rem !important
+
+		select#Days-of-Week-For-X-Months-For-Same-Week,
+		select#Days-of-Week-For-Same-Week-Each-Year
+			width: 12.5rem !important
+			margin-left: .3rem
+
+		select#Months-for-Same-Date-Each-Year
+			width: 12.5rem !important
+
+
+
+// --- CAFE DEFAULTS
+
+div#app-container.cafe-defaults
+
+	div#request-form
+
+		a.show-default-station-times,
+		a.hide-default-station-times
+			margin: 0 0 1rem 19.5rem !important
+
+
+
+// --- DIRECT DEPOSIT
+
+div#app-container.direct-deposit
+
+	div#request-form
+
+		table.signature-and-date
+			width: 100%
+			margin-bottom: 2rem
+
+			td
+				padding-top: 1rem
+
+			td.label
+				padding-right: .5rem
+
+			td.label.date
+				padding-left: 1rem
+
+			td.space.signature
+				width: 32rem
+
+			td.space.date
+				width: 15rem
+
+			td.space
+				border-bottom: .1rem solid $black
+
+			span.label
+				display: inline-block
+				width: 100%
+				text-align: right
+
+			span.label_help-note
+				display: block
+				width: 100%
+				text-align: right
+				font-style: italic
+				color: $grey7
+
+			tr#second-signature td.label.date
+				padding-top: 2rem
+
+		@media only screen
+
+			h2#header_about-the-requester,
+				display: none
+
+			p#print-reminder
+				padding: .5rem
+				background-color: $yellow
+				color: $grey1
+
+		@media only print
+
+			h2#header_about-you,
+			a.remove-section-anchor,
+			a.repeat-section-anchor,
+			p#print-reminder,
+			span.screen-only,
+			div#s4-workspace div#request-form div.field-type-indication,
+			div.help-text
+				display: none !important
+
+			div.repeat-container
+				border-bottom: 1px solid $grey6
+
+			div#s4-workspace div#request-form input[type="text"][readonly]
+				color: $grey4
+
+			div#s4-workspace div#request-form input[type="text"],
+			div#s4-workspace div#request-form select
+				height: 2rem
+				padding: 0
+				border: none
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+//			PRINTER CONTENT
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+div#printer-content
+
+	table.layout-table
+		width: 100%
+
+		td
+			vertical-align: top
+			padding-left: 2rem
+
+			&:first-child
+				padding-left: 0
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+//			PRODUCT TIMELINE
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+body.product-timeline
+
+	ul#timeline-options
+		+gridElementDarkened2
+		display: inline-block
+
+	li#new-product-option,
+	li#category-filter-option,
+	li#date-filter-option
+		+col
+
+	div#categories-children
+
+		p#control-group-label
+			+blockHidden
+
+		div.category-selectors-container
+			+col
+
+	div#categories-children,
+	div#dates-children
+		padding: 1.5rem 1.5rem 0 0
+		font-weight: 600
+
+		div.category-selectors-container,
+		div.date-selector-container
+			padding: 0 0 1.5rem 1.5rem
+
+			label.date-selector-label
+				display: inline-block
+				width: 12.5rem
+
+			input.date-selector
+				width: 13rem
+
+	div#timeline
+
+		// need for translucence prevents use of standard greys
+
+		div.vis-timeline
+			border: none
+			background-color: $grey14
+
+			div.vis-panel.vis-left,
+			div.vis-panel.vis-bottom,
+			div.vis-panel.vis-center,
+			div.vis-panel.vis-top
+				border: none
+
+			div.vis-panel.vis-center
+				background-color: transparent
+
+				div.vis-background div.vis-group
+					background-color: rgba(102,102,102,.35)
+
+				div.vis-background div.vis-group:nth-child(odd)
+					background-color: rgba(102,102,102,.1)
+
+				div.vis-foreground div.vis-group
+					border: none
+					cursor: grab
+
+					&:active,
+					&:focus
+						cursor: grabbing
+
+
+				div.vis-shadow
+					box-shadow: none
+
+			.vis-panel.vis-left
+				background-color: transparent
+
+				div.vis-content div.vis-label
+					background-color: rgba(150,150,150,.35)
+					border: none
+
+				div.vis-content div.vis-label:nth-child(even)
+					background-color: rgba(150,150,150,.2)
+
+		div.vis-current-time
+			background-color: $pink
+
+		div.vis-time-axis div.vis-grid.vis-minor,
+		div.vis-time-axis div.vis-grid.vis-major,
+		div.vis-labelset div.vis-label
+			border-color: $grey10
+
+		div.vis-time-axis div.vis-grid.vis-major
+			border-width: 2px
+
+
+		div.vis-item.vis-range
+			border: none
+			border-radius: 0
+			cursor: pointer
+
+	div.ui-dialog#product-timeline-item-dialog
+
+		div.ui-dialog-titlebar
+
+			span.ui-dialog-title
+				white-space: normal
+
+				h2.ui-dialog-title-product-date-range
+					white-space: nowrap
+					font-size: 2rem !important
+					font-weight: 300
+					margin: 0
+					margin-block-start: 0
+					margin-block-end: 0
+
+				p.ui-dialog-title-product-category
+					font-size: 1.3rem
+					font-weight: 400
+					margin: 0
+					color: $grey6
+
+		div.ui-dialog-content
+
+			p.ui-dialog-product-title
+				font-size: 3rem
+				font-weight: 300
+				margin: 0
+				padding: 1rem 0
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+//			BUYOUTS, MUSEUM-WIDE CALENDARS
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+// button styles are in button section
+
+div#museum-event-calendar-container,
+div#buyout-calendar-container
+
+	div.fc-toolbar
+		height: 4.5rem
+		margin-bottom: 1rem
+		opacity: 0
+
+		div.fc-left
+			float: left
+			height: 4.5rem
+
+		div.fc-right
+			float: none
+			display: inline-block
+			height: 4.5rem
+
+			> div
+				height: 4.5rem
+
+		div.fc-center
+			float: right
+			height: 4.5rem
+
+			> div
+				height: 4.5rem
+
+		h2
+			display: inline-block
+			font-size: 3.75rem !important
+			line-height: 3.75rem !important
+			padding: .25rem 3rem .5rem
+
+div#buyout-calendar-container
+
+	div#buyouts-metadata
+		opacity: 0
+
+		h2#header_legend
+			+blockHidden
+
+		ul#legend-items
+			padding: 0
+
+			li.legend-item
+				display: inline-block
+				font-size: 1.75rem
+				list-style: none
+				margin: 0 2.25rem 0 0
+
+			span.color-indicator
+				display: inline-block
+				height: .5rem
+				width: 2rem
+				margin-right: .75rem
+				position: relative
+				top: 50%
+				transform: translateY(-50%)
+
+			span.mugar-omni-theater
+				background-color: $orange
+
+			span.three-d-digital-cinema
+				background-color: $pink
+
+			span.butterfly-garden
+				background-color: $purple
+
+			span.charles-hayden-planetarium
+				background-color: $blue2
+
+			span.skyline-room
+				background-color: $green
+
+			span.nichols-gallery
+				background-color: $darkPink
+
+			span.stearns-gallery
+				background-color: $darkGreen
+
+div#buyout-calendar-container,
+div#museum-event-calendar-container
+
+	div.fc-view-container
+		opacity: 0
+
+	a.fc-event
+		font-size: 1.3rem
+		line-height: 2rem
+		border-radius: 0
+		border: none
+		padding-left: .5rem
+		cursor: pointer
+		background-color: $intDefault
+		color: $white !important
+
+	a.fc-event.mugar-omni-theater
+		background-color: $orange
+		color: $textOnOrange !important
+
+	a.fc-event.three-d-digital-cinema
+		background-color: $pink
+		color: $textOnPink !important
+
+	a.fc-event.butterfly-garden
+		background-color: $purple
+		color: $textOnPurple !important
+
+	a.fc-event.charles-hayden-planetarium
+		background-color: $blue2
+		color: $black !important
+
+	a.fc-event.skyline-room
+		background-color: $green
+		color: $textOnGreen !important
+
+	a.fc-event.nichols-gallery
+		background-color: $darkPink
+		color: $textOnDarkPink !important
+
+	a.fc-event.stearns-gallery
+		background-color: $darkGreen
+		color: $textOnDarkGreen !important
+
+div.ui-dialog#buyout-calendar-item-dialog,
+div.ui-dialog#museum-calendar-item-dialog
+
+	div.ui-dialog-titlebar
+
+		span.ui-dialog-title
+			white-space: normal
+
+			h2.ui-dialog-buyout-title-date-and-time-range
+				white-space: nowrap
+				font-size: 2rem !important
+				font-weight: 300
+				margin: 0
+				margin-block-start: 0
+				margin-block-end: 0
+
+				span.ui-dialog-title-buyout-start-time
+					margin-left: 1rem
+
+			p.ui-dialog-title-buyout-location
+				font-size: 1.3rem
+				font-weight: 400
+				margin: 0
+				color: $grey6
+
+	div.ui-dialog-content
+
+		p.ui-dialog-buyout-title
+			font-size: 3rem
+			font-weight: 300
+			margin: 0
+			padding: 1rem 0
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+//			TODAY'S REMAINING CAPACITY
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+div#remaining-capacity-metadata
+	opacity: 0
+
+	h2#header_legend
+		+blockHidden
+
+	ul#legend-items
+		padding: 0
+
+		li.legend-item
+			display: inline-block
+			font-size: 1.75rem
+			list-style: none
+			margin: 0 2.25rem 0 0
+
+		span.color-indicator
+			display: inline-block
+			height: .5rem
+			width: 2rem
+			margin-right: .75rem
+			position: relative
+			top: 50%
+			transform: translateY(-50%)
+
+		span.audience_general
+			background-color: $purple
+
+		span.audience_school
+			background-color: $pink
+
+div#remaining-capacities
+	opacity: 0
+	background: none
+	border: none
+
+	ul#tab-navigation.ui-tabs-nav
+		padding: 0
+		margin-bottom: 1rem
+		border: none
+		background: none
+
+		li
+			list-style: none
+			margin: 0
+			border: none
+
+		li.ui-tabs-active
+			margin: 0
+			padding: 0
+
+	div.venue-container.ui-tabs-panel
+		background-color: $grey14
+
+		h2.header_venue
+			+blockHidden
+
+		h3.header_show
+			padding: 1rem 0 .5rem 0
+
+ul.show-remaining-capacities
+	padding: 0
+
+	div.past-show-times
+		padding: .5rem 0
+		margin-bottom: .2rem
+		background-color: $grey13b
+		color: $grey6
+
+	li
+		list-style: none !important
+		font-size: 1.3rem
+		margin-left: 0 !important
+		white-space: nowrap
+
+	span.start-time
+		display: inline-block
+		width: 7rem
+
+	span.time-and-capacity-separator,
+	span.audience-indicator,
+	span.audience-and-time-separator
+		+inlineHidden
+
+	span.capacity-bar
+		display: inline-block
+		height: .5rem
+		position: relative
+		top: 50%
+		transform: translateY(-50%)
+
+	span.capacity-text
+		width: 7rem
+		margin-left: 1rem
+
+	span.audience_general
+		background-color: $purple
+
+	span.audience_school
+		background-color: $pink
+
+	span.capacity-bar.seats-remaining_1
+		+remainingCapacityBar(1)
+	span.capacity-bar.seats-remaining_2
+		+remainingCapacityBar(2)
+	span.capacity-bar.seats-remaining_3
+		+remainingCapacityBar(3)
+	span.capacity-bar.seats-remaining_4
+		+remainingCapacityBar(4)
+	span.capacity-bar.seats-remaining_5
+		+remainingCapacityBar(5)
+	span.capacity-bar.seats-remaining_6
+		+remainingCapacityBar(6)
+	span.capacity-bar.seats-remaining_7
+		+remainingCapacityBar(7)
+	span.capacity-bar.seats-remaining_8
+		+remainingCapacityBar(8)
+	span.capacity-bar.seats-remaining_9
+		+remainingCapacityBar(9)
+	span.capacity-bar.seats-remaining_10
+		+remainingCapacityBar(10)
+	span.capacity-bar.seats-remaining_11
+		+remainingCapacityBar(11)
+	span.capacity-bar.seats-remaining_12
+		+remainingCapacityBar(12)
+	span.capacity-bar.seats-remaining_13
+		+remainingCapacityBar(13)
+	span.capacity-bar.seats-remaining_14
+		+remainingCapacityBar(14)
+	span.capacity-bar.seats-remaining_15
+		+remainingCapacityBar(15)
+	span.capacity-bar.seats-remaining_16
+		+remainingCapacityBar(16)
+	span.capacity-bar.seats-remaining_17
+		+remainingCapacityBar(17)
+	span.capacity-bar.seats-remaining_18
+		+remainingCapacityBar(18)
+	span.capacity-bar.seats-remaining_19
+		+remainingCapacityBar(19)
+	span.capacity-bar.seats-remaining_20
+		+remainingCapacityBar(20)
+	span.capacity-bar.seats-remaining_21
+		+remainingCapacityBar(21)
+	span.capacity-bar.seats-remaining_22
+		+remainingCapacityBar(22)
+	span.capacity-bar.seats-remaining_23
+		+remainingCapacityBar(23)
+	span.capacity-bar.seats-remaining_24
+		+remainingCapacityBar(24)
+	span.capacity-bar.seats-remaining_25
+		+remainingCapacityBar(25)
+	span.capacity-bar.seats-remaining_26
+		+remainingCapacityBar(26)
+	span.capacity-bar.seats-remaining_27
+		+remainingCapacityBar(27)
+	span.capacity-bar.seats-remaining_28
+		+remainingCapacityBar(28)
+	span.capacity-bar.seats-remaining_29
+		+remainingCapacityBar(29)
+	span.capacity-bar.seats-remaining_30
+		+remainingCapacityBar(30)
+	span.capacity-bar.seats-remaining_31
+		+remainingCapacityBar(31)
+	span.capacity-bar.seats-remaining_32
+		+remainingCapacityBar(32)
+	span.capacity-bar.seats-remaining_33
+		+remainingCapacityBar(33)
+	span.capacity-bar.seats-remaining_34
+		+remainingCapacityBar(34)
+	span.capacity-bar.seats-remaining_35
+		+remainingCapacityBar(35)
+	span.capacity-bar.seats-remaining_36
+		+remainingCapacityBar(36)
+	span.capacity-bar.seats-remaining_37
+		+remainingCapacityBar(37)
+	span.capacity-bar.seats-remaining_38
+		+remainingCapacityBar(38)
+	span.capacity-bar.seats-remaining_39
+		+remainingCapacityBar(39)
+	span.capacity-bar.seats-remaining_40
+		+remainingCapacityBar(40)
+	span.capacity-bar.seats-remaining_41
+		+remainingCapacityBar(41)
+	span.capacity-bar.seats-remaining_42
+		+remainingCapacityBar(42)
+	span.capacity-bar.seats-remaining_43
+		+remainingCapacityBar(43)
+	span.capacity-bar.seats-remaining_44
+		+remainingCapacityBar(44)
+	span.capacity-bar.seats-remaining_45
+		+remainingCapacityBar(45)
+	span.capacity-bar.seats-remaining_46
+		+remainingCapacityBar(46)
+	span.capacity-bar.seats-remaining_47
+		+remainingCapacityBar(47)
+	span.capacity-bar.seats-remaining_48
+		+remainingCapacityBar(48)
+	span.capacity-bar.seats-remaining_49
+		+remainingCapacityBar(49)
+	span.capacity-bar.seats-remaining_50
+		+remainingCapacityBar(50)
+	span.capacity-bar.seats-remaining_51
+		+remainingCapacityBar(51)
+	span.capacity-bar.seats-remaining_52
+		+remainingCapacityBar(52)
+	span.capacity-bar.seats-remaining_53
+		+remainingCapacityBar(53)
+	span.capacity-bar.seats-remaining_54
+		+remainingCapacityBar(54)
+	span.capacity-bar.seats-remaining_55
+		+remainingCapacityBar(55)
+	span.capacity-bar.seats-remaining_56
+		+remainingCapacityBar(56)
+	span.capacity-bar.seats-remaining_57
+		+remainingCapacityBar(57)
+	span.capacity-bar.seats-remaining_58
+		+remainingCapacityBar(58)
+	span.capacity-bar.seats-remaining_59
+		+remainingCapacityBar(59)
+	span.capacity-bar.seats-remaining_60
+		+remainingCapacityBar(60)
+	span.capacity-bar.seats-remaining_61
+		+remainingCapacityBar(61)
+	span.capacity-bar.seats-remaining_62
+		+remainingCapacityBar(62)
+	span.capacity-bar.seats-remaining_63
+		+remainingCapacityBar(63)
+	span.capacity-bar.seats-remaining_64
+		+remainingCapacityBar(64)
+	span.capacity-bar.seats-remaining_65
+		+remainingCapacityBar(65)
+	span.capacity-bar.seats-remaining_66
+		+remainingCapacityBar(66)
+	span.capacity-bar.seats-remaining_67
+		+remainingCapacityBar(67)
+	span.capacity-bar.seats-remaining_68
+		+remainingCapacityBar(68)
+	span.capacity-bar.seats-remaining_69
+		+remainingCapacityBar(69)
+	span.capacity-bar.seats-remaining_70
+		+remainingCapacityBar(70)
+	span.capacity-bar.seats-remaining_71
+		+remainingCapacityBar(71)
+	span.capacity-bar.seats-remaining_72
+		+remainingCapacityBar(72)
+	span.capacity-bar.seats-remaining_73
+		+remainingCapacityBar(73)
+	span.capacity-bar.seats-remaining_74
+		+remainingCapacityBar(74)
+	span.capacity-bar.seats-remaining_75
+		+remainingCapacityBar(75)
+	span.capacity-bar.seats-remaining_76
+		+remainingCapacityBar(76)
+	span.capacity-bar.seats-remaining_77
+		+remainingCapacityBar(77)
+	span.capacity-bar.seats-remaining_78
+		+remainingCapacityBar(78)
+	span.capacity-bar.seats-remaining_79
+		+remainingCapacityBar(79)
+	span.capacity-bar.seats-remaining_80
+		+remainingCapacityBar(80)
+	span.capacity-bar.seats-remaining_81
+		+remainingCapacityBar(81)
+	span.capacity-bar.seats-remaining_82
+		+remainingCapacityBar(82)
+	span.capacity-bar.seats-remaining_83
+		+remainingCapacityBar(83)
+	span.capacity-bar.seats-remaining_84
+		+remainingCapacityBar(84)
+	span.capacity-bar.seats-remaining_85
+		+remainingCapacityBar(85)
+	span.capacity-bar.seats-remaining_86
+		+remainingCapacityBar(86)
+	span.capacity-bar.seats-remaining_87
+		+remainingCapacityBar(87)
+	span.capacity-bar.seats-remaining_88
+		+remainingCapacityBar(88)
+	span.capacity-bar.seats-remaining_89
+		+remainingCapacityBar(89)
+	span.capacity-bar.seats-remaining_90
+		+remainingCapacityBar(90)
+	span.capacity-bar.seats-remaining_91
+		+remainingCapacityBar(91)
+	span.capacity-bar.seats-remaining_92
+		+remainingCapacityBar(92)
+	span.capacity-bar.seats-remaining_93
+		+remainingCapacityBar(93)
+	span.capacity-bar.seats-remaining_94
+		+remainingCapacityBar(94)
+	span.capacity-bar.seats-remaining_95
+		+remainingCapacityBar(95)
+	span.capacity-bar.seats-remaining_96
+		+remainingCapacityBar(96)
+	span.capacity-bar.seats-remaining_97
+		+remainingCapacityBar(97)
+	span.capacity-bar.seats-remaining_98
+		+remainingCapacityBar(98)
+	span.capacity-bar.seats-remaining_99
+		+remainingCapacityBar(99)
+	span.capacity-bar.seats-remaining_100
+		+remainingCapacityBar(100)
+	span.capacity-bar.seats-remaining_101
+		+remainingCapacityBar(101)
+	span.capacity-bar.seats-remaining_102
+		+remainingCapacityBar(102)
+	span.capacity-bar.seats-remaining_103
+		+remainingCapacityBar(103)
+	span.capacity-bar.seats-remaining_104
+		+remainingCapacityBar(104)
+	span.capacity-bar.seats-remaining_105
+		+remainingCapacityBar(105)
+	span.capacity-bar.seats-remaining_106
+		+remainingCapacityBar(106)
+	span.capacity-bar.seats-remaining_107
+		+remainingCapacityBar(107)
+	span.capacity-bar.seats-remaining_108
+		+remainingCapacityBar(108)
+	span.capacity-bar.seats-remaining_109
+		+remainingCapacityBar(109)
+	span.capacity-bar.seats-remaining_110
+		+remainingCapacityBar(110)
+	span.capacity-bar.seats-remaining_111
+		+remainingCapacityBar(111)
+	span.capacity-bar.seats-remaining_112
+		+remainingCapacityBar(112)
+	span.capacity-bar.seats-remaining_113
+		+remainingCapacityBar(113)
+	span.capacity-bar.seats-remaining_114
+		+remainingCapacityBar(114)
+	span.capacity-bar.seats-remaining_115
+		+remainingCapacityBar(115)
+	span.capacity-bar.seats-remaining_116
+		+remainingCapacityBar(116)
+	span.capacity-bar.seats-remaining_117
+		+remainingCapacityBar(117)
+	span.capacity-bar.seats-remaining_118
+		+remainingCapacityBar(118)
+	span.capacity-bar.seats-remaining_119
+		+remainingCapacityBar(119)
+	span.capacity-bar.seats-remaining_120
+		+remainingCapacityBar(120)
+	span.capacity-bar.seats-remaining_121
+		+remainingCapacityBar(121)
+	span.capacity-bar.seats-remaining_122
+		+remainingCapacityBar(122)
+	span.capacity-bar.seats-remaining_123
+		+remainingCapacityBar(123)
+	span.capacity-bar.seats-remaining_124
+		+remainingCapacityBar(124)
+	span.capacity-bar.seats-remaining_125
+		+remainingCapacityBar(125)
+	span.capacity-bar.seats-remaining_126
+		+remainingCapacityBar(126)
+	span.capacity-bar.seats-remaining_127
+		+remainingCapacityBar(127)
+	span.capacity-bar.seats-remaining_128
+		+remainingCapacityBar(128)
+	span.capacity-bar.seats-remaining_129
+		+remainingCapacityBar(129)
+	span.capacity-bar.seats-remaining_130
+		+remainingCapacityBar(130)
+	span.capacity-bar.seats-remaining_131
+		+remainingCapacityBar(131)
+	span.capacity-bar.seats-remaining_132
+		+remainingCapacityBar(132)
+	span.capacity-bar.seats-remaining_133
+		+remainingCapacityBar(133)
+	span.capacity-bar.seats-remaining_134
+		+remainingCapacityBar(134)
+	span.capacity-bar.seats-remaining_135
+		+remainingCapacityBar(135)
+	span.capacity-bar.seats-remaining_136
+		+remainingCapacityBar(136)
+	span.capacity-bar.seats-remaining_137
+		+remainingCapacityBar(137)
+	span.capacity-bar.seats-remaining_138
+		+remainingCapacityBar(138)
+	span.capacity-bar.seats-remaining_139
+		+remainingCapacityBar(139)
+	span.capacity-bar.seats-remaining_140
+		+remainingCapacityBar(140)
+	span.capacity-bar.seats-remaining_141
+		+remainingCapacityBar(141)
+	span.capacity-bar.seats-remaining_142
+		+remainingCapacityBar(142)
+	span.capacity-bar.seats-remaining_143
+		+remainingCapacityBar(143)
+	span.capacity-bar.seats-remaining_144
+		+remainingCapacityBar(144)
+	span.capacity-bar.seats-remaining_145
+		+remainingCapacityBar(145)
+	span.capacity-bar.seats-remaining_146
+		+remainingCapacityBar(146)
+	span.capacity-bar.seats-remaining_147
+		+remainingCapacityBar(147)
+	span.capacity-bar.seats-remaining_148
+		+remainingCapacityBar(148)
+	span.capacity-bar.seats-remaining_149
+		+remainingCapacityBar(149)
+	span.capacity-bar.seats-remaining_150
+		+remainingCapacityBar(150)
+	span.capacity-bar.seats-remaining_151
+		+remainingCapacityBar(151)
+	span.capacity-bar.seats-remaining_152
+		+remainingCapacityBar(152)
+	span.capacity-bar.seats-remaining_153
+		+remainingCapacityBar(153)
+	span.capacity-bar.seats-remaining_154
+		+remainingCapacityBar(154)
+	span.capacity-bar.seats-remaining_155
+		+remainingCapacityBar(155)
+	span.capacity-bar.seats-remaining_156
+		+remainingCapacityBar(156)
+	span.capacity-bar.seats-remaining_157
+		+remainingCapacityBar(157)
+	span.capacity-bar.seats-remaining_158
+		+remainingCapacityBar(158)
+	span.capacity-bar.seats-remaining_159
+		+remainingCapacityBar(159)
+	span.capacity-bar.seats-remaining_160
+		+remainingCapacityBar(160)
+	span.capacity-bar.seats-remaining_161
+		+remainingCapacityBar(161)
+	span.capacity-bar.seats-remaining_162
+		+remainingCapacityBar(162)
+	span.capacity-bar.seats-remaining_163
+		+remainingCapacityBar(163)
+	span.capacity-bar.seats-remaining_164
+		+remainingCapacityBar(164)
+	span.capacity-bar.seats-remaining_165
+		+remainingCapacityBar(165)
+	span.capacity-bar.seats-remaining_166
+		+remainingCapacityBar(166)
+	span.capacity-bar.seats-remaining_167
+		+remainingCapacityBar(167)
+	span.capacity-bar.seats-remaining_168
+		+remainingCapacityBar(168)
+	span.capacity-bar.seats-remaining_169
+		+remainingCapacityBar(169)
+	span.capacity-bar.seats-remaining_170
+		+remainingCapacityBar(170)
+	span.capacity-bar.seats-remaining_171
+		+remainingCapacityBar(171)
+	span.capacity-bar.seats-remaining_172
+		+remainingCapacityBar(172)
+	span.capacity-bar.seats-remaining_173
+		+remainingCapacityBar(173)
+	span.capacity-bar.seats-remaining_174
+		+remainingCapacityBar(174)
+	span.capacity-bar.seats-remaining_175
+		+remainingCapacityBar(175)
+	span.capacity-bar.seats-remaining_176
+		+remainingCapacityBar(176)
+	span.capacity-bar.seats-remaining_177
+		+remainingCapacityBar(177)
+	span.capacity-bar.seats-remaining_178
+		+remainingCapacityBar(178)
+	span.capacity-bar.seats-remaining_179
+		+remainingCapacityBar(179)
+	span.capacity-bar.seats-remaining_180
+		+remainingCapacityBar(180)
+	span.capacity-bar.seats-remaining_181
+		+remainingCapacityBar(181)
+	span.capacity-bar.seats-remaining_182
+		+remainingCapacityBar(182)
+	span.capacity-bar.seats-remaining_183
+		+remainingCapacityBar(183)
+	span.capacity-bar.seats-remaining_184
+		+remainingCapacityBar(184)
+	span.capacity-bar.seats-remaining_185
+		+remainingCapacityBar(185)
+	span.capacity-bar.seats-remaining_186
+		+remainingCapacityBar(186)
+	span.capacity-bar.seats-remaining_187
+		+remainingCapacityBar(187)
+	span.capacity-bar.seats-remaining_188
+		+remainingCapacityBar(188)
+	span.capacity-bar.seats-remaining_189
+		+remainingCapacityBar(189)
+	span.capacity-bar.seats-remaining_190
+		+remainingCapacityBar(190)
+	span.capacity-bar.seats-remaining_191
+		+remainingCapacityBar(191)
+	span.capacity-bar.seats-remaining_192
+		+remainingCapacityBar(192)
+	span.capacity-bar.seats-remaining_193
+		+remainingCapacityBar(193)
+	span.capacity-bar.seats-remaining_194
+		+remainingCapacityBar(194)
+	span.capacity-bar.seats-remaining_195
+		+remainingCapacityBar(195)
+	span.capacity-bar.seats-remaining_196
+		+remainingCapacityBar(196)
+	span.capacity-bar.seats-remaining_197
+		+remainingCapacityBar(197)
+	span.capacity-bar.seats-remaining_198
+		+remainingCapacityBar(198)
+	span.capacity-bar.seats-remaining_199
+		+remainingCapacityBar(199)
+	span.capacity-bar.seats-remaining_200
+		+remainingCapacityBar(200)
+	span.capacity-bar.seats-remaining_201
+		+remainingCapacityBar(201)
+	span.capacity-bar.seats-remaining_202
+		+remainingCapacityBar(202)
+	span.capacity-bar.seats-remaining_203
+		+remainingCapacityBar(203)
+	span.capacity-bar.seats-remaining_204
+		+remainingCapacityBar(204)
+	span.capacity-bar.seats-remaining_205
+		+remainingCapacityBar(205)
+	span.capacity-bar.seats-remaining_206
+		+remainingCapacityBar(206)
+	span.capacity-bar.seats-remaining_207
+		+remainingCapacityBar(207)
+	span.capacity-bar.seats-remaining_208
+		+remainingCapacityBar(208)
+	span.capacity-bar.seats-remaining_209
+		+remainingCapacityBar(209)
+	span.capacity-bar.seats-remaining_210
+		+remainingCapacityBar(210)
+	span.capacity-bar.seats-remaining_211
+		+remainingCapacityBar(211)
+	span.capacity-bar.seats-remaining_212
+		+remainingCapacityBar(212)
+	span.capacity-bar.seats-remaining_213
+		+remainingCapacityBar(213)
+	span.capacity-bar.seats-remaining_214
+		+remainingCapacityBar(214)
+	span.capacity-bar.seats-remaining_215
+		+remainingCapacityBar(215)
+	span.capacity-bar.seats-remaining_216
+		+remainingCapacityBar(216)
+	span.capacity-bar.seats-remaining_217
+		+remainingCapacityBar(217)
+	span.capacity-bar.seats-remaining_218
+		+remainingCapacityBar(218)
+	span.capacity-bar.seats-remaining_219
+		+remainingCapacityBar(219)
+	span.capacity-bar.seats-remaining_220
+		+remainingCapacityBar(220)
+	span.capacity-bar.seats-remaining_221
+		+remainingCapacityBar(221)
+	span.capacity-bar.seats-remaining_222
+		+remainingCapacityBar(222)
+	span.capacity-bar.seats-remaining_223
+		+remainingCapacityBar(223)
+	span.capacity-bar.seats-remaining_224
+		+remainingCapacityBar(224)
+	span.capacity-bar.seats-remaining_225
+		+remainingCapacityBar(225)
+	span.capacity-bar.seats-remaining_226
+		+remainingCapacityBar(226)
+	span.capacity-bar.seats-remaining_227
+		+remainingCapacityBar(227)
+	span.capacity-bar.seats-remaining_228
+		+remainingCapacityBar(228)
+	span.capacity-bar.seats-remaining_229
+		+remainingCapacityBar(229)
+	span.capacity-bar.seats-remaining_230
+		+remainingCapacityBar(230)
+	span.capacity-bar.seats-remaining_231
+		+remainingCapacityBar(231)
+	span.capacity-bar.seats-remaining_232
+		+remainingCapacityBar(232)
+	span.capacity-bar.seats-remaining_233
+		+remainingCapacityBar(233)
+	span.capacity-bar.seats-remaining_234
+		+remainingCapacityBar(234)
+	span.capacity-bar.seats-remaining_235
+		+remainingCapacityBar(235)
+	span.capacity-bar.seats-remaining_236
+		+remainingCapacityBar(236)
+	span.capacity-bar.seats-remaining_237
+		+remainingCapacityBar(237)
+	span.capacity-bar.seats-remaining_238
+		+remainingCapacityBar(238)
+	span.capacity-bar.seats-remaining_239
+		+remainingCapacityBar(239)
+	span.capacity-bar.seats-remaining_240
+		+remainingCapacityBar(240)
+	span.capacity-bar.seats-remaining_241
+		+remainingCapacityBar(241)
+	span.capacity-bar.seats-remaining_242
+		+remainingCapacityBar(242)
+	span.capacity-bar.seats-remaining_243
+		+remainingCapacityBar(243)
+	span.capacity-bar.seats-remaining_244
+		+remainingCapacityBar(244)
+	span.capacity-bar.seats-remaining_245
+		+remainingCapacityBar(245)
+	span.capacity-bar.seats-remaining_246
+		+remainingCapacityBar(246)
+	span.capacity-bar.seats-remaining_247
+		+remainingCapacityBar(247)
+	span.capacity-bar.seats-remaining_248
+		+remainingCapacityBar(248)
+	span.capacity-bar.seats-remaining_249
+		+remainingCapacityBar(249)
+	span.capacity-bar.seats-remaining_250
+		+remainingCapacityBar(250)
+	span.capacity-bar.seats-remaining_251
+		+remainingCapacityBar(251)
+	span.capacity-bar.seats-remaining_252
+		+remainingCapacityBar(252)
+	span.capacity-bar.seats-remaining_253
+		+remainingCapacityBar(253)
+	span.capacity-bar.seats-remaining_254
+		+remainingCapacityBar(254)
+	span.capacity-bar.seats-remaining_255
+		+remainingCapacityBar(255)
+	span.capacity-bar.seats-remaining_256
+		+remainingCapacityBar(256)
+	span.capacity-bar.seats-remaining_257
+		+remainingCapacityBar(257)
+	span.capacity-bar.seats-remaining_258
+		+remainingCapacityBar(258)
+	span.capacity-bar.seats-remaining_259
+		+remainingCapacityBar(259)
+	span.capacity-bar.seats-remaining_260
+		+remainingCapacityBar(260)
+	span.capacity-bar.seats-remaining_261
+		+remainingCapacityBar(261)
+	span.capacity-bar.seats-remaining_262
+		+remainingCapacityBar(262)
+	span.capacity-bar.seats-remaining_263
+		+remainingCapacityBar(263)
+	span.capacity-bar.seats-remaining_264
+		+remainingCapacityBar(264)
+	span.capacity-bar.seats-remaining_265
+		+remainingCapacityBar(265)
+	span.capacity-bar.seats-remaining_266
+		+remainingCapacityBar(266)
+	span.capacity-bar.seats-remaining_267
+		+remainingCapacityBar(267)
+	span.capacity-bar.seats-remaining_268
+		+remainingCapacityBar(268)
+	span.capacity-bar.seats-remaining_269
+		+remainingCapacityBar(269)
+	span.capacity-bar.seats-remaining_270
+		+remainingCapacityBar(270)
+	span.capacity-bar.seats-remaining_271
+		+remainingCapacityBar(271)
+	span.capacity-bar.seats-remaining_272
+		+remainingCapacityBar(272)
+	span.capacity-bar.seats-remaining_273
+		+remainingCapacityBar(273)
+	span.capacity-bar.seats-remaining_274
+		+remainingCapacityBar(274)
+	span.capacity-bar.seats-remaining_275
+		+remainingCapacityBar(275)
+	span.capacity-bar.seats-remaining_276
+		+remainingCapacityBar(276)
+	span.capacity-bar.seats-remaining_277
+		+remainingCapacityBar(277)
+	span.capacity-bar.seats-remaining_278
+		+remainingCapacityBar(278)
+	span.capacity-bar.seats-remaining_279
+		+remainingCapacityBar(279)
+	span.capacity-bar.seats-remaining_280
+		+remainingCapacityBar(280)
+	span.capacity-bar.seats-remaining_281
+		+remainingCapacityBar(281)
+	span.capacity-bar.seats-remaining_282
+		+remainingCapacityBar(282)
+	span.capacity-bar.seats-remaining_283
+		+remainingCapacityBar(283)
+	span.capacity-bar.seats-remaining_284
+		+remainingCapacityBar(284)
+	span.capacity-bar.seats-remaining_285
+		+remainingCapacityBar(285)
+	span.capacity-bar.seats-remaining_286
+		+remainingCapacityBar(286)
+	span.capacity-bar.seats-remaining_287
+		+remainingCapacityBar(287)
+	span.capacity-bar.seats-remaining_288
+		+remainingCapacityBar(288)
+	span.capacity-bar.seats-remaining_289
+		+remainingCapacityBar(289)
+	span.capacity-bar.seats-remaining_290
+		+remainingCapacityBar(290)
+	span.capacity-bar.seats-remaining_291
+		+remainingCapacityBar(291)
+	span.capacity-bar.seats-remaining_292
+		+remainingCapacityBar(292)
+	span.capacity-bar.seats-remaining_293
+		+remainingCapacityBar(293)
+	span.capacity-bar.seats-remaining_294
+		+remainingCapacityBar(294)
+	span.capacity-bar.seats-remaining_295
+		+remainingCapacityBar(295)
+	span.capacity-bar.seats-remaining_296
+		+remainingCapacityBar(296)
+	span.capacity-bar.seats-remaining_297
+		+remainingCapacityBar(297)
+	span.capacity-bar.seats-remaining_298
+		+remainingCapacityBar(298)
+	span.capacity-bar.seats-remaining_299
+		+remainingCapacityBar(299)
+	span.capacity-bar.seats-remaining_300
+		+remainingCapacityBar(300)
+	span.capacity-bar.seats-remaining_301
+		+remainingCapacityBar(301)
+	span.capacity-bar.seats-remaining_302
+		+remainingCapacityBar(302)
+	span.capacity-bar.seats-remaining_303
+		+remainingCapacityBar(303)
+	span.capacity-bar.seats-remaining_304
+		+remainingCapacityBar(304)
+	span.capacity-bar.seats-remaining_305
+		+remainingCapacityBar(305)
+	span.capacity-bar.seats-remaining_306
+		+remainingCapacityBar(306)
+	span.capacity-bar.seats-remaining_307
+		+remainingCapacityBar(307)
+	span.capacity-bar.seats-remaining_308
+		+remainingCapacityBar(308)
+	span.capacity-bar.seats-remaining_309
+		+remainingCapacityBar(309)
+	span.capacity-bar.seats-remaining_310
+		+remainingCapacityBar(310)
+	span.capacity-bar.seats-remaining_311
+		+remainingCapacityBar(311)
+	span.capacity-bar.seats-remaining_312
+		+remainingCapacityBar(312)
+	span.capacity-bar.seats-remaining_313
+		+remainingCapacityBar(313)
+	span.capacity-bar.seats-remaining_314
+		+remainingCapacityBar(314)
+	span.capacity-bar.seats-remaining_315
+		+remainingCapacityBar(315)
+	span.capacity-bar.seats-remaining_316
+		+remainingCapacityBar(316)
+	span.capacity-bar.seats-remaining_317
+		+remainingCapacityBar(317)
+	span.capacity-bar.seats-remaining_318
+		+remainingCapacityBar(318)
+	span.capacity-bar.seats-remaining_319
+		+remainingCapacityBar(319)
+	span.capacity-bar.seats-remaining_320
+		+remainingCapacityBar(320)
+	span.capacity-bar.seats-remaining_321
+		+remainingCapacityBar(321)
+	span.capacity-bar.seats-remaining_322
+		+remainingCapacityBar(322)
+	span.capacity-bar.seats-remaining_323
+		+remainingCapacityBar(323)
+	span.capacity-bar.seats-remaining_324
+		+remainingCapacityBar(324)
+	span.capacity-bar.seats-remaining_325
+		+remainingCapacityBar(325)
+	span.capacity-bar.seats-remaining_326
+		+remainingCapacityBar(326)
+	span.capacity-bar.seats-remaining_327
+		+remainingCapacityBar(327)
+	span.capacity-bar.seats-remaining_328
+		+remainingCapacityBar(328)
+	span.capacity-bar.seats-remaining_329
+		+remainingCapacityBar(329)
+	span.capacity-bar.seats-remaining_330
+		+remainingCapacityBar(330)
+	span.capacity-bar.seats-remaining_331
+		+remainingCapacityBar(331)
+	span.capacity-bar.seats-remaining_332
+		+remainingCapacityBar(332)
+	span.capacity-bar.seats-remaining_333
+		+remainingCapacityBar(333)
+	span.capacity-bar.seats-remaining_334
+		+remainingCapacityBar(334)
+	span.capacity-bar.seats-remaining_335
+		+remainingCapacityBar(335)
+	span.capacity-bar.seats-remaining_336
+		+remainingCapacityBar(336)
+	span.capacity-bar.seats-remaining_337
+		+remainingCapacityBar(337)
+	span.capacity-bar.seats-remaining_338
+		+remainingCapacityBar(338)
+	span.capacity-bar.seats-remaining_339
+		+remainingCapacityBar(339)
+	span.capacity-bar.seats-remaining_340
+		+remainingCapacityBar(340)
+	span.capacity-bar.seats-remaining_341
+		+remainingCapacityBar(341)
+	span.capacity-bar.seats-remaining_342
+		+remainingCapacityBar(342)
+	span.capacity-bar.seats-remaining_343
+		+remainingCapacityBar(343)
+	span.capacity-bar.seats-remaining_344
+		+remainingCapacityBar(344)
+	span.capacity-bar.seats-remaining_345
+		+remainingCapacityBar(345)
+	span.capacity-bar.seats-remaining_346
+		+remainingCapacityBar(346)
+	span.capacity-bar.seats-remaining_347
+		+remainingCapacityBar(347)
+	span.capacity-bar.seats-remaining_348
+		+remainingCapacityBar(348)
+	span.capacity-bar.seats-remaining_349
+		+remainingCapacityBar(349)
+	span.capacity-bar.seats-remaining_350
+		+remainingCapacityBar(350)

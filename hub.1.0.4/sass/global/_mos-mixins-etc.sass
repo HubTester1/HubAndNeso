@@ -1,0 +1,1243 @@
+
+
+
+
+=killTopSpace
+	position: relative
+	top: -1.5rem
+
+
+
+// ------------------
+// ROWS & COLUMNS
+// ------------------
+
+=row
+	display: table
+	table-layout: fixed
+	border-collapse: collapse
+
+=col
+	display: table-cell
+	vertical-align: top
+
+
+
+// ------------------
+// GRID ELEMENT COLORING
+// ------------------
+
+=gridElementDarkened1
+	color: $grey3
+	background-color: $grey14
+
+	a
+		color: $blue5 !important
+
+		&:hover
+			color: $blue6 !important
+
+=gridElementDarkened2
+	color: $grey2
+	background-color: $grey13
+
+	a
+		color: $blue6 !important
+
+		&:hover
+			color: $blue7 !important
+
+=gridElementDarkened3
+	color: $grey1
+	background-color: $grey12
+
+	a
+		color: $blue7 !important
+
+		&:hover
+			color: $blue8 !important
+
+
+
+// ------------------
+// HIDDEN
+// ------------------
+
+=blockHidden
+	display: block !important
+	width: 0 !important
+	height: 0
+	padding: 0 !important
+	text-indent: 100%
+	white-space: nowrap
+	overflow: hidden
+
+=inlineHidden
+	display: inline-block
+	width: 0
+	height: 0
+	text-indent: 100%
+	white-space: nowrap
+	overflow: hidden
+
+=colHidden
+	display: table-cell
+	width: 0
+	height: 0
+	text-indent: 100%
+	white-space: nowrap
+	overflow: hidden
+
+
+
+// ------------------
+// LINK
+// ------------------
+
+=linkText
+	text-decoration: none
+	color: $intDefault !important
+	transition: color 250ms
+
+=linkTextActive
+	text-decoration: none
+	color: $intActive !important
+
+
+=intElementDarkened1
+	color: $blue5
+
+	&:hover
+		color: $blue6
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ------------------
+// BUTTON
+// ------------------
+
+=button
+	display: inline-block
+	float: none !important
+	box-sizing: border-box
+	min-width: 0
+	min-height: 3rem
+	padding: .3rem 2rem
+	margin: 0 !important
+	font-size: 1.5rem
+	font-weight: 600
+	text-align: center
+	text-decoration: none
+	border: none
+	transition: background-color 250ms
+	cursor: pointer
+
+=buttonActive
+	text-decoration: none
+
+=buttonInForm
+	font-size: 1.3rem
+	font-weight: 500
+	padding: 0.5rem 2rem
+
+=buttonUnderOtherElement
+	margin-top: 1rem !important
+
+=buttonOverOtherElement
+	margin-bottom: 1rem !important
+
+=toolBarButton
+	height: 2.5rem
+	min-height: 2.5rem
+
+
+
+// ------------------
+// POSITION
+// ------------------
+
+=verticalAlignMiddle
+	position: relative
+	top: 50%
+	transform: translateY(-50%)
+
+
+
+// ------------------
+// INDIVIDUALS
+// ------------------
+
+=remainingCapacityBar($calcBase)
+	width: calc(((#{$calcBase} / #{$higestCapacityAllVenues}) * 100%) - #{$accompanimentsWidth})
+	min-width: calc(((#{$calcBase} / #{$higestCapacityAllVenues}) * #{$smallestCapacityBarMaxWidth}))
+
+
+// ------------------
+// FONT ICON
+// ------------------
+
+=fontIcon
+	display: inline-block
+	font-family: 'Office365Icons'
+	font-size: inherit
+	font-weight: inherit
+	color: inherit
+	text-rendering: auto
+	-webkit-font-smoothing: antialiased
+	-moz-osx-font-smoothing: grayscale
+
+=fontIconBefore
+	margin-right: .5rem
+
+=fontIconAfter
+	margin-left: .5rem
+
+
+
+
+
+=fontIconCircleEmpty
+	content: '\e000'
+
+=fontIconCircleFill
+	content: '\e001'
+
+=fontIconPlaceholder
+	content: '\e002'
+
+=fontIconStar
+	content: '\e003'
+
+=fontIconPlus
+	content: '\e004'
+
+=fontIconMinus
+	content: '\e005'
+
+=fontIconQuestion
+	content: '\e006'
+
+=fontIconExclamation
+	content: '\e007'
+
+=fontIconPerson
+	content: '\e008'
+
+=fontIconMail
+	content: '\e009'
+
+=fontIconInfoCircle
+	content: '\e00a'
+
+=fontIconAlert
+	content: '\e00b'
+
+=fontIconXCircle
+	content: '\e00c'
+
+=fontIconMailOpen
+	content: '\e00d'
+
+=fontIconPeople
+	content: '\e00e'
+
+=fontIconBell
+	content: '\e010'
+
+=fontIconCalendar
+	content: '\e011'
+
+=fontIconScheduling
+	content: '\e012'
+
+=fontIconEvent
+	content: '\e013'
+
+=fontIconFolder
+	content: '\e014'
+
+=fontIconDocuments
+	content: '\e015'
+
+=fontIconOnedrive
+	content: '\e016'
+
+=fontIconChat
+	content: '\e017'
+
+=fontIconSites
+	content: '\e018'
+
+=fontIconListBullets
+	content: '\e019'
+
+=fontIconCalendarWeek
+	content: '\e01a'
+
+=fontIconCalendarWorkWeek
+	content: '\e01b'
+
+=fontIconCalendarDay
+	content: '\e01c'
+
+=fontIconFolderMove
+	content: '\e01d'
+
+=fontIconPanel
+	content: '\e01e'
+
+=fontIconPopout
+	content: '\e01f'
+
+=fontIconMenu
+	content: '\e020'
+
+=fontIconHome
+	content: '\e021'
+
+=fontIconFavorites
+	content: '\e022'
+
+=fontIconPhone
+	content: '\e023'
+
+=fontIconMailSend
+	content: '\e024'
+
+=fontIconSave
+	content: '\e025'
+
+=fontIconTrash
+	content: '\e026'
+
+=fontIconPencil
+	content: '\e027'
+
+=fontIconFlag
+	content: '\e028'
+
+=fontIconReply
+	content: '\e029'
+
+=fontIconMiniatures
+	content: '\e02a'
+
+=fontIconVoicemail
+	content: '\e02b'
+
+=fontIconPlay
+	content: '\e02c'
+
+=fontIconPause
+	content: '\e02d'
+
+=fontIconOnlineAdd
+	content: '\e02e'
+
+=fontIconOnlineJoin
+	content: '\e02f'
+
+=fontIconReplyAll
+	content: '\e030'
+
+=fontIconAttachment
+	content: '\e031'
+
+=fontIconDrm
+	content: '\e032'
+
+=fontIconPinDown
+	content: '\e033'
+
+=fontIconRefresh
+	content: '\e034'
+
+=fontIconGear
+	content: '\e035'
+
+=fontIconSmiley
+	content: '\e036'
+
+=fontIconInfo
+	content: '\e037'
+
+=fontIconLock
+	content: '\e038'
+
+=fontIconSearch
+	content: '\e039'
+
+=fontIconQuestionReverse
+	content: '\e03a'
+
+=fontIconNotRecurring
+	content: '\e03b'
+
+=fontIconTasks
+	content: '\e040'
+
+=fontIconCheck
+	content: '\e041'
+
+=fontIconX
+	content: '\e042'
+
+=fontIconEllipsis
+	content: '\e045'
+
+=fontIconDot
+	content: '\e046'
+
+=fontIconArrowUp
+	content: '\e047'
+
+=fontIconArrowDown
+	content: '\e048'
+
+=fontIconArrowLeft
+	content: '\e049'
+
+=fontIconArrowRight
+	content: '\e04a'
+
+=fontIconDownload
+	content: '\e04b'
+
+=fontIconDirections
+	content: '\e04c'
+
+=fontIconMicrophone
+	content: '\e04f'
+
+=fontIconCaretUp
+	content: '\e051'
+
+=fontIconCaretDown
+	content: '\e052'
+
+=fontIconCaretLeft
+	content: '\e053'
+
+=fontIconCaretRight
+	content: '\e054'
+
+=fontIconCaretUpLeft
+	content: '\e05a'
+
+=fontIconCaretUpRight
+	content: '\e05b'
+
+=fontIconCaretDownRight
+	content: '\e05c'
+
+=fontIconCaretDownLeft
+	content: '\e05d'
+
+=fontIconNote
+	content: '\e06a'
+
+=fontIconNoteReply
+	content: '\e06b'
+
+=fontIconNoteForward
+	content: '\e06c'
+
+=fontIconKey
+	content: '\e06f'
+
+=fontIconTile
+	content: '\e070'
+
+=fontIconTaskRecurring
+	content: '\e071'
+
+=fontIconStarEmpty
+	content: '\e073'
+
+=fontIconUpload
+	content: '\e076'
+
+=fontIconWrench
+	content: '\e077'
+
+=fontIconShare
+	content: '\e078'
+
+=fontIconDocumentReply
+	content: '\e079'
+
+=fontIconDocumentForward
+	content: '\e07a'
+
+=fontIconPartner
+	content: '\e080'
+
+=fontIconReactivate
+	content: '\e084'
+
+=fontIconSort
+	content: '\e085'
+
+=fontIconPersonAdd
+	content: '\e086'
+
+=fontIconChevronUp
+	content: '\e087'
+
+=fontIconChevronDown
+	content: '\e088'
+
+=fontIconChevronLeft
+	content: '\e089'
+
+=fontIconChevronRight
+	content: '\e08a'
+
+=fontIconPeopleAdd
+	content: '\e08c'
+
+=fontIconNewsfeed
+	content: '\e08d'
+
+=fontIconNotebook
+	content: '\e08e'
+
+=fontIconLink
+	content: '\e08f'
+
+=fontIconChevronsUp
+	content: '\e090'
+
+=fontIconChevronsDown
+	content: '\e091'
+
+=fontIconChevronsLeft
+	content: '\e092'
+
+=fontIconChevronsRight
+	content: '\e093'
+
+=fontIconClutter
+	content: '\e09a'
+
+=fontIconSubscribe
+	content: '\e09c'
+
+=fontIconUnsubscribe
+	content: '\e09d'
+
+=fontIconPersonRemove
+	content: '\e09e'
+
+=fontIconReceiptForward
+	content: '\e0a0'
+
+=fontIconReceiptReply
+	content: '\e0a1'
+
+=fontIconReceiptCheck
+	content: '\e0a2'
+
+=fontIconPeopleRemove
+	content: '\e0a3'
+
+=fontIconMerge
+	content: '\e0a4'
+
+=fontIconSplit
+	content: '\e0a5'
+
+=fontIconEventCancel
+	content: '\e0a6'
+
+=fontIconEventShare
+	content: '\e0a7'
+
+=fontIconToday
+	content: '\e0a9'
+
+=fontIconOofReply
+	content: '\e0aa'
+
+=fontIconVoicemailReply
+	content: '\e0ac'
+
+=fontIconVoicemailForward
+	content: '\e0ad'
+
+=fontIconRibbon
+	content: '\e0af'
+
+=fontIconContact
+	content: '\e0b0'
+
+=fontIconEye
+	content: '\e0b1'
+
+=fontIconGlasses
+	content: '\e0b2'
+
+=fontIconPrint
+	content: '\e100'
+
+=fontIconRoom
+	content: '\e101'
+
+=fontIconPost
+	content: '\e102'
+
+=fontIconToggle
+	content: '\e103'
+
+=fontIconTouch
+	content: '\e104'
+
+=fontIconClock
+	content: '\e105'
+
+=fontIconFax
+	content: '\e106'
+
+=fontIconLightning
+	content: '\e110'
+
+=fontIconDialpad
+	content: '\e111'
+
+=fontIconPhoneTransfer
+	content: '\e112'
+
+=fontIconPhoneAdd
+	content: '\e113'
+
+=fontIconLate
+	content: '\e114'
+
+=fontIconChatAdd
+	content: '\e115'
+
+=fontIconConflict
+	content: '\e116'
+
+=fontIconNavigate
+	content: '\e117'
+
+=fontIconCamera
+	content: '\e119'
+
+=fontIconFilter
+	content: '\e11a'
+
+=fontIconFullscreen
+	content: '\e11b'
+
+=fontIconNew
+	content: '\e11c'
+
+=fontIconMailEmpty
+	content: '\e11d'
+
+=fontIconEditBox
+	content: '\e11e'
+
+=fontIconWaffle
+	content: '\e11f'
+
+=fontIconWork
+	content: '\e120'
+
+=fontIconEventRecurring
+	content: '\e121'
+
+=fontIconCart
+	content: '\e122'
+
+=fontIconSocialListening
+	content: '\e123'
+
+=fontIconMapMarker
+	content: '\e124'
+
+=fontIconOrg
+	content: '\e125'
+
+=fontIconReplyAlt
+	content: '\e150'
+
+=fontIconReplyAllAlt
+	content: '\e152'
+
+=fontIconEventInfo
+	content: '\e154'
+
+=fontIconGroup
+	content: '\e155'
+
+=fontIconMoney
+	content: '\e161'
+
+=fontIconGraph
+	content: '\e162'
+
+=fontIconNoteEdit
+	content: '\e163'
+
+=fontIconDashboard
+	content: '\e164'
+
+=fontIconMailEdit
+	content: '\e165'
+
+=fontIconPinLeft
+	content: '\e167'
+
+=fontIconHeart
+	content: '\e16a'
+
+=fontIconHeartEmpty
+	content: '\e16b'
+
+=fontIconPicture
+	content: '\e16c'
+
+=fontIconCake
+	content: '\e16d'
+
+=fontIconBooks
+	content: '\e16e'
+
+=fontIconChart
+	content: '\e16f'
+
+=fontIconVideo
+	content: '\e170'
+
+=fontIconSoccer
+	content: '\e171'
+
+=fontIconMeal
+	content: '\e172'
+
+=fontIconBalloon
+	content: '\e173'
+
+=fontIconCat
+	content: '\e174'
+
+=fontIconDog
+	content: '\e175'
+
+=fontIconBag
+	content: '\e176'
+
+=fontIconMusic
+	content: '\e177'
+
+=fontIconStopwatch
+	content: '\e178'
+
+=fontIconCoffee
+	content: '\e179'
+
+=fontIconBriefcase
+	content: '\e17a'
+
+=fontIconPill
+	content: '\e17b'
+
+=fontIconTrophy
+	content: '\e17c'
+
+=fontIconFirstAid
+	content: '\e17d'
+
+=fontIconPlane
+	content: '\e17e'
+
+=fontIconPage
+	content: '\e17f'
+
+=fontIconCar
+	content: '\e180'
+
+=fontIconDogAlt
+	content: '\e181'
+
+=fontIconDocument
+	content: '\e182'
+
+=fontIconMetadata
+	content: '\e183'
+
+=fontIconPointItem
+	content: '\e184'
+
+=fontIconText
+	content: '\e185'
+
+=fontIconFieldText
+	content: '\e186'
+
+=fontIconFieldNumber
+	content: '\e187'
+
+=fontIconDropdown
+	content: '\e188'
+
+=fontIconRadioButton
+	content: '\e189'
+
+=fontIconCheckbox
+	content: '\e18a'
+
+=fontIconStory
+	content: '\e18b'
+
+=fontIconBold
+	content: '\e18c'
+
+=fontIconItalic
+	content: '\e18d'
+
+=fontIconUnderline
+	content: '\e18e'
+
+=fontIconQuote
+	content: '\e18f'
+
+=fontIconStyleRemove
+	content: '\e190'
+
+=fontIconPictureAdd
+	content: '\e191'
+
+=fontIconPictureRemove
+	content: '\e192'
+
+=fontIconDesktop
+	content: '\e193'
+
+=fontIconTablet
+	content: '\e194'
+
+=fontIconMobile
+	content: '\e195'
+
+=fontIconTable
+	content: '\e196'
+
+=fontIconHide
+	content: '\e197'
+
+=fontIconShield
+	content: '\e198'
+
+=fontIconHeader
+	content: '\e19a'
+
+=fontIconPaint
+	content: '\e19b'
+
+=fontIconSupport
+	content: '\e19c'
+
+=fontIconSettings
+	content: '\e19d'
+
+=fontIconCreditCard
+	content: '\e19e'
+
+=fontIconReload
+	content: '\e19f'
+
+=fontIconPeopleSecurity
+	content: '\e200'
+
+=fontIconFieldTextBox
+	content: '\e203'
+
+=fontIconMultiChoice
+	content: '\e204'
+
+=fontIconFieldMail
+	content: '\e205'
+
+=fontIconContactForm
+	content: '\e206'
+
+=fontIconCircleHalfFilled
+	content: '\e207'
+
+=fontIconDocumentPDF
+	content: '\e208'
+
+=fontIconBookmark
+	content: '\e209'
+
+=fontIconCircleUnfilled
+	content: '\e20b'
+
+=fontIconCircleFilled
+	content: '\e20c'
+
+=fontIconTextBox
+	content: '\e20e'
+
+=fontIconDrop
+	content: '\e20f'
+
+=fontIconSun
+	content: '\e210'
+
+=fontIconLifesaver
+	content: '\e211'
+
+=fontIconLifesaverLock
+	content: '\e212'
+
+=fontIconMailUnread
+	content: '\e213'
+
+=fontIconMailRead
+	content: '\e214'
+
+=fontIconInboxCheck
+	content: '\e215'
+
+=fontIconFolderSearch
+	content: '\e216'
+
+=fontIconCollapse
+	content: '\e217'
+
+=fontIconExpand
+	content: '\e218'
+
+=fontIconAscending
+	content: '\e219'
+
+=fontIconDescending
+	content: '\e21a'
+
+=fontIconFilterClear
+	content: '\e21b'
+
+=fontIconCheckboxEmpty
+	content: '\e21c'
+
+=fontIconCheckboxMixed
+	content: '\e21d'
+
+=fontIconBoards
+	content: '\e21e'
+
+=fontIconCheckboxCheck
+	content: '\e21f'
+
+=fontIconFrowny
+	content: '\e220'
+
+=fontIconLightBulb
+	content: '\e221'
+
+=fontIconGlobe
+	content: '\e222'
+
+=fontIconDeviceWipe
+	content: '\e223'
+
+=fontIconListCheck
+	content: '\e226'
+
+=fontIconListGroup
+	content: '\e227'
+
+=fontIconTimeline
+	content: '\e228'
+
+=fontIconFontIncrease
+	content: '\e229'
+
+=fontIconFontDecrease
+	content: '\e22a'
+
+=fontIconFontColor
+	content: '\e22b'
+
+=fontIconMailCheck
+	content: '\e22c'
+
+=fontIconMailDown
+	content: '\e22d'
+
+=fontIconListCheckbox
+	content: '\e22e'
+
+=fontIconSunAdd
+	content: '\e22f'
+
+=fontIconSunQuestion
+	content: '\e230'
+
+=fontIconChevronThinUp
+	content: '\e231'
+
+=fontIconChevronThinDown
+	content: '\e232'
+
+=fontIconChevronThinLeft
+	content: '\e233'
+
+=fontIconChevronThinRight
+	content: '\e234'
+
+=fontIconChevronThickUp
+	content: '\e235'
+
+=fontIconChevronThickDown
+	content: '\e236'
+
+=fontIconChevronThickLeft
+	content: '\e237'
+
+=fontIconChevronThickRight
+	content: '\e238'
+
+=fontIconLinkRemove
+	content: '\e239'
+
+=fontIconAlertOutline
+	content: '\e23b'
+
+=fontIconDocumentLandscape
+	content: '\e23c'
+
+=fontIconDocumentAdd
+	content: '\e23d'
+
+=fontIconToggleMiddle
+	content: '\e23e'
+
+=fontIconEmbed
+	content: '\e23f'
+
+=fontIconListNumbered
+	content: '\e240'
+
+=fontIconPeopleCheck
+	content: '\e242'
+
+=fontIconCaretUpOutline
+	content: '\e243'
+
+=fontIconCaretDownOutline
+	content: '\e244'
+
+=fontIconCaretLeftOutline
+	content: '\e245'
+
+=fontIconCaretRightOutline
+	content: '\e246'
+
+=fontIconMailSync
+	content: '\e248'
+
+=fontIconMailError
+	content: '\e249'
+
+=fontIconMailPause
+	content: '\e24a'
+
+=fontIconPeopleSync
+	content: '\e24b'
+
+=fontIconPeopleError
+	content: '\e24c'
+
+=fontIconPeoplePause
+	content: '\e24d'
+
+=fontIconCircleBall
+	content: '\e24e'
+
+=fontIconCircleBalloons
+	content: '\e24f'
+
+=fontIconCircleCar
+	content: '\e250'
+
+=fontIconCircleCat
+	content: '\e251'
+
+=fontIconCircleCoffee
+	content: '\e252'
+
+=fontIconCircleDog
+	content: '\e253'
+
+=fontIconCircleLightning
+	content: '\e254'
+
+=fontIconCirclePill
+	content: '\e255'
+
+=fontIconCirclePlane
+	content: '\e256'
+
+=fontIconCirclePoodle
+	content: '\e257'
+
+=fontIconCheckPeople
+	content: '\e259'
+
+=fontIconDocumentSearch
+	content: '\e25a'
+
+=fontIconSortLines
+	content: '\e25c'
+
+=fontIconCalendarPublic
+	content: '\e25d'
+
+=fontIconContactPublic
+	content: '\e25e'
+
+=fontIconClassNotebook
+	content: '\e25f'
+
+=fontIconTriangleUp
+	content: '\e260'
+
+=fontIconTriangleRight
+	content: '\e261'
+
+=fontIconTriangleDown
+	content: '\e262'
+
+=fontIconTriangleLeft
+	content: '\e263'
+
+=fontIconTriangleEmptyUp
+	content: '\e264'
+
+=fontIconTriangleEmptyRight
+	content: '\e265'
+
+=fontIconTriangleEmptyDown
+	content: '\e266'
+
+=fontIconTriangleEmptyLeft
+	content: '\e267'
+
+=fontIconFilePDF
+	content: '\e268'
+
+=fontIconFileImage
+	content: '\e26c'
+
+=fontIconFileDocument
+	content: '\e26d'
+
+=fontIconListGroup2
+	content: '\e26e'
+
+=fontIconCopy
+	content: '\e26f'
+
+=fontIconCreditCardOutline
+	content: '\e270'
+
+=fontIconMailPublic
+	content: '\e272'
+
+=fontIconFolderPublic
+	content: '\e273'
+
+=fontIconTeamwork
+	content: '\e274'
+
+=fontIconMove
+	content: '\e275'
+
+=fontIconClassroom
+	content: '\e276'
+
+=fontIconMenu2
+	content: '\e277'
+
+=fontIconPlus2
+	content: '\e278'
+
+=fontIconTag
+	content: '\e279'
+
+=fontIconArrowUp2
+	content: '\e27a'
+
+=fontIconArrowDown2
+	content: '\e27b'
+
+=fontIconCirclePlus
+	content: '\e27c'
+
+=fontIconCircleInfo
+	content: '\e27d'
+
+=fontIconSection
+	content: '\e27e'
+
+=fontIconSections
+	content: '\e27f'
+
+=fontIconAt
+	content: '\e282'
+
+=fontIconArrowUpRight
+	content: '\e283'
+
+=fontIconArrowDownRight
+	content: '\e284'
+
+=fontIconArrowDownLeft
+	content: '\e285'
+
+=fontIconArrowUpLeft
+	content: '\e286'
+
+=fontIconBundle
+	content: '\e287'
+
+=fontIconPictureEdit
+	content: '\e288'
+
+=fontIconProtectionCenter
+	content: '\e289'
+
+=fontIconAlert2
+	content: '\e28a'
