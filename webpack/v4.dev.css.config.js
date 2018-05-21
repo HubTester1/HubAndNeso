@@ -7,6 +7,9 @@ const merge = require('webpack-merge');
 const HtmlWebpack = require('html-webpack-plugin');
 // eslint-disable-next-line
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+// eslint-disable-next-line
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+
 const baseConfig = require('./base.config.js');
 const path = require('path');
 
@@ -19,12 +22,14 @@ module.exports = merge(baseConfig, {
 		path: path.join(__dirname, '../hub.1.0.4/css'),
 		filename: 'mos.css.js',
 	},
+	optimization: {
+		minimizer: [
+			new OptimizeCSSAssetsPlugin({}),
+		],
+	},
 	plugins: [
 		new MiniCssExtractPlugin({
-			// Options similar to the same options in webpackOptions.output
-			// both options are optional
 			filename: 'mos.css',
-			// chunkFilename: '[id].css',
 		}),
 	],
 	module: {

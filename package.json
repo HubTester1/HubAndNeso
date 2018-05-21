@@ -13,9 +13,9 @@
     ]
   },
   "scripts": {
-	"build-dev-4": "NODE_ENV=development webpack --config webpack/v4.dev.css.config.js",
-	"build-watch-dev-4": "NODE_ENV=development webpack --config webpack/v4.dev.css.config.js --watch",
-	"build-dev-5": "NODE_ENV=development webpack --config webpack/v5.dev.config.js",
+    "build-dev-4": "NODE_ENV=development webpack --config webpack/v4.dev.css.config.js",
+    "build-watch-dev-4": "NODE_ENV=development webpack --config webpack/v4.dev.css.config.js --watch",
+    "build-dev-5": "NODE_ENV=development webpack --config webpack/v5.dev.config.js",
     "build-watch-dev-5": "NODE_ENV=development webpack --config webpack/v5.dev.config.js --watch",
     "start-5": "NODE_ENV=development webpack-dev-server --config webpack/v5.dev.config.js"
   },
@@ -74,6 +74,7 @@
     "mini-css-extract-plugin": "^0.4.0",
     "moment": "^2.22.1",
     "node-sass": "^4.9.0",
+    "optimize-css-assets-webpack-plugin": "^4.0.1",
     "postcss-loader": "^2.1.5",
     "sass-lint": "^1.12.1",
     "sass-loader": "^6.0.7",
