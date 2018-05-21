@@ -22,8 +22,6 @@ module.exports = merge(baseConfig, {
 				include: path.join(__dirname, '../hub.1.0.4/sass'),
 				test: /\.sass$/,
 				use: [
-					{ loader: 'style-loader' },
-					{ loader: 'css-loader' },
 					{ loader: 'postcss-loader' },
 					{ loader: 'sass-loader' },
 				],
