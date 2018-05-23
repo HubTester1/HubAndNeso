@@ -17,16 +17,41 @@ const webpack = require('webpack');
 const webpackStream = require('webpack-stream');
 const { argv } = require('yargs');
 const webpackV4DevConfig = require('./webpack/v4.dev.css.config');
+const webpackV4ProdConfig = require('./webpack/v4.prod.css.config');
 const webpackV5DevConfig = require('./webpack/v5.dev.config');
 const gulpBaseConfig = require('./gulp/base.config');
 const gulpV4DevConfig = require('./gulp/v4.dev.config');
-// const gulpV4ProdConfig = require('./gulp/v4.prod.config');
+const gulpV4ProdConfig = require('./gulp/v4.prod.config');
 const gulpV5DevConfig = require('./gulp/v5.dev.config');
 const gulpV5ProdConfig = require('./gulp/v5.prod.config');
 
 // ----- CONFIG TASKS
 
-// V4 ---
+// SWF APP SETTINGS ---
+
+// push specified settings file to specified location
+gulp.task('push-settings', () =>
+	// for specified settings file
+	gulp.src(gulpBaseConfig.ReturnSWFSettingsFile(argv.app))
+		// replace the standard pipe method
+		.pipe(plumber())
+		// pipe them into a caching proxy 
+		.pipe(cached('spFiles'))
+		// and then to specified SP location
+		.pipe(gulpSPSave(
+			gulpBaseConfig.ReturnSPSaveSWFSettingsOptions(argv.app),
+			gulpBaseConfig.ReturnGulpSPSaveCredentials(),
+		)));
+
+// when the specified settings file changes, push it to specified location
+gulp.task('watch-push-settings', () => {
+	// watch the src style file; upon changes, build dist style file and push it to dev
+	gulp.watch([gulpBaseConfig.ReturnSWFSettingsFile(argv.app)], ['push-settings']);
+});
+
+// V4 API & STYLES ---
+
+// DEV
 
 // build style file
 gulp.task('4-dev-build-styles', () => {
@@ -76,26 +101,78 @@ gulp.task('4-dev-watch-build-push-styles', () => {
 	gulp.watch([gulpV4DevConfig.ReturnV4DevStylesSrcFile()], ['4-dev-push-styles']);
 });
 
-
-// push specified settings file to specified location
-gulp.task('push-settings', () =>
-	// for specified settings file
-	gulp.src(gulpBaseConfig.ReturnSWFSettingsFile(argv.app))
+// push specified swf api file to dev
+gulp.task('4-dev-push-api', () =>
+	// for specified dist swf api file
+	gulp.src(gulpV4DevConfig.ReturnV4DevSWFAPIDevFile(argv.api))
 		// replace the standard pipe method
 		.pipe(plumber())
 		// pipe them into a caching proxy 
 		.pipe(cached('spFiles'))
-		// and then to specified SP location
+		// and then to SP dev location
 		.pipe(gulpSPSave(
-			gulpBaseConfig.ReturnSPSaveSWFSettingsOptions(argv.app),
+			gulpV4DevConfig.ReturnV4SPSaveDevSWFAPIOptions(),
 			gulpBaseConfig.ReturnGulpSPSaveCredentials(),
 		)));
 
-// when the specified settings file changes, push it to specified location
-gulp.task('watch-push-settings', () => {
-	// watch the src style file; upon changes, build dist style file and push it to dev
-	gulp.watch([gulpBaseConfig.ReturnSWFSettingsFile(argv.app)], ['push-settings']);
+
+
+
+
+
+
+
+
+// PROD
+
+// build style file
+gulp.task('4-prod-build-styles', () => {
+	// for specified src style file
+	gulp.src(gulpV4ProdConfig.ReturnV4ProdStylesSrcFile())
+		// replace the standard pipe method
+		.pipe(plumber())
+		// pipe it through webpack
+		.pipe(webpackStream(webpackV4ProdConfig), webpack)
+		// to the specified style folder
+		.pipe(gulp.dest(gulpV4ProdConfig.ReturnV4ProdStylesDistFolder()));
 });
+
+// push style file to dev
+gulp.task('4-prod-push-styles', () =>
+	// for specified dist style file
+	gulp.src(gulpV4ProdConfig.ReturnV4ProdStylesDistFile())
+		// replace the standard pipe method
+		.pipe(plumber())
+		// pipe them into a caching proxy 
+		.pipe(cached('spFiles'))
+		// and then to SP dev location
+		.pipe(gulpSPSave(
+			gulpV4ProdConfig.ReturnV4SPSaveDevCSSOptions(),
+			gulpBaseConfig.ReturnGulpSPSaveCredentials(),
+		)));
+
+// build style file and push style file to dev
+gulp.task('4-prod-build-push-styles', () =>
+	// for specified style file
+	gulp.src(gulpV4ProdConfig.ReturnV4ProdStylesSrcFile())
+		// replace the standard pipe method
+		.pipe(plumber())
+		// pipe it through webpack
+		.pipe(webpackStream(webpackV4ProdConfig), webpack)
+		// to the specified style folder
+		.pipe(gulp.dest(gulpV4ProdConfig.ReturnV4ProdStylesDistFolder()))
+		// and then to SP dev location
+		.pipe(gulpSPSave(
+			gulpV4ProdConfig.ReturnV4SPSaveDevCSSOptions(),
+			gulpBaseConfig.ReturnGulpSPSaveCredentials(),
+		)));
+
+// when the specified src style file changes, build dist style file and push it to dev
+gulp.task('4-prod-watch-build-push-styles', () => {
+	// watch the src style file; upon changes, build dist style file and push it to dev
+	gulp.watch([gulpV4ProdConfig.ReturnV4ProdStylesSrcFile()], ['4-prod-push-styles']);
+});
+
 
 
 

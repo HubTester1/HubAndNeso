@@ -4,7 +4,17 @@ module.exports = {
 	ReturnV4DevStylesSrcFile: () => './hub.1.0.4/sass/mos.sass',
 	ReturnV4DevStylesDistFolder: () => './hub.1.0.4/css',
 	ReturnV4DevStylesDistFile: () => './hub.1.0.4/css/mos.css',
-	ReturnV4DevSWFAPIDevFiles: () => './hub.1.0.4/js/dev_mos-main*.js',	
+	ReturnV4DevSWFAPIDevFile: (apiToken) => {
+		let swfAPIDevFile = './hub.1.0.4/js/dev_mos-main';
+		if (apiToken === 'long') {
+			swfAPIDevFile += '_long';
+		}
+		if (apiToken === 'medium') {
+			swfAPIDevFile += '_long';
+		}
+		swfAPIDevFile += '.1.0.4.js';
+		return swfAPIDevFile;
+	},	
 	ReturnV4DevDistFolder: () => './hub.1.0.4',
 	ReturnV4SPSaveDevAllOptions: () => ({
 		siteUrl: 'https://bmos.sharepoint.com/sites/hubdev',

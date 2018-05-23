@@ -1,4 +1,6 @@
 
+// --- IMPORTS
+
 // eslint-disable-next-line
 const webpack = require('webpack');
 // eslint-disable-next-line
@@ -6,20 +8,13 @@ const merge = require('webpack-merge');
 // eslint-disable-next-line
 const HtmlWebpack = require('html-webpack-plugin');
 // eslint-disable-next-line
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-// eslint-disable-next-line
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-
+const ETP = require('extract-text-webpack-plugin');
 const baseConfig = require('./base.config.js');
 const path = require('path');
 
+// --- CONFIG
+
 module.exports = merge(baseConfig, {
-	optimization: {
-		minimizer: [
-			new OptimizeCSSAssetsPlugin({}),
-		],
-	},
-	mode: 'production',
 	entry: {
 		index: './hub.1.0.4/sass/mos.sass',
 	},
@@ -27,24 +22,16 @@ module.exports = merge(baseConfig, {
 		path: path.join(__dirname, '../hub.1.0.4/css'),
 		filename: 'mos.css.js',
 	},
-	plugins: [
-		new MiniCssExtractPlugin({
-			filename: 'mos.css',
-		}),
-	],
 	module: {
-		rules: [
+		loaders: [
 			{
 				include: path.join(__dirname, '../hub.1.0.4/sass'),
 				test: /\.sass$/,
-				use: [
-					{ loader: MiniCssExtractPlugin.loader },
-					{ loader: 'css-loader' },
-					{ loader: 'postcss-loader' },
-					{ loader: 'sass-loader' },
-				],
+				loader: ETP.extract({ fallback: 'style-loader', use: 'css-loader!postcss-loader!sass-loader' }),
 			},
 		],
 	},
-	devtool: 'eval-source-map',
+	plugins: [
+		new ETP('mos.css'),
+	],
 });
