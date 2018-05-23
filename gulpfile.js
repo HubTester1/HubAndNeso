@@ -15,8 +15,7 @@ const cached = require('gulp-cached');
 const plumber = require('gulp-plumber');
 const webpack = require('webpack');
 const webpackStream = require('webpack-stream');
-// const run = require('gulp-run');
-// const runSequence = require('run-sequence');
+const { argv } = require('yargs');
 const webpackV4DevConfig = require('./webpack/v4.dev.css.config');
 const webpackV5DevConfig = require('./webpack/v5.dev.config');
 const gulpBaseConfig = require('./gulp/base.config');
@@ -71,11 +70,65 @@ gulp.task('4-dev-build-push-styles', () =>
 			gulpBaseConfig.ReturnGulpSPSaveCredentials(),
 		)));
 
-// when the specified src style file changes, build dist file and push dist to prod
+// when the specified src style file changes, build dist style file and push it to dev
 gulp.task('4-dev-watch-build-push-styles', () => {
-	// watch the src folder; upon changes, build dist file and push dist to prod
+	// watch the src style file; upon changes, build dist style file and push it to dev
 	gulp.watch([gulpV4DevConfig.ReturnV4DevStylesSrcFile()], ['4-dev-push-styles']);
 });
+
+
+// push specified settings file to specified location
+gulp.task('push-settings', () =>
+	// for specified settings file
+	gulp.src(gulpBaseConfig.ReturnSWFSettingsFile(argv.app))
+		// replace the standard pipe method
+		.pipe(plumber())
+		// pipe them into a caching proxy 
+		.pipe(cached('spFiles'))
+		// and then to specified SP location
+		.pipe(gulpSPSave(
+			gulpBaseConfig.ReturnSPSaveSWFSettingsOptions(argv.app),
+			gulpBaseConfig.ReturnGulpSPSaveCredentials(),
+		)));
+
+// when the specified settings file changes, push it to specified location
+gulp.task('watch-push-settings', () => {
+	// watch the src style file; upon changes, build dist style file and push it to dev
+	gulp.watch([gulpBaseConfig.ReturnSWFSettingsFile(argv.app)], ['push-settings']);
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
