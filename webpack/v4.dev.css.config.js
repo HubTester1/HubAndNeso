@@ -6,15 +6,24 @@ const merge = require('webpack-merge');
 // eslint-disable-next-line
 const HtmlWebpack = require('html-webpack-plugin');
 // eslint-disable-next-line
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-// eslint-disable-next-line
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-
+const ETP = require('extract-text-webpack-plugin');
 const baseConfig = require('./base.config.js');
 const path = require('path');
 
+
+/* 
+	Note: For the moment, development files are written locally and pushed to a dev location 
+	in SharePoint. That is, every file change has to be evaluated in SharePoint. (Observation 
+	indicates that this is not slower than saving directly to SP through a Windows Explorer 
+	mapped drive.)
+
+	In future, it would be great to develop locally and avoid waiting on saving to SharePoint 
+	each time. In that case, v4 configs should be updated to look more like v5 configs; e.g.,
+	style-loader and no MiniCssExtractPlugin during development.
+
+ */
+
 module.exports = merge(baseConfig, {
-	mode: 'production',
 	entry: {
 		index: './hub.1.0.4/sass/mos.sass',
 	},
@@ -22,29 +31,16 @@ module.exports = merge(baseConfig, {
 		path: path.join(__dirname, '../hub.1.0.4/css'),
 		filename: 'mos.css.js',
 	},
-	optimization: {
-		minimizer: [
-			new OptimizeCSSAssetsPlugin({}),
-		],
-	},
-	plugins: [
-		new MiniCssExtractPlugin({
-			filename: 'mos.css',
-		}),
-	],
 	module: {
-		rules: [
+		loaders: [
 			{
 				include: path.join(__dirname, '../hub.1.0.4/sass'),
 				test: /\.sass$/,
-				use: [
-					{ loader: MiniCssExtractPlugin.loader },
-					{ loader: 'css-loader' },
-					{ loader: 'postcss-loader' },
-					{ loader: 'sass-loader' },
-				],
+				loader: ETP.extract({ fallback: 'style-loader', use: 'css-loader!postcss-loader!sass-loader' }),
 			},
 		],
 	},
-	devtool: 'eval-source-map',
+	plugins: [
+		new ETP('mos.css'),
+	],
 });
