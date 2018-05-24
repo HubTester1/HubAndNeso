@@ -1526,10 +1526,8 @@
 
 			case "Refer a Friend":
 				if (uData.isAdmin === 0) {
-					console.log("this user gets myReferrals");
 					userNeeedsAlternateOverviewScreen = "myReferrals";
 				} else {
-					console.log("this user gets adminReferrals");
 					userNeeedsAlternateOverviewScreen = "adminReferrals";
 				}
 				break;
