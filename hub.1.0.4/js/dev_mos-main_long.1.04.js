@@ -13855,28 +13855,35 @@
 	function ReturnRequestFormDataFromDOMAsObject () {
 		// get data from form as string
 		var clonedForm = $("div#request-form").clone();
+		var repeatables = $(clonedForm).find('[data-repeatable]');
 		var formData = '{';
-		// handle the repeatables
+		// handle the repeatable section
 		formData += '"RepeatedElements": [';
-		$(clonedForm).find('[data-repeatable]').each(function() {
+		repeatables.each(function(index, value) {
+			var thisIsLastRepeatable = false;
+			if ((repeatables.length - 1) === index) {
+				thisIsLastRepeatable = true;
+			}
 			var repeatableString = '{"ID": "' + $(this).attr('id') + '",';
 			repeatableString += '"OriginalToRepeat": "' + $(this).attr('data-original-to-repeat') + '",';
 			repeatableString += ReturnRequestStorageObjectPropertiesAndPushRequestColumns(this);
 			repeatableString = repeatableString.substring(0, repeatableString.length - 1); // remove trailing comma
-			repeatableString += '},';
+			repeatableString += '}';
+			if (!thisIsLastRepeatable) {
+				repeatableString += ',';
+			}
 			formData += repeatableString;
 			$(this).remove();
 		});
-		// remove trailing "},"
-		formData = formData.substring(0, formData.length - 2);
-		// finish off the repeatable
-		formData += '}],';
+		// finish off the repeatable section
+		formData += '],';
 		// handle the non-repeatables
 		formData += ReturnRequestStorageObjectPropertiesAndPushRequestColumns(clonedForm);
 		// remove trailing comma
 		formData = formData.substring(0, formData.length - 1);
 		// end building the JSON string that will be stored
 		formData += '}';
+		console.log(formData);
 		// get object from string
 		formData = JSON.parse(formData);
 		return formData;
@@ -14009,10 +14016,8 @@
 								'	<tr style="width: 100%;">' + 
 								'		<td style="width: 50%; vertical-align: top;">' + 
 								'			<ul style="margin: 0;">' + 
-								'				<li><b>Position Number:</b> ' + formData["Position-Number"] + '</li>' + 
 								'				<li><b>Department:</b> ' + formData["Department"] + '</li>' + 
-								'				<li><b>Working Title:</b> ' + formData["Working-Title"] + '</li>' + 
-								'				<li><b>Composition Title:</b> ' + formData["Compensation-Title"] + '</li>' + 
+								'				<li><b>Position Title:</b> ' + formData["Position-Title"] + '</li>' + 
 								'				<li><b>Grade:</b> ' + formData["Grade"] + '</li>' + 
 								'				<li><b>Employee Classification:</b> ' + formData["Employee-Classification"] + '</li>' + 
 								'				<li><b>Scheduled Hours, Biweekly:</b> ' + formData["Scheduled-Hours-Biweekly"] + '</li>' + 
@@ -14041,7 +14046,7 @@
 							'			<ul>' + 
 							'				<li><b>Accounts:</b> ';
 
-			if (formData["Funding-Source"] == "Grant Funds") {
+			if (formData["Funding-Source"] == "Grant Funds" || formData["Funding-Source"] == "Endowment Funds") {
 				printContent += '					<ol>';
 
 				$.each(formData["RepeatedElements"], function(i, accountSet) {
@@ -14075,14 +14080,14 @@
 				printContent += '				<li><b>Reason for Job Opening:</b> Addition to Budgeted FTE</li>';
 			}
 
-			if (typeof(formData["hrc-grading_graded"]) !== "undefined") {
-				printContent += '				<li><b>HRC Grading:</b> Graded by HRC</li>' + 
-								'				<li><b>HRC Grading Last Updated:</b> ' + formData["HRC-Last-Updated"] + '</li>';
-			}
+			// if (typeof(formData["hrc-grading_graded"]) !== "undefined") {
+			// 	printContent += '				<li><b>HRC Grading:</b> Graded by HRC</li>' + 
+			// 					'				<li><b>HRC Grading Last Updated:</b> ' + formData["HRC-Last-Updated"] + '</li>';
+			// }
 
-			if (typeof(formData["hrc-grading_pending"]) !== "undefined") {
-				printContent += '				<li><b>HRC Grading:</b> Pending</li>';
-			}
+			// if (typeof(formData["hrc-grading_pending"]) !== "undefined") {
+			// 	printContent += '				<li><b>HRC Grading:</b> Pending</li>';
+			// }
 
 			printContent += '		</td>' + 
 							'	</tr>' + 
