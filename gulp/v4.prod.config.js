@@ -4,9 +4,9 @@ module.exports = {
 	ReturnV4ProdStylesSrcFile: () => './hub.1.0.4/sass/mos.sass',
 	ReturnV4ProdStylesDistFolder: () => './hub.1.0.4/css',
 	ReturnV4ProdStylesDistFile: () => './hub.1.0.4/css/mos.css',
-	ReturnV4ProdSWFAPIDevFile: () => './hub.1.0.4/js/mos-main.js',
+	ReturnV4ProdSWFAPIFile: () => './hub.1.0.4/js/mos-main.js',
 	ReturnV4ProdDistFolder: () => './hub.1.0.4',
-	ReturnV4SPSaveDevAllOptions: () => ({
+	ReturnV4ProdSPSaveAllOptions: () => ({
 		siteUrl: 'https://bmos.sharepoint.com/sites/hubprod',
 		notification: true,
 		folder: 'Code4',

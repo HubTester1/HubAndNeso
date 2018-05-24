@@ -1,4 +1,4 @@
-
+/* eslint-disable */
 (function($) {
 
 	// data for the current user
@@ -19224,14 +19224,14 @@
 
 
 
-	$.fn.ReturnGPCInitialConceptApprovalRequestAdditionalViewAccess = function(arguments) {
+	$.fn.ReturnGPCInitialConceptApprovalRequestAdditionalViewAccess = function(incomingArgs) {
 		
 		var gpcGroups = $().ReturnGPCGroups();
 		var hasViewPermission = 0;
 
 		// don't allow view access to requests that are in development -- this is the reason we can't
 		//		just put the relevant names in the ViewAccess column in ComponentLog
-		if (arguments.rData.requestStatus != "In Development") {
+		if (incomingArgs.rData.requestStatus != "In Development") {
 			$.each(gpcGroups.InitialConceptViewAccess, function(i,person) {
 				if (person.accountLong === uData.account) {
 					hasViewPermission = 1;
@@ -19243,14 +19243,14 @@
 
 
 
-	$.fn.ReturnGPCSubmissionApprovalRequestAdditionalViewAccess = function (arguments) {
+	$.fn.ReturnGPCSubmissionApprovalRequestAdditionalViewAccess = function (incomingArgs) {
 		
 		var gpcGroups = $().ReturnGPCGroups();
 		var hasViewPermission = 0;
 
 		// don't allow view access to requests that are in development -- this is the reason we can't
 		//		just put the relevant names in the ViewAccess column in ComponentLog
-		if (arguments.rData.requestStatus != "In Development") {
+		if (incomingArgs.rData.requestStatus != "In Development") {
 			$.each(gpcGroups.SubmissionApprovalViewAccess, function(i,person) {
 				if (person.accountLong === uData.account) {
 					hasViewPermission = 1;
@@ -20471,7 +20471,7 @@
 		// wait for all data retrieval / setting promises to complete (pass or fail) 
 		$.when.apply($, allDataRetrievalAndSettingPromises).always(function() {
 
-			console.log('using dev_mos-main_long.1.04 m2 - DevCode4');
+			console.log('using dev_mos-main_long.1.04 m1 - DevCode4');
 
 			$().ConfigureAndShowScreenContainerAndAllScreens();
 		});
