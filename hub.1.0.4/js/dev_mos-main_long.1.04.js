@@ -11331,6 +11331,7 @@
 					options += "<option value='" + department + "'>" + department + "</option>";
 				}
 			});
+			options += "<option value='other'>Other</option>";
 								
 			$(selectID).append(options);
 		});
@@ -14015,16 +14016,23 @@
 								'<table style="width: 100%;">' + 
 								'	<tr style="width: 100%;">' + 
 								'		<td style="width: 50%; vertical-align: top;">' + 
-								'			<ul style="margin: 0;">' + 
-								'				<li><b>Department:</b> ' + formData["Department"] + '</li>' + 
-								'				<li><b>Position Title:</b> ' + formData["Position-Title"] + '</li>' + 
-								'				<li><b>Grade:</b> ' + formData["Grade"] + '</li>' + 
-								'				<li><b>Employee Classification:</b> ' + formData["Employee-Classification"] + '</li>' + 
-								'				<li><b>Scheduled Hours, Biweekly:</b> ' + formData["Scheduled-Hours-Biweekly"] + '</li>' + 
-								'				<li><b>Scheduled Hours, Annually:</b> ' + formData["Scheduled-Hours-Annually"] + '</li>' + 
-								'				<li><b>Proposed Hourly Wage:</b> ' + formData["Proposed-Hourly-Wage"] + '</li>' + 
-								'				<li><b>Proposed Annualized Salary:</b> ' + formData["Proposed-Annualized-Salary"] + '</li>' + 
-								'				<li><b>Proposed Start Date:</b> ' + formData["Proposed-Start-Date"] + '</li>';
+								'			<ul style="margin: 0;">';
+			
+			if (formData["Department"] != "Other") {
+				printContent += '				<li><b>Department:</b> ' + formData["Department"] + '</li>';
+			}
+			if (formData["Department"] == "Other") {
+				printContent += '				<li><b>Department:</b> ' + formData["Other-Department"] + '</li>';
+			}
+
+			printContent += '				<li><b>Position Title:</b> ' + formData["Position-Title"] + '</li>' + 
+							'				<li><b>Grade:</b> ' + formData["Grade"] + '</li>' + 
+							'				<li><b>Employee Classification:</b> ' + formData["Employee-Classification"] + '</li>' + 
+							'				<li><b>Scheduled Hours, Biweekly:</b> ' + formData["Scheduled-Hours-Biweekly"] + '</li>' + 
+							'				<li><b>Scheduled Hours, Annually:</b> ' + formData["Scheduled-Hours-Annually"] + '</li>' + 
+							'				<li><b>Proposed Hourly Wage:</b> ' + formData["Proposed-Hourly-Wage"] + '</li>' + 
+							'				<li><b>Proposed Annualized Salary:</b> ' + formData["Proposed-Annualized-Salary"] + '</li>' + 
+							'				<li><b>Proposed Start Date:</b> ' + formData["Proposed-Start-Date"] + '</li>';
 
 			if (formData["Employee-Classification"] != "Regular FT" && formData["Employee-Classification"] != "Regular PT") {
 				printContent += '				<li><b>Proposed End Date:</b> ' + formData["Proposed-End-Date"] + '</li>';
@@ -14043,41 +14051,69 @@
 							'			</ul>' + 
 							'		</td>' + 
 							'		<td style="width: 50%; vertical-align: top;">' + 
-							'			<ul>' + 
-							'				<li><b>Accounts:</b> ';
+							'			<ul>';
+							
+
+
+
+
+
 
 			if (formData["Funding-Source"] == "Grant Funds" || formData["Funding-Source"] == "Endowment Funds") {
-				printContent += '					<ol>';
+				printContent += '				<li><b>Accounts:</b> ' +
+								'					<ol>';
 
 				$.each(formData["RepeatedElements"], function(i, accountSet) {
 
 					if (i != 0) { accountSetPropertyNameSuffix = '-repeat-' + i; }
-					printContent += '						<li>Account ' + (i + 1) + '<ol>' +
-									'							<li><b>Grant Object Code:</b> ' + accountSet["Grant-Object-Code" + accountSetPropertyNameSuffix] + '</li>' + 
-									'							<li><b>Grant Source Code:</b> ' + accountSet["Grant-Source-Code" + accountSetPropertyNameSuffix] + '</li>' + 
-									'							<li><b>Percent Salary from this Account:</b> ' + accountSet["Percent-Salary-from-this-Account" + accountSetPropertyNameSuffix] + '</li>' + 
-									'						</ol>';
+					printContent += '						<li>Account ' + (i + 1) +
+									'							<ol>' +
+									'								<li><b>Grant Object Code:</b> ' + accountSet["Grant-Object-Code" + accountSetPropertyNameSuffix] + '</li>' + 
+									'								<li><b>Grant Source Code:</b> ' + accountSet["Grant-Source-Code" + accountSetPropertyNameSuffix] + '</li>' + 
+									'								<li><b>Percent Salary from this Account:</b> ' + accountSet["Percent-Salary-from-this-Account" + accountSetPropertyNameSuffix] + '</li>' + 
+									'							</ol>' +
+									'						</li>';
 				});
 
-				printContent += '					</ol>';
+				printContent += '					</ol>' +
+								'				</li>';
 			}
-			printContent += '				</li>';
 
 			printContent += '				<li><b>Workspace Approved by Facilities?:</b> Yes</li>';
 
-			if (typeof(formData["job-opening-reason_replacement"]) !== "undefined") {
-				printContent += '				<li><b>Reason for Job Opening:</b> Replacement for Another Job</li>' + 
-								'				<li><b>Replacement For:</b> ' + formData["Replacement-Name"] + '</li>' + 
-								'				<li><b>Last Salary for Position:</b> ' + formData["Replacement-Salary"] + '</li>';
-			}
 
-			if (typeof(formData["job-opening-reason_grant"]) !== "undefined") {
-				printContent += '				<li><b>Reason for Job Opening:</b> Grant-funded Position</li>' + 
-								'				<li><b>Grant Funding Source:</b> ' + formData["Grant-Funding-Source"] + '</li>';
-			}
 
+
+
+
+
+
+
+
+
+
+
+
+			if (typeof (formData["job-opening-reason_backfill"]) !== "undefined") {
+				printContent += '				<li><b>Reason for Submission:</b> Backfill for ' + formData["Backfill-For"] + '</li>';
+			}
+			if (typeof (formData["job-opening-reason_promotion"]) !== "undefined") {
+				printContent += '				<li><b>Reason for Submission:</b> Promotion for ' + formData["Promotion-For"] + '</li>';
+			}
+			if (typeof (formData["job-opening-reason_wageorschedulechange"]) !== "undefined") {
+				printContent += '				<li><b>Reason for Submission:</b> Wage / Schedule Change for ' + formData["Wage-or-Schedule-Change-For"] + '</li>';
+			}
 			if (typeof(formData["job-opening-reason_additiontofte"]) !== "undefined") {
-				printContent += '				<li><b>Reason for Job Opening:</b> Addition to Budgeted FTE</li>';
+				printContent += '				<li><b>Reason for Submission:</b> Addition to Budgeted FTE</li>';
+			}
+
+			if (typeof (formData["Replacement-Salary"]) !== "undefined") {
+				printContent += '				<li><b>Last Salary for Position:</b> ' + formData["Replacement-Salary"] + '</li>';
+				var salaryChangeString = parseFloat(formData["Salary-Change"].replace("\$", "").replace(/[,]/g, ""));
+				printContent += '				<li><b>Salary Change:</b> ' + formData["Salary-Change"] + '</li>';
+				if (salaryChangeString !== 0) {
+					printContent += '				<li><b>Salary Change Reason:</b> ' + formData["Salary-Change-Reason"] + '</li>';
+				}
 			}
 
 			// if (typeof(formData["hrc-grading_graded"]) !== "undefined") {
@@ -18880,7 +18916,7 @@
 
 
 
-	$.fn.ProcessEARAndPARHourAndWageFields = function (hourlyWageFieldID, annualWageFieldID, biweeklyHoursFieldID, annualHoursFieldID) {
+	$.fn.ProcessEARAndPARHourAndWageFields = function (hourlyWageFieldID, annualWageFieldID, biweeklyHoursFieldID, annualHoursFieldID, lastSalaryFieldID) {
 		var earHoursFieldsProcessed = $().ProcessEARAndPARHourFields(biweeklyHoursFieldID, annualHoursFieldID);
 		if (earHoursFieldsProcessed == 1) {
 			var hourlyWageString = $("input#" + hourlyWageFieldID).val().replace("\$", "").replace(/[,]/g, "");
@@ -18888,11 +18924,27 @@
 				var biWeeklyHoursString = $("input#" + biweeklyHoursFieldID).val().replace("\$", "").replace(/[,]/g, "");
 				var hourlyWageIsValid = $().ValidateInRealTimeForPositiveNumberInUSDFormat(hourlyWageString, "input#" + hourlyWageFieldID);
 				var biWeeklyPeriodsPerAnnum = 26;
-				if (hourlyWageIsValid == 0) {
-					$("input#" + annualWageFieldID).val("");
-				} else {
+				if (hourlyWageIsValid == 1) {
+					var annualWageString = parseFloat(hourlyWageString) * parseFloat(biWeeklyHoursString) * biWeeklyPeriodsPerAnnum;
 					$("input#" + hourlyWageFieldID).val(numeral(parseFloat(hourlyWageString)).format('$0,0.00'));
-					$("input#" + annualWageFieldID).val(numeral(parseFloat(hourlyWageString) * parseFloat(biWeeklyHoursString) * biWeeklyPeriodsPerAnnum).format('$0,0.00'));
+					$("input#" + annualWageFieldID).val(numeral(annualWageString).format('$0,0.00'));
+
+					if (lastSalaryFieldID) {
+						var lastSalaryString = $("input#" + lastSalaryFieldID).val().replace("\$", "").replace(/[,]/g, "");
+						if (lastSalaryString != '') {
+							var salaryChangeString = parseFloat(annualWageString) - parseFloat(lastSalaryString);
+							$("input#" + lastSalaryFieldID).val(numeral(parseFloat(lastSalaryString)).format('$0,0.00'));
+							$("input#Salary-Change").val(numeral(parseFloat(salaryChangeString)).format('$0,0.00'));
+							$().SetFieldToRequired('Salary-Change', 'text');
+							$("div#label-and-control_Salary-Change").show("fast").removeClass("hidden");
+							if (salaryChangeString != 0) {
+								$().SetFieldToRequired('Salary-Change-Reason', 'textarea');
+								$("div#label-and-control_Salary-Change-Reason").show("fast").removeClass("hidden");
+							}
+						}
+					}
+				} else {
+					$("input#" + annualWageFieldID).val("");
 				}
 			} else {
 				$("input#" + annualWageFieldID).val('');
@@ -20476,7 +20528,7 @@
 		// wait for all data retrieval / setting promises to complete (pass or fail) 
 		$.when.apply($, allDataRetrievalAndSettingPromises).always(function() {
 
-			console.log('using dev_mos-main_long.1.04 m1 - DevCode4');
+			console.log('using dev_mos-main_long.1.04 m5 - DevCode4');
 
 			$().ConfigureAndShowScreenContainerAndAllScreens();
 		});

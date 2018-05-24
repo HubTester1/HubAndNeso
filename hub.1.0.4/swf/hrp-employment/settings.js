@@ -14,7 +14,7 @@
 		'notifications': 0,
 	};
 
-	console.log("using settings m1");
+	console.log("using settings m5");
 
 
 
@@ -329,8 +329,34 @@
 				'requiredForAdmin': [""],
 				"disabledForNonAdmin": ['Submitted', 'Cancelled'],
 				"disabledForAdmin": ['Submitted', 'Cancelled'],
-				"hideForNonAdmin": ['Submitted', 'Cancelled'],
-				"hideForAdmin": ['Submitted', 'Cancelled']
+				"onChange": [{
+					"thisFieldNotEquals": ["other"],
+					"hide": [{
+						"fieldName": "Other Department"
+					}],
+					"optional": [{
+						"fieldName": "Other Department",
+						"type": "text"
+					}]
+				}, {
+						"thisFieldEquals": ["other"],
+					"show": [{
+						"fieldName": "Other Department"
+					}],
+					"require": [{
+						"fieldName": "Other Department",
+						"type": "text"
+					}]
+				}]
+			}, {
+				'elementType': "field",
+				'controlType': "text",
+				'fieldName': "Other Department",
+				'labelContent': "Other Department",
+				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
+				'disabledForAdmin': ['Submitted', 'Cancelled'],
+				'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
+				'hideForAdmin': ['', 'Submitted', 'Cancelled'],
 			}, {
 				'elementType': "field",
 				'controlType': "text",
@@ -765,7 +791,7 @@
 				'choices': [
 					{
 						'value': 'approved',
-						'display': 'Yes, Facilities has approved a Workspace for this position'
+						'display': 'Yes, Facilities has approved a workspace for this position'
 					}
 				],
 				"requiredForNonAdmin": [""],
@@ -776,14 +802,17 @@
 				'elementType': 'field',
 				'controlType': 'radio',
 				'fieldName': 'Job Opening Reason',
-				'choiceSetLabel': 'Why is this job open?',
+				'choiceSetLabel': 'Why are you submitting this request?',
 				'choices': [
 					{
-						'value': 'replacement',
-						'display': 'Replacement for Another Job'
+						'value': 'backfill',
+						'display': 'Backfill'
 					}, {
-						'value': 'grant',
-						'display': 'Grant-funded Position'
+						'value': 'promotion',
+						'display': 'Promotion'
+					}, {
+						'value': 'wageOrScheduleChange',
+						'display': 'Wage / Schedule Change'
 					}, {
 						'value': 'additionToFTE',
 						'display': 'Addition to Budgeted FTE'
@@ -791,29 +820,111 @@
 				],
 				'onChange': [
 					{
-						'allOfSpecificCheckboxesAreChecked': ['input#job-opening-reason_replacement'],
+						'allOfSpecificCheckboxesAreChecked': ['input#job-opening-reason_backfill'],
 						'show': [
-							{ 'fieldName': 'Replacement Name' },
+							{ 'fieldName': 'Backfill For' },
 							{ 'fieldName': 'Replacement Salary' },
 						],
+						"require": [
+							{
+								"fieldName": "Backfill For",
+								"type": "text"
+							}, {
+								"fieldName": "Replacement Salary",
+								"type": "text"
+							}
+						],
 						'hide': [
-							{ 'fieldName': 'Grant Funding Source' },
+							{ 'fieldName': 'Promotion For' },
+							{ 'fieldName': 'Wage or Schedule Change For' },
+						],
+						"optional": [
+							{
+								"fieldName": "Promotion For",
+								"type": "text"
+							}, {
+								"fieldName": "Wage or Schedule Change For",
+								"type": "text"
+							}
 						],
 					}, {
-						'allOfSpecificCheckboxesAreChecked': ['input#job-opening-reason_grant'],
-						'hide': [
-							{ 'fieldName': 'Replacement Name' },
+						'allOfSpecificCheckboxesAreChecked': ['input#job-opening-reason_promotion'],
+						'show': [
+							{ 'fieldName': 'Promotion For' },
 							{ 'fieldName': 'Replacement Salary' },
 						],
+						"require": [
+							{
+								"fieldName": "Promotion For",
+								"type": "text"
+							}, {
+								"fieldName": "Replacement Salary",
+								"type": "text"
+							}
+						],
+						'hide': [
+							{ 'fieldName': 'Backfill For' },
+							{ 'fieldName': 'Wage or Schedule Change For' },
+						],
+						"optional": [
+							{
+								"fieldName": "Backfill For",
+								"type": "text"
+							}, {
+								"fieldName": "Wage or Schedule Change For",
+								"type": "text"
+							}
+						],
+					}, {
+						'allOfSpecificCheckboxesAreChecked': ['input#job-opening-reason_wageorschedulechange'],
 						'show': [
-							{ 'fieldName': 'Grant Funding Source' },
+							{ 'fieldName': 'Wage or Schedule Change For' },
+							{ 'fieldName': 'Replacement Salary' },
+						],
+						"require": [
+							{
+								"fieldName": "Wage or Schedule Change For",
+								"type": "text"
+							}, {
+								"fieldName": "Replacement Salary",
+								"type": "text"
+							}
+						],
+						'hide': [
+							{ 'fieldName': 'Backfill For' },
+							{ 'fieldName': 'Promotion For' },
+						],
+						"optional": [
+							{
+								"fieldName": "Backfill For",
+								"type": "text"
+							}, {
+								"fieldName": "Promotion For",
+								"type": "text"
+							}
 						],
 					}, {
 						'allOfSpecificCheckboxesAreChecked': ['input#job-opening-reason_additiontofte'],
 						'hide': [
-							{ 'fieldName': 'Replacement Name' },
+							{ 'fieldName': 'Backfill For' },
+							{ 'fieldName': 'Promotion For' },
+							{ 'fieldName': 'Wage or Schedule Change For' },
 							{ 'fieldName': 'Replacement Salary' },
-							{ 'fieldName': 'Grant Funding Source' },
+						],
+						"optional": [
+							{
+								"fieldName": "Backfill For",
+								"type": "text"
+							}, {
+								"fieldName": "Promotion For",
+								"type": "text"
+							}, {
+								"fieldName": "Wage or Schedule Change For",
+								"type": "text"
+							}, {
+								"fieldName": "Replacement Salary",
+								"type": "text"
+							}
 						],
 					}
 				],
@@ -824,8 +935,8 @@
 			}, {
 				'elementType': "field",
 				'controlType': "text",
-				'fieldName': "Replacement Name",
-				'labelContent': "Replacement for whom?",
+				'fieldName': "Backfill For",
+				'labelContent': "Backfill for whom?",
 				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
 				'disabledForAdmin': ['Submitted', 'Cancelled'],
 				"hideForNonAdmin": ['', 'Submitted', 'Cancelled'],
@@ -833,13 +944,23 @@
 			}, {
 				'elementType': "field",
 				'controlType': "text",
-				'fieldName': "Replacement Salary",
-				'labelContent': "What was the last salary paid for this position?",
+				'fieldName': "Promotion For",
+				'labelContent': "Promotion for whom?",
 				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
 				'disabledForAdmin': ['Submitted', 'Cancelled'],
 				"hideForNonAdmin": ['', 'Submitted', 'Cancelled'],
 				"hideForAdmin": ['', 'Submitted', 'Cancelled'],
 			}, {
+				'elementType': "field",
+				'controlType': "text",
+				'fieldName': "Wage or Schedule Change For",
+				'labelContent': "Wage / Schedule Change for whom?",
+				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
+				'disabledForAdmin': ['Submitted', 'Cancelled'],
+				"hideForNonAdmin": ['', 'Submitted', 'Cancelled'],
+				"hideForAdmin": ['', 'Submitted', 'Cancelled'],
+				
+			/* }, {
 				'elementType': "field",
 				'controlType': "text",
 				'fieldName': "Grant Funding Source",
@@ -856,7 +977,7 @@
 						'hideForAdmin': ['Submitted', 'Cancelled']
 					}
 				],
-			/* }, {
+			}, {
 				'elementType': 'field',
 				'controlType': 'radio',
 				'fieldName': 'HRC Grading',
@@ -906,6 +1027,33 @@
 
 
 			}, {
+				'elementType': "field",
+				'controlType': "text",
+				'fieldName': "Replacement Salary",
+				'labelContent': "What was the last salary paid for this position?",
+				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
+				'disabledForAdmin': ['Submitted', 'Cancelled'],
+				"hideForNonAdmin": ['', 'Submitted', 'Cancelled'],
+				"hideForAdmin": ['', 'Submitted', 'Cancelled'],
+			}, {
+				'elementType': "field",
+				'controlType': "text",
+				'fieldName': "Salary Change",
+				'labelContent': "Salary Change",
+				'disabledForNonAdmin': ['', 'Submitted', 'Cancelled'],
+				'disabledForAdmin': ['', 'Submitted', 'Cancelled'],
+				"hideForNonAdmin": ['', 'Submitted', 'Cancelled'],
+				"hideForAdmin": ['', 'Submitted', 'Cancelled'],
+			}, {
+				'elementType': "field",
+				'controlType': "textarea",
+				'fieldName': "Salary Change Reason",
+				'labelContent': "Salary Change Reason",
+				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
+				'disabledForAdmin': ['Submitted', 'Cancelled'],
+				"hideForNonAdmin": ['', 'Submitted', 'Cancelled'],
+				"hideForAdmin": ['', 'Submitted', 'Cancelled'],
+			}, {
 				'elementType': 'markup',
 				'tag': 'div',
 				'end': 1,
@@ -938,26 +1086,27 @@
 
 	fData.CustomScriptLast +=	'$("input#Position-Title").val("Position Title"); \n';
 	fData.CustomScriptLast +=	'$("input#Grade").val("Grade 1"); \n';
-	fData.CustomScriptLast +=	'$("input#Scheduled-Hours-Biweekly").val("80"); \n';
-	fData.CustomScriptLast +=	'$("input#Scheduled-Hours-Annually").val("2080"); \n';
-	fData.CustomScriptLast +=	'$("input#Proposed-Hourly-Wage").val("35"); \n';
-	fData.CustomScriptLast +=	'$("input#Proposed-Annualized-Salary").val("72000"); \n';
-	fData.CustomScriptLast +=	'$("input#Proposed-Start-Date").val("April 26, 2018"); \n';
-	fData.CustomScriptLast +=	'$("input#Proposed-End-Date").val("April 27, 2018"); \n';
+	// fData.CustomScriptLast +=	'$("input#Scheduled-Hours-Biweekly").val("80"); \n';
+	// fData.CustomScriptLast +=	'$("input#Scheduled-Hours-Annually").val("2080"); \n';
+	// fData.CustomScriptLast +=	'$("input#Proposed-Hourly-Wage").val("35"); \n';
+	// fData.CustomScriptLast +=	'$("input#Proposed-Annualized-Salary").val("72000"); \n';
+	fData.CustomScriptLast +=	'$("input#Proposed-Start-Date").val("June 26, 2018"); \n';
+	fData.CustomScriptLast +=	'$("input#Proposed-End-Date").val("June 27, 2018"); \n';
 	fData.CustomScriptLast +=	'$("input#Grant-Object-Code").val("123"); \n';
 	fData.CustomScriptLast +=	'$("input#Grant-Source-Code").val("4567"); \n';
 	fData.CustomScriptLast +=	'$("input#Percent-Salary-from-this-Account").val("49"); \n';
 	fData.CustomScriptLast +=	'$("input#Grant-Funding-Source").val("This grant funding source"); \n';
-	fData.CustomScriptLast +=	'$("input#HRC-Last-Updated").val("April 28, 2018"); \n';
-	fData.CustomScriptLast +=	'$("input#Replacement-Name").val("Replcmt Name"); \n';
-	fData.CustomScriptLast +=	'$("input#Replacement-Salary").val("Replcmt Slry"); \n';
+	// fData.CustomScriptLast +=	'$("input#HRC-Last-Updated").val("June 28, 2018"); \n';
+	fData.CustomScriptLast +=	'$("input#Backfill-For").val("Backfill Name"); \n';
+	fData.CustomScriptLast +=	'$("input#Promotion-For").val("Promotion Name"); \n';
+	fData.CustomScriptLast +=	'$("input#Wage-or-Schedule-Change-For").val("Wage Change Name"); \n';
+	// fData.CustomScriptLast +=	'$("input#Replacement-Salary").val("71000"); \n';
 	// fData.CustomScriptLast +=	'$("input#XXXXXXXXXXXXXXXX").val("XXXXXXXXXXXXX"); \n';
 
 
 	fData.CustomScriptLast +=	'$("textarea#Schedule").val("M-F, 9-5"); \n';
 	// fData.CustomScriptLast +=	'$("textarea#XXXXXXXXXXXXXXXX").val("XXXXXXXXXXXXX"); \n';
 
-	fData.CustomScriptLast +=	'$("div.subsection-container").each(function() { $(this).removeClass("hidden"); });';
 
 
 
@@ -966,10 +1115,10 @@
 
 
 
+	fData.CustomScriptLast += '$("div.subsection-container, div#container_primary-fieldset").each(function() { $(this).removeClass("hidden"); });';
 
-
-	fData.CustomScriptLast += '$("input#Proposed-Hourly-Wage, input#Scheduled-Hours-Biweekly").on("change", function() { \n' +
-		'	$().ProcessEARAndPARHourAndWageFields("Proposed-Hourly-Wage", "Proposed-Annualized-Salary", "Scheduled-Hours-Biweekly", "Scheduled-Hours-Annually");\n' +
+	fData.CustomScriptLast += '$("input#Proposed-Hourly-Wage, input#Scheduled-Hours-Biweekly, input#Replacement-Salary").on("change", function() { \n' +
+		'	$().ProcessEARAndPARHourAndWageFields("Proposed-Hourly-Wage", "Proposed-Annualized-Salary", "Scheduled-Hours-Biweekly", "Scheduled-Hours-Annually", "Replacement-Salary");\n' +
 		'}); \n';
 
 	fData.CustomScriptLast += '$("div#request-form").on("change", "input.format-percent", function() { \n' +
