@@ -1,6 +1,6 @@
 (function ($) {
 
-	console.log("using settings m1");
+	console.log("using settings m57");
 
 	var mData = {
 		'componentID': 155,
@@ -10,7 +10,7 @@
 		// "mosMainKey": "devMedium",
 		"mosMainKey": "devLong",
 		"currentRequestVersion": 1,
-		"devAdminNotifications": 0,
+		"devAdminNotifications": 1,
 		"notifications": 1
 	};
 

@@ -140,7 +140,7 @@ gulp.task('4-prod-push-styles', () =>
 		.pipe(cached('spFiles'))
 		// and then to SP dev location
 		.pipe(spSave(
-			gulpV4ProdConfig.ReturnV4DevSPSaveCSSOptions(),
+			gulpV4ProdConfig.ReturnV4ProdSPSaveCSSOptions(),
 			gulpBaseConfig.ReturnGulpSPSaveCredentials(),
 		)));
 // build style file and push style file to dev
@@ -155,7 +155,7 @@ gulp.task('4-prod-build-push-styles', () =>
 		.pipe(gulp.dest(gulpV4ProdConfig.ReturnV4ProdStylesDistFolder()))
 		// and then to SP dev location
 		.pipe(spSave(
-			gulpV4ProdConfig.ReturnV4DevSPSaveCSSOptions(),
+			gulpV4ProdConfig.ReturnV4ProdSPSaveCSSOptions(),
 			gulpBaseConfig.ReturnGulpSPSaveCredentials(),
 		)));
 // when the specified src style file changes, build dist style file and push it to dev

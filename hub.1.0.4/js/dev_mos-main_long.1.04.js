@@ -7240,6 +7240,18 @@
 
 
 
+	$.fn.ReturnGPCProposalDeveloperName = function() {
+		var proposalDeveloperPPValue = [];
+		var proposalDeveloperName = '';
+		if ($('input#Proposal-Developer_TopSpan_HiddenInput').val()) {
+			proposalDeveloperPPValue = JSON.parse($('input#Proposal-Developer_TopSpan_HiddenInput').val());
+			proposalDeveloperName = proposalDeveloperPPValue[0].DisplayText;
+		}
+
+	};
+
+
+
 	$.fn.ReturnGPCRequesterSetPersonsArray = function() {
 
 		var requestersInRequest = [];
@@ -7421,6 +7433,7 @@
 		var emailProcessingPromise = new $.Deferred();
 		var sData = {};
 
+		sData.proposalDeveloperName = $().ReturnGPCProposalDeveloperName();
 		sData.requesterSetEmailArray = $().ReturnGPCRequesterSetEmailArray();
 		sData.gpcEmailArray = $().ReturnGPCInitialConceptGPCNotificationEmailArray();
 		sData.gpcPlusRequesterSetEmailArray = $().ReturnGPCInitialConceptGPCNotificationPersonsPlusRequesterSetEmailArray();
@@ -19992,6 +20005,9 @@
 			// check that file size does not exceed 2GB limit
 			if (file.size <= 2000000000) {
 
+				// disable form submit button; this will be re-enabled when the last modified timestamp is updated
+				$("a#form-submit-button").attr("disabled", "true");
+
 				// unset any validation errors
 
 				$("#" + controlID).closest("div.control").parent("div.label-and-control").removeClass('contains-errors');
@@ -20249,13 +20265,15 @@
 									$("input#" + fileStorageSizeID).val(fileSizeToReport);
 									$("input#" + fileStorageTypeClassID).val(fileTypeClass);
 
-									$().UpdateLastModifiedFileAttachment();
-
 									setTimeout(function() {
 										$("#" + fileUploadIconID).css("opacity", 0);
 										$("#" + filePresentationContainerID).attr("href", attachedFileURL);
-										$("#" + controlID).removeClass('populatable').addClass('replaceable')
+										$("#" + controlID).removeClass('populatable').addClass('replaceable');
 									}, 500);
+
+									setTimeout(function() {
+										$().UpdateLastModifiedFileAttachment();
+									}, 5000);
 
 								}
 							}
@@ -20299,6 +20317,8 @@
 			}), 
 			rData
 		);
+
+		$("a#form-submit-button").removeAttr("disabled");
 	};
 
 

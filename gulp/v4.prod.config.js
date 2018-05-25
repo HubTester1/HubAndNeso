@@ -12,13 +12,13 @@ module.exports = {
 		folder: 'Code4',
 		flatten: false,
 	}),
-	ReturnV4SPSaveDevCSSOptions: () => ({
+	ReturnV4ProdSPSaveCSSOptions: () => ({
 		siteUrl: 'https://bmos.sharepoint.com/sites/hubprod',
 		notification: true,
 		folder: 'Code4/css',
 		flatten: false,
 	}),
-	ReturnV4SPSaveDevSWFAPIOptions: () => ({
+	ReturnV4ProdSPSaveSWFAPIOptions: () => ({
 		siteUrl: 'https://bmos.sharepoint.com/sites/hubprod',
 		notification: true,
 		folder: 'Code4/js',
