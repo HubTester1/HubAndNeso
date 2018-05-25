@@ -1,4 +1,4 @@
-
+/* eslint-disable */
 (function($) {
 
 	// data for the current user
@@ -1526,10 +1526,8 @@
 
 			case "Refer a Friend":
 				if (uData.isAdmin === 0) {
-					console.log("this user gets myReferrals");
 					userNeeedsAlternateOverviewScreen = "myReferrals";
 				} else {
-					console.log("this user gets adminReferrals");
 					userNeeedsAlternateOverviewScreen = "adminReferrals";
 				}
 				break;
@@ -7242,6 +7240,18 @@
 
 
 
+	$.fn.ReturnGPCProposalDeveloperName = function() {
+		var proposalDeveloperPPValue = [];
+		var proposalDeveloperName = '';
+		if ($('input#Proposal-Developer_TopSpan_HiddenInput').val()) {
+			proposalDeveloperPPValue = JSON.parse($('input#Proposal-Developer_TopSpan_HiddenInput').val());
+			proposalDeveloperName = proposalDeveloperPPValue[0].DisplayText;
+		}
+
+	};
+
+
+
 	$.fn.ReturnGPCRequesterSetPersonsArray = function() {
 
 		var requestersInRequest = [];
@@ -7423,6 +7433,7 @@
 		var emailProcessingPromise = new $.Deferred();
 		var sData = {};
 
+		sData.proposalDeveloperName = $().ReturnGPCProposalDeveloperName();
 		sData.requesterSetEmailArray = $().ReturnGPCRequesterSetEmailArray();
 		sData.gpcEmailArray = $().ReturnGPCInitialConceptGPCNotificationEmailArray();
 		sData.gpcPlusRequesterSetEmailArray = $().ReturnGPCInitialConceptGPCNotificationPersonsPlusRequesterSetEmailArray();
@@ -11331,6 +11342,7 @@
 					options += "<option value='" + department + "'>" + department + "</option>";
 				}
 			});
+			options += "<option value='other'>Other</option>";
 								
 			$(selectID).append(options);
 		});
@@ -13855,28 +13867,35 @@
 	function ReturnRequestFormDataFromDOMAsObject () {
 		// get data from form as string
 		var clonedForm = $("div#request-form").clone();
+		var repeatables = $(clonedForm).find('[data-repeatable]');
 		var formData = '{';
-		// handle the repeatables
+		// handle the repeatable section
 		formData += '"RepeatedElements": [';
-		$(clonedForm).find('[data-repeatable]').each(function() {
+		repeatables.each(function(index, value) {
+			var thisIsLastRepeatable = false;
+			if ((repeatables.length - 1) === index) {
+				thisIsLastRepeatable = true;
+			}
 			var repeatableString = '{"ID": "' + $(this).attr('id') + '",';
 			repeatableString += '"OriginalToRepeat": "' + $(this).attr('data-original-to-repeat') + '",';
 			repeatableString += ReturnRequestStorageObjectPropertiesAndPushRequestColumns(this);
 			repeatableString = repeatableString.substring(0, repeatableString.length - 1); // remove trailing comma
-			repeatableString += '},';
+			repeatableString += '}';
+			if (!thisIsLastRepeatable) {
+				repeatableString += ',';
+			}
 			formData += repeatableString;
 			$(this).remove();
 		});
-		// remove trailing "},"
-		formData = formData.substring(0, formData.length - 2);
-		// finish off the repeatable
-		formData += '}],';
+		// finish off the repeatable section
+		formData += '],';
 		// handle the non-repeatables
 		formData += ReturnRequestStorageObjectPropertiesAndPushRequestColumns(clonedForm);
 		// remove trailing comma
 		formData = formData.substring(0, formData.length - 1);
 		// end building the JSON string that will be stored
 		formData += '}';
+		console.log(formData);
 		// get object from string
 		formData = JSON.parse(formData);
 		return formData;
@@ -14008,18 +14027,23 @@
 								'<table style="width: 100%;">' + 
 								'	<tr style="width: 100%;">' + 
 								'		<td style="width: 50%; vertical-align: top;">' + 
-								'			<ul style="margin: 0;">' + 
-								'				<li><b>Position Number:</b> ' + formData["Position-Number"] + '</li>' + 
-								'				<li><b>Department:</b> ' + formData["Department"] + '</li>' + 
-								'				<li><b>Working Title:</b> ' + formData["Working-Title"] + '</li>' + 
-								'				<li><b>Composition Title:</b> ' + formData["Compensation-Title"] + '</li>' + 
-								'				<li><b>Grade:</b> ' + formData["Grade"] + '</li>' + 
-								'				<li><b>Employee Classification:</b> ' + formData["Employee-Classification"] + '</li>' + 
-								'				<li><b>Scheduled Hours, Biweekly:</b> ' + formData["Scheduled-Hours-Biweekly"] + '</li>' + 
-								'				<li><b>Scheduled Hours, Annually:</b> ' + formData["Scheduled-Hours-Annually"] + '</li>' + 
-								'				<li><b>Proposed Hourly Wage:</b> ' + formData["Proposed-Hourly-Wage"] + '</li>' + 
-								'				<li><b>Proposed Annualized Salary:</b> ' + formData["Proposed-Annualized-Salary"] + '</li>' + 
-								'				<li><b>Proposed Start Date:</b> ' + formData["Proposed-Start-Date"] + '</li>';
+								'			<ul style="margin: 0;">';
+			
+			if (formData["Department"] != "Other") {
+				printContent += '				<li><b>Department:</b> ' + formData["Department"] + '</li>';
+			}
+			if (formData["Department"] == "Other") {
+				printContent += '				<li><b>Department:</b> ' + formData["Other-Department"] + '</li>';
+			}
+
+			printContent += '				<li><b>Position Title:</b> ' + formData["Position-Title"] + '</li>' + 
+							'				<li><b>Grade:</b> ' + formData["Grade"] + '</li>' + 
+							'				<li><b>Employee Classification:</b> ' + formData["Employee-Classification"] + '</li>' + 
+							'				<li><b>Scheduled Hours, Biweekly:</b> ' + formData["Scheduled-Hours-Biweekly"] + '</li>' + 
+							'				<li><b>Scheduled Hours, Annually:</b> ' + formData["Scheduled-Hours-Annually"] + '</li>' + 
+							'				<li><b>Proposed Hourly Wage:</b> ' + formData["Proposed-Hourly-Wage"] + '</li>' + 
+							'				<li><b>Proposed Annualized Salary:</b> ' + formData["Proposed-Annualized-Salary"] + '</li>' + 
+							'				<li><b>Proposed Start Date:</b> ' + formData["Proposed-Start-Date"] + '</li>';
 
 			if (formData["Employee-Classification"] != "Regular FT" && formData["Employee-Classification"] != "Regular PT") {
 				printContent += '				<li><b>Proposed End Date:</b> ' + formData["Proposed-End-Date"] + '</li>';
@@ -14038,51 +14062,79 @@
 							'			</ul>' + 
 							'		</td>' + 
 							'		<td style="width: 50%; vertical-align: top;">' + 
-							'			<ul>' + 
-							'				<li><b>Accounts:</b> ';
+							'			<ul>';
+							
 
-			if (formData["Funding-Source"] == "Grant Funds") {
-				printContent += '					<ol>';
+
+
+
+
+
+			if (formData["Funding-Source"] == "Grant Funds" || formData["Funding-Source"] == "Endowment Funds") {
+				printContent += '				<li><b>Accounts:</b> ' +
+								'					<ol>';
 
 				$.each(formData["RepeatedElements"], function(i, accountSet) {
 
 					if (i != 0) { accountSetPropertyNameSuffix = '-repeat-' + i; }
-					printContent += '						<li>Account ' + (i + 1) + '<ol>' +
-									'							<li><b>Grant Object Code:</b> ' + accountSet["Grant-Object-Code" + accountSetPropertyNameSuffix] + '</li>' + 
-									'							<li><b>Grant Source Code:</b> ' + accountSet["Grant-Source-Code" + accountSetPropertyNameSuffix] + '</li>' + 
-									'							<li><b>Percent Salary from this Account:</b> ' + accountSet["Percent-Salary-from-this-Account" + accountSetPropertyNameSuffix] + '</li>' + 
-									'						</ol>';
+					printContent += '						<li>Account ' + (i + 1) +
+									'							<ol>' +
+									'								<li><b>Grant Object Code:</b> ' + accountSet["Grant-Object-Code" + accountSetPropertyNameSuffix] + '</li>' + 
+									'								<li><b>Grant Source Code:</b> ' + accountSet["Grant-Source-Code" + accountSetPropertyNameSuffix] + '</li>' + 
+									'								<li><b>Percent Salary from this Account:</b> ' + accountSet["Percent-Salary-from-this-Account" + accountSetPropertyNameSuffix] + '</li>' + 
+									'							</ol>' +
+									'						</li>';
 				});
 
-				printContent += '					</ol>';
+				printContent += '					</ol>' +
+								'				</li>';
 			}
-			printContent += '				</li>';
 
 			printContent += '				<li><b>Workspace Approved by Facilities?:</b> Yes</li>';
 
-			if (typeof(formData["job-opening-reason_replacement"]) !== "undefined") {
-				printContent += '				<li><b>Reason for Job Opening:</b> Replacement for Another Job</li>' + 
-								'				<li><b>Replacement For:</b> ' + formData["Replacement-Name"] + '</li>' + 
-								'				<li><b>Last Salary for Position:</b> ' + formData["Replacement-Salary"] + '</li>';
-			}
 
-			if (typeof(formData["job-opening-reason_grant"]) !== "undefined") {
-				printContent += '				<li><b>Reason for Job Opening:</b> Grant-funded Position</li>' + 
-								'				<li><b>Grant Funding Source:</b> ' + formData["Grant-Funding-Source"] + '</li>';
-			}
 
+
+
+
+
+
+
+
+
+
+
+
+			if (typeof (formData["job-opening-reason_backfill"]) !== "undefined") {
+				printContent += '				<li><b>Reason for Submission:</b> Backfill for ' + formData["Backfill-For"] + '</li>';
+			}
+			if (typeof (formData["job-opening-reason_promotion"]) !== "undefined") {
+				printContent += '				<li><b>Reason for Submission:</b> Promotion for ' + formData["Promotion-For"] + '</li>';
+			}
+			if (typeof (formData["job-opening-reason_wageorschedulechange"]) !== "undefined") {
+				printContent += '				<li><b>Reason for Submission:</b> Wage / Schedule Change for ' + formData["Wage-or-Schedule-Change-For"] + '</li>';
+			}
 			if (typeof(formData["job-opening-reason_additiontofte"]) !== "undefined") {
-				printContent += '				<li><b>Reason for Job Opening:</b> Addition to Budgeted FTE</li>';
+				printContent += '				<li><b>Reason for Submission:</b> Addition to Budgeted FTE</li>';
 			}
 
-			if (typeof(formData["hrc-grading_graded"]) !== "undefined") {
-				printContent += '				<li><b>HRC Grading:</b> Graded by HRC</li>' + 
-								'				<li><b>HRC Grading Last Updated:</b> ' + formData["HRC-Last-Updated"] + '</li>';
+			if (typeof (formData["Replacement-Salary"]) !== "undefined") {
+				printContent += '				<li><b>Last Salary for Position:</b> ' + formData["Replacement-Salary"] + '</li>';
+				var salaryChangeString = parseFloat(formData["Salary-Change"].replace("\$", "").replace(/[,]/g, ""));
+				printContent += '				<li><b>Salary Change:</b> ' + formData["Salary-Change"] + '</li>';
+				if (salaryChangeString !== 0) {
+					printContent += '				<li><b>Salary Change Reason:</b> ' + formData["Salary-Change-Reason"] + '</li>';
+				}
 			}
 
-			if (typeof(formData["hrc-grading_pending"]) !== "undefined") {
-				printContent += '				<li><b>HRC Grading:</b> Pending</li>';
-			}
+			// if (typeof(formData["hrc-grading_graded"]) !== "undefined") {
+			// 	printContent += '				<li><b>HRC Grading:</b> Graded by HRC</li>' + 
+			// 					'				<li><b>HRC Grading Last Updated:</b> ' + formData["HRC-Last-Updated"] + '</li>';
+			// }
+
+			// if (typeof(formData["hrc-grading_pending"]) !== "undefined") {
+			// 	printContent += '				<li><b>HRC Grading:</b> Pending</li>';
+			// }
 
 			printContent += '		</td>' + 
 							'	</tr>' + 
@@ -18875,7 +18927,7 @@
 
 
 
-	$.fn.ProcessEARAndPARHourAndWageFields = function (hourlyWageFieldID, annualWageFieldID, biweeklyHoursFieldID, annualHoursFieldID) {
+	$.fn.ProcessEARAndPARHourAndWageFields = function (hourlyWageFieldID, annualWageFieldID, biweeklyHoursFieldID, annualHoursFieldID, lastSalaryFieldID) {
 		var earHoursFieldsProcessed = $().ProcessEARAndPARHourFields(biweeklyHoursFieldID, annualHoursFieldID);
 		if (earHoursFieldsProcessed == 1) {
 			var hourlyWageString = $("input#" + hourlyWageFieldID).val().replace("\$", "").replace(/[,]/g, "");
@@ -18883,11 +18935,27 @@
 				var biWeeklyHoursString = $("input#" + biweeklyHoursFieldID).val().replace("\$", "").replace(/[,]/g, "");
 				var hourlyWageIsValid = $().ValidateInRealTimeForPositiveNumberInUSDFormat(hourlyWageString, "input#" + hourlyWageFieldID);
 				var biWeeklyPeriodsPerAnnum = 26;
-				if (hourlyWageIsValid == 0) {
-					$("input#" + annualWageFieldID).val("");
-				} else {
+				if (hourlyWageIsValid == 1) {
+					var annualWageString = parseFloat(hourlyWageString) * parseFloat(biWeeklyHoursString) * biWeeklyPeriodsPerAnnum;
 					$("input#" + hourlyWageFieldID).val(numeral(parseFloat(hourlyWageString)).format('$0,0.00'));
-					$("input#" + annualWageFieldID).val(numeral(parseFloat(hourlyWageString) * parseFloat(biWeeklyHoursString) * biWeeklyPeriodsPerAnnum).format('$0,0.00'));
+					$("input#" + annualWageFieldID).val(numeral(annualWageString).format('$0,0.00'));
+
+					if (lastSalaryFieldID) {
+						var lastSalaryString = $("input#" + lastSalaryFieldID).val().replace("\$", "").replace(/[,]/g, "");
+						if (lastSalaryString != '') {
+							var salaryChangeString = parseFloat(annualWageString) - parseFloat(lastSalaryString);
+							$("input#" + lastSalaryFieldID).val(numeral(parseFloat(lastSalaryString)).format('$0,0.00'));
+							$("input#Salary-Change").val(numeral(parseFloat(salaryChangeString)).format('$0,0.00'));
+							$().SetFieldToRequired('Salary-Change', 'text');
+							$("div#label-and-control_Salary-Change").show("fast").removeClass("hidden");
+							if (salaryChangeString != 0) {
+								$().SetFieldToRequired('Salary-Change-Reason', 'textarea');
+								$("div#label-and-control_Salary-Change-Reason").show("fast").removeClass("hidden");
+							}
+						}
+					}
+				} else {
+					$("input#" + annualWageFieldID).val("");
 				}
 			} else {
 				$("input#" + annualWageFieldID).val('');
@@ -19224,14 +19292,14 @@
 
 
 
-	$.fn.ReturnGPCInitialConceptApprovalRequestAdditionalViewAccess = function(arguments) {
+	$.fn.ReturnGPCInitialConceptApprovalRequestAdditionalViewAccess = function(incomingArgs) {
 		
 		var gpcGroups = $().ReturnGPCGroups();
 		var hasViewPermission = 0;
 
 		// don't allow view access to requests that are in development -- this is the reason we can't
 		//		just put the relevant names in the ViewAccess column in ComponentLog
-		if (arguments.rData.requestStatus != "In Development") {
+		if (incomingArgs.rData.requestStatus != "In Development") {
 			$.each(gpcGroups.InitialConceptViewAccess, function(i,person) {
 				if (person.accountLong === uData.account) {
 					hasViewPermission = 1;
@@ -19243,14 +19311,14 @@
 
 
 
-	$.fn.ReturnGPCSubmissionApprovalRequestAdditionalViewAccess = function (arguments) {
+	$.fn.ReturnGPCSubmissionApprovalRequestAdditionalViewAccess = function (incomingArgs) {
 		
 		var gpcGroups = $().ReturnGPCGroups();
 		var hasViewPermission = 0;
 
 		// don't allow view access to requests that are in development -- this is the reason we can't
 		//		just put the relevant names in the ViewAccess column in ComponentLog
-		if (arguments.rData.requestStatus != "In Development") {
+		if (incomingArgs.rData.requestStatus != "In Development") {
 			$.each(gpcGroups.SubmissionApprovalViewAccess, function(i,person) {
 				if (person.accountLong === uData.account) {
 					hasViewPermission = 1;
@@ -19937,6 +20005,9 @@
 			// check that file size does not exceed 2GB limit
 			if (file.size <= 2000000000) {
 
+				// disable form submit button; this will be re-enabled when the last modified timestamp is updated
+				$("a#form-submit-button").attr("disabled", "true");
+
 				// unset any validation errors
 
 				$("#" + controlID).closest("div.control").parent("div.label-and-control").removeClass('contains-errors');
@@ -20194,13 +20265,15 @@
 									$("input#" + fileStorageSizeID).val(fileSizeToReport);
 									$("input#" + fileStorageTypeClassID).val(fileTypeClass);
 
-									$().UpdateLastModifiedFileAttachment();
-
 									setTimeout(function() {
 										$("#" + fileUploadIconID).css("opacity", 0);
 										$("#" + filePresentationContainerID).attr("href", attachedFileURL);
-										$("#" + controlID).removeClass('populatable').addClass('replaceable')
+										$("#" + controlID).removeClass('populatable').addClass('replaceable');
 									}, 500);
+
+									setTimeout(function() {
+										$().UpdateLastModifiedFileAttachment();
+									}, 5000);
 
 								}
 							}
@@ -20244,6 +20317,8 @@
 			}), 
 			rData
 		);
+
+		$("a#form-submit-button").removeAttr("disabled");
 	};
 
 
