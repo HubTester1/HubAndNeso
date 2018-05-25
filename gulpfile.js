@@ -166,7 +166,7 @@ gulp.task('4-prod-watch-build-push-styles', () => {
 // push specified swf api file to dev
 gulp.task('4-prod-push-api', () =>
 	// for specified dist swf api file
-	gulp.src(gulpV4ProdConfig.ReturnV4ProdSWFAPIFile(argv.api))
+	gulp.src(gulpV4ProdConfig.ReturnV4ProdSWFAPIFile())
 		// and then to SP dev location
 		.pipe(spSave(
 			gulpV4ProdConfig.ReturnV4ProdSPSaveSWFAPIOptions(),
@@ -177,7 +177,7 @@ gulp.task('4-prod-wait-push-api', () => {
 	setTimeout(
 		() =>
 			// for specified dist swf api file
-			gulp.src(gulpV4ProdConfig.ReturnV4ProdSWFAPIFile(argv.api))
+			gulp.src(gulpV4ProdConfig.ReturnV4ProdSWFAPIFile())
 				// and then to SP dev location
 				.pipe(spSave(
 					gulpV4ProdConfig.ReturnV4ProdSPSaveSWFAPIOptions(),
@@ -189,7 +189,7 @@ gulp.task('4-prod-wait-push-api', () => {
 // when the specified swf api file changes, push it to dev
 gulp.task('4-prod-watch-push-api', () => {
 	// watch the src style file; upon changes, build dist style file and push it to dev
-	gulp.watch([gulpV4ProdConfig.ReturnV4ProdSWFAPIFile(argv.api)], ['4-prod-wait-push-api']);
+	gulp.watch([gulpV4ProdConfig.ReturnV4ProdSWFAPIFile()], ['4-prod-wait-push-api']);
 });
 
 

@@ -11,7 +11,7 @@ module.exports = {
 				SWFAPIFile += '_long';
 			}
 			if (apiToken === 'medium') {
-				SWFAPIFile += '_long';
+				SWFAPIFile += '_medium';
 			}
 		}
 		SWFAPIFile += '.1.04.js';
