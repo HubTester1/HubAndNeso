@@ -1,6 +1,6 @@
 (function ($) {
 
-	console.log("using settings m57");
+	console.log("using settings m58");
 
 	var mData = {
 		'componentID': 155,
