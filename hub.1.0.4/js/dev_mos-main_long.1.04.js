@@ -20556,7 +20556,7 @@
 		// wait for all data retrieval / setting promises to complete (pass or fail) 
 		$.when.apply($, allDataRetrievalAndSettingPromises).always(function() {
 
-			console.log('using dev_mos-main_long.1.04 m6 - DevCode4');
+			console.log('using dev_mos-main_long.1.04 m1 - DevCode4');
 
 			$().ConfigureAndShowScreenContainerAndAllScreens();
 		});

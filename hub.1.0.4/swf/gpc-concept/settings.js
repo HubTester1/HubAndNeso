@@ -1,17 +1,17 @@
 
 (function ($) {
 
-	console.log("using settings m58");
+	console.log("using settings m1");
 
 	var mData = {
 		'componentID': 154,
 		"swf": 1,
-		// "mosMainKey": "prod",
+		"mosMainKey": "prod",
 		// "mosMainKey": "dev",
 		// "mosMainKey": "devMedium",
-		"mosMainKey": "devLong",
+		// "mosMainKey": "devLong",
 		"currentRequestVersion": 1,
-		"devAdminNotifications": 1,
+		"devAdminNotifications": 0,
 		"notifications": 1
 	};
 

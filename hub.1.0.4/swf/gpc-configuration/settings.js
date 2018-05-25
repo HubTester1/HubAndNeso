@@ -1,5 +1,7 @@
 (function ($) {
 
+	console.log("using settings m1");
+
 	var mData = {
 		'componentID': 153,
 		"swf": 1,
