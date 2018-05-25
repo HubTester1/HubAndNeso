@@ -1,6 +1,4 @@
 
-/* eslint-disable */
-
 (function ($) {
 
 	var mData = {
