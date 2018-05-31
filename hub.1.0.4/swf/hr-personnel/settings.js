@@ -536,7 +536,7 @@
 							}
 						],
 
-					// hire or rehire
+					// hire or rehire fields
 
 					}, {
 
@@ -606,60 +606,85 @@
 						],
 						"optional": [
 							{
-								"fieldName": "Position Change Previous Working Title",
+								"fieldName": "Hire First Name",
 								"type": "text"
 							}, {
-								"fieldName": "Position Change Working Title",
+								"fieldName": "Hire Last Name",
 								"type": "text"
 							}, {
-								"fieldName": "Position Change Previous Compensation Title",
+								"fieldName": "Hired Staff Member",
 								"type": "text"
 							}, {
-								"fieldName": "Position Change Compensation Title",
-								"type": "text"
-							}, {
-								"fieldName": "Position Change Previous Department",
-								"type": "select"
-							}, {
-								"fieldName": "Position Change Department",
-								"type": "select"
-							}, {
-								"fieldName": "Position Change Previous Manager",
+								"fieldName": "Hire Manager",
 								"type": "peoplePicker"
 							}, {
-								"fieldName": "Position Change Manager",
-								"type": "peoplePicker"
-							}, {
-								"fieldName": "Position Change Previous Grade",
-								"type": "text"
-							}, {
-								"fieldName": "Position Change Grade",
-								"type": "text"
-							}, {
-								"fieldName": "Position Change Previous Scheduled Hours Biweekly",
-								"type": "text"
-							}, {
-								"fieldName": "Position Change Scheduled Hours Biweekly",
-								"type": "text"
-							}, {
-								"fieldName": "Position Change Previous Scheduled Hours Annually",
-								"type": "text"
-							}, {
-								"fieldName": "Position Change Scheduled Hours Annually",
-								"type": "text"
-							}, {
-								"fieldName": "Position Change Previous Employee Classification",
+								"fieldName": "Hire Department",
 								"type": "select"
 							}, {
-								"fieldName": "Position Change Employee Classification",
+								"fieldName": "Hire Working Title",
+								"type": "text"
+							}, {
+								"fieldName": "Hire Compensation Title",
+								"type": "text"
+							}, {
+								"fieldName": "Hire Position Number",
+								"type": "text"
+							}, {
+								"fieldName": "Hire Grade",
+								"type": "text"
+							}, {
+								"fieldName": "Hire Employee Classification",
 								"type": "select"
 							}, {
-								"fieldName": "Position Change Previous Start Date",
+								"fieldName": "Hire Scheduled Hours Biweekly",
+								"type": "text"
+							}, {
+								"fieldName": "Hire Scheduled Hours Annually",
+								"type": "text"
+							}, {
+								"fieldName": "Hire Proposed Hourly Wage",
+								"type": "text"
+							}, {
+								"fieldName": "Hire Proposed Annualized Salary",
+								"type": "text"
+							}, {
+								"fieldName": "Hire Start Date",
 								"type": "datePicker"
 							}, {
-								"fieldName": "Position Change Start Date",
+								"fieldName": "Hire End Date",
 								"type": "datePicker"
+							}, {
+								"fieldName": "Hire Funding Source",
+								"type": "select"
 							}
+						],
+
+					// hire header
+
+					}, {
+
+						"anyOfSpecificCheckboxesAreChecked": ["#action_new-hire"],
+						"show": [
+							{ "headerID": "header_new-hire" },
+						],
+					}, {
+						"noneOfSpecificCheckboxesAreChecked": ["#action_new-hire"],
+						"hide": [
+							{ "headerID": "header_new-hire" },
+						],
+
+					// rehire header
+
+					}, {
+
+						"anyOfSpecificCheckboxesAreChecked": ["#action_rehire"],
+						"show": [
+							{ "headerID": "header_rehire" },
+						],
+					}, {
+						"noneOfSpecificCheckboxesAreChecked": ["#action_rehire"],
+						"hide": [
+							{ "headerID": "header_rehire" },
 						],
 
 					// position change
