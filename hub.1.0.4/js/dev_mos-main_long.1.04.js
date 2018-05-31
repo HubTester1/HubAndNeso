@@ -6440,7 +6440,7 @@
 			var bodyUnique = '<ul>' +
 				'<li>Affected User = ' + uData.name + ' (' + uData.userName + ')</li>' +
 				'<li>Issue Datetime = ' + $().ReturnFormattedDateTime('nowLocal', null, 'MMMM D, YYYY h:mm a') + '</li>' +
-				'<li>Affected System = ' + mData.requestName + '</li>' +
+				'<li>Affected System = ' + 57 + '</li>' +
 				'<li>Affected Request # = ' + rData.requestID + '</li>' +
 				'<li>Browser = ' + uData.browserFamilyAndVersion + '</li>' +
 				'<li>Form Factor = ' + uData.formFactor + '</li>' +
@@ -11235,9 +11235,14 @@
 
 	$.fn.LoadSelectOptions = function(options, restrictions) {
 		// if a loading function was specified
-		if (typeof(options.function) !== "undefined") {
-			// call the function and pass the select ID
-			CallFunctionFromString (options.function, {'selectID': this.selector});
+		if (options.function) {
+			var functionParameters = {};
+			if (options.params) {
+				functionParameters = options.params;
+			}
+			functionParameters.selectID = this.selector;
+			// call the function and pass the parameters
+			CallFunctionFromString(options.function, functionParameters);
 		// if a loading function was NOT specified
 		} else {
 			// assume loading from a SharePoint list
@@ -11330,7 +11335,7 @@
 
 
 
-	$.fn.LoadDepartmentSelectOptions = function(selectObject) {
+	$.fn.LoadDepartmentSelectOptions = function (parameters) {
 
 		$.ajax({
 			async: false,
@@ -11338,24 +11343,27 @@
 			dataType: "json",
 			url: 'https://neso.mos.org/activeDirectory/depts',
 		})
-		.done(function(returnedDepartments) {
+			.done(function (returnedDepartments) {
 
-			var selectID = selectObject.selectID;
-			var departments = returnedDepartments.docs[0].departments;
-			var options = "<option value=''></option>";
-			var currentSelectedText = $(selectID).find("option:selected").text();
+				var selectID = parameters.selectID;
+				var departments = returnedDepartments.docs[0].departments;
+				var options = "<option value=''></option>";
+				var currentSelectedText = $(selectID).find("option:selected").text();
 
-			$.each(departments, function(i, department) {
-				if ($.trim(department) == $.trim(currentSelectedText)) {
-					options += "<option selected='selected' value='" + department + "' >" + department + "</option>";
-				} else {
-					options += "<option value='" + department + "'>" + department + "</option>";
+				if (parameters.otherOptionPosition && parameters.otherOptionPosition === 'top') {
+					options += "<option value='other'>Other</option>";
 				}
+
+				$.each(departments, function (i, department) {
+					if ($.trim(department) == $.trim(currentSelectedText)) {
+						options += "<option selected='selected' value='" + department + "' >" + department + "</option>";
+					} else {
+						options += "<option value='" + department + "'>" + department + "</option>";
+					}
+				});
+
+				$(selectID).append(options);
 			});
-			options += "<option value='other'>Other</option>";
-								
-			$(selectID).append(options);
-		});
 	};
 
 
@@ -14244,10 +14252,6 @@
 								'	<li><b>Last Name:</b> ' + formData["Hire-Last-Name"] + '</li>' + 
 								'	<li><b>Manager / Supervisor:</b> ' + formData["Hire-Manager"][0]["displayText"] + '</li>' + 
 								'	<li><b>Department:</b> ' + formData["Hire-Department"] + '</li>' + 
-								'	<li><b>Street Address:</b> ' + formData["Hire-Street-Address"] + '</li>' + 
-								'	<li><b>City:</b> ' + formData["Hire-City"] + '</li>' + 
-								'	<li><b>State:</b> ' + formData["Hire-State"] + '</li>' + 
-								'	<li><b>Zip Code:</b> ' + formData["Hire-Zip-Code"] + '</li>' + 
 								'	<li><b>Working Title:</b> ' + formData["Hire-Working-Title"] + '</li>' + 
 								'	<li><b>Compensation Title:</b> ' + formData["Hire-Compensation-Title"] + '</li>' + 
 								'	<li><b>Position Number:</b> ' + formData["Hire-Position-Number"] + '</li>' + 
@@ -14443,24 +14447,6 @@
 
 
 
-					// --- LEAVE
-
-
-					if (typeof(formData["status-change_leave"]) !== "undefined") {
-						printContent += '<h2>Leave</h2>' +
-										'<ul style="margin: 0;">' + 
-										'	<li><b>Effective Beginning Date:</b> ' + formData["Leave-Effective-Beginning-Date"] + '</li>' + 
-										'	<li><b>Effective Ending Date:</b> ' + formData["Leave-Effective-Ending-Date"] + '</li>';
-
-						if (formData["Leave-Reason"] == "Other") {
-							printContent += '	<li><b>Reason:</b> ' + formData["Leave-Reason-Explanation"] + '</li>';
-						} else {
-							printContent += '	<li><b>Reason:</b> ' + formData["Leave-Reason"] + '</li>';
-						}
-					}
-
-
-
 					// --- TERMINATION
 
 
@@ -14486,6 +14472,23 @@
 											'	<li><b>Reason Explanation:</b> ' + formData["Other-Termination-Reason-Explanation"] + '</li>';
 						}
 					}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 					printContent += '<h2>Approvals</h2>' +
@@ -17380,22 +17383,6 @@
 					"		</IsNotNull>" +
 					"	</And>" +
 					"</Where>";
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 			} else if (typeof(t.fieldGEQDaysBeforeToday) != "undefined") {
 				query = "<Where>" +
@@ -20488,8 +20475,8 @@
 		if (uData.isAdmin == 1) { uData.roles.push("admin"); }
 		if (uData.isComponentGrpAdmin == 1) { uData.roles.push("componentGrpAdmin"); }
 
-		// uData.isComponentGrpAdmin = 0;
-		// uData.isAdmin = 0;
+		uData.isComponentGrpAdmin = 0;
+		uData.isAdmin = 0;
 
 		// if this is a GSE Request
 		if (mData.requestName === "GSE Job" || mData.requestName === "GSE Schedule" || mData.requestName === "GSE Signup" || mData.requestName === "GSE Configuration") {
@@ -20556,7 +20543,7 @@
 		// wait for all data retrieval / setting promises to complete (pass or fail) 
 		$.when.apply($, allDataRetrievalAndSettingPromises).always(function() {
 
-			console.log('using dev_mos-main_long.1.04 m1 - DevCode4');
+			console.log('using dev_mos-main_long.1.04 m57 - DevCode4');
 
 			$().ConfigureAndShowScreenContainerAndAllScreens();
 		});

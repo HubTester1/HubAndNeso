@@ -323,7 +323,10 @@
 				"fieldName": "Department",
 				"labelContent": "Department",
 				'loadOptions': {
-					'function': 'LoadDepartmentSelectOptions'
+					'function': 'LoadDepartmentSelectOptions',
+					'params': {
+						'otherOptionPosition': 'top'
+					}
 				},
 				'requiredForNonAdmin': [""],
 				'requiredForAdmin': [""],
