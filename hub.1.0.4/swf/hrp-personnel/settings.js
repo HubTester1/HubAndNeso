@@ -23,7 +23,9 @@
 		'notifications': 0,
 	};
 
-	console.log("using settings m2");
+	console.log("using settings m57");
+
+
 
 	var oData = {
 		'admin': {
@@ -56,8 +58,7 @@
 						'tableTitle': 'Submitted',
 						'tableID': 'submitted',
 						'someColsAreUsers': 1,
-						'basicRSQueryRelevantStatus': 'Submitted',
-						'sortColAndOrder': [4, 'desc']
+						'basicRSQueryRelevantStatus': 'Submitted'
 					}
 				]
 			}
@@ -88,8 +89,7 @@
 						'tableTitle': 'Submitted',
 						'tableID': 'open',
 						'someColsAreUsers': 1,
-						'basicMyEOLQueryRelevantValue': 0,
-						'sortColAndOrder': [3, 'desc']
+						'basicMyEOLQueryRelevantValue': 0
 					}
 				]
 			}
@@ -133,16 +133,16 @@
 				'content': 'Print this request, acquire appropriate signatures, and submit it to Human Resources.',
 				'begin': 1,
 				'end': 1
-
-
-
-
-
-
-
-
-
-
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 			}, {
 				"elementType": "markup",
 				"tag": "div",
@@ -351,46 +351,37 @@
 				"elementType": "markup",
 				"tag": "div",
 				"end": 1
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 			}, {
 				'elementType': 'markup',
 				'tag': 'h2',
 				'content': 'Action',
 				'begin': 1,
 				'end': 1,
+
 			}, {
 				"elementType": "field",
-				"controlType": "select",
+				'controlType': 'check',
 				"fieldName": "Action",
-				"listFieldName": "Action",
-				"labelContent": "What action?",
-				"setOptions": [
+				"choiceSetLabel": "Which action(s)?",
+				"choices": [
 					{
 						"value": "New Hire",
 						"display": "New Hire"
@@ -398,198 +389,6 @@
 						"value": "Rehire",
 						"display": "Rehire"
 					}, {
-						"value": "Status Change",
-						"display": "Status Change"
-					}
-				],
-				"disabledForNonAdmin": ['Submitted', 'Cancelled'],
-				"disabledForAdmin": ['Submitted', 'Cancelled'],
-				"onChange": [
-
-					// RE/HIRE HEADERS
-
-					{
-						"thisFieldEquals": ["New Hire", "Status Change"],
-						"hide": [{
-							"headerID": "header_rehire"
-						}],
-					}, {
-						"thisFieldEquals": ["Rehire", "Status Change"],
-						"hide": [{
-							"headerID": "header_new-hire"
-						}],
-					}, {
-						"thisFieldEquals": ["New Hire"],
-						"show": [{
-							"headerID": "header_new-hire"
-						}],
-					}, {
-						"thisFieldEquals": ["Rehire"],
-						"show": [{
-							"headerID": "header_rehire"
-						}],
-
-
-
-						// IF HIRING
-
-					}, {
-						"thisFieldEquals": ["New Hire", "Rehire"],
-						"hide": [{
-							"fieldName": "Status Change"
-						}],
-						"show": [{
-							"divID": "container_hire-fieldset"
-						}],
-						"require": [
-							{
-								"fieldName": "Hire First Name",
-								"type": "text"
-							}, {
-								"fieldName": "Hire Last Name",
-								"type": "text"
-							}, {
-								"fieldName": "Hire Manager",
-								"type": "peoplePicker"
-							}, {
-								"fieldName": "Hire Department",
-								"type": "select"
-							}, {
-								"fieldName": "Hire Working Title",
-								"type": "text"
-							}, {
-								"fieldName": "Hire Compensation Title",
-								"type": "text"
-							}, {
-								"fieldName": "Hire Grade",
-								"type": "text"
-							}, {
-								"fieldName": "Hire Employee Classification",
-								"type": "select"
-							}, {
-								"fieldName": "Hire Scheduled Hours Biweekly",
-								"type": "text"
-							}, {
-								"fieldName": "Hire Scheduled Hours Annually",
-								"type": "text"
-							}, {
-								"fieldName": "Hire Proposed Hourly Wage",
-								"type": "text"
-							}, {
-								"fieldName": "Hire Proposed Annualized Salary",
-								"type": "text"
-							}, {
-								"fieldName": "Hire Start Date",
-								"type": "datePicker"
-							}, {
-								"fieldName": "Hire Funding Source",
-								"type": "text"
-							}
-						],
-						"optional": [
-							{
-								"fieldName": "Status Change",
-								"type": "check"
-							}
-						]
-
-
-
-						//  IF STATUS CHANGE
-
-					}, {
-						"thisFieldEquals": ["Status Change"],
-						"show": [{
-							"fieldName": "Status Change"
-						}],
-						"hide": [{
-							"divID": "container_hire-fieldset"
-						}],
-						"optional": [
-							{
-								"fieldName": "Hire First Name",
-								"type": "text"
-							}, {
-								"fieldName": "Hire Last Name",
-								"type": "text"
-							}, {
-								"fieldName": "Hire Manager",
-								"type": "peoplePicker"
-							}, {
-								"fieldName": "Hire Department",
-								"type": "select"
-							}, {
-								"fieldName": "Hire Working Title",
-								"type": "text"
-							}, {
-								"fieldName": "Hire Compensation Title",
-								"type": "text"
-							}, {
-								"fieldName": "Hire Grade",
-								"type": "text"
-							}, {
-								"fieldName": "Hire Employee Classification",
-								"type": "select"
-							}, {
-								"fieldName": "Hire Scheduled Hours Biweekly",
-								"type": "text"
-							}, {
-								"fieldName": "Hire Scheduled Hours Annually",
-								"type": "text"
-							}, {
-								"fieldName": "Hire Proposed Hourly Wage",
-								"type": "text"
-							}, {
-								"fieldName": "Hire Proposed Annualized Salary",
-								"type": "text"
-							}, {
-								"fieldName": "Hire Start Date",
-								"type": "datePicker"
-							}, {
-								"fieldName": "Hire Funding Source",
-								"type": "text"
-
-
-							}, {
-								"fieldName": "Hire End Date",
-								"type": "datePicker"
-
-							}, {
-								"fieldName": "Hire Grant Object Code",
-								"type": "text",
-								'repeatable': 1
-							}, {
-								"fieldName": "Hire Grant Source Code",
-								"type": "text",
-								'repeatable': 1
-							}, {
-								"fieldName": "Hire Percent Salary from this Account",
-								"type": "text",
-								'repeatable': 1
-							}
-						],
-						"require": [
-							{
-								"fieldName": "Status Change",
-								"type": "check"
-							}
-						]
-					}
-				]
-
-
-
-
-
-
-
-			}, {
-				"elementType": "field",
-				'controlType': 'check',
-				"fieldName": "Status Change",
-				"choiceSetLabel": "What status change?",
-				"choices": [
-					{
 						"value": "Position Change",
 						"display": "Position Change"
 					}, {
@@ -598,6 +397,9 @@
 					}, {
 						"value": "Wage Change",
 						"display": "Wage Change"
+					}, {
+						"value": "Title Change",
+						"display": "Title Change"
 					}, {
 						"value": "Schedule Change",
 						"display": "Schedule Change"
@@ -611,13 +413,303 @@
 				],
 				"disabledForNonAdmin": ['Submitted', 'Cancelled'],
 				"disabledForAdmin": ['Submitted', 'Cancelled'],
-				"hideForNonAdmin": ['', 'Submitted', 'Cancelled'],
-				"hideForAdmin": ['', 'Submitted', 'Cancelled'],
 				"onChange": [
+				
+					// main container, section container, buttons
+
+					{
+						"anyOfSpecificCheckboxesAreChecked": [
+							"#action_new-hire",
+							"#action_rehire",
+							"#action_position-change",
+							"#action_additional-position",
+							"#action_wage-change",
+							"#action_title-change",
+							"#action_schedule-change",
+							"#action_temporary-extension",
+							"#action_termination",
+						],
+						"show": [
+							{ "divID": "container_main" },
+							{ "divID": "container_sections" },
+							{ "divID": "submit-or-exit" },
+						],
+					}, {
+						"noneOfSpecificCheckboxesAreChecked": [
+							"#action_new-hire",
+							"#action_rehire",
+							"#action_position-change",
+							"#action_additional-position",
+							"#action_wage-change",
+							"#action_title-change",
+							"#action_schedule-change",
+							"#action_temporary-extension",
+							"#action_termination",
+						],
+						"hide": [
+							{ "divID": "container_main" },
+							{ "divID": "container_sections" },
+							{ "divID": "submit-or-exit" },
+						],
+
+					// ear
+
+					}, {
+						"anyOfSpecificCheckboxesAreChecked": [
+							"#action_new-hire",
+							"#action_rehire",
+							"#action_position-change",
+							"#action_additional-position",
+							"#action_wage-change",
+							"#action_title-change",
+							"#action_schedule-change",
+							"#action_temporary-extension",
+						],
+						"show": [
+							{ "divID": "container_ear" },
+						],
+						"require": [
+							{
+								"fieldName": "Employment Authorization Request",
+								"type": "radio"
+							}
+						],
+					}, {
+						"noneOfSpecificCheckboxesAreChecked": [
+							"#action_new-hire",
+							"#action_rehire",
+							"#action_position-change",
+							"#action_additional-position",
+							"#action_wage-change",
+							"#action_title-change",
+							"#action_schedule-change",
+							"#action_temporary-extension",
+						],
+						"hide": [
+							{ "divID": "container_ear" },
+						],
+						"optional": [
+							{
+								"fieldName": "Employment Authorization Request",
+								"type": "radio"
+							}
+						],
+
+					// staff member
+
+					}, {
+						"anyOfSpecificCheckboxesAreChecked": [
+							"#action_position-change",
+							"#action_additional-position",
+							"#action_wage-change",
+							"#action_title-change",
+							"#action_schedule-change",
+							"#action_temporary-extension",
+							"#action_termination",
+						],
+						"show": [
+							{ "divID": "container_staff-member" },
+						],
+						"require": [
+							{
+								"fieldName": "Status Change Staff Member",
+								"type": "peoplePicker"
+							}
+						],
+					}, {
+						"noneOfSpecificCheckboxesAreChecked": [
+							"#action_position-change",
+							"#action_additional-position",
+							"#action_wage-change",
+							"#action_title-change",
+							"#action_schedule-change",
+							"#action_temporary-extension",
+							"#action_termination",
+						],
+						"hide": [
+							{ "divID": "container_staff-member" },
+						],
+						"optional": [
+							{
+								"fieldName": "Status Change Staff Member",
+								"type": "peoplePicker"
+							}
+						],
+
+					// hire or rehire fields
+
+					}, {
+
+						"anyOfSpecificCheckboxesAreChecked": ["#action_new-hire", "#action_rehire"],
+						"show": [
+							{ "divID": "container_hire-fieldset" },
+						],
+						"require": [
+							{
+								"fieldName": "Hire First Name",
+								"type": "text"
+							}, {
+								"fieldName": "Hire Last Name",
+								"type": "text"
+							}, {
+								"fieldName": "Hired Staff Member",
+								"type": "text"
+							}, {
+								"fieldName": "Hire Manager",
+								"type": "peoplePicker"
+							}, {
+								"fieldName": "Hire Department",
+								"type": "select"
+							}, {
+								"fieldName": "Hire Working Title",
+								"type": "text"
+							}, {
+								"fieldName": "Hire Compensation Title",
+								"type": "text"
+							}, {
+								"fieldName": "Hire Position Number",
+								"type": "text"
+							}, {
+								"fieldName": "Hire Grade",
+								"type": "text"
+							}, {
+								"fieldName": "Hire Employee Classification",
+								"type": "select"
+							}, {
+								"fieldName": "Hire Scheduled Hours Biweekly",
+								"type": "text"
+							}, {
+								"fieldName": "Hire Scheduled Hours Annually",
+								"type": "text"
+							}, {
+								"fieldName": "Hire Proposed Hourly Wage",
+								"type": "text"
+							}, {
+								"fieldName": "Hire Proposed Annualized Salary",
+								"type": "text"
+							}, {
+								"fieldName": "Hire Start Date",
+								"type": "datePicker"
+							}, {
+								"fieldName": "Hire End Date",
+								"type": "datePicker"
+							}, {
+								"fieldName": "Hire Funding Source",
+								"type": "select"
+							}
+						],
+
+					}, {
+						"noneOfSpecificCheckboxesAreChecked": ["#action_new-hire", "#action_rehire"],
+						"hide": [
+							{ "divID": "container_hire-fieldset" },
+						],
+						"optional": [
+							{
+								"fieldName": "Hire First Name",
+								"type": "text"
+							}, {
+								"fieldName": "Hire Last Name",
+								"type": "text"
+							}, {
+								"fieldName": "Hired Staff Member",
+								"type": "text"
+							}, {
+								"fieldName": "Hire Manager",
+								"type": "peoplePicker"
+							}, {
+								"fieldName": "Hire Department",
+								"type": "select"
+							}, {
+								"fieldName": "Hire Working Title",
+								"type": "text"
+							}, {
+								"fieldName": "Hire Compensation Title",
+								"type": "text"
+							}, {
+								"fieldName": "Hire Position Number",
+								"type": "text"
+							}, {
+								"fieldName": "Hire Grade",
+								"type": "text"
+							}, {
+								"fieldName": "Hire Employee Classification",
+								"type": "select"
+							}, {
+								"fieldName": "Hire Scheduled Hours Biweekly",
+								"type": "text"
+							}, {
+								"fieldName": "Hire Scheduled Hours Annually",
+								"type": "text"
+							}, {
+								"fieldName": "Hire Proposed Hourly Wage",
+								"type": "text"
+							}, {
+								"fieldName": "Hire Proposed Annualized Salary",
+								"type": "text"
+							}, {
+								"fieldName": "Hire Start Date",
+								"type": "datePicker"
+							}, {
+								"fieldName": "Hire End Date",
+								"type": "datePicker"
+							}, {
+								"fieldName": "Hire Funding Source",
+								"type": "select"
+							}
+						],
+
+					// hire or not, hire vs. rehire
+
+					}, {
+
+						"anyOfSpecificCheckboxesAreChecked": ["#action_new-hire"],
+						"show": [
+							{ "headerID": "header_new-hire" },
+						],
+						// "hide": [
+						// 	{ "headerID": "header_rehire" },
+						// ],
+						// "set": [{
+						// 	"fieldName": "Action",
+						// 	"type": "checkbox",
+						// 	"valueAffected": "Rehire",
+						// 	"checked": 0
+						// }]
+					}, {
+						"noneOfSpecificCheckboxesAreChecked": ["#action_new-hire"],
+						"hide": [
+							{ "headerID": "header_new-hire" },
+						],
+
+					// rehire or not, rehire vs. hire
+
+					}, {
+
+						"anyOfSpecificCheckboxesAreChecked": ["#action_rehire"],
+						"show": [
+							{ "headerID": "header_rehire" },
+						],
+						// "hide": [
+						// 	{ "headerID": "header_new-hire" },
+						// ],
+						// "set": [{
+						// 	"fieldName": "Action",
+						// 	"type": "checkbox",
+						// 	"valueAffected": "New Hire",
+						// 	"checked": 0
+						// }]
+					}, {
+						"noneOfSpecificCheckboxesAreChecked": ["#action_rehire"],
+						"hide": [
+							{ "headerID": "header_rehire" },
+						],
 
 					// position change
-					{
-						"anyOfSpecificCheckboxesAreChecked": ["#status-change_position-change"],
+
+					}, {
+
+						"anyOfSpecificCheckboxesAreChecked": ["#action_position-change"],
 						"show": [
 							{ "divID": "container_position-change-fieldset" },
 						],
@@ -678,8 +770,9 @@
 								"type": "datePicker"
 							}
 						],
+
 					}, {
-						"noneOfSpecificCheckboxesAreChecked": ["#status-change_position-change"],
+						"noneOfSpecificCheckboxesAreChecked": ["#action_position-change"],
 						"hide": [
 							{ "divID": "container_position-change-fieldset" },
 						],
@@ -744,7 +837,7 @@
 					// additional position
 
 					}, {
-						"anyOfSpecificCheckboxesAreChecked": ["#status-change_additional-position"],
+						"anyOfSpecificCheckboxesAreChecked": ["#action_additional-position"],
 						"show": [
 							{ "divID": "container_additional-position-fieldset" },
 						],
@@ -782,7 +875,7 @@
 							}
 						],
 					}, {
-						"noneOfSpecificCheckboxesAreChecked": ["#status-change_additional-position"],
+						"noneOfSpecificCheckboxesAreChecked": ["#action_additional-position"],
 						"hide": [
 							{ "divID": "container_additional-position-fieldset" },
 						],
@@ -823,7 +916,7 @@
 					// wage change
 
 					}, {
-						"anyOfSpecificCheckboxesAreChecked": ["#status-change_wage-change"],
+						"anyOfSpecificCheckboxesAreChecked": ["#action_wage-change"],
 						"show": [
 							{ "divID": "container_wage-change-fieldset" },
 						],
@@ -855,7 +948,7 @@
 							}
 						],
 					}, {
-						"noneOfSpecificCheckboxesAreChecked": ["#status-change_wage-change"],
+						"noneOfSpecificCheckboxesAreChecked": ["#action_wage-change"],
 						"hide": [
 							{ "divID": "container_wage-change-fieldset" },
 						],
@@ -887,10 +980,42 @@
 							}
 						],
 
+
+					// title change
+
+					}, {
+						"anyOfSpecificCheckboxesAreChecked": ["#action_title-change"],
+						"show": [
+							{ "divID": "container_title-change-fieldset" },
+						],
+						"require": [
+							{
+								"fieldName": "Previous Position Title",
+								"type": "text"
+							}, {
+								"fieldName": "New Position Title",
+								"type": "text"
+							}
+						],
+					}, {
+						"noneOfSpecificCheckboxesAreChecked": ["#action_title-change"],
+						"hide": [
+							{ "divID": "container_title-change-fieldset" },
+						],
+						"optional": [
+							{
+								"fieldName": "Previous Position Title",
+								"type": "text"
+							}, {
+								"fieldName": "New Position Title",
+								"type": "text"
+							}
+						],
+
 					// schedule change
 
 					}, {
-						"anyOfSpecificCheckboxesAreChecked": ["#status-change_schedule-change"],
+						"anyOfSpecificCheckboxesAreChecked": ["#action_schedule-change"],
 						"show": [
 							{ "divID": "container_schedule-change-fieldset" },
 						],
@@ -916,7 +1041,7 @@
 							}
 						],
 					}, {
-						"noneOfSpecificCheckboxesAreChecked": ["#status-change_schedule-change"],
+						"noneOfSpecificCheckboxesAreChecked": ["#action_schedule-change"],
 						"hide": [
 							{ "divID": "container_schedule-change-fieldset" },
 						],
@@ -945,7 +1070,7 @@
 					// temporary extension
 
 					}, {
-						"anyOfSpecificCheckboxesAreChecked": ["#status-change_temporary-extension"],
+						"anyOfSpecificCheckboxesAreChecked": ["#action_temporary-extension"],
 						"show": [
 							{ "divID": "container_temporary-extension-fieldset" },
 						],
@@ -965,7 +1090,7 @@
 							}
 						],
 					}, {
-						"noneOfSpecificCheckboxesAreChecked": ["#status-change_temporary-extension"],
+						"noneOfSpecificCheckboxesAreChecked": ["#action_temporary-extension"],
 						"hide": [
 							{ "divID": "container_temporary-extension-fieldset" },
 						],
@@ -988,7 +1113,7 @@
 					// termination
 
 					}, {
-						"anyOfSpecificCheckboxesAreChecked": ["#status-change_termination"],
+						"anyOfSpecificCheckboxesAreChecked": ["#action_termination"],
 						"show": [
 							{ "divID": "container_termination-fieldset" },
 						],
@@ -1008,7 +1133,7 @@
 							}
 						],
 					}, {
-						"noneOfSpecificCheckboxesAreChecked": ["#status-change_termination"],
+						"noneOfSpecificCheckboxesAreChecked": ["#action_termination"],
 						"hide": [
 							{ "divID": "container_termination-fieldset" },
 						],
@@ -1028,69 +1153,78 @@
 							}
 						],
 
-					// any, none
 
-					}, {
-						"anyOfSpecificCheckboxesAreChecked": [
-							"#status-change_position-change",
-							"#status-change_additional-position",
-							"#status-change_wage-change",
-							"#status-change_schedule-change",
-							"#status-change_supervisor-change",
-							"#status-change_temporary-extension",
-							"#status-change_temporary-extension",
-							"#status-change_termination",
-						],
-						"show": [
-							{ "divID": "container_status-change-fieldset" },
-						],
-						"require": [
-							{
-								"fieldName": "Status Change Staff Member",
-								"type": "peoplePicker"
-							}
-						],
-					}, {
-						"noneOfSpecificCheckboxesAreChecked": [
-							"#status-change_position-change",
-							"#status-change_additional-position",
-							"#status-change_wage-change",
-							"#status-change_schedule-change",
-							"#status-change_supervisor-change",
-							"#status-change_temporary-extension",
-							"#status-change_temporary-extension",
-							"#status-change_termination",
-						],
-						"hide": [
-							{ "divID": "container_status-change-fieldset" },
-						],
-						"optional": [
-							{
-								"fieldName": "Status Change Staff Member",
-								"type": "peoplePicker"
-							}
-						],
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+						
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 					}
 				]
 
 
 
-			// --- PRIMARY FIELDSET
+
+
 
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
 				'begin': 1,
-				'htmlID': 'container_primary-fieldset',
-				"hideForNonAdmin": ['', 'Submitted', 'Cancelled'],
-				"hideForAdmin": ['', 'Submitted', 'Cancelled'],
+				'htmlID': 'container_main',
+				"hideForNonAdmin": [""],
+				"hideForAdmin": [""],
 
 
 
 
 
 
-			// --- EAR
+				
+			
+			
 
 			}, {
 				'elementType': 'markup',
@@ -1123,50 +1257,14 @@
 				],
 				'helpNotes': [
 					{
-						'text': "You must create or update an <a href=\"https://bmos.sharepoint.com/sites/hrp-employment/SitePages/App.aspx\">Employment Authorization Request</a> prior to submitting this request",
+						'text': "You must create or update an <a href=\"https://bmos.sharepoint.com/sites/hr-employment/SitePages/App.aspx\">Employment Authorization Request</a> prior to submitting this request",
 						'htmlID': "help-note_no-employment-authorization-request",
 						'emphasis': 1,
 						'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
 						'hideForAdmin': ['', 'Submitted', 'Cancelled']
 					}
 				],
-				'onChange': [
-					{
-						'allOfSpecificCheckboxesAreChecked': ['input#employment-authorization-request_yes'],
-						'show': [
-							{ 'divID': 'container_primary-fieldset' },
-							// { 'divID': 'submit-or-exit' },
-						],
-						"require": [
-							{
-								"fieldName": "Action",
-								"type": "select"
-							}
-						],
-						'hide': [
-							{ 'noteID': 'help-note_no-employment-authorization-request' },
-						],
-					}, {
-						'allOfSpecificCheckboxesAreChecked': ['input#employment-authorization-request_no'],
-						'hide': [
-							{ 'divID': 'container_primary-fieldset' },
-							// { 'divID': 'submit-or-exit' },
-						],
-						"optional": [
-							{
-								"fieldName": "Action",
-								"type": "select"
-							}
-						],
-						'show': [
-							{ 'noteID': 'help-note_no-employment-authorization-request' },
-						],
-					}
-				],
-				"requiredForNonAdmin": [""],
-				"requiredForAdmin": [""],
-				'hideForNonAdmin': ['Submitted', 'Cancelled'],
-				'hideForAdmin': ['Submitted', 'Cancelled'],
+
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
@@ -1177,7 +1275,14 @@
 
 
 
-			// --- EXISTING STAFF MEMBER
+
+
+
+
+
+
+				// --- STAFF MEMBER
+
 
 			}, {
 				'elementType': 'markup',
@@ -1195,11 +1300,10 @@
 
 			}, {
 				'elementType': "field",
-				'controlType': "text",
+				'controlType': 'peoplePicker',
 				'fieldName': "Status Change Staff Member",
 				'listFieldName': "ExistingStaffMember",
 				'labelContent': "Which staff member?",
-				'controlType': 'peoplePicker',
 				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
 				'disabledForAdmin': ['Submitted', 'Cancelled']
 			}, {
@@ -1216,7 +1320,34 @@
 
 
 
-			// --- HIRE
+
+
+
+
+
+				
+
+
+			}, {
+				'elementType': 'markup',
+				'tag': 'div',
+				'begin': 1,
+				'htmlID': 'container_sections',
+				"hideForNonAdmin": ['', 'Submitted', 'Cancelled'],
+				"hideForAdmin": ['', 'Submitted', 'Cancelled'],
+
+
+
+
+
+
+
+
+
+
+
+
+				// --- HIRE
 
 			}, {
 				'elementType': 'markup',
@@ -1291,10 +1422,9 @@
 				"hideForAdmin": [""],
 			}, {
 				'elementType': "field",
-				'controlType': "text",
+				'controlType': 'peoplePicker',
 				'fieldName': "Hire Manager",
 				'labelContent': "Manager / Supervisor",
-				'controlType': 'peoplePicker',
 				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
 				'disabledForAdmin': ['Submitted', 'Cancelled']
 			}, {
@@ -1319,6 +1449,13 @@
 				'controlType': "text",
 				'fieldName': "Hire Compensation Title",
 				'labelContent': "Compensation Title",
+				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
+				'disabledForAdmin': ['Submitted', 'Cancelled']
+			}, {
+				'elementType': "field",
+				'controlType': "text",
+				'fieldName': "Hire Position Number",
+				'labelContent': "Position Number",
 				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
 				'disabledForAdmin': ['Submitted', 'Cancelled']
 			}, {
@@ -1579,8 +1716,6 @@
 				'elementType': 'markup',
 				'tag': 'div',
 				'end': 1,
-
-
 
 
 
@@ -2246,7 +2381,45 @@
 
 
 
-				// --- SCHEDULE CHANGE
+			// --- TITLE CHANGE
+
+
+			}, {
+				'elementType': 'markup',
+				'tag': 'div',
+				'begin': 1,
+				'htmlID': 'container_title-change-fieldset',
+				"hideForNonAdmin": [""],
+				"hideForAdmin": [""],
+			}, {
+				'elementType': 'markup',
+				'tag': 'h2',
+				'content': 'Title Change',
+				'begin': 1,
+				'end': 1,
+			}, {
+				'elementType': "field",
+				'controlType': "text",
+				'fieldName': "Previous Position Title",
+				'labelContent': "Current Position Title",
+				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
+				'disabledForAdmin': ['Submitted', 'Cancelled']
+			}, {
+				'elementType': "field",
+				'controlType': "text",
+				'fieldName': "New Position Title",
+				'labelContent': "New Position Title",
+				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
+				'disabledForAdmin': ['Submitted', 'Cancelled']
+			}, {
+				'elementType': 'markup',
+				'tag': 'div',
+				'end': 1,
+
+
+
+
+			// --- SCHEDULE CHANGE
 
 
 			}, {
@@ -2361,11 +2534,17 @@
 				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
 				'disabledForAdmin': ['Submitted', 'Cancelled']
 
+
+
+
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
 				'end': 1,
 
+
+
+				
 
 
 				// --- TERMINATION
@@ -2585,6 +2764,18 @@
 
 
 
+
+			}, {
+				'elementType': 'markup',
+				'tag': 'div',
+				'end': 1,
+			}, {
+				'elementType': 'markup',
+				'tag': 'div',
+				'end': 1,
+
+
+
 			}, {
 				"elementType": "field",
 				"controlType": "text",
@@ -2595,16 +2786,6 @@
 				'disabledForAdmin': ['', 'Submitted', 'Cancelled'],
 				'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
 				'hideForAdmin': ['', 'Submitted', 'Cancelled']
-
-
-
-			}, {
-				'elementType': 'markup',
-				'tag': 'div',
-				'end': 1,
-
-
-
 			}
 		]
 	};
@@ -2643,18 +2824,18 @@
 		'}); \n';
 
 
-	// ======================================================================================================================================================
+	// =============================================================================================================================
 
 	// --- RADIO + CHECK
 
 
-	fData.CustomScriptLast +=	'$("input#employment-authorization-request_yes").prop("checked", true).attr("checked", true); \n';
+	// fData.CustomScriptLast +=	'$("input#employment-authorization-request_yes").prop("checked", true).attr("checked", true); \n';
 	// fData.CustomScriptLast +=	'$("input#XXXXXXXXXXXXXXXX").prop("checked", true).attr("checked", true); \n';
 
 
 	// --- SELECTS
 
-	fData.CustomScriptLast +=	'$("select#Action option[value=\'Status Change\']").attr("selected","selected"); \n';
+	// fData.CustomScriptLast +=	'$("select#Action option[value=\'Status Change\']").attr("selected","selected"); \n';
 	fData.CustomScriptLast +=	'$("select#Hire-Department option[value=\'Accounting\']").attr("selected","selected"); \n';
 	fData.CustomScriptLast +=	'$("select#Hire-Employee-Classification option[value=\'Grant FT\']").attr("selected","selected"); \n';
 	fData.CustomScriptLast +=	'$("select#Hire-Funding-Source option[value=\'Grant Funds\']").attr("selected","selected"); \n';
@@ -2677,10 +2858,6 @@
 	fData.CustomScriptLast +=	'$("input#Request-Nickname").val("Sample Request"); \n';
 	fData.CustomScriptLast +=	'$("input#Hire-First-Name").val("James"); \n';
 	fData.CustomScriptLast +=	'$("input#Hire-Last-Name").val("Baker"); \n';
-	fData.CustomScriptLast +=	'$("input#Hire-Street-Address").val("71 Boston Ave"); \n';
-	fData.CustomScriptLast +=	'$("input#Hire-City").val("Somerville"); \n';
-	fData.CustomScriptLast +=	'$("input#Hire-State").val("MA"); \n';
-	fData.CustomScriptLast +=	'$("input#Hire-Zip-Code").val("75701"); \n';
 	fData.CustomScriptLast +=	'$("input#Hire-Working-Title").val("W Title"); \n';
 	fData.CustomScriptLast +=	'$("input#Hire-Compensation-Title").val("C Title"); \n';
 	fData.CustomScriptLast +=	'$("input#Hire-Position-Number").val("123"); \n';
@@ -2765,9 +2942,10 @@
 					"}]);";
 
 
-	// --- EXPOSE
 
 	// fData.CustomScriptLast +=	'$(".hidden").each(function() { $(this).removeClass("hidden"); });';
+
+
 	fData.CustomScriptLast +=	'$().ProcessEARAndPARHourAndWageFields("Hire-Proposed-Hourly-Wage", "Hire-Proposed-Annualized-Salary", "Hire-Scheduled-Hours-Biweekly", "Hire-Scheduled-Hours-Annually");';
 	fData.CustomScriptLast +=	'$().ProcessEARPercentFields("Hire-Percent-Salary-from-this-Account");';
 
@@ -2778,7 +2956,6 @@
 	fData.CustomScriptLast +=	'$().ProcessEARAndPARHourFields("Position-Change-Scheduled-Hours-Biweekly", "Position-Change-Scheduled-Hours-Annually");';
 	fData.CustomScriptLast +=	'$().ProcessEARAndPARHourAndWageFields("Additional-Position-Proposed-Hourly-Wage", "Additional-Position-Proposed-Annualized-Salary", "Additional-Position-Scheduled-Hours-Biweekly", "Additional-Position-Scheduled-Hours-Annually");';
 	fData.CustomScriptLast +=	'$().ProcessEARAndPARHourAndWageFields("Wage-Change-Hourly-Wage", "Wage-Change-Annualized-Salary", "Wage-Change-Scheduled-Hours-Biweekly", "Wage-Change-Scheduled-Hours-Annually");';
-	
 
 
 	$.fn.ReturnThisAppMData = function () {

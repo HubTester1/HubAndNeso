@@ -13690,7 +13690,14 @@
 						} else if (set.type == "radio") {
 							// to be completed
 						} else if (set.type == "checkbox") {
-							// to be completed
+							if (set.checked == 0) { set.checked = false; }
+							if (set.checked == 1) { set.checked = true; }
+							var inputID = $().ReturnHyphenatedFieldNameOrValue(set.fieldName).toLowerCase() + '_' + $().ReturnHyphenatedFieldNameOrValue(set.valueAffected).toLowerCase();
+							stmtsToAdd += '	  $("#' + inputID + '").prop("checked", ' + set.checked + '); \n';
+							stmtsToAdd += 	set.checked ?
+											'	  $("#' + inputID + '").attr("checked", true); \n' :
+											'	  $("#' + inputID + '").removeAttr("checked"); \n';
+							
 						} else if (set.type == "select") {
 							stmtsToAdd += '	  $("#' + ReplaceAll("\\.", "", ReplaceAll(" ", "-", set.fieldName)) + '").prop("selectedIndex", ' + set.optionIndex + '); \n';
 						} else if (set.type == "datetime") {
@@ -20475,8 +20482,8 @@
 		if (uData.isAdmin == 1) { uData.roles.push("admin"); }
 		if (uData.isComponentGrpAdmin == 1) { uData.roles.push("componentGrpAdmin"); }
 
-		uData.isComponentGrpAdmin = 0;
-		uData.isAdmin = 0;
+		// uData.isComponentGrpAdmin = 0;
+		// uData.isAdmin = 0;
 
 		// if this is a GSE Request
 		if (mData.requestName === "GSE Job" || mData.requestName === "GSE Schedule" || mData.requestName === "GSE Signup" || mData.requestName === "GSE Configuration") {
