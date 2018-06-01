@@ -402,47 +402,51 @@
 						"display": "Status Change"
 					}
 				],
-				"disabledForNonAdmin": ['Submitted', 'Cancelled'],
-				"disabledForAdmin": ['Submitted', 'Cancelled'],
+				"requiredForNonAdmin": [""],
+				"requiredForAdmin": [""],
 				"onChange": [
 
-					// RE/HIRE HEADERS
+					// re/hire headers
 
 					{
 						"thisFieldEquals": ["New Hire", "Status Change"],
-						"hide": [{
-							"headerID": "header_rehire"
-						}],
+						"hide": [
+							{"headerID": "header_rehire"}
+						],
 					}, {
 						"thisFieldEquals": ["Rehire", "Status Change"],
-						"hide": [{
-							"headerID": "header_new-hire"
-						}],
+						"hide": [
+							{"headerID": "header_new-hire"}
+						],
 					}, {
 						"thisFieldEquals": ["New Hire"],
-						"show": [{
-							"headerID": "header_new-hire"
-						}],
+						"show": [
+							{"headerID": "header_new-hire"}
+						],
 					}, {
 						"thisFieldEquals": ["Rehire"],
-						"show": [{
-							"headerID": "header_rehire"
-						}],
+						"show": [
+							{"headerID": "header_rehire"}
+						],
 
-
-
-						// IF HIRING
+					// re/hire
 
 					}, {
 						"thisFieldEquals": ["New Hire", "Rehire"],
-						"hide": [{
-							"fieldName": "Status Change"
-						}],
-						"show": [{
-							"divID": "container_hire-fieldset"
-						}],
+						"show": [
+							{ "divID": "container_primary-fieldset" },
+							{ "divID": "container_hire-fieldset" },
+							{ "divID": "container_ear" },
+							{ "divID": "submit-or-exit" }
+						],
+						"hide": [
+							{"fieldName": "Status Change"}
+						],
 						"require": [
 							{
+								"fieldName": "Employment Authorization Request",
+								"type": "radio"
+							}, {
 								"fieldName": "Hire First Name",
 								"type": "text"
 							}, {
@@ -455,10 +459,7 @@
 								"fieldName": "Hire Department",
 								"type": "select"
 							}, {
-								"fieldName": "Hire Working Title",
-								"type": "text"
-							}, {
-								"fieldName": "Hire Compensation Title",
+								"fieldName": "Hire Position Title",
 								"type": "text"
 							}, {
 								"fieldName": "Hire Grade",
@@ -490,23 +491,35 @@
 							{
 								"fieldName": "Status Change",
 								"type": "check"
+								// to do : every status change field here
 							}
 						]
-
-
-
-						//  IF STATUS CHANGE
+						
+					//  status change
 
 					}, {
 						"thisFieldEquals": ["Status Change"],
-						"show": [{
-							"fieldName": "Status Change"
-						}],
-						"hide": [{
-							"divID": "container_hire-fieldset"
-						}],
+						"show": [
+							{ "fieldName": "Status Change" }
+						],
+						"hide": [
+							{ "divID": "container_primary-fieldset" },
+							{ "divID": "container_hire-fieldset" },
+							{ "divID": "container_ear" },
+							{ "divID": "submit-or-exit" },
+							{ "divID": "container_primary-fieldset" },
+						],
+						"require": [
+							{
+								"fieldName": "Status Change",
+								"type": "check"
+							}
+						],
 						"optional": [
 							{
+								"fieldName": "Employment Authorization Request",
+								"type": "radio"
+							}, {
 								"fieldName": "Hire First Name",
 								"type": "text"
 							}, {
@@ -519,10 +532,7 @@
 								"fieldName": "Hire Department",
 								"type": "select"
 							}, {
-								"fieldName": "Hire Working Title",
-								"type": "text"
-							}, {
-								"fieldName": "Hire Compensation Title",
+								"fieldName": "Hire Position Title",
 								"type": "text"
 							}, {
 								"fieldName": "Hire Grade",
@@ -548,12 +558,9 @@
 							}, {
 								"fieldName": "Hire Funding Source",
 								"type": "text"
-
-
 							}, {
 								"fieldName": "Hire End Date",
 								"type": "datePicker"
-
 							}, {
 								"fieldName": "Hire Grant Object Code",
 								"type": "text",
@@ -567,13 +574,20 @@
 								"type": "text",
 								'repeatable': 1
 							}
-						],
-						"require": [
-							{
-								"fieldName": "Status Change",
-								"type": "check"
-							}
 						]
+
+					//  status change when no status change checkboxes are checked
+
+					/* }, {
+						"thisFieldEquals": ["Status Change"],
+						"addlAndConditions": [
+							"!$('input#status-change_position-change').prop('checked')"
+						],
+						"hide": [
+							{ "divID": "container_primary-fieldset" },
+							{ "divID": "container_ear" },
+							{ "divID": "submit-or-exit" }
+						], */
 					}
 				]
 
@@ -616,6 +630,7 @@
 				"onChange": [
 
 					// position change
+
 					{
 						"anyOfSpecificCheckboxesAreChecked": ["#status-change_position-change"],
 						"show": [
@@ -623,16 +638,10 @@
 						],
 						"require": [
 							{
-								"fieldName": "Position Change Previous Working Title",
+								"fieldName": "Position Change Previous Position Title",
 								"type": "text"
 							}, {
-								"fieldName": "Position Change Working Title",
-								"type": "text"
-							}, {
-								"fieldName": "Position Change Previous Compensation Title",
-								"type": "text"
-							}, {
-								"fieldName": "Position Change Compensation Title",
+								"fieldName": "Position Change Position Title",
 								"type": "text"
 							}, {
 								"fieldName": "Position Change Previous Department",
@@ -685,16 +694,10 @@
 						],
 						"optional": [
 							{
-								"fieldName": "Position Change Previous Working Title",
+								"fieldName": "Position Change Previous Position Title",
 								"type": "text"
 							}, {
-								"fieldName": "Position Change Working Title",
-								"type": "text"
-							}, {
-								"fieldName": "Position Change Previous Compensation Title",
-								"type": "text"
-							}, {
-								"fieldName": "Position Change Compensation Title",
+								"fieldName": "Position Change Position Title",
 								"type": "text"
 							}, {
 								"fieldName": "Position Change Previous Department",
@@ -750,10 +753,7 @@
 						],
 						"require": [
 							{
-								"fieldName": "Additional Position Working Title",
-								"type": "text"
-							}, {
-								"fieldName": "dditional Position Compensation Title",
+								"fieldName": "Additional Position Position Title",
 								"type": "text"
 							}, {
 								"fieldName": "Additional Position Department",
@@ -788,10 +788,7 @@
 						],
 						"optional": [
 							{
-								"fieldName": "Additional Position Working Title",
-								"type": "text"
-							}, {
-								"fieldName": "dditional Position Compensation Title",
+								"fieldName": "Additional Position Position Title",
 								"type": "text"
 							}, {
 								"fieldName": "Additional Position Department",
@@ -1028,6 +1025,47 @@
 							}
 						],
 
+					// any, none - except termination
+
+					}, {
+						"anyOfSpecificCheckboxesAreChecked": [
+							"#status-change_position-change",
+							"#status-change_additional-position",
+							"#status-change_wage-change",
+							"#status-change_schedule-change",
+							"#status-change_supervisor-change",
+							"#status-change_temporary-extension",
+							"#status-change_temporary-extension",
+						],
+						"show": [
+							{ "divID": "container_ear" }
+						],
+						"require": [
+							{
+								"fieldName": "Employment Authorization Request",
+								"type": "radio"
+							}
+						],
+					}, {
+						"noneOfSpecificCheckboxesAreChecked": [
+							"#status-change_position-change",
+							"#status-change_additional-position",
+							"#status-change_wage-change",
+							"#status-change_schedule-change",
+							"#status-change_supervisor-change",
+							"#status-change_temporary-extension",
+							"#status-change_temporary-extension",
+						],
+						"hide": [
+							{ "divID": "container_ear" }
+						],
+						"optional": [
+							{
+								"fieldName": "Employment Authorization Request",
+								"type": "radio"
+							}
+						],
+					
 					// any, none
 
 					}, {
@@ -1042,7 +1080,9 @@
 							"#status-change_termination",
 						],
 						"show": [
-							{ "divID": "container_status-change-fieldset" },
+							{ "divID": "container_primary-fieldset" },
+							{ "divID": "container_staff-member" },
+							{ "divID": "submit-or-exit" }
 						],
 						"require": [
 							{
@@ -1062,7 +1102,9 @@
 							"#status-change_termination",
 						],
 						"hide": [
-							{ "divID": "container_status-change-fieldset" },
+							{ "divID": "container_primary-fieldset" },
+							{ "divID": "container_staff-member" },
+							{ "divID": "submit-or-exit" }
 						],
 						"optional": [
 							{
@@ -1130,7 +1172,7 @@
 						'hideForAdmin': ['', 'Submitted', 'Cancelled']
 					}
 				],
-				'onChange': [
+				/* 'onChange': [
 					{
 						'allOfSpecificCheckboxesAreChecked': ['input#employment-authorization-request_yes'],
 						'show': [
@@ -1162,9 +1204,7 @@
 							{ 'noteID': 'help-note_no-employment-authorization-request' },
 						],
 					}
-				],
-				"requiredForNonAdmin": [""],
-				"requiredForAdmin": [""],
+				], */
 				'hideForNonAdmin': ['Submitted', 'Cancelled'],
 				'hideForAdmin': ['Submitted', 'Cancelled'],
 			}, {
@@ -1310,15 +1350,8 @@
 			}, {
 				'elementType': "field",
 				'controlType': "text",
-				'fieldName': "Hire Working Title",
-				'labelContent': "Working Title",
-				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
-				'disabledForAdmin': ['Submitted', 'Cancelled']
-			}, {
-				'elementType': "field",
-				'controlType': "text",
-				'fieldName': "Hire Compensation Title",
-				'labelContent': "Compensation Title",
+				'fieldName': "Hire Position Title",
+				'labelContent': "Position Title",
 				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
 				'disabledForAdmin': ['Submitted', 'Cancelled']
 			}, {
@@ -1608,31 +1641,15 @@
 			}, {
 				'elementType': "field",
 				'controlType': "text",
-				'fieldName': "Position Change Previous Working Title",
-				'labelContent': "Previous Working Title",
+				'fieldName': "Position Change Previous Position Title",
+				'labelContent': "Previous Position Title",
 				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
 				'disabledForAdmin': ['Submitted', 'Cancelled']
 			}, {
 				'elementType': "field",
 				'controlType': "text",
-				'fieldName': "Position Change Working Title",
-				'labelContent': "Working Title",
-				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
-				'disabledForAdmin': ['Submitted', 'Cancelled']
-
-
-			}, {
-				'elementType': "field",
-				'controlType': "text",
-				'fieldName': "Position Change Previous Compensation Title",
-				'labelContent': "Previous Compensation Title",
-				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
-				'disabledForAdmin': ['Submitted', 'Cancelled']
-			}, {
-				'elementType': "field",
-				'controlType': "text",
-				'fieldName': "Position Change Compensation Title",
-				'labelContent': "Compensation Title",
+				'fieldName': "Position Change Position Title",
+				'labelContent': "Position Title",
 				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
 				'disabledForAdmin': ['Submitted', 'Cancelled']
 
@@ -1962,15 +1979,8 @@
 			}, {
 				'elementType': "field",
 				'controlType': "text",
-				'fieldName': "Additional Position Working Title",
-				'labelContent': "Working Title",
-				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
-				'disabledForAdmin': ['Submitted', 'Cancelled']
-			}, {
-				'elementType': "field",
-				'controlType': "text",
-				'fieldName': "Additional Position Compensation Title",
-				'labelContent': "Compensation Title",
+				'fieldName': "Additional Position Position Title",
+				'labelContent': "Position Title",
 				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
 				'disabledForAdmin': ['Submitted', 'Cancelled']
 			}, {
@@ -2654,7 +2664,7 @@
 
 	// --- SELECTS
 
-	fData.CustomScriptLast +=	'$("select#Action option[value=\'Status Change\']").attr("selected","selected"); \n';
+	// fData.CustomScriptLast +=	'$("select#Action option[value=\'Status Change\']").attr("selected","selected"); \n';
 	fData.CustomScriptLast +=	'$("select#Hire-Department option[value=\'Accounting\']").attr("selected","selected"); \n';
 	fData.CustomScriptLast +=	'$("select#Hire-Employee-Classification option[value=\'Grant FT\']").attr("selected","selected"); \n';
 	fData.CustomScriptLast +=	'$("select#Hire-Funding-Source option[value=\'Grant Funds\']").attr("selected","selected"); \n';
@@ -2681,7 +2691,7 @@
 	fData.CustomScriptLast +=	'$("input#Hire-City").val("Somerville"); \n';
 	fData.CustomScriptLast +=	'$("input#Hire-State").val("MA"); \n';
 	fData.CustomScriptLast +=	'$("input#Hire-Zip-Code").val("75701"); \n';
-	fData.CustomScriptLast +=	'$("input#Hire-Working-Title").val("W Title"); \n';
+	fData.CustomScriptLast +=	'$("input#Hire-Position-Title").val("P Title"); \n';
 	fData.CustomScriptLast +=	'$("input#Hire-Compensation-Title").val("C Title"); \n';
 	fData.CustomScriptLast +=	'$("input#Hire-Position-Number").val("123"); \n';
 	fData.CustomScriptLast +=	'$("input#Hire-Grade").val("37"); \n';
@@ -2692,8 +2702,8 @@
 	fData.CustomScriptLast +=	'$("input#Hire-Grant-Object-Code").val("789"); \n';
 	fData.CustomScriptLast +=	'$("input#Hire-Grant-Source-Code").val("4561"); \n';
 	fData.CustomScriptLast +=	'$("input#Hire-Percent-Salary-from-this-Account").val("20"); \n';
-	fData.CustomScriptLast +=	'$("input#Position-Change-Previous-Working-Title").val("W Title 1"); \n';
-	fData.CustomScriptLast +=	'$("input#Position-Change-Working-Title").val("W Title 2"); \n';
+	fData.CustomScriptLast +=	'$("input#Position-Change-Previous-Position-Title").val("P Title 1"); \n';
+	fData.CustomScriptLast +=	'$("input#Position-Change-Position-Title").val("P Title 2"); \n';
 	fData.CustomScriptLast +=	'$("input#Position-Change-Previous-Compensation-Title").val("C Title 1"); \n';
 	fData.CustomScriptLast +=	'$("input#Position-Change-Compensation-Title").val("C Title 2"); \n';
 	fData.CustomScriptLast +=	'$("input#Position-Change-Previous-Grade").val("37"); \n';
@@ -2704,7 +2714,7 @@
 	fData.CustomScriptLast +=	'$("input#Position-Change-Start-Date").val("April 29, 2018"); \n';
 	fData.CustomScriptLast +=	'$("input#Position-Change-Previous-End-Date").val("May 17, 2018"); \n';
 	fData.CustomScriptLast +=	'$("input#Position-Change-End-Date").val("May 18, 2018"); \n';
-	fData.CustomScriptLast +=	'$("input#Additional-Position-Working-Title").val("W Title"); \n';
+	fData.CustomScriptLast +=	'$("input#Additional-Position-Position-Title").val("P Title"); \n';
 	fData.CustomScriptLast +=	'$("input#Additional-Position-Compensation-Title").val("C Title"); \n';
 	fData.CustomScriptLast +=	'$("input#Additional-Position-Grade").val("37"); \n';
 	fData.CustomScriptLast +=	'$("input#Additional-Position-Scheduled-Hours-Biweekly").val("80"); \n';

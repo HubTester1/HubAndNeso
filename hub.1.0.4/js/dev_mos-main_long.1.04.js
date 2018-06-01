@@ -13522,7 +13522,7 @@
 						}
 
 						// if visible, hide
-						stmtsToAdd += '		if ($("' + hdID + '").is(":visible")) { \n' +
+						stmtsToAdd += '		if (!$("' + hdID + '").hasClass("hidden")) { \n' +
 							'			$("' + hdID + '").hide("fast"); \n' +
 							'			$("' + hdID + '").addClass("hidden"); \n' +
 							'		} \n';
@@ -14259,8 +14259,7 @@
 								'	<li><b>Last Name:</b> ' + formData["Hire-Last-Name"] + '</li>' + 
 								'	<li><b>Manager / Supervisor:</b> ' + formData["Hire-Manager"][0]["displayText"] + '</li>' + 
 								'	<li><b>Department:</b> ' + formData["Hire-Department"] + '</li>' + 
-								'	<li><b>Working Title:</b> ' + formData["Hire-Working-Title"] + '</li>' + 
-								'	<li><b>Compensation Title:</b> ' + formData["Hire-Compensation-Title"] + '</li>' + 
+								'	<li><b>Position Title:</b> ' + formData["Hire-Position-Title"] + '</li>' + 
 								'	<li><b>Position Number:</b> ' + formData["Hire-Position-Number"] + '</li>' + 
 								'	<li><b>Grade:</b> ' + formData["Hire-Grade"] + '</li>' + 
 								'	<li><b>Employee Classification:</b> ' + formData["Hire-Employee-Classification"] + '</li>' + 
@@ -14335,8 +14334,7 @@
 										'		<td style="width: 50%;>' +
 										'			<h3>From</h3>' + 
 										'			<ul style="margin: 0;">' + 
-										'				<li><b>Working Title:</b> ' + formData["Position-Change-Previous-Working-Title"] + '</li>' + 
-										'				<li><b>Compensation Title:</b> ' + formData["Position-Change-Previous-Compensation-Title"] + '</li>' + 
+										'				<li><b>Position Title:</b> ' + formData["Position-Change-Previous-Position-Title"] + '</li>' + 
 										'				<li><b>Department:</b> ' + formData["Position-Change-Previous-Department"] + '</li>' + 
 										'				<li><b>Manager / Supervisor:</b> ' + formData["Position-Change-Previous-Manager"][0]["displayText"] + '</li>' + 
 										'				<li><b>Grade:</b> ' + formData["Position-Change-Previous-Grade"] + '</li>' + 
@@ -14354,8 +14352,7 @@
 										'		<td style="width: 50%;>' +
 										'			<h3>To</h3>' + 
 										'			<ul style="margin: 0;">' + 
-										'				<li><b>Working Title:</b> ' + formData["Position-Change-Working-Title"] + '</li>' + 
-										'				<li><b>Compensation Title:</b> ' + formData["Position-Change-Compensation-Title"] + '</li>' + 
+										'				<li><b>Position Title:</b> ' + formData["Position-Change-Position-Title"] + '</li>' + 
 										'				<li><b>Department:</b> ' + formData["Position-Change-Department"] + '</li>' + 
 										'				<li><b>Manager / Supervisor:</b> ' + formData["Position-Change-Manager"][0]["displayText"] + '</li>' + 
 										'				<li><b>Grade:</b> ' + formData["Position-Change-Grade"] + '</li>' + 
@@ -14382,8 +14379,7 @@
 					if (typeof(formData["status-change_additional-position"]) !== "undefined") {
 						printContent += '<h2>Additional Position</h2>' +
 										'<ul style="margin: 0;">' + 
-										'	<li><b>Working Title:</b> ' + formData["Additional-Position-Working-Title"] + '</li>' + 
-										'	<li><b>Compensation Title:</b> ' + formData["Additional-Position-Compensation-Title"] + '</li>' + 
+										'	<li><b>Position Title:</b> ' + formData["Additional-Position-Position-Title"] + '</li>' + 
 										'	<li><b>Department:</b> ' + formData["Additional-Position-Department"] + '</li>' + 
 										'	<li><b>Grade:</b> ' + formData["Additional-Position-Grade"] + '</li>' + 
 										'	<li><b>Scheduled Hours, Biweekly:</b> ' + formData["Additional-Position-Scheduled-Hours-Biweekly"] + '</li>' + 
