@@ -43,7 +43,7 @@ export default class HcMessagesMessagePreview extends React.Component {
 		this.setState({ showInlineFull: false });
 	}
 	render() {
-		Modal.setAppElement('#react-mount-point');
+		Modal.setAppElement('#hub-central-mount-point');
 		/* const customStyles = {
 			content: {
 				top: '50%',

@@ -64,6 +64,8 @@ class HcContainer extends React.Component {
 	}
 	render() {
 		if (EnvironmentDetector.ReturnIsHCScreen()) {
+			document.body.classList.add('contains-hub-central');
+
 			return (
 				<div
 					id="hc-container"
@@ -160,4 +162,4 @@ class HcContainer extends React.Component {
 	}
 }
 
-ReactDOM.render(<HcContainer />, document.getElementById('react-mount-point'));
+ReactDOM.render(<HcContainer />, document.getElementById('hub-central-mount-point'));

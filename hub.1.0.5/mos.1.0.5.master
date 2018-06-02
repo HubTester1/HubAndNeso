@@ -18,8 +18,11 @@
 
 
 										<meta charset="utf-8">
-										<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+										<meta http-equiv="x-ua-compatible" content="ie=edge">
 										<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+
 
 
 										<meta http-equiv="Expires" content="0" />
@@ -48,9 +51,6 @@
 											<asp:ContentPlaceHolder id="PlaceHolderBodyAreaClass" runat="server" />
 										</SharePoint:AjaxDelta>
 										<SharePoint:CssRegistration Name="Themable/corev15.css" runat="server" />
-
-										<SharePoint:CssRegistration Name="/sites/hubprod/Code4/css/libs/_libs.concatenated.1.0.css" runat="server" />
-										<SharePoint:CssRegistration Name="/sites/hubprod/Code4/css/mos.css" runat="server" />
 
 										<style>
 											body {
@@ -377,24 +377,6 @@
 												</div>
 											</div>
 											<div id="s4-workspace" class="ms-core-overlay">
-
-
-
-
-
-
-												<div id="loading-screen">
-													<p id="loading-text">Loading...</p>
-													<div id="loading-spinner"></div>
-												</div>
-
-
-
-
-
-
-
-
 												<div id="s4-bodyContainer">
 													<div id="s4-titlerow" class="ms-dialogHidden s4-titlerowhidetitle">
 														<div id="titleAreaBox" class="ms-noList ms-table ms-core-tableNoSpace">
@@ -603,15 +585,8 @@
 											ga('send', 'pageview');
 										</script>
 
-										<script type="text/javascript" src="/sites/hubprod/Code4/js/libs/jquery.2.2.0.js"></script>
-										<script type="text/javascript" src="/sites/hubprod/Code4/js/libs/_libs.concatenated.1.0.js"></script>
-										<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bowser/1.0.0/bowser.min.js"></script>
-										<script type="text/javascript" src="/sites/iit-swf-update-5/SiteAssets/settings.js"></script>
-										<script type="text/javascript" src="/sites/iit-swf-update-5/_layouts/15/clienttemplates.js"></script>
-										<script type="text/javascript" src="/sites/iit-swf-update-5/_layouts/15/clientforms.js"></script>
-										<script type="text/javascript" src="/sites/iit-swf-update-5/_layouts/15/clientpeoplepicker.js"></script>
-										<script type="text/javascript" src="/sites/iit-swf-update-5/_layouts/15/autofill.js"></script>
-										<script type="text/javascript" src="/sites/hubdev/DevCode4/js/dev_mos-main_long.1.04.js"></script>
+										<script type="text/javascript" src="/sites/hubdev/DevCode5/mos.1.0.5.dev.js"></script>
+
 
 									</body>
 								</SharePoint:SPHtmlTag>
