@@ -52,12 +52,13 @@
 										</SharePoint:AjaxDelta>
 										<SharePoint:CssRegistration Name="Themable/corev15.css" runat="server" />
 
-										<style>
-											body {
-												background-color: bisque;
-											}
-										</style>
 
+
+
+
+
+
+										
 									</head>
 
 									<body>
@@ -572,7 +573,6 @@
 										<SharePoint:ScriptBlock runat="server">var g_Workspace = "s4-workspace"; </SharePoint:ScriptBlock>
 
 
-										< !--Google Analytics-->
 										<script>
 
 											(function (i, s, o, g, r, a, m) {
@@ -586,7 +586,6 @@
 										</script>
 
 										<script type="text/javascript" src="/sites/hubdev/DevCode5/mos.1.0.5.dev.js"></script>
-
 
 									</body>
 								</SharePoint:SPHtmlTag>

@@ -60,7 +60,7 @@ module.exports = merge(baseConfig, {
 	devServer: {
 		contentBase: path.join(__dirname, '../hub.1.0.5/dist'),
 		hot: true,
-		host: '192.168.0.14', // set to VirtualBox IP so it can be accessed outside VBox
+		host: '192.168.1.183', // set to VirtualBox IP so it can be accessed outside VBox
 		port: 3001,
 	},
 });
