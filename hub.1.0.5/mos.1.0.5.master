@@ -52,7 +52,8 @@
 										</SharePoint:AjaxDelta>
 										<SharePoint:CssRegistration Name="Themable/corev15.css" runat="server" />
 
-
+										<script type="text/javascript" src="/sites/hubprod/Code4/js/libs/jquery.2.2.0.js"></script>
+										<script type="text/javascript" src="/sites/hubprod/Code4/js/libs/jquery.SPServices.2014.02.min.js"></script>
 
 
 
@@ -584,8 +585,8 @@
 											ga('create', 'UA-51830655-1', 'sharepoint.com');
 											ga('send', 'pageview');
 										</script>
-
 										<script type="text/javascript" src="/sites/hubdev/DevCode5/mos.1.0.5.dev.js"></script>
+										<script type="text/javascript" src="/sites/hubdev/DevCode5/mos.1.0.5.transitional.js"></script>
 
 									</body>
 								</SharePoint:SPHtmlTag>
