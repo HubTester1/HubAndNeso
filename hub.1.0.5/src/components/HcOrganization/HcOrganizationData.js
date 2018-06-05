@@ -44,7 +44,7 @@ export default class HcGetItDoneData {
 		return new Promise(((resolve, reject) => {
 			// if environment is sharepoint
 			if (EnvironmentDetector.ReturnIsSPO()) {
-				console.log('is spo');
+				// console.log('is spo');
 				// collect data async from multiple sources
 				const listItemQueryPromises = [
 					this.ReturnHRDocsForHcOrg(),
@@ -55,8 +55,8 @@ export default class HcGetItDoneData {
 				Promise.all(listItemQueryPromises)
 					// if the promises are resolved with the data
 					.then((resultsReturnArray) => {
-						console.log('alll qs resolved');
-						console.log(resultsReturnArray);
+						// console.log('alll qs resolved');
+						// console.log(resultsReturnArray);
 						// set up vars
 						let orgChartsReturn;
 						let divDeptWTeamsReturn;
@@ -112,8 +112,8 @@ export default class HcGetItDoneData {
 					})
 					// if any single promise is rejected with an error
 					.catch((queryError) => {
-						console.log('was rejected');
-						console.log(queryError);
+						// console.log('was rejected');
+						// console.log(queryError);
 						// reject this promise with the first error (because that's all we get)
 						reject({
 							error: true,
