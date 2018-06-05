@@ -19,7 +19,8 @@
     "4-prod-watch-build-css": "webpack --config webpack/v4.prod.css.config.js --watch",
     "5-dev-build": "webpack --config webpack/v5.dev.config.js",
     "5-dev-watch-build": "webpack --config webpack/v5.dev.config.js --watch",
-    "5-serve": "webpack-dev-server --config webpack/v5.dev.config.js"
+    "5-serve": "webpack-dev-server --config webpack/v5.dev.config.js",
+    "5-prod-build": "webpack --config webpack/v5.prod.config.js"
   },
   "repository": {
     "type": "git",
@@ -33,7 +34,8 @@
   "homepage": "https://github.com/HubTester1/HubAndNeso#readme",
   "dependencies": {
     "add": "^2.0.6",
-    "axios": "^0.18.0",
+	"axios": "^0.18.0",
+	"moment": "^2.22.1",
     "office-ui-fabric-react": "^5.107.0",
     "react": "^16.3.2",
     "react-accessible-accordion": "^2.4.0",
@@ -73,13 +75,13 @@
     "gulp-plumber": "^1.2.0",
     "gulp-spsave": "^3.1.0",
     "html-webpack-plugin": "^3.2.0",
-    "moment": "^2.22.1",
     "node-sass": "^4.9.0",
     "optimize-css-assets-webpack-plugin": "^4.0.1",
     "postcss-loader": "^2.1.5",
     "sass-lint": "^1.12.1",
     "sass-loader": "^6.0.7",
     "style-loader": "^0.18.2",
+    "uglifyjs-webpack-plugin": "^1.2.5",
     "webpack": "^3.1.0",
     "webpack-dev-server": "^2.5.1",
     "webpack-merge": "^4.1.2",

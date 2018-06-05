@@ -728,8 +728,9 @@
 											ga('create', 'UA-51830655-1', 'sharepoint.com');
 											ga('send', 'pageview');
 										</script>
-										<script type="text/javascript" src="/sites/hubdev/DevCode5/mos.1.0.5.dev.js"></script>
-										<script type="text/javascript" src="/sites/hubdev/DevCode5/mos.1.0.5.transitional.js"></script>
+										<script type="text/javascript" src="/sites/hubdev/DevCode5/mos.1.0.5.vendor.js"></script>
+										<script type="text/javascript" src="/sites/hubdev/DevCode5/mos.1.0.5.app.js"></script>
+										<script type="text/javascript" src="/sites/hubdev/DevCode5/mos.1.0.5.transition-helper.js"></script>
 
 									</body>
 								</SharePoint:SPHtmlTag>

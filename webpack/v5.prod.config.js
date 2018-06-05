@@ -4,17 +4,34 @@ const webpack = require('webpack');
 // eslint-disable-next-line
 const merge = require('webpack-merge');
 // eslint-disable-next-line
-const HtmlWebpack = require('html-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const baseConfig = require('./base.config.js');
 const path = require('path');
 
 module.exports = merge(baseConfig, {
 	entry: {
-		index: './hub.1.0.5/src/components/HcContainer/HcContainer.js',
+		vendor: [
+			'axios',
+			'office-ui-fabric-react',
+			'react',
+			'react-accessible-accordion',
+			'react-dom',
+			'react-dropzone',
+			'react-js-pagination',
+			'react-modal',
+			'react-responsive',
+			'react-responsive-modal',
+			'react-scroll',
+			'react-stickynode',
+			'react-truncate',
+			'sp-pnp-js',
+			'moment',
+		],
+		app: './hub.1.0.5/src/components/HcContainer/HcContainer.js',
 	},
 	output: {
 		path: path.join(__dirname, '../hub.1.0.5/dist'),
-		filename: 'mos.1.0.5.dev.js',
+		filename: 'mos.1.0.5.[name].js',
 	},
 	module: {
 		loaders: [
@@ -50,17 +67,21 @@ module.exports = merge(baseConfig, {
 		],
 	},
 	plugins: [
-		new HtmlWebpack({
-			template: path.join(__dirname, '../hub.1.0.5/src', 'index.html'),
-			hash: true,
+		new UglifyJsPlugin({
+			include: path.join(__dirname, '../hub.1.0.5/src'),
+			test: /\.js$/,
+			uglifyOptions: {
+				ecma: 5,
+				compress: true,
+				toplevel: true,
+			},
 		}),
-		new webpack.HotModuleReplacementPlugin(),
+		new webpack.DefinePlugin({
+			'process.env.NODE_ENV': JSON.stringify('production'),
+		}),
+		new webpack.optimize.CommonsChunkPlugin({
+			name: 'vendor',
+			minChunks: Infinity,
+		}),
 	],
-	devtool: 'inline-source-map',
-	devServer: {
-		contentBase: path.join(__dirname, '../hub.1.0.5/dist'),
-		hot: true,
-		host: '192.168.1.183', // set to VirtualBox IP so it can be accessed outside VBox
-		port: 3001,
-	},
 });
