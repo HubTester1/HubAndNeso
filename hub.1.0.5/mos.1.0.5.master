@@ -58,6 +58,29 @@
 
 
 										<style>
+											body {
+												overflow: visible;
+											}
+
+
+											div#suiteBarDelta div#suiteBarTop div#O365_NavHeader {
+												background-color: #000;
+												transition: background-color .5s;
+											}
+											div#suiteBarDelta div#suiteBarTop div#O365_NavHeader button.ms-bgc-tp {
+												background-color: #000;
+												transition: background-color .5s;
+											}
+											div#suiteBarDelta div#suiteBarTop div#O365_NavHeader button.ms-bgc-tdr-h:hover,
+											div#suiteBarDelta div#suiteBarTop div#O365_NavHeader button.ms-bgc-tp:hover {
+												background-color: #000;
+												transition: background-color .5s;
+											}
+
+
+
+
+
 											div#s4-bodyContainer {
 												opacity: 0;
 											}
