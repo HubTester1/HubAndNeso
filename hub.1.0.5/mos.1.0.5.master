@@ -57,7 +57,109 @@
 
 
 
-
+										<style>
+											div#s4-bodyContainer {
+												opacity: 0;
+											}
+										
+											div#s4-ribbonrow {
+												display: none;
+											}
+										
+											div#loading-screen {
+												position: fixed;
+												top: 0;
+												right: 0;
+												bottom: 0;
+												left: 0;
+												width: 100%;
+												text-align: center;
+												z-index: 1;
+												background-color: #fff;
+											}
+										
+											p#loading-text {
+												display: block !important;
+												width: 0 !important;
+												height: 0;
+												padding: 0 !important;
+												text-indent: 100%;
+												white-space: nowrap;
+												overflow: hidden;
+											}
+										
+											div#loading-spinner:before,
+											div#loading-spinner:after {
+												content: '';
+												box-sizing: border-box;
+												position: absolute;
+												top: 50%;
+												left: 50%;
+												width: 50px;
+												height: 50px;
+												margin-top: -25px;
+												margin-left: -25px;
+												border-radius: 50%;
+												background-color: #da1884;
+												-webkit-animation: sk-bounce 1s infinite ease-in-out;
+												animation: sk-bounce 1s infinite ease-in-out;
+												z-index: 9001;
+											}
+										
+											div#loading-spinner:before {
+												background-color: #49c5b1;
+												-webkit-animation-delay: -.5s;
+												animation-delay: -.5s;
+											}
+										
+											@-webkit-keyframes sk-bounce {
+												0%,
+												100% {
+													-webkit-transform: scale(0.0)
+												}
+												50% {
+													-webkit-transform: scale(1.0)
+												}
+											}
+										
+											@keyframes sk-bounce {
+												0%,
+												100% {
+													transform: scale(0.0);
+													-webkit-transform: scale(0.0);
+												}
+												50% {
+													transform: scale(1.0);
+													-webkit-transform: scale(1.0);
+												}
+											}
+										
+											/*div#loading-spinner:before {
+													content: '';
+													box-sizing: border-box;
+													position: absolute;
+													top: 50%;
+													left: 50%;
+													width: 50px;
+													height: 50px;
+													margin-top: -25px;
+													margin-left: -25px;
+													border-radius: 50%;
+													border: 5px solid #da1884; /* hot pink */
+										
+											/*border-top-color: #49c5b1; /* seafoam */
+										
+											/*border-right-color: #fedd00; /* yellow */
+										
+											/*border-bottom-color: #69b3e7; /* light blue */
+										
+											/*animation: spinner .6s linear infinite;
+													z-index: 9001;
+												}
+												@keyframes spinner {
+													to {transform: rotate(360deg);}
+												}*/
+										</style>
 
 										
 									</head>
@@ -379,6 +481,24 @@
 												</div>
 											</div>
 											<div id="s4-workspace" class="ms-core-overlay">
+		
+		
+		
+		
+		
+		
+												<div id="loading-screen">
+													<p id="loading-text">Loading...</p>
+													<div id="loading-spinner"></div>
+												</div>
+		
+		
+		
+		
+		
+		
+		
+		
 												<div id="s4-bodyContainer">
 													<div id="s4-titlerow" class="ms-dialogHidden s4-titlerowhidetitle">
 														<div id="titleAreaBox" class="ms-noList ms-table ms-core-tableNoSpace">
@@ -575,7 +695,7 @@
 
 
 										<script>
-
+											// Google Analytics
 											(function (i, s, o, g, r, a, m) {
 												i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
 													(i[r].q = i[r].q || []).push(arguments)
