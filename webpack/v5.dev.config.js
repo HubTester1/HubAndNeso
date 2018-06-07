@@ -4,9 +4,13 @@ const webpack = require('webpack');
 // eslint-disable-next-line
 const merge = require('webpack-merge');
 // eslint-disable-next-line
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+// eslint-disable-next-line
 const HtmlWebpack = require('html-webpack-plugin');
 const baseConfig = require('./base.config.js');
 const path = require('path');
+
+const CSSExtract = new ExtractTextPlugin('mos.1.0.5.css');
 
 module.exports = merge(baseConfig, {
 	entry: {
@@ -25,7 +29,31 @@ module.exports = merge(baseConfig, {
 			}, {
 				include: path.join(__dirname, '../hub.1.0.5/src'),
 				test: /\.sass$/,
-				loader: 'style-loader!css-loader!postcss-loader!sass-loader',
+				use: CSSExtract.extract({
+					use: [
+						{
+							loader: 'css-loader',
+							options: {
+								sourceMap: true,
+							},
+						}, {
+							loader: 'postcss-loader',
+							options: {
+								sourceMap: true,
+							},
+						}, {
+							loader: 'sass-loader',
+							options: {
+								sourceMap: true,
+							},
+						},
+					],
+				}),
+
+			// }, {
+			// 	include: path.join(__dirname, '../hub.1.0.5/src'),
+			// 	test: /\.sass$/,
+			// 	loader: 'style-loader!css-loader!postcss-loader!sass-loader',
 			}, {
 				include: path.join(__dirname, '../hub.1.0.5/src'),
 				test: /\.(jpg|png)$/,
@@ -50,6 +78,7 @@ module.exports = merge(baseConfig, {
 		],
 	},
 	plugins: [
+		CSSExtract,
 		new HtmlWebpack({
 			template: path.join(__dirname, '../hub.1.0.5/src', 'index.html'),
 			hash: true,

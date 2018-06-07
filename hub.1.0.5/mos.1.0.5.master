@@ -717,7 +717,7 @@
 
 
 										<script>
-											// Google Analytics
+											// analytics
 											(function (i, s, o, g, r, a, m) {
 												i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
 													(i[r].q = i[r].q || []).push(arguments)
@@ -726,8 +726,11 @@
 											})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
 											ga('create', 'UA-51830655-1', 'sharepoint.com');
 											ga('send', 'pageview');
-										</script>
-										<script>
+
+											// hold the ready event
+											$.holdReady(true);
+
+											// load the loader, which will un-hold the ready event when all files have loaded
 											var s = document.createElement('script');
 											s.type = "text/javascript";
 											s.src = "/sites/hubprod/Code5/mos.1.0.5.loader.js?ts=" + Date.now();

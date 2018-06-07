@@ -41,7 +41,10 @@ var centrallyManagedFileBasePathBasePath = prodCentrallyManagedFileBasePathBaseP
 // note: will determine whether or not the centrally managed dev file base path should be used instead, 
 // 		but can only do so after the site's local settings have been loaded and parsed
 
-
+// stylesheets
+var stylesheetsToLoad = [
+	{ "centrallyManaged": 1, 						"path": "mos.1.0.5.css" },
+];
 
 // libraries
 var libraryLoadingPromises = [];
@@ -51,17 +54,11 @@ var librariesToLoad = [
 	{ "centrallyManaged": 1, 						"path": "jquery.SPServices.2014.02.min.js" },
 ];
 
-
-
-
-
-
 // local settings
 var settingsLoadingPromises = [];
 var settingsToLoad = [
 	{ "localSiteAssets": 1,		"notCached": 1,		"path": "settings.js" },
 ];
-
 
 // mos.1.0.5
 var mosLoadingPromises = [];
@@ -70,7 +67,6 @@ var mosToLoad = [
 	// { "centrallyManaged": 1,	"notCached": 1,		"path": "mos.1.0.5.app.js" },
 	{ "centrallyManaged": 1,						"path": "mos.1.0.5.transition-helper.js" },
 ];
-
 
 function LoadFiles() {
 	LoadJSFiles(settingsToLoad, settingsLoadingPromises, null, function () {
@@ -82,10 +78,32 @@ function LoadFiles() {
 
 		LoadJSFiles(librariesToLoad, libraryLoadingPromises, null, function () {
 
-			LoadJSFiles(mosToLoad, mosLoadingPromises, mData);
+			LoadJSFiles(mosToLoad, mosLoadingPromises, mData, function () {
+				LoadCSSFiles(stylesheetsToLoad, function () {
+					$.holdReady(false);
+				});
+			});
 		});
 	});
 }
+
+
+
+function LoadCSSFiles(filesToLoad, callback) {
+
+	$.each(filesToLoad, function (i, file) {
+		var urlToLoad = ReturnURLToLoad(file);
+		var fileReference = document.createElement("link");
+		$(fileReference).attr("rel", "stylesheet");
+		$(fileReference).attr("href", urlToLoad);
+		$('head').append(fileReference);
+	});
+
+	if (callback && typeof (callback) === "function") {
+		callback();
+	}
+}
+
 
 
 function LoadJSFiles(filesToLoad, promiseTracker, mData, callback) {
