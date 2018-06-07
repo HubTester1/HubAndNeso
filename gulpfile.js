@@ -244,8 +244,8 @@ gulp.task('5-dev-watch-build-push', () => {
 
 // PROD
 
-// push dist to prod
-gulp.task('5-push-prod', () =>
+// push all to prod
+gulp.task('5-prod-push-all', () =>
 	// for all files in the dist folder
 	gulp.src(`${gulpV5DevConfig.ReturnV5DevDistFolder()}/**`)
 		// replace the standard pipe method
@@ -254,6 +254,64 @@ gulp.task('5-push-prod', () =>
 		.pipe(cached('spFiles'))
 		// and then to SP prod location
 		.pipe(spSave(
-			gulpV5ProdConfig.ReturnV5SPSaveProdOptions(), 
+			gulpV5ProdConfig.ReturnV5SPSaveProdOptions(),
 			gulpBaseConfig.ReturnGulpSPSaveCredentials(),
 		)));
+
+// push js to prod
+gulp.task('5-prod-push-js', () =>
+	// for all files in the dist folder
+	gulp.src(`${gulpV5DevConfig.ReturnV5DevDistFolder()}/+(*.js|*.js.map)`)
+		// replace the standard pipe method
+		.pipe(plumber())
+		// pipe them into a caching proxy 
+		.pipe(cached('spFiles'))
+		// and then to SP prod location
+		.pipe(spSave(
+			gulpV5ProdConfig.ReturnV5SPSaveProdOptions(),
+			gulpBaseConfig.ReturnGulpSPSaveCredentials(),
+		)));
+
+// push styles to prod
+gulp.task('5-prod-push-styles', () =>
+	// for all files in the dist folder
+	gulp.src(`${gulpV5DevConfig.ReturnV5DevDistFolder()}/+(*.css|*.css.map)`)
+		// replace the standard pipe method
+		.pipe(plumber())
+		// pipe them into a caching proxy 
+		.pipe(cached('spFiles'))
+		// and then to SP prod location
+		.pipe(spSave(
+			gulpV5ProdConfig.ReturnV5SPSaveProdOptions(),
+			gulpBaseConfig.ReturnGulpSPSaveCredentials(),
+		)));
+
+// push app to prod
+gulp.task('5-prod-push-app-js', () =>
+	// for all files in the dist folder
+	gulp.src(`${gulpV5DevConfig.ReturnV5DevDistFolder()}/+(*App.js|*App.js.map)`)
+		// replace the standard pipe method
+		.pipe(plumber())
+		// pipe them into a caching proxy 
+		.pipe(cached('spFiles'))
+		// and then to SP prod location
+		.pipe(spSave(
+			gulpV5ProdConfig.ReturnV5SPSaveProdOptions(),
+			gulpBaseConfig.ReturnGulpSPSaveCredentials(),
+		)));
+
+
+// push app to prod
+gulp.task('5-prod-push-app-all', () =>
+	// for all files in the dist folder
+	gulp.src(`${gulpV5DevConfig.ReturnV5DevDistFolder()}/+(*App.js|*App.js.map|*.css|*.css.map)`)
+		// replace the standard pipe method
+		.pipe(plumber())
+		// pipe them into a caching proxy 
+		.pipe(cached('spFiles'))
+		// and then to SP prod location
+		.pipe(spSave(
+			gulpV5ProdConfig.ReturnV5SPSaveProdOptions(),
+			gulpBaseConfig.ReturnGulpSPSaveCredentials(),
+		)));
+
