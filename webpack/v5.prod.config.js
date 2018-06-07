@@ -8,15 +8,17 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const baseConfig = require('./base.config.js');
 const path = require('path');
 
-const CSSExtract = new ExtractTextPlugin('mos.1.0.5.css');
+const CSSExtract = new ExtractTextPlugin('mos.1.0.5.Styles.css');
 
 module.exports = merge(baseConfig, {
 	entry: {
-		index: './hub.1.0.5/src/components/HcContainer/HcContainer.js',
+		App: './hub.1.0.5/src/components/HcContainer/HcContainer.js',
+		TransitionHelper: './hub.1.0.5/src/services/TransitionHelper.js',
+		Loader: './hub.1.0.5/src/services/Loader.js',		
 	},
 	output: {
 		path: path.join(__dirname, '../hub.1.0.5/dist'),
-		filename: 'mos.1.0.5.js',
+		filename: 'mos.1.0.5.[name].js',
 	},
 	module: {
 		rules: [

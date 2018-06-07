@@ -43,7 +43,7 @@ var centrallyManagedFileBasePathBasePath = prodCentrallyManagedFileBasePathBaseP
 
 // stylesheets
 var stylesheetsToLoad = [
-	{ "centrallyManaged": 1, 						"path": "mos.1.0.5.css" },
+	{ "centrallyManaged": 1, 						"path": "mos.1.0.5.Styles.css" },
 ];
 
 // libraries
@@ -63,10 +63,8 @@ var settingsToLoad = [
 // mos.1.0.5
 var mosLoadingPromises = [];
 var mosToLoad = [
-	// { "centrallyManaged": 1,						"path": "mos.1.0.5.vendor.js" },
-	// { "centrallyManaged": 1,	"notCached": 1,		"path": "mos.1.0.5.app.js" },
-	{ "centrallyManaged": 1,	"notCached": 1,		"path": "mos.1.0.5.js" },
-	{ "centrallyManaged": 1,						"path": "mos.1.0.5.transition-helper.js" },
+	{ "centrallyManaged": 1,	"notCached": 1,		"path": "mos.1.0.5.App.js" },
+	{ "centrallyManaged": 1,						"path": "mos.1.0.5.TransitionHelper.js" },
 ];
 
 function LoadFiles() {
