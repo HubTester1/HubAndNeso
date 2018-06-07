@@ -16,7 +16,7 @@ module.exports = merge(baseConfig, {
 	},
 	output: {
 		path: path.join(__dirname, '../hub.1.0.5/dist'),
-		filename: 'mos.1.0.5.dev.js',
+		filename: 'mos.1.0.5.js',
 	},
 	module: {
 		rules: [
@@ -29,11 +29,34 @@ module.exports = merge(baseConfig, {
 				test: /\.sass$/,
 				use: CSSExtract.extract({
 					use: [
-						'css-loader',
-						'postcss-loader',
-						'sass-loader',
+						{
+							loader: 'css-loader',
+							options: {
+								sourceMap: true,
+							},
+						}, {
+							loader: 'postcss-loader',
+							options: {
+								sourceMap: true,
+							},
+						}, {
+							loader: 'sass-loader',
+							options: {
+								sourceMap: true,
+							},
+						},
 					],
 				}),
+			// }, {
+			// 	include: path.join(__dirname, '../hub.1.0.5/src'),
+			// 	test: /\.sass$/,
+			// 	use: CSSExtract.extract({
+			// 		use: [
+			// 			'css-loader',
+			// 			'postcss-loader',
+			// 			'sass-loader',
+			// 		],
+			// 	}),
 			}, {
 				include: path.join(__dirname, '../hub.1.0.5/src'),
 				test: /\.(jpg|png)$/,

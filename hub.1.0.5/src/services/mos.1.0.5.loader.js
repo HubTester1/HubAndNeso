@@ -63,8 +63,9 @@ var settingsToLoad = [
 // mos.1.0.5
 var mosLoadingPromises = [];
 var mosToLoad = [
-	{ "centrallyManaged": 1,						"path": "mos.1.0.5.vendor.js" },
+	// { "centrallyManaged": 1,						"path": "mos.1.0.5.vendor.js" },
 	// { "centrallyManaged": 1,	"notCached": 1,		"path": "mos.1.0.5.app.js" },
+	{ "centrallyManaged": 1,	"notCached": 1,		"path": "mos.1.0.5.js" },
 	{ "centrallyManaged": 1,						"path": "mos.1.0.5.transition-helper.js" },
 ];
 
