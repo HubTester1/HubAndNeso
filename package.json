@@ -20,7 +20,7 @@
     "5-dev-build": "webpack --config webpack/v5.dev.config.js",
     "5-dev-watch-build": "webpack --config webpack/v5.dev.config.js --watch",
     "5-serve": "webpack-dev-server --config webpack/v5.dev.config.js",
-    "5-prod-build": "webpack --config webpack/v5.prod.config.js"
+    "5-prod-build": "webpack -p --config webpack/v5.prod.config.js"
   },
   "repository": {
     "type": "git",
