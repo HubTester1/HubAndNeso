@@ -6,6 +6,13 @@
 
 // ----- DECLARATIONS
 
+// --- SMALL - SUITEBAR
+
+@media screen and (max-width: $small-screen-maximum-width)
+	
+	div#suiteBarDelta
+		transition: height .25s
+
 // --- SMALL - HC CONTAINER
 
 @media screen and (max-width: $small-screen-maximum-width)
@@ -19,11 +26,11 @@
 
 	header#hc-header
 		position: relative
-		z-index: $z-index-sticky-header
+		// z-index: $z-index-sticky-header
 		width: 100%
 		
 		div#hamburger-and-brand-container
-			background-color: $grey14
+			// background-color: $grey14
 			height: 5rem
 
 		div.hamburger
@@ -51,6 +58,25 @@
 
 						svg
 							height: 3rem
+
+	// STUCK
+	
+	div.sticky-outer-wrapper.active
+
+		div.sticky-inner-wrapper
+			z-index: $z-index-sticky-header
+			background-color: $grey14
+
+
+	// SHOWING SMALL NAME
+	
+	body.showing-small-nav
+
+		div.sticky-inner-wrapper
+			z-index: $z-index-sticky-header
+			background-color: $grey14
+
+
 
 // --- SMALL - HAMBURGER
 
@@ -210,13 +236,19 @@
 	
 	// handle top position of nav separately 
 	
-	div#hc-container.showing-small-nav
+	body.showing-small-nav
+		
+		div#suiteBarDelta
+			height: 0
+
+			div#suiteBarTop
+				height: 0 !important
 		
 		header#hc-header
 			
 			nav#hc-navigation
 				position: fixed
-				top: 10rem
+				top: 5rem
 				width: 100%
 				height: 100%
 				z-index: $z-index-sticky-header
@@ -228,32 +260,6 @@
 					margin-top: 0
 					margin-left: 0
 					opacity: 1
-
-	// top position of nav here
-
-	// with no scrolling - suite bar is still showing
-	
-	div#hc-container.showing-small-nav
-		
-		div.sticky-outer-wrapper
-		
-			header#hc-header
-				
-				nav#hc-navigation
-					top: 10rem
-
-	// with scrolling - suite bar is no longer showing
-	
-	div#hc-container.showing-small-nav
-		
-		div.sticky-outer-wrapper.active
-			
-			header#hc-header
-				
-				nav#hc-navigation
-					position: fixed
-					z-index: $z-index-sticky-header
-					top: 5rem
 
 	// when small nav is showing, disable scrolling the content beneath the nav
 
