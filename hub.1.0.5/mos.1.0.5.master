@@ -434,6 +434,7 @@
 													<SharePoint:DelegateControl id="ID_SuiteBarDelegate" ControlId="SuiteBarDelegate" runat="server" /></SharePoint:FlightedContent>
 											</SharePoint:AjaxDelta>
 											<div id="ms-hcTest"></div>
+											<div id="hub-central-mount-point"></div>
 											<div id="s4-ribbonrow">
 												<div id="globalNavBox" class="noindex">
 													<div id="ribbonBox">
