@@ -274,7 +274,7 @@ module.exports = {
 										fse
 											.remove(newUsersFilePathAndName)
 											.then(() => {
-												console.log('FILE REMOVED');
+												// console.log('FILE REMOVED');
 											})
 											.catch((err) => {
 												// construct a custom error

@@ -24,12 +24,10 @@ const cron = require('node-cron');
 // NESO (MOS) MODULES ---
 
 const nesoCORS = require('./neso_modules/nesoCORS');
-const nesoUtilities = require('./neso_modules/nesoUtilities');
 const nesoEmail = require('./neso_modules/nesoEmail');
 const nesoHRPositions = require('./neso_modules/nesoHRPositions');
 const nesoActiveDirectory = require('./neso_modules/nesoActiveDirectory');
 const nesoHcOrg = require('./neso_modules/nesoHcOrg');
-const nesoHubSync = require('./neso_modules/nesoHubSync');
 
 // NESO (MOS) ROUTES ---
 
@@ -38,7 +36,6 @@ const health = require('./routes/health');
 const email = require('./routes/email');
 const hrPositions = require('./routes/hrPositions');
 const activeDirectory = require('./routes/activeDirectory');
-const hubSync = require('./routes/hubSync');
 const hcMessages = require('./routes/hcMessages');
 const hcGetItDone = require('./routes/hcGetItDone');
 const hcOrg = require('./routes/hcOrg');
@@ -191,12 +188,15 @@ cron.schedule('* * * * *', () => {
 	nesoEmail.ProcessEmailQueue()
 		// if the promise is resolved with the docs, then respond with the docs as JSON
 		.then((result) => {
+			// eslint-disable-next-line no-console
 			// console.log("Processed Email Queue:");
 			// console.log(result);
 		})
 		// if the promise is rejected with an error, then respond with the error as JSON
 		.catch((error) => {
+			// eslint-disable-next-line no-console
 			console.log('ERROR - Processing Email Queue:');
+			// eslint-disable-next-line no-console
 			console.log(error);
 		});
 });
@@ -207,18 +207,15 @@ cron.schedule(process.env.hrPositionsProcessingCronSchedule1, () => {
 		// if the promise is resolved with the docs, then respond with the docs as JSON
 		.then((result) => {
 			// eslint-disable-next-line no-console
-			console.log('Processed HR Position Directory data:');
-			console.log(`Real time was ${nesoUtilities.ReturnFormattedDateTime('nowLocal', null, null)}`);
-			console.log(`Cron schedule was ${process.env.hrPositionsProcessingCronSchedule1}`);
+			// console.log('Processed HR Position Directory data:');
 			// console.log(result);
 		})
 		// if the promise is rejected with an error, then respond with the error as JSON
 		.catch((error) => {
 			// eslint-disable-next-line no-console
 			console.log('ERROR - Processing HR Position Directory data:');
+			// eslint-disable-next-line no-console
 			console.log(error);
-			console.log(`Real time was ${nesoUtilities.ReturnFormattedDateTime('nowLocal', null, null)}`);
-			console.log(`Cron schedule was ${process.env.hrPositionsProcessingCronSchedule1}`);
 		});
 });
 // schedule as specified in environment
@@ -228,18 +225,15 @@ cron.schedule(process.env.hrPositionsProcessingCronSchedule2, () => {
 		// if the promise is resolved with the docs, then respond with the docs as JSON
 		.then((result) => {
 			// eslint-disable-next-line no-console
-			console.log('Processed HR Position Directory data:');
-			console.log(`Real time was ${nesoUtilities.ReturnFormattedDateTime('nowLocal', null, null)}`);
-			console.log(`Cron schedule was ${process.env.hrPositionsProcessingCronSchedule2}`);
+			// console.log('Processed HR Position Directory data:');
 			// console.log(result);
 		})
 		// if the promise is rejected with an error, then respond with the error as JSON
 		.catch((error) => {
 			// eslint-disable-next-line no-console
 			console.log('ERROR - Processing HR Position Directory data:');
+			// eslint-disable-next-line no-console
 			console.log(error);
-			console.log(`Real time was ${nesoUtilities.ReturnFormattedDateTime('nowLocal', null, null)}`);
-			console.log(`Cron schedule was ${process.env.hrPositionsProcessingCronSchedule2}`);
 		});
 });
 // schedule as specified in environment
@@ -249,17 +243,14 @@ cron.schedule(process.env.adUserProcessingCronSchedule, () => {
 		.then((result) => {
 			// eslint-disable-next-line no-console
 			// console.log('Processed Active Directory Users data:');
-			// console.log(`Real time was ${nesoUtilities.ReturnFormattedDateTime('nowLocal', null, null)}`);
-			// console.log(`Cron schedule was ${process.env.adUserProcessingCronSchedule}`);
 			// console.log(result);
 		})
 		// if the promise is rejected with an error, then respond with the error as JSON
 		.catch((error) => {
 			// eslint-disable-next-line no-console
 			console.log('ERROR - Processing Active Directory Users data:');
+			// eslint-disable-next-line no-console
 			console.log(error);
-			console.log(`Real time was ${nesoUtilities.ReturnFormattedDateTime('nowLocal', null, null)}`);
-			console.log(`Cron schedule was ${process.env.adUserProcessingCronSchedule}`);
 		});
 });
 // schedule as specified in environment
@@ -269,17 +260,14 @@ cron.schedule(process.env.adUserByDivisionDepartmentProcessingCronSchedule, () =
 		.then((result) => {
 			// eslint-disable-next-line no-console
 			// console.log('Processed Active Directory Users By Division Department data:');
-			// console.log(`Real time was ${nesoUtilities.ReturnFormattedDateTime('nowLocal', null, null)}`);
-			// console.log(`Cron schedule was ${process.env.adUserByDivisionDepartmentProcessingCronSchedule}`);
 			// console.log(result);
 		})
 		// if the promise is rejected with an error, then respond with the error as JSON
 		.catch((error) => {
 			// eslint-disable-next-line no-console
 			console.log('ERROR - Processing Active Directory Users By Division Department data:');
+			// eslint-disable-next-line no-console
 			console.log(error);
-			console.log(`Real time was ${nesoUtilities.ReturnFormattedDateTime('nowLocal', null, null)}`);
-			console.log(`Cron schedule was ${process.env.adUserProcessingCronSchedule}`);
 		});
 });
 // schedule as specified in environment
@@ -287,6 +275,7 @@ cron.schedule(process.env.adUserByDivisionDepartmentTeamsProcessingCronSchedule,
 	nesoHcOrg.ProcessHcOrgDivDeptWTeamsData()
 		// if the promise is resolved with the docs, then respond with the docs as JSON
 		.then((result) => {
+			// eslint-disable-next-line no-console
 			// console.log('Processed HcOrg DivDept data:');
 			// console.log(result);
 		})
@@ -294,6 +283,7 @@ cron.schedule(process.env.adUserByDivisionDepartmentTeamsProcessingCronSchedule,
 		.catch((error) => {
 			// eslint-disable-next-line no-console
 			console.log('ERROR - Processing HcOrg DivDept data data:');
+			// eslint-disable-next-line no-console
 			console.log(error);
 		});
 });
@@ -302,6 +292,7 @@ cron.schedule(process.env.nonDivisionDepartmentTeamsProcessingCronSchedule, () =
 	nesoHcOrg.ProcessNonDivDeptTeamsData()
 		// if the promise is resolved with the docs, then respond with the docs as JSON
 		.then((result) => {
+			// eslint-disable-next-line no-console
 			// console.log('Processed HcOrg NONDivDept data:');
 			// console.log(result);
 		})
@@ -309,6 +300,7 @@ cron.schedule(process.env.nonDivisionDepartmentTeamsProcessingCronSchedule, () =
 		.catch((error) => {
 			// eslint-disable-next-line no-console
 			console.log('ERROR - Processing HcOrg NONDivDept data data:');
+			// eslint-disable-next-line no-console
 			console.log(error);
 		});
 });
