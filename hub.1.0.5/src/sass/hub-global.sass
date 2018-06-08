@@ -1,4 +1,6 @@
 
+// sass-lint:disable no-vendor-prefixes
+
 // ----- IMPORTS
 
 @import './hub-vars'
@@ -58,6 +60,7 @@ div#suiteBarDelta
 
 div#hc-container,
 div.ReactModal__Content.ReactModal__Content--after-open.hc-messages-message-full-message-modal
+	+font-size-5
 	+font-weight-light
 	font-family: 'Segoe UI', 'Segoe', Roboto, Helvetica Neue, Helvetica,  Arial, sans-serif
 	color: $text-on-white
@@ -65,34 +68,52 @@ div.ReactModal__Content.ReactModal__Content--after-open.hc-messages-message-full
 	box-sizing: border-box
 
 	h1
-		+font-weight-light
+		+font-size-2
+		+line-height-title
+		+font-weight-regular
+		margin-top: $spacing-3
+		margin-bottom: $spacing-1
 		color: $grey12
-		margin: 0
 
 	h2
+		+font-size-2
+		+line-height-title
 		+font-weight-light
+		margin-top: $spacing-3
+		margin-bottom: $spacing-1
 		color: $grey12
-		margin: 0
 
 	h3
+		+font-size-3
+		+line-height-title
 		+font-weight-light
+		margin-top: $spacing-3
+		margin-bottom: $spacing-1
 		color: $grey12
-		margin: 0
 
 	h4
+		+font-size-4
+		+line-height-title
 		+font-weight-light
+		margin-top: $spacing-3
+		margin-bottom: $spacing-1
 		color: $grey12
-		margin: 0
 
 	h5
+		+font-size-5
+		+line-height-title
 		+font-weight-light
+		margin-top: $spacing-2
+		margin-bottom: $spacing-1
 		color: $grey12
-		margin: 0
 
 	h6
+		+font-size-5
+		+line-height-title
 		+font-weight-light
+		margin-top: $spacing-2
+		margin-bottom: $spacing-1
 		color: $grey12
-		margin: 0
 
 	p
 		margin: 0 0 1rem 0
@@ -448,8 +469,8 @@ div#hc-container
 				text-align: center
 
 			p.name
+				+font-size-2
 				padding: 2rem 2rem 1rem 0
-				font-size: $large-screen-type-size-l
 				color: $dark-purple
 
 			p.title,
@@ -458,8 +479,8 @@ div#hc-container
 				padding: 0 2rem 0 0
 			
 			p.department
+				+font-size-6
 				color: $dark-pink
-				font-size: $large-screen-type-size-xs
 		
 		ul.persona-card-dialog-body
 			padding: 0 0 1rem 0
@@ -495,8 +516,8 @@ div#hc-container
 						margin: 0
 
 				span.phone-number-label
+					+font-size-6
 					display: block
-					font-size: $large-screen-type-size-xs
 
 				span.phone-number-separator
 					+inline-hidden

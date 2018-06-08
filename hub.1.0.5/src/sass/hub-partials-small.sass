@@ -269,10 +269,6 @@
 	div#hero-container
 		padding: 6rem 2rem 4rem 2rem
 			
-		h2
-			+font-weight-semibold
-			font-size: $small-screen-type-size-m !important
-
 // --- SMALL - HC SECTIONS / ACCORDION
 
 @media screen and (max-width: $small-screen-maximum-width)
@@ -295,8 +291,6 @@
 				h2
 					
 					div.accordion__title__text
-						+font-weight-regular
-						font-size: $small-screen-type-size-m !important
 						color: $white
 					
 					div.accordion__arrow
@@ -320,7 +314,7 @@
 
 				h3.hc-messages-message-subject
 					+font-weight-regular
-					font-size: $small-screen-type-size-m
+					+font-size-4
 
 				button.hc-messages-message-full-message-button
 					+button
@@ -378,7 +372,7 @@
 @media screen and (max-width: $small-screen-maximum-width)
 
 	footer
-		font-size: $small-screen-type-size-xs
+		+font-size-6
 		padding: 2rem
 
 

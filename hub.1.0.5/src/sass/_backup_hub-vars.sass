@@ -1,0 +1,439 @@
+
+@import './hub-vars-ms-icons'
+
+// ------------------
+// Z-INDEX
+// ------------------
+
+$z-index-sticky-header:			1000
+$z-index-modal-full-message:	2000
+$z-index-modal-full-image:		2010
+
+// ------------------
+// SCREEN WIDTHS
+// ------------------
+
+$large-screen-minimum-width:	1025px
+$medium-screen-minimum-width: 	768px
+$medium-screen-maximum-width: 	1024px
+$small-screen-maximum-width: 	767px
+$very-small-screen-maximum-width: 	374px
+
+// ------------------
+// TYPE SIZES
+// ------------------
+
+// --- BASE SIZES
+
+$small-screen-type-base:		1.7rem
+$medium-screen-type-base:		1.7rem
+$large-screen-type-base:		1.7rem
+
+// --- SMALL SCREEN TYPE SCALE FACTORS
+
+$small-screen-type-scale-factor-xxl:		3
+$small-screen-type-scale-factor-xl:			2.25
+$small-screen-type-scale-factor-l:			1.75
+$small-screen-type-scale-factor-l-minus:	1.5
+$small-screen-type-scale-factor-m-plus:		1.25
+$small-screen-type-scale-factor-m:			1.125
+$small-screen-type-scale-factor-s:			1
+$small-screen-type-scale-factor-xs:			.67
+
+// --- MEDIUM SCREEN TYPE SCALE FACTORS
+
+$medium-screen-type-scale-factor-xxl:		3
+$medium-screen-type-scale-factor-xl:		2.25
+$medium-screen-type-scale-factor-l:			1.75
+$medium-screen-type-scale-factor-l-minus:	1.5
+$medium-screen-type-scale-factor-m-plus:	1.25
+$medium-screen-type-scale-factor-m:			1.125
+$medium-screen-type-scale-factor-s:			1
+$medium-screen-type-scale-factor-xs:		.67
+
+// --- LARGE SCREEN TYPE SCALE FACTORS
+
+$large-screen-type-scale-factor-xxl:		3
+$large-screen-type-scale-factor-xl:			2.25
+$large-screen-type-scale-factor-l:			1.75
+$large-screen-type-scale-factor-l-minus:	1.5
+$large-screen-type-scale-factor-m-plus:		1.25
+$large-screen-type-scale-factor-m:			1.125
+$large-screen-type-scale-factor-s:			1
+$large-screen-type-scale-factor-xs:			.67
+
+// --- SMALL SCREEN TYPE SIZES
+
+$small-screen-type-size-xxl:		($small-screen-type-scale-factor-xxl * $small-screen-type-base)
+$small-screen-type-size-xl: 		($small-screen-type-scale-factor-xl * $small-screen-type-base)
+$small-screen-type-size-l: 			($small-screen-type-scale-factor-l * $small-screen-type-base)
+$small-screen-type-size-l-minus:	($small-screen-type-scale-factor-l-minus * $small-screen-type-base)
+$small-screen-type-size-m-plus:		($small-screen-type-scale-factor-m-plus * $small-screen-type-base)
+$small-screen-type-size-m: 			($small-screen-type-scale-factor-m * $small-screen-type-base)
+$small-screen-type-size-s: 			($small-screen-type-scale-factor-s * $small-screen-type-base)
+$small-screen-type-size-xs: 		($small-screen-type-scale-factor-xs * $small-screen-type-base)
+
+// --- MEDIUM SCREEN TYPE SIZES
+
+$medium-screen-type-size-xxl:		($medium-screen-type-scale-factor-xxl * $medium-screen-type-base)
+$medium-screen-type-size-xl: 		($medium-screen-type-scale-factor-xl * $medium-screen-type-base)
+$medium-screen-type-size-l: 		($medium-screen-type-scale-factor-l * $medium-screen-type-base)
+$medium-screen-type-size-l-minus:	($medium-screen-type-scale-factor-l-minus * $medium-screen-type-base)
+$medium-screen-type-size-m-plus:	($medium-screen-type-scale-factor-m-plus * $medium-screen-type-base)
+$medium-screen-type-size-m: 		($medium-screen-type-scale-factor-m * $medium-screen-type-base)
+$medium-screen-type-size-s: 		($medium-screen-type-scale-factor-s * $medium-screen-type-base)
+$medium-screen-type-size-xs: 		($medium-screen-type-scale-factor-xs * $medium-screen-type-base)
+
+// --- LARGE SCREEN TYPE SIZES
+
+$large-screen-type-size-xxl:		($large-screen-type-scale-factor-xxl * $large-screen-type-base)
+$large-screen-type-size-xl: 		($large-screen-type-scale-factor-xl * $large-screen-type-base)
+$large-screen-type-size-l: 			($large-screen-type-scale-factor-l * $large-screen-type-base)
+$large-screen-type-size-l-minus:	($large-screen-type-scale-factor-l-minus * $large-screen-type-base)
+$large-screen-type-size-m-plus:		($large-screen-type-scale-factor-m-plus * $large-screen-type-base)
+$large-screen-type-size-m: 			($large-screen-type-scale-factor-m * $large-screen-type-base)
+$large-screen-type-size-s: 			($large-screen-type-scale-factor-s * $large-screen-type-base)
+$large-screen-type-size-xs: 		($large-screen-type-scale-factor-xs * $large-screen-type-base)
+
+// --- LINE HEIGHT FACTORS
+
+$total-line-height-factor:				1.75
+$top-padding-factor:					0
+$bottom-padding-factor:					1
+
+// --- SMALL SCREEN TOP PADDINGS
+
+$small-screen-top-padding-xxl:			$small-screen-type-scale-factor-xxl * $total-line-height-factor * $top-padding-factor
+$small-screen-top-padding-xl: 			$small-screen-type-scale-factor-xl * $total-line-height-factor * $top-padding-factor
+$small-screen-top-padding-l: 			$small-screen-type-scale-factor-l * $total-line-height-factor * $top-padding-factor
+$small-screen-top-padding-l-minus:		$small-screen-type-scale-factor-l-minus * $total-line-height-factor * $top-padding-factor
+$small-screen-top-padding-m-plus:		$small-screen-type-scale-factor-m-plus * $total-line-height-factor * $top-padding-factor
+$small-screen-top-padding-m: 			$small-screen-type-scale-factor-m * $total-line-height-factor * $top-padding-factor
+$small-screen-top-padding-s: 			$small-screen-type-scale-factor-s * $total-line-height-factor * $top-padding-factor
+$small-screen-top-padding-xs: 			$small-screen-type-scale-factor-xs * $total-line-height-factor * $top-padding-factor
+
+// --- MEDIUM SCREEN TOP PADDINGS
+
+$medium-screen-top-padding-xxl:			$medium-screen-type-scale-factor-xxl * $total-line-height-factor * $top-padding-factor
+$medium-screen-top-padding-xl: 			$medium-screen-type-scale-factor-xl * $total-line-height-factor * $top-padding-factor
+$medium-screen-top-padding-l: 			$medium-screen-type-scale-factor-l * $total-line-height-factor * $top-padding-factor
+$medium-screen-top-padding-l-minus:		$medium-screen-type-scale-factor-l-minus * $total-line-height-factor * $top-padding-factor
+$medium-screen-top-padding-m-plus:		$medium-screen-type-scale-factor-m-plus * $total-line-height-factor * $top-padding-factor
+$medium-screen-top-padding-m: 			$medium-screen-type-scale-factor-m * $total-line-height-factor * $top-padding-factor
+$medium-screen-top-padding-s: 			$medium-screen-type-scale-factor-s * $total-line-height-factor * $top-padding-factor
+$medium-screen-top-padding-xs: 			$medium-screen-type-scale-factor-xs * $total-line-height-factor * $top-padding-factor
+
+// --- LARGE SCREEN TOP PADDINGS
+
+$large-screen-top-padding-xxl:			$large-screen-type-scale-factor-xxl * $total-line-height-factor * $top-padding-factor
+$large-screen-top-padding-xl: 			$large-screen-type-scale-factor-xl * $total-line-height-factor * $top-padding-factor
+$large-screen-top-padding-l: 			$large-screen-type-scale-factor-l * $total-line-height-factor * $top-padding-factor
+$large-screen-top-padding-l-minus:		$large-screen-type-scale-factor-l-minus * $total-line-height-factor * $top-padding-factor
+$large-screen-top-padding-m-plus:		$large-screen-type-scale-factor-l-minus * $total-line-height-factor * $top-padding-factor
+$large-screen-top-padding-m: 			$large-screen-type-scale-factor-m * $total-line-height-factor * $top-padding-factor
+$large-screen-top-padding-s: 			$large-screen-type-scale-factor-s * $total-line-height-factor * $top-padding-factor
+$large-screen-top-padding-xs: 			$large-screen-type-scale-factor-xs * $total-line-height-factor * $top-padding-factor
+
+// --- SMALL SCREEN BOTTOM PADDINGS
+
+$small-screen-bottom-padding-xxl:			$small-screen-type-scale-factor-xxl * $total-line-height-factor * $bottom-padding-factor
+$small-screen-bottom-padding-xl: 			$small-screen-type-scale-factor-xl * $total-line-height-factor * $bottom-padding-factor
+$small-screen-bottom-padding-l: 			$small-screen-type-scale-factor-l * $total-line-height-factor * $bottom-padding-factor
+$small-screen-bottom-padding-l-minus:		$small-screen-type-scale-factor-l-minus * $total-line-height-factor * $bottom-padding-factor
+$small-screen-bottom-padding-m-plus:		$small-screen-type-scale-factor-m-plus * $total-line-height-factor * $bottom-padding-factor
+$small-screen-bottom-padding-m: 			$small-screen-type-scale-factor-m * $total-line-height-factor * $bottom-padding-factor
+$small-screen-bottom-padding-s: 			$small-screen-type-scale-factor-s * $total-line-height-factor * $bottom-padding-factor
+$small-screen-bottom-padding-xs: 			$small-screen-type-scale-factor-xs * $total-line-height-factor * $bottom-padding-factor
+
+// --- MEDIUM SCREEN BOTTOM PADDINGS
+
+$medium-screen-bottom-padding-xxl:			$medium-screen-type-scale-factor-xxl * $total-line-height-factor * $bottom-padding-factor
+$medium-screen-bottom-padding-xl: 			$medium-screen-type-scale-factor-xl * $total-line-height-factor * $bottom-padding-factor
+$medium-screen-bottom-padding-l: 			$medium-screen-type-scale-factor-l * $total-line-height-factor * $bottom-padding-factor
+$medium-screen-bottom-padding-l-minus:		$medium-screen-type-scale-factor-l-minus * $total-line-height-factor * $bottom-padding-factor
+$medium-screen-bottom-padding-m-plus:		$medium-screen-type-scale-factor-m-plus * $total-line-height-factor * $bottom-padding-factor
+$medium-screen-bottom-padding-m: 			$medium-screen-type-scale-factor-m * $total-line-height-factor * $bottom-padding-factor
+$medium-screen-bottom-padding-s: 			$medium-screen-type-scale-factor-s * $total-line-height-factor * $bottom-padding-factor
+$medium-screen-bottom-padding-xs: 			$medium-screen-type-scale-factor-xs * $total-line-height-factor * $bottom-padding-factor
+
+// --- LARGE SCREEN BOTTOM PADDINGS
+
+$large-screen-bottom-padding-xxl:			$large-screen-type-scale-factor-xxl * $total-line-height-factor * $bottom-padding-factor
+$large-screen-bottom-padding-xl: 			$large-screen-type-scale-factor-xl * $total-line-height-factor * $bottom-padding-factor
+$large-screen-bottom-padding-l: 			$large-screen-type-scale-factor-l * $total-line-height-factor * $bottom-padding-factor
+$large-screen-bottom-padding-l-minus:		$large-screen-type-scale-factor-l-minus * $total-line-height-factor * $bottom-padding-factor
+$large-screen-bottom-padding-m-plus:		$large-screen-type-scale-factor-l-minus * $total-line-height-factor * $bottom-padding-factor
+$large-screen-bottom-padding-m: 			$large-screen-type-scale-factor-m * $total-line-height-factor * $bottom-padding-factor
+$large-screen-bottom-padding-s: 			$large-screen-type-scale-factor-s * $total-line-height-factor * $bottom-padding-factor
+$large-screen-bottom-padding-xs: 			$large-screen-type-scale-factor-xs * $total-line-height-factor * $bottom-padding-factor
+
+// ------------------
+// BASE COLORS
+// ------------------
+
+// --- GREYS
+
+$black:						#000
+$white:						#fff
+$grey1:						#eee // lightest
+$grey2:						#e6e6e6
+$grey3:						#ddd
+$grey4:						#ccc
+$grey5:						#bbb
+$grey6:						#aaa
+$grey7:						#999
+$grey8:						#888
+$grey9:						#777
+$grey10:					#666
+$grey11:					#555
+$grey12:					#444
+$grey13:					#333
+$grey14:					#222
+$grey15:					#111 // darkest
+
+// --- BLUES
+
+$blue0:						#d0f4ff	// lightest
+$blue1:						#aae1f2
+$blue2:						#8cbdcf
+$blue3:						#649db5
+$blue4:						#417d9e
+$blue5:						#246187
+$blue6:						#0f466e
+$blue7:						#002f56
+$blue8:						#002140	// darkest
+
+// --- DARKS
+
+$dark-red:					#79232e
+$dark-pink: 				#a60063
+$dark-purple: 				#490c66
+$dark-green: 				#034436
+
+// --- MEDIUMS
+
+$yellow:		 			#fedd00
+$red:			 			#d82113
+$orange:	 				#d94001
+$pink:		 				#da1884
+$purple:	 				#8015b2
+$green:		 				#218575
+
+// --- LIGHTS
+
+$light-yellow:				#f2ea9a
+$light-orange:				#ffc999
+$light-peach:				#ffb4aa
+$light-pink:				#e5c5d3
+$light-green:				#b2ffd9
+
+// ------------------
+// CONTEXT COLORS
+// ------------------
+
+// --- BLUES
+
+$text-on-blue0:				$grey10
+$text-on-blue1:				$grey11
+$text-on-blue2:				$grey12
+$text-on-blue3:				$grey14
+$text-on-blue4:				$white
+$text-on-blue5:				$white
+$text-on-blue6:				$white
+$text-on-blue7:				$white
+$text-on-blue8:				$white
+
+// --- DARKS
+
+$text-on-dark-red:			$white
+$text-on-dark-pink:			$white
+$text-on-dark-purple:		$white
+$text-on-dark-green:		$white
+$body-text-on-grey15:		$grey4
+$header-text-on-grey15:		$white
+
+$colored-on-dark-pink:		$light-pink
+$colored-on-dark-green:		$light-green
+$colored-on-dark-purple:	$light-orange
+
+// --- MEDIUMS
+
+$text-on-yellow:			$grey11
+$text-on-red:				$white
+$text-on-orange:			$white
+$text-on-pink:				$white
+$text-on-purple:			$white
+$text-on-green:				$white
+
+// --- LIGHTS
+
+$text-on-light-yellow:		$grey10
+$text-on-light-orange:		$grey11
+$text-on-light-peach:		$grey14
+$text-on-light-pink:		$grey11
+$text-on-light-green:		$grey10
+
+$text-on-white:				$grey10
+
+$colored-on-light-yellow:	$dark-green
+$colored-on-light-orange: 	$dark-purple
+$colored-on-light-peach:	$purple
+$colored-on-light-pink:		$dark-green
+$colored-on-light-green: 	$dark-pink
+
+// --- INTERACTIVE
+
+// on white
+
+$interactive-default:		$blue5
+$interactive-active:		$blue6
+
+$interactive-light:			$blue0
+$interactive-light-active:	$blue1
+
+$text-on-interactive-default:	$white
+$text-on-interactive-active:	$white
+
+$text-on-interactive-light:			$blue6
+$text-on-interactive-light-active:	$blue7
+
+// on darks
+
+$interactive-on-dark-green:			$blue0
+$text-on-interactive-on-dark-green:	$blue5
+$interactive-active-on-dark-green:			$blue1
+$text-on-interactive-active-on-dark-green:	$blue6
+
+$interactive-on-dark-pink:			$blue0
+$text-on-interactive-on-dark-pink:	$blue5
+$interactive-active-on-dark-pink:			$blue1
+$text-on-interactive-active-on-dark-pink:	$blue6
+
+$interactive-on-dark-purple:			$blue0
+$text-on-interactive-on-dark-purple:	$blue5
+$interactive-active-on-dark-purple:			$blue1
+$text-on-interactive-active-on-dark-purple:	$blue6
+
+$interactive-on-grey15:			$blue1
+$text-on-interactive-on-grey15:	$blue5
+$interactive-active-on-grey15:			$blue2
+$text-on-interactive-active-on-grey15:	$blue6
+
+// lights
+
+$interactive-on-light-yellow:			$blue5
+$text-on-interactive-on-light-yellow:	$white
+$interactive-active-on-light-yellow:			$blue6
+$text-on-interactive-active-on-light-yellow:	$white
+
+$interactive-on-light-orange:			$blue6
+$text-on-interactive-on-light-orange:	$white
+$interactive-active-on-light-orange:			$blue7
+$text-on-interactive-active-on-light-orange:	$white
+
+$interactive-on-light-peach:			$blue7
+$text-on-interactive-on-light-peach:	$white
+$interactive-active-on-light-peach:			$blue8
+$text-on-interactive-active-on-light-peach:	$white
+
+$interactive-on-light-pink:			$blue6
+$text-on-interactive-on-light-pink:	$white
+$interactive-active-on-light-pink:			$blue7
+$text-on-interactive-active-on-light-pink:	$white
+
+$interactive-on-light-green:			$blue5
+$text-on-interactive-on-light-green:	$white
+$interactive-active-on-light-green:			$blue6
+$text-on-interactive-active-on-light-green:	$white
+
+$interactive-on-light-grey:			$blue6
+$text-on-interactive-on-light-grey:	$white
+$interactive-active-on-light-grey:			$blue7
+$text-on-interactive-active-on-light-grey:	$white
+
+// ------------------
+// ALPHA COLORS
+// ------------------
+
+$black-10-percent:							rgba($black, .1)
+$black-20-percent:							rgba($black, .2)
+$black-30-percent:							rgba($black, .3)
+$black-40-percent:							rgba($black, .4)
+$black-50-percent:							rgba($black, .5)
+$black-60-percent:							rgba($black, .6)
+$black-70-percent:							rgba($black, .7)
+$black-80-percent:							rgba($black, .8)
+$black-90-percent:							rgba($black, .9)
+
+$grey14-10-percent:							rgba($grey14, .1)
+$grey14-20-percent:							rgba($grey14, .2)
+$grey14-30-percent:							rgba($grey14, .3)
+$grey14-40-percent:							rgba($grey14, .4)
+$grey14-50-percent:							rgba($grey14, .5)
+$grey14-60-percent:							rgba($grey14, .6)
+$grey14-70-percent:							rgba($grey14, .7)
+$grey14-80-percent:							rgba($grey14, .8)
+$grey14-90-percent:							rgba($grey14, .9)
+$grey14-95-percent:							rgba($grey14, .95)
+
+$grey15-10-percent:							rgba($grey15, .1)
+$grey15-20-percent:							rgba($grey15, .2)
+$grey15-30-percent:							rgba($grey15, .3)
+$grey15-40-percent:							rgba($grey15, .4)
+$grey15-50-percent:							rgba($grey15, .5)
+$grey15-60-percent:							rgba($grey15, .6)
+$grey15-70-percent:							rgba($grey15, .7)
+$grey15-80-percent:							rgba($grey15, .8)
+$grey15-90-percent:							rgba($grey15, .9)
+$grey15-95-percent:							rgba($grey15, .95)
+
+$white-10-percent:							rgba($white, .1)
+$white-20-percent:							rgba($white, .2)
+$white-30-percent:							rgba($white, .3)
+$white-40-percent:							rgba($white, .4)
+$white-50-percent:							rgba($white, .5)
+$white-60-percent:							rgba($white, .6)
+$white-70-percent:							rgba($white, .7)
+$white-80-percent:							rgba($white, .8)
+$white-90-percent:							rgba($white, .9)
+$white-95-percent:							rgba($white, .95)
+
+$pink-10-percent:							rgba($pink, .1)
+$pink-20-percent:							rgba($pink, .2)
+$pink-30-percent:							rgba($pink, .3)
+$pink-40-percent:							rgba($pink, .4)
+$pink-50-percent:							rgba($pink, .5)
+$pink-60-percent:							rgba($pink, .6)
+$pink-70-percent:							rgba($pink, .7)
+$pink-80-percent:							rgba($pink, .8)
+$pink-90-percent:							rgba($pink, .9)
+
+$green-10-percent:							rgba($green, .1)
+$green-20-percent:							rgba($green, .2)
+$green-30-percent:							rgba($green, .3)
+$green-40-percent:							rgba($green, .4)
+$green-50-percent:							rgba($green, .5)
+$green-60-percent:							rgba($green, .6)
+$green-70-percent:							rgba($green, .7)
+$green-80-percent:							rgba($green, .8)
+$green-90-percent:							rgba($green, .9)
+
+$blue7-10-percent:							rgba($blue7, .1)
+$blue7-20-percent:							rgba($blue7, .2)
+$blue7-30-percent:							rgba($blue7, .3)
+$blue7-40-percent:							rgba($blue7, .4)
+$blue7-50-percent:							rgba($blue7, .5)
+$blue7-60-percent:							rgba($blue7, .6)
+$blue7-70-percent:							rgba($blue7, .7)
+$blue7-80-percent:							rgba($blue7, .8)
+$blue7-90-percent:							rgba($blue7, .9)
+
+$blue8-10-percent:							rgba($blue8, .1)
+$blue8-20-percent:							rgba($blue8, .2)
+$blue8-30-percent:							rgba($blue8, .3)
+$blue8-40-percent:							rgba($blue8, .4)
+$blue8-50-percent:							rgba($blue8, .5)
+$blue8-60-percent:							rgba($blue8, .6)
+$blue8-70-percent:							rgba($blue8, .7)
+$blue8-80-percent:							rgba($blue8, .8)
+$blue8-90-percent:							rgba($blue8, .9)
