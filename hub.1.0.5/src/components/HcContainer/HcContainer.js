@@ -163,5 +163,5 @@ class HcContainer extends React.Component {
 }
 
 if (EnvironmentDetector.ReturnIsHCScreen()) {
-	ReactDOM.render(<HcContainer />, document.getElementById('hub-central-mount-point'));
+	// ReactDOM.render(<HcContainer />, document.getElementById('hub-central-mount-point'));
 }

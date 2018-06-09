@@ -239,7 +239,7 @@ gulp.task('5-dev-build-push', () =>
 // when src changes, build dist file and push dist to dev
 gulp.task('5-dev-watch-build-push', () => {
 	// watch the src folder; upon changes, build dist file and push dist to dev
-	gulp.watch([`${gulpV5DevConfig.ReturnV5DevSrcFolder()}/**`], ['build-push-dev']);
+	gulp.watch([`${gulpV5DevConfig.ReturnV5DevSrcFolder()}/**`], ['5-dev-build-push']);
 });
 
 // PROD

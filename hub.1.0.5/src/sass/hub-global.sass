@@ -143,10 +143,6 @@ div.ReactModal__Content.ReactModal__Content--after-open.hc-messages-message-full
 		list-style-type: disc
 		list-style-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAATElEQVQoU2NkIAAYQfIzZ878f//+fQZFRUWG9PR0sBgMMIIkz549CxcwNjZGUcRYUVHx/927d3AFQkJCDB0dHXBTCJtA0A1E+QKfIgBQeyMJtPI08AAAAABJRU5ErkJggg==')
 
-
-
-
-
 	a,
 	a:visited
 		+link-text
@@ -257,7 +253,6 @@ div#hc-container
 						&:hover
 							color: $aqua-8
 							background-color: $aqua-2
-
 
 // ACCORDION
 
@@ -549,13 +544,85 @@ div#hc-container
 	div.hc-organization-teams-member-persona
 		margin: 0
 
+// MAINTENANCE MODE
 
+body.is-in-maintenance-mode
 
+	div#hub-central-mount-point
+		display: none
 
+	div#overlays-screen-container
+		position: fixed
+		top: 0
+		right: 0
+		bottom: 0
+		left: 0
+		width: 100%
+		text-align: center
+		z-index: $z-index-overlay-screen-container
+		background-color: $white
 
+	div.overlay-screen
+		position: fixed
+		top: 0
+		right: 0
+		bottom: 0
+		left: 0
+		width: 100%
+		text-align: center
+		z-index: $z-index-overlay-screen
 
+		&::before
+			display: inline-block !important
+			vertical-align: middle
+			content: ''
+			height: 100%
+			margin-right: -.25rem
 
+		div.screen-content
+			display: inline-block
+			min-width: 20rem
+			max-width: 40rem
+			white-space: normal
+			vertical-align: middle
 
+			p
+				font-size: 3.5rem
+				line-height: 4rem
+				color: $grey-5
+				text-rendering: optimizelegibility
+
+			a,
+			input[type='button']
+				margin: 2rem auto 0
+
+	div#overlays-screen-container
+		
+		div.overlay-screen#maintenance-mode
+			background-image: url('/sites/hubprod/Asset%20Library/sweet-kitty-action_1920.jpg')
+			background-position: right top
+			background-repeat: no-repeat
+			background-attachment: fixed
+			background-size: cover
+			text-align: left
+
+			&::before
+				margin-left: 20%
+
+			div.screen-content
+				padding: 5rem
+				background-color: $pink-10-90-percent
+
+				a
+					display: block
+					width: 30rem
+					margin-bottom: 2rem
+
+					svg
+						width: 20rem
+						
+						g.letterforms
+							fill: $white
 
 
 
