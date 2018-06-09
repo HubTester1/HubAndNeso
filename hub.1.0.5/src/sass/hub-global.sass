@@ -63,7 +63,7 @@ div.ReactModal__Content.ReactModal__Content--after-open.hc-messages-message-full
 	+font-size-5
 	+font-weight-light
 	font-family: 'Segoe UI', 'Segoe', Roboto, Helvetica Neue, Helvetica,  Arial, sans-serif
-	color: $text-on-white
+	color: $grey-15
 	background-color: $white
 	box-sizing: border-box
 
@@ -126,18 +126,26 @@ div.ReactModal__Content.ReactModal__Content--after-open.hc-messages-message-full
 
 	ul ul,
 	ol ol
-		margin: 0 0 1rem 2rem
+		margin: 0
 		padding: 0
 
 	ul li,
 	ol li
 		list-style-position: outside
 		vertical-align: text-top
-		margin-left: 1.8rem
+		margin: 0 0 .25rem 1.8rem
 
 	ul li
 		list-style-type: square
-		list-style-image: url('../../img/bullet.png')
+		list-style-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAIElEQVQoU2NkIAAY09LS/qOrmTVrFiNMbFAoIOgLQgoAA4QUCSjONAIAAAAASUVORK5CYII=')
+
+	ul ul li
+		list-style-type: disc
+		list-style-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAATElEQVQoU2NkIAAYQfIzZ878f//+fQZFRUWG9PR0sBgMMIIkz549CxcwNjZGUcRYUVHx/927d3AFQkJCDB0dHXBTCJtA0A1E+QKfIgBQeyMJtPI08AAAAABJRU5ErkJggg==')
+
+
+
+
 
 	a,
 	a:visited
@@ -205,24 +213,24 @@ div#hc-container
 
 			button.ms-CommandBarItem-link
 				margin: 0
-				color: $blue-7
-				background-color: $blue-1
+				color: $aqua-7
+				background-color: $aqua-1
 				transition-property: color, background-color
 				transition-duration: .25s
 
 				&:hover
-					color: $blue-8
-					background-color: $blue-1
+					color: $aqua-8
+					background-color: $aqua-1
 
 				i.ms-CommandBarItem-icon
 					+font-weight-semibold
-					color: $blue-7
+					color: $aqua-7
 					transition-property: color
 					transition-duration: .25s
 
 					&:hover
-						color: $blue-8
-						background-color: $blue-1
+						color: $aqua-8
+						background-color: $aqua-1
 				
 				span.ms-CommandBarItem-commandText
 					+font-weight-semibold
@@ -236,19 +244,19 @@ div#hc-container
 			div.ms-CommandBar-primaryCommands
 
 				button.ms-CommandBarItem-link
-					color: $blue-7
-					background-color: $blue-1
+					color: $aqua-7
+					background-color: $aqua-1
 
 					&:hover
-						color: $blue-8
-						background-color: $blue-2
+						color: $aqua-8
+						background-color: $aqua-2
 
 					i.ms-CommandBarItem-icon
-						color: $blue-7
+						color: $aqua-7
 
 						&:hover
-							color: $blue-8
-							background-color: $blue-2
+							color: $aqua-8
+							background-color: $aqua-2
 
 
 // ACCORDION
@@ -526,10 +534,10 @@ div#hc-container
 			li.profile
 
 				a
-					color: $blue-6 !important
+					color: $aqua-6 !important
 
 					&:hover
-						color: $blue-7 !important
+						color: $aqua-7 !important
 
 			p.ui-message
 				padding: 2rem
