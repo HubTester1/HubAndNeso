@@ -96,7 +96,7 @@
 												left: 0;
 												width: 100%;
 												text-align: center;
-												z-index: 1;
+												z-index: 10000;
 												background-color: #fff;
 											}
 										
@@ -476,6 +476,11 @@
 													</div>
 												</div>
 											</div>
+											<div id="loading-screen">
+												<p id="loading-text">Loading...</p>
+												<div id="loading-spinner"></div>
+											</div>
+
 											<div id="hub-central-mount-point"></div>
 											<div id="s4-ribbonrow">
 												<div id="globalNavBox" class="noindex">
@@ -552,10 +557,6 @@
 		
 		
 		
-												<div id="loading-screen">
-													<p id="loading-text">Loading...</p>
-													<div id="loading-spinner"></div>
-												</div>
 		
 		
 		

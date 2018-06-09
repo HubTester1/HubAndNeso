@@ -210,8 +210,9 @@
 			// if (uData.userName == 'jbaker@mos.org') {
 			if (mData.hubCentralInMaintenanceMode || mData.allComponentsInMaintenanceMode) {
 				$('body').addClass('is-in-maintenance-mode');
-				$('div#overlays-screen-container').fadeIn(750).removeClass("hidden");
-				$('div#maintenance-mode').fadeIn(750).removeClass("hidden");
+				$('div#overlays-screen-container').fadeIn(500).removeClass("hidden");
+				$('div#maintenance-mode').fadeIn(500).removeClass("hidden");
+				$("div#loading-screen").fadeOut(500).addClass("hidden");
 			} else {
 				$("img.ms-siteicon-img").attr("src", "/sites/hubprod/Asset%20Library/BrandHorizontalOpt.svg");
 				$("div.ms-breadcrumb-top").remove();
@@ -219,12 +220,8 @@
 					$("div#s4-ribbonrow").css("display", "block");
 					$("div#s4-bodyContainer ").css("padding-top", "1rem");
 				}
-				$("div#loading-screen").fadeOut(750).addClass("hidden");
-				$("div#s4-bodyContainer").fadeTo(750, 1);
-				if (uData.userName == 'jbaker@mos.org') {
-					$("div#s4-ribbonrow").css("display", "block");
-					$("div#s4-bodyContainer ").css("padding-top", "1rem");
-				}
+				$("div#loading-screen").fadeOut(500).addClass("hidden");
+				$("div#s4-bodyContainer").fadeTo(500, 1);
 			}
 		});
 	});
