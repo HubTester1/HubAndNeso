@@ -10,7 +10,7 @@
 @media screen and (min-width: $medium-screen-minimum-width)
 
 	div.hc-header-and-hero-container
-		background-image: linear-gradient(to bottom, $blue8-80-percent, $blue8-10-percent 20%, $blue8-10-percent 100%), linear-gradient(to right, transparent, $blue8-10-percent 50%, $blue8-60-percent 60%, $blue8-60-percent 90%, $blue8-20-percent 100%), linear-gradient(to bottom right, $blue8-60-percent, $green-20-percent), url('../../img/bkgrd-milky-way.jpg'), url('/sites/hubdev/DevCode5/img/bkgrd-milky-way.jpg')
+		background-image: linear-gradient(to bottom, $blue-10-80-percent, $blue-10-10-percent 20%, $blue-10-10-percent 100%), linear-gradient(to right, transparent, $blue-10-10-percent 50%, $blue-10-60-percent 60%, $blue-10-60-percent 90%, $blue-10-20-percent 100%), linear-gradient(to bottom right, $blue-10-60-percent, $green-5-20-percent), url('../../img/bkgrd-milky-way.jpg'), url('/sites/hubdev/DevCode5/img/bkgrd-milky-way.jpg')
 
 // --- MEDIUM - HEADER
 
@@ -34,7 +34,7 @@
 
 		div.sticky-inner-wrapper
 			z-index: $z-index-sticky-header
-			background-color: $grey17
+			background-color: $grey-17
 
 // --- MEDIUM - NAVIGATION
 
@@ -129,7 +129,7 @@
 						div.ms-Button-flexContainer
 
 							i.ms-Button-icon
-								color: $blue1
+								color: $blue-1
 
 // --- MEDIUM - BACKGROUND IMAGE INFO
 
@@ -142,31 +142,31 @@
 			margin-left: 0
 			margin-top: 2rem
 			border: 0
-			background-color: $blue7
-			color: $text-on-blue7
+			background-color: $blue-7
+			color: $grey-15
 			transition: background-color .25s
 
 			&:hover
-				background-color: $blue8
-				color: $text-on-blue8
+				background-color: $blue-8
+				color: $grey-16
 
 		div#hc-background-info__information
 			padding: 2rem
-			background-color: $grey18-80-percent
-			color: $body-text-on-grey15
+			background-color: $grey-18-80-percent
+			color: $grey-5
 
 			h3
 				// +font-weight-regular
 				// +font-size-4
-				color: $header-text-on-grey15
+				color: $grey-5
 
 			a#photo-source-link,
 			a#photographer-link
-				color: $interactive-on-grey15 !important
+				color: $interactive-on-grey18 !important
 				transition: color .25s
 
 				&:hover
-					color: $interactive-active-on-grey15
+					color: $interactive-active-on-grey18
 
 
 // --- MEDIUM - HERO SECTION
@@ -232,8 +232,8 @@
 @media screen and (min-width: $medium-screen-minimum-width)
 	
 	div#hc-get-it-done
-		background-image: linear-gradient(to bottom right, $green, $yellow)
-		// background-image: linear-gradient(to bottom left, $dark-pink, $dark-purple)
+		background-image: linear-gradient(to bottom right, $green-5, $yellow-3)
+		// background-image: linear-gradient(to bottom left, $pink-7, $purple-9)
 		padding: 5rem 4rem 5rem 5rem
 
 		h2
@@ -320,16 +320,16 @@
 					p.hc-messages-message-creator
 						+font-weight-regular
 						margin: 0
-						color: $grey13
+						color: $grey-13
 					
 					p.hc-messages-message-created,
 					p.hc-messages-message-tags
 						font-style: italic
-						color: $grey11
+						color: $grey-11
 
 					div.hc-messages-message-body
 						padding-bottom: 2rem
-						color: $grey16
+						color: $grey-16
 
 	// top messages
 
@@ -343,7 +343,7 @@
 				color: $white
 
 			ul#hc-messages-list
-				color: $body-text-on-grey15
+				color: $grey-5
 				padding: 0
 				margin: 0
 
@@ -355,7 +355,7 @@
 					h3.hc-messages-message-subject
 						+font-weight-regular
 						+font-size-4
-						color: $header-text-on-grey15
+						color: $grey-5
 
 					button.hc-messages-message-full-message-button
 						display: block
@@ -363,13 +363,13 @@
 						text-transform: uppercase
 						margin: 1rem 0 0 0
 						border: 0
-						background-color: $blue7
-						color: $text-on-blue7
+						background-color: $blue-7
+						color: $grey-15
 						transition: background-color .25s
 
 						&:hover
-							background-color: $blue8
-							color: $text-on-blue8
+							background-color: $blue-8
+							color: $grey-16
 						
 						i
 							+font-size-6
@@ -386,8 +386,8 @@
 	
 	div#hc-messages-all
 		padding: 5rem 4rem 5rem 5rem
-		background-image: linear-gradient(to bottom left, $dark-pink, $dark-purple)
-		// background-image: linear-gradient(to bottom right, $green, $yellow)
+		background-image: linear-gradient(to bottom left, $pink-7, $purple-9)
+		// background-image: linear-gradient(to bottom right, $green-5, $yellow-3)
 
 		h2
 			color: $white
@@ -450,11 +450,11 @@
 
 			> li.disabled a
 				color: $white !important
-				background-color: $grey12
+				background-color: $grey-12
 
 				&:hover
 					color: $white !important
-					background-color: $grey12
+					background-color: $grey-12
 
 			> li.active a
 				color: $text-on-interactive-active !important
@@ -481,7 +481,7 @@
 		label
 
 			&:after
-				color: $light-yellow
+				color: $yellow-1
 
 		label[for='hc-messages-images-file-input']
 			padding: .5rem 0
@@ -489,9 +489,9 @@
 		div.mos-file-input
 			margin-top: 1rem
 			padding: 5rem
-			color: $blue6
+			color: $blue-6
 			background-color: $white
-			border: .3rem dashed $blue3
+			border: .3rem dashed $blue-3
 
 		button
 			+button
@@ -542,7 +542,7 @@
 
 			div#hc-staff-lookup__picker-and-personas
 				padding: 2rem
-				background-color: $grey1
+				background-color: $grey-1
 		
 		// MISSION
 

@@ -39,7 +39,7 @@ div#suiteBarDelta
 	div#suiteBarTop
 
 		div#O365_NavHeader
-			background-color: $grey16
+			background-color: $grey-16
 
 			button.ms-bgc-tp
 				background-color: $interactive-default
@@ -54,7 +54,7 @@ div#suiteBarDelta
 
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active)
 	#internet-explorer-upgrade
-		color: $green
+		color: $green-5
 
 // TYPE, LISTS, & LINKS
 
@@ -73,7 +73,7 @@ div.ReactModal__Content.ReactModal__Content--after-open.hc-messages-message-full
 		+font-weight-regular
 		margin-top: $spacing-3
 		margin-bottom: $spacing-1
-		color: $grey15
+		color: $grey-15
 
 	h2
 		+font-size-2
@@ -81,7 +81,7 @@ div.ReactModal__Content.ReactModal__Content--after-open.hc-messages-message-full
 		+font-weight-light
 		margin-top: $spacing-3
 		margin-bottom: $spacing-1
-		color: $grey15
+		color: $grey-15
 
 	h3
 		+font-size-3
@@ -89,7 +89,7 @@ div.ReactModal__Content.ReactModal__Content--after-open.hc-messages-message-full
 		+font-weight-light
 		margin-top: $spacing-3
 		margin-bottom: $spacing-1
-		color: $grey15
+		color: $grey-15
 
 	h4
 		+font-size-4
@@ -97,7 +97,7 @@ div.ReactModal__Content.ReactModal__Content--after-open.hc-messages-message-full
 		+font-weight-light
 		margin-top: $spacing-3
 		margin-bottom: $spacing-1
-		color: $grey15
+		color: $grey-15
 
 	h5
 		+font-size-5
@@ -105,7 +105,7 @@ div.ReactModal__Content.ReactModal__Content--after-open.hc-messages-message-full
 		+font-weight-light
 		margin-top: $spacing-2
 		margin-bottom: $spacing-1
-		color: $grey15
+		color: $grey-15
 
 	h6
 		+font-size-5
@@ -113,7 +113,7 @@ div.ReactModal__Content.ReactModal__Content--after-open.hc-messages-message-full
 		+font-weight-light
 		margin-top: $spacing-2
 		margin-bottom: $spacing-1
-		color: $grey15
+		color: $grey-15
 
 	p
 		margin: 0 0 1rem 0
@@ -168,14 +168,14 @@ div#hc-container
 			border: 0
 
 			div.ms-PickerPersona-container
-				color: $grey15
-				background-color: $grey2
+				color: $grey-15
+				background-color: $grey-2
 
 			div.ms-PickerPersona-container.is-selected.personaContainerIsSelected
-				background-color: $grey2
+				background-color: $grey-2
 
 			div.ms-Persona-primaryText
-				color: $grey15
+				color: $grey-15
 
 			button.ms-Button.ms-PickerItem-removeButton
 				width: 2.6rem
@@ -190,7 +190,7 @@ div#hc-container
 
 		input.ms-BasePicker-input
 			border: 0
-			color: $grey15
+			color: $grey-15
 			background-color: $white
 
 // COMMAND BAR
@@ -205,24 +205,24 @@ div#hc-container
 
 			button.ms-CommandBarItem-link
 				margin: 0
-				color: $blue7
-				background-color: $blue0
+				color: $blue-7
+				background-color: $blue-1
 				transition-property: color, background-color
 				transition-duration: .25s
 
 				&:hover
-					color: $blue8
-					background-color: $blue1
+					color: $blue-8
+					background-color: $blue-1
 
 				i.ms-CommandBarItem-icon
 					+font-weight-semibold
-					color: $blue7
+					color: $blue-7
 					transition-property: color
 					transition-duration: .25s
 
 					&:hover
-						color: $blue8
-						background-color: $blue1
+						color: $blue-8
+						background-color: $blue-1
 				
 				span.ms-CommandBarItem-commandText
 					+font-weight-semibold
@@ -236,19 +236,19 @@ div#hc-container
 			div.ms-CommandBar-primaryCommands
 
 				button.ms-CommandBarItem-link
-					color: $blue7
-					background-color: $blue1
+					color: $blue-7
+					background-color: $blue-1
 
 					&:hover
-						color: $blue8
-						background-color: $blue2
+						color: $blue-8
+						background-color: $blue-2
 
 					i.ms-CommandBarItem-icon
-						color: $blue7
+						color: $blue-7
 
 						&:hover
-							color: $blue8
-							background-color: $blue2
+							color: $blue-8
+							background-color: $blue-2
 
 
 // ACCORDION
@@ -272,7 +272,7 @@ div#hc-container
 		padding: 1rem 2rem
 		width: 100%
 		text-align: left
-		border-bottom: .1rem solid $grey3
+		border-bottom: .1rem solid $grey-3
 		transition: color .25s
 
 		h1,
@@ -305,7 +305,7 @@ div#hc-container
 	.accordion__body
 		padding: 2rem
 		display: block
-		background-color: $grey1
+		background-color: $grey-1
 		animation: fadein .35s ease-in
 
 
@@ -430,7 +430,7 @@ div#hc-container
 			margin: 0
 
 	.accordion__body
-		border-left: .1rem solid $grey3
+		border-left: .1rem solid $grey-3
 
 // PERSONA CARD
 
@@ -465,13 +465,13 @@ div#hc-container
 				padding: 1.3rem 0 1.7rem
 				border-radius: 50%
 				color: $white
-				background-color: $purple
+				background-color: $purple-5
 				text-align: center
 
 			p.name
 				+font-size-2
 				padding: 2rem 2rem 1rem 0
-				color: $dark-purple
+				color: $purple-9
 
 			p.title,
 			p.department
@@ -480,7 +480,7 @@ div#hc-container
 			
 			p.department
 				+font-size-6
-				color: $dark-pink
+				color: $pink-7
 		
 		ul.persona-card-dialog-body
 			padding: 0 0 1rem 0
@@ -495,15 +495,15 @@ div#hc-container
 				margin: 0 0 1rem 0
 				padding: 2rem
 				text-align: center
-				background-color: $light-peach
-				color: $text-on-light-peach
+				background-color: $coral-3
+				color: $grey-11
 			
 			i.section-icon--phone,
 			i.section-icon--email,
 			i.section-icon--profile
 				display: block
 				margin-top: .5rem
-				color: $dark-purple					
+				color: $purple-9					
 
 			li.phone-numbers
 
@@ -526,16 +526,16 @@ div#hc-container
 			li.profile
 
 				a
-					color: $blue6 !important
+					color: $blue-6 !important
 
 					&:hover
-						color: $blue7 !important
+						color: $blue-7 !important
 
 			p.ui-message
 				padding: 2rem
 				text-align: center
-				background-color: $light-peach
-				color: $text-on-light-peach
+				background-color: $coral-3
+				color: $grey-11
 
 
 	div.hc-organization-teams-member-persona
