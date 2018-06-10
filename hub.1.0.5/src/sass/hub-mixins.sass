@@ -246,6 +246,10 @@
 	&::before
 		content: $ms-icon-code-Org
 
+=icon-document-before
+	&::before
+		content: $ms-icon-code-TextDocument
+
 =icon-link-before
 	&::before
 		content: $ms-icon-code-Link
@@ -255,6 +259,24 @@
 		content: $ms-icon-code-ContactLink
 
 
+
+// ------------------
+// LIST ITEM ICON BULLET
+// ------------------
+
+=list-item-icon-bullet
+	position: relative
+	padding: 0 0 0 2.25rem
+
+	&::before
+		+icon
+		+font-size-6
+		position: absolute
+		left: 0
+		top: .4rem
+
+
+	
 // ------------------
 // BUTTON
 // ------------------

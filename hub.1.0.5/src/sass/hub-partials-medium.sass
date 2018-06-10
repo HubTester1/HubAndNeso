@@ -169,7 +169,6 @@
 				&:hover
 					color: $interactive-active-on-grey18
 
-
 // --- MEDIUM - HERO SECTION
 
 @media screen and (min-width: $medium-screen-minimum-width)
@@ -183,6 +182,17 @@
 			width: 60%
 			padding: 0 2.5rem 5rem 5rem
 
+// --- MEDIUM - SECTION HEADER SPACING
+
+@media screen and (min-width: $medium-screen-minimum-width)
+
+	div#hc-pushed-items,
+	div#hc-get-it-done,
+	div#hc-organization,
+	div#hc-messages-all
+
+		h2
+			margin-bottom: 2rem
 
 // --- MEDIUM - PUSHED ITEMS
 
@@ -194,14 +204,30 @@
 		ul#hc-pushed-items-list
 			column-count: 5
 			column-gap: 2rem
-			margin: 2rem 0 0 0
+			margin: 0
 
 		li.hc-pushed-items-item
-			+font-weight-semi-light
+			+font-weight-semilight
 			break-inside: avoid
 			page-break-inside: avoid
 			list-style: none
 			margin: 0 0 1rem 0
+
+		li.hc-pushed-items-item.file
+			+list-item-icon-bullet
+			+icon-document-before
+			color: $grey-13
+
+			&::before
+				+font-size-7
+
+		li.hc-pushed-items-item.page
+			+list-item-icon-bullet
+			+icon-link-before
+			color: $grey-13
+
+			&::before
+				+font-size-6
 
 // --- MEDIUM - STAFF LOOKUP
 
@@ -262,7 +288,6 @@
 
 			&:hover
 				color: $interactive-active-darkened-1
-
 
 // --- MEDIUM - MESSAGES
 
@@ -398,17 +423,27 @@
 			column-gap: 0
 
 			li.hc-messages-message-preview
+				+round-corners
+				+small-shadow-bottom-right-light-color
 				list-style: none
 				break-inside: avoid
 				page-break-inside: avoid
 				padding: 2rem
-				background-color: $white-80-percent
+				background-color: $white-90-percent
 				margin: 0 1rem 1rem 0
+				border-top: 5px solid $white-10-percent
+				border-bottom: 5px solid $white-10-percent
+				transition: border-color .5s, background-color .5s
 
 				h3.hc-messages-message-subject
 					+font-weight-regular
 					+font-size-4
-				
+
+				&:hover
+					+small-shadow-bottom-right-medium-color
+					border-color: $pink-2
+					background-color: $white
+
 				div.hc-messages-message-preview-truncated-body
 					+font-weight-semilight
 
@@ -498,7 +533,6 @@
 			+button-colored
 			margin-top: 2rem !important
 
-
 // --- MEDIUM - CALENDARDS & SCHEDULES
 
 @media screen and (min-width: $medium-screen-minimum-width)
@@ -513,7 +547,6 @@
 			li
 				break-inside: avoid
 				page-break-inside: avoid
-	
 	
 // --- MEDIUM - HC ORG
 
@@ -554,7 +587,6 @@
 			ul
 				break-inside: avoid
 				page-break-inside: avoid
-
 
 // --- MEDIUM - FOOTER
 
