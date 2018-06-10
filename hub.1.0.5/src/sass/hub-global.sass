@@ -572,17 +572,8 @@ body.is-in-maintenance-mode
 		text-align: center
 		z-index: $z-index-overlay-screen
 
-		&::before
-			display: inline-block !important
-			vertical-align: middle
-			content: ''
-			height: 100%
-			margin-right: -.25rem
-
 		div.screen-content
 			display: inline-block
-			min-width: 20rem
-			max-width: 40rem
 			white-space: normal
 			vertical-align: middle
 
@@ -599,19 +590,9 @@ body.is-in-maintenance-mode
 	div#overlays-screen-container
 		
 		div.overlay-screen#maintenance-mode
-			background-image: url('/sites/hubprod/Asset%20Library/sweet-kitty-action_1920.jpg')
-			background-position: right top
-			background-repeat: no-repeat
-			background-attachment: fixed
-			background-size: cover
-			text-align: left
-
-			&::before
-				margin-left: 20%
 
 			div.screen-content
 				padding: 5rem
-				background-color: $pink-10-90-percent
 
 				a
 					display: block

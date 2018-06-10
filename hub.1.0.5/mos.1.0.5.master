@@ -469,8 +469,11 @@
 																	</g>
 																</svg>
 															</a>
-															<p>
+															<p class="medium-screen">
 																This area is down for maintenance, but please enjoy this gratuitous pic of some sweet kitty action.
+															</p>
+															<p class="small-screen">
+																This area is down for maintenance.
 															</p>
 														</div>
 													</div>
