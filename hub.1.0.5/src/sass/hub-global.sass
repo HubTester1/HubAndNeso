@@ -208,30 +208,49 @@ div#hc-container
 		div.ms-CommandBar-primaryCommands
 			margin: 0
 
+			div.ms-CommandBarItem:hover
+				height: 5rem
+				background-color: transparent
+
 			button.ms-CommandBarItem-link
+				height: 4rem
 				margin: 0
-				color: $aqua-7
-				background-color: $aqua-1
+				color: $interactive-default-darkened-1
+				background-color: $interactive-light
 				transition-property: color, background-color
 				transition-duration: .25s
 
 				&:hover
-					color: $aqua-8
-					background-color: $aqua-1
+					+small-shadow-bottom-right-light-color
+					color: $interactive-active-darkened-1
+					background-color: $interactive-light-active
+					z-index: $z-index-command-bar-button-active
+
+					i.ms-CommandBarItem-icon
+						color: $interactive-active-darkened-1
 
 				i.ms-CommandBarItem-icon
 					+font-weight-semibold
-					color: $aqua-7
+					color: $interactive-default-darkened-1
 					transition-property: color
 					transition-duration: .25s
-
-					&:hover
-						color: $aqua-8
-						background-color: $aqua-1
 				
 				span.ms-CommandBarItem-commandText
 					+font-weight-semibold
+			
+			div.ms-CommandBarItem:first-child
 
+				button.ms-CommandBarItem-link
+					+round-corners-left
+			
+			div.ms-CommandBarItem:last-child
+
+				button.ms-CommandBarItem-link
+					+round-corners-right
+
+					&:hover
+						+small-shadow-bottom-left-light-color
+			
 div#hc-container
 	
 	.accordion__body

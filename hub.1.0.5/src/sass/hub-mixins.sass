@@ -134,8 +134,16 @@
 // BORDER RADIUS
 // ------------------
 
-=border-radius
+=round-corners
 	border-radius: .2rem
+
+=round-corners-left
+	border-top-left-radius: .2rem
+	border-bottom-left-radius: .2rem
+
+=round-corners-right
+	border-top-right-radius: .2rem
+	border-bottom-right-radius: .2rem
 
 
 
@@ -143,11 +151,23 @@
 // BOX SHADOW
 // ------------------
 
-=box-shadow-light
-	box-shadow: 0 .5rem 1rem 0 $black-20-percent
+=small-shadow-bottom-right-light-color
+	box-shadow: .5rem .5rem 1rem 0 $black-20-percent
 
-=box-shadow-medium
-	box-shadow: 0 1rem 1.5rem 0 $black-20-percent
+=small-shadow-bottom-right-medium-color
+	box-shadow: .5rem .5rem 1rem 0 $black-40-percent
+
+=small-shadow-bottom-right-dark-color
+	box-shadow: .5rem .5rem 1rem 0 $black-60-percent
+
+=small-shadow-bottom-left-light-color
+	box-shadow: -.5rem .5rem 1rem 0 $black-20-percent
+
+=small-shadow-bottom-left-medium-color
+	box-shadow: -.5rem .5rem 1rem 0 $black-40-percent
+
+=small-shadow-bottom-left-dark-color
+	box-shadow: -.5rem .5rem 1rem 0 $black-60-percent
 
 
 

@@ -189,16 +189,19 @@
 @media screen and (min-width: $medium-screen-minimum-width)
 	
 	div#hc-pushed-items
-		padding: 5rem
+		padding: 5rem 5rem 4rem 5rem
 
 		ul#hc-pushed-items-list
-			column-count: 4
+			column-count: 5
 			column-gap: 2rem
+			margin: 2rem 0 0 0
 
 		li.hc-pushed-items-item
+			+font-weight-semi-light
 			break-inside: avoid
 			page-break-inside: avoid
-
+			list-style: none
+			margin: 0 0 1rem 0
 
 // --- MEDIUM - STAFF LOOKUP
 
@@ -207,27 +210,6 @@
 	div#hc-staff-lookup
 		flex: 1 0 auto
 		
-
-// --- MEDIUM - PUSHED ITEMS
-
-@media screen and (min-width: $medium-screen-minimum-width)
-
-	div#hero-container
-		
-		div#hc-pushed-items
-			padding: 2rem
-			margin: 2rem 0
-			background-color: $white-80-percent
-
-			ul#hc-pushed-items-list
-				column-count: 3
-				column-gap: 2rem
-
-				li.hc-pushed-items-item
-					break-inside: avoid
-					page-break-inside: avoid
-					
-
 // --- MEDIUM - GET IT DONE
 
 @media screen and (min-width: $medium-screen-minimum-width)
@@ -251,8 +233,8 @@
 
 		div#hc-get-it-done-view-by-group div.hc-get-it-done-group,
 		div#hc-get-it-done-view-by-alpha > ul > li.hc-get-it-done-item
-			+border-radius
-			+box-shadow-light
+			+round-corners
+			+small-shadow-bottom-right-light-color
 			break-inside: avoid
 			page-break-inside: avoid
 			padding: 3rem
@@ -263,12 +245,18 @@
 			transition: border-color .5s, background-color .5s
 
 			&:hover
-				+box-shadow-medium
+				+small-shadow-bottom-right-medium-color
 				border-color: $green-2
 				background-color: $white
-				
+		
+		div#hc-get-it-done-view-by-group
+			
+			li.hc-get-it-done-item
+				list-style: none
+				margin: 1rem 0 3rem 0
 
 		a.hc-get-it-done-item-link
+			+font-weight-regular
 			color: $interactive-default-darkened-1 !important
 			transition: color .25s
 
