@@ -155,6 +155,24 @@ export default class HcPushedItemsData {
 						key: 'HJuOtih_hf',
 					},
 					{
+						url: 'https://bmos.sharepoint.com/sites/mwec/SitePages/Museum-wide%20Event%20Calendar.aspx',
+						anchorText: 'Museumwide Event Calendar',
+						type: 'page',
+						key: 'HJuOtih_hf1',
+					},
+					{
+						url: 'https://bmos.sharepoint.com/sites/pt/SitePages/Product%20Timeline.aspx',
+						anchorText: 'Product Timeline',
+						type: 'page',
+						key: 'HJuOtih_hf2',
+					},
+					{
+						url: 'https://bmos.sharepoint.com/sites/wpc-cafe/SitePages/Riverview%20Caf%C3%A9.aspx',
+						anchorText: 'Riverview Café',
+						type: 'page',
+						key: 'HJuOtih_hf3',
+					},
+					{
 						url: 'https://bmos.sharepoint.com/_layouts/15/Doc.aspx?sourcedoc={d6a0d37f-74aa-4559-9d4b-0dd4132dc44a}&action=interactivepreview',
 						anchorText: 'Schedule an Appointment with the Info Desk',
 						type: 'file',

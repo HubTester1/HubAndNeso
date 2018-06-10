@@ -17,7 +17,6 @@ import HcGetItDone from '../../components/HcGetItDone/HcGetItDone';
 import HcPushedItems from '../../components/HcPushedItems/HcPushedItems';
 import HcMessages from '../../components/HcMessages/HcMessages';
 import HcOrganization from '../../components/HcOrganization/HcOrganization';
-import HcCalendarsSchedules from '../../components/HcCalendarsSchedules/HcCalendarsSchedules';
 
 // eslint-disable-next-line
 import { initializeIcons } from '@uifabric/icons';
@@ -128,9 +127,6 @@ class HcContainer extends React.Component {
 								allOrTop="all"
 								screenType="small"
 							/>
-							<HcCalendarsSchedules
-								screenType="small"
-							/>
 						</Accordion>
 					</MediaQuery>
 					<MediaQuery minWidth={ScreenSizes.ReturnMediumMin()}>
@@ -146,9 +142,6 @@ class HcContainer extends React.Component {
 						<HcMessages
 							uData={this.state.uData}
 							allOrTop="all"
-							screenType="medium"
-						/>
-						<HcCalendarsSchedules
 							screenType="medium"
 						/>
 					</MediaQuery>
