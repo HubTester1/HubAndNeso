@@ -122,7 +122,7 @@
 =link-text
 	text-decoration: none
 	color: $interactive-default !important
-	transition: color 250ms
+	transition: color .25s
 
 =link-text-active
 	text-decoration: none
@@ -135,7 +135,7 @@
 // ------------------
 
 =border-radius
-	border-radius: 2rem
+	border-radius: .2rem
 
 
 
@@ -145,6 +145,9 @@
 
 =box-shadow-light
 	box-shadow: 0 .5rem 1rem 0 $black-20-percent
+
+=box-shadow-medium
+	box-shadow: 0 1rem 1.5rem 0 $black-20-percent
 
 
 
@@ -156,6 +159,13 @@
 	position: relative
 	top: 50%
 	transform: translateY(-50%)
+
+=scale-1-1
+	transition-property: transform
+	transition-duration: .2s
+	transform: scale(1.1)
+
+
 
 
 // ------------------

@@ -233,7 +233,7 @@
 @media screen and (min-width: $medium-screen-minimum-width)
 	
 	div#hc-get-it-done
-		background-image: linear-gradient(to bottom right, $bold-green, $primary-yellow)
+		background-image: linear-gradient(to bottom right, $green-7, $primary-yellow)
 		// background-image: linear-gradient(to bottom left, $pink-7, $purple-9)
 		padding: 5rem 4rem 5rem 5rem
 
@@ -242,7 +242,6 @@
 
 		div#hc-get-it-done-view-by-group,
 		div#hc-get-it-done-view-by-alpha > ul
-			+border-radius
 			padding-top: 1rem
 			column-count: 4
 			column-gap: 0
@@ -252,18 +251,29 @@
 
 		div#hc-get-it-done-view-by-group div.hc-get-it-done-group,
 		div#hc-get-it-done-view-by-alpha > ul > li.hc-get-it-done-item
+			+border-radius
+			+box-shadow-light
 			break-inside: avoid
 			page-break-inside: avoid
-			padding: 2rem
+			padding: 3rem
 			background-color: $white-90-percent
 			margin: 0 1rem 1rem 0
+			border-top: 5px solid $white-10-percent
+			border-bottom: 5px solid $white-10-percent
+			transition: border-color .5s, background-color .5s
+
+			&:hover
+				+box-shadow-medium
+				border-color: $green-2
+				background-color: $white
+				
 
 		a.hc-get-it-done-item-link
-			color: $interactive-on-light-grey !important
+			color: $interactive-default-darkened-1 !important
 			transition: color .25s
 
 			&:hover
-				color: $interactive-active-on-light-grey
+				color: $interactive-active-darkened-1
 
 
 // --- MEDIUM - MESSAGES
