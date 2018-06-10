@@ -309,11 +309,12 @@
 
 				// message
 				div.ReactModal__Content.ReactModal__Content--after-open.hc-messages-message-full-message-modal
+					+small-shadow-bottom-left-light-color
 					position: absolute
 					top: 0
 					right: 0
 					bottom: 0
-					left: 10rem
+					left: 30rem
 					padding: 5rem
 					border: 0
 					overflow: auto
@@ -321,14 +322,29 @@
 					outline: none
 					background-color: $white
 
+					div.hc-messages-message
+						padding-bottom: 5rem
+
 					button.hc-messages-message-control
 						+button
-						+button-colored
-						margin: 0 0 1rem 0 !important
+						+button-white
+						+button-white-outlined
+						margin: 0 !important
 						
 						i
-							+font-size-6
+							+font-size-8
 							margin-right: 1rem
+
+					h3.hc-messages-message-subject,
+					div.hc-messages-message-image-container,
+					p.hc-messages-message-creator,
+					p.hc-messages-message-created,
+					div.hc-messages-message-body,
+					p.hc-messages-message-tags
+						max-width: 60rem
+
+					h3.hc-messages-message-subject
+						margin-top: 3rem
 
 					div.hc-messages-message-image-container
 
@@ -356,6 +372,9 @@
 						padding-bottom: 2rem
 						color: $grey-16
 
+					p.hc-messages-message-tags
+						margin-bottom: 2rem
+
 	// top messages
 
 	div#staff-lookup-and-background-info-and-top-messages
@@ -368,51 +387,68 @@
 				color: $white
 
 			ul#hc-messages-list
-				color: $grey-5
+				color: $white
 				padding: 0
 				margin: 0
 
 				li.hc-messages-message-preview
+					+round-corners
+					+small-shadow-bottom-right-light-color
 					display: block
-					margin: 0
-					padding-bottom: 2rem
+					margin: 0 1rem 1rem 0
+					padding: 2rem
+					background-color: $white-5-percent
+					border-top: 5px solid $pink-10
+					border-bottom: 5px solid $pink-10
+					transition: border-color .5s, background-color .5s
+
+					&:hover
+						+small-shadow-bottom-right-medium-color
+						padding: 2rem
+						border-color: $pink-7
+						background-color: $white-10-percent
+
+						button.hc-messages-message-full-message-button
+							+button-icon-after
+							+icon-fullscreen-after
+							padding-left: 2rem
+							color: $white
+							background-color: $interactive-default
+
+							&:hover
+								background-color: $interactive-active
 
 					h3.hc-messages-message-subject
-						+font-weight-regular
-						+font-size-4
-						color: $grey-5
+						color: white
 
 					button.hc-messages-message-full-message-button
-						display: block
+						+button
 						+font-size-6
-						text-transform: uppercase
-						margin: 1rem 0 0 0
+						+font-weight-regular
+						display: block
+						padding-left: 0
+						margin: 1rem 0 0 0 !important
 						border: 0
-						background-color: $aqua-7
-						color: $grey-15
-						transition: background-color .25s
+						background-color: transparent
+						color: $aqua-3
+						transition: color .25s, background-color .25s, padding .25s
 
-						&:hover
-							background-color: $aqua-8
-							color: $grey-16
-						
-						i
-							+font-size-6
-				
+						&:after
+							+font-size-7
+							
 				li.hc-messages-message-preview:nth-child(3),
 				li.hc-messages-message-preview:nth-child(4)
 					display: none
 
 				li.hc-messages-message-preview:nth-child(2),
 				li.hc-messages-message-preview:nth-child(4)
-					padding-bottom: 0
+					margin-bottom: 0
 
 	// all messages
 	
 	div#hc-messages-all
 		padding: 5rem 4rem 5rem 5rem
 		background-image: linear-gradient(to bottom left, $pink-7, $purple-9)
-		// background-image: linear-gradient(to bottom right, $green-5, $yellow-3)
 
 		h2
 			color: $white
@@ -435,33 +471,40 @@
 				border-bottom: 5px solid $white-10-percent
 				transition: border-color .5s, background-color .5s
 
-				h3.hc-messages-message-subject
-					+font-weight-regular
-					+font-size-4
-
 				&:hover
 					+small-shadow-bottom-right-medium-color
 					border-color: $pink-2
 					background-color: $white
 
+					button.hc-messages-message-full-message-button
+						+button-icon-after
+						+icon-fullscreen-after
+						padding-left: 2rem
+						color: $white
+						background-color: $interactive-default
+
+						&:hover
+							background-color: $interactive-active
+
+
 				div.hc-messages-message-preview-truncated-body
 					+font-weight-semilight
 
 				button.hc-messages-message-full-message-button
-					display: block
+					+button
 					+font-size-6
-					text-transform: uppercase
-					margin: 1rem 0 0 0
+					+font-weight-regular
+					display: block
+					padding-left: 0
+					margin: 1rem 0 0 0 !important
 					border: 0
-					background-color: $white
+					background-color: transparent
 					color: $interactive-default
-					transition: color .25s
+					transition: color .25s, background-color .25s, padding .25s
 
-					&:hover
-						color: $interactive-active
+					&:after
+						+font-size-7
 					
-					i
-						+font-size-6
 
 		ul.pagination
 			display: block
@@ -486,6 +529,7 @@
 			> li.disabled a
 				color: $white !important
 				background-color: $grey-12
+				cursor: default
 
 				&:hover
 					color: $white !important

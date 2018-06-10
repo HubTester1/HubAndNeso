@@ -46,7 +46,6 @@ export default class HcOrganizationTeamsDivision extends React.Component {
 								target="_blank"
 								className="hc-organization-teams-division-org-chart-link org-chart-link"
 							>
-								<i className="ms-Icon ms-Icon--Mail" aria-hidden="true" />
 								Organization Chart
 							</a>
 						</p>

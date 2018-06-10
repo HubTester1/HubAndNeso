@@ -258,6 +258,11 @@
 	&::before
 		content: $ms-icon-code-ContactLink
 
+=icon-fullscreen-after
+	&::after
+		content: $ms-icon-code-FullScreen
+
+
 
 
 // ------------------
@@ -282,6 +287,7 @@
 // ------------------
 
 =button
+	+round-corners
 	display: inline-block
 	float: none !important
 	box-sizing: border-box
@@ -296,6 +302,9 @@
 	border: 0
 	transition: background-color .25s
 	cursor: pointer
+
+	&:hover
+		+small-shadow-bottom-right-light-color
 
 =button-active
 	text-decoration: none
