@@ -283,18 +283,34 @@
 	div#hc-container
 		
 		div.hc-sections-container.accordion
-			padding: 4rem 2rem 0
-			background-color: $grey-13
+			padding: 4rem 2rem
+			background-image: linear-gradient(to bottom left, $pink-7, $purple-9)
 
 			div.hc-pushed-items.accordion__item,
 			div.hc-get-it-done.accordion__item,
 			div.hc-organization.accordion__item,
 			div.hc-messages-all.accordion__item
 				+round-corners
+				+small-shadow-bottom-right-light-color
 				margin-bottom: 4rem
-				background-color: $grey-3
+				background-color: $grey-1
+				
+				&:hover
+					+small-shadow-bottom-right-medium-color
 
-				> div.accordion__title
+				> .accordion__title
+					padding-top: 4rem
+					padding-bottom: 4rem
+					border-bottom: 0
+					background-color: $interactive-default
+
+					h2
+						color: $white
+
+				> .accordion__title[aria-expanded='false']
+					+round-corners
+
+				> .accordion__title[aria-expanded='true']
 					+round-corners-top
 
 				> div.accordion__body

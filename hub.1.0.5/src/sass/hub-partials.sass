@@ -66,6 +66,31 @@ div#hc-staff-lookup
 
 	h3.persona-cards__header
 		+block-hidden
+
+// --- ALL - PUSHED ITEMS
+
+div#hc-pushed-items
+
+	li.hc-pushed-items-item
+		list-style: none
+		margin: 0 0 1rem 0
+
+	li.hc-pushed-items-item.file
+		+list-item-icon-bullet
+		+icon-document-before
+		color: $grey-13
+
+		&::before
+			+font-size-7
+
+	li.hc-pushed-items-item.page
+		+list-item-icon-bullet
+		+icon-link-before
+		color: $grey-13
+
+		&::before
+			+font-size-6
+
 	
 // --- ALL - HC ORG
 
@@ -103,7 +128,6 @@ div#hc-container
 
 			&:hover
 				+small-shadow-bottom-right-very-light-color
-
 
 // --- ALL - FOOTER
 
