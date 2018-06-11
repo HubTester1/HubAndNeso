@@ -140,26 +140,25 @@
 		flex-shrink: 0
 
 		button.hc-background-info__button
-			margin-left: 0
+			+button
+			+button-colored
 			margin-top: 2rem
-			border: 0
-			background-color: $aqua-10
-			color: $white
-			transition: background-color .25s
+			background-color: $aqua-9 !important
 
 			&:hover
-				background-color: $aqua-8
-				color: $grey-16
+				background-color: $aqua-10 !important
 
 		div#hc-background-info__information
+			+round-corners
+			+small-shadow-bottom-right-light-color
 			padding: 2rem
-			background-color: $grey-18-80-percent
-			color: $grey-5
+			background-color: $pink-10-30-percent
+			color: $white
 
 			h3
 				// +font-weight-regular
 				// +font-size-4
-				color: $grey-5
+				color: $white
 
 			a#photo-source-link,
 			a#photographer-link
@@ -464,7 +463,7 @@
 				break-inside: avoid
 				page-break-inside: avoid
 				padding: 2rem
-				background-color: $white-90-percent
+				background-color: $white-95-percent
 				margin: 0 1rem 1rem 0
 				border-top: 5px solid $white-10-percent
 				border-bottom: 5px solid $white-10-percent

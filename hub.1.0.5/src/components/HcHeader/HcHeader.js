@@ -29,8 +29,6 @@ export default class HcHeader extends React.Component {
 		this.handleGetItDoneNavItemClick = this.handleGetItDoneNavItemClick.bind(this);
 		this.handleMessagesNavItemClick = this.handleMessagesNavItemClick.bind(this);
 		this.handleOrganizationNavItemClick = this.handleOrganizationNavItemClick.bind(this);
-		this.handleCalendarsSchedulesNavItemClick = 
-			this.handleCalendarsSchedulesNavItemClick.bind(this);
 	}
 	handlePushedItemsNavItemClick() {
 		if (this.props.screenType === 'small') {
@@ -71,17 +69,6 @@ export default class HcHeader extends React.Component {
 		}
 		scroller.scrollTo('hc-organization', {
 			duration: 1250,
-			offset: -70,
-			delay: 0,
-			smooth: 'easeInOutQuart',
-		});
-	}
-	handleCalendarsSchedulesNavItemClick() {
-		if (this.props.screenType === 'small') {
-			this.props.handleHamburgerOrNavItemClick();
-		}
-		scroller.scrollTo('hc-calendars-and-schedules', {
-			duration: 1500,
 			offset: -70,
 			delay: 0,
 			smooth: 'easeInOutQuart',
@@ -170,7 +157,6 @@ export default class HcHeader extends React.Component {
 									{this.returnGetItDoneNavItem()}
 									{this.returnOrganizationNavItem()}
 									{this.returnMessagesNavItem()}
-									{this.returnCalendarsSchedulesNavItem()}
 								</ul>
 							</nav>
 						</div>
@@ -187,7 +173,6 @@ export default class HcHeader extends React.Component {
 								{this.returnGetItDoneNavItem()}
 								{this.returnOrganizationNavItem()}
 								{this.returnMessagesNavItem()}
-								{this.returnCalendarsSchedulesNavItem()}
 							</ul>
 						</nav>
 					}
@@ -203,7 +188,6 @@ export default class HcHeader extends React.Component {
 								{this.returnGetItDoneNavItem()}
 								{this.returnOrganizationNavItem()}
 								{this.returnMessagesNavItem()}
-								{this.returnCalendarsSchedulesNavItem()}
 							</ul>
 						</nav>
 					}
