@@ -270,6 +270,11 @@
 
 	div#hero-container
 		padding: 6rem 2rem 4rem 2rem
+
+		div#staff-lookup-and-background-info
+
+			h2
+				margin-bottom: 1rem
 			
 // --- SMALL - HC SECTIONS / ACCORDION
 
@@ -278,25 +283,28 @@
 	div#hc-container
 		
 		div.hc-sections-container.accordion
+			padding: 4rem 2rem 0
+			background-color: $grey-13
 
-			div.hc-pushed-items__title.accordion__title,
-			div.hc-get-it-done__title.accordion__title,
-			div.hc-organization__title.accordion__title,
-			div.hc-messages-all__title.accordion__title,
-			div.hc-calendars-and-schedules__title.accordion__title
-				padding: 3rem 2rem
-				background-color: $aqua-7
+			div.hc-pushed-items.accordion__item,
+			div.hc-get-it-done.accordion__item,
+			div.hc-organization.accordion__item,
+			div.hc-messages-all.accordion__item
+				+round-corners
+				margin-bottom: 4rem
+				background-color: $grey-3
 
-				&:hover
-					background-color: $aqua-8
+				> div.accordion__title
+					+round-corners-top
 
-				h2
-					
-					div.accordion__title__text
-						color: $white
-					
-					div.accordion__arrow
-						color: $white
+				> div.accordion__body
+					border-left: 0
+
+
+			// div.hc-pushed-items__title.accordion__title,
+			// div.hc-get-it-done__title.accordion__title,
+			// div.hc-organization__title.accordion__title,
+			// div.hc-messages-all__title.accordion__title
 
 // --- SMALL - MESSAGES
 
