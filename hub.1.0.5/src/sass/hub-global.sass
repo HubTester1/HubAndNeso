@@ -8,7 +8,7 @@
 
 // ----- DECLARATIONS
 
-// HTML & BODY
+// CONTAINERS
 
 html
 	font-size: 10px
@@ -26,6 +26,17 @@ body
 
 form#aspnetForm
 	margin: 0
+
+div#hc-container,
+div#s4-workspace,
+div.ReactModal__Content.ReactModal__Content--after-open.hc-messages-message-full-message-modal,
+div#internet-explorer-upgrade
+	+font-size-5
+	+font-weight-light
+	font-family: 'Segoe UI', 'Segoe', Roboto, Helvetica Neue, Helvetica,  Arial, sans-serif
+	color: $grey-15
+	background-color: $white
+	box-sizing: border-box
 
 // OFFICE 365 SUITE BAR
 
@@ -49,24 +60,19 @@ div#suiteBarDelta
 				background-color: $interactive-active
 
 // INTERNET EXPLORER
-#internet-explorer-upgrade
+form#aspnetForm div#internet-explorer-upgrade
 	display: none
 
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active)
-	#internet-explorer-upgrade
-		color: $green-5
+	form#aspnetForm div#internet-explorer-upgrade
+		display: block
 
 // TYPE, LISTS, & LINKS
 
 div#hc-container,
 div#s4-workspace,
-div.ReactModal__Content.ReactModal__Content--after-open.hc-messages-message-full-message-modal
-	+font-size-5
-	+font-weight-light
-	font-family: 'Segoe UI', 'Segoe', Roboto, Helvetica Neue, Helvetica,  Arial, sans-serif
-	color: $grey-15
-	background-color: $white
-	box-sizing: border-box
+div.ReactModal__Content.ReactModal__Content--after-open.hc-messages-message-full-message-modal,
+div#internet-explorer-upgrade
 
 	h1
 		+font-size-2
@@ -181,7 +187,6 @@ div.ms-TextField-fieldGroup
 	+round-corners
 	border: 0
 
-
 // DATE PICKER
 
 div.ms-DatePicker-callout
@@ -254,13 +259,12 @@ div.ms-DatePicker-callout
 			color: $interactive-active
 			background-color: $interactive-light
 
-
-
 // PEOPLE PICKER
 
 div#hc-container
 
 	div.ms-BasePicker.ms-PeoplePicker
+		+round-corners
 		box-sizing: border-box
 		border: 0
 		background-color: $white
@@ -290,6 +294,7 @@ div#hc-container
 					background-color: $interactive-active
 
 		input.ms-BasePicker-input
+			+round-corners
 			border: 0
 			color: $grey-15
 			background-color: $white
@@ -721,7 +726,23 @@ body.is-in-maintenance-mode
 						g.letterforms
 							fill: $white
 
+// BANNERS
 
+form#aspnetForm
+	
+	div.banner
+		padding: 2rem 5rem
+		text-align: center
+
+		p.banner__text
+			+p-icon-before
+			+icon-error-before
+			max-width: 60rem
+			margin: 0 auto
+
+	div.banner--critical
+		color: $pink-8
+		background-color: $pink-1
 
 
 

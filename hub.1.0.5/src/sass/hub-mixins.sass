@@ -248,6 +248,14 @@
 	&::before
 		content: $ms-icon-code-Org
 
+=icon-error-before
+	&::before
+		content: $ms-icon-code-Error
+
+=icon-warning-before
+	&::before
+		content: $ms-icon-code-Warning
+
 =icon-document-before
 	&::before
 		content: $ms-icon-code-TextDocument
@@ -265,8 +273,6 @@
 		content: $ms-icon-code-FullScreen
 
 
-
-
 // ------------------
 // LIST ITEM ICON BULLET
 // ------------------
@@ -280,8 +286,15 @@
 		+font-size-6
 		position: absolute
 		left: 0
-		top: .4rem
+		top: .7rem
 
+
+// ------------------
+// PARA ICON BULLET
+// ------------------
+
+=p-icon-before
+	+list-item-icon-bullet
 
 	
 // ------------------

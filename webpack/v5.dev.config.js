@@ -6,7 +6,7 @@ const merge = require('webpack-merge');
 // eslint-disable-next-line
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 // eslint-disable-next-line
-// const HtmlWebpack = require('html-webpack-plugin');
+const HtmlWebpack = require('html-webpack-plugin');
 const baseConfig = require('./base.config.js');
 const path = require('path');
 
@@ -76,10 +76,10 @@ module.exports = merge(baseConfig, {
 	},
 	plugins: [
 		CSSExtract,
-		// new HtmlWebpack({
-		// 	template: path.join(__dirname, '../hub.1.0.5/src', 'index.html'),
-		// 	hash: true,
-		// }),
+		new HtmlWebpack({
+			template: path.join(__dirname, '../hub.1.0.5/src', 'index.html'),
+			hash: true,
+		}),
 		new webpack.HotModuleReplacementPlugin(),
 	],
 	devtool: 'inline-source-map',

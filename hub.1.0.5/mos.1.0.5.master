@@ -483,7 +483,10 @@
 												<p id="loading-text">Loading...</p>
 												<div id="loading-spinner"></div>
 											</div>
-
+		<div id="internet-explorer-upgrade" class="banner banner--critical">
+			<p class="banner__text">Internet Explorer was replaced in 2015. Please upgrade from Internet Explorer to Edge, or switch to Chrome or Firefox. If
+				you need assistance doing so, please contact IIT.
+		</div>
 											<div id="hub-central-mount-point"></div>
 											<div id="s4-ribbonrow">
 												<div id="globalNavBox" class="noindex">
@@ -554,24 +557,6 @@
 												</div>
 											</div>
 											<div id="s4-workspace" class="ms-core-overlay">
-		
-		
-		
-		
-		
-		
-		
-		
-		
-												<p id="internet-explorer-upgrade">
-													Internet Explorer was replaced in 2015. Please upgrade from 
-													Internet Explorer to Edge, or switch to Chrome or Firefox.
-												</p>
-		
-		
-		
-		
-		
 												<div id="s4-bodyContainer">
 													<div id="s4-titlerow" class="ms-dialogHidden s4-titlerowhidetitle">
 														<div id="titleAreaBox" class="ms-noList ms-table ms-core-tableNoSpace">
