@@ -160,6 +160,102 @@ div.ReactModal__Content.ReactModal__Content--after-open.hc-messages-message-full
   font-weight: 400
   font-style: normal
 
+// STANDARD FORM ELEMENTS
+
+// select / dropdown
+
+div.ms-Dropdown
+
+	span.ms-Dropdown-title
+		+round-corners
+		border: 0
+		// +standard-form-control-border
+
+div.ms-Dropdown-callout
+	+round-corners
+	+small-shadow-bottom-right-medium-color
+
+// text
+
+div.ms-TextField-fieldGroup
+	+round-corners
+	border: 0
+
+
+// DATE PICKER
+
+div.ms-DatePicker-callout
+	+round-corners
+	+small-shadow-bottom-right-medium-color
+
+	div.ms-Callout-main
+		+round-corners
+
+	div.ms-DatePicker-frame
+
+		div.ms-DatePicker-wrap
+			padding-bottom: 3rem
+
+	div[class^='divider']
+		margin-top: 0
+		margin-bottom: -2rem
+
+	div[class^='day']
+		background-color: $interactive-light
+
+	div.ms-DatePicker-day--today
+		background-color: $interactive-default
+		color: $white
+
+	div[id^='DatePickerDay-active']
+		background-color: $green-7
+		color: $white
+
+	td.ms-DatePicker-day
+		background-color: transparent
+		transition: background-color .25s
+
+	td.ms-DatePicker-day:hover
+		outline: 0
+		background-color: $interactive-light
+
+	div.ms-DatePicker-navContainer
+
+		button.ms-DatePicker-prevMonth,
+		button.ms-DatePicker-nextMonth,
+		button.ms-DatePicker-prevYear,
+		button.ms-DatePicker-nextYear
+			transition: background-color .25s, color .25s
+
+			i
+				color: $interactive-default
+
+			&:hover
+				background-color: $interactive-light
+
+				i
+					color: $interactive-active
+
+	div.ms-DatePicker-optionGrid
+
+		button.ms-DatePicker-monthOption
+			color: $interactive-default
+			transition: background-color .25s, color .25s
+			
+			&:hover
+				color: $interactive-active
+				background-color: $interactive-light
+
+	button.ms-DatePicker-goToday
+		color: $interactive-default
+		transition: background-color .25s, color .25s
+		
+		&:hover
+			color: $interactive-active
+			background-color: $interactive-light
+
+
+
 // PEOPLE PICKER
 
 div#hc-container
