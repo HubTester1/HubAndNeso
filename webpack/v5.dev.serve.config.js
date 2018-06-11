@@ -60,7 +60,7 @@ module.exports = merge(baseConfig, {
 		}),
 		new webpack.HotModuleReplacementPlugin(),
 	],
-	devtool: 'inline-source-map',
+	devtool: 'cheap-eval-source-map',
 	devServer: {
 		contentBase: path.join(__dirname, '../hub.1.0.5/dist'),
 		hot: true,

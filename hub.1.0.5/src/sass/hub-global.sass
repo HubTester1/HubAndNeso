@@ -171,11 +171,12 @@ div#internet-explorer-upgrade
 // requirement legend
 
 div.requirement-legend
-	padding: 2rem 0
+	padding: 1rem 0
 
 	span.requirement-indicator
 		
 		&::after
+			+font-size-6
 			display: inline-block
 			height: 2rem
 			content: '* '
@@ -184,6 +185,7 @@ div.requirement-legend
 	span.requirement-indicator-label
 		
 		&::after
+			+font-size-6
 			display: inline-block
 			height: 2rem
 			content: ' = required field'
@@ -285,6 +287,15 @@ div.ms-DatePicker-callout
 		&:hover
 			color: $interactive-active
 			background-color: $interactive-light
+
+// FILE INPUT
+
+div.mos-file-input
+	+round-corners
+	margin-top: 1rem
+	padding: 5rem 2rem
+	color: $aqua-6
+	background-color: $white
 
 // PEOPLE PICKER
 
@@ -601,9 +612,13 @@ div#hc-container
 	div.hc-organization-teams-member-persona,
 	li.hc-staff-lookup-persona
 		+round-corners
+		+small-shadow-bottom-right-light-color
 		width: 100%
 		margin: 2rem 0 0 0
 		background-color: $white
+
+		&:hover
+			+small-shadow-bottom-right-medium-color
 
 		div.persona-card-dialog-header
 			vertical-align: middle
