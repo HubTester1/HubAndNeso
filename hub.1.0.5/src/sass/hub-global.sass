@@ -171,6 +171,7 @@ div#internet-explorer-upgrade
 // requirement legend
 
 div.requirement-legend
+	padding: 2rem 0
 
 	span.requirement-indicator
 		
@@ -178,6 +179,7 @@ div.requirement-legend
 			display: inline-block
 			height: 2rem
 			content: '* '
+			color: $primary-pink !important
 
 	span.requirement-indicator-label
 		
@@ -187,11 +189,11 @@ div.requirement-legend
 			content: ' = required field'
 		
 // requirement indicators
+
 label.ms-Label
 	
 	&::after
-		color: $primary-green
-
+		color: $primary-pink !important
 
 // select / dropdown
 
@@ -353,10 +355,12 @@ div#hc-container
 					background-color: $interactive-light-active
 					z-index: $z-index-command-bar-button-active
 
-					i.ms-CommandBarItem-icon
+					i.ms-CommandBarItem-icon,
+					i.ms-CommandBarItem-chevronDown
 						color: $interactive-active-darkened-1
 
-				i.ms-CommandBarItem-icon
+				i.ms-CommandBarItem-icon,
+				i.ms-CommandBarItem-chevronDown
 					+font-weight-semibold
 					color: $interactive-default-darkened-1
 					transition-property: color

@@ -152,11 +152,20 @@
 			+round-corners
 			+small-shadow-bottom-right-light-color
 			padding: 2rem
-			background-color: $pink-10-80-percent
 			color: $white
+			background-image: linear-gradient(to right, $blue-10-60-percent, $blue-10-60-percent), linear-gradient(to right, $white-20-percent, $white-20-percent)
+			border-top: 5px solid $pink-10
+			border-bottom: 5px solid $pink-10
+			transition: border-color .5s, background-color .5s
 
 			h3
 				color: $white
+
+			&:hover
+				+small-shadow-bottom-right-medium-color
+				padding: 2rem
+				border-color: $pink-7
+				background-image: linear-gradient(to right, $blue-10-60-percent, $blue-10-60-percent), linear-gradient(to right, $white-30-percent, $white-30-percent)
 
 			a#photo-source-link,
 			a#photographer-link
@@ -165,10 +174,6 @@
 
 				&:hover
 					color: $aqua-1 !important
-
-			&:hover
-				+small-shadow-bottom-right-medium-color
-				background-color: $pink-10-90-percent
 
 // --- MEDIUM - HERO SECTION
 
@@ -548,6 +553,7 @@
 		padding: 2rem 0 5rem 0
 
 		h3,
+		div.requirement-legend,
 		label.ms-Label,
 		label[for='hc-messages-images-file-input']
 			color: $white
@@ -555,10 +561,11 @@
 		div.mos-react-form-field
 			padding-bottom: 1rem
 
-		label
+		label,
+		span.requirement-indicator
 
-			// &:after
-			// 	color: $yellow-1
+			&:after
+				color: $primary-yellow !important
 
 		label[for='hc-messages-images-file-input']
 			padding: .5rem 0
