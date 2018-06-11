@@ -21,15 +21,23 @@ const HcStaffLookupPersonaCard = (props) => {
 		<li id={`hc-staff-lookup-persona_${props.personaId}`} className="hc-staff-lookup-persona mos-react-component-root">
 			<div className="persona-card-dialog-header">
 				{
-					props.personaContent.photoURL &&
-					<span className="avatar" style={photoStyleObject} />
-				}
-				{
-					!props.personaContent.photoURL &&
+					props.personaContent.firstInitial &&
+					props.personaContent.lastInitial &&
 					<span className="avatar">
 						<span className="avatar-initials">{props.personaContent.firstInitial}{props.personaContent.lastInitial}
 						</span>
 					</span>
+				}
+				{
+					/* props.personaContent.photoURL &&
+					<span className="avatar" style={photoStyleObject} /> */
+				}
+				{
+					/* !props.personaContent.photoURL &&
+					<span className="avatar">
+						<span className="avatar-initials">{props.personaContent.firstInitial}{props.personaContent.lastInitial}
+						</span>
+					</span> */
 				}
 				<span className="name_title_department">
 					{
