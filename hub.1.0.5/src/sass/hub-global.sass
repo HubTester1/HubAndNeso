@@ -420,16 +420,15 @@ div#hc-container
 // ACCORDION
 
 div#hc-container
+
 	.u-position-absolute
 		position: absolute
-
 
 	.u-position-relative
 		position: relative
 
 	.accordion__item--has-icon
 		position: relative
-
 
 	.accordion__title
 		background-color: $white
@@ -463,7 +462,12 @@ div#hc-container
 			transition: color .25s
 
 	.accordion__title[aria-expanded='true']
+		+small-shadow-bottom-right-very-light-color
 		border-bottom: 0
+		z-index: 5
+
+		&:hover
+			+small-shadow-bottom-right-light-color
 
 	.accordion__title__text
 		padding-right: 4rem
@@ -471,7 +475,7 @@ div#hc-container
 	.accordion__body
 		padding: 2rem
 		display: block
-		background-color: $grey-1
+		// background-color: $grey-1
 		animation: fadein .35s ease-in
 
 
@@ -502,14 +506,14 @@ div#hc-container
 		display: block
 		position: absolute
 		top: 50%
-		width: 10px
-		height: 2px
+		width: 11px
+		height: 1px
 		background-color: currentColor
 		content: ''
 
 
 	.accordion__arrow::before
-		left: .4rem
+		left: .3rem
 		transform: rotate(45deg)
 
 
@@ -519,7 +523,7 @@ div#hc-container
 
 
 	.accordion__arrow::after
-		right: .4rem
+		right: .3rem
 		transform: rotate(-45deg)
 
 
@@ -597,6 +601,25 @@ div#hc-container
 
 	.accordion__body
 		border-left: .1rem solid $grey-3
+
+
+	div.hc-organization__teams div:last-child .accordion__title
+		border-bottom: 0
+		
+	div.hc-organization__teams__division:last-child .accordion__title,
+	div.hc-organization__teams__department:last-child .accordion__title,
+	div.hc-organization__teams__department-member:last-child .accordion__title
+		border-bottom: 0
+
+	div.hc-organization__teams__department-member-body
+
+		div.hc-organization-teams-member-persona
+			+small-shadow-bottom-right-very-very-light-color
+
+			&:hover
+				+small-shadow-bottom-right-very-light-color
+
+
 
 // PERSONA CARD
 
