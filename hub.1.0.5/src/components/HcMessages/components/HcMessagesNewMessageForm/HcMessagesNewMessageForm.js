@@ -333,6 +333,10 @@ export default class HcMessagesNewMessageForm extends React.Component {
 			return (
 				<div id="hc-messages-new-message-form" className="mos-react-component-root">
 					<h3>New Message</h3>
+					<div className="requirement-legend">
+						<span className="requirement-indicator" />
+						<span className="requirement-indicator-label" />
+					</div>
 					<div className={this.returnFormFieldContainerClassNameString('newMessageTagsError')}>
 						<HcMessagesTagDropdown
 							tagsArray={this.props.tagsArray}
@@ -418,7 +422,7 @@ export default class HcMessagesNewMessageForm extends React.Component {
 							<span className="urgent">Oh no!</span> We couldn&apos;t notify IIT, either. Are you connected to the Internet?
 						</div>
 					}
-					<button onClick={this.handleAddMessage}>Save</button>
+					<button id="new-message-save-button" onClick={this.handleAddMessage}>Save</button>
 					{
 						this.state.newMessageSaveSuccess &&
 

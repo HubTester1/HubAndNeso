@@ -168,6 +168,31 @@ div#internet-explorer-upgrade
 
 // STANDARD FORM ELEMENTS
 
+// requirement legend
+
+div.requirement-legend
+
+	span.requirement-indicator
+		
+		&::after
+			display: inline-block
+			height: 2rem
+			content: '* '
+
+	span.requirement-indicator-label
+		
+		&::after
+			display: inline-block
+			height: 2rem
+			content: ' = required field'
+		
+// requirement indicators
+label.ms-Label
+	
+	&::after
+		color: $primary-green
+
+
 // select / dropdown
 
 div.ms-Dropdown
@@ -316,6 +341,7 @@ div#hc-container
 			button.ms-CommandBarItem-link
 				height: 4rem
 				margin: 0
+				padding: 0 2rem
 				color: $interactive-default-darkened-1
 				background-color: $interactive-light
 				transition-property: color, background-color

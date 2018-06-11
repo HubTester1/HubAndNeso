@@ -256,6 +256,10 @@
 	&::before
 		content: $ms-icon-code-Warning
 
+=icon-save-before
+	&::before
+		content: $ms-icon-code-Save
+
 =icon-document-before
 	&::before
 		content: $ms-icon-code-TextDocument
@@ -303,6 +307,8 @@
 
 =button
 	+round-corners
+	+font-size-6
+	+font-weight-semibold
 	display: inline-block
 	float: none !important
 	box-sizing: border-box
@@ -310,14 +316,16 @@
 	min-height: 3rem
 	padding: .6rem 2rem .5rem
 	margin: 0 !important
-	font-size: 1.4rem
-	font-weight: 400
 	text-align: center
 	text-decoration: none
 	border: 0
 	transition: background-color .25s
 	cursor: pointer
 
+	div.ms-Button-label
+		+font-size-6
+		+font-weight-semibold
+	
 	&:hover
 		+small-shadow-bottom-right-light-color
 

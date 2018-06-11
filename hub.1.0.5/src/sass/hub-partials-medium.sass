@@ -152,21 +152,23 @@
 			+round-corners
 			+small-shadow-bottom-right-light-color
 			padding: 2rem
-			background-color: $pink-10-30-percent
+			background-color: $pink-10-80-percent
 			color: $white
 
 			h3
-				// +font-weight-regular
-				// +font-size-4
 				color: $white
 
 			a#photo-source-link,
 			a#photographer-link
-				color: $interactive-on-grey18 !important
+				color: $aqua-3 !important
 				transition: color .25s
 
 				&:hover
-					color: $interactive-active-on-grey18
+					color: $aqua-1 !important
+
+			&:hover
+				+small-shadow-bottom-right-medium-color
+				background-color: $pink-10-90-percent
 
 // --- MEDIUM - HERO SECTION
 
@@ -271,7 +273,7 @@
 
 			&:hover
 				+small-shadow-bottom-right-medium-color
-				border-color: $green-2
+				border-color: $coral-4
 				background-color: $white
 		
 		div#hc-get-it-done-view-by-group
@@ -421,8 +423,6 @@
 
 					button.hc-messages-message-full-message-button
 						+button
-						+font-size-6
-						+font-weight-regular
 						display: block
 						padding-left: 0
 						margin: 1rem 0 0 0 !important
@@ -471,7 +471,7 @@
 
 				&:hover
 					+small-shadow-bottom-right-medium-color
-					border-color: $pink-2
+					border-color: $primary-yellow
 					background-color: $white
 
 					button.hc-messages-message-full-message-button
@@ -557,8 +557,8 @@
 
 		label
 
-			&:after
-				color: $yellow-1
+			// &:after
+			// 	color: $yellow-1
 
 		label[for='hc-messages-images-file-input']
 			padding: .5rem 0
@@ -570,9 +570,11 @@
 			background-color: $white
 			border: .3rem dashed $aqua-3
 
-		button
+		button#new-message-save-button
 			+button
 			+button-colored
+			+button-icon-before
+			+icon-save-before
 			margin-top: 2rem !important
 
 // --- MEDIUM - CALENDARDS & SCHEDULES
