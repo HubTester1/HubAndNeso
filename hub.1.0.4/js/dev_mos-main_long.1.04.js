@@ -14512,6 +14512,7 @@
 					if (typeof(formData["status-change_temporary-extension"]) !== "undefined") {
 						printContent += '<h2>Temporary Extension</h2>' +
 										'<ul style="margin: 0;">' + 
+										'	<li><b>Position Title:</b> ' + formData["Temporary-Extension-Position-Title"] + '</li>' + 
 										'	<li><b>Anticipated Start Date:</b> ' + formData["Temporary-Extension-Effective-Beginning-Date"] + '</li>' + 
 										'	<li><b>Anticipated End Date:</b> ' + formData["Temporary-Extension-Effective-Ending-Date"] + '</li>' + 
 										'	<li><b>Reason:</b> ' + formData["Temporary-Extension-Reason"] + '</li>' + 
@@ -14544,7 +14545,7 @@
 					if (typeof(formData["status-change_termination"]) !== "undefined") {
 						printContent += '<h2>Termination</h2>' +
 										'<ul style="margin: 0;">' + 
-										'	<li><b>Job Being Terminated:</b> ' + formData["Job-Being-Terminated"] + '</li>' + 
+										'	<li><b>Terminated Position:</b> ' + formData["Job-Being-Terminated"] + '</li>' + 
 										'	<li><b>Termination Date:</b> ' + formData["Termination-Date"] + '</li>' + 
 										'	<li><b>Last Date Worked:</b> ' + formData["Last-Date-Worked"] + '</li>';
 
@@ -14558,10 +14559,10 @@
 											'	<li><b>Reason Explanation:</b> ' + formData["Involuntary-Termination-Reason-Explanation"] + '</li>';
 						}
 
-						if (formData["Termination-Reason"] == "Other") {
-							printContent += '	<li><b>Reason:</b> Other</li>' + 
-											'	<li><b>Reason Explanation:</b> ' + formData["Other-Termination-Reason-Explanation"] + '</li>';
-						}
+						// if (formData["Termination-Reason"] == "Other") {
+						// 	printContent += '	<li><b>Reason:</b> Other</li>' + 
+						// 					'	<li><b>Reason Explanation:</b> ' + formData["Other-Termination-Reason-Explanation"] + '</li>';
+						// }
 					}
 
 

@@ -1021,6 +1021,9 @@
 						],
 						"optional": [
 							{
+								"fieldName": "Temporary Extension Position Title",
+								"type": "text"
+							}, {
 								"fieldName": "Temporary Extension Effective Beginning Date",
 								"type": "datePicker"
 							}, {
@@ -1576,6 +1579,7 @@
 			}, {
 				'elementType': "field",
 				'controlType': "text",
+				'htmlClass': 'auto-populated',
 				'fieldName': "Hire Scheduled Hours Annually",
 				'labelContent': "Scheduled Hours, Annually",
 				'disabledForNonAdmin': ['', 'Submitted', 'Cancelled'],
@@ -3417,14 +3421,7 @@
 				'elementType': "field",
 				'controlType': "text",
 				'fieldName': "Job Being Terminated",
-				'labelContent': "Job Being Terminated",
-				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
-				'disabledForAdmin': ['Submitted', 'Cancelled']
-			}, {
-				'elementType': "field",
-				'controlType': "datePicker",
-				'fieldName': "Termination Date",
-				'labelContent': "Termination Date",
+				'labelContent': "Terminated Position",
 				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
 				'disabledForAdmin': ['Submitted', 'Cancelled']
 			}, {
@@ -3432,6 +3429,26 @@
 				'controlType': "datePicker",
 				'fieldName': "Last Date Worked",
 				'labelContent': "Last Date Worked",
+				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
+				'disabledForAdmin': ['Submitted', 'Cancelled'],
+				"onChange": [
+					{
+						'alwaysTrue': 1,
+						"set": [
+							{
+								"fieldName": "Termination Date",
+								"type": "text",
+								"method": "dynamic",
+								"value": "$('input#Last-Date-Worked').val()"
+							}
+						]
+					}
+				]
+			}, {
+				'elementType': "field",
+				'controlType': "datePicker",
+				'fieldName': "Termination Date",
+				'labelContent': "Termination Date",
 				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
 				'disabledForAdmin': ['Submitted', 'Cancelled']
 			}, {
@@ -3446,9 +3463,9 @@
 					}, {
 						"value": "Involuntary",
 						"display": "Involuntary"
-					}, {
-						"value": "Other",
-						"display": "Other"
+					// }, {
+					// 	"value": "Other",
+					// 	"display": "Other"
 					}
 				],
 				"disabledForNonAdmin": ['Submitted', 'Cancelled'],
@@ -3498,7 +3515,7 @@
 								"type": "text"
 							}
 						]
-					}, {
+					/* }, {
 						"thisFieldEquals": ["Other"],
 						"show": [{
 							"fieldName": "Other Termination Reason Explanation"
@@ -3519,13 +3536,13 @@
 								"fieldName": "Involuntary Termination Reason Explanation",
 								"type": "text"
 							}
-						]
+						] */
 					}, {
-						"thisFieldNotEquals": ["Voluntary", "Involuntary", "Other"],
+						"thisFieldNotEquals": ["Voluntary", "Involuntary"], // , "Other"
 						"hide": [
 							{ "fieldName": "Voluntary Termination Reason Explanation" },
 							{ "fieldName": "Involuntary Termination Reason Explanation" },
-							{ "fieldName": "Other Termination Reason Explanation" }
+							// { "fieldName": "Other Termination Reason Explanation" }
 						],
 						"optional": [
 							{
@@ -3534,9 +3551,9 @@
 							}, {
 								"fieldName": "Involuntary Termination Reason Explanation",
 								"type": "text"
-							}, {
-								"fieldName": "Other Termination Reason Explanation",
-								"type": "text"
+							// }, {
+							// 	"fieldName": "Other Termination Reason Explanation",
+							// 	"type": "text"
 							}
 						]
 					}
