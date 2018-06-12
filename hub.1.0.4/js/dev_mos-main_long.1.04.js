@@ -14361,7 +14361,6 @@
 
 
 						printContent += '		<td style="width: 50%;>' +
-										'			<h3>New Position</h3>' + 
 										'			<ul style="margin: 0;">' + 
 										'				<li><b>Position Title:</b> ' + formData["Position-Change-Position-Title"] + '</li>' + 
 										'				<li><b>Department:</b> ' + formData["Position-Change-Department"] + '</li>' + 

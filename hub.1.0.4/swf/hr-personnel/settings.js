@@ -1594,6 +1594,7 @@
 			}, {
 				'elementType': "field",
 				'controlType': "text",
+				'htmlClass': 'auto-populated',
 				'fieldName': "Hire Proposed Annualized Salary",
 				'labelContent': "Proposed Annualized Salary",
 				'disabledForNonAdmin': ['', 'Submitted', 'Cancelled'],
@@ -2012,6 +2013,7 @@
 				'controlType': "text",
 				'fieldName': "Position Change Scheduled Hours Annually",
 				'labelContent': "Scheduled Hours, Annually",
+				'htmlClass': 'auto-populated',
 				'disabledForNonAdmin': ['', 'Submitted', 'Cancelled'],
 				'disabledForAdmin': ['', 'Submitted', 'Cancelled']
 
@@ -2478,6 +2480,7 @@
 				'controlType': "text",
 				'fieldName': "Additional Position Scheduled Hours Annually",
 				'labelContent': "Scheduled Hours, Annually",
+				'htmlClass': 'auto-populated',
 				'disabledForNonAdmin': ['', 'Submitted', 'Cancelled'],
 				'disabledForAdmin': ['', 'Submitted', 'Cancelled']
 			}, {
@@ -2492,6 +2495,7 @@
 				'controlType': "text",
 				'fieldName': "Additional Position Proposed Annualized Salary",
 				'labelContent': "Proposed Annualized Salary",
+				'htmlClass': 'auto-populated',
 				'disabledForNonAdmin': ['', 'Submitted', 'Cancelled'],
 				'disabledForAdmin': ['', 'Submitted', 'Cancelled']
 			}, {
@@ -2775,6 +2779,7 @@
 				'controlType': "text",
 				'fieldName': "Wage Change Scheduled Hours Annually",
 				'labelContent': "Scheduled Hours, Annually",
+				'htmlClass': 'auto-populated',
 				'disabledForNonAdmin': ['', 'Submitted', 'Cancelled'],
 				'disabledForAdmin': ['', 'Submitted', 'Cancelled']
 			// }, {
@@ -2796,6 +2801,7 @@
 				'controlType': "text",
 				'fieldName': "Wage Change Annualized Salary",
 				'labelContent': "Annualized Salary",
+				'htmlClass': 'auto-populated',
 				'disabledForNonAdmin': ['', 'Submitted', 'Cancelled'],
 				'disabledForAdmin': ['', 'Submitted', 'Cancelled']
 			}, {

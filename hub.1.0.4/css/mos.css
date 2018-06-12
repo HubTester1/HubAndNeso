@@ -2032,6 +2032,10 @@ div#s4-workspace div.overlay-screen {
   div#s4-workspace div#request-form div.sp-peoplepicker-topLevel.mos_people-picker-disabled span.sp-peoplepicker-userSpan a.sp-peoplepicker-delImage,
   div#s4-workspace div.overlay-screen div.sp-peoplepicker-topLevel.mos_people-picker-disabled span.sp-peoplepicker-userSpan a.sp-peoplepicker-delImage {
     display: none; }
+  div#s4-workspace div#request-form input.auto-populated,
+  div#s4-workspace div.overlay-screen input.auto-populated {
+    background-color: transparent !important;
+    border: 0 !important; }
   div#s4-workspace div#request-form .urgent,
   div#s4-workspace div.overlay-screen .urgent {
     color: #a30c5e !important; }
