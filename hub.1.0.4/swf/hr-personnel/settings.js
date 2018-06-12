@@ -130,7 +130,7 @@
 			}, {
 				'elementType': "markup",
 				'tag': "p",
-				'content': 'Print this request, acquire appropriate signatures, and submit it to Human Resources.',
+				'content': 'Print this request, save it, acquire appropriate signatures, and submit it to Human Resources.',
 				'begin': 1,
 				'end': 1
 
@@ -507,7 +507,6 @@
 							{ "divID": "container_hire-fieldset" },
 							{ "divID": "container_ear" },
 							{ "divID": "submit-or-exit" },
-							{ "divID": "container_primary-fieldset" },
 						],
 						"require": [
 							{
@@ -606,6 +605,9 @@
 					{
 						"value": "Position Change",
 						"display": "Position Change"
+					}, {
+						"value": "Title Change",
+						"display": "Title Change"
 					}, {
 						"value": "Additional Position",
 						"display": "Additional Position"
@@ -749,6 +751,38 @@
 								"type": "radio"
 							}
 						],
+
+					// title change
+
+					}, {
+						"anyOfSpecificCheckboxesAreChecked": ["#status-change_title-change"],
+						"show": [
+							{ "divID": "container_title-change-fieldset" },
+						],
+						"require": [
+							{
+								"fieldName": "Title Change Current Position Title",
+								"type": "text"
+							}, {
+								"fieldName": "Title Change New Position Title",
+								"type": "text"
+							}
+						],
+					}, {
+						"noneOfSpecificCheckboxesAreChecked": ["#status-change_title-change"],
+						"hide": [
+							{ "divID": "container_title-change-fieldset" },
+						],
+						"optional": [
+							{
+								"fieldName": "Title Change Current Position Title",
+								"type": "text"
+							}, {
+								"fieldName": "Title Change New Position Title",
+								"type": "text"
+							}
+						],
+
 
 					// additional position
 
@@ -1127,6 +1161,7 @@
 					}, {
 						"anyOfSpecificCheckboxesAreChecked": [
 							"#status-change_position-change",
+							"#status-change_title-change",
 							"#status-change_additional-position",
 							"#status-change_wage-change",
 							"#status-change_schedule-change",
@@ -1148,6 +1183,7 @@
 					}, {
 						"noneOfSpecificCheckboxesAreChecked": [
 							"#status-change_position-change",
+							"#status-change_title-change",
 							"#status-change_additional-position",
 							"#status-change_wage-change",
 							"#status-change_schedule-change",
@@ -2352,6 +2388,44 @@
 				'end': 1,
 
 
+
+
+
+
+
+			// --- TITLE CHANGE
+
+			}, {
+				'elementType': 'markup',
+				'tag': 'div',
+				'begin': 1,
+				'htmlID': 'container_title-change-fieldset',
+				"hideForNonAdmin": [""],
+				"hideForAdmin": [""],
+			}, {
+				'elementType': 'markup',
+				'tag': 'h2',
+				'content': 'Title Change',
+				'begin': 1,
+				'end': 1,
+			}, {
+				'elementType': "field",
+				'controlType': "text",
+				'fieldName': "Title Change Current Position Title",
+				'labelContent': "Current Position Title",
+				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
+				'disabledForAdmin': ['Submitted', 'Cancelled']
+			}, {
+				'elementType': "field",
+				'controlType': "text",
+				'fieldName': "Title Change New Position Title",
+				'labelContent': "New Position Title",
+				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
+				'disabledForAdmin': ['Submitted', 'Cancelled']
+			}, {
+				'elementType': "markup",
+				'tag': "div",
+				'end': 1
 
 
 

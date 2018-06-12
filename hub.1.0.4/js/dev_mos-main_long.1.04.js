@@ -14383,6 +14383,23 @@
 
 
 
+
+
+
+					// --- TERMINATION
+
+
+					if (typeof (formData["status-change_title-change"]) !== "undefined") {
+						printContent += '<h2>Title Change</h2>' +
+							'<ul style="margin: 0;">' +
+							'	<li><b>Current Position Title:</b> ' + formData["Title-Change-Current-Position-Title"] + '</li>' +
+							'	<li><b>New Position Title:</b> ' + formData["Title-Change-New-Position-Title"] + '</li>';
+					}
+
+
+
+
+
 					// --- ADDITIONAL POSITION
 
 
