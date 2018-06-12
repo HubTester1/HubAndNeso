@@ -14403,6 +14403,24 @@
 						if (formData["Additional-Position-Employee-Classification"] != "Regular FT" && formData["Additional-Position-Employee-Classification"] != "Regular PT") {
 							printContent += '	<li><b>End Date:</b> ' + formData["Additional-Position-End-Date"] + '</li>';
 						}
+						printContent += '	<li><b>Funding Source:</b> ' + formData["Additional-Position-Funding-Source"] + '</li>';
+
+						if (formData["Additional-Position-Funding-Source"] == "Grant Funds" || formData["Additional-Position-Funding-Source"] == "Endowment Funds") {
+							printContent += '	<li><b>Accounts:</b> <ol>';
+							var accountSetIdentifier = 'Additional-Position-account-numbers-set';
+							$.each(formData["RepeatedElements"], function (i, accountSet) {
+								if (StrInStr(accountSet.ID, accountSetIdentifier)) {
+									accountSetPropertyNameSuffix = StrInStr(accountSet.ID, accountSetIdentifier, 3);
+									printContent += '						<li>Account<ol>' +
+										'							<li><b>Grant Object Code:</b> ' + accountSet["Additional-Position-Grant-Object-Code" + accountSetPropertyNameSuffix] + '</li>' +
+										'							<li><b>Grant Source Code:</b> ' + accountSet["Additional-Position-Grant-Source-Code" + accountSetPropertyNameSuffix] + '</li>' +
+										'							<li><b>Percent Salary from this Account:</b> ' + accountSet["Additional-Position-Percent-Salary-from-this-Account" + accountSetPropertyNameSuffix] + '</li>' +
+										'						</ol></li>';
+								}
+
+							});
+							printContent += '					</ol></li>';
+						}
 					}
 
 
@@ -14495,9 +14513,27 @@
 						printContent += '<h2>Temporary Extension</h2>' +
 										'<ul style="margin: 0;">' + 
 										'	<li><b>Anticipated Start Date:</b> ' + formData["Temporary-Extension-Effective-Beginning-Date"] + '</li>' + 
-										'	<li><b>Effective Ending Date:</b> ' + formData["Temporary-Extension-Effective-Ending-Date"] + '</li>' + 
+										'	<li><b>Anticipated End Date:</b> ' + formData["Temporary-Extension-Effective-Ending-Date"] + '</li>' + 
 										'	<li><b>Reason:</b> ' + formData["Temporary-Extension-Reason"] + '</li>' + 
 										'	<li><b>Funding Source:</b> ' + formData["Temporary-Extension-Funding-Source"] + '</li>';
+
+						if (formData["Temporary-Extension-Funding-Source"] == "Grant Funds" || formData["Temporary-Extension-Funding-Source"] == "Endowment Funds") {
+							printContent += '	<li><b>Accounts:</b> <ol>';
+							var accountSetIdentifier = 'Temporary-Extension-account-numbers-set';
+							$.each(formData["RepeatedElements"], function (i, accountSet) {
+								if (StrInStr(accountSet.ID, accountSetIdentifier)) {
+									accountSetPropertyNameSuffix = StrInStr(accountSet.ID, accountSetIdentifier, 3);
+									printContent += '						<li>Account<ol>' +
+										'							<li><b>Grant Object Code:</b> ' + accountSet["Temporary-Extension-Grant-Object-Code" + accountSetPropertyNameSuffix] + '</li>' +
+										'							<li><b>Grant Source Code:</b> ' + accountSet["Temporary-Extension-Grant-Source-Code" + accountSetPropertyNameSuffix] + '</li>' +
+										'							<li><b>Percent Salary from this Account:</b> ' + accountSet["Temporary-Extension-Percent-Salary-from-this-Account" + accountSetPropertyNameSuffix] + '</li>' +
+										'						</ol></li>';
+								}
+
+							});
+							printContent += '					</ol></li>';
+						}
+
 					}
 
 

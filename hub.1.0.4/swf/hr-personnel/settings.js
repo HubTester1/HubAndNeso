@@ -785,6 +785,9 @@
 							}, {
 								"fieldName": "Additional Position Start Date",
 								"type": "datePicker"
+							}, {
+								"fieldName": "Additional Position Funding Source",
+								"type": "select"
 							}
 						],
 					}, {
@@ -820,6 +823,9 @@
 							}, {
 								"fieldName": "Additional Position Start Date",
 								"type": "datePicker"
+							}, {
+								"fieldName": "Additional Position Funding Source",
+								"type": "select"
 							}
 						],
 
@@ -992,6 +998,9 @@
 						],
 						"require": [
 							{
+								"fieldName": "Temporary Extension Position Title",
+								"type": "text"
+							}, {
 								"fieldName": "Temporary Extension Effective Beginning Date",
 								"type": "datePicker"
 							}, {
@@ -1002,7 +1011,7 @@
 								"type": "text"
 							}, {
 								"fieldName": "Temporary Extension Funding Source",
-								"type": "text"
+								"type": "select"
 							}
 						],
 					}, {
@@ -1126,7 +1135,6 @@
 						"show": [
 							{ "divID": "container_primary-fieldset" },
 							{ "divID": "container_staff-member" },
-							{ "divID": "submit-or-exit" }
 						],
 						"require": [
 							{
@@ -1148,7 +1156,6 @@
 						"hide": [
 							{ "divID": "container_primary-fieldset" },
 							{ "divID": "container_staff-member" },
-							{ "divID": "submit-or-exit" }
 						],
 						"optional": [
 							{
@@ -2381,7 +2388,7 @@
 				"disabledForAdmin": ['Submitted', 'Cancelled'],
 			}, {
 				'elementType': "field",
-				'controlType': "text",
+				'controlType': "select",
 				'fieldName': "Additional Position Grade",
 				'labelContent': "Grade",
 				"setOptions": [
@@ -2575,6 +2582,137 @@
 				'disabledForAdmin': ['Submitted', 'Cancelled'],
 				'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
 				'hideForAdmin': ['', 'Submitted', 'Cancelled']
+			}, {
+				"elementType": "field",
+				"controlType": "select",
+				"fieldName": "Additional Position Funding Source",
+				"labelContent": "Funding Source",
+				"setOptions": [
+					{
+						"value": "Campaign Funds",
+						"display": "Campaign Funds"
+					}, {
+						"value": "Operating Funds",
+						"display": "Operating Funds"
+					}, {
+						"value": "Endowment Funds",
+						"display": "Endowment Funds"
+					}, {
+						"value": "Grant Funds",
+						"display": "Grant Funds"
+					}
+				],
+				"disabledForNonAdmin": ['Submitted', 'Cancelled'],
+				"disabledForAdmin": ['Submitted', 'Cancelled'],
+				"onChange": [
+					{
+						"thisFieldNotEquals": ["Grant Funds", "Endowment Funds"],
+						"hide": [{
+							"divID": "Additional-Position-account-numbers-sets"
+						}],
+						"optional": [
+							{
+								"fieldName": "Additional Position Grant Object Code",
+								"type": "text",
+								'repeatable': 1
+							}, {
+								"fieldName": "Additional Position Grant Source Code",
+								"type": "text",
+								'repeatable': 1
+							}, {
+								"fieldName": "Additional Position Percent Salary from this Account",
+								"type": "text",
+								'repeatable': 1
+							}
+						]
+					}, {
+						"thisFieldEquals": ["Grant Funds", "Endowment Funds"],
+						"show": [{
+							"divID": "Additional-Position-account-numbers-sets"
+						}],
+						"require": [
+							{
+								"fieldName": "Additional Position Grant Object Code",
+								"type": "text",
+								'repeatable': 1
+							}, {
+								"fieldName": "Additional Position Grant Source Code",
+								"type": "text",
+								'repeatable': 1
+							}, {
+								"fieldName": "Additional Position Percent Salary from this Account",
+								"type": "text",
+								'repeatable': 1
+							}
+						]
+					}
+				]
+			}, {
+				'elementType': "markup",
+				'tag': "div",
+				'begin': 1,
+				'htmlID': "Additional-Position-account-numbers-sets",
+				'htmlClass': "subsection-container repeating-content-container",
+				'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
+				'hideForAdmin': ['', 'Submitted', 'Cancelled']
+			}, {
+				'elementType': "markup",
+				'tag': "div",
+				'begin': 1,
+				'htmlID': "Additional-Position-account-numbers-set",
+				'htmlClass': "subsection repeat-container",
+				'repeatable': 1
+			}, {
+				'elementType': "field",
+				'controlType': "text",
+				'fieldName': "Additional Position Grant Object Code",
+				'labelContent': "Grant Object Code",
+				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
+				'disabledForAdmin': ['Submitted', 'Cancelled'],
+			}, {
+				'elementType': "field",
+				'controlType': "text",
+				'fieldName': "Additional Position Grant Source Code",
+				'labelContent': "Grant Source Code",
+				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
+				'disabledForAdmin': ['Submitted', 'Cancelled'],
+			}, {
+				'elementType': "field",
+				'controlType': "text",
+				'fieldName': "Additional Position Percent Salary from this Account",
+				'labelContent': "Percent Salary from this Account",
+				'htmlClass': 'format-percent',
+				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
+				'disabledForAdmin': ['Submitted', 'Cancelled'],
+			}, {
+				'elementType': "markup",
+				'tag': "a",
+				'begin': 1,
+				'end': 1,
+				'htmlClass': "remove-section-anchor",
+				'content': "Remove",
+				'removeThisRepeat': 1,
+				'hideForNonAdmin': ['Submitted', 'Cancelled'],
+				'hideForAdmin': ['Submitted', 'Cancelled'],
+			}, {
+				'elementType': "markup",
+				'tag': "div",
+				'end': 1,
+			}, {
+				'elementType': "markup",
+				'tag': "a",
+				'begin': 1,
+				'end': 1,
+				'htmlID': "Additional-Position-repeat-account-numbers-set",
+				'htmlClass': "repeat-section-anchor",
+				'content': "Insert an Account",
+				'repeatSectionID': "Additional-Position-account-numbers-set",
+				'hideForNonAdmin': ['Submitted', 'Cancelled'],
+				'hideForAdmin': ['Submitted', 'Cancelled'],
+			}, {
+				'elementType': "markup",
+				'tag': "div",
+				'end': 1
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
@@ -3095,6 +3233,13 @@
 				'end': 1,
 			}, {
 				'elementType': "field",
+				'controlType': "text",
+				"fieldName": "Temporary Extension Position Title",
+				"labelContent": "Position Title",
+				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
+				'disabledForAdmin': ['Submitted', 'Cancelled']
+			}, {
+				'elementType': "field",
 				'controlType': "datePicker",
 				'fieldName': "Temporary Extension Effective Beginning Date",
 				'labelContent': "Anticipated Start Date",
@@ -3104,7 +3249,7 @@
 				'elementType': "field",
 				'controlType': "datePicker",
 				'fieldName': "Temporary Extension Effective Ending Date",
-				'labelContent': "Effective Ending Date",
+				'labelContent': "Anticipated End Date",
 				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
 				'disabledForAdmin': ['Submitted', 'Cancelled']
 			}, {
@@ -3115,13 +3260,136 @@
 				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
 				'disabledForAdmin': ['Submitted', 'Cancelled']
 			}, {
+				"elementType": "field",
+				"controlType": "select",
+				"fieldName": "Temporary Extension Funding Source",
+				"labelContent": "Funding Source",
+				"setOptions": [
+					{
+						"value": "Campaign Funds",
+						"display": "Campaign Funds"
+					}, {
+						"value": "Operating Funds",
+						"display": "Operating Funds"
+					}, {
+						"value": "Endowment Funds",
+						"display": "Endowment Funds"
+					}, {
+						"value": "Grant Funds",
+						"display": "Grant Funds"
+					}
+				],
+				"disabledForNonAdmin": ['Submitted', 'Cancelled'],
+				"disabledForAdmin": ['Submitted', 'Cancelled'],
+				"onChange": [
+					{
+						"thisFieldNotEquals": ["Grant Funds", "Endowment Funds"],
+						"hide": [{
+							"divID": "Temporary-Extension-account-numbers-sets"
+						}],
+						"optional": [
+							{
+								"fieldName": "Temporary Extension Grant Object Code",
+								"type": "text",
+								'repeatable': 1
+							}, {
+								"fieldName": "Temporary Extension Grant Source Code",
+								"type": "text",
+								'repeatable': 1
+							}, {
+								"fieldName": "Temporary Extension Percent Salary from this Account",
+								"type": "text",
+								'repeatable': 1
+							}
+						]
+					}, {
+						"thisFieldEquals": ["Grant Funds", "Endowment Funds"],
+						"show": [{
+							"divID": "Temporary-Extension-account-numbers-sets"
+						}],
+						"require": [
+							{
+								"fieldName": "Temporary Extension Grant Object Code",
+								"type": "text",
+								'repeatable': 1
+							}, {
+								"fieldName": "Temporary Extension Grant Source Code",
+								"type": "text",
+								'repeatable': 1
+							}, {
+								"fieldName": "Temporary Extension Percent Salary from this Account",
+								"type": "text",
+								'repeatable': 1
+							}
+						]
+					}
+				]
+			}, {
+				'elementType': "markup",
+				'tag': "div",
+				'begin': 1,
+				'htmlID': "Temporary-Extension-account-numbers-sets",
+				'htmlClass': "subsection-container repeating-content-container",
+				'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
+				'hideForAdmin': ['', 'Submitted', 'Cancelled']
+			}, {
+				'elementType': "markup",
+				'tag': "div",
+				'begin': 1,
+				'htmlID': "Temporary-Extension-account-numbers-set",
+				'htmlClass': "subsection repeat-container",
+				'repeatable': 1
+			}, {
 				'elementType': "field",
 				'controlType': "text",
-				'fieldName': "Temporary Extension Funding Source",
-				'labelContent': "Funding Source",
+				'fieldName': "Temporary Extension Grant Object Code",
+				'labelContent': "Grant Object Code",
 				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
-				'disabledForAdmin': ['Submitted', 'Cancelled']
-
+				'disabledForAdmin': ['Submitted', 'Cancelled'],
+			}, {
+				'elementType': "field",
+				'controlType': "text",
+				'fieldName': "Temporary Extension Grant Source Code",
+				'labelContent': "Grant Source Code",
+				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
+				'disabledForAdmin': ['Submitted', 'Cancelled'],
+			}, {
+				'elementType': "field",
+				'controlType': "text",
+				'fieldName': "Temporary Extension Percent Salary from this Account",
+				'labelContent': "Percent Salary from this Account",
+				'htmlClass': 'format-percent',
+				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
+				'disabledForAdmin': ['Submitted', 'Cancelled'],
+			}, {
+				'elementType': "markup",
+				'tag': "a",
+				'begin': 1,
+				'end': 1,
+				'htmlClass': "remove-section-anchor",
+				'content': "Remove",
+				'removeThisRepeat': 1,
+				'hideForNonAdmin': ['Submitted', 'Cancelled'],
+				'hideForAdmin': ['Submitted', 'Cancelled'],
+			}, {
+				'elementType': "markup",
+				'tag': "div",
+				'end': 1,
+			}, {
+				'elementType': "markup",
+				'tag': "a",
+				'begin': 1,
+				'end': 1,
+				'htmlID': "Temporary-Extension-repeat-account-numbers-set",
+				'htmlClass': "repeat-section-anchor",
+				'content': "Insert an Account",
+				'repeatSectionID': "Temporary-Extension-account-numbers-set",
+				'hideForNonAdmin': ['Submitted', 'Cancelled'],
+				'hideForAdmin': ['Submitted', 'Cancelled'],
+			}, {
+				'elementType': "markup",
+				'tag': "div",
+				'end': 1
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
