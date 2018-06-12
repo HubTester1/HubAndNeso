@@ -14277,14 +14277,12 @@
 				printContent += '	<li><b>Funding Source:</b> ' + formData["Hire-Funding-Source"] + '</li>';
 				
 				if (formData["Hire-Funding-Source"] == "Grant Funds" || formData["Hire-Funding-Source"] == "Endowment Funds") {
-					printContent += '	<li><b>Accounts:</b> <ol>';
+					printContent += '	<li><b>Account(s):</b> <ol>';
 					var accountSetIdentifier = 'Hire-account-numbers-set';
 					$.each(formData["RepeatedElements"], function(i, accountSet) {
-						console.log('accountSet');
-						console.log(accountSet);
 						if (StrInStr(accountSet.ID, accountSetIdentifier)){
 							accountSetPropertyNameSuffix = StrInStr(accountSet.ID, accountSetIdentifier, 3);
-							printContent += '						<li>Account ' + (i + 1) + '<ol>' +
+							printContent += '						<li>Account<ol>' +
 											'							<li><b>Grant Object Code:</b> ' + accountSet["Hire-Grant-Object-Code" + accountSetPropertyNameSuffix] + '</li>' + 
 											'							<li><b>Grant Source Code:</b> ' + accountSet["Hire-Grant-Source-Code" + accountSetPropertyNameSuffix] + '</li>' + 
 											'							<li><b>Percent Salary from this Account:</b> ' + accountSet["Hire-Percent-Salary-from-this-Account" + accountSetPropertyNameSuffix] + '</li>' + 
@@ -14306,6 +14304,9 @@
 			if (formData["Action"] == "Status Change") {
 
 				var staffUserID = StrInStr(formData["Status-Change-Staff-Member"][0]["description"], '@mos.org', 1);
+				
+				console.log('staffUserID');
+				console.log(staffUserID);
 
 				$.ajax({
 					async: false,
@@ -14314,20 +14315,15 @@
 					url: 'https://neso.mos.org/activeDirectory/user/' + staffUserID,
 				})
 				.done(function(returnedUserData) {
+					statusChangeEmployeeData = returnedUserData.docs;
 
-					statusChangeEmployeeData = {
-						'Division': 'This Division',
-						'ID': '789101112',
-						'Department': 'That Dept',
-						'Title': 'My Job Title',
-					};
 					printContent += '<h2>Staff Member</h2>' + 
 									'<ul style="margin: 0;">' + 
-									'				<li><b>Name:</b> ' + returnedUserData.displayName + '</li>' + 
-									'				<li><b>ID:</b> ' + returnedUserData.employeeID + '</li>' + 
-									'				<li><b>Department:</b> ' + returnedUserData.department + '</li>' + 
-									'				<li><b>Division:</b> ' + returnedUserData.division + '</li>' + 
-									'				<li><b>Title:</b> ' + returnedUserData.title + '</li>' + 
+									'				<li><b>Name:</b> ' + statusChangeEmployeeData.displayName + '</li>' + 
+									'				<li><b>ID:</b> ' + statusChangeEmployeeData.employeeID + '</li>' + 
+									'				<li><b>Department:</b> ' + statusChangeEmployeeData.department + '</li>' + 
+									'				<li><b>Division:</b> ' + statusChangeEmployeeData.division + '</li>' + 
+									'				<li><b>Title:</b> ' + statusChangeEmployeeData.title + '</li>' + 
 									'			</ul>';
 
 
@@ -14377,7 +14373,7 @@
 										'				<li><b>Anticipated Start Date:</b> ' + formData["Position-Change-Start-Date"] + '</li>';
 
 						if (formData["Position-Change-Employee-Classification"] != "Regular FT" && formData["Position-Change-Employee-Classification"] != "Regular PT") {
-							printContent += '				<li><b>End Date:</b> ' + formData["Position-Change-End-Date"] + '</li>';
+							printContent += '				<li><b>Anticipated End Date:</b> ' + formData["Position-Change-End-Date"] + '</li>';
 						}
 
 						printContent += '			</ul>' + 
@@ -14425,10 +14421,28 @@
 										'	<li><b>Hourly Wage:</b> ' + formData["Wage-Change-Hourly-Wage"] + '</li>' + 
 										'	<li><b>Annualized Salary:</b> ' + formData["Wage-Change-Annualized-Salary"] + '</li>';
 										
-						if (formData["Wage-Change-Reason"] == "Other") {
+						if (formData["Wage-Change-Reason"] == "Adjustment") {
 							printContent += '	<li><b>Reason:</b> ' + formData["Wage-Change-Reason-Explanation"] + '</li>';
 						} else {
 							printContent += '	<li><b>Reason:</b> ' + formData["Wage-Change-Reason"] + '</li>';
+						}
+						printContent += '	<li><b>Funding Source:</b> ' + formData["Wage-Change-Funding-Source"] + '</li>';
+
+						if (formData["Wage-Change-Funding-Source"] == "Grant Funds" || formData["Wage-Change-Funding-Source"] == "Endowment Funds") {
+							printContent += '	<li><b>Account(s):</b> <ol>';
+							var accountSetIdentifier = 'Wage-Change-account-numbers-set';
+							$.each(formData["RepeatedElements"], function (i, accountSet) {
+								if (StrInStr(accountSet.ID, accountSetIdentifier)) {
+									accountSetPropertyNameSuffix = StrInStr(accountSet.ID, accountSetIdentifier, 3);
+									printContent += '						<li>Account<ol>' +
+										'							<li><b>Grant Object Code:</b> ' + accountSet["Wage-Change-Grant-Object-Code" + accountSetPropertyNameSuffix] + '</li>' +
+										'							<li><b>Grant Source Code:</b> ' + accountSet["Wage-Change-Grant-Source-Code" + accountSetPropertyNameSuffix] + '</li>' +
+										'							<li><b>Percent Salary from this Account:</b> ' + accountSet["Wage-Change-Percent-Salary-from-this-Account" + accountSetPropertyNameSuffix] + '</li>' +
+										'						</ol></li>';
+								}
+
+							});
+							printContent += '					</ol></li>';
 						}
 					}
 
@@ -14452,15 +14466,20 @@
 										'	<li><b>Reason:</b> ' + formData["Schedule-Change-Reason"] + '</li>' + 
 										'	<li><b>Funding Source:</b> ' + formData["Schedule-Change-Funding-Source"] + '</li>';
 
-						if (formData["Schedule-Change-Funding-Source"] == "Grant Funds") {
-							printContent += '	<li><b>Accounts:</b> <ol>';
+
+						if (formData["Schedule-Change-Funding-Source"] == "Grant Funds" || formData["Schedule-Change-Funding-Source"] == "Endowment Funds") {
+							printContent += '	<li><b>Account(s):</b> <ol>';
+							var accountSetIdentifier = 'Schedule-Change-account-numbers-set';
 							$.each(formData["RepeatedElements"], function (i, accountSet) {
-								if (i != 0) { accountSetPropertyNameSuffix = '-repeat-' + i; }
-								printContent += '						<li>Account ' + (i + 1) + '<ol>' +
-									'							<li><b>Grant Object Code:</b> ' + accountSet["Shcedule-Change-Grant-Object-Code" + accountSetPropertyNameSuffix] + '</li>' +
-									'							<li><b>Grant Source Code:</b> ' + accountSet["Shcedule-Change-Grant-Source-Code" + accountSetPropertyNameSuffix] + '</li>' +
-									'							<li><b>Percent Salary from this Account:</b> ' + accountSet["Shcedule-Change-Percent-Salary-from-this-Account" + accountSetPropertyNameSuffix] + '</li>' +
-									'						</ol></li>';
+								if (StrInStr(accountSet.ID, accountSetIdentifier)) {
+									accountSetPropertyNameSuffix = StrInStr(accountSet.ID, accountSetIdentifier, 3);
+									printContent += '						<li>Account<ol>' +
+										'							<li><b>Grant Object Code:</b> ' + accountSet["Schedule-Change-Grant-Object-Code" + accountSetPropertyNameSuffix] + '</li>' +
+										'							<li><b>Grant Source Code:</b> ' + accountSet["Schedule-Change-Grant-Source-Code" + accountSetPropertyNameSuffix] + '</li>' +
+										'							<li><b>Percent Salary from this Account:</b> ' + accountSet["Schedule-Change-Percent-Salary-from-this-Account" + accountSetPropertyNameSuffix] + '</li>' +
+										'						</ol></li>';
+								}
+
 							});
 							printContent += '					</ol></li>';
 						}

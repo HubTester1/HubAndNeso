@@ -868,6 +868,9 @@
 							}, {
 								"fieldName": "Wage Change Reason",
 								"type": "select"
+							}, {
+								"fieldName": "Wage Change Funding Source",
+								"type": "select"
 							}
 						],
 					}, {
@@ -912,6 +915,9 @@
 								"type": "text"
 							}, {
 								"fieldName": "Wage Change Reason",
+								"type": "select"
+							}, {
+								"fieldName": "Wage Change Funding Source",
 								"type": "select"
 							}
 						],
@@ -2704,7 +2710,141 @@
 				'disabledForAdmin': ['Submitted', 'Cancelled'],
 				'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
 				'hideForAdmin': ['', 'Submitted', 'Cancelled']
-
+			}, {
+				"elementType": "field",
+				"controlType": "select",
+				"fieldName": "Wage Change Funding Source",
+				"labelContent": "Funding Source",
+				"setOptions": [
+					{
+						"value": "Campaign Funds",
+						"display": "Campaign Funds"
+					}, {
+						"value": "Operating Funds",
+						"display": "Operating Funds"
+					}, {
+						"value": "Endowment Funds",
+						"display": "Endowment Funds"
+					}, {
+						"value": "Grant Funds",
+						"display": "Grant Funds"
+					}
+				],
+				"disabledForNonAdmin": ['Submitted', 'Cancelled'],
+				"disabledForAdmin": ['Submitted', 'Cancelled'],
+				"onChange": [
+					{
+						"thisFieldNotEquals": ["Grant Funds", "Endowment Funds"],
+						"hide": [{
+							"divID": "Wage-Change-account-numbers-sets"
+						}],
+						"optional": [
+							{
+								"fieldName": "Wage Change Grant Object Code",
+								"type": "text",
+								'repeatable': 1
+							}, {
+								"fieldName": "Wage Change Grant Source Code",
+								"type": "text",
+								'repeatable': 1
+							}, {
+								"fieldName": "Wage Change Percent Salary from this Account",
+								"type": "text",
+								'repeatable': 1
+							}
+						]
+					}, {
+						"thisFieldEquals": ["Grant Funds", "Endowment Funds"],
+						"show": [{
+							"divID": "Wage-Change-account-numbers-sets"
+						}],
+						"require": [
+							{
+								"fieldName": "Wage Change Grant Object Code",
+								"type": "text",
+								'repeatable': 1
+							}, {
+								"fieldName": "Wage Change Grant Source Code",
+								"type": "text",
+								'repeatable': 1
+							}, {
+								"fieldName": "Wage Change Percent Salary from this Account",
+								"type": "text",
+								'repeatable': 1
+							}
+						]
+					}
+				]
+			}, {
+				'elementType': "markup",
+				'tag': "div",
+				'begin': 1,
+				'htmlID': "Wage-Change-account-numbers-sets",
+				'htmlClass': "subsection-container repeating-content-container",
+				'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
+				'hideForAdmin': ['', 'Submitted', 'Cancelled']
+			}, {
+				'elementType': "markup",
+				'tag': "div",
+				'begin': 1,
+				'htmlID': "Wage-Change-account-numbers-set",
+				'htmlClass': "subsection repeat-container",
+				'repeatable': 1
+			}, {
+				'elementType': "field",
+				'controlType': "text",
+				'fieldName': "Wage Change Grant Object Code",
+				'labelContent': "Grant Object Code",
+				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
+				'disabledForAdmin': ['Submitted', 'Cancelled'],
+			}, {
+				'elementType': "field",
+				'controlType': "text",
+				'fieldName': "Wage Change Grant Source Code",
+				'labelContent': "Grant Source Code",
+				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
+				'disabledForAdmin': ['Submitted', 'Cancelled'],
+			}, {
+				'elementType': "field",
+				'controlType': "text",
+				'fieldName': "Wage Change Percent Salary from this Account",
+				'labelContent': "Percent Salary from this Account",
+				'htmlClass': 'format-percent',
+				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
+				'disabledForAdmin': ['Submitted', 'Cancelled'],
+			}, {
+				'elementType': "markup",
+				'tag': "a",
+				'begin': 1,
+				'end': 1,
+				'htmlClass': "remove-section-anchor",
+				'content': "Remove",
+				'removeThisRepeat': 1,
+				'hideForNonAdmin': ['Submitted', 'Cancelled'],
+				'hideForAdmin': ['Submitted', 'Cancelled'],
+			}, {
+				'elementType': "markup",
+				'tag': "div",
+				'end': 1,
+			}, {
+				'elementType': "markup",
+				'tag': "a",
+				'begin': 1,
+				'end': 1,
+				'htmlID': "Wage-Change-repeat-account-numbers-set",
+				'htmlClass': "repeat-section-anchor",
+				'content': "Insert an Account",
+				'repeatSectionID': "Wage-Change-account-numbers-set",
+				'hideForNonAdmin': ['Submitted', 'Cancelled'],
+				'hideForAdmin': ['Submitted', 'Cancelled'],
+			// }, {
+			// 	'elementType': "markup",
+			// 	'tag': "div",
+			// 	'end': 1
+			}, {
+				'elementType': 'markup',
+				'tag': 'div',
+				'end': 1,
 
 			}, {
 				'elementType': 'markup',
@@ -2903,10 +3043,10 @@
 				'tag': "a",
 				'begin': 1,
 				'end': 1,
-				'htmlID': "repeat-account-numbers-set",
+				'htmlID': "Schedule-Change-repeat-account-numbers-set",
 				'htmlClass': "repeat-section-anchor",
 				'content': "Insert an Account",
-				'repeatSectionID': "account-numbers-set",
+				'repeatSectionID': "Schedule-Change-account-numbers-set",
 				'hideForNonAdmin': ['Submitted', 'Cancelled'],
 				'hideForAdmin': ['Submitted', 'Cancelled'],
 			// }, {
