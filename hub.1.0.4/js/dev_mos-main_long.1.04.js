@@ -13687,9 +13687,7 @@
 							} else {
 								stmtsToAdd += '	  $("#' + ReplaceAll("\\.", "", ReplaceAll(" ", "-", set.fieldName)) + '").val("' + set.value + '"); \n';
 							}
-						} else if (set.type == "radio") {
-							// to be completed
-						} else if (set.type == "checkbox") {
+						} else if (set.type == "checkbox" || set.type == "radio") {
 							if (set.checked == 0) { set.checked = false; }
 							if (set.checked == 1) { set.checked = true; }
 							var inputID = $().ReturnHyphenatedFieldNameOrValue(set.fieldName).toLowerCase() + '_' + $().ReturnHyphenatedFieldNameOrValue(set.valueAffected).toLowerCase();
@@ -13699,7 +13697,13 @@
 											'	  $("#' + inputID + '").removeAttr("checked"); \n';
 							
 						} else if (set.type == "select") {
-							stmtsToAdd += '	  $("#' + ReplaceAll("\\.", "", ReplaceAll(" ", "-", set.fieldName)) + '").prop("selectedIndex", ' + set.optionIndex + '); \n';
+							if (typeof (set.copyField) != "undefined") {
+								var copyFieldID = $().ReturnHyphenatedFieldNameOrValue(set.copyField);
+								stmtsToAdd += '	  $("#' + ReplaceAll("\\.", "", ReplaceAll(" ", "-", set.fieldName)) + '").prop("selectedIndex", $("#' + copyFieldID + '").prop("selectedIndex")); \n';
+
+							} else {
+								stmtsToAdd += '	  $("#' + ReplaceAll("\\.", "", ReplaceAll(" ", "-", set.fieldName)) + '").prop("selectedIndex", ' + set.optionIndex + '); \n';
+							}
 						} else if (set.type == "datetime") {
 							if (typeof(set.method) != "undefined" && set.method == "dynamic" && typeof(set.valueFromFieldName) != "undefined") {
 								stmtsToAdd += '	  $("input#date-input_' + ReplaceAll("\\.", "", ReplaceAll(" ", "-", set.fieldName)) + '").val($("input#date-input_' + ReplaceAll("\\.", "", ReplaceAll(" ", "-", set.valueFromFieldName)) + '").val()); \n';
@@ -14260,28 +14264,33 @@
 								'	<li><b>Manager / Supervisor:</b> ' + formData["Hire-Manager"][0]["displayText"] + '</li>' + 
 								'	<li><b>Department:</b> ' + formData["Hire-Department"] + '</li>' + 
 								'	<li><b>Position Title:</b> ' + formData["Hire-Position-Title"] + '</li>' + 
-								'	<li><b>Position Number:</b> ' + formData["Hire-Position-Number"] + '</li>' + 
 								'	<li><b>Grade:</b> ' + formData["Hire-Grade"] + '</li>' + 
 								'	<li><b>Employee Classification:</b> ' + formData["Hire-Employee-Classification"] + '</li>' + 
 								'	<li><b>Scheduled Hours, Biweekly:</b> ' + formData["Hire-Scheduled-Hours-Biweekly"] + '</li>' + 
 								'	<li><b>Scheduled Hours, Annually:</b> ' + formData["Hire-Scheduled-Hours-Annually"] + '</li>' + 
 								'	<li><b>Proposed Hourly Wage:</b> ' + formData["Hire-Proposed-Hourly-Wage"] + '</li>' + 
 								'	<li><b>Proposed Annualized Salary:</b> ' + formData["Hire-Proposed-Annualized-Salary"] + '</li>' + 
-								'	<li><b>Start Date:</b> ' + formData["Hire-Start-Date"] + '</li>';
+								'	<li><b>Anticipated Start Date:</b> ' + formData["Hire-Start-Date"] + '</li>';
 				if (formData["Hire-Employee-Classification"] != "Regular FT" && formData["Hire-Employee-Classification"] != "Regular PT") {
-					printContent += '	<li><b>End Date:</b> ' + formData["Hire-End-Date"] + '</li>';
+					printContent += '	<li><b>Anticipated End Date:</b> ' + formData["Hire-End-Date"] + '</li>';
 				}
 				printContent += '	<li><b>Funding Source:</b> ' + formData["Hire-Funding-Source"] + '</li>';
 				
-				if (formData["Hire-Funding-Source"] == "Grant Funds") {
+				if (formData["Hire-Funding-Source"] == "Grant Funds" || formData["Hire-Funding-Source"] == "Endowment Funds") {
 					printContent += '	<li><b>Accounts:</b> <ol>';
+					var accountSetIdentifier = 'Hire-account-numbers-set';
 					$.each(formData["RepeatedElements"], function(i, accountSet) {
-						if (i != 0) { accountSetPropertyNameSuffix = '-repeat-' + i; }
-						printContent += '						<li>Account ' + (i + 1) + '<ol>' +
-										'							<li><b>Grant Object Code:</b> ' + accountSet["Grant-Object-Code" + accountSetPropertyNameSuffix] + '</li>' + 
-										'							<li><b>Grant Source Code:</b> ' + accountSet["Grant-Source-Code" + accountSetPropertyNameSuffix] + '</li>' + 
-										'							<li><b>Percent Salary from this Account:</b> ' + accountSet["Percent-Salary-from-this-Account" + accountSetPropertyNameSuffix] + '</li>' + 
-										'						</ol></li>';
+						console.log('accountSet');
+						console.log(accountSet);
+						if (StrInStr(accountSet.ID, accountSetIdentifier)){
+							accountSetPropertyNameSuffix = StrInStr(accountSet.ID, accountSetIdentifier, 3);
+							printContent += '						<li>Account ' + (i + 1) + '<ol>' +
+											'							<li><b>Grant Object Code:</b> ' + accountSet["Hire-Grant-Object-Code" + accountSetPropertyNameSuffix] + '</li>' + 
+											'							<li><b>Grant Source Code:</b> ' + accountSet["Hire-Grant-Source-Code" + accountSetPropertyNameSuffix] + '</li>' + 
+											'							<li><b>Percent Salary from this Account:</b> ' + accountSet["Hire-Percent-Salary-from-this-Account" + accountSetPropertyNameSuffix] + '</li>' + 
+											'						</ol></li>';
+						}
+					
 					});
 					printContent += '					</ol></li>';
 				}
@@ -14330,27 +14339,33 @@
 
 						printContent += '<h2>Position Change</h2>' +
 										'<table style="width: 100%;">' + 
-										'	<tr style="width: 100%;">' + 
-										'		<td style="width: 50%;>' +
-										'			<h3>From</h3>' + 
-										'			<ul style="margin: 0;">' + 
-										'				<li><b>Position Title:</b> ' + formData["Position-Change-Previous-Position-Title"] + '</li>' + 
-										'				<li><b>Department:</b> ' + formData["Position-Change-Previous-Department"] + '</li>' + 
-										'				<li><b>Manager / Supervisor:</b> ' + formData["Position-Change-Previous-Manager"][0]["displayText"] + '</li>' + 
-										'				<li><b>Grade:</b> ' + formData["Position-Change-Previous-Grade"] + '</li>' + 
-										'				<li><b>Scheduled Hours, Biweekly:</b> ' + formData["Position-Change-Previous-Scheduled-Hours-Biweekly"] + '</li>' + 
-										'				<li><b>Scheduled Hours, Annually:</b> ' + formData["Position-Change-Previous-Scheduled-Hours-Annually"] + '</li>' + 
-										'				<li><b>Employee Classification:</b> ' + formData["Position-Change-Previous-Employee-Classification"] + '</li>' + 
-										'				<li><b>Start Date:</b> ' + formData["Position-Change-Previous-Start-Date"] + '</li>';
+										'	<tr style="width: 100%;">';
 
-						if (formData["Position-Change-Previous-Employee-Classification"] != "Regular FT" && formData["Position-Change-Previous-Employee-Classification"] != "Regular PT") {
-							printContent += '				<li><b>End Date:</b> ' + formData["Position-Change-Previous-End-Date"] + '</li>';
-						}
 
-						printContent += '			</ul>' + 
-										'		</td>' + 
-										'		<td style="width: 50%;>' +
-										'			<h3>To</h3>' + 
+
+						// 				'		<td style="width: 50%;>' +
+						// 				'			<h3>From</h3>' + 
+						// 				'			<ul style="margin: 0;">' + 
+						// 				'				<li><b>Position Title:</b> ' + formData["Position-Change-Previous-Position-Title"] + '</li>' + 
+						// 				'				<li><b>Department:</b> ' + formData["Position-Change-Previous-Department"] + '</li>' + 
+						// 				'				<li><b>Manager / Supervisor:</b> ' + formData["Position-Change-Previous-Manager"][0]["displayText"] + '</li>' + 
+						// 				'				<li><b>Grade:</b> ' + formData["Position-Change-Previous-Grade"] + '</li>' + 
+						// 				'				<li><b>Scheduled Hours, Biweekly:</b> ' + formData["Position-Change-Previous-Scheduled-Hours-Biweekly"] + '</li>' + 
+						// 				'				<li><b>Scheduled Hours, Annually:</b> ' + formData["Position-Change-Previous-Scheduled-Hours-Annually"] + '</li>' + 
+						// 				'				<li><b>Employee Classification:</b> ' + formData["Position-Change-Previous-Employee-Classification"] + '</li>' + 
+						// 				'				<li><b>Start Date:</b> ' + formData["Position-Change-Previous-Start-Date"] + '</li>';
+
+						// if (formData["Position-Change-Previous-Employee-Classification"] != "Regular FT" && formData["Position-Change-Previous-Employee-Classification"] != "Regular PT") {
+						// 	printContent += '				<li><b>End Date:</b> ' + formData["Position-Change-Previous-End-Date"] + '</li>';
+						// }
+
+						// printContent += '			</ul>' + 
+						// 				'		</td>' + 
+
+
+
+						printContent += '		<td style="width: 50%;>' +
+										'			<h3>New Position</h3>' + 
 										'			<ul style="margin: 0;">' + 
 										'				<li><b>Position Title:</b> ' + formData["Position-Change-Position-Title"] + '</li>' + 
 										'				<li><b>Department:</b> ' + formData["Position-Change-Department"] + '</li>' + 
@@ -14359,7 +14374,7 @@
 										'				<li><b>Scheduled Hours, Biweekly:</b> ' + formData["Position-Change-Scheduled-Hours-Biweekly"] + '</li>' + 
 										'				<li><b>Scheduled Hours, Annually:</b> ' + formData["Position-Change-Scheduled-Hours-Annually"] + '</li>' + 
 										'				<li><b>Employee Classification:</b> ' + formData["Position-Change-Employee-Classification"] + '</li>' + 
-										'				<li><b>Start Date:</b> ' + formData["Position-Change-Start-Date"] + '</li>';
+										'				<li><b>Anticipated Start Date:</b> ' + formData["Position-Change-Start-Date"] + '</li>';
 
 						if (formData["Position-Change-Employee-Classification"] != "Regular FT" && formData["Position-Change-Employee-Classification"] != "Regular PT") {
 							printContent += '				<li><b>End Date:</b> ' + formData["Position-Change-End-Date"] + '</li>';
@@ -14402,11 +14417,11 @@
 					if (typeof(formData["status-change_wage-change"]) !== "undefined") {
 						printContent += '<h2>Wage Change</h2>' +
 										'<ul style="margin: 0;">' + 
-										'	<li><b>Effective Beginning Date:</b> ' + formData["Wage-Change-Effective-Beginning-Date"] + '</li>' + 
+										'	<li><b>Anticipated Start Date:</b> ' + formData["Wage-Change-Effective-Beginning-Date"] + '</li>' + 
 										'	<li><b>Department:</b> ' + formData["Wage-Change-Department"] + '</li>' + 
 										'	<li><b>Scheduled Hours, Biweekly:</b> ' + formData["Wage-Change-Scheduled-Hours-Biweekly"] + '</li>' + 
 										'	<li><b>Scheduled Hours, Annually:</b> ' + formData["Wage-Change-Scheduled-Hours-Annually"] + '</li>' + 
-										'	<li><b>Previous Hourly Wage:</b> ' + formData["Wage-Change-Previous-Hourly-Wage"] + '</li>' + 
+										// '	<li><b>Previous Hourly Wage:</b> ' + formData["Wage-Change-Previous-Hourly-Wage"] + '</li>' + 
 										'	<li><b>Hourly Wage:</b> ' + formData["Wage-Change-Hourly-Wage"] + '</li>' + 
 										'	<li><b>Annualized Salary:</b> ' + formData["Wage-Change-Annualized-Salary"] + '</li>';
 										
@@ -14426,12 +14441,30 @@
 					if (typeof(formData["status-change_schedule-change"]) !== "undefined") {
 						printContent += '<h2>Schedule Change</h2>' +
 										'<ul style="margin: 0;">' + 
-										'	<li><b>Effective Beginning Date:</b> ' + formData["Schedule-Change-Effective-Beginning-Date"] + '</li>' + 
-										'	<li><b>Department:</b> ' + formData["Schedule-Change-Department"] + '</li>' + 
-										'	<li><b>Previous Scheduled Hours, Biweekly:</b> ' + formData["Schedule-Change-Previous-Scheduled-Hours-Biweekly"] + '</li>' + 
+										'	<li><b>Position Title:</b> ' + formData["Schedule-Change-Position-Title"] + '</li>' + 
+										'	<li><b>Anticipated Start Date:</b> ' + formData["Schedule-Change-Effective-Beginning-Date"] + '</li>';
+						if (typeof (formData["Schedule-Change-Effective-End-Date"]) !== "undefined") {
+							printContent += '	<li><b>Anticipated End Date:</b> ' + formData["Schedule-Change-Effective-End-Date"] + '</li>';
+						}
+						printContent += '	<li><b>Department:</b> ' + formData["Schedule-Change-Department"] + '</li>' + 
+										// '	<li><b>Previous Scheduled Hours, Biweekly:</b> ' + formData["Schedule-Change-Previous-Scheduled-Hours-Biweekly"] + '</li>' + 
 										'	<li><b>Scheduled Hours, Biweekly:</b> ' + formData["Schedule-Change-Scheduled-Hours-Biweekly"] + '</li>' + 
 										'	<li><b>Reason:</b> ' + formData["Schedule-Change-Reason"] + '</li>' + 
 										'	<li><b>Funding Source:</b> ' + formData["Schedule-Change-Funding-Source"] + '</li>';
+
+						if (formData["Schedule-Change-Funding-Source"] == "Grant Funds") {
+							printContent += '	<li><b>Accounts:</b> <ol>';
+							$.each(formData["RepeatedElements"], function (i, accountSet) {
+								if (i != 0) { accountSetPropertyNameSuffix = '-repeat-' + i; }
+								printContent += '						<li>Account ' + (i + 1) + '<ol>' +
+									'							<li><b>Grant Object Code:</b> ' + accountSet["Shcedule-Change-Grant-Object-Code" + accountSetPropertyNameSuffix] + '</li>' +
+									'							<li><b>Grant Source Code:</b> ' + accountSet["Shcedule-Change-Grant-Source-Code" + accountSetPropertyNameSuffix] + '</li>' +
+									'							<li><b>Percent Salary from this Account:</b> ' + accountSet["Shcedule-Change-Percent-Salary-from-this-Account" + accountSetPropertyNameSuffix] + '</li>' +
+									'						</ol></li>';
+							});
+							printContent += '					</ol></li>';
+						}
+						printContent += '</ul>';
 					}
 
 
@@ -14442,7 +14475,7 @@
 					if (typeof(formData["status-change_temporary-extension"]) !== "undefined") {
 						printContent += '<h2>Temporary Extension</h2>' +
 										'<ul style="margin: 0;">' + 
-										'	<li><b>Effective Beginning Date:</b> ' + formData["Temporary-Extension-Effective-Beginning-Date"] + '</li>' + 
+										'	<li><b>Anticipated Start Date:</b> ' + formData["Temporary-Extension-Effective-Beginning-Date"] + '</li>' + 
 										'	<li><b>Effective Ending Date:</b> ' + formData["Temporary-Extension-Effective-Ending-Date"] + '</li>' + 
 										'	<li><b>Reason:</b> ' + formData["Temporary-Extension-Reason"] + '</li>' + 
 										'	<li><b>Funding Source:</b> ' + formData["Temporary-Extension-Funding-Source"] + '</li>';
@@ -16105,6 +16138,11 @@
 
 
 	function ReturnRequestStorageObjectPropertiesAndPushRequestColumns(formElement) {
+
+		// this is probably kinda hokey, but 3 days prior to major release this is what works
+		if (typeof (globalSubmissionValuePairsArray) === "undefined") {
+			globalSubmissionValuePairsArray = [];
+		}
 
 		var formDataString = '';
 
@@ -20546,7 +20584,7 @@
 		// wait for all data retrieval / setting promises to complete (pass or fail) 
 		$.when.apply($, allDataRetrievalAndSettingPromises).always(function() {
 
-			console.log('using dev_mos-main_long.1.04 m57 - DevCode4');
+			console.log('using dev_mos-main_long.1.04 m1 - DevCode4');
 
 			$().ConfigureAndShowScreenContainerAndAllScreens();
 		});

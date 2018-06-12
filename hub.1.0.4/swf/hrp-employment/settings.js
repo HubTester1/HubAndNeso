@@ -385,71 +385,71 @@
 				'labelContent': "Grade",
 				"setOptions": [
 					{
-						"value": "Grade 25",
-						"display": "Grade 25"
+						"value": "25",
+						"display": "25"
 					}, {
-						"value": "Grade 26",
-						"display": "Grade 26"
+						"value": "26",
+						"display": "26"
 					}, {
-						"value": "Grade 27",
-						"display": "Grade 27"
+						"value": "27",
+						"display": "27"
 					}, {
-						"value": "Grade 28",
-						"display": "Grade 28"
+						"value": "28",
+						"display": "28"
 					}, {
-						"value": "Grade 29",
-						"display": "Grade 29"
+						"value": "29",
+						"display": "29"
 					}, {
-						"value": "Grade 30",
-						"display": "Grade 30"
+						"value": "30",
+						"display": "30"
 					}, {
-						"value": "Grade 31",
-						"display": "Grade 31"
+						"value": "31",
+						"display": "31"
 					}, {
-						"value": "Grade 32",
-						"display": "Grade 32"
+						"value": "32",
+						"display": "32"
 					}, {
-						"value": "Grade 33",
-						"display": "Grade 33"
+						"value": "33",
+						"display": "33"
 					}, {
-						"value": "Grade 34",
-						"display": "Grade 34"
+						"value": "34",
+						"display": "34"
 					}, {
-						"value": "Grade 35",
-						"display": "Grade 35"
+						"value": "35",
+						"display": "35"
 					}, {
-						"value": "Grade 36",
-						"display": "Grade 36"
+						"value": "36",
+						"display": "36"
 					}, {
-						"value": "Grade 37",
-						"display": "Grade 37"
+						"value": "37",
+						"display": "37"
 					}, {
-						"value": "Grade 38",
-						"display": "Grade 38"
+						"value": "38",
+						"display": "38"
 					}, {
-						"value": "Grade 39",
-						"display": "Grade 39"
+						"value": "39",
+						"display": "39"
 					}, {
-						"value": "Grade 40",
-						"display": "Grade 40"
+						"value": "40",
+						"display": "40"
 					}, {
-						"value": "Grade 41",
-						"display": "Grade 41"
+						"value": "41",
+						"display": "41"
 					}, {
-						"value": "Grade 42",
-						"display": "Grade 42"
+						"value": "42",
+						"display": "42"
 					}, {
-						"value": "Grade 43",
-						"display": "Grade 43"
+						"value": "43",
+						"display": "43"
 					}, {
-						"value": "Grade 44",
-						"display": "Grade 44"
+						"value": "44",
+						"display": "44"
 					}, {
-						"value": "Grade 45",
-						"display": "Grade 45"
+						"value": "45",
+						"display": "45"
 					}, {
-						"value": "Grade 46",
-						"display": "Grade 46"
+						"value": "46",
+						"display": "46"
 					}
 				],
 				'requiredForNonAdmin': [""],

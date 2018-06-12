@@ -23,7 +23,7 @@
 		'notifications': 0,
 	};
 
-	console.log("using settings m2");
+	console.log("using settings m3");
 
 	var oData = {
 		'admin': {
@@ -108,7 +108,7 @@
 			},
 			// 'standardThisRequestAndRequesterElements': 1,
 			// 'standardButtonElements': 1,
-			'standardButtonElementsInitiallyHidden': 1,
+			// 'standardButtonElementsInitiallyHidden': 1,
 			'standardComponentGrpAdminOnlyElements': 1
 		},
 		'alwaysTalkToRequester': 1,
@@ -536,7 +536,7 @@
 								"type": "text"
 							}, {
 								"fieldName": "Hire Grade",
-								"type": "text"
+								"type": "select"
 							}, {
 								"fieldName": "Hire Employee Classification",
 								"type": "select"
@@ -638,53 +638,56 @@
 						],
 						"require": [
 							{
-								"fieldName": "Position Change Previous Position Title",
-								"type": "text"
-							}, {
+							// 	"fieldName": "Position Change Previous Position Title",
+							// 	"type": "text"
+							// }, {
 								"fieldName": "Position Change Position Title",
 								"type": "text"
-							}, {
-								"fieldName": "Position Change Previous Department",
-								"type": "select"
+							// }, {
+							// 	"fieldName": "Position Change Previous Department",
+							// 	"type": "select"
 							}, {
 								"fieldName": "Position Change Department",
 								"type": "select"
-							}, {
-								"fieldName": "Position Change Previous Manager",
-								"type": "peoplePicker"
+							// }, {
+							// 	"fieldName": "Position Change Previous Manager",
+							// 	"type": "peoplePicker"
 							}, {
 								"fieldName": "Position Change Manager",
 								"type": "peoplePicker"
-							}, {
-								"fieldName": "Position Change Previous Grade",
-								"type": "text"
+							// }, {
+							// 	"fieldName": "Position Change Previous Grade",
+							// 	"type": "select"
 							}, {
 								"fieldName": "Position Change Grade",
-								"type": "text"
-							}, {
-								"fieldName": "Position Change Previous Scheduled Hours Biweekly",
-								"type": "text"
+								"type": "select"
+							// }, {
+							// 	"fieldName": "Position Change Previous Scheduled Hours Biweekly",
+							// 	"type": "text"
 							}, {
 								"fieldName": "Position Change Scheduled Hours Biweekly",
 								"type": "text"
-							}, {
-								"fieldName": "Position Change Previous Scheduled Hours Annually",
-								"type": "text"
+							// }, {
+							// 	"fieldName": "Position Change Previous Scheduled Hours Annually",
+							// 	"type": "text"
 							}, {
 								"fieldName": "Position Change Scheduled Hours Annually",
 								"type": "text"
-							}, {
-								"fieldName": "Position Change Previous Employee Classification",
-								"type": "select"
+							// }, {
+							// 	"fieldName": "Position Change Previous Employee Classification",
+							// 	"type": "select"
 							}, {
 								"fieldName": "Position Change Employee Classification",
 								"type": "select"
-							}, {
-								"fieldName": "Position Change Previous Start Date",
-								"type": "datePicker"
+							// }, {
+							// 	"fieldName": "Position Change Previous Start Date",
+							// 	"type": "datePicker"
 							}, {
 								"fieldName": "Position Change Start Date",
 								"type": "datePicker"
+							}, {
+								"fieldName": "Wage Change With Position Change",
+								"type": "radio"
 							}
 						],
 					}, {
@@ -694,53 +697,56 @@
 						],
 						"optional": [
 							{
-								"fieldName": "Position Change Previous Position Title",
-								"type": "text"
-							}, {
+							// 	"fieldName": "Position Change Previous Position Title",
+							// 	"type": "text"
+							// }, {
 								"fieldName": "Position Change Position Title",
 								"type": "text"
-							}, {
-								"fieldName": "Position Change Previous Department",
-								"type": "select"
+							// }, {
+							// 	"fieldName": "Position Change Previous Department",
+							// 	"type": "select"
 							}, {
 								"fieldName": "Position Change Department",
 								"type": "select"
-							}, {
-								"fieldName": "Position Change Previous Manager",
-								"type": "peoplePicker"
+							// }, {
+							// 	"fieldName": "Position Change Previous Manager",
+							// 	"type": "peoplePicker"
 							}, {
 								"fieldName": "Position Change Manager",
 								"type": "peoplePicker"
-							}, {
-								"fieldName": "Position Change Previous Grade",
-								"type": "text"
+							// }, {
+							// 	"fieldName": "Position Change Previous Grade",
+							// 	"type": "select"
 							}, {
 								"fieldName": "Position Change Grade",
-								"type": "text"
-							}, {
-								"fieldName": "Position Change Previous Scheduled Hours Biweekly",
-								"type": "text"
+								"type": "select"
+							// }, {
+							// 	"fieldName": "Position Change Previous Scheduled Hours Biweekly",
+							// 	"type": "text"
 							}, {
 								"fieldName": "Position Change Scheduled Hours Biweekly",
 								"type": "text"
-							}, {
-								"fieldName": "Position Change Previous Scheduled Hours Annually",
-								"type": "text"
+							// }, {
+							// 	"fieldName": "Position Change Previous Scheduled Hours Annually",
+							// 	"type": "text"
 							}, {
 								"fieldName": "Position Change Scheduled Hours Annually",
 								"type": "text"
-							}, {
-								"fieldName": "Position Change Previous Employee Classification",
-								"type": "select"
+							// }, {
+							// 	"fieldName": "Position Change Previous Employee Classification",
+							// 	"type": "select"
 							}, {
 								"fieldName": "Position Change Employee Classification",
 								"type": "select"
-							}, {
-								"fieldName": "Position Change Previous Start Date",
-								"type": "datePicker"
+							// }, {
+							// 	"fieldName": "Position Change Previous Start Date",
+							// 	"type": "datePicker"
 							}, {
 								"fieldName": "Position Change Start Date",
 								"type": "datePicker"
+							}, {
+								"fieldName": "Wage Change With Position Change",
+								"type": "radio"
 							}
 						],
 
@@ -760,7 +766,7 @@
 								"type": "select"
 							}, {
 								"fieldName": "Additional Position Grade",
-								"type": "text"
+								"type": "select"
 							}, {
 								"fieldName": "Additional Position Scheduled Hours Biweekly",
 								"type": "text"
@@ -795,7 +801,7 @@
 								"type": "select"
 							}, {
 								"fieldName": "Additional Position Grade",
-								"type": "text"
+								"type": "select"
 							}, {
 								"fieldName": "Additional Position Scheduled Hours Biweekly",
 								"type": "text"
@@ -821,6 +827,19 @@
 
 					}, {
 						"anyOfSpecificCheckboxesAreChecked": ["#status-change_wage-change"],
+						"set": [
+							{ 
+								"fieldName": "Wage Change With Position Change",
+								"type": "radio",
+								"valueAffected": "yes",
+								"checked": 1,
+							}, {
+								"fieldName": "Wage Change With Position Change",
+								"type": "radio",
+								"valueAffected": "no",
+								"checked": 0,
+							}
+						],
 						"show": [
 							{ "divID": "container_wage-change-fieldset" },
 						],
@@ -837,9 +856,9 @@
 							}, {
 								"fieldName": "Wage Change Scheduled Hours Annually",
 								"type": "text"
-							}, {
-								"fieldName": "Wage Change Previous Hourly Wage",
-								"type": "text"
+							// }, {
+							// 	"fieldName": "Wage Change Previous Hourly Wage",
+							// 	"type": "text"
 							}, {
 								"fieldName": "Wage Change Hourly Wage",
 								"type": "text"
@@ -853,6 +872,19 @@
 						],
 					}, {
 						"noneOfSpecificCheckboxesAreChecked": ["#status-change_wage-change"],
+						/* "set": [
+							{
+								"fieldName": "Wage Change With Position Change",
+								"type": "radio",
+								"valueAffected": "yes",
+								"checked": 0,
+							}, {
+								"fieldName": "Wage Change With Position Change",
+								"type": "radio",
+								"valueAffected": "no",
+								"checked": 1,
+							}
+						], */
 						"hide": [
 							{ "divID": "container_wage-change-fieldset" },
 						],
@@ -869,9 +901,9 @@
 							}, {
 								"fieldName": "Wage Change Scheduled Hours Annually",
 								"type": "text"
-							}, {
-								"fieldName": "Wage Change Previous Hourly Wage",
-								"type": "text"
+							// }, {
+							// 	"fieldName": "Wage Change Previous Hourly Wage",
+							// 	"type": "text"
 							}, {
 								"fieldName": "Wage Change Hourly Wage",
 								"type": "text"
@@ -893,14 +925,17 @@
 						],
 						"require": [
 							{
+								"fieldName": "Schedule Change Position Title",
+								"type": "text"
+							}, {
 								"fieldName": "Schedule Change Effective Beginning Date",
 								"type": "datePicker"
 							}, {
 								"fieldName": "Schedule Change Department",
 								"type": "select"
-							}, {
-								"fieldName": "Schedule Change Previous Scheduled Hours Biweekly",
-								"type": "text"
+							// }, {
+							// 	"fieldName": "Schedule Change Previous Scheduled Hours Biweekly",
+							// 	"type": "text"
 							}, {
 								"fieldName": "Schedule Change Scheduled Hours Biweekly",
 								"type": "text"
@@ -919,14 +954,17 @@
 						],
 						"optional": [
 							{
+								"fieldName": "Schedule Change Position Title",
+								"type": "text"
+							}, {
 								"fieldName": "Schedule Change Effective Beginning Date",
 								"type": "datePicker"
 							}, {
 								"fieldName": "Schedule Change Department",
 								"type": "select"
-							}, {
-								"fieldName": "Schedule Change Previous Scheduled Hours Biweekly",
-								"type": "text"
+							// }, {
+							// 	"fieldName": "Schedule Change Previous Scheduled Hours Biweekly",
+							// 	"type": "text"
 							}, {
 								"fieldName": "Schedule Change Scheduled Hours Biweekly",
 								"type": "text"
@@ -1172,11 +1210,11 @@
 						'hideForAdmin': ['', 'Submitted', 'Cancelled']
 					}
 				],
-				/* 'onChange': [
+				'onChange': [
 					{
 						'allOfSpecificCheckboxesAreChecked': ['input#employment-authorization-request_yes'],
 						'show': [
-							{ 'divID': 'container_primary-fieldset' },
+							{ 'divID': 'container_secondary-fieldset' },
 							// { 'divID': 'submit-or-exit' },
 						],
 						"require": [
@@ -1191,7 +1229,7 @@
 					}, {
 						'allOfSpecificCheckboxesAreChecked': ['input#employment-authorization-request_no'],
 						'hide': [
-							{ 'divID': 'container_primary-fieldset' },
+							{ 'divID': 'container_secondary-fieldset' },
 							// { 'divID': 'submit-or-exit' },
 						],
 						"optional": [
@@ -1204,7 +1242,7 @@
 							{ 'noteID': 'help-note_no-employment-authorization-request' },
 						],
 					}
-				], */
+				],
 				'hideForNonAdmin': ['Submitted', 'Cancelled'],
 				'hideForAdmin': ['Submitted', 'Cancelled'],
 			}, {
@@ -1212,6 +1250,17 @@
 				'tag': 'div',
 				'end': 1,
 
+
+
+
+
+			// --- SECONDARY FIELDSET
+
+			}, {
+				'elementType': 'markup',
+				'tag': 'div',
+				'begin': 1,
+				'htmlID': 'container_secondary-fieldset',
 
 
 
@@ -1356,9 +1405,78 @@
 				'disabledForAdmin': ['Submitted', 'Cancelled']
 			}, {
 				'elementType': "field",
-				'controlType': "text",
+				'controlType': "select",
 				'fieldName': "Hire Grade",
 				'labelContent': "Grade",
+				"setOptions": [
+					{
+						"value": "25",
+						"display": "25"
+					}, {
+						"value": "26",
+						"display": "26"
+					}, {
+						"value": "27",
+						"display": "27"
+					}, {
+						"value": "28",
+						"display": "28"
+					}, {
+						"value": "29",
+						"display": "29"
+					}, {
+						"value": "30",
+						"display": "30"
+					}, {
+						"value": "31",
+						"display": "31"
+					}, {
+						"value": "32",
+						"display": "32"
+					}, {
+						"value": "33",
+						"display": "33"
+					}, {
+						"value": "34",
+						"display": "34"
+					}, {
+						"value": "35",
+						"display": "35"
+					}, {
+						"value": "36",
+						"display": "36"
+					}, {
+						"value": "37",
+						"display": "37"
+					}, {
+						"value": "38",
+						"display": "38"
+					}, {
+						"value": "39",
+						"display": "39"
+					}, {
+						"value": "40",
+						"display": "40"
+					}, {
+						"value": "41",
+						"display": "41"
+					}, {
+						"value": "42",
+						"display": "42"
+					}, {
+						"value": "43",
+						"display": "43"
+					}, {
+						"value": "44",
+						"display": "44"
+					}, {
+						"value": "45",
+						"display": "45"
+					}, {
+						"value": "46",
+						"display": "46"
+					}
+				],
 				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
 				'disabledForAdmin': ['Submitted', 'Cancelled']
 			}, {
@@ -1373,9 +1491,9 @@
 					}, {
 						"value": "Regular PT",
 						"display": "Regular, Part-time"
-					}, {
-						"value": "Casual FT",
-						"display": "Casual, Full-time"
+						// }, {
+						// 	"value": "Casual FT",
+						// 	"display": "Casual, Full-time"
 					}, {
 						"value": "Casual PT",
 						"display": "Casual, Part-time"
@@ -1398,11 +1516,14 @@
 						"value": "Campaign PT",
 						"display": "Campaign, Part-time"
 					}, {
-						"value": "Intern FT",
-						"display": "Intern, Full-time"
-					}, {
-						"value": "Intern PT",
-						"display": "Intern, Part-time"
+						"value": "Intern",
+						"display": "Intern"
+						// }, {
+						// 	"value": "Intern FT",
+						// 	"display": "Intern, Full-time"
+						// }, {
+						// 	"value": "Intern PT",
+						// 	"display": "Intern, Part-time"
 					}, {
 						"value": "Fellow FT",
 						"display": "Fellow, Full-time"
@@ -1476,7 +1597,6 @@
 				'disabledForAdmin': ['Submitted', 'Cancelled'],
 				'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
 				'hideForAdmin': ['', 'Submitted', 'Cancelled']
-
 			}, {
 				"elementType": "field",
 				"controlType": "select",
@@ -1501,9 +1621,9 @@
 				"disabledForAdmin": ['Submitted', 'Cancelled'],
 				"onChange": [
 					{
-						"thisFieldNotEquals": ["Grant Funds"],
+						"thisFieldNotEquals": ["Grant Funds", "Endowment Funds"],
 						"hide": [{
-							"divID": "account-numbers-sets"
+							"divID": "Hire-account-numbers-sets"
 						}],
 						"optional": [
 							{
@@ -1521,9 +1641,9 @@
 							}
 						]
 					}, {
-						"thisFieldEquals": ["Grant Funds"],
+						"thisFieldEquals": ["Grant Funds", "Endowment Funds"],
 						"show": [{
-							"divID": "account-numbers-sets"
+							"divID": "Hire-account-numbers-sets"
 						}],
 						"require": [
 							{
@@ -1546,7 +1666,7 @@
 				'elementType': "markup",
 				'tag': "div",
 				'begin': 1,
-				'htmlID': "account-numbers-sets",
+				'htmlID': "Hire-account-numbers-sets",
 				'htmlClass': "subsection-container repeating-content-container",
 				'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
 				'hideForAdmin': ['', 'Submitted', 'Cancelled']
@@ -1554,7 +1674,7 @@
 				'elementType': "markup",
 				'tag': "div",
 				'begin': 1,
-				'htmlID': "account-numbers-set",
+				'htmlID': "Hire-account-numbers-set",
 				'htmlClass': "subsection repeat-container",
 				'repeatable': 1
 			}, {
@@ -1598,10 +1718,10 @@
 				'tag': "a",
 				'begin': 1,
 				'end': 1,
-				'htmlID': "repeat-account-numbers-set",
+				'htmlID': "repeat-Hire-account-numbers-set",
 				'htmlClass': "repeat-section-anchor",
 				'content': "Insert an Account",
-				'repeatSectionID': "account-numbers-set",
+				'repeatSectionID': "Hire-account-numbers-set",
 				'hideForNonAdmin': ['Submitted', 'Cancelled'],
 				'hideForAdmin': ['Submitted', 'Cancelled'],
 			}, {
@@ -1638,13 +1758,13 @@
 
 
 
-			}, {
-				'elementType': "field",
-				'controlType': "text",
-				'fieldName': "Position Change Previous Position Title",
-				'labelContent': "Previous Position Title",
-				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
-				'disabledForAdmin': ['Submitted', 'Cancelled']
+			// }, {
+			// 	'elementType': "field",
+			// 	'controlType': "text",
+			// 	'fieldName': "Position Change Previous Position Title",
+			// 	'labelContent': "Previous Position Title",
+			// 	'disabledForNonAdmin': ['Submitted', 'Cancelled'],
+			// 	'disabledForAdmin': ['Submitted', 'Cancelled']
 			}, {
 				'elementType': "field",
 				'controlType': "text",
@@ -1654,16 +1774,16 @@
 				'disabledForAdmin': ['Submitted', 'Cancelled']
 
 
-			}, {
-				"elementType": "field",
-				"controlType": "select",
-				'fieldName': "Position Change Previous Department",
-				'labelContent': "Previous Department",
-				'loadOptions': {
-					'function': 'LoadDepartmentSelectOptions'
-				},
-				"disabledForNonAdmin": ['Submitted', 'Cancelled'],
-				"disabledForAdmin": ['Submitted', 'Cancelled'],
+			// }, {
+			// 	"elementType": "field",
+			// 	"controlType": "select",
+			// 	'fieldName': "Position Change Previous Department",
+			// 	'labelContent': "Previous Department",
+			// 	'loadOptions': {
+			// 		'function': 'LoadDepartmentSelectOptions'
+			// 	},
+			// 	"disabledForNonAdmin": ['Submitted', 'Cancelled'],
+			// 	"disabledForAdmin": ['Submitted', 'Cancelled'],
 			}, {
 				"elementType": "field",
 				"controlType": "select",
@@ -1676,14 +1796,14 @@
 				"disabledForAdmin": ['Submitted', 'Cancelled'],
 
 
-			}, {
-				'elementType': "field",
-				'controlType': "text",
-				'fieldName': "Position Change Previous Manager",
-				'labelContent': "Previous Manager / Supervisor",
-				'controlType': 'peoplePicker',
-				"disabledForNonAdmin": ['Submitted', 'Cancelled'],
-				"disabledForAdmin": ['Submitted', 'Cancelled'],
+			// }, {
+			// 	'elementType': "field",
+			// 	'controlType': "text",
+			// 	'fieldName': "Position Change Previous Manager",
+			// 	'labelContent': "Previous Manager / Supervisor",
+			// 	'controlType': 'peoplePicker',
+			// 	"disabledForNonAdmin": ['Submitted', 'Cancelled'],
+			// 	"disabledForAdmin": ['Submitted', 'Cancelled'],
 			}, {
 				'elementType': "field",
 				'controlType': "text",
@@ -1694,28 +1814,166 @@
 				'disabledForAdmin': ['Submitted', 'Cancelled']
 
 
+			// }, {
+			// 	'elementType': "field",
+			// 	'controlType': "select",
+			// 	'fieldName': "Position Change Previous Grade",
+			// 	'labelContent': "Previous Grade",
+			// 	"setOptions": [
+			// 		{
+			// 			"value": "25",
+			// 			"display": "25"
+			// 		}, {
+			// 			"value": "26",
+			// 			"display": "26"
+			// 		}, {
+			// 			"value": "27",
+			// 			"display": "27"
+			// 		}, {
+			// 			"value": "28",
+			// 			"display": "28"
+			// 		}, {
+			// 			"value": "29",
+			// 			"display": "29"
+			// 		}, {
+			// 			"value": "30",
+			// 			"display": "30"
+			// 		}, {
+			// 			"value": "31",
+			// 			"display": "31"
+			// 		}, {
+			// 			"value": "32",
+			// 			"display": "32"
+			// 		}, {
+			// 			"value": "33",
+			// 			"display": "33"
+			// 		}, {
+			// 			"value": "34",
+			// 			"display": "34"
+			// 		}, {
+			// 			"value": "35",
+			// 			"display": "35"
+			// 		}, {
+			// 			"value": "36",
+			// 			"display": "36"
+			// 		}, {
+			// 			"value": "37",
+			// 			"display": "37"
+			// 		}, {
+			// 			"value": "38",
+			// 			"display": "38"
+			// 		}, {
+			// 			"value": "39",
+			// 			"display": "39"
+			// 		}, {
+			// 			"value": "40",
+			// 			"display": "40"
+			// 		}, {
+			// 			"value": "41",
+			// 			"display": "41"
+			// 		}, {
+			// 			"value": "42",
+			// 			"display": "42"
+			// 		}, {
+			// 			"value": "43",
+			// 			"display": "43"
+			// 		}, {
+			// 			"value": "44",
+			// 			"display": "44"
+			// 		}, {
+			// 			"value": "45",
+			// 			"display": "45"
+			// 		}, {
+			// 			"value": "46",
+			// 			"display": "46"
+			// 		}
+			// 	],
+			// 	'disabledForNonAdmin': ['Submitted', 'Cancelled'],
+			// 	'disabledForAdmin': ['Submitted', 'Cancelled']
 			}, {
 				'elementType': "field",
-				'controlType': "text",
-				'fieldName': "Position Change Previous Grade",
-				'labelContent': "Previous Grade",
-				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
-				'disabledForAdmin': ['Submitted', 'Cancelled']
-			}, {
-				'elementType': "field",
-				'controlType': "text",
+				'controlType': "select",
 				'fieldName': "Position Change Grade",
 				'labelContent': "Grade",
+				"setOptions": [
+					{
+						"value": "25",
+						"display": "25"
+					}, {
+						"value": "26",
+						"display": "26"
+					}, {
+						"value": "27",
+						"display": "27"
+					}, {
+						"value": "28",
+						"display": "28"
+					}, {
+						"value": "29",
+						"display": "29"
+					}, {
+						"value": "30",
+						"display": "30"
+					}, {
+						"value": "31",
+						"display": "31"
+					}, {
+						"value": "32",
+						"display": "32"
+					}, {
+						"value": "33",
+						"display": "33"
+					}, {
+						"value": "34",
+						"display": "34"
+					}, {
+						"value": "35",
+						"display": "35"
+					}, {
+						"value": "36",
+						"display": "36"
+					}, {
+						"value": "37",
+						"display": "37"
+					}, {
+						"value": "38",
+						"display": "38"
+					}, {
+						"value": "39",
+						"display": "39"
+					}, {
+						"value": "40",
+						"display": "40"
+					}, {
+						"value": "41",
+						"display": "41"
+					}, {
+						"value": "42",
+						"display": "42"
+					}, {
+						"value": "43",
+						"display": "43"
+					}, {
+						"value": "44",
+						"display": "44"
+					}, {
+						"value": "45",
+						"display": "45"
+					}, {
+						"value": "46",
+						"display": "46"
+					}
+				],
 				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
 				'disabledForAdmin': ['Submitted', 'Cancelled']
 
-			}, {
-				'elementType': "field",
-				'controlType': "text",
-				'fieldName': "Position Change Previous Scheduled Hours Biweekly",
-				'labelContent': "Previous Scheduled Hours, Biweekly",
-				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
-				'disabledForAdmin': ['Submitted', 'Cancelled']
+			// }, {
+			// 	'elementType': "field",
+			// 	'controlType': "text",
+			// 	'fieldName': "Position Change Previous Scheduled Hours Biweekly",
+			// 	'labelContent': "Previous Scheduled Hours, Biweekly",
+			// 	'disabledForNonAdmin': ['Submitted', 'Cancelled'],
+			// 	'disabledForAdmin': ['Submitted', 'Cancelled']
 			}, {
 				'elementType': "field",
 				'controlType': "text",
@@ -1725,13 +1983,13 @@
 				'disabledForAdmin': ['Submitted', 'Cancelled']
 
 
-			}, {
-				'elementType': "field",
-				'controlType': "text",
-				'fieldName': "Position Change Previous Scheduled Hours Annually",
-				'labelContent': "Previous Scheduled Hours, Annually",
-				'disabledForNonAdmin': ['', 'Submitted', 'Cancelled'],
-				'disabledForAdmin': ['', 'Submitted', 'Cancelled']
+			// }, {
+			// 	'elementType': "field",
+			// 	'controlType': "text",
+			// 	'fieldName': "Position Change Previous Scheduled Hours Annually",
+			// 	'labelContent': "Previous Scheduled Hours, Annually",
+			// 	'disabledForNonAdmin': ['', 'Submitted', 'Cancelled'],
+			// 	'disabledForAdmin': ['', 'Submitted', 'Cancelled']
 			}, {
 				'elementType': "field",
 				'controlType': "text",
@@ -1741,91 +1999,94 @@
 				'disabledForAdmin': ['', 'Submitted', 'Cancelled']
 
 
-			}, {
-				"elementType": "field",
-				"controlType": "select",
-				'fieldName': "Position Change Previous Employee Classification",
-				'labelContent': "Previous Employee Classification",
-				"setOptions": [
-					{
-						"value": "Regular FT",
-						"display": "Regular, Full-time"
-					}, {
-						"value": "Regular PT",
-						"display": "Regular, Part-time"
-					}, {
-						"value": "Casual FT",
-						"display": "Casual, Full-time"
-					}, {
-						"value": "Casual PT",
-						"display": "Casual, Part-time"
-					}, {
-						"value": "Temporary PT",
-						"display": "Temporary, Full-time"
-					}, {
-						"value": "Temporary PT",
-						"display": "Temporary, Part-time"
-					}, {
-						"value": "Grant FT",
-						"display": "Grant, Full-time"
-					}, {
-						"value": "Grant FT",
-						"display": "Grant, Part-time"
-					}, {
-						"value": "Campaign FT",
-						"display": "Campaign, Full-time"
-					}, {
-						"value": "Campaign PT",
-						"display": "Campaign, Part-time"
-					}, {
-						"value": "Intern FT",
-						"display": "Intern, Full-time"
-					}, {
-						"value": "Intern PT",
-						"display": "Intern, Part-time"
-					}, {
-						"value": "Fellow FT",
-						"display": "Fellow, Full-time"
-					}, {
-						"value": "Fellow PT",
-						"display": "Fellow, Part-time"
-					}
-				],
-				"disabledForNonAdmin": ['Submitted', 'Cancelled'],
-				"disabledForAdmin": ['Submitted', 'Cancelled'],
-				"onChange": [
-					{
-						"thisFieldEquals": ["Regular FT", "Regular PT"],
-						"hide": [
-							{ "fieldName": "Position Change Previous End Date" },
-							{ "fieldName": "Position Change End Date" },
-						],
-						"optional": [
-							{
-								"fieldName": "Position Change Previous End Date",
-								"type": "datePicker"
-							}, {
-								"fieldName": "Position Change End Date",
-								"type": "datePicker"
-							}
-						]
-					}, {
-						"thisFieldNotEquals": ["Regular FT", "Regular PT"],
-						"show": [
-							{ "fieldName": "Position Change Previous End Date" },
-							{ "fieldName": "Position Change End Date" },
-						],
-						"require": [
-							{
-								"fieldName": "Position Change Previous End Date",
-								"type": "datePicker"
-							}, {
-								"fieldName": "Position Change End Date",
-								"type": "datePicker"
-							}
-						]
-					}
-				]
+			// }, {
+			// 	"elementType": "field",
+			// 	"controlType": "select",
+			// 	'fieldName': "Position Change Previous Employee Classification",
+			// 	'labelContent': "Previous Employee Classification",
+			// 	"setOptions": [
+			// 		{
+			// 			"value": "Regular FT",
+			// 			"display": "Regular, Full-time"
+			// 		}, {
+			// 			"value": "Regular PT",
+			// 			"display": "Regular, Part-time"
+			// 			// }, {
+			// 			// 	"value": "Casual FT",
+			// 			// 	"display": "Casual, Full-time"
+			// 		}, {
+			// 			"value": "Casual PT",
+			// 			"display": "Casual, Part-time"
+			// 		}, {
+			// 			"value": "Temporary PT",
+			// 			"display": "Temporary, Full-time"
+			// 		}, {
+			// 			"value": "Temporary PT",
+			// 			"display": "Temporary, Part-time"
+			// 		}, {
+			// 			"value": "Grant FT",
+			// 			"display": "Grant, Full-time"
+			// 		}, {
+			// 			"value": "Grant FT",
+			// 			"display": "Grant, Part-time"
+			// 		}, {
+			// 			"value": "Campaign FT",
+			// 			"display": "Campaign, Full-time"
+			// 		}, {
+			// 			"value": "Campaign PT",
+			// 			"display": "Campaign, Part-time"
+			// 		}, {
+			// 			"value": "Intern",
+			// 			"display": "Intern"
+			// 			// }, {
+			// 			// 	"value": "Intern FT",
+			// 			// 	"display": "Intern, Full-time"
+			// 			// }, {
+			// 			// 	"value": "Intern PT",
+			// 			// 	"display": "Intern, Part-time"
+			// 		}, {
+			// 			"value": "Fellow FT",
+			// 			"display": "Fellow, Full-time"
+			// 		}, {
+			// 			"value": "Fellow PT",
+			// 			"display": "Fellow, Part-time"
+			// 		}
+			// 	],
+			// 	"disabledForNonAdmin": ['Submitted', 'Cancelled'],
+			// 	"disabledForAdmin": ['Submitted', 'Cancelled'],
+			// 	"onChange": [
+			// 		{
+			// 			"thisFieldEquals": ["Regular FT", "Regular PT"],
+			// 			"hide": [
+			// 				{ "fieldName": "Position Change Previous End Date" },
+			// 				{ "fieldName": "Position Change End Date" },
+			// 			],
+			// 			"optional": [
+			// 				{
+			// 					"fieldName": "Position Change Previous End Date",
+			// 					"type": "datePicker"
+			// 				}, {
+			// 					"fieldName": "Position Change End Date",
+			// 					"type": "datePicker"
+			// 				}
+			// 			]
+			// 		}, {
+			// 			"thisFieldNotEquals": ["Regular FT", "Regular PT"],
+			// 			"show": [
+			// 				{ "fieldName": "Position Change Previous End Date" },
+			// 				{ "fieldName": "Position Change End Date" },
+			// 			],
+			// 			"require": [
+			// 				{
+			// 					"fieldName": "Position Change Previous End Date",
+			// 					"type": "datePicker"
+			// 				}, {
+			// 					"fieldName": "Position Change End Date",
+			// 					"type": "datePicker"
+			// 				}
+			// 			]
+			// 		}
+			// 	]
 			}, {
 				"elementType": "field",
 				"controlType": "select",
@@ -1838,9 +2099,9 @@
 					}, {
 						"value": "Regular PT",
 						"display": "Regular, Part-time"
-					}, {
-						"value": "Casual FT",
-						"display": "Casual, Full-time"
+						// }, {
+						// 	"value": "Casual FT",
+						// 	"display": "Casual, Full-time"
 					}, {
 						"value": "Casual PT",
 						"display": "Casual, Part-time"
@@ -1863,11 +2124,14 @@
 						"value": "Campaign PT",
 						"display": "Campaign, Part-time"
 					}, {
-						"value": "Intern FT",
-						"display": "Intern, Full-time"
-					}, {
-						"value": "Intern PT",
-						"display": "Intern, Part-time"
+						"value": "Intern",
+						"display": "Intern"
+						// }, {
+						// 	"value": "Intern FT",
+						// 	"display": "Intern, Full-time"
+						// }, {
+						// 	"value": "Intern PT",
+						// 	"display": "Intern, Part-time"
 					}, {
 						"value": "Fellow FT",
 						"display": "Fellow, Full-time"
@@ -1911,31 +2175,36 @@
 				}]
 
 
-			}, {
-				'elementType': "field",
-				'controlType': "datePicker",
-				'fieldName': "Position Change Previous Start Date",
-				'labelContent': "Previous Start Date",
-				'disabledForNonAdmin': ['', 'Submitted', 'Cancelled'],
-				'disabledForAdmin': ['', 'Submitted', 'Cancelled']
+			// }, {
+			// 	'elementType': "field",
+			// 	'controlType': "datePicker",
+			// 	'fieldName': "Position Change Previous Start Date",
+			// 	'labelContent': "Previous Start Date",
+			// 	'disabledForNonAdmin': ['', 'Submitted', 'Cancelled'],
+			// 	'disabledForAdmin': ['', 'Submitted', 'Cancelled']
 			}, {
 				'elementType': "field",
 				'controlType': "datePicker",
 				'fieldName': "Position Change Start Date",
-				'labelContent': "Start Date",
+				'labelContent': "Anticipated Start Date",
 				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
-				'disabledForAdmin': ['Submitted', 'Cancelled']
+				'disabledForAdmin': ['Submitted', 'Cancelled'],
+				'helpNotes': [
+					{
+						'text': "Please select the beginning of a pay period",
+						'htmlID': "help-note_position-change-start-date",
+					}
+				],
 
-
-			}, {
-				'elementType': "field",
-				'controlType': "datePicker",
-				'fieldName': "Position Change Previous End Date",
-				'labelContent': "Previous End Date",
-				'disabledForNonAdmin': ['', 'Submitted', 'Cancelled'],
-				'disabledForAdmin': ['', 'Submitted', 'Cancelled'],
-				'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
-				'hideForAdmin': ['', 'Submitted', 'Cancelled']
+			// }, {
+			// 	'elementType': "field",
+			// 	'controlType': "datePicker",
+			// 	'fieldName': "Position Change Previous End Date",
+			// 	'labelContent': "Previous End Date",
+			// 	'disabledForNonAdmin': ['', 'Submitted', 'Cancelled'],
+			// 	'disabledForAdmin': ['', 'Submitted', 'Cancelled'],
+			// 	'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
+			// 	'hideForAdmin': ['', 'Submitted', 'Cancelled']
 			}, {
 				'elementType': "field",
 				'controlType': "datePicker",
@@ -1945,6 +2214,117 @@
 				'disabledForAdmin': ['Submitted', 'Cancelled'],
 				'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
 				'hideForAdmin': ['', 'Submitted', 'Cancelled']
+			}, {
+				'elementType': 'field',
+				'controlType': 'radio',
+				'fieldName': 'Wage Change With Position Change',
+				'choiceSetLabel': 'Is this employee\'s wage changing?',
+				'choices': [
+					{
+						'value': 'yes',
+						'display': 'Yes, this employee\'s wage is changing'
+					}, {
+						'value': 'no',
+						'display': 'No, this employee\'s wage is not changing'
+					}
+				],
+				'onChange': [
+					{
+						'allOfSpecificCheckboxesAreChecked': ['input#wage-change-with-position-change_yes'],
+						"set": [
+							{
+								"fieldName": "Status Change",
+								"type": "checkbox",
+								"valueAffected": "Wage Change",
+								"checked": 1
+							}, {
+								"fieldName": "Wage Change Department",
+								"type": "select",
+								"copyField": "Position Change Department",
+							}, {
+								"fieldName": "Wage Change Scheduled Hours Biweekly",
+								"type": "text",
+								"method": "dynamic",
+								"value": "$('input#Position-Change-Scheduled-Hours-Biweekly').val()"
+							}, {
+								"fieldName": "Wage Change Scheduled Hours Annually",
+								"type": "text",
+								"method": "dynamic",
+								"value": "$('input#Position-Change-Scheduled-Hours-Annually').val()"
+							}
+						],
+						"show": [
+							{ "divID": "container_wage-change-fieldset" },
+						],
+						"require": [
+							{
+								"fieldName": "Wage Change Effective Beginning Date",
+								"type": "datePicker"
+							}, {
+								"fieldName": "Wage Change Department",
+								"type": "select"
+							}, {
+								"fieldName": "Wage Change Scheduled Hours Biweekly",
+								"type": "text"
+							}, {
+								"fieldName": "Wage Change Scheduled Hours Annually",
+								"type": "text"
+								// }, {
+								// 	"fieldName": "Wage Change Previous Hourly Wage",
+								// 	"type": "text"
+							}, {
+								"fieldName": "Wage Change Hourly Wage",
+								"type": "text"
+							}, {
+								"fieldName": "Wage Change Annualized Salary",
+								"type": "text"
+							}, {
+								"fieldName": "Wage Change Reason",
+								"type": "select"
+							}
+						],
+					}, {
+						'allOfSpecificCheckboxesAreChecked': ['input#wage-change-with-position-change_no'],
+						"set": [
+							{
+								"fieldName": "Status Change",
+								"type": "checkbox",
+								"valueAffected": "Wage Change",
+								"checked": 0
+							}
+						],
+						"hide": [
+							{ "divID": "container_wage-change-fieldset" },
+						],
+						"optional": [
+							{
+								"fieldName": "Wage Change Effective Beginning Date",
+								"type": "datePicker"
+							}, {
+								"fieldName": "Wage Change Department",
+								"type": "select"
+							}, {
+								"fieldName": "Wage Change Scheduled Hours Biweekly",
+								"type": "text"
+							}, {
+								"fieldName": "Wage Change Scheduled Hours Annually",
+								"type": "text"
+								// }, {
+								// 	"fieldName": "Wage Change Previous Hourly Wage",
+								// 	"type": "text"
+							}, {
+								"fieldName": "Wage Change Hourly Wage",
+								"type": "text"
+							}, {
+								"fieldName": "Wage Change Annualized Salary",
+								"type": "text"
+							}, {
+								"fieldName": "Wage Change Reason",
+								"type": "select"
+							}
+						],
+					}
+				],
 
 
 			}, {
@@ -1998,6 +2378,75 @@
 				'controlType': "text",
 				'fieldName': "Additional Position Grade",
 				'labelContent': "Grade",
+				"setOptions": [
+					{
+						"value": "25",
+						"display": "25"
+					}, {
+						"value": "26",
+						"display": "26"
+					}, {
+						"value": "27",
+						"display": "27"
+					}, {
+						"value": "28",
+						"display": "28"
+					}, {
+						"value": "29",
+						"display": "29"
+					}, {
+						"value": "30",
+						"display": "30"
+					}, {
+						"value": "31",
+						"display": "31"
+					}, {
+						"value": "32",
+						"display": "32"
+					}, {
+						"value": "33",
+						"display": "33"
+					}, {
+						"value": "34",
+						"display": "34"
+					}, {
+						"value": "35",
+						"display": "35"
+					}, {
+						"value": "36",
+						"display": "36"
+					}, {
+						"value": "37",
+						"display": "37"
+					}, {
+						"value": "38",
+						"display": "38"
+					}, {
+						"value": "39",
+						"display": "39"
+					}, {
+						"value": "40",
+						"display": "40"
+					}, {
+						"value": "41",
+						"display": "41"
+					}, {
+						"value": "42",
+						"display": "42"
+					}, {
+						"value": "43",
+						"display": "43"
+					}, {
+						"value": "44",
+						"display": "44"
+					}, {
+						"value": "45",
+						"display": "45"
+					}, {
+						"value": "46",
+						"display": "46"
+					}
+				],
 				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
 				'disabledForAdmin': ['Submitted', 'Cancelled']
 			}, {
@@ -2040,9 +2489,9 @@
 					}, {
 						"value": "Regular PT",
 						"display": "Regular, Part-time"
-					}, {
-						"value": "Casual FT",
-						"display": "Casual, Full-time"
+						// }, {
+						// 	"value": "Casual FT",
+						// 	"display": "Casual, Full-time"
 					}, {
 						"value": "Casual PT",
 						"display": "Casual, Part-time"
@@ -2065,11 +2514,14 @@
 						"value": "Campaign PT",
 						"display": "Campaign, Part-time"
 					}, {
-						"value": "Intern FT",
-						"display": "Intern, Full-time"
-					}, {
-						"value": "Intern PT",
-						"display": "Intern, Part-time"
+						"value": "Intern",
+						"display": "Intern"
+						// }, {
+						// 	"value": "Intern FT",
+						// 	"display": "Intern, Full-time"
+						// }, {
+						// 	"value": "Intern PT",
+						// 	"display": "Intern, Part-time"
 					}, {
 						"value": "Fellow FT",
 						"display": "Fellow, Full-time"
@@ -2144,7 +2596,13 @@
 				'elementType': "field",
 				'controlType': "datePicker",
 				'fieldName': "Wage Change Effective Beginning Date",
-				'labelContent': "Effective Beginning Date",
+				'labelContent': "Anticipated Start Date",
+				'helpNotes': [
+					{
+						'text': "Please select the beginning of a pay period",
+						'htmlID': "help-note_position-change-start-date",
+					}
+				],
 				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
 				'disabledForAdmin': ['Submitted', 'Cancelled']
 			}, {
@@ -2171,13 +2629,13 @@
 				'labelContent': "Scheduled Hours, Annually",
 				'disabledForNonAdmin': ['', 'Submitted', 'Cancelled'],
 				'disabledForAdmin': ['', 'Submitted', 'Cancelled']
-			}, {
-				'elementType': "field",
-				'controlType': "text",
-				'fieldName': "Wage Change Previous Hourly Wage",
-				'labelContent': "Previous Hourly Wage",
-				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
-				'disabledForAdmin': ['Submitted', 'Cancelled']
+			// }, {
+			// 	'elementType': "field",
+			// 	'controlType': "text",
+			// 	'fieldName': "Wage Change Previous Hourly Wage",
+			// 	'labelContent': "Previous Hourly Wage",
+			// 	'disabledForNonAdmin': ['Submitted', 'Cancelled'],
+			// 	'disabledForAdmin': ['Submitted', 'Cancelled']
 			}, {
 				'elementType': "field",
 				'controlType': "text",
@@ -2211,14 +2669,14 @@
 						"value": "Incentive",
 						"display": "Incentive"
 					}, {
-						"value": "Other",
-						"display": "Other"
+						"value": "Adjustment",
+						"display": "Adjustment"
 					}
 				],
 				"disabledForNonAdmin": ['Submitted', 'Cancelled'],
 				"disabledForAdmin": ['Submitted', 'Cancelled'],
 				"onChange": [{
-					"thisFieldEquals": ["Other"],
+					"thisFieldEquals": ["Adjustment"],
 					"show": [{
 						"fieldName": "Wage Change Reason Explanation"
 					}],
@@ -2227,7 +2685,7 @@
 						"type": "textarea"
 					}]
 				}, {
-					"thisFieldNotEquals": ["Other"],
+					"thisFieldNotEquals": ["Adjustment"],
 					"hide": [{
 						"fieldName": "Wage Change Reason Explanation"
 					}],
@@ -2274,9 +2732,23 @@
 				'end': 1,
 			}, {
 				'elementType': "field",
+				'controlType': "text",
+				'fieldName': "Schedule Change Position Title",
+				'labelContent': "Position Title",
+				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
+				'disabledForAdmin': ['Submitted', 'Cancelled']
+			}, {
+				'elementType': "field",
 				'controlType': "datePicker",
 				'fieldName': "Schedule Change Effective Beginning Date",
-				'labelContent': "Effective Beginning Date",
+				'labelContent': "Anticipated Start Date",
+				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
+				'disabledForAdmin': ['Submitted', 'Cancelled']
+			}, {
+				'elementType': "field",
+				'controlType': "datePicker",
+				'fieldName': "Schedule Change Effective End Date",
+				'labelContent': "Anticipated End Date",
 				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
 				'disabledForAdmin': ['Submitted', 'Cancelled']
 			}, {
@@ -2289,13 +2761,13 @@
 				},
 				"disabledForNonAdmin": ['Submitted', 'Cancelled'],
 				"disabledForAdmin": ['Submitted', 'Cancelled'],
-			}, {
-				'elementType': "field",
-				'controlType': "text",
-				'fieldName': "Schedule Change Previous Scheduled Hours Biweekly",
-				'labelContent': "Previous Scheduled Hours, Biweekly",
-				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
-				'disabledForAdmin': ['Submitted', 'Cancelled']
+			// }, {
+			// 	'elementType': "field",
+			// 	'controlType': "text",
+			// 	'fieldName': "Schedule Change Previous Scheduled Hours Biweekly",
+			// 	'labelContent': "Previous Scheduled Hours, Biweekly",
+			// 	'disabledForNonAdmin': ['Submitted', 'Cancelled'],
+			// 	'disabledForAdmin': ['Submitted', 'Cancelled']
 			}, {
 				'elementType': "field",
 				'controlType': "text",
@@ -2311,12 +2783,151 @@
 				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
 				'disabledForAdmin': ['Submitted', 'Cancelled']
 			}, {
+				"elementType": "field",
+				"controlType": "select",
+				"fieldName": "Schedule Change Funding Source",
+				"labelContent": "Funding Source",
+				"setOptions": [
+					{
+						"value": "Campaign Funds",
+						"display": "Campaign Funds"
+					}, {
+						"value": "Operating Funds",
+						"display": "Operating Funds"
+					}, {
+						"value": "Endowment Funds",
+						"display": "Endowment Funds"
+					}, {
+						"value": "Grant Funds",
+						"display": "Grant Funds"
+					}
+				],
+				"disabledForNonAdmin": ['Submitted', 'Cancelled'],
+				"disabledForAdmin": ['Submitted', 'Cancelled'],
+				"onChange": [
+					{
+						"thisFieldNotEquals": ["Grant Funds", "Endowment Funds"],
+						"hide": [{
+							"divID": "Schedule-Change-account-numbers-sets"
+						}],
+						"optional": [
+							{
+								"fieldName": "Schedule Change Grant Object Code",
+								"type": "text",
+								'repeatable': 1
+							}, {
+								"fieldName": "Schedule Change Grant Source Code",
+								"type": "text",
+								'repeatable': 1
+							}, {
+								"fieldName": "Schedule Change Percent Salary from this Account",
+								"type": "text",
+								'repeatable': 1
+							}
+						]
+					}, {
+						"thisFieldEquals": ["Grant Funds", "Endowment Funds"],
+						"show": [{
+							"divID": "Schedule-Change-account-numbers-sets"
+						}],
+						"require": [
+							{
+								"fieldName": "Schedule Change Grant Object Code",
+								"type": "text",
+								'repeatable': 1
+							}, {
+								"fieldName": "Schedule Change Grant Source Code",
+								"type": "text",
+								'repeatable': 1
+							}, {
+								"fieldName": "Schedule Change Percent Salary from this Account",
+								"type": "text",
+								'repeatable': 1
+							}
+						]
+					}
+				]
+			}, {
+				'elementType': "markup",
+				'tag': "div",
+				'begin': 1,
+				'htmlID': "Schedule-Change-account-numbers-sets",
+				'htmlClass': "subsection-container repeating-content-container",
+				'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
+				'hideForAdmin': ['', 'Submitted', 'Cancelled']
+			}, {
+				'elementType': "markup",
+				'tag': "div",
+				'begin': 1,
+				'htmlID': "Schedule-Change-account-numbers-set",
+				'htmlClass': "subsection repeat-container",
+				'repeatable': 1
+			}, {
 				'elementType': "field",
 				'controlType': "text",
-				'fieldName': "Schedule Change Funding Source",
-				'labelContent': "Funding Source",
+				'fieldName': "Schedule Change Grant Object Code",
+				'labelContent': "Grant Object Code",
 				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
-				'disabledForAdmin': ['Submitted', 'Cancelled']
+				'disabledForAdmin': ['Submitted', 'Cancelled'],
+			}, {
+				'elementType': "field",
+				'controlType': "text",
+				'fieldName': "Schedule Change Grant Source Code",
+				'labelContent': "Grant Source Code",
+				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
+				'disabledForAdmin': ['Submitted', 'Cancelled'],
+			}, {
+				'elementType': "field",
+				'controlType': "text",
+				'fieldName': "Schedule Change Percent Salary from this Account",
+				'labelContent': "Percent Salary from this Account",
+				'htmlClass': 'format-percent',
+				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
+				'disabledForAdmin': ['Submitted', 'Cancelled'],
+			}, {
+				'elementType': "markup",
+				'tag': "a",
+				'begin': 1,
+				'end': 1,
+				'htmlClass': "remove-section-anchor",
+				'content': "Remove",
+				'removeThisRepeat': 1,
+				'hideForNonAdmin': ['Submitted', 'Cancelled'],
+				'hideForAdmin': ['Submitted', 'Cancelled'],
+			}, {
+				'elementType': "markup",
+				'tag': "div",
+				'end': 1,
+			}, {
+				'elementType': "markup",
+				'tag': "a",
+				'begin': 1,
+				'end': 1,
+				'htmlID': "repeat-account-numbers-set",
+				'htmlClass': "repeat-section-anchor",
+				'content': "Insert an Account",
+				'repeatSectionID': "account-numbers-set",
+				'hideForNonAdmin': ['Submitted', 'Cancelled'],
+				'hideForAdmin': ['Submitted', 'Cancelled'],
+			// }, {
+			// 	'elementType': "markup",
+			// 	'tag': "div",
+			// 	'end': 1
+			}, {
+				'elementType': 'markup',
+				'tag': 'div',
+				'end': 1,
+
+
+
+
+
+
+
+
+
+
+
 
 			}, {
 				'elementType': 'markup',
@@ -2346,7 +2957,7 @@
 				'elementType': "field",
 				'controlType': "datePicker",
 				'fieldName': "Temporary Extension Effective Beginning Date",
-				'labelContent': "Effective Beginning Date",
+				'labelContent': "Anticipated Start Date",
 				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
 				'disabledForAdmin': ['Submitted', 'Cancelled']
 			}, {
@@ -2595,6 +3206,17 @@
 
 
 
+
+
+
+			}, {
+				'elementType': 'markup',
+				'tag': 'div',
+				'end': 1,
+
+
+
+
 			}, {
 				"elementType": "field",
 				"controlType": "text",
@@ -2636,9 +3258,9 @@
 		'	$().ProcessEARAndPARHourAndWageFields("Hire-Proposed-Hourly-Wage", "Hire-Proposed-Annualized-Salary", "Hire-Scheduled-Hours-Biweekly", "Hire-Scheduled-Hours-Annually");\n' +
 		'}); \n';
 
-	fData.CustomScriptLast += '$("input#Position-Change-Previous-Scheduled-Hours-Biweekly").on("change", function() { \n' +
+	/* fData.CustomScriptLast += '$("input#Position-Change-Previous-Scheduled-Hours-Biweekly").on("change", function() { \n' +
 		'	$().ProcessEARAndPARHourFields("Position-Change-Previous-Scheduled-Hours-Biweekly", "Position-Change-Previous-Scheduled-Hours-Annually");\n' +
-		'}); \n';
+		'}); \n'; */
 
 	fData.CustomScriptLast += '$("input#Additional-Position-Proposed-Hourly-Wage, input#Additional-Position-Scheduled-Hours-Biweekly").on("change", function() { \n' +
 		'	$().ProcessEARAndPARHourAndWageFields("Additional-Position-Proposed-Hourly-Wage", "Additional-Position-Proposed-Annualized-Salary", "Additional-Position-Scheduled-Hours-Biweekly", "Additional-Position-Scheduled-Hours-Annually");\n' +
@@ -2668,17 +3290,21 @@
 	fData.CustomScriptLast +=	'$("select#Hire-Department option[value=\'Accounting\']").attr("selected","selected"); \n';
 	fData.CustomScriptLast +=	'$("select#Hire-Employee-Classification option[value=\'Grant FT\']").attr("selected","selected"); \n';
 	fData.CustomScriptLast +=	'$("select#Hire-Funding-Source option[value=\'Grant Funds\']").attr("selected","selected"); \n';
-	fData.CustomScriptLast +=	'$("select#Position-Change-Previous-Employee-Classification option[value=\'Grant FT\']").attr("selected","selected"); \n';
+	// fData.CustomScriptLast +=	'$("select#Position-Change-Previous-Employee-Classification option[value=\'Grant FT\']").attr("selected","selected"); \n';
 	fData.CustomScriptLast +=	'$("select#Position-Change-Employee-Classification option[value=\'Grant FT\']").attr("selected","selected"); \n';
-	fData.CustomScriptLast +=	'$("select#Position-Change-Previous-Department option[value=\'Accounting\']").attr("selected","selected"); \n';
+	// fData.CustomScriptLast +=	'$("select#Position-Change-Previous-Department option[value=\'Accounting\']").attr("selected","selected"); \n';
 	fData.CustomScriptLast +=	'$("select#Position-Change-Department option[value=\'Accounting\']").attr("selected","selected"); \n';
 	fData.CustomScriptLast +=	'$("select#Additional-Position-Department option[value=\'Accounting\']").attr("selected","selected"); \n';
 	fData.CustomScriptLast +=	'$("select#Additional-Position-Employee-Classification option[value=\'Grant FT\']").attr("selected","selected"); \n';
-	fData.CustomScriptLast +=	'$("select#Wage-Change-Department option[value=\'Accounting\']").attr("selected","selected"); \n';
-	fData.CustomScriptLast +=	'$("select#Wage-Change-Reason option[value=\'Other\']").attr("selected","selected"); \n';
+	// fData.CustomScriptLast +=	'$("select#Wage-Change-Department option[value=\'Accounting\']").attr("selected","selected"); \n';
+	fData.CustomScriptLast +=	'$("select#Wage-Change-Reason option[value=\'Bonus\']").attr("selected","selected"); \n';
 	fData.CustomScriptLast +=	'$("select#Schedule-Change-Department option[value=\'Accounting\']").attr("selected","selected"); \n';
 	fData.CustomScriptLast +=	'$("select#Termination-Reason option[value=\'Voluntary\']").attr("selected","selected"); \n';
 	fData.CustomScriptLast +=	'$("select#Voluntary-Termination-Reason-Explanation option[value=\'OE\']").attr("selected","selected"); \n';
+	fData.CustomScriptLast +=	'$("select#Position-Change-Grade option[value=\'37\']").attr("selected","selected"); \n';
+	fData.CustomScriptLast +=	'$("select#Hire-Grade option[value=\'38\']").attr("selected","selected"); \n';
+	fData.CustomScriptLast +=	'$("select#Additional-Position-Grade option[value=\'39\']").attr("selected","selected"); \n';
+
 	// fData.CustomScriptLast +=	'$("select#XXXXXXXXXXXXXXXX option[value=\'XXXXXXXXXXXXXXXX\']").attr("selected","selected"); \n';
 
 
@@ -2694,7 +3320,6 @@
 	fData.CustomScriptLast +=	'$("input#Hire-Position-Title").val("P Title"); \n';
 	fData.CustomScriptLast +=	'$("input#Hire-Compensation-Title").val("C Title"); \n';
 	fData.CustomScriptLast +=	'$("input#Hire-Position-Number").val("123"); \n';
-	fData.CustomScriptLast +=	'$("input#Hire-Grade").val("37"); \n';
 	fData.CustomScriptLast +=	'$("input#Hire-Scheduled-Hours-Biweekly").val("80"); \n';
 	fData.CustomScriptLast +=	'$("input#Hire-Proposed-Hourly-Wage").val("35"); \n';
 	fData.CustomScriptLast +=	'$("input#Hire-Start-Date").val("June 30, 2018"); \n';
@@ -2702,31 +3327,28 @@
 	fData.CustomScriptLast +=	'$("input#Hire-Grant-Object-Code").val("789"); \n';
 	fData.CustomScriptLast +=	'$("input#Hire-Grant-Source-Code").val("4561"); \n';
 	fData.CustomScriptLast +=	'$("input#Hire-Percent-Salary-from-this-Account").val("20"); \n';
-	fData.CustomScriptLast +=	'$("input#Position-Change-Previous-Position-Title").val("P Title 1"); \n';
+	// fData.CustomScriptLast +=	'$("input#Position-Change-Previous-Position-Title").val("P Title 1"); \n';
 	fData.CustomScriptLast +=	'$("input#Position-Change-Position-Title").val("P Title 2"); \n';
-	fData.CustomScriptLast +=	'$("input#Position-Change-Previous-Compensation-Title").val("C Title 1"); \n';
+	// fData.CustomScriptLast +=	'$("input#Position-Change-Previous-Compensation-Title").val("C Title 1"); \n';
 	fData.CustomScriptLast +=	'$("input#Position-Change-Compensation-Title").val("C Title 2"); \n';
-	fData.CustomScriptLast +=	'$("input#Position-Change-Previous-Grade").val("37"); \n';
-	fData.CustomScriptLast +=	'$("input#Position-Change-Grade").val("42"); \n';
-	fData.CustomScriptLast +=	'$("input#Position-Change-Previous-Scheduled-Hours-Biweekly").val("80"); \n';
+	// fData.CustomScriptLast +=	'$("input#Position-Change-Previous-Scheduled-Hours-Biweekly").val("80"); \n';
 	fData.CustomScriptLast +=	'$("input#Position-Change-Scheduled-Hours-Biweekly").val("80"); \n';
-	fData.CustomScriptLast +=	'$("input#Position-Change-Previous-Start-Date").val("April 28, 2018"); \n';
+	// fData.CustomScriptLast +=	'$("input#Position-Change-Previous-Start-Date").val("April 28, 2018"); \n';
 	fData.CustomScriptLast +=	'$("input#Position-Change-Start-Date").val("April 29, 2018"); \n';
-	fData.CustomScriptLast +=	'$("input#Position-Change-Previous-End-Date").val("May 17, 2018"); \n';
+	// fData.CustomScriptLast +=	'$("input#Position-Change-Previous-End-Date").val("May 17, 2018"); \n';
 	fData.CustomScriptLast +=	'$("input#Position-Change-End-Date").val("May 18, 2018"); \n';
 	fData.CustomScriptLast +=	'$("input#Additional-Position-Position-Title").val("P Title"); \n';
 	fData.CustomScriptLast +=	'$("input#Additional-Position-Compensation-Title").val("C Title"); \n';
-	fData.CustomScriptLast +=	'$("input#Additional-Position-Grade").val("37"); \n';
 	fData.CustomScriptLast +=	'$("input#Additional-Position-Scheduled-Hours-Biweekly").val("80"); \n';
 	fData.CustomScriptLast +=	'$("input#Additional-Position-Proposed-Hourly-Wage").val("35"); \n';
 	fData.CustomScriptLast +=	'$("input#Additional-Position-Start-Date").val("June 30, 2018"); \n';
 	fData.CustomScriptLast +=	'$("input#Additional-Position-End-Date").val("August 30, 2018"); \n';
 	fData.CustomScriptLast +=	'$("input#Wage-Change-Effective-Beginning-Date").val("September 11, 2018"); \n';
-	fData.CustomScriptLast +=	'$("input#Wage-Change-Previous-Hourly-Wage").val("35"); \n';
+	// fData.CustomScriptLast +=	'$("input#Wage-Change-Previous-Hourly-Wage").val("35"); \n';
 	fData.CustomScriptLast +=	'$("input#Wage-Change-Hourly-Wage").val("35"); \n';
-	fData.CustomScriptLast +=	'$("input#Wage-Change-Scheduled-Hours-Biweekly").val("80"); \n';
+	// fData.CustomScriptLast +=	'$("input#Wage-Change-Scheduled-Hours-Biweekly").val("80"); \n';
 	fData.CustomScriptLast +=	'$("input#Schedule-Change-Effective-Beginning-Date").val("October 24, 2018"); \n';
-	fData.CustomScriptLast +=	'$("input#Schedule-Change-Previous-Scheduled-Hours-Biweekly").val("80"); \n';
+	// fData.CustomScriptLast +=	'$("input#Schedule-Change-Previous-Scheduled-Hours-Biweekly").val("80"); \n';
 	fData.CustomScriptLast +=	'$("input#Schedule-Change-Scheduled-Hours-Biweekly").val("80"); \n';
 	fData.CustomScriptLast +=	'$("input#Schedule-Change-Reason").val("This is the schedule change reason."); \n';
 	fData.CustomScriptLast +=	'$("input#Schedule-Change-Funding-Source").val("SC: 456-7894-456121"); \n';
@@ -2762,11 +3384,11 @@
 					"	'account': 'i:0#.f|membership|jbaker@mos.org'" + 
 					"}]);";
 
-	fData.CustomScriptLast +=	"$().PutAddtlPeopleInPicker('Position Change Previous Manager', [{" + 
+	/* fData.CustomScriptLast +=	"$().PutAddtlPeopleInPicker('Position Change Previous Manager', [{" + 
 					"	'name': 'Hub Tester2'," + 
 					"	'email': 'sp2@mos.org'," + 
 					"	'account': 'i:0#.f|membership|sp2@mos.org'" + 
-					"}]);";
+					"}]);"; */
 
 	fData.CustomScriptLast +=	"$().PutAddtlPeopleInPicker('Position Change Manager', [{" + 
 					"	'name': 'Hub Tester3'," + 
@@ -2784,10 +3406,10 @@
 
 	// --- OTHER
 
-	fData.CustomScriptLast +=	'$().ProcessEARAndPARHourFields("Position-Change-Previous-Scheduled-Hours-Biweekly", "Position-Change-Previous-Scheduled-Hours-Annually");';
+	// fData.CustomScriptLast +=	'$().ProcessEARAndPARHourFields("Position-Change-Previous-Scheduled-Hours-Biweekly", "Position-Change-Previous-Scheduled-Hours-Annually");';
 	fData.CustomScriptLast +=	'$().ProcessEARAndPARHourFields("Position-Change-Scheduled-Hours-Biweekly", "Position-Change-Scheduled-Hours-Annually");';
 	fData.CustomScriptLast +=	'$().ProcessEARAndPARHourAndWageFields("Additional-Position-Proposed-Hourly-Wage", "Additional-Position-Proposed-Annualized-Salary", "Additional-Position-Scheduled-Hours-Biweekly", "Additional-Position-Scheduled-Hours-Annually");';
-	fData.CustomScriptLast +=	'$().ProcessEARAndPARHourAndWageFields("Wage-Change-Hourly-Wage", "Wage-Change-Annualized-Salary", "Wage-Change-Scheduled-Hours-Biweekly", "Wage-Change-Scheduled-Hours-Annually");';
+	// fData.CustomScriptLast +=	'$().ProcessEARAndPARHourAndWageFields("Wage-Change-Hourly-Wage", "Wage-Change-Annualized-Salary", "Wage-Change-Scheduled-Hours-Biweekly", "Wage-Change-Scheduled-Hours-Annually");';
 	
 
 
