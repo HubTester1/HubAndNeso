@@ -14,7 +14,7 @@
 		'notifications': 0,
 	};
 
-	console.log("using settings m5");
+	console.log("using settings m1");
 
 
 
@@ -544,6 +544,7 @@
 			}, {
 				'elementType': "field",
 				'controlType': "text",
+				'htmlClass': 'auto-populated',
 				'fieldName': "Scheduled Hours Annually",
 				'labelContent': "Scheduled Hours, Annually",
 				'requiredForNonAdmin': [""],
@@ -562,6 +563,7 @@
 			}, {
 				'elementType': "field",
 				'controlType': "text",
+				'htmlClass': 'auto-populated',
 				'fieldName': "Proposed Annualized Salary",
 				'labelContent': "Proposed Annualized Salary",
 				'requiredForNonAdmin': [""],
@@ -1069,9 +1071,10 @@
 	//	  (customScriptFirst will be prepended to auto-generated script)
 	//	  (customScriptLast will be appended to auto-generated script)
 	fData.CustomScriptFirst = '';
+	fData.CustomScriptLast = '';
 
 
-	fData.CustomScriptLast = '$("input#job-description_yes").prop("checked", true).attr("checked", true); \n';
+	/* fData.CustomScriptLast += '$("input#job-description_yes").prop("checked", true).attr("checked", true); \n';
 	fData.CustomScriptLast +=	'$("input#overtime-status_exempt").prop("checked", true).attr("checked", true); \n';
 	fData.CustomScriptLast +=	'$("input#workspace-approved_approved").prop("checked", true).attr("checked", true); \n';
 	fData.CustomScriptLast +=	'$("input#job-opening-reason_replacement").prop("checked", true).attr("checked", true); \n';
@@ -1081,7 +1084,7 @@
 
 
 	fData.CustomScriptLast += '$("select#Department option[value=\'Accounting\']").attr("selected","selected"); \n';
-	fData.CustomScriptLast += '$("select#Grade option[value=\'Grade 25\']").attr("selected","selected"); \n';
+	fData.CustomScriptLast += '$("select#Grade option[value=\'25\']").attr("selected","selected"); \n';
 	fData.CustomScriptLast +=	'$("select#Employee-Classification option[value=\'Grant FT\']").attr("selected","selected"); \n';
 	fData.CustomScriptLast +=	'$("select#Funding-Source option[value=\'Grant Funds\']").attr("selected","selected"); \n';
 	// fData.CustomScriptLast +=	'$("select#XXXXXXXXXXXXXXXX option[value=\'XXXXXXXXXXXXXXXX\']").attr("selected","selected"); \n';
@@ -1118,9 +1121,10 @@
 
 
 
-	fData.CustomScriptLast += '$("div.subsection-container, div#container_primary-fieldset").each(function() { $(this).removeClass("hidden"); });';
+	fData.CustomScriptLast += '$("div.subsection-container, div#container_primary-fieldset").each(function() { $(this).removeClass("hidden"); });'; */
 
 	fData.CustomScriptLast += '$("input#Proposed-Hourly-Wage, input#Scheduled-Hours-Biweekly, input#Replacement-Salary").on("change", function() { \n' +
+		'console.log("firing");'+
 		'	$().ProcessEARAndPARHourAndWageFields("Proposed-Hourly-Wage", "Proposed-Annualized-Salary", "Scheduled-Hours-Biweekly", "Scheduled-Hours-Annually", "Replacement-Salary");\n' +
 		'}); \n';
 

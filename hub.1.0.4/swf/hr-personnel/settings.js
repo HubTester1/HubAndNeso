@@ -3782,7 +3782,7 @@
 
 	// ======================================================================================================================================================
 
-	// --- RADIO + CHECK
+	/* // --- RADIO + CHECK
 
 
 	fData.CustomScriptLast +=	'$("input#employment-authorization-request_yes").prop("checked", true).attr("checked", true); \n';
@@ -3889,11 +3889,11 @@
 					"	'account': 'i:0#.f|membership|jbaker@mos.org'" + 
 					"}]);";
 
-	/* fData.CustomScriptLast +=	"$().PutAddtlPeopleInPicker('Position Change Previous Manager', [{" + 
-					"	'name': 'Hub Tester2'," + 
-					"	'email': 'sp2@mos.org'," + 
-					"	'account': 'i:0#.f|membership|sp2@mos.org'" + 
-					"}]);"; */
+	// fData.CustomScriptLast +=	"$().PutAddtlPeopleInPicker('Position Change Previous Manager', [{" + 
+	// 				"	'name': 'Hub Tester2'," + 
+	// 				"	'email': 'sp2@mos.org'," + 
+	// 				"	'account': 'i:0#.f|membership|sp2@mos.org'" + 
+	// 				"}]);";
 
 	fData.CustomScriptLast +=	"$().PutAddtlPeopleInPicker('Position Change Manager', [{" + 
 					"	'name': 'Hub Tester3'," + 
@@ -3914,7 +3914,7 @@
 	// fData.CustomScriptLast +=	'$().ProcessEARAndPARHourFields("Position-Change-Previous-Scheduled-Hours-Biweekly", "Position-Change-Previous-Scheduled-Hours-Annually");';
 	fData.CustomScriptLast +=	'$().ProcessEARAndPARHourFields("Position-Change-Scheduled-Hours-Biweekly", "Position-Change-Scheduled-Hours-Annually");';
 	fData.CustomScriptLast +=	'$().ProcessEARAndPARHourAndWageFields("Additional-Position-Proposed-Hourly-Wage", "Additional-Position-Proposed-Annualized-Salary", "Additional-Position-Scheduled-Hours-Biweekly", "Additional-Position-Scheduled-Hours-Annually");';
-	// fData.CustomScriptLast +=	'$().ProcessEARAndPARHourAndWageFields("Wage-Change-Hourly-Wage", "Wage-Change-Annualized-Salary", "Wage-Change-Scheduled-Hours-Biweekly", "Wage-Change-Scheduled-Hours-Annually");';
+	// fData.CustomScriptLast +=	'$().ProcessEARAndPARHourAndWageFields("Wage-Change-Hourly-Wage", "Wage-Change-Annualized-Salary", "Wage-Change-Scheduled-Hours-Biweekly", "Wage-Change-Scheduled-Hours-Annually");'; */
 	
 
 
