@@ -3763,9 +3763,13 @@
 		'	$().ProcessEARAndPARHourAndWageFields("Hire-Proposed-Hourly-Wage", "Hire-Proposed-Annualized-Salary", "Hire-Scheduled-Hours-Biweekly", "Hire-Scheduled-Hours-Annually");\n' +
 		'}); \n';
 
-	/* fData.CustomScriptLast += '$("input#Position-Change-Previous-Scheduled-Hours-Biweekly").on("change", function() { \n' +
-		'	$().ProcessEARAndPARHourFields("Position-Change-Previous-Scheduled-Hours-Biweekly", "Position-Change-Previous-Scheduled-Hours-Annually");\n' +
-		'}); \n'; */
+	fData.CustomScriptLast += '$("input#Position-Change-Scheduled-Hours-Biweekly").on("change", function() { \n' +
+		'	$().ProcessEARAndPARHourFields("Position-Change-Scheduled-Hours-Biweekly", "Position-Change-Scheduled-Hours-Annually");\n' +
+		'}); \n';
+
+	// fData.CustomScriptLast += '$("input#Position-Change-Previous-Scheduled-Hours-Biweekly").on("change", function() { \n' +
+	// 	'	$().ProcessEARAndPARHourFields("Position-Change-Previous-Scheduled-Hours-Biweekly", "Position-Change-Previous-Scheduled-Hours-Annually");\n' +
+	// 	'}); \n';
 
 	fData.CustomScriptLast += '$("input#Additional-Position-Proposed-Hourly-Wage, input#Additional-Position-Scheduled-Hours-Biweekly").on("change", function() { \n' +
 		'	$().ProcessEARAndPARHourAndWageFields("Additional-Position-Proposed-Hourly-Wage", "Additional-Position-Proposed-Annualized-Salary", "Additional-Position-Scheduled-Hours-Biweekly", "Additional-Position-Scheduled-Hours-Annually");\n' +
