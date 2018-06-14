@@ -2125,33 +2125,21 @@ export default class HcMessagesData {
 	static UploadMessagesFiles(messageID, filesArray) {
 		// return a promise to upload the fies
 		return new Promise((resolve, reject) => {
-			console.log('filesArray');
-			console.log(filesArray);
 			// prep data and config for file upload
-			// const filesUploadConfig = {
-			// 	headers: { 'content-type': 'multipart/form-data' },
-			// };
+			const filesUploadEndPoint = 'https://neso.mos.org:3001/images/receive';
+			const filesUploadConfig = {
+				headers: { 'content-type': 'multipart/form-data' },
+			};
 			const filesUploadData = new FormData();
+			filesUploadData.append('messageID', messageID);
 			// for each file in filesArray
-			for (let i = 0; i < filesArray; i + 1) {
-				console.log('i = ', i);
-				console.log('filesArray[i]');
-				console.log(filesArray[i]);
+			filesArray.forEach((fileValue, fileIndex) => {
 				// append to filesUploadData
-				filesUploadData.append('image', filesArray[i], filesArray[i].name); // `images[${fileIndex}]`
-			}
-
-
-			// filesArray.forEach((fileValue, fileIndex) => {
-			// 	console.log('fileValue');
-			// 	console.log(fileValue);
-			// 	// append to filesUploadData
-			// 	filesUploadData.append('image', fileValue, fileValue.name); // `images[${fileIndex}]`
-			// });
-			console.log('filesUploadData');
-			console.log(filesUploadData);
+				filesUploadData.append(`image[${fileIndex}]`, fileValue, fileValue.name);
+			});
 			// get promise to upload message files to Neso
-			NesoHTTPClient.SendNesoJSONAndReceiveResponse('https://neso.mos.org:3001/images/receive', filesUploadData)
+			NesoHTTPClient
+				.SendNesoJSONAndReceiveResponse(filesUploadEndPoint, filesUploadData, filesUploadConfig)
 				.then((fileUploadResults) => {
 					console.log(fileUploadResults);
 					// resolve the top level promise with the file upload results

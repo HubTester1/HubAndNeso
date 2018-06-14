@@ -2,6 +2,7 @@
 // ----- PULL IN MODULES
 
 // const fse = require('fs-extra');
+const formidable = require('formidable');
 const easyimage = require('easyimage');
 
 
@@ -40,14 +41,20 @@ module.exports = {
 				.catch((error) => { reject(error); });
 		}),
 	
-	ReceiveImage: imagesData =>
+	ReceiveImage: req =>
 		// return a new promise
 		new Promise((resolve, reject) => {
 			console.log('in the func');
-			if (imagesData) {
-				console.log(imagesData);
+			const form = new formidable.IncomingForm();
+			form.parse(req, (err, fields, files) => {
+				console.log('messageID');
+				console.log(fields.messageID);
+				console.log('file path');
+				console.log(files.image0.File.path);
+			});
+			if (req) {
 				resolve({
-					imagesData,
+					req,
 				});
 			} else {
 				reject({

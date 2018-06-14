@@ -18,11 +18,11 @@ export default class NesoHttpClient {
 				});
 		}));
 	}
-	static SendNesoJSONAndReceiveResponse(endpoint, jsonObject) {
+	static SendNesoJSONAndReceiveResponse(endpoint, jsonObject, config) {
 		// return a new promise
 		return new Promise(((resolve, reject) => {
 			// get a promise to post the data
-			axios.post(endpoint, jsonObject)
+			axios.post(endpoint, jsonObject, config)
 				// if the promise is resolved with the docs, then resolve this promise with the docs
 				.then((result) => { resolve(result); })
 				// if the promise is rejected with an error
