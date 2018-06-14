@@ -39,6 +39,7 @@ const activeDirectory = require('./routes/activeDirectory');
 const hcMessages = require('./routes/hcMessages');
 const hcGetItDone = require('./routes/hcGetItDone');
 const hcOrg = require('./routes/hcOrg');
+const images = require('./routes/images');
 
 // ----- INSTANTIATE, CONFIG EXPRESS APP
 
@@ -110,10 +111,10 @@ app.set('view engine', 'pug');
 
 // PARSING ---
 
-// if a request contains JSON data, parse the data and place it on the request object
-app.use(bodyParser.json());
 // if a request contains url encoded data, parse the data and place it on the request object
 app.use(bodyParser.urlencoded({ extended: false }));
+// if a request contains JSON data, parse the data and place it on the request object
+app.use(bodyParser.json());
 // if a request contains cookie data, parse the data and place it on the request object
 app.use(cookieParser());
 
@@ -151,6 +152,7 @@ app.use('/hrPositions', cors(nesoCORS.RequestingDomainWhitelistedForEmailAPI), h
 app.use('/activeDirectory', cors(nesoCORS.RequestingDomainWhitelistedForEmailAPI), activeDirectory);
 app.use('/hcMessages', cors(nesoCORS.RequestingDomainWhitelistedForHcMessagesAPI), hcMessages);
 app.use('/hcGetItDone', cors(nesoCORS.RequestingDomainWhitelistedForHcGetItDoneAPI), hcGetItDone);
+app.use('/images', cors(nesoCORS.RequestingDomainWhitelistedForHcGetItDoneAPI), images);
 app.use('/hcOrg', cors(nesoCORS.RequestingDomainWhitelistedForHcGetItDoneAPI), hcOrg);
 
 // STATIC LOCATIONS ---

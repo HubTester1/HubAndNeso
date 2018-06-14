@@ -39,6 +39,22 @@ module.exports = {
 				// if the promise is rejected with an error, then reject this promise with an error
 				.catch((error) => { reject(error); });
 		}),
+	
+	ReceiveImage: imagesData =>
+		// return a new promise
+		new Promise((resolve, reject) => {
+			console.log('in the func');
+			if (imagesData) {
+				console.log(imagesData);
+				resolve({
+					imagesData,
+				});
+			} else {
+				reject({
+					error: true,
+				});
+			}
+		}),
 
 	ResizeImage: (source, destination, width, height) =>
 		// return a new promise

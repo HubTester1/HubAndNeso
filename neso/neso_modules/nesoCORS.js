@@ -8,7 +8,7 @@ const nesoActiveDirectory = require('./nesoActiveDirectory');
 const hcMessages = require('./nesoHcMessages');
 const hcGetItDone = require('./nesoHcGetItDone');
 const hcOrg = require('./nesoHcOrg');
-
+const nesoImages = require('./nesoImages');
 
 // ----- HELPER FUNCTIONS, GENERAL AND BY API
 
@@ -135,6 +135,25 @@ module.exports = {
 			// callback expects two parameters: error and options
 			.catch((error) => { callback(error, null); });
 	},
+
+
+	RequestingDomainWhitelistedForImagesAPI: (req, callback) => {
+		// get a promise to retrieve from the db the array of domains whitelisted for the images API
+		nesoImages.ReturnImagesWhitelistedDomains()
+			// if the promise is resolved with the setting, then
+			.then((setting) => {
+				// set options by passing requesting domain and domains whitelisted for
+				// 		the health APT to RequestingDomainInSpecifiedWhitelist
+				const corsOptions = module.exports.RequestingDomainInSpecifiedWhitelist(req.header('Origin'), setting.whitelistedDomains);
+				// pass options to callback in the CORS node module so that it can do its business
+				// callback expects two parameters: error and options
+				callback(null, corsOptions);
+			})
+			// if the promise is rejected with an error, then respond with the error as JSON
+			// callback expects two parameters: error and options
+			.catch((error) => { callback(error, null); });
+	},
+	
 
 	RequestingDomainInSpecifiedWhitelist: (requestingDomain, specifiedWhitelist) => {
 		if (specifiedWhitelist.indexOf(requestingDomain) !== -1) {

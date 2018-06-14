@@ -2067,7 +2067,7 @@ export default class HcMessagesData {
 			}
 		});
 	}
-	static UploadMessagesFiles(messageID, filesArray) {
+	/* static UploadMessagesFiles(messageID, filesArray) {
 		// return a promise to upload the fies
 		return new Promise((resolve, reject) => {
 			// if environment is sharepoint
@@ -2120,6 +2120,48 @@ export default class HcMessagesData {
 						});
 					});
 			}
+		});
+	} */
+	static UploadMessagesFiles(messageID, filesArray) {
+		// return a promise to upload the fies
+		return new Promise((resolve, reject) => {
+			console.log('filesArray');
+			console.log(filesArray);
+			// prep data and config for file upload
+			// const filesUploadConfig = {
+			// 	headers: { 'content-type': 'multipart/form-data' },
+			// };
+			const filesUploadData = new FormData();
+			// for each file in filesArray
+			for (let i = 0; i < filesArray; i + 1) {
+				console.log('i = ', i);
+				console.log('filesArray[i]');
+				console.log(filesArray[i]);
+				// append to filesUploadData
+				filesUploadData.append('image', filesArray[i], filesArray[i].name); // `images[${fileIndex}]`
+			}
+
+
+			// filesArray.forEach((fileValue, fileIndex) => {
+			// 	console.log('fileValue');
+			// 	console.log(fileValue);
+			// 	// append to filesUploadData
+			// 	filesUploadData.append('image', fileValue, fileValue.name); // `images[${fileIndex}]`
+			// });
+			console.log('filesUploadData');
+			console.log(filesUploadData);
+			// get promise to upload message files to Neso
+			NesoHTTPClient.SendNesoJSONAndReceiveResponse('https://neso.mos.org:3001/images/receive', filesUploadData)
+				.then((fileUploadResults) => {
+					console.log(fileUploadResults);
+					// resolve the top level promise with the file upload results
+					resolve({
+						error: 'hello',
+						fileUploadResults,
+					});
+				})
+				// if the promise is rejected with an error, then reject this promise with an error
+				.catch((error) => { console.log(error); reject(error); });
 		});
 	}
 	static UploadOneMessageFile(folder, file) {
