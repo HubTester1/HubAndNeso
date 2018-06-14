@@ -43,7 +43,7 @@ export default class HcPushedItems extends React.Component {
 						className="hc-pushed-items__title accordion__title accordion__title--animated"
 					>
 						<h2 className="u-position-relative">
-							<div className="accordion__title__text">Please Be Aware</div>
+							<div className="accordion__title__text">Quick Hits</div>
 							<div className="accordion__arrow" role="presentation" />
 						</h2>
 					</AccordionItemTitle>
@@ -67,7 +67,7 @@ export default class HcPushedItems extends React.Component {
 		}
 		return (
 			<div id="hc-pushed-items" className="mos-react-component-root" name="hc-pushed-items">
-				<h2>Please Be Aware</h2>
+				<h2>Quick Hits</h2>
 				<ul id="hc-pushed-items-list">
 					{
 						this.state.listItemsArray.map((listItemValue, listItemIndex) => (

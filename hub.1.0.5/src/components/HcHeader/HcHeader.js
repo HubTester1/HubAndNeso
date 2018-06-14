@@ -78,8 +78,8 @@ export default class HcHeader extends React.Component {
 		return (
 			<li className="hc-navigation__items__item">
 				<DefaultButton
-					iconProps={{ iconName: 'Megaphone' }}
-					text="Please Be Aware"
+					iconProps={{ iconName: 'LightningBolt' }}
+					text="Quick Hits"
 					className="hc-navigation__items__item__button"
 					onClick={this.handlePushedItemsNavItemClick}
 				/>
@@ -90,7 +90,7 @@ export default class HcHeader extends React.Component {
 		return (
 			<li className="hc-navigation__items__item">
 				<DefaultButton
-					iconProps={{ iconName: 'FormLibrary' }}
+					iconProps={{ iconName: 'Edit' }}
 					text="Get it Done"
 					className="hc-navigation__items__item__button"
 					onClick={this.handleGetItDoneNavItemClick}

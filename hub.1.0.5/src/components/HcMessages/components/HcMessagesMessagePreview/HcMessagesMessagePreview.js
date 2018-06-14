@@ -61,18 +61,17 @@ export default class HcMessagesMessagePreview extends React.Component {
 							<Truncate
 								lines={2}
 								ellipsis={
-									<span>...
-										<button
-											className="hc-messages-message-full-message-button"
-											onClick={this.handleOpenModalClick}
-										>
-											Full message
-										</button>
-									</span>
+									<span>...</span>
 								}
 							>
 								<div className="hc-messages-message-body">{this.props.messageContent.body}</div>
 							</Truncate>
+							<button
+								className="hc-messages-message-full-message-button"
+								onClick={this.handleOpenModalClick}
+							>
+								Full message
+							</button>
 							<Modal
 								className="hc-messages-message-full-message-modal"
 								isOpen={this.state.showModalFull}
@@ -93,18 +92,17 @@ export default class HcMessagesMessagePreview extends React.Component {
 							<Truncate
 								lines={1}
 								ellipsis={
-									<span>...
-										<button
-											className="hc-messages-message-full-message-button"
-											onClick={this.handleOpenInlineFullClick}
-										>
-											Full message
-										</button>
-									</span>
+									<span>...</span>
 								}
 							>
 								<div className="hc-messages-message-body">{this.props.messageContent.body}</div>
 							</Truncate>
+							<button
+								className="hc-messages-message-full-message-button"
+								onClick={this.handleOpenInlineFullClick}
+							>
+								Full message
+							</button>
 						</MediaQuery>
 					</div>
 				}
