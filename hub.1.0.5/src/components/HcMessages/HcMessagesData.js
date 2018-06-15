@@ -2126,7 +2126,7 @@ export default class HcMessagesData {
 		// return a promise to upload the fies
 		return new Promise((resolve, reject) => {
 			// prep data and config for file upload
-			const filesUploadEndPoint = 'https://neso.mos.org:3001/images/receive';
+			const filesUploadEndPoint = 'https://neso.mos.org:3001/hcMessages/addMessageImages';
 			const filesUploadConfig = {
 				headers: { 'content-type': 'multipart/form-data' },
 			};
@@ -2135,7 +2135,7 @@ export default class HcMessagesData {
 			// for each file in filesArray
 			filesArray.forEach((fileValue, fileIndex) => {
 				// append to filesUploadData
-				filesUploadData.append(`image[${fileIndex}]`, fileValue, fileValue.name);
+				filesUploadData.append(`image[${fileIndex}]`, fileValue);
 			});
 			// get promise to upload message files to Neso
 			NesoHTTPClient
@@ -2152,7 +2152,7 @@ export default class HcMessagesData {
 				.catch((error) => { console.log(error); reject(error); });
 		});
 	}
-	static UploadOneMessageFile(folder, file) {
+	/* static UploadOneMessageFile(folder, file) {
 		// return a promise to upload the single fie
 		return new Promise((resolve, reject) => {
 			// if environment is sharepoint
@@ -2191,5 +2191,5 @@ export default class HcMessagesData {
 				});
 			}
 		});
-	}
+	} */
 }

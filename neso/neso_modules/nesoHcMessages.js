@@ -2,8 +2,9 @@
 // ----- PULL IN MODULES
 
 const nesoDBQueries = require('./nesoDBQueries');
-const formidable = require('formidable');
 const nesoImages = require('./nesoImages');
+const fse = require('fs-extra');
+const formidable = require('formidable');
 
 // ----- DEFINE HEALTH FUNCTIONS
 
@@ -124,8 +125,6 @@ module.exports = {
 			// parse the form data out of the incoming request
 			const form = new formidable.IncomingForm();
 			form.parse(req, (err, fields, files) => {
-				// extract messageID for convenience
-				const { messageID } = fields;
 				// get an array of keys in the files object
 				const fileKeys = Object.keys(files);
 				// for each key in the files object
@@ -136,25 +135,64 @@ module.exports = {
 					nesoImages.ReturnImageInfo(incomingFile.path)
 						// if the promise is resolved with the image info
 						.then((imageInfo) => {
-							// resolve this promise with the image info
-							console.log(imageInfo);
-							resolve({
-								error: false,
-								imageInfo,
-							});
+							// get a promise to convert to JPG, if needed
+							nesoImages.ConvertToJPGIfNeeded(imageInfo)
+								// if the promise was resolved with the result
+								.then((conversionResult) => {
+									// construct base storage path, name, extension
+									const storagePath = `${process.env.appRoot}\\public\\images\\hcMessages\\${fields.messageID}\\`;
+									const storageName = incomingFile.name.replace(/\.[^/.]+$/, '');
+									const storageExtension = conversionResult.resultType;
+									// create folder for storage, if it doesn't exist
+									if (!fse.existsSync(storagePath)) {
+										fse.mkdirSync(storagePath);
+									}
+									// get a promise to store resized images
+									nesoImages.ResizeImages([
+										{
+											source: conversionResult.result,
+											width: 350,
+											destination: `${storagePath}${storageName}_350.${storageExtension}`,
+										}, {
+											source: conversionResult.result,
+											width: 600,
+											destination: `${storagePath}${storageName}_600.${storageExtension}`,
+										},
+									])
+										// if the promise was resolved with the result
+										.then((resizeResults) => {
+											resolve({
+												error: false,
+												result: resizeResults,
+											});
+										})
+										// if the promise was rejected with an error
+										.catch((error) => {
+											reject({
+												error: true,
+												imageResizeError: true,
+												errorInfo: error,
+											});
+										});
+								})
+								// if the promise was rejected with an error
+								.catch((error) => {
+									reject({
+										error: true,
+										imageConversionError: true,
+										errorInfo: error,
+									});
+								});
 						})
-						// if the promise is rejected with an error, then reject this promise with an error
-						.catch((error) => { reject(error); });
-				}),
-					
-					
-					
-					
-					// resize to sm, med, and lg storing by messageID in public
-
-				});
-				resolve({
-					messageID: fields.messageID,
+						// if the promise is rejected with an error
+						.catch((error) => {
+							// reject this promise with the error
+							reject({
+								error: true,
+								imageInfoError: true,
+								errorInfo: error,
+							});
+						});
 				});
 			});
 		}),

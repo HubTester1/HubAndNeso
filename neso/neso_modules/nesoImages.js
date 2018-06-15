@@ -43,16 +43,49 @@ module.exports = {
 	
 	ReturnImageInfo: path => easyimage.info(path),
 		
+	ConvertToJPGIfNeeded: imageInfo =>
+		// return a new promise
+		new Promise((resolve, reject) => {
+			// if this image is a PNG
+			if (imageInfo.type === 'png') {
+				// get a promise to create a JPG at the destination
+				easyimage.convert({
+					src: imageInfo.path,
+					dst: `${imageInfo.path}_converted`,
+				})
+					// if the promise was resolved
+					.then(() => {
+						// resolve this promise with the result
+						resolve({
+							error: false,
+							result: `${imageInfo.path}_converted`,
+							resultType: 'jpg',
+						});
+					})
+					// if the promise was rejected with an error, reject this promise with the error
+					.catch((error) => { reject(error); });
+			// if this image is NOT a PNG
+			} else {
+				// resolve this promise with the original info
+				resolve({
+					error: false,
+					result: imageInfo.path,
+					resultType: imageInfo.type,
+				});
+			}
+		}),
+
+
 	ReceiveImage: req =>
 		// return a new promise
 		new Promise((resolve, reject) => {
-			console.log('---------ReceiveImage---------');
+			// console.log('---------ReceiveImage---------');
 			const form = new formidable.IncomingForm();
 			form.parse(req, (err, fields, files) => {
-				console.log('messageID');
-				console.log(fields.messageID);
-				console.log('image0 path');
-				console.log(files.image0.path);
+				// console.log('messageID');
+				// console.log(fields.messageID);
+				// console.log('image0 path');
+				// console.log(files.image0.path);
 			});
 			if (req) {
 				resolve({
@@ -65,21 +98,43 @@ module.exports = {
 			}
 		}),
 
-	ResizeImage: (source, destination, width, height) =>
+	ResizeImages: imagesArray =>
+		// return a new promise
+		new Promise((resolve, reject) => {
+			const imageResizePromises = [];
+			imagesArray.forEach((image) => {
+				imageResizePromises.push(module.exports.ResizeImage(image));
+			});
+			Promise.all(imageResizePromises)
+				.then((imageResizeResults) => {
+					resolve({
+						error: false,
+						imageResizeResults,
+					});
+				})
+				// if the promise was rejected with an error
+				.catch((error) => { reject(error); });
+		}),
+
+	ResizeImage: incomingImage =>
 		// return a new promise
 		new Promise((resolve, reject) => {
 			// either width or height is required
-			if (source && destination && (width || height)) {
+			if (
+				incomingImage.source && 
+				incomingImage.destination && 
+				(incomingImage.width || incomingImage.height)
+			) {
 				// construct options object from params
 				const resizeOptions = {
-					src: source,
-					dst: destination,
+					src: incomingImage.source,
+					dst: incomingImage.destination,
 				};
-				if (width) {
-					resizeOptions.width = width;
+				if (incomingImage.width) {
+					resizeOptions.width = incomingImage.width;
 				}
-				if (height) {
-					resizeOptions.height = height;
+				if (incomingImage.height) {
+					resizeOptions.height = incomingImage.height;
 				}
 				// get a promise to resize the image
 				easyimage.resize(resizeOptions)
@@ -94,7 +149,7 @@ module.exports = {
 					// if the promise was rejected with an error
 					.catch((error) => {
 						// reject this promise with the error
-						resolve({
+						reject({
 							error: true,
 							imageMagickError: error,
 						});
@@ -104,7 +159,7 @@ module.exports = {
 				// reject this promise with an error
 				reject({
 					error: true,
-					paramError: 'Source, destination, and either width or height must be supplied',
+					paramError: 'image object does not contain needed properties',
 				});
 			}
 		}),
