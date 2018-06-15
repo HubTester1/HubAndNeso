@@ -85,7 +85,15 @@ router.get('/descending/tagged/:tag', (req, res, next) => {
 // for POST requests for /addMessage
 router.post('/addMessage', (req, res) => {
 	// get a promise to insert the email (request body) into the queue
-	hcMessages.ReceiveMessage(req.body)
+	hcMessages.ProcessNewMessage(req.body)
+		// if the promise is resolved with the result, then respond with the result as JSON
+		.then((result) => { res.json(result); });
+});
+
+// for POST requests for /addMessage
+router.post('/addMessageImages', (req, res) => {
+	// get a promise to insert the email (request body) into the queue
+	hcMessages.ProcessNewMessageImage(req)
 		// if the promise is resolved with the result, then respond with the result as JSON
 		.then((result) => { res.json(result); });
 });

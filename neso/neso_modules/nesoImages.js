@@ -41,16 +41,18 @@ module.exports = {
 				.catch((error) => { reject(error); });
 		}),
 	
+	ReturnImageInfo: path => easyimage.info(path),
+		
 	ReceiveImage: req =>
 		// return a new promise
 		new Promise((resolve, reject) => {
-			console.log('in the func');
+			console.log('---------ReceiveImage---------');
 			const form = new formidable.IncomingForm();
 			form.parse(req, (err, fields, files) => {
 				console.log('messageID');
 				console.log(fields.messageID);
-				console.log('file path');
-				console.log(files.image0.File.path);
+				console.log('image0 path');
+				console.log(files.image0.path);
 			});
 			if (req) {
 				resolve({

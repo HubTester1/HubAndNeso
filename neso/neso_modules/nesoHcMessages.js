@@ -2,6 +2,8 @@
 // ----- PULL IN MODULES
 
 const nesoDBQueries = require('./nesoDBQueries');
+const formidable = require('formidable');
+const nesoImages = require('./nesoImages');
 
 // ----- DEFINE HEALTH FUNCTIONS
 
@@ -116,7 +118,48 @@ module.exports = {
 				.catch((error) => { reject(error); });
 		})),
 
-	ReceiveMessage: incomingMessage =>
+	ProcessNewMessageImage: req =>
+		// return a new promise
+		new Promise((resolve, reject) => {
+			// parse the form data out of the incoming request
+			const form = new formidable.IncomingForm();
+			form.parse(req, (err, fields, files) => {
+				// extract messageID for convenience
+				const { messageID } = fields;
+				// get an array of keys in the files object
+				const fileKeys = Object.keys(files);
+				// for each key in the files object
+				fileKeys.forEach((fileKey) => {
+					// get one file from the files object using its key
+					const incomingFile = files[fileKey];
+					// get a promise to get info about this image file
+					nesoImages.ReturnImageInfo(incomingFile.path)
+						// if the promise is resolved with the image info
+						.then((imageInfo) => {
+							// resolve this promise with the image info
+							console.log(imageInfo);
+							resolve({
+								error: false,
+								imageInfo,
+							});
+						})
+						// if the promise is rejected with an error, then reject this promise with an error
+						.catch((error) => { reject(error); });
+				}),
+					
+					
+					
+					
+					// resize to sm, med, and lg storing by messageID in public
+
+				});
+				resolve({
+					messageID: fields.messageID,
+				});
+			});
+		}),
+
+	ProcessNewMessage: incomingMessage =>
 		// return a new promise
 		new Promise(((resolve, reject) => {
 			// preserve function parameter
