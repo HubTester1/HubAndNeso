@@ -1,6 +1,9 @@
 // ----- PULL IN MODULES
 
 const moment = require('moment');
+const path = require('path');
+const fse = require('fs-extra');
+const nesoErrors = require('./nesoErrors');
 
 // ----- DEFINE UTILITIES FUNCTIONS
 
@@ -162,4 +165,52 @@ module.exports = {
 
 		return returnValue;
 	},
+
+	EmptyTmpDirectory: () =>
+		// return a new promise
+		new Promise((resolve, reject) => {
+			const directory = 'E:\\tmp';
+			fse.readdir(directory, (directoryReadError, files) => {
+				// if there was a directory reading error
+				if (directoryReadError) {
+					// reject this promise with the error
+					reject({
+						error: true,
+						tmpDirectoryReadError: true,
+						tmpDirectoryReadErrorDetails: directoryReadError,
+					});
+				} else {
+					// set error count to 0
+					let fileDeletionErrorCount = 0;
+					// for each file
+					files.forEach((file) => {
+						// attempt to delete the file
+						fse.unlink(path.join(directory, file), (fileDeletionError) => {
+							// if there was a file deletion error
+							if (fileDeletionError) {
+								// iterate count
+								fileDeletionErrorCount += 1;
+							}
+						});
+					});
+					// if there were more than 5 errors
+					if (fileDeletionErrorCount > 5) {
+						// process error
+						nesoErrors.ProcessError({
+							error: true,
+							fivePlusTmpFileDeletionErrors: true,
+						});
+						// reject this promise with the error
+						reject({
+							error: true,
+							fivePlusTmpFileDeletionErrors: true,
+						});
+					} else {
+						resolve({
+							error: false,
+						});
+					}
+				}
+			});
+		}),
 };

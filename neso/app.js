@@ -24,6 +24,7 @@ const cron = require('node-cron');
 // NESO (MOS) MODULES ---
 
 const nesoCORS = require('./neso_modules/nesoCORS');
+const nesoUtilities = require('./neso_modules/nesoUtilities');
 const nesoEmail = require('./neso_modules/nesoEmail');
 const nesoHRPositions = require('./neso_modules/nesoHRPositions');
 const nesoActiveDirectory = require('./neso_modules/nesoActiveDirectory');
@@ -183,7 +184,6 @@ app.use((err, req, res, next) => {
 });
 
 // CRON ---
-
 // schedule for once per minute
 cron.schedule('* * * * *', () => {
 	// get a promise to process the email queue
@@ -302,6 +302,25 @@ cron.schedule(process.env.nonDivisionDepartmentTeamsProcessingCronSchedule, () =
 		.catch((error) => {
 			// eslint-disable-next-line no-console
 			console.log('ERROR - Processing HcOrg NONDivDept data data:');
+			// eslint-disable-next-line no-console
+			console.log(error);
+		});
+});
+// schedule for once per day at 2 am
+cron.schedule('0 2 * * *', () => {
+	// get a promise to empty the tmp directory
+	nesoUtilities.EmptyTmpDirectory()
+		// if the promise is resolved with the docs, then respond with the docs as JSON
+		.then((result) => {
+			// eslint-disable-next-line no-console
+			console.log('Emptied Tmp Directory:');
+			// eslint-disable-next-line no-console
+			console.log(result);
+		})
+		// if the promise is rejected with an error, then respond with the error as JSON
+		.catch((error) => {
+			// eslint-disable-next-line no-console
+			console.log('ERROR - Emptied Tmp Directory:');
 			// eslint-disable-next-line no-console
 			console.log(error);
 		});

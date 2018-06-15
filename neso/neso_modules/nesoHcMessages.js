@@ -124,6 +124,7 @@ module.exports = {
 		new Promise((resolve, reject) => {
 			// parse the form data out of the incoming request
 			const form = new formidable.IncomingForm();
+			form.uploadDir = 'E:\\tmp';
 			form.parse(req, (err, fields, files) => {
 				// get an array of keys in the files object
 				const fileKeys = Object.keys(files);
