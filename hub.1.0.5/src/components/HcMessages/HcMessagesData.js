@@ -2125,7 +2125,6 @@ export default class HcMessagesData {
 	static UploadMessagesFiles(messageID, filesArray) {
 		// return a promise to upload the fies
 		return new Promise((resolve, reject) => {
-			console.log('starting upload');
 			// prep data and config for file upload
 			const filesUploadEndPoint = 'https://neso.mos.org/hcMessages/addMessageImages';
 			const filesUploadConfig = {
@@ -2144,8 +2143,6 @@ export default class HcMessagesData {
 			NesoHTTPClient
 				.SendNesoJSONAndReceiveResponse(filesUploadEndPoint, filesUploadData, filesUploadConfig)
 				.then((fileUploadResults) => {
-					console.log('fileUploadResults');
-					console.log(fileUploadResults);
 					// resolve the top level promise with the file upload results
 					resolve(fileUploadResults);
 				})

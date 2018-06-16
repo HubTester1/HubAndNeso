@@ -25,8 +25,6 @@ import './HcContainer.sass';
 
 initializeIcons();
 
-// ----- COMPONENT
-
 class HcContainer extends React.Component {
 	constructor(props) {
 		super(props);
@@ -37,23 +35,21 @@ class HcContainer extends React.Component {
 		this.handleHamburgerOrNavItemClick = this.handleHamburgerOrNavItemClick.bind(this);
 	}
 	componentDidMount() {
-		if (EnvironmentDetector.ReturnIsHCScreen()) {
-			HcContainerData.ReturnUData()
-				.then((response) => {
-					const accountBrief = 
-						MOSUtilities.ReplaceAll('i:0#.f\\|membership\\|', '', MOSUtilities.ReplaceAll('@mos.org', '', response.LoginName.toLowerCase()));
-					this.setState(() => ({
-						uData: {
-							email: response.Email,
-							account: accountBrief,
-							displayName: response.Title,
-						},
-					}));
-				})
-				.catch((error) => {
-					// 
-				});
-		}
+		HcContainerData.ReturnUData()
+			.then((response) => {
+				const accountBrief =
+					MOSUtilities.ReplaceAll('i:0#.f\\|membership\\|', '', MOSUtilities.ReplaceAll('@mos.org', '', response.LoginName.toLowerCase()));
+				this.setState(() => ({
+					uData: {
+						email: response.Email,
+						account: accountBrief,
+						displayName: response.Title,
+					},
+				}));
+			})
+			.catch((error) => {
+				// 
+			});
 	}
 	handleHamburgerOrNavItemClick() {
 		document.body.classList.toggle('showing-small-nav', !this.state.showSmallNav);
@@ -146,7 +142,7 @@ class HcContainer extends React.Component {
 						/>
 					</MediaQuery>
 					<footer>
-						&copy; {MOSUtilities.ReturnFormattedDateTime({ incomingDateTimeString: 'nowLocal', incomingReturnFormat: 'YYYY' })} Museum of Science
+							&copy; {MOSUtilities.ReturnFormattedDateTime({ incomingDateTimeString: 'nowLocal', incomingReturnFormat: 'YYYY' })} Museum of Science
 					</footer>
 				</div>
 			);
@@ -154,7 +150,7 @@ class HcContainer extends React.Component {
 		return null;
 	}
 }
-
+	
 if (EnvironmentDetector.ReturnIsHCScreen()) {
 	// eslint-disable-next-line no-console
 	console.log('hc m1');

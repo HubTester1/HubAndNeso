@@ -43,6 +43,8 @@ export default class HcMessagesNewMessageForm extends React.Component {
 		this.handleFileDeletion = this.handleFileDeletion.bind(this);
 		this.handleChangedExpirationDate = this.handleChangedExpirationDate.bind(this);
 		this.handleAddMessage = this.handleAddMessage.bind(this);
+		this.enableMessageUpdate = this.enableMessageUpdate.bind(this);
+		this.handleMessageUpdate = this.handleMessageUpdate.bind(this);
 	}
 	setAndReturnMessageFormIsInvalid() {
 		// set up new errors; default to no errors
@@ -150,7 +152,6 @@ export default class HcMessagesNewMessageForm extends React.Component {
 		});
 	}
 	handleDroppedFiles(acceptedFiles, rejectedFiles) {
-		console.log('handling changed image');
 		// if all files submitted for upload are of the right type (none were rejected by Dropzone)
 		if (!rejectedFiles[0]) {
 			// set state to indicate that images are processing and unset warnings
@@ -164,7 +165,6 @@ export default class HcMessagesNewMessageForm extends React.Component {
 			this.returnAndConditionallySetMessageID()
 				// if the promise was resolved with the messageID
 				.then((messageID) => {
-					console.log('got a message ID');
 					// get a promise to upload the files
 					HcMessagesData.UploadMessagesFiles(messageID, acceptedFiles)
 						// if the promise was *resolved* with some results
@@ -232,16 +232,11 @@ export default class HcMessagesNewMessageForm extends React.Component {
 	handleFileDeletion(imageID, e) {
 		// prevent navigating to image (because the control is inside a link)
 		e.preventDefault();
-		// set state to reflect results of all image uploads to this point
-		// note: accounts for the possibility of multiple rounds of uploads
-		console.log('--------------');
-		console.log('imageID');
-		console.log(imageID);
+		// set state to reflect all image uploads to this point minus the one whose button was clicked
 		this.setState((prevState) => {
 			const previousFileArray = prevState.newMessageImages;
 			const currentFileArray = [];
 			previousFileArray.forEach((file) => {
-				console.log(file);
 				if (file.key !== imageID) {
 					currentFileArray.push(file);
 				}
@@ -306,6 +301,12 @@ export default class HcMessagesNewMessageForm extends React.Component {
 					this.handleSaveError();
 				});
 		}
+	}
+	enableMessageUpdate(e, messageID) {
+
+	}
+	handleMessageUpdate() {
+
 	}
 	resetNewMessageStateAndSetSaveSuccess() {
 		this.setState(() => ({

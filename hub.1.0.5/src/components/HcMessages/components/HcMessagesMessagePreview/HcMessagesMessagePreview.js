@@ -44,6 +44,7 @@ export default class HcMessagesMessagePreview extends React.Component {
 	}
 	render() {
 		Modal.setAppElement('#hub-central-mount-point');
+		console.log(this.props.messageContent);
 		return (
 			<li id={`hc-messages-message-preview_${this.props.messageId}`} className="hc-messages-message-preview mos-react-component-root">
 				{
