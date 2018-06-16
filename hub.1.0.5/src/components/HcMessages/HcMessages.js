@@ -223,9 +223,9 @@ export default class HcMessages extends React.Component {
 		);
 	}
 	enableMessageUpdate(e, messageID) {
-
-
-		// yello
+		// set state for controlled fields
+		// open form and change button
+		// scroll to form
 
 
 	}

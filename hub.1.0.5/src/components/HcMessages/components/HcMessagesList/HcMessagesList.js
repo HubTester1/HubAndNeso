@@ -7,8 +7,6 @@ import HcMessagesMessagePreview from '../HcMessagesMessagePreview/HcMessagesMess
 // ----- COMPONENT
 export default class HcMessagesList extends React.Component {
 	render() {
-		console.log('HcMessagesList uData');
-		console.log(this.props.uData);
 		if (this.props.messagesThisPage && this.props.messagesThisPage[0]) {
 			return (
 				<div id="hc-messages-list-and-pagination">
