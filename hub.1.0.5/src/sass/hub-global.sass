@@ -217,7 +217,7 @@ div.ms-TextField-fieldGroup
 	+round-corners
 	border: 0
 
-	input#ms-TextField-field
+	input.ms-TextField-field
 		+round-corners
 		border: 0
 
@@ -293,14 +293,70 @@ div.ms-DatePicker-callout
 			color: $interactive-active
 			background-color: $interactive-light
 
-// FILE INPUT
+// FILE UPLOADS
 
-div.mos-file-input
-	+round-corners
-	margin-top: 1rem
-	padding: 5rem 2rem
-	color: $aqua-6
-	background-color: $white
+div#hc-container
+
+	div.mos-file-input
+		+round-corners
+		margin-top: 1rem
+		padding: 4rem 2rem
+		color: $aqua-6
+		background-color: $white
+		cursor: pointer
+
+	a.file-upload-preview
+		+round-corners
+		display: flex
+		width: 100%
+		height: 5rem
+		margin-top: 1rem
+		background-color: $green-1
+
+		&:hover
+
+			div.file-upload-preview__file-info
+				color: $interactive-active-darkened-1
+
+		div.file-upload-preview__file-image
+			+round-corners-left
+			width: 5rem
+			height: 5rem
+			background-repeat: no-repeat
+			background-position: center
+			background-size: cover
+
+		div.file-upload-preview__file-info
+			width: calc(100% - 5rem)
+			padding: .8rem 0 .8rem 1rem
+			color: $interactive-default-darkened-1
+
+			div.file-upload-preview__file-info__file-name
+				// height: 1.9rem
+				max-width:  calc(100% - 10rem)
+				white-space: nowrap
+				overflow: hidden
+				text-overflow: ellipsis
+
+		button.file-upload-preview__file-control
+			width: 3rem
+			background-color: transparent
+			border: 0
+			cursor: pointer
+
+			span.button__icon
+				+icon
+				+icon-before
+				+icon-close-before
+				+font-size-8
+				color: $interactive-default-darkened-1
+
+				&:hover
+					color: $interactive-active-darkened-1
+
+
+			span.button__text
+				+inline-hidden
 
 // PEOPLE PICKER
 
@@ -783,6 +839,17 @@ body.is-in-maintenance-mode
 						g.letterforms
 							fill: $white
 
+// BUTTONS
+
+div#hc-container,
+div.ms-Fabric
+
+	input[type='button'],
+	input[type='reset'],
+	input[type='submit'],
+	button
+		min-width: 0
+	
 // BANNERS
 
 form#aspnetForm
@@ -809,7 +876,6 @@ form#aspnetForm
 	div.banner--success
 		color: $green-9
 		background-color: $green-1
-
 
 
 

@@ -72,7 +72,7 @@ export default class HcMessagesFiles extends React.Component {
 				{
 					this.props.newMessageImageUploadsImpossible &&
 
-					<div id="image-uploads-are-not-possible-message" className="mos-react-form-field-error-message banner banner--success">
+					<div id="image-uploads-are-not-possible-message" className="mos-react-form-field-error-message banner banner--critical">
 						<p className="banner__text"><span className="urgent">Whoopsie!</span> We can&apos;t save your images right now. Please try later.</p>
 					</div>
 				}

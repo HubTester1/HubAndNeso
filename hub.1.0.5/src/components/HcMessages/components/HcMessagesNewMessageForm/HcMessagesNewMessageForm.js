@@ -368,7 +368,7 @@ export default class HcMessagesNewMessageForm extends React.Component {
 						<TextField
 							label="Body"
 							multiline
-							rows={3}
+							rows={5}
 							autoAdjustHeight
 							value={this.state.newMessageBody}
 							onChanged={this.handleChangedBody}
@@ -436,7 +436,7 @@ export default class HcMessagesNewMessageForm extends React.Component {
 					{
 						this.state.newMessageSaveSuccess &&
 
-						<div id="new-message-save-success-message" className="message-success-message banner banner--critical">
+						<div id="new-message-save-success-message" className="message-success-message banner banner--success">
 							<p className="banner__text">Your message was saved.</p>
 						</div>
 					}

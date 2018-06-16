@@ -54,7 +54,7 @@ export default class HcMessagesFilePreview extends React.Component {
 		console.log(this.props.imageContent);
 		// if this image was uploaded successfully (error is false)
 		if (!this.props.imageContent.error) {
-			const backgroundImageUrl = MOSUtilities.ReplaceAll(' ', '%20', this.props.imageContent.urlLarge);
+			const backgroundImageUrl = MOSUtilities.ReplaceAll(' ', '%20', this.props.imageContent.urlSmall);
 			const imagePreviewStyles = {
 				backgroundImage: `url(${backgroundImageUrl})`,
 			};
@@ -62,29 +62,31 @@ export default class HcMessagesFilePreview extends React.Component {
 			return (
 				<a 
 					id={`hc-messages-images-image-container_${this.props.imageId}`}
-					className="hc-messages-images-image-container image-upload-success mos-react-component-root"
+					className="hc-messages-images-image-container file-upload-preview image-upload-success mos-react-component-root"
 					href={this.props.imageContent.urlLarge} 
 					target="_blank"
 				>
 					{/* image preview */}
 					<div 
 						id={`hc-messages-images-image-preview_${this.props.imageId}`}
-						className="hc-messages-images-image-preview specific-image"
+						className="hc-messages-images-image-preview file-upload-preview__file-image specific-image"
 						style={imagePreviewStyles}
 					/>
 					{/* file data text */}
 					<div
 						id={`hc-messages-images-image-file-name-and-size_${this.props.imageId}`}
-						className="hc-messages-images-image-file-name-and-size"
+						className="hc-messages-images-image-file-info file-upload-preview__file-info"
 					>
-						<div className="hc-messages-images-image-file-name">{this.props.imageContent.name}</div>
+						<div className="hc-messages-images-image-file-name file-upload-preview__file-info__file-name">{this.props.imageContent.name}</div>
 						{/* <div className="hc-messages-images-image-file-size">{fileSizeFormatted}</div> */}
 					</div>
 					{/* delete control */}
 					<button
 						id={`hc-messages-images-image-file-control_${this.props.imageId}`} 
-						className="hc-messages-images-image-file-control"
-					>XXXXX
+						className="hc-messages-images-image-file-control file-upload-preview__file-control"
+					>
+						<span className="button__icon"></span>
+						<span className="button__text">Delete image</span>
 					</button>
 				</a>
 			);
