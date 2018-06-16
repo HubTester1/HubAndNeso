@@ -126,6 +126,8 @@ export default class HcMessagesData {
 					.ReturnNesoData('https://neso.mos.org/hcMessages/descending')
 					// if the promise is resolved with the settings
 					.then((messagesResults) => {
+						console.log('messagesResults');
+						console.log(messagesResults);
 						// set up var to receive all messages
 						const allMessagesMessages = [];
 						// iterate over the results and push them to allListItems
@@ -978,6 +980,7 @@ export default class HcMessagesData {
 	}
 	static ReturnFormattedMessage(messageValues, messageFormatted) {
 		const messageFormattedCopy = messageFormatted;
+		messageFormattedCopy.mongoID = messageValues._id;
 		messageFormattedCopy.tags = messageValues.messageTags;
 		messageFormattedCopy.subject = messageValues.messageSubject;
 		messageFormattedCopy.created = messageValues.messageCreated;

@@ -222,12 +222,22 @@ export default class HcMessages extends React.Component {
 			</div>
 		);
 	}
-	enableMessageUpdate(e, messageID) {
+	enableMessageUpdate(incomingMongoID, e) {
 		// set state for controlled fields
 		// open form and change button
 		// scroll to form
 
+		e.preventDefault();
+		console.log('enable');
+		console.log(incomingMongoID);
+		this.state.messagesArray.forEach((message) => {
+			if (message.mongoID === incomingMongoID) {
+				console.log(message);
+			}
+		});
 
+
+		// yello
 	}
 	render() {
 		if (this.props.allOrTop === 'all' && this.props.screenType === 'medium') {
