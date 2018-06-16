@@ -3,6 +3,7 @@
 
 import * as React from 'react';
 import Dropzone from 'react-dropzone';
+import { Spinner, SpinnerSize } from 'office-ui-fabric-react/lib/Spinner';
 import HcMessageFilePreview from '../HcMessageFilePreview/HcMessageFilePreview';
 
 // ----- COMPONENT
@@ -20,7 +21,7 @@ export default class HcMessagesFiles extends React.Component {
 						{/* eslint-disable jsx-a11y/label-has-for */}
 						<label htmlFor="hc-messages-images-file-input">Images</label>
 						<Dropzone
-							onDrop={this.props.handleChangedImage}
+							onDrop={this.props.handleDroppedFiles}
 							accept="image/jpeg,image/jpg,image/png,image/gif"
 							multiple
 							name="hc-messages-images-file-input"
@@ -34,8 +35,11 @@ export default class HcMessagesFiles extends React.Component {
 				{
 					this.props.newMessageImagesAreUploading && 
 					
-					<div className="banner banner--critical">
-						------ Files are uploading -----
+					<div className="banner">
+						<Spinner
+							size={SpinnerSize.medium}
+							label="Uploading"
+						/>
 					</div>
 				}
 				{
@@ -85,6 +89,7 @@ export default class HcMessagesFiles extends React.Component {
 							key={imageValue.key}
 							imageId={imageValue.key}
 							imageContent={imageValue}
+							handleFileDeletion={this.props.handleFileDeletion}
 						/>))
 				}
 			</div>

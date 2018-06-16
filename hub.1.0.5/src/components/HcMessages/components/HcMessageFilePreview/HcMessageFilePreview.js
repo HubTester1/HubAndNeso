@@ -84,6 +84,7 @@ export default class HcMessagesFilePreview extends React.Component {
 					<button
 						id={`hc-messages-images-image-file-control_${this.props.imageId}`} 
 						className="hc-messages-images-image-file-control file-upload-preview__file-control"
+						onClick={(e) => this.props.handleFileDeletion(this.props.imageId, e)}
 					>
 						<span className="button__icon"></span>
 						<span className="button__text">Delete image</span>

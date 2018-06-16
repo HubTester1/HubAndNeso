@@ -39,7 +39,8 @@ export default class HcMessagesNewMessageForm extends React.Component {
 		this.handleChangedTags = this.handleChangedTags.bind(this);
 		this.handleChangedSubject = this.handleChangedSubject.bind(this);
 		this.handleChangedBody = this.handleChangedBody.bind(this);
-		this.handleChangedImage = this.handleChangedImage.bind(this);
+		this.handleDroppedFiles = this.handleDroppedFiles.bind(this);
+		this.handleFileDeletion = this.handleFileDeletion.bind(this);
 		this.handleChangedExpirationDate = this.handleChangedExpirationDate.bind(this);
 		this.handleAddMessage = this.handleAddMessage.bind(this);
 	}
@@ -148,7 +149,7 @@ export default class HcMessagesNewMessageForm extends React.Component {
 			}
 		});
 	}
-	handleChangedImage(acceptedFiles, rejectedFiles) {
+	handleDroppedFiles(acceptedFiles, rejectedFiles) {
 		console.log('handling changed image');
 		// if all files submitted for upload are of the right type (none were rejected by Dropzone)
 		if (!rejectedFiles[0]) {
@@ -180,10 +181,6 @@ export default class HcMessagesNewMessageForm extends React.Component {
 									uploadsFailed.push(resultValue);
 								}
 							});
-							console.log('uploadsSucceeded');
-							console.log(uploadsSucceeded);
-							console.log('uploadsFailed');
-							console.log(uploadsFailed);
 							if (uploadsFailed[0]) {
 								newMessageImageSomeOrAllUploadsFailedWarningValue = true;
 							}
@@ -231,6 +228,28 @@ export default class HcMessagesNewMessageForm extends React.Component {
 				newMessageImagesWrongTypesWarning: true,
 			}));
 		}
+	}
+	handleFileDeletion(imageID, e) {
+		// prevent navigating to image (because the control is inside a link)
+		e.preventDefault();
+		// set state to reflect results of all image uploads to this point
+		// note: accounts for the possibility of multiple rounds of uploads
+		console.log('--------------');
+		console.log('imageID');
+		console.log(imageID);
+		this.setState((prevState) => {
+			const previousFileArray = prevState.newMessageImages;
+			const currentFileArray = [];
+			previousFileArray.forEach((file) => {
+				console.log(file);
+				if (file.key !== imageID) {
+					currentFileArray.push(file);
+				}
+			});
+			return {
+				newMessageImages: currentFileArray,
+			};
+		});
 	}
 	handleChangedExpirationDate(value) {
 		if (value) {
@@ -380,7 +399,8 @@ export default class HcMessagesNewMessageForm extends React.Component {
 					</div>
 					<div className="mos-react-form-field">
 						<HcMessagesFiles
-							handleChangedImage={this.handleChangedImage}
+							handleDroppedFiles={this.handleDroppedFiles}
+							handleFileDeletion={this.handleFileDeletion}
 							newMessageImagesAreUploading={this.state.newMessageImagesAreUploading}
 							newMessageImages={this.state.newMessageImages}
 							newMessageImagesWrongTypesWarning={this.state.newMessageImagesWrongTypesWarning}
