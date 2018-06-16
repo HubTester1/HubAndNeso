@@ -44,6 +44,7 @@ export default class HcMessages extends React.Component {
 		this.handleClickTagFilterMenuItem = this.handleClickTagFilterMenuItem.bind(this);
 		this.handlePageChange = this.handlePageChange.bind(this);
 		this.returnHcMessagesAllBody = this.returnHcMessagesAllBody.bind(this);
+		this.enableMessageUpdate = this.enableMessageUpdate.bind(this);
 	}
 	componentDidMount() {
 		if (this.props.allOrTop === 'all') {
@@ -189,6 +190,7 @@ export default class HcMessages extends React.Component {
 				<MediaQuery maxWidth={ScreenSizes.ReturnSmallMax()}>
 					<HcMessagesList
 						messagesThisPage={this.state.messagesThisPageSmallScreen}
+						uData={this.props.uData}
 					/>
 					<Pagination
 						activePage={this.state.activePage}
@@ -205,6 +207,7 @@ export default class HcMessages extends React.Component {
 				<MediaQuery minWidth={ScreenSizes.ReturnMediumMin()}>
 					<HcMessagesList
 						messagesThisPage={this.state.messagesThisPageLargeScreen}
+						uData={this.props.uData}
 					/>
 					<Pagination
 						activePage={this.state.activePage}
@@ -218,6 +221,13 @@ export default class HcMessages extends React.Component {
 				</MediaQuery>
 			</div>
 		);
+	}
+	enableMessageUpdate(e, messageID) {
+
+
+		// yello
+
+
 	}
 	render() {
 		if (this.props.allOrTop === 'all' && this.props.screenType === 'medium') {
@@ -255,7 +265,11 @@ export default class HcMessages extends React.Component {
 		return (
 			<div id="hc-messages-top" className="mos-react-component-root">
 				<h2>Latest Messages</h2>
-				<HcMessagesList messagesThisPage={this.state.messagesArray} />
+				<HcMessagesList
+					messagesThisPage={this.state.messagesArray}
+					enableMessageUpdate={this.enableMessageUpdate}
+					uData={this.props.uData}
+				/>
 			</div>
 		);
 	}

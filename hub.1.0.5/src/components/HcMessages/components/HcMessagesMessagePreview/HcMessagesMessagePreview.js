@@ -45,6 +45,8 @@ export default class HcMessagesMessagePreview extends React.Component {
 	render() {
 		Modal.setAppElement('#hub-central-mount-point');
 		console.log(this.props.messageContent);
+		console.log(this.props.uData);
+		// enableMessageUpdate
 		return (
 			<li id={`hc-messages-message-preview_${this.props.messageId}`} className="hc-messages-message-preview mos-react-component-root">
 				{
@@ -73,6 +75,16 @@ export default class HcMessagesMessagePreview extends React.Component {
 							>
 								Full message
 							</button>
+							{
+								this.props.messageContent.creator.account === this.props.uData.account &&
+
+								<button
+									className="hc-messages-message-enable-message-update-button"
+									onClick={this.props.enableMessageUpdate}
+								>
+									Update message
+								</button>
+							}
 							<Modal
 								className="hc-messages-message-full-message-modal"
 								isOpen={this.state.showModalFull}

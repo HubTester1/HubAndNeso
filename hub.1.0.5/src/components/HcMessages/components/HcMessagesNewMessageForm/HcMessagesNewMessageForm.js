@@ -43,7 +43,6 @@ export default class HcMessagesNewMessageForm extends React.Component {
 		this.handleFileDeletion = this.handleFileDeletion.bind(this);
 		this.handleChangedExpirationDate = this.handleChangedExpirationDate.bind(this);
 		this.handleAddMessage = this.handleAddMessage.bind(this);
-		this.enableMessageUpdate = this.enableMessageUpdate.bind(this);
 		this.handleMessageUpdate = this.handleMessageUpdate.bind(this);
 	}
 	setAndReturnMessageFormIsInvalid() {
@@ -302,10 +301,11 @@ export default class HcMessagesNewMessageForm extends React.Component {
 				});
 		}
 	}
-	enableMessageUpdate(e, messageID) {
-
-	}
 	handleMessageUpdate() {
+
+
+		// yello
+
 
 	}
 	resetNewMessageStateAndSetSaveSuccess() {
