@@ -1,4 +1,6 @@
 
+/* eslint-disable */
+
 // ----- IMPORTS
 
 import * as React from 'react';
@@ -9,11 +11,11 @@ import MOSUtilities from '../../../../services/MOSUtilities';
 export default class HcMessagesFilePreview extends React.Component {
 	constructor(props) {
 		super(props);
-		this.ReturnFileSizeToReport = this.ReturnFileSizeToReport.bind(this);
-		this.ReturnFileSizeFormattedToOneSignificantDigit = 
-			this.ReturnFileSizeFormattedToOneSignificantDigit.bind(this);
+		// this.ReturnFileSizeToReport = this.ReturnFileSizeToReport.bind(this);
+		/* this.ReturnFileSizeFormattedToOneSignificantDigit = 
+			this.ReturnFileSizeFormattedToOneSignificantDigit.bind(this); */
 	}
-	ReturnFileSizeFormattedToOneSignificantDigit(fileSize) {
+	/* ReturnFileSizeFormattedToOneSignificantDigit(fileSize) {
 		let fileSizeString = fileSize.toFixed(1).toString();
 		const quantityOfDigitsInFileSizeString = fileSizeString.length;
 		const lastDigitInFileSizeString = fileSizeString.charAt(quantityOfDigitsInFileSizeString - 1);
@@ -21,8 +23,8 @@ export default class HcMessagesFilePreview extends React.Component {
 			fileSizeString = fileSizeString.substring(0, quantityOfDigitsInFileSizeString - 2);
 		}
 		return fileSizeString;
-	}
-	ReturnFileSizeToReport(rawFileSize) {
+	} */
+	/* ReturnFileSizeToReport(rawFileSize) {
 		// perform some file size conversions
 		const fileSizeInKB = rawFileSize / 1000;
 		const fileSizeInMB = fileSizeInKB / 1000;
@@ -46,21 +48,22 @@ export default class HcMessagesFilePreview extends React.Component {
 			fileSizeToReport = `${rawFileSize} bytes`;
 		}
 		return fileSizeToReport;
-	}
+	} */
 
 	render() {
+		console.log(this.props.imageContent);
 		// if this image was uploaded successfully (error is false)
 		if (!this.props.imageContent.error) {
-			const backgroundImageUrl = MOSUtilities.ReplaceAll(' ', '%20', this.props.imageContent.url);
+			const backgroundImageUrl = MOSUtilities.ReplaceAll(' ', '%20', this.props.imageContent.urlLarge);
 			const imagePreviewStyles = {
 				backgroundImage: `url(${backgroundImageUrl})`,
 			};
-			const fileSizeFormatted = this.ReturnFileSizeToReport(this.props.imageContent.size);
+			// const fileSizeFormatted = this.ReturnFileSizeToReport(this.props.imageContent.size);
 			return (
 				<a 
 					id={`hc-messages-images-image-container_${this.props.imageId}`}
 					className="hc-messages-images-image-container image-upload-success mos-react-component-root"
-					href={this.props.imageContent.url} 
+					href={this.props.imageContent.urlLarge} 
 					target="_blank"
 				>
 					{/* image preview */}
@@ -75,7 +78,7 @@ export default class HcMessagesFilePreview extends React.Component {
 						className="hc-messages-images-image-file-name-and-size"
 					>
 						<div className="hc-messages-images-image-file-name">{this.props.imageContent.name}</div>
-						<div className="hc-messages-images-image-file-size">{fileSizeFormatted}</div>
+						{/* <div className="hc-messages-images-image-file-size">{fileSizeFormatted}</div> */}
 					</div>
 					{/* delete control */}
 					<button

@@ -149,6 +149,7 @@ export default class HcMessagesNewMessageForm extends React.Component {
 		});
 	}
 	handleChangedImage(acceptedFiles, rejectedFiles) {
+		console.log('handling changed image');
 		// if all files submitted for upload are of the right type (none were rejected by Dropzone)
 		if (!rejectedFiles[0]) {
 			// set state to indicate that images are processing and unset warnings
@@ -162,6 +163,7 @@ export default class HcMessagesNewMessageForm extends React.Component {
 			this.returnAndConditionallySetMessageID()
 				// if the promise was resolved with the messageID
 				.then((messageID) => {
+					console.log('got a message ID');
 					// get a promise to upload the files
 					HcMessagesData.UploadMessagesFiles(messageID, acceptedFiles)
 						// if the promise was *resolved* with some results
@@ -171,14 +173,17 @@ export default class HcMessagesNewMessageForm extends React.Component {
 							const uploadsSucceeded = [];
 							const uploadsFailed = [];
 							let newMessageImageSomeOrAllUploadsFailedWarningValue = false;
-							fileUploadResults.fileUploadResults.forEach((resultValue) => {
+							fileUploadResults.data.imageProcessingResults.forEach((resultValue) => {
 								if (!resultValue.error) {
 									uploadsSucceeded.push(resultValue);
 								} else {
 									uploadsFailed.push(resultValue);
 								}
 							});
-
+							console.log('uploadsSucceeded');
+							console.log(uploadsSucceeded);
+							console.log('uploadsFailed');
+							console.log(uploadsFailed);
 							if (uploadsFailed[0]) {
 								newMessageImageSomeOrAllUploadsFailedWarningValue = true;
 							}
@@ -189,16 +194,16 @@ export default class HcMessagesNewMessageForm extends React.Component {
 								const currentFileArray 
 									= [...uploadsSucceeded, ...previousFileArray];
 								return {
-									// newMessageImagesAreUploading: false,
+									newMessageImagesAreUploading: false,
 									newMessageImages: currentFileArray,
 									newMessageImageSomeOrAllUploadsFailedWarning: 
 										newMessageImageSomeOrAllUploadsFailedWarningValue,
 								};
 							});
-							// set state to indicate that images are no longer processing
+							/* // set state to indicate that images are no longer processing
 							this.setState({
 								newMessageImagesAreUploading: false,
-							});
+							}); */
 						})
 						// if the promise to upload the files was rejected with an error
 						// note: could be because a folder couldn't be created, or some other reason
@@ -397,37 +402,42 @@ export default class HcMessagesNewMessageForm extends React.Component {
 					{
 						this.state.newMessageIDError && 
 
-						<div id="new-message-id-error-message" className="mos-react-form-error-message">
-							<span className="urgent">Whoopsie!</span> We can&apos;t save your stuff right now. Please try later.
+						<div id="new-message-id-error-message" className="mos-react-form-error-message banner banner--critical">
+							<p className="banner__text">
+								<span className="urgent">Whoopsie!</span> We can&apos;t save your stuff right now. Please try later.
+							</p>
 						</div>
 					}
 					{
 						this.state.newMessageIsInvalid &&
 
-						<div id="form-entries-invalid-error-message" className="mos-react-form-error-message">
-							The highlighted fields contain errors. Please make changes and try again.
+						<div id="form-entries-invalid-error-message" className="mos-react-form-error-message banner banner--critical">
+							<p className="banner__text">The highlighted fields contain errors. Please make changes and try again.</p>
 						</div>
 					}
 					{
 						this.state.newMessageSaveFailure &&
 
-						<div id="new-message-save-failure-error-message" className="mos-react-form-error-message">
-							<span className="urgent">Yikes!</span> We had a problem saving your information.
+						<div id="new-message-save-failure-error-message" className="mos-react-form-error-message banner banner--critical">
+							<p className="banner__text"><span className="urgent">Yikes!</span> We had a problem saving your information.</p>
 						</div>
 					}
 					{
 						this.state.newMessageIITNotificationFailure &&
 
-						<div id="new-message-iit-notification-failure-error-message" className="mos-react-form-error-message">
-							<span className="urgent">Oh no!</span> We couldn&apos;t notify IIT, either. Are you connected to the Internet?
+						<div id="new-message-iit-notification-failure-error-message" className="mos-react-form-error-message banner banner--critical">
+							<p className="banner__text">
+								<span className="urgent">Oh no!</span> We couldn&apos;t notify IIT, either. 
+								Are you connected to the Internet?
+							</p>
 						</div>
 					}
 					<button id="new-message-save-button" onClick={this.handleAddMessage}>Save</button>
 					{
 						this.state.newMessageSaveSuccess &&
 
-						<div id="new-message-save-success-message" className="message-success-message">
-							Your message was saved.
+						<div id="new-message-save-success-message" className="message-success-message banner banner--critical">
+							<p className="banner__text">Your message was saved.</p>
 						</div>
 					}
 				</div>

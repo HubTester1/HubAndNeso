@@ -120,7 +120,6 @@ module.exports = {
 				.catch((error) => { reject(error); });
 		})),
 
-
 	ProcessNewMessageImages: req =>
 		// return a new promise
 		new Promise((resolve, reject) => {
@@ -134,7 +133,7 @@ module.exports = {
 				const fileProcessingPromises = [];
 				// construct base storage path and URI
 				const storageBasePath = `${process.env.appRoot}\\public\\images\\hcMessages\\${fields.messageID}\\`;
-				const storageBaseURI = `https://neso.mos.org/images/hcMessages/${fields.messageID}/`;
+				const storageBaseURI = `https://neso.mos.org:${process.env.httpsPort}/images/hcMessages/${fields.messageID}/`;
 				// create folder for storage, if it doesn't exist
 				if (!fse.existsSync(storageBasePath)) {
 					fse.mkdirSync(storageBasePath);

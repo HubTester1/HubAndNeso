@@ -88,7 +88,7 @@ gulp.task('4-dev-build-push-styles', () =>
 // when the specified src style file changes, build dist style file and push it to dev
 gulp.task('4-dev-watch-build-push-styles', () => {
 	// watch the src style file; upon changes, build dist style file and push it to dev
-	gulp.watch([gulpV4DevConfig.ReturnV4DevStylesSrcFile()], ['4-dev-push-styles']);
+	gulp.watch([gulpV4DevConfig.ReturnV4DevStylesSrcFile()], ['4-dev-build-push-styles']);
 });
 // push specified swf api file to dev
 gulp.task('4-dev-push-api', () =>

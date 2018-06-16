@@ -34,15 +34,18 @@ export default class HcMessagesFiles extends React.Component {
 				{
 					this.props.newMessageImagesAreUploading && 
 					
-					<div>
+					<div className="banner banner--critical">
 						------ Files are uploading -----
 					</div>
 				}
 				{
 					this.props.newMessageImagesWrongTypesWarning &&
 
-					<div id="mos-react-form-field-error-wrong-image-type" className="mos-react-form-field-error-message">
-						<span className="urgent">Oops!</span> No images were uploaded. Only JPG, JPEG, GIF, and PNG files are allowed.
+					<div id="mos-react-form-field-error-wrong-image-type" className="mos-react-form-field-error-message banner banner--warning">
+						<p className="banner__text">
+							<span className="urgent">Oops!</span> No images were uploaded. Only JPG, 
+							JPEG, GIF, and PNG files are allowed. Please try again.
+						</p>
 					</div>
 				}
 				{
@@ -50,9 +53,11 @@ export default class HcMessagesFiles extends React.Component {
 					!this.props.newMessageImageUploadsImpossible &&
 					this.props.newMessageImages[0] &&
 
-					<div id="some-image-uploads-failed-message" className="mos-react-form-field-warning-message">
-						<span className="urgent">Hmmm...</span> Successful uploads can be previewed here, 
-						but at least one of your uploads failed.
+					<div id="some-image-uploads-failed-message" className="mos-react-form-field-warning-message banner banner--warning">
+						<p className="banner__text">
+							<span className="urgent">Hmmm...</span> Successful uploads can be previewed here, 
+							but at least one of your uploads failed. Feel free to try again.
+						</p>
 					</div>
 				}
 				{
@@ -60,15 +65,15 @@ export default class HcMessagesFiles extends React.Component {
 					!this.props.newMessageImageUploadsImpossible &&
 					!this.props.newMessageImages[0] &&
 
-					<div id="some-image-uploads-failed-message" className="mos-react-form-field-warning-message">
-						<span className="urgent">On no!</span> None of your images could be uploaded.
+					<div id="some-image-uploads-failed-message" className="mos-react-form-field-warning-message banner banner--critical">
+						<p className="banner__text"><span className="urgent">On no!</span> None of your images could be uploaded.</p>
 					</div>
 				}
 				{
 					this.props.newMessageImageUploadsImpossible &&
 
-					<div id="image-uploads-are-not-possible-message" className="mos-react-form-field-error-message">
-						<span className="urgent">Whoopsie!</span> We can&apos;t save your images right now. Please try later.
+					<div id="image-uploads-are-not-possible-message" className="mos-react-form-field-error-message banner banner--success">
+						<p className="banner__text"><span className="urgent">Whoopsie!</span> We can&apos;t save your images right now. Please try later.</p>
 					</div>
 				}
 				{

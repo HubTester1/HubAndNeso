@@ -157,6 +157,6 @@ class HcContainer extends React.Component {
 
 if (EnvironmentDetector.ReturnIsHCScreen()) {
 	// eslint-disable-next-line no-console
-	console.log('hc m5');
+	console.log('hc m1');
 	ReactDOM.render(<HcContainer />, document.getElementById('hub-central-mount-point'));
 }

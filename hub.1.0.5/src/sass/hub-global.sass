@@ -34,7 +34,7 @@ div#internet-explorer-upgrade
 	+font-size-5
 	+font-weight-light
 	font-family: 'Segoe UI', 'Segoe', Roboto, Helvetica Neue, Helvetica,  Arial, sans-serif
-	color: $grey-15
+	color: $grey-16
 	background-color: $white
 	box-sizing: border-box
 
@@ -216,6 +216,10 @@ div.ms-Dropdown-callout
 div.ms-TextField-fieldGroup
 	+round-corners
 	border: 0
+
+	input#ms-TextField-field
+		+round-corners
+		border: 0
 
 // DATE PICKER
 
@@ -784,6 +788,7 @@ body.is-in-maintenance-mode
 form#aspnetForm
 	
 	div.banner
+		+round-corners
 		padding: 2rem 5rem
 		text-align: center
 
@@ -796,6 +801,14 @@ form#aspnetForm
 	div.banner--critical
 		color: $pink-8
 		background-color: $pink-1
+
+	div.banner--warning
+		color: $yellow-10
+		background-color: $yellow-1
+
+	div.banner--success
+		color: $green-9
+		background-color: $green-1
 
 
 
