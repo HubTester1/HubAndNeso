@@ -41,8 +41,17 @@ module.exports = {
 				.catch((error) => { reject(error); });
 		}),
 	
-	ReturnImageInfo: path => easyimage.info(path),
-		
+	ReturnImageInfo: path => 
+		// return a new promise
+		new Promise((resolve, reject) => {
+			// get a promise to get image info
+			easyimage.info(path)
+				// if the promise is resolved with the result, then resolve this promise with the result
+				.then((infoResult) => { resolve(infoResult); })
+				// if the promise is rejected with an error, then reject this promise with an error
+				.catch((error) => { reject(error); });
+		}),
+	
 	ConvertToJPGIfNeeded: imageInfo =>
 		// return a new promise
 		new Promise((resolve, reject) => {
@@ -99,6 +108,8 @@ module.exports = {
 		}),
 
 	ResizeImages: imagesArray =>
+		// note that this promise will always be resolved, never rejected; 
+		// 		however, errors may be true or false
 		// return a new promise
 		new Promise((resolve, reject) => {
 			const imageResizePromises = [];
@@ -108,15 +119,15 @@ module.exports = {
 			Promise.all(imageResizePromises)
 				.then((imageResizeResults) => {
 					resolve({
-						error: false,
+						error: 'check',
 						imageResizeResults,
 					});
-				})
-				// if the promise was rejected with an error
-				.catch((error) => { reject(error); });
+				});
 		}),
 
 	ResizeImage: incomingImage =>
+		// note that this promise will always be resolved, never rejected; 
+		// 		however, errors may be true or false
 		// return a new promise
 		new Promise((resolve, reject) => {
 			// either width or height is required
@@ -149,7 +160,7 @@ module.exports = {
 					// if the promise was rejected with an error
 					.catch((error) => {
 						// reject this promise with the error
-						reject({
+						resolve({
 							error: true,
 							imageMagickError: error,
 						});
@@ -157,7 +168,7 @@ module.exports = {
 			// if neither width or height was supplied
 			} else {
 				// reject this promise with an error
-				reject({
+				resolve({
 					error: true,
 					paramError: 'image object does not contain needed properties',
 				});

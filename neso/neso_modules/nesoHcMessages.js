@@ -5,6 +5,7 @@ const nesoDBQueries = require('./nesoDBQueries');
 const nesoImages = require('./nesoImages');
 const fse = require('fs-extra');
 const formidable = require('formidable');
+const shortid = require('shortid');
 
 // ----- DEFINE HEALTH FUNCTIONS
 
@@ -119,83 +120,129 @@ module.exports = {
 				.catch((error) => { reject(error); });
 		})),
 
-	ProcessNewMessageImage: req =>
+
+	ProcessNewMessageImages: req =>
 		// return a new promise
 		new Promise((resolve, reject) => {
-			// parse the form data out of the incoming request
+			// get the form data out of the incoming request
 			const form = new formidable.IncomingForm();
+			// set the temporary file storage location
 			form.uploadDir = 'E:\\tmp';
+			// parse the form data
 			form.parse(req, (err, fields, files) => {
+				// set up container for file processing promises
+				const fileProcessingPromises = [];
+				// construct base storage path and URI
+				const storageBasePath = `${process.env.appRoot}\\public\\images\\hcMessages\\${fields.messageID}\\`;
+				const storageBaseURI = `https://neso.mos.org/images/hcMessages/${fields.messageID}/`;
+				// create folder for storage, if it doesn't exist
+				if (!fse.existsSync(storageBasePath)) {
+					fse.mkdirSync(storageBasePath);
+				}
 				// get an array of keys in the files object
 				const fileKeys = Object.keys(files);
 				// for each key in the files object
 				fileKeys.forEach((fileKey) => {
-					// get one file from the files object using its key
-					const incomingFile = files[fileKey];
-					// get a promise to get info about this image file
-					nesoImages.ReturnImageInfo(incomingFile.path)
-						// if the promise is resolved with the image info
-						.then((imageInfo) => {
-							// get a promise to convert to JPG, if needed
-							nesoImages.ConvertToJPGIfNeeded(imageInfo)
-								// if the promise was resolved with the result
-								.then((conversionResult) => {
-									// construct base storage path, name, extension
-									const storagePath = `${process.env.appRoot}\\public\\images\\hcMessages\\${fields.messageID}\\`;
-									const storageName = incomingFile.name.replace(/\.[^/.]+$/, '');
-									const storageExtension = conversionResult.resultType;
-									// create folder for storage, if it doesn't exist
-									if (!fse.existsSync(storagePath)) {
-										fse.mkdirSync(storagePath);
-									}
-									// get a promise to store resized images
-									nesoImages.ResizeImages([
-										{
-											source: conversionResult.result,
-											width: 350,
-											destination: `${storagePath}${storageName}_350.${storageExtension}`,
-										}, {
-											source: conversionResult.result,
-											width: 600,
-											destination: `${storagePath}${storageName}_600.${storageExtension}`,
-										},
-									])
-										// if the promise was resolved with the result
-										.then((resizeResults) => {
-											resolve({
-												error: false,
-												result: resizeResults,
-											});
-										})
-										// if the promise was rejected with an error
-										.catch((error) => {
-											reject({
-												error: true,
-												imageResizeError: true,
-												errorInfo: error,
-											});
-										});
-								})
-								// if the promise was rejected with an error
-								.catch((error) => {
-									reject({
-										error: true,
-										imageConversionError: true,
-										errorInfo: error,
+					// add to file processing promises container a promise to 
+					// 		process one file (from the files object, using this fileKey)
+					fileProcessingPromises
+						.push(module.exports.ProcessNewMessageImage(files[fileKey], storageBasePath, storageBaseURI));
+				});
+				// when all file processing promises are resolved
+				Promise.all(fileProcessingPromises)
+					.then((fileProcessingResults) => {
+						// resolve this promise with the file processing results
+						resolve({
+							error: 'check',
+							imageProcessingResults: fileProcessingResults,
+						});
+					});
+			});
+		}),
+
+	ProcessNewMessageImage: (incomingFile, storageBasePath, storageBaseURI) =>
+		// return a new promise
+		new Promise((resolve, reject) => {
+			// console.log(incomingFile);
+			// get a promise to get info about this image file
+			nesoImages.ReturnImageInfo(incomingFile.path)
+				// if the promise is resolved with the image info
+				.then((imageInfo) => {
+					// get a promise to convert to JPG, if needed
+					nesoImages.ConvertToJPGIfNeeded(imageInfo)
+						// if the promise was resolved with the result
+						.then((conversionResult) => {
+							// construct base storage path, name, extension
+							const storageName = incomingFile.name.replace(/\.[^/.]+$/, '');
+							const storageExtension = conversionResult.resultType;
+							// get a promise to store resized images
+							nesoImages.ResizeImages([
+								{
+									source: conversionResult.result,
+									width: 350,
+									destination: `${storageBasePath}${storageName}_350.${storageExtension}`,
+								}, {
+									source: conversionResult.result,
+									width: 600,
+									destination: `${storageBasePath}${storageName}_600.${storageExtension}`,
+								},
+							])
+								// when the promise was resolved with the result, which will
+								// 		always be the case; no promise rejection here
+								.then((resizeResults) => {
+									// extract the results
+									const { imageResizeResults } = resizeResults;
+									// set flag indicating that none of the resizes failed
+									let onePlusResizesFailed = false;
+									// iterate over each resize result
+									imageResizeResults.forEach((imageResizeResult) => {
+										// if this result was an error, set flag to indicate 1+ errors
+										if (imageResizeResult.error) { onePlusResizesFailed = true; }
 									});
+									// if there were no resize errors
+									if (!onePlusResizesFailed) {
+										// resolve this promise with a result
+										resolve({
+											error: false,
+											name: storageName,
+											urlSmall: `${storageBaseURI}${storageName}_350.${storageExtension}`,
+											urlLarge: `${storageBaseURI}${storageName}_600.${storageExtension}`,
+											key: shortid.generate(),
+										});
+									} else {
+										// resolve this promise with an error
+										resolve({
+											error: true,
+											imageResizeError: true,
+											name: storageName,
+											key: shortid.generate(),
+										});
+									}
 								});
 						})
-						// if the promise is rejected with an error
+						// if the promise was rejected with an error
 						.catch((error) => {
-							// reject this promise with the error
-							reject({
+							// resolve this promise with an error
+							resolve({
 								error: true,
-								imageInfoError: true,
+								imageConversionError: true,
 								errorInfo: error,
+								name: incomingFile.name,
+								key: shortid.generate(),
 							});
 						});
+				})
+				// if the promise is rejected with an error
+				.catch((error) => {
+					// resolve this promise with an error
+					resolve({
+						error: true,
+						imageInfoError: true,
+						errorInfo: error,
+						name: incomingFile.name,
+						key: shortid.generate(),
+					});
 				});
-			});
 		}),
 
 	ProcessNewMessage: incomingMessage =>

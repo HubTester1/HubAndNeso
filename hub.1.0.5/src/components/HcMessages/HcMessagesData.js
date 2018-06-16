@@ -1,7 +1,7 @@
 
 // ----- IMPORTS
 
-import { Web } from 'sp-pnp-js';
+// import { Web } from 'sp-pnp-js';
 import EnvironmentDetector from '../../services/EnvironmentDetector';
 import NesoHTTPClient from '../../services/NesoHTTPClient';
 
@@ -2138,6 +2138,8 @@ export default class HcMessagesData {
 				filesUploadData.append(`image[${fileIndex}]`, fileValue);
 			});
 			// get promise to upload message files to Neso
+			// note: filesUploadConfig doesn't seem to be needed, but leaving it defined and passed
+			// 		for now in case a need is discovered; FUNCTION DOES NOT CURRENTLY RECEIVE AND USE IT
 			NesoHTTPClient
 				.SendNesoJSONAndReceiveResponse(filesUploadEndPoint, filesUploadData, filesUploadConfig)
 				.then((fileUploadResults) => {
@@ -2159,7 +2161,7 @@ export default class HcMessagesData {
 			if (EnvironmentDetector.ReturnIsSPO()) {
 				// upload the file
 				const spWeb = new Web('https://bmos.sharepoint.com');
-				spWeb.getFolderByServerRelativeUrl(`/img/${folder}`)
+				spWeb.getFolderByServerRelativeUrl(`/HcMessagesFiles/${folder}`)
 					.files.add(file.name, file, true)
 					// if the upload was successful
 					.then((fileResponse) => {
