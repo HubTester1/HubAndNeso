@@ -9,22 +9,32 @@ import { CommandBar } from 'office-ui-fabric-react/lib/CommandBar';
 
 export default class HcMessagesCommandBar extends React.Component {
 	returnCommanBarItems() {
-		const hideShowButton = 
-		this.props.showingNewMessageForm ?
-			{
+		let hideShowButton = {
+			key: 'newMessage',
+			name: 'New',
+			icon: 'Add',
+			ariaLabel: 'Add a message',
+			onClick: this.props.handleClickNewMessageButton,
+		};
+		if (this.props.showingNewMessageForm && !this.props.updatingMessage) {
+			hideShowButton = {
 				key: 'hideNewMessage',
 				name: 'Hide New Message',
 				icon: 'ChevronUpMed',
 				ariaLabel: 'Hide the new message form',
 				onClick: this.props.handleClickHideNewMessageButton,
-			} : 
-			{
-				key: 'newMessage',
-				name: 'New',
-				icon: 'Add',
-				ariaLabel: 'Add a message',
-				onClick: this.props.handleClickNewMessageButton,
 			};
+		}
+		if (this.props.showingNewMessageForm && this.props.updatingMessage) {
+			hideShowButton = {
+				key: 'hideUpdateMessage',
+				name: 'Hide Message Modification',
+				icon: 'ChevronUpMed',
+				ariaLabel: 'Hide the message modification form',
+				onClick: this.props.handleClickHideNewMessageButton,
+			};
+		}
+			
 		return [
 			hideShowButton,
 			{

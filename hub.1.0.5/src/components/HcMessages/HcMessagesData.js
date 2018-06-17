@@ -126,8 +126,6 @@ export default class HcMessagesData {
 					.ReturnNesoData('https://neso.mos.org/hcMessages/descending')
 					// if the promise is resolved with the settings
 					.then((messagesResults) => {
-						console.log('messagesResults');
-						console.log(messagesResults);
 						// set up var to receive all messages
 						const allMessagesMessages = [];
 						// iterate over the results and push them to allListItems
@@ -980,7 +978,7 @@ export default class HcMessagesData {
 	}
 	static ReturnFormattedMessage(messageValues, messageFormatted) {
 		const messageFormattedCopy = messageFormatted;
-		messageFormattedCopy.mongoID = messageValues._id;
+		messageFormattedCopy.messageID = messageValues.messageID;
 		messageFormattedCopy.tags = messageValues.messageTags;
 		messageFormattedCopy.subject = messageValues.messageSubject;
 		messageFormattedCopy.created = messageValues.messageCreated;
@@ -992,10 +990,13 @@ export default class HcMessagesData {
 		messageFormattedCopy.key = shortid.generate();
 
 		if (messageValues.messageImages && messageValues.messageImages[0]) {
+			console.log(messageValues.messageImages);
 			messageValues.messageImages.forEach((imageValue) => {
 				const imageValueCopy = imageValue;
+				// add a separate, unique key for use solely in displaying inside in full message
 				imageValueCopy.imageKey = shortid.generate();
-				imageValueCopy.previewKey = shortid.generate();
+				// this is leftover from when it was anticiapted that message previews would show images
+				// imageValueCopy.previewKey = shortid.generate();
 				messageFormattedCopy.images.push(imageValueCopy);
 			});
 		}

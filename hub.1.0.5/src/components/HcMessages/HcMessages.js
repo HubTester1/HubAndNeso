@@ -1,4 +1,6 @@
 
+/* eslint-disable max-len */
+
 // ----- IMPORTS
 
 import * as React from 'react';
@@ -7,7 +9,6 @@ import {
 	AccordionItemTitle,
 	AccordionItemBody,
 } from 'react-accessible-accordion';
-
 import MediaQuery from 'react-responsive';
 import Pagination from 'react-js-pagination';
 import HcMessagesData from './HcMessagesData';
@@ -15,10 +16,13 @@ import HcMessagesCommandBar from './components/HcMessagesCommandBar/HcMessagesCo
 import HcMessagesList from './components/HcMessagesList/HcMessagesList';
 import HcMessagesNewMessageForm from './components/HcMessagesNewMessageForm/HcMessagesNewMessageForm';
 import ScreenSizes from '../../services/ScreenSizes';
+import MOSUtilities from '../../services/MOSUtilities';
 
 import './HcMessages.sass';
 import './HcMessagesSmall.sass';
 import './HcMessagesMediumLarge.sass';
+
+const shortid = require('shortid');
 
 // ----- COMPONENT
 
@@ -35,7 +39,28 @@ export default class HcMessages extends React.Component {
 			messagesThisPageLargeScreen: [],
 			activePage: startingPageNumber,
 			tagsArray: [],
+
 			showNewMessageForm: false,
+			updatingMessage: false,
+
+			newMessageID: undefined,
+			newMessageTags: [{ key: '' }],
+			newMessageSubject: '',
+			newMessageBody: '',
+			newMessageImages: [],
+			newMessageExpirationDate: '',
+			newMessageImagesAreUploading: false,
+			newMessageIDError: undefined,
+			newMessageTagsError: undefined,
+			newMessageSubjectError: undefined,
+			newMessageBodyError: undefined,
+			newMessageImageSomeOrAllUploadsFailedWarning: undefined,
+			newMessageImagesWrongTypesWarning: undefined,
+			newMessageIsInvalid: undefined,
+			newMessageImageUploadsImpossible: undefined,
+			newMessageSaveFailure: undefined,
+			newMessageSaveSuccess: undefined,
+			newMessageIITNotificationFailure: undefined,
 		};
 		this.addMessageToList = this.addMessageToList.bind(this);
 		this.handleClickNewMessageButton = this.handleClickNewMessageButton.bind(this);
@@ -45,6 +70,28 @@ export default class HcMessages extends React.Component {
 		this.handlePageChange = this.handlePageChange.bind(this);
 		this.returnHcMessagesAllBody = this.returnHcMessagesAllBody.bind(this);
 		this.enableMessageUpdate = this.enableMessageUpdate.bind(this);
+		this.handleChangedTags = this.handleChangedTags.bind(this);
+		this.handleChangedSubject = this.handleChangedSubject.bind(this);
+		this.handleChangedBody = this.handleChangedBody.bind(this);
+		this.handleDroppedFiles = this.handleDroppedFiles.bind(this);
+		this.handleFileDeletion = this.handleFileDeletion.bind(this);
+		this.handleChangedExpirationDate = this.handleChangedExpirationDate.bind(this);
+		this.handleAddMessage = this.handleAddMessage.bind(this);
+		this.handleMessageUpdate = this.handleMessageUpdate.bind(this);
+		this.returnFormFieldContainerClassNameString = 
+			this.returnFormFieldContainerClassNameString.bind(this);
+		this.handleChangedSubject = this.handleChangedSubject.bind(this);
+		// this.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX = this.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.bind(this);
+		// this.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX = this.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.bind(this);
+		// this.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX = this.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.bind(this);
+		// this.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX = this.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.bind(this);
+		// this.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX = this.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.bind(this);
+		// this.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX = this.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.bind(this);
+		// this.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX = this.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.bind(this);
+		// this.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX = this.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.bind(this);
+		// this.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX = this.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.bind(this);
+		// this.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX = this.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.bind(this);
+		// this.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX = this.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.bind(this);
 	}
 	componentDidMount() {
 		if (this.props.allOrTop === 'all') {
@@ -73,6 +120,314 @@ export default class HcMessages extends React.Component {
 					}));
 				});
 		}
+	}
+	setAndReturnMessageFormIsInvalid() {
+		// set up new errors; default to no errors
+		const newErrors = {
+			newMessageTagsError: undefined,
+			newMessageSubjectError: undefined,
+			newMessageBodyError: undefined,
+			newMessageIsInvalid: undefined,
+		};
+		// if there's no tag
+		if (!this.state.newMessageTags[0].camlName) {
+			// prepare tag error
+			newErrors.newMessageTagsError = 'Cannot be blank';
+		}
+		// if there's no subject
+		if (!this.state.newMessageSubject) {
+			// prepare subject error
+			newErrors.newMessageSubjectError = 'Cannot be blank';
+		}
+		// if there's no body
+		if (!this.state.newMessageBody) {
+			// prepare body error
+			newErrors.newMessageBodyError = 'Cannot be blank';
+		}
+
+		// if there's no tag, subject, or body; if there is a messageID error
+		if (!this.state.newMessageTags[0].camlName || !this.state.newMessageSubject ||
+			!this.state.newMessageBody || this.state.newMessageIDError) {
+			// prepare form validation error
+			newErrors.newMessageIsInvalid = true;
+		}
+		// set state to indicate errors
+		this.setState(() => ({
+			newMessageTagsError: newErrors.newMessageTagsError,
+			newMessageSubjectError: newErrors.newMessageSubjectError,
+			newMessageBodyError: newErrors.newMessageBodyError,
+			newMessageIsInvalid: newErrors.newMessageIsInvalid,
+		}));
+		// return to caller
+		return newErrors.newMessageIsInvalid;
+	}
+	handleChangedTags(value) {
+		console.log(value);
+		if (value && value.key) {
+			this.setState(() => ({
+				newMessageTags: [{ camlName: value.key, name: value.text }],
+				newMessageTagsError: undefined,
+			}));
+		} else {
+			this.setState(() => ({
+				newMessageTags: [{ camlName: '' }],
+				newMessageTagsError: 'Cannot be blank',
+			}));
+		}
+	}
+	handleChangedSubject(value) {
+		if (value) {
+			this.setState(() => ({
+				newMessageSubject: value,
+				newMessageSubjectError: undefined,
+			}));
+		} else {
+			this.setState(() => ({
+				newMessageSubject: undefined,
+				newMessageSubjectError: 'Cannot be blank',
+			}));
+		}
+	}
+	handleChangedBody(value) {
+		if (value) {
+			this.setState(() => ({
+				newMessageBody: value,
+				newMessageBodyError: undefined,
+			}));
+		} else {
+			this.setState(() => ({
+				newMessageBody: undefined,
+				newMessageBodyError: 'Cannot be blank',
+			}));
+		}
+	}
+	returnAndConditionallySetMessageID() {
+		// return a promise to return the message ID
+		return new Promise((resolve, reject) => {
+			// if the message ID is already in state
+			if (this.state.newMessageID) {
+				// resolve this promise with the message ID
+				resolve(this.state.newMessageID);
+				// if the message ID is NOT in state
+			} else {
+				// get a new message ID
+				HcMessagesData.ReturnNesoNextMessageID()
+					.then((newMessageIDResults) => {
+						this.setState({
+							newMessageID: newMessageIDResults.nextMessageID,
+						});
+						resolve(newMessageIDResults.nextMessageID);
+					})
+					.catch((nesoAxiosError) => {
+						this.setState({
+							newMessageIDError: true,
+						});
+						reject(nesoAxiosError);
+					});
+			}
+		});
+	}
+	handleDroppedFiles(acceptedFiles, rejectedFiles) {
+		// if all files submitted for upload are of the right type (none were rejected by Dropzone)
+		if (!rejectedFiles[0]) {
+			// set state to indicate that images are processing and unset warnings
+			this.setState({
+				newMessageImagesAreUploading: true,
+				newMessageImageSomeOrAllUploadsFailedWarning: undefined,
+				newMessageImagesWrongTypesWarning: undefined,
+			});
+			// note: will use messageID as folder name for uploaded files
+			// get a promise to get a new messageID
+			this.returnAndConditionallySetMessageID()
+				// if the promise was resolved with the messageID
+				.then((messageID) => {
+					// get a promise to upload the files
+					HcMessagesData.UploadMessagesFiles(messageID, acceptedFiles)
+						// if the promise was *resolved* with some results
+						// note: here, results could contain errors; results are for
+						// 		one upload attempt per file
+						.then((fileUploadResults) => {
+							const uploadsSucceeded = [];
+							const uploadsFailed = [];
+							let newMessageImageSomeOrAllUploadsFailedWarningValue = false;
+							fileUploadResults.data.imageProcessingResults.forEach((resultValue) => {
+								if (!resultValue.error) {
+									uploadsSucceeded.push(resultValue);
+								} else {
+									uploadsFailed.push(resultValue);
+								}
+							});
+							if (uploadsFailed[0]) {
+								newMessageImageSomeOrAllUploadsFailedWarningValue = true;
+							}
+							// set state to reflect results of all image uploads to this point
+							// note: accounts for the possibility of multiple rounds of uploads
+							this.setState((prevState) => {
+								const previousFileArray = prevState.newMessageImages;
+								const currentFileArray
+									= [...uploadsSucceeded, ...previousFileArray];
+								console.log('the files after dropping and before saving');
+								console.log(currentFileArray);
+								return {
+									newMessageImagesAreUploading: false,
+									newMessageImages: currentFileArray,
+									newMessageImageSomeOrAllUploadsFailedWarning:
+										newMessageImageSomeOrAllUploadsFailedWarningValue,
+								};
+							});
+							/* // set state to indicate that images are no longer processing
+							this.setState({
+								newMessageImagesAreUploading: false,
+							}); */
+						})
+						// if the promise to upload the files was rejected with an error
+						// note: could be because a folder couldn't be created, or some other reason
+						.catch((error) => {
+							// set state to indicate that images are no longer processing and image upload error
+							this.setState({
+								newMessageImagesAreUploading: false,
+								newMessageImageUploadsImpossible: true,
+							});
+						});
+				})
+				// if the promise was rejected with an error
+				// note: messageIDError already set
+				.catch((error) => {
+					// set state to indicate that images are no longer processing
+					this.setState({
+						newMessageImagesAreUploading: false,
+						newMessageImageUploadsImpossible: true,
+					});
+				});
+			// if 1+ files of the wrong type were submitted for upload (some were reject by Dropzone)
+		} else {
+			// set state to indicate an images wrong type error
+			this.setState(() => ({
+				newMessageImagesWrongTypesWarning: true,
+			}));
+		}
+	}
+	handleFileDeletion(imageID, e) {
+		// prevent navigating to image (because the control is inside a link)
+		e.preventDefault();
+		// set state to reflect all image uploads to this point minus the one whose button was clicked
+		this.setState((prevState) => {
+			const previousFileArray = prevState.newMessageImages;
+			const currentFileArray = [];
+			previousFileArray.forEach((file) => {
+				if (file.key !== imageID) {
+					currentFileArray.push(file);
+				}
+			});
+			return {
+				newMessageImages: currentFileArray,
+			};
+		});
+	}
+	handleChangedExpirationDate(value) {
+		console.log(typeof (value));
+		console.log(value);
+		// console.log(value.toString());
+		if (value) {
+			this.setState(() => ({
+				newMessageExpirationDate: value,
+			}));
+		} else {
+			this.setState(() => ({
+				newMessageExpirationDate: undefined,
+			}));
+		}
+	}
+	handleAddMessage(e) {
+		// prevent submitting using the SP form tag
+		e.preventDefault();
+		// if the form is not invalid
+		if (!this.setAndReturnMessageFormIsInvalid()) {
+			// get a promise to retrieve a message ID
+			this.returnAndConditionallySetMessageID()
+				// if the message ID was retrieved
+				.then((newMessageIDResult) => {
+					// use the message ID + other message properties to construct a new message object
+					const newMessageCreatorObject = {
+						account: this.props.uData.account,
+						displayName: this.props.uData.displayName,
+					};
+					const newMessageProperties = {
+						newMessageID: newMessageIDResult,
+						newMessageTags: [{ name: this.state.newMessageTags[0].name, camlName: this.state.newMessageTags[0].camlName }],
+						newMessageSubject: this.state.newMessageSubject,
+						newMessageBody: this.state.newMessageBody,
+						newMessageImages: this.state.newMessageImages,
+						newMessageExpirationDate: this.state.newMessageExpirationDate,
+						newMessageKey: shortid.generate(),
+						newMessageCreated: MOSUtilities.ReturnFormattedDateTime({
+							incomingDateTimeString: 'nowLocal',
+						}),
+						newMessageCreator: newMessageCreatorObject,
+					};
+					// send message to Neso
+					HcMessagesData.SendNesoMessagesMessage(newMessageProperties)
+						.then((response) => {
+							if (!response.data.error) {
+								this.handleSaveSuccess(newMessageProperties);
+							} else {
+								this.handleSaveError();
+							}
+						})
+						.catch((error) => {
+							this.handleSaveError();
+						});
+				})
+				.catch((newMessageIDError) => {
+					this.handleSaveError();
+				});
+		}
+	}
+	resetNewMessageStateAndSetSaveSuccess() {
+		this.setState(() => ({
+			updatingMessage: false,
+			newMessageID: undefined,
+			newMessageTags: [{ camlName: '' }],
+			newMessageSubject: '',
+			newMessageBody: '',
+			newMessageImages: [],
+			newMessageExpirationDate: '',
+			newMessageImagesAreUploading: false,
+			newMessageIDError: undefined,
+			newMessageTagsError: undefined,
+			newMessageSubjectError: undefined,
+			newMessageBodyError: undefined,
+			newMessageImageSomeOrAllUploadsFailedWarning: undefined,
+			newMessageImagesWrongTypesWarning: undefined,
+			newMessageIsInvalid: undefined,
+			newMessageImageUploadsImpossible: undefined,
+			newMessageSaveFailure: undefined,
+			newMessageSaveSuccess: true,
+			newMessageIITNotificationFailure: undefined,
+		}));
+	}
+	handleSaveError() {
+		HcMessagesData.SendSaveErrorEmail(this.state)
+			.then((response) => {
+				this.setState(() => ({
+					newMessageSaveFailure: true,
+				}));
+			})
+			.catch((error) => {
+				this.setState(() => ({
+					newMessageSaveFailure: true,
+					newMessageIITNotificationFailure: true,
+				}));
+			});
+	}
+	handleSaveSuccess(newMessageProperties) {
+		this.addMessageToList(newMessageProperties);
+		this.resetNewMessageStateAndSetSaveSuccess();
+	}
+	returnFormFieldContainerClassNameString(errorPropertyName) {
+		return errorPropertyName && this.state[errorPropertyName] ?
+			'mos-react-form-field contains-errors' :
+			'mos-react-form-field';
 	}
 	handlePageChange(pageNumber) {
 		const messagesThisPage =
@@ -104,14 +459,17 @@ export default class HcMessages extends React.Component {
 		};
 	}
 	addMessageToList(newMessageProperties) {
+		console.log('adding to list - newMessageProperties');
+		console.log(newMessageProperties);
 		this.setState((prevState) => {
 			const newMessageArray = [{
 				body: newMessageProperties.newMessageBody,
 				created: newMessageProperties.newMessageCreated,
 				creator: newMessageProperties.newMessageCreator,
-				image: newMessageProperties.newMessageImage,
+				images: newMessageProperties.newMessageImages,
 				subject: newMessageProperties.newMessageSubject,
 				tags: [newMessageProperties.newMessageTags[0]],
+				expirationDate: newMessageProperties.newMessageExpirationDate,
 				key: newMessageProperties.newMessageKey,
 			}, ...prevState.messagesArray];
 			const messagesThisPage =
@@ -124,18 +482,23 @@ export default class HcMessages extends React.Component {
 		});
 	}
 	handleClickNewMessageButton(e) {
+		// prevent submitting using the SP form tag
 		e.preventDefault();
+		// set state
 		this.setState(() => ({
 			showNewMessageForm: true,
 		}));
 	}
 	handleClickHideNewMessageButton(e) {
+		// prevent submitting using the SP form tag
 		e.preventDefault();
+		// set state
 		this.setState(() => ({
 			showNewMessageForm: false,
 		}));
 	}
 	handleClickTagFilterMenuLabel(e) {
+		// prevent submitting using the SP form tag
 		e.preventDefault();
 	}
 	handleClickTagFilterMenuItem(e, menuItem) {
@@ -178,19 +541,60 @@ export default class HcMessages extends React.Component {
 					handleClickNewMessageButton={this.handleClickNewMessageButton}
 					handleClickHideNewMessageButton={this.handleClickHideNewMessageButton}
 					showingNewMessageForm={this.state.showNewMessageForm}
+					updatingMessage={this.state.updatingMessage}
 					handleClickTagFilterMenuLabel={this.handleClickTagFilterMenuLabel}
 					handleClickTagFilterMenuItem={this.handleClickTagFilterMenuItem}
 				/>
 				<HcMessagesNewMessageForm
-					show={this.state.showNewMessageForm}
+					showNewMessageForm={this.state.showNewMessageForm}
+					updatingMessage={this.state.updatingMessage}
 					tagsArray={this.state.tagsArray}
 					addMessageToList={this.addMessageToList}
 					uData={this.props.uData}
+					
+					newMessageID={this.state.newMessageID}
+					newMessageTags={this.state.newMessageTags}
+					newMessageSubject={this.state.newMessageSubject}
+					newMessageBody={this.state.newMessageBody}
+					newMessageImages={this.state.newMessageImages}
+					newMessageExpirationDate={this.state.newMessageExpirationDate}
+					newMessageImagesAreUploading={this.state.newMessageImagesAreUploading}
+					newMessageIDError={this.state.newMessageExpinewMessageIDErrorrationDate}
+					newMessageTagsError={this.state.newMessageTagsError}
+					newMessageSubjectError={this.state.newMessageSubjectError}
+					newMessageBodyError={this.state.newMessageBodyError}
+					newMessageImageSomeOrAllUploadsFailedWarning={this.state.newMessageImageSomeOrAllUploadsFailedWarning}
+					newMessageImagesWrongTypesWarning={this.state.newMessageImagesWrongTypesWarning}
+					newMessageIsInvalid={this.state.newMessageIsInvalid}
+					newMessageImageUploadsImpossible={this.state.newMessageImageUploadsImpossible}
+					newMessageSaveFailure={this.state.newMessageSaveFailure}
+					newMessageSaveSuccess={this.state.newMessageSaveSuccess}
+					newMessageIITNotificationFailure={this.state.newMessageIITNotificationFailure}
+
+					returnFormFieldContainerClassNameString={this.returnFormFieldContainerClassNameString}
+					handleChangedTags={this.handleChangedTags}
+					handleChangedSubject={this.handleChangedSubject}
+					handleChangedBody={this.handleChangedBody}
+					handleDroppedFiles={this.handleDroppedFiles}
+					handleFileDeletion={this.handleFileDeletion}
+					handleMessageUpdate={this.handleMessageUpdate}
+					handleChangedExpirationDate={this.handleChangedExpirationDate}
+					// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX={this.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX}
+					// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX={this.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX}
+					// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX={this.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX}
+					// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX={this.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX}
+					// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX={this.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX}
+					handleAddMessage={this.handleAddMessage}
+					// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX={this.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX}
+					// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX={this.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX}
+					// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX={this.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX}
+					// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX={this.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX}
 				/>
 				<MediaQuery maxWidth={ScreenSizes.ReturnSmallMax()}>
 					<HcMessagesList
 						messagesThisPage={this.state.messagesThisPageSmallScreen}
 						uData={this.props.uData}
+						enableMessageUpdate={this.enableMessageUpdate}
 					/>
 					<Pagination
 						activePage={this.state.activePage}
@@ -208,6 +612,7 @@ export default class HcMessages extends React.Component {
 					<HcMessagesList
 						messagesThisPage={this.state.messagesThisPageLargeScreen}
 						uData={this.props.uData}
+						enableMessageUpdate={this.enableMessageUpdate}
 					/>
 					<Pagination
 						activePage={this.state.activePage}
@@ -222,22 +627,53 @@ export default class HcMessages extends React.Component {
 			</div>
 		);
 	}
-	enableMessageUpdate(incomingMongoID, e) {
-		// set state for controlled fields
-		// open form and change button
-		// scroll to form
-
+	handleMessageUpdate(e) {
+		// prevent submitting using the SP form tag
 		e.preventDefault();
-		console.log('enable');
-		console.log(incomingMongoID);
-		this.state.messagesArray.forEach((message) => {
-			if (message.mongoID === incomingMongoID) {
-				console.log(message);
-			}
-		});
-
+		console.log('handling message update');
+		// if the form is not invalid
+		if (!this.setAndReturnMessageFormIsInvalid()) {
+			console.log('form is valid');
+		} else {
+			console.log('form is NOT valid');
+		}
 
 		// yello
+	}
+	enableMessageUpdate(incomingMessageID, e) {
+		// set state for controlled fields
+		// open form and change button
+		// to do: scroll to form
+		// to do: when you click new message, you're still modifying old message
+
+		// prevent submitting using the SP form tag
+		e.preventDefault();
+		// set state
+		this.state.messagesArray.forEach((message) => {
+			// console.log(message);
+			if (message.messageID === incomingMessageID) {
+				console.log('message');
+				console.log(message);
+				this.setState({
+					showNewMessageForm: true,
+					updatingMessage: true,
+					newMessageID: message.messageID,
+					newMessageSubject: message.subject,
+					newMessageTags: [message.tags[0]],
+					newMessageBody: message.body,
+					// newMessageExpirationDate: message.expirationDate,
+					newMessageImages: message.images,
+					newMessageSaveSuccess: undefined,
+					// newMessageCreated: message.messageCreated,
+				});
+				// newMessageExpirationDate: this.state.newMessageExpirationDate,
+				// newMessageKey: shortid.generate(),
+				// newMessageCreated: MOSUtilities.ReturnFormattedDateTime({
+				// 	incomingDateTimeString: 'nowLocal',
+				// }),
+				// newMessageCreator: newMessageCreatorObject,
+			}
+		});
 	}
 	render() {
 		if (this.props.allOrTop === 'all' && this.props.screenType === 'medium') {

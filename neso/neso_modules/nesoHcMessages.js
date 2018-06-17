@@ -253,9 +253,12 @@ module.exports = {
 			const imageDataToKeep = [];
 			incomingMessageCopy.newMessageImages.forEach((imageValue) => {
 				imageDataToKeep.push({
+					error: false,
 					name: imageValue.name,
-					size: imageValue.size,
-					url: imageValue.url,
+					key: imageValue.key,
+					// size: imageValue.size,
+					urlLarge: imageValue.urlLarge,
+					urlSmall: imageValue.urlSmall,
 				});
 			});
 			const messageToInsert = {

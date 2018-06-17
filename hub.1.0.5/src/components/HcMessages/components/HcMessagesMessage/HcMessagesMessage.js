@@ -60,7 +60,7 @@ const HcMessagesMessage = props => (
 
 		<div className="hc-messages-message-body">{props.messageContent.body}</div>
 		{/* note: currently only one tag per message */}
-		<p className="hc-messages-message-tags">#{props.messageContent.tags[0]}</p>
+		<p className="hc-messages-message-tags">#{props.messageContent.tags[0].name}</p>
 		<MediaQuery minWidth={ScreenSizes.ReturnMediumMin()}>
 			{/* <div className="hc-messages-message-control"> */}
 			<DefaultButton

@@ -51,7 +51,7 @@ export default class HcMessagesFilePreview extends React.Component {
 	} */
 
 	render() {
-		console.log(this.props.imageContent);
+		// console.log(this.props.imageContent);
 		// if this image was uploaded successfully (error is false)
 		if (!this.props.imageContent.error) {
 			const backgroundImageUrl = MOSUtilities.ReplaceAll(' ', '%20', this.props.imageContent.urlSmall);

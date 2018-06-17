@@ -66,7 +66,13 @@ class HcContainer extends React.Component {
 					id="hc-container"
 					className={`mos-react-component-root${this.state.showSmallNav ? ' showing-small-nav' : ''}`}
 				>
-					<div
+					<HcMessages
+						uData={this.state.uData}
+						allOrTop="all"
+						screenType="medium"
+					/>
+
+					{/* <div
 						id="hc-header-and-hero-container" 
 						className="hc-header-and-hero-container"
 					>
@@ -143,7 +149,7 @@ class HcContainer extends React.Component {
 					</MediaQuery>
 					<footer>
 							&copy; {MOSUtilities.ReturnFormattedDateTime({ incomingDateTimeString: 'nowLocal', incomingReturnFormat: 'YYYY' })} Museum of Science
-					</footer>
+					</footer> */}
 				</div>
 			);
 		}
