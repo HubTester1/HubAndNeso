@@ -17439,6 +17439,9 @@
 		$("input#filter--start-date_from").val(moment(startDateFrom, 'YYYY-MM-DD').format('MMMM D, YYYY'));
 		$("input#filter--start-date_to").val(moment(startDateTo, 'YYYY-MM-DD').format('MMMM D, YYYY'));
 
+		// collapse collapsible
+		$('.collapsible').collapsible();
+
  		// listen for date filtering
 		$("a#filter--submit-button").click(function () {
 

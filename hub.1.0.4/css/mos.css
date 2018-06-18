@@ -496,7 +496,7 @@ div#s4-workspace div#public-community-page_hr div#primary-section_open-enrollmen
 div#s4-workspace div#app-container.event-av div#container_command-bar div#container_new-request-control a,
 div#s4-workspace div#app-container.event-av div#container_command-bar ul#container_tab-controls li a,
 div#s4-workspace div#app-container.event-av div#container_command-bar div#container_date-filter-controls-and-header a.collapsible-heading-toggle,
-div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#submit-button,
+div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button,
 div#s4-workspace div#public-community-page_open-enrollment div.primary-section a,
 a#standard-printer-button-inside-request {
   display: inline-block;
@@ -544,7 +544,7 @@ a#standard-printer-button-inside-request {
   div#s4-workspace div#app-container.event-av div#container_command-bar div#container_new-request-control a:hover,
   div#s4-workspace div#app-container.event-av div#container_command-bar ul#container_tab-controls li a:hover,
   div#s4-workspace div#app-container.event-av div#container_command-bar div#container_date-filter-controls-and-header a.collapsible-heading-toggle:hover,
-  div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#submit-button:hover,
+  div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button:hover,
   div#s4-workspace div#public-community-page_open-enrollment div.primary-section a:hover,
   a#standard-printer-button-inside-request:hover {
     text-decoration: none; }
@@ -557,7 +557,7 @@ div#timeline div.vis-item,
 div#s4-workspace div.in-page-persona a.profile,
 div#s4-workspace div#public-community-page_moscars div#call-to-action a,
 div#s4-workspace div#public-community-page_hr div#primary-section_open-enrollment a,
-div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#submit-button,
+div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button,
 div#s4-workspace div#public-community-page_open-enrollment div.primary-section a {
   color: #fff !important;
   background-color: #0072c6 !important; }
@@ -569,7 +569,7 @@ div#s4-workspace div#public-community-page_open-enrollment div.primary-section a
   div#s4-workspace div.in-page-persona a.profile:hover,
   div#s4-workspace div#public-community-page_moscars div#call-to-action a:hover,
   div#s4-workspace div#public-community-page_hr div#primary-section_open-enrollment a:hover,
-  div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#submit-button:hover,
+  div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button:hover,
   div#s4-workspace div#public-community-page_open-enrollment div.primary-section a:hover {
     color: #fff !important;
     background-color: #004f87 !important; }
@@ -715,7 +715,7 @@ a.id-or-link_list-item-chooser:before,
 a.show-default-station-times:before,
 a.hide-default-station-times:before,
 button.cafe-button:before,
-div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#submit-button:before,
+div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button:before,
 a#standard-printer-button-inside-request:before {
   display: inline-block;
   font-family: 'Office365Icons';
@@ -750,7 +750,7 @@ a.id-or-link_list-item-chooser:before {
 a.show-default-station-times:before {
   content: '\E236'; }
 
-div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#submit-button:before {
+div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button:before {
   content: '\E034'; }
 
 a#Import-from-Event-Request:before,
@@ -2759,7 +2759,7 @@ div#s4-workspace div#app-container.event-av div#container_date-filter-controls {
       width: 10.5rem; }
     div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control input.date-selector {
       width: 13rem; }
-    div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#submit-button {
+    div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button {
       margin-left: 11rem !important; }
 
 div#s4-workspace div#app-container.event-av div.table-container {

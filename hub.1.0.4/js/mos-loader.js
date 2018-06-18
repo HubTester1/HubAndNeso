@@ -119,7 +119,7 @@ var librariesToLoad = [
 	{ "centrallyManaged": 1, "js": 1, "lib": 1, 					"path": "_libs.concatenated." + latestConcatenatedLibsVersion + ".js" },
 
 	// Bowser
-	{ "centrallyManaged": 0, 										"path": "https://cdnjs.cloudflare.com/ajax/libs/bowser/1.0.0/bowser.min.js" },
+	{ "centrallyManaged": 0, 										"path": "https://cdnjs.cloudflare.com/ajax/libs/bowser/1.9.3/bowser.min.js" },
 
 	// Yammer Embed
 	// { "centrallyManaged": 0, 									"path": "https://c64.assets-yammer.com/assets/platform_embed.js" },
