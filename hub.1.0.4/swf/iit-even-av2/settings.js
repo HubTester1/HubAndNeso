@@ -9,8 +9,8 @@
 		'mosMainKey': 'devLong',
 		// "useRecordedMOSMainMajorVersion": 1,
 		'currentRequestVersion': 1,
-		'devAdminNotifications': 1,
-		'notifications': 0,
+		'devAdminNotifications': 0,
+		'notifications': 1,
 	};
 
 	console.log("using settings m1");
