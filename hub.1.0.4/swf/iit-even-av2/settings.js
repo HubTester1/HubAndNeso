@@ -262,6 +262,14 @@
 
 		'uniqueElements': [
 			{
+				"elementType": "field",
+				"controlType": "hidden",
+				"fieldName": "Migrated From Quark",
+			}, {
+				"elementType": "field",
+				"controlType": "hidden",
+				"fieldName": "Legacy ID",
+			}, {
 				'elementType': 'markup',
 				'tag': 'h2',
 				'content': 'Event',

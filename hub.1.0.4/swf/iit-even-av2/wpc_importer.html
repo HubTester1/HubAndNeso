@@ -24,9 +24,9 @@
         // partial config 
         var mData = {
             'legacyFile': '/sites/iit-even-av2/SiteAssets/avRequests.xml', //https://bmos.sharepoint.com
-            'maxToProcess': 3,
+            'maxToProcess': 5,
             'newList': 'SWFList',
-            'deleteAllItemsBeforeImporting': 0,
+            'deleteAllItemsBeforeImporting': 1,
             'emailErrorsTo': 'jbaker@mos.org'
         }
   
@@ -50,21 +50,27 @@
             dataType: "xml",
         }).done(function (receivedXML) {
 
+			// console.log('receivedXML');
+			// console.log(receivedXML);
+
             // iterate over each legacy request
             $(receivedXML).find('request').each(function (requestIndex, requestValue) {
 
                 // if we haven't surpassed the max to process
                 if (requestIndex < mData.maxToProcess) {
 
+					// console.log('requestValue');
+					// console.log(requestValue);
+
                     // set up empty vars
                     var listFields = {};
                     var submissionValuePairs = [];
 
                     // grab some data that will be used multiple times, that needs to be manipulated, or is otherwise convenient
-                    var legacyID = $(requestValue).find('legacyID').text();
-
+					var legacyID = $(requestValue).find('legacyid').text();
                     var beginningDate = $(requestValue).find('date').text();
-                    var beginningDateVerbose = moment(beginningDate, "YYYY-MM-DD").format("MMMM D, YYYY");
+					var beginningDateVerbose = moment(beginningDate, "YYYY-MM-DD").format("MMMM D, YYYY");
+
                     var beginningTime = moment($(requestValue).find('beginningTime').text(), "hh:mma").format("HH:mm:ss");
                     var endingTime = moment($(requestValue).find('endingTime').text(), "hh:mma").format("HH:mm:ss");
                     var eventBeginningDatetime = beginningDate + "T" + beginningTime + "-04:00";
@@ -224,7 +230,17 @@
                     // manually set some basic list fields for this item
                     listFields.NewlyApprovedOrPending = HtmlEncode('0');
                     listFields.BeginningOfLife = HtmlEncode('0');
-                    listFields.EndOfLife = HtmlEncode('0');
+					
+					
+					if (requestStatus == "Cancelled") {
+						listFields.EndOfLife = HtmlEncode('1');
+					} else {
+						listFields.EndOfLife = HtmlEncode('0');
+					}
+					
+					
+
+
                     // listFields.URIAdmin = HtmlEncode('https://bmos.sharepoint.com/sites/iit-event-av/SitePages/Admin%20Event%20AV%20Requests.aspx');
                     // listFields.URIRequest = HtmlEncode('https://bmos.sharepoint.com/sites/iit-event-av/SitePages/Event%20AV%20Request.aspx');
                     // listFields.URIRequester = HtmlEncode('https://bmos.sharepoint.com/sites/iit-event-av/SitePages/My%20Event%20AV%20Requests.aspx');
@@ -233,9 +249,9 @@
                     listFields.RequestName = HtmlEncode('Event AV');
 
                     // manually set some allRequestData properties
-                    var allRequestData =    '{"RepeatedElements": [],' +
+					var allRequestData =    '{"RepeatedElements": [],' +
+											'"migrated-from-quark": "1",' +
                                             '"Beginning-of-Life": "0",' +
-                                            '"End-of-Life": "0",' +
                                             '"Approval-Newly-Needed-Notify": "none",' +
                                             '"Approval-Not-Needed-Notify": "none",' +
                                             '"Approval-Still-Needed-Notify": "none",' +
@@ -266,7 +282,9 @@
                     listFields.RequestDate = HtmlEncode(requestDate);
 
                     // dynamically set all remaining allRequestData properties
-                    allRequestData +=   '"Request-Nickname":"' + listFields.Title + '",' +
+					allRequestData +=   '"legacy-id":"' + legacyID + '",' +
+										'"End-of-Life": "' + listFields.EndOfLife + '",' +
+										'"Request-Nickname":"' + listFields.Title + '",' +
                                         '"Request-Date":"' + listFields.RequestDate + '",' +
                                         '"Requester-Name":"' + HtmlEncode(requesterName) + '",' +
                                         '"Requester-Department":"' + HtmlEncode($(requestValue).find('department').text())  + '",' +
