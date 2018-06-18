@@ -214,11 +214,6 @@
 
 
 
-                    /* var legacyFileArray = [];
-                    $(requestValue).find('legacyFiles legacyFile').each(function (fileIndex, fileValue) {
-                        legacyFileArray.push(fileValue.textContent);
-                    });
-                    var legacyFileString = JSON.stringify(legacyFileArray); */
 
 
 
@@ -230,26 +225,61 @@
                     // manually set some basic list fields for this item
                     listFields.NewlyApprovedOrPending = HtmlEncode('0');
                     listFields.BeginningOfLife = HtmlEncode('0');
-					
-					
 					if (requestStatus == "Cancelled") {
 						listFields.EndOfLife = HtmlEncode('1');
 					} else {
 						listFields.EndOfLife = HtmlEncode('0');
 					}
-					
-					
-
-
-                    // listFields.URIAdmin = HtmlEncode('https://bmos.sharepoint.com/sites/iit-event-av/SitePages/Admin%20Event%20AV%20Requests.aspx');
-                    // listFields.URIRequest = HtmlEncode('https://bmos.sharepoint.com/sites/iit-event-av/SitePages/Event%20AV%20Request.aspx');
-                    // listFields.URIRequester = HtmlEncode('https://bmos.sharepoint.com/sites/iit-event-av/SitePages/My%20Event%20AV%20Requests.aspx');
                     listFields.SWFVersion = HtmlEncode('1.0');
                     listFields.RequestVersion = HtmlEncode('1');
-                    listFields.RequestName = HtmlEncode('Event AV');
+					listFields.RequestName = HtmlEncode('Event AV');
+					
+					// manually set some allRequestData properties
+					// files are repeats, so gotta do them first
+					var allRequestData = '{"RepeatedElements": [';
 
-                    // manually set some allRequestData properties
-					var allRequestData =    '{"RepeatedElements": [],' +
+
+
+                    $(requestValue).find('legacyFiles legacyFile').each(function (fileIndex, fileValue) {
+						console.log('fileValue');
+						console.log(fileValue);
+						var idSuffix = (fileIndex != 0) ? '-repeat-' + fileIndex : '';
+						allRequestData += '{"ID": "attachment' + idSuffix + '",';
+						if (fileIndex == 0) {
+							allRequestData += '"OriginalToRepeat": "undefined",';
+						} else {
+							allRequestData += '"OriginalToRepeat": "attachment",';
+						}
+						allRequestData += '"mos-drag-and-drop-file-name_Attachment' + idSuffix + '": "' + fileValue.textContent + '",';
+						allRequestData += '"mos-drag-and-drop-file-size_Attachment' + idSuffix + '": "",';
+						allRequestData += '"mos-drag-and-drop-file-type-class_Attachment' + idSuffix + '": "generic-file",';
+						allRequestData += '"mos-drag-and-drop-file-in-quark-files_Attachment' + idSuffix + '":"1",}';
+                    });
+
+					/*
+					{
+						"ID": "attachment",
+						"OriginalToRepeat": "undefined",
+						"mos-drag-and-drop-file-name_Attachment": "Boston Neighbourhoods.gif",
+						"mos-drag-and-drop-file-size_Attachment": "",
+						"mos-drag-and-drop-file-type-class_Attachment": "generic-file",
+						"mos-drag-and-drop-file-in-quark-files_Attachment":"1",
+					}, {
+						"ID": "attachment-repeat-1",
+						"OriginalToRepeat": "attachment",
+						"mos-drag-and-drop-file-name_Attachment-repeat-1": "ducks.jpg",
+						"mos-drag-and-drop-file-size_Attachment-repeat-1": "",
+						"mos-drag-and-drop-file-type-class_Attachment-repeat-1": "generic-file",
+						"mos-drag-and-drop-file-in-quark-files_Attachment-repeat-1":"1",
+					},
+					*/
+
+
+
+
+
+                    
+					allRequestData 		+=  '],' + 
 											'"migrated-from-quark": "1",' +
                                             '"Beginning-of-Life": "0",' +
                                             '"Approval-Newly-Needed-Notify": "none",' +

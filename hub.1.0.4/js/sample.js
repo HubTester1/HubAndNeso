@@ -1,5 +1,5 @@
-
-(function($) {
+/* eslint-disable */
+(function ($) {
 
 	// data for the current user
 	var uData = {};
@@ -44,13 +44,13 @@
 			calls, and to show the screen container and appropriate screen to the user 
 			only when all (async) building / configuration has completed
 		*/
-		
+
 
 		// start by inserting the app container into the SharePoint page
 		$("a#mainContent").after(
-		// $("html").prepend(
-			'<div id="app-container">' + 
-			'	<div id="overlays-screen-container" class="screen-container hidden" style="display: none;"></div>' + 
+			// $("html").prepend(
+			'<div id="app-container">' +
+			'	<div id="overlays-screen-container" class="screen-container hidden" style="display: none;"></div>' +
 			'</div>'
 		);
 
@@ -72,13 +72,13 @@
 			allScreenAndContainerConfigurationPromises.push($().ConfigureScreenContainer());
 
 			// swfs, as needed
-			if (typeof(mData.swf) != "undefined" && mData.swf === 1 && mData.thisPageIsASWFAppPage === 1) {
+			if (typeof (mData.swf) != "undefined" && mData.swf === 1 && mData.thisPageIsASWFAppPage === 1) {
 				allScreenAndContainerConfigurationPromises.push($().ConfigureSWFScreens());
 			}
 		}
 
 		// wait for all promises to complete (pass or fail) 
-		$.when.apply($, allScreenAndContainerConfigurationPromises).always(function() {
+		$.when.apply($, allScreenAndContainerConfigurationPromises).always(function () {
 			// move #app-container to appropriate location
 			// var appContainer = $("div#app-container").detach();
 			// $("a#mainContent").after(appContainer);
@@ -87,18 +87,18 @@
 
 			// show screen
 			$().HideScreen("loading");
-			$().ShowScreenContainer ();
+			$().ShowScreenContainer();
 		});
 	};
 
 
 
 	$.fn.ConfigureOverlayScreens = function () {
-		
+
 		// --- set up internal promise to configure
 
 		var deferred = $.Deferred();
-		
+
 		// --- do config
 
 		$("div#overlays-screen-container").append(
@@ -253,26 +253,26 @@
 
 
 	$.fn.ConfigureScreenContainer = function () {
-		
+
 		// --- set up internal promise to configure
 
 		var deferred = $.Deferred();
 
 		// --- body class
 
-		if (typeof(mData.axle) != "undefined" && mData.axle === 1) {
+		if (typeof (mData.axle) != "undefined" && mData.axle === 1) {
 			$("body").addClass("axle");
 		}
 
-		if (typeof(mData.community) != "undefined" && mData.community === 1) {
+		if (typeof (mData.community) != "undefined" && mData.community === 1) {
 			$("body").addClass("community");
 		}
 
-		if (typeof(mData.swf) != "undefined" && mData.swf === 1) {
+		if (typeof (mData.swf) != "undefined" && mData.swf === 1) {
 			$("body").addClass("structured-workflow");
 		}
 
-		if (typeof(mData.visualization) != "undefined" && mData.visualization === 1) {
+		if (typeof (mData.visualization) != "undefined" && mData.visualization === 1) {
 			$("body").addClass("visualization");
 		}
 
@@ -298,7 +298,7 @@
 
 		// --- adoption ad
 
-		$("div#adoption-1 p#apps_lead-in").click(function() {
+		$("div#adoption-1 p#apps_lead-in").click(function () {
 			$("#apps-list").slideToggle("slow");
 		});
 
@@ -313,13 +313,13 @@
 		}
 
 		// set local nav (quicklaunch)
-		if (typeof(mData.quickLaunches) != 'undefined' && mData.quickLaunches != '') {
+		if (typeof (mData.quickLaunches) != 'undefined' && mData.quickLaunches != '') {
 
 			// parse quickLaunches string into array
 			mData.quickLaunches = JSON.parse(mData.quickLaunches);
 
 			// for each array element (each quickLaunch), get its data, build its markup, and append it
-			$.each(mData.quickLaunches, function(i, quickLaunch) {
+			$.each(mData.quickLaunches, function (i, quickLaunch) {
 				$().GetQuickLaunchDataAndBuildMarkupAndAppend(quickLaunch);
 			});
 
@@ -350,13 +350,13 @@
 
 
 	$.fn.AddBrowserHistoryEntry = function (toScreen, title, pageAndParameters) {
-		history.pushState({"toScreen": toScreen}, title, pageAndParameters);
+		history.pushState({ "toScreen": toScreen }, title, pageAndParameters);
 	};
 
 
 
 	$.fn.ReplaceBrowserHistoryEntry = function (toScreen, title, pageAndParameters) {
-		history.replaceState({"toScreen": toScreen}, title, pageAndParameters);
+		history.replaceState({ "toScreen": toScreen }, title, pageAndParameters);
 	};
 
 
@@ -436,7 +436,7 @@
 				newTitle = "GSE Signup Opportunities";
 				break;
 
-				
+
 			case "gseSignupsHRAdmin":
 				newTitle = "All GSE Signups";
 				break;
@@ -457,7 +457,7 @@
 
 
 	$.fn.UpdateBrowserHistoryAsNeeded = function (toScreen, requestID, addBrowserHistoryEntry, replaceBrowserHistoryEntry) {
-		
+
 		var newTitle = $().ReturnNewPageTitle(toScreen);
 
 		switch (toScreen) {
@@ -478,34 +478,34 @@
 			case "gseSchedulesListJobAdmin":
 			case "gseSchedulesListManager":
 			case "gseSchedulesListStaff":
-			
+
 			case "gseSignupsHRAdmin":
 			// case "gseSignupsJobAdmin":
 			case "gseSignupsManager":
 			case "gseSignupsStaff":
-				if (addBrowserHistoryEntry === 1) { $().AddBrowserHistoryEntry (toScreen, newTitle, "App.aspx"); }
-				if (replaceBrowserHistoryEntry === 1) { $().ReplaceBrowserHistoryEntry (toScreen, newTitle, "App.aspx"); }
+				if (addBrowserHistoryEntry === 1) { $().AddBrowserHistoryEntry(toScreen, newTitle, "App.aspx"); }
+				if (replaceBrowserHistoryEntry === 1) { $().ReplaceBrowserHistoryEntry(toScreen, newTitle, "App.aspx"); }
 				break;
 
 			case "gseSchedulesCalendarHRAdmin":
 			case "gseSchedulesCalendarJobAdmin":
 			case "gseSchedulesCalendarManager":
 			case "gseSchedulesCalendarStaff":
-				if (addBrowserHistoryEntry === 1) { $().AddBrowserHistoryEntry (toScreen, newTitle, "App.aspx?f=cal"); }
-				if (replaceBrowserHistoryEntry === 1) { $().ReplaceBrowserHistoryEntry (toScreen, newTitle, "App.aspx?f=cal"); }
+				if (addBrowserHistoryEntry === 1) { $().AddBrowserHistoryEntry(toScreen, newTitle, "App.aspx?f=cal"); }
+				if (replaceBrowserHistoryEntry === 1) { $().ReplaceBrowserHistoryEntry(toScreen, newTitle, "App.aspx?f=cal"); }
 				break;
-			
+
 			case "newRequest":
-				if (addBrowserHistoryEntry === 1) { $().AddBrowserHistoryEntry (toScreen, newTitle, "App.aspx?r=0"); }
-				if (replaceBrowserHistoryEntry === 1) { $().ReplaceBrowserHistoryEntry (toScreen, newTitle, "App.aspx?r=0"); }
+				if (addBrowserHistoryEntry === 1) { $().AddBrowserHistoryEntry(toScreen, newTitle, "App.aspx?r=0"); }
+				if (replaceBrowserHistoryEntry === 1) { $().ReplaceBrowserHistoryEntry(toScreen, newTitle, "App.aspx?r=0"); }
 				break;
 			case "existingRequest":
-				if (addBrowserHistoryEntry === 1) { $().AddBrowserHistoryEntry (toScreen, newTitle, "App.aspx?r=" + requestID); }
-				if (replaceBrowserHistoryEntry === 1) { $().ReplaceBrowserHistoryEntry (toScreen, newTitle, "App.aspx?r=" + requestID); }
+				if (addBrowserHistoryEntry === 1) { $().AddBrowserHistoryEntry(toScreen, newTitle, "App.aspx?r=" + requestID); }
+				if (replaceBrowserHistoryEntry === 1) { $().ReplaceBrowserHistoryEntry(toScreen, newTitle, "App.aspx?r=" + requestID); }
 				break;
 			case "overlayFormSubmissionConfirmation":
-				if (addBrowserHistoryEntry === 1) { $().AddBrowserHistoryEntry (toScreen, newTitle, "App.aspx?r=" + requestID); }
-				if (replaceBrowserHistoryEntry === 1) { $().ReplaceBrowserHistoryEntry (toScreen, newTitle, "App.aspx?r=" + requestID); }
+				if (addBrowserHistoryEntry === 1) { $().AddBrowserHistoryEntry(toScreen, newTitle, "App.aspx?r=" + requestID); }
+				if (replaceBrowserHistoryEntry === 1) { $().ReplaceBrowserHistoryEntry(toScreen, newTitle, "App.aspx?r=" + requestID); }
 				break;
 		}
 	};
@@ -518,14 +518,14 @@
 
 		switch (toScreen) {
 			case "maintenance":
-				$().ReplacePageTitle (newTitle);
+				$().ReplacePageTitle(newTitle);
 				$('div#overlays-screen-container').fadeIn(mData.gracefulScreenTransitionTime).removeClass("hidden");
 				$('div#maintenance-mode').fadeIn(mData.gracefulScreenTransitionTime).removeClass("hidden");
 				break;
 			case "loading":
 				$("div#loading-screen").fadeIn(mData.quickScreenTransitionTime).removeClass("hidden");
 				break;
-			
+
 
 
 			case "adminRequests":
@@ -544,15 +544,15 @@
 			case "gseSchedulesListJobAdmin":
 			case "gseSchedulesListManager":
 			case "gseSchedulesListStaff":
-			
+
 			case "gseSignupsHRAdmin":
 			// case "gseSignupsJobAdmin":
 			case "gseSignupsManager":
 			case "gseSignupsStaff":
 
-				$().ReplacePageTitle (newTitle);
+				$().ReplacePageTitle(newTitle);
 				$("div#overview-screen-container").fadeIn(mData.gracefulScreenTransitionTime).removeClass("hidden");
-				$("div#overview-screen-container table.dataTable").each(function() {
+				$("div#overview-screen-container table.dataTable").each(function () {
 					var tableToResize = $(this).DataTable();
 					tableToResize.columns.adjust().draw();
 				});
@@ -563,27 +563,27 @@
 			case "gseSchedulesCalendarJobAdmin":
 			case "gseSchedulesCalendarManager":
 			case "gseSchedulesCalendarStaff":
-				$().ReplacePageTitle (newTitle);
+				$().ReplacePageTitle(newTitle);
 				$("div#overview-screen-container").fadeIn(mData.gracefulScreenTransitionTime).removeClass("hidden");
 				$('#s4-workspace').scrollTop(0);
 				break;
 
 			case "newRequest":
-				$().ReplacePageTitle (newTitle);
+				$().ReplacePageTitle(newTitle);
 				$("div#request-screen-container").fadeIn(mData.gracefulScreenTransitionTime).removeClass("hidden");
 				$('#s4-workspace').scrollTop(0);
 				break;
 			case "existingRequest":
-				$().ReplacePageTitle (newTitle);
+				$().ReplacePageTitle(newTitle);
 				$('#s4-workspace').scrollTop(0);
 				$("div#request-screen-container").fadeIn(mData.gracefulScreenTransitionTime).removeClass("hidden");
 				break;
 			case "overlayFormSubmissionConfirmation":
-				$().ReplacePageTitle (newTitle);
+				$().ReplacePageTitle(newTitle);
 				$("div#overlays-screen-container").fadeIn(mData.gracefulScreenTransitionTime).removeClass("hidden");
 				$("div#mos-form-submission-confirmation").fadeIn(mData.gracefulScreenTransitionTime).removeClass("hidden");
 				break;
-		}	
+		}
 	};
 
 
@@ -618,7 +618,7 @@
 			case "gseSchedulesListJobAdmin":
 			case "gseSchedulesListManager":
 			case "gseSchedulesListStaff":
-			
+
 			case "gseSchedulesCalendarHRAdmin":
 			case "gseSchedulesCalendarJobAdmin":
 			case "gseSchedulesCalendarManager":
@@ -634,7 +634,7 @@
 			case "existingRequest":
 				$("div#request-screen-container").fadeOut(mData.gracefulScreenTransitionTime).addClass("hidden");
 				break;
-		}	
+		}
 	};
 
 
@@ -712,7 +712,7 @@
 				$().ConfigureOverviewScreen("gseSchedulesListStaff");
 				break;
 
-				
+
 			case "gseSignupsHRAdmin":
 				$().ConfigureOverviewScreen("gseSignupsHRAdmin");
 				break;
@@ -727,7 +727,7 @@
 				break;
 
 
-			}	
+		}
 	};
 
 
@@ -738,18 +738,18 @@
 		//		needs to be given a moment before the next starts; without these timeouts, nothing really happens on the screen 
 		//		until the last step is completed and then the final result flashes onto the screen, and the user actually
 		//		has to wait *longer* for the screen to become usable
-		
+
 		// console.log("show loading");
 		$().ShowScreen("loading");
 
-		setTimeout(function() {
-			
-			$.each(options.fromScreens, function(i, fromScreen) {
+		setTimeout(function () {
+
+			$.each(options.fromScreens, function (i, fromScreen) {
 				// console.log("hide " + fromScreen);
 				$().HideScreen(fromScreen);
 			});
 
-			setTimeout(function() {
+			setTimeout(function () {
 				// refresh data, as needed, and show overview screen
 				if (options.toScreen === "adminRequests" || options.toScreen === "myRequests") {
 
@@ -758,12 +758,12 @@
 
 					// if we don't need to stop for maintenance mode
 					if (uData.maintenanceModeForThisUser != 1) {
-						
+
 						// update history, as needed
 						// console.log("update browser history");
 						$().UpdateBrowserHistoryAsNeeded(options.toScreen, options.requestID, options.addBrowserHistoryEntry, options.replaceBrowserHistoryEntry);
 
-						if (typeof(options.rebuildOverview) != "undefined" && options.rebuildOverview === 1) {
+						if (typeof (options.rebuildOverview) != "undefined" && options.rebuildOverview === 1) {
 							// console.log("remove " + options.toScreen);
 							$().RemoveScreen(options.toScreen);
 							// console.log("configure " + options.toScreen);
@@ -778,7 +778,7 @@
 						// console.log("show " + options.toScreen);
 						$().ShowScreen(options.toScreen, options.requestID, options.addBrowserHistoryEntry, options.replaceBrowserHistoryEntry);
 					}
-				// populate request data prior to showing request
+					// populate request data prior to showing request
 				} else if (options.toScreen === "existingRequest") {
 
 					// check to see if we need to stop for maintenance mode
@@ -796,7 +796,7 @@
 						// console.log("show " + options.toScreen + " for options.requestID = " + options.requestID);
 						$().ShowScreen(options.toScreen, options.requestID, options.addBrowserHistoryEntry, options.replaceBrowserHistoryEntry);
 					}
-				// show request
+					// show request
 				} else if (options.toScreen === "newRequest") {
 
 					// check to see if we need to stop for maintenance mode
@@ -812,10 +812,10 @@
 				} else {
 					// update history, as needed
 					$().UpdateBrowserHistoryAsNeeded(options.toScreen, options.requestID, options.addBrowserHistoryEntry, options.replaceBrowserHistoryEntry);
-						// console.log("remove " + options.toScreen);
+					// console.log("remove " + options.toScreen);
 					$().ShowScreen(options.toScreen, options.requestID, options.addBrowserHistoryEntry, options.replaceBrowserHistoryEntry);
 				}
-				
+
 				// var relTime = Date.now();
 				// console.log("start hiding");
 				$().HideScreen("loading");
@@ -823,9 +823,9 @@
 				// console.log("");
 
 				if (options.toScreen !== "newRequest" && options.toScreen !== "existingRequest") {
-					setTimeout(function() {
-			
-						$.each(options.fromScreens, function(i, fromScreen) {
+					setTimeout(function () {
+
+						$.each(options.fromScreens, function (i, fromScreen) {
 							// console.log("remove " + fromScreen + " at " + (Date.now() - relTime)/1000 + ' seconds');
 							$().RemoveScreen(fromScreen, options.rebuildOverlays);
 							// console.log("configure " + fromScreen); // + " at " + (Date.now() - relTime)/1000 + ' seconds'
@@ -867,7 +867,7 @@
 
 
 	$.fn.ConfigureSWFScreens = function () {
-		
+
 		// --- set up internal promise to configure
 
 		var deferred = $.Deferred();
@@ -876,9 +876,9 @@
 
 		// insert request screen container and overview screen container
 		$("div#app-container").append(
-			'<div id="request-screen-container" class="screen-container hidden"></div>' + 
-			'<div id="overview-screen-container" class="screen-container hidden">' + 
-			'	<div id="overview-table-container" class="table-container"></div>' + 
+			'<div id="request-screen-container" class="screen-container hidden"></div>' +
+			'<div id="overview-screen-container" class="screen-container hidden">' +
+			'	<div id="overview-table-container" class="table-container"></div>' +
 			'</div>'
 		);
 
@@ -889,11 +889,11 @@
 
 		// initialScreen is the one that will be shown initially
 		var initialScreen = "";
-		
+
 		// secondaryScreen is the one that will be prepared in the background after 
 		//		showing the initial screen
 		var secondaryScreen = "";
-		
+
 		// overview screen is that which contains an overview of requests, e.g.,
 		//		a my requests screen, an admin requests screen, etc.
 		var overviewScreen = "";
@@ -901,13 +901,13 @@
 		// if user is admin
 		if (uData.isAdmin === 1) {
 			overviewScreen = "adminRequests";
-		// if user is NOT admin and does NOT need an alternate overview screen
+			// if user is NOT admin and does NOT need an alternate overview screen
 		} else {
 			overviewScreen = "myRequests";
 		}
 
 		// if user needs an alternate overview screen
-		if (typeof(uData.alternateOverviewScreen) != "undefined" && uData.alternateOverviewScreen !== 0) {
+		if (typeof (uData.alternateOverviewScreen) != "undefined" && uData.alternateOverviewScreen !== 0) {
 			overviewScreen = uData.alternateOverviewScreen;
 		}
 
@@ -915,11 +915,11 @@
 		if (rData.requestID != "" && rData.requestID == 0) {
 			initialScreen = "newRequest";
 			secondaryScreen = overviewScreen;
-		// if the URL contains a request ID (r) and it is greater than 0
+			// if the URL contains a request ID (r) and it is greater than 0
 		} else if (rData.requestID != "" && rData.requestID > 0) {
 			initialScreen = "existingRequest";
 			secondaryScreen = overviewScreen;
-		// if the URL does not contain a request ID (r)
+			// if the URL does not contain a request ID (r)
 		} else if (rData.requestID === "") {
 			initialScreen = overviewScreen;
 			secondaryScreen = "newRequest";
@@ -943,7 +943,7 @@
 
 		var controlKeyIsPressed = 0;
 
-		window.onpopstate = function(event) {
+		window.onpopstate = function (event) {
 
 			// console.log(event);
 			// console.log(initialScreen);
@@ -951,7 +951,7 @@
 			var fromScreens = [];
 			var toScreen = "";
 
-			$("div.screen-container:visible").each(function(i, screenContainer){
+			$("div.screen-container:visible").each(function (i, screenContainer) {
 				fromScreenIDs.push($(this).attr("id"));
 			});
 			if (fromScreenIDs.indexOf("overlays-screen-container") > -1) {
@@ -968,7 +968,7 @@
 			// console.log(typeof(event.state));
 			// console.log(typeof(typeof(event.state)));
 
-			if (event.state != null && typeof(event.state.toScreen) !== "undefined") {
+			if (event.state != null && typeof (event.state.toScreen) !== "undefined") {
 				toScreen = event.state.toScreen;
 			} else {
 				toScreen = initialScreen;
@@ -976,38 +976,38 @@
 
 			// console.log("toScreen = " + toScreen);
 
-			$().TransitionAppScreens ({ "fromScreens": fromScreens, "toScreen": toScreen, "requestID": null, "addBrowserHistoryEntry": 0 });
+			$().TransitionAppScreens({ "fromScreens": fromScreens, "toScreen": toScreen, "requestID": null, "addBrowserHistoryEntry": 0 });
 		};
 
 		// prevent accidental page unload on hitting return
-		$(document).keydown(function(keyDownEvent) {
-			if(keyDownEvent.which == "13") {
-				window.onbeforeunload = function() { 
+		$(document).keydown(function (keyDownEvent) {
+			if (keyDownEvent.which == "13") {
+				window.onbeforeunload = function () {
 					return "If you navigate away from this screen without saving changes, then you will lose your unsaved changes.";
 				}
 			}
 		});
 
 		// track whether or not the Control key is being pressed
-		$(document).keydown(function(keyDownEvent) {
-			if(keyDownEvent.which == "17") {
+		$(document).keydown(function (keyDownEvent) {
+			if (keyDownEvent.which == "17") {
 				controlKeyIsPressed = 1;
 			}
 		});
 
-		$(document).keyup(function(){
+		$(document).keyup(function () {
 			controlKeyIsPressed = 0;
 		});
 
 		// on clicking new request button
-		$("div#overview-screen-container").on("click", "a[data-button-type='newRequest']", function(clickEvent) {
+		$("div#overview-screen-container").on("click", "a[data-button-type='newRequest']", function (clickEvent) {
 			// left click only
 			if (clickEvent.which == 1 && controlKeyIsPressed == 0) {
 				// prevent default behaviour
 				clickEvent.preventDefault();
 				// transition screen: new request
-				$().TransitionAppScreens ({"fromScreens": [overviewScreen], "toScreen": "newRequest", "requestID": null, "addBrowserHistoryEntry": 1});
-			// middle click
+				$().TransitionAppScreens({ "fromScreens": [overviewScreen], "toScreen": "newRequest", "requestID": null, "addBrowserHistoryEntry": 1 });
+				// middle click
 			} else if (clickEvent.which == 2) {
 				// prevent default behaviour
 				clickEvent.preventDefault();
@@ -1015,15 +1015,15 @@
 		});
 
 		// on clicking existing request ID
-		$("div#overview-screen-container").on("click", "a[data-button-type='existingRequest']", function(clickEvent) {
+		$("div#overview-screen-container").on("click", "a[data-button-type='existingRequest']", function (clickEvent) {
 			// left click only
 			if (clickEvent.which == 1 && controlKeyIsPressed == 0) {
 				// prevent default behaviour
 				clickEvent.preventDefault();
 				// transition screen: populated request
 				var selectedRequestID = $(this).attr("data-request-id");
-				$().TransitionAppScreens ({"fromScreens": [overviewScreen], "toScreen": "existingRequest", "requestID": selectedRequestID, "addBrowserHistoryEntry": 1});
-			// middle click
+				$().TransitionAppScreens({ "fromScreens": [overviewScreen], "toScreen": "existingRequest", "requestID": selectedRequestID, "addBrowserHistoryEntry": 1 });
+				// middle click
 			} else if (clickEvent.which == 2) {
 				// prevent default behaviour
 				clickEvent.preventDefault();
@@ -1031,31 +1031,31 @@
 		});
 
 		// on clicking Don't Save; overlays will not have been modified from defaults, so no need to rebuild them
-		$("div#request-screen-container").on("click", "a[data-button-type='noSave']", function() {
+		$("div#request-screen-container").on("click", "a[data-button-type='noSave']", function () {
 			// transition screen: overview screen
-			$().TransitionAppScreens ({"fromScreens": ["request"], "toScreen": overviewScreen, "requestID": null, "addBrowserHistoryEntry": 1});
+			$().TransitionAppScreens({ "fromScreens": ["request"], "toScreen": overviewScreen, "requestID": null, "addBrowserHistoryEntry": 1 });
 		});
 
 		// on clicking Exit; overlays will not have been modified from defaults, so no need to rebuild them
-		$("div#overlays-screen-container").on("click", "a[data-button-type='exit']", function() {
+		$("div#overlays-screen-container").on("click", "a[data-button-type='exit']", function () {
 			// transition screen: overview screen
-			$().TransitionAppScreens ({"fromScreens": ["overlays"], "toScreen": overviewScreen, "requestID": null, "addBrowserHistoryEntry": 1});
+			$().TransitionAppScreens({ "fromScreens": ["overlays"], "toScreen": overviewScreen, "requestID": null, "addBrowserHistoryEntry": 1 });
 		});
 
 		// on clicking Exit(AndRebuildOverview); overlays may have been modified from defaults, so rebuild them
-		$("div#overlays-screen-container").on("click", "a[data-button-type='exitAndRebuildNonRequest']", function() {
+		$("div#overlays-screen-container").on("click", "a[data-button-type='exitAndRebuildNonRequest']", function () {
 			// transition screen: overview screen
-			$().TransitionAppScreens ({"fromScreens": ["overlays", "request"], "toScreen": overviewScreen, "requestID": null, "addBrowserHistoryEntry": 1, "replaceBrowserHistoryEntry": 0, "rebuildOverview": 1, "rebuildOverlays": 1});
+			$().TransitionAppScreens({ "fromScreens": ["overlays", "request"], "toScreen": overviewScreen, "requestID": null, "addBrowserHistoryEntry": 1, "replaceBrowserHistoryEntry": 0, "rebuildOverview": 1, "rebuildOverlays": 1 });
 		});
 
 		// on clicking Save; no screen transition happening here
-		$("div#request-screen-container").on("click", "a[data-button-type='save']", function() {
+		$("div#request-screen-container").on("click", "a[data-button-type='save']", function () {
 			// Process Submission
 			$().ProcessSubmission();
 		});
 
 		// on clicking Dismiss; no screen transition happening here
-		$("div#overlays-screen-container").on("click", "a[data-button-type='dismiss']", function() {
+		$("div#overlays-screen-container").on("click", "a[data-button-type='dismiss']", function () {
 			$('div#overlays-screen-container').fadeOut(200);
 			$(this).closest('div.overlay-screen').fadeOut(200);
 		});
@@ -1107,15 +1107,15 @@
 				quickLaunchMarkup += '	<li class="static';
 				if (thisIsCurrentPage === 1) { quickLaunchMarkup += ' selected'; }
 				quickLaunchMarkup += '">' +
-										'		<a class="static ';
+					'		<a class="static ';
 				if (thisIsCurrentPage === 1) { quickLaunchMarkup += ' selected ms-core-listMenu-selected '; }
 				quickLaunchMarkup += 'menu-item ms-core-listMenu-item ms-displayInline ms-navedit-linkNode" title="' + d.URL.Description + '" href="' + d.URL.Url + '">' +
-										'			<span class="additional-background ms-navedit-flyoutArrow">' +
-										'				<span class="menu-item-text">' + d.URL.Description + '</span>';
+					'			<span class="additional-background ms-navedit-flyoutArrow">' +
+					'				<span class="menu-item-text">' + d.URL.Description + '</span>';
 				if (thisIsCurrentPage === 1) { quickLaunchMarkup += '				<span class="ms-hidden">Currently selected</span>'; }
 				quickLaunchMarkup += '			</span>' +
-										'		</a>' +
-										'	</li>';
+					'		</a>' +
+					'	</li>';
 			});
 
 			quickLaunchMarkup += '</ul>';
@@ -1132,18 +1132,18 @@
 	$.fn.ResizeTextareaToFitAllContents = function (textareaID) {
 
 		var primaryElement = $('textarea#' + textareaID);
-		
+
 		// get the initial height of the textarea
 		var primaryElementInitialScrollHeight = $(primaryElement).prop('scrollHeight');
-		
+
 		// if initial height is greater than zero, then the textarea is not hidden and the process is straightforward
 		if (primaryElementInitialScrollHeight > 0) {
 			// set height to 0; this makes the scroll height equivalent to the height of all of the content (rounded to nearest integer, so could be rounded down)
 			$(primaryElement).height(0);
 			// set height to scroll height + 1 (one extra pixel accounts for the rounding down)
 			$(primaryElement).height($(primaryElement)[0].scrollHeight);
-		
-		// if we're dealing with a hidden textarea
+
+			// if we're dealing with a hidden textarea
 		} else {
 			// append a non-hidden (but invisible) clone
 			var clonedElement = $(primaryElement).clone();
@@ -1174,7 +1174,7 @@
 
 
 	$.fn.GetFieldsFromAllRows = function (options) {
-	
+
 		var returnValue = [];
 
 		var opt = $.extend({}, {
@@ -1190,10 +1190,10 @@
 		}
 
 		var query = "<Query>" +
-					"	<OrderBy>" +
-					"		<FieldRef Name='" + opt.order.field + "' Ascending='" + opt.order.ascending + "'></FieldRef>" +
-					"	</OrderBy>" +
-					"</Query>";
+			"	<OrderBy>" +
+			"		<FieldRef Name='" + opt.order.field + "' Ascending='" + opt.order.ascending + "'></FieldRef>" +
+			"	</OrderBy>" +
+			"</Query>";
 
 		var fields = "<ViewFields>";
 		$.each(opt.select, function (i, oneField) {
@@ -1254,7 +1254,7 @@
 
 
 
-	function GetFieldsFromOneRow (options) {
+	function GetFieldsFromOneRow(options) {
 
 		var returnValue = {};
 
@@ -1272,13 +1272,13 @@
 		}
 
 		var query = "<Query>" +
-						"<Where>" +
-							"<Eq>" +
-								"<FieldRef Name='" + opt.where.field + "'></FieldRef>" +
-								"<Value Type='" + opt.where.type + "'>" + opt.where.value + "</Value>" +
-							"</Eq>" +
-						"</Where>" +
-					"</Query>";
+			"<Where>" +
+			"<Eq>" +
+			"<FieldRef Name='" + opt.where.field + "'></FieldRef>" +
+			"<Value Type='" + opt.where.type + "'>" + opt.where.value + "</Value>" +
+			"</Eq>" +
+			"</Where>" +
+			"</Query>";
 
 		var fields = "<ViewFields>";
 		$.each(opt.select, function (i, oneField) {
@@ -1319,7 +1319,7 @@
 
 							if (typeof (oneField.linkField) != "undefined") {
 								if (oneField.linkField === 1) {
-									
+
 									value = ReplaceAll(",,", "DOUBLECOMMAREPLACEMENT", value);
 									value = value.split(",")[0];
 									value = ReplaceAll("DOUBLECOMMAREPLACEMENT", ",", value);
@@ -1356,13 +1356,13 @@
 		}
 
 		var query = "<Query>" +
-						"<Where>" +
-							"<Eq>" +
-								"<FieldRef Name='" + opt.where.field + "'></FieldRef>" +
-								"<Value Type='" + opt.where.type + "'>" + opt.where.value + "</Value>" +
-							"</Eq>" +
-						"</Where>" +
-					"</Query>";
+			"<Where>" +
+			"<Eq>" +
+			"<FieldRef Name='" + opt.where.field + "'></FieldRef>" +
+			"<Value Type='" + opt.where.type + "'>" + opt.where.value + "</Value>" +
+			"</Eq>" +
+			"</Where>" +
+			"</Query>";
 
 		var fields = "<ViewFields>";
 		$.each(opt.select, function (i, oneField) {
@@ -1403,7 +1403,7 @@
 
 							if (typeof (oneField.linkField) != "undefined") {
 								if (oneField.linkField === 1) {
-									
+
 									value = ReplaceAll(",,", "DOUBLECOMMAREPLACEMENT", value);
 									value = value.split(",")[0];
 									value = ReplaceAll("DOUBLECOMMAREPLACEMENT", ",", value);
@@ -1428,8 +1428,8 @@
 			operation: "GetUserProfileByName",
 			async: false,
 			AccountName: accountName,
-			completefunc: function(xData, Status) {
-				$(xData.responseXML).SPFilterNode("PropertyData").each(function() {
+			completefunc: function (xData, Status) {
+				$(xData.responseXML).SPFilterNode("PropertyData").each(function () {
 					userData[$(this).find("Name").text()] = $(this).find("Value").text();
 				});
 			}
@@ -1451,7 +1451,7 @@
 
 
 
-	$.fn.ReturnCurrentUserData = function() {
+	$.fn.ReturnCurrentUserData = function () {
 
 		var currentUserLookupValue = $().SPServices.SPGetCurrentUser({
 			fieldNames: [
@@ -1478,7 +1478,7 @@
 		if (StrInStr(mData.componentAdmin, uData.userName, 0) != false) {
 			// this user is component admin
 			userIsComponentAdmin = 1;
-		// otherwise, if this is a GSE component
+			// otherwise, if this is a GSE component
 		} else if (mData.requestName === "GSE Job" || mData.requestName === "GSE Schedule" || mData.requestName === "GSE Signup") {
 			// if this user is an HR Admin
 			var gseGroups = $().ReturnGSEGroups();
@@ -1496,14 +1496,14 @@
 
 
 	$.fn.UserNeeedsAlternateOverviewScreen = function () {
-		
+
 		var userNeeedsAlternateOverviewScreen = 0;
 
 		switch (mData.requestName) {
 			case "GPC Initial Concept Approval":
 				if (uData.isAdmin === 0) {
 					var gpcGroups = $().ReturnGPCGroups();
-					$.each(gpcGroups.InitialConceptViewAccess, function(i,person) {
+					$.each(gpcGroups.InitialConceptViewAccess, function (i, person) {
 						if (person.accountLong === uData.account) {
 							userNeeedsAlternateOverviewScreen = "gpcInitialConceptApprovalViewer";
 						}
@@ -1513,23 +1513,21 @@
 			case "GPC Submission Approval":
 				if (uData.isAdmin === 0) {
 					var gpcGroups = $().ReturnGPCGroups();
-					$.each(gpcGroups.SubmissionApprovalViewAccess, function(i,person) {
+					$.each(gpcGroups.SubmissionApprovalViewAccess, function (i, person) {
 						if (person.accountLong === uData.account) {
 							userNeeedsAlternateOverviewScreen = "gpcSubmissionApprovalViewer";
 						}
 					});
 				}
 				break;
-			
+
 
 
 
 			case "Refer a Friend":
 				if (uData.isAdmin === 0) {
-					console.log("this user gets myReferrals");
 					userNeeedsAlternateOverviewScreen = "myReferrals";
 				} else {
-					console.log("this user gets adminReferrals");
 					userNeeedsAlternateOverviewScreen = "adminReferrals";
 				}
 				break;
@@ -1573,8 +1571,8 @@
 			case "GSE Signup":
 				if (uData.roles.indexOf("gseHRAdmin") > -1) {
 					userNeeedsAlternateOverviewScreen = "gseSignupsHRAdmin";
-				// } else if (uData.roles.indexOf("gseJobAdmin") > -1) {
-				// 	userNeeedsAlternateOverviewScreen = "gseSignupsJobAdmin";
+					// } else if (uData.roles.indexOf("gseJobAdmin") > -1) {
+					// 	userNeeedsAlternateOverviewScreen = "gseSignupsJobAdmin";
 				} else if (uData.roles.indexOf("gseManager") > -1) {
 					userNeeedsAlternateOverviewScreen = "gseSignupsManager";
 				} else {
@@ -1588,7 +1586,7 @@
 
 
 
-	function GetParamFromUrl (urlParams, paramToReturn) {
+	function GetParamFromUrl(urlParams, paramToReturn) {
 
 		// set up var
 		var param = "";
@@ -1620,8 +1618,8 @@
 
 
 
-	function ReturnSiteTokenFromURL () {
-		if (typeof(mData.axle) != "undefined" && mData.axle == 1) {
+	function ReturnSiteTokenFromURL() {
+		if (typeof (mData.axle) != "undefined" && mData.axle == 1) {
 			return false;
 		} else {
 			return StrInStr(ReplaceAll('/sites/', '', window.location.pathname), '/', 1);
@@ -1630,7 +1628,7 @@
 
 
 
-	function ReturnSitePageTokenFromURL () {
+	function ReturnSitePageTokenFromURL() {
 		var pageToken = "notASitePage";
 		// try the standard url
 		var attemptedPartialPageToken = StrInStr(window.location.pathname, '/SitePages/', 3);
@@ -1647,19 +1645,19 @@
 
 
 
-	function ReturnThisPageIsASWFAppPage () {
+	function ReturnThisPageIsASWFAppPage() {
 		var thisPageIsASWFAppPage = 0;
 		// if (mData.pageToken != "notASitePage") {
-			if (mData.swfAppPageTokens.indexOf(mData.pageToken) > -1) {
-				thisPageIsASWFAppPage = 1;
-			}
+		if (mData.swfAppPageTokens.indexOf(mData.pageToken) > -1) {
+			thisPageIsASWFAppPage = 1;
+		}
 		// }
 		return thisPageIsASWFAppPage;
 	}
 
 
-	
-	function ReturnFullSiteBaseURLFromSitePageURL () {
+
+	function ReturnFullSiteBaseURLFromSitePageURL() {
 		var siteToken = ReturnSiteTokenFromURL();
 
 		if (siteToken === false) {
@@ -1677,27 +1675,27 @@
 
 		personaSet += '<h2>Request Admins</h2>';
 
-		$.each(personArray, function(i, person) {
+		$.each(personArray, function (i, person) {
 
-			
+
 
 			person.nameParts = person.name.split(" ");
 			person.firstInitial = person.nameParts[0].slice(0, 1).toUpperCase();
 			person.lastInitial = person.nameParts[1].slice(0, 1).toUpperCase();
 
-			personaSet += 	'<div class="in-page-persona"> \n' + 
-							'	<span class="avatar-container"> \n' + 
-							'		<span class="avatar"> \n' + 
-							'			<span class="avatar-initials">' + person.firstInitial + person.lastInitial + '</span> \n' + 
-							'			<span class="avatar-photo" style="background-image: url(\'/_layouts/15/userphoto.aspx?size=M&accountname=' + person.sipAddress + '\');"></span> \n' + 
-							'		</span> \n' + 
-							'	</span> \n' + 
-							'	<span class="name_title"> \n' + 
-							'		<a class="profile" href="https://bmos-my.sharepoint.com:443/Person.aspx?accountname=' + encodeURIComponent(person.account) + 
-										'" target="_blank">' + person.name + '</a> \n' + 
-							'		<span class="title">' + person.jobTitle + '</span> \n' +
-							'	</span> \n' + 
-							'</div>\n';
+			personaSet += '<div class="in-page-persona"> \n' +
+				'	<span class="avatar-container"> \n' +
+				'		<span class="avatar"> \n' +
+				'			<span class="avatar-initials">' + person.firstInitial + person.lastInitial + '</span> \n' +
+				'			<span class="avatar-photo" style="background-image: url(\'/_layouts/15/userphoto.aspx?size=M&accountname=' + person.sipAddress + '\');"></span> \n' +
+				'		</span> \n' +
+				'	</span> \n' +
+				'	<span class="name_title"> \n' +
+				'		<a class="profile" href="https://bmos-my.sharepoint.com:443/Person.aspx?accountname=' + encodeURIComponent(person.account) +
+				'" target="_blank">' + person.name + '</a> \n' +
+				'		<span class="title">' + person.jobTitle + '</span> \n' +
+				'	</span> \n' +
+				'</div>\n';
 		});
 
 		personaSet += '</div>';
@@ -1706,31 +1704,31 @@
 
 
 
-	$.fn.RenderInPagePersonaSet = function(personaData) {
+	$.fn.RenderInPagePersonaSet = function (personaData) {
 
 		var personaSet = '<div class="in-page-personas';
 
-		if (typeof(personaData.classValues) != "undefined" && personaData.classValues != null) {
+		if (typeof (personaData.classValues) != "undefined" && personaData.classValues != null) {
 			personaSet += ' ' + personaData.classValues;
 		}
 
-		personaSet +=  '">\n';
+		personaSet += '">\n';
 
-		if (typeof(personaData.title) != "undefined" && personaData.title != null) {
+		if (typeof (personaData.title) != "undefined" && personaData.title != null) {
 			personaSet += '<' + personaData.title.tag + '>' + personaData.title.content + '</' + personaData.title.tag + '>\n';
 		}
 
-		$.each(personaData.people, function(i, accountPart) {
+		$.each(personaData.people, function (i, accountPart) {
 			personaSet += '<div class="in-page-persona">\n';
 
 			var userProfileValues = {};
-			
+
 			$().SPServices({
 				operation: "GetUserProfileByName",
 				async: false,
 				AccountName: "i:0#.f|membership|" + accountPart + "@mos.org",
-				completefunc: function(xData, Status) {
-					$(xData.responseXML).SPFilterNode("PropertyData").each(function() {
+				completefunc: function (xData, Status) {
+					$(xData.responseXML).SPFilterNode("PropertyData").each(function () {
 						userProfileValues[$(this).find("Name").text()] = $(this).find("Value").text();
 					});
 				}
@@ -1745,22 +1743,22 @@
 				personaSet += '><span class="avatar-initials">' + userProfileValues.firstInitial + userProfileValues.lastInitial + '</span>';
 			}
 
-			personaSet +=  '</span></span> \n' +
-						'	<span class="name_title"> \n';
-			if (typeof(userProfileValues.PreferredName) != 'undefined' && userProfileValues.PreferredName != '') {
-				if (typeof(userProfileValues["SPS-PersonalSiteCapabilities"]) != 'undefined' && userProfileValues["SPS-PersonalSiteCapabilities"] != '') {
+			personaSet += '</span></span> \n' +
+				'	<span class="name_title"> \n';
+			if (typeof (userProfileValues.PreferredName) != 'undefined' && userProfileValues.PreferredName != '') {
+				if (typeof (userProfileValues["SPS-PersonalSiteCapabilities"]) != 'undefined' && userProfileValues["SPS-PersonalSiteCapabilities"] != '') {
 					personaSet += '		<a class="profile" href="https://bmos-my.sharepoint.com/_layouts/15/me.aspx?u=' + userProfileValues["msOnline-ObjectId"] + '" target="_blank">' + userProfileValues.PreferredName + '</a> \n';
 				} else {
 					personaSet += '		<span class="name">' + userProfileValues.PreferredName + '</span> \n';
 				}
 			}
 
-			if (typeof(userProfileValues.Title) != 'undefined' && userProfileValues.Title != '') {
+			if (typeof (userProfileValues.Title) != 'undefined' && userProfileValues.Title != '') {
 				personaSet += '		<span class="title">' + userProfileValues.Title + '</span> \n';
 			}
 
-			personaSet +=	'	</span> \n' + 
-							'</div>\n';
+			personaSet += '	</span> \n' +
+				'</div>\n';
 		});
 
 		personaSet += '</div>';
@@ -1770,7 +1768,7 @@
 
 
 
-	$.fn.RedirectToHomePage = function() {
+	$.fn.RedirectToHomePage = function () {
 		window.location = _spPageContextInfo.webServerRelativeUrl + "/SitePages/Home.aspx";
 	};
 
@@ -1785,7 +1783,7 @@
 		if (position === -1) {
 			return false;
 		} else {
-			if (typeof(flag) != "undefined") {
+			if (typeof (flag) != "undefined") {
 				if (flag === 1) {
 					// return from beginning of string to beginning of needle
 					return haystack.substr(0, position);
@@ -1820,20 +1818,20 @@
 	$.fn.TryMaintenanceModeThisComponentThisUser = function (initialLoad) {
 
 		// if the mData.maintenanceModeForThisUser timestamp was set (e.g., the ajax operation didn't fail, etc.)
-		if (typeof(mData.maintenanceModeForThisUserExpirationTimestamp) === "number") {
+		if (typeof (mData.maintenanceModeForThisUserExpirationTimestamp) === "number") {
 
 			// if user is not component group admin
 			if (uData.isComponentGrpAdmin != 1) {
 
 				// console.log("not a CG admin");
-			
+
 				// if this is the initial load
-				if (typeof(initialLoad) != "undefined" && initialLoad === 1) {
+				if (typeof (initialLoad) != "undefined" && initialLoad === 1) {
 					// console.log("this is the initial load!!!");
 					// set flag according to whether or not component is in maintenance mode
 					mData.maintenanceModeForThisUser = ReturnMaintenanceModeThisComponent();
 
-				// if this is NOT the initial load, then don't check unless the mData.maintenanceModeForThisUserExpirationTimestamp flag has expired
+					// if this is NOT the initial load, then don't check unless the mData.maintenanceModeForThisUserExpirationTimestamp flag has expired
 				} else if (mData.maintenanceModeForThisUserExpirationTimestamp <= Date.now()) {
 					// console.log("not the initial load and flag HAS expired");
 					// update maintenance mode info via ajax
@@ -1841,7 +1839,7 @@
 
 					// set flag according to whether or not component is in maintenance mode
 					mData.maintenanceModeForThisUser = ReturnMaintenanceModeThisComponent();
-			
+
 					// if still not in maintenance mode for this user
 					if (mData.maintenanceModeForThisUser === 0) {
 						// extend the expiration
@@ -1853,7 +1851,7 @@
 					// console.log("   not the initial load and flag HAS ((NOT)) expired");
 					// console.log('   flag will expire in ' + (mData.maintenanceModeForThisUserExpirationTimestamp - Date.now()) / 1000 + 'seconds');
 				}
-			// if user IS component group admin
+				// if user IS component group admin
 			} else {
 				// set flag indicating that this component is NOT in maintenance mode for this user
 				mData.maintenanceModeForThisUser = 0;
@@ -1865,10 +1863,10 @@
 				// show the maintenance screen
 				// console.log("showing maintenance screen");
 				$().ShowScreen("maintenance", null, 0, 0);
-			// if not in maintenance mode for this user
+				// if not in maintenance mode for this user
 			}
 
-		// if the mData.maintenanceModeForThisUser timestamp was never set (e.g., because the ajax operation failed)
+			// if the mData.maintenanceModeForThisUser timestamp was never set (e.g., because the ajax operation failed)
 		} else {
 
 			// show the maintenance screen
@@ -1879,13 +1877,13 @@
 
 
 	$.fn.GetAndSetMaintenanceModeData = function () {
-		
+
 		// console.log("--- getting new MM data");
 
 		// --- set up internal promise to configure
 
 		var deferred = $.Deferred();
-		
+
 		// console.log("gonna get the data");
 
 		$.ajax({
@@ -1894,77 +1892,77 @@
 			dataType: "json",
 			url: "https://bmos.sharepoint.com/sites/hubprod/Code4/js/mos-maintenance-mode.js?ts=" + Date.now(),
 		})
-		.done(function(hubData) {
-			// console.log("maintenance mode: hubData:");
-			// console.log(hubData);
+			.done(function (hubData) {
+				// console.log("maintenance mode: hubData:");
+				// console.log(hubData);
 
-			$.ajax({
-				async: false,
-				method: "GET",
-				dataType: "json",
-				url: "https://neso.mos.org/health/check?ts=" + Date.now(),
+				$.ajax({
+					async: false,
+					method: "GET",
+					dataType: "json",
+					url: "https://neso.mos.org/health/check?ts=" + Date.now(),
+				})
+					.done(function (nesoData) {
+
+						// console.log("maintenance mode: nesoData:");
+						// console.log(nesoData);
+
+						// flag for Neso health
+						// if neso didn't have a problem returning the info
+						if (nesoData.error === false) {
+							// extract the info for syntactic convenience
+							var nesoHealthDoc = nesoData.docs[0];
+							// if the info indicates that Neso is healthy
+							if (nesoHealthDoc.healthy === true) {
+								mData.nesoIsHealthy = true;
+								// if the info indicates that Neso is NOT healthy
+							} else {
+								mData.nesoIsHealthy = false;
+							}
+							// if neso had a problem returning the info
+						} else {
+							mData.nesoIsHealthy = false;
+						}
+
+						// flag for all Hub components in maintenance mode
+						mData.allComponentsInMaintenanceMode = hubData.allComponentsInMaintenanceMode;
+
+						// flag for Hub Central in maintenance mode
+						mData.hubCentralInMaintenanceMode = hubData.hubCentralInMaintenanceMode;
+
+						// flag for all SWFs in maintenance mode
+						mData.allSWFsInMaintenanceMode = hubData.allSWFsInMaintenanceMode;
+
+						// flag for specific component site tokens when only they are in maintenance mode;
+						//		note that Hub Central cannot be set here
+						mData.componentsInMaintenanceMode = hubData.componentsInMaintenanceMode;
+
+						mData.maintenanceModeForThisUserExpirationTimestamp = Date.now() + mData.maintenanceModeCacheLifespan;
+
+						deferred.resolve();
+						return deferred.promise();
+
+					})
+					.fail(function (error) {
+						// console.log("no such luck");
+						// console.log(error);
+
+						deferred.resolve();
+						return deferred.promise();
+					});
 			})
-			.done(function(nesoData) {
-
-				// console.log("maintenance mode: nesoData:");
-				// console.log(nesoData);
-
-				// flag for Neso health
-				// if neso didn't have a problem returning the info
-				if (nesoData.error === false ) {
-					// extract the info for syntactic convenience
-					var nesoHealthDoc = nesoData.docs[0];
-					// if the info indicates that Neso is healthy
-					if (nesoHealthDoc.healthy === true) {
-						mData.nesoIsHealthy = true;
-					// if the info indicates that Neso is NOT healthy
-					} else {
-						mData.nesoIsHealthy = false;
-					}
-				// if neso had a problem returning the info
-				} else {
-					mData.nesoIsHealthy = false;
-				}
-
-				// flag for all Hub components in maintenance mode
-				mData.allComponentsInMaintenanceMode = hubData.allComponentsInMaintenanceMode;
-
-				// flag for Hub Central in maintenance mode
-				mData.hubCentralInMaintenanceMode = hubData.hubCentralInMaintenanceMode;
-
-				// flag for all SWFs in maintenance mode
-				mData.allSWFsInMaintenanceMode = hubData.allSWFsInMaintenanceMode;
-
-				// flag for specific component site tokens when only they are in maintenance mode;
-				//		note that Hub Central cannot be set here
-				mData.componentsInMaintenanceMode = hubData.componentsInMaintenanceMode;
-
-				mData.maintenanceModeForThisUserExpirationTimestamp = Date.now() + mData.maintenanceModeCacheLifespan;
-
-				deferred.resolve();
-				return deferred.promise();
-
-			})
-			.fail(function(error) {
-				// console.log("no such luck");
+			.fail(function (error) {
+				// console.log("no such luck - HUB");
 				// console.log(error);
 
 				deferred.resolve();
 				return deferred.promise();
 			});
-		})
-		.fail(function(error) {
-			// console.log("no such luck - HUB");
-			// console.log(error);
-
-			deferred.resolve();
-			return deferred.promise();
-		});
 	};
 
 
 
-	function ReturnMaintenanceModeThisComponent () {
+	function ReturnMaintenanceModeThisComponent() {
 
 		// console.log("checking MM for this component");
 
@@ -1974,16 +1972,16 @@
 		if (mData.allComponentsInMaintenanceMode) {
 			// alter flag
 			inMaintenanceMode = 1;
-		// if this is Hub Central and it's in maintenance mode
-		} else if (typeof(mData.axle) != "undefined" && mData.axle === 1 && mData.hubCentralInMaintenanceMode) {
+			// if this is Hub Central and it's in maintenance mode
+		} else if (typeof (mData.axle) != "undefined" && mData.axle === 1 && mData.hubCentralInMaintenanceMode) {
 			// alter flag
 			inMaintenanceMode = 1;
-		// if this is a swf and all swfs are in maintenance mode
-		} else if (typeof(mData.swf) != "undefined" && mData.swf === 1 && mData.allSWFsInMaintenanceMode) {
+			// if this is a swf and all swfs are in maintenance mode
+		} else if (typeof (mData.swf) != "undefined" && mData.swf === 1 && mData.allSWFsInMaintenanceMode) {
 			// alter flag
 			inMaintenanceMode = 1;
-		// if this is a swf and Neso is not healthy
-		} else if (typeof(mData.swf) != "undefined" && mData.swf === 1 && mData.nesoIsHealthy === false) {
+			// if this is a swf and Neso is not healthy
+		} else if (typeof (mData.swf) != "undefined" && mData.swf === 1 && mData.nesoIsHealthy === false) {
 			// alter flag
 			inMaintenanceMode = 1;
 		} else {
@@ -2002,7 +2000,7 @@
 	}
 
 
-	
+
 	// ============
 	// ---- SWF FUNCTIONS
 	// ============
@@ -2010,7 +2008,7 @@
 	// ---- MOST FREQUENTLY NEEDED
 
 
-	$.fn.ConfigureExistingGSESchedule = function(passedScheduleID) {
+	$.fn.ConfigureExistingGSESchedule = function (passedScheduleID) {
 		/*
 			scorey: here, 
 			 ** query SWFList, build screen 3.1, insert it into the container, listen for the signup button to be clicked, and start trying maintenance mode
@@ -2024,13 +2022,13 @@
 
 
 
-	$.fn.ConfigureRequest = function(passedRequestID) {
+	$.fn.ConfigureRequest = function (passedRequestID) {
 
 		// if this is a GSE Sschedule and this user is not HR Admin, Job Admin, or Manager
 		if (mData.requestName === "GSE Schedule" && uData.roles.indexOf("gseUserOnly") > -1) {
 			// forget this function and go to ConfigureExistingGSESchedule instead
 			$().ConfigureExistingGSESchedule();
-		// if this is not a GSE Schedule or this user is HR Admin, Job Admin, or Manager
+			// if this is not a GSE Schedule or this user is HR Admin, Job Admin, or Manager
 		} else {
 
 			// ========================================================
@@ -2041,7 +2039,7 @@
 
 			// if mData.adminNotificationPersons === 1, overwrite the admin notifications data pulled from Component Log with
 			//		data from Component Group Log
-			if (typeof(mData.devAdminNotifications) != 'undefined' && mData.devAdminNotifications === 1) {
+			if (typeof (mData.devAdminNotifications) != 'undefined' && mData.devAdminNotifications === 1) {
 				mData.adminNotificationPersons = mData.devAdminNotificationPersons;
 			}
 
@@ -2052,18 +2050,21 @@
 			mData.adminEmailArray = $().ReturnUserEmailStringAndArray(mData.adminNotificationPersons).array;
 			mData.componentGrpAdminEmailString = $().ReturnUserEmailStringAndArray(mData.componentGrpAdminNotifications).string;
 			mData.componentGrpAdminEmailArray = $().ReturnUserEmailStringAndArray(mData.componentGrpAdminNotifications).array;
-			mData.requiredApproversArray = $().ReturnUserDataFromPersonOrGroupFieldString(mData.requiredApproversString);
-				
+
+			mData.requiredApproversArray = (mData.requiredApproversString) ?
+				$().ReturnUserDataFromPersonOrGroupFieldString(mData.requiredApproversString) :
+				[];
+
 			// THIS REQUEST'S DATA
 			// reset rData and get request id from url param
-			if (typeof(passedRequestID) != "undefined" && passedRequestID === "0") {
+			if (typeof (passedRequestID) != "undefined" && passedRequestID === "0") {
 				rData = { "requestID": "" };
 			} else {
 				rData = { "requestID": GetParamFromUrl(location.search, "r") };
 			}
 
 			// if request id is undefined or "0", then this is a new request, which is signified everywhere by an empty id string
-			if (typeof(rData.requestID) === "undefined" || rData.requestID === "0") { rData.requestID = ""; }
+			if (typeof (rData.requestID) === "undefined" || rData.requestID === "0") { rData.requestID = ""; }
 
 			// if there is a request id, then get data for this request
 
@@ -2105,7 +2106,7 @@
 				// console.log(rData);
 			}
 
-			if (typeof(rData.requestStatus) === "undefined") {
+			if (typeof (rData.requestStatus) === "undefined") {
 				rData.requestStatus = "";
 			}
 
@@ -2116,7 +2117,7 @@
 
 			// THIS REQUEST'S DEFAULT DATA FOR NEW REQUESTS
 
-			if (typeof(mData.defaultDataForNewRequests) != "undefined") {
+			if (typeof (mData.defaultDataForNewRequests) != "undefined") {
 				rData = $.extend($().GetFieldsFromOneRow({
 					'webURL': mData.defaultDataForNewRequests.webURL,
 					'listName': mData.defaultDataForNewRequests.listName,
@@ -2128,66 +2129,66 @@
 			// CAPTURE MACHINE DATA
 			uData.browserFamilyAndVersion = bowser.name + ' ' + bowser.version;
 
-			if (typeof(bowser.mobile) != 'undefined' && bowser.mobile === true) {
+			if (typeof (bowser.mobile) != 'undefined' && bowser.mobile === true) {
 				uData.formFactor = 'mobile';
-			} else if (typeof(bowser.tablet) != 'undefined' && bowser.tablet === true) {
+			} else if (typeof (bowser.tablet) != 'undefined' && bowser.tablet === true) {
 				uData.formFactor = 'tablet';
 			} else {
 				uData.formFactor = 'probably desktop';
 			}
 
-			if (typeof(bowser.android) != 'undefined' && bowser.android === true) {
+			if (typeof (bowser.android) != 'undefined' && bowser.android === true) {
 				uData.os = 'Android';
-			} else if (typeof(bowser.ios) != 'undefined' && bowser.ios === true) {
-				if (typeof(bowser.ipad) != 'undefined' && bowser.ipad === true) {
+			} else if (typeof (bowser.ios) != 'undefined' && bowser.ios === true) {
+				if (typeof (bowser.ipad) != 'undefined' && bowser.ipad === true) {
 					uData.os = 'iOS (iPad)';
-				} else if (typeof(bowser.iphone) != 'undefined' && bowser.iphone === true) {
+				} else if (typeof (bowser.iphone) != 'undefined' && bowser.iphone === true) {
 					uData.os = 'iOS (iPhone)';
-				} else if (typeof(bowser.ipod) != 'undefined' && bowser.ipod === true) {
+				} else if (typeof (bowser.ipod) != 'undefined' && bowser.ipod === true) {
 					uData.os = 'iOS (iPhod)';
 				}
-			} else if (typeof(bowser.windowsphone) != 'undefined' && bowser.windowsphone === true) {
+			} else if (typeof (bowser.windowsphone) != 'undefined' && bowser.windowsphone === true) {
 				uData.os = 'Windows Phone';
-			} else if (typeof(bowser.mac) != 'undefined' && bowser.mac === true) {
+			} else if (typeof (bowser.mac) != 'undefined' && bowser.mac === true) {
 				uData.os = 'Mac';
-			} else if (typeof(bowser.linux) != 'undefined' && bowser.linux === true) {
+			} else if (typeof (bowser.linux) != 'undefined' && bowser.linux === true) {
 				uData.os = 'Linux';
 			} else {
 				uData.os = 'Probably Windows';
 			}
 
-			if (typeof(bowser.osversion) != 'undefined') {
+			if (typeof (bowser.osversion) != 'undefined') {
 				uData.os = uData.os + ' ' + bowser.osversion;
 			}
 
 			// COMBINE STANDARD AND UNIQUE FORM ELEMENTS
 
-			if (typeof(fData.standardElementGroups.standardPrintButton) != "undefined") {
+			if (typeof (fData.standardElementGroups.standardPrintButton) != "undefined") {
 
 				var standardPrintButton = [
-		            {
-		                'elementType': 'markup',
-		                'tag': 'a',
-		                'htmlID': 'standard-printer-button-inside-request',
-		                'content': fData.standardElementGroups.standardPrintButton.buttonText,
-		                'dataAttributes': [{
-		                	'key': 'print-function',
-		                	'value': fData.standardElementGroups.standardPrintButton.printFunction
-		                }],
-		                'begin': 1,
-		                'end': 1,
+					{
+						'elementType': 'markup',
+						'tag': 'a',
+						'htmlID': 'standard-printer-button-inside-request',
+						'content': fData.standardElementGroups.standardPrintButton.buttonText,
+						'dataAttributes': [{
+							'key': 'print-function',
+							'value': fData.standardElementGroups.standardPrintButton.printFunction
+						}],
+						'begin': 1,
+						'end': 1,
 						// 'hideForNonAdmin': [""],
 						// 'hideForAdmin': [""],
-		            }
+					}
 				];
 
-				if (typeof(fData.standardElementGroups.standardPrintButton.hideForNonAdmin) !== "undefined") {
+				if (typeof (fData.standardElementGroups.standardPrintButton.hideForNonAdmin) !== "undefined") {
 					standardPrintButton[0]["hideForNonAdmin"] = fData.standardElementGroups.standardPrintButton.hideForNonAdmin;
 				} else {
 					standardPrintButton[0]["hideForNonAdmin"] = [""];
 				}
 
-				if (typeof(fData.standardElementGroups.standardPrintButton.hideForAdmin) !== "undefined") {
+				if (typeof (fData.standardElementGroups.standardPrintButton.hideForAdmin) !== "undefined") {
 					standardPrintButton[0]["hideForAdmin"] = fData.standardElementGroups.standardPrintButton.hideForAdmin;
 				} else {
 					standardPrintButton[0]["hideForAdmin"] = [""];
@@ -2337,7 +2338,7 @@
 					"hideForAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Disapproved", "Cancelled"],
 					"disabledForNonAdmin": ["Completed", "Disapproved", "Cancelled"],
 					"disabledForAdmin": ["Completed", "Disapproved", "Cancelled"]
-						// about the requester
+					// about the requester
 				}, {
 					"elementType": "markup",
 					"tag": "div",
@@ -2523,7 +2524,7 @@
 				}
 			];
 
-			if (typeof(fData.standardElementGroups.standardAdminAssignmentCompletionElements) != "undefined") {
+			if (typeof (fData.standardElementGroups.standardAdminAssignmentCompletionElements) != "undefined") {
 
 				var standardAdminAssignmentCompletionElements1 = [
 					{
@@ -2723,7 +2724,7 @@
 				];
 
 
-				if (typeof(fData.standardElementGroups.standardAdminAssignmentCompletionElements.additionalAdminFields) != "undefined") {
+				if (typeof (fData.standardElementGroups.standardAdminAssignmentCompletionElements.additionalAdminFields) != "undefined") {
 					var standardAdminAssignmentCompletionElements = standardAdminAssignmentCompletionElements1.concat(fData.standardElementGroups.standardAdminAssignmentCompletionElements.additionalAdminFields).concat(standardAdminAssignmentCompletionElements2);
 				} else {
 					var standardAdminAssignmentCompletionElements = standardAdminAssignmentCompletionElements1.concat(standardAdminAssignmentCompletionElements2);
@@ -2820,7 +2821,7 @@
 					}
 				];
 
-				if (typeof(fData.standardElementGroups.standardAdminElements.additionalAdminFields) != "undefined") {
+				if (typeof (fData.standardElementGroups.standardAdminElements.additionalAdminFields) != "undefined") {
 					var standardAdminElements = standardAdminElements1.concat(fData.standardElementGroups.standardAdminElements.additionalAdminFields);
 				} else {
 					var standardAdminElements = standardAdminElements1;
@@ -2940,20 +2941,20 @@
 					"elementType": "markup",
 					"tag": "div",
 					"htmlID": "submit-or-exit",
-					"content":  '	<div class="label-and-control">' +
-								'	 <div class="label"></div>' +
-								'	 <div class="field-type-indication"></div>' +
-								'	 <div class="control">' +
-								'		<div id="submission-notice">Please check your information before saving it. ' +
-								'			You won\'t be able to make edits afterward.</div>' +
-								'		<a data-button-type="save" id="form-submit-button">Save</a>' + 
-								'	</div>' +
-								'	</div>' +
-								'	<div class="label-and-control">' +
-								'		<div class="label"></div>' +
-								'		<div class="field-type-indication"></div>' +
-								'		<div class="control"><a data-button-type="noSave" id="exit-sans-save-button">Don\'t Save</a></div>' +
-								'	</div>',
+					"content": '	<div class="label-and-control">' +
+						'	 <div class="label"></div>' +
+						'	 <div class="field-type-indication"></div>' +
+						'	 <div class="control">' +
+						'		<div id="submission-notice">Please check your information before saving it. ' +
+						'			You won\'t be able to make edits afterward.</div>' +
+						'		<a data-button-type="save" id="form-submit-button">Save</a>' +
+						'	</div>' +
+						'	</div>' +
+						'	<div class="label-and-control">' +
+						'		<div class="label"></div>' +
+						'		<div class="field-type-indication"></div>' +
+						'		<div class="control"><a data-button-type="noSave" id="exit-sans-save-button">Don\'t Save</a></div>' +
+						'	</div>',
 					"begin": 1,
 					"end": 1,
 					"hideForNonAdmin": ["Completed", "Disapproved", "Cancelled"]
@@ -2965,20 +2966,20 @@
 					"elementType": "markup",
 					"tag": "div",
 					"htmlID": "submit-or-exit",
-					"content":  '	<div class="label-and-control">' +
-								'	 <div class="label"></div>' +
-								'	 <div class="field-type-indication"></div>' +
-								'	 <div class="control">' +
-								'		<div id="submission-notice">Please check your information before saving it. ' +
-								'			You won\'t be able to make edits afterward.</div>' +
-								'		<a data-button-type="save" id="form-submit-button">Save</a>' + 
-								'	</div>' +
-								'	</div>' +
-								'	<div class="label-and-control">' +
-								'		<div class="label"></div>' +
-								'		<div class="field-type-indication"></div>' +
-								'		<div class="control"><a data-button-type="noSave" id="exit-sans-save-button">Don\'t Save</a></div>' +
-								'	</div>',
+					"content": '	<div class="label-and-control">' +
+						'	 <div class="label"></div>' +
+						'	 <div class="field-type-indication"></div>' +
+						'	 <div class="control">' +
+						'		<div id="submission-notice">Please check your information before saving it. ' +
+						'			You won\'t be able to make edits afterward.</div>' +
+						'		<a data-button-type="save" id="form-submit-button">Save</a>' +
+						'	</div>' +
+						'	</div>' +
+						'	<div class="label-and-control">' +
+						'		<div class="label"></div>' +
+						'		<div class="field-type-indication"></div>' +
+						'		<div class="control"><a data-button-type="noSave" id="exit-sans-save-button">Don\'t Save</a></div>' +
+						'	</div>',
 					"begin": 1,
 					"end": 1,
 					"hideForAdmin": [""],
@@ -3197,8 +3198,8 @@
 					"end": 1,
 				}
 			];
-			
-			if (typeof(fData.standardElementGroups) != "undefined") {
+
+			if (typeof (fData.standardElementGroups) != "undefined") {
 
 				if (fData.standardElementGroups.standardPrintButton != undefined) {
 					fData.elements = standardPrintButton;
@@ -3261,28 +3262,28 @@
 				var hasViewingPermissionThisRequest = 0; // this user's permission flag
 
 				// for each element
-				$.each(fData.elements, function(i, elem) {
+				$.each(fData.elements, function (i, elem) {
 					// if it yields view permissions
-					if (typeof(elem.yieldsViewPermissions) != "undefined" && elem.yieldsViewPermissions === 1) {
+					if (typeof (elem.yieldsViewPermissions) != "undefined" && elem.yieldsViewPermissions === 1) {
 						// push its value to permitted
-						if (typeof(rData.formData[$().ReturnHyphenatedFieldNameOrValue(elem.fieldName)]) === 'string') {
+						if (typeof (rData.formData[$().ReturnHyphenatedFieldNameOrValue(elem.fieldName)]) === 'string') {
 							permitted.push(rData.formData[$().ReturnHyphenatedFieldNameOrValue(elem.fieldName)]);
-						} else if (typeof(rData.formData[$().ReturnHyphenatedFieldNameOrValue(elem.fieldName)]) === 'object') {
-							$.each(rData.formData[$().ReturnHyphenatedFieldNameOrValue(elem.fieldName)], function(i, p) {
+						} else if (typeof (rData.formData[$().ReturnHyphenatedFieldNameOrValue(elem.fieldName)]) === 'object') {
+							$.each(rData.formData[$().ReturnHyphenatedFieldNameOrValue(elem.fieldName)], function (i, p) {
 								permitted.push(p.account);
 							});
 						}
 					}
 				});
 
-				$.each(permitted, function(i, p) {
+				$.each(permitted, function (i, p) {
 					if (StrInStr(p, uData.account)) {
 						hasViewingPermissionThisRequest = 1;
 					}
 				});
 
-				if (hasViewingPermissionThisRequest === 0 && typeof(fData.additionalViewPermissionsFunction) != "undefined") {
-					hasViewingPermissionThisRequest = CallFunctionFromString (fData.additionalViewPermissionsFunction, { "rData": rData });
+				if (hasViewingPermissionThisRequest === 0 && typeof (fData.additionalViewPermissionsFunction) != "undefined") {
+					hasViewingPermissionThisRequest = CallFunctionFromString(fData.additionalViewPermissionsFunction, { "rData": rData });
 				}
 
 				if (hasViewingPermissionThisRequest === 0) {
@@ -3302,7 +3303,7 @@
 
 			var formScript = '';
 
-			$.each(fData.elements, function(i, elem) {
+			$.each(fData.elements, function (i, elem) {
 
 				switch (elem.elementType) {
 					case "field":
@@ -3408,7 +3409,7 @@
 
 			// insert approval nodes, if any
 			if (rData.requestID != "" && rData.requestID > 0) {
-				if (typeof(rData.formData['Approval-Nodes-Storage']) != 'undefined') {
+				if (typeof (rData.formData['Approval-Nodes-Storage']) != 'undefined') {
 					$("div#all-approvals").html(HtmlDecode(rData.formData['Approval-Nodes-Storage']));
 				}
 			}
@@ -3421,7 +3422,7 @@
 			// ========================================================
 
 			// for each div with relevant attribute, create PeoplePicker control
-			$("div[data-control-type='PeoplePicker']").each(function() {
+			$("div[data-control-type='PeoplePicker']").each(function () {
 				var peoplePickerDiv = $(this).attr("ID");
 				InitializePeoplePicker(peoplePickerDiv);
 			});
@@ -3430,7 +3431,7 @@
 			//		do this before populating form; population will repeat the original, as needed;
 			//		assumption here is that if the original is required, then all repeats should be required, too;
 			//		therefore, require the original before repeating it
-			$('div#request-form').find('.required').each(function() {
+			$('div#request-form').find('.required').each(function () {
 				$(this).SetFieldToRequired($(this).attr("id"));
 			});
 
@@ -3438,16 +3439,16 @@
 			//		do this before populating form; population will repeat the original, as needed;
 			//		assumption here is that if the original is disabled, then all repeats should be disabled, too;
 			//		therefore, disable the original before repeating it
-			$('div#request-form').find('.disabled').each(function() {
+			$('div#request-form').find('.disabled').each(function () {
 				$(this).SetFieldToDisabled('#' + $(this).attr("id"));
 			});
 
 			// load select options, set datepickers on appropriate fields
-			$.each(fData.elements, function(i, elem) {
+			$.each(fData.elements, function (i, elem) {
 
 				if (elem.controlType === "select") {
-					if (typeof(elem.loadOptions) != "undefined") {
-						if (typeof(elem.restrictions) === "undefined") {
+					if (typeof (elem.loadOptions) != "undefined") {
+						if (typeof (elem.restrictions) === "undefined") {
 							$("#" + ReplaceAll("\\.", "", ReplaceAll(" ", "-", elem.fieldName))).LoadSelectOptions(elem.loadOptions);
 						} else {
 							$("#" + ReplaceAll("\\.", "", ReplaceAll(" ", "-", elem.fieldName))).LoadSelectOptions(elem.loadOptions, elem.restrictions);
@@ -3475,7 +3476,7 @@
 					}
 				}
 				if (elem.controlType === "datetime" || elem.controlType === "time") {
-					if (typeof(elem.hoursRestrictions) === "undefined") {
+					if (typeof (elem.hoursRestrictions) === "undefined") {
 						$("#hours-input_" + ReplaceAll("\\.", "", ReplaceAll(" ", "-", elem.fieldName))).LoadSelectOptions({
 							listName: "Hours",
 							firstOptionText: "",
@@ -3493,7 +3494,7 @@
 							restrictions: elem.hoursRestrictions
 						});
 					}
-					if (typeof(elem.minutesRestrictions) === "undefined") {
+					if (typeof (elem.minutesRestrictions) === "undefined") {
 						$("#minutes-input_" + ReplaceAll("\\.", "", ReplaceAll(" ", "-", elem.fieldName))).LoadSelectOptions({
 							listName: "Minutes",
 							firstOptionText: "",
@@ -3525,14 +3526,14 @@
 
 			var approvalNodeScripts = '';
 
-			if (rData.requestStatus == "" && typeof(rData.defaultDataForNewRequests) != "undefined") {
+			if (rData.requestStatus == "" && typeof (rData.defaultDataForNewRequests) != "undefined") {
 				PopulateFormData("div#request-form", rData.defaultDataForNewRequests, mData.uriRoot, rData.requestID);
 			}
 
 			if (rData.requestStatus != "") {
 
 				// set stored object's data, if any
-				if (typeof(rData.formData) != "undefined") {
+				if (typeof (rData.formData) != "undefined") {
 					PopulateFormData("div#request-form", rData.formData, mData.uriRoot, rData.requestID, mData.checkForAlternateEventDataToPopulate);
 				}
 
@@ -3542,12 +3543,12 @@
 				$("a.link_admin-email").attr("href", "mailto:" + mData.adminEmailString);
 
 				// set notification history rows, if any
-				if (typeof($('textarea#Approval-Notification-Rows-Storage').val()) != "undefined") {
+				if (typeof ($('textarea#Approval-Notification-Rows-Storage').val()) != "undefined") {
 					$("table#table_approval-notification-history tbody").append($('textarea#Approval-Notification-Rows-Storage').val());
 				}
 
 				// get approval node scripts, if any
-				if (typeof($('textarea#Approval-Nodes-Script-Storage').val()) != "undefined") {
+				if (typeof ($('textarea#Approval-Nodes-Script-Storage').val()) != "undefined") {
 					approvalNodeScripts += ReplaceAll("'", "", $('textarea#Approval-Nodes-Script-Storage').val());
 				}
 			}
@@ -3563,7 +3564,7 @@
 				$('input#Requester-Account').val(uData.account);
 
 				// if designated, set current user's dept as event dept
-				if (typeof(mData.autoPopulateEventDeparment) != 'undefined' && mData.autoPopulateEventDeparment === 1) {
+				if (typeof (mData.autoPopulateEventDeparment) != 'undefined' && mData.autoPopulateEventDeparment === 1) {
 					$('input#Event-Department').val(uData.dept);
 				}
 
@@ -3571,7 +3572,7 @@
 				$("input#Required-Approvers").val(mData.requiredApproversString);
 
 				// if alwaysTalkToRequester, populate and hide relevant fields
-				if (typeof(fData.alwaysTalkToRequester) != 'undefined' && fData.alwaysTalkToRequester === 1) {
+				if (typeof (fData.alwaysTalkToRequester) != 'undefined' && fData.alwaysTalkToRequester === 1) {
 					$('option[value="Self"]').prop('selected', true);
 					$().PutAddtlPeopleInPicker('Requested For', [{
 						'name': uData.name,
@@ -3608,7 +3609,7 @@
 			$("input#Current-User-is-Component-Group-Admin").val(uData.isComponentGrpAdmin);
 			$("input#Component-ID").val(mData.componentID);
 			// concatenate built and stored scripts and append inside script#request-form-script
-			
+
 
 
 
@@ -3646,24 +3647,24 @@
 			// ========================================================
 
 			// set friendly formats on date fields designated in mData.elements
-			$.each(fData.elements, function(i, elem) {
-				
+			$.each(fData.elements, function (i, elem) {
+
 				// if element needs its date value formatted on load
-				if (typeof(elem.friendlyFormatOnLoad) != "undefined") {
+				if (typeof (elem.friendlyFormatOnLoad) != "undefined") {
 
 					// determine the date field selector from the element's other properties
 					var fieldSelector = "#" + ReplaceAll("\\.", "", ReplaceAll(" ", "-", elem.fieldName));
 
 					// if the field has a value
-					if (typeof($(fieldSelector).val()) != "undefined" && $(fieldSelector).val() != "") {
+					if (typeof ($(fieldSelector).val()) != "undefined" && $(fieldSelector).val() != "") {
 						// console.log("this field has a value");
 
 						// if the field is disabled or readonly
-						if (typeof($(fieldSelector).attr('disabled')) != "undefined" || typeof($(fieldSelector).attr('readonly')) != "undefined") {
+						if (typeof ($(fieldSelector).attr('disabled')) != "undefined" || typeof ($(fieldSelector).attr('readonly')) != "undefined") {
 							// console.log("this field is disabled/RO");
 
 							// if this date needs to be re-stored in iso format
-							if (typeof(elem.isoFormatOnSubmit) != "undefined") {
+							if (typeof (elem.isoFormatOnSubmit) != "undefined") {
 								// console.log("has isoFormatOnSubmit");
 								// store the db-stored date in the markup
 								//		(it'll be re-used for db storage upon submit, in case 
@@ -3677,7 +3678,7 @@
 				}
 
 				// if element needs its date value formatted on load
-				if (typeof(elem.setDateFromURLOnLoad) != "undefined") {
+				if (typeof (elem.setDateFromURLOnLoad) != "undefined") {
 
 					// determine the date field selector from the element's other properties
 					var fieldSelector = "#" + ReplaceAll("\\.", "", ReplaceAll(" ", "-", elem.fieldName));
@@ -3709,7 +3710,7 @@
 			}
 
 			// append approvalPreface, if appropriate
-			if (typeof(mData.approvalPreface) != 'undefined') {
+			if (typeof (mData.approvalPreface) != 'undefined') {
 				$('div#swf-specific-approval-preface').html(mData.approvalPreface);
 			}
 
@@ -3726,7 +3727,7 @@
 
 			// if there are no historical admin notes, hide the textarea
 			//		(otherwise, it breaks up the vertical rhythm)
-			if (typeof($('textarea#Historical-Admin-Notes').val()) === 'undefined') {
+			if (typeof ($('textarea#Historical-Admin-Notes').val()) === 'undefined') {
 				$('div#label-and-control_Historical-Admin-Notes').addClass('hidden');
 			} else if ($('textarea#Historical-Admin-Notes').val() === '') {
 				$('div#label-and-control_Historical-Admin-Notes').addClass('hidden');
@@ -3734,19 +3735,19 @@
 
 			// if there are no historical other preservable notes, hide the textarea
 			//		(otherwise, it breaks up the vertical rhythm)
-			if (typeof($('textarea#Historical-Other-Preservable-Notes').val()) === 'undefined') {
+			if (typeof ($('textarea#Historical-Other-Preservable-Notes').val()) === 'undefined') {
 				$('div#label-and-control_Historical-Other-Preservable-Notes').addClass('hidden');
 			} else if ($('textarea#Historical-Other-Preservable-Notes').val() === '') {
 				$('div#label-and-control_Historical-Other-Preservable-Notes').addClass('hidden');
 			}
 
 			// if there are historical admin notes, resize the textarea to fit all of them
-			if (typeof($('textarea#Historical-Admin-Notes').val()) != 'undefined' && $('textarea#Historical-Admin-Notes').val() != '') {
+			if (typeof ($('textarea#Historical-Admin-Notes').val()) != 'undefined' && $('textarea#Historical-Admin-Notes').val() != '') {
 				$().ResizeTextareaToFitAllContents('Historical-Admin-Notes');
 			}
 
 			// if there are historical other preservable notes, resize the textarea to fit all of them
-			if (typeof($('textarea#Historical-Other-Preservable-Notes').val()) != 'undefined' && $('textarea#Historical-Other-Preservable-Notes').val() != '') {
+			if (typeof ($('textarea#Historical-Other-Preservable-Notes').val()) != 'undefined' && $('textarea#Historical-Other-Preservable-Notes').val() != '') {
 				$().ResizeTextareaToFitAllContents('Historical-Other-Preservable-Notes');
 			}
 
@@ -3756,12 +3757,12 @@
 			}
 
 			// for each mos file field
-			$("div.mos-drag-and-drop-file-attachment").each(function() {
+			$("div.mos-drag-and-drop-file-attachment").each(function () {
 				var thisFileFieldID = $(this).attr("ID");
 				var thisFileName = $("div#" + thisFileFieldID).find("input.mos-drag-and-drop-file-name").val();
 
 				// if the hidden inputs have been populated with data by PopulateFormData(), then set the UI to present the file info to the 
-				if (typeof(thisFileName) == "string" && thisFileName != "") {
+				if (typeof (thisFileName) == "string" && thisFileName != "") {
 
 					var thisFileIsInQuarkFiles = $("div#" + thisFileFieldID).find("input.mos-drag-and-drop-file-in-quark-files").val();
 					var thisFileURI = "";
@@ -3780,9 +3781,9 @@
 					var thisFileTypeClass = $("div#" + thisFileFieldID).find("input.mos-drag-and-drop-file-type-class").val();
 					var filePresentationContainerID = $("#" + thisFileFieldID).find("a.mos-drag-and-drop-file-container").attr("id");
 					var fileUploadIconID = $("#" + filePresentationContainerID).find("div.mos-drag-and-drop-file-upload-icon").attr("id");
-					var filePreviewID  = $("#" + filePresentationContainerID).find("div.mos-drag-and-drop-file-preview").attr("id");
-					var fileNameAndSizePresentationID  = $("#" + filePresentationContainerID).find("div.mos-drag-and-drop-file-name-and-size").attr("id");
-					var fileControlID  = $("#" + filePresentationContainerID).find("div.mos-drag-and-drop-file-control").attr("id");
+					var filePreviewID = $("#" + filePresentationContainerID).find("div.mos-drag-and-drop-file-preview").attr("id");
+					var fileNameAndSizePresentationID = $("#" + filePresentationContainerID).find("div.mos-drag-and-drop-file-name-and-size").attr("id");
+					var fileControlID = $("#" + filePresentationContainerID).find("div.mos-drag-and-drop-file-control").attr("id");
 					var progressBarID = $("#" + filePresentationContainerID).find("div.mos-drag-and-drop-file-progress progress").attr("id");
 
 					// set the UI
@@ -3799,16 +3800,16 @@
 
 
 			// modify submission notice & button text, as needed
-			if (typeof(fData.conditionalSubmissionNoticesAndButtonValues) != "undefined") {
-				$.each(fData.conditionalSubmissionNoticesAndButtonValues, function(i, noticeAndORValue) {
+			if (typeof (fData.conditionalSubmissionNoticesAndButtonValues) != "undefined") {
+				$.each(fData.conditionalSubmissionNoticesAndButtonValues, function (i, noticeAndORValue) {
 					if (noticeAndORValue.condition()) {
-						if (typeof(noticeAndORValue.submissionNotice) != "undefined") {
+						if (typeof (noticeAndORValue.submissionNotice) != "undefined") {
 							$("div#submission-notice").html(noticeAndORValue.submissionNotice);
 						}
-						if (typeof(noticeAndORValue.buttonValue) != "undefined") {
+						if (typeof (noticeAndORValue.buttonValue) != "undefined") {
 							$("input#form-submit-button").attr("value", noticeAndORValue.buttonValue);
 						}
-						if (typeof(noticeAndORValue.buttonWidth) != "undefined") {
+						if (typeof (noticeAndORValue.buttonWidth) != "undefined") {
 							$("input#form-submit-button").css("width", noticeAndORValue.buttonWidth);
 							$("a.link_exit-sans-save").css("width", noticeAndORValue.buttonWidth);
 						}
@@ -3838,19 +3839,19 @@
 			// ========================================================
 
 			// when user clicks link tester, open corresponding link in new tab
-			$('a.link-tester').click(function() {
+			$('a.link-tester').click(function () {
 				window.open($(this).closest('div.control').find('input[type="url"]').val(), '_blank');
 			});
 
 			// when approved or disapproved, set signature and date
-			$('input[name^="Approval-Indicator"]').change(function() {
+			$('input[name^="Approval-Indicator"]').change(function () {
 				$(this).closest('div.approver-container').find('input[id^="Approval-Signature"]').val(uData.name).attr('value', uData.name);
 				$(this).closest('div.approver-container').find('input[id^="Approval-Date"]').val($().ReturnFormattedDateTime('nowLocal', null, 'MMMM D, YYYY')).attr('value', $().ReturnFormattedDateTime('nowLocal', null, 'MMMM D, YYYY'));
 			});
 
 			// when a radio button is clicked, set its "checked" attribute
 			//		and remove that attribute from others with same name
-			$("input[type='radio']").change(function() {
+			$("input[type='radio']").change(function () {
 
 				// get this radio button's id
 				var clickedID = $(this).attr("id");
@@ -3862,7 +3863,7 @@
 				$(this).attr("checked", true);
 
 				// iterate over all other radio buttons with the same name
-				$("input[name='" + clickedName + "']").each(function(i, sameName) {
+				$("input[name='" + clickedName + "']").each(function (i, sameName) {
 
 					// if this radio button isn't the one that was clicked
 					if ($(sameName).attr("id") != clickedID) {
@@ -3874,7 +3875,7 @@
 			});
 
 			// when a checkbox is clicked, set / remove its "checked" attribute
-			$("input[type='checkbox']").change(function() {
+			$("input[type='checkbox']").change(function () {
 				if ($(this).is(":checked")) {
 					$(this).attr("checked", true);
 				} else {
@@ -3883,7 +3884,7 @@
 			});
 
 			// when resolved PeoplePicker entity is clicked, open the corresponding persona card
-			$('div#request-form').on('click', 'span.ms-entity-resolved', function() {
+			$('div#request-form').on('click', 'span.ms-entity-resolved', function () {
 
 				// close and empty
 
@@ -3896,8 +3897,8 @@
 					operation: "GetUserProfileByName",
 					async: false,
 					AccountName: $(this).closest("span.sp-peoplepicker-userSpan").attr("sid"),
-					completefunc: function(xData, Status) {
-						$(xData.responseXML).SPFilterNode("PropertyData").each(function() {
+					completefunc: function (xData, Status) {
+						$(xData.responseXML).SPFilterNode("PropertyData").each(function () {
 							userProfileValues[$(this).find("Name").text()] = $(this).find("Value").text();
 						});
 					}
@@ -3919,15 +3920,15 @@
 				dialogHeader += '	</span> \n' +
 					'	<span id="name_title_department"> \n';
 
-				if (typeof(userProfileValues.PreferredName) != 'undefined' && userProfileValues.PreferredName != '') {
+				if (typeof (userProfileValues.PreferredName) != 'undefined' && userProfileValues.PreferredName != '') {
 					dialogHeader += '		 <span id="name">' + userProfileValues.PreferredName + '</span> \n';
 				}
 
-				if (typeof(userProfileValues.Title) != 'undefined' && userProfileValues.Title != '') {
+				if (typeof (userProfileValues.Title) != 'undefined' && userProfileValues.Title != '') {
 					dialogHeader += '		 <span id="title">' + userProfileValues.Title + '</span> \n';
 				}
 
-				if (typeof(userProfileValues.Department) != 'undefined' && userProfileValues.Department != '') {
+				if (typeof (userProfileValues.Department) != 'undefined' && userProfileValues.Department != '') {
 					dialogHeader += '		 <span id="department">' + userProfileValues.Department + '</span> \n';
 				}
 
@@ -3939,24 +3940,24 @@
 
 				var dialogBody = '<ul id="persona-card-dialog-body"> \n';
 
-				if (typeof(userProfileValues.WorkPhone) != 'undefined' && typeof(userProfileValues.CellPhone) != 'undefined' && userProfileValues.WorkPhone != '' && userProfileValues.CellPhone != '') {
+				if (typeof (userProfileValues.WorkPhone) != 'undefined' && typeof (userProfileValues.CellPhone) != 'undefined' && userProfileValues.WorkPhone != '' && userProfileValues.CellPhone != '') {
 					dialogBody += '	<li id="phone-numbers">\n' +
 						'		 <ul>\n' +
 						'			  <li id="business-phone-number">Business: ' + userProfileValues.WorkPhone + '</li> \n' +
 						'			  <li id="mobile-phone-number">Mobile: ' + userProfileValues.CellPhone + '</li> \n' +
 						'		 </ul>\n' +
 						'	</li> \n';
-				} else if (typeof(userProfileValues.WorkPhone) != 'undefined' && userProfileValues.WorkPhone != '') {
+				} else if (typeof (userProfileValues.WorkPhone) != 'undefined' && userProfileValues.WorkPhone != '') {
 					dialogBody += '	<li id="business-phone-number">Business: ' + userProfileValues.WorkPhone + '</li> \n';
-				} else if (typeof(userProfileValues.WorkPhone) != 'undefined' && userProfileValues.WorkPhone != '') {
+				} else if (typeof (userProfileValues.WorkPhone) != 'undefined' && userProfileValues.WorkPhone != '') {
 					dialogBody += '	<li id="mobile-phone-number">Mobile: ' + userProfileValues.CellPhone + '</li> \n';
 				}
 
-				if (typeof(userProfileValues.WorkEmail) != 'undefined' && userProfileValues.WorkEmail != '') {
+				if (typeof (userProfileValues.WorkEmail) != 'undefined' && userProfileValues.WorkEmail != '') {
 					dialogBody += '	<li id="email"><a href="mailto:' + userProfileValues.WorkEmail + '">' + userProfileValues.WorkEmail + '</a></li> \n';
 				}
 
-				if (typeof(userProfileValues["SPS-PersonalSiteCapabilities"]) != 'undefined' && userProfileValues["SPS-PersonalSiteCapabilities"] != '') {
+				if (typeof (userProfileValues["SPS-PersonalSiteCapabilities"]) != 'undefined' && userProfileValues["SPS-PersonalSiteCapabilities"] != '') {
 					dialogBody += '	<li id="profile"><a href="https://bmos-my.sharepoint.com/_layouts/15/me.aspx?u=' + userProfileValues["msOnline-ObjectId"] + '" target="_blank">Profile</a></li> \n';
 				}
 
@@ -4006,14 +4007,14 @@
 			});
 
 			// when a printer button is clicked
-			$("a#standard-printer-button-inside-request").on("click", function() {
+			$("a#standard-printer-button-inside-request").on("click", function () {
 				var printFunction = $(this).attr("data-print-function");
 				var printContent = [$("textarea#All-Request-Data").val()];
-				CallFunctionFromString (printFunction, printContent);
+				CallFunctionFromString(printFunction, printContent);
 			});
 
 			// when replaceable file attachment deletion control is clicked, display confirmation, overlay
-			$('div#request-form').on('click', 'div.mos-drag-and-drop-file-control', function(clickEvent) {
+			$('div#request-form').on('click', 'div.mos-drag-and-drop-file-control', function (clickEvent) {
 				// prevent default behaviour
 				clickEvent.preventDefault();
 				// record which file field is relevant
@@ -4022,7 +4023,7 @@
 				if ($(this).closest("div.mos-drag-and-drop-file-attachment").hasClass("attachment-error")) {
 					// delete the file attachment
 					$().DeleteRequestFileAttachment(rData.lastUsedFileFieldID);
-				// if there was a file attached
+					// if there was a file attached
 				} else {
 					// present the confirmation
 					$('div#overlays-screen-container').fadeIn(200);
@@ -4031,38 +4032,38 @@
 			});
 
 			// when file attachment deletion confirmation button is clicked, delete the file, clear the data, hide confirmation overlay, and inform the user
-			$("div#overlays-screen-container").on("click", "a[data-button-type='file-deletion-confirmation']", function() {
+			$("div#overlays-screen-container").on("click", "a[data-button-type='file-deletion-confirmation']", function () {
 				// delete the file attachment
 				$().DeleteRequestFileAttachment(rData.lastUsedFileFieldID);
 			});
 
 			var chosenFiles = false;
 
-			$("div#request-form").on('drag dragstart dragend dragover dragenter dragleave drop', 'div.mos-drag-and-drop-file-attachment', function(e) {
+			$("div#request-form").on('drag dragstart dragend dragover dragenter dragleave drop', 'div.mos-drag-and-drop-file-attachment', function (e) {
 				e.preventDefault();
 				e.stopPropagation();
 			})
-			.on('dragover dragenter', function() {
-				$(this).addClass('dragged-over');
-				$(this).find("div.mos-drag-and-drop-file-input label").html("Drop here.");
-			})
-			.on('dragleave dragend drop', function() {
-				$(this).removeClass('dragged-over');
-				$(this).find("div.mos-drag-and-drop-file-input label").html("<span class=\"mos-file-selection-prompt\">Tap or click here to select a file</span>"); // Drop a file here, or 
-			})
-			.on('drop', function(e) {
-				var controlID = this.id;
-				chosenFiles = e.originalEvent.dataTransfer.files;
-				$.each(chosenFiles, function(i, chosenFile) {
-					$().UploadRequestFileAttachment(chosenFile, controlID);
+				.on('dragover dragenter', function () {
+					$(this).addClass('dragged-over');
+					$(this).find("div.mos-drag-and-drop-file-input label").html("Drop here.");
+				})
+				.on('dragleave dragend drop', function () {
+					$(this).removeClass('dragged-over');
+					$(this).find("div.mos-drag-and-drop-file-input label").html("<span class=\"mos-file-selection-prompt\">Tap or click here to select a file</span>"); // Drop a file here, or 
+				})
+				.on('drop', function (e) {
+					var controlID = this.id;
+					chosenFiles = e.originalEvent.dataTransfer.files;
+					$.each(chosenFiles, function (i, chosenFile) {
+						$().UploadRequestFileAttachment(chosenFile, controlID);
+					});
 				});
-			});
 
-			$("div#request-form").on("change", "div.mos-drag-and-drop-file-attachment div.mos-drag-and-drop-file-input input.mos-file-selector", function(e){
+			$("div#request-form").on("change", "div.mos-drag-and-drop-file-attachment div.mos-drag-and-drop-file-input input.mos-file-selector", function (e) {
 				var fileInputID = this.id;
 				var controlID = $("#" + fileInputID).closest('div.mos-drag-and-drop-file-attachment').attr("id");
 				chosenFiles = e.target.files;
-				$.each(chosenFiles, function(i, chosenFile) {
+				$.each(chosenFiles, function (i, chosenFile) {
 					$().UploadRequestFileAttachment(chosenFile, controlID);
 				});
 			});
@@ -4072,18 +4073,18 @@
 			// ========================================================
 			// PRESENT FORM TO USER & BEGIN MONITORING MAINTENANCE MODE
 			// ========================================================
-			
+
 			$("div#request-form").fadeTo(1, 1);
 
 			//  console.log('total screen initialization time = ' + (Date.now() - loadingStartTime)/1000 + ' seconds');
 
-			setInterval(function() { $().TryMaintenanceModeThisComponentThisUser(); }, mData.maintenanceModeCheckFrequency);
+			setInterval(function () { $().TryMaintenanceModeThisComponentThisUser(); }, mData.maintenanceModeCheckFrequency);
 		}
 	};
 
 
 
-	$.fn.ProcessSubmission = function() {
+	$.fn.ProcessSubmission = function () {
 
 		// ========================================================
 		// SET UP VARS
@@ -4129,7 +4130,7 @@
 						"type": "Number",
 						"value": rData.requestID,
 					}
-				}), 
+				}),
 				rData
 			);
 
@@ -4156,27 +4157,27 @@
 
 				$(workingMessage).text("Preparing dates");
 
-				$.each(fData.elements, function(i, elem) {
+				$.each(fData.elements, function (i, elem) {
 
 					// if element needs its date value formatted on SUBMIT
-					if (typeof(elem.isoFormatOnSubmit) != "undefined") {
+					if (typeof (elem.isoFormatOnSubmit) != "undefined") {
 
 						// determine the date field selector from the element's other properties
 						var fieldsSelector = "[id^='" + ReplaceAll("\\.", "", ReplaceAll(" ", "-", elem.fieldName)) + "']";
 						// console.log(fieldsSelector);
 
-						$(fieldsSelector).each(function() {
+						$(fieldsSelector).each(function () {
 
 							// if the field has a value
-							if (typeof($(this).val()) != "undefined" && $(this).val() != "") {
+							if (typeof ($(this).val()) != "undefined" && $(this).val() != "") {
 
 								// if the field is not disabled and not readonly
-								if (typeof($(fieldsSelector).attr('disabled')) === "undefined" && typeof($(fieldsSelector).attr('readonly')) === "undefined") {
-									
+								if (typeof ($(fieldsSelector).attr('disabled')) === "undefined" && typeof ($(fieldsSelector).attr('readonly')) === "undefined") {
+
 									// get the formatted value using the field value and the properties of friendlyFormatOnLoad
 									$(this).val($().ReturnFormattedDateTime($(this).val(), elem.isoFormatOnSubmit.incomingFormat, elem.isoFormatOnSubmit.returnFormat, elem.isoFormatOnSubmit.determineYearDisplayDynamically));
-								
-								// if the field is disabled
+
+									// if the field is disabled
 								} else {
 
 									// just use the data value that was set on load
@@ -4205,7 +4206,7 @@
 				if (rData.requestStatus === '') {
 					$("input#Request-Date").val(NowAsISOUTC);
 
-					if (typeof(fData.autoPopulateRequestedBy) != 'undefined' && fData.autoPopulateRequestedBy === 1) {
+					if (typeof (fData.autoPopulateRequestedBy) != 'undefined' && fData.autoPopulateRequestedBy === 1) {
 						$().PutAddtlPeopleInPicker('Requested By', [{
 							'name': uData.name,
 							'email': uData.email.toLowerCase(),
@@ -4233,11 +4234,11 @@
 
 				// append any new admin notes to historical and then clear new
 				var newAdminNotes = $("textarea#New-Admin-Notes").val();
-				
+
 				// preserve a copy of the comment
 				rData.newAdminNotes = newAdminNotes;
 
-				if (typeof(newAdminNotes) != "undefined" && newAdminNotes.length > 0) {
+				if (typeof (newAdminNotes) != "undefined" && newAdminNotes.length > 0) {
 					var historicalAdminNotes = $("textarea#Historical-Admin-Notes").val();
 					var userDisplayName = $().SPServices.SPGetCurrentUser({
 						fieldName: "Title"
@@ -4257,11 +4258,11 @@
 
 				// append any new other preservable notes to historical and then clear new
 				var newOtherPreservableNotes = $("textarea#New-Other-Preservable-Notes").val();
-				
+
 				// preserve a copy of the comment
 				rData.newOtherPreservableNotes = newOtherPreservableNotes;
 
-				if (typeof(newOtherPreservableNotes) != "undefined" && newOtherPreservableNotes.length > 0) {
+				if (typeof (newOtherPreservableNotes) != "undefined" && newOtherPreservableNotes.length > 0) {
 					var historicalOtherPreservableNotes = $("textarea#Historical-Other-Preservable-Notes").val();
 					var userDisplayName = $().SPServices.SPGetCurrentUser({
 						fieldName: "Title"
@@ -4282,7 +4283,7 @@
 				//		and clear the relevant boolean field if it's populated
 				var keepExceptionalEventOccurrences = 0;
 
-				if (typeof(fData.autoTrackKeepingRemovingExceptionalEventOccurrences) != 'undefined') {
+				if (typeof (fData.autoTrackKeepingRemovingExceptionalEventOccurrences) != 'undefined') {
 					// if the user hasn't elected to change the recurrence pattern
 					if ($("#" + fData.autoTrackKeepingRemovingExceptionalEventOccurrences.relevantBooleanID).prop("checked") === false) {
 						// set flag to indicate that exceptional event data will need to be kept
@@ -4301,19 +4302,19 @@
 				// ========================================================
 				// HANDLE ASSIGNMENTS (if appropriate)
 				// ========================================================
-				
-				if (typeof(fData.autoAddAssigneesFromFields) != "undefined" && rData.endOfLife != 1) {
+
+				if (typeof (fData.autoAddAssigneesFromFields) != "undefined" && rData.endOfLife != 1) {
 
 					$(workingMessage).text("Handling Assignments");
 
-					$.each(fData.autoAddAssigneesFromFields, function(i, conditionAndFieldsSet) {
-						if(conditionAndFieldsSet.condition()) {
+					$.each(fData.autoAddAssigneesFromFields, function (i, conditionAndFieldsSet) {
+						if (conditionAndFieldsSet.condition()) {
 							$().AddAssigneesFromFields(conditionAndFieldsSet.fields);
 						}
 					});
 				}
 
-				if (typeof(fData.autoProcessAssignments) != "undefined" && rData.endOfLife != 1) {
+				if (typeof (fData.autoProcessAssignments) != "undefined" && rData.endOfLife != 1) {
 
 					$(workingMessage).text("Handling Assignments");
 
@@ -4326,12 +4327,12 @@
 					var workNewlyNeededArray = [];
 					var workNotNeededArray = [];
 
-					if (typeof($('input#Assigned-To_TopSpan_HiddenInput').val()) === 'undefined' || $('input#Assigned-To_TopSpan_HiddenInput').val() === "") {
+					if (typeof ($('input#Assigned-To_TopSpan_HiddenInput').val()) === 'undefined' || $('input#Assigned-To_TopSpan_HiddenInput').val() === "") {
 						var assignedToNowInitialArray = [];
 					} else {
 						var assignedToNowInitialArray = JSON.parse($('input#Assigned-To_TopSpan_HiddenInput').val());
 					}
-					if (typeof($('input#Assigned-To-on-Load_TopSpan_HiddenInput').val()) === 'undefined' || $('input#Assigned-To-on-Load_TopSpan_HiddenInput').val() === "") {
+					if (typeof ($('input#Assigned-To-on-Load_TopSpan_HiddenInput').val()) === 'undefined' || $('input#Assigned-To-on-Load_TopSpan_HiddenInput').val() === "") {
 						var assignedToOnLoadInitialArray = [];
 					} else {
 						var assignedToOnLoadInitialArray = JSON.parse($('input#Assigned-To-on-Load_TopSpan_HiddenInput').val());
@@ -4353,13 +4354,13 @@
 					// -- get work newly needed
 
 					// for each assigned to now
-					$.each(assignedToNowInitialArray, function(i, assignedToNow) {
+					$.each(assignedToNowInitialArray, function (i, assignedToNow) {
 
 						// set flag indicating that this assigned to now IS NOT in assigned to on load
 						var assignedToNowInAssignedToOnLOad = 0;
 
 						// for each assigned to on load
-						$.each(assignedToOnLoadInitialArray, function(i, assignedToOnLoad) {
+						$.each(assignedToOnLoadInitialArray, function (i, assignedToOnLoad) {
 
 							// if this assigned to on load matches this assigned to now
 							if (assignedToNow.Key === assignedToOnLoad.Key) {
@@ -4385,13 +4386,13 @@
 					// -- get work newly not needed
 
 					// for each assigned to on load
-					$.each(assignedToOnLoadInitialArray, function(i, assignedToOnLoad) {
+					$.each(assignedToOnLoadInitialArray, function (i, assignedToOnLoad) {
 
 						// set flag indicating that this assigned to on load IS NOT in assigned to now
 						var assignedToOnLoadInAssignedToNow = 0;
 
 						// for each assigned to now
-						$.each(assignedToNowInitialArray, function(i, assignedToNow) {
+						$.each(assignedToNowInitialArray, function (i, assignedToNow) {
 
 							// if this assigned to on load matches this assigned to now
 							if (assignedToOnLoad.Key === assignedToNow.Key) {
@@ -4428,9 +4429,9 @@
 					//		SP Designer determine if the field is empty but is not set to an empty string.
 
 					// for each element in workNewlyNeededArray
-					$.each(workNewlyNeededArray, function(i, a) {
+					$.each(workNewlyNeededArray, function (i, a) {
 
-						if (typeof(a.Key) != 'undefined') {
+						if (typeof (a.Key) != 'undefined') {
 
 							// clear 'none' on first iteration
 							if (workNewlyNeededNotificationString === 'none') {
@@ -4448,9 +4449,9 @@
 					});
 
 					// for each element in workNotNeededArray
-					$.each(workNotNeededArray, function(i, a) {
+					$.each(workNotNeededArray, function (i, a) {
 
-						if (typeof(a.Key) != 'undefined') {
+						if (typeof (a.Key) != 'undefined') {
 
 							// clear 'none' on first iteration
 							if (workNewlyNotNeededNotificationString === 'none') {
@@ -4482,7 +4483,7 @@
 					$().ClearPeoplePicker("Assigned-To-on-Load_TopSpan");
 
 					// get keys of approvers now
-					$.each(assignedToNowInitialArray, function(i, a) {
+					$.each(assignedToNowInitialArray, function (i, a) {
 
 						assignedToNowToAdd.push({
 							'name': a.DisplayText,
@@ -4574,89 +4575,89 @@
 				}
 
 				if (fData.autoTrackPendingAndApproval === 1 && rData.endOfLife != 1) {
- 
+
 					$(workingMessage).text("Handling Request Status");
 
-                   var newReqStatus = '';
-                    var endOfLife = 0;
-                    var endOfLifeIsNew = 0;
-                    if (rData.requestStatus == '') {
-                        newReqStatus = 'Pending Approval';
-                    } else if (rData.requestStatus == 'Pending Approval' && ($('input#requester-cancellation_cancel:checked').length > 0 || $('select#Change-Request-Status option:selected').val() == 'Cancel')) {
-                        newReqStatus = 'Cancelled';
-                        endOfLife = 1;
-                        endOfLifeIsNew = 1;
-                    } else if (rData.requestStatus == 'Pending Approval' && $('select#Change-Request-Status option:selected').val() == 'Approve') {
-                        newReqStatus = 'Approved';
-                        endOfLife = 1;
-                        endOfLifeIsNew = 1;
-                    } else if (rData.requestStatus == 'Pending Approval' && $('select#Change-Request-Status option:selected').val() == 'Disapprove') {
-                        newReqStatus = 'Disapproved';
-                        endOfLife = 1;
-                        endOfLifeIsNew = 1;
-                    }
-                    rData.endOfLifeIsNew = endOfLifeIsNew;
-                    rData.endOfLife = endOfLife;
-                    rData.requestStatus = newReqStatus;
-                    globalRData = rData;
-                    $('input#Request-Status').val(newReqStatus);
-                    $('input#End-of-Life').val(endOfLife);
+					var newReqStatus = '';
+					var endOfLife = 0;
+					var endOfLifeIsNew = 0;
+					if (rData.requestStatus == '') {
+						newReqStatus = 'Pending Approval';
+					} else if (rData.requestStatus == 'Pending Approval' && ($('input#requester-cancellation_cancel:checked').length > 0 || $('select#Change-Request-Status option:selected').val() == 'Cancel')) {
+						newReqStatus = 'Cancelled';
+						endOfLife = 1;
+						endOfLifeIsNew = 1;
+					} else if (rData.requestStatus == 'Pending Approval' && $('select#Change-Request-Status option:selected').val() == 'Approve') {
+						newReqStatus = 'Approved';
+						endOfLife = 1;
+						endOfLifeIsNew = 1;
+					} else if (rData.requestStatus == 'Pending Approval' && $('select#Change-Request-Status option:selected').val() == 'Disapprove') {
+						newReqStatus = 'Disapproved';
+						endOfLife = 1;
+						endOfLifeIsNew = 1;
+					}
+					rData.endOfLifeIsNew = endOfLifeIsNew;
+					rData.endOfLife = endOfLife;
+					rData.requestStatus = newReqStatus;
+					globalRData = rData;
+					$('input#Request-Status').val(newReqStatus);
+					$('input#End-of-Life').val(endOfLife);
 				}
 
 				if (fData.autoTrackGSEJobStatuses === 1 && rData.endOfLife != 1) {
-					
-					$(workingMessage).text("Handling Request Status");
- 
-					var newReqStatus = '';
-                    var endOfLife = 0;
-                    var endOfLifeIsNew = 0;
-                    if (rData.requestStatus == '') {
-                        newReqStatus = 'Pending Approval';
-                    } else if (rData.requestStatus == 'Pending Approval' && ($('input#requester-cancellation_cancel:checked').length > 0 || $('select#Change-Request-Status option:selected').val() == 'Cancel')) {
-                        newReqStatus = 'Cancelled';
-                        endOfLife = 1;
-                        endOfLifeIsNew = 1;
-                    } else if (rData.requestStatus == 'Pending Approval' && $('select#Change-Request-Status option:selected').val() == 'Approve') {
-                        newReqStatus = 'Approved';
-                    } else if (rData.requestStatus == 'Pending Approval' && $('select#Change-Request-Status option:selected').val() == 'Disapprove') {
-                        newReqStatus = 'Disapproved';
-                        endOfLife = 1;
-                        endOfLifeIsNew = 1;
-                    }
-                    rData.endOfLifeIsNew = endOfLifeIsNew;
-                    rData.endOfLife = endOfLife;
-                    rData.requestStatus = newReqStatus;
-                    globalRData = rData;
-                    $('input#Request-Status').val(newReqStatus);
-                    $('input#End-of-Life').val(endOfLife);
-            	}
 
-            	if (fData.autoTrackGSEScheduleStatuses === 1 && rData.endofLife != 1) {
-            		$(workingMessage).text("Handling Request Status");
- 
+					$(workingMessage).text("Handling Request Status");
+
 					var newReqStatus = '';
-                    var endOfLife = 0;
-                    var endOfLifeIsNew = 0;
-                    if (rData.requestStatus == '') {
-                        newReqStatus = 'Pending Approval';
-                    } else if (rData.requestStatus == 'Pending Approval' && ($('input#requester-cancellation_cancel:checked').length > 0 || $('select#Change-Request-Status option:selected').val() == 'Approve')) {
-                        newReqStatus = 'Unassigned';
-                        endOfLife = 1;
-                        endOfLifeIsNew = 1;
-                    } else if (rData.requestStatus == 'Unassigned' && $('select#Change-Request-Status option:selected').val() == 'Assign') {
-                        newReqStatus = 'Assigned';
-                    } else if (rData.requestStatus == 'Unapproved' && $('select#Change-Request-Status option:selected').val() == 'Close') {
-                        newReqStatus = 'Closed';
-                        endOfLife = 1;
-                        endOfLifeIsNew = 1;
-                    }
-                    rData.endOfLifeIsNew = endOfLifeIsNew;
-                    rData.endOfLife = endOfLife;
-                    rData.requestStatus = newReqStatus;
-                    globalRData = rData;
-                    $('input#Request-Status').val(newReqStatus);
-                    $('input#End-of-Life').val(endOfLife);
-            	}
+					var endOfLife = 0;
+					var endOfLifeIsNew = 0;
+					if (rData.requestStatus == '') {
+						newReqStatus = 'Pending Approval';
+					} else if (rData.requestStatus == 'Pending Approval' && ($('input#requester-cancellation_cancel:checked').length > 0 || $('select#Change-Request-Status option:selected').val() == 'Cancel')) {
+						newReqStatus = 'Cancelled';
+						endOfLife = 1;
+						endOfLifeIsNew = 1;
+					} else if (rData.requestStatus == 'Pending Approval' && $('select#Change-Request-Status option:selected').val() == 'Approve') {
+						newReqStatus = 'Approved';
+					} else if (rData.requestStatus == 'Pending Approval' && $('select#Change-Request-Status option:selected').val() == 'Disapprove') {
+						newReqStatus = 'Disapproved';
+						endOfLife = 1;
+						endOfLifeIsNew = 1;
+					}
+					rData.endOfLifeIsNew = endOfLifeIsNew;
+					rData.endOfLife = endOfLife;
+					rData.requestStatus = newReqStatus;
+					globalRData = rData;
+					$('input#Request-Status').val(newReqStatus);
+					$('input#End-of-Life').val(endOfLife);
+				}
+
+				if (fData.autoTrackGSEScheduleStatuses === 1 && rData.endofLife != 1) {
+					$(workingMessage).text("Handling Request Status");
+
+					var newReqStatus = '';
+					var endOfLife = 0;
+					var endOfLifeIsNew = 0;
+					if (rData.requestStatus == '') {
+						newReqStatus = 'Pending Approval';
+					} else if (rData.requestStatus == 'Pending Approval' && ($('input#requester-cancellation_cancel:checked').length > 0 || $('select#Change-Request-Status option:selected').val() == 'Approve')) {
+						newReqStatus = 'Unassigned';
+						endOfLife = 1;
+						endOfLifeIsNew = 1;
+					} else if (rData.requestStatus == 'Unassigned' && $('select#Change-Request-Status option:selected').val() == 'Assign') {
+						newReqStatus = 'Assigned';
+					} else if (rData.requestStatus == 'Unapproved' && $('select#Change-Request-Status option:selected').val() == 'Close') {
+						newReqStatus = 'Closed';
+						endOfLife = 1;
+						endOfLifeIsNew = 1;
+					}
+					rData.endOfLifeIsNew = endOfLifeIsNew;
+					rData.endOfLife = endOfLife;
+					rData.requestStatus = newReqStatus;
+					globalRData = rData;
+					$('input#Request-Status').val(newReqStatus);
+					$('input#End-of-Life').val(endOfLife);
+				}
 
 				if (fData.autoTrackEventNeedsStatuses === 1) {
 
@@ -4689,7 +4690,7 @@
 					$('input#End-of-Life').val(endOfLife);
 				}
 
-				if (typeof(fData.autoTrackGPCConceptStatuses) !== "undefined" && fData.autoTrackGPCConceptStatuses === 1 && rData.endOfLife != 1) {
+				if (typeof (fData.autoTrackGPCConceptStatuses) !== "undefined" && fData.autoTrackGPCConceptStatuses === 1 && rData.endOfLife != 1) {
 
 					$(workingMessage).text("Handling Request Status");
 
@@ -4716,7 +4717,7 @@
 						newReqStatus = 'Cancelled';
 						endOfLife = 1;
 						endOfLifeIsNew = 1;
-					
+
 					} else if ((rData.requestStatus === 'Pending Approval' || rData.requestStatus === 'Approval Pending Comments') && $('select#Change-Request-Status option:selected').val() === 'Approve') { //  || (someApprovalNodesAreDisapproved === 0 && someApprovalNodesAreNeedInfo === 0 && someApprovalNodesAreBlank === 0))
 						newReqStatus = 'Approved';
 						endOfLife = 1;
@@ -4736,7 +4737,7 @@
 					$('input#End-of-Life').val(endOfLife);
 				}
 
-				if (typeof(fData.autoTrackGPCSubmissionStatuses) !== "undefined" && fData.autoTrackGPCSubmissionStatuses === 1 && rData.endOfLife != 1) {
+				if (typeof (fData.autoTrackGPCSubmissionStatuses) !== "undefined" && fData.autoTrackGPCSubmissionStatuses === 1 && rData.endOfLife != 1) {
 
 					$(workingMessage).text("Handling Request Status");
 
@@ -4757,7 +4758,7 @@
 					var grantAwardedIsNew = 0;
 					var grantDeclinedIsNew = 0;
 
-					$('div.approver-container').each(function(i, a) {
+					$('div.approver-container').each(function (i, a) {
 						quantityOfApprovalNodes++;
 						if ($(this).find('input[value="approve"]').is(':checked')) {
 							quantityOfApprovalNodesMarkedApproved++;
@@ -4778,7 +4779,7 @@
 					} else {
 						allApprovalNodesAreMarked = 1;
 					}
-					
+
 					if (rData.requestStatus === '' && $('input#ready-for-submission-to-committee_yes:checked').length === 0) {
 						newReqStatus = 'In Development';
 						beginningOfLifeIsNew = 1;
@@ -4795,14 +4796,14 @@
 						newReqStatus = 'Cancelled';
 						endOfLife = 1;
 						endOfLifeIsNew = 1;
-					} else if ((rData.requestStatus === 'Pending Approval' || rData.requestStatus === 'Approval Pending Comments') && 
+					} else if ((rData.requestStatus === 'Pending Approval' || rData.requestStatus === 'Approval Pending Comments') &&
 						($('select#Change-Request-Status option:selected').val() === 'GrantProposalReadyForSubmission' || (allApprovalNodesAreMarked == 1 && quantityOfApprovalNodesMarkedApproved === quantityOfApprovalNodes))) {
 						newReqStatus = 'Grant Proposal Ready for Submission';
 						approvalIsNew = 1;
-					/*} else if (rData.requestStatus === 'Pending Approval' && $('select#Change-Request-Status option:selected').val() === 'Disapprove') { // || quantityOfApprovalNodesMarkedDisapproved > 0
-						newReqStatus = 'Disapproved';
-						endOfLife = 1;
-						endOfLifeIsNew = 1;*/
+						/*} else if (rData.requestStatus === 'Pending Approval' && $('select#Change-Request-Status option:selected').val() === 'Disapprove') { // || quantityOfApprovalNodesMarkedDisapproved > 0
+							newReqStatus = 'Disapproved';
+							endOfLife = 1;
+							endOfLifeIsNew = 1;*/
 					} else if ((rData.requestStatus === 'Pending Approval' || rData.requestStatus === 'Approval Pending Comments' || rData.requestStatus === 'Grant Proposal Ready for Submission') && $('select#Change-Request-Status option:selected').val() === 'GrantProposalSubmitted') {
 						newReqStatus = 'Grant Proposal Submitted';
 						grantProposalSubmittedIsNew = 1;
@@ -4858,7 +4859,7 @@
 					}
 					rData.endOfLifeIsNew = endOfLifeIsNew;
 					rData.endOfLife = endOfLife;
-					if (newReqStatus != null) { 
+					if (newReqStatus != null) {
 						rData.requestStatus = newReqStatus;
 						$('input#Request-Status').val(newReqStatus);
 					}
@@ -5125,7 +5126,7 @@
 
 
 
-				if (typeof(fData.addToCalendarOnApproval) != 'undefined' && rData.requestStatus == 'Approved') {
+				if (typeof (fData.addToCalendarOnApproval) != 'undefined' && rData.requestStatus == 'Approved') {
 
 					$(workingMessage).text("Adding to Calendar");
 
@@ -5148,7 +5149,7 @@
 						batchCmd: 'New',
 						ID: 0,
 						valuepairs: calendarValuePairs,
-						completefunc: function(xData, Status) {
+						completefunc: function (xData, Status) {
 							$().HandleListUpdateReturn(xData, Status, 'Hub Attachment Error');
 						}
 					});
@@ -5160,7 +5161,7 @@
 				// ADD LOCATION (to form field and to external list) (if appropriate)
 				// ========================================================
 
-				if (typeof(fData.autoAddLocationToList) != 'undefined' && $("#" + fData.autoAddLocationToList.relevantAdditionID).val() != '') {
+				if (typeof (fData.autoAddLocationToList) != 'undefined' && $("#" + fData.autoAddLocationToList.relevantAdditionID).val() != '') {
 
 					$(workingMessage).text("Adding Location to List");
 
@@ -5171,7 +5172,7 @@
 					//		options, then we'll know that valueToAdd isn't in the SP list, either;
 					//		if the index of the option containing valueToAdd (not with value = valueToAdd) is returned as 'undefined', 
 					//		then there is no option in the relevant select containing valueToAdd, in which case valueToAdd isn't in the SP list)
-					if (typeof($().ReturnOptionIndexByText($("#" + fData.autoAddLocationToList.relevantSelectID), valueToAdd)) == 'undefined') {
+					if (typeof ($().ReturnOptionIndexByText($("#" + fData.autoAddLocationToList.relevantSelectID), valueToAdd)) == 'undefined') {
 
 						var listValuePairs = [
 							['Title', valueToAdd]
@@ -5185,7 +5186,7 @@
 							batchCmd: 'New',
 							ID: 0,
 							valuepairs: listValuePairs,
-							completefunc: function(xData, Status) {
+							completefunc: function (xData, Status) {
 								$().HandleListUpdateReturn(xData, Status, 'Hub Location Addition Error');
 							}
 						});
@@ -5261,12 +5262,12 @@
 					var approvalNewlyNeededArray = [];
 					var approvalNotNeededArray = [];
 
-					if (typeof($('input#Approvers_TopSpan_HiddenInput').val()) == 'undefined' || $('input#Approvers_TopSpan_HiddenInput').val() == "") {
+					if (typeof ($('input#Approvers_TopSpan_HiddenInput').val()) == 'undefined' || $('input#Approvers_TopSpan_HiddenInput').val() == "") {
 						var approversNowInitialArray = [];
 					} else {
 						var approversNowInitialArray = JSON.parse($('input#Approvers_TopSpan_HiddenInput').val());
 					}
-					if (typeof($('input#Approvers-on-Load_TopSpan_HiddenInput').val()) == 'undefined' || $('input#Approvers-on-Load_TopSpan_HiddenInput').val() == "") {
+					if (typeof ($('input#Approvers-on-Load_TopSpan_HiddenInput').val()) == 'undefined' || $('input#Approvers-on-Load_TopSpan_HiddenInput').val() == "") {
 						var approversOnLoadInitialArray = [];
 					} else {
 						var approversOnLoadInitialArray = JSON.parse($('input#Approvers-on-Load_TopSpan_HiddenInput').val());
@@ -5301,7 +5302,7 @@
 					var approversNowToKeep = [];
 
 					// for each approver now
-					$.each(approversNowInitialArray, function(i, approverNow) {
+					$.each(approversNowInitialArray, function (i, approverNow) {
 
 						// if this approver now matches the requester
 						if (approverNow.Key == $("#Requester-Account").val()) {
@@ -5346,7 +5347,7 @@
 					if (mData.requiredApproversArray.length != 0) {
 
 						// if onlyAutoProcessApprovalsAfterDevelopment is set, then set flag indicating whether or not request is ready for approval
-						if (typeof(fData.onlyAutoProcessApprovalsAfterDevelopment) != "undefined") {
+						if (typeof (fData.onlyAutoProcessApprovalsAfterDevelopment) != "undefined") {
 
 							// readyForApproval = 0
 							var readyForApproval = 0;
@@ -5365,17 +5366,17 @@
 
 						// if onlyAutoProcessApprovalsAfterDevelopment is undefined and RS = "" OR
 						//		onlyAutoProcessApprovalsAfterDevelopment is set and readyForApproval = 1
-						if ( (typeof(fData.onlyAutoProcessApprovalsAfterDevelopment) == "undefined" && rData.requestStatus == '') || 
-							(typeof(fData.onlyAutoProcessApprovalsAfterDevelopment) != "undefined" && readyForApproval == 1) ) {
+						if ((typeof (fData.onlyAutoProcessApprovalsAfterDevelopment) == "undefined" && rData.requestStatus == '') ||
+							(typeof (fData.onlyAutoProcessApprovalsAfterDevelopment) != "undefined" && readyForApproval == 1)) {
 
 							// for each required approver
-							$.each(mData.requiredApproversArray, function(i, r) {
+							$.each(mData.requiredApproversArray, function (i, r) {
 
 								// set flag indicating that this required approver IS NOT in approvers now
 								var requiredApproverAlreadyAdded = 0;
 
 								// iterate over each approver now
-								$.each(approversNowInitialArray, function(i, approverNow) {
+								$.each(approversNowInitialArray, function (i, approverNow) {
 
 									// if this approver now matches this required approver
 									if (r.account == approverNow.Key) {
@@ -5418,13 +5419,13 @@
 					// -- get approvals newly needed
 
 					// for each approver now
-					$.each(approversNowInitialArray, function(i, approverNow) {
+					$.each(approversNowInitialArray, function (i, approverNow) {
 
 						// set flag indicating that this approver now IS NOT in approvers on load
 						var approverNowInApproverOnLoad = 0;
 
 						// for each approver on load
-						$.each(approversOnLoadInitialArray, function(i, approverOnLoad) {
+						$.each(approversOnLoadInitialArray, function (i, approverOnLoad) {
 
 							// if this approver on load matches this approver now
 							if (approverNow.Key == approverOnLoad.Key) {
@@ -5445,13 +5446,13 @@
 					// -- get approvals newly not needed
 
 					// for each approver on load
-					$.each(approversOnLoadInitialArray, function(i, approverOnLoad) {
+					$.each(approversOnLoadInitialArray, function (i, approverOnLoad) {
 
 						// set flag indicating that this approver on load IS NOT in approvers now
 						var approverOnLoadInApproverNow = 0;
 
 						// for each approver on load
-						$.each(approversNowInitialArray, function(i, approverNow) {
+						$.each(approversNowInitialArray, function (i, approverNow) {
 
 							// if this approver on load matches this approver now
 							if (approverOnLoad.Key == approverNow.Key) {
@@ -5483,7 +5484,7 @@
 					var newNotificationTableRows = '';
 
 					// build and append approval nodes, scripts, and notification history table rows
-					$.each(approvalNewlyNeededArray, function(i, a) {
+					$.each(approvalNewlyNeededArray, function (i, a) {
 						newNodes += $().ReturnApprovalNode(a.DisplayText, ReplaceAll("\\.", "", ReplaceAll("'", "", ReplaceAll(" ", "-", a.DisplayText))), a.Description.toLowerCase());
 						newNodesScripts += $().ReturnApprovalNodeScript(a.DisplayText, ReplaceAll("\\.", "", ReplaceAll(" ", "-", a.DisplayText)), NowAsFriendlyDateWithYear);
 						newNotificationTableRows += $().ReturnNotificationHistoryRow(a.DisplayText, ReplaceAll("\\.", "", ReplaceAll(" ", "-", a.DisplayText)), NowAsISOLocal, NowAsFriendlyDateTimeWithYear, "Needed");
@@ -5497,7 +5498,7 @@
 					newNotificationTableRows = '';
 
 					// remove approval nodes, add notification history table rows
-					$.each(approvalNotNeededArray, function(i, a) {
+					$.each(approvalNotNeededArray, function (i, a) {
 						$('div[data-approver-email="' + a.Description.toLowerCase() + '"]').remove();
 						newNotificationTableRows += $().ReturnNotificationHistoryRow(a.DisplayText, ReplaceAll("\\.", "", ReplaceAll(" ", "-", a.DisplayText)), NowAsISOLocal, NowAsFriendlyDateTimeWithYear, "Not Needed");
 					});
@@ -5517,9 +5518,9 @@
 					//		is the only other option for "clearing" previously-set values.
 
 					// for each approval node with an empty approval status
-					$.each(approvalNewlyNeededArray, function(i, a) {
+					$.each(approvalNewlyNeededArray, function (i, a) {
 
-						if (typeof(a.Key) != 'undefined') {
+						if (typeof (a.Key) != 'undefined') {
 
 							// clear 'none' on first iteration
 							if (approvalNewlyNeededNotificationString == 'none') {
@@ -5537,9 +5538,9 @@
 					});
 
 					// for each approval node with an empty approval status
-					$.each(approvalNotNeededArray, function(i, a) {
+					$.each(approvalNotNeededArray, function (i, a) {
 
-						if (typeof(a.Key) != 'undefined') {
+						if (typeof (a.Key) != 'undefined') {
 
 							// clear 'none' on first iteration
 							if (approvalNewlyNotNeededNotificationString == 'none') {
@@ -5557,7 +5558,7 @@
 					});
 
 					// for each approval node with an empty approval status
-					$('div[data-approval-status=""]').each(function(i, d) {
+					$('div[data-approval-status=""]').each(function (i, d) {
 
 						// clear 'none' on first iteration
 						if (approvalStillNeededNotificationString == 'none') {
@@ -5593,7 +5594,7 @@
 					$().ClearPeoplePicker("Approvers-on-Load_TopSpan");
 
 					// get keys of approvers now
-					$.each(approversNowInitialArray, function(i, a) {
+					$.each(approversNowInitialArray, function (i, a) {
 						// add this approver now's account (key) to approversNowToAdd
 						approversNowToAdd.push({
 							'name': a.DisplayText,
@@ -5625,7 +5626,7 @@
 					}
 
 					// alter flags from their defaults if there are disapproved or blank approval nodes
-					$('div.approver-container').each(function(i, a) {
+					$('div.approver-container').each(function (i, a) {
 						var approvalButtonChecked = 0;
 						var disapprovalButtonChecked = 0;
 
@@ -5647,17 +5648,17 @@
 					// set RS upon new submission
 					if (rData.requestStatus == '') {
 						// if this request may undergo development prior to being submitted for approval
-						if (typeof(fData.devPriorToApproval) != "undefined") {
+						if (typeof (fData.devPriorToApproval) != "undefined") {
 							// if this is a GPC Submission Approval Request that is ready for submission to the committee
 							if (readyForGPCSubmission == 1) {
 								// set Pending Approval
 								newReqStatus = 'Pending Approval';
-							// if this is either NOT a GPC Submission Approval Request or NOT one that is ready for submission to the committee
+								// if this is either NOT a GPC Submission Approval Request or NOT one that is ready for submission to the committee
 							} else {
 								// set In Development
 								newReqStatus = 'In Development';
 							}
-						// if this request may NOT undergo development prior to being submitted for approval
+							// if this request may NOT undergo development prior to being submitted for approval
 						} else {
 							newReqStatus = 'Pending Approval';
 						}
@@ -5748,7 +5749,7 @@
 						$("input#Completion-Date").val(NowAsISOLocal);
 					}
 
-					$("div#all-approvals textarea").each(function() {
+					$("div#all-approvals textarea").each(function () {
 						$(this).text($(this).val());
 					});
 
@@ -5768,7 +5769,7 @@
 				// SET COMPLETION DATE (if needed)
 				// ========================================================
 
-				if (typeof(fData.autoDateCompletion) != 'undefined' && fData.autoDateCompletion == 1) {
+				if (typeof (fData.autoDateCompletion) != 'undefined' && fData.autoDateCompletion == 1) {
 
 					$(workingMessage).text("Handling Completion Date");
 
@@ -5786,7 +5787,7 @@
 				$(workingMessage).text("Preparing Confirmation");
 
 				// if this is a new request and a newRequestConfirmationAddition has been provided
-				if (rData.requestID == '' && typeof(fData.newRequestConfirmationAddition) != "undefined") {
+				if (rData.requestID == '' && typeof (fData.newRequestConfirmationAddition) != "undefined") {
 					// insert it into its container
 					$('div#mos-form-submission-confirmation-additional-message').append(fData.newRequestConfirmationAddition);
 					// add class to container's container for styling hook
@@ -5794,11 +5795,11 @@
 				}
 
 				// if this is a new request and a newRequestConditionalConfirmationAdditions have been provided
-				if (rData.requestID == '' && typeof(fData.newRequestConditionalConfirmationAdditions) !== "undefined") {
+				if (rData.requestID == '' && typeof (fData.newRequestConditionalConfirmationAdditions) !== "undefined") {
 
 					var additionalMessageContent = '';
 
-					$.each(fData.newRequestConditionalConfirmationAdditions, function(i, a) {
+					$.each(fData.newRequestConditionalConfirmationAdditions, function (i, a) {
 						if (a.condition()) {
 							additionalMessageContent += a.addition;
 						}
@@ -5837,12 +5838,12 @@
 				globalSubmissionValuePairsArrayOfArrays = [];
 
 				// if saving data normally
-				if (typeof(fData.bypassNormalDataSaving) == 'undefined' || fData.bypassNormalDataSaving == 0) {
+				if (typeof (fData.bypassNormalDataSaving) == 'undefined' || fData.bypassNormalDataSaving == 0) {
 					globalSubmissionValuePairsArrayOfArrays.push(ReturnStandardSubmissionValuePairArray(clonedForm));
 				}
 
 				// if augmenting the AllRequestData object with some of the form data as an exceptional occurrence
-				if (typeof(fData.augmentDataWithExceptionalEventOccurrence) != 'undefined' && fData.augmentDataWithExceptionalEventOccurrence == 1) {
+				if (typeof (fData.augmentDataWithExceptionalEventOccurrence) != 'undefined' && fData.augmentDataWithExceptionalEventOccurrence == 1) {
 					globalSubmissionValuePairsArrayOfArrays.push(ReturnAllRequestDataObjectAugmentedWithExceptionalEventOccurrence(clonedForm, rData.formData));
 				}
 
@@ -5853,8 +5854,8 @@
 
 
 				// if saving data using a custom function
-				if (typeof(fData.customDataSavingFunction) !== 'undefined') {
-					switch(fData.customDataSavingFunction) {
+				if (typeof (fData.customDataSavingFunction) !== 'undefined') {
+					switch (fData.customDataSavingFunction) {
 						case 'ReturnGSESchedulesSubmissionValuePairArray':
 							globalSubmissionValuePairsArrayOfArrays = ReturnStandardSubmissionValuePairArray(clonedForm);
 							break;
@@ -5867,12 +5868,12 @@
 				var allCreateOrUpdateListItemPromises = [];
 
 				// for each array of value pairs in globalSubmissionValuePairsArrayOfArrays
-				$.each(globalSubmissionValuePairsArrayOfArrays, function(i, submissionValuePairsArray) {
+				$.each(globalSubmissionValuePairsArrayOfArrays, function (i, submissionValuePairsArray) {
 					allCreateOrUpdateListItemPromises.push($().CreateOrUpdateListItem(mData, rData, submissionValuePairsArray));
 				});
 
 				// wait for all promises to complete (pass or fail) 
-				$.when.apply($, allCreateOrUpdateListItemPromises).always(function() {
+				$.when.apply($, allCreateOrUpdateListItemPromises).always(function () {
 
 					// save requestID in rData
 					rData.requestID = globalLastRequestIDs[globalLastRequestIDs.length - 1];
@@ -5883,7 +5884,7 @@
 					var notificationProcessingPromise = new $.Deferred();
 
 					// if notifications is NOT set to 1
-					if (typeof(mData.notifications) == "undefined" || mData.notifications != 1) {
+					if (typeof (mData.notifications) == "undefined" || mData.notifications != 1) {
 
 						notificationProcessingPromise.resolve();
 
@@ -5893,7 +5894,7 @@
 						$(workingMessage).text("Preparing Emails");
 
 						// if processing standard notifications
-						if (typeof(fData.standardChangeNotifications) != "undefined") {
+						if (typeof (fData.standardChangeNotifications) != "undefined") {
 							// if NOT just saving an allowed change after EOL has already been reached
 							if (rData.endOfLife == 0 || (rData.endOfLife == 1 && rData.endOfLifeIsNew == 1)) {
 								// pass sData to ProcessStandardChangeNotifications
@@ -5914,8 +5915,8 @@
 									'beginningOfLife': beginningOfLife,
 									'endOfLife': endOfLife
 
-								// only when that's done
-								}).then(function() {
+									// only when that's done
+								}).then(function () {
 									// resolve promise to process any needed notifications
 									notificationProcessingPromise.resolve();
 								});
@@ -5923,7 +5924,7 @@
 						}
 
 						// if processing super simple notifications
-						if (typeof(fData.superSimpleChangeNotifications) != "undefined") {
+						if (typeof (fData.superSimpleChangeNotifications) != "undefined") {
 							// if NOT just saving an allowed change after EOL has already been reached
 							if (rData.endOfLife == 0 || (rData.endOfLife == 1 && rData.endOfLifeIsNew == 1)) {
 								// pass sData to ProcessSuperSimpleChangeNotifications
@@ -5935,9 +5936,9 @@
 									'workNotNeededArray': workNotNeededArray,
 									'beginningOfLife': beginningOfLife,
 									'endOfLife': endOfLife
-								
-								// only when that's done
-								}).then(function() {
+
+									// only when that's done
+								}).then(function () {
 									// resolve promise to process any needed notifications
 									notificationProcessingPromise.resolve();
 								});
@@ -5945,57 +5946,57 @@
 						}
 
 						// if processing event space notifications
-						if (typeof(fData.eventSpaceNotifications) != "undefined") {
+						if (typeof (fData.eventSpaceNotifications) != "undefined") {
 							// if NOT just saving an allowed change after EOL has already been reached
 							if (rData.endOfLife == 0 || (rData.endOfLife == 1 && rData.endOfLifeIsNew == 1)) {
 								// pass sData to ProcessEventSpaceNotifications
 								$().ProcessEventSpaceNotifications({
 									'beginningOfLife': beginningOfLife,
 									'endOfLife': endOfLife
-								
-								// only when that's done
-								}).then(function() {
+
+									// only when that's done
+								}).then(function () {
 									// resolve promise to process any needed notifications
 									notificationProcessingPromise.resolve();
 								});
 							}
 						}
 
-                        // if processing event needs notifications
-                        if (typeof(fData.eventNeedsNotifications) != "undefined") {
-                            // if NOT just saving an allowed change after EOL has already been reached
-                            if (rData.endOfLife == 0 || (rData.endOfLife == 1 && rData.endOfLifeIsNew == 1)) {
-                                // pass sData to ProcessEventNeedsNotifications
-                                $().ProcessEventNeedsNotifications({
+						// if processing event needs notifications
+						if (typeof (fData.eventNeedsNotifications) != "undefined") {
+							// if NOT just saving an allowed change after EOL has already been reached
+							if (rData.endOfLife == 0 || (rData.endOfLife == 1 && rData.endOfLifeIsNew == 1)) {
+								// pass sData to ProcessEventNeedsNotifications
+								$().ProcessEventNeedsNotifications({
 									'beginningOfLife': beginningOfLife,
-                                    'newReqStatus': newReqStatus,
-                                    'endOfLife': endOfLife
-                                
-                                // only when that's done
-                                }).then(function() {
-                                    // resolve promise to process any needed notifications
-                                    notificationProcessingPromise.resolve();
-                                });
-                            }
-                        }
+									'newReqStatus': newReqStatus,
+									'endOfLife': endOfLife
+
+									// only when that's done
+								}).then(function () {
+									// resolve promise to process any needed notifications
+									notificationProcessingPromise.resolve();
+								});
+							}
+						}
 
 						// if processing event space notifications
-						if (typeof(fData.gpcInitialConceptApprovalRequestNotifications) != "undefined") {
+						if (typeof (fData.gpcInitialConceptApprovalRequestNotifications) != "undefined") {
 							// if NOT just saving an allowed change after EOL has already been reached
 							if (rData.endOfLife == 0 || (rData.endOfLife == 1 && rData.endOfLifeIsNew == 1)) {
 								// pass sData to ProcessEventSpaceNotifications
 								$().ProcessGPCInitialConceptApprovalRequestNotifications()
-								
-								// only when that's done
-								.then(function() {
-									// resolve promise to process any needed notifications
-									notificationProcessingPromise.resolve();
-								});
+
+									// only when that's done
+									.then(function () {
+										// resolve promise to process any needed notifications
+										notificationProcessingPromise.resolve();
+									});
 							}
 						}
 
 						// if processing event space notifications
-						if (typeof(fData.gpcSubmissionApprovalRequestNotifications) != "undefined") {
+						if (typeof (fData.gpcSubmissionApprovalRequestNotifications) != "undefined") {
 							// if NOT just saving an allowed change after EOL has already been reached
 							if (rData.endOfLife == 0 || (rData.endOfLife == 1 && rData.endOfLifeIsNew == 1)) {
 								// pass sData to ProcessEventSpaceNotifications
@@ -6003,8 +6004,8 @@
 									'requestStatus': rData.requestStatus,
 									'beginningOfLifeIsNew': rData.beginningOfLifeIsNew,
 									'formDataOnLoad': rData.formDataOnLoad
-								// only when that's done
-								}).then(function() {
+									// only when that's done
+								}).then(function () {
 									// resolve promise to process any needed notifications
 									notificationProcessingPromise.resolve();
 								});
@@ -6012,7 +6013,7 @@
 						}
 
 						// if processing promo request notifications
-						if (typeof(fData.promoReqNotifications) != "undefined") {
+						if (typeof (fData.promoReqNotifications) != "undefined") {
 
 							// if NOT just saving an allowed change after EOL has already been reached
 							if (rData.endOfLife == 0 || (rData.endOfLife == 1 && rData.endOfLifeIsNew == 1)) {
@@ -6022,8 +6023,8 @@
 									'beginningOfLife': beginningOfLife,
 									'endOfLife': endOfLife
 
-								// only when that's done
-								}).then(function() {
+									// only when that's done
+								}).then(function () {
 									// resolve promise to process any needed notifications
 									notificationProcessingPromise.resolve();
 								});
@@ -6031,7 +6032,7 @@
 						}
 
 						// if processing interpreter request notifications
-						if (typeof(fData.interpreterReqNotifications) != "undefined") {
+						if (typeof (fData.interpreterReqNotifications) != "undefined") {
 
 							// if NOT just saving an allowed change after EOL has already been reached
 							if (rData.endOfLife == 0 || (rData.endOfLife == 1 && rData.endOfLifeIsNew == 1)) {
@@ -6041,8 +6042,8 @@
 									'beginningOfLife': beginningOfLife,
 									'endOfLife': endOfLife
 
-								// only when that's done
-								}).then(function() {
+									// only when that's done
+								}).then(function () {
 									// resolve promise to process any needed notifications
 									notificationProcessingPromise.resolve();
 								});
@@ -6050,7 +6051,7 @@
 						}
 
 						// if processing volunteer service request notifications
-						if (typeof(fData.referralNotifications) != "undefined") {
+						if (typeof (fData.referralNotifications) != "undefined") {
 
 							// if NOT just saving an allowed change after EOL has already been reached
 							if (rData.endOfLife == 0 || (rData.endOfLife == 1 && rData.endOfLifeIsNew == 1)) {
@@ -6059,9 +6060,9 @@
 								$().ProcessReferralNotifications({
 									'beginningOfLife': beginningOfLife,
 									'endOfLife': endOfLife
-								
-								// only when that's done
-								}).then(function() {
+
+									// only when that's done
+								}).then(function () {
 									// resolve promise to process any needed notifications
 									notificationProcessingPromise.resolve();
 								});
@@ -6069,7 +6070,7 @@
 						}
 
 						// if processing volunteer service request notifications
-						if (typeof(fData.vsReqNotifications) != "undefined") {
+						if (typeof (fData.vsReqNotifications) != "undefined") {
 
 							// if NOT just saving an allowed change after EOL has already been reached
 							if (rData.endOfLife == 0 || (rData.endOfLife == 1 && rData.endOfLifeIsNew == 1)) {
@@ -6078,9 +6079,9 @@
 								$().ProcessVolunteerServicesReqNotifications({
 									'beginningOfLife': beginningOfLife,
 									'endOfLife': endOfLife
-								
-								// only when that's done
-								}).then(function() {
+
+									// only when that's done
+								}).then(function () {
 									// resolve promise to process any needed notifications
 									notificationProcessingPromise.resolve();
 								});
@@ -6088,7 +6089,7 @@
 						}
 
 						// if processing mc project request notifications
-						if (typeof(fData.mcProjectReqNotifications) != "undefined") {
+						if (typeof (fData.mcProjectReqNotifications) != "undefined") {
 
 							// if NOT just saving an allowed change after EOL has already been reached
 							if (rData.endOfLife == 0 || (rData.endOfLife == 1 && rData.endOfLifeIsNew == 1)) {
@@ -6098,8 +6099,8 @@
 									'beginningOfLife': beginningOfLife,
 									'endOfLife': endOfLife
 
-								// only when that's done
-								}).then(function() {
+									// only when that's done
+								}).then(function () {
 									// resolve promise to process any needed notifications
 									notificationProcessingPromise.resolve();
 								});
@@ -6107,7 +6108,7 @@
 						}
 
 						// if processing mc project request notifications
-						if (typeof(fData.testNotifications) != "undefined") {
+						if (typeof (fData.testNotifications) != "undefined") {
 
 							// if NOT just saving an allowed change after EOL has already been reached
 							if (rData.endOfLife == 0 || (rData.endOfLife == 1 && rData.endOfLifeIsNew == 1)) {
@@ -6117,8 +6118,8 @@
 									'beginningOfLife': beginningOfLife,
 									'endOfLife': endOfLife
 
-								// only when that's done
-								}).then(function() {
+									// only when that's done
+								}).then(function () {
 									// resolve promise to process any needed notifications
 									notificationProcessingPromise.resolve();
 								});
@@ -6126,7 +6127,7 @@
 						}
 
 						// if processing photo request notifications
-						if (typeof(fData.photoReqNotifications) != "undefined") {
+						if (typeof (fData.photoReqNotifications) != "undefined") {
 
 							// if NOT just saving an allowed change after EOL has already been reached
 							if (rData.endOfLife == 0 || (rData.endOfLife == 1 && rData.endOfLifeIsNew == 1)) {
@@ -6136,8 +6137,8 @@
 									'beginningOfLife': beginningOfLife,
 									'endOfLife': endOfLife
 
-								// only when that's done
-								}).then(function() {
+									// only when that's done
+								}).then(function () {
 									// resolve promise to process any needed notifications
 									notificationProcessingPromise.resolve();
 								});
@@ -6145,7 +6146,7 @@
 						}
 
 						// if processing logo request notifications
-						if (typeof(fData.logoReqNotifications) != "undefined") {
+						if (typeof (fData.logoReqNotifications) != "undefined") {
 
 							// if NOT just saving an allowed change after EOL has already been reached
 							if (rData.endOfLife == 0 || (rData.endOfLife == 1 && rData.endOfLifeIsNew == 1)) {
@@ -6155,8 +6156,8 @@
 									'beginningOfLife': beginningOfLife,
 									'endOfLife': endOfLife
 
-								// only when that's done
-								}).then(function() {
+									// only when that's done
+								}).then(function () {
 									// resolve promise to process any needed notifications
 									notificationProcessingPromise.resolve();
 								});
@@ -6164,7 +6165,7 @@
 						}
 
 						// if processing function space request notifications
-						if (typeof(fData.functionSpaceReqNotifications) != "undefined") {
+						if (typeof (fData.functionSpaceReqNotifications) != "undefined") {
 
 							// if NOT just saving an allowed change after EOL has already been reached
 							if (rData.endOfLife == 0 || (rData.endOfLife == 1 && rData.endOfLifeIsNew == 1)) {
@@ -6174,8 +6175,8 @@
 									'beginningOfLife': beginningOfLife,
 									'endOfLife': endOfLife
 
-								// only when that's done
-								}).then(function() {
+									// only when that's done
+								}).then(function () {
 									// resolve promise to process any needed notifications
 									notificationProcessingPromise.resolve();
 								});
@@ -6184,12 +6185,12 @@
 					}
 
 					// when notifications have been processed
-					$.when(notificationProcessingPromise).done(function() {
+					$.when(notificationProcessingPromise).done(function () {
 
 						$(workingMessage).text("Wrapping Up");
 
 						$('div#wait-while-working').fadeOut(200);
-						$().TransitionAppScreens({"fromScreens": ["request"], "toScreen": "overlayFormSubmissionConfirmation", "requestID": "0"});
+						$().TransitionAppScreens({ "fromScreens": ["request"], "toScreen": "overlayFormSubmissionConfirmation", "requestID": "0" });
 					});
 
 				});
@@ -6197,7 +6198,7 @@
 
 			} // END if (rData.lastModMismatch == 0)
 
-		// if form data is not valid
+			// if form data is not valid
 		} else {
 			$('div#overlays-screen-container').fadeIn(200);
 			$("#mos-form-data-errors").fadeIn(400);
@@ -6208,7 +6209,7 @@
 
 	// ---- INITIALIZE PAGES
 
-	$.fn.ReturnUniqueElementsOfCorrectVersion = function() {
+	$.fn.ReturnUniqueElementsOfCorrectVersion = function () {
 
 		var elementsToReturn = [];
 
@@ -6220,19 +6221,19 @@
 			requestVersionToLoad = mData.currentRequestVersion;
 			// for a previous request, if there's a stored version number, get it
 		} else {
-			if (typeof(rData.requestVersion) != "undefined") {
+			if (typeof (rData.requestVersion) != "undefined") {
 				requestVersionToLoad = rData.requestVersion;
 			}
 		}
 		// for a previous request with no stored version number, stick with null
 
-		$.each(fData.uniqueElements, function(i, element) {
+		$.each(fData.uniqueElements, function (i, element) {
 
 			// if this element has no version number, use it
 			// if this element has a version number and it matches the version to load, use it
 			// if this element has a version number == 1 and the version to load is null
 
-			if (typeof(element.requestVersion) == "undefined" || (typeof(element.requestVersion) != "undefined" && (element.requestVersion == requestVersionToLoad || (element.requestVersion == 1 && requestVersionToLoad == null)))) {
+			if (typeof (element.requestVersion) == "undefined" || (typeof (element.requestVersion) != "undefined" && (element.requestVersion == requestVersionToLoad || (element.requestVersion == 1 && requestVersionToLoad == null)))) {
 				elementsToReturn = elementsToReturn.concat(element);
 			}
 		});
@@ -6243,9 +6244,9 @@
 
 	$.fn.ReturnThisUserHasSpecifiedRole = function (role) {
 		if (uData.roles.indexOf(role) > -1) {
-		    return 1;
+			return 1;
 		} else {
-		    return 0;
+			return 0;
 		}
 	};
 
@@ -6255,16 +6256,16 @@
 		// set permission flag, assuming no permission
 		var thisUserPermittedThisButton = 0;
 		// if use of this button is restricted to users with 1+ roles
-		if (typeof(button.restrictedToRoles) !== "undefined") {
+		if (typeof (button.restrictedToRoles) !== "undefined") {
 			// for each relevant role
-			$.each(button.restrictedToRoles, function(i, role) {
+			$.each(button.restrictedToRoles, function (i, role) {
 				// if we haven't already found a relevant role for this user and this user has this role
 				if (thisUserPermittedThisButton === 0 && $().ReturnThisUserHasSpecifiedRole(role) == 1) {
 					// alter permission flag to indicate that use of this button is allowed
 					thisUserPermittedThisButton = 1;
 				}
 			});
-		// if user of this button is NOT restricted
+			// if user of this button is NOT restricted
 		} else {
 			// alter permission flag to indicate that use of this button is allowed
 			thisUserPermittedThisButton = 1;
@@ -6275,18 +6276,18 @@
 
 
 
-	$.fn.RenderOverviewScreenButtons = function(buttonSet, renderSWFNewRequestButton) {
+	$.fn.RenderOverviewScreenButtons = function (buttonSet, renderSWFNewRequestButton) {
 		// if no new request button rendering flag was set or if it was set to 1
-		if (typeof(renderSWFNewRequestButton) === "undefined" || renderSWFNewRequestButton === 1) {
+		if (typeof (renderSWFNewRequestButton) === "undefined" || renderSWFNewRequestButton === 1) {
 			// render a new request button
 			$().RenderSWFNewRequestButton();
 		}
 		// if there's a set of other buttons
-		if (typeof(buttonSet) !== "undefined") {
+		if (typeof (buttonSet) !== "undefined") {
 			// set an empty array of buttons to render
 			var buttonsToRender = [];
 			// for each button in the set
-			$.each(buttonSet, function(i, button) {
+			$.each(buttonSet, function (i, button) {
 				// if this user has permissions for this button
 				if ($().ReturnThisUserPermittedThisButton(button) === 1) {
 					// add an HTML class to this button
@@ -6302,22 +6303,22 @@
 
 
 
-	$.fn.RenderOverviewScreenPreamble = function(preambleMarkup) {
-		if (typeof(preambleMarkup) !== "undefined" && preambleMarkup !== '') {
+	$.fn.RenderOverviewScreenPreamble = function (preambleMarkup) {
+		if (typeof (preambleMarkup) !== "undefined" && preambleMarkup !== '') {
 			$("#overview-table-container").before(preambleMarkup);
 		}
 	};
 
 
 
-	$.fn.RenderWorkflowContacts = function() {
+	$.fn.RenderWorkflowContacts = function () {
 		var workflowContactsMarkup = $().ReturnWorkflowContactsMarkup($().ReturnUserDataFromPersonOrGroupFieldString(mData.adminContacts));
 		$("div#overview-screen-container").append('<div id="workflow-contacts">' + workflowContactsMarkup + '</div>');
 	};
 
 
 
-	$.fn.ConfigureOverviewScreen = function(type) {
+	$.fn.ConfigureOverviewScreen = function (type) {
 		if (type === "admin") {
 			$().RenderOverviewScreenButtons(oData.admin.buttons);
 			$().RenderOverviewScreenPreamble(oData.admin.preamble);
@@ -6346,70 +6347,70 @@
 			$().RenderWorkflowContacts();
 
 
- 		} else if (type === "gseJobsHRAdmin") {
+		} else if (type === "gseJobsHRAdmin") {
 			// scorey: control how oData.gseJobsHRAdmin gets used to build a screen here
 			$().RenderOverviewScreenButtons(oData.gseJobsHRAdmin.buttons, 0);
 			// $("div#overview-table-container").html("<p>This is 1.2 Jobs List for HR Admin (gseJobsHRAdmin).</p>");
 			$().RenderAllDataTables(oData.gseJobsHRAdmin.sections, "overview-table-container");
- 		} else if (type === "gseJobsJobAdmin") {
+		} else if (type === "gseJobsJobAdmin") {
 			// scorey: control how oData.gseJobsJobAdmin gets used to build a screen here
 			$().RenderOverviewScreenButtons(oData.gseJobsJobAdmin.buttons, 0);
 			// $("div#overview-table-container").html("<p>This is 1.2 Jobs List for Job Admin (gseJobsJobAdmin).</p>");
 			$().RenderAllDataTables(oData.gseJobsJobAdmin.sections, "overview-table-container");
- 		} else if (type === "gseJobsManager") {
+		} else if (type === "gseJobsManager") {
 			// scorey: control how oData.gseJobsManager gets used to build a screen here
 			$().RenderOverviewScreenButtons(oData.gseJobsManager.buttons, 0);
 			// $("div#overview-table-container").html("<p>This is 1.2 Jobs List for Manager (gseJobsManager).</p>");
 			$().RenderAllDataTables(oData.gseJobsManager.sections, "overview-table-container");
 
 
- 		} else if (type === "gseSchedulesCalendarHRAdmin") {
+		} else if (type === "gseSchedulesCalendarHRAdmin") {
 			// scorey: control how oData.gseSchedulesCalendarHRAdmin gets used to build a screen here
 			$().RenderOverviewScreenButtons(oData.gseSchedulesCalendarHRAdmin.buttons, 0);
 			$("div#overview-table-container").html("<p>This is 2.2 Schedules Calendar for HR Admin (gseSchedulesCalendarHRAdmin).</p>");
- 		} else if (type === "gseSchedulesCalendarJobAdmin") {
+		} else if (type === "gseSchedulesCalendarJobAdmin") {
 			// scorey: control how oData.gseSchedulesCalendarJobAdmin gets used to build a screen here
 			$().RenderOverviewScreenButtons(oData.gseSchedulesCalendarJobAdmin.buttons, 0);
 			$("div#overview-table-container").html("<p>This is 2.2 Schedules Calendar for Job Admin (gseSchedulesCalendarJobAdmin).</p>");
- 		} else if (type === "gseSchedulesCalendarManager") {
+		} else if (type === "gseSchedulesCalendarManager") {
 			// scorey: control how oData.gseSchedulesCalendarManager gets used to build a screen here
 			$().RenderOverviewScreenButtons(oData.gseSchedulesCalendarManager.buttons, 0);
 			$("div#overview-table-container").html("<p>This is 2.2 Schedules Calendar for Manager (gseSchedulesCalendarManager).</p>");
- 		} else if (type === "gseSchedulesCalendarStaff") {
+		} else if (type === "gseSchedulesCalendarStaff") {
 			// scorey: control how oData.gseSchedulesCalendarStaff gets used to build a screen here
 			$().RenderOverviewScreenButtons(oData.gseSchedulesCalendarStaff.buttons, 0);
 			$("div#overview-table-container").html("<p>This is 2.2 Schedules Calendar for Staff (gseSchedulesCalendarStaff).</p>");
- 		
 
- 		} else if (type === "gseSchedulesListHRAdmin") {
+
+		} else if (type === "gseSchedulesListHRAdmin") {
 			// scorey: control how oData.gseSchedulesListHRAdmin gets used to build a screen here
 			$().RenderOverviewScreenButtons(oData.gseSchedulesListHRAdmin.buttons, 0);
 			// $("div#overview-table-container").html("<p>This is 2.3 Schedules List for HR Admin (gseSchedulesListHRAdmin).</p>");
 			$().RenderAllDataTables(oData.gseSchedulesListHRAdmin.sections, "overview-table-container");
- 		} else if (type === "gseSchedulesListJobAdmin") {
+		} else if (type === "gseSchedulesListJobAdmin") {
 			// scorey: control how oData.gseSchedulesListJobAdmin gets used to build a screen here
 			$().RenderOverviewScreenButtons(oData.gseSchedulesListJobAdmin.buttons, 0);
 			// $("div#overview-table-container").html("<p>This is 2.3 Schedules List for Job Admin (gseSchedulesListJobAdmin).</p>");
 			$().RenderAllDataTables(oData.gseSchedulesListJobAdmin.sections, "overview-table-container");
- 		} else if (type === "gseSchedulesListManager") {
+		} else if (type === "gseSchedulesListManager") {
 			// scorey: control how oData.gseSchedulesListManager gets used to build a screen here
 			$().RenderOverviewScreenButtons(oData.gseSchedulesListManager.buttons, 0);
 			// $("div#overview-table-container").html("<p>This is 2.3 Schedules List for Manager (gseSchedulesListManager).</p>");
 			$().RenderAllDataTables(oData.gseSchedulesListManager.sections, "overview-table-container");
- 		} else if (type === "gseSchedulesListStaff") {
+		} else if (type === "gseSchedulesListStaff") {
 			// scorey: control how oData.gseSchedulesListStaff gets used to build a screen here
 			$().RenderOverviewScreenButtons(oData.gseSchedulesListStaff.buttons, 0);
 			// $("div#overview-table-container").html("<p>This is 2.3 Schedules List for Staff (gseSchedulesListStaff).</p>");
 			$().RenderAllDataTables(oData.gseSchedulesListStaff.sections, "overview-table-container");
- 		} else if (type === "gseSignupsHRAdmin") {
+		} else if (type === "gseSignupsHRAdmin") {
 			// scorey: control how oData.gseSignupsHRAdmin gets used to build a screen here
 			$().RenderOverviewScreenButtons(oData.gseSignupsHRAdmin.buttons, 0);
 			$("div#overview-table-container").html("<p>This is 3.2 Signups List for HR Admin (gseSignupsHRAdmin).</p>");
- 		} else if (type === "gseSignupsManager") {
+		} else if (type === "gseSignupsManager") {
 			// scorey: control how oData.gseSignupsManager gets used to build a screen here
 			$().RenderOverviewScreenButtons(oData.gseSignupsManager.buttons, 0);
 			$("div#overview-table-container").html("<p>This is 3.2 Signups List for Manager (gseSignupsManager).</p>");
- 		} else if (type === "gseSignupsStaff") {
+		} else if (type === "gseSignupsStaff") {
 			// scorey: control how oData.gseSignupsStaff gets used to build a screen here
 			$().RenderOverviewScreenButtons(oData.gseSignupsStaff.buttons, 0);
 			$("div#overview-table-container").html("<p>This is 3.2 Signups List for Staff (including Job Admins) (gseSignupsStaff).</p>");
@@ -6418,7 +6419,7 @@
 		}
 
 		$("div#overview-screen-container").addClass(type + "-requests");
-		setInterval(function() { $().TryMaintenanceModeThisComponentThisUser(); }, mData.maintenanceModeCheckFrequency);
+		setInterval(function () { $().TryMaintenanceModeThisComponentThisUser(); }, mData.maintenanceModeCheckFrequency);
 	}
 
 
@@ -6427,7 +6428,7 @@
 	// ---- SUBMISSION, VALIDATION, & NOTIFICATION
 
 
-	$.fn.HandleListUpdateReturn = function(xData, Status, subject) {
+	$.fn.HandleListUpdateReturn = function (xData, Status, subject) {
 
 		var successFlag = 0;
 		var spErrorCode = $(xData.responseXML).find('ErrorCode').text() != '' ? $(xData.responseXML).find('ErrorCode').text() : '""';
@@ -6442,7 +6443,7 @@
 			var bodyUnique = '<ul>' +
 				'<li>Affected User = ' + uData.name + ' (' + uData.userName + ')</li>' +
 				'<li>Issue Datetime = ' + $().ReturnFormattedDateTime('nowLocal', null, 'MMMM D, YYYY h:mm a') + '</li>' +
-				'<li>Affected System = ' + mData.requestName + '</li>' +
+				'<li>Affected System = ' + 57 + '</li>' +
 				'<li>Affected Request # = ' + rData.requestID + '</li>' +
 				'<li>Browser = ' + uData.browserFamilyAndVersion + '</li>' +
 				'<li>Form Factor = ' + uData.formFactor + '</li>' +
@@ -6458,7 +6459,7 @@
 				'</ul>';
 
 			// push email for each component group admin
-			$.each(mData.componentGrpAdminEmailArray, function(i, cgAdmin) {
+			$.each(mData.componentGrpAdminEmailArray, function (i, cgAdmin) {
 				globalErrorEmailsToSend.push({
 					'emailType': 'Error',
 					'caller': 'HandleListUpdateReturn',
@@ -6482,7 +6483,7 @@
 
 
 
-	$.fn.ProcessStandardChangeNotifications = function(sData) {
+	$.fn.ProcessStandardChangeNotifications = function (sData) {
 
 		// ============
 		// ---- 1. SET UP VARS
@@ -6501,7 +6502,7 @@
 
 
 
-		
+
 
 
 		mData.subjectPreface = mData.requestName + ' Request #' + rData.requestID + ': ';
@@ -6524,18 +6525,18 @@
 		// ---- 2. BEGINNING OF LIFE
 		// ============
 
-		if (typeof(eData.beginningOfLife) != 'undefined' && eData.beginningOfLife == 1) {
+		if (typeof (eData.beginningOfLife) != 'undefined' && eData.beginningOfLife == 1) {
 
-			if (typeof(eData.newlyApprOrPending) != "undefined" && eData.newlyApprOrPending == 1) {
+			if (typeof (eData.newlyApprOrPending) != "undefined" && eData.newlyApprOrPending == 1) {
 				var beginningOfLifeApprovalMention = " and you'll be notified again when the relevant people have approved it";
 			} else {
 				var beginningOfLifeApprovalMention = "";
 			}
 
 			// admin
-			if (typeof(eData.standardChangeNotifications.beginningOfLife.admin) != "undefined") {
+			if (typeof (eData.standardChangeNotifications.beginningOfLife.admin) != "undefined") {
 				if (eData.standardChangeNotifications.beginningOfLife.admin == 1) {
-					$.each(eData.adminEmailArray, function(i, toAdmin) {
+					$.each(eData.adminEmailArray, function (i, toAdmin) {
 						notificationsToSend.push({
 							'emailType': 'Notification',
 							'caller': 'beginningOfLife admin',
@@ -6553,7 +6554,7 @@
 			}
 
 			// requester
-			if (typeof(eData.standardChangeNotifications.beginningOfLife.requester) != "undefined") {
+			if (typeof (eData.standardChangeNotifications.beginningOfLife.requester) != "undefined") {
 				if (eData.standardChangeNotifications.beginningOfLife.requester == 1) {
 					notificationsToSend.push({
 						'emailType': 'Notification',
@@ -6562,7 +6563,7 @@
 						'subject': eData.subjectPreface + 'new request received',
 						'bodyUnique': '<p>This is the request you nicknamed "' + eData.requestNick + '". You can ' +
 							'<a href="' + eData.uriRequest + '">review the details at any time</a>' +
-								beginningOfLifeApprovalMention + '.</p>' +
+							beginningOfLifeApprovalMention + '.</p>' +
 							'<p>In the meantime, you can <a href="mailto:' + eData.adminEmailString + '">' +
 							'contact the admin</a> with any questions or <a href="' + eData.uriOverview + '">' +
 							'check up on this and any other ' + eData.requestName + ' requests</a>.</p>'
@@ -6576,12 +6577,12 @@
 		// ---- 3. APPROVAL NEWLY NEEDED
 		// ============
 
-		if (typeof(eData.autoProcessApprovals) != 'undefined' && eData.autoProcessApprovals == 1) {
+		if (typeof (eData.autoProcessApprovals) != 'undefined' && eData.autoProcessApprovals == 1) {
 			if (eData.approvalNewlyNeededArray != []) {
-				$.each(eData.approvalNewlyNeededArray, function(i, a) {
+				$.each(eData.approvalNewlyNeededArray, function (i, a) {
 
-					if (typeof(a.EntityData) != 'undefined') {
-						if (typeof(a.EntityData.Email) != 'undefined') {
+					if (typeof (a.EntityData) != 'undefined') {
+						if (typeof (a.EntityData.Email) != 'undefined') {
 							var addressee = a.EntityData.Email;
 						}
 					} else {
@@ -6609,12 +6610,12 @@
 		// ---- 4. APPROVAL NOT NEEDED
 		// ============
 
-		if (typeof(eData.autoProcessApprovals) != 'undefined' && eData.autoProcessApprovals == 1) {
+		if (typeof (eData.autoProcessApprovals) != 'undefined' && eData.autoProcessApprovals == 1) {
 			if (eData.approvalNotNeededArray != []) {
-				$.each(eData.approvalNotNeededArray, function(i, a) {
+				$.each(eData.approvalNotNeededArray, function (i, a) {
 
-					if (typeof(a.EntityData) != 'undefined') {
-						if (typeof(a.EntityData.Email) != 'undefined') {
+					if (typeof (a.EntityData) != 'undefined') {
+						if (typeof (a.EntityData.Email) != 'undefined') {
 							var addressee = a.EntityData.Email;
 						}
 					} else {
@@ -6641,14 +6642,14 @@
 		// ---- 5. NEWLY APPROVED OR PENDING
 		// ============
 
-		if (typeof(eData.autoProcessApprovals) != 'undefined' && eData.autoProcessApprovals == 1) {
+		if (typeof (eData.autoProcessApprovals) != 'undefined' && eData.autoProcessApprovals == 1) {
 			if (eData.newlyApprOrPending == 1) {
 
 				// approved
 				if (eData.requestStatus == 'Approved') {
 
 					// admin
-					$.each(eData.adminEmailArray, function(i, toAdmin) {
+					$.each(eData.adminEmailArray, function (i, toAdmin) {
 						notificationsToSend.push({
 							'emailType': 'Notification',
 							'caller': 'approved admin',
@@ -6678,7 +6679,7 @@
 				if (eData.requestStatus == 'Pending Approval') {
 
 					// admin
-					$.each(eData.adminEmailArray, function(i, toAdmin) {
+					$.each(eData.adminEmailArray, function (i, toAdmin) {
 						notificationsToSend.push({
 							'emailType': 'Notification',
 							'caller': 'pending approval admin',
@@ -6716,33 +6717,33 @@
 		// ---- 6. ASSIGNMENTS
 		// ============
 
-		if (typeof(eData.autoProcessAssignments) != 'undefined') {
+		if (typeof (eData.autoProcessAssignments) != 'undefined') {
 			if (eData.assignmentHasChanged == 1) {
 
 				// do not prompt assignee to mark complete
-				if (typeof(eData.autoProcessAssignments.promptToMarkComplete) == 'undefined') {
+				if (typeof (eData.autoProcessAssignments.promptToMarkComplete) == 'undefined') {
 
-					var workNeededBodyUnique = 	'<p>This request has been assigned to you. As needed, ' +
-												'<a href="' + eData.uriRequest + '">review the details of this request</a> ' +
-												'or contact ' + eData.requestedForLinkedNamesString + '.</p>';
+					var workNeededBodyUnique = '<p>This request has been assigned to you. As needed, ' +
+						'<a href="' + eData.uriRequest + '">review the details of this request</a> ' +
+						'or contact ' + eData.requestedForLinkedNamesString + '.</p>';
 
-				// prompt assignee to mark complete
+					// prompt assignee to mark complete
 				} else if (eData.autoProcessAssignments.promptToMarkComplete == 1) {
 
-					var workNeededBodyUnique = 	'<p>This request has been assigned to you. As needed, ' +
-												'<a href="' + eData.uriRequest + '">review the details of this request</a> ' +
-												'or contact ' + eData.requestedForLinkedNamesString + '.</p>' + 
-												'<p>When your work is completed,  ' +
-												'<a href="' + eData.uriRequest + '">indicate this in the request</a>.</p>';
+					var workNeededBodyUnique = '<p>This request has been assigned to you. As needed, ' +
+						'<a href="' + eData.uriRequest + '">review the details of this request</a> ' +
+						'or contact ' + eData.requestedForLinkedNamesString + '.</p>' +
+						'<p>When your work is completed,  ' +
+						'<a href="' + eData.uriRequest + '">indicate this in the request</a>.</p>';
 				}
 
 				// finish setting up
 				// work needed
 				if (eData.workNewlyNeededArray != []) {
-					$.each(eData.workNewlyNeededArray, function(i, w) {
+					$.each(eData.workNewlyNeededArray, function (i, w) {
 
-						if (typeof(w.EntityData) != 'undefined') {
-							if (typeof(w.EntityData.Email) != 'undefined') {
+						if (typeof (w.EntityData) != 'undefined') {
+							if (typeof (w.EntityData.Email) != 'undefined') {
 								var addressee = w.EntityData.Email;
 							}
 						} else {
@@ -6761,10 +6762,10 @@
 
 				// work not needed
 				if (eData.workNotNeededArray != []) {
-					$.each(eData.workNotNeededArray, function(i, w) {
+					$.each(eData.workNotNeededArray, function (i, w) {
 
-						if (typeof(w.EntityData) != 'undefined') {
-							if (typeof(w.EntityData.Email) != 'undefined') {
+						if (typeof (w.EntityData) != 'undefined') {
+							if (typeof (w.EntityData.Email) != 'undefined') {
 								var addressee = w.EntityData.Email;
 							}
 						} else {
@@ -6789,12 +6790,12 @@
 		// ---- 7. END OF LIFE
 		// ============
 
-		if (typeof(eData.endOfLife) != 'undefined' && eData.endOfLife == 1) {
+		if (typeof (eData.endOfLife) != 'undefined' && eData.endOfLife == 1) {
 
 			// admin
-			if (typeof(eData.standardChangeNotifications.endOfLife.admin) != "undefined") {
+			if (typeof (eData.standardChangeNotifications.endOfLife.admin) != "undefined") {
 				if (eData.standardChangeNotifications.endOfLife.admin == 1) {
-					$.each(eData.adminEmailArray, function(i, toAdmin) {
+					$.each(eData.adminEmailArray, function (i, toAdmin) {
 						notificationsToSend.push({
 							'emailType': 'Notification',
 							'caller': 'endOfLife admin',
@@ -6808,7 +6809,7 @@
 			}
 
 			// requester
-			if (typeof(eData.standardChangeNotifications.endOfLife.requester) != "undefined") {
+			if (typeof (eData.standardChangeNotifications.endOfLife.requester) != "undefined") {
 
 				// completion - specific
 				if (eData.requestStatus == 'Completed' && eData.standardChangeNotifications.endOfLife.requester.completion == 'specific') {
@@ -6860,7 +6861,7 @@
 			console.log('notificationsToSend');
 			console.log(notificationsToSend);
 		}
-		$().SendEmails(notificationsToSend).then(function() {
+		$().SendEmails(notificationsToSend).then(function () {
 			// return promise
 			emailProcessingPromise.resolve();
 		});
@@ -6869,7 +6870,7 @@
 
 
 
-	$.fn.ProcessSuperSimpleChangeNotifications = function(sData) {
+	$.fn.ProcessSuperSimpleChangeNotifications = function (sData) {
 
 		// ============
 		// ---- SET UP VARS
@@ -6910,12 +6911,12 @@
 		// ---- BEGINNING OF LIFE
 		// ============
 
-		if (typeof(eData.beginningOfLife) != 'undefined' && eData.beginningOfLife == 1) {
+		if (typeof (eData.beginningOfLife) != 'undefined' && eData.beginningOfLife == 1) {
 
 			// admin
-			if (typeof(eData.superSimpleChangeNotifications.beginningOfLife.admin) != "undefined") {
+			if (typeof (eData.superSimpleChangeNotifications.beginningOfLife.admin) != "undefined") {
 				if (eData.superSimpleChangeNotifications.beginningOfLife.admin == 1) {
-					$.each(eData.adminEmailArray, function(i, toAdmin) {
+					$.each(eData.adminEmailArray, function (i, toAdmin) {
 						notificationsToSend.push({
 							'emailType': 'Notification',
 							'caller': 'beginningOfLife admin',
@@ -6932,7 +6933,7 @@
 			}
 
 			// requester
-			if (typeof(eData.superSimpleChangeNotifications.beginningOfLife.requester) != "undefined") {
+			if (typeof (eData.superSimpleChangeNotifications.beginningOfLife.requester) != "undefined") {
 				if (eData.superSimpleChangeNotifications.beginningOfLife.requester == 1) {
 					notificationsToSend.push({
 						'emailType': 'Notification',
@@ -6959,15 +6960,15 @@
 
 			console.log('RS = approved');
 
-			if (typeof(eData.superSimpleChangeNotifications.approved) != "undefined") {
+			if (typeof (eData.superSimpleChangeNotifications.approved) != "undefined") {
 
 				// admin
-				if (typeof(eData.superSimpleChangeNotifications.approved.admin) != "undefined") {
+				if (typeof (eData.superSimpleChangeNotifications.approved.admin) != "undefined") {
 					if (eData.superSimpleChangeNotifications.approved.admin == 1) {
 
 						console.log('gonna push admin email');
 
-						$.each(eData.adminEmailArray, function(i, toAdmin) {
+						$.each(eData.adminEmailArray, function (i, toAdmin) {
 							notificationsToSend.push({
 								'emailType': 'Notification',
 								'caller': 'approved admin',
@@ -6981,7 +6982,7 @@
 				}
 
 				// requester
-				if (typeof(eData.superSimpleChangeNotifications.approved.requester) != "undefined") {
+				if (typeof (eData.superSimpleChangeNotifications.approved.requester) != "undefined") {
 					if (eData.superSimpleChangeNotifications.approved.requester == 1) {
 
 						console.log('gonna push requester email');
@@ -7007,15 +7008,15 @@
 		// ---- ASSIGNMENTS
 		// ============
 
-		if (typeof(eData.autoProcessAssignments) != 'undefined' && eData.autoProcessAssignments == 1) {
+		if (typeof (eData.autoProcessAssignments) != 'undefined' && eData.autoProcessAssignments == 1) {
 			if (eData.assignmentHasChanged == 1) {
 
 				// work needed
 				if (eData.workNewlyNeededArray != []) {
-					$.each(eData.workNewlyNeededArray, function(i, w) {
+					$.each(eData.workNewlyNeededArray, function (i, w) {
 
-						if (typeof(w.EntityData) != 'undefined') {
-							if (typeof(w.EntityData.Email) != 'undefined') {
+						if (typeof (w.EntityData) != 'undefined') {
+							if (typeof (w.EntityData.Email) != 'undefined') {
 								var addressee = w.EntityData.Email;
 							}
 						} else {
@@ -7036,10 +7037,10 @@
 
 				// work not needed
 				if (eData.workNotNeededArray != []) {
-					$.each(eData.workNotNeededArray, function(i, w) {
+					$.each(eData.workNotNeededArray, function (i, w) {
 
-						if (typeof(w.EntityData) != 'undefined') {
-							if (typeof(w.EntityData.Email) != 'undefined') {
+						if (typeof (w.EntityData) != 'undefined') {
+							if (typeof (w.EntityData.Email) != 'undefined') {
 								var addressee = w.EntityData.Email;
 							}
 						} else {
@@ -7065,13 +7066,13 @@
 		// ---- END OF LIFE
 		// ============
 
-		if (typeof(eData.endOfLife) != 'undefined' && eData.endOfLife == 1) {
+		if (typeof (eData.endOfLife) != 'undefined' && eData.endOfLife == 1) {
 
 			// admin
 			var adminSendEOL = 0;
 			var adminComparisonBank = [];
 
-			if (typeof(eData.superSimpleChangeNotifications.endOfLife.admin) != "undefined") {
+			if (typeof (eData.superSimpleChangeNotifications.endOfLife.admin) != "undefined") {
 				if (eData.superSimpleChangeNotifications.endOfLife.admin == 1) {
 					adminSendEOL = 1;
 				} else if (eData.superSimpleChangeNotifications.endOfLife.admin != 0) {
@@ -7081,7 +7082,7 @@
 					}
 				}
 				if (adminSendEOL == 1) {
-					$.each(eData.adminEmailArray, function(i, toAdmin) {
+					$.each(eData.adminEmailArray, function (i, toAdmin) {
 						notificationsToSend.push({
 							'emailType': 'Notification',
 							'caller': 'endOfLife admin',
@@ -7098,7 +7099,7 @@
 			var requesterSendEOL = 0;
 			var requesterComparisonBank = [];
 
-			if (typeof(eData.superSimpleChangeNotifications.endOfLife.requester) != "undefined") {
+			if (typeof (eData.superSimpleChangeNotifications.endOfLife.requester) != "undefined") {
 				if (eData.superSimpleChangeNotifications.endOfLife.requester == 1) {
 					requesterSendEOL = 1;
 				} else if (eData.superSimpleChangeNotifications.endOfLife.requester != 0) {
@@ -7133,7 +7134,7 @@
 			console.log(notificationsToSend);
 		}
 
-		$().SendEmails(notificationsToSend).then(function() {
+		$().SendEmails(notificationsToSend).then(function () {
 			// return promise
 			emailProcessingPromise.resolve();
 		});
@@ -7143,7 +7144,7 @@
 
 
 
-	$.fn.ReturnGPCSubmissionApprovalRequestChangedComment = function(sData) {
+	$.fn.ReturnGPCSubmissionApprovalRequestChangedComment = function (sData) {
 
 		var changedCommentToReturn = 0;
 		var approvalNoteIDArray = [
@@ -7157,18 +7158,18 @@
 			"Other-Reviewer-Comments"
 		];
 
-		$.each(approvalNoteIDArray, function(i, approvalNoteID) {
+		$.each(approvalNoteIDArray, function (i, approvalNoteID) {
 			// if a previous version of this comment existed
-			if(typeof(sData.formDataOnLoad[approvalNoteID]) != "undefined") {
+			if (typeof (sData.formDataOnLoad[approvalNoteID]) != "undefined") {
 				// if the previous version differs from the current version
-				if(sData.formDataOnLoad[approvalNoteID] != HtmlEncode($("#" + approvalNoteID).val())) {
+				if (sData.formDataOnLoad[approvalNoteID] != HtmlEncode($("#" + approvalNoteID).val())) {
 					// the changed comment to return is the current version
 					changedCommentToReturn = $("#" + approvalNoteID).val();
 				}
-			// if no previous version of this comment existed
+				// if no previous version of this comment existed
 			} else {
 				// if there is a current version of this comment
-				if(typeof($("#" + approvalNoteID).val()) !== "undefined" && $("#" + approvalNoteID).val() != "") {
+				if (typeof ($("#" + approvalNoteID).val()) !== "undefined" && $("#" + approvalNoteID).val() != "") {
 					// the changed comment to return is the current version
 					changedCommentToReturn = $("#" + approvalNoteID).val();
 				}
@@ -7187,22 +7188,22 @@
 
 
 
-	$.fn.ReturnUniquePersonsArrayFromPersonsArray = function(personsArray) {
+	$.fn.ReturnUniquePersonsArrayFromPersonsArray = function (personsArray) {
 
 		var personsToKeepArray = [];
 
-		$.each(personsArray, function(i, incomingPerson) {
+		$.each(personsArray, function (i, incomingPerson) {
 
 			thisPersonAlreadyKept = 0;
-			
-			$.each(personsToKeepArray, function(i, keptPerson) {
-				if (typeof(incomingPerson.Key) !== "undefined") {
+
+			$.each(personsToKeepArray, function (i, keptPerson) {
+				if (typeof (incomingPerson.Key) !== "undefined") {
 					var incomingPersonComparisonProperty = "Key";
 				} else {
 					var incomingPersonComparisonProperty = "account";
 				}
 
-				if (typeof(keptPerson.Key) !== "undefined") {
+				if (typeof (keptPerson.Key) !== "undefined") {
 					var keptPersonComparisonProperty = "Key";
 				} else {
 					var keptPersonComparisonProperty = "account";
@@ -7223,12 +7224,12 @@
 
 
 
-	$.fn.ReturnEmailArrayFromPersonsArray = function(personsArray) {
+	$.fn.ReturnEmailArrayFromPersonsArray = function (personsArray) {
 
 		var emailArray = [];
 
-		$.each(personsArray, function(i, person) {
-			if (typeof(person.Description) !== "undefined") {
+		$.each(personsArray, function (i, person) {
+			if (typeof (person.Description) !== "undefined") {
 				var personEmailProperty = "Description";
 			} else {
 				var personEmailProperty = "email";
@@ -7242,29 +7243,41 @@
 
 
 
-	$.fn.ReturnGPCRequesterSetPersonsArray = function() {
+	$.fn.ReturnGPCProposalDeveloperName = function () {
+		var proposalDeveloperPPValue = [];
+		var proposalDeveloperName = '';
+		if ($('input#Proposal-Developer_TopSpan_HiddenInput').val()) {
+			proposalDeveloperPPValue = JSON.parse($('input#Proposal-Developer_TopSpan_HiddenInput').val());
+			proposalDeveloperName = proposalDeveloperPPValue[0].DisplayText;
+		}
+		return proposalDeveloperName;
+	};
+
+
+
+	$.fn.ReturnGPCRequesterSetPersonsArray = function () {
 
 		var requestersInRequest = [];
 
-		if (typeof($('input#Requested-For_TopSpan_HiddenInput').val()) == 'undefined' || $('input#Requested-For_TopSpan_HiddenInput').val() == "") {
+		if (typeof ($('input#Requested-For_TopSpan_HiddenInput').val()) == 'undefined' || $('input#Requested-For_TopSpan_HiddenInput').val() == "") {
 			var requestedForInitialArray = [];
 		} else {
 			var requestedForInitialArray = JSON.parse($('input#Requested-For_TopSpan_HiddenInput').val());
 		}
 
-		if (typeof($('input#MOS-Principal-Investigator_TopSpan_HiddenInput').val()) == 'undefined' || $('input#MOS-Principal-Investigator_TopSpan_HiddenInput').val() == "") {
+		if (typeof ($('input#MOS-Principal-Investigator_TopSpan_HiddenInput').val()) == 'undefined' || $('input#MOS-Principal-Investigator_TopSpan_HiddenInput').val() == "") {
 			var mosPrincipalInvestigatorInitialArray = [];
 		} else {
 			var mosPrincipalInvestigatorInitialArray = JSON.parse($('input#MOS-Principal-Investigator_TopSpan_HiddenInput').val());
 		}
 
-		if (typeof($('input#MOS-Co-Investigator_TopSpan_HiddenInput').val()) == 'undefined' || $('input#MOS-Co-Investigator_TopSpan_HiddenInput').val() == "") {
+		if (typeof ($('input#MOS-Co-Investigator_TopSpan_HiddenInput').val()) == 'undefined' || $('input#MOS-Co-Investigator_TopSpan_HiddenInput').val() == "") {
 			var mosCoInvestigatorInitialArray = [];
 		} else {
 			var mosCoInvestigatorInitialArray = JSON.parse($('input#MOS-Co-Investigator_TopSpan_HiddenInput').val());
 		}
 
-		if (typeof($('input#Proposal-Developer_TopSpan_HiddenInput').val()) == 'undefined' || $('input#Proposal-Developer_TopSpan_HiddenInput').val() == "") {
+		if (typeof ($('input#Proposal-Developer_TopSpan_HiddenInput').val()) == 'undefined' || $('input#Proposal-Developer_TopSpan_HiddenInput').val() == "") {
 			var proposalDeveloperInitialArray = [];
 		} else {
 			var proposalDeveloperInitialArray = JSON.parse($('input#Proposal-Developer_TopSpan_HiddenInput').val());
@@ -7277,8 +7290,8 @@
 
 
 
-	$.fn.ReturnGPCRequesterSetEmailArray = function() {
-		
+	$.fn.ReturnGPCRequesterSetEmailArray = function () {
+
 		var requestersInRequest = $().ReturnGPCRequesterSetPersonsArray();
 		var requestersToKeep = $().ReturnUniquePersonsArrayFromPersonsArray(requestersInRequest);
 		var requesterSetEmailArray = $().ReturnEmailArrayFromPersonsArray(requestersToKeep);
@@ -7288,29 +7301,29 @@
 
 
 
-	$.fn.ReturnDevAdminPersonsArray = function() {
+	$.fn.ReturnDevAdminPersonsArray = function () {
 		var devAdminPersonsString = $().GetFieldsFromOneRow({
-            "webURL": "https://bmos.sharepoint.com/sites/hubprod",
-            "listName": "Component Group Log",
-            "select": [{
-                "nameHere": "returnedString",
-                "nameInList": "DevAdminNotifications"
-            }],
-            "where": {
-                "field": "ComponentGroupID",
-                "type": "Number",
-                "value": 3,
-            }
-        });
+			"webURL": "https://bmos.sharepoint.com/sites/hubprod",
+			"listName": "Component Group Log",
+			"select": [{
+				"nameHere": "returnedString",
+				"nameInList": "DevAdminNotifications"
+			}],
+			"where": {
+				"field": "ComponentGroupID",
+				"type": "Number",
+				"value": 3,
+			}
+		});
 
 		var devAdminPersonsArray = $().ReturnUserDataFromPersonOrGroupFieldString(devAdminPersonsString.returnedString);
-		
+
 		return devAdminPersonsArray;
 	};
 
 
 
-	$.fn.ReturnDevAdminPlusGPCRequesterSetPersonsArray = function() {
+	$.fn.ReturnDevAdminPlusGPCRequesterSetPersonsArray = function () {
 		var requestersInRequest = $().ReturnGPCRequesterSetPersonsArray();
 		var devAdminPersons = $().ReturnDevAdminPersonsArray();
 		var devAdminPlusGPCRequesterSetPersonsArray = requestersInRequest.concat(devAdminPersons);
@@ -7319,8 +7332,8 @@
 
 
 
-	$.fn.ReturnGPCInitialConceptGPCNotificationEmailArray = function() {
-		if (typeof(mData.devAdminNotifications) != 'undefined' && mData.devAdminNotifications === 1) {
+	$.fn.ReturnGPCInitialConceptGPCNotificationEmailArray = function () {
+		if (typeof (mData.devAdminNotifications) != 'undefined' && mData.devAdminNotifications === 1) {
 			var initialConceptNotificationEmailArray = $().ReturnUserEmailStringAndArray(mData.devAdminNotificationPersons).array;
 		} else {
 			var initialConceptNotificationRecipients = $().ReturnGPCInitialConceptGPCNotificationPersonsArray();;
@@ -7332,8 +7345,8 @@
 
 
 
-	$.fn.ReturnGPCSubmissionApprovalGPCNotificationEmailArray = function() {
-		if (typeof(mData.devAdminNotifications) != 'undefined' && mData.devAdminNotifications === 1) {
+	$.fn.ReturnGPCSubmissionApprovalGPCNotificationEmailArray = function () {
+		if (typeof (mData.devAdminNotifications) != 'undefined' && mData.devAdminNotifications === 1) {
 			var submissionApprovalNotificationEmailArray = $().ReturnUserEmailStringAndArray(mData.devAdminNotificationPersons).array;
 		} else {
 			var submissionApprovalNotificationRecipients = $().ReturnGPCSubmissionApprovalGPCNotificationPersonsArray();
@@ -7346,7 +7359,7 @@
 
 
 
-	$.fn.ReturnGPCInitialConceptGPCNotificationPersonsArray = function() {
+	$.fn.ReturnGPCInitialConceptGPCNotificationPersonsArray = function () {
 		var gpcGroups = $().ReturnGPCGroups();
 		var initialConceptNotificationRecipients = gpcGroups.InitialConceptNotifications.concat(mData.adminNotificationPersons);
 		return initialConceptNotificationRecipients;
@@ -7354,7 +7367,7 @@
 
 
 
-	$.fn.ReturnGPCSubmissionApprovalGPCNotificationPersonsArray = function() {
+	$.fn.ReturnGPCSubmissionApprovalGPCNotificationPersonsArray = function () {
 		var gpcGroups = $().ReturnGPCGroups();
 		var submissionApprovalNotificationRecipients = gpcGroups.SubmissionApprovalNotifications.concat(mData.adminNotificationPersons);
 		return submissionApprovalNotificationRecipients;
@@ -7362,7 +7375,7 @@
 
 
 
-	$.fn.ReturnGPCInitialConceptGPCNotificationPersonsPlusRequesterSetPersonsArray = function() {
+	$.fn.ReturnGPCInitialConceptGPCNotificationPersonsPlusRequesterSetPersonsArray = function () {
 
 		var initialConceptNotificationRecipients = $().ReturnGPCInitialConceptGPCNotificationPersonsArray();;
 		var requestersInRequest = $().ReturnGPCRequesterSetPersonsArray();
@@ -7373,7 +7386,7 @@
 
 
 
-	$.fn.ReturnGPCSubmissionApprovalGPCNotificationPersonsPlusRequesterSetPersonsArray = function() {
+	$.fn.ReturnGPCSubmissionApprovalGPCNotificationPersonsPlusRequesterSetPersonsArray = function () {
 
 		var submissionApprovalNotificationRecipients = $().ReturnGPCSubmissionApprovalGPCNotificationPersonsArray();;
 		var requestersInRequest = $().ReturnGPCRequesterSetPersonsArray();
@@ -7384,9 +7397,9 @@
 
 
 
-	$.fn.ReturnGPCInitialConceptGPCNotificationPersonsPlusRequesterSetEmailArray = function() {
-		
-		if (typeof(mData.devAdminNotifications) != 'undefined' && mData.devAdminNotifications === 1) {
+	$.fn.ReturnGPCInitialConceptGPCNotificationPersonsPlusRequesterSetEmailArray = function () {
+
+		if (typeof (mData.devAdminNotifications) != 'undefined' && mData.devAdminNotifications === 1) {
 			var personArray = $().ReturnDevAdminPlusGPCRequesterSetPersonsArray();
 		} else {
 			var personArray = $().ReturnGPCInitialConceptGPCNotificationPersonsPlusRequesterSetPersonsArray();
@@ -7399,9 +7412,9 @@
 
 
 
-	$.fn.ReturnGPCSubmissionApprovalGPCNotificationPersonsPlusRequesterSetEmailArray = function() {
-		
-		if (typeof(mData.devAdminNotifications) != 'undefined' && mData.devAdminNotifications === 1) {
+	$.fn.ReturnGPCSubmissionApprovalGPCNotificationPersonsPlusRequesterSetEmailArray = function () {
+
+		if (typeof (mData.devAdminNotifications) != 'undefined' && mData.devAdminNotifications === 1) {
 			var personArray = $().ReturnDevAdminPlusGPCRequesterSetPersonsArray();
 		} else {
 			var personArray = $().ReturnGPCSubmissionApprovalGPCNotificationPersonsPlusRequesterSetPersonsArray();
@@ -7414,7 +7427,7 @@
 
 
 
-	$.fn.ProcessGPCInitialConceptApprovalRequestNotifications = function(sData) {
+	$.fn.ProcessGPCInitialConceptApprovalRequestNotifications = function (sData) {
 
 		// ============
 		// ---- SET UP VARS
@@ -7423,30 +7436,31 @@
 		var emailProcessingPromise = new $.Deferred();
 		var sData = {};
 
+		sData.proposalDeveloperName = $().ReturnGPCProposalDeveloperName();
 		sData.requesterSetEmailArray = $().ReturnGPCRequesterSetEmailArray();
 		sData.gpcEmailArray = $().ReturnGPCInitialConceptGPCNotificationEmailArray();
 		sData.gpcPlusRequesterSetEmailArray = $().ReturnGPCInitialConceptGPCNotificationPersonsPlusRequesterSetEmailArray();
 
-		if (typeof($("input#Project-Title").val()) !== "undefined" && $("input#Project-Title").val() !== "") {
+		if (typeof ($("input#Project-Title").val()) !== "undefined" && $("input#Project-Title").val() !== "") {
 			sData.subject = mData.requestName + ' Request #' + rData.requestID + ' (' + $("input#Project-Title").val() + ')';
 		} else {
 			sData.subject = mData.requestName + ' Request #' + rData.requestID;
 		}
 
-		if (typeof($("textarea#PID-Comments").val()) !== "undefined" && $("textarea#PID-Comments").val() !== "") {
+		if (typeof ($("textarea#PID-Comments").val()) !== "undefined" && $("textarea#PID-Comments").val() !== "") {
 			sData.pidComments = $("textarea#PID-Comments").val();
 		} else {
 			sData.pidComments = "No comments were included.";
 		}
 
-		if (typeof($("textarea#GPC-Comments").val()) !== "undefined" && $("textarea#GPC-Comments").val() !== "") {
+		if (typeof ($("textarea#GPC-Comments").val()) !== "undefined" && $("textarea#GPC-Comments").val() !== "") {
 			sData.gpcComments = $("textarea#GPC-Comments").val();
 		} else {
 			sData.gpcComments = "No comments were included.";
 		}
 
 		sData.requestNick = $("input#Request-Nickname").val();
-		
+
 		sData.uriOverview = mData.fullSiteBaseURL + "/SitePages/" + mData.pageToken + ".aspx"
 		sData.uriRequest = sData.uriOverview + "?r=" + rData.requestID;
 
@@ -7469,7 +7483,7 @@
 		if (eData.requestStatus == "In Development" && eData.beginningOfLifeIsNew == 1) {
 
 			// requester
-			$.each(eData.requesterSetEmailArray, function(i, toRequester) {
+			$.each(eData.requesterSetEmailArray, function (i, toRequester) {
 				notificationsToSend.push({
 					'emailType': 'Notification',
 					'caller': 'inDevelopment requesterSet',
@@ -7492,16 +7506,17 @@
 
 		if (eData.requestStatus == "Pending Approval" && eData.pendingApprovalIsNew == 1) {
 
-			$.each(eData.gpcPlusRequesterSetEmailArray, function(i, toPerson) {
+			$.each(eData.gpcPlusRequesterSetEmailArray, function (i, toPerson) {
 				notificationsToSend.push({
 					'emailType': 'Notification',
 					'caller': 'pendingApproval gpcPlusRequesterSet',
 					'to': toPerson,
 					'subject': eData.subject,
-					'bodyUnique': '<p>The above‐referenced project has been submitted for Concept Approval. ' + 
+					'bodyUnique': '<p>' + eData.proposalDeveloperName + ' has submitted the ' +
+						'above‐referenced project for Concept Approval. ' +
 						'The proposal will be reviewed at the next GPC meeting. You may review the proposal ' +
-						'<a href="' + eData.uriRequest + '">here</a>.</p>' + 
-						'<p>Developer’s comments:</p>' + 
+						'<a href="' + eData.uriRequest + '">here</a>.</p>' +
+						'<p>' + eData.proposalDeveloperName + '’s comments:</p>' +
 						'<p>' + eData.pidComments + '</p>'
 				});
 			});
@@ -7515,7 +7530,7 @@
 
 		if (eData.requestStatus == "Approval Pending Comments" && eData.approvalPendingCommentsIsNew == 1) {
 
-			$.each(eData.gpcPlusRequesterSetEmailArray, function(i, toRequester) {
+			$.each(eData.gpcPlusRequesterSetEmailArray, function (i, toRequester) {
 				notificationsToSend.push({
 					'emailType': 'Notification',
 					'caller': 'approvalPendingComments requesterSet',
@@ -7523,9 +7538,10 @@
 					'subject': eData.subject,
 					'bodyUnique': '<p>The above‐referenced project has been reviewed by GPC. Approval is withheld pending ' +
 						'resolution of certain questions or issues. Please see comments below, and respond using the GPC ' +
-						'site (do not reply via e‐mail). You may view the proposal ' +
-						'<a href="' + eData.uriRequest + '">here</a>.</p>' + 
-						'<p>GPC comments:</p>' + 
+						'site (do not reply via e‐mail).</p>' +
+						'<p>This notice was generated by ' + eData.name + '. You may view the proposal ' +
+						'<a href="' + eData.uriRequest + '">here</a>.</p>' +
+						'<p>GPC comments:</p>' +
 						'<p>' + sData.gpcComments + '</p>'
 				});
 			});
@@ -7540,35 +7556,35 @@
 		if (eData.requestStatus == "Approved" && eData.endOfLifeIsNew == 1) {
 
 			// gpc
-			$.each(eData.gpcEmailArray, function(i, toGPC) {
+			$.each(eData.gpcEmailArray, function (i, toGPC) {
 				notificationsToSend.push({
 					'emailType': 'Notification',
 					'caller': 'approved gpc',
 					'to': toGPC,
 					'subject': eData.subject,
 					'bodyUnique': '<p>The above‐referenced project has been reviewed by GPC and is approved. The proposal developer has been ' +
-						'instructed to create a GPC Submission Approval Request for this project.</p>' + 
-						//  You may view the proposal ' + 
-						// '<a href="' + eData.uriRequest + '">here</a>.</p>' + 
-						'<p>GPC comments:</p>' + 
+						'instructed to create a GPC Submission Approval Request for this project.</p>' +
+						'<p>This notice was generated by ' + eData.name + '. You may view the proposal ' +
+						'<a href="' + eData.uriRequest + '">here</a>.</p>' +
+						'<p>GPC comments:</p>' +
 						'<p>' + sData.gpcComments + '</p>'
 				});
 			});
 
 			// requester
-			$.each(eData.requesterSetEmailArray, function(i, toRequester) {
+			$.each(eData.requesterSetEmailArray, function (i, toRequester) {
 				notificationsToSend.push({
 					'emailType': 'Notification',
 					'caller': 'approved requesterSet',
 					'to': toRequester,
 					'subject': eData.subject,
-					'bodyUnique': '<p>The above‐referenced project has been reviewed by GPC and is approved. Please convert your proposal to a ' + 
+					'bodyUnique': '<p>The above‐referenced project has been reviewed by GPC and is approved. Please convert your proposal to a ' +
 						'<a href="https://bmos.sharepoint.com/sites/gpc-submission/SitePages/App.aspx">GPC Submission Approval Request</a>' +
-						', and submit it and all required attachments to the GPC at least two weeks before your proposal is due to the ' + 
+						', and submit it and all required attachments to the GPC at least two weeks before your proposal is due to the ' +
 						'funder/prime recipient.</p>' +
-						// You may view the proposal ' +
-						// '<a href="' + eData.uriRequest + '">here</a>.</p>' + 
-						'<p>GPC comments:</p>' + 
+						'<p>This notice was generated by ' + eData.name + '. You may view the proposal ' +
+						'<a href="' + eData.uriRequest + '">here</a>.</p>' +
+						'<p>GPC comments:</p>' +
 						'<p>' + sData.gpcComments + '</p>'
 				});
 			});
@@ -7581,17 +7597,18 @@
 		// ============
 
 		if (eData.requestStatus == "Disapproved" && eData.endOfLifeIsNew == 1) {
-			
-			$.each(eData.gpcPlusRequesterSetEmailArray, function(i, toPerson) {
+
+			$.each(eData.gpcPlusRequesterSetEmailArray, function (i, toPerson) {
 				notificationsToSend.push({
 					'emailType': 'Notification',
 					'caller': 'disapproved gpcPlusRequesterSet',
 					'to': toPerson,
 					'subject': eData.subject,
-					'bodyUnique': '<p>The above‐referenced project has been reviewed by GPC and has been disapproved. ' + 
-						'Please see comments below. You may view the proposal ' + 
-						'<a href="' + eData.uriRequest + '">here</a>.</p>' + 
-						'<p>GPC comments:</p>' + 
+					'bodyUnique': '<p>The above‐referenced project has been reviewed by GPC and has been disapproved. ' +
+						'Please see comments below.</p>' +
+						'<p>This notice was generated by ' + eData.name + '. You may view the proposal ' +
+						'<a href="' + eData.uriRequest + '">here</a>.</p>' +
+						'<p>GPC comments:</p>' +
 						'<p>' + sData.gpcComments + '</p>'
 				});
 			});
@@ -7602,35 +7619,37 @@
 		// ============
 		// ---- CANCELLED
 		// ============
-		
+
 		if (eData.requestStatus == "Cancelled" && eData.endOfLifeIsNew == 1) {
-		
+
 			if (eData.formDataOnLoad.requestStatus != "In Development") {
 				// gpc
-				$.each(eData.gpcEmailArray, function(i, toPerson) {
+				$.each(eData.gpcEmailArray, function (i, toPerson) {
 					notificationsToSend.push({
 						'emailType': 'Notification',
 						'caller': 'cancelled gpc',
 						'to': toPerson,
 						'subject': eData.subject,
-						'bodyUnique': '<p>The above‐referenced project has been withdrawn from consideration. You may view the proposal ' + 
-							'<a href="' + eData.uriRequest + '">here</a>.</p>' + 
-							'<p>GPC comments:</p>' + 
+						'bodyUnique': '<p>The above‐referenced project has been withdrawn from consideration.</p>' +
+							'<p>This notice was generated by ' + eData.name + '. You may view the proposal ' +
+							'<a href="' + eData.uriRequest + '">here</a>.</p>' +
+							'<p>GPC comments:</p>' +
 							'<p>' + eData.gpcComments + '</p>'
 					});
 				});
 			}
 
 			// requester
-			$.each(eData.requesterSetEmailArray, function(i, toPerson) {
+			$.each(eData.requesterSetEmailArray, function (i, toPerson) {
 				notificationsToSend.push({
 					'emailType': 'Notification',
 					'caller': 'cancelled requesterSet',
 					'to': toPerson,
 					'subject': eData.subject,
-					'bodyUnique': '<p>The above‐referenced project has been withdrawn from consideration. You may view the proposal ' + 
-						'<a href="' + eData.uriRequest + '">here</a>.</p>' + 
-						'<p>GPC comments:</p>' + 
+					'bodyUnique': '<p>The above‐referenced project has been withdrawn from consideration.</p>' +
+						'<p>This notice was generated by ' + eData.name + '. You may view the proposal ' +
+						'<a href="' + eData.uriRequest + '">here</a>.</p>' +
+						'<p>GPC comments:</p>' +
 						'<p>' + eData.gpcComments + '</p>'
 				});
 			});
@@ -7648,7 +7667,7 @@
 			console.log(notificationsToSend);
 		}
 
-		$().SendEmails(notificationsToSend).then(function() {
+		$().SendEmails(notificationsToSend).then(function () {
 			// return promise
 			emailProcessingPromise.resolve();
 		});
@@ -7658,7 +7677,7 @@
 
 
 
-	$.fn.ProcessGPCSubmissionApprovalRequestNotifications = function(sData) {
+	$.fn.ProcessGPCSubmissionApprovalRequestNotifications = function (sData) {
 
 		console.log("rData");
 		console.log(rData);
@@ -7669,11 +7688,12 @@
 
 		var emailProcessingPromise = new $.Deferred();
 
+		sData.proposalDeveloperName = $().ReturnGPCProposalDeveloperName();
 		sData.requesterSetEmailArray = $().ReturnGPCRequesterSetEmailArray();
 		sData.gpcEmailArray = $().ReturnGPCSubmissionApprovalGPCNotificationEmailArray();
 		sData.gpcPlusRequesterSetEmailArray = $().ReturnGPCSubmissionApprovalGPCNotificationPersonsPlusRequesterSetEmailArray();
 
-		if (typeof($("input#Project-Title").val()) !== "undefined" && $("input#Project-Title").val() !== "") {
+		if (typeof ($("input#Project-Title").val()) !== "undefined" && $("input#Project-Title").val() !== "") {
 			sData.subject = mData.requestName + ' Request #' + rData.requestID + ' (' + $("input#Project-Title").val() + ')';
 		} else {
 			sData.subject = mData.requestName + ' Request #' + rData.requestID;
@@ -7685,7 +7705,7 @@
 
 		sData.requestNick = $("input#Request-Nickname").val();
 
-		if (typeof($("textarea#PID-Comments").val()) !== "undefined" && $("textarea#PID-Comments").val() !== "") {
+		if (typeof ($("textarea#PID-Comments").val()) !== "undefined" && $("textarea#PID-Comments").val() !== "") {
 			sData.pidComments = $("textarea#PID-Comments").val();
 		} else {
 			sData.pidComments = "No comments were included.";
@@ -7694,7 +7714,7 @@
 		sData.uriOverview = mData.fullSiteBaseURL + "/SitePages/" + mData.pageToken + ".aspx"
 		sData.uriRequest = sData.uriOverview + "?r=" + rData.requestID;
 
-		if (sData.beginningOfLifeIsNew == 0 && typeof(sData.formDataOnLoad) !== "undefined") {
+		if (sData.beginningOfLifeIsNew == 0 && typeof (sData.formDataOnLoad) !== "undefined") {
 			sData.gpcSubmissionApprovalRequestChangedComment = $().ReturnGPCSubmissionApprovalRequestChangedComment(sData);
 		}
 
@@ -7719,7 +7739,7 @@
 		if (eData.requestStatus == "In Development" && eData.beginningOfLifeIsNew == 1) {
 
 			// requester
-			$.each(eData.requesterSetEmailArray, function(i, toRequester) {
+			$.each(eData.requesterSetEmailArray, function (i, toRequester) {
 				notificationsToSend.push({
 					'emailType': 'Notification',
 					'caller': 'inDevelopment requesterSet',
@@ -7742,16 +7762,17 @@
 
 		if (eData.requestStatus == "Pending Approval" && eData.pendingApprovalIsNew == 1) {
 
-			$.each(eData.gpcPlusRequesterSetEmailArray, function(i, toPerson) {
-				
+			$.each(eData.gpcPlusRequesterSetEmailArray, function (i, toPerson) {
+
 				notificationsToSend.push({
 					'emailType': 'Notification',
 					'caller': 'pendingApproval gpcPlusRequesterSet',
 					'to': toPerson,
 					'subject': eData.subject,
-					'bodyUnique': '<p>The above‐referenced project has been submitted for Submission Approval. ' + 
+					'bodyUnique': '<p>' + eData.proposalDeveloperName + ' has submitted the ' +
+						'above‐referenced project for Submission Approval. ' +
 						'You may review the proposal <a href="' + eData.uriRequest + '">here</a>.</p>' +
-						'<p>Developer’s comments:</p>' + 
+						'<p>' + eData.proposalDeveloperName + '’s comments:</p>' +
 						'<p>' + eData.pidComments + '</p>'
 				});
 			});
@@ -7768,36 +7789,34 @@
 			// if a changed comment was detected
 			if (sData.gpcSubmissionApprovalRequestChangedComment != 0) {
 				// to GPC
-				$.each(eData.gpcEmailArray, function(i, toPerson) {
+				$.each(eData.gpcEmailArray, function (i, toPerson) {
 					notificationsToSend.push({
 						'emailType': 'Notification',
 						'caller': 'pendingApproval gpc',
 						'to': toPerson,
 						'subject': eData.subject,
-						'bodyUnique': '<p>A new comment has been submitted on the above-referenced project. If this comment requires a response, please respond using ' + 
-							'the GPC site (do not reply via email). You may review the proposal <a href="' + eData.uriRequest + '">here</a>.</p>' + 
-							'<p>Comments:</p>' + 
+						'bodyUnique': '<p>A new comment has been submitted on the above-referenced project. If this comment requires a response, please respond using ' +
+							'the GPC site (do not reply via email). You may review the proposal <a href="' + eData.uriRequest + '">here</a>.</p>' +
+							'<p>Comments:</p>' +
 							'<p>' + uData.name + ': ' + eData.gpcSubmissionApprovalRequestChangedComment + '</p>'
 					});
 				});
 				// to requester set
-				$.each(eData.requesterSetEmailArray, function(i, toPerson) {
+				$.each(eData.requesterSetEmailArray, function (i, toPerson) {
 					notificationsToSend.push({
 						'emailType': 'Notification',
 						'caller': 'pendingApproval requesterSet',
 						'to': toPerson,
 						'subject': eData.subject,
-						'bodyUnique': '<p>A new comment has been submitted on the above-referenced project. Please review all of the current comments. If any comment ' + 
+						'bodyUnique': '<p>A new comment has been submitted on the above-referenced project. Please review all of the current comments. If any comment ' +
 							'requires a response, please add a comment in the <b>Submission to Committee</b> section on the GPC site (do not reply via email). ' +
-							'You may review the proposal <a href="' + eData.uriRequest + '">here</a>.</p>' + 
-							'<p>Comments:</p>' + 
+							'You may review the proposal <a href="' + eData.uriRequest + '">here</a>.</p>' +
+							'<p>Comments:</p>' +
 							'<p>' + uData.name + ': ' + eData.gpcSubmissionApprovalRequestChangedComment + '</p>'
 					});
 				});
 			}
 		}
-
-
 
 		// ============
 		// ---- APPROVED
@@ -7806,32 +7825,33 @@
 		if (eData.requestStatus == "Grant Proposal Ready for Submission" && eData.approvalIsNew == 1) {
 
 			// gpc
-			$.each(eData.gpcEmailArray, function(i, toGPC) {
+			$.each(eData.gpcEmailArray, function (i, toGPC) {
 				notificationsToSend.push({
 					'emailType': 'Notification',
 					'caller': 'approved gpc',
 					'to': toGPC,
 					'subject': eData.subject,
-					'bodyUnique': '<p>The above‐referenced project has been approved for submission. You may view the proposal ' + 
+					'bodyUnique': '<p>The above‐referenced project has been approved for submission.</p>' +
+						'<p>This notice was generated by ' + eData.name + '. You may view the proposal ' +
 						'<a href="' + eData.uriRequest + '">here</a>.</p>'
+
 				});
 			});
 
 			// requester
-			$.each(eData.requesterSetEmailArray, function(i, toRequester) {
+			$.each(eData.requesterSetEmailArray, function (i, toRequester) {
 				notificationsToSend.push({
 					'emailType': 'Notification',
 					'caller': 'approved requesterSet',
 					'to': toRequester,
 					'subject': eData.subject,
-					'bodyUnique': '<p>The above‐referenced project has been approved for submission. Please work with Accounting and ' + 
-						'Advancement to submit your proposal. You may view the proposal ' +
+					'bodyUnique': '<p>The above‐referenced project has been approved for submission. Please work with Accounting and ' +
+						'Advancement to submit your proposal.</p>' +
+						'<p>This notice was generated by ' + eData.name + '. You may view the proposal ' +
 						'<a href="' + eData.uriRequest + '">here</a>.</p>'
 				});
 			});
 		}
-
-
 
 		/*// ============
 		// ---- DISAPPROVED
@@ -7859,16 +7879,17 @@
 		// ============
 
 		if (eData.requestStatus == "Cancelled" && eData.endOfLifeIsNew == 1) {
-			
-			$.each(eData.gpcPlusRequesterSetEmailArray, function(i, toPerson) {
+
+			$.each(eData.gpcPlusRequesterSetEmailArray, function (i, toPerson) {
 				notificationsToSend.push({
 					'emailType': 'Notification',
 					'caller': 'cancelled gpcPlusRequesterSet',
 					'to': toPerson,
 					'subject': eData.subject,
-					'bodyUnique': '<p>The above‐referenced project has been withdrawn from consideration. You may view the proposal ' + 
-						'<a href="' + eData.uriRequest + '">here</a>.</p>' + 
-						'<p>GPC comments:</p>' + 
+					'bodyUnique': '<p>The above‐referenced project has been withdrawn from consideration.</p>' +
+						'<p>This notice was generated by ' + eData.name + '. You may view the proposal ' +
+						'<a href="' + eData.uriRequest + '">here</a>.</p>' +
+						'<p>GPC comments:</p>' +
 						'<p>' + uData.name + ': ' + sData.pidComments + '</p>'
 				});
 			});
@@ -7882,13 +7903,14 @@
 
 		if (eData.requestStatus == "Grant Proposal Submitted" && eData.grantProposalSubmittedIsNew == 1) {
 
-			$.each(eData.gpcPlusRequesterSetEmailArray, function(i, toPerson) {
+			$.each(eData.gpcPlusRequesterSetEmailArray, function (i, toPerson) {
 				notificationsToSend.push({
 					'emailType': 'Notification',
 					'caller': 'grantProposalSubmitted gpcPlusRequesterSet',
 					'to': toPerson,
 					'subject': eData.subject,
-					'bodyUnique': '<p>The above‐referenced project has been submitted to the funder. You may view the proposal ' + 
+					'bodyUnique': '<p>The above‐referenced project has been submitted to the funder.</p>' +
+						'<p>This notice was generated by ' + eData.name + '. You may view the proposal ' +
 						'<a href="' + eData.uriRequest + '">here</a>.</p>'
 				});
 			});
@@ -7902,14 +7924,15 @@
 
 		if (eData.requestStatus == "Grant Awarded" && eData.grantAwardedIsNew == 1) {
 
-			$.each(eData.gpcPlusRequesterSetEmailArray, function(i, toPerson) {
+			$.each(eData.gpcPlusRequesterSetEmailArray, function (i, toPerson) {
 				notificationsToSend.push({
 					'emailType': 'Notification',
 					'caller': 'grantAwarded gpcPlusRequesterSet',
 					'to': toPerson,
 					'subject': eData.subject,
 					'bodyUnique': '<p>The above‐referenced project has been awarded by the funder. Accounting and Advancement will follow ' +
-						'up with the PI regarding next steps. You may view the proposal ' + 
+						'up with the PI regarding next steps.</p>' +
+						'<p>This notice was generated by ' + eData.name + '. You may view the proposal ' +
 						'<a href="' + eData.uriRequest + '">here</a>.</p>'
 				});
 			});
@@ -7923,13 +7946,14 @@
 
 		if (eData.requestStatus == "Grant Declined" && eData.grantDeclinedIsNew == 1) {
 
-			$.each(eData.gpcPlusRequesterSetEmailArray, function(i, toPerson) {
+			$.each(eData.gpcPlusRequesterSetEmailArray, function (i, toPerson) {
 				notificationsToSend.push({
 					'emailType': 'Notification',
 					'caller': 'grantDeclined gpcPlusRequesterSet',
 					'to': toPerson,
 					'subject': eData.subject,
-					'bodyUnique': '<p>The above‐referenced project has been declined by the funder. You may view the proposal ' + 
+					'bodyUnique': '<p>The above‐referenced project has been declined by the funder.</p>' +
+						'<p>This notice was generated by ' + eData.name + '. You may view the proposal ' +
 						'<a href="' + eData.uriRequest + '">here</a>.</p>'
 				});
 			});
@@ -7947,7 +7971,7 @@
 			console.log(notificationsToSend);
 		}
 
-		$().SendEmails(notificationsToSend).then(function() {
+		$().SendEmails(notificationsToSend).then(function () {
 			// return promise
 			emailProcessingPromise.resolve();
 		});
@@ -7957,430 +7981,430 @@
 
 
 
-    $.fn.ProcessEventNeedsNotifications = function(sData) {
+	$.fn.ProcessEventNeedsNotifications = function (sData) {
 
-        // ============
-        // ---- SET UP VARS
-        // ============
+		// ============
+		// ---- SET UP VARS
+		// ============
 
-        var emailProcessingPromise = new $.Deferred();
+		var emailProcessingPromise = new $.Deferred();
 
-        sData.requesterName = $("input#Requester-Name").val();
-        sData.requesterEmail = $("input#Requester-Email").val();
+		sData.requesterName = $("input#Requester-Name").val();
+		sData.requesterEmail = $("input#Requester-Email").val();
 
-        sData.requestedForLinkedNamesString = $().ReturnNamesWLinkedEmailsFromPP('Requested For');
+		sData.requestedForLinkedNamesString = $().ReturnNamesWLinkedEmailsFromPP('Requested For');
 
-        sData.requestNick = $("input#Request-Nickname").val();
-        sData.replacedFloorplan = $('input#Replacement-flag-for-Floor-Plan').val();
+		sData.requestNick = $("input#Request-Nickname").val();
+		sData.replacedFloorplan = $('input#Replacement-flag-for-Floor-Plan').val();
 
-        mData.subjectPreface = mData.requestName + ' Request #' + rData.requestID + ': ';
+		mData.subjectPreface = mData.requestName + ' Request #' + rData.requestID + ': ';
 
 		mData.uriOverview = mData.fullSiteBaseURL + "/SitePages/" + mData.pageToken + ".aspx"
 		mData.uriRequest = mData.uriOverview + "?r=" + rData.requestID;
 
 		var eData = $.extend(sData, rData, mData, uData, fData);
 
-        var notificationsToSend = [];
+		var notificationsToSend = [];
 
-        // for debugging
-        if (true) {
-            console.log('eData');
-            console.log(eData);
-        }
+		// for debugging
+		if (true) {
+			console.log('eData');
+			console.log(eData);
+		}
 
 
 
-        // ============
-        // ---- BEGINNING OF LIFE
-        // ============
+		// ============
+		// ---- BEGINNING OF LIFE
+		// ============
 
-		if (typeof(eData.beginningOfLife) != 'undefined' && eData.beginningOfLife == 1) {
-			
+		if (typeof (eData.beginningOfLife) != 'undefined' && eData.beginningOfLife == 1) {
+
 			// admin
-            if (typeof(eData.eventNeedsNotifications.beginningOfLife.admin) != "undefined") {
-                if (eData.eventNeedsNotifications.beginningOfLife.admin == 1) {
-                    $.each(eData.adminEmailArray, function(i, toAdmin) {
-                        notificationsToSend.push({
-                            'emailType': 'Notification',
-                            'caller': 'beginningOfLife admin',
-                            'to': toAdmin,
-                            'subject': eData.subjectPreface + 'new request received',
-                            'bodyUnique': '<p>' + eData.requesterName + ' has submitted a new request. You can ' +
-                                '<a href="' + eData.uriRequest + '">review this request\'s details</a>, ' +
-                                '<a href="mailto:' + eData.requesterEmail + '">contact the requester</a> ' +
-                                'with any questions, or <a href="' + eData.uriOverview + '">' +
-                                'review other ' + eData.requestName + ' requests</a>.</p>'
-                        });
-                    });
-                }
-            }
+			if (typeof (eData.eventNeedsNotifications.beginningOfLife.admin) != "undefined") {
+				if (eData.eventNeedsNotifications.beginningOfLife.admin == 1) {
+					$.each(eData.adminEmailArray, function (i, toAdmin) {
+						notificationsToSend.push({
+							'emailType': 'Notification',
+							'caller': 'beginningOfLife admin',
+							'to': toAdmin,
+							'subject': eData.subjectPreface + 'new request received',
+							'bodyUnique': '<p>' + eData.requesterName + ' has submitted a new request. You can ' +
+								'<a href="' + eData.uriRequest + '">review this request\'s details</a>, ' +
+								'<a href="mailto:' + eData.requesterEmail + '">contact the requester</a> ' +
+								'with any questions, or <a href="' + eData.uriOverview + '">' +
+								'review other ' + eData.requestName + ' requests</a>.</p>'
+						});
+					});
+				}
+			}
 
-            // requester
-            if (typeof(eData.eventNeedsNotifications.beginningOfLife.requester) != "undefined") {
-                if (eData.eventNeedsNotifications.beginningOfLife.requester == 1) {
-                    notificationsToSend.push({
-                        'emailType': 'Notification',
-                        'caller': 'beginningOfLife requester',
-                        'to': eData.requesterEmail,
-                        'subject': eData.subjectPreface + 'new request received',
-                        'bodyUnique': '<p>The request you nicknamed "' + eData.requestNick + '" has been received. You can ' +
-                            '<a href="' + eData.uriRequest + '">review this request\'s details</a>, ' +
-                            '<a href="mailto:' + eData.adminEmailString + '">contact the admin</a> ' +
-                            'with any questions, or <a href="' + eData.uriOverview + '">' +
-                            'review other ' + eData.requestName + ' requests</a>.</p>'
-                    });
-                }
-            }
-        }
-
-
-
-        // ============
-        // ---- APPROVED
-        // ============
-
-        // if this request is newly approved
-        if (eData.newReqStatus == "Approved") {
-
-            console.log('RS = approved');
-
-            if (typeof(eData.eventNeedsNotifications.approved) != "undefined") {
-
-                // query to get the additional recipients
-
-                // if we're doing devAdminNotifications
-                if (typeof(eData.devAdminNotifications) != 'undefined' && eData.devAdminNotifications == 1) {
-
-                	// get the value from the Component Group Log
-                    eData = $.extend(
-                        $().GetFieldsFromOneRow({
-                            "webURL": "https://bmos.sharepoint.com/sites/hubprod",
-                            "listName": "Component Group Log",
-                            "select": [{
-                                "nameHere": "approvedAdditionalRecipientsVerbose",
-                                "nameInList": "DevAdminNotifications"
-                            }],
-                            "where": {
-                                "field": "ComponentGroupID",
-                                "type": "Number",
-                                "value": 3,
-                            }
-                        }),
-                        eData
-                    );
-
-                // if we're NOT doing devAdminNotifications
-                } else {
-
-                	// get the value from EventNeedsNotificationRecipients
-                    eData = $.extend(
-                        $().GetFieldsFromOneRow({
-                            "webURL": "https://bmos.sharepoint.com/sites/hubprod",
-                            "listName": "EventNeedsNotificationRecipients",
-                            "select": [{
-                                "nameHere": "approvedAdditionalRecipientsVerbose",
-                                "nameInList": "Recipients"
-                            }],
-                            "where": {
-                                "field": "Title",
-                                "type": "Text",
-                                "value": "Approved Testing",
-                                // "value": "Approved",
-                            }
-                        }),
-                        eData
-                    );
-                }
-
-                // pull the additional recipients' needed values out of the query results
-                eData.approvedAdditionalRecipients = $().ReturnUserEmailStringAndArray(eData.approvedAdditionalRecipientsVerbose).array;
-
-                // admin
-                if (typeof(eData.eventNeedsNotifications.approved.admin) != "undefined") {
-                    if (eData.eventNeedsNotifications.approved.admin == 1) {
-
-                        $.each(eData.adminEmailArray, function(i, toAdmin) {
-                            notificationsToSend.push({
-                                'emailType': 'Notification',
-                                'caller': 'approved admin',
-                                'to': toAdmin,
-                                'subject': eData.subjectPreface + eData.requestStatus.toLowerCase(),
-                                'bodyUnique': '<p>As needed, <a href="' + eData.uriRequest + '">review the request\'s details</a> ' +
-                                    'and contact ' + eData.requestedForLinkedNamesString + '.'
-                            });
-                        });
-                    }
-                }
-
-                // requester
-                if (typeof(eData.eventNeedsNotifications.approved.requester) != "undefined") {
-                    if (eData.eventNeedsNotifications.approved.requester == 1) {
-
-                        notificationsToSend.push({
-                            'emailType': 'Notification',
-                            'caller': 'approved requester',
-                            'to': eData.requesterEmail,
-                            'subject': eData.subjectPreface + eData.requestStatus.toLowerCase(),
-                            'bodyUnique': '<p>This is the request you nicknamed "' + eData.requestNick + '". You can ' +
-                                '<a href="mailto:' + eData.adminEmailString + '">contact the admin</a> with any ' +
-                                'issues related thereto.'
-                        });
-                    }
-                }
-
-                // additional
-                if (typeof(eData.eventNeedsNotifications.approved.additional) != "undefined") {
-                    if (eData.eventNeedsNotifications.approved.additional == 1) {
-
-                        $.each(eData.approvedAdditionalRecipients, function(i, toAdditional) {
-                            notificationsToSend.push({
-                                'emailType': 'Notification',
-                                'caller': 'approved additional',
-                                'to': toAdditional,
-                                'subject': eData.subjectPreface + eData.requestStatus.toLowerCase(),
-                                'bodyUnique': '<p>As needed, <a href="' + eData.uriRequest + '">review the request\'s details</a> ' +
-                                    'and contact ' + eData.requestedForLinkedNamesString + '.'
-                            });
-                        });
-                    }
-                }
-            }
-        // if this request is not newly approved but RS = approved and floorplan has changed
-        } else if (eData.requestStatus == "Approved" && eData.replacedFloorplan == 1) {
-
-                // query to get the additional recipients
-
-                // if we're doing devAdminNotifications
-                if (typeof(eData.devAdminNotifications) != 'undefined' && eData.devAdminNotifications == 1) {
-
-                	// get the value from the Component Group Log
-                    eData = $.extend(
-                        $().GetFieldsFromOneRow({
-                            "webURL": "https://bmos.sharepoint.com/sites/hubprod",
-                            "listName": "Component Group Log",
-                            "select": [{
-                                "nameHere": "approvedAdditionalRecipientsVerbose",
-                                "nameInList": "DevAdminNotifications"
-                            }],
-                            "where": {
-                                "field": "ComponentGroupID",
-                                "type": "Number",
-                                "value": 3,
-                            }
-                        }),
-                        eData
-                    );
-                // if we're NOT doing devAdminNotifications
-                } else {
-
-                	// get the value from EventNeedsNotificationRecipients
-                    eData = $.extend(
-                        $().GetFieldsFromOneRow({
-                            "webURL": "https://bmos.sharepoint.com/sites/hubprod",
-                            "listName": "EventNeedsNotificationRecipients",
-                            "select": [{
-                                "nameHere": "approvedAdditionalRecipientsVerbose",
-                                "nameInList": "Recipients"
-                            }],
-                            "where": {
-                                "field": "Title",
-                                "type": "Text",
-                                "value": "Floor Plan Changed Testing",
-                                // "value": "Floor Plan Changed",
-                            }
-                        }),
-                        eData
-                    );
-                }
-                // pull the additional recipients' needed values out of the query results
-                eData.approvedAdditionalRecipients = $().ReturnUserEmailStringAndArray(eData.approvedAdditionalRecipientsVerbose).array;
-
-                // admin
-                if (typeof(eData.eventNeedsNotifications.floorplanChanged.admin) != "undefined") {
-                    if (eData.eventNeedsNotifications.floorplanChanged.admin == 1) {
-
-                        $.each(eData.adminEmailArray, function(i, toAdmin) {
-                            notificationsToSend.push({
-                                'emailType': 'Notification',
-                                'caller': 'floorplanChanged admin',
-                                'to': toAdmin,
-                                'subject': eData.subjectPreface + 'floorplan has changed',
-                                'bodyUnique': '<p>As needed, <a href="' + eData.uriRequest + '">review the request\'s details</a> ' +
-                                    'and contact ' + eData.requestedForLinkedNamesString + '.'
-                            });
-                        });
-                    }
-                }
-
-                // requester
-                if (typeof(eData.eventNeedsNotifications.floorplanChanged.requester) != "undefined") {
-                    if (eData.eventNeedsNotifications.floorplanChanged.requester == 1) {
-
-                        notificationsToSend.push({
-                            'emailType': 'Notification',
-                            'caller': 'floorplanChanged requester',
-                            'to': eData.requesterEmail,
-                            'subject': eData.subjectPreface + 'floorplan has changed',
-                            'bodyUnique': '<p>This is the request you nicknamed "' + eData.requestNick + '". You can ' +
-                            '<a href="' + eData.uriRequest + '">review this request\'s details</a>, ' +
-                            '<a href="mailto:' + eData.adminEmailString + '">contact the admin</a> ' +
-                            'with any questions, or <a href="' + eData.uriOverview + '">' +
-                            'review other ' + eData.requestName + ' requests</a>.</p>'
-                        });
-                    }
-                }
-
-                // additional
-                if (typeof(eData.eventNeedsNotifications.floorplanChanged.additional) != "undefined") {
-                    if (eData.eventNeedsNotifications.floorplanChanged.additional == 1) {
-
-                        $.each(eData.approvedAdditionalRecipients, function(i, toAdditional) {
-                            notificationsToSend.push({
-                                'emailType': 'Notification',
-                                'caller': 'floorplanChanged additional',
-                                'to': toAdditional,
-                                'subject': eData.subjectPreface + 'floorplan has changed',
-                                'bodyUnique': '<p>As needed, <a href="' + eData.uriRequest + '">review the request\'s details</a> ' +
-                                    'and contact ' + eData.requestedForLinkedNamesString + '.'
-                            });
-                        });
-                    }
-                }
-        }
+			// requester
+			if (typeof (eData.eventNeedsNotifications.beginningOfLife.requester) != "undefined") {
+				if (eData.eventNeedsNotifications.beginningOfLife.requester == 1) {
+					notificationsToSend.push({
+						'emailType': 'Notification',
+						'caller': 'beginningOfLife requester',
+						'to': eData.requesterEmail,
+						'subject': eData.subjectPreface + 'new request received',
+						'bodyUnique': '<p>The request you nicknamed "' + eData.requestNick + '" has been received. You can ' +
+							'<a href="' + eData.uriRequest + '">review this request\'s details</a>, ' +
+							'<a href="mailto:' + eData.adminEmailString + '">contact the admin</a> ' +
+							'with any questions, or <a href="' + eData.uriOverview + '">' +
+							'review other ' + eData.requestName + ' requests</a>.</p>'
+					});
+				}
+			}
+		}
 
 
 
-        // ============
-        // ---- REVERSION TO PENDING APPROVAL
-        // ============
+		// ============
+		// ---- APPROVED
+		// ============
 
-        if ((typeof(eData.beginningOfLife) === 'undefined' || eData.beginningOfLife !== 1) && eData.newReqStatus == "Pending Approval") {
+		// if this request is newly approved
+		if (eData.newReqStatus == "Approved") {
 
-		// REWORD EMAILS
+			console.log('RS = approved');
+
+			if (typeof (eData.eventNeedsNotifications.approved) != "undefined") {
+
+				// query to get the additional recipients
+
+				// if we're doing devAdminNotifications
+				if (typeof (eData.devAdminNotifications) != 'undefined' && eData.devAdminNotifications == 1) {
+
+					// get the value from the Component Group Log
+					eData = $.extend(
+						$().GetFieldsFromOneRow({
+							"webURL": "https://bmos.sharepoint.com/sites/hubprod",
+							"listName": "Component Group Log",
+							"select": [{
+								"nameHere": "approvedAdditionalRecipientsVerbose",
+								"nameInList": "DevAdminNotifications"
+							}],
+							"where": {
+								"field": "ComponentGroupID",
+								"type": "Number",
+								"value": 3,
+							}
+						}),
+						eData
+					);
+
+					// if we're NOT doing devAdminNotifications
+				} else {
+
+					// get the value from EventNeedsNotificationRecipients
+					eData = $.extend(
+						$().GetFieldsFromOneRow({
+							"webURL": "https://bmos.sharepoint.com/sites/hubprod",
+							"listName": "EventNeedsNotificationRecipients",
+							"select": [{
+								"nameHere": "approvedAdditionalRecipientsVerbose",
+								"nameInList": "Recipients"
+							}],
+							"where": {
+								"field": "Title",
+								"type": "Text",
+								"value": "Approved Testing",
+								// "value": "Approved",
+							}
+						}),
+						eData
+					);
+				}
+
+				// pull the additional recipients' needed values out of the query results
+				eData.approvedAdditionalRecipients = $().ReturnUserEmailStringAndArray(eData.approvedAdditionalRecipientsVerbose).array;
+
+				// admin
+				if (typeof (eData.eventNeedsNotifications.approved.admin) != "undefined") {
+					if (eData.eventNeedsNotifications.approved.admin == 1) {
+
+						$.each(eData.adminEmailArray, function (i, toAdmin) {
+							notificationsToSend.push({
+								'emailType': 'Notification',
+								'caller': 'approved admin',
+								'to': toAdmin,
+								'subject': eData.subjectPreface + eData.requestStatus.toLowerCase(),
+								'bodyUnique': '<p>As needed, <a href="' + eData.uriRequest + '">review the request\'s details</a> ' +
+									'and contact ' + eData.requestedForLinkedNamesString + '.'
+							});
+						});
+					}
+				}
+
+				// requester
+				if (typeof (eData.eventNeedsNotifications.approved.requester) != "undefined") {
+					if (eData.eventNeedsNotifications.approved.requester == 1) {
+
+						notificationsToSend.push({
+							'emailType': 'Notification',
+							'caller': 'approved requester',
+							'to': eData.requesterEmail,
+							'subject': eData.subjectPreface + eData.requestStatus.toLowerCase(),
+							'bodyUnique': '<p>This is the request you nicknamed "' + eData.requestNick + '". You can ' +
+								'<a href="mailto:' + eData.adminEmailString + '">contact the admin</a> with any ' +
+								'issues related thereto.'
+						});
+					}
+				}
+
+				// additional
+				if (typeof (eData.eventNeedsNotifications.approved.additional) != "undefined") {
+					if (eData.eventNeedsNotifications.approved.additional == 1) {
+
+						$.each(eData.approvedAdditionalRecipients, function (i, toAdditional) {
+							notificationsToSend.push({
+								'emailType': 'Notification',
+								'caller': 'approved additional',
+								'to': toAdditional,
+								'subject': eData.subjectPreface + eData.requestStatus.toLowerCase(),
+								'bodyUnique': '<p>As needed, <a href="' + eData.uriRequest + '">review the request\'s details</a> ' +
+									'and contact ' + eData.requestedForLinkedNamesString + '.'
+							});
+						});
+					}
+				}
+			}
+			// if this request is not newly approved but RS = approved and floorplan has changed
+		} else if (eData.requestStatus == "Approved" && eData.replacedFloorplan == 1) {
+
+			// query to get the additional recipients
+
+			// if we're doing devAdminNotifications
+			if (typeof (eData.devAdminNotifications) != 'undefined' && eData.devAdminNotifications == 1) {
+
+				// get the value from the Component Group Log
+				eData = $.extend(
+					$().GetFieldsFromOneRow({
+						"webURL": "https://bmos.sharepoint.com/sites/hubprod",
+						"listName": "Component Group Log",
+						"select": [{
+							"nameHere": "approvedAdditionalRecipientsVerbose",
+							"nameInList": "DevAdminNotifications"
+						}],
+						"where": {
+							"field": "ComponentGroupID",
+							"type": "Number",
+							"value": 3,
+						}
+					}),
+					eData
+				);
+				// if we're NOT doing devAdminNotifications
+			} else {
+
+				// get the value from EventNeedsNotificationRecipients
+				eData = $.extend(
+					$().GetFieldsFromOneRow({
+						"webURL": "https://bmos.sharepoint.com/sites/hubprod",
+						"listName": "EventNeedsNotificationRecipients",
+						"select": [{
+							"nameHere": "approvedAdditionalRecipientsVerbose",
+							"nameInList": "Recipients"
+						}],
+						"where": {
+							"field": "Title",
+							"type": "Text",
+							"value": "Floor Plan Changed Testing",
+							// "value": "Floor Plan Changed",
+						}
+					}),
+					eData
+				);
+			}
+			// pull the additional recipients' needed values out of the query results
+			eData.approvedAdditionalRecipients = $().ReturnUserEmailStringAndArray(eData.approvedAdditionalRecipientsVerbose).array;
+
+			// admin
+			if (typeof (eData.eventNeedsNotifications.floorplanChanged.admin) != "undefined") {
+				if (eData.eventNeedsNotifications.floorplanChanged.admin == 1) {
+
+					$.each(eData.adminEmailArray, function (i, toAdmin) {
+						notificationsToSend.push({
+							'emailType': 'Notification',
+							'caller': 'floorplanChanged admin',
+							'to': toAdmin,
+							'subject': eData.subjectPreface + 'floorplan has changed',
+							'bodyUnique': '<p>As needed, <a href="' + eData.uriRequest + '">review the request\'s details</a> ' +
+								'and contact ' + eData.requestedForLinkedNamesString + '.'
+						});
+					});
+				}
+			}
+
+			// requester
+			if (typeof (eData.eventNeedsNotifications.floorplanChanged.requester) != "undefined") {
+				if (eData.eventNeedsNotifications.floorplanChanged.requester == 1) {
+
+					notificationsToSend.push({
+						'emailType': 'Notification',
+						'caller': 'floorplanChanged requester',
+						'to': eData.requesterEmail,
+						'subject': eData.subjectPreface + 'floorplan has changed',
+						'bodyUnique': '<p>This is the request you nicknamed "' + eData.requestNick + '". You can ' +
+							'<a href="' + eData.uriRequest + '">review this request\'s details</a>, ' +
+							'<a href="mailto:' + eData.adminEmailString + '">contact the admin</a> ' +
+							'with any questions, or <a href="' + eData.uriOverview + '">' +
+							'review other ' + eData.requestName + ' requests</a>.</p>'
+					});
+				}
+			}
+
+			// additional
+			if (typeof (eData.eventNeedsNotifications.floorplanChanged.additional) != "undefined") {
+				if (eData.eventNeedsNotifications.floorplanChanged.additional == 1) {
+
+					$.each(eData.approvedAdditionalRecipients, function (i, toAdditional) {
+						notificationsToSend.push({
+							'emailType': 'Notification',
+							'caller': 'floorplanChanged additional',
+							'to': toAdditional,
+							'subject': eData.subjectPreface + 'floorplan has changed',
+							'bodyUnique': '<p>As needed, <a href="' + eData.uriRequest + '">review the request\'s details</a> ' +
+								'and contact ' + eData.requestedForLinkedNamesString + '.'
+						});
+					});
+				}
+			}
+		}
 
 
-            // admin
-            if (typeof(eData.eventNeedsNotifications.pendingApproval.admin) != "undefined") {
-                if (eData.eventNeedsNotifications.pendingApproval.admin == 1) {
-                    $.each(eData.adminEmailArray, function(i, toAdmin) {
-                        notificationsToSend.push({
-                            'emailType': 'Notification',
-                            'caller': 'pendingApproval admin',
-                            'to': toAdmin,
-                            'subject': eData.subjectPreface + 'pending approval',
-                            'bodyUnique': '<p>Changes have been made to this request. You can ' +
-                                '<a href="' + eData.uriRequest + '">review and approve this request</a>, ' +
-                                '<a href="mailto:' + eData.requesterEmail + '">contact the requester</a> ' +
-                                'with any issues, or <a href="' + eData.uriOverview + '">' +
-                                'review other ' + eData.requestName + ' requests</a>.</p>'
-                        });
-                    });
-                }
-            }
 
-            // requester
-            if (typeof(eData.eventNeedsNotifications.pendingApproval.requester) != "undefined") {
-                if (eData.eventNeedsNotifications.pendingApproval.requester == 1) {
-                    notificationsToSend.push({
-                        'emailType': 'Notification',
-                        'caller': 'pendingApproval requester',
-                        'to': eData.requesterEmail,
-                        'subject': eData.subjectPreface + 'pending approval',
-                        'bodyUnique': '<p>Changes to the request you nicknamed "' + eData.requestNick + '" have been received ' +
-                            'for approval. You can <a href="' + eData.uriRequest + '">review this request\'s details</a>, ' +
-                            '<a href="mailto:' + eData.adminEmailString + '">contact the admin</a> ' +
-                            'with any questions, or <a href="' + eData.uriOverview + '">' +
-                            'review other ' + eData.requestName + ' requests</a>.</p>'
-                    });
-                }
-            }
-        }
+		// ============
+		// ---- REVERSION TO PENDING APPROVAL
+		// ============
+
+		if ((typeof (eData.beginningOfLife) === 'undefined' || eData.beginningOfLife !== 1) && eData.newReqStatus == "Pending Approval") {
+
+			// REWORD EMAILS
 
 
+			// admin
+			if (typeof (eData.eventNeedsNotifications.pendingApproval.admin) != "undefined") {
+				if (eData.eventNeedsNotifications.pendingApproval.admin == 1) {
+					$.each(eData.adminEmailArray, function (i, toAdmin) {
+						notificationsToSend.push({
+							'emailType': 'Notification',
+							'caller': 'pendingApproval admin',
+							'to': toAdmin,
+							'subject': eData.subjectPreface + 'pending approval',
+							'bodyUnique': '<p>Changes have been made to this request. You can ' +
+								'<a href="' + eData.uriRequest + '">review and approve this request</a>, ' +
+								'<a href="mailto:' + eData.requesterEmail + '">contact the requester</a> ' +
+								'with any issues, or <a href="' + eData.uriOverview + '">' +
+								'review other ' + eData.requestName + ' requests</a>.</p>'
+						});
+					});
+				}
+			}
 
-        // ============
-        // ---- END OF LIFE
-        // ============
-
-        if (typeof(eData.endOfLife) != 'undefined' && eData.endOfLife == 1) {
-
-            // admin
-            var adminSendEOL = 0;
-            var adminComparisonBank = [];
-
-            if (typeof(eData.eventNeedsNotifications.endOfLife.admin) != "undefined") {
-                if (eData.eventNeedsNotifications.endOfLife.admin == 1) {
-                    adminSendEOL = 1;
-                } else if (eData.eventNeedsNotifications.endOfLife.admin != 0) {
-                    adminComparisonBank = eData.eventNeedsNotifications.endOfLife.admin;
-                    if (adminComparisonBank.indexOf(eData.requestStatus) > -1) {
-                        adminSendEOL = 1;
-                    }
-                }
-                if (adminSendEOL == 1) {
-                    $.each(eData.adminEmailArray, function(i, toAdmin) {
-                        notificationsToSend.push({
-                            'emailType': 'Notification',
-                            'caller': 'endOfLife admin',
-                            'to': toAdmin,
-                            'subject': eData.subjectPreface + eData.requestStatus.toLowerCase(),
-                            'bodyUnique': '<p>Feel free to <a href="mailto:' + eData.requesterEmail + '">' +
-                                'contact the requester</a> if you need to follow up.</p>'
-                        });
-                    });
-                }
-            }
-
-            // requester
-            var requesterSendEOL = 0;
-            var requesterComparisonBank = [];
-
-            if (typeof(eData.eventNeedsNotifications.endOfLife.requester) != "undefined") {
-                if (eData.eventNeedsNotifications.endOfLife.requester == 1) {
-                    requesterSendEOL = 1;
-                } else if (eData.eventNeedsNotifications.endOfLife.requester != 0) {
-                    requesterComparisonBank = eData.eventNeedsNotifications.endOfLife.requester;
-                    if (requesterComparisonBank.indexOf(eData.requestStatus) > -1) {
-                        requesterSendEOL = 1;
-                    }
-                }
-                if (requesterSendEOL == 1) {
-                    notificationsToSend.push({
-                        'emailType': 'Notification',
-                        'caller': 'endOfLife requester generic',
-                        'to': eData.requesterEmail,
-                        'subject': eData.subjectPreface + eData.requestStatus.toLowerCase(),
-                        'bodyUnique': '<p>This is the <a href="' + eData.uriRequest + '">request you nicknamed "' + eData.requestNick +
-                            '"</a>. Please <a href="mailto:' + eData.adminEmailString + '">contact the admin</a> with any ' +
-                            'issues related to this request.'
-                    });
-                }
-            }
-        }
+			// requester
+			if (typeof (eData.eventNeedsNotifications.pendingApproval.requester) != "undefined") {
+				if (eData.eventNeedsNotifications.pendingApproval.requester == 1) {
+					notificationsToSend.push({
+						'emailType': 'Notification',
+						'caller': 'pendingApproval requester',
+						'to': eData.requesterEmail,
+						'subject': eData.subjectPreface + 'pending approval',
+						'bodyUnique': '<p>Changes to the request you nicknamed "' + eData.requestNick + '" have been received ' +
+							'for approval. You can <a href="' + eData.uriRequest + '">review this request\'s details</a>, ' +
+							'<a href="mailto:' + eData.adminEmailString + '">contact the admin</a> ' +
+							'with any questions, or <a href="' + eData.uriOverview + '">' +
+							'review other ' + eData.requestName + ' requests</a>.</p>'
+					});
+				}
+			}
+		}
 
 
 
-        // ============
-        // ---- 7. SEND
-        // ============
+		// ============
+		// ---- END OF LIFE
+		// ============
 
-        // for debugging
-        if (true) {
-            console.log('notificationsToSend');
-            console.log(notificationsToSend);
-        }
+		if (typeof (eData.endOfLife) != 'undefined' && eData.endOfLife == 1) {
 
-        $().SendEmails(notificationsToSend).then(function() {
-            // return promise
-            emailProcessingPromise.resolve();
-        });
+			// admin
+			var adminSendEOL = 0;
+			var adminComparisonBank = [];
 
-        return emailProcessingPromise.promise();
-    };
+			if (typeof (eData.eventNeedsNotifications.endOfLife.admin) != "undefined") {
+				if (eData.eventNeedsNotifications.endOfLife.admin == 1) {
+					adminSendEOL = 1;
+				} else if (eData.eventNeedsNotifications.endOfLife.admin != 0) {
+					adminComparisonBank = eData.eventNeedsNotifications.endOfLife.admin;
+					if (adminComparisonBank.indexOf(eData.requestStatus) > -1) {
+						adminSendEOL = 1;
+					}
+				}
+				if (adminSendEOL == 1) {
+					$.each(eData.adminEmailArray, function (i, toAdmin) {
+						notificationsToSend.push({
+							'emailType': 'Notification',
+							'caller': 'endOfLife admin',
+							'to': toAdmin,
+							'subject': eData.subjectPreface + eData.requestStatus.toLowerCase(),
+							'bodyUnique': '<p>Feel free to <a href="mailto:' + eData.requesterEmail + '">' +
+								'contact the requester</a> if you need to follow up.</p>'
+						});
+					});
+				}
+			}
+
+			// requester
+			var requesterSendEOL = 0;
+			var requesterComparisonBank = [];
+
+			if (typeof (eData.eventNeedsNotifications.endOfLife.requester) != "undefined") {
+				if (eData.eventNeedsNotifications.endOfLife.requester == 1) {
+					requesterSendEOL = 1;
+				} else if (eData.eventNeedsNotifications.endOfLife.requester != 0) {
+					requesterComparisonBank = eData.eventNeedsNotifications.endOfLife.requester;
+					if (requesterComparisonBank.indexOf(eData.requestStatus) > -1) {
+						requesterSendEOL = 1;
+					}
+				}
+				if (requesterSendEOL == 1) {
+					notificationsToSend.push({
+						'emailType': 'Notification',
+						'caller': 'endOfLife requester generic',
+						'to': eData.requesterEmail,
+						'subject': eData.subjectPreface + eData.requestStatus.toLowerCase(),
+						'bodyUnique': '<p>This is the <a href="' + eData.uriRequest + '">request you nicknamed "' + eData.requestNick +
+							'"</a>. Please <a href="mailto:' + eData.adminEmailString + '">contact the admin</a> with any ' +
+							'issues related to this request.'
+					});
+				}
+			}
+		}
 
 
 
-	$.fn.ProcessEventSpaceNotifications = function(sData) {
+		// ============
+		// ---- 7. SEND
+		// ============
+
+		// for debugging
+		if (true) {
+			console.log('notificationsToSend');
+			console.log(notificationsToSend);
+		}
+
+		$().SendEmails(notificationsToSend).then(function () {
+			// return promise
+			emailProcessingPromise.resolve();
+		});
+
+		return emailProcessingPromise.promise();
+	};
+
+
+
+	$.fn.ProcessEventSpaceNotifications = function (sData) {
 
 		// ============
 		// ---- SET UP VARS
@@ -8406,20 +8430,20 @@
 		mData.uriFormApprover = mData.uriRequest + '?requestID=' + rData.requestID + '&returnURI=' + mData.uriPageApprover;
 
 		sData.adminToRequesterMessageAddendum = '';
-		if (typeof($("textarea#Email-Message-Addendum").val()) != 'undefined' && $("textarea#Email-Message-Addendum").val() != '') {
+		if (typeof ($("textarea#Email-Message-Addendum").val()) != 'undefined' && $("textarea#Email-Message-Addendum").val() != '') {
 			sData.adminToRequesterMessageAddendum = '<p>From the Admin:</p>' +
 				'<blockquote>' + $("textarea#Email-Message-Addendum").val() + '</blockquote>';
 		}
 
 		sData.spaceReservedStarting = '';
-		if (typeof($("input#datetime-storage_Space-Reserved-Beginning-Datetime").val()) != 'undefined' && $("input#datetime-storage_Space-Reserved-Beginning-Datetime").val() != '') {
+		if (typeof ($("input#datetime-storage_Space-Reserved-Beginning-Datetime").val()) != 'undefined' && $("input#datetime-storage_Space-Reserved-Beginning-Datetime").val() != '') {
 			sData.spaceReservedStarting = $("input#datetime-storage_Space-Reserved-Beginning-Datetime").val().substring(0, 19);
 			sData.spaceReservedStarting = $().ReturnFormattedDateTime(sData.spaceReservedStarting, null, 'MMMM D, YYYY h:mm a');
 			sData.spaceReservedStarting = '<p>Your space reservation starts: ' + sData.spaceReservedStarting + '</p>';
 		}
 
 		sData.spaceReservedEnding = '';
-		if (typeof($("input#datetime-storage_Space-Reserved-Ending-Datetime").val()) != 'undefined' && $("input#datetime-storage_Space-Reserved-Ending-Datetime").val() != '') {
+		if (typeof ($("input#datetime-storage_Space-Reserved-Ending-Datetime").val()) != 'undefined' && $("input#datetime-storage_Space-Reserved-Ending-Datetime").val() != '') {
 			sData.spaceReservedEnding = $("input#datetime-storage_Space-Reserved-Ending-Datetime").val().substring(0, 19);
 			sData.spaceReservedEnding = $().ReturnFormattedDateTime(sData.spaceReservedEnding, null, 'MMMM D, YYYY h:mm a');
 			sData.spaceReservedEnding = '<p>Your space reservation ends: ' + sData.spaceReservedEnding + '</p>';
@@ -8441,12 +8465,12 @@
 		// ---- BEGINNING OF LIFE
 		// ============
 
-		if (typeof(eData.beginningOfLife) != 'undefined' && eData.beginningOfLife == 1) {
+		if (typeof (eData.beginningOfLife) != 'undefined' && eData.beginningOfLife == 1) {
 
 			// admin
-			if (typeof(eData.eventSpaceNotifications.beginningOfLife.admin) != "undefined") {
+			if (typeof (eData.eventSpaceNotifications.beginningOfLife.admin) != "undefined") {
 				if (eData.eventSpaceNotifications.beginningOfLife.admin == 1) {
-					$.each(eData.adminEmailArray, function(i, toAdmin) {
+					$.each(eData.adminEmailArray, function (i, toAdmin) {
 						notificationsToSend.push({
 							'emailType': 'Notification',
 							'caller': 'beginningOfLife admin',
@@ -8463,7 +8487,7 @@
 			}
 
 			// requester
-			if (typeof(eData.eventSpaceNotifications.beginningOfLife.requester) != "undefined") {
+			if (typeof (eData.eventSpaceNotifications.beginningOfLife.requester) != "undefined") {
 				if (eData.eventSpaceNotifications.beginningOfLife.requester == 1) {
 					notificationsToSend.push({
 						'emailType': 'Notification',
@@ -8491,15 +8515,15 @@
 
 			console.log('RS = approved');
 
-			if (typeof(eData.eventSpaceNotifications.approved) != "undefined") {
+			if (typeof (eData.eventSpaceNotifications.approved) != "undefined") {
 
 				// admin
-				if (typeof(eData.eventSpaceNotifications.approved.admin) != "undefined") {
+				if (typeof (eData.eventSpaceNotifications.approved.admin) != "undefined") {
 					if (eData.eventSpaceNotifications.approved.admin == 1) {
 
 						console.log('gonna push admin email');
 
-						$.each(eData.adminEmailArray, function(i, toAdmin) {
+						$.each(eData.adminEmailArray, function (i, toAdmin) {
 							notificationsToSend.push({
 								'emailType': 'Notification',
 								'caller': 'approved admin',
@@ -8513,7 +8537,7 @@
 				}
 
 				// requester
-				if (typeof(eData.eventSpaceNotifications.approved.requester) != "undefined") {
+				if (typeof (eData.eventSpaceNotifications.approved.requester) != "undefined") {
 					if (eData.eventSpaceNotifications.approved.requester == 1) {
 
 						console.log('gonna push requester email');
@@ -8527,7 +8551,7 @@
 								'<a href="mailto:' + eData.adminEmailString + '">contact the admin</a> with any ' +
 								'issues related thereto.' +
 								eData.spaceReservedStarting +
-								eData.spaceReservedEnding + 
+								eData.spaceReservedEnding +
 								eData.adminToRequesterMessageAddendum
 						});
 					}
@@ -8542,13 +8566,13 @@
 		// ---- END OF LIFE
 		// ============
 
-		if (typeof(eData.endOfLife) != 'undefined' && eData.endOfLife == 1) {
+		if (typeof (eData.endOfLife) != 'undefined' && eData.endOfLife == 1) {
 
 			// admin
 			var adminSendEOL = 0;
 			var adminComparisonBank = [];
 
-			if (typeof(eData.eventSpaceNotifications.endOfLife.admin) != "undefined") {
+			if (typeof (eData.eventSpaceNotifications.endOfLife.admin) != "undefined") {
 				if (eData.eventSpaceNotifications.endOfLife.admin == 1) {
 					adminSendEOL = 1;
 				} else if (eData.eventSpaceNotifications.endOfLife.admin != 0) {
@@ -8558,7 +8582,7 @@
 					}
 				}
 				if (adminSendEOL == 1) {
-					$.each(eData.adminEmailArray, function(i, toAdmin) {
+					$.each(eData.adminEmailArray, function (i, toAdmin) {
 						notificationsToSend.push({
 							'emailType': 'Notification',
 							'caller': 'endOfLife admin',
@@ -8575,7 +8599,7 @@
 			var requesterSendEOL = 0;
 			var requesterComparisonBank = [];
 
-			if (typeof(eData.eventSpaceNotifications.endOfLife.requester) != "undefined") {
+			if (typeof (eData.eventSpaceNotifications.endOfLife.requester) != "undefined") {
 				if (eData.eventSpaceNotifications.endOfLife.requester == 1) {
 					requesterSendEOL = 1;
 				} else if (eData.eventSpaceNotifications.endOfLife.requester != 0) {
@@ -8611,7 +8635,7 @@
 			console.log(notificationsToSend);
 		}
 
-		$().SendEmails(notificationsToSend).then(function() {
+		$().SendEmails(notificationsToSend).then(function () {
 			// return promise
 			emailProcessingPromise.resolve();
 		});
@@ -8621,7 +8645,7 @@
 
 
 
-	$.fn.ProcessVolunteerServicesReqNotifications = function(sData) {
+	$.fn.ProcessVolunteerServicesReqNotifications = function (sData) {
 
 		console.log('ProcessVolunteerServicesReqNotifications');
 
@@ -8681,19 +8705,19 @@
 		// ---- BEGINNING OF LIFE
 		// ============
 
-		if (typeof(eData.beginningOfLife) != 'undefined' && eData.beginningOfLife == 1) {
+		if (typeof (eData.beginningOfLife) != 'undefined' && eData.beginningOfLife == 1) {
 
 			var recipientEmailArray = [];
 			var otherNotificationsInitialArray = [];
 
-			if (typeof($('input#Other-Notifications_TopSpan_HiddenInput').val()) !== 'undefined' && $('input#Other-Notifications_TopSpan_HiddenInput').val() !== "") {
+			if (typeof ($('input#Other-Notifications_TopSpan_HiddenInput').val()) !== 'undefined' && $('input#Other-Notifications_TopSpan_HiddenInput').val() !== "") {
 				otherNotificationsInitialArray = JSON.parse($('input#Other-Notifications_TopSpan_HiddenInput').val());
 			}
 
-			$.each(otherNotificationsInitialArray, function(i, otherNotification){
+			$.each(otherNotificationsInitialArray, function (i, otherNotification) {
 				recipientEmailArray.push(otherNotification.Description);
 			});
-			$.each(eData.adminEmailArray, function(i, adminEmail){
+			$.each(eData.adminEmailArray, function (i, adminEmail) {
 				recipientEmailArray.push(adminEmail);
 			});
 
@@ -8711,23 +8735,23 @@
 				'</ul>' +
 				'<h2>Staff Contacts</h2>' +
 				'<ul>' +
-				'	<li><b>Primary</b>: ' + eData.primaryStaffContactName + '</li>' + 
-				'	<li><b>Secondary</b>: ' + eData.secondaryStaffContactName + '</li>' + 
+				'	<li><b>Primary</b>: ' + eData.primaryStaffContactName + '</li>' +
+				'	<li><b>Secondary</b>: ' + eData.secondaryStaffContactName + '</li>' +
 				'</ul>' +
 				'<h2>Project</h2>' +
 				'<ul>' +
-				'	<li><b>Special Event or Project</b>: ' + eData.SpecialEventOrProject + '</li>' + 
-				'	<li><b>Volunteer Tasks</b>: ' + eData.VolunteerTasks + '</li>' + 
-				'	<li><b>Number of Volunteers Desired</b>: ' + eData.NumberOfVolunteersDesired + '</li>' + 
-				'	<li><b>Event or Project Date</b>: ' + eData.EventOrProjectDate + '</li>' + 
-				'	<li><b>Volunteer Arrival Time</b>: ' + eData.VolunteerArrivalTime + '</li>' + 
-				'	<li><b>Estimated Number of Hours Needed</b>: ' + eData.EstimatedNumberOfHoursNeeded + '</li>' + 
-				'	<li><b>Special Skills Required</b>: ' + eData.SpecialSkillsRequired + '</li>' + 
-				'	<li><b>Additional Comments</b>: ' + eData.AdditionalComments + '</li>' + 
+				'	<li><b>Special Event or Project</b>: ' + eData.SpecialEventOrProject + '</li>' +
+				'	<li><b>Volunteer Tasks</b>: ' + eData.VolunteerTasks + '</li>' +
+				'	<li><b>Number of Volunteers Desired</b>: ' + eData.NumberOfVolunteersDesired + '</li>' +
+				'	<li><b>Event or Project Date</b>: ' + eData.EventOrProjectDate + '</li>' +
+				'	<li><b>Volunteer Arrival Time</b>: ' + eData.VolunteerArrivalTime + '</li>' +
+				'	<li><b>Estimated Number of Hours Needed</b>: ' + eData.EstimatedNumberOfHoursNeeded + '</li>' +
+				'	<li><b>Special Skills Required</b>: ' + eData.SpecialSkillsRequired + '</li>' +
+				'	<li><b>Additional Comments</b>: ' + eData.AdditionalComments + '</li>' +
 				'</ul>';
 
 			// all
-			$.each(recipientEmailArray, function(i, toRecipient) {
+			$.each(recipientEmailArray, function (i, toRecipient) {
 				notificationsToSend.push({
 					'emailType': 'Notification',
 					'caller': 'beginningOfLife all',
@@ -8743,10 +8767,10 @@
 		// ---- END OF LIFE
 		// ============
 
-		if (typeof(eData.endOfLife) != 'undefined' && eData.endOfLife == 1) {
+		if (typeof (eData.endOfLife) != 'undefined' && eData.endOfLife == 1) {
 
 			// admin
-			$.each(eData.adminEmailArray, function(i, toAdmin) {
+			$.each(eData.adminEmailArray, function (i, toAdmin) {
 				notificationsToSend.push({
 					'emailType': 'Notification',
 					'caller': 'endOfLife admin',
@@ -8781,7 +8805,7 @@
 			console.log(notificationsToSend);
 		}
 
-		$().SendEmails(notificationsToSend).then(function() {
+		$().SendEmails(notificationsToSend).then(function () {
 			// return promise
 			emailProcessingPromise.resolve();
 		});
@@ -8791,7 +8815,7 @@
 
 
 
-	$.fn.ProcessReferralNotifications = function(sData) {
+	$.fn.ProcessReferralNotifications = function (sData) {
 
 		console.log('ProcessReferralNotifications');
 
@@ -8821,26 +8845,26 @@
 
 
 
-/*		sData.primaryStaffContactArray = JSON.parse($('input#Primary-Staff-Contact_TopSpan_HiddenInput').val());
-		sData.primaryStaffContactName = sData.primaryStaffContactArray[0]["DisplayText"];
-
-		sData.secondaryStaffContactArray = JSON.parse($('input#Secondary-Staff-Contact_TopSpan_HiddenInput').val());
-		sData.secondaryStaffContactName = sData.secondaryStaffContactArray[0]["DisplayText"];
-
-		sData.SpecialEventOrProject = $("textarea#Special-Event-or-Project").val();
-
-		sData.VolunteerTasks = $("textarea#Volunteer-Tasks").val();
-		sData.NumberOfVolunteersDesired = $("input#Number-of-Volunteers-Desired").val();
-		sData.EventOrProjectDate = $().ReturnFormattedDateTime($("input#Event-or-Project-Date").val(), null, 'dddd, MMMM D, YYYY');
-		sData.VolunteerArrivalTimeDate = $().ReturnFormattedDateTime($("input#Event-or-Project-Date").val(), null, 'YYYY-MM-DD');
-		sData.VolunteerArrivalTimeTimezone = $().ReturnFormattedDateTime($("input#Event-or-Project-Date").val(), null, 'Z');
-		sData.VolunteerArrivalTimeHours = $("select#hours-input_Volunteer-Arrival-Time option:selected").val();
-		sData.VolunteerArrivalTimeMinutes = $("select#minutes-input_Volunteer-Arrival-Time option:selected").val();
-		sData.VolunteerArrivalTime = $().ReturnFormattedDateTime(sData.VolunteerArrivalTimeDate + sData.VolunteerArrivalTimeHours + sData.VolunteerArrivalTimeMinutes + sData.VolunteerArrivalTimeTimezone, null, 'h:mm a');
-		sData.EstimatedNumberOfHoursNeeded = $("input#Estimated-Number-of-Hours-Needed").val();
-		sData.SpecialSkillsRequired = $("textarea#Special-Skills-Required").val();
-		sData.AdditionalComments = $("textarea#Additional-Comments").val();
-*/
+		/*		sData.primaryStaffContactArray = JSON.parse($('input#Primary-Staff-Contact_TopSpan_HiddenInput').val());
+				sData.primaryStaffContactName = sData.primaryStaffContactArray[0]["DisplayText"];
+		
+				sData.secondaryStaffContactArray = JSON.parse($('input#Secondary-Staff-Contact_TopSpan_HiddenInput').val());
+				sData.secondaryStaffContactName = sData.secondaryStaffContactArray[0]["DisplayText"];
+		
+				sData.SpecialEventOrProject = $("textarea#Special-Event-or-Project").val();
+		
+				sData.VolunteerTasks = $("textarea#Volunteer-Tasks").val();
+				sData.NumberOfVolunteersDesired = $("input#Number-of-Volunteers-Desired").val();
+				sData.EventOrProjectDate = $().ReturnFormattedDateTime($("input#Event-or-Project-Date").val(), null, 'dddd, MMMM D, YYYY');
+				sData.VolunteerArrivalTimeDate = $().ReturnFormattedDateTime($("input#Event-or-Project-Date").val(), null, 'YYYY-MM-DD');
+				sData.VolunteerArrivalTimeTimezone = $().ReturnFormattedDateTime($("input#Event-or-Project-Date").val(), null, 'Z');
+				sData.VolunteerArrivalTimeHours = $("select#hours-input_Volunteer-Arrival-Time option:selected").val();
+				sData.VolunteerArrivalTimeMinutes = $("select#minutes-input_Volunteer-Arrival-Time option:selected").val();
+				sData.VolunteerArrivalTime = $().ReturnFormattedDateTime(sData.VolunteerArrivalTimeDate + sData.VolunteerArrivalTimeHours + sData.VolunteerArrivalTimeMinutes + sData.VolunteerArrivalTimeTimezone, null, 'h:mm a');
+				sData.EstimatedNumberOfHoursNeeded = $("input#Estimated-Number-of-Hours-Needed").val();
+				sData.SpecialSkillsRequired = $("textarea#Special-Skills-Required").val();
+				sData.AdditionalComments = $("textarea#Additional-Comments").val();
+		*/
 		mData.subjectPreface = mData.requestName + ' Request #' + rData.requestID + ': ';
 
 		mData.uriOverview = mData.fullSiteBaseURL + "/SitePages/" + mData.pageToken + ".aspx"
@@ -8861,13 +8885,13 @@
 		// ---- BEGINNING OF LIFE
 		// ============
 
-		if (typeof(eData.beginningOfLife) != 'undefined' && eData.beginningOfLife == 1) {
+		if (typeof (eData.beginningOfLife) != 'undefined' && eData.beginningOfLife == 1) {
 
 			console.log("eData.devAdminNotifications");
 			console.log(eData.devAdminNotifications);
 
 			// query
-			if (typeof(eData.devAdminNotifications) != 'undefined' && eData.devAdminNotifications == 1) {
+			if (typeof (eData.devAdminNotifications) != 'undefined' && eData.devAdminNotifications == 1) {
 
 				eData = $.extend(
 					$().GetFieldsFromOneRow({
@@ -8924,23 +8948,23 @@
 				'</ul>' +
 				'<h2>About the Referred Candidate</h2>' +
 				'<ul>' +
-				'	<li><b>Name</b>: ' + eData.candidateName + '</li>' + 
-				'	<li><b>Position Type</b>: ' + eData.candidatePositionType + '</li>' + 
+				'	<li><b>Name</b>: ' + eData.candidateName + '</li>' +
+				'	<li><b>Position Type</b>: ' + eData.candidatePositionType + '</li>' +
 				'	<li><b>Phone</b>: ' + eData.candidatePhone + '</li>' +
 				'	<li><b>Email</b>: ' + eData.candidateEmail + '</li>' +
 				'	<li><b>Reference</b>: ' + eData.candidateReference + '</li>' +
 				'</ul>' +
 				'<h2>Office Use Only</h2>' +
 				'<ul>' +
-				'	<li><b>Candidate Hired As</b>: </li>' + 
-				'	<li><b>Candidate Hired On</b>: </li>' + 
-				'	<li><b>Passes Awarded</b>: </li>' + 
-				'	<li><b>Card sent</b>: </li>' + 
-				'	<li><b>Payroll Check Request</b> (if applicable): </li>' + 
+				'	<li><b>Candidate Hired As</b>: </li>' +
+				'	<li><b>Candidate Hired On</b>: </li>' +
+				'	<li><b>Passes Awarded</b>: </li>' +
+				'	<li><b>Card sent</b>: </li>' +
+				'	<li><b>Payroll Check Request</b> (if applicable): </li>' +
 				'</ul>';
 
 			// all
-			$.each(eData.allReferralNotificationRecipients, function(i, toRecipient) {
+			$.each(eData.allReferralNotificationRecipients, function (i, toRecipient) {
 				notificationsToSend.push({
 					'emailType': 'Notification',
 					'caller': 'beginningOfLife all',
@@ -8956,10 +8980,10 @@
 		// ---- END OF LIFE
 		// ============
 
-		if (typeof(eData.endOfLife) != 'undefined' && eData.endOfLife == 1) {
+		if (typeof (eData.endOfLife) != 'undefined' && eData.endOfLife == 1) {
 
 			// admin
-			$.each(eData.adminEmailArray, function(i, toAdmin) {
+			$.each(eData.adminEmailArray, function (i, toAdmin) {
 				notificationsToSend.push({
 					'emailType': 'Notification',
 					'caller': 'endOfLife admin',
@@ -8994,7 +9018,7 @@
 			console.log(notificationsToSend);
 		}
 
-		$().SendEmails(notificationsToSend).then(function() {
+		$().SendEmails(notificationsToSend).then(function () {
 			// return promise
 			emailProcessingPromise.resolve();
 		});
@@ -9004,7 +9028,7 @@
 
 
 
-	$.fn.ProcessMCProjectReqNotifications = function(sData) {
+	$.fn.ProcessMCProjectReqNotifications = function (sData) {
 
 		console.log('ProcessMCProjectReqNotifications');
 
@@ -9044,8 +9068,8 @@
 		sData.EventDate = $().ReturnFormattedDateTime($("input#Event-Date").val(), null, 'MMMM D');
 		sData.Description = $("textarea#Description").val();
 		sData.hasAttachments = "No";
-		$('input.mos-drag-and-drop-file-name').each(function(){
-			if (typeof($(this).val()) !== "undefined" && $(this).val() != '') {
+		$('input.mos-drag-and-drop-file-name').each(function () {
+			if (typeof ($(this).val()) !== "undefined" && $(this).val() != '') {
 				sData.hasAttachments = "Yes";
 			}
 		});
@@ -9070,7 +9094,7 @@
 		// ---- BEGINNING OF LIFE
 		// ============
 
-		if (typeof(eData.beginningOfLife) != 'undefined' && eData.beginningOfLife == 1) {
+		if (typeof (eData.beginningOfLife) != 'undefined' && eData.beginningOfLife == 1) {
 
 			var adminBeginningOfLifeBodyUnique = '<p>' + eData.requesterName + ' has submitted a new request. You can ' +
 				'<a href="' + eData.uriRequest + '">review this request\'s details and retrieve attachments</a>, ' +
@@ -9103,7 +9127,7 @@
 				'</ul>';
 
 			// admin
-			$.each(eData.adminEmailArray, function(i, toAdmin) {
+			$.each(eData.adminEmailArray, function (i, toAdmin) {
 				notificationsToSend.push({
 					'emailType': 'Notification',
 					'caller': 'beginningOfLife admin',
@@ -9133,10 +9157,10 @@
 		// ---- END OF LIFE
 		// ============
 
-		if (typeof(eData.endOfLife) != 'undefined' && eData.endOfLife == 1) {
+		if (typeof (eData.endOfLife) != 'undefined' && eData.endOfLife == 1) {
 
 			// admin
-			$.each(eData.adminEmailArray, function(i, toAdmin) {
+			$.each(eData.adminEmailArray, function (i, toAdmin) {
 				notificationsToSend.push({
 					'emailType': 'Notification',
 					'caller': 'endOfLife admin',
@@ -9171,7 +9195,7 @@
 			console.log(notificationsToSend);
 		}
 
-		$().SendEmails(notificationsToSend).then(function() {
+		$().SendEmails(notificationsToSend).then(function () {
 			// return promise
 			emailProcessingPromise.resolve();
 		});
@@ -9182,7 +9206,7 @@
 
 
 
-	$.fn.ProcessTestNotifications = function(sData) {
+	$.fn.ProcessTestNotifications = function (sData) {
 
 		console.log('ProcessTestNotifications');
 
@@ -9218,10 +9242,10 @@
 		// ---- BEGINNING OF LIFE
 		// ============
 
-		if (typeof(eData.beginningOfLife) != 'undefined' && eData.beginningOfLife == 1) {
+		if (typeof (eData.beginningOfLife) != 'undefined' && eData.beginningOfLife == 1) {
 
 			// admin
-			$.each(eData.adminEmailArray, function(i, toAdmin) {
+			$.each(eData.adminEmailArray, function (i, toAdmin) {
 				notificationsToSend.push({
 					'emailType': 'Notification',
 					'caller': 'beginningOfLife admin',
@@ -9253,9 +9277,9 @@
 		// ---- END OF LIFE
 		// ============
 
-		if (typeof(eData.endOfLife) != 'undefined' && eData.endOfLife == 1) {
+		if (typeof (eData.endOfLife) != 'undefined' && eData.endOfLife == 1) {
 
-			$.each(eData.adminEmailArray, function(i, toAdmin) {
+			$.each(eData.adminEmailArray, function (i, toAdmin) {
 				notificationsToSend.push({
 					'emailType': 'Notification',
 					'caller': 'endOfLife admin',
@@ -9290,7 +9314,7 @@
 			console.log(notificationsToSend);
 		}
 
-		$().SendEmails(notificationsToSend).then(function() {
+		$().SendEmails(notificationsToSend).then(function () {
 			// return promise
 			emailProcessingPromise.resolve();
 		});
@@ -9300,7 +9324,7 @@
 
 
 
-	$.fn.ProcessPhotoReqNotifications = function(sData) {
+	$.fn.ProcessPhotoReqNotifications = function (sData) {
 
 		console.log('ProcessPhotoReqNotifications');
 
@@ -9356,7 +9380,7 @@
 		// ---- BEGINNING OF LIFE
 		// ============
 
-		if (typeof(eData.beginningOfLife) != 'undefined' && eData.beginningOfLife == 1) {
+		if (typeof (eData.beginningOfLife) != 'undefined' && eData.beginningOfLife == 1) {
 
 			var adminBeginningOfLifeBodyUnique = '<p>' + eData.requesterName + ' has submitted a new request. You can ' +
 				'<a href="' + eData.uriFormAdmin + '">review this request\'s details and retrieve attachments</a>, ' +
@@ -9380,7 +9404,7 @@
 				'</ul>';
 
 			// admin
-			$.each(eData.adminEmailArray, function(i, toAdmin) {
+			$.each(eData.adminEmailArray, function (i, toAdmin) {
 				notificationsToSend.push({
 					'emailType': 'Notification',
 					'caller': 'beginningOfLife admin',
@@ -9410,10 +9434,10 @@
 		// ---- END OF LIFE
 		// ============
 
-		if (typeof(eData.endOfLife) != 'undefined' && eData.endOfLife == 1) {
+		if (typeof (eData.endOfLife) != 'undefined' && eData.endOfLife == 1) {
 
 			// admin
-			$.each(eData.adminEmailArray, function(i, toAdmin) {
+			$.each(eData.adminEmailArray, function (i, toAdmin) {
 				notificationsToSend.push({
 					'emailType': 'Notification',
 					'caller': 'endOfLife admin',
@@ -9448,7 +9472,7 @@
 			console.log(notificationsToSend);
 		}
 
-		$().SendEmails(notificationsToSend).then(function() {
+		$().SendEmails(notificationsToSend).then(function () {
 			// return promise
 			emailProcessingPromise.resolve();
 		});
@@ -9458,7 +9482,7 @@
 
 
 
-	$.fn.ProcessLogoReqNotifications = function(sData) {
+	$.fn.ProcessLogoReqNotifications = function (sData) {
 
 		console.log('ProcessLogoReqNotifications');
 
@@ -9524,7 +9548,7 @@
 		// ---- BEGINNING OF LIFE
 		// ============
 
-		if (typeof(eData.beginningOfLife) != 'undefined' && eData.beginningOfLife == 1) {
+		if (typeof (eData.beginningOfLife) != 'undefined' && eData.beginningOfLife == 1) {
 
 			var adminBeginningOfLifeBodyUnique = '<p>' + eData.requesterName + ' has submitted a new request. You can ' +
 				'<a href="' + eData.uriFormAdmin + '">review this request\'s details and retrieve attachments</a>, ' +
@@ -9549,7 +9573,7 @@
 				'</ul>';
 
 			// admin
-			$.each(eData.adminEmailArray, function(i, toAdmin) {
+			$.each(eData.adminEmailArray, function (i, toAdmin) {
 				notificationsToSend.push({
 					'emailType': 'Notification',
 					'caller': 'beginningOfLife admin',
@@ -9579,10 +9603,10 @@
 		// ---- END OF LIFE
 		// ============
 
-		if (typeof(eData.endOfLife) != 'undefined' && eData.endOfLife == 1) {
+		if (typeof (eData.endOfLife) != 'undefined' && eData.endOfLife == 1) {
 
 			// admin
-			$.each(eData.adminEmailArray, function(i, toAdmin) {
+			$.each(eData.adminEmailArray, function (i, toAdmin) {
 				notificationsToSend.push({
 					'emailType': 'Notification',
 					'caller': 'endOfLife admin',
@@ -9617,7 +9641,7 @@
 			console.log(notificationsToSend);
 		}
 
-		$().SendEmails(notificationsToSend).then(function() {
+		$().SendEmails(notificationsToSend).then(function () {
 			// return promise
 			emailProcessingPromise.resolve();
 		});
@@ -9627,7 +9651,7 @@
 
 
 
-	$.fn.ProcessPromoReqNotifications = function(sData) {
+	$.fn.ProcessPromoReqNotifications = function (sData) {
 
 		console.log('ProcessPromoReqNotifications');
 
@@ -9696,12 +9720,12 @@
 			// ============
 
 
-			if (typeof(eData.beginningOfLife) != 'undefined' && eData.beginningOfLife == 1) {
+			if (typeof (eData.beginningOfLife) != 'undefined' && eData.beginningOfLife == 1) {
 
 				console.log('beginningOfLife = 1');
 
 				// query
-				if (typeof(eData.devAdminNotifications) != 'undefined' && eData.devAdminNotifications == 1) {
+				if (typeof (eData.devAdminNotifications) != 'undefined' && eData.devAdminNotifications == 1) {
 
 					eData = $.extend(
 						$().GetFieldsFromOneRow({
@@ -9743,7 +9767,7 @@
 				eData.pendingApprovalRecipients = $().ReturnUserEmailStringAndArray(eData.pendingApprovalRecipientsVerbose).array;
 
 				// admin
-				$.each(eData.pendingApprovalRecipients, function(i, toAdmin) {
+				$.each(eData.pendingApprovalRecipients, function (i, toAdmin) {
 					notificationsToSend.push({
 						'emailType': 'Notification',
 						'caller': 'beginningOfLife admin',
@@ -9783,7 +9807,7 @@
 				console.log('RS = approved');
 
 				// query
-				if (typeof(eData.devAdminNotifications) != 'undefined' && eData.devAdminNotifications == 1) {
+				if (typeof (eData.devAdminNotifications) != 'undefined' && eData.devAdminNotifications == 1) {
 
 					eData = $.extend(
 						$().GetFieldsFromOneRow({
@@ -9825,7 +9849,7 @@
 				eData.approvedRecipients = $().ReturnUserEmailStringAndArray(eData.approvedRecipientsVerbose).array;
 
 				// admin
-				$.each(eData.approvedRecipients, function(i, toAdmin) {
+				$.each(eData.approvedRecipients, function (i, toAdmin) {
 					notificationsToSend.push({
 						'emailType': 'Notification',
 						'caller': 'approved admin',
@@ -9854,7 +9878,7 @@
 				console.log('RS = text edited');
 
 				// query
-				if (typeof(eData.devAdminNotifications) != 'undefined' && eData.devAdminNotifications == 1) {
+				if (typeof (eData.devAdminNotifications) != 'undefined' && eData.devAdminNotifications == 1) {
 
 					eData = $.extend(
 						$().GetFieldsFromOneRow({
@@ -9896,7 +9920,7 @@
 				eData.textEditedRecipients = $().ReturnUserEmailStringAndArray(eData.textEditedRecipientsVerbose).array;
 
 				// admin
-				$.each(eData.textEditedRecipients, function(i, toAdmin) {
+				$.each(eData.textEditedRecipients, function (i, toAdmin) {
 					notificationsToSend.push({
 						'emailType': 'Notification',
 						'caller': 'text edited admin',
@@ -9925,7 +9949,7 @@
 				console.log('RS = web live');
 
 				// query
-				if (typeof(eData.devAdminNotifications) != 'undefined' && eData.devAdminNotifications == 1) {
+				if (typeof (eData.devAdminNotifications) != 'undefined' && eData.devAdminNotifications == 1) {
 
 					eData = $.extend(
 						$().GetFieldsFromOneRow({
@@ -9967,7 +9991,7 @@
 				eData.webLiveRecipients = $().ReturnUserEmailStringAndArray(eData.webLiveRecipientsVerbose).array;
 
 				// admin
-				$.each(eData.webLiveRecipients, function(i, toAdmin) {
+				$.each(eData.webLiveRecipients, function (i, toAdmin) {
 					notificationsToSend.push({
 						'emailType': 'Notification',
 						'caller': 'web live admin',
@@ -9991,7 +10015,7 @@
 			// ---- END OF LIFE
 			// ============
 
-			if (typeof(eData.endOfLife) != 'undefined' && eData.endOfLife == 1) {
+			if (typeof (eData.endOfLife) != 'undefined' && eData.endOfLife == 1) {
 
 				// requester
 				notificationsToSend.push({
@@ -10017,7 +10041,7 @@
 				console.log(notificationsToSend);
 			}
 
-			$().SendEmails(notificationsToSend).then(function() {
+			$().SendEmails(notificationsToSend).then(function () {
 				// return promise
 				emailProcessingPromise.resolve();
 			});
@@ -10028,7 +10052,7 @@
 
 
 
-	$.fn.ProcessInterpreterReqNotifications = function(sData) {
+	$.fn.ProcessInterpreterReqNotifications = function (sData) {
 
 		console.log('ProcessInterpreterReqNotifications');
 
@@ -10080,10 +10104,10 @@
 		// ---- 2. BEGINNING OF LIFE
 		// ============
 
-		if (typeof(eData.beginningOfLife) != 'undefined' && eData.beginningOfLife == 1) {
+		if (typeof (eData.beginningOfLife) != 'undefined' && eData.beginningOfLife == 1) {
 
 			// admin
-			$.each(eData.adminEmailArray, function(i, toAdmin) {
+			$.each(eData.adminEmailArray, function (i, toAdmin) {
 				notificationsToSend.push({
 					'emailType': 'Notification',
 					'caller': 'beginningOfLife admin',
@@ -10123,7 +10147,7 @@
 		if (eData.requestStatus == 'Submitted to Commission') {
 
 			// admin
-			$.each(eData.adminEmailArray, function(i, toAdmin) {
+			$.each(eData.adminEmailArray, function (i, toAdmin) {
 				notificationsToSend.push({
 					'emailType': 'Notification',
 					'caller': 'submitted to commission admin',
@@ -10148,7 +10172,7 @@
 		if (eData.requestStatus == 'Interpreter Assigned') {
 
 			// admin
-			$.each(eData.adminEmailArray, function(i, toAdmin) {
+			$.each(eData.adminEmailArray, function (i, toAdmin) {
 				notificationsToSend.push({
 					'emailType': 'Notification',
 					'caller': 'interpreter assigned admin',
@@ -10186,7 +10210,7 @@
 		if (eData.requestStatus == 'Invoice Received') {
 
 			// admin
-			$.each(eData.adminEmailArray, function(i, toAdmin) {
+			$.each(eData.adminEmailArray, function (i, toAdmin) {
 				notificationsToSend.push({
 					'emailType': 'Notification',
 					'caller': 'invoice received admin',
@@ -10218,10 +10242,10 @@
 		// ---- 6. END OF LIFE
 		// ============
 
-		if (typeof(eData.endOfLife) != 'undefined' && eData.endOfLife == 1) {
+		if (typeof (eData.endOfLife) != 'undefined' && eData.endOfLife == 1) {
 
 			// admin
-			$.each(eData.adminEmailArray, function(i, toAdmin) {
+			$.each(eData.adminEmailArray, function (i, toAdmin) {
 				notificationsToSend.push({
 					'emailType': 'Notification',
 					'caller': 'endOfLife admin',
@@ -10256,7 +10280,7 @@
 			console.log(notificationsToSend);
 		}
 
-		$().SendEmails(notificationsToSend).then(function() {
+		$().SendEmails(notificationsToSend).then(function () {
 			// return promise
 			emailProcessingPromise.resolve();
 		});
@@ -10266,7 +10290,7 @@
 
 
 
-	$.fn.ProcessFunctionSpaceReqNotifications = function(sData) {
+	$.fn.ProcessFunctionSpaceReqNotifications = function (sData) {
 
 		console.log('ProcessFunctionSpaceReqNotifications');
 
@@ -10309,10 +10333,10 @@
 		// ---- BEGINNING OF LIFE
 		// ============
 
-		if (typeof(eData.beginningOfLife) != 'undefined' && eData.beginningOfLife == 1) {
+		if (typeof (eData.beginningOfLife) != 'undefined' && eData.beginningOfLife == 1) {
 
 			// admin
-			$.each(eData.adminEmailArray, function(i, toAdmin) {
+			$.each(eData.adminEmailArray, function (i, toAdmin) {
 				notificationsToSend.push({
 					'caller': 'beginningOfLife admin',
 					'to': toAdmin,
@@ -10402,7 +10426,7 @@
 		if (eData.requestStatus == 'Cancelled') {
 
 			// admin
-			$.each(eData.adminEmailArray, function(i, toAdmin) {
+			$.each(eData.adminEmailArray, function (i, toAdmin) {
 				notificationsToSend.push({
 					'caller': 'endOfLife admin',
 					'to': toAdmin,
@@ -10435,8 +10459,8 @@
 			console.log(notificationsToSend);
 		}
 
-		$.each(notificationsToSend, function(i, n) {
-			setTimeout(function() {
+		$.each(notificationsToSend, function (i, n) {
+			setTimeout(function () {
 				$().SendStandardHubEmail(n);
 			}, 500);
 		});
@@ -10444,7 +10468,7 @@
 
 
 
-	$.fn.ValidateForm = function(options) {
+	$.fn.ValidateForm = function (options) {
 
 		// set form validation status flag
 		var validForm = true;
@@ -10454,7 +10478,7 @@
 		$("div#request-form div.contains-errors").removeClass("contains-errors");
 
 		// for each input, select, and textarea
-		$(this).find("input, select, textarea, div.mos-drag-and-drop-file-attachment").each(function() {
+		$(this).find("input, select, textarea, div.mos-drag-and-drop-file-attachment").each(function () {
 
 			// set element flag
 			var invalidField = 0;
@@ -10474,29 +10498,29 @@
 				// if this is a file attachment
 				if ($(this).hasClass("mos-drag-and-drop-file-attachment")) {
 					var fileStorageNameForValidation = $(this).find("input.mos-drag-and-drop-file-name").val();
-					if (typeof(fileStorageNameForValidation) == "undefined" || fileStorageNameForValidation == "") {
+					if (typeof (fileStorageNameForValidation) == "undefined" || fileStorageNameForValidation == "") {
 						invalidField = 1;
 						msg = "At least one file must be selected";
 					}
 
-				// if this element has a type attribute defined
-				} else if (typeof($(this).attr("type")) != "undefined") {
+					// if this element has a type attribute defined
+				} else if (typeof ($(this).attr("type")) != "undefined") {
 
 					// if element is of type radio or checkbox and there are no elelements in the named set checked
 					if (($(this).attr("type") == "radio" || $(this).attr("type") == "checkbox") && ($('input[name="' + $(this).attr("name") + '"]:checked').val() == undefined)) {
 						invalidField = 1;
 						msg = "At least one must be selected";
 
-					// // if element is of type file and there is no file reference
-					// } else if ($(this).attr("type") == "file" && typeof(($(this))[0].files[0]) == 'undefined') {
-					// 	invalidField = 1;
-					// 	msg = "At least one file must be selected";
+						// // if element is of type file and there is no file reference
+						// } else if ($(this).attr("type") == "file" && typeof(($(this))[0].files[0]) == 'undefined') {
+						// 	invalidField = 1;
+						// 	msg = "At least one file must be selected";
 
-					// if this element is of a type other than radio, checkbox, or file and it has no value
+						// if this element is of a type other than radio, checkbox, or file and it has no value
 					} else if ($(this).attr("type") != "radio" && $(this).attr("type") != "checkbox" && $(this).attr("type") != "file" && (value.length == 0)) {
 						invalidField = 1;
 					}
-				// if this element does not have a type attribute defined and it has no value
+					// if this element does not have a type attribute defined and it has no value
 				} else if ((value.length == 0)) {
 					invalidField = 1;
 				}
@@ -10507,13 +10531,13 @@
 			// (this will be a div and thus will not have a value)
 			if (addtlValidationType != undefined && addtlValidationType == "validAttachment") {
 				validAttachment(this);
-			// if it has an additional validation type and it has a value
+				// if it has an additional validation type and it has a value
 			} else if (addtlValidationType != undefined && value != undefined && value.length > 0) {
 				// perform the additional validation
 
 				var addtlValidationTypeObject = isJSONParsable(ReplaceAll('DOUBLEQUOTE', '"', addtlValidationType));
-				
-				if (typeof(addtlValidationTypeObject) == "object") {
+
+				if (typeof (addtlValidationTypeObject) == "object") {
 					var addtlValidationTypeName = addtlValidationTypeObject.name;
 				} else {
 					var addtlValidationTypeName = addtlValidationType;
@@ -10571,8 +10595,8 @@
 
 
 
-	$.fn.SetErrorMessage = function(element, msg) {
-		if (typeof(msg) == 'undefined') {
+	$.fn.SetErrorMessage = function (element, msg) {
+		if (typeof (msg) == 'undefined') {
 			msg = 'Cannot be blank';
 		} else if (msg == "") {
 			msg = 'Cannot be blank';
@@ -10586,14 +10610,14 @@
 
 
 
-	$.fn.RemoveErrorMessage = function(element) {
+	$.fn.RemoveErrorMessage = function (element) {
 		$(element).closest("div.control").find("div.error-message").remove();
 		$(element).closest("div.control").parent("div.label-and-control").removeClass("contains-errors");
 	};
 
 
 
-	$.fn.ValidateInRealTimeForPositiveInteger = function(value, element) {
+	$.fn.ValidateInRealTimeForPositiveInteger = function (value, element) {
 		if (!(/^[0-9]*[1-9][0-9]*$/.test(value))) {
 			$().SetErrorMessage(element, 'Please enter a valid positive integer');
 		} else {
@@ -10603,7 +10627,7 @@
 
 
 
-	$.fn.ValidateInRealTimeForPositiveGrantCostsInUSD = function(value, element) {
+	$.fn.ValidateInRealTimeForPositiveGrantCostsInUSD = function (value, element) {
 		if (!(/^((\$)?([0-9]{1,3})?(?:,?[0-9]{3})*(?:\.[0-9]{1,2})?)?$/.test(value))) {
 			$().SetErrorMessage(element, 'Please enter a positive number. Use numeric characters, optionally using commas to separate groups of three numerals and a decimal to separate the integer portion from the fractional portion of the number. Avoid all other characters, including spaces. Convert to USD, if grant will be in another currency.');
 			return 0;
@@ -10615,7 +10639,7 @@
 
 
 
-	$.fn.ValidateInRealTimeForPositiveNumberInUSDFormat = function(value, element) {
+	$.fn.ValidateInRealTimeForPositiveNumberInUSDFormat = function (value, element) {
 		if (!(/^((\$)?([0-9]{1,3})?(?:,?[0-9]{3})*(?:\.[0-9]{1,2})?)?$/.test(value))) {
 			$().SetErrorMessage(element, 'Please enter a positive number. Use numeric characters, optionally using commas to separate groups of three numerals and a decimal to separate the integer portion from the fractional portion of the number.');
 			return 0;
@@ -10627,7 +10651,7 @@
 
 
 
-	$.fn.ValidateInRealTimeForPositiveFloat = function(value, element) {
+	$.fn.ValidateInRealTimeForPositiveFloat = function (value, element) {
 		if (!(/^((\$)?([0-9]{1,3})?(?:,?[0-9]{3})*(?:\.[0-9]{1,2})?)?$/.test(value))) {
 			$().SetErrorMessage(element, 'Please enter a valid positive number');
 			return 0;
@@ -10639,7 +10663,7 @@
 
 
 
-	$.fn.ValidateInRealTimeForDayOfWeek = function(value, element, dayOfWeek) {
+	$.fn.ValidateInRealTimeForDayOfWeek = function (value, element, dayOfWeek) {
 		if (moment(value, "MMMM D, YYYY").day() != dayOfWeek) {
 			$().SetErrorMessage(element, 'Please enter a Monday date');
 		} else {
@@ -10649,8 +10673,8 @@
 
 
 
-	$.fn.ValidateInRealTimeForMaxQuantityCheckedInGroup = function(element, maxQuantityNumber, maxQuantityString) {
-		if($("input[name='" + $(element).attr("name") + "']:checked").length > maxQuantityNumber) {
+	$.fn.ValidateInRealTimeForMaxQuantityCheckedInGroup = function (element, maxQuantityNumber, maxQuantityString) {
+		if ($("input[name='" + $(element).attr("name") + "']:checked").length > maxQuantityNumber) {
 			$().SetErrorMessage(element, 'Please select no more than ' + maxQuantityString);
 		} else {
 			$().RemoveErrorMessage(element);
@@ -10659,13 +10683,13 @@
 
 
 
-	$.fn.ValidateInRealTimeForAllVisibleCheckedInSet = function(checkboxFields, errorFieldID, errorFieldValue, errorMessage) {
+	$.fn.ValidateInRealTimeForAllVisibleCheckedInSet = function (checkboxFields, errorFieldID, errorFieldValue, errorMessage) {
 
-		if($("#" + errorFieldID).val() == errorFieldValue) {
-			
+		if ($("#" + errorFieldID).val() == errorFieldValue) {
+
 			var uncheckedInSet = 0;
 
-			$.each(checkboxFields, function(i,checkboxField) {
+			$.each(checkboxFields, function (i, checkboxField) {
 				var checkboxSelector = '#' + ReplaceAll(" ", "", checkboxField);
 				if ($(checkboxSelector).is(":visible") && !($(checkboxSelector).is(":checked"))) {
 					uncheckedInSet++;
@@ -10684,10 +10708,10 @@
 
 
 
-	$.fn.WarnIfTimeEarlierThan = function(timeOneHours, timeOneMinutes, timeTwoHours, timeTwoMinutes, warningID) {
-		
-		if(typeof(timeOneHours) != "undefined" && typeof(timeOneMinutes) != "undefined" && typeof(timeTwoHours) != "undefined" && typeof(timeTwoMinutes) != "undefined") {
-			
+	$.fn.WarnIfTimeEarlierThan = function (timeOneHours, timeOneMinutes, timeTwoHours, timeTwoMinutes, warningID) {
+
+		if (typeof (timeOneHours) != "undefined" && typeof (timeOneMinutes) != "undefined" && typeof (timeTwoHours) != "undefined" && typeof (timeTwoMinutes) != "undefined") {
+
 			var timeOneIsEarlier = $().ReturnTimeOneIsEarlierThanTimeTwo(timeOneHours, timeOneMinutes, timeTwoHours, timeTwoMinutes);
 
 			if (timeOneIsEarlier == 1) {
@@ -10700,10 +10724,10 @@
 
 
 
-	$.fn.WarnIfTimeLaterThan = function(timeOneHours, timeOneMinutes, timeTwoHours, timeTwoMinutes, warningID) {
-		
-		if(typeof(timeOneHours) != "undefined" && typeof(timeOneMinutes) != "undefined" && typeof(timeTwoHours) != "undefined" && typeof(timeTwoMinutes) != "undefined") {
-			
+	$.fn.WarnIfTimeLaterThan = function (timeOneHours, timeOneMinutes, timeTwoHours, timeTwoMinutes, warningID) {
+
+		if (typeof (timeOneHours) != "undefined" && typeof (timeOneMinutes) != "undefined" && typeof (timeTwoHours) != "undefined" && typeof (timeTwoMinutes) != "undefined") {
+
 			var timeOneIsLater = $().ReturnTimeOneIsLaterThanTimeTwo(timeOneHours, timeOneMinutes, timeTwoHours, timeTwoMinutes);
 
 			if (timeOneIsLater == 1) {
@@ -10716,9 +10740,9 @@
 
 
 
-	$.fn.CreateWFHistoryItem = function(d) {
+	$.fn.CreateWFHistoryItem = function (d) {
 		// set up vars for new history item
-		if (typeof(rData.requestID) != 'undefined') {
+		if (typeof (rData.requestID) != 'undefined') {
 			var requestID = rData.requestID;
 		} else {
 			var requestID = 0;
@@ -10736,7 +10760,7 @@
 			batchCmd: 'New',
 			ID: 0,
 			valuepairs: historyValuePairs,
-			completefunc: function(xData, Status) {
+			completefunc: function (xData, Status) {
 				notificationAttemptWFHistorySuccess = $().HandleListUpdateReturn(xData, Status, 'WF History List Error (Notification Attempt)');
 			}
 		});
@@ -10744,11 +10768,11 @@
 
 
 
-	$.fn.SendEmails = function(emailsToSend) {
+	$.fn.SendEmails = function (emailsToSend) {
 
 		var emailSendingPromises = [];
 
-		$.each(emailsToSend, function(i, emailData) {
+		$.each(emailsToSend, function (i, emailData) {
 
 			var standardizedHubEmail = $().CreateStandardHubEmail(emailData);
 
@@ -10758,35 +10782,35 @@
 				crossDomain: true,
 				contentType: 'application/json',
 				data: JSON.stringify(standardizedHubEmail),
-				beforeSend: function() {
+				beforeSend: function () {
 					$().CreateWFHistoryItem(standardizedHubEmail.type + ' Attempt -- ' + standardizedHubEmail.to + ', ' + standardizedHubEmail.subject);
 				}
 			})
-			.done(function() {
-				$().CreateWFHistoryItem(standardizedHubEmail.type + ' Success -- ' + standardizedHubEmail.to + ', ' + standardizedHubEmail.subject);
-			})
-			.fail(function() {
-				$().CreateWFHistoryItem(standardizedHubEmail.type + ' Failure -- ' + standardizedHubEmail.to + ', ' + standardizedHubEmail.subject);
-			}));
+				.done(function () {
+					$().CreateWFHistoryItem(standardizedHubEmail.type + ' Success -- ' + standardizedHubEmail.to + ', ' + standardizedHubEmail.subject);
+				})
+				.fail(function () {
+					$().CreateWFHistoryItem(standardizedHubEmail.type + ' Failure -- ' + standardizedHubEmail.to + ', ' + standardizedHubEmail.subject);
+				}));
 		});
 
 		// wait for all promises to complete (pass or fail) 
-		return $.when.apply($, emailSendingPromises).always(function() {});
+		return $.when.apply($, emailSendingPromises).always(function () { });
 	};
 
 
 
-	$.fn.CreateStandardHubEmail = function(emailData) {
+	$.fn.CreateStandardHubEmail = function (emailData) {
 
 		return {
 			'to': emailData.to,
 			'from': 'The Hub <noreply@mos.org>',
 			'subject': emailData.subject,
 			'html': '<div style="font-family: \'wf_segoe-ui_normal\', \'Segoe UI\', \'Segoe WP\', Arial, sans-serif; ' +
-					'	color: #212121; font-size: 15px">' +
-					emailData.bodyUnique +
-					'	<p style="font-weight: 700">The Hub</p>' +
-					'</div>',
+				'	color: #212121; font-size: 15px">' +
+				emailData.bodyUnique +
+				'	<p style="font-weight: 700">The Hub</p>' +
+				'</div>',
 			'system': 'hub',
 			'type': emailData.emailType,
 			'event': emailData.caller
@@ -10795,7 +10819,7 @@
 
 
 
-	$.fn.ProcessStandardHubEmail = function(p) {
+	$.fn.ProcessStandardHubEmail = function (p) {
 
 		// augment message body
 		p.body = '<div style="font-family: \'wf_segoe-ui_normal\', \'Segoe UI\', \'Segoe WP\', Arial, sans-serif; ' +
@@ -10812,7 +10836,7 @@
 
 	function validPeoplePicker(value, element) {
 		var ppArray = JSON.parse($(element).val());
-		$.each(ppArray, function(i, p) {
+		$.each(ppArray, function (i, p) {
 			if (p.IsResolved == false) {
 				$().SetErrorMessage(element, 'Please begin entering a name or email address, and then select people from the resulting list');
 			}
@@ -10835,7 +10859,7 @@
 		// ======================================================================================= //
 
 		// if field is not disabled
-		if (typeof($(element).attr('disabled')) != 'string') {
+		if (typeof ($(element).attr('disabled')) != 'string') {
 			var attemptDateConstruction = 0;
 
 			// only allow the date construction test to be performed if value is in a known format
@@ -10887,11 +10911,11 @@
 
 	function validAllVisibleCheckedInSet(checkboxFields, errorField, errorFieldValue, errorMessage) {
 
-		if($("#" + errorField).val() == errorFieldValue) {
+		if ($("#" + errorField).val() == errorFieldValue) {
 
 			var uncheckedInSet = 0;
 
-			$.each(checkboxFields, function(i,checkboxField) {
+			$.each(checkboxFields, function (i, checkboxField) {
 				var checkboxSelector = '#' + ReplaceAll(" ", "", checkboxField);
 				if ($(checkboxSelector).is(":visible") && !($(checkboxSelector).is(":checked"))) {
 					uncheckedInSet++;
@@ -10945,50 +10969,50 @@
 		var maxQuantityString = "";
 
 		switch (maxQuantityNumber) {
-			
+
 			case "1":
 				maxQuantityString = "one";
 				break;
-				
+
 			case "2":
 				maxQuantityString = "two";
 				break;
-				
+
 			case "3":
 				maxQuantityString = "three";
 				break;
-				
+
 			case "4":
 				maxQuantityString = "four";
 				break;
-				
+
 			case "5":
 				maxQuantityString = "five";
 				break;
-				
+
 			case "6":
 				maxQuantityString = "six";
 				break;
-				
+
 			case "7":
 				maxQuantityString = "seven";
 				break;
-				
+
 			case "8":
 				maxQuantityString = "eight";
 				break;
-				
+
 			case "9":
 				maxQuantityString = "nine";
 				break;
-				
+
 			case "10":
 				maxQuantityString = "ten";
 				break;
-				
+
 		}
 
-		if($("input[name='" + $(element).attr("name") + "']:checked").length > maxQuantityNumber) {
+		if ($("input[name='" + $(element).attr("name") + "']:checked").length > maxQuantityNumber) {
 			$().SetErrorMessage(element, 'Please select no more than ' + maxQuantityString);
 		}
 	}
@@ -11023,14 +11047,14 @@
 
 
 
-	$.fn.PopulatePeoplePickerFromList = function(fieldNameOrSelector, userKeysAsString) {
+	$.fn.PopulatePeoplePickerFromList = function (fieldNameOrSelector, userKeysAsString) {
 		var metaObject = $().GetPeoplePickerMetaObject(fieldNameOrSelector);
 		metaObject.picker.AddUserKeys(userKeysAsString, false);
 	};
 
 
 
-	$.fn.GetPeoplePickerMetaObject = function(fieldNameOrSelector) {
+	$.fn.GetPeoplePickerMetaObject = function (fieldNameOrSelector) {
 		// fieldNameOrSelector can be in any of these formats:
 		//	 -	div#request-form #Requested-For
 		//	 -	#Requested-For
@@ -11044,8 +11068,8 @@
 
 
 
-	$.fn.PopulatePeoplePickerFromListAndResolve = function(fieldNameOrSelector, peopleObjectArray) {
-		
+	$.fn.PopulatePeoplePickerFromListAndResolve = function (fieldNameOrSelector, peopleObjectArray) {
+
 		// --- set up internal promise to configure
 
 		// var deferred = $.Deferred();
@@ -11060,7 +11084,7 @@
 		schema['Width'] = '450px';
 		var allPeople = [];
 
-		$.each(peopleObjectArray, function(i, p) {
+		$.each(peopleObjectArray, function (i, p) {
 			allPeople.push({
 				'AutoFillDisplayText': p.displayText,
 				'AutoFillKey': p.description,
@@ -11073,7 +11097,7 @@
 			});
 		});
 
-		setTimeout(function() {
+		setTimeout(function () {
 			SPClientPeoplePicker_InitStandaloneControlWrapper(metaObject.pickerID, allPeople, schema);
 			if ($('#' + metaObject.pickerID).hasClass("disabled") && !$('#' + metaObject.pickerTopSpanID).hasClass("disabled")) {
 				$().SetFieldToDisabled('#' + metaObject.pickerID);
@@ -11083,7 +11107,7 @@
 
 
 
-	$.fn.PutAddtlPeopleInPicker = function(fieldNameOrSelector, newPeople) {
+	$.fn.PutAddtlPeopleInPicker = function (fieldNameOrSelector, newPeople) {
 		var metaObject = $().GetPeoplePickerMetaObject(fieldNameOrSelector);
 		var schema = {};
 		schema['PrincipalAccountType'] = 'User,DL,SecGroup,SPGroup';
@@ -11095,7 +11119,7 @@
 		var existingPeople = metaObject.picker.GetAllUserInfo();
 		var allPeople = [];
 
-		$.each(existingPeople, function(i, e) {
+		$.each(existingPeople, function (i, e) {
 			allPeople.push({
 				'AutoFillDisplayText': e.DisplayText,
 				'AutoFillKey': e.Description,
@@ -11108,7 +11132,7 @@
 			});
 		});
 
-		$.each(newPeople, function(i, n) {
+		$.each(newPeople, function (i, n) {
 			allPeople.push({
 				'AutoFillDisplayText': n.name,
 				'AutoFillKey': n.email,
@@ -11126,8 +11150,8 @@
 
 
 
-	$.fn.AddAssigneesFromFields = function(fields) {
-		
+	$.fn.AddAssigneesFromFields = function (fields) {
+
 		// this might ought to be combined with with $.fn.PutAddtlPeopleInPicker; impending deadline precludes the research to determine whether or not this would disrupt anything
 
 		var metaObject = $().GetPeoplePickerMetaObject("Assigned-To");
@@ -11141,7 +11165,7 @@
 
 		var newAssigneesString = "";
 
-		$.each(fields, function(i, field) {
+		$.each(fields, function (i, field) {
 			if (i > 0) {
 				newAssigneesString += ";#";
 			}
@@ -11151,7 +11175,7 @@
 
 		var existingAssignees = metaObject.picker.GetAllUserInfo();
 		var newAssignees = $().ReturnUserDataFromPersonOrGroupFieldString(newAssigneesString);
-		var allAssignees =[];
+		var allAssignees = [];
 
 		// console.log("pp test 1");
 		// console.log(metaObject.picker.GetAllUserInfo());
@@ -11159,7 +11183,7 @@
 		// console.log("pp test 2");
 		// console.log(metaObject.picker.GetAllUserInfo());
 
-		$.each(existingAssignees, function(i, e) {
+		$.each(existingAssignees, function (i, e) {
 			allAssignees.push({
 				'AutoFillDisplayText': e.DisplayText,
 				'AutoFillKey': e.Description,
@@ -11172,11 +11196,11 @@
 			});
 		});
 
-		$.each(newAssignees, function(i, n) {
+		$.each(newAssignees, function (i, n) {
 
 			var alreadyInAllAssignees = 0;
 
-			$.each(allAssignees, function(i, a) {
+			$.each(allAssignees, function (i, a) {
 				if (n.account == a.Key) {
 					alreadyInAllAssignees = 1;
 				}
@@ -11201,10 +11225,10 @@
 
 
 
-	$.fn.ClearPeoplePicker = function(id) {
+	$.fn.ClearPeoplePicker = function (id) {
 		var ppobject = SPClientPeoplePicker.SPClientPeoplePickerDict[id];
 		var usersobject = ppobject.GetAllUserInfo();
-		usersobject.forEach(function(index) {
+		usersobject.forEach(function (index) {
 			ppobject.DeleteProcessedUser(usersobject[index]);
 		});
 		$("span#" + id + "_InitialHelpText").css("display", "inline");
@@ -11212,12 +11236,17 @@
 
 
 
-	$.fn.LoadSelectOptions = function(options, restrictions) {
+	$.fn.LoadSelectOptions = function (options, restrictions) {
 		// if a loading function was specified
-		if (typeof(options.function) !== "undefined") {
-			// call the function and pass the select ID
-			CallFunctionFromString (options.function, {'selectID': this.selector});
-		// if a loading function was NOT specified
+		if (options.function) {
+			var functionParameters = {};
+			if (options.params) {
+				functionParameters = options.params;
+			}
+			functionParameters.selectID = this.selector;
+			// call the function and pass the parameters
+			CallFunctionFromString(options.function, functionParameters);
+			// if a loading function was NOT specified
 		} else {
 			// assume loading from a SharePoint list
 			var opt = $.extend({}, {
@@ -11225,11 +11254,11 @@
 				listName: "",
 				firstOptionText: "",
 				completefunc: null,
-				restrictions: {'lowest': 0, 'highest': 1000000}
+				restrictions: { 'lowest': 0, 'highest': 1000000 }
 			}, options);
 			var $this = this;
 
-			return this.each(function() {
+			return this.each(function () {
 
 				var currentSelectedText = $($this).find("option:selected").text();
 
@@ -11242,13 +11271,13 @@
 					"	<Geq>" +
 					"		 <FieldRef Name='Order' />" +
 					"		 <Value Type='Number'>" +
-								opt.restrictions.lowest * 100 +
+					opt.restrictions.lowest * 100 +
 					"		 </Value>" +
 					"	</Geq>" +
 					"	<Leq>" +
 					"		 <FieldRef Name='Order' />" +
 					"		 <Value Type='Number'>" +
-								opt.restrictions.highest * 100 +
+					opt.restrictions.highest * 100 +
 					"		 </Value>" +
 					"	</Leq>" +
 					"</And>" +
@@ -11273,10 +11302,10 @@
 					listName: opt.listName,
 					CAMLViewFields: fieldsToRead,
 					CAMLQuery: query,
-					completefunc: function(xData, Status) {
+					completefunc: function (xData, Status) {
 						var options = "<option value=''> " + opt.firstOptionText + " </option>";
 
-						$(xData.responseXML).SPFilterNode("z:row").each(function() {
+						$(xData.responseXML).SPFilterNode("z:row").each(function () {
 
 							var optionOrder = ($(this).attr("ows_" + opt.orderField));
 							var optionValue = ($(this).attr("ows_" + opt.valueField));
@@ -11309,7 +11338,7 @@
 
 
 
-	$.fn.LoadDepartmentSelectOptions = function(selectObject) {
+	$.fn.LoadDepartmentSelectOptions = function (parameters) {
 
 		$.ajax({
 			async: false,
@@ -11317,67 +11346,71 @@
 			dataType: "json",
 			url: 'https://neso.mos.org/activeDirectory/depts',
 		})
-		.done(function(returnedDepartments) {
+			.done(function (returnedDepartments) {
 
-			var selectID = selectObject.selectID;
-			var departments = returnedDepartments.docs[0].departments;
-			var options = "<option value=''></option>";
-			var currentSelectedText = $(selectID).find("option:selected").text();
+				var selectID = parameters.selectID;
+				var departments = returnedDepartments.docs[0].departments;
+				var options = "<option value=''></option>";
+				var currentSelectedText = $(selectID).find("option:selected").text();
 
-			$.each(departments, function(i, department) {
-				if ($.trim(department) == $.trim(currentSelectedText)) {
-					options += "<option selected='selected' value='" + department + "' >" + department + "</option>";
-				} else {
-					options += "<option value='" + department + "'>" + department + "</option>";
+				if (parameters.otherOptionPosition && parameters.otherOptionPosition === 'top') {
+					options += "<option value='other'>Other</option>";
 				}
+
+				$.each(departments, function (i, department) {
+					if ($.trim(department) == $.trim(currentSelectedText)) {
+						options += "<option selected='selected' value='" + department + "' >" + department + "</option>";
+					} else {
+						options += "<option value='" + department + "'>" + department + "</option>";
+					}
+				});
+
+				$(selectID).append(options);
 			});
-								
-			$(selectID).append(options);
-		});
 	};
 
 
 
-	$.fn.BuildMarkup = function(e) {
+	$.fn.BuildMarkup = function (e) {
 
 		var markup = '';
 
-		if (typeof(e.begin) != "undefined" && e.begin == 1) {
+		if (typeof (e.begin) != "undefined" && e.begin == 1) {
 			markup = '\x3c' + e.tag;
-			if (typeof(e.htmlID) != "undefined") {
+			if (typeof (e.htmlID) != "undefined") {
 				markup += ' id="' + e.htmlID + '"';
 			}
 			markup += ' class="';
-			if (typeof(e.htmlClass) != "undefined") {
+			if (typeof (e.htmlClass) != "undefined") {
 				markup += e.htmlClass
 			}
 			markup += $().AddMarkupClass(e, "hideForAdmin", "hideForNonAdmin");
 			markup += '"';
-			if (typeof(e.scope) != "undefined") {
+			if (typeof (e.scope) != "undefined") {
 				markup += ' scope="' + e.scope + '"';
 			}
-			if (typeof(e.repeatable) != "undefined") {
+			if (typeof (e.repeatable) != "undefined") {
 				markup += ' data-repeatable="Y" ';
 			}
-			if (typeof(e.dataAttributes) != "undefined") {
-				$.each(e.dataAttributes, function(i,dataAttribute){
+			if (typeof (e.dataAttributes) != "undefined") {
+				$.each(e.dataAttributes, function (i, dataAttribute) {
 					markup += ' data-' + dataAttribute.key + '="' + dataAttribute.value + '" ';
 				});
 			}
-			if (typeof(e.repeatSectionID) != "undefined") {
+			if (typeof (e.repeatSectionID) != "undefined") {
 				markup += 'onclick="$().RepeatElement(\'' + e.repeatSectionID + '\');"';
 			}
-			if (typeof(e.removeThisRepeat) != "undefined") {
+			if (typeof (e.removeThisRepeat) != "undefined") {
 				markup += 'onclick="$().RemoveThisRepeat(this);"';
 			}
 			markup += '\x3e';
 		}
 
-		if (typeof(e.content) != "undefined") {
+		if (typeof (e.content) != "undefined") {
 			markup += e.content;
 		}
 
-		if (typeof(e.end) != "undefined" && e.end == 1) {
+		if (typeof (e.end) != "undefined" && e.end == 1) {
 			markup += '\x3c/' + e.tag + '\x3e';
 		}
 
@@ -11386,12 +11419,12 @@
 
 
 
-	$.fn.BuildSelectField = function(e) {
+	$.fn.BuildSelectField = function (e) {
 
 		e.hypehnatedName = $().ReturnHyphenatedFieldNameOrValue(e.fieldName);
 		e.hypehnatedNameLower = e.hypehnatedName.toLowerCase();
 
-		if (typeof(e.addtlValidationType) == "object") {
+		if (typeof (e.addtlValidationType) == "object") {
 			e.addtlValidationType = ReplaceAll('"', 'DOUBLEQUOTE', JSON.stringify(e.addtlValidationType));
 		}
 
@@ -11407,12 +11440,12 @@
 			'	 </div>' +
 			'	 <div class="control">' +
 			'			<select id="' + e.hypehnatedName + '" ';
-		
-		if (typeof(e.addtlValidationType) !== "undefined") {
+
+		if (typeof (e.addtlValidationType) !== "undefined") {
 			field += ' data-validation="' + e.addtlValidationType + '" ';
 		}
-		
-		if (typeof(e.listFieldName) !== "undefined") {
+
+		if (typeof (e.listFieldName) !== "undefined") {
 			field += ' listFieldName="' + e.listFieldName + '" ';
 		}
 
@@ -11422,19 +11455,19 @@
 			'" ';
 
 		field += ' aria-describedby="field-type-indicator_' + e.hypehnatedNameLower;
-		if (typeof(e.helpNotes) != "undefined") {
+		if (typeof (e.helpNotes) != "undefined") {
 			field += $().AddHelpNotesReferences(e, uData.isAdmin, rData.requestStatus);
 		}
 		field += ' ">';
 
-		if (typeof(e.setOptions) != "undefined") {
+		if (typeof (e.setOptions) != "undefined") {
 			field += '					 <option value=""></option>';
 			field += $().BuildSelectOptions(e);
 		}
 
 		field += '			  </select>';
 
-		if (typeof(e.helpNotes) != "undefined") {
+		if (typeof (e.helpNotes) != "undefined") {
 			field += $().AddHelpNotes(e, uData.isAdmin, rData.requestStatus);
 		}
 
@@ -11446,7 +11479,7 @@
 
 
 
-	$.fn.BuildMultifield = function(e) {
+	$.fn.BuildMultifield = function (e) {
 
 		e.hypehnatedName = $().ReturnHyphenatedFieldNameOrValue(e.fieldName);
 		e.hypehnatedNameLower = e.hypehnatedName.toLowerCase();
@@ -11461,10 +11494,10 @@
 			'	 <div class="field-type-indication">' +
 			'		  <span id="field-type-indicator_' + e.hypehnatedNameLower + '" class="field-type-indicator field-optional"><span class="message message-optional">Optional Field</span></span>' +
 			'	 </div>' +
-			'	 <div class="control">' + 
+			'	 <div class="control">' +
 			'		 <div id="' + e.hypehnatedName + '">';
 
-		$.each(e.subfields, function(i, subfield) {
+		$.each(e.subfields, function (i, subfield) {
 
 			subfield.hypehnatedName = ReplaceAll(",", "", ReplaceAll("&", "and", ReplaceAll("\\.", "", ReplaceAll(" ", "-", subfield.subfieldName))));
 			subfield.hypehnatedNameLower = ReplaceAll(",", "", ReplaceAll("&", "and", ReplaceAll("\\.", "", ReplaceAll(" ", "-", subfield.subfieldName)))).toLowerCase();
@@ -11475,7 +11508,7 @@
 
 					field += '			 <select id="' + subfield.hypehnatedName + '" ';
 
-					if (typeof(subfield.listFieldName) !== "undefined") {
+					if (typeof (subfield.listFieldName) !== "undefined") {
 						field += ' listFieldName="' + subfield.listFieldName + '" ';
 					}
 
@@ -11485,19 +11518,19 @@
 						'" ';
 
 					field += ' aria-describedby="field-type-indicator_' + e.hypehnatedNameLower;
-					if (typeof(subfield.helpNotes) != "undefined") {
+					if (typeof (subfield.helpNotes) != "undefined") {
 						field += $().AddHelpNotesReferences(subfield, uData.isAdmin, rData.requestStatus);
 					}
 					field += ' ">';
 
-					if (typeof(subfield.setOptions) != "undefined") {
+					if (typeof (subfield.setOptions) != "undefined") {
 						field += '				  <option value=""></option>';
 						field += $().BuildSelectOptions(subfield);
 					}
 
 					field += '			 </select>';
 
-					if (typeof(subfield.helpNotes) != "undefined") {
+					if (typeof (subfield.helpNotes) != "undefined") {
 						field += $().AddHelpNotes(subfield, uData.isAdmin, rData.requestStatus);
 					}
 
@@ -11507,11 +11540,11 @@
 
 					field += '		  <input type="text" id="' + subfield.hypehnatedName + '"';
 
-					if (typeof(subfield.addtlValidationType) !== "undefined") {
+					if (typeof (subfield.addtlValidationType) !== "undefined") {
 						field += ' data-validation="' + subfield.addtlValidationType + '" ';
 					}
 
-					if (typeof(subfield.listFieldName) !== "undefined") {
+					if (typeof (subfield.listFieldName) !== "undefined") {
 						field += ' listFieldName="' + subfield.listFieldName + '" ';
 					}
 
@@ -11521,12 +11554,12 @@
 						'" ';
 
 					field += ' aria-describedby="field-type-indicator_' + subfield.hypehnatedNameLower;
-					if (typeof(subfield.helpNotes) != "undefined") {
+					if (typeof (subfield.helpNotes) != "undefined") {
 						field += $().AddHelpNotesReferences(subfield, uData.isAdmin, rData.requestStatus);
 					}
 					field += ' ">';
 
-					if (typeof(subfield.helpNotes) != "undefined") {
+					if (typeof (subfield.helpNotes) != "undefined") {
 						field += $().AddHelpNotes(subfield, uData.isAdmin, rData.requestStatus);
 					}
 
@@ -11548,36 +11581,36 @@
 					field += '" ';
 
 					if (i == 0) {
-						if (typeof(e.addtlValidationType) !== "undefined") {
+						if (typeof (e.addtlValidationType) !== "undefined") {
 							field += ' data-validation="' + e.addtlValidationType + '" ';
 						}
-						if (typeof(e.addtlValidationQuantity) !== "undefined") {
+						if (typeof (e.addtlValidationQuantity) !== "undefined") {
 							field += ' data-validation-quantity="' + e.addtlValidationQuantity + '" ';
 						}
 					}
 
 					field += 'aria-describedby="field-type-indicator_' + e.hypehnatedNameLower + ' choice-set-label_' + e.hypehnatedNameLower;
-					
-					if (typeof(e.helpNotes) != "undefined") {
+
+					if (typeof (e.helpNotes) != "undefined") {
 						field += $().AddHelpNotesReferences(subfield, uData.isAdmin, rData.requestStatus);
 					}
-					
-					field +=	 ' ">' +
-								'				  <label for="' + e.hypehnatedNameLower + '_' + subfield.hypehnatedNameLower + '">' + subfield.subfieldName + '</label>' +
-								'			 </div>' + 
-								'			 <div class="subsection hidden">' +
-								'				  <div id="label-and-control_' + subfield.hypehnatedName + '" class="label-and-control text">' +
-								'						<div class="label">' +
-								'							 <label for="' + subfield.hypehnatedName + '">Quantity</label>' +
-								'						</div>' +
-								'						<div class="field-type-indication"> <span id="field-type-indicator_' + subfield.hypehnatedNameLower + '" class="field-type-indicator field-optional"><span class="message message-optional">Optional Field</span></span>' +
-								'						</div>' +
-								'						<div class="control">' +
-								'							 <input id="' + subfield.hypehnatedName + '" class="subsection-quantity-input" aria-describedby="field-type-indicator_' + subfield.hypehnatedNameLower + ' ' + subfield.hypehnatedNameLower + '_help-note " type="text">' +
-								'							 <div class="help-text" id="' + subfield.hypehnatedNameLower + '_help-note">' + subfield.quantityType + '</div>' +
-								'						</div>' +
-								'				  </div>' +
-								'			 </div>';
+
+					field += ' ">' +
+						'				  <label for="' + e.hypehnatedNameLower + '_' + subfield.hypehnatedNameLower + '">' + subfield.subfieldName + '</label>' +
+						'			 </div>' +
+						'			 <div class="subsection hidden">' +
+						'				  <div id="label-and-control_' + subfield.hypehnatedName + '" class="label-and-control text">' +
+						'						<div class="label">' +
+						'							 <label for="' + subfield.hypehnatedName + '">Quantity</label>' +
+						'						</div>' +
+						'						<div class="field-type-indication"> <span id="field-type-indicator_' + subfield.hypehnatedNameLower + '" class="field-type-indicator field-optional"><span class="message message-optional">Optional Field</span></span>' +
+						'						</div>' +
+						'						<div class="control">' +
+						'							 <input id="' + subfield.hypehnatedName + '" class="subsection-quantity-input" aria-describedby="field-type-indicator_' + subfield.hypehnatedNameLower + ' ' + subfield.hypehnatedNameLower + '_help-note " type="text">' +
+						'							 <div class="help-text" id="' + subfield.hypehnatedNameLower + '_help-note">' + subfield.quantityType + '</div>' +
+						'						</div>' +
+						'				  </div>' +
+						'			 </div>';
 
 					break;
 
@@ -11588,20 +11621,20 @@
 
 
 
-		if (typeof(e.helpNotes) != "undefined") {
+		if (typeof (e.helpNotes) != "undefined") {
 			field += $().AddHelpNotes(e, uData.isAdmin, rData.requestStatus);
 		}
 
-		field +=	 '		 </div>' +
-					'	 </div>' +
-					'</div>';
+		field += '		 </div>' +
+			'	 </div>' +
+			'</div>';
 
 		return field;
 	};
 
 
 
-	$.fn.BuildPeoplePickerField = function(e) {
+	$.fn.BuildPeoplePickerField = function (e) {
 
 		e.hypehnatedName = $().ReturnHyphenatedFieldNameOrValue(e.fieldName);
 		e.hypehnatedNameLower = e.hypehnatedName.toLowerCase();
@@ -11619,7 +11652,7 @@
 			'	 <div class="control">' +
 			'		  <div id="' + e.hypehnatedName + '"';
 
-		if (typeof(e.listFieldName) !== "undefined") {
+		if (typeof (e.listFieldName) !== "undefined") {
 			field += ' listFieldName="' + e.listFieldName + '" ';
 		}
 
@@ -11629,13 +11662,13 @@
 			'" ';
 
 		field += ' data-control-type="PeoplePicker" aria-describedby="field-type-indicator_' + e.hypehnatedNameLower;
-		if (typeof(e.helpNotes) != "undefined") {
+		if (typeof (e.helpNotes) != "undefined") {
 			field += $().AddHelpNotesReferences(e, uData.isAdmin, rData.requestStatus);
 		}
 		field += '">' +
 			'		  </div>';
 
-		if (typeof(e.helpNotes) != "undefined") {
+		if (typeof (e.helpNotes) != "undefined") {
 			field += $().AddHelpNotes(e, uData.isAdmin, rData.requestStatus);
 		}
 
@@ -11647,7 +11680,7 @@
 
 
 
-	$.fn.BuildHiddenField = function(e) {
+	$.fn.BuildHiddenField = function (e) {
 
 		e.hypehnatedName = $().ReturnHyphenatedFieldNameOrValue(e.fieldName);
 		e.hypehnatedNameLower = e.hypehnatedName.toLowerCase();
@@ -11655,7 +11688,7 @@
 		// start building field
 		var field = '<input type="hidden" id="' + e.hypehnatedNameLower + '" name="' + e.hypehnatedNameLower + '"';
 
-		if (typeof(e.value) !== "undefined") {
+		if (typeof (e.value) !== "undefined") {
 			field += ' value="' + e.value + '"';
 		}
 
@@ -11666,7 +11699,7 @@
 
 
 
-	$.fn.BuildTextField = function(e) {
+	$.fn.BuildTextField = function (e) {
 
 		e.hypehnatedName = $().ReturnHyphenatedFieldNameOrValue(e.fieldName);
 		e.hypehnatedNameLower = e.hypehnatedName.toLowerCase();
@@ -11684,33 +11717,33 @@
 			'	 <div class="control">' +
 			'		  <input type="text" id="' + e.hypehnatedName + '"';
 
-		if (typeof(e.addtlValidationType) !== "undefined") {
+		if (typeof (e.addtlValidationType) !== "undefined") {
 			field += ' data-validation="' + e.addtlValidationType + '" ';
 		}
 
-		if (typeof(e.listFieldName) !== "undefined") {
+		if (typeof (e.listFieldName) !== "undefined") {
 			field += ' listFieldName="' + e.listFieldName + '" ';
 		}
-		field += 'class="' + 
+		field += 'class="' +
 			$().AddMarkupClass(e, "disabledForAdmin", "disabledForNonAdmin") +
 			$().AddMarkupClass(e, "requiredForAdmin", "requiredForNonAdmin");
 
-		if (typeof(e.htmlClass) !== "undefined") {
+		if (typeof (e.htmlClass) !== "undefined") {
 			field += ' ' + e.htmlClass
 		}
 
 		field += '" ';
-		if (typeof(e.dataAttributes) != "undefined") {
-			$.each(e.dataAttributes, function(i,dataAttribute){
+		if (typeof (e.dataAttributes) != "undefined") {
+			$.each(e.dataAttributes, function (i, dataAttribute) {
 				field += ' data-' + dataAttribute.key + '="' + dataAttribute.value + '" ';
 			});
 		}
 		field += ' aria-describedby="field-type-indicator_' + e.hypehnatedNameLower;
-		if (typeof(e.helpNotes) != "undefined") {
+		if (typeof (e.helpNotes) != "undefined") {
 			field += $().AddHelpNotesReferences(e, uData.isAdmin, rData.requestStatus);
 		}
 		field += ' ">';
-		if (typeof(e.helpNotes) != "undefined") {
+		if (typeof (e.helpNotes) != "undefined") {
 			field += $().AddHelpNotes(e, uData.isAdmin, rData.requestStatus);
 		}
 		field += '	 </div>' +
@@ -11721,7 +11754,7 @@
 
 
 
-	$.fn.BuildPhoneField = function(e) {
+	$.fn.BuildPhoneField = function (e) {
 
 		e.hypehnatedName = $().ReturnHyphenatedFieldNameOrValue(e.fieldName);
 		e.hypehnatedNameLower = e.hypehnatedName.toLowerCase();
@@ -11741,7 +11774,7 @@
 
 		field += ' data-validation="validPhone"';
 
-		if (typeof(e.listFieldName) !== "undefined") {
+		if (typeof (e.listFieldName) !== "undefined") {
 			field += ' listFieldName="' + e.listFieldName + '" ';
 		}
 
@@ -11752,12 +11785,12 @@
 
 		field += ' aria-describedby="field-type-indicator_' + e.hypehnatedNameLower;
 		field += ' telephone-format-indicator_' + e.hypehnatedNameLower;
-		if (typeof(e.helpNotes) != "undefined") {
+		if (typeof (e.helpNotes) != "undefined") {
 			field += $().AddHelpNotesReferences(e, uData.isAdmin, rData.requestStatus);
 		}
 		field += ' ">';
 
-		if (typeof(e.helpNotes) != "undefined") {
+		if (typeof (e.helpNotes) != "undefined") {
 			field += $().AddHelpNotes(e, uData.isAdmin, rData.requestStatus);
 		}
 
@@ -11769,7 +11802,7 @@
 
 
 
-	$.fn.BuildTextAreaField = function(e) {
+	$.fn.BuildTextAreaField = function (e) {
 
 		e.hypehnatedName = $().ReturnHyphenatedFieldNameOrValue(e.fieldName);
 		e.hypehnatedNameLower = e.hypehnatedName.toLowerCase();
@@ -11779,7 +11812,7 @@
 
 		field += $().AddMarkupClass(e, "hideForAdmin", "hideForNonAdmin");
 
-		if (typeof(e.htmlClass) !== "undefined") {
+		if (typeof (e.htmlClass) !== "undefined") {
 			field += ' ' + e.htmlClass
 		}
 
@@ -11791,27 +11824,27 @@
 			'	 <div class="control">' +
 			'		  <textarea id="' + e.hypehnatedName + '"';
 
-		if (typeof(e.listFieldName) !== "undefined") {
+		if (typeof (e.listFieldName) !== "undefined") {
 			field += ' listFieldName="' + e.listFieldName + '" ';
 		}
 
-		field += 'class="' + 
+		field += 'class="' +
 			$().AddMarkupClass(e, "disabledForAdmin", "disabledForNonAdmin") +
 			$().AddMarkupClass(e, "requiredForAdmin", "requiredForNonAdmin");
 
-		if (typeof(e.htmlClass) !== "undefined") {
+		if (typeof (e.htmlClass) !== "undefined") {
 			field += ' ' + e.htmlClass
 		}
 
 		field += '" ';
 
 		field += ' aria-describedby="field-type-indicator_' + e.hypehnatedNameLower;
-		if (typeof(e.helpNotes) != "undefined") {
+		if (typeof (e.helpNotes) != "undefined") {
 			field += $().AddHelpNotesReferences(e, uData.isAdmin, rData.requestStatus);
 		}
 		field += '"></textarea>';
 
-		if (typeof(e.helpNotes) != "undefined") {
+		if (typeof (e.helpNotes) != "undefined") {
 			field += $().AddHelpNotes(e, uData.isAdmin, rData.requestStatus);
 		}
 
@@ -11823,7 +11856,7 @@
 
 
 
-	$.fn.BuildDatePicker = function(e) {
+	$.fn.BuildDatePicker = function (e) {
 
 		e.hypehnatedName = $().ReturnHyphenatedFieldNameOrValue(e.fieldName);
 		e.hypehnatedNameLower = e.hypehnatedName.toLowerCase();
@@ -11841,7 +11874,7 @@
 			'	 <div class="control">' +
 			'		  <input type="text" id="' + e.hypehnatedName + '" data-is-date="true" data-validation="validDate"';
 
-		if (typeof(e.listFieldName) !== "undefined") {
+		if (typeof (e.listFieldName) !== "undefined") {
 			field += ' listFieldName="' + e.listFieldName + '" ';
 		}
 
@@ -11851,12 +11884,12 @@
 			'" ';
 
 		field += ' aria-describedby="field-type-indicator_' + e.hypehnatedNameLower;
-		if (typeof(e.helpNotes) != "undefined") {
+		if (typeof (e.helpNotes) != "undefined") {
 			field += $().AddHelpNotesReferences(e, uData.isAdmin, rData.requestStatus);
 		}
 		field += ' ">';
 
-		if (typeof(e.helpNotes) != "undefined") {
+		if (typeof (e.helpNotes) != "undefined") {
 			field += $().AddHelpNotes(e, uData.isAdmin, rData.requestStatus);
 		}
 
@@ -11868,7 +11901,7 @@
 
 
 
-	$.fn.BuildDatetime = function(e) {
+	$.fn.BuildDatetime = function (e) {
 
 		e.hypehnatedName = $().ReturnHyphenatedFieldNameOrValue(e.fieldName);
 		e.hypehnatedNameLower = e.hypehnatedName.toLowerCase();
@@ -11893,7 +11926,7 @@
 			$().AddMarkupClass(e, "requiredForAdmin", "requiredForNonAdmin") +
 			'" ';
 		field += ' aria-describedby="field-type-indicator_' + e.hypehnatedNameLower + ' datetime-label_' + e.hypehnatedNameLower;
-		if (typeof(e.helpNotes) != "undefined") {
+		if (typeof (e.helpNotes) != "undefined") {
 			field += $().AddHelpNotesReferences(e, uData.isAdmin, rData.requestStatus);
 		}
 		field += ' ">';
@@ -11907,7 +11940,7 @@
 			$().AddMarkupClass(e, "requiredForAdmin", "requiredForNonAdmin") +
 			'" ';
 		field += ' aria-describedby="field-type-indicator_' + e.hypehnatedNameLower + ' datetime-label_' + e.hypehnatedNameLower;
-		if (typeof(e.helpNotes) != "undefined") {
+		if (typeof (e.helpNotes) != "undefined") {
 			field += $().AddHelpNotesReferences(e, uData.isAdmin, rData.requestStatus);
 		}
 		field += ' "></select>';
@@ -11922,7 +11955,7 @@
 			$().AddMarkupClass(e, "requiredForAdmin", "requiredForNonAdmin") +
 			'" ';
 		field += ' aria-describedby="field-type-indicator_' + e.hypehnatedNameLower + ' datetime-label_' + e.hypehnatedNameLower;
-		if (typeof(e.helpNotes) != "undefined") {
+		if (typeof (e.helpNotes) != "undefined") {
 			field += $().AddHelpNotesReferences(e, uData.isAdmin, rData.requestStatus);
 		}
 		field += ' "></select>';
@@ -11930,12 +11963,12 @@
 		// ---- Hidden Storage
 
 		field += '		  <input type="hidden" id="datetime-storage_' + e.hypehnatedName + '"';
-		if (typeof(e.listFieldName) !== "undefined") {
+		if (typeof (e.listFieldName) !== "undefined") {
 			field += ' listFieldName="' + e.listFieldName + '" ';
 		}
 		field += '>';
 
-		if (typeof(e.helpNotes) != "undefined") {
+		if (typeof (e.helpNotes) != "undefined") {
 			field += $().AddHelpNotes(e, uData.isAdmin, rData.requestStatus);
 		}
 
@@ -11947,20 +11980,20 @@
 
 
 
-	$.fn.ReturnEditabilityFlag = function(e) {
+	$.fn.ReturnEditabilityFlag = function (e) {
 		var editable = 0;
 		var relevantRStatuses = [];
 
 		// determine the relevant request statuses for editability
-		if (uData.isAdmin == 1 && typeof(e.editableForAdmin) != "undefined") {
+		if (uData.isAdmin == 1 && typeof (e.editableForAdmin) != "undefined") {
 			relevantRStatuses = e.editableForAdmin;
 		}
-		if (uData.isAdmin == 0 && typeof(e.editableForNonAdmin) != "undefined") {
+		if (uData.isAdmin == 0 && typeof (e.editableForNonAdmin) != "undefined") {
 			relevantRStatuses = e.editableForNonAdmin;
 		}
 
 		// determine whether or not to change from anchor to input for editability
-		$.each(relevantRStatuses, function(i, relevantRStatus) {
+		$.each(relevantRStatuses, function (i, relevantRStatus) {
 			if (relevantRStatus == rData.requestStatus) {
 				editable = 1;
 			}
@@ -11971,44 +12004,44 @@
 
 
 
-	$.fn.BuildListItemChooserField = function(e) {
+	$.fn.BuildListItemChooserField = function (e) {
 
 		e.hypehnatedName = $().ReturnHyphenatedFieldNameOrValue(e.fieldName);
 		e.hypehnatedNameLower = e.hypehnatedName.toLowerCase();
 
-		e.dataSourceTypeName = ReplaceAll("\\.", "", ReplaceAll(" ", "-",  ReplaceAll(" ID", "",  e.fieldName))).toLowerCase();
+		e.dataSourceTypeName = ReplaceAll("\\.", "", ReplaceAll(" ", "-", ReplaceAll(" ID", "", e.fieldName))).toLowerCase();
 
 		var editable = $().ReturnEditabilityFlag(e, uData.isAdmin, rData.requestStatus);
 
 		var field = '<div id="label-and-control_' + e.hypehnatedName + '" class="label-and-control ' + e.controlType +
-					$().AddMarkupClass(e, "hideForAdmin", "hideForNonAdmin") + 
-					'">' +
-					'	 <div class="label"><label for="' + e.hypehnatedName + '">';
+			$().AddMarkupClass(e, "hideForAdmin", "hideForNonAdmin") +
+			'">' +
+			'	 <div class="label"><label for="' + e.hypehnatedName + '">';
 
 		if (editable == 0) {
 			field += e.nonEditableLabelContent;
-		} else  {
+		} else {
 			field += e.editableLabelContent;
 		}
 
-		field +=	 '</label></div>' +
-					'	 <div class="field-type-indication">' +
-					'		  <span id="field-type-indicator_' + e.hypehnatedNameLower + '" class="field-type-indicator field-optional"><span class="message message-optional">Optional Field</span></span>' +
-					'	 </div>' +
-					'	 <div class="control">';
+		field += '</label></div>' +
+			'	 <div class="field-type-indication">' +
+			'		  <span id="field-type-indicator_' + e.hypehnatedNameLower + '" class="field-type-indicator field-optional"><span class="message message-optional">Optional Field</span></span>' +
+			'	 </div>' +
+			'	 <div class="control">';
 
 		if (editable == 0) {
 
 			field += '		  <a href="" target="_blank" data-source-type="' + e.dataSourceTypeName + '" ';
 
-		} else  {
+		} else {
 			field += '		  <input type="text" ';
 
-			if (typeof(e.addtlValidationType) !== "undefined") {
+			if (typeof (e.addtlValidationType) !== "undefined") {
 				field += ' data-validation="' + e.addtlValidationType + '" ';
 			}
 
-			if (typeof(e.listFieldName) !== "undefined") {
+			if (typeof (e.listFieldName) !== "undefined") {
 				field += ' listFieldName="' + e.listFieldName + '" ';
 			}
 		}
@@ -12020,28 +12053,28 @@
 			'" ';
 
 		field += ' aria-describedby="field-type-indicator_' + e.hypehnatedNameLower;
-		if (typeof(e.helpNotes) != "undefined") {
+		if (typeof (e.helpNotes) != "undefined") {
 			field += $().AddHelpNotesReferences(e, uData.isAdmin, rData.requestStatus);
 		}
 
 		if (editable == 0) {
 			field += '"></a>';
-		} else  {
-			field +=	 '">' +
-						'		  <a id="anchor_' + e.hypehnatedName + '"' +
-						'class="anchor_list-item-chooser ' +
-						$().AddMarkupClass(e, "hideButtonForAdmin", "hideButtonForNonAdmin") +
-						$().AddMarkupClass(e, "disabledForAdmin", "disabledForNonAdmin") +
-						'" aria-describedby="field-type-indicator_' + e.hypehnatedNameLower;
-			
-			if (typeof(e.helpNotes) != "undefined") {
+		} else {
+			field += '">' +
+				'		  <a id="anchor_' + e.hypehnatedName + '"' +
+				'class="anchor_list-item-chooser ' +
+				$().AddMarkupClass(e, "hideButtonForAdmin", "hideButtonForNonAdmin") +
+				$().AddMarkupClass(e, "disabledForAdmin", "disabledForNonAdmin") +
+				'" aria-describedby="field-type-indicator_' + e.hypehnatedNameLower;
+
+			if (typeof (e.helpNotes) != "undefined") {
 				field += $().AddHelpNotesReferences(e, uData.isAdmin, rData.requestStatus);
 			}
-			
+
 			field += ' ">' + e.choosingAnchorContent + '</a>';
 		}
 
-		if (typeof(e.helpNotes) != "undefined") {
+		if (typeof (e.helpNotes) != "undefined") {
 			field += $().AddHelpNotes(e, uData.isAdmin, rData.requestStatus);
 		}
 
@@ -12053,7 +12086,7 @@
 
 
 
-	$.fn.BuildButtonWithLabelField = function(e) {
+	$.fn.BuildButtonWithLabelField = function (e) {
 
 		e.hypehnatedName = $().ReturnHyphenatedFieldNameOrValue(e.fieldName);
 		e.hypehnatedNameLower = e.hypehnatedName.toLowerCase();
@@ -12077,12 +12110,12 @@
 			'" ';
 
 		field += ' aria-describedby="field-type-indicator_' + e.hypehnatedNameLower;
-		if (typeof(e.helpNotes) != "undefined") {
+		if (typeof (e.helpNotes) != "undefined") {
 			field += $().AddHelpNotesReferences(e, uData.isAdmin, rData.requestStatus);
 		}
 		field += ' ">' + e.buttonContent + '</a>';
 
-		if (typeof(e.helpNotes) != "undefined") {
+		if (typeof (e.helpNotes) != "undefined") {
 			field += $().AddHelpNotes(e, uData.isAdmin, rData.requestStatus);
 		}
 
@@ -12094,7 +12127,7 @@
 
 
 
-	$.fn.BuildTime = function(e) {
+	$.fn.BuildTime = function (e) {
 
 		e.hypehnatedName = $().ReturnHyphenatedFieldNameOrValue(e.fieldName);
 		e.hypehnatedNameLower = e.hypehnatedName.toLowerCase();
@@ -12103,7 +12136,7 @@
 
 		field += $().AddMarkupClass(e, "hideForAdmin", "hideForNonAdmin");
 
-		if (typeof(e.htmlClass) != "undefined") {
+		if (typeof (e.htmlClass) != "undefined") {
 			field += " " + e.htmlClass
 		}
 
@@ -12135,7 +12168,7 @@
 			$().AddMarkupClass(e, "requiredForAdmin", "requiredForNonAdmin") +
 			'" ';
 		field += ' aria-describedby="field-type-indicator_' + e.hypehnatedNameLower + ' time-label_' + e.hypehnatedNameLower;
-		if (typeof(e.helpNotes) != "undefined") {
+		if (typeof (e.helpNotes) != "undefined") {
 			field += $().AddHelpNotesReferences(e, uData.isAdmin, rData.requestStatus);
 		}
 		field += ' "></select>';
@@ -12150,7 +12183,7 @@
 			$().AddMarkupClass(e, "requiredForAdmin", "requiredForNonAdmin") +
 			'" ';
 		field += ' aria-describedby="field-type-indicator_' + e.hypehnatedNameLower + ' time-label_' + e.hypehnatedNameLower;
-		if (typeof(e.helpNotes) != "undefined") {
+		if (typeof (e.helpNotes) != "undefined") {
 			field += $().AddHelpNotesReferences(e, uData.isAdmin, rData.requestStatus);
 		}
 		field += ' "></select>';
@@ -12158,7 +12191,7 @@
 		// ---- Hidden Storage
 
 		field += '		  <input type="hidden" id="time-storage_' + e.hypehnatedName + '"';
-		if (typeof(e.listFieldName) !== "undefined") {
+		if (typeof (e.listFieldName) !== "undefined") {
 			field += ' listFieldName="' + e.listFieldName + '" ';
 		}
 		field += '>';
@@ -12172,7 +12205,7 @@
 
 
 
-	$.fn.BuildRadioButtonsOrCheckboxes = function(e) {
+	$.fn.BuildRadioButtonsOrCheckboxes = function (e) {
 
 		e.hypehnatedName = $().ReturnHyphenatedFieldNameOrValue(e.fieldName);
 		e.hypehnatedNameLower = e.hypehnatedName.toLowerCase();
@@ -12190,7 +12223,7 @@
 			'	 <div class="control">' +
 			'		 <div id="' + e.hypehnatedName + '">';
 
-		$.each(e.choices, function(i, chc) {
+		$.each(e.choices, function (i, chc) {
 
 			chc.hypehnatedValueLower = $().ReturnHyphenatedFieldNameOrValue(chc.value).toLowerCase();
 
@@ -12204,12 +12237,12 @@
 			}
 			field += '" name="' + e.hypehnatedName + '" id="' + e.hypehnatedNameLower + '_' + chc.hypehnatedValueLower + '" value ="' + chc.value + '" ';
 
-			if (typeof(e.listFieldName) !== "undefined") {
+			if (typeof (e.listFieldName) !== "undefined") {
 				field += ' listFieldName="' + e.listFieldName + '" ';
 			}
 
-			if (typeof(e.dataAttributes) != "undefined") {
-				$.each(e.dataAttributes, function(i,dataAttribute){
+			if (typeof (e.dataAttributes) != "undefined") {
+				$.each(e.dataAttributes, function (i, dataAttribute) {
 					field += ' data-' + dataAttribute.key + '="' + dataAttribute.value + '" ';
 				});
 			}
@@ -12224,24 +12257,24 @@
 				field += $().AddMarkupClass(e, "requiredForAdmin", "requiredForNonAdmin");
 			}
 
-			if (typeof(e.htmlClass) !== "undefined") {
+			if (typeof (e.htmlClass) !== "undefined") {
 				field += " " + e.htmlClass;
 			}
 
 			field += '" ';
 
 			if (i == 0) {
-				if (typeof(e.addtlValidationType) !== "undefined") {
+				if (typeof (e.addtlValidationType) !== "undefined") {
 					field += ' data-validation="' + e.addtlValidationType + '" ';
 				}
-				if (typeof(e.addtlValidationQuantity) !== "undefined") {
+				if (typeof (e.addtlValidationQuantity) !== "undefined") {
 					field += ' data-validation-quantity="' + e.addtlValidationQuantity + '" ';
 				}
 			}
 
 
 			field += 'aria-describedby="field-type-indicator_' + e.hypehnatedNameLower + ' choice-set-label_' + e.hypehnatedNameLower;
-			if (typeof(e.helpNotes) != "undefined") {
+			if (typeof (e.helpNotes) != "undefined") {
 				field += $().AddHelpNotesReferences(e, uData.isAdmin, rData.requestStatus);
 			}
 			field += ' ">';
@@ -12250,7 +12283,7 @@
 
 		});
 
-		if (typeof(e.helpNotes) != "undefined") {
+		if (typeof (e.helpNotes) != "undefined") {
 			field += $().AddHelpNotes(e, uData.isAdmin, rData.requestStatus);
 		}
 
@@ -12263,50 +12296,50 @@
 
 
 
-    $.fn.BuildFileField = function(e) {
+	$.fn.BuildFileField = function (e) {
 
 		e.hypehnatedName = $().ReturnHyphenatedFieldNameOrValue(e.fieldName);
 		e.hypehnatedNameLower = e.hypehnatedName.toLowerCase();
 
-        // start building field
-        var field = '<div id="label-and-control_' + e.hypehnatedName + '" class="label-and-control ' + e.controlType;
+		// start building field
+		var field = '<div id="label-and-control_' + e.hypehnatedName + '" class="label-and-control ' + e.controlType;
 
-        field += $().AddMarkupClass(e, "hideForAdmin", "hideForNonAdmin");
+		field += $().AddMarkupClass(e, "hideForAdmin", "hideForNonAdmin");
 
-        field += '">' +
-            '    <div class="label"><label for="' + e.hypehnatedName + '">' + e.labelContent + '</label></div>' +
-            '    <div class="field-type-indication">' +
-            '         <span id="field-type-indicator_' + e.hypehnatedNameLower + '" class="field-type-indicator field-optional"><span class="message message-optional">Optional Field</span></span>' +
-            '    </div>' +
-            '    <div class="control">';
+		field += '">' +
+			'    <div class="label"><label for="' + e.hypehnatedName + '">' + e.labelContent + '</label></div>' +
+			'    <div class="field-type-indication">' +
+			'         <span id="field-type-indicator_' + e.hypehnatedNameLower + '" class="field-type-indicator field-optional"><span class="message message-optional">Optional Field</span></span>' +
+			'    </div>' +
+			'    <div class="control">';
 
-        field += $().AddInputOrLinkBeginning(e, "editableForAdmin", "editableForNonAdmin");
+		field += $().AddInputOrLinkBeginning(e, "editableForAdmin", "editableForNonAdmin");
 
-        field += 'id="' + e.hypehnatedName + '" class="mos-file ' +
-            $().AddMarkupClass(e, "disabledForAdmin", "disabledForNonAdmin") +
-            $().AddMarkupClass(e, "requiredForAdmin", "requiredForNonAdmin") +
-            '" ';
+		field += 'id="' + e.hypehnatedName + '" class="mos-file ' +
+			$().AddMarkupClass(e, "disabledForAdmin", "disabledForNonAdmin") +
+			$().AddMarkupClass(e, "requiredForAdmin", "requiredForNonAdmin") +
+			'" ';
 
-        field += ' aria-describedby="field-type-indicator_' + e.hypehnatedNameLower;
-        if (typeof(e.helpNotes) != "undefined") {
-            field += $().AddHelpNotesReferences(e, uData.isAdmin, rData.requestStatus);
-        }
+		field += ' aria-describedby="field-type-indicator_' + e.hypehnatedNameLower;
+		if (typeof (e.helpNotes) != "undefined") {
+			field += $().AddHelpNotesReferences(e, uData.isAdmin, rData.requestStatus);
+		}
 
-        field += $().AddInputOrLinkEnding(e, uData.isAdmin, rData.requestStatus, "editableForAdmin", "editableForNonAdmin");
+		field += $().AddInputOrLinkEnding(e, uData.isAdmin, rData.requestStatus, "editableForAdmin", "editableForNonAdmin");
 
-        if (typeof(e.helpNotes) != "undefined") {
-            field += $().AddHelpNotes(e, uData.isAdmin, rData.requestStatus);
-        }
+		if (typeof (e.helpNotes) != "undefined") {
+			field += $().AddHelpNotes(e, uData.isAdmin, rData.requestStatus);
+		}
 
-        field += '   </div>' +
-            '</div>';
+		field += '   </div>' +
+			'</div>';
 
-        return field;
-    };
+		return field;
+	};
 
 
 
-	$.fn.BuildMOSFileField = function(e) {
+	$.fn.BuildMOSFileField = function (e) {
 
 		e.hypehnatedName = $().ReturnHyphenatedFieldNameOrValue(e.fieldName);
 		e.hypehnatedNameLower = e.hypehnatedName.toLowerCase();
@@ -12316,24 +12349,24 @@
 		var replaceable = 0;
 
 		if (uData.isAdmin == 1) {
-			if (typeof(e.populatableForAdmin) != "undefined") {
+			if (typeof (e.populatableForAdmin) != "undefined") {
 				if (e.populatableForAdmin.indexOf(rData.requestStatus) != -1) { populatable = 1; }
 			}
-			if (typeof(e.replaceableForAdmin) != "undefined") {
+			if (typeof (e.replaceableForAdmin) != "undefined") {
 				if (e.replaceableForAdmin.indexOf(rData.requestStatus) != -1) { replaceable = 1; }
 			}
 		}
 		if (uData.isAdmin == 0) {
-			if (typeof(e.populatableForNonAdmin) != "undefined") {
+			if (typeof (e.populatableForNonAdmin) != "undefined") {
 				if (e.populatableForNonAdmin.indexOf(rData.requestStatus) != -1) { populatable = 1; }
 			}
-			if (typeof(e.replaceableForNonAdmin) != "undefined") {
+			if (typeof (e.replaceableForNonAdmin) != "undefined") {
 				if (e.replaceableForNonAdmin.indexOf(rData.requestStatus) != -1) { replaceable = 1; }
 			}
 		}
 
-		if (populatable == 0 && typeof(e.populatablePerFunction) != "undefined") {
-			
+		if (populatable == 0 && typeof (e.populatablePerFunction) != "undefined") {
+
 			/*// commented out because, for GPC, handling differently; however, this may be useful for other cases
 			switch (e.populatablePerFunction) {
 				
@@ -12344,8 +12377,8 @@
 
 		}
 
-		if (replaceable == 0 && typeof(e.replaceablePerFunction) != "undefined") {
-			
+		if (replaceable == 0 && typeof (e.replaceablePerFunction) != "undefined") {
+
 			/*// commented out because, for GPC, handling differently; however, this may be useful for other cases
 			switch (e.populatablePerFunction) {
 				
@@ -12361,20 +12394,20 @@
 
 		field += $().AddMarkupClass(e, "hideForAdmin", "hideForNonAdmin");
 
-		field += 	'">' +
-					'	 <div class="label"><label for="' + e.hypehnatedName + '">' + e.labelContent + '</label></div>' +
-					'	 <div class="field-type-indication">' +
-					'		  <span id="field-type-indicator_' + e.hypehnatedNameLower + '" class="field-type-indicator field-optional"><span class="message message-optional">Optional Field</span></span>' +
-					'	 </div>' +
-					'	 <div class="control">' + 
-					'		<div  id="' + e.hypehnatedName + '" data-validation="validAttachment" ';
+		field += '">' +
+			'	 <div class="label"><label for="' + e.hypehnatedName + '">' + e.labelContent + '</label></div>' +
+			'	 <div class="field-type-indication">' +
+			'		  <span id="field-type-indicator_' + e.hypehnatedNameLower + '" class="field-type-indicator field-optional"><span class="message message-optional">Optional Field</span></span>' +
+			'	 </div>' +
+			'	 <div class="control">' +
+			'		<div  id="' + e.hypehnatedName + '" data-validation="validAttachment" ';
 
 
 
 		// if (typeof(e.listFieldName) !== "undefined") {
 		// 	field += ' listFieldName="' + e.listFieldName + '" ';
 		// }
-		field += 'class="mos-drag-and-drop-file-attachment ' + 
+		field += 'class="mos-drag-and-drop-file-attachment ' +
 			// $().AddMarkupClass(e, "disabledForAdmin", "disabledForNonAdmin") +
 			$().AddMarkupClass(e, "requiredForAdmin", "requiredForNonAdmin");
 
@@ -12386,45 +12419,45 @@
 			field += ' replaceable';
 		}
 
-		if (typeof(e.htmlClass) !== "undefined") {
+		if (typeof (e.htmlClass) !== "undefined") {
 			field += ' ' + e.htmlClass;
 		}
 
 		field += '" ';
-		if (typeof(e.dataAttributes) != "undefined") {
-			$.each(e.dataAttributes, function(i,dataAttribute){
+		if (typeof (e.dataAttributes) != "undefined") {
+			$.each(e.dataAttributes, function (i, dataAttribute) {
 				field += ' data-' + dataAttribute.key + '="' + dataAttribute.value + '" ';
 			});
 		}
 		field += ' data-control-type="MOSFile" aria-describedby="field-type-indicator_' + e.hypehnatedNameLower;
-		if (typeof(e.helpNotes) != "undefined") {
+		if (typeof (e.helpNotes) != "undefined") {
 			field += $().AddHelpNotesReferences(e, uData.isAdmin, rData.requestStatus);
 		}
-		field += 	' ">' + 
-					'			<div id="mos-drag-and-drop-file-input_' + e.hypehnatedName + '" class="mos-drag-and-drop-file-input">' +
-					'				<input class="mos-file-selector" type="file" name="files[]" id="file_' + e.hypehnatedName + '" />' + 
-					'				<label for="file_' + e.hypehnatedName + '"><span class="mos-file-selection-prompt">Tap or click here to select a file</span></label>' + // Drop a file here, or 
-					'			</div>' + 
-					'			<a id="mos-drag-and-drop-file-container_' + e.hypehnatedName + '" class="mos-drag-and-drop-file-container" target="_blank">' + 
-					'				<div id="mos-drag-and-drop-file-upload-icon_' + e.hypehnatedName + '"  class="mos-drag-and-drop-file-upload-icon"></div>' + 
-					'				<div id="mos-drag-and-drop-file-preview_' + e.hypehnatedName + '"  class="mos-drag-and-drop-file-preview"></div>' + 
-					'				<div id="mos-drag-and-drop-file-name-and-size_' + e.hypehnatedName + '"  class="mos-drag-and-drop-file-name-and-size">' + 
-					'					<div class="mos-drag-and-drop-file-name"></div>' + 
-					'					<div class="mos-drag-and-drop-file-size"></div>' + 
-					'				</div>' + 
-					'				<div id="mos-drag-and-drop-file-control_' + e.hypehnatedName + '"  class="mos-drag-and-drop-file-control"></div>' + 
-					'				<div id="mos-drag-and-drop-file-progress_' + e.hypehnatedName + '"  class="mos-drag-and-drop-file-progress">' + 
-					'					<progress id="progress-bar_' + e.hypehnatedName + '" value="0" max="1"></progress>' + 
-					'				</div>' + 
-					'			</a>' + 
-					'			<div id="mos-drag-and-drop-file-storage_' + e.hypehnatedName + '" class="mos-drag-and-drop-file-storage">' +
-					'				<input type="hidden" id="mos-drag-and-drop-file-name_' + e.hypehnatedName + '" name="mos-drag-and-drop-file-name_' + e.hypehnatedName + '" class="mos-drag-and-drop-file-name" >' + 
-					'				<input type="hidden" id="mos-drag-and-drop-file-size_' + e.hypehnatedName + '" name="mos-drag-and-drop-file-size_' + e.hypehnatedName + '" class="mos-drag-and-drop-file-size" >' + 
-					'				<input type="hidden" id="mos-drag-and-drop-file-type-class_' + e.hypehnatedName + '" name="mos-drag-and-drop-file-type-class_' + e.hypehnatedName + '" class="mos-drag-and-drop-file-type-class" >' + 
-					'				<input type="hidden" id="mos-drag-and-drop-file-in-quark-files_' + e.hypehnatedName + '" name="mos-drag-and-drop-file-in-quark-files_' + e.hypehnatedName + '" class="mos-drag-and-drop-file-in-quark-files" >' + 
-					'			</div>';
+		field += ' ">' +
+			'			<div id="mos-drag-and-drop-file-input_' + e.hypehnatedName + '" class="mos-drag-and-drop-file-input">' +
+			'				<input class="mos-file-selector" type="file" name="files[]" id="file_' + e.hypehnatedName + '" />' +
+			'				<label for="file_' + e.hypehnatedName + '"><span class="mos-file-selection-prompt">Tap or click here to select a file</span></label>' + // Drop a file here, or 
+			'			</div>' +
+			'			<a id="mos-drag-and-drop-file-container_' + e.hypehnatedName + '" class="mos-drag-and-drop-file-container" target="_blank">' +
+			'				<div id="mos-drag-and-drop-file-upload-icon_' + e.hypehnatedName + '"  class="mos-drag-and-drop-file-upload-icon"></div>' +
+			'				<div id="mos-drag-and-drop-file-preview_' + e.hypehnatedName + '"  class="mos-drag-and-drop-file-preview"></div>' +
+			'				<div id="mos-drag-and-drop-file-name-and-size_' + e.hypehnatedName + '"  class="mos-drag-and-drop-file-name-and-size">' +
+			'					<div class="mos-drag-and-drop-file-name"></div>' +
+			'					<div class="mos-drag-and-drop-file-size"></div>' +
+			'				</div>' +
+			'				<div id="mos-drag-and-drop-file-control_' + e.hypehnatedName + '"  class="mos-drag-and-drop-file-control"></div>' +
+			'				<div id="mos-drag-and-drop-file-progress_' + e.hypehnatedName + '"  class="mos-drag-and-drop-file-progress">' +
+			'					<progress id="progress-bar_' + e.hypehnatedName + '" value="0" max="1"></progress>' +
+			'				</div>' +
+			'			</a>' +
+			'			<div id="mos-drag-and-drop-file-storage_' + e.hypehnatedName + '" class="mos-drag-and-drop-file-storage">' +
+			'				<input type="hidden" id="mos-drag-and-drop-file-name_' + e.hypehnatedName + '" name="mos-drag-and-drop-file-name_' + e.hypehnatedName + '" class="mos-drag-and-drop-file-name" >' +
+			'				<input type="hidden" id="mos-drag-and-drop-file-size_' + e.hypehnatedName + '" name="mos-drag-and-drop-file-size_' + e.hypehnatedName + '" class="mos-drag-and-drop-file-size" >' +
+			'				<input type="hidden" id="mos-drag-and-drop-file-type-class_' + e.hypehnatedName + '" name="mos-drag-and-drop-file-type-class_' + e.hypehnatedName + '" class="mos-drag-and-drop-file-type-class" >' +
+			'				<input type="hidden" id="mos-drag-and-drop-file-in-quark-files_' + e.hypehnatedName + '" name="mos-drag-and-drop-file-in-quark-files_' + e.hypehnatedName + '" class="mos-drag-and-drop-file-in-quark-files" >' +
+			'			</div>';
 
-		if (typeof(e.helpNotes) != "undefined") {
+		if (typeof (e.helpNotes) != "undefined") {
 			field += $().AddHelpNotes(e, uData.isAdmin, rData.requestStatus);
 		}
 		field += '	 </div>';
@@ -12438,7 +12471,7 @@
 
 
 
-	$.fn.BuildLegacyFileSetField = function(e) {
+	$.fn.BuildLegacyFileSetField = function (e) {
 
 		e.hypehnatedName = $().ReturnHyphenatedFieldNameOrValue(e.fieldName);
 		e.hypehnatedNameLower = e.hypehnatedName.toLowerCase();
@@ -12462,13 +12495,13 @@
 			'" ';
 
 		field += ' aria-describedby="field-type-indicator_' + e.hypehnatedNameLower;
-		if (typeof(e.helpNotes) != "undefined") {
+		if (typeof (e.helpNotes) != "undefined") {
 			field += $().AddHelpNotesReferences(e, uData.isAdmin, rData.requestStatus);
 		}
 
 		field += '"></div>';
 
-		if (typeof(e.helpNotes) != "undefined") {
+		if (typeof (e.helpNotes) != "undefined") {
 			field += $().AddHelpNotes(e, uData.isAdmin, rData.requestStatus);
 		}
 
@@ -12480,7 +12513,7 @@
 
 
 
-	$.fn.BuildURLField = function(e) {
+	$.fn.BuildURLField = function (e) {
 
 		e.hypehnatedName = $().ReturnHyphenatedFieldNameOrValue(e.fieldName);
 		e.hypehnatedNameLower = e.hypehnatedName.toLowerCase();
@@ -12505,13 +12538,13 @@
 			'" ';
 
 		field += ' aria-describedby="field-type-indicator_' + e.hypehnatedNameLower;
-		if (typeof(e.helpNotes) != "undefined") {
+		if (typeof (e.helpNotes) != "undefined") {
 			field += $().AddHelpNotesReferences(e, uData.isAdmin, rData.requestStatus);
 		}
 
 		field += $().AddInputOrLinkEnding(e, uData.isAdmin, rData.requestStatus, "editableForAdmin", "editableForNonAdmin");
 
-		if (typeof(e.helpNotes) != "undefined") {
+		if (typeof (e.helpNotes) != "undefined") {
 			field += $().AddHelpNotes(e, uData.isAdmin, rData.requestStatus);
 		}
 
@@ -12527,22 +12560,22 @@
 
 
 
-	$.fn.AddInputOrLinkBeginning = function(e, adminProperty, nonAdminProperty) {
+	$.fn.AddInputOrLinkBeginning = function (e, adminProperty, nonAdminProperty) {
 
 		var controlBeginningToAdd = '		  <a href="" target="_blank" data-source-type="' + e.controlType + '" ';
 
 		// determine the relevant request statuses for editability
 		var relevantRStatuses = [];
 
-		if (uData.isAdmin == 1 && typeof(e[adminProperty]) != "undefined") {
+		if (uData.isAdmin == 1 && typeof (e[adminProperty]) != "undefined") {
 			relevantRStatuses = e[adminProperty];
 		}
-		if (uData.isAdmin == 0 && typeof(e[nonAdminProperty]) != "undefined") {
+		if (uData.isAdmin == 0 && typeof (e[nonAdminProperty]) != "undefined") {
 			relevantRStatuses = e[nonAdminProperty];
 		}
 
 		// if the actual request status is in the array of relevant request statuses for this user
-		$.each(relevantRStatuses, function(i, rs) {
+		$.each(relevantRStatuses, function (i, rs) {
 			if (rs == rData.requestStatus) {
 				controlBeginningToAdd = '		  <input type="' + e.controlType + '" '
 				if (e.controlType == 'url') {
@@ -12556,22 +12589,22 @@
 
 
 
-	$.fn.AddInputOrLinkEnding = function(e, adminProperty, nonAdminProperty) {
+	$.fn.AddInputOrLinkEnding = function (e, adminProperty, nonAdminProperty) {
 
 		var controlEndingToAdd = '"></a>';
 
 		// determine the relevant request statuses for attachability
 		var relevantRStatuses = [];
 
-		if (uData.isAdmin == 1 && typeof(e[adminProperty]) != "undefined") {
+		if (uData.isAdmin == 1 && typeof (e[adminProperty]) != "undefined") {
 			relevantRStatuses = e[adminProperty];
 		}
-		if (uData.isAdmin == 0 && typeof(e[nonAdminProperty]) != "undefined") {
+		if (uData.isAdmin == 0 && typeof (e[nonAdminProperty]) != "undefined") {
 			relevantRStatuses = e[nonAdminProperty];
 		}
 
 		// if the actual request status is in the array of relevant request statuses for this user
-		$.each(relevantRStatuses, function(i, rs) {
+		$.each(relevantRStatuses, function (i, rs) {
 			if (rs == rData.requestStatus) {
 				controlEndingToAdd = '">'
 			}
@@ -12582,24 +12615,24 @@
 
 
 
-	$.fn.AddHelpNotesReferences = function(e) {
+	$.fn.AddHelpNotesReferences = function (e) {
 
 		var refsToAdd = "";
 
-		$.each(e.helpNotes, function(i, note) {
+		$.each(e.helpNotes, function (i, note) {
 
 			// determine which request status property of the note to pay attention to: hideForNonAdmin, hideForAdmin, or neither
 			var relevantRStatuses = [];
 			var dontAddFlag = 0;
 
-			if (uData.isAdmin == 1 && typeof(note.hideForAdmin) != "undefined") {
+			if (uData.isAdmin == 1 && typeof (note.hideForAdmin) != "undefined") {
 				relevantRStatuses = note.hideForAdmin;
 			}
-			if (uData.isAdmin == 0 && typeof(note.hideForNonAdmin) != "undefined") {
+			if (uData.isAdmin == 0 && typeof (note.hideForNonAdmin) != "undefined") {
 				relevantRStatuses = note.hideForNonAdmin;
 			}
 
-			$.each(relevantRStatuses, function(i, rs) {
+			$.each(relevantRStatuses, function (i, rs) {
 				if (rs == rData.requestStatus) {
 					dontAddFlag = 1;
 				}
@@ -12615,11 +12648,11 @@
 
 
 
-	$.fn.AddHelpNotes = function(e) {
+	$.fn.AddHelpNotes = function (e) {
 
 		var notesToAdd = "";
 
-		$.each(e.helpNotes, function(i, note) {
+		$.each(e.helpNotes, function (i, note) {
 
 			notesToAdd += '		  <div class="help-text';
 			if (note.urgent == 1) {
@@ -12637,22 +12670,22 @@
 
 
 
-	$.fn.AddMarkupClass = function(e, adminProperty, nonAdminProperty) {
+	$.fn.AddMarkupClass = function (e, adminProperty, nonAdminProperty) {
 
 		var classToAdd = "";
 
 		// determine which request status property of e to pay attention to: hideForNonAdmin, hideForAdmin, or neither
 		var relevantRStatuses = [];
 
-		if (uData.isAdmin == 1 && typeof(e[adminProperty]) != "undefined") {
+		if (uData.isAdmin == 1 && typeof (e[adminProperty]) != "undefined") {
 			relevantRStatuses = e[adminProperty];
 		}
-		if (uData.isAdmin == 0 && typeof(e[nonAdminProperty]) != "undefined") {
+		if (uData.isAdmin == 0 && typeof (e[nonAdminProperty]) != "undefined") {
 			relevantRStatuses = e[nonAdminProperty];
 		}
 
 		// if the actual request status is in the array of relevant request statuses for this user
-		$.each(relevantRStatuses, function(i, rs) {
+		$.each(relevantRStatuses, function (i, rs) {
 			if (rs == rData.requestStatus) {
 				if (nonAdminProperty == "hideForNonAdmin" || nonAdminProperty == "hideButtonForNonAdmin" || adminProperty == "hideForAdmin" || adminProperty == "hideButtonForAdmin") {
 					classToAdd = ' hidden';
@@ -12671,12 +12704,12 @@
 
 
 
-	$.fn.BuildSelectOptions = function(e) {
+	$.fn.BuildSelectOptions = function (e) {
 
 		var optionsToAdd = "";
 
-		if (typeof(e.setOptions) != "undefined") {
-			$.each(e.setOptions, function(i, opt) {
+		if (typeof (e.setOptions) != "undefined") {
+			$.each(e.setOptions, function (i, opt) {
 				optionsToAdd += '				  <option value="' + opt.value + '">' + opt.display + '</option>';
 			});
 		}
@@ -12686,14 +12719,14 @@
 
 
 
-	$.fn.ReturnHyphenatedFieldNameOrValue = function(nameOrValue) {
-		return ReplaceAll("&eacute;", "e", ReplaceAll("\\.", "", ReplaceAll("\\'", "", ReplaceAll(" ", "-",  nameOrValue))));
+	$.fn.ReturnHyphenatedFieldNameOrValue = function (nameOrValue) {
+		return ReplaceAll("&eacute;", "e", ReplaceAll("\\.", "", ReplaceAll("\\'", "", ReplaceAll(" ", "-", nameOrValue))));
 	};
 
 
 
-	$.fn.SetFieldToRequired = function(id, type, repeatable) {
-		if (typeof(type) != "undefined") {
+	$.fn.SetFieldToRequired = function (id, type, repeatable) {
+		if (typeof (type) != "undefined") {
 			type = type.toLowerCase();
 			if (type == "radio" || type == "check" || type == "checkorradio") {
 				$('input[name="' + id + '"]').first().addClass('required');
@@ -12701,14 +12734,14 @@
 				$('#' + id + '_TopSpan_HiddenInput').addClass('required');
 			} else if (type == "text" || type == "textarea" || type == "url" || type == "file" || type == "complexfile" || type == "select" || type == "datepicker") {
 				$('#' + id).addClass("required");
-            } else if (type == "listitemchooser") {
-                $('#id-or-link_' + id).addClass("required");
-            } else if (type == "datetime") {
+			} else if (type == "listitemchooser") {
+				$('#id-or-link_' + id).addClass("required");
+			} else if (type == "datetime") {
 				$('#date-input_' + id).addClass("required");
 				$('#hours-input_' + id).addClass("required");
 				$('#minutes-input_' + id).addClass("required");
 			}
-		} else if (typeof($('#' + id).attr('data-control-type') != 'undefined')) {
+		} else if (typeof ($('#' + id).attr('data-control-type') != 'undefined')) {
 			if ($('#' + id).attr('data-control-type') == 'PeoplePicker') {
 				var elID = $('#' + id).attr('id');
 				$('#' + elID + '_TopSpan_HiddenInput').addClass('required');
@@ -12721,14 +12754,14 @@
 
 		if ($('#' + id).length) {
 			$('#' + id).closest("div.control").prev("div.field-type-indication").children("span.field-type-indicator").removeClass("field-optional").addClass("field-required").children("span.message").removeClass("message-optional").addClass("message-required").text("Required Field");
-        } else if ($('#id-or-link_' + id).length) {
-            $('#id-or-link_' + id).closest("div.control").prev("div.field-type-indication").children("span.field-type-indicator").removeClass("field-optional").addClass("field-required").children("span.message").removeClass("message-optional").addClass("message-required").text("Required Field");
-        } else if ($('#date-input_' + id).length) {
+		} else if ($('#id-or-link_' + id).length) {
+			$('#id-or-link_' + id).closest("div.control").prev("div.field-type-indication").children("span.field-type-indicator").removeClass("field-optional").addClass("field-required").children("span.message").removeClass("message-optional").addClass("message-required").text("Required Field");
+		} else if ($('#date-input_' + id).length) {
 			$('#date-input_' + id).closest("div.control").prev("div.field-type-indication").children("span.field-type-indicator").removeClass("field-optional").addClass("field-required").children("span.message").removeClass("message-optional").addClass("message-required").text("Required Field");
 		}
 
 		// if repeatable == 1, call this function again
-		if (typeof(repeatable) != 'undefined' && repeatable == 1) {
+		if (typeof (repeatable) != 'undefined' && repeatable == 1) {
 
 			// find the id #s of the repeats
 			var repeatIDs = [];
@@ -12744,17 +12777,17 @@
 				//	 repeatIDs.push($(this).attr('id'));
 				//});
 			} else if (type == "text" || type == "textarea" || type == "select" || type == "datepicker") {
-				$("[id^='" + id + "-repeat']").each(function() {
+				$("[id^='" + id + "-repeat']").each(function () {
 					repeatIDs.push($(this).attr('id'));
 				});
 			} else if (type == "datetime") {
-				$("[id^='date-input_" + id + "-repeat']").each(function() {
+				$("[id^='date-input_" + id + "-repeat']").each(function () {
 					repeatIDs.push($(this).attr('id'));
 				});
 			}
 
 			// for each repeatID
-			$.each(repeatIDs, function(i, repeatID) {
+			$.each(repeatIDs, function (i, repeatID) {
 				$().SetFieldToRequired(ReplaceAll('date-input_', '', repeatID), type, 0);
 			});
 		}
@@ -12762,24 +12795,24 @@
 
 
 
-	$.fn.SetFieldToOptional = function(id, type, repeatable) {
+	$.fn.SetFieldToOptional = function (id, type, repeatable) {
 
-		if (typeof(type) != "undefined") {
+		if (typeof (type) != "undefined") {
 			type = type.toLowerCase();
 			if (type == "radio" || type == "check" || type == "checkorradio") {
 				$('input[name="' + id + '"]').first().removeClass('required');
 			} else if (type == "peoplepicker") {
 				$('#' + id + '_TopSpan_HiddenInput').removeClass('required');
-			} else if (type == "text" || type == "textarea" || type == "url" || type == "file"  || type == "complexfile" || type == "mosFile" || type == "select" || type == "datepicker") {
+			} else if (type == "text" || type == "textarea" || type == "url" || type == "file" || type == "complexfile" || type == "mosFile" || type == "select" || type == "datepicker") {
 				$('#' + id).removeClass("required");
-            } else if (type == "listitemchooser") {
-                $('#id-or-link_' + id).removeClass("required");
-            } else if (type == "datetime") {
+			} else if (type == "listitemchooser") {
+				$('#id-or-link_' + id).removeClass("required");
+			} else if (type == "datetime") {
 				$('#date-input_' + id).removeClass("required");
 				$('#hours-input_' + id).removeClass("required");
 				$('#minutes-input_' + id).removeClass("required");
 			}
-		} else if (typeof($(id).attr('data-control-type') != 'undefined')) {
+		} else if (typeof ($(id).attr('data-control-type') != 'undefined')) {
 			if ($(id).attr('data-control-type') == 'PeoplePicker') {
 				var elID = $(id).attr('id');
 				$('#' + elID + '_TopSpan_HiddenInput').removeClass('required');
@@ -12790,15 +12823,15 @@
 
 		if ($('#' + id).length) {
 			$('#' + id).closest("div.control").prev("div.field-type-indication").children("span.field-type-indicator").removeClass("field-required").addClass("field-optional").children("span.message").removeClass("message-required").addClass("message-optional").text("Optional Field");
-        } else if ($('#id-or-link_' + id).length) {
-            console.log("found the field for real");
-            $('#id-or-link_' + id).closest("div.control").prev("div.field-type-indication").children("span.field-type-indicator").removeClass("field-required").addClass("field-optional").children("span.message").removeClass("message-required").addClass("message-optional").text("Optional Field");
-        } else if ($('#date-input_' + id).length) {
+		} else if ($('#id-or-link_' + id).length) {
+			console.log("found the field for real");
+			$('#id-or-link_' + id).closest("div.control").prev("div.field-type-indication").children("span.field-type-indicator").removeClass("field-required").addClass("field-optional").children("span.message").removeClass("message-required").addClass("message-optional").text("Optional Field");
+		} else if ($('#date-input_' + id).length) {
 			$('#date-input_' + id).closest("div.control").prev("div.field-type-indication").children("span.field-type-indicator").removeClass("field-required").addClass("field-optional").children("span.message").removeClass("message-required").addClass("message-optional").text("Optional Field");
 		}
 
 		// if repeatable == 1, call this function again
-		if (typeof(repeatable) != 'undefined' && repeatable == 1) {
+		if (typeof (repeatable) != 'undefined' && repeatable == 1) {
 
 			// find the id #s of the repeats
 			var repeatIDs = [];
@@ -12814,17 +12847,17 @@
 				//	 repeatIDs.push($(this).attr('id'));
 				//});
 			} else if (type == "text" || type == "textarea" || type == "select" || type == "datepicker") {
-				$("[id^='" + id + "-repeat']").each(function() {
+				$("[id^='" + id + "-repeat']").each(function () {
 					repeatIDs.push($(this).attr('id'));
 				});
 			} else if (type == "datetime") {
-				$("[id^='date-input_" + id + "-repeat']").each(function() {
+				$("[id^='date-input_" + id + "-repeat']").each(function () {
 					repeatIDs.push($(this).attr('id'));
 				});
 			}
 
 			// for each repeatID
-			$.each(repeatIDs, function(i, repeatID) {
+			$.each(repeatIDs, function (i, repeatID) {
 				$().SetFieldToOptional(ReplaceAll('date-input_', '', repeatID), type, 0);
 			});
 
@@ -12833,7 +12866,7 @@
 
 
 
-	$.fn.SetFieldToDisabled = function(e, caller) {
+	$.fn.SetFieldToDisabled = function (e, caller) {
 
 		// if this is a PeoplePicker field
 		if ($(e + '_TopSpan_EditorInput').length) {
@@ -12844,12 +12877,12 @@
 			$(e).closest("div.control").prev("div.field-type-indication").children("span.field-type-indicator").removeClass("field-optional").addClass("field-disabled").children("span.message").removeClass("message-optional").addClass("message-disabled").text("Disabled Field");
 
 		} else if (($(e).is("input") && ($(e).attr("type") == "text") || $(e).attr("type") == "url") || $(e).is("textarea")) {
-				$(e).prop("readonly", true);
-				$(e).closest("div.control").prev("div.field-type-indication").children("span.field-type-indicator").removeClass("field-optional").addClass("field-disabled").children("span.message").removeClass("message-optional").addClass("message-disabled").text("Read-only Field");
-				// for url fields, hide the "check this link" button
-				if ($(e).is("input") && $(e).attr("type") == "url") {
-					$(e).closest("div.control").find("a.link-tester").hide("fast").addClass("hidden");
-				}
+			$(e).prop("readonly", true);
+			$(e).closest("div.control").prev("div.field-type-indication").children("span.field-type-indicator").removeClass("field-optional").addClass("field-disabled").children("span.message").removeClass("message-optional").addClass("message-disabled").text("Read-only Field");
+			// for url fields, hide the "check this link" button
+			if ($(e).is("input") && $(e).attr("type") == "url") {
+				$(e).closest("div.control").find("a.link-tester").hide("fast").addClass("hidden");
+			}
 		} else if ($(e).hasClass('mos-drag-and-drop-file-attachment')) {
 			$(e).removeClass('populatable replaceable');
 			$(e).closest("div.control").prev("div.field-type-indication").children("span.field-type-indicator").removeClass("field-optional").addClass("field-disabled").children("span.message").removeClass("message-optional").addClass("message-disabled").text("Disabled Field");
@@ -12862,7 +12895,7 @@
 
 
 
-	$.fn.SetFieldToEnabled = function(e) {
+	$.fn.SetFieldToEnabled = function (e) {
 
 		// if this is a PeoplePicker element
 		if ($(e + '_TopSpan_EditorInput').length) {
@@ -12896,20 +12929,20 @@
 	function PopulateFormData(form, formData, uriRoot, requestID, checkForAlternateEventDataToPopulate) {
 
 		var formDataCopy = {};
-		
 
-		$.each(formData, function(formDatumKey, formDatumValue) {
+
+		$.each(formData, function (formDatumKey, formDatumValue) {
 			formDataCopy[formDatumKey] = formDatumValue;
 		});
 
 		// if we should *check for* alternate event data to populate
-		if (typeof(checkForAlternateEventDataToPopulate) != 'undefined') {
+		if (typeof (checkForAlternateEventDataToPopulate) != 'undefined') {
 
 			//var occurrenceDate = GetParamFromUrl(location.search, "date");
 			var exceptionID = GetParamFromUrl(location.search, "exceptionID");
 
 			if (exceptionID != "") {
-				$(formDataCopy["datesToAdd"]).each(function(i, e) {
+				$(formDataCopy["datesToAdd"]).each(function (i, e) {
 					if (e["exceptionID"] == exceptionID) {
 						formDataCopy["hours-input_Start-Time"] = e["hours-input_Start-Time"];
 						formDataCopy["minutes-input_Start-Time"] = e["minutes-input_Start-Time"];
@@ -12986,7 +13019,7 @@
 				if ($(element).attr("data-control-type") != undefined && $(element).attr("data-control-type") == "PeoplePicker") {
 					if (formDataCopy[field] != '') {
 						// allPeoplePickerResolutionPromises.push(
-							$().PopulatePeoplePickerFromListAndResolve(element.selector, formDataCopy[field])
+						$().PopulatePeoplePickerFromListAndResolve(element.selector, formDataCopy[field])
 						// );
 					}
 				} else if ($(element).attr("data-control-type") != undefined && $(element).attr("data-control-type") == "LegacyFileSet") {
@@ -13000,13 +13033,13 @@
 				// console.log(field);
 				// console.log($(element));
 				if ($(element).attr("type") == "radio" || $(element).attr("type") == "checkbox") {
-					if ((typeof(fData.saveApprovalFields) != 'undefined' && fData.saveApprovalFields == 1)  || (StrInStr(element.selector, '#approval-indicator') == false)) {
+					if ((typeof (fData.saveApprovalFields) != 'undefined' && fData.saveApprovalFields == 1) || (StrInStr(element.selector, '#approval-indicator') == false)) {
 						$(element).attr("checked", true);
 					}
 				} else {
 					if (element.selector == 'div#request-form #Historical-Admin-Notes' || element.selector == 'div#request-form #Historical-Other-Preservable-Notes') {
 						$(element).val(ReplaceAll("' '", "\r \r", HtmlDecode(formDataCopy[field])));
-					} else if ((typeof(fData.saveApprovalFields) != 'undefined' && fData.saveApprovalFields == 1)  || (StrInStr(element.selector, '#approval-signature') == false && StrInStr(element.selector, '#approval-date') == false && StrInStr(element.selector, '#Approval-Notes') == false)) {
+					} else if ((typeof (fData.saveApprovalFields) != 'undefined' && fData.saveApprovalFields == 1) || (StrInStr(element.selector, '#approval-signature') == false && StrInStr(element.selector, '#approval-date') == false && StrInStr(element.selector, '#Approval-Notes') == false)) {
 						$(element).val(HtmlDecode(formDataCopy[field]));
 					}
 				}
@@ -13016,7 +13049,7 @@
 
 
 
-	$.fn.PopulateLegacyFileSetLinks = function(selector, fileArray) {
+	$.fn.PopulateLegacyFileSetLinks = function (selector, fileArray) {
 
 		var markup = '';
 		var multipleFiles = 0;
@@ -13027,7 +13060,7 @@
 
 		if (multipleFiles == 1) { markup += '<ul>'; }
 
-		$(fileArray).each(function(fileIndex, fileValue) {
+		$(fileArray).each(function (fileIndex, fileValue) {
 			var fileName = StrInStr(fileValue, "/", 3);
 			if (multipleFiles == 1) { markup += '<li>'; }
 			markup += '<a href="../LegacyFiles/' + fileValue + '" target="_blank">' + fileName + '</a>';
@@ -13041,9 +13074,9 @@
 
 
 
-	$.fn.SetSelectByText = function(select, value) {
+	$.fn.SetSelectByText = function (select, value) {
 		var relevantOptionIndex = $().ReturnOptionIndexByText($(select), value);
-		if (typeof(relevantOptionIndex) != 'undefined') {
+		if (typeof (relevantOptionIndex) != 'undefined') {
 			$(select).prop("selectedIndex", relevantOptionIndex);
 		} else {
 			console.log("wrong setting method");
@@ -13053,9 +13086,9 @@
 
 
 
-	$.fn.ReturnOptionIndexByText = function(relevantSelect, relevantOptionText) {
+	$.fn.ReturnOptionIndexByText = function (relevantSelect, relevantOptionText) {
 		var relevantOptionIndex;
-		$(relevantSelect).children("option").each(function(i) {
+		$(relevantSelect).children("option").each(function (i) {
 			if (HtmlEncode($(this).text().trim()) == HtmlEncode(relevantOptionText.trim())) {
 				relevantOptionIndex = i;
 			}
@@ -13065,9 +13098,9 @@
 
 
 
-	$.fn.ReturnSelectedOptionIndex = function(relevantSelect) {
+	$.fn.ReturnSelectedOptionIndex = function (relevantSelect) {
 		var relevantOptionIndex;
-		$(relevantSelect + " option:selected").children("option").each(function(i) {
+		$(relevantSelect + " option:selected").children("option").each(function (i) {
 			if (HtmlEncode($(this).text().trim()) == HtmlEncode(relevantOptionText.trim())) {
 				relevantOptionIndex = i;
 			}
@@ -13082,7 +13115,7 @@
 
 
 	// doesn't handle people pickers
-	$.fn.RepeatElement = function(originalToRepeat, submittedID) {
+	$.fn.RepeatElement = function (originalToRepeat, submittedID) {
 
 		// --- get the id # of the last existing repeat
 
@@ -13111,7 +13144,7 @@
 		// --- use submittedID for newRepeatID, or construct a new one
 
 		// if there's a submittedID
-		if (typeof(submittedID) != 'undefined') {
+		if (typeof (submittedID) != 'undefined') {
 			// use it
 			var newRepeatID = submittedID;
 			// otherwise
@@ -13129,12 +13162,12 @@
 		// --- update ID, for, aria-described-by attributes on new repeat's descendant elements
 		$('#' + newRepeatID)
 			.find('[id^="label-and-control"], label, div.label > span, span.field-type-indicator, div.help-text, :input, a, div.mos-drag-and-drop-file-attachment, div.mos-drag-and-drop-file-attachment div, div.mos-drag-and-drop-file-attachment progress') // div.mos-drag-and-drop-file-attachment, div.mos-drag-and-drop-file-input, a.mos-drag-and-drop-file-container div, a.mos-drag-and-drop-file-container progress
-			.each(function() {
+			.each(function () {
 
 				// console.log($(this));
 
 				// if there's a submittedID
-				if (typeof(submittedID) != 'undefined') {
+				if (typeof (submittedID) != 'undefined') {
 					// use the number on the end of it
 					var newRepeatDescendantIDNumber = submittedID.slice(-1);
 					// otherwise
@@ -13144,23 +13177,23 @@
 				}
 
 				// if id exists, update it
-				if (typeof($(this).attr('id')) != 'undefined') {
+				if (typeof ($(this).attr('id')) != 'undefined') {
 					$(this).attr('id', $(this).attr('id') + '-repeat-' + newRepeatDescendantIDNumber);
 				}
 
 				// if for exists, update it
-				if (typeof($(this).attr('for')) != 'undefined') {
+				if (typeof ($(this).attr('for')) != 'undefined') {
 					$(this).attr('for', $(this).attr('for') + '-repeat-' + newRepeatDescendantIDNumber);
 				}
 
 				// if aria-described-by exists, update it
-				if (typeof($(this).attr('aria-describedby')) != 'undefined') {
+				if (typeof ($(this).attr('aria-describedby')) != 'undefined') {
 					var oldAriaDescribedByString = $(this).attr('aria-describedby');
 					var oldAriaDescribedByArray = oldAriaDescribedByString.split(' ');
 					var newAriaDescribedByString = '';
 					var ariaDescriberSeparator = '';
 
-					$.each(oldAriaDescribedByArray, function(i, d) {
+					$.each(oldAriaDescribedByArray, function (i, d) {
 						if (d.length) {
 							newAriaDescribedByString += ariaDescriberSeparator + d + '-repeat-' + newRepeatDescendantIDNumber;
 							ariaDescriberSeparator = ' ';
@@ -13171,14 +13204,14 @@
 				}
 
 				// if listfieldname exists, remove it
-				if (typeof($(this).attr('listfieldname')) != 'undefined') {
+				if (typeof ($(this).attr('listfieldname')) != 'undefined') {
 					$(this).removeAttr('listfieldname');
 				}
 			});
 
 
 		// --- clear the values in the new repeat
-		$("#" + newRepeatID).find(':input').each(function() {
+		$("#" + newRepeatID).find(':input').each(function () {
 			switch (this.type) {
 				case 'password':
 				case 'text':
@@ -13195,7 +13228,7 @@
 			}
 		});
 
-		$("#" + newRepeatID).find('a').each(function() {
+		$("#" + newRepeatID).find('a').each(function () {
 			// do not remove file-related functionality here; still used for older requests which load with the old file control
 			if ($(this).attr('data-source-type') == 'url' || $(this).attr('data-source-type') == 'file') {
 				$(this).attr('href', '');
@@ -13242,7 +13275,7 @@
 
 
 
-	$.fn.RemoveThisRepeat = function(e) {
+	$.fn.RemoveThisRepeat = function (e) {
 		$(e).closest('div.repeat-container').remove();
 	};
 
@@ -13250,17 +13283,17 @@
 	// ---- AUTO-GENERATED SCRIPT
 
 
-	$.fn.BuildScript = function(e) {
+	$.fn.BuildScript = function (e) {
 
 		var stmtsToAdd = '';
 
-		if (typeof(e.fieldName) != "undefined") {
+		if (typeof (e.fieldName) != "undefined") {
 			e.hypehnatedName = $().ReturnHyphenatedFieldNameOrValue(e.fieldName);
 			e.hypehnatedNameLower = e.hypehnatedName.toLowerCase();
 		}
 
 		// if an onchange value has been defined
-		if (typeof(e.onChange) != "undefined") {
+		if (typeof (e.onChange) != "undefined") {
 
 			// set up the onchange event handler
 			if (e.controlType == "radio" || e.controlType == "check") {
@@ -13268,7 +13301,7 @@
 				var chcQuantity = e.choices.length;
 				stmtsToAdd += '\n$("';
 
-				$.each(e.choices, function(i, chc) {
+				$.each(e.choices, function (i, chc) {
 					chc.hypehnatedValueLower = $().ReturnHyphenatedFieldNameOrValue(chc.value).toLowerCase();
 					stmtsToAdd += '#' + e.hypehnatedNameLower + '_' + chc.hypehnatedValueLower;
 					if ((i + 1) < chcQuantity) {
@@ -13292,12 +13325,12 @@
 			}
 
 			// for each object in the onChange array
-			$.each(e.onChange, function(i, chg) {
-				if (typeof(chg.alwaysTrue) != "undefined") {
+			$.each(e.onChange, function (i, chg) {
+				if (typeof (chg.alwaysTrue) != "undefined") {
 					stmtsToAdd += '	if (true) { \n';
-				} else if (typeof(chg.thisFieldEquals) != "undefined") {
+				} else if (typeof (chg.thisFieldEquals) != "undefined") {
 					stmtsToAdd += '	var comparisonBank = [';
-					$.each(chg.thisFieldEquals, function(i, comp) {
+					$.each(chg.thisFieldEquals, function (i, comp) {
 						if (i != 0) {
 							stmtsToAdd += ', ';
 						}
@@ -13305,9 +13338,9 @@
 					});
 					stmtsToAdd += ']; \n';
 					stmtsToAdd += '	if (comparisonBank.indexOf($(this).val()) > -1) { \n';
-				} else if (typeof(chg.thisFieldNotEquals) != "undefined") {
+				} else if (typeof (chg.thisFieldNotEquals) != "undefined") {
 					stmtsToAdd += '	var comparisonBank = [';
-					$.each(chg.thisFieldNotEquals, function(i, comp) {
+					$.each(chg.thisFieldNotEquals, function (i, comp) {
 						if (i != 0) {
 							stmtsToAdd += ', ';
 						}
@@ -13315,107 +13348,107 @@
 					});
 					stmtsToAdd += ']; \n';
 					stmtsToAdd += '	if (comparisonBank.indexOf($(this).val()) == -1) { \n';
-				} else if (typeof(chg.thisFieldIsPositiveInteger) != "undefined") {
+				} else if (typeof (chg.thisFieldIsPositiveInteger) != "undefined") {
 					if (chg.thisFieldIsPositiveInteger == 1) {
 						stmtsToAdd += '	if (/^[0-9]*[1-9][0-9]*$/.test($(this).val())) { \n';
 					} else if (chg.thisFieldIsPositiveInteger == 0) {
 						stmtsToAdd += '	if (!(/^[0-9]*[1-9][0-9]*$/.test($(this).val()))) { \n';
 					}
-				} else if (typeof(chg.thisFieldIsChecked) != "undefined") {
+				} else if (typeof (chg.thisFieldIsChecked) != "undefined") {
 					if (chg.thisFieldIsChecked == 1) {
 						stmtsToAdd += '	if ($(this).is(":checked")) { \n';
 					} else {
 						stmtsToAdd += '	if (!$(this).is(":checked")) { \n';
 					}
-				} else if (typeof(chg.anyOfSpecificCheckboxesAreChecked) != "undefined") {
+				} else if (typeof (chg.anyOfSpecificCheckboxesAreChecked) != "undefined") {
 					stmtsToAdd += '	if (';
-					$.each(chg.anyOfSpecificCheckboxesAreChecked, function(i, checkbox) {
+					$.each(chg.anyOfSpecificCheckboxesAreChecked, function (i, checkbox) {
 						if (i != 0) {
 							stmtsToAdd += ' || ';
 						}
 						stmtsToAdd += ' $("' + checkbox + '").is(":checked")';
 					});
 					stmtsToAdd += ') { \n';
-				} else if (typeof(chg.allOfSpecificCheckboxesAreChecked) != "undefined") {
+				} else if (typeof (chg.allOfSpecificCheckboxesAreChecked) != "undefined") {
 					stmtsToAdd += '	if (';
-					$.each(chg.allOfSpecificCheckboxesAreChecked, function(i, checkbox) {
+					$.each(chg.allOfSpecificCheckboxesAreChecked, function (i, checkbox) {
 						if (i != 0) {
 							stmtsToAdd += ' && ';
 						}
 						stmtsToAdd += ' $("' + checkbox + '").is(":checked")';
 					});
 					stmtsToAdd += ') { \n';
-				} else if (typeof(chg.noneOfSpecificCheckboxesAreChecked) != "undefined") {
+				} else if (typeof (chg.noneOfSpecificCheckboxesAreChecked) != "undefined") {
 					stmtsToAdd += '	if (';
-					$.each(chg.noneOfSpecificCheckboxesAreChecked, function(i, checkbox) {
+					$.each(chg.noneOfSpecificCheckboxesAreChecked, function (i, checkbox) {
 						if (i != 0) {
 							stmtsToAdd += ' && ';
 						}
 						stmtsToAdd += ' !($("' + checkbox + '").is(":checked"))';
 					});
 					stmtsToAdd += ') { \n';
-                } else if (typeof(chg.anyOfSpecificCheckboxesAreCheckedInAllCheckboxSets) != "undefined") {
-                    stmtsToAdd += ' if (';
-                    $.each(chg.anyOfSpecificCheckboxesAreCheckedInAllCheckboxSets, function(i, checkboxSet) {
-                        if (i != 0) {
-                            stmtsToAdd += ' && ';
-                        }
-                        stmtsToAdd += '(';
-                            
-                        $.each(checkboxSet, function(i, checkbox) {
-                            if (i != 0) {
-                                stmtsToAdd += ' || ';
-                            }
-                            stmtsToAdd += ' $("' + checkbox + '").is(":checked")';
-                        });
-                        stmtsToAdd += ')';
-                    });
-                    stmtsToAdd += ') { \n';
-                } else if (typeof(chg.noneOfSpecificCheckboxesAreCheckedInAnyCheckboxSets) != "undefined") {
-                    stmtsToAdd += ' if (';
-                    $.each(chg.noneOfSpecificCheckboxesAreCheckedInAnyCheckboxSets, function(i, checkboxSet) {
-                        if (i != 0) {
-                            stmtsToAdd += ' || ';
-                        }
-                        stmtsToAdd += '(';
-                            
-                        $.each(checkboxSet, function(i, checkbox) {
-                            if (i != 0) {
-                                stmtsToAdd += ' && ';
-                            }
-                            stmtsToAdd += ' !$("' + checkbox + '").is(":checked")';
-                        });
-                        stmtsToAdd += ')';
-                    });
-                    stmtsToAdd += ') { \n';
-                } else if (typeof(chg.thisFieldLessThan) != "undefined") {
+				} else if (typeof (chg.anyOfSpecificCheckboxesAreCheckedInAllCheckboxSets) != "undefined") {
+					stmtsToAdd += ' if (';
+					$.each(chg.anyOfSpecificCheckboxesAreCheckedInAllCheckboxSets, function (i, checkboxSet) {
+						if (i != 0) {
+							stmtsToAdd += ' && ';
+						}
+						stmtsToAdd += '(';
+
+						$.each(checkboxSet, function (i, checkbox) {
+							if (i != 0) {
+								stmtsToAdd += ' || ';
+							}
+							stmtsToAdd += ' $("' + checkbox + '").is(":checked")';
+						});
+						stmtsToAdd += ')';
+					});
+					stmtsToAdd += ') { \n';
+				} else if (typeof (chg.noneOfSpecificCheckboxesAreCheckedInAnyCheckboxSets) != "undefined") {
+					stmtsToAdd += ' if (';
+					$.each(chg.noneOfSpecificCheckboxesAreCheckedInAnyCheckboxSets, function (i, checkboxSet) {
+						if (i != 0) {
+							stmtsToAdd += ' || ';
+						}
+						stmtsToAdd += '(';
+
+						$.each(checkboxSet, function (i, checkbox) {
+							if (i != 0) {
+								stmtsToAdd += ' && ';
+							}
+							stmtsToAdd += ' !$("' + checkbox + '").is(":checked")';
+						});
+						stmtsToAdd += ')';
+					});
+					stmtsToAdd += ') { \n';
+				} else if (typeof (chg.thisFieldLessThan) != "undefined") {
 					stmtsToAdd += '	if ($(this).val() < ' + chg.thisFieldLessThan + ') { \n';
-				} else if (typeof(chg.thisFieldLessThanEqualTo) != "undefined") {
+				} else if (typeof (chg.thisFieldLessThanEqualTo) != "undefined") {
 					stmtsToAdd += '	if ($(this).val() <= ' + chg.thisFieldLessThanEqualTo + ') { \n';
-				} else if (typeof(chg.thisFieldGreaterThan) != "undefined") {
+				} else if (typeof (chg.thisFieldGreaterThan) != "undefined") {
 					stmtsToAdd += '	if ($(this).val() > ' + chg.thisFieldLessThan + ') { \n';
-				} else if (typeof(chg.thisFieldGreaterThanEqualTo) != "undefined") {
+				} else if (typeof (chg.thisFieldGreaterThanEqualTo) != "undefined") {
 					stmtsToAdd += '	if ($(this).val() >= ' + chg.thisFieldGreaterThanEqualTo + ') { \n';
-				} else if (typeof(chg.thisDateFieldLessThanDaysFromNow) != "undefined") {
+				} else if (typeof (chg.thisDateFieldLessThanDaysFromNow) != "undefined") {
 					stmtsToAdd += '	if ($().ReturnDateDifferenceInDays($(this).val(), "' + new Date().toLocaleString() + '") < ' + chg.thisDateFieldLessThanDaysFromNow + ') { \n';
-				} else if (typeof(chg.thisDateFieldLessThanEqualToDaysFromNow) != "undefined") {
+				} else if (typeof (chg.thisDateFieldLessThanEqualToDaysFromNow) != "undefined") {
 					stmtsToAdd += '	if ($().ReturnDateDifferenceInDays($(this).val(), "' + new Date() + '") <= ' + chg.thisDateFieldLessThanEqualToDaysFromNow + ') { \n';
-				} else if (typeof(chg.thisDateFieldGreaterThanDaysFromNow) != "undefined") {
+				} else if (typeof (chg.thisDateFieldGreaterThanDaysFromNow) != "undefined") {
 					stmtsToAdd += '	if ($().ReturnDateDifferenceInDays($(this).val(), "' + new Date() + '") > ' + chg.thisDateFieldGreaterThanDaysFromNow + ') { \n';
-				} else if (typeof(chg.thisDateFieldGreaterThanDaysFromNowEqualTo) != "undefined") {
+				} else if (typeof (chg.thisDateFieldGreaterThanDaysFromNowEqualTo) != "undefined") {
 					stmtsToAdd += '	if ($().ReturnDateDifferenceInDays($(this).val(), "' + new Date().toLocaleString() + '") >= ' + chg.thisDateFieldGreaterThanDaysFromNowEqualTo + ') { \n';
-				} else if (typeof(chg.thisTimeFieldSetEarlierThan) != "undefined") {
+				} else if (typeof (chg.thisTimeFieldSetEarlierThan) != "undefined") {
 					stmtsToAdd += '	if (typeof($("select#hours-input_' + e.hypehnatedName + '").val()) != "undefined" && $("select#hours-input_' + e.hypehnatedName + '").val() != "" && typeof($("select#minutes-input_' + e.hypehnatedName + '").val()) != "undefined" && $("select#minutes-input_' + e.hypehnatedName + '").val()!= "" && $().ReturnTimeOneIsEarlierThanTimeTwo($("select#hours-input_' + e.hypehnatedName + '").val(), $("select#minutes-input_' + e.hypehnatedName + '").val(), "' + chg.thisTimeFieldSetEarlierThan.hours + '", "' + chg.thisTimeFieldSetEarlierThan.minutes + '") != 0) { \n';
-				} else if (typeof(chg.thisTimeFieldSetLaterThan) != "undefined") {
+				} else if (typeof (chg.thisTimeFieldSetLaterThan) != "undefined") {
 					stmtsToAdd += '	if (typeof($("select#hours-input_' + e.hypehnatedName + '").val()) != "undefined" && $("select#hours-input_' + e.hypehnatedName + '").val() != "" && typeof($("select#minutes-input_' + e.hypehnatedName + '").val()) != "undefined" && $("select#minutes-input_' + e.hypehnatedName + '").val()!= "" && $().ReturnTimeOneIsLaterThanTimeTwo($("select#hours-input_' + e.hypehnatedName + '").val(), $("select#minutes-input_' + e.hypehnatedName + '").val(), "' + chg.thisTimeFieldSetLaterThan.hours + '", "' + chg.thisTimeFieldSetLaterThan.minutes + '") != 0) { \n';
 				}
 
-			
 
-				if (typeof(chg.addlOrConditions) != "undefined") {
+
+				if (typeof (chg.addlOrConditions) != "undefined") {
 					stmtsToAdd += '			if (';
 
-					$.each(chg.addlOrConditions, function(i, orCond) {
+					$.each(chg.addlOrConditions, function (i, orCond) {
 						if (i != 0) {
 							stmtsToAdd += ' || ';
 						}
@@ -13425,10 +13458,10 @@
 					stmtsToAdd += ') { \n';
 				}
 
-				if (typeof(chg.addlAndConditions) != "undefined") {
+				if (typeof (chg.addlAndConditions) != "undefined") {
 					stmtsToAdd += '			if (';
 
-					$.each(chg.addlAndConditions, function(i, andCond) {
+					$.each(chg.addlAndConditions, function (i, andCond) {
 						if (i != 0) {
 							stmtsToAdd += ' && ';
 						}
@@ -13441,23 +13474,23 @@
 
 
 				// if this change includes a show
-				if (typeof(chg.show) != "undefined") {
+				if (typeof (chg.show) != "undefined") {
 
 					// for each value in the show array
-					$.each(chg.show, function(i, sh) {
-						if (typeof(sh.fieldName) != "undefined") {
+					$.each(chg.show, function (i, sh) {
+						if (typeof (sh.fieldName) != "undefined") {
 							var shID = '#label-and-control_' + ReplaceAll("\\.", "", ReplaceAll(" ", "-", sh.fieldName));
 						}
-						if (typeof(sh.noteID) != "undefined") {
+						if (typeof (sh.noteID) != "undefined") {
 							var shID = '#' + ReplaceAll("\\.", "", ReplaceAll(" ", "-", sh.noteID));
 						}
-						if (typeof(sh.divID) != "undefined") {
+						if (typeof (sh.divID) != "undefined") {
 							var shID = '#' + ReplaceAll("\\.", "", ReplaceAll(" ", "-", sh.divID));
 						}
-						if (typeof(sh.headerID) != "undefined") {
+						if (typeof (sh.headerID) != "undefined") {
 							var shID = '#' + ReplaceAll("\\.", "", ReplaceAll(" ", "-", sh.headerID));
 						}
-						if (typeof(sh.divClass) != "undefined") {
+						if (typeof (sh.divClass) != "undefined") {
 							var shID = '.' + ReplaceAll("\\.", "", ReplaceAll(" ", "-", sh.divClass));
 						}
 
@@ -13471,28 +13504,28 @@
 				}
 
 				// if this change includes a hide
-				if (typeof(chg.hide) != "undefined") {
+				if (typeof (chg.hide) != "undefined") {
 
 					// for each value in the show array
-					$.each(chg.hide, function(i, hd) {
-						if (typeof(hd.fieldName) != "undefined") {
+					$.each(chg.hide, function (i, hd) {
+						if (typeof (hd.fieldName) != "undefined") {
 							var hdID = '#label-and-control_' + ReplaceAll("\\.", "", ReplaceAll(" ", "-", hd.fieldName));
 						}
-						if (typeof(hd.noteID) != "undefined") {
+						if (typeof (hd.noteID) != "undefined") {
 							var hdID = '#' + ReplaceAll("\\.", "", ReplaceAll(" ", "-", hd.noteID));
 						}
-						if (typeof(hd.divID) != "undefined") {
+						if (typeof (hd.divID) != "undefined") {
 							var hdID = '#' + ReplaceAll("\\.", "", ReplaceAll(" ", "-", hd.divID));
 						}
-						if (typeof(hd.headerID) != "undefined") {
+						if (typeof (hd.headerID) != "undefined") {
 							var hdID = '#' + ReplaceAll("\\.", "", ReplaceAll(" ", "-", hd.headerID));
 						}
-						if (typeof(hd.divClass) != "undefined") {
+						if (typeof (hd.divClass) != "undefined") {
 							var hdID = '.' + ReplaceAll("\\.", "", ReplaceAll(" ", "-", hd.divClass));
 						}
 
 						// if visible, hide
-						stmtsToAdd += '		if ($("' + hdID + '").is(":visible")) { \n' +
+						stmtsToAdd += '		if (!$("' + hdID + '").hasClass("hidden")) { \n' +
 							'			$("' + hdID + '").hide("fast"); \n' +
 							'			$("' + hdID + '").addClass("hidden"); \n' +
 							'		} \n';
@@ -13501,10 +13534,10 @@
 				}
 
 				// if this change includes a require
-				if (typeof(chg.require) != "undefined") {
+				if (typeof (chg.require) != "undefined") {
 
 					// for each value in the require array
-					$.each(chg.require, function(i, req) {
+					$.each(chg.require, function (i, req) {
 
 						// if repeatable isn't set, set to 0
 						req = $.extend({
@@ -13520,10 +13553,10 @@
 				}
 
 				// if this change includes an optional
-				if (typeof(chg.optional) != "undefined") {
+				if (typeof (chg.optional) != "undefined") {
 
 					// for each value in the show array
-					$.each(chg.optional, function(i, optl) {
+					$.each(chg.optional, function (i, optl) {
 
 						// if repeatable isn't set, set to 0
 						optl = $.extend({
@@ -13538,26 +13571,26 @@
 				}
 
 				// if this change includes a disabled
-				if (typeof(chg.disable) != "undefined") {
+				if (typeof (chg.disable) != "undefined") {
 
 					// for each value in the show array
-					$.each(chg.disable, function(i, dis) {
+					$.each(chg.disable, function (i, dis) {
 						// if not visible, show
 						stmtsToAdd += '		if (!$("#label-and-control_' + ReplaceAll("\\.", "", ReplaceAll(" ", "-", dis.fieldName)) + ' div.field-type-indication span.field-type-indicator").hasClass("field-disabled")) { \n';
 
-						if (typeof(dis.inputIDs) != 'undefined') {
-							$(dis.inputIDs).each(function(inputIDIndex, InputIDValue) {
+						if (typeof (dis.inputIDs) != 'undefined') {
+							$(dis.inputIDs).each(function (inputIDIndex, InputIDValue) {
 								stmtsToAdd += '			$().SetFieldToDisabled("#' + InputIDValue + '"); \n';
 							});
 						}
 
-						if (typeof(dis.selectIDs) != 'undefined') {
-							$(dis.selectIDs).each(function(selectIDIndex, selectIDValue) {
+						if (typeof (dis.selectIDs) != 'undefined') {
+							$(dis.selectIDs).each(function (selectIDIndex, selectIDValue) {
 								stmtsToAdd += '			$().SetFieldToDisabled("#' + selectIDValue + '"); \n';
 							});
 						}
 
-						if (typeof(dis.inputIDs) == 'undefined' && typeof(dis.selectIDs) == 'undefined') {
+						if (typeof (dis.inputIDs) == 'undefined' && typeof (dis.selectIDs) == 'undefined') {
 							stmtsToAdd += '			$().SetFieldToDisabled("#' + ReplaceAll("\\.", "", ReplaceAll(" ", "-", dis.fieldName)) + '"); \n';
 						}
 
@@ -13567,15 +13600,15 @@
 				}
 
 				// if this change includes an enabled
-				if (typeof(chg.enable) != "undefined") {
+				if (typeof (chg.enable) != "undefined") {
 
 					// for each value in the show array
-					$.each(chg.enable, function(i, en) {
+					$.each(chg.enable, function (i, en) {
 						// if not visible, show
 						stmtsToAdd += '		if ($("#label-and-control_' + ReplaceAll("\\.", "", ReplaceAll(" ", "-", en.fieldName)) + ' div.field-type-indication span.field-type-indicator").hasClass("field-disabled")) { \n';
 
-						if (typeof(en.inputIDs) != 'undefined') {
-							$(en.inputIDs).each(function(inputIDIndex, InputIDValue) {
+						if (typeof (en.inputIDs) != 'undefined') {
+							$(en.inputIDs).each(function (inputIDIndex, InputIDValue) {
 								stmtsToAdd += '			$().SetFieldToEnabled("#' + InputIDValue + '"); \n';
 								stmtsToAdd += '			if ($("#' + InputIDValue + '").attr("data-is-date") == true) { \n';
 								stmtsToAdd += '				 $("#' + InputIDValue + '").datepicker({ \n';
@@ -13588,13 +13621,13 @@
 							});
 						}
 
-						if (typeof(en.selectIDs) != 'undefined') {
-							$(en.selectIDs).each(function(selectIDIndex, selectIDValue) {
+						if (typeof (en.selectIDs) != 'undefined') {
+							$(en.selectIDs).each(function (selectIDIndex, selectIDValue) {
 								stmtsToAdd += '			$().SetFieldToEnabled("#' + selectIDValue + '"); \n';
 							});
 						}
 
-						if (typeof(en.inputIDs) == 'undefined' && typeof(en.selectIDs) == 'undefined') {
+						if (typeof (en.inputIDs) == 'undefined' && typeof (en.selectIDs) == 'undefined') {
 							stmtsToAdd += '			$().SetFieldToEnabled("#' + ReplaceAll("\\.", "", ReplaceAll(" ", "-", en.fieldName)) + '"); \n';
 							stmtsToAdd += '			if ($("#' + ReplaceAll("\\.", "", ReplaceAll(" ", "-", en.fieldName)) + '").attr("data-is-date") == "true") { \n';
 							stmtsToAdd += '				 $("#' + ReplaceAll("\\.", "", ReplaceAll(" ", "-", en.fieldName)) + '").datepicker({ \n';
@@ -13609,16 +13642,16 @@
 					});
 
 				}
-				
+
 				// if this change includes a calibration of odd & even subsection classes
-				if (typeof(chg.calibrateOddEvenSubsectionClasses) != "undefined") {
-					
+				if (typeof (chg.calibrateOddEvenSubsectionClasses) != "undefined") {
+
 					// for each value in the calibrateOddEvenSubsectionClasses array
 
 					stmtsToAdd += '		var visibleSubsectionCounter = 0;';
 					stmtsToAdd += '		$("';
 
-					$.each(chg.calibrateOddEvenSubsectionClasses, function(i, subsection) {
+					$.each(chg.calibrateOddEvenSubsectionClasses, function (i, subsection) {
 						if (i != 0) { stmtsToAdd += ','; }
 						stmtsToAdd += subsection;
 					});
@@ -13637,34 +13670,45 @@
 				}
 
 				// if this change includes a checkbox label update
-				if (typeof(chg.checkboxLabelUpdate) != "undefined") {
+				if (typeof (chg.checkboxLabelUpdate) != "undefined") {
 
 					// for each value in the checkboxLabelUpdate array
-					$.each(chg.checkboxLabelUpdate, function(i, l) {
+					$.each(chg.checkboxLabelUpdate, function (i, l) {
 						stmtsToAdd += '		$("label[for=\'' + l.labelFor + '\']").html("' + l.newLabel + '"); \n';
 					});
 
 				}
 
 				// if this change includes a set
-				if (typeof(chg.set) != "undefined") {
+				if (typeof (chg.set) != "undefined") {
 
 					// for each value in the set array
-					$.each(chg.set, function(i, set) {
+					$.each(chg.set, function (i, set) {
 						if (set.type == "text" || set.type == "textarea") {
-							if (typeof(set.method) != "undefined" && set.method == "dynamic") {
+							if (typeof (set.method) != "undefined" && set.method == "dynamic") {
 								stmtsToAdd += '	  $("#' + ReplaceAll("\\.", "", ReplaceAll(" ", "-", set.fieldName)) + '").val(' + set.value + '); \n';
 							} else {
 								stmtsToAdd += '	  $("#' + ReplaceAll("\\.", "", ReplaceAll(" ", "-", set.fieldName)) + '").val("' + set.value + '"); \n';
 							}
-						} else if (set.type == "radio") {
-							// to be completed
-						} else if (set.type == "checkbox") {
-							// to be completed
+						} else if (set.type == "checkbox" || set.type == "radio") {
+							if (set.checked == 0) { set.checked = false; }
+							if (set.checked == 1) { set.checked = true; }
+							var inputID = $().ReturnHyphenatedFieldNameOrValue(set.fieldName).toLowerCase() + '_' + $().ReturnHyphenatedFieldNameOrValue(set.valueAffected).toLowerCase();
+							stmtsToAdd += '	  $("#' + inputID + '").prop("checked", ' + set.checked + '); \n';
+							stmtsToAdd += set.checked ?
+								'	  $("#' + inputID + '").attr("checked", true); \n' :
+								'	  $("#' + inputID + '").removeAttr("checked"); \n';
+
 						} else if (set.type == "select") {
-							stmtsToAdd += '	  $("#' + ReplaceAll("\\.", "", ReplaceAll(" ", "-", set.fieldName)) + '").prop("selectedIndex", ' + set.optionIndex + '); \n';
+							if (typeof (set.copyField) != "undefined") {
+								var copyFieldID = $().ReturnHyphenatedFieldNameOrValue(set.copyField);
+								stmtsToAdd += '	  $("#' + ReplaceAll("\\.", "", ReplaceAll(" ", "-", set.fieldName)) + '").prop("selectedIndex", $("#' + copyFieldID + '").prop("selectedIndex")); \n';
+
+							} else {
+								stmtsToAdd += '	  $("#' + ReplaceAll("\\.", "", ReplaceAll(" ", "-", set.fieldName)) + '").prop("selectedIndex", ' + set.optionIndex + '); \n';
+							}
 						} else if (set.type == "datetime") {
-							if (typeof(set.method) != "undefined" && set.method == "dynamic" && typeof(set.valueFromFieldName) != "undefined") {
+							if (typeof (set.method) != "undefined" && set.method == "dynamic" && typeof (set.valueFromFieldName) != "undefined") {
 								stmtsToAdd += '	  $("input#date-input_' + ReplaceAll("\\.", "", ReplaceAll(" ", "-", set.fieldName)) + '").val($("input#date-input_' + ReplaceAll("\\.", "", ReplaceAll(" ", "-", set.valueFromFieldName)) + '").val()); \n';
 								stmtsToAdd += '	  $().SetSelectByText("#hours-input_' + ReplaceAll("\\.", "", ReplaceAll(" ", "-", set.fieldName)) + '", $("select#hours-input_' + ReplaceAll("\\.", "", ReplaceAll(" ", "-", set.valueFromFieldName)) + ' option:selected").text()); \n';
 								stmtsToAdd += '	  $().SetSelectByText("#minutes-input_' + ReplaceAll("\\.", "", ReplaceAll(" ", "-", set.fieldName)) + '", $("select#minutes-input_' + ReplaceAll("\\.", "", ReplaceAll(" ", "-", set.valueFromFieldName)) + ' option:selected").text()); \n';
@@ -13687,7 +13731,7 @@
 
 				}
 
-				if (typeof(chg.addlAndConditions) != "undefined" || typeof(chg.addlOrConditions) != "undefined") {
+				if (typeof (chg.addlAndConditions) != "undefined" || typeof (chg.addlOrConditions) != "undefined") {
 					stmtsToAdd += '			} \n';
 				}
 
@@ -13707,18 +13751,18 @@
 				'	show: { effect: "bounce", times: 2, duration: 500 }, \n' +
 				'	width: 1200, \n' +
 				'	maxHeight: 600, \n' +
-				'}); \n' + 
+				'}); \n' +
 
-				'$("div[aria-describedby=\'list-item-dialog\'] div.ui-dialog-titlebar span.ui-dialog-title").append("\x3cspan class=\\x22list-dialog-header\\x22\x3e' + e.dialogTitle + '\x3c/span\x3e"); \n' + 
-				'$("div#list-item-dialog").append("\x3cdiv id=\\x22list-item-table-container\\x22 class=\\x22table-container\\x22\x3e\x3c/div\x3e"); \n' + 
+				'$("div[aria-describedby=\'list-item-dialog\'] div.ui-dialog-titlebar span.ui-dialog-title").append("\x3cspan class=\\x22list-dialog-header\\x22\x3e' + e.dialogTitle + '\x3c/span\x3e"); \n' +
+				'$("div#list-item-dialog").append("\x3cdiv id=\\x22list-item-table-container\\x22 class=\\x22table-container\\x22\x3e\x3c/div\x3e"); \n' +
 
 				'var sections = ' + JSON.stringify(e.listItemViewSections) + '; \n' +
-				
+
 				'$().RenderAllDataTables(sections, "list-item-table-container"); \n' +
 
 				'$("a#anchor_' + e.hypehnatedName + '").click(function() { \n' +
 				'	$("div#list-item-dialog").dialog("open"); \n' +
-				'}); \n' + 
+				'}); \n' +
 
 				'$("div#list-item-dialog a.anchor_no-href").click(function() { \n' +
 				'	$("input#id-or-link_' + e.hypehnatedName + '").val($(this).text()); \n' +
@@ -13734,7 +13778,7 @@
 	// ---- STANDARD APPROVALS
 
 
-	$.fn.ReturnApprovalNode = function(standardName, hyphenatedName, email) {
+	$.fn.ReturnApprovalNode = function (standardName, hyphenatedName, email) {
 		email = email.toLowerCase();
 		return '	<div id="approver_' + hyphenatedName + '" class="approver-container" data-approver-email="' + email + '" data-approval-status="">' +
 			'		  <h3>' + standardName + '</h3>' +
@@ -13803,7 +13847,7 @@
 
 
 
-	$.fn.ReturnApprovalNodeScript = function(standardName, hyphenatedName, NowAsFriendlyDateWithYear) {
+	$.fn.ReturnApprovalNodeScript = function (standardName, hyphenatedName, NowAsFriendlyDateWithYear) {
 		return '	 $("#approval-indicator_approve_' + hyphenatedName + ', #approval-indicator_disapprove_' + hyphenatedName + '").on("change", function () { \n' +
 			'		  if ($(this).val() == "disapprove") { \n' +
 			'				if (!$("#approval-indicator_help-note-2_' + hyphenatedName + '").is(":visible")) { \n' +
@@ -13838,7 +13882,7 @@
 
 
 
-	$.fn.ReturnNotificationHistoryRow = function(standardName, hyphenatedName, NowAsISOLocal, NowAsFriendlyDateTimeWithYear, neededOrNot) {
+	$.fn.ReturnNotificationHistoryRow = function (standardName, hyphenatedName, NowAsISOLocal, NowAsFriendlyDateTimeWithYear, neededOrNot) {
 		return '		 <tr class="notification-set" id="notification-set_' + hyphenatedName + '_' + NowAsISOLocal + '">' +
 			'			  <th>' + standardName + '</th>' +
 			'			  <td>' + neededOrNot + '</td>' +
@@ -13852,39 +13896,46 @@
 
 
 
-	function ReturnRequestFormDataFromDOMAsObject () {
+	function ReturnRequestFormDataFromDOMAsObject() {
 		// get data from form as string
 		var clonedForm = $("div#request-form").clone();
+		var repeatables = $(clonedForm).find('[data-repeatable]');
 		var formData = '{';
-		// handle the repeatables
+		// handle the repeatable section
 		formData += '"RepeatedElements": [';
-		$(clonedForm).find('[data-repeatable]').each(function() {
+		repeatables.each(function (index, value) {
+			var thisIsLastRepeatable = false;
+			if ((repeatables.length - 1) === index) {
+				thisIsLastRepeatable = true;
+			}
 			var repeatableString = '{"ID": "' + $(this).attr('id') + '",';
 			repeatableString += '"OriginalToRepeat": "' + $(this).attr('data-original-to-repeat') + '",';
 			repeatableString += ReturnRequestStorageObjectPropertiesAndPushRequestColumns(this);
 			repeatableString = repeatableString.substring(0, repeatableString.length - 1); // remove trailing comma
-			repeatableString += '},';
+			repeatableString += '}';
+			if (!thisIsLastRepeatable) {
+				repeatableString += ',';
+			}
 			formData += repeatableString;
 			$(this).remove();
 		});
-		// remove trailing "},"
-		formData = formData.substring(0, formData.length - 2);
-		// finish off the repeatable
-		formData += '}],';
+		// finish off the repeatable section
+		formData += '],';
 		// handle the non-repeatables
 		formData += ReturnRequestStorageObjectPropertiesAndPushRequestColumns(clonedForm);
 		// remove trailing comma
 		formData = formData.substring(0, formData.length - 1);
 		// end building the JSON string that will be stored
 		formData += '}';
+		console.log(formData);
 		// get object from string
 		formData = JSON.parse(formData);
 		return formData;
 	}
 
 
-	function PrintOutsideEmploymentRequest () {
-		
+	function PrintOutsideEmploymentRequest() {
+
 		// set working message
 		var workingMessage = $("div#app-container div#overlays-screen-container div#wait-while-working div.message p");
 		$(workingMessage).text("Checking your info");
@@ -13899,61 +13950,61 @@
 			var currentDate = $().ReturnFormattedDateTime('nowLocal', null, 'MMMM D, YYYY');
 
 			// construct print content
-			var printContent = 	'<h1>Outside Employment Request</h1>' +
-								'<h2>Request Date</h2>' +
-								'<p>' + currentDate + '</p>' +
-								'<h2>Staff Member</h2>' +
-								'<ul style="margin: 0;">' + 
-								'	<li><b>Staff Member Name:</b> ' + formData["Staff-Member-Name"] + '</li>' + 
-								'	<li><b>Staff Member Position:</b> ' + formData["Staff-Member-Position"] + '</li>' + 
-								'	<li><b>Manager\'s Name:</b> ' + formData["Manager-Name"] + '</li>' + 
-								'</ul>' + 
-								'<h2>Outside Employment</h2>' + 
-								'<h3>Proposed Outside Employer</h3>' +
-								'<p>' + formData["Outside-Employer"] + '</p>' +
-								'<h3>Proposed Start Date With Outside Employer</h3>' +
-								'<p>' + formData["Start-Date"] + '</p>' +
-								'<h3>Proposed Primary Responsibilities of Outside Employment</h3>' + 
-								'<p>' + formData["Primary-Responsibilities"] + '</p>' +
-								'<h3>Relation of Outside Responsibilities to Museum Responsibilities</h3>' +
-								'<p>' + formData["Relevant-Responsibilities"] + '</p>' +
-								'<h3>Museum Materials Used in Outside Employment</h3>' +
-								'<p>' + formData["Relevant-Materials"] + '</p>' + 
-								'<h2>Approvals</h2>' + 
-								'<table style="width: 100%;">' + 
-								'	<tr style="width: 100%;">' + 
-								'		<td style="width: 25%; height: 40px; text-align: right">Signature of Staff Member</td>' + 
-								'		<td style="width: 45%; height: 40px; border-bottom: 2px solid black"></td>' + 
-								'		<td style="width: 10%; height: 40px; text-align: right">Date</td>' + 
-								'		<td style="width: 20%; height: 40px; border-bottom: 2px solid black"></td>' + 
-								'	</tr>' + 
-								'	<tr style="width: 100%;">' + 
-								'		<td style="width: 25%; height: 40px; text-align: right">Signature of Manager</td>' + 
-								'		<td style="width: 45%; height: 40px; border-bottom: 2px solid black"></td>' + 
-								'		<td style="width: 10%; height: 40px; text-align: right">Date</td>' + 
-								'		<td style="width: 20%; height: 40px; border-bottom: 2px solid black"></td>' + 
-								'	</tr>' + 
-								'	<tr style="width: 100%;">' + 
-								'		<td style="width: 25%; height: 40px; text-align: right">Signature of Controller</td>' + 
-								'		<td style="width: 45%; height: 40px; border-bottom: 2px solid black"></td>' + 
-								'		<td style="width: 10%; height: 40px; text-align: right">Date</td>' + 
-								'		<td style="width: 20%; height: 40px; border-bottom: 2px solid black"></td>' + 
-								'	</tr>' + 
-								'	<tr style="width: 100%;">' + 
-								'		<td style="width: 25%; height: 40px; text-align: right">Signature of VP of HR</td>' + 
-								'		<td style="width: 45%; height: 40px; border-bottom: 2px solid black"></td>' + 
-								'		<td style="width: 10%; height: 40px; text-align: right">Date</td>' + 
-								'		<td style="width: 20%; height: 40px; border-bottom: 2px solid black"></td>' + 
-								'	</tr>' + 
-								'<table>';
+			var printContent = '<h1>Outside Employment Request</h1>' +
+				'<h2>Request Date</h2>' +
+				'<p>' + currentDate + '</p>' +
+				'<h2>Staff Member</h2>' +
+				'<ul style="margin: 0;">' +
+				'	<li><b>Staff Member Name:</b> ' + formData["Staff-Member-Name"] + '</li>' +
+				'	<li><b>Staff Member Position:</b> ' + formData["Staff-Member-Position"] + '</li>' +
+				'	<li><b>Manager\'s Name:</b> ' + formData["Manager-Name"] + '</li>' +
+				'</ul>' +
+				'<h2>Outside Employment</h2>' +
+				'<h3>Proposed Outside Employer</h3>' +
+				'<p>' + formData["Outside-Employer"] + '</p>' +
+				'<h3>Proposed Start Date With Outside Employer</h3>' +
+				'<p>' + formData["Start-Date"] + '</p>' +
+				'<h3>Proposed Primary Responsibilities of Outside Employment</h3>' +
+				'<p>' + formData["Primary-Responsibilities"] + '</p>' +
+				'<h3>Relation of Outside Responsibilities to Museum Responsibilities</h3>' +
+				'<p>' + formData["Relevant-Responsibilities"] + '</p>' +
+				'<h3>Museum Materials Used in Outside Employment</h3>' +
+				'<p>' + formData["Relevant-Materials"] + '</p>' +
+				'<h2>Approvals</h2>' +
+				'<table style="width: 100%;">' +
+				'	<tr style="width: 100%;">' +
+				'		<td style="width: 25%; height: 40px; text-align: right">Signature of Staff Member</td>' +
+				'		<td style="width: 45%; height: 40px; border-bottom: 2px solid black"></td>' +
+				'		<td style="width: 10%; height: 40px; text-align: right">Date</td>' +
+				'		<td style="width: 20%; height: 40px; border-bottom: 2px solid black"></td>' +
+				'	</tr>' +
+				'	<tr style="width: 100%;">' +
+				'		<td style="width: 25%; height: 40px; text-align: right">Signature of Manager</td>' +
+				'		<td style="width: 45%; height: 40px; border-bottom: 2px solid black"></td>' +
+				'		<td style="width: 10%; height: 40px; text-align: right">Date</td>' +
+				'		<td style="width: 20%; height: 40px; border-bottom: 2px solid black"></td>' +
+				'	</tr>' +
+				'	<tr style="width: 100%;">' +
+				'		<td style="width: 25%; height: 40px; text-align: right">Signature of Controller</td>' +
+				'		<td style="width: 45%; height: 40px; border-bottom: 2px solid black"></td>' +
+				'		<td style="width: 10%; height: 40px; text-align: right">Date</td>' +
+				'		<td style="width: 20%; height: 40px; border-bottom: 2px solid black"></td>' +
+				'	</tr>' +
+				'	<tr style="width: 100%;">' +
+				'		<td style="width: 25%; height: 40px; text-align: right">Signature of VP of HR</td>' +
+				'		<td style="width: 45%; height: 40px; border-bottom: 2px solid black"></td>' +
+				'		<td style="width: 10%; height: 40px; text-align: right">Date</td>' +
+				'		<td style="width: 20%; height: 40px; border-bottom: 2px solid black"></td>' +
+				'	</tr>' +
+				'<table>';
 
 
-			printContent = ReturnPrintableContentWithStandardWrapper (printContent, "hr-outside-employment");
-			
+			printContent = ReturnPrintableContentWithStandardWrapper(printContent, "hr-outside-employment");
+
 			// send print content to printer
-			PrintToPrinter (printContent);
-		
-		// if user-entered data is NOT valid
+			PrintToPrinter(printContent);
+
+			// if user-entered data is NOT valid
 		} else {
 			// display invalid data overlay
 			$('div#overlays-screen-container').fadeIn(200);
@@ -13962,8 +14013,8 @@
 	}
 
 
-	function PrintEmploymentAuthorizationRequest () {
-		
+	function PrintEmploymentAuthorizationRequest() {
+
 		// set working message
 		var workingMessage = $("div#app-container div#overlays-screen-container div#wait-while-working div.message p");
 		$(workingMessage).text("Checking your info");
@@ -13981,142 +14032,175 @@
 			var accountSetPropertyNameSuffix = '';
 
 			// construct print content
-			var printContent = 	'<h1>Employment Authorization Request</h1>' +
-								'<p>' + currentDate + '</p>' +
-								'<h2>Human Resources\' Use Only</h2>' +
-								'<table style="width: 100%;">' + 
-								'	<tr style="width: 100%;">' + 
-								'		<td style="width: 18%; height: 40px; text-align: right">EAR Requisition #</td>' + 
-								'		<td style="width: 17%; height: 40px; border-bottom: 2px solid black"></td>' + 
-								'		<td style="width: 20; height: 40px; text-align: right">Recruiter Assigned</td>' + 
-								'		<td style="width: 45%; height: 40px; border-bottom: 2px solid black"></td>' + 
-								'	</tr>' + 
-								'	<tr style="width: 100%;">' + 
-								'		<td style="width: 18%; height: 40px; text-align: right">EEO Classification</td>' + 
-								'		<td style="width: 17%; height: 40px; border-bottom: 2px solid black"></td>' + 
-								'		<td style="width: 20%; height: 40px; text-align: right">Position Filled By</td>' + 
-								'		<td style="width: 45%; height: 40px; border-bottom: 2px solid black"></td>' + 
-								'	</tr>' + 
-								'	<tr style="width: 100%;">' + 
-								'		<td style="width: 18%; height: 40px;"></td>' + 
-								'		<td style="width: 17%; height: 40px;"></td>' + 
-								'		<td style="width: 20%; height: 40px; text-align: right">Date</td>' + 
-								'		<td style="width: 45%; height: 40px; border-bottom: 2px solid black"></td>' + 
-								'	</tr>' + 
-								'<table>' +
-								'<h2>Job Data</h2>' +
-								'<table style="width: 100%;">' + 
-								'	<tr style="width: 100%;">' + 
-								'		<td style="width: 50%; vertical-align: top;">' + 
-								'			<ul style="margin: 0;">' + 
-								'				<li><b>Position Number:</b> ' + formData["Position-Number"] + '</li>' + 
-								'				<li><b>Department:</b> ' + formData["Department"] + '</li>' + 
-								'				<li><b>Working Title:</b> ' + formData["Working-Title"] + '</li>' + 
-								'				<li><b>Composition Title:</b> ' + formData["Compensation-Title"] + '</li>' + 
-								'				<li><b>Grade:</b> ' + formData["Grade"] + '</li>' + 
-								'				<li><b>Employee Classification:</b> ' + formData["Employee-Classification"] + '</li>' + 
-								'				<li><b>Scheduled Hours, Biweekly:</b> ' + formData["Scheduled-Hours-Biweekly"] + '</li>' + 
-								'				<li><b>Scheduled Hours, Annually:</b> ' + formData["Scheduled-Hours-Annually"] + '</li>' + 
-								'				<li><b>Proposed Hourly Wage:</b> ' + formData["Proposed-Hourly-Wage"] + '</li>' + 
-								'				<li><b>Proposed Annualized Salary:</b> ' + formData["Proposed-Annualized-Salary"] + '</li>' + 
-								'				<li><b>Proposed Start Date:</b> ' + formData["Proposed-Start-Date"] + '</li>';
+			var printContent = '<h1>Employment Authorization Request</h1>' +
+				'<p>' + currentDate + '</p>' +
+				'<h2>Human Resources\' Use Only</h2>' +
+				'<table style="width: 100%;">' +
+				'	<tr style="width: 100%;">' +
+				'		<td style="width: 18%; height: 40px; text-align: right">EAR Requisition #</td>' +
+				'		<td style="width: 17%; height: 40px; border-bottom: 2px solid black"></td>' +
+				'		<td style="width: 20; height: 40px; text-align: right">Recruiter Assigned</td>' +
+				'		<td style="width: 45%; height: 40px; border-bottom: 2px solid black"></td>' +
+				'	</tr>' +
+				'	<tr style="width: 100%;">' +
+				'		<td style="width: 18%; height: 40px; text-align: right">EEO Classification</td>' +
+				'		<td style="width: 17%; height: 40px; border-bottom: 2px solid black"></td>' +
+				'		<td style="width: 20%; height: 40px; text-align: right">Position Filled By</td>' +
+				'		<td style="width: 45%; height: 40px; border-bottom: 2px solid black"></td>' +
+				'	</tr>' +
+				'	<tr style="width: 100%;">' +
+				'		<td style="width: 18%; height: 40px;"></td>' +
+				'		<td style="width: 17%; height: 40px;"></td>' +
+				'		<td style="width: 20%; height: 40px; text-align: right">Date</td>' +
+				'		<td style="width: 45%; height: 40px; border-bottom: 2px solid black"></td>' +
+				'	</tr>' +
+				'<table>' +
+				'<h2>Job Data</h2>' +
+				'<table style="width: 100%;">' +
+				'	<tr style="width: 100%;">' +
+				'		<td style="width: 50%; vertical-align: top;">' +
+				'			<ul style="margin: 0;">';
+
+			if (formData["Department"] != "Other") {
+				printContent += '				<li><b>Department:</b> ' + formData["Department"] + '</li>';
+			}
+			if (formData["Department"] == "Other") {
+				printContent += '				<li><b>Department:</b> ' + formData["Other-Department"] + '</li>';
+			}
+
+			printContent += '				<li><b>Position Title:</b> ' + formData["Position-Title"] + '</li>' +
+				'				<li><b>Grade:</b> ' + formData["Grade"] + '</li>' +
+				'				<li><b>Employee Classification:</b> ' + formData["Employee-Classification"] + '</li>' +
+				'				<li><b>Scheduled Hours, Biweekly:</b> ' + formData["Scheduled-Hours-Biweekly"] + '</li>' +
+				'				<li><b>Scheduled Hours, Annually:</b> ' + formData["Scheduled-Hours-Annually"] + '</li>' +
+				'				<li><b>Proposed Hourly Wage:</b> ' + formData["Proposed-Hourly-Wage"] + '</li>' +
+				'				<li><b>Proposed Annualized Salary:</b> ' + formData["Proposed-Annualized-Salary"] + '</li>' +
+				'				<li><b>Proposed Start Date:</b> ' + formData["Proposed-Start-Date"] + '</li>';
 
 			if (formData["Employee-Classification"] != "Regular FT" && formData["Employee-Classification"] != "Regular PT") {
 				printContent += '				<li><b>Proposed End Date:</b> ' + formData["Proposed-End-Date"] + '</li>';
 			}
 
-			if (typeof(formData["overtime-status_exempt"]) !== "undefined") {
+			if (typeof (formData["overtime-status_exempt"]) !== "undefined") {
 				printContent += '				<li><b>Overtime Status:</b> Exempt</li>';
 			}
 
-			if (typeof(formData["overtime-status_nonexempt"]) !== "undefined") {
+			if (typeof (formData["overtime-status_nonexempt"]) !== "undefined") {
 				printContent += '				<li><b>Overtime Status:</b> Non-exempt</li>';
 			}
 
-			printContent += '				<li><b>Work Schedule:</b> ' + formData["Schedule"] + '</li>' + 
-							'				<li><b>Funding Source:</b> ' + formData["Funding-Source"] + '</li>' + 
-							'			</ul>' + 
-							'		</td>' + 
-							'		<td style="width: 50%; vertical-align: top;">' + 
-							'			<ul>' + 
-							'				<li><b>Accounts:</b> ';
+			printContent += '				<li><b>Work Schedule:</b> ' + formData["Schedule"] + '</li>' +
+				'				<li><b>Funding Source:</b> ' + formData["Funding-Source"] + '</li>' +
+				'			</ul>' +
+				'		</td>' +
+				'		<td style="width: 50%; vertical-align: top;">' +
+				'			<ul>';
 
-			if (formData["Funding-Source"] == "Grant Funds") {
-				printContent += '					<ol>';
 
-				$.each(formData["RepeatedElements"], function(i, accountSet) {
+
+
+
+
+
+			if (formData["Funding-Source"] == "Grant Funds" || formData["Funding-Source"] == "Endowment Funds") {
+				printContent += '				<li><b>Accounts:</b> ' +
+					'					<ol>';
+
+				$.each(formData["RepeatedElements"], function (i, accountSet) {
 
 					if (i != 0) { accountSetPropertyNameSuffix = '-repeat-' + i; }
-					printContent += '						<li>Account ' + (i + 1) + '<ol>' +
-									'							<li><b>Grant Object Code:</b> ' + accountSet["Grant-Object-Code" + accountSetPropertyNameSuffix] + '</li>' + 
-									'							<li><b>Grant Source Code:</b> ' + accountSet["Grant-Source-Code" + accountSetPropertyNameSuffix] + '</li>' + 
-									'							<li><b>Percent Salary from this Account:</b> ' + accountSet["Percent-Salary-from-this-Account" + accountSetPropertyNameSuffix] + '</li>' + 
-									'						</ol>';
+					printContent += '						<li>Account ' + (i + 1) +
+						'							<ol>' +
+						'								<li><b>Grant Object Code:</b> ' + accountSet["Grant-Object-Code" + accountSetPropertyNameSuffix] + '</li>' +
+						'								<li><b>Grant Source Code:</b> ' + accountSet["Grant-Source-Code" + accountSetPropertyNameSuffix] + '</li>' +
+						'								<li><b>Percent Salary from this Account:</b> ' + accountSet["Percent-Salary-from-this-Account" + accountSetPropertyNameSuffix] + '</li>' +
+						'							</ol>' +
+						'						</li>';
 				});
 
-				printContent += '					</ol>';
+				printContent += '					</ol>' +
+					'				</li>';
 			}
-			printContent += '				</li>';
 
 			printContent += '				<li><b>Workspace Approved by Facilities?:</b> Yes</li>';
 
-			if (typeof(formData["job-opening-reason_replacement"]) !== "undefined") {
-				printContent += '				<li><b>Reason for Job Opening:</b> Replacement for Another Job</li>' + 
-								'				<li><b>Replacement For:</b> ' + formData["Replacement-Name"] + '</li>' + 
-								'				<li><b>Last Salary for Position:</b> ' + formData["Replacement-Salary"] + '</li>';
+
+
+
+
+
+
+
+
+
+
+
+
+
+			if (typeof (formData["job-opening-reason_backfill"]) !== "undefined") {
+				printContent += '				<li><b>Reason for Submission:</b> Backfill for ' + formData["Backfill-For"] + '</li>';
+			}
+			if (typeof (formData["job-opening-reason_promotion"]) !== "undefined") {
+				printContent += '				<li><b>Reason for Submission:</b> Promotion for ' + formData["Promotion-For"] + '</li>';
+			}
+			if (typeof (formData["job-opening-reason_wageorschedulechange"]) !== "undefined") {
+				printContent += '				<li><b>Reason for Submission:</b> Wage / Schedule Change for ' + formData["Wage-or-Schedule-Change-For"] + '</li>';
+			}
+			if (typeof (formData["job-opening-reason_additiontofte"]) !== "undefined") {
+				printContent += '				<li><b>Reason for Submission:</b> Addition to Budgeted FTE</li>';
 			}
 
-			if (typeof(formData["job-opening-reason_grant"]) !== "undefined") {
-				printContent += '				<li><b>Reason for Job Opening:</b> Grant-funded Position</li>' + 
-								'				<li><b>Grant Funding Source:</b> ' + formData["Grant-Funding-Source"] + '</li>';
+			if (typeof (formData["Replacement-Salary"]) !== "undefined") {
+				printContent += '				<li><b>Last Salary for Position:</b> ' + formData["Replacement-Salary"] + '</li>';
+				var salaryChangeString = parseFloat(formData["Salary-Change"].replace("\$", "").replace(/[,]/g, ""));
+				printContent += '				<li><b>Salary Change:</b> ' + formData["Salary-Change"] + '</li>';
+				if (salaryChangeString !== 0) {
+					printContent += '				<li><b>Salary Change Reason:</b> ' + formData["Salary-Change-Reason"] + '</li>';
+				}
 			}
 
-			if (typeof(formData["job-opening-reason_additiontofte"]) !== "undefined") {
-				printContent += '				<li><b>Reason for Job Opening:</b> Addition to Budgeted FTE</li>';
-			}
+			// if (typeof(formData["hrc-grading_graded"]) !== "undefined") {
+			// 	printContent += '				<li><b>HRC Grading:</b> Graded by HRC</li>' + 
+			// 					'				<li><b>HRC Grading Last Updated:</b> ' + formData["HRC-Last-Updated"] + '</li>';
+			// }
 
-			if (typeof(formData["hrc-grading_graded"]) !== "undefined") {
-				printContent += '				<li><b>HRC Grading:</b> Graded by HRC</li>' + 
-								'				<li><b>HRC Grading Last Updated:</b> ' + formData["HRC-Last-Updated"] + '</li>';
-			}
+			// if (typeof(formData["hrc-grading_pending"]) !== "undefined") {
+			// 	printContent += '				<li><b>HRC Grading:</b> Pending</li>';
+			// }
 
-			if (typeof(formData["hrc-grading_pending"]) !== "undefined") {
-				printContent += '				<li><b>HRC Grading:</b> Pending</li>';
-			}
-
-			printContent += '		</td>' + 
-							'	</tr>' + 
-							'<table>';
+			printContent += '		</td>' +
+				'	</tr>' +
+				'<table>';
 
 
 			printContent += '<h2>Approvals</h2>' +
-							'<table style="width: 100%;">' + 
-								'	<tr style="width: 100%;">' + 
-								'		<td style="width: 20%; height: 40px; text-align: right">Manager/Director</td>' + 
-								'		<td style="width: 50%; height: 40px; border-bottom: 2px solid black"></td>' + 
-								'		<td style="width: 10%; height: 40px; text-align: right">Date</td>' + 
-								'		<td style="width: 20%; height: 40px; border-bottom: 2px solid black"></td>' + 
-								'	</tr>' + 
-								'	<tr style="width: 100%;">' + 
-								'		<td style="width: 20%; height: 40px; text-align: right">Vice President</td>' + 
-								'		<td style="width: 50%; height: 40px; border-bottom: 2px solid black"></td>' + 
-								'		<td style="width: 10%; height: 40px; text-align: right">Date</td>' + 
-								'		<td style="width: 20%; height: 40px; border-bottom: 2px solid black"></td>' + 
-								'	</tr>' + 
-								'	<tr style="width: 100%;">' + 
-								'		<td style="width: 20%; height: 40px; text-align: right">Human Resources</td>' + 
-								'		<td style="width: 50%; height: 40px; border-bottom: 2px solid black"></td>' + 
-								'		<td style="width: 10%; height: 40px; text-align: right">Date</td>' + 
-								'		<td style="width: 20%; height: 40px; border-bottom: 2px solid black"></td>' + 
-								'	</tr>' + 
-							'<table>';
+				'<table style="width: 100%;">' +
+				'	<tr style="width: 100%;">' +
+				'		<td style="width: 20%; height: 40px; text-align: right">Manager/Director</td>' +
+				'		<td style="width: 50%; height: 40px; border-bottom: 2px solid black"></td>' +
+				'		<td style="width: 10%; height: 40px; text-align: right">Date</td>' +
+				'		<td style="width: 20%; height: 40px; border-bottom: 2px solid black"></td>' +
+				'	</tr>' +
+				'	<tr style="width: 100%;">' +
+				'		<td style="width: 20%; height: 40px; text-align: right">Vice President</td>' +
+				'		<td style="width: 50%; height: 40px; border-bottom: 2px solid black"></td>' +
+				'		<td style="width: 10%; height: 40px; text-align: right">Date</td>' +
+				'		<td style="width: 20%; height: 40px; border-bottom: 2px solid black"></td>' +
+				'	</tr>' +
+				'	<tr style="width: 100%;">' +
+				'		<td style="width: 20%; height: 40px; text-align: right">Human Resources</td>' +
+				'		<td style="width: 50%; height: 40px; border-bottom: 2px solid black"></td>' +
+				'		<td style="width: 10%; height: 40px; text-align: right">Date</td>' +
+				'		<td style="width: 20%; height: 40px; border-bottom: 2px solid black"></td>' +
+				'	</tr>' +
+				'<table>';
 
-			printContent = ReturnPrintableContentWithStandardWrapper (printContent, "hr-employment-authorization");
-			
+			printContent = ReturnPrintableContentWithStandardWrapper(printContent, "hr-employment-authorization");
+
 			// send print content to printer
-			PrintToPrinter (printContent);
-		
-		// if user-entered data is NOT valid
+			PrintToPrinter(printContent);
+
+			// if user-entered data is NOT valid
 		} else {
 			// display invalid data overlay
 			$('div#overlays-screen-container').fadeIn(200);
@@ -14124,10 +14208,10 @@
 		}
 	}
 
-	
-	
-	function PrintPersonnelActionRequest () {
-		
+
+
+	function PrintPersonnelActionRequest() {
+
 		// set working message
 		var workingMessage = $("div#app-container div#overlays-screen-container div#wait-while-working div.message p");
 		$(workingMessage).text("Checking your info");
@@ -14165,9 +14249,9 @@
 			var statusChangeEmployeeData;
 
 			// construct print content
-			var printContent = 	'<h1>Personnel Action Request</h1>' +
-								'<p>' + currentDate + '</p>';
-			
+			var printContent = '<h1>Personnel Action Request</h1>' +
+				'<p>' + currentDate + '</p>';
+
 			if (formData["Action"] == "New Hire") {
 				printContent += '<h2>New Hire</h2>';
 			}
@@ -14177,39 +14261,37 @@
 			}
 
 			if (formData["Action"] == "New Hire" || formData["Action"] == "Rehire") {
-				printContent += '<ul style="margin: 0;">' + 
-								'	<li><b>First Name:</b> ' + formData["Hire-First-Name"] + '</li>' + 
-								'	<li><b>Last Name:</b> ' + formData["Hire-Last-Name"] + '</li>' + 
-								'	<li><b>Manager / Supervisor:</b> ' + formData["Hire-Manager"][0]["displayText"] + '</li>' + 
-								'	<li><b>Department:</b> ' + formData["Hire-Department"] + '</li>' + 
-								'	<li><b>Street Address:</b> ' + formData["Hire-Street-Address"] + '</li>' + 
-								'	<li><b>City:</b> ' + formData["Hire-City"] + '</li>' + 
-								'	<li><b>State:</b> ' + formData["Hire-State"] + '</li>' + 
-								'	<li><b>Zip Code:</b> ' + formData["Hire-Zip-Code"] + '</li>' + 
-								'	<li><b>Working Title:</b> ' + formData["Hire-Working-Title"] + '</li>' + 
-								'	<li><b>Compensation Title:</b> ' + formData["Hire-Compensation-Title"] + '</li>' + 
-								'	<li><b>Position Number:</b> ' + formData["Hire-Position-Number"] + '</li>' + 
-								'	<li><b>Grade:</b> ' + formData["Hire-Grade"] + '</li>' + 
-								'	<li><b>Employee Classification:</b> ' + formData["Hire-Employee-Classification"] + '</li>' + 
-								'	<li><b>Scheduled Hours, Biweekly:</b> ' + formData["Hire-Scheduled-Hours-Biweekly"] + '</li>' + 
-								'	<li><b>Scheduled Hours, Annually:</b> ' + formData["Hire-Scheduled-Hours-Annually"] + '</li>' + 
-								'	<li><b>Proposed Hourly Wage:</b> ' + formData["Hire-Proposed-Hourly-Wage"] + '</li>' + 
-								'	<li><b>Proposed Annualized Salary:</b> ' + formData["Hire-Proposed-Annualized-Salary"] + '</li>' + 
-								'	<li><b>Start Date:</b> ' + formData["Hire-Start-Date"] + '</li>';
+				printContent += '<ul style="margin: 0;">' +
+					'	<li><b>First Name:</b> ' + formData["Hire-First-Name"] + '</li>' +
+					'	<li><b>Last Name:</b> ' + formData["Hire-Last-Name"] + '</li>' +
+					'	<li><b>Manager / Supervisor:</b> ' + formData["Hire-Manager"][0]["displayText"] + '</li>' +
+					'	<li><b>Department:</b> ' + formData["Hire-Department"] + '</li>' +
+					'	<li><b>Position Title:</b> ' + formData["Hire-Position-Title"] + '</li>' +
+					'	<li><b>Grade:</b> ' + formData["Hire-Grade"] + '</li>' +
+					'	<li><b>Employee Classification:</b> ' + formData["Hire-Employee-Classification"] + '</li>' +
+					'	<li><b>Scheduled Hours, Biweekly:</b> ' + formData["Hire-Scheduled-Hours-Biweekly"] + '</li>' +
+					'	<li><b>Scheduled Hours, Annually:</b> ' + formData["Hire-Scheduled-Hours-Annually"] + '</li>' +
+					'	<li><b>Proposed Hourly Wage:</b> ' + formData["Hire-Proposed-Hourly-Wage"] + '</li>' +
+					'	<li><b>Proposed Annualized Salary:</b> ' + formData["Hire-Proposed-Annualized-Salary"] + '</li>' +
+					'	<li><b>Anticipated Start Date:</b> ' + formData["Hire-Start-Date"] + '</li>';
 				if (formData["Hire-Employee-Classification"] != "Regular FT" && formData["Hire-Employee-Classification"] != "Regular PT") {
-					printContent += '	<li><b>End Date:</b> ' + formData["Hire-End-Date"] + '</li>';
+					printContent += '	<li><b>Anticipated End Date:</b> ' + formData["Hire-End-Date"] + '</li>';
 				}
 				printContent += '	<li><b>Funding Source:</b> ' + formData["Hire-Funding-Source"] + '</li>';
-				
-				if (formData["Hire-Funding-Source"] == "Grant Funds") {
-					printContent += '	<li><b>Accounts:</b> <ol>';
-					$.each(formData["RepeatedElements"], function(i, accountSet) {
-						if (i != 0) { accountSetPropertyNameSuffix = '-repeat-' + i; }
-						printContent += '						<li>Account ' + (i + 1) + '<ol>' +
-										'							<li><b>Grant Object Code:</b> ' + accountSet["Grant-Object-Code" + accountSetPropertyNameSuffix] + '</li>' + 
-										'							<li><b>Grant Source Code:</b> ' + accountSet["Grant-Source-Code" + accountSetPropertyNameSuffix] + '</li>' + 
-										'							<li><b>Percent Salary from this Account:</b> ' + accountSet["Percent-Salary-from-this-Account" + accountSetPropertyNameSuffix] + '</li>' + 
-										'						</ol></li>';
+
+				if (formData["Hire-Funding-Source"] == "Grant Funds" || formData["Hire-Funding-Source"] == "Endowment Funds") {
+					printContent += '	<li><b>Account(s):</b> <ol>';
+					var accountSetIdentifier = 'Hire-account-numbers-set';
+					$.each(formData["RepeatedElements"], function (i, accountSet) {
+						if (StrInStr(accountSet.ID, accountSetIdentifier)) {
+							accountSetPropertyNameSuffix = StrInStr(accountSet.ID, accountSetIdentifier, 3);
+							printContent += '						<li>Account<ol>' +
+								'							<li><b>Grant Object Code:</b> ' + accountSet["Hire-Grant-Object-Code" + accountSetPropertyNameSuffix] + '</li>' +
+								'							<li><b>Grant Source Code:</b> ' + accountSet["Hire-Grant-Source-Code" + accountSetPropertyNameSuffix] + '</li>' +
+								'							<li><b>Percent Salary from this Account:</b> ' + accountSet["Hire-Percent-Salary-from-this-Account" + accountSetPropertyNameSuffix] + '</li>' +
+								'						</ol></li>';
+						}
+
 					});
 					printContent += '					</ol></li>';
 				}
@@ -14226,314 +14308,408 @@
 
 				var staffUserID = StrInStr(formData["Status-Change-Staff-Member"][0]["description"], '@mos.org', 1);
 
+				console.log('staffUserID');
+				console.log(staffUserID);
+
 				$.ajax({
 					async: false,
 					method: "GET",
 					dataType: "json",
 					url: 'https://neso.mos.org/activeDirectory/user/' + staffUserID,
 				})
-				.done(function(returnedUserData) {
+					.done(function (returnedUserData) {
+						statusChangeEmployeeData = returnedUserData.docs;
 
-					statusChangeEmployeeData = {
-						'Division': 'This Division',
-						'ID': '789101112',
-						'Department': 'That Dept',
-						'Title': 'My Job Title',
-					};
-					printContent += '<h2>Staff Member</h2>' + 
-									'<ul style="margin: 0;">' + 
-									'				<li><b>Name:</b> ' + returnedUserData.displayName + '</li>' + 
-									'				<li><b>ID:</b> ' + returnedUserData.employeeID + '</li>' + 
-									'				<li><b>Department:</b> ' + returnedUserData.department + '</li>' + 
-									'				<li><b>Division:</b> ' + returnedUserData.division + '</li>' + 
-									'				<li><b>Title:</b> ' + returnedUserData.title + '</li>' + 
-									'			</ul>';
+						printContent += '<h2>Staff Member</h2>' +
+							'<ul style="margin: 0;">' +
+							'				<li><b>Name:</b> ' + statusChangeEmployeeData.displayName + '</li>' +
+							'				<li><b>ID:</b> ' + statusChangeEmployeeData.employeeID + '</li>' +
+							'				<li><b>Department:</b> ' + statusChangeEmployeeData.department + '</li>' +
+							'				<li><b>Division:</b> ' + statusChangeEmployeeData.division + '</li>' +
+							'				<li><b>Title:</b> ' + statusChangeEmployeeData.title + '</li>' +
+							'			</ul>';
 
 
 
-					// --- POSITION CHANGE
+						// --- POSITION CHANGE
 
 
-					if (typeof(formData["status-change_position-change"]) !== "undefined") {
+						if (typeof (formData["status-change_position-change"]) !== "undefined") {
 
-						printContent += '<h2>Position Change</h2>' +
-										'<table style="width: 100%;">' + 
-										'	<tr style="width: 100%;">' + 
-										'		<td style="width: 50%;>' +
-										'			<h3>From</h3>' + 
-										'			<ul style="margin: 0;">' + 
-										'				<li><b>Working Title:</b> ' + formData["Position-Change-Previous-Working-Title"] + '</li>' + 
-										'				<li><b>Compensation Title:</b> ' + formData["Position-Change-Previous-Compensation-Title"] + '</li>' + 
-										'				<li><b>Department:</b> ' + formData["Position-Change-Previous-Department"] + '</li>' + 
-										'				<li><b>Manager / Supervisor:</b> ' + formData["Position-Change-Previous-Manager"][0]["displayText"] + '</li>' + 
-										'				<li><b>Grade:</b> ' + formData["Position-Change-Previous-Grade"] + '</li>' + 
-										'				<li><b>Scheduled Hours, Biweekly:</b> ' + formData["Position-Change-Previous-Scheduled-Hours-Biweekly"] + '</li>' + 
-										'				<li><b>Scheduled Hours, Annually:</b> ' + formData["Position-Change-Previous-Scheduled-Hours-Annually"] + '</li>' + 
-										'				<li><b>Employee Classification:</b> ' + formData["Position-Change-Previous-Employee-Classification"] + '</li>' + 
-										'				<li><b>Start Date:</b> ' + formData["Position-Change-Previous-Start-Date"] + '</li>';
+							printContent += '<h2>Position Change</h2>' +
+								'<table style="width: 100%;">' +
+								'	<tr style="width: 100%;">';
 
-						if (formData["Position-Change-Previous-Employee-Classification"] != "Regular FT" && formData["Position-Change-Previous-Employee-Classification"] != "Regular PT") {
-							printContent += '				<li><b>End Date:</b> ' + formData["Position-Change-Previous-End-Date"] + '</li>';
+
+
+							// 				'		<td style="width: 50%;>' +
+							// 				'			<h3>From</h3>' + 
+							// 				'			<ul style="margin: 0;">' + 
+							// 				'				<li><b>Position Title:</b> ' + formData["Position-Change-Previous-Position-Title"] + '</li>' + 
+							// 				'				<li><b>Department:</b> ' + formData["Position-Change-Previous-Department"] + '</li>' + 
+							// 				'				<li><b>Manager / Supervisor:</b> ' + formData["Position-Change-Previous-Manager"][0]["displayText"] + '</li>' + 
+							// 				'				<li><b>Grade:</b> ' + formData["Position-Change-Previous-Grade"] + '</li>' + 
+							// 				'				<li><b>Scheduled Hours, Biweekly:</b> ' + formData["Position-Change-Previous-Scheduled-Hours-Biweekly"] + '</li>' + 
+							// 				'				<li><b>Scheduled Hours, Annually:</b> ' + formData["Position-Change-Previous-Scheduled-Hours-Annually"] + '</li>' + 
+							// 				'				<li><b>Employee Classification:</b> ' + formData["Position-Change-Previous-Employee-Classification"] + '</li>' + 
+							// 				'				<li><b>Start Date:</b> ' + formData["Position-Change-Previous-Start-Date"] + '</li>';
+
+							// if (formData["Position-Change-Previous-Employee-Classification"] != "Regular FT" && formData["Position-Change-Previous-Employee-Classification"] != "Regular PT") {
+							// 	printContent += '				<li><b>End Date:</b> ' + formData["Position-Change-Previous-End-Date"] + '</li>';
+							// }
+
+							// printContent += '			</ul>' + 
+							// 				'		</td>' + 
+
+
+
+							printContent += '		<td style="width: 50%;>' +
+								'			<ul style="margin: 0;">' +
+								'				<li><b>Position Title:</b> ' + formData["Position-Change-Position-Title"] + '</li>' +
+								'				<li><b>Department:</b> ' + formData["Position-Change-Department"] + '</li>' +
+								'				<li><b>Manager / Supervisor:</b> ' + formData["Position-Change-Manager"][0]["displayText"] + '</li>' +
+								'				<li><b>Grade:</b> ' + formData["Position-Change-Grade"] + '</li>' +
+								'				<li><b>Scheduled Hours, Biweekly:</b> ' + formData["Position-Change-Scheduled-Hours-Biweekly"] + '</li>' +
+								'				<li><b>Scheduled Hours, Annually:</b> ' + formData["Position-Change-Scheduled-Hours-Annually"] + '</li>' +
+								'				<li><b>Employee Classification:</b> ' + formData["Position-Change-Employee-Classification"] + '</li>' +
+								'				<li><b>Anticipated Start Date:</b> ' + formData["Position-Change-Start-Date"] + '</li>';
+
+							if (formData["Position-Change-Employee-Classification"] != "Regular FT" && formData["Position-Change-Employee-Classification"] != "Regular PT") {
+								printContent += '				<li><b>Anticipated End Date:</b> ' + formData["Position-Change-End-Date"] + '</li>';
+							}
+
+							printContent += '			</ul>' +
+								'		</td>' +
+								'	</tr>' +
+								'</table>';
 						}
 
-						printContent += '			</ul>' + 
-										'		</td>' + 
-										'		<td style="width: 50%;>' +
-										'			<h3>To</h3>' + 
-										'			<ul style="margin: 0;">' + 
-										'				<li><b>Working Title:</b> ' + formData["Position-Change-Working-Title"] + '</li>' + 
-										'				<li><b>Compensation Title:</b> ' + formData["Position-Change-Compensation-Title"] + '</li>' + 
-										'				<li><b>Department:</b> ' + formData["Position-Change-Department"] + '</li>' + 
-										'				<li><b>Manager / Supervisor:</b> ' + formData["Position-Change-Manager"][0]["displayText"] + '</li>' + 
-										'				<li><b>Grade:</b> ' + formData["Position-Change-Grade"] + '</li>' + 
-										'				<li><b>Scheduled Hours, Biweekly:</b> ' + formData["Position-Change-Scheduled-Hours-Biweekly"] + '</li>' + 
-										'				<li><b>Scheduled Hours, Annually:</b> ' + formData["Position-Change-Scheduled-Hours-Annually"] + '</li>' + 
-										'				<li><b>Employee Classification:</b> ' + formData["Position-Change-Employee-Classification"] + '</li>' + 
-										'				<li><b>Start Date:</b> ' + formData["Position-Change-Start-Date"] + '</li>';
 
-						if (formData["Position-Change-Employee-Classification"] != "Regular FT" && formData["Position-Change-Employee-Classification"] != "Regular PT") {
-							printContent += '				<li><b>End Date:</b> ' + formData["Position-Change-End-Date"] + '</li>';
+
+
+
+
+						// --- TERMINATION
+
+
+						if (typeof (formData["status-change_title-change"]) !== "undefined") {
+							printContent += '<h2>Title Change</h2>' +
+								'<ul style="margin: 0;">' +
+								'	<li><b>Current Position Title:</b> ' + formData["Title-Change-Current-Position-Title"] + '</li>' +
+								'	<li><b>New Position Title:</b> ' + formData["Title-Change-New-Position-Title"] + '</li>';
 						}
 
-						printContent += '			</ul>' + 
-										'		</td>' + 
-										'	</tr>' + 
-										'</table>';
-					}
-
-
-
-					// --- ADDITIONAL POSITION
-
-
-					if (typeof(formData["status-change_additional-position"]) !== "undefined") {
-						printContent += '<h2>Additional Position</h2>' +
-										'<ul style="margin: 0;">' + 
-										'	<li><b>Working Title:</b> ' + formData["Additional-Position-Working-Title"] + '</li>' + 
-										'	<li><b>Compensation Title:</b> ' + formData["Additional-Position-Compensation-Title"] + '</li>' + 
-										'	<li><b>Department:</b> ' + formData["Additional-Position-Department"] + '</li>' + 
-										'	<li><b>Grade:</b> ' + formData["Additional-Position-Grade"] + '</li>' + 
-										'	<li><b>Scheduled Hours, Biweekly:</b> ' + formData["Additional-Position-Scheduled-Hours-Biweekly"] + '</li>' + 
-										'	<li><b>Scheduled Hours, Annually:</b> ' + formData["Additional-Position-Scheduled-Hours-Annually"] + '</li>' + 
-										'	<li><b>Proposed Hourly Wage:</b> ' + formData["Additional-Position-Proposed-Hourly-Wage"] + '</li>' + 
-										'	<li><b>Proposed Annualized Salary:</b> ' + formData["Additional-Position-Proposed-Annualized-Salary"] + '</li>' + 
-										'	<li><b>Employee Classification:</b> ' + formData["Additional-Position-Employee-Classification"] + '</li>' + 
-										'	<li><b>Start Date:</b> ' + formData["Additional-Position-Start-Date"] + '</li>';
-										
-						if (formData["Additional-Position-Employee-Classification"] != "Regular FT" && formData["Additional-Position-Employee-Classification"] != "Regular PT") {
-							printContent += '	<li><b>End Date:</b> ' + formData["Additional-Position-End-Date"] + '</li>';
-						}
-					}
-
-
-
-					// --- WAGE CHANGE
-
-
-					if (typeof(formData["status-change_wage-change"]) !== "undefined") {
-						printContent += '<h2>Wage Change</h2>' +
-										'<ul style="margin: 0;">' + 
-										'	<li><b>Effective Beginning Date:</b> ' + formData["Wage-Change-Effective-Beginning-Date"] + '</li>' + 
-										'	<li><b>Department:</b> ' + formData["Wage-Change-Department"] + '</li>' + 
-										'	<li><b>Scheduled Hours, Biweekly:</b> ' + formData["Wage-Change-Scheduled-Hours-Biweekly"] + '</li>' + 
-										'	<li><b>Scheduled Hours, Annually:</b> ' + formData["Wage-Change-Scheduled-Hours-Annually"] + '</li>' + 
-										'	<li><b>Previous Hourly Wage:</b> ' + formData["Wage-Change-Previous-Hourly-Wage"] + '</li>' + 
-										'	<li><b>Hourly Wage:</b> ' + formData["Wage-Change-Hourly-Wage"] + '</li>' + 
-										'	<li><b>Annualized Salary:</b> ' + formData["Wage-Change-Annualized-Salary"] + '</li>';
-										
-						if (formData["Wage-Change-Reason"] == "Other") {
-							printContent += '	<li><b>Reason:</b> ' + formData["Wage-Change-Reason-Explanation"] + '</li>';
-						} else {
-							printContent += '	<li><b>Reason:</b> ' + formData["Wage-Change-Reason"] + '</li>';
-						}
-					}
 
 
 
 
-					// --- SCHEDULE CHANGE
+						// --- ADDITIONAL POSITION
 
 
-					if (typeof(formData["status-change_schedule-change"]) !== "undefined") {
-						printContent += '<h2>Schedule Change</h2>' +
-										'<ul style="margin: 0;">' + 
-										'	<li><b>Effective Beginning Date:</b> ' + formData["Schedule-Change-Effective-Beginning-Date"] + '</li>' + 
-										'	<li><b>Department:</b> ' + formData["Schedule-Change-Department"] + '</li>' + 
-										'	<li><b>Previous Scheduled Hours, Biweekly:</b> ' + formData["Schedule-Change-Previous-Scheduled-Hours-Biweekly"] + '</li>' + 
-										'	<li><b>Scheduled Hours, Biweekly:</b> ' + formData["Schedule-Change-Scheduled-Hours-Biweekly"] + '</li>' + 
-										'	<li><b>Reason:</b> ' + formData["Schedule-Change-Reason"] + '</li>' + 
-										'	<li><b>Funding Source:</b> ' + formData["Schedule-Change-Funding-Source"] + '</li>';
-					}
+						if (typeof (formData["status-change_additional-position"]) !== "undefined") {
+							printContent += '<h2>Additional Position</h2>' +
+								'<ul style="margin: 0;">' +
+								'	<li><b>Position Title:</b> ' + formData["Additional-Position-Position-Title"] + '</li>' +
+								'	<li><b>Department:</b> ' + formData["Additional-Position-Department"] + '</li>' +
+								'	<li><b>Grade:</b> ' + formData["Additional-Position-Grade"] + '</li>' +
+								'	<li><b>Scheduled Hours, Biweekly:</b> ' + formData["Additional-Position-Scheduled-Hours-Biweekly"] + '</li>' +
+								'	<li><b>Scheduled Hours, Annually:</b> ' + formData["Additional-Position-Scheduled-Hours-Annually"] + '</li>' +
+								'	<li><b>Proposed Hourly Wage:</b> ' + formData["Additional-Position-Proposed-Hourly-Wage"] + '</li>' +
+								'	<li><b>Proposed Annualized Salary:</b> ' + formData["Additional-Position-Proposed-Annualized-Salary"] + '</li>' +
+								'	<li><b>Employee Classification:</b> ' + formData["Additional-Position-Employee-Classification"] + '</li>' +
+								'	<li><b>Start Date:</b> ' + formData["Additional-Position-Start-Date"] + '</li>';
 
+							if (formData["Additional-Position-Employee-Classification"] != "Regular FT" && formData["Additional-Position-Employee-Classification"] != "Regular PT") {
+								printContent += '	<li><b>End Date:</b> ' + formData["Additional-Position-End-Date"] + '</li>';
+							}
+							printContent += '	<li><b>Funding Source:</b> ' + formData["Additional-Position-Funding-Source"] + '</li>';
 
+							if (formData["Additional-Position-Funding-Source"] == "Grant Funds" || formData["Additional-Position-Funding-Source"] == "Endowment Funds") {
+								printContent += '	<li><b>Accounts:</b> <ol>';
+								var accountSetIdentifier = 'Additional-Position-account-numbers-set';
+								$.each(formData["RepeatedElements"], function (i, accountSet) {
+									if (StrInStr(accountSet.ID, accountSetIdentifier)) {
+										accountSetPropertyNameSuffix = StrInStr(accountSet.ID, accountSetIdentifier, 3);
+										printContent += '						<li>Account<ol>' +
+											'							<li><b>Grant Object Code:</b> ' + accountSet["Additional-Position-Grant-Object-Code" + accountSetPropertyNameSuffix] + '</li>' +
+											'							<li><b>Grant Source Code:</b> ' + accountSet["Additional-Position-Grant-Source-Code" + accountSetPropertyNameSuffix] + '</li>' +
+											'							<li><b>Percent Salary from this Account:</b> ' + accountSet["Additional-Position-Percent-Salary-from-this-Account" + accountSetPropertyNameSuffix] + '</li>' +
+											'						</ol></li>';
+									}
 
-					// --- TEMPORARY EXTENSION
-
-
-					if (typeof(formData["status-change_temporary-extension"]) !== "undefined") {
-						printContent += '<h2>Temporary Extension</h2>' +
-										'<ul style="margin: 0;">' + 
-										'	<li><b>Effective Beginning Date:</b> ' + formData["Temporary-Extension-Effective-Beginning-Date"] + '</li>' + 
-										'	<li><b>Effective Ending Date:</b> ' + formData["Temporary-Extension-Effective-Ending-Date"] + '</li>' + 
-										'	<li><b>Reason:</b> ' + formData["Temporary-Extension-Reason"] + '</li>' + 
-										'	<li><b>Funding Source:</b> ' + formData["Temporary-Extension-Funding-Source"] + '</li>';
-					}
-
-
-
-					// --- LEAVE
-
-
-					if (typeof(formData["status-change_leave"]) !== "undefined") {
-						printContent += '<h2>Leave</h2>' +
-										'<ul style="margin: 0;">' + 
-										'	<li><b>Effective Beginning Date:</b> ' + formData["Leave-Effective-Beginning-Date"] + '</li>' + 
-										'	<li><b>Effective Ending Date:</b> ' + formData["Leave-Effective-Ending-Date"] + '</li>';
-
-						if (formData["Leave-Reason"] == "Other") {
-							printContent += '	<li><b>Reason:</b> ' + formData["Leave-Reason-Explanation"] + '</li>';
-						} else {
-							printContent += '	<li><b>Reason:</b> ' + formData["Leave-Reason"] + '</li>';
-						}
-					}
-
-
-
-					// --- TERMINATION
-
-
-					if (typeof(formData["status-change_termination"]) !== "undefined") {
-						printContent += '<h2>Termination</h2>' +
-										'<ul style="margin: 0;">' + 
-										'	<li><b>Job Being Terminated:</b> ' + formData["Job-Being-Terminated"] + '</li>' + 
-										'	<li><b>Termination Date:</b> ' + formData["Termination-Date"] + '</li>' + 
-										'	<li><b>Last Date Worked:</b> ' + formData["Last-Date-Worked"] + '</li>';
-
-						if (formData["Termination-Reason"] == "Voluntary") {
-							printContent += '	<li><b>Reason:</b> Voluntary</li>' + 
-											'	<li><b>Reason Explanation:</b> ' + formData["Voluntary-Termination-Reason-Explanation"] + '</li>';
+								});
+								printContent += '					</ol></li>';
+							}
 						}
 
-						if (formData["Termination-Reason"] == "Involuntary") {
-							printContent += '	<li><b>Reason:</b> Involuntary</li>' + 
-											'	<li><b>Reason Explanation:</b> ' + formData["Involuntary-Termination-Reason-Explanation"] + '</li>';
+
+
+						// --- WAGE CHANGE
+
+
+						if (typeof (formData["status-change_wage-change"]) !== "undefined") {
+							printContent += '<h2>Wage Change</h2>' +
+								'<ul style="margin: 0;">' +
+								'	<li><b>Anticipated Start Date:</b> ' + formData["Wage-Change-Effective-Beginning-Date"] + '</li>' +
+								'	<li><b>Department:</b> ' + formData["Wage-Change-Department"] + '</li>' +
+								'	<li><b>Scheduled Hours, Biweekly:</b> ' + formData["Wage-Change-Scheduled-Hours-Biweekly"] + '</li>' +
+								'	<li><b>Scheduled Hours, Annually:</b> ' + formData["Wage-Change-Scheduled-Hours-Annually"] + '</li>' +
+								// '	<li><b>Previous Hourly Wage:</b> ' + formData["Wage-Change-Previous-Hourly-Wage"] + '</li>' + 
+								'	<li><b>Hourly Wage:</b> ' + formData["Wage-Change-Hourly-Wage"] + '</li>' +
+								'	<li><b>Annualized Salary:</b> ' + formData["Wage-Change-Annualized-Salary"] + '</li>';
+
+							if (formData["Wage-Change-Reason"] == "Adjustment") {
+								printContent += '	<li><b>Reason:</b> ' + formData["Wage-Change-Reason-Explanation"] + '</li>';
+							} else {
+								printContent += '	<li><b>Reason:</b> ' + formData["Wage-Change-Reason"] + '</li>';
+							}
+							printContent += '	<li><b>Funding Source:</b> ' + formData["Wage-Change-Funding-Source"] + '</li>';
+
+							if (formData["Wage-Change-Funding-Source"] == "Grant Funds" || formData["Wage-Change-Funding-Source"] == "Endowment Funds") {
+								printContent += '	<li><b>Account(s):</b> <ol>';
+								var accountSetIdentifier = 'Wage-Change-account-numbers-set';
+								$.each(formData["RepeatedElements"], function (i, accountSet) {
+									if (StrInStr(accountSet.ID, accountSetIdentifier)) {
+										accountSetPropertyNameSuffix = StrInStr(accountSet.ID, accountSetIdentifier, 3);
+										printContent += '						<li>Account<ol>' +
+											'							<li><b>Grant Object Code:</b> ' + accountSet["Wage-Change-Grant-Object-Code" + accountSetPropertyNameSuffix] + '</li>' +
+											'							<li><b>Grant Source Code:</b> ' + accountSet["Wage-Change-Grant-Source-Code" + accountSetPropertyNameSuffix] + '</li>' +
+											'							<li><b>Percent Salary from this Account:</b> ' + accountSet["Wage-Change-Percent-Salary-from-this-Account" + accountSetPropertyNameSuffix] + '</li>' +
+											'						</ol></li>';
+									}
+
+								});
+								printContent += '					</ol></li>';
+							}
 						}
 
-						if (formData["Termination-Reason"] == "Other") {
-							printContent += '	<li><b>Reason:</b> Other</li>' + 
-											'	<li><b>Reason Explanation:</b> ' + formData["Other-Termination-Reason-Explanation"] + '</li>';
+
+
+
+						// --- SCHEDULE CHANGE
+
+
+						if (typeof (formData["status-change_schedule-change"]) !== "undefined") {
+							printContent += '<h2>Schedule Change</h2>' +
+								'<ul style="margin: 0;">' +
+								'	<li><b>Position Title:</b> ' + formData["Schedule-Change-Position-Title"] + '</li>' +
+								'	<li><b>Anticipated Start Date:</b> ' + formData["Schedule-Change-Effective-Beginning-Date"] + '</li>';
+							if (typeof (formData["Schedule-Change-Effective-End-Date"]) !== "undefined") {
+								printContent += '	<li><b>Anticipated End Date:</b> ' + formData["Schedule-Change-Effective-End-Date"] + '</li>';
+							}
+							printContent += '	<li><b>Department:</b> ' + formData["Schedule-Change-Department"] + '</li>' +
+								// '	<li><b>Previous Scheduled Hours, Biweekly:</b> ' + formData["Schedule-Change-Previous-Scheduled-Hours-Biweekly"] + '</li>' + 
+								'	<li><b>Scheduled Hours, Biweekly:</b> ' + formData["Schedule-Change-Scheduled-Hours-Biweekly"] + '</li>' +
+								'	<li><b>Reason:</b> ' + formData["Schedule-Change-Reason"] + '</li>' +
+								'	<li><b>Funding Source:</b> ' + formData["Schedule-Change-Funding-Source"] + '</li>';
+
+
+							if (formData["Schedule-Change-Funding-Source"] == "Grant Funds" || formData["Schedule-Change-Funding-Source"] == "Endowment Funds") {
+								printContent += '	<li><b>Account(s):</b> <ol>';
+								var accountSetIdentifier = 'Schedule-Change-account-numbers-set';
+								$.each(formData["RepeatedElements"], function (i, accountSet) {
+									if (StrInStr(accountSet.ID, accountSetIdentifier)) {
+										accountSetPropertyNameSuffix = StrInStr(accountSet.ID, accountSetIdentifier, 3);
+										printContent += '						<li>Account<ol>' +
+											'							<li><b>Grant Object Code:</b> ' + accountSet["Schedule-Change-Grant-Object-Code" + accountSetPropertyNameSuffix] + '</li>' +
+											'							<li><b>Grant Source Code:</b> ' + accountSet["Schedule-Change-Grant-Source-Code" + accountSetPropertyNameSuffix] + '</li>' +
+											'							<li><b>Percent Salary from this Account:</b> ' + accountSet["Schedule-Change-Percent-Salary-from-this-Account" + accountSetPropertyNameSuffix] + '</li>' +
+											'						</ol></li>';
+									}
+
+								});
+								printContent += '					</ol></li>';
+							}
+							printContent += '</ul>';
 						}
-					}
 
 
-					printContent += '<h2>Approvals</h2>' +
-									'<table style="width: 100%;">' + 
-									'	<tr style="width: 100%;">' + 
-									'		<td style="width: 20%; height: 40px; text-align: right">Manager/Director</td>' + 
-									'		<td style="width: 50%; height: 40px; border-bottom: 2px solid black"></td>' + 
-									'		<td style="width: 10%; height: 40px; text-align: right">Date</td>' + 
-									'		<td style="width: 20%; height: 40px; border-bottom: 2px solid black"></td>' + 
-									'	</tr>' + 
-									'	<tr style="width: 100%;">' + 
-									'		<td style="width: 20%; height: 40px; text-align: right">Vice President</td>' + 
-									'		<td style="width: 50%; height: 40px; border-bottom: 2px solid black"></td>' + 
-									'		<td style="width: 10%; height: 40px; text-align: right">Date</td>' + 
-									'		<td style="width: 20%; height: 40px; border-bottom: 2px solid black"></td>' + 
-									'	</tr>' + 
-									'	<tr style="width: 100%;">' + 
-									'		<td style="width: 20%; height: 40px; text-align: right">Human Resources</td>' + 
-									'		<td style="width: 50%; height: 40px; border-bottom: 2px solid black"></td>' + 
-									'		<td style="width: 10%; height: 40px; text-align: right">Date</td>' + 
-									'		<td style="width: 20%; height: 40px; border-bottom: 2px solid black"></td>' + 
-									'	</tr>' + 
-									'<table>' + 
-									'<h2>Human Resources\' Use Only</h2>' +
-									'<table style="width: 100%;">' + 
-									'	<tr style="width: 100%;">' + 
-									'		<td style="width: 4%; height: 40px; border-bottom: 2px solid black"></td>' + 
-									'		<td style="width: 8%; height: 40px;">' + 
-									'			Exempt' + 
-									'		</td>' + 
-									'		<td style="width: 4%; height: 40px;"></td>' + 
-									'		<td style="width: 4%; height: 40px; border-bottom: 2px solid black"></td>' + 
-									'		<td style="width: 8%; height: 40px;">' + 
-									'			Non-exempt' + 
-									'		</td>' + 
-									'		<td style="width: 4%; height: 40px;"></td>' + 
-									'		<td style="width: 8%; height: 40px; text-align: right;">' + 
-									'			EAR #:' + 
-									'		</td>' + 
-									'		<td style="width: 20%; height: 40px; border-bottom: 2px solid black"></td>' + 
-									'		<td style="width: 4%; height: 40px;"></td>' + 
-									'		<td style="width: 13%; height: 40px; text-align: right;">' + 
-									'			Worker\'s Comp #:' + 
-									'		</td>' + 
-									'		<td style="width: 16%; height: 40px; border-bottom: 2px solid black"></td>' + 
-									'		<td style="width: 4%; height: 40px;"></td>' + 
-									'	</tr>' + 
-									'</table>' + 
-									'<table style="width: 100%;">' + 
-									'	<tr style="width: 100%;">' + 
-									'		<td style="width: 8%; height: 40px;">' + 
-									'			Benefits:' + 
-									'		</td>' + 
-									'		<td style="width: 4%; height: 40px;"></td>' + 
-									'		<td style="width: 4%; height: 40px; border-bottom: 2px solid black"></td>' + 
-									'		<td style="width: 6%; height: 40px;">' + 
-									'			FT (E)' + 
-									'		</td>' + 
-									'		<td style="width: 4%; height: 40px;"></td>' + 
-									'		<td style="width: 4%; height: 40px; border-bottom: 2px solid black"></td>' + 
-									'		<td style="width: 6%; height: 40px;">' + 
-									'			PT (P)' + 
-									'		</td>' + 
-									'		<td style="width: 4%; height: 40px;"></td>' + 
-									'		<td style="width: 4%; height: 40px; border-bottom: 2px solid black"></td>' + 
-									'		<td style="width: 15%; height: 40px;">' + 
-									'			403(b) Only (I)' + 
-									'		</td>' + 
-									'		<td style="width: 41%; height: 40px;"></td>' + 
-									'	</tr>' + 
-									'</table>' + 
-									'<table style="width: 100%;">' + 
-									'	<tr style="width: 100%;">' + 
+
+						// --- TEMPORARY EXTENSION
 
 
-									'		<td style="width: 8%; height: 40px; text-align: right;">' + 
-									'			SSN:'+
-									'		</td>' + 
-									'		<td style="width: 20%; height: 40px; border-bottom: 2px solid black">' + 
-									'		</td>' + 
+						if (typeof (formData["status-change_temporary-extension"]) !== "undefined") {
+							printContent += '<h2>Temporary Extension</h2>' +
+								'<ul style="margin: 0;">' +
+								'	<li><b>Position Title:</b> ' + formData["Temporary-Extension-Position-Title"] + '</li>' +
+								'	<li><b>Anticipated Start Date:</b> ' + formData["Temporary-Extension-Effective-Beginning-Date"] + '</li>' +
+								'	<li><b>Anticipated End Date:</b> ' + formData["Temporary-Extension-Effective-Ending-Date"] + '</li>' +
+								'	<li><b>Reason:</b> ' + formData["Temporary-Extension-Reason"] + '</li>' +
+								'	<li><b>Funding Source:</b> ' + formData["Temporary-Extension-Funding-Source"] + '</li>';
+
+							if (formData["Temporary-Extension-Funding-Source"] == "Grant Funds" || formData["Temporary-Extension-Funding-Source"] == "Endowment Funds") {
+								printContent += '	<li><b>Accounts:</b> <ol>';
+								var accountSetIdentifier = 'Temporary-Extension-account-numbers-set';
+								$.each(formData["RepeatedElements"], function (i, accountSet) {
+									if (StrInStr(accountSet.ID, accountSetIdentifier)) {
+										accountSetPropertyNameSuffix = StrInStr(accountSet.ID, accountSetIdentifier, 3);
+										printContent += '						<li>Account<ol>' +
+											'							<li><b>Grant Object Code:</b> ' + accountSet["Temporary-Extension-Grant-Object-Code" + accountSetPropertyNameSuffix] + '</li>' +
+											'							<li><b>Grant Source Code:</b> ' + accountSet["Temporary-Extension-Grant-Source-Code" + accountSetPropertyNameSuffix] + '</li>' +
+											'							<li><b>Percent Salary from this Account:</b> ' + accountSet["Temporary-Extension-Percent-Salary-from-this-Account" + accountSetPropertyNameSuffix] + '</li>' +
+											'						</ol></li>';
+									}
+
+								});
+								printContent += '					</ol></li>';
+							}
+
+						}
 
 
-									'		<td style="width: 4%; height: 40px;"></td>' + 
-									'		<td style="width: 8%; height: 40px; text-align: right;">' + 
-									'			DOB:'+
-									'		</td>' + 
-									'		<td style="width: 20%; height: 40px; border-bottom: 2px solid black">' + 
-									'		</td>' + 
+
+						// --- TERMINATION
 
 
-									'		<td style="width: 4%; height: 40px;"></td>' + 
-									'		<td style="width: 15%; height: 40px; text-align: right;">' + 
-									'			Remaining vacation Hrs:'+
-									'		</td>' + 
-									'		<td style="width: 21%; height: 40px; border-bottom: 2px solid black">' + 
-									'		</td>' + 
+						if (typeof (formData["status-change_termination"]) !== "undefined") {
+							printContent += '<h2>Termination</h2>' +
+								'<ul style="margin: 0;">' +
+								'	<li><b>Terminated Position:</b> ' + formData["Job-Being-Terminated"] + '</li>' +
+								'	<li><b>Termination Date:</b> ' + formData["Termination-Date"] + '</li>' +
+								'	<li><b>Last Date Worked:</b> ' + formData["Last-Date-Worked"] + '</li>';
+
+							if (formData["Termination-Reason"] == "Voluntary") {
+								printContent += '	<li><b>Reason:</b> Voluntary</li>' +
+									'	<li><b>Reason Explanation:</b> ' + formData["Voluntary-Termination-Reason-Explanation"] + '</li>';
+							}
+
+							if (formData["Termination-Reason"] == "Involuntary") {
+								printContent += '	<li><b>Reason:</b> Involuntary</li>' +
+									'	<li><b>Reason Explanation:</b> ' + formData["Involuntary-Termination-Reason-Explanation"] + '</li>';
+							}
+
+							// if (formData["Termination-Reason"] == "Other") {
+							// 	printContent += '	<li><b>Reason:</b> Other</li>' + 
+							// 					'	<li><b>Reason Explanation:</b> ' + formData["Other-Termination-Reason-Explanation"] + '</li>';
+							// }
+						}
 
 
-									'	</tr>' + 
-									'<table>';
 
-				});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+						printContent += '<h2>Approvals</h2>' +
+							'<table style="width: 100%;">' +
+							'	<tr style="width: 100%;">' +
+							'		<td style="width: 20%; height: 40px; text-align: right">Manager/Director</td>' +
+							'		<td style="width: 50%; height: 40px; border-bottom: 2px solid black"></td>' +
+							'		<td style="width: 10%; height: 40px; text-align: right">Date</td>' +
+							'		<td style="width: 20%; height: 40px; border-bottom: 2px solid black"></td>' +
+							'	</tr>' +
+							'	<tr style="width: 100%;">' +
+							'		<td style="width: 20%; height: 40px; text-align: right">Vice President</td>' +
+							'		<td style="width: 50%; height: 40px; border-bottom: 2px solid black"></td>' +
+							'		<td style="width: 10%; height: 40px; text-align: right">Date</td>' +
+							'		<td style="width: 20%; height: 40px; border-bottom: 2px solid black"></td>' +
+							'	</tr>' +
+							'	<tr style="width: 100%;">' +
+							'		<td style="width: 20%; height: 40px; text-align: right">Human Resources</td>' +
+							'		<td style="width: 50%; height: 40px; border-bottom: 2px solid black"></td>' +
+							'		<td style="width: 10%; height: 40px; text-align: right">Date</td>' +
+							'		<td style="width: 20%; height: 40px; border-bottom: 2px solid black"></td>' +
+							'	</tr>' +
+							'<table>' +
+							'<h2>Human Resources\' Use Only</h2>' +
+							'<table style="width: 100%;">' +
+							'	<tr style="width: 100%;">' +
+							'		<td style="width: 4%; height: 40px; border-bottom: 2px solid black"></td>' +
+							'		<td style="width: 8%; height: 40px;">' +
+							'			Exempt' +
+							'		</td>' +
+							'		<td style="width: 4%; height: 40px;"></td>' +
+							'		<td style="width: 4%; height: 40px; border-bottom: 2px solid black"></td>' +
+							'		<td style="width: 8%; height: 40px;">' +
+							'			Non-exempt' +
+							'		</td>' +
+							'		<td style="width: 4%; height: 40px;"></td>' +
+							'		<td style="width: 8%; height: 40px; text-align: right;">' +
+							'			EAR #:' +
+							'		</td>' +
+							'		<td style="width: 20%; height: 40px; border-bottom: 2px solid black"></td>' +
+							'		<td style="width: 4%; height: 40px;"></td>' +
+							'		<td style="width: 13%; height: 40px; text-align: right;">' +
+							'			Worker\'s Comp #:' +
+							'		</td>' +
+							'		<td style="width: 16%; height: 40px; border-bottom: 2px solid black"></td>' +
+							'		<td style="width: 4%; height: 40px;"></td>' +
+							'	</tr>' +
+							'</table>' +
+							'<table style="width: 100%;">' +
+							'	<tr style="width: 100%;">' +
+							'		<td style="width: 8%; height: 40px;">' +
+							'			Benefits:' +
+							'		</td>' +
+							'		<td style="width: 4%; height: 40px;"></td>' +
+							'		<td style="width: 4%; height: 40px; border-bottom: 2px solid black"></td>' +
+							'		<td style="width: 6%; height: 40px;">' +
+							'			FT (E)' +
+							'		</td>' +
+							'		<td style="width: 4%; height: 40px;"></td>' +
+							'		<td style="width: 4%; height: 40px; border-bottom: 2px solid black"></td>' +
+							'		<td style="width: 6%; height: 40px;">' +
+							'			PT (P)' +
+							'		</td>' +
+							'		<td style="width: 4%; height: 40px;"></td>' +
+							'		<td style="width: 4%; height: 40px; border-bottom: 2px solid black"></td>' +
+							'		<td style="width: 15%; height: 40px;">' +
+							'			403(b) Only (I)' +
+							'		</td>' +
+							'		<td style="width: 41%; height: 40px;"></td>' +
+							'	</tr>' +
+							'</table>' +
+							'<table style="width: 100%;">' +
+							'	<tr style="width: 100%;">' +
+
+
+							'		<td style="width: 8%; height: 40px; text-align: right;">' +
+							'			SSN:' +
+							'		</td>' +
+							'		<td style="width: 20%; height: 40px; border-bottom: 2px solid black">' +
+							'		</td>' +
+
+
+							'		<td style="width: 4%; height: 40px;"></td>' +
+							'		<td style="width: 8%; height: 40px; text-align: right;">' +
+							'			DOB:' +
+							'		</td>' +
+							'		<td style="width: 20%; height: 40px; border-bottom: 2px solid black">' +
+							'		</td>' +
+
+
+							'		<td style="width: 4%; height: 40px;"></td>' +
+							'		<td style="width: 15%; height: 40px; text-align: right;">' +
+							'			Remaining vacation Hrs:' +
+							'		</td>' +
+							'		<td style="width: 21%; height: 40px; border-bottom: 2px solid black">' +
+							'		</td>' +
+
+
+							'	</tr>' +
+							'<table>';
+
+					});
 			}
 
-			printContent = ReturnPrintableContentWithStandardWrapper (printContent, "hr-personnel-action");
-			
+			printContent = ReturnPrintableContentWithStandardWrapper(printContent, "hr-personnel-action");
+
 			// send print content to printer
-			PrintToPrinter (printContent);
-		
-		// if user-entered data is NOT valid
+			PrintToPrinter(printContent);
+
+			// if user-entered data is NOT valid
 		} else {
 			// display invalid data overlay
 			$('div#overlays-screen-container').fadeIn(200);
@@ -14541,9 +14717,9 @@
 		}
 	}
 
-	
-	
-	function PrintNeedsSheet () {
+
+
+	function PrintNeedsSheet() {
 
 		moment.locale('en');
 		moment.suppressDeprecationWarnings = true;
@@ -14556,8 +14732,8 @@
 			operation: "GetUserProfileByName",
 			async: false,
 			AccountName: sheetData["Onsite-Contact"][0]["account"],
-			completefunc: function(xData, Status) {
-				$(xData.responseXML).SPFilterNode("PropertyData").each(function() {
+			completefunc: function (xData, Status) {
+				$(xData.responseXML).SPFilterNode("PropertyData").each(function () {
 					onsiteContactUserProfileValues[$(this).find("Name").text()] = $(this).find("Value").text();
 				});
 			}
@@ -14567,129 +14743,129 @@
 
 		sheetData["Printer-Buyout-Venues"] = [];
 
-		if (typeof(sheetData["buyout-venues_other"]) !== "undefined") {
-			if (typeof(sheetData["Other-Buyout-Venue"]) !== "undefined" && sheetData["Other-Buyout-Venue"] != "") {
-				 sheetData["Printer-Buyout-Venues"].push(sheetData["Other-Buyout-Venue"]);
+		if (typeof (sheetData["buyout-venues_other"]) !== "undefined") {
+			if (typeof (sheetData["Other-Buyout-Venue"]) !== "undefined" && sheetData["Other-Buyout-Venue"] != "") {
+				sheetData["Printer-Buyout-Venues"].push(sheetData["Other-Buyout-Venue"]);
 			} else {
 				sheetData["Printer-Buyout-Venues"].push("Other, not specified");
 			}
 		}
 
-		if (typeof(sheetData["buyout-venues_omni"]) !== "undefined") {
+		if (typeof (sheetData["buyout-venues_omni"]) !== "undefined") {
 			sheetData["Printer-Buyout-Venues"].push("Omni");
 		}
 
-		if (typeof(sheetData["buyout-venues_planetarium"]) !== "undefined") {
+		if (typeof (sheetData["buyout-venues_planetarium"]) !== "undefined") {
 			sheetData["Printer-Buyout-Venues"].push("Planetarium");
 		}
 
-		if (typeof(sheetData["buyout-venues_4dtheater"]) !== "undefined") {
+		if (typeof (sheetData["buyout-venues_4dtheater"]) !== "undefined") {
 			sheetData["Printer-Buyout-Venues"].push("4-D Theater");
 		}
 
-		if (typeof(sheetData["buyout-venues_nichols"]) !== "undefined") {
+		if (typeof (sheetData["buyout-venues_nichols"]) !== "undefined") {
 			sheetData["Printer-Buyout-Venues"].push("Nichols");
 		}
 
-		if (typeof(sheetData["buyout-venues_stearns"]) !== "undefined") {
+		if (typeof (sheetData["buyout-venues_stearns"]) !== "undefined") {
 			sheetData["Printer-Buyout-Venues"].push("Stearns");
 		}
 
 		sheetData["Printer-Event-Spaces"] = [];
 
-		if (typeof(sheetData["event-space_skyline-or-darbeloff"]) !== "undefined") {
-			if (typeof(sheetData["Skyline-or-dArbeloff"]) !== "undefined" && sheetData["Skyline-or-dArbeloff"] != "") {
-				 sheetData["Printer-Event-Spaces"].push(sheetData["Skyline-or-dArbeloff"]);
+		if (typeof (sheetData["event-space_skyline-or-darbeloff"]) !== "undefined") {
+			if (typeof (sheetData["Skyline-or-dArbeloff"]) !== "undefined" && sheetData["Skyline-or-dArbeloff"] != "") {
+				sheetData["Printer-Event-Spaces"].push(sheetData["Skyline-or-dArbeloff"]);
 			} else {
 				sheetData["Printer-Event-Spaces"].push("Skyline or d'Arbeloff");
 			}
 		}
 
-		if (typeof(sheetData["event-space_other"]) !== "undefined") {
-			if (typeof(sheetData["Other-Event-Space"]) !== "undefined" && sheetData["Other-Event-Space"] != "") {
-				 sheetData["Printer-Event-Spaces"].push(sheetData["Other-Event-Space"]);
+		if (typeof (sheetData["event-space_other"]) !== "undefined") {
+			if (typeof (sheetData["Other-Event-Space"]) !== "undefined" && sheetData["Other-Event-Space"] != "") {
+				sheetData["Printer-Event-Spaces"].push(sheetData["Other-Event-Space"]);
 			} else {
 				sheetData["Printer-Event-Spaces"].push("Not yet specified");
 			}
 		}
 
-		if (typeof(sheetData["event-space_atrium"]) !== "undefined") {
+		if (typeof (sheetData["event-space_atrium"]) !== "undefined") {
 			sheetData["Printer-Event-Spaces"].push("Atrium");
 		}
 
-		if (typeof(sheetData["event-space_blue-wing"]) !== "undefined") {
+		if (typeof (sheetData["event-space_blue-wing"]) !== "undefined") {
 			sheetData["Printer-Event-Spaces"].push("Blue Wing");
 		}
 
-		if (typeof(sheetData["event-space_green-wing"]) !== "undefined") {
+		if (typeof (sheetData["event-space_green-wing"]) !== "undefined") {
 			sheetData["Printer-Event-Spaces"].push("Green Wing");
 		}
 
-		if (typeof(sheetData["event-space_museum-cafe"]) !== "undefined") {
+		if (typeof (sheetData["event-space_museum-cafe"]) !== "undefined") {
 			sheetData["Printer-Event-Spaces"].push("Museum Café");
 		}
 
-		if (typeof(sheetData["event-space_nichols"]) !== "undefined") {
+		if (typeof (sheetData["event-space_nichols"]) !== "undefined") {
 			sheetData["Printer-Event-Spaces"].push("Nichols");
 		}
 
-		if (typeof(sheetData["event-space_hhl"]) !== "undefined") {
+		if (typeof (sheetData["event-space_hhl"]) !== "undefined") {
 			sheetData["Printer-Event-Spaces"].push("Hall of Human Life");
 		}
 
-		if (typeof(sheetData["event-space_omni-and-planetarium-foyer"]) !== "undefined") {
+		if (typeof (sheetData["event-space_omni-and-planetarium-foyer"]) !== "undefined") {
 			sheetData["Printer-Event-Spaces"].push("Omni and Planetarium Foyer");
 		}
 
-		if (typeof(sheetData["event-space_omni-and-planetarium-foyer-and-atrium"]) !== "undefined") {
+		if (typeof (sheetData["event-space_omni-and-planetarium-foyer-and-atrium"]) !== "undefined") {
 			sheetData["Printer-Event-Spaces"].push("Omni and Planetarium Foyer and Atrium");
 		}
 
-		if (typeof(sheetData["event-space_6th-floor"]) !== "undefined") {
+		if (typeof (sheetData["event-space_6th-floor"]) !== "undefined") {
 			sheetData["Printer-Event-Spaces"].push("6th floor");
 		}
 
-		if (typeof(sheetData["event-space_hodgkinson"]) !== "undefined") {
+		if (typeof (sheetData["event-space_hodgkinson"]) !== "undefined") {
 			sheetData["Printer-Event-Spaces"].push("Hodgkinson");
 		}
 
-		if (typeof(sheetData["event-space_hornblower"]) !== "undefined") {
+		if (typeof (sheetData["event-space_hornblower"]) !== "undefined") {
 			sheetData["Printer-Event-Spaces"].push("Hornblower");
 		}
 
-		if (typeof(sheetData["event-space_lower-morse"]) !== "undefined") {
+		if (typeof (sheetData["event-space_lower-morse"]) !== "undefined") {
 			sheetData["Printer-Event-Spaces"].push("Lower Morse");
 		}
 
 
 
 
-		if (typeof(sheetData["tables-and-equipment-and-cleaning_rentalequipment"]) != "undefined") {
-			if (typeof(sheetData["rental-equipment-setup_vendor"]) != "undefined") {
+		if (typeof (sheetData["tables-and-equipment-and-cleaning_rentalequipment"]) != "undefined") {
+			if (typeof (sheetData["rental-equipment-setup_vendor"]) != "undefined") {
 				sheetData["Printer-Rental-Equipment-Setup"] = "Vendor";
 			} else {
 				sheetData["Printer-Rental-Equipment-Setup"] = "C&W";
 			}
-			if (typeof(sheetData["rental-equipment-pickup-location_door16ramp"]) != "undefined") {
+			if (typeof (sheetData["rental-equipment-pickup-location_door16ramp"]) != "undefined") {
 				sheetData["Rental-Equipment-Pickup-Location"] = "Door #16 Ramp";
-			} else if (typeof(sheetData["rental-equipment-pickup-location_receiving"]) != "undefined") {
+			} else if (typeof (sheetData["rental-equipment-pickup-location_receiving"]) != "undefined") {
 				sheetData["Rental-Equipment-Pickup-Location"] = "Receiving";
 			} else {
 				sheetData["Rental-Equipment-Pickup-Location"] = "Event Space";
 			}
 
 
-			
-			if (typeof(sheetData["rental-equipment-porter-service_beforesetup"]) != "undefined" && typeof(sheetData["rental-equipment-porter-service_aftersetup"]) != "undefined") {
+
+			if (typeof (sheetData["rental-equipment-porter-service_beforesetup"]) != "undefined" && typeof (sheetData["rental-equipment-porter-service_aftersetup"]) != "undefined") {
 				sheetData["Rental-Equipment-Porter-Service"] = "Porter service needed for both setup and pickup";
 			}
-			if (typeof(sheetData["rental-equipment-porter-service_beforesetup"]) != "undefined" && typeof(sheetData["rental-equipment-porter-service_aftersetup"]) == "undefined") {
+			if (typeof (sheetData["rental-equipment-porter-service_beforesetup"]) != "undefined" && typeof (sheetData["rental-equipment-porter-service_aftersetup"]) == "undefined") {
 				sheetData["Rental-Equipment-Porter-Service"] = "Porter service needed for setup only";
 			}
-			if (typeof(sheetData["rental-equipment-porter-service_beforesetup"]) == "undefined" && typeof(sheetData["rental-equipment-porter-service_aftersetup"]) != "undefined") {
+			if (typeof (sheetData["rental-equipment-porter-service_beforesetup"]) == "undefined" && typeof (sheetData["rental-equipment-porter-service_aftersetup"]) != "undefined") {
 				sheetData["Rental-Equipment-Porter-Service"] = "Porter service needed for pickup only";
 			}
-			if (typeof(sheetData["rental-equipment-porter-service_beforesetup"]) == "undefined" && typeof(sheetData["rental-equipment-porter-service_aftersetup"]) == "undefined") {
+			if (typeof (sheetData["rental-equipment-porter-service_beforesetup"]) == "undefined" && typeof (sheetData["rental-equipment-porter-service_aftersetup"]) == "undefined") {
 				sheetData["Rental-Equipment-Porter-Service"] = "Porter service not needed";
 			}
 		}
@@ -14697,18 +14873,18 @@
 		sheetData["Printer-Onsite-Contact-Name"] = onsiteContactUserProfileValues["PreferredName"];
 		sheetData["Printer-Onsite-Contact-Department"] = onsiteContactUserProfileValues["Department"];
 		sheetData["Printer-Onsite-Contact-Phone"] = onsiteContactUserProfileValues["WorkPhone"];
-		sheetData["Printer-Event-Beginning-Time"] = $().ReturnFormattedDateTime (sheetData["datetime-storage_Event-Beginning-Datetime"], "YYYY-MM-DDTHH:mm:ss", "h:mm a");
-		sheetData["Printer-Event-Ending-Time"] = $().ReturnFormattedDateTime (sheetData["datetime-storage_Event-Ending-Datetime"], "YYYY-MM-DDTHH:mm:ss", "h:mm a");
-		sheetData["Printer-Space-Reserved-Beginning-Datetime"] = $().ReturnFormattedDateTime (sheetData["datetime-storage_Space-Reserved-Beginning-Datetime"], "YYYY-MM-DDTHH:mm:ss", "h:mm a");
-		sheetData["Printer-Space-Reserved-Ending-Datetime"] = $().ReturnFormattedDateTime (sheetData["datetime-storage_Space-Reserved-Ending-Datetime"], "YYYY-MM-DDTHH:mm:ss", "h:mm a");
-		sheetData["Printer-Registration-Table-Beginning-Datetime"] = $().ReturnFormattedDateTime (sheetData["datetime-storage_Registration-Table-Beginning-Datetime"], "YYYY-MM-DDTHH:mm:ss", "h:mm a");
-		sheetData["Printer-Registration-Table-Ending-Datetime"] = $().ReturnFormattedDateTime (sheetData["datetime-storage_Registration-Table-Ending-Datetime"], "YYYY-MM-DDTHH:mm:ss", "h:mm a");
-		sheetData["Printer-Guest-Access-Beginning-Datetime"] = $().ReturnFormattedDateTime (sheetData["datetime-storage_Guest-Access-Beginning-Datetime"], "YYYY-MM-DDTHH:mm:ss", "h:mm a");
-		sheetData["Printer-Guest-Access-Ending-Datetime"] = $().ReturnFormattedDateTime (sheetData["datetime-storage_Guest-Access-Ending-Datetime"], "YYYY-MM-DDTHH:mm:ss", "h:mm a");
-		sheetData["Printer-Security-Detail-Beginning-Datetime"] = $().ReturnFormattedDateTime (sheetData["datetime-storage_Security-Detail-Beginning-Datetime"], "YYYY-MM-DDTHH:mm:ss", "h:mm a");
-		sheetData["Printer-Security-Detail-Ending-Datetime"] = $().ReturnFormattedDateTime (sheetData["datetime-storage_Security-Detail-Ending-Datetime"], "YYYY-MM-DDTHH:mm:ss", "h:mm a");
-		sheetData["Printer-Temperature-Control-Beginning-Datetime"] = $().ReturnFormattedDateTime (sheetData["datetime-storage_Temperature-Control-Beginning-Datetime"], "YYYY-MM-DDTHH:mm:ss", "h:mm a");
-		sheetData["Printer-Temperature-Control-Ending-Datetime"] = $().ReturnFormattedDateTime (sheetData["datetime-storage_Temperature-Control-Ending-Datetime"], "YYYY-MM-DDTHH:mm:ss", "h:mm a");
+		sheetData["Printer-Event-Beginning-Time"] = $().ReturnFormattedDateTime(sheetData["datetime-storage_Event-Beginning-Datetime"], "YYYY-MM-DDTHH:mm:ss", "h:mm a");
+		sheetData["Printer-Event-Ending-Time"] = $().ReturnFormattedDateTime(sheetData["datetime-storage_Event-Ending-Datetime"], "YYYY-MM-DDTHH:mm:ss", "h:mm a");
+		sheetData["Printer-Space-Reserved-Beginning-Datetime"] = $().ReturnFormattedDateTime(sheetData["datetime-storage_Space-Reserved-Beginning-Datetime"], "YYYY-MM-DDTHH:mm:ss", "h:mm a");
+		sheetData["Printer-Space-Reserved-Ending-Datetime"] = $().ReturnFormattedDateTime(sheetData["datetime-storage_Space-Reserved-Ending-Datetime"], "YYYY-MM-DDTHH:mm:ss", "h:mm a");
+		sheetData["Printer-Registration-Table-Beginning-Datetime"] = $().ReturnFormattedDateTime(sheetData["datetime-storage_Registration-Table-Beginning-Datetime"], "YYYY-MM-DDTHH:mm:ss", "h:mm a");
+		sheetData["Printer-Registration-Table-Ending-Datetime"] = $().ReturnFormattedDateTime(sheetData["datetime-storage_Registration-Table-Ending-Datetime"], "YYYY-MM-DDTHH:mm:ss", "h:mm a");
+		sheetData["Printer-Guest-Access-Beginning-Datetime"] = $().ReturnFormattedDateTime(sheetData["datetime-storage_Guest-Access-Beginning-Datetime"], "YYYY-MM-DDTHH:mm:ss", "h:mm a");
+		sheetData["Printer-Guest-Access-Ending-Datetime"] = $().ReturnFormattedDateTime(sheetData["datetime-storage_Guest-Access-Ending-Datetime"], "YYYY-MM-DDTHH:mm:ss", "h:mm a");
+		sheetData["Printer-Security-Detail-Beginning-Datetime"] = $().ReturnFormattedDateTime(sheetData["datetime-storage_Security-Detail-Beginning-Datetime"], "YYYY-MM-DDTHH:mm:ss", "h:mm a");
+		sheetData["Printer-Security-Detail-Ending-Datetime"] = $().ReturnFormattedDateTime(sheetData["datetime-storage_Security-Detail-Ending-Datetime"], "YYYY-MM-DDTHH:mm:ss", "h:mm a");
+		sheetData["Printer-Temperature-Control-Beginning-Datetime"] = $().ReturnFormattedDateTime(sheetData["datetime-storage_Temperature-Control-Beginning-Datetime"], "YYYY-MM-DDTHH:mm:ss", "h:mm a");
+		sheetData["Printer-Temperature-Control-Ending-Datetime"] = $().ReturnFormattedDateTime(sheetData["datetime-storage_Temperature-Control-Ending-Datetime"], "YYYY-MM-DDTHH:mm:ss", "h:mm a");
 
 		// build the sheet to be printed
 		var printContent = '<h1>In-House Needs Sheet</h1>';
@@ -14724,21 +14900,21 @@
 		}
 
 		// event basics
-		printContent += '<h2>Event Basics</h2>' + 
-						'<table class="layout-table" style="margin: 0 0 20px;">' + 
-						'	<tbody><tr><td><ul style="margin: 0;">' + 
-						'		<li><b>Event Date:</b> ' + sheetData["date-input_Event-Beginning-Datetime"] + '</li>' + 
-						'		<li><b>Event Times:</b> ' + sheetData["Printer-Event-Beginning-Time"] + ' - ' + sheetData["Printer-Event-Ending-Time"] + '</li>' + 
-						'		<li><b>Event Name:</b> ' + sheetData["Event-Name"] + '</li>' + 
-						'		<li><b>Total Attendance:</b> ' + sheetData["Total-Attendance"] + '</li>' + 
-						'		<li><b>Non-staff Attendance:</b> ' + sheetData["Total-Non-Staff-Attendance"] + '</li>' + 
-						'		<li><b>Event Space:</b> ';
-		
+		printContent += '<h2>Event Basics</h2>' +
+			'<table class="layout-table" style="margin: 0 0 20px;">' +
+			'	<tbody><tr><td><ul style="margin: 0;">' +
+			'		<li><b>Event Date:</b> ' + sheetData["date-input_Event-Beginning-Datetime"] + '</li>' +
+			'		<li><b>Event Times:</b> ' + sheetData["Printer-Event-Beginning-Time"] + ' - ' + sheetData["Printer-Event-Ending-Time"] + '</li>' +
+			'		<li><b>Event Name:</b> ' + sheetData["Event-Name"] + '</li>' +
+			'		<li><b>Total Attendance:</b> ' + sheetData["Total-Attendance"] + '</li>' +
+			'		<li><b>Non-staff Attendance:</b> ' + sheetData["Total-Non-Staff-Attendance"] + '</li>' +
+			'		<li><b>Event Space:</b> ';
+
 		if (eventSpacesUseList == 1) {
 			printContent += '<ul style="margin: 0;">';
 		}
 
-		$.each(sheetData["Printer-Event-Spaces"], function(i, eventSpace) {
+		$.each(sheetData["Printer-Event-Spaces"], function (i, eventSpace) {
 			printContent += eventSpacesOpeningTag + eventSpace + eventSpacesClosingTag;
 		});
 
@@ -14746,40 +14922,40 @@
 			printContent += '</ul>';
 		}
 
-		printContent += '</li>' + 
-						'		<li><b>Space Reservation Times:</b> ' + sheetData["Printer-Space-Reserved-Beginning-Datetime"] + ' - ' + sheetData["Printer-Space-Reserved-Ending-Datetime"] + '</li>' + 
-						'	</ul></td>' + 
-						'	<td><ul style="margin: 0;"><li><b>Onsite Contact:</b><ul>' + 
-						'		<li><b>Name:</b> ' + sheetData["Printer-Onsite-Contact-Name"] + '</li>' + 
-						'		<li><b>Department:</b> ' + sheetData["Printer-Onsite-Contact-Department"] + '</li>' + 
-						'		<li><b>Phone:</b> ' + sheetData["Printer-Onsite-Contact-Phone"] + '</li>' + 
-						'	</ul></li></ul></td></tr></tbody>' + 
-						'<table>';
+		printContent += '</li>' +
+			'		<li><b>Space Reservation Times:</b> ' + sheetData["Printer-Space-Reserved-Beginning-Datetime"] + ' - ' + sheetData["Printer-Space-Reserved-Ending-Datetime"] + '</li>' +
+			'	</ul></td>' +
+			'	<td><ul style="margin: 0;"><li><b>Onsite Contact:</b><ul>' +
+			'		<li><b>Name:</b> ' + sheetData["Printer-Onsite-Contact-Name"] + '</li>' +
+			'		<li><b>Department:</b> ' + sheetData["Printer-Onsite-Contact-Department"] + '</li>' +
+			'		<li><b>Phone:</b> ' + sheetData["Printer-Onsite-Contact-Phone"] + '</li>' +
+			'	</ul></li></ul></td></tr></tbody>' +
+			'<table>';
 
 		// event schedule
-		if (typeof(sheetData["Schedule"]) != "undefined") {
-			printContent += '<h2>Event Schedule</h2>'; 
+		if (typeof (sheetData["Schedule"]) != "undefined") {
+			printContent += '<h2>Event Schedule</h2>';
 			printContent += ReplaceAll("%0A", "<br />", sheetData["Schedule"]);
 		}
 
 		// services needed
-		printContent += '<h2>Services Needed</h2>' + 
-						'<table class="layout-table" style="margin: 0 0 20px;">' + 
-						'	<tbody>' + 
-						'		<tr>' + 
-						'			<td style="border: 2px solid black;padding: 1rem;">' + 
-						'				<h3>C&W</h3>';
+		printContent += '<h2>Services Needed</h2>' +
+			'<table class="layout-table" style="margin: 0 0 20px;">' +
+			'	<tbody>' +
+			'		<tr>' +
+			'			<td style="border: 2px solid black;padding: 1rem;">' +
+			'				<h3>C&W</h3>';
 
 		var tablesEquipmentCleaningHasContent = 0;
-		if (typeof(sheetData["tables-and-equipment-and-cleaning_registrationtable"]) != "undefined" ||
-			typeof(sheetData["tables-and-equipment-and-cleaning_rentalequipment"]) != "undefined" || 
-			typeof(sheetData["tables-and-equipment-and-cleaning_more"]) != "undefined" ) {
+		if (typeof (sheetData["tables-and-equipment-and-cleaning_registrationtable"]) != "undefined" ||
+			typeof (sheetData["tables-and-equipment-and-cleaning_rentalequipment"]) != "undefined" ||
+			typeof (sheetData["tables-and-equipment-and-cleaning_more"]) != "undefined") {
 			tablesEquipmentCleaningHasContent = 1;
 		}
 
-		if (	(typeof(sheetData["tables-and-equipment-and-cleaning_registrationtable"]) != "undefined" && typeof(sheetData["tables-and-equipment-and-cleaning_rentalequipment"]) != "undefined") || 
-				(typeof(sheetData["tables-and-equipment-and-cleaning_rentalequipment"]) != "undefined" && typeof(sheetData["tables-and-equipment-and-cleaning_more"]) != "undefined") || 
-				(typeof(sheetData["tables-and-equipment-and-cleaning_registrationtable"]) != "undefined" && typeof(sheetData["tables-and-equipment-and-cleaning_more"]) != "undefined") ) {
+		if ((typeof (sheetData["tables-and-equipment-and-cleaning_registrationtable"]) != "undefined" && typeof (sheetData["tables-and-equipment-and-cleaning_rentalequipment"]) != "undefined") ||
+			(typeof (sheetData["tables-and-equipment-and-cleaning_rentalequipment"]) != "undefined" && typeof (sheetData["tables-and-equipment-and-cleaning_more"]) != "undefined") ||
+			(typeof (sheetData["tables-and-equipment-and-cleaning_registrationtable"]) != "undefined" && typeof (sheetData["tables-and-equipment-and-cleaning_more"]) != "undefined")) {
 			var tablesEquipmentCleaningUseList = 1;
 			var tablesEquipmentCleaningOpeningTag = '<li>';
 			var tablesEquipmentCleaningClosingTag = '</li>';
@@ -14794,22 +14970,22 @@
 				printContent += '<ul style="margin: 0;">';
 			}
 
-			if (typeof(sheetData["tables-and-equipment-and-cleaning_registrationtable"]) != "undefined") {
-				printContent += tablesEquipmentCleaningOpeningTag + '<b>Registration Table:</b><ul style="margin: 0;">' + 
-								'	<li><b>Setup Completed By: </b>' + sheetData["Printer-Registration-Table-Beginning-Datetime"] + '</li>' + 
-								'	<li><b>Breakdown Starting: </b>' + sheetData["Printer-Registration-Table-Ending-Datetime"] + '</li>' + 
-								'</ul>' + tablesEquipmentCleaningClosingTag;
+			if (typeof (sheetData["tables-and-equipment-and-cleaning_registrationtable"]) != "undefined") {
+				printContent += tablesEquipmentCleaningOpeningTag + '<b>Registration Table:</b><ul style="margin: 0;">' +
+					'	<li><b>Setup Completed By: </b>' + sheetData["Printer-Registration-Table-Beginning-Datetime"] + '</li>' +
+					'	<li><b>Breakdown Starting: </b>' + sheetData["Printer-Registration-Table-Ending-Datetime"] + '</li>' +
+					'</ul>' + tablesEquipmentCleaningClosingTag;
 			}
 
-			if (typeof(sheetData["tables-and-equipment-and-cleaning_rentalequipment"]) != "undefined") {
-				printContent += tablesEquipmentCleaningOpeningTag + '<b>Rental Equipment:</b><ul style="margin: 0;">' + 
-								'	<li><b>Setup: </b>' + sheetData["Printer-Rental-Equipment-Setup"] + '</li>' + 
-								'	<li><b>Pickup Location: </b>' + sheetData["Rental-Equipment-Pickup-Location"] + '</li>' + 
-								'	<li><b>Porter Service: </b>' + sheetData["Rental-Equipment-Porter-Service"] + '</li>' + 
-								'</ul>' + tablesEquipmentCleaningClosingTag;
+			if (typeof (sheetData["tables-and-equipment-and-cleaning_rentalequipment"]) != "undefined") {
+				printContent += tablesEquipmentCleaningOpeningTag + '<b>Rental Equipment:</b><ul style="margin: 0;">' +
+					'	<li><b>Setup: </b>' + sheetData["Printer-Rental-Equipment-Setup"] + '</li>' +
+					'	<li><b>Pickup Location: </b>' + sheetData["Rental-Equipment-Pickup-Location"] + '</li>' +
+					'	<li><b>Porter Service: </b>' + sheetData["Rental-Equipment-Porter-Service"] + '</li>' +
+					'</ul>' + tablesEquipmentCleaningClosingTag;
 			}
-			
-			if (typeof(sheetData["tables-and-equipment-and-cleaning_more"]) != "undefined") {
+
+			if (typeof (sheetData["tables-and-equipment-and-cleaning_more"]) != "undefined") {
 				printContent += tablesEquipmentCleaningOpeningTag + '<b>Notes: </b><br />' + ReplaceAll("%0A", "<br />", sheetData["More-Tables-and-Equipment-and-Cleaning"]) + tablesEquipmentCleaningClosingTag;
 			}
 
@@ -14821,9 +14997,9 @@
 			printContent += '<p>Nothing needed.</p>';
 		}
 
-		printContent += '			</td>' + 
-						'			<td style="border: 2px solid black;padding: 1rem;">' + 
-						'				<h3>Exhibit Maintenance</h3>';
+		printContent += '			</td>' +
+			'			<td style="border: 2px solid black;padding: 1rem;">' +
+			'				<h3>Exhibit Maintenance</h3>';
 
 
 
@@ -14834,12 +15010,12 @@
 
 
 		var exhibitMaintenanceHasContent = 0;
-		if (typeof(sheetData["exhibit-maintenance_scatterbenches"]) != "undefined" ||
-			typeof(sheetData["exhibit-maintenance_other"]) != "undefined" ) {
+		if (typeof (sheetData["exhibit-maintenance_scatterbenches"]) != "undefined" ||
+			typeof (sheetData["exhibit-maintenance_other"]) != "undefined") {
 			exhibitMaintenanceHasContent = 1;
 		}
 
-		if (typeof(sheetData["exhibit-maintenance_scatterbenches"]) != "undefined" && typeof(sheetData["exhibit-maintenance_other"]) != "undefined") {
+		if (typeof (sheetData["exhibit-maintenance_scatterbenches"]) != "undefined" && typeof (sheetData["exhibit-maintenance_other"]) != "undefined") {
 			var exhibitMaintenanceUseList = 1;
 			var exhibitMaintenanceOpeningTag = '<li>';
 			var exhibitMaintenanceClosingTag = '</li>';
@@ -14854,11 +15030,11 @@
 				printContent += '<ul style="margin: 0;">';
 			}
 
-			if (typeof(sheetData["exhibit-maintenance_scatterbenches"]) != "undefined") {
+			if (typeof (sheetData["exhibit-maintenance_scatterbenches"]) != "undefined") {
 				printContent += exhibitMaintenanceOpeningTag + '<b>Scatter CS&T benches in the Blue Wing level 1</b>' + exhibitMaintenanceClosingTag;
 			}
 
-			if (typeof(sheetData["exhibit-maintenance_other"]) != "undefined") {
+			if (typeof (sheetData["exhibit-maintenance_other"]) != "undefined") {
 				printContent += exhibitMaintenanceOpeningTag + '<b>Notes: </b><br />' + ReplaceAll("%0A", "<br />", sheetData["Other-Exhibit-Maintenance-Service"]) + exhibitMaintenanceClosingTag;
 			}
 
@@ -14870,16 +15046,16 @@
 			printContent += '<p>Nothing needed.</p>';
 		}
 
-		printContent += '			</td>' + 
-						'		</tr>';
+		printContent += '			</td>' +
+			'		</tr>';
 
-		printContent += '		<tr>' + 
-						'			<td style="border: 2px solid black;padding: 1rem;">' + 
-						'				<h3>WPC</h3>';
+		printContent += '		<tr>' +
+			'			<td style="border: 2px solid black;padding: 1rem;">' +
+			'				<h3>WPC</h3>';
 		var wpcHasContent = 0;
-		if (typeof(sheetData["wolfgang-puck-catering_linens"]) != "undefined" ||
-			typeof(sheetData["wolfgang-puck-catering_menu"]) != "undefined"  ||
-			typeof(sheetData["wolfgang-puck-catering_other"]) != "undefined" ) {
+		if (typeof (sheetData["wolfgang-puck-catering_linens"]) != "undefined" ||
+			typeof (sheetData["wolfgang-puck-catering_menu"]) != "undefined" ||
+			typeof (sheetData["wolfgang-puck-catering_other"]) != "undefined") {
 			wpcHasContent = 1;
 		}
 
@@ -14892,15 +15068,15 @@
 				printContent += '<ul style="margin: 0;">';
 			}
 
-			if (typeof(sheetData["wolfgang-puck-catering_linens"]) != "undefined") {
+			if (typeof (sheetData["wolfgang-puck-catering_linens"]) != "undefined") {
 				printContent += wpcOpeningTag + '<b>Linens</b>' + wpcClosingTag;
 			}
 
-			if (typeof(sheetData["wolfgang-puck-catering_menu"]) != "undefined") {
+			if (typeof (sheetData["wolfgang-puck-catering_menu"]) != "undefined") {
 				printContent += wpcOpeningTag + '<b>Menu</b>' + wpcClosingTag;
 			}
 
-			if (typeof(sheetData["wolfgang-puck-catering_other"]) != "undefined") {
+			if (typeof (sheetData["wolfgang-puck-catering_other"]) != "undefined") {
 				printContent += wpcOpeningTag + '<b>Notes: </b><br />' + ReplaceAll("%0A", "<br />", sheetData["WPC-Other"]) + wpcClosingTag;
 			}
 
@@ -14914,12 +15090,12 @@
 			printContent += '<p>Nothing needed.</p>';
 		}
 
-		printContent += '			</td>' + 
-						'			<td style="border: 2px solid black;padding: 1rem;">' + 
-						'				<h3>IIT AV</h3>';
+		printContent += '			</td>' +
+			'			<td style="border: 2px solid black;padding: 1rem;">' +
+			'				<h3>IIT AV</h3>';
 
 		var iitAVHasContent = 0;
-		if (typeof(sheetData["iit-av_yes"]) != "undefined") {
+		if (typeof (sheetData["iit-av_yes"]) != "undefined") {
 			iitAVHasContent = 1;
 		}
 
@@ -14943,16 +15119,16 @@
 			printContent += '<p>Nothing needed.</p>';
 		}
 
-		printContent += '			</td>' + 
-						'		</tr>';
+		printContent += '			</td>' +
+			'		</tr>';
 
-		printContent += '		<tr>' + 
-						'			<td style="border: 2px solid black;padding: 1rem;">' + 
-						'				<h3>IIT Help Desk / Infrastracture</h3>';
+		printContent += '		<tr>' +
+			'			<td style="border: 2px solid black;padding: 1rem;">' +
+			'				<h3>IIT Help Desk / Infrastracture</h3>';
 
 
 		var iitInfraHasContent = 0;
-		if (typeof(sheetData["iit-help-desk-and-infrastracture_yes"]) != "undefined") {
+		if (typeof (sheetData["iit-help-desk-and-infrastracture_yes"]) != "undefined") {
 			iitInfraHasContent = 1;
 		}
 
@@ -14976,17 +15152,17 @@
 			printContent += '<p>Nothing needed.</p>';
 		}
 
-		printContent += '			</td>' + 
-						'			<td style="border: 2px solid black;padding: 1rem;">' + 
-						'				<h3>Public Safety</h3>';
+		printContent += '			</td>' +
+			'			<td style="border: 2px solid black;padding: 1rem;">' +
+			'				<h3>Public Safety</h3>';
 
 		var publicSafetyContentQuantity = 0;
-		if (typeof(sheetData["parking-validation_under20"]) != "undefined") { publicSafetyContentQuantity++; }
-		if (typeof(sheetData["parking-validation_20plus"]) != "undefined") { publicSafetyContentQuantity++; }
-		if (typeof(sheetData["security-detail_yes"]) != "undefined") { publicSafetyContentQuantity++; }
-		if (typeof(sheetData["guest-access_yes"]) != "undefined") { publicSafetyContentQuantity++; }
-		if (typeof(sheetData["elevator-access_4andor5"]) != "undefined") { publicSafetyContentQuantity++; }
-		if (typeof(sheetData["crowd-management_yes"]) != "undefined") { publicSafetyContentQuantity++; }
+		if (typeof (sheetData["parking-validation_under20"]) != "undefined") { publicSafetyContentQuantity++; }
+		if (typeof (sheetData["parking-validation_20plus"]) != "undefined") { publicSafetyContentQuantity++; }
+		if (typeof (sheetData["security-detail_yes"]) != "undefined") { publicSafetyContentQuantity++; }
+		if (typeof (sheetData["guest-access_yes"]) != "undefined") { publicSafetyContentQuantity++; }
+		if (typeof (sheetData["elevator-access_4andor5"]) != "undefined") { publicSafetyContentQuantity++; }
+		if (typeof (sheetData["crowd-management_yes"]) != "undefined") { publicSafetyContentQuantity++; }
 
 		if (publicSafetyContentQuantity > 0) {
 			var publicSafetyHasContent = 1;
@@ -15009,50 +15185,50 @@
 				printContent += '<ul style="margin: 0;">';
 			}
 
-			if (typeof(sheetData["parking-validation_under20"]) != "undefined") {
+			if (typeof (sheetData["parking-validation_under20"]) != "undefined") {
 				printContent += publicSafetyOpeningTag + '<b>Parking: </b>Leaving validation at Info Desk' + publicSafetyClosingTag;
 			}
 
-			if (typeof(sheetData["parking-validation_20plus"]) != "undefined") {
+			if (typeof (sheetData["parking-validation_20plus"]) != "undefined") {
 				printContent += publicSafetyOpeningTag + '<b>Parking: </b>Requested free or $5 flat rate validator' + publicSafetyClosingTag;
 			}
 
-			if (typeof(sheetData["security-detail_yes"]) != "undefined") {
-				printContent += publicSafetyOpeningTag + '<b>Security Detail:</b><ul style="margin: 0;">' + 
-								'	<li><b>Account: </b>' + sheetData["Security-Detail-Account-Number"] + '</li>' + 
-								'	<li><b>Location: </b>' + sheetData["Security-Detail-Location"] + '</li>' + 
-								'	<li><b>Starting: </b>' + sheetData["Printer-Security-Detail-Beginning-Datetime"] + '</li>' + 
-								'	<li><b>Ending: </b>' + sheetData["Printer-Security-Detail-Ending-Datetime"] + '</li>' + 
-								'</ul>' + publicSafetyClosingTag;
+			if (typeof (sheetData["security-detail_yes"]) != "undefined") {
+				printContent += publicSafetyOpeningTag + '<b>Security Detail:</b><ul style="margin: 0;">' +
+					'	<li><b>Account: </b>' + sheetData["Security-Detail-Account-Number"] + '</li>' +
+					'	<li><b>Location: </b>' + sheetData["Security-Detail-Location"] + '</li>' +
+					'	<li><b>Starting: </b>' + sheetData["Printer-Security-Detail-Beginning-Datetime"] + '</li>' +
+					'	<li><b>Ending: </b>' + sheetData["Printer-Security-Detail-Ending-Datetime"] + '</li>' +
+					'</ul>' + publicSafetyClosingTag;
 			}
 
-			if (typeof(sheetData["guest-access_yes"]) != "undefined") {
-				printContent += publicSafetyOpeningTag + '<b>Guest Access:</b><ul style="margin: 0;">' + 
-								'	<li><b>Location: </b>' + sheetData["Guest-Access-Location"] + '</li>' + 
-								'	<li><b>Starting: </b>' + sheetData["Printer-Guest-Access-Beginning-Datetime"] + '</li>' + 
-								'	<li><b>Ending: </b>' + sheetData["Printer-Guest-Access-Ending-Datetime"] + '</li>' + 
-								'</ul>' + publicSafetyClosingTag;
+			if (typeof (sheetData["guest-access_yes"]) != "undefined") {
+				printContent += publicSafetyOpeningTag + '<b>Guest Access:</b><ul style="margin: 0;">' +
+					'	<li><b>Location: </b>' + sheetData["Guest-Access-Location"] + '</li>' +
+					'	<li><b>Starting: </b>' + sheetData["Printer-Guest-Access-Beginning-Datetime"] + '</li>' +
+					'	<li><b>Ending: </b>' + sheetData["Printer-Guest-Access-Ending-Datetime"] + '</li>' +
+					'</ul>' + publicSafetyClosingTag;
 			}
 
-			if (typeof(sheetData["elevator-access_4andor5"]) != "undefined") {
+			if (typeof (sheetData["elevator-access_4andor5"]) != "undefined") {
 				printContent += publicSafetyOpeningTag + '<b>Key off elevator for 4th and 5th floor</b>' + publicSafetyClosingTag;
 			}
 
-			if (typeof(sheetData["elevator-access_6ordarb"]) != "undefined") {
+			if (typeof (sheetData["elevator-access_6ordarb"]) != "undefined") {
 				printContent += publicSafetyOpeningTag + '<b>Key off elevator for 6th floor and d\'Arb</b>' + publicSafetyClosingTag;
 			}
 
-			if (typeof(sheetData["elevator-access_4andor5"]) != "undefined" && typeof(sheetData["elevator-access-security_hired"]) != "undefined") {
+			if (typeof (sheetData["elevator-access_4andor5"]) != "undefined" && typeof (sheetData["elevator-access-security_hired"]) != "undefined") {
 				printContent += publicSafetyOpeningTag + '<b>A security guard will be hired for 4th and 5th floor elevator access</b>' + publicSafetyClosingTag;
 			}
 
-			if (typeof(sheetData["elevator-access_4andor5"]) != "undefined" && typeof(sheetData["elevator-access-security_internal"]) != "undefined") {
+			if (typeof (sheetData["elevator-access_4andor5"]) != "undefined" && typeof (sheetData["elevator-access-security_internal"]) != "undefined") {
 				printContent += publicSafetyOpeningTag + '<b>Security for 4th and 5th floor elevator access will be handled internally</b>' + publicSafetyClosingTag;
 			}
 
-			if (typeof(sheetData["crowd-management_yes"]) != "undefined") {
-				printContent += publicSafetyOpeningTag + '<b>Crowd Management: </b>' + sheetData["Number-of-Crowd-Managers"] + ' crowd manager(s) needed<ul>' + 
-								'</ul>' + publicSafetyClosingTag;
+			if (typeof (sheetData["crowd-management_yes"]) != "undefined") {
+				printContent += publicSafetyOpeningTag + '<b>Crowd Management: </b>' + sheetData["Number-of-Crowd-Managers"] + ' crowd manager(s) needed<ul>' +
+					'</ul>' + publicSafetyClosingTag;
 			}
 
 			if (publicSafetyUseList == 1) {
@@ -15063,17 +15239,17 @@
 			printContent += '<p>Nothing needed.</p>';
 		}
 
-		printContent += '			</td>' + 
-						'		</tr>';
-		printContent += '		<tr>' + 
+		printContent += '			</td>' +
+			'		</tr>';
+		printContent += '		<tr>' +
 
-						'			<td style="border: 2px solid black;padding: 1rem;">' + 
-						'				<h3>Facilities</h3>';
+			'			<td style="border: 2px solid black;padding: 1rem;">' +
+			'				<h3>Facilities</h3>';
 
 		var facilitiesContentQuantity = 0;
-		if (typeof(sheetData["facilities_fiveminutedelay"]) != "undefined") { facilitiesContentQuantity++; }
-		if (typeof(sheetData["facilities_tempcontrol"]) != "undefined") { facilitiesContentQuantity++; }
-		if (typeof(sheetData["facilities_more"]) != "undefined") { facilitiesContentQuantity++; }
+		if (typeof (sheetData["facilities_fiveminutedelay"]) != "undefined") { facilitiesContentQuantity++; }
+		if (typeof (sheetData["facilities_tempcontrol"]) != "undefined") { facilitiesContentQuantity++; }
+		if (typeof (sheetData["facilities_more"]) != "undefined") { facilitiesContentQuantity++; }
 
 		if (facilitiesContentQuantity > 0) {
 			var facilitiesHasContent = 1;
@@ -15097,18 +15273,18 @@
 			}
 
 
-			if (typeof(sheetData["facilities_fiveminutedelay"]) != "undefined") {
+			if (typeof (sheetData["facilities_fiveminutedelay"]) != "undefined") {
 				printContent += facilitiesOpeningTag + '<b>Five-minute delay</b>' + facilitiesClosingTag;
 			}
 
-			if (typeof(sheetData["facilities_tempcontrol"]) != "undefined") {
-				printContent += facilitiesOpeningTag + '<b>Temperature Control: </b><ul style="margin: 0;">' + 
-								'	<li><b>Starting: </b>' + sheetData["Printer-Temperature-Control-Beginning-Datetime"] + '</li>' + 
-								'	<li><b>Ending: </b>' + sheetData["Printer-Temperature-Control-Ending-Datetime"] + '</li>' + 
-								'</ul>' + facilitiesClosingTag;
+			if (typeof (sheetData["facilities_tempcontrol"]) != "undefined") {
+				printContent += facilitiesOpeningTag + '<b>Temperature Control: </b><ul style="margin: 0;">' +
+					'	<li><b>Starting: </b>' + sheetData["Printer-Temperature-Control-Beginning-Datetime"] + '</li>' +
+					'	<li><b>Ending: </b>' + sheetData["Printer-Temperature-Control-Ending-Datetime"] + '</li>' +
+					'</ul>' + facilitiesClosingTag;
 			}
 
-			if (typeof(sheetData["facilities_more"]) != "undefined") {
+			if (typeof (sheetData["facilities_more"]) != "undefined") {
 				printContent += facilitiesOpeningTag + '<b>Notes: </b><br />' + ReplaceAll("%0A", "<br />", sheetData["More-Facilities"]) + facilitiesClosingTag;
 			}
 
@@ -15121,15 +15297,15 @@
 			printContent += '<p>Nothing needed.</p>';
 		}
 
-		printContent += '			</td>' + 
-						'		</tr>';
+		printContent += '			</td>' +
+			'		</tr>';
 
-		printContent += '		<tr>' + 
-						'			<td style="border: 2px solid black;padding: 1rem;">' + 
-						'				<h3>Buyouts</h3>';
+		printContent += '		<tr>' +
+			'			<td style="border: 2px solid black;padding: 1rem;">' +
+			'				<h3>Buyouts</h3>';
 
 		var buyoutsHasContent = 0;
-		if (typeof(sheetData["buyouts_yes"]) != "undefined" ) {
+		if (typeof (sheetData["buyouts_yes"]) != "undefined") {
 			buyoutsHasContent = 1;
 		}
 
@@ -15158,7 +15334,7 @@
 				printContent += '<ul style="margin: 0;">';
 			}
 
-			$.each(sheetData["Printer-Buyout-Venues"], function(i, buyoutVenue) {
+			$.each(sheetData["Printer-Buyout-Venues"], function (i, buyoutVenue) {
 				printContent += buyoutVenuesOpeningTag + buyoutVenue + buyoutVenuesClosingTag;
 			});
 
@@ -15169,10 +15345,10 @@
 			printContent += buyoutsClosingTag;
 
 			printContent += buyoutsOpeningTag + '<b>Scheduled: </b>';
-			if (typeof(sheetData["buyout-scheduled-or-not_scheduled"]) != "undefined") {
+			if (typeof (sheetData["buyout-scheduled-or-not_scheduled"]) != "undefined") {
 				printContent += 'Yes';
 			}
-			if (typeof(sheetData["buyout-scheduled-or-not_unscheduled"]) != "undefined") {
+			if (typeof (sheetData["buyout-scheduled-or-not_unscheduled"]) != "undefined") {
 				printContent += 'No';
 			}
 			printContent += buyoutsClosingTag;
@@ -15192,25 +15368,25 @@
 
 		printContent += '			</td>';
 
-		if (typeof(sheetData["Additional-Notes"]) != "undefined") {
-			printContent += '			<td colspan="2" style="border: 2px solid black;padding: 1rem;">' + 
-							'				<h3>Additional Notes</h3>';
+		if (typeof (sheetData["Additional-Notes"]) != "undefined") {
+			printContent += '			<td colspan="2" style="border: 2px solid black;padding: 1rem;">' +
+				'				<h3>Additional Notes</h3>';
 			printContent += ReplaceAll("%0A", "<br />", sheetData["Additional-Notes"]);
 			printContent += '			</td>';
 		}
-		
+
 
 
 		printContent += '		</tr>';
 
-		printContent += '	</tbody>' + 
-						'<table>';
+		printContent += '	</tbody>' +
+			'<table>';
 
-		printContent = ReturnPrintableContentWithStandardWrapper (printContent, "vxo-event-needs");
-		PrintToPrinter (printContent);
+		printContent = ReturnPrintableContentWithStandardWrapper(printContent, "vxo-event-needs");
+		PrintToPrinter(printContent);
 	}
 
-	
+
 
 	$.fn.PrintGPCInitialConceptApprovalRequest = function () {
 
@@ -15222,19 +15398,19 @@
 		var printerRequestID = rData.requestID;
 		var requesterData = $().ReturnUserDataUsingAccountName(sheetData["Requester-Account"]);
 		var mosPIData = $().ReturnUserDataUsingAccountName(sheetData["MOS-Principal-Investigator"][0]["account"]);
-		if (typeof(sheetData["MOS-Co-Investigator"][0]) != "undefined") {
+		if (typeof (sheetData["MOS-Co-Investigator"][0]) != "undefined") {
 			var mosCoPIExists = 1;
 			var mosCoPIData = $().ReturnUserDataUsingAccountName(sheetData["MOS-Co-Investigator"][0]["account"]);
 		} else {
 			var mosCoPIExists = 0;
 		}
-		
+
 		var mosPDData = $().ReturnUserDataUsingAccountName(sheetData["Proposal-Developer"][0]["account"]);
 
 		// process some of the data
 		var requesterIsUnique = 0;
 
-		if (requesterData.userName !== mosPIData.userName && 
+		if (requesterData.userName !== mosPIData.userName &&
 			requesterData.userName !== mosPDData.userName) {
 			requesterIsUnique = 1;
 		}
@@ -15269,34 +15445,34 @@
 			sheetData["Printer-Requester-Email"] = mosPIData["email"];
 		}
 
-		if (typeof(sheetData["MOS-Direct-Costs"]) != "undefined" || 
-			typeof(sheetData["IDC"]) != "undefined" || 
-			typeof(sheetData["Total-MOS-Budget"]) != "undefined" || 
-			typeof(sheetData["Total-Project-Budget"]) != "undefined") {
+		if (typeof (sheetData["MOS-Direct-Costs"]) != "undefined" ||
+			typeof (sheetData["IDC"]) != "undefined" ||
+			typeof (sheetData["Total-MOS-Budget"]) != "undefined" ||
+			typeof (sheetData["Total-Project-Budget"]) != "undefined") {
 			var printBudgetTable = 1;
 		} else {
 			var printBudgetTable = 0;
 		}
 
-		if ( typeof(sheetData["museum-role_primerecipient"]) != "undefined" ) {
+		if (typeof (sheetData["museum-role_primerecipient"]) != "undefined") {
 			sheetData["Printer-Museum-Role"] = "Prime Recipient";
 		} else {
 			sheetData["Printer-Museum-Role"] = "Subawardee";
 		}
 
-		if ( typeof(sheetData["new-or-existing-program_new"]) != "undefined" ) {
+		if (typeof (sheetData["new-or-existing-program_new"]) != "undefined") {
 			sheetData["Printer-New-Or-Existing"] = "New";
 		} else {
 			sheetData["Printer-New-Or-Existing"] = "Existing";
 		}
 
-		if ( typeof(sheetData["cost-share-required_yes"]) != "undefined" ) {
+		if (typeof (sheetData["cost-share-required_yes"]) != "undefined") {
 			sheetData["Printer-Cost-Sharing-Required"] = "Yes";
 		} else {
 			sheetData["Printer-Cost-Sharing-Required"] = "No";
 		}
 
-		if ( typeof(sheetData["subawards-or-not_yes"]) != "undefined" ) {
+		if (typeof (sheetData["subawards-or-not_yes"]) != "undefined") {
 			sheetData["Printer-Subawards-or-Not"] = "Yes";
 		} else {
 			sheetData["Printer-Subawards-or-Not"] = "No";
@@ -15306,47 +15482,47 @@
 		var quantityOfSpaceNeeds = 0;
 		var quantityOfOtherNeeds = 0;
 
-		if ( typeof(sheetData["staffing-needs_pi-direct-reports"]) != "undefined" ) {
+		if (typeof (sheetData["staffing-needs_pi-direct-reports"]) != "undefined") {
 			quantityOfStaffingNeeds++;
 		}
 
-		if ( typeof(sheetData["staffing-needs_eep"]) != "undefined" ) {
+		if (typeof (sheetData["staffing-needs_eep"]) != "undefined") {
 			quantityOfStaffingNeeds++;
 		}
 
-		if ( typeof(sheetData["staffing-needs_edc"]) != "undefined" ) {
+		if (typeof (sheetData["staffing-needs_edc"]) != "undefined") {
 			quantityOfStaffingNeeds++;
 		}
 
-		if ( typeof(sheetData["staffing-needs_interactive-media"]) != "undefined" ) {
+		if (typeof (sheetData["staffing-needs_interactive-media"]) != "undefined") {
 			quantityOfStaffingNeeds++;
 		}
 
-		if ( typeof(sheetData["staffing-needs_infrastructure"]) != "undefined" ) {
+		if (typeof (sheetData["staffing-needs_infrastructure"]) != "undefined") {
 			quantityOfStaffingNeeds++;
 		}
 
-		if ( typeof(sheetData["staffing-needs_research-and-evaluation"]) != "undefined" ) {
+		if (typeof (sheetData["staffing-needs_research-and-evaluation"]) != "undefined") {
 			quantityOfStaffingNeeds++;
 		}
 
-		if ( typeof(sheetData["staffing-needs_new-staff"]) != "undefined" ) {
+		if (typeof (sheetData["staffing-needs_new-staff"]) != "undefined") {
 			quantityOfStaffingNeeds++;
 		}
 
-		if ( typeof(sheetData["space-needs_new-office-space"]) != "undefined" ) {
+		if (typeof (sheetData["space-needs_new-office-space"]) != "undefined") {
 			quantityOfSpaceNeeds++;
 		}
 
-		if ( typeof(sheetData["space-needs_exhibit-halls-space"]) != "undefined" ) {
+		if (typeof (sheetData["space-needs_exhibit-halls-space"]) != "undefined") {
 			quantityOfSpaceNeeds++;
 		}
 
-		if ( typeof(sheetData["other-needs_external-evaluator"]) != "undefined" ) {
+		if (typeof (sheetData["other-needs_external-evaluator"]) != "undefined") {
 			quantityOfOtherNeeds++;
 		}
 
-		sheetData["Printer-Proposal-Due-Date"] = $().ReturnFormattedDateTime (sheetData["Proposal-Due-Date"], "YYYY-MM-DDTHH:mm:ss", "MMMM D, YYYY");
+		sheetData["Printer-Proposal-Due-Date"] = $().ReturnFormattedDateTime(sheetData["Proposal-Due-Date"], "YYYY-MM-DDTHH:mm:ss", "MMMM D, YYYY");
 
 
 
@@ -15355,74 +15531,74 @@
 
 		printContent += '<p><b>Request ID: </b>' + printerRequestID + '</p>';
 
-		printContent += '<h2>Project Basics</h2>' + 
-						'<table class="layout-table">' + 
-						'	<tbody><tr><td><ul style="margin: 0;">' + 
-						'		<li><b>Project Title: </b> ' + sheetData["Project-Title"] + '</li>' + 
-						'		<li><b>Funder: </b> ' + sheetData["Funder"] + '</li>';
-		if (typeof(sheetData["RFP-or-Other-Relevant-Website"]) !== "undefined") {
+		printContent += '<h2>Project Basics</h2>' +
+			'<table class="layout-table">' +
+			'	<tbody><tr><td><ul style="margin: 0;">' +
+			'		<li><b>Project Title: </b> ' + sheetData["Project-Title"] + '</li>' +
+			'		<li><b>Funder: </b> ' + sheetData["Funder"] + '</li>';
+		if (typeof (sheetData["RFP-or-Other-Relevant-Website"]) !== "undefined") {
 			printContent += '		<li><b>RFP or Other Website: </b> ' + sheetData["RFP-or-Other-Relevant-Website"] + '</li>';
 		}
 
-		printContent += '		<li><b>Proposal Type: </b> ' + sheetData["Proposal-Type"] + '</li>' + 
-						'		<li><b>Proposal Due Date: </b> ' + sheetData["Printer-Proposal-Due-Date"] + '</li>' + 
-						'		<li><b>Museum Role: </b> ' + sheetData["Printer-Museum-Role"] + '</li>';
+		printContent += '		<li><b>Proposal Type: </b> ' + sheetData["Proposal-Type"] + '</li>' +
+			'		<li><b>Proposal Due Date: </b> ' + sheetData["Printer-Proposal-Due-Date"] + '</li>' +
+			'		<li><b>Museum Role: </b> ' + sheetData["Printer-Museum-Role"] + '</li>';
 
-		if ( typeof(sheetData["Prime-Institution"]) != "undefined" ) {
+		if (typeof (sheetData["Prime-Institution"]) != "undefined") {
 			printContent += '<li><b>Prime Institution: </b> ' + sheetData["Prime-Institution"] + '</li>';
 		}
 
-		if ( typeof(sheetData["Outside-PI"]) != "undefined" ) {
+		if (typeof (sheetData["Outside-PI"]) != "undefined") {
 			printContent += '<li><b>Outside PI: </b> ' + sheetData["Outside-PI"] + '</li>';
 		}
 
-		printContent += '	</ul></td>' + 
-						'	<td><ul style="margin: 0;">' + 
-						
-						'	<li><b>MOS Principal Investigator:</b><ul style="margin-bottom: 0;">' + 
-						'		<li><b>Name:</b> ' + sheetData["Printer-MOS-PI-Name"] + '</li>' + 
-						'		<li><b>Department:</b> ' + sheetData["Printer-MOS-PI-Department"] + '</li>' + 
-						'		<li><b>Phone:</b> ' + sheetData["Printer-MOS-PI-Phone"] + '</li>' + 
-						'		<li><b>Email:</b> ' + sheetData["Printer-MOS-PI-Email"] + '</li>' + 
-						'	</ul></li>';
+		printContent += '	</ul></td>' +
+			'	<td><ul style="margin: 0;">' +
+
+			'	<li><b>MOS Principal Investigator:</b><ul style="margin-bottom: 0;">' +
+			'		<li><b>Name:</b> ' + sheetData["Printer-MOS-PI-Name"] + '</li>' +
+			'		<li><b>Department:</b> ' + sheetData["Printer-MOS-PI-Department"] + '</li>' +
+			'		<li><b>Phone:</b> ' + sheetData["Printer-MOS-PI-Phone"] + '</li>' +
+			'		<li><b>Email:</b> ' + sheetData["Printer-MOS-PI-Email"] + '</li>' +
+			'	</ul></li>';
 
 		if (mosCoPIExists === 1) {
-			printContent += '	<li><b>MOS Co-Principal Investigator:</b><ul style="margin-bottom: 0;">' + 
-							'		<li><b>Name:</b> ' + sheetData["Printer-MOS-Co-PI-Name"] + '</li>' + 
-							'		<li><b>Department:</b> ' + sheetData["Printer-MOS-Co-PI-Department"] + '</li>' + 
-							'		<li><b>Phone:</b> ' + sheetData["Printer-MOS-Co-PI-Phone"] + '</li>' + 
-							'		<li><b>Email:</b> ' + sheetData["Printer-MOS-Co-PI-Email"] + '</li>' + 
-							'	</ul></li>';
+			printContent += '	<li><b>MOS Co-Principal Investigator:</b><ul style="margin-bottom: 0;">' +
+				'		<li><b>Name:</b> ' + sheetData["Printer-MOS-Co-PI-Name"] + '</li>' +
+				'		<li><b>Department:</b> ' + sheetData["Printer-MOS-Co-PI-Department"] + '</li>' +
+				'		<li><b>Phone:</b> ' + sheetData["Printer-MOS-Co-PI-Phone"] + '</li>' +
+				'		<li><b>Email:</b> ' + sheetData["Printer-MOS-Co-PI-Email"] + '</li>' +
+				'	</ul></li>';
 		}
 
-		printContent += '	<li><b>MOS Proposal Developer:</b><ul style="margin-bottom: 0;">' + 
-						'		<li><b>Name:</b> ' + sheetData["Printer-MOS-PD-Name"] + '</li>' + 
-						'		<li><b>Department:</b> ' + sheetData["Printer-MOS-PD-Department"] + '</li>' + 
-						'		<li><b>Phone:</b> ' + sheetData["Printer-MOS-PD-Phone"] + '</li>' + 
-						'		<li><b>Email:</b> ' + sheetData["Printer-MOS-PD-Email"] + '</li>' + 
-						'	</ul></li>';
+		printContent += '	<li><b>MOS Proposal Developer:</b><ul style="margin-bottom: 0;">' +
+			'		<li><b>Name:</b> ' + sheetData["Printer-MOS-PD-Name"] + '</li>' +
+			'		<li><b>Department:</b> ' + sheetData["Printer-MOS-PD-Department"] + '</li>' +
+			'		<li><b>Phone:</b> ' + sheetData["Printer-MOS-PD-Phone"] + '</li>' +
+			'		<li><b>Email:</b> ' + sheetData["Printer-MOS-PD-Email"] + '</li>' +
+			'	</ul></li>';
 
 		if (requesterIsUnique === 1) {
-			printContent += '	<li><b>Requester:</b><ul style="margin-bottom: 0;">' + 
-							'		<li><b>Name:</b> ' + sheetData["Printer-Requester-Name"] + '</li>' + 
-							'		<li><b>Department:</b> ' + sheetData["Printer-Requester-Department"] + '</li>' + 
-							'		<li><b>Phone:</b> ' + sheetData["Printer-Requester-Phone"] + '</li>' + 
-							'		<li><b>Email:</b> ' + sheetData["Printer-Requester-Email"]  + '</li>' + 
-							'	</ul></li>';
+			printContent += '	<li><b>Requester:</b><ul style="margin-bottom: 0;">' +
+				'		<li><b>Name:</b> ' + sheetData["Printer-Requester-Name"] + '</li>' +
+				'		<li><b>Department:</b> ' + sheetData["Printer-Requester-Department"] + '</li>' +
+				'		<li><b>Phone:</b> ' + sheetData["Printer-Requester-Phone"] + '</li>' +
+				'		<li><b>Email:</b> ' + sheetData["Printer-Requester-Email"] + '</li>' +
+				'	</ul></li>';
 		}
 
-		printContent += '	</ul></td></tr></tbody>' + 
-						'</table>';
+		printContent += '	</ul></td></tr></tbody>' +
+			'</table>';
 
-		printContent += '<table class="layout-table">' + 
-						'	<tbody><tr><td><h2>Project Description</h2><ul style="margin: 0;">' + 
-						'		<li><b>Refer to File: </b> ' + sheetData["mos-drag-and-drop-file-name_Project-Description-File"] + '</li>' + 
-						'		<li><b>New or Existing Program: </b> ' + sheetData["Printer-New-Or-Existing"] + '</li>' + 
-						'	</ul><h2>Project Needs</h2>';
+		printContent += '<table class="layout-table">' +
+			'	<tbody><tr><td><h2>Project Description</h2><ul style="margin: 0;">' +
+			'		<li><b>Refer to File: </b> ' + sheetData["mos-drag-and-drop-file-name_Project-Description-File"] + '</li>' +
+			'		<li><b>New or Existing Program: </b> ' + sheetData["Printer-New-Or-Existing"] + '</li>' +
+			'	</ul><h2>Project Needs</h2>';
 
 		if (quantityOfStaffingNeeds > 0) {
 			printContent += '<h3>Staffing Needs</h3>';
-			
+
 			if (quantityOfStaffingNeeds > 1) {
 				var staffingNeedsUseList = 1;
 				var staffingNeedsOpeningTag = '<li>';
@@ -15437,31 +15613,31 @@
 				printContent += '<ul style="margin: 0;">';
 			}
 
-			if (typeof(sheetData["staffing-needs_pi-direct-reports"]) != "undefined") {
+			if (typeof (sheetData["staffing-needs_pi-direct-reports"]) != "undefined") {
 				printContent += staffingNeedsOpeningTag + 'PI\'s Direct Reports' + staffingNeedsClosingTag;
 			}
 
-			if (typeof(sheetData["staffing-needs_eep"]) != "undefined") {
+			if (typeof (sheetData["staffing-needs_eep"]) != "undefined") {
 				printContent += staffingNeedsOpeningTag + 'Education & Enrichment Programs' + staffingNeedsClosingTag;
 			}
 
-			if (typeof(sheetData["staffing-needs_edc"]) != "undefined") {
+			if (typeof (sheetData["staffing-needs_edc"]) != "undefined") {
 				printContent += staffingNeedsOpeningTag + 'Exhibit Development & Conservation' + staffingNeedsClosingTag;
 			}
 
-			if (typeof(sheetData["staffing-needs_interactive-media"]) != "undefined") {
+			if (typeof (sheetData["staffing-needs_interactive-media"]) != "undefined") {
 				printContent += staffingNeedsOpeningTag + 'Web & Interactive Media' + staffingNeedsClosingTag;
 			}
 
-			if (typeof(sheetData["staffing-needs_infrastructure"]) != "undefined") {
+			if (typeof (sheetData["staffing-needs_infrastructure"]) != "undefined") {
 				printContent += staffingNeedsOpeningTag + 'IIT Infrastructure' + staffingNeedsClosingTag;
 			}
 
-			if (typeof(sheetData["staffing-needs_research-and-evaluation"]) != "undefined") {
+			if (typeof (sheetData["staffing-needs_research-and-evaluation"]) != "undefined") {
 				printContent += staffingNeedsOpeningTag + 'Research & Evaluation' + staffingNeedsClosingTag;
 			}
 
-			if (typeof(sheetData["staffing-needs_new-staff"]) != "undefined") {
+			if (typeof (sheetData["staffing-needs_new-staff"]) != "undefined") {
 				printContent += staffingNeedsOpeningTag + 'New Staff' + staffingNeedsClosingTag;
 			}
 
@@ -15472,7 +15648,7 @@
 
 		if (quantityOfSpaceNeeds > 0) {
 			printContent += '<h3>Space Needs</h3>';
-			
+
 			if (quantityOfSpaceNeeds > 1) {
 				var spaceNeedsUseList = 1;
 				var spaceNeedsOpeningTag = '<li>';
@@ -15487,11 +15663,11 @@
 				printContent += '<ul style="margin: 0;">';
 			}
 
-			if (typeof(sheetData["space-needs_new-office-space"]) != "undefined") {
+			if (typeof (sheetData["space-needs_new-office-space"]) != "undefined") {
 				printContent += spaceNeedsOpeningTag + 'New Office Space' + spaceNeedsClosingTag;
 			}
 
-			if (typeof(sheetData["space-needs_exhibit-halls-space"]) != "undefined") {
+			if (typeof (sheetData["space-needs_exhibit-halls-space"]) != "undefined") {
 				printContent += spaceNeedsOpeningTag + 'Exhibit Halls Space' + spaceNeedsClosingTag;
 			}
 
@@ -15502,55 +15678,55 @@
 
 		if (quantityOfOtherNeeds > 0) {
 			printContent += '<h3>Other Needs</h3>' +
-							'<p>' + sheetData["other-needs_external-evaluator"] + '</p>';
+				'<p>' + sheetData["other-needs_external-evaluator"] + '</p>';
 		}
 
-		printContent += '	</td>' + 
-						'	<td id="budget-summary"><h2>Budget Summary</h2>';
+		printContent += '	</td>' +
+			'	<td id="budget-summary"><h2>Budget Summary</h2>';
 
 		if (printBudgetTable == 1) {
 			printContent += '	<table><tbody>';
-			if (typeof(sheetData["MOS-Direct-Costs"]) != "undefined") {
+			if (typeof (sheetData["MOS-Direct-Costs"]) != "undefined") {
 				printContent += '		<tr><td class="label"><b>MOS Direct Costs</b></td> <td class="content">' + sheetData["MOS-Direct-Costs"] + '</td></tr>';
 			}
-			if (typeof(sheetData["IDC"]) != "undefined") {
+			if (typeof (sheetData["IDC"]) != "undefined") {
 				printContent += '		<tr><td class="label"><b>IDC</b></td> <td class="content">' + sheetData["IDC"] + '</td></tr>';
 			}
-			if (typeof(sheetData["Total-MOS-Budget"]) != "undefined") {
+			if (typeof (sheetData["Total-MOS-Budget"]) != "undefined") {
 				printContent += '		<tr><td class="label"><b>Total MOS Budget</b></td> <td class="content">' + sheetData["Total-MOS-Budget"] + '</td></tr>';
 			}
-			if (typeof(sheetData["Total-Project-Budget"]) != "undefined") {
+			if (typeof (sheetData["Total-Project-Budget"]) != "undefined") {
 				printContent += '		<tr><td class="label"><b>Total Project Budget</b></td> <td class="content">' + sheetData["Total-Project-Budget"] + '</td></tr>';
 			}
 			printContent += '	</tbody></table>';
 		}
 
-		if (typeof(sheetData["Printer-Subawards-or-Not"]) != "undefined") {
-			printContent += '	<ul style="margin: 0;">' + 
-							'		<li><b>Will cost sharing be required?</b> ' + sheetData["Printer-Cost-Sharing-Required"] + '</li>' + 
-							'		<li><b>Will there be subawards?</b> ' + sheetData["Printer-Subawards-or-Not"] + '</li>' + 
-							'	</ul>';
+		if (typeof (sheetData["Printer-Subawards-or-Not"]) != "undefined") {
+			printContent += '	<ul style="margin: 0;">' +
+				'		<li><b>Will cost sharing be required?</b> ' + sheetData["Printer-Cost-Sharing-Required"] + '</li>' +
+				'		<li><b>Will there be subawards?</b> ' + sheetData["Printer-Subawards-or-Not"] + '</li>' +
+				'	</ul>';
 		} else {
 			printContent += '	<p style="margin: 0;"><b>Will cost sharing be required?</b> ' + sheetData["Printer-Cost-Sharing-Required"] + '</p>';
 		}
 
-		printContent +=	'</td></tr></tbody></table>';
+		printContent += '</td></tr></tbody></table>';
 
-		if (typeof(sheetData["PID-Comments"]) != "undefined") {
-			printContent += '<h2>Principal Investigator / Proposal Developer Comments</h2>' + 
-							'<div>' + sheetData["PID-Comments"] + '</div>';
+		if (typeof (sheetData["PID-Comments"]) != "undefined") {
+			printContent += '<h2>Principal Investigator / Proposal Developer Comments</h2>' +
+				'<div>' + sheetData["PID-Comments"] + '</div>';
 		}
 
-		if (typeof(sheetData["GPC-Comments"]) != "undefined") {
-			printContent += '<h2>GPC Comments</h2>' + 
-							'<div>' + sheetData["GPC-Comments"] + '</div>';
+		if (typeof (sheetData["GPC-Comments"]) != "undefined") {
+			printContent += '<h2>GPC Comments</h2>' +
+				'<div>' + sheetData["GPC-Comments"] + '</div>';
 		}
 
-		printContent = ReturnPrintableContentWithStandardWrapper (printContent, "gpc-initial-concept-approval");
-		PrintToPrinter (printContent);
+		printContent = ReturnPrintableContentWithStandardWrapper(printContent, "gpc-initial-concept-approval");
+		PrintToPrinter(printContent);
 	};
 
-	
+
 
 	$.fn.PrintGPCSubmissionApprovalRequest = function () {
 
@@ -15562,7 +15738,7 @@
 		var printerRequestID = rData.requestID;
 		var requesterData = $().ReturnUserDataUsingAccountName(sheetData["Requester-Account"]);
 		var mosPIData = $().ReturnUserDataUsingAccountName(sheetData["MOS-Principal-Investigator"][0]["account"]);
-		if (typeof(sheetData["MOS-Co-Investigator"][0]) != "undefined") {
+		if (typeof (sheetData["MOS-Co-Investigator"][0]) != "undefined") {
 			var mosCoPIExists = 1;
 			var mosCoPIData = $().ReturnUserDataUsingAccountName(sheetData["MOS-Co-Investigator"][0]["account"]);
 		} else {
@@ -15573,7 +15749,7 @@
 		// process some of the data
 		var requesterIsUnique = 0;
 
-		if (requesterData.userName !== mosPIData.userName && 
+		if (requesterData.userName !== mosPIData.userName &&
 			requesterData.userName !== mosPDData.userName) {
 			requesterIsUnique = 1;
 		}
@@ -15608,103 +15784,103 @@
 			sheetData["Printer-Requester-Email"] = mosPIData["email"];
 		}
 
-		if ( typeof(sheetData["museum-role_primerecipient"]) != "undefined" ) {
+		if (typeof (sheetData["museum-role_primerecipient"]) != "undefined") {
 			sheetData["Printer-Museum-Role"] = "Prime Recipient";
 		} else {
 			sheetData["Printer-Museum-Role"] = "Subawardee";
 		}
 
 
-		if ( typeof(sheetData["subaward-materials-or-not_yes"]) != "undefined" ) {
+		if (typeof (sheetData["subaward-materials-or-not_yes"]) != "undefined") {
 			sheetData["Printer-Subawards-or-Not"] = "In Hand";
 		} else {
 			sheetData["Printer-Subawards-or-Not"] = "None";
 		}
 
-		if ( typeof(sheetData["eep-needs_yes"]) != "undefined" ) {
+		if (typeof (sheetData["eep-needs_yes"]) != "undefined") {
 			sheetData["Printer-EEP-Needs"] = "Education and Enrichment Programs staff needs have been negotiated with " + $("input#eep-needs-negotiator-on-load").val();
-		} else if ( typeof(sheetData["eep-needs_no"]) != "undefined" ) {
+		} else if (typeof (sheetData["eep-needs_no"]) != "undefined") {
 			sheetData["Printer-EEP-Needs"] = "Education and Enrichment Programs staff needs have <i>not</i> been negotiated with " + $("input#eep-needs-negotiator-on-load").val();
-		} else if ( typeof(sheetData["eep-needs_notapplicable"]) != "undefined" ) {
+		} else if (typeof (sheetData["eep-needs_notapplicable"]) != "undefined") {
 			sheetData["Printer-EEP-Needs"] = "Education and Enrichment Programs staff needs are not applicable";
 		}
 
-		if ( typeof(sheetData["edc-needs_yes"]) != "undefined" ) {
+		if (typeof (sheetData["edc-needs_yes"]) != "undefined") {
 			sheetData["Printer-EDC-Needs"] = "Exhibit Development and Conservation staff needs have been negotiated with " + $("input#edc-needs-negotiator-on-load").val();
-		} else if ( typeof(sheetData["edc-needs_no"]) != "undefined" ) {
+		} else if (typeof (sheetData["edc-needs_no"]) != "undefined") {
 			sheetData["Printer-EDC-Needs"] = "Exhibit Development and Conservation staff needs have <i>not</i> been negotiated with " + $("input#edc-needs-negotiator-on-load").val();
-		} else if ( typeof(sheetData["edc-needs_notapplicable"]) != "undefined" ) {
+		} else if (typeof (sheetData["edc-needs_notapplicable"]) != "undefined") {
 			sheetData["Printer-EDC-Needs"] = "Exhibit Development and Conservation staff needs are not applicable";
 		}
 
-		if ( typeof(sheetData["web-needs_yes"]) != "undefined" ) {
+		if (typeof (sheetData["web-needs_yes"]) != "undefined") {
 			sheetData["Printer-Web-Needs"] = "Website needs (whether internal or external) have been negotiated with " + $("input#web-needs-negotiator-on-load").val();
-		} else if ( typeof(sheetData["web-needs_no"]) != "undefined" ) {
+		} else if (typeof (sheetData["web-needs_no"]) != "undefined") {
 			sheetData["Printer-Web-Needs"] = "Website needs (whether internal or external) have <i>not</i> been negotiated with " + $("input#web-needs-negotiator-on-load").val();
-		} else if ( typeof(sheetData["web-needs_notapplicable"]) != "undefined" ) {
+		} else if (typeof (sheetData["web-needs_notapplicable"]) != "undefined") {
 			sheetData["Printer-Web-Needs"] = "Website needs (whether internal or external) are not applicable";
 		}
 
-		if ( typeof(sheetData["infra-needs_yes"]) != "undefined" ) {
+		if (typeof (sheetData["infra-needs_yes"]) != "undefined") {
 			sheetData["Printer-Infra-Needs"] = "IIT infrastructure needs have been negotiated with " + $("input#infra-needs-negotiator-on-load").val();
-		} else if ( typeof(sheetData["infra-needs_no"]) != "undefined" ) {
+		} else if (typeof (sheetData["infra-needs_no"]) != "undefined") {
 			sheetData["Printer-Infra-Needs"] = "IIT infrastructure needs have <i>not</i> been negotiated with " + $("input#infra-needs-negotiator-on-load").val();
-		} else if ( typeof(sheetData["infra-needs_notapplicable"]) != "undefined" ) {
+		} else if (typeof (sheetData["infra-needs_notapplicable"]) != "undefined") {
 			sheetData["Printer-Infra-Needs"] = "IIT infrastructure needs are not applicable";
 		}
 
-		if ( typeof(sheetData["re-needs_yes"]) != "undefined" ) {
+		if (typeof (sheetData["re-needs_yes"]) != "undefined") {
 			sheetData["Printer-RE-Needs"] = "Research & Evaluation needs have been negotiated with " + $("input#re-needs-negotiator-on-load").val();
-		} else if ( typeof(sheetData["re-needs_no"]) != "undefined" ) {
+		} else if (typeof (sheetData["re-needs_no"]) != "undefined") {
 			sheetData["Printer-RE-Needs"] = "Research & Evaluation needs have <i>not</i> been negotiated with " + $("input#re-needs-negotiator-on-load").val();
-		} else if ( typeof(sheetData["re-needs_notapplicable"]) != "undefined" ) {
+		} else if (typeof (sheetData["re-needs_notapplicable"]) != "undefined") {
 			sheetData["Printer-RE-Needs"] = "Research & Evaluation needs are not applicable";
 		}
 
-		if ( typeof(sheetData["external-evaluator-needs_yes"]) != "undefined" ) {
+		if (typeof (sheetData["external-evaluator-needs_yes"]) != "undefined") {
 			sheetData["Printer-EE-Needs"] = "External evaluator has been contacted; scope, timeline, and budget have been agreed to";
-		} else if ( typeof(sheetData["external-evaluator-needs_no"]) != "undefined" ) {
+		} else if (typeof (sheetData["external-evaluator-needs_no"]) != "undefined") {
 			sheetData["Printer-EE-Needs"] = "External evaluator has <i>not</i> been contacted";
-		} else if ( typeof(sheetData["external-evaluator-needs_notapplicable"]) != "undefined" ) {
+		} else if (typeof (sheetData["external-evaluator-needs_notapplicable"]) != "undefined") {
 			sheetData["Printer-EE-Needs"] = "External evaluator is not applicable";
 		}
 
-		if ( typeof(sheetData["irb-needs_yes"]) != "undefined" ) {
+		if (typeof (sheetData["irb-needs_yes"]) != "undefined") {
 			sheetData["Printer-IRB-Needs"] = "IRB review has been negotiated with " + $("input#irb-review-discussee-on-load").val();
-		} else if ( typeof(sheetData["irb-needs_no"]) != "undefined" ) {
+		} else if (typeof (sheetData["irb-needs_no"]) != "undefined") {
 			sheetData["Printer-IRB-Needs"] = "IRB review has <i>not</i> been negotiated with " + $("input#irb-review-discussee-on-load").val();
-		} else if ( typeof(sheetData["irb-needs_notapplicable"]) != "undefined" ) {
+		} else if (typeof (sheetData["irb-needs_notapplicable"]) != "undefined") {
 			sheetData["Printer-IRB-Needs"] = "IRB review is not applicable";
 		}
 
-		if ( typeof(sheetData["new-staff-needs_yes"]) != "undefined" ) {
+		if (typeof (sheetData["new-staff-needs_yes"]) != "undefined") {
 			sheetData["Printer-New-Staff-Needs"] = "New staff positions will be required";
-		} else if ( typeof(sheetData["new-staff-needs_no"]) != "undefined" ) {
+		} else if (typeof (sheetData["new-staff-needs_no"]) != "undefined") {
 			sheetData["Printer-New-Staff-Needs"] = "New staff positions will <i>not</i> be required";
-		} else if ( typeof(sheetData["new-staff-needs_notapplicable"]) != "undefined" ) {
+		} else if (typeof (sheetData["new-staff-needs_notapplicable"]) != "undefined") {
 			sheetData["Printer-New-Staff-Needs"] = "New staff positions are not applicable";
 		}
 
-		if ( typeof(sheetData["office-space-needs_yes"]) != "undefined" ) {
+		if (typeof (sheetData["office-space-needs_yes"]) != "undefined") {
 			sheetData["Printer-Office-Space-Needs"] = "New office space will be required";
-		} else if ( typeof(sheetData["office-space-needs_no"]) != "undefined" ) {
+		} else if (typeof (sheetData["office-space-needs_no"]) != "undefined") {
 			sheetData["Printer-Office-Space-Needs"] = "New office space will <i>not</i> be required";
-		} else if ( typeof(sheetData["office-space-needs_notapplicable"]) != "undefined" ) {
+		} else if (typeof (sheetData["office-space-needs_notapplicable"]) != "undefined") {
 			sheetData["Printer-Office-Space-Needs"] = "New office space is not applicable";
 		}
 
-		if ( typeof(sheetData["exhibit-halls-space-needs_yes"]) != "undefined" ) {
+		if (typeof (sheetData["exhibit-halls-space-needs_yes"]) != "undefined") {
 			sheetData["Printer-Exhibits-Needs"] = "Exhibit Halls space needs have been negotiated with " + $("input#re-needs-negotiator-on-load").val();
-		} else if ( typeof(sheetData["exhibit-halls-space-needs_no"]) != "undefined" ) {
+		} else if (typeof (sheetData["exhibit-halls-space-needs_no"]) != "undefined") {
 			sheetData["Printer-Exhibits-Needs"] = "Exhibit Halls space needs have <i>not</i> been negotiated with " + $("input#re-needs-negotiator-on-load").val();
-		} else if ( typeof(sheetData["exhibit-halls-space-needs_notapplicable"]) != "undefined" ) {
+		} else if (typeof (sheetData["exhibit-halls-space-needs_notapplicable"]) != "undefined") {
 			sheetData["Printer-Exhibits-Needs"] = "Exhibit Halls space needs are not applicable";
 		}
 
 
-		sheetData["Printer-Proposal-Due-Date"] = $().ReturnFormattedDateTime (sheetData["Proposal-Due-Date"], "YYYY-MM-DDTHH:mm:ss", "MMMM D, YYYY");
-		if ( typeof(sheetData["Expected-Decision-Date"]) != "undefined" ) {
-			sheetData["Printer-Expected-Decision-Date"] = $().ReturnFormattedDateTime (sheetData["Expected-Decision-Date"], "YYYY-MM-DDTHH:mm:ss", "MMMM D, YYYY");
+		sheetData["Printer-Proposal-Due-Date"] = $().ReturnFormattedDateTime(sheetData["Proposal-Due-Date"], "YYYY-MM-DDTHH:mm:ss", "MMMM D, YYYY");
+		if (typeof (sheetData["Expected-Decision-Date"]) != "undefined") {
+			sheetData["Printer-Expected-Decision-Date"] = $().ReturnFormattedDateTime(sheetData["Expected-Decision-Date"], "YYYY-MM-DDTHH:mm:ss", "MMMM D, YYYY");
 		} else {
 			sheetData["Printer-Expected-Decision-Date"] = "Unknown";
 		}
@@ -15714,155 +15890,155 @@
 
 		printContent += '<p><b>Request ID: </b>' + printerRequestID + '</p>';
 
-		printContent += '<h2>Project Basics</h2>' + 
-						'<table class="layout-table">' + 
-						'	<tbody><tr><td><ul style="margin: 0;">' + 
-						'		<li><b>Project Title: </b> ' + sheetData["Project-Title"] + '</li>' + 
-						'		<li><b>Funder: </b> ' + sheetData["Funder"] + '</li>' + 
-						'		<li><b>RFP or Other Website: </b> ' + sheetData["RFP-or-Other-Relevant-Website"] + '</li>' + 
-						'		<li><b>Proposal Type: </b> ' + sheetData["Proposal-Type"] + '</li>' + 
-						'		<li><b>Proposal Due Date: </b> ' + sheetData["Printer-Proposal-Due-Date"] + '</li>' + 
-						'		<li><b>Expected Decision Date: </b> ' + sheetData["Printer-Expected-Decision-Date"] + '</li>' + 
-						'		<li><b>Museum Role: </b> ' + sheetData["Printer-Museum-Role"] + '</li>';
+		printContent += '<h2>Project Basics</h2>' +
+			'<table class="layout-table">' +
+			'	<tbody><tr><td><ul style="margin: 0;">' +
+			'		<li><b>Project Title: </b> ' + sheetData["Project-Title"] + '</li>' +
+			'		<li><b>Funder: </b> ' + sheetData["Funder"] + '</li>' +
+			'		<li><b>RFP or Other Website: </b> ' + sheetData["RFP-or-Other-Relevant-Website"] + '</li>' +
+			'		<li><b>Proposal Type: </b> ' + sheetData["Proposal-Type"] + '</li>' +
+			'		<li><b>Proposal Due Date: </b> ' + sheetData["Printer-Proposal-Due-Date"] + '</li>' +
+			'		<li><b>Expected Decision Date: </b> ' + sheetData["Printer-Expected-Decision-Date"] + '</li>' +
+			'		<li><b>Museum Role: </b> ' + sheetData["Printer-Museum-Role"] + '</li>';
 
-		if ( typeof(sheetData["Prime-Institution"]) != "undefined" ) {
+		if (typeof (sheetData["Prime-Institution"]) != "undefined") {
 			printContent += '<li><b>Prime Institution: </b> ' + sheetData["Prime-Institution"] + '</li>';
 		}
 
-		if ( typeof(sheetData["Outside-PI"]) != "undefined" ) {
+		if (typeof (sheetData["Outside-PI"]) != "undefined") {
 			printContent += '<li><b>Outside PI: </b> ' + sheetData["Outside-PI"] + '</li>';
 		}
 
-		printContent += '	</ul></td>' + 
-						'	<td><ul style="margin: 0;">' + 
-						
-						'	<li><b>MOS Principal Investigator:</b><ul style="margin-bottom: 0;">' + 
-						'		<li><b>Name:</b> ' + sheetData["Printer-MOS-PI-Name"] + '</li>' + 
-						'		<li><b>Department:</b> ' + sheetData["Printer-MOS-PI-Department"] + '</li>' + 
-						'		<li><b>Phone:</b> ' + sheetData["Printer-MOS-PI-Phone"] + '</li>' + 
-						'		<li><b>Email:</b> ' + sheetData["Printer-MOS-PI-Email"] + '</li>' + 
-						'	</ul></li>';
+		printContent += '	</ul></td>' +
+			'	<td><ul style="margin: 0;">' +
+
+			'	<li><b>MOS Principal Investigator:</b><ul style="margin-bottom: 0;">' +
+			'		<li><b>Name:</b> ' + sheetData["Printer-MOS-PI-Name"] + '</li>' +
+			'		<li><b>Department:</b> ' + sheetData["Printer-MOS-PI-Department"] + '</li>' +
+			'		<li><b>Phone:</b> ' + sheetData["Printer-MOS-PI-Phone"] + '</li>' +
+			'		<li><b>Email:</b> ' + sheetData["Printer-MOS-PI-Email"] + '</li>' +
+			'	</ul></li>';
 
 		if (mosCoPIExists === 1) {
-			printContent += '	<li><b>MOS Co-Principal Investigator:</b><ul style="margin-bottom: 0;">' + 
-							'		<li><b>Name:</b> ' + sheetData["Printer-MOS-Co-PI-Name"] + '</li>' + 
-							'		<li><b>Department:</b> ' + sheetData["Printer-MOS-Co-PI-Department"] + '</li>' + 
-							'		<li><b>Phone:</b> ' + sheetData["Printer-MOS-Co-PI-Phone"] + '</li>' + 
-							'		<li><b>Email:</b> ' + sheetData["Printer-MOS-Co-PI-Email"] + '</li>' + 
-							'	</ul></li>';
+			printContent += '	<li><b>MOS Co-Principal Investigator:</b><ul style="margin-bottom: 0;">' +
+				'		<li><b>Name:</b> ' + sheetData["Printer-MOS-Co-PI-Name"] + '</li>' +
+				'		<li><b>Department:</b> ' + sheetData["Printer-MOS-Co-PI-Department"] + '</li>' +
+				'		<li><b>Phone:</b> ' + sheetData["Printer-MOS-Co-PI-Phone"] + '</li>' +
+				'		<li><b>Email:</b> ' + sheetData["Printer-MOS-Co-PI-Email"] + '</li>' +
+				'	</ul></li>';
 		}
 
-		printContent += '	<li><b>MOS Proposal Developer:</b><ul style="margin-bottom: 0;">' + 
-						'		<li><b>Name:</b> ' + sheetData["Printer-MOS-PD-Name"] + '</li>' + 
-						'		<li><b>Department:</b> ' + sheetData["Printer-MOS-PD-Department"] + '</li>' + 
-						'		<li><b>Phone:</b> ' + sheetData["Printer-MOS-PD-Phone"] + '</li>' + 
-						'		<li><b>Email:</b> ' + sheetData["Printer-MOS-PD-Email"] + '</li>' + 
-						'	</ul></li>';
+		printContent += '	<li><b>MOS Proposal Developer:</b><ul style="margin-bottom: 0;">' +
+			'		<li><b>Name:</b> ' + sheetData["Printer-MOS-PD-Name"] + '</li>' +
+			'		<li><b>Department:</b> ' + sheetData["Printer-MOS-PD-Department"] + '</li>' +
+			'		<li><b>Phone:</b> ' + sheetData["Printer-MOS-PD-Phone"] + '</li>' +
+			'		<li><b>Email:</b> ' + sheetData["Printer-MOS-PD-Email"] + '</li>' +
+			'	</ul></li>';
 
 		if (requesterIsUnique === 1) {
-			printContent += '	<li><b>Requester:</b><ul style="margin-bottom: 0;">' + 
-							'		<li><b>Name:</b> ' + sheetData["Printer-Requester-Name"] + '</li>' + 
-							'		<li><b>Department:</b> ' + sheetData["Printer-Requester-Department"] + '</li>' + 
-							'		<li><b>Phone:</b> ' + sheetData["Printer-Requester-Phone"] + '</li>' + 
-							'		<li><b>Email:</b> ' + sheetData["Printer-Requester-Email"]  + '</li>' + 
-							'	</ul></li>';
+			printContent += '	<li><b>Requester:</b><ul style="margin-bottom: 0;">' +
+				'		<li><b>Name:</b> ' + sheetData["Printer-Requester-Name"] + '</li>' +
+				'		<li><b>Department:</b> ' + sheetData["Printer-Requester-Department"] + '</li>' +
+				'		<li><b>Phone:</b> ' + sheetData["Printer-Requester-Phone"] + '</li>' +
+				'		<li><b>Email:</b> ' + sheetData["Printer-Requester-Email"] + '</li>' +
+				'	</ul></li>';
 		}
 
-		printContent += '	</ul></td></tr></tbody>' + 
-						'</table>';
+		printContent += '	</ul></td></tr></tbody>' +
+			'</table>';
 
-		printContent += '<table class="layout-table">' + 
-						'	<tbody><tr><td><h2>Project Narrative</h2><p style="margin: 0;">' + 
-						'		<b>Refer to File: </b> ' + sheetData["Project-Narrative-File"] + 
-						'	</p><h2>Project Needs</h2>';
+		printContent += '<table class="layout-table">' +
+			'	<tbody><tr><td><h2>Project Narrative</h2><p style="margin: 0;">' +
+			'		<b>Refer to File: </b> ' + sheetData["Project-Narrative-File"] +
+			'	</p><h2>Project Needs</h2>';
 
-		printContent += '<h3>Staffing and Similar Needs</h3><ul style="margin-bottom: 0;">' + 
-						'		<li>' + sheetData["Printer-EEP-Needs"];
+		printContent += '<h3>Staffing and Similar Needs</h3><ul style="margin-bottom: 0;">' +
+			'		<li>' + sheetData["Printer-EEP-Needs"];
 
-		if (typeof(sheetData["EEP-Staff-Member-Names"]) != "undefined") {
+		if (typeof (sheetData["EEP-Staff-Member-Names"]) != "undefined") {
 			printContent += '			<div>EEP Staff Member Names: ' + sheetData["EEP-Staff-Member-Names"] + '</div';
 		}
 
 		printContent += '		</li><li>' + sheetData["Printer-EDC-Needs"];
 
-		if (typeof(sheetData["EDC-Staff-Member-Names"]) != "undefined") {
+		if (typeof (sheetData["EDC-Staff-Member-Names"]) != "undefined") {
 			printContent += '			<div>EDC Staff Member Names: ' + sheetData["EDC-Staff-Member-Names"] + '</div';
 		}
 
-		printContent += '		</li><li>' + sheetData["Printer-Web-Needs"] + '</li>' + 
-						'		<li>' + sheetData["Printer-Infra-Needs"] + '</li>' + 
-						'		<li>' + sheetData["Printer-RE-Needs"] + '</li>' + 
-						'		<li>' + sheetData["Printer-EE-Needs"] + '</li>' + 
-						'		<li>' + sheetData["Printer-IRB-Needs"] + '</li>' + 
-						'		<li>' + sheetData["Printer-New-Staff-Needs"];
+		printContent += '		</li><li>' + sheetData["Printer-Web-Needs"] + '</li>' +
+			'		<li>' + sheetData["Printer-Infra-Needs"] + '</li>' +
+			'		<li>' + sheetData["Printer-RE-Needs"] + '</li>' +
+			'		<li>' + sheetData["Printer-EE-Needs"] + '</li>' +
+			'		<li>' + sheetData["Printer-IRB-Needs"] + '</li>' +
+			'		<li>' + sheetData["Printer-New-Staff-Needs"];
 
-		if (typeof(sheetData["New-Staff-Positions"]) != "undefined") {
+		if (typeof (sheetData["New-Staff-Positions"]) != "undefined") {
 			printContent += '			<div>New Staff Positions Required: ' + sheetData["New-Staff-Positions"] + '</div';
 		}
 
-		printContent += '	</li></ul>' + 
-						'<h3>Space Needs</h3><ul style="margin-bottom: 0;">' + 
-						'		<li>' + sheetData["Printer-Office-Space-Needs"];
+		printContent += '	</li></ul>' +
+			'<h3>Space Needs</h3><ul style="margin-bottom: 0;">' +
+			'		<li>' + sheetData["Printer-Office-Space-Needs"];
 
-		if (typeof(sheetData["Staff-Quantity-for-Office-Space"]) != "undefined") {
+		if (typeof (sheetData["Staff-Quantity-for-Office-Space"]) != "undefined") {
 			printContent += '			<div>For how many staff members will new office space be required? ' + sheetData["Staff-Quantity-for-Office-Space"] + '</div';
 		}
 
-		printContent += '		</li><li>' + sheetData["Printer-Exhibits-Needs"] + '</li>' + 
-						'	</ul>';
+		printContent += '		</li><li>' + sheetData["Printer-Exhibits-Needs"] + '</li>' +
+			'	</ul>';
 
 
-		printContent += '	</td>' + 
-						'	<td id="project-budget"><h2>Project Budget</h2>' +
-						'	<table><tbody>' + 
-						'		<tr><td class="label"><b>MOS Direct Costs</b></td> <td class="content">' + sheetData["MOS-Direct-Costs"] + '</td></tr>' + 
-						'		<tr><td class="label"><b>IDC</b></td> <td class="content">' + sheetData["IDC"] + '</td></tr>' + 
-						'		<tr><td class="label"><b>Total MOS Budget</b></td> <td class="content">' + sheetData["Total-MOS-Budget"] + '</td></tr>';
+		printContent += '	</td>' +
+			'	<td id="project-budget"><h2>Project Budget</h2>' +
+			'	<table><tbody>' +
+			'		<tr><td class="label"><b>MOS Direct Costs</b></td> <td class="content">' + sheetData["MOS-Direct-Costs"] + '</td></tr>' +
+			'		<tr><td class="label"><b>IDC</b></td> <td class="content">' + sheetData["IDC"] + '</td></tr>' +
+			'		<tr><td class="label"><b>Total MOS Budget</b></td> <td class="content">' + sheetData["Total-MOS-Budget"] + '</td></tr>';
 
-		if (typeof(sheetData["Total-Project-Budget"]) != "undefined") {
+		if (typeof (sheetData["Total-Project-Budget"]) != "undefined") {
 			printContent += '		<tr><td class="label"><b>Total Project Budget</b></td> <td class="content">' + sheetData["Total-Project-Budget"] + '</td></tr>';
 		}
 
-		printContent += '		<tr><td class="label"><b>Cost Share</b></td> <td class="content">' + sheetData["Cost-Share"] + '</td></tr>' + 
-						'	</tbody></table>' + 
-						'	<ul style="margin: 0;">' + 
-						'		<li><b>Required Subaward Materials:</b> ' + sheetData["Printer-Subawards-or-Not"] + '</li>';
-		
-		if (typeof(sheetData["Project-Budget-Justification-File"]) != "undefined") {
-			printContent += '		<li><b>Refer to Files: </b> <ul style="margin-bottom: 0;">' + 
-							'			<li>' + sheetData["Project-Budget-File"] + '</li>' + 
-							'			<li>' + sheetData["Project-Budget-Justification-File"] + '</li></ul></li>';
+		printContent += '		<tr><td class="label"><b>Cost Share</b></td> <td class="content">' + sheetData["Cost-Share"] + '</td></tr>' +
+			'	</tbody></table>' +
+			'	<ul style="margin: 0;">' +
+			'		<li><b>Required Subaward Materials:</b> ' + sheetData["Printer-Subawards-or-Not"] + '</li>';
+
+		if (typeof (sheetData["Project-Budget-Justification-File"]) != "undefined") {
+			printContent += '		<li><b>Refer to Files: </b> <ul style="margin-bottom: 0;">' +
+				'			<li>' + sheetData["Project-Budget-File"] + '</li>' +
+				'			<li>' + sheetData["Project-Budget-Justification-File"] + '</li></ul></li>';
 		} else {
 			printContent += '		<li><b>Refer to File: </b> ' + sheetData["Project-Budget-File"] + '</li>';
 		}
 
 		printContent += '	</ul></td></tr></tbody></table>';
 
-		if (typeof(sheetData["PID-Comments"]) != "undefined") {
-			printContent += '<h2>Principal Investigator / Proposal Developer Comments</h2>' + 
-							'<div>' + sheetData["PID-Comments"] + '</div>';
+		if (typeof (sheetData["PID-Comments"]) != "undefined") {
+			printContent += '<h2>Principal Investigator / Proposal Developer Comments</h2>' +
+				'<div>' + sheetData["PID-Comments"] + '</div>';
 		}
 
-		printContent = ReturnPrintableContentWithStandardWrapper (printContent, "gpc-submission-approval");
-		PrintToPrinter (printContent);
+		printContent = ReturnPrintableContentWithStandardWrapper(printContent, "gpc-submission-approval");
+		PrintToPrinter(printContent);
 	};
 
-	
 
-	function ReturnPrintableContentWithStandardWrapper (printContent, wrapperID) {
-		return 	'<div id="' + wrapperID + '">' + 
-				'<div id="print-header" ' + 
-				'style="text-align: center; margin: 0 0 20px;' + 
-				'"><img src="/sites/hubprod/Asset Library/header_print-view.png" style="margin: 0 auto;" /></div>'  + 
-				'<div id="print-body">' + printContent + '</div></div>';
+
+	function ReturnPrintableContentWithStandardWrapper(printContent, wrapperID) {
+		return '<div id="' + wrapperID + '">' +
+			'<div id="print-header" ' +
+			'style="text-align: center; margin: 0 0 20px;' +
+			'"><img src="/sites/hubprod/Asset Library/header_print-view.png" style="margin: 0 auto;" /></div>' +
+			'<div id="print-body">' + printContent + '</div></div>';
 	}
 
 
 
-	function PrintToPrinter (printContent) {
+	function PrintToPrinter(printContent) {
 		$("body").append('<div id="printer-content"></div>');
-        $("div#printer-content").html(printContent);
-	    $("form#aspnetForm").hide();
+		$("div#printer-content").html(printContent);
+		$("form#aspnetForm").hide();
 		window.print();
 		$("div#printer-content").remove();
 		$("form#aspnetForm").show();
@@ -15872,34 +16048,34 @@
 
 	// ---- UTILITIES
 
-	function CallFunctionFromString (functionName, functionArgumentsObject) {
+	function CallFunctionFromString(functionName, functionArgumentsObject) {
 
 		switch (functionName) {
-			
-			case "PrintNeedsSheet": 
+
+			case "PrintNeedsSheet":
 				PrintNeedsSheet();
 				break;
-			
-			case "PrintOutsideEmploymentRequest": 
+
+			case "PrintOutsideEmploymentRequest":
 				PrintOutsideEmploymentRequest();
 				break;
-			
-			case "PrintEmploymentAuthorizationRequest": 
+
+			case "PrintEmploymentAuthorizationRequest":
 				PrintEmploymentAuthorizationRequest();
 				break;
-			
-			case "PrintPersonnelActionRequest": 
+
+			case "PrintPersonnelActionRequest":
 				PrintPersonnelActionRequest();
 				break;
-			
-			case "PrintGPCInitialConceptApprovalRequest": 
+
+			case "PrintGPCInitialConceptApprovalRequest":
 				$().PrintGPCInitialConceptApprovalRequest();
 				break;
-			
-			case "PrintGPCSubmissionApprovalRequest": 
+
+			case "PrintGPCSubmissionApprovalRequest":
 				$().PrintGPCSubmissionApprovalRequest();
 				break;
-			
+
 			case "ReturnGPCInitialConceptApprovalRequestAdditionalViewAccess":
 				return $().ReturnGPCInitialConceptApprovalRequestAdditionalViewAccess(functionArgumentsObject);
 				break;
@@ -15920,7 +16096,7 @@
 
 
 
-	function isJSONParsable (stringToTest) {
+	function isJSONParsable(stringToTest) {
 
 		try {
 			var o = JSON.parse(stringToTest);
@@ -15943,14 +16119,14 @@
 		var deferred = $.Deferred();
 		var reader = new FileReader();
 
-		reader.onload = function(e) {
+		reader.onload = function (e) {
 			console.log("reader.onload");
 			console.log("e = ");
 			console.log(e);
 			deferred.resolve(e.target.result);
 		}
 
-		reader.onerror = function(e) {
+		reader.onerror = function (e) {
 			console.log("reader.onerror");
 			console.log("e = ");
 			console.log(e);
@@ -15964,11 +16140,11 @@
 
 
 
-	$.fn.ReturnNamesWLinkedEmailsFromPP = function(fieldName) {
+	$.fn.ReturnNamesWLinkedEmailsFromPP = function (fieldName) {
 
 		var dataLocationSelector = 'input#' + ReplaceAll("\\.", "", ReplaceAll(" ", "-", fieldName)) + '_TopSpan_HiddenInput';
 
-		if (typeof($(dataLocationSelector).val()) == 'undefined' || $(dataLocationSelector).val() == [] || $(dataLocationSelector).val() == '') {
+		if (typeof ($(dataLocationSelector).val()) == 'undefined' || $(dataLocationSelector).val() == [] || $(dataLocationSelector).val() == '') {
 			peopleArray = [];
 		} else {
 			peopleArray = JSON.parse($(dataLocationSelector).val());
@@ -15978,7 +16154,7 @@
 		var peopleArrayIndexLast = (peopleArrayIndexQty - 1);
 		var linkedNamesString = '';
 
-		$.each(peopleArray, function(i, r) {
+		$.each(peopleArray, function (i, r) {
 
 			// if peopleArrayIndexQty == 1
 			if (peopleArrayIndexQty == 1) {
@@ -16038,16 +16214,21 @@
 
 	function ReturnRequestStorageObjectPropertiesAndPushRequestColumns(formElement) {
 
+		// this is probably kinda hokey, but 3 days prior to major release this is what works
+		if (typeof (globalSubmissionValuePairsArray) === "undefined") {
+			globalSubmissionValuePairsArray = [];
+		}
+
 		var formDataString = '';
 
 		// handle inputs that aren't people pickers
-		$(formElement).find('input').each(function() {
+		$(formElement).find('input').each(function () {
 
 			// get this input's id
 			var id = this.id;
 
 			// unless otherwise indicated, don't save approval fields; in most cases, these fields won't be populated individually as the corresponding data is saved in the "Approval Nodes Storage" field
-			if ((typeof(fData.saveApprovalFields) != 'undefined' && fData.saveApprovalFields == 1) || (StrInStr(id, 'approval-signature') == false && StrInStr(id, 'approval-date') == false && StrInStr(id, 'Approval-Notes') == false && StrInStr(id, 'approval-indicator') == false)) {
+			if ((typeof (fData.saveApprovalFields) != 'undefined' && fData.saveApprovalFields == 1) || (StrInStr(id, 'approval-signature') == false && StrInStr(id, 'approval-date') == false && StrInStr(id, 'Approval-Notes') == false && StrInStr(id, 'approval-indicator') == false)) {
 
 				// if this input is not a people picker
 				if (id.indexOf('TopSpan_HiddenInput') < 0) {
@@ -16071,7 +16252,7 @@
 
 							// if this input is NOT a radio or checkbox - OR - if it's checked
 							if ((type.toUpperCase() != 'RADIO' && type.toUpperCase() != 'CHECKBOX') || $(this).attr('checked')) {
-								
+
 								// create object property for it
 								formDataString += '"' + id + '":"' + value + '",';
 
@@ -16089,13 +16270,13 @@
 								}
 							}
 						}
-					} 
+					}
 				}
 			}
 		});
 
 		// handle selects
-		$(formElement).find('select').each(function() {
+		$(formElement).find('select').each(function () {
 			id = this.id;
 
 			if (id != 'Change-Request-Status') {
@@ -16110,11 +16291,11 @@
 		});
 
 		// handle textareas
-		$(formElement).find('textarea').each(function() {
+		$(formElement).find('textarea').each(function () {
 			id = this.id;
 
 			// unless otherwise indicated, don't save approval fields; in most cases, these fields won't be populated individually as the corresponding data is saved in the "Approval Nodes Storage" field
-			if ((typeof(fData.saveApprovalFields) != 'undefined' && fData.saveApprovalFields == 1)  || StrInStr(id, 'Approval-Notes') == false) {
+			if ((typeof (fData.saveApprovalFields) != 'undefined' && fData.saveApprovalFields == 1) || StrInStr(id, 'Approval-Notes') == false) {
 				value = HtmlEncode($(this).val());
 
 				if (value.length > 0) {
@@ -16127,7 +16308,7 @@
 		});
 
 		// handle people pickers
-		$(formElement).find('div[data-control-type="PeoplePicker"]').each(function() {
+		$(formElement).find('div[data-control-type="PeoplePicker"]').each(function () {
 
 			// set up vars
 			var spPP = SPClientPeoplePicker.SPClientPeoplePickerDict[$(this).attr('id') + '_TopSpan'];
@@ -16140,7 +16321,7 @@
 				formDataString += '"' + this.id + '":[';
 				var peopleSeparator = '';
 
-				$.each(people, function(i, p) {
+				$.each(people, function (i, p) {
 					formDataString += peopleSeparator +
 						'{' +
 						'"account": "' + p.Key + '",' +
@@ -16172,7 +16353,7 @@
 		});
 
 		// handle divs
-		$('div.listFieldName').each(function() {
+		$('div.listFieldName').each(function () {
 			if ($(this).attr('data-control-type') == undefined) {
 				if ($.trim($(this).html()).length > 0) {
 					var regex = new RegExp("\"", "g");
@@ -16187,7 +16368,7 @@
 		});
 
 		// handle links for url, file, and event request fields
-		$(formElement).find('a[data-source-type="url"], a[data-source-type="file"], a[data-source-type="event-space-request"], a[data-source-type="event-needs-request"], a[data-source-type="gpc-initial-concept-approval-request"]').each(function() {
+		$(formElement).find('a[data-source-type="url"], a[data-source-type="file"], a[data-source-type="event-space-request"], a[data-source-type="event-needs-request"], a[data-source-type="gpc-initial-concept-approval-request"]').each(function () {
 			id = this.id;
 
 			value = HtmlEncode(ReplaceAll("#", "", $(this).text()));
@@ -16206,11 +16387,11 @@
 
 
 	$.fn.CreateOrUpdateListItem = function (mData, rData, submissionValuePairsArray) {
-		
+
 		// --- set up internal promise to configure
 
 		var deferred = $.Deferred();
-		
+
 		// --- do create or update
 
 		// set up vars
@@ -16231,7 +16412,7 @@
 			batchCmd: batchCommand,
 			ID: ID,
 			valuepairs: submissionValuePairsArray,
-			completefunc: function(xData, Status) {
+			completefunc: function (xData, Status) {
 
 
 				// determine success of save; then...
@@ -16241,7 +16422,7 @@
 				if (swfListSaveSuccess == 0) {
 
 					// send error emails from queue, then...
-					$().SendEmails(globalErrorEmailsToSend).then(function() {
+					$().SendEmails(globalErrorEmailsToSend).then(function () {
 						// display messages
 						$('div#wait-while-working').fadeOut(200);
 						if (batchCommand == 'New') {
@@ -16250,21 +16431,21 @@
 							$('div#swfList-error_updated-request').fadeIn(200);
 						}
 					});
-					
+
 					// --- signify completion
 
 					// deferred.resolve();
 
-				// if swfList save was successful
+					// if swfList save was successful
 				} else if (swfListSaveSuccess == 1) {
 
 					var requestID = $(xData.responseXML).SPFilterNode("z:row").attr("ows_ID");
 					globalLastRequestIDs.push(requestID);
-					
+
 					// --- signify completion
 
 					deferred.resolve();
-					
+
 
 				}
 			}
@@ -16283,7 +16464,7 @@
 
 		// handle the repeatables
 		formDataString += '"RepeatedElements": [';
-		$(form).find('[data-repeatable]').each(function() {
+		$(form).find('[data-repeatable]').each(function () {
 			var repeatableString = '{"ID": "' + $(this).attr('id') + '",';
 			repeatableString += '"OriginalToRepeat": "' + $(this).attr('data-original-to-repeat') + '",';
 			repeatableString += ReturnRequestStorageObjectPropertiesAndPushRequestColumns(this);
@@ -16345,7 +16526,7 @@
 
 
 	function ReturnGSESchedulesSubmissionValuePairArray(form) {
-		
+
 		/*
 			overview / context notes
 			1. for each date that was added, one row will be created in SWFList
@@ -16354,7 +16535,7 @@
 			4. one of those elements corresponds to the AllRequestData column
 
 		*/
-		
+
 		// set up vars
 		// the dates for which we'll create rows in SWFList
 		var scheduleDates = [];
@@ -16366,12 +16547,12 @@
 		//		all of the repeatable date fields, we'll match the beginning of the IDs
 		// note: change the partial ID being searched for to correspond to the field name you've chosen for the form; 
 		// 		using the caret character means we'll find every input whose ID *begins* with this partial ID
-		$(form).find('input[id^="Name-of-Date-Field"]').each(function() {
+		$(form).find('input[id^="Name-of-Date-Field"]').each(function () {
 			scheduleDates.push($(this).val());
 		});
 
 		// for each date that was found
-		$.each(scheduleDates, function(i, scheduleDate) {
+		$.each(scheduleDates, function (i, scheduleDate) {
 
 			// re/set globalSubmissionValuePairsArray to new, empty array
 			// this corresponds to one row to be created in SWFList
@@ -16381,7 +16562,7 @@
 			if (scheduleDate !== '') {
 				// get date in ISO format
 				var scheduleDateISO = $().ReturnFormattedDateTime(scheduleDate, null, null, null);
-				
+
 				// start building the JSON string that will be stored
 				var formDataString = '{';
 
@@ -16472,7 +16653,7 @@
 
 
 	function ReturnGSESchedulesSubmissionValuePairArrayTest(form) {
-		
+
 		/*
 			overview / context notes
 			1. for each date that was added, one row will be created in SWFList
@@ -16481,7 +16662,7 @@
 			4. one of those elements corresponds to the AllRequestData column
 
 		*/
-		
+
 		// set up vars
 		// the dates for which we'll create rows in SWFList
 		var scheduleDates = [];
@@ -16493,12 +16674,12 @@
 		//		all of the repeatable date fields, we'll match the beginning of the IDs
 		// note: change the partial ID being searched for to correspond to the field name you've chosen for the form; 
 		// 		using the caret character means we'll find every input whose ID *begins* with this partial ID
-		$(form).find('input[id^="Offering-Beginning-Datetime"]').each(function() {
+		$(form).find('input[id^="Offering-Beginning-Datetime"]').each(function () {
 			scheduleDates.push($(this).val());
 		});
 
 		// for each date that was found
-		$.each(scheduleDates, function(i, scheduleDate) {
+		$.each(scheduleDates, function (i, scheduleDate) {
 
 			// re/set globalSubmissionValuePairsArray to new, empty array
 			// this corresponds to one row to be created in SWFList
@@ -16508,7 +16689,7 @@
 			if (scheduleDate !== '') {
 				// get date in ISO format
 				var scheduleDateISO = $().ReturnFormattedDateTime(scheduleDate, null, null, null);
-				
+
 				// start building the JSON string that will be stored
 				var formDataString = '{';
 
@@ -16568,7 +16749,7 @@
 		// if this event date on load was a pattern date
 		if ($(form).find('input#Exception-ID').val() == "") {
 			// store event date on load as a date to skip
-			if (typeof(allRequestDataObject.datesToSkip) == 'undefined') {
+			if (typeof (allRequestDataObject.datesToSkip) == 'undefined') {
 				allRequestDataObject.datesToSkip = [];
 			}
 			allRequestDataObject.datesToSkip.push($(form).find('input#Event-Date-on-Load').val());
@@ -16578,7 +16759,7 @@
 
 			// get index of element to remove
 			var exceptionToRemoveIndex = -1;
-			$(allRequestDataObject.datesToAdd).each(function(dateToAddIndex, dateToAddValue) {
+			$(allRequestDataObject.datesToAdd).each(function (dateToAddIndex, dateToAddValue) {
 				if (dateToAddValue.exceptionID == $(form).find('input#Exception-ID').val()) {
 					exceptionToRemoveIndex = dateToAddIndex;
 				}
@@ -16594,7 +16775,7 @@
 		if ($("input#requester-cancellation_cancel").prop("checked") == false) {
 
 			// store form data as a date to add
-			if (typeof(allRequestDataObject.datesToAdd) == 'undefined') {
+			if (typeof (allRequestDataObject.datesToAdd) == 'undefined') {
 				allRequestDataObject.datesToAdd = [];
 				var thisExceptionID = "1";
 			} else if (allRequestDataObject.datesToAdd.length == 0) {
@@ -16635,13 +16816,13 @@
 		globalSubmissionValuePairsArray = [];
 
 		// if there is exceptional event data to keep
-		if (typeof(originalFormData) != 'undefined') {
-			if (typeof(originalFormData.datesToSkip) != 'undefined') {
+		if (typeof (originalFormData) != 'undefined') {
+			if (typeof (originalFormData.datesToSkip) != 'undefined') {
 
 				// stringify the objects inside the datesToSkip array
 				var datesToSkipArrayLength = originalFormData.datesToSkip.length;
 				var datesToSkipString = '';
-				$(originalFormData.datesToSkip).each(function(i, v) {
+				$(originalFormData.datesToSkip).each(function (i, v) {
 					datesToSkipString += JSON.stringify(this);
 					// if not the last one, add a comma
 					if (i + 1 < datesToSkipArrayLength) {
@@ -16652,7 +16833,7 @@
 				// stringify the objects inside the datesToAdd array
 				var datesToAddArrayLength = originalFormData.datesToAdd.length;
 				var datesToAddString = '';
-				$(originalFormData.datesToAdd).each(function(i, v) {
+				$(originalFormData.datesToAdd).each(function (i, v) {
 					datesToAddString += JSON.stringify(this);
 					// if not the last one, add a comma
 					if (i + 1 < datesToAddArrayLength) {
@@ -16680,16 +16861,16 @@
 	function ReturnFileNameFromEndOfHtmlEncodedPath(pathAndName) {
 		// if pathAndName does not contain an encoded backslash
 		if (StrInStr(pathAndName, '%5C', 0) == false) {
-			
+
 			//return full, unchanged pathAndName
 			return pathAndName;
-		
-		// if pathAndName contains an encoded backslash
+
+			// if pathAndName contains an encoded backslash
 		} else {
 
 			// find the position of the last encoded backslash
 			var lastEncodedBackslashPosition = pathAndName.lastIndexOf('%5C') + 3;
-			
+
 			// return the portion of pathAndName after the last encoded backslash
 			return pathAndName.slice(lastEncodedBackslashPosition);
 		}
@@ -16697,7 +16878,7 @@
 
 
 
-	function ReturnPathFromBeginningOfDecodedAbsoluteURL (pathAndName) {
+	function ReturnPathFromBeginningOfDecodedAbsoluteURL(pathAndName) {
 		// if pathAndName does not contain a forward slash
 		if (StrInStr(pathAndName, '/', 0) == false) {
 
@@ -16708,7 +16889,7 @@
 
 			// find the position of the last forward slash
 			var lastForwardSlashPosition = pathAndName.lastIndexOf('/');
-			
+
 			// return the portion of pathAndName before the last forward slash
 			return pathAndName.slice(0, lastForwardSlashPosition);
 		}
@@ -16749,12 +16930,12 @@
 	}
 
 
-	$.fn.ReturnStringWithInitialCap = function(string) {
+	$.fn.ReturnStringWithInitialCap = function (string) {
 		return string.charAt(0).toUpperCase() + string.slice(1);
 	};
 
 
-	$.fn.ZeroFillString = function(string, places) {
+	$.fn.ZeroFillString = function (string, places) {
 		for (i = 0; string.length < places; i++) {
 			string = '0' + string;
 		}
@@ -16763,7 +16944,7 @@
 
 
 
-	$.fn.ReturnUserDataFromPersonOrGroupFieldString = function(usersString) {
+	$.fn.ReturnUserDataFromPersonOrGroupFieldString = function (usersString) {
 
 		// parse query response from SP list's Person or Group field 
 		//		(at least, with People Only selected in column config - if groups are included this may not work)
@@ -16787,7 +16968,7 @@
 		var distinctUsersAsStrings = [];
 		var allUsersData = [];
 
-		$.each(usersParts, function(i, usersPart) {
+		$.each(usersParts, function (i, usersPart) {
 
 			// if i represents an even-numbered position in array
 			if (i % 2 == 1) {
@@ -16796,7 +16977,7 @@
 			}
 		});
 
-		$.each(distinctUsersAsStrings, function(i, s) {
+		$.each(distinctUsersAsStrings, function (i, s) {
 			var thisUser = s.split(",#");
 			if (thisUser.length == 2) {
 				allUsersData.push({
@@ -16832,7 +17013,7 @@
 
 
 
-	$.fn.ReturnDateDifferenceInDays = function(dateOne, dateTwo) {
+	$.fn.ReturnDateDifferenceInDays = function (dateOne, dateTwo) {
 
 		var oneDay = 24 * 60 * 60 * 1000;
 		var firstDate = new Date(dateOne);
@@ -16845,17 +17026,17 @@
 
 
 
-	$.fn.ReturnTimeOneIsEarlierThanTimeTwo = function(timeOneHours, timeOneMinutes, timeTwoHours, timeTwoMinutes) {
-		
+	$.fn.ReturnTimeOneIsEarlierThanTimeTwo = function (timeOneHours, timeOneMinutes, timeTwoHours, timeTwoMinutes) {
+
 		moment.locale('en');
 		moment.suppressDeprecationWarnings = true;
 
 		var timeOneIsEarlierThanTimeTwo = 0;
 
-		if(typeof(timeOneHours) != "undefined" && typeof(timeOneMinutes) != "undefined" && typeof(timeTwoHours) != "undefined" && typeof(timeTwoMinutes) != "undefined") {
+		if (typeof (timeOneHours) != "undefined" && typeof (timeOneMinutes) != "undefined" && typeof (timeTwoHours) != "undefined" && typeof (timeTwoMinutes) != "undefined") {
 			var dateOne = moment().format('YYYY-MM-DD') + timeOneHours + timeOneMinutes;
 			var dateTwo = moment().format('YYYY-MM-DD') + timeTwoHours + timeTwoMinutes;
-			if ( moment(dateOne).isBefore(dateTwo) ) {
+			if (moment(dateOne).isBefore(dateTwo)) {
 				timeOneIsEarlierThanTimeTwo = 1;
 			}
 		}
@@ -16865,17 +17046,17 @@
 
 
 
-	$.fn.ReturnTimeOneIsLaterThanTimeTwo = function(timeOneHours, timeOneMinutes, timeTwoHours, timeTwoMinutes) {
-		
+	$.fn.ReturnTimeOneIsLaterThanTimeTwo = function (timeOneHours, timeOneMinutes, timeTwoHours, timeTwoMinutes) {
+
 		moment.locale('en');
 		moment.suppressDeprecationWarnings = true;
 
 		var timeOneIsEarlierThanTimeTwo = 0;
 
-		if(typeof(timeOneHours) != "undefined" && typeof(timeOneMinutes) != "undefined" && typeof(timeTwoHours) != "undefined" && typeof(timeTwoMinutes) != "undefined") {
+		if (typeof (timeOneHours) != "undefined" && typeof (timeOneMinutes) != "undefined" && typeof (timeTwoHours) != "undefined" && typeof (timeTwoMinutes) != "undefined") {
 			var dateOne = moment().format('YYYY-MM-DD') + timeOneHours + timeOneMinutes;
 			var dateTwo = moment().format('YYYY-MM-DD') + timeTwoHours + timeTwoMinutes;
-			if ( moment(dateOne).isAfter(dateTwo) ) {
+			if (moment(dateOne).isAfter(dateTwo)) {
 				timeOneIsEarlierThanTimeTwo = 1;
 			}
 		}
@@ -16885,7 +17066,7 @@
 
 
 
-	$.fn.ReturnUserEmailStringAndArray = function(usersString) {
+	$.fn.ReturnUserEmailStringAndArray = function (usersString) {
 
 		var userArray = usersString.split(";#");
 		var emailReturnObject = {
@@ -16893,7 +17074,7 @@
 			string: ""
 		};
 
-		$.each(userArray, function(i, userDatum) {
+		$.each(userArray, function (i, userDatum) {
 
 			// if i is even
 			if (i % 2 == 1) {
@@ -16912,7 +17093,7 @@
 
 
 
-	$.fn.ReturnISODateTimeFromParts = function(dateTime, keyphrase) {
+	$.fn.ReturnISODateTimeFromParts = function (dateTime, keyphrase) {
 
 		// config locale
 		moment.locale('en');
@@ -16932,14 +17113,14 @@
 
 
 
-	$.fn.RenderDateTime = function(dateTimeString, timeFlag, useYearAnyway) {
+	$.fn.RenderDateTime = function (dateTimeString, timeFlag, useYearAnyway) {
 
 		// config locale
 		moment.locale('en');
 		moment.suppressDeprecationWarnings = true;
 
 		// default to determining year usage dynamically
-		if (typeof(useYearAnyway) == "undefined") {
+		if (typeof (useYearAnyway) == "undefined") {
 			useYearAnyway = 0;
 		}
 
@@ -16969,7 +17150,7 @@
 			// append date format with year
 			displayFormat += ', YYYY';
 			// otherwise, if useYearAnyway flag is set to 1
-		} else if (typeof(useYearAnyway) != "undefined") {
+		} else if (typeof (useYearAnyway) != "undefined") {
 			if (useYearAnyway == 1) {
 				// append date format with year
 				displayFormat += ', YYYY';
@@ -16990,9 +17171,9 @@
 	// ---- DATATABLES
 
 
-	$.fn.RenderAllDataTables = function(sections, targetID) {
+	$.fn.RenderAllDataTables = function (sections, targetID) {
 
-		$.each(sections.tables, function(i, t) {
+		$.each(sections.tables, function (i, t) {
 
 			// var setupStartTime = Date.now();
 
@@ -17003,17 +17184,17 @@
 			var datatableFields = [];
 			var theadDetails = "";
 
-			if (typeof(t.customColumns) != "undefined") {
+			if (typeof (t.customColumns) != "undefined") {
 				columns = t.customColumns;
 			} else {
 				columns = sections.commonColumns;
 			}
 
-			if (typeof(t.sortColAndOrder) == 'undefined') {
+			if (typeof (t.sortColAndOrder) == 'undefined') {
 				t.sortColAndOrder = [0, 'asc'];
 			}
 
-			if (typeof(t.webURL) == 'undefined') {
+			if (typeof (t.webURL) == 'undefined') {
 				mData = $.extend(
 					$().GetFieldsFromOneRow({
 						"listName": "ComponentLog",
@@ -17034,7 +17215,7 @@
 				t.webURL = StrInStr(mData.uriRoot, '/Lists/SWFList', 1);
 			}
 
-			$.each(columns, function(i, column) {
+			$.each(columns, function (i, column) {
 				if (column.internalName != "") {
 					camlViewFields += "<FieldRef Name='" + column.internalName + "' />";
 					datatableFields.push({
@@ -17044,7 +17225,7 @@
 				if (column.displayName != "") {
 					theadDetails += "<th>" + column.displayName + "</th>";
 				}
-				if (column.internalName != "" && typeof(column.formLink) !== "undefined") {
+				if (column.internalName != "" && typeof (column.formLink) !== "undefined") {
 					lookupFields.push({
 						"internalName": column.internalName,
 						"anchorNoHref": 0,
@@ -17053,7 +17234,7 @@
 						"friendlyFormatOnLoad": 0,
 						"groupingFriendlyFormatOnLoad": 0
 					});
-				} else if (column.internalName != "" && typeof(column.anchorNoHref) !== "undefined") {
+				} else if (column.internalName != "" && typeof (column.anchorNoHref) !== "undefined") {
 					lookupFields.push({
 						"internalName": column.internalName,
 						"anchorNoHref": column.anchorNoHref,
@@ -17062,7 +17243,7 @@
 						"friendlyFormatOnLoad": 0,
 						"groupingFriendlyFormatOnLoad": 0
 					});
-				} else if (column.internalName != "" && typeof(column.userName) !== "undefined") {
+				} else if (column.internalName != "" && typeof (column.userName) !== "undefined") {
 					lookupFields.push({
 						"internalName": column.internalName,
 						"anchorNoHref": 0,
@@ -17071,7 +17252,7 @@
 						"friendlyFormatOnLoad": 0,
 						"groupingFriendlyFormatOnLoad": 0
 					});
-				} else if (column.internalName != "" && typeof(column.friendlyFormatOnLoad) !== "undefined") {
+				} else if (column.internalName != "" && typeof (column.friendlyFormatOnLoad) !== "undefined") {
 					lookupFields.push({
 						"internalName": column.internalName,
 						"anchorNoHref": 0,
@@ -17080,7 +17261,7 @@
 						"friendlyFormatOnLoad": column.friendlyFormatOnLoad,
 						"groupingFriendlyFormatOnLoad": 0
 					});
-				} else if (column.internalName != "" && typeof(column.groupingFriendlyFormatOnLoad) !== "undefined") {
+				} else if (column.internalName != "" && typeof (column.groupingFriendlyFormatOnLoad) !== "undefined") {
 					lookupFields.push({
 						"internalName": column.internalName,
 						"anchorNoHref": 0,
@@ -17101,29 +17282,29 @@
 				}
 			});
 
-			if (typeof(t.basicRSQueryRelevantStatus) != "undefined") {
+			if (typeof (t.basicRSQueryRelevantStatus) != "undefined") {
 				query = "<Where>" +
-						"	<Eq>" +
-						"		 <FieldRef Name='RequestStatus'></FieldRef>" +
-						"		 <Value Type='Text'>" + t.basicRSQueryRelevantStatus + "</Value>" +
-						"	</Eq>" +
-						"</Where>";
-			} else if (typeof(t.basicRSQueryTwoRelevantStatuses) != "undefined") {
+					"	<Eq>" +
+					"		 <FieldRef Name='RequestStatus'></FieldRef>" +
+					"		 <Value Type='Text'>" + t.basicRSQueryRelevantStatus + "</Value>" +
+					"	</Eq>" +
+					"</Where>";
+			} else if (typeof (t.basicRSQueryTwoRelevantStatuses) != "undefined") {
 				query = "<Where>" +
-						"	<Or>" +
-						"		<Eq>" +
-						"			<FieldRef Name='RequestStatus'></FieldRef>" +
-						"			<Value Type='Text'>" + t.basicRSQueryTwoRelevantStatuses[0] + "</Value>" +
-						"		</Eq>" +
-						"		<Eq>" +
-						"			<FieldRef Name='RequestStatus'></FieldRef>" +
-						"			<Value Type='Text'>" + t.basicRSQueryTwoRelevantStatuses[1] + "</Value>" +
-						"		</Eq>" +
-						"	</Or>" +
-						"</Where>";
-			} else if (typeof(t.myRSQueryTwoRelevantStatuses) != "undefined") {
+					"	<Or>" +
+					"		<Eq>" +
+					"			<FieldRef Name='RequestStatus'></FieldRef>" +
+					"			<Value Type='Text'>" + t.basicRSQueryTwoRelevantStatuses[0] + "</Value>" +
+					"		</Eq>" +
+					"		<Eq>" +
+					"			<FieldRef Name='RequestStatus'></FieldRef>" +
+					"			<Value Type='Text'>" + t.basicRSQueryTwoRelevantStatuses[1] + "</Value>" +
+					"		</Eq>" +
+					"	</Or>" +
+					"</Where>";
+			} else if (typeof (t.myRSQueryTwoRelevantStatuses) != "undefined") {
 
-				if (typeof(mData.getRequesterFrom) == 'undefined') {
+				if (typeof (mData.getRequesterFrom) == 'undefined') {
 					var getRequesterFrom = 'Author';
 				} else {
 					var getRequesterFrom = mData.getRequesterFrom;
@@ -17131,45 +17312,25 @@
 
 				query = "<Where>" +
 					"	<And>" +
-						"	<Or>" +
-						"		<Eq>" +
-						"			<FieldRef Name='RequestStatus'></FieldRef>" +
-						"			<Value Type='Text'>" + t.myRSQueryTwoRelevantStatuses[0] + "</Value>" +
-						"		</Eq>" +
-						"		<Eq>" +
-						"			<FieldRef Name='RequestStatus'></FieldRef>" +
-						"			<Value Type='Text'>" + t.myRSQueryTwoRelevantStatuses[1] + "</Value>" +
-						"		</Eq>" +
-						"	</Or>" +
+					"	<Or>" +
+					"		<Eq>" +
+					"			<FieldRef Name='RequestStatus'></FieldRef>" +
+					"			<Value Type='Text'>" + t.myRSQueryTwoRelevantStatuses[0] + "</Value>" +
+					"		</Eq>" +
+					"		<Eq>" +
+					"			<FieldRef Name='RequestStatus'></FieldRef>" +
+					"			<Value Type='Text'>" + t.myRSQueryTwoRelevantStatuses[1] + "</Value>" +
+					"		</Eq>" +
+					"	</Or>" +
 					"		 <Contains>" +
 					"			  <FieldRef Name='" + getRequesterFrom + "'></FieldRef>" +
 					"			  <Value Type='Text'>" + uData.name + "</Value>" +
 					"		 </Contains>" +
 					"	</And>" +
 					"</Where>";
-			} else if (typeof(t.myRSQueryRelevantStatus) != "undefined") {
+			} else if (typeof (t.myRSQueryRelevantStatus) != "undefined") {
 
-				if (typeof(mData.getRequesterFrom) == 'undefined') {
-					var getRequesterFrom = 'Author';
-				} else {
-					var getRequesterFrom = mData.getRequesterFrom;
-				}
-
-				query = "<Where>" +
-					"	<And>" +
-					"		 <Eq>" +
-					"			  <FieldRef Name='RequestStatus'></FieldRef>" +
-					"			  <Value Type='Text'>" + t.myRSQueryRelevantStatus + "</Value>" +
-					"		 </Eq>" +
-					"		 <Contains>" +
-					"			  <FieldRef Name='" + getRequesterFrom + "'></FieldRef>" +
-					"			  <Value Type='Text'>" + uData.name + "</Value>" +
-					"		 </Contains>" +
-					"	</And>" +
-					"</Where>";
-			} else if (typeof(t.myRSQueryRelevantStatus) != "undefined") {
-
-				if (typeof(mData.getRequesterFrom) == 'undefined') {
+				if (typeof (mData.getRequesterFrom) == 'undefined') {
 					var getRequesterFrom = 'Author';
 				} else {
 					var getRequesterFrom = mData.getRequesterFrom;
@@ -17187,7 +17348,26 @@
 					"		 </Contains>" +
 					"	</And>" +
 					"</Where>";
-			
+			} else if (typeof (t.myRSQueryRelevantStatus) != "undefined") {
+
+				if (typeof (mData.getRequesterFrom) == 'undefined') {
+					var getRequesterFrom = 'Author';
+				} else {
+					var getRequesterFrom = mData.getRequesterFrom;
+				}
+
+				query = "<Where>" +
+					"	<And>" +
+					"		 <Eq>" +
+					"			  <FieldRef Name='RequestStatus'></FieldRef>" +
+					"			  <Value Type='Text'>" + t.myRSQueryRelevantStatus + "</Value>" +
+					"		 </Eq>" +
+					"		 <Contains>" +
+					"			  <FieldRef Name='" + getRequesterFrom + "'></FieldRef>" +
+					"			  <Value Type='Text'>" + uData.name + "</Value>" +
+					"		 </Contains>" +
+					"	</And>" +
+					"</Where>";
 
 
 
@@ -17196,8 +17376,9 @@
 
 
 
-			} else if (typeof(t.myRSQueryRelevantStatusUnassigned) != "undefined") {
-				if (typeof(mData.getRequesterFrom) == 'undefined') {
+
+			} else if (typeof (t.myRSQueryRelevantStatusUnassigned) != "undefined") {
+				if (typeof (mData.getRequesterFrom) == 'undefined') {
 					var getRequesterFrom = 'Author';
 				} else {
 					var getRequesterFrom = mData.getRequesterFrom;
@@ -17221,8 +17402,8 @@
 					"	</And>" +
 					"</Where>";
 
-			} else if (typeof(t.myRSQueryRelevantStatusAssigned) != "undefined") {
-				if (typeof(mData.getRequesterFrom) == 'undefined') {
+			} else if (typeof (t.myRSQueryRelevantStatusAssigned) != "undefined") {
+				if (typeof (mData.getRequesterFrom) == 'undefined') {
 					var getRequesterFrom = 'Author';
 				} else {
 					var getRequesterFrom = mData.getRequesterFrom;
@@ -17246,9 +17427,9 @@
 					"	</And>" +
 					"</Where>";
 
-			} else if (typeof(t.myDeptRSQueryRelevantStatus) != "undefined") {
+			} else if (typeof (t.myDeptRSQueryRelevantStatus) != "undefined") {
 
-				if (typeof(mData.getRequesterFrom) == 'undefined') {
+				if (typeof (mData.getRequesterFrom) == 'undefined') {
 					var getRequesterFrom = 'Department';
 				} else {
 					var getRequesterFrom = mData.getRequesterFrom;
@@ -17267,9 +17448,9 @@
 					"	</And>" +
 					"</Where>";
 
-			} else if (typeof(t.myDeptRSQueryRelevantStatusUnassigned) != "undefined") {
+			} else if (typeof (t.myDeptRSQueryRelevantStatusUnassigned) != "undefined") {
 
-				if (typeof(mData.getRequesterFrom) == 'undefined') {
+				if (typeof (mData.getRequesterFrom) == 'undefined') {
 					var getRequesterFrom = 'Department';
 				} else {
 					var getRequesterFrom = mData.getRequesterFrom;
@@ -17293,9 +17474,9 @@
 					"	</And>" +
 					"</Where>";
 
-			} else if (typeof(t.myDeptRSQueryRelevantStatusAssigned) != "undefined") {
+			} else if (typeof (t.myDeptRSQueryRelevantStatusAssigned) != "undefined") {
 
-				if (typeof(mData.getRequesterFrom) == 'undefined') {
+				if (typeof (mData.getRequesterFrom) == 'undefined') {
 					var getRequesterFrom = 'Department';
 				} else {
 					var getRequesterFrom = mData.getRequesterFrom;
@@ -17319,23 +17500,7 @@
 					"	</And>" +
 					"</Where>";
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-			} else if (typeof(t.fieldGEQDaysBeforeToday) != "undefined") {
+			} else if (typeof (t.fieldGEQDaysBeforeToday) != "undefined") {
 				query = "<Where>" +
 					"	<Geq>" +
 					"		 <FieldRef Name='" + t.fieldGEQDaysBeforeToday[0] + "'></FieldRef>" +
@@ -17344,7 +17509,7 @@
 					"		 </Value>" +
 					"	</Geq>" +
 					"</Where>";
-			} else if (typeof(t.rsQueryAndFieldGEQDate) != "undefined") {
+			} else if (typeof (t.rsQueryAndFieldGEQDate) != "undefined") {
 				query = "<Where>" +
 					"	 <And>" +
 					"		  <Eq>" +
@@ -17357,7 +17522,7 @@
 					"		  </Geq>" +
 					"	 </And>" +
 					"</Where>";
-			} else if (typeof(t.rsQueryAndFieldLTDate) != "undefined") {
+			} else if (typeof (t.rsQueryAndFieldLTDate) != "undefined") {
 				query = "<Where>" +
 					"	 <And>" +
 					"		  <Eq>" +
@@ -17370,7 +17535,7 @@
 					"		  </Lt>" +
 					"	 </And>" +
 					"</Where>";
-			} else if (typeof(t.rsQueryAndFieldGEQDaysBeforeToday) != "undefined") {
+			} else if (typeof (t.rsQueryAndFieldGEQDaysBeforeToday) != "undefined") {
 				query = "<Where>" +
 					"	 <And>" +
 					"		  <Eq>" +
@@ -17385,14 +17550,14 @@
 					"		  </Geq>" +
 					"	 </And>" +
 					"</Where>";
-			} else if (typeof(t.MyRSQueryAndFieldGEQDate) != "undefined") {
+			} else if (typeof (t.MyRSQueryAndFieldGEQDate) != "undefined") {
 
 				var myName = $().SPServices.SPGetCurrentUser({
 					fieldName: "Title",
 					debug: false
 				});
 
-				if (typeof(mData.getRequesterFrom) == 'undefined') {
+				if (typeof (mData.getRequesterFrom) == 'undefined') {
 					var getRequesterFrom = 'Author';
 				} else {
 					var getRequesterFrom = mData.getRequesterFrom;
@@ -17416,14 +17581,14 @@
 					"		 </And>" +
 					"	</And>" +
 					"</Where>";
-			} else if (typeof(t.MyRSQueryAndFieldLTDate) != "undefined") {
+			} else if (typeof (t.MyRSQueryAndFieldLTDate) != "undefined") {
 
 				var myName = $().SPServices.SPGetCurrentUser({
 					fieldName: "Title",
 					debug: false
 				});
 
-				if (typeof(mData.getRequesterFrom) == 'undefined') {
+				if (typeof (mData.getRequesterFrom) == 'undefined') {
 					var getRequesterFrom = 'Author';
 				} else {
 					var getRequesterFrom = mData.getRequesterFrom;
@@ -17447,7 +17612,7 @@
 					"		  </And>" +
 					"	 </And>" +
 					"</Where>";
-			} else if (typeof(t.basicEOLQueryRelevantValue) != "undefined") {
+			} else if (typeof (t.basicEOLQueryRelevantValue) != "undefined") {
 				if (t.basicEOLQueryRelevantValue == 0) {
 					query = "<Where>" +
 						"	<Or>" +
@@ -17468,14 +17633,14 @@
 						"	</Eq>" +
 						"</Where>";
 				}
-			} else if (typeof(t.basicMyEOLQueryRelevantValue) != "undefined") {
+			} else if (typeof (t.basicMyEOLQueryRelevantValue) != "undefined") {
 
 				var myName = $().SPServices.SPGetCurrentUser({
 					fieldName: "Title",
 					debug: false
 				});
 
-				if (typeof(mData.getRequesterFrom) == 'undefined') {
+				if (typeof (mData.getRequesterFrom) == 'undefined') {
 					var getRequesterFrom = 'Author';
 				} else {
 					var getRequesterFrom = mData.getRequesterFrom;
@@ -17513,26 +17678,26 @@
 						"	</And>" +
 						"</Where>";
 				}
-			} else if (typeof(t.basicMyAllQueryRelevantValue) != "undefined") {
+			} else if (typeof (t.basicMyAllQueryRelevantValue) != "undefined") {
 
 				var myName = $().SPServices.SPGetCurrentUser({
 					fieldName: "Title",
 					debug: false
 				});
 
-				if (typeof(mData.getRequesterFrom) == 'undefined') {
+				if (typeof (mData.getRequesterFrom) == 'undefined') {
 					var getRequesterFrom = 'Author';
 				} else {
 					var getRequesterFrom = mData.getRequesterFrom;
 				}
 
 				query = "<Where>" +
-						"	<Contains>" +
-						"		<FieldRef Name='" + getRequesterFrom + "'></FieldRef>" +
-						"			<Value Type='Text'>" + uData.name + "</Value>" +
-						"		</Contains>" +
-						"</Where>";
-			} else if (typeof(t.customCAMLQuery) != "undefined") {
+					"	<Contains>" +
+					"		<FieldRef Name='" + getRequesterFrom + "'></FieldRef>" +
+					"			<Value Type='Text'>" + uData.name + "</Value>" +
+					"		</Contains>" +
+					"</Where>";
+			} else if (typeof (t.customCAMLQuery) != "undefined") {
 				query = ReplaceAll('myName', uData.name, t.customCAMLQuery);
 			}
 
@@ -17562,7 +17727,7 @@
 
 
 
-	$.fn.GetListDataForDatatable = function(options) {
+	$.fn.GetListDataForDatatable = function (options) {
 
 		var returnValue = [];
 		var opt = options;
@@ -17587,17 +17752,17 @@
 			CAMLViewFields: fields,
 			CAMLQuery: query,
 			CAMLQueryOptions: queryOptions,
-			completefunc: function(xData, Status) {
+			completefunc: function (xData, Status) {
 
 				// iterate through every list item returned
-				$(xData.responseXML).SPFilterNode("z:row").each(function() {
+				$(xData.responseXML).SPFilterNode("z:row").each(function () {
 
 					var thisItem = $(this);
 					var itemDataForReturn = {};
 
-					$.each(opt.lookupFields, function(i, lookupField) {
+					$.each(opt.lookupFields, function (i, lookupField) {
 
-						if (typeof(thisItem.attr("ows_" + lookupField.internalName)) === "undefined") {
+						if (typeof (thisItem.attr("ows_" + lookupField.internalName)) === "undefined") {
 							itemDataForReturn[lookupField.internalName] = "";
 						} else {
 
@@ -17605,10 +17770,10 @@
 
 								var thisRequestID = thisItem.attr("ows_" + lookupField.internalName);
 
-								itemDataForReturn[lookupField.internalName] = "<a href = \"" + mData.fullSiteBaseURL + "/SitePages/App.aspx?r=" + thisRequestID + 
-									"\" data-button-type=\"existingRequest\" " + 
-									"data-request-id=\"" + thisRequestID + "\"" + 
-									"class=\"link_request-id\">" + 
+								itemDataForReturn[lookupField.internalName] = "<a href = \"" + mData.fullSiteBaseURL + "/SitePages/App.aspx?r=" + thisRequestID +
+									"\" data-button-type=\"existingRequest\" " +
+									"data-request-id=\"" + thisRequestID + "\"" +
+									"class=\"link_request-id\">" +
 									thisRequestID + "</a>";
 
 							} else if (lookupField.anchorNoHref == 1) {
@@ -17646,14 +17811,14 @@
 
 
 
-	$.fn.RenderPersonLinks = function(usersString) {
+	$.fn.RenderPersonLinks = function (usersString) {
 
 		// console.log(usersString);
 
 		var returnValue = "";
 		var userArray = usersString.split(";#");
 
-		$.each(userArray, function(i, userData) {
+		$.each(userArray, function (i, userData) {
 
 			if (isNaN(userData) != false) {
 
@@ -17682,7 +17847,7 @@
 
 
 
-	$.fn.ReturnSortableDate = function(dateTimeString, incomingFormat, returnFormat, determineYearDisplayDynamically) {
+	$.fn.ReturnSortableDate = function (dateTimeString, incomingFormat, returnFormat, determineYearDisplayDynamically) {
 
 		// set up vars
 		var retVal = '';
@@ -17697,7 +17862,7 @@
 
 
 
-	$.fn.ReturnFormattedDateTime = function(dateTimeString, incomingFormat, returnFormat, determineYearDisplayDynamically) {
+	$.fn.ReturnFormattedDateTime = function (dateTimeString, incomingFormat, returnFormat, determineYearDisplayDynamically) {
 
 		// config locale
 		moment.locale('en');
@@ -17718,7 +17883,7 @@
 
 		// if need to determine year display dynamically
 		//		(essentially, we'll only display year if it's not the current year)
-		if (typeof(determineYearDisplayDynamically) != "undefined") {
+		if (typeof (determineYearDisplayDynamically) != "undefined") {
 			if (determineYearDisplayDynamically == 1) {
 
 				// if there's an incoming format
@@ -17765,13 +17930,13 @@
 				// use return format to format dateTimeString
 				retVal += moment(dateTimeString, incomingFormat).format(returnFormat);
 			}
-		
-		// if incoming format is not null, use it to parse dateTimeString
+
+			// if incoming format is not null, use it to parse dateTimeString
 		} else {
 
 			// if incomingFormat contains ', YYYY' and dateTimeString doesn't end with that value and determineYearDisplayDynamically == 1
 			//  (E.g., incomingFormat == 'MMMM D, YYYY' and dateTimeString is only 'February 14'
-			if (StrInStr(incomingFormat, ', YYYY') != false && StrInStr(dateTimeString, ', 2') == false && typeof(determineYearDisplayDynamically) != "undefined" && determineYearDisplayDynamically == 1) {
+			if (StrInStr(incomingFormat, ', YYYY') != false && StrInStr(dateTimeString, ', 2') == false && typeof (determineYearDisplayDynamically) != "undefined" && determineYearDisplayDynamically == 1) {
 				// augment with the current year
 				//  (since determineYearDisplayDynamically == 1, should be safe assumption (until it isn't))
 				dateTimeString += ', ' + moment().format('YYYY');
@@ -17782,7 +17947,7 @@
 				// use iso format to format dateTimeString
 				retVal += moment(dateTimeString, incomingFormat).format();
 
-			// if return format is not null
+				// if return format is not null
 			} else {
 				// use return format to format dateTimeString
 				retVal += moment(dateTimeString, incomingFormat).format(returnFormat);
@@ -17794,9 +17959,9 @@
 
 
 
-	$.fn.ReturnButtonLink = function(linkType, anchorText, href, idValue, classValues, target) {
+	$.fn.ReturnButtonLink = function (linkType, anchorText, href, idValue, classValues, target) {
 		var newLink = "<a";
-		if (typeof(idValue) != "undefined" && idValue != null && idValue != "") {
+		if (typeof (idValue) != "undefined" && idValue != null && idValue != "") {
 			newLink += " id=\"" + idValue + "\"";
 		}
 
@@ -17813,11 +17978,11 @@
 				break;
 		}
 
-		if (typeof(classValues) != "undefined" && classValues != null && classValues != "") {
+		if (typeof (classValues) != "undefined" && classValues != null && classValues != "") {
 			newLink += " " + classValues;
 		}
 		newLink += "\"";
-		if (typeof(target) != "undefined" && target != null && target != "") {
+		if (typeof (target) != "undefined" && target != null && target != "") {
 			newLink += " target=\"" + target + "\"";
 		}
 
@@ -17825,32 +17990,32 @@
 			newLink += "data-button-type=\"newRequest\" href=\"" + mData.fullSiteBaseURL + "/SitePages/App.aspx?r=0\""
 		}
 
-		if (typeof(href) != "undefined" && href != null && href != "") {
+		if (typeof (href) != "undefined" && href != null && href != "") {
 			newLink += " href=\"" + href + "\"";
 		}
 
 		newLink += ">" + anchorText + "</a>";
-		
+
 		return newLink;
 	};
 
 
 
-	$.fn.RenderSWFNewRequestButton = function() {
+	$.fn.RenderSWFNewRequestButton = function () {
 		$("#overview-table-container").before($().ReturnButtonLink("newItem", "New Request", null, "", "button_swf-new-request-with-datatable"));
 	};
 
 
 
-	$.fn.RenderAdditionalButtons = function(buttons) {
+	$.fn.RenderAdditionalButtons = function (buttons) {
 		var buttonsMarkup = "";
-		$.each(buttons, function(i, button) {
+		$.each(buttons, function (i, button) {
 			// business rule: even if there's a function restricting rendering permission, the button will always render for admins; if this changes, 
 			//		will need to update GPC requests
-			if (uData.isAdmin === 1 || typeof(button.renderPermissionsFunction) == "undefined") {
+			if (uData.isAdmin === 1 || typeof (button.renderPermissionsFunction) == "undefined") {
 				buttonsMarkup += $().ReturnButtonLink(button.linkType, button.anchorText, button.href, button.idValue, button.classValues, button.target);
 			} else {
-				if (CallFunctionFromString (button.renderPermissionsFunction) === 1) {
+				if (CallFunctionFromString(button.renderPermissionsFunction) === 1) {
 					buttonsMarkup += $().ReturnButtonLink(button.linkType, button.anchorText, button.href, button.idValue, button.classValues, button.target);
 				}
 			}
@@ -17860,58 +18025,58 @@
 
 
 
-	$.fn.RenderListAsDatatable = function(options) {
+	$.fn.RenderListAsDatatable = function (options) {
 
 		var opt = options;
 
 		var tableMarkup = '<div id="table-container_' + opt.tableID + '"> \n';
 
-		if (typeof(opt.tableTitle) != "undefined") {
+		if (typeof (opt.tableTitle) != "undefined") {
 			tableMarkup += '<h2 id="header_' + opt.tableID + '">' + opt.tableTitle + '</h2>';
 		}
 
-		if (typeof(opt.listForDatatable[0]) == "undefined") {
+		if (typeof (opt.listForDatatable[0]) == "undefined") {
 			tableMarkup += '<p class="message_no-requests-found">No requests found</p></div>';
 			$("#" + opt.targetID).append(tableMarkup);
 		} else {
 			tableMarkup += '<table id="' + opt.tableID + '"><thead><tr>' + opt.theadDetails + '</tr></thead></table>';
 			$("#" + opt.targetID).append(tableMarkup);
 
-			if (typeof(opt.grouping) == "undefined") {
+			if (typeof (opt.grouping) == "undefined") {
 				opt.columnDefs = [];
-				opt.groupingFunction = function () {};
+				opt.groupingFunction = function () { };
 			} else {
-				
+
 				opt.columnDefs = [{ "visible": false, "targets": opt.grouping.zeroIndexedColumnNumber }];
 
 				opt.groupingFunction = function () {
-		            
-		            var api = this.api();
-		            var rows = api.rows( {page:'current'} ).nodes();
-		            var last = null;
 
-		            api.column(opt.grouping.zeroIndexedColumnNumber, {page:'current'}).data().each(function (group, i) {
-		                if (last !== group ) {
-		                    $(rows).eq(i).before('<tr class="group"><td colspan="' + opt.grouping.numberColsForHeaderToSpan + '">' + group + '</td></tr>');
-		                    last = group;
-		                }
-		            });
+					var api = this.api();
+					var rows = api.rows({ page: 'current' }).nodes();
+					var last = null;
 
-		            var tracker = 0;
+					api.column(opt.grouping.zeroIndexedColumnNumber, { page: 'current' }).data().each(function (group, i) {
+						if (last !== group) {
+							$(rows).eq(i).before('<tr class="group"><td colspan="' + opt.grouping.numberColsForHeaderToSpan + '">' + group + '</td></tr>');
+							last = group;
+						}
+					});
 
-		            $("table#" + opt.tableID + " > tbody > tr").each(function() {
-            			if ($(this).hasClass("group")) { 
-            				tracker = 0;
-            			} else {
-            				tracker++;
-            				$(this).removeClass("odd even");
-            				if (tracker % 2 == 0) {
-            					$(this).addClass("even");
-            				} else {
-            					$(this).addClass("odd");
-            				}
-            			}
-		            });
+					var tracker = 0;
+
+					$("table#" + opt.tableID + " > tbody > tr").each(function () {
+						if ($(this).hasClass("group")) {
+							tracker = 0;
+						} else {
+							tracker++;
+							$(this).removeClass("odd even");
+							if (tracker % 2 == 0) {
+								$(this).addClass("even");
+							} else {
+								$(this).addClass("odd");
+							}
+						}
+					});
 				};
 			}
 
@@ -17930,7 +18095,7 @@
 
 
 
-	$.fn.GetMondayThisWeekAsISODateString = function(relevantMondayISODateString) {
+	$.fn.GetMondayThisWeekAsISODateString = function (relevantMondayISODateString) {
 		var today = new Date();
 		var day = today.getDay();
 		var mondayThisWeekAsISODateString = moment().subtract(day - 1, 'days').format("YYYY-MM-DD");
@@ -17939,7 +18104,7 @@
 
 
 
-	$.fn.GenerateDatesForEveryXDaysEndNever = function(xVar, startDate) {
+	$.fn.GenerateDatesForEveryXDaysEndNever = function (xVar, startDate) {
 		// daily - every X days - custom start date - no end date
 		moment.locale('en');
 		moment.suppressDeprecationWarnings = true;
@@ -17952,7 +18117,7 @@
 
 
 
-	$.fn.GenerateDatesForEveryXDaysEndAfterYOccurrences = function(xVar, startDate, yVar) {
+	$.fn.GenerateDatesForEveryXDaysEndAfterYOccurrences = function (xVar, startDate, yVar) {
 		// daily - every X days - custom start date - end after Y occurrences
 		moment.locale('en');
 		moment.suppressDeprecationWarnings = true;
@@ -17965,7 +18130,7 @@
 
 
 
-	$.fn.GenerateDatesForEveryXDaysEndByDateY = function(xVar, startDate, yVar) {
+	$.fn.GenerateDatesForEveryXDaysEndByDateY = function (xVar, startDate, yVar) {
 		// daily - every X days - custom start date - end by date Y
 		moment.locale('en');
 		moment.suppressDeprecationWarnings = true;
@@ -17978,7 +18143,7 @@
 
 
 
-	$.fn.GenerateDatesForEveryWeekdayEndNever = function(startDate) {
+	$.fn.GenerateDatesForEveryWeekdayEndNever = function (startDate) {
 		// daily - every weekday - custom start date - no end date
 		moment.locale('en');
 		moment.suppressDeprecationWarnings = true;
@@ -17990,7 +18155,7 @@
 
 
 
-	$.fn.GenerateDatesForEveryWeekdayEndAfterXOccurrences = function(startDate, xVar) {
+	$.fn.GenerateDatesForEveryWeekdayEndAfterXOccurrences = function (startDate, xVar) {
 		// daily - every weekday - custom start date - end after X occurrences
 		moment.locale('en');
 		moment.suppressDeprecationWarnings = true;
@@ -18002,7 +18167,7 @@
 
 
 
-	$.fn.GenerateDatesForEveryWeekdayEndByDateX = function(startDate, xVar) {
+	$.fn.GenerateDatesForEveryWeekdayEndByDateX = function (startDate, xVar) {
 		// daily - every weekday - custom start date - end by date X
 		moment.locale('en');
 		moment.suppressDeprecationWarnings = true;
@@ -18014,7 +18179,7 @@
 
 
 
-	$.fn.GenerateDatesForEveryXWeeksOnYDaysEndNever = function(xVar, yVar, startDate) {
+	$.fn.GenerateDatesForEveryXWeeksOnYDaysEndNever = function (xVar, yVar, startDate) {
 		// weekly - every X weeks on [array of days of week] - custom start date - no end date
 		moment.locale('en');
 		moment.suppressDeprecationWarnings = true;
@@ -18031,7 +18196,7 @@
 
 
 
-	$.fn.GenerateDatesForEveryXWeeksOnYDaysEndAfterZOccurrences = function(xVar, yVar, startDate, zVar) {
+	$.fn.GenerateDatesForEveryXWeeksOnYDaysEndAfterZOccurrences = function (xVar, yVar, startDate, zVar) {
 		// weekly - every X weeks on [array of days of week] - custom start date - end after Z occurrences
 		moment.locale('en');
 		moment.suppressDeprecationWarnings = true;
@@ -18050,7 +18215,7 @@
 
 		// ensure only the desired number of selected occurrences are in the final batch
 		var occrrencesPared = [];
-		$.each(selectedOcurrences, function(k, v) {
+		$.each(selectedOcurrences, function (k, v) {
 			// k is 0-indexed; zVar is 1-indexed
 			if (k < zVar) {
 				occrrencesPared.push(v)
@@ -18062,7 +18227,7 @@
 
 
 
-	$.fn.GenerateDatesForEveryXWeeksOnYDaysEndByDateZ = function(xVar, yVar, startDate, zVar) {
+	$.fn.GenerateDatesForEveryXWeeksOnYDaysEndByDateZ = function (xVar, yVar, startDate, zVar) {
 		// weekly - every X weeks on [array of days of week] - custom start date - end by date Z
 		moment.locale('en');
 		moment.suppressDeprecationWarnings = true;
@@ -18080,7 +18245,7 @@
 
 
 
-	$.fn.GenerateDatesForEveryXDaysOfEveryYMonthsEndNever = function(xVar, yVar, startDate) {
+	$.fn.GenerateDatesForEveryXDaysOfEveryYMonthsEndNever = function (xVar, yVar, startDate) {
 		// monthly - every day X of every Y months - custom start date - no end date
 		moment.locale('en');
 		moment.suppressDeprecationWarnings = true;
@@ -18096,7 +18261,7 @@
 
 
 
-	$.fn.GenerateDatesForEveryXDaysOfEveryYMonthsEndAfterYOccurrences = function(xVar, yVar, startDate, zVar) {
+	$.fn.GenerateDatesForEveryXDaysOfEveryYMonthsEndAfterYOccurrences = function (xVar, yVar, startDate, zVar) {
 		// monthly - every day X of every Y months - custom start date - end after Z occurrences
 		moment.locale('en');
 		moment.suppressDeprecationWarnings = true;
@@ -18112,7 +18277,7 @@
 
 
 
-	$.fn.GenerateDatesForEveryXDaysOfEveryYMonthsEndByDateY = function(xVar, yVar, startDate, zVar) {
+	$.fn.GenerateDatesForEveryXDaysOfEveryYMonthsEndByDateY = function (xVar, yVar, startDate, zVar) {
 		// monthly - every day X of every Y months - custom start date - end by date Z
 		moment.locale('en');
 		moment.suppressDeprecationWarnings = true;
@@ -18127,7 +18292,7 @@
 
 
 
-	$.fn.GenerateDatesForEveryXYDayOfEveryZMonthsEndNever = function(xVar, yVar, zVar, startDate) {
+	$.fn.GenerateDatesForEveryXYDayOfEveryZMonthsEndNever = function (xVar, yVar, zVar, startDate) {
 		// monthly - every X (ordinal) Y (day of week) of every Z month(s) - custom start date - no end date
 		moment.locale('en');
 		moment.suppressDeprecationWarnings = true;
@@ -18144,7 +18309,7 @@
 
 
 
-	$.fn.GenerateDatesForEveryXYDayOfEveryZMonthsEndAfterYOccurrences = function(xVar, yVar, zVar, startDate, aVar) {
+	$.fn.GenerateDatesForEveryXYDayOfEveryZMonthsEndAfterYOccurrences = function (xVar, yVar, zVar, startDate, aVar) {
 		// monthly - every X (ordinal/last) Y (day of week) of every Z month(s) - custom start date - end after A occurrences
 		moment.locale('en');
 		moment.suppressDeprecationWarnings = true;
@@ -18161,7 +18326,7 @@
 
 
 
-	$.fn.GenerateDatesForEveryXYDayOfEveryZMonthsEndByDateY = function(xVar, yVar, zVar, startDate, aVar) {
+	$.fn.GenerateDatesForEveryXYDayOfEveryZMonthsEndByDateY = function (xVar, yVar, zVar, startDate, aVar) {
 		// monthly - every X (ordinal/last) Y (day of week) of every Z month(s) - custom start date - end by date A
 		moment.locale('en');
 		moment.suppressDeprecationWarnings = true;
@@ -18177,7 +18342,7 @@
 
 
 
-	$.fn.GenerateDatesForEveryXDayYMonthEveryYearEndNever = function(xVar, yVar, startDate) {
+	$.fn.GenerateDatesForEveryXDayYMonthEveryYearEndNever = function (xVar, yVar, startDate) {
 		// yearly - every X month Y date - custom start date - no end date
 		moment.locale('en');
 		moment.suppressDeprecationWarnings = true;
@@ -18191,7 +18356,7 @@
 
 
 
-	$.fn.GenerateDatesForEveryXDayYMonthEveryYearEndAfterYOccurrences = function(xVar, yVar, startDate, zVar) {
+	$.fn.GenerateDatesForEveryXDayYMonthEveryYearEndAfterYOccurrences = function (xVar, yVar, startDate, zVar) {
 		// yearly - every X month Y date - custom start date - end after Z occurrences
 		moment.locale('en');
 		moment.suppressDeprecationWarnings = true;
@@ -18205,7 +18370,7 @@
 
 
 
-	$.fn.GenerateDatesForEveryXDayYMonthEveryYearEndByDateY = function(xVar, yVar, startDate, zVar) {
+	$.fn.GenerateDatesForEveryXDayYMonthEveryYearEndByDateY = function (xVar, yVar, startDate, zVar) {
 		// yearly - every X month Y date - custom start date - end by date Z
 		moment.locale('en');
 		moment.suppressDeprecationWarnings = true;
@@ -18219,7 +18384,7 @@
 
 
 
-	$.fn.GenerateDatesForEveryXYDayZMonthEveryYearEndNever = function(xVar, yVar, zVar, startDate) {
+	$.fn.GenerateDatesForEveryXYDayZMonthEveryYearEndNever = function (xVar, yVar, zVar, startDate) {
 		// yearly - every X (ordinal/last) Y (day of week) of Z month - custom start date - no end date
 		moment.locale('en');
 		moment.suppressDeprecationWarnings = true;
@@ -18234,7 +18399,7 @@
 
 
 
-	$.fn.GenerateDatesForEveryXYDayZMonthEveryYearEndAfterYOccurrences = function(xVar, yVar, zVar, startDate, aVar) {
+	$.fn.GenerateDatesForEveryXYDayZMonthEveryYearEndAfterYOccurrences = function (xVar, yVar, zVar, startDate, aVar) {
 		// yearly - every X (ordinal/last) Y (day of week) of Z month - custom start date - end after A occurrences
 		moment.locale('en');
 		moment.suppressDeprecationWarnings = true;
@@ -18249,7 +18414,7 @@
 
 
 
-	$.fn.GenerateDatesForEveryXYDayZMonthEveryYearEndByDateY = function(xVar, yVar, zVar, startDate, aVar) {
+	$.fn.GenerateDatesForEveryXYDayZMonthEveryYearEndByDateY = function (xVar, yVar, zVar, startDate, aVar) {
 		// yearly - every X (ordinal/last) Y (day of week) of Z month - custom start date - end by date A
 		moment.locale('en');
 		moment.suppressDeprecationWarnings = true;
@@ -18265,7 +18430,7 @@
 
 
 
-	$.fn.GetFirstAndEveryNthDate = function(getFromArray, n) {
+	$.fn.GetFirstAndEveryNthDate = function (getFromArray, n) {
 
 		if (n == 0 || n == 1) {
 			var returnArray = getFromArray;
@@ -18276,13 +18441,13 @@
 
 			// create a dummy array of all dates but the first
 			var allButFirst = [];
-			$.each(getFromArray, function(k, v) {
+			$.each(getFromArray, function (k, v) {
 				if (k != 0) {
 					allButFirst.push(v);
 				}
 			});
 
-			$.each(allButFirst, function(k, v) {
+			$.each(allButFirst, function (k, v) {
 				if (((k + 1) % n) == 0) {
 					returnArray.push(v);
 				}
@@ -18294,7 +18459,7 @@
 
 
 
-	$.fn.GetEveryNthChunkAsUnchunked = function(getFromArray, chunkSize, n) {
+	$.fn.GetEveryNthChunkAsUnchunked = function (getFromArray, chunkSize, n) {
 
 		if (n == 0 || n == 1) {
 			var returnArray = getFromArray;
@@ -18314,20 +18479,20 @@
 
 			// create a dummy array of all chunks but the first
 			var allChunksButFirst = [];
-			$.each(chunkedArray, function(k, v) {
+			$.each(chunkedArray, function (k, v) {
 				if (k != 0) {
 					allChunksButFirst.push(v);
 				}
 			});
 
-			$.each(allChunksButFirst, function(k, v) {
+			$.each(allChunksButFirst, function (k, v) {
 				if (((k + 1) % n) == 0) {
 					chunkedFilteredArray.push(v);
 				}
 			});
 
-			$.each(chunkedFilteredArray, function(k, v) {
-				$.each(v, function(k2, v2) {
+			$.each(chunkedFilteredArray, function (k, v) {
+				$.each(v, function (k2, v2) {
 					returnArray.push(v2);
 				});
 			});
@@ -18341,7 +18506,7 @@
 
 
 
-	$.fn.ImportEventNeedsRequestDataToEventAVRequest = function(requestID) {
+	$.fn.ImportEventNeedsRequestDataToEventAVRequest = function (requestID) {
 
 		console.log("function called");
 
@@ -18364,9 +18529,9 @@
 
 		var eventRDataSelected = {};
 
-		if ("Event-Name" in eventRData.formData){ eventRDataSelected["Event-Name"] = eventRData.formData["Event-Name"]; }
+		if ("Event-Name" in eventRData.formData) { eventRDataSelected["Event-Name"] = eventRData.formData["Event-Name"]; }
 
-		if ("Event-Space" in eventRData.formData){ eventRDataSelected["Event-Space"] = eventRData.formData["Event-Space"]; }
+		if ("Event-Space" in eventRData.formData) { eventRDataSelected["Event-Space"] = eventRData.formData["Event-Space"]; }
 
 		if ("date-input_Event-Beginning-Datetime" in eventRData.formData) { eventRDataSelected["date-input_Event-Beginning-Datetime"] = eventRData.formData["date-input_Event-Beginning-Datetime"]; }
 		if ("hours-input_Event-Beginning-Datetime" in eventRData.formData) { eventRDataSelected["hours-input_Event-Beginning-Datetime"] = eventRData.formData["hours-input_Event-Beginning-Datetime"]; }
@@ -18388,7 +18553,7 @@
 
 
 
-	$.fn.ImportEventSpaceRequestDataToEventRequest = function(requestID) {
+	$.fn.ImportEventSpaceRequestDataToEventRequest = function (requestID) {
 
 		var eventRData = $().GetFieldsFromOneRow({
 			"listName": "swfList",
@@ -18408,10 +18573,10 @@
 
 		var eventRDataSelected = {};
 
-		if ("Event-Name" in eventRData.formData){ eventRDataSelected["Event-Name"] = eventRData.formData["Event-Name"]; }
-		if ("Total-Attendance" in eventRData.formData){ eventRDataSelected["Total-Attendance"] = eventRData.formData["Total-Attendance"]; }
-		if ("Requested-Space" in eventRData.formData){ eventRDataSelected["event-space_" + $().ReturnHyphenatedFieldNameOrValue(eventRData.formData["Requested-Space"]).toLowerCase()] = $().ReturnHyphenatedFieldNameOrValue(eventRData.formData["Requested-Space"]).toLowerCase(); }
-		if ("Other-Event-Space" in eventRData.formData){ eventRDataSelected["Other-Event-Space"] = eventRData.formData["Other-Event-Space"]; }
+		if ("Event-Name" in eventRData.formData) { eventRDataSelected["Event-Name"] = eventRData.formData["Event-Name"]; }
+		if ("Total-Attendance" in eventRData.formData) { eventRDataSelected["Total-Attendance"] = eventRData.formData["Total-Attendance"]; }
+		if ("Requested-Space" in eventRData.formData) { eventRDataSelected["event-space_" + $().ReturnHyphenatedFieldNameOrValue(eventRData.formData["Requested-Space"]).toLowerCase()] = $().ReturnHyphenatedFieldNameOrValue(eventRData.formData["Requested-Space"]).toLowerCase(); }
+		if ("Other-Event-Space" in eventRData.formData) { eventRDataSelected["Other-Event-Space"] = eventRData.formData["Other-Event-Space"]; }
 
 		if ("date-input_Event-Beginning-Datetime" in eventRData.formData) { eventRDataSelected["date-input_Event-Beginning-Datetime"] = eventRData.formData["date-input_Event-Beginning-Datetime"]; }
 		if ("hours-input_Event-Beginning-Datetime" in eventRData.formData) { eventRDataSelected["hours-input_Event-Beginning-Datetime"] = eventRData.formData["hours-input_Event-Beginning-Datetime"]; }
@@ -18440,13 +18605,13 @@
 
 		PopulateFormData("div#request-form", eventRDataSelected, "https://bmos.sharepoint.com/sites/vxo-function/Lists/SWFList", requestID, undefined);
 		if ("Requested-Space" in eventRData.formData && eventRData.formData["Requested-Space"] === "Other") {
-			$( "#event-space_other" ).trigger( "change" );
+			$("#event-space_other").trigger("change");
 		}
 	};
 
 
 
-	$.fn.ImportEventNeedsRequestDataToCateringRequest = function(requestID) {
+	$.fn.ImportEventNeedsRequestDataToCateringRequest = function (requestID) {
 
 		var eventRData = $().GetFieldsFromOneRow({
 			"listName": "swfList",
@@ -18474,7 +18639,7 @@
 		if ("minutes-input_Event-Ending-Datetime" in eventRData.formData) { eventRDataSelected["minutes-input_Event-Ending-Datetime"] = eventRData.formData["minutes-input_Event-Ending-Datetime"]; }
 		if ("datetime-storage_Event-Ending-Datetime" in eventRData.formData) { eventRDataSelected["datetime-storage_Event-Ending-Datetime"] = eventRData.formData["datetime-storage_Event-Ending-Datetime"]; }
 
-		if ("Total-Attendance" in eventRData.formData){ eventRDataSelected["Total-Attendance"] = eventRData.formData["Total-Attendance"]; }
+		if ("Total-Attendance" in eventRData.formData) { eventRDataSelected["Total-Attendance"] = eventRData.formData["Total-Attendance"]; }
 
 		if ("Onsite-Contact" in eventRData.formData) { eventRDataSelected["Onsite-Contact"] = eventRData.formData["Onsite-Contact"]; }
 
@@ -18482,7 +18647,7 @@
 
 		PopulateFormData("div#request-form", eventRDataSelected, "https://bmos.sharepoint.com/sites/vxo-function/Lists/SWFList", requestID, undefined);
 
-		if (typeof($("input#Total-Attendance").val()) != "undefined" && $("input#Total-Attendance").val() != "" && $("input#Total-Attendance").val() != "0" && (/^[0-9]*[1-9][0-9]*$/.test($("input#Total-Attendance").val()))) {
+		if (typeof ($("input#Total-Attendance").val()) != "undefined" && $("input#Total-Attendance").val() != "" && $("input#Total-Attendance").val() != "0" && (/^[0-9]*[1-9][0-9]*$/.test($("input#Total-Attendance").val()))) {
 			$().SetFieldToEnabled("#checkbox-for-boxed-lunches_boxedlunches");
 			$().SetFieldToEnabled("#checkbox-for-upscale-sandwich-buffet_upscalesandwichbuffet");
 			$().SetFieldToEnabled("#checkbox-for-delicatessen-buffet_delicatessenbuffet");
@@ -18491,8 +18656,8 @@
 
 
 
-	$.fn.SetSubtotalAndTotalFromTableRowPriceAndQuantity = function(quantityNumberElement) {
-		
+	$.fn.SetSubtotalAndTotalFromTableRowPriceAndQuantity = function (quantityNumberElement) {
+
 		var commonParentElement = $(quantityNumberElement).closest("tr");
 		var previousQuantityNumberElement = $(commonParentElement).find("input.previous-quantity");
 		var priceNumberElement = $(commonParentElement).find("span.price-amount");
@@ -18504,73 +18669,73 @@
 		var previousQuantityString = $(previousQuantityNumberElement).val();
 		var subtotalString = $(subtotalNumberElement).text();
 		var totalString = $(totalNumberElement).val();
-		
-		var priceNumber = Number(ReplaceAll(",","", priceString));
-		var totalNumber = Number(ReplaceAll("\\$","", ReplaceAll(",","", totalString)));
+
+		var priceNumber = Number(ReplaceAll(",", "", priceString));
+		var totalNumber = Number(ReplaceAll("\\$", "", ReplaceAll(",", "", totalString)));
 
 
 
 		// if quantityString is empty string
 
-			// set quantityNumber to 0
-			// clear error message
+		// set quantityNumber to 0
+		// clear error message
 
 		// if quantityString is not empty string
 
-			// if quantityString is 0
+		// if quantityString is 0
 
-				// set quantityNumber to 0
-				// clear error message
+		// set quantityNumber to 0
+		// clear error message
 
-			// if quantityString is not 0
+		// if quantityString is not 0
 
-				// if quantityString is not positive integer
+		// if quantityString is not positive integer
 
-					// set quantityNumber to 0
-					// set error message
+		// set quantityNumber to 0
+		// set error message
 
-				// if quantityString is positive integer
+		// if quantityString is positive integer
 
-					// set quantityNumber to quantityString
-					// clear error message 
+		// set quantityNumber to quantityString
+		// clear error message 
 
 		// if quantityNumber is 0
 
-			// set subtotalNumber to 0
+		// set subtotalNumber to 0
 
 		// if quantityNumber is not 0
 
-			// set subtotalNumber to priceNumber * quantityNumber
+		// set subtotalNumber to priceNumber * quantityNumber
 
 		// if previousQuantityString is empty or is 0 (initial entry)
 
-			// set previousQuantityNumber to 0
+		// set previousQuantityNumber to 0
 
 		// else
 
-			// set previousQuantityNumber to previousQuantityString
+		// set previousQuantityNumber to previousQuantityString
 
 		// if previousQuantityNumber is 0 (initial entry)
 
-			// set newTotalNumber to previousTotalNumber + subtotalNumber
+		// set newTotalNumber to previousTotalNumber + subtotalNumber
 
 		// if previousQuantityNumber is not 0 (not initial entry)
 
-			// set quantityDifferenceNumber to quantityNumber - previousQuantityNumber (may be negative)
+		// set quantityDifferenceNumber to quantityNumber - previousQuantityNumber (may be negative)
 
-			// set totalDifferenceNumber to priceNumber * quantityDifferenceNumber (may be negative)
+		// set totalDifferenceNumber to priceNumber * quantityDifferenceNumber (may be negative)
 
-			// set newTotalNumber to previousTotalNumber + totalDifferenceNumber
+		// set newTotalNumber to previousTotalNumber + totalDifferenceNumber
 
 		// if quantityNumber|subtotalNumber|newTotalNumber is 0
 
-			// set subtotalPrefix|newTotalPrefix to empty
-			// set quantityString|subtotalString|newTotalString to empty
+		// set subtotalPrefix|newTotalPrefix to empty
+		// set quantityString|subtotalString|newTotalString to empty
 
 		// if quantityNumber|subtotalNumber|newTotalNumber is not 0
 
-			// set subtotalPrefix|newTotalPrefix to $
-			// set quantityString|subtotalString|newTotalString to quantityNumber|subtotalNumber|newTotalNumber
+		// set subtotalPrefix|newTotalPrefix to $
+		// set quantityString|subtotalString|newTotalString to quantityNumber|subtotalNumber|newTotalNumber
 
 		// set prefixes and values: quantity|previousQuantity|subtotal|total
 
@@ -18597,7 +18762,7 @@
 			}
 		}
 
-		if(quantityNumber == 0) {
+		if (quantityNumber == 0) {
 			var newSubtotalNumber = 0;
 		} else {
 			var newSubtotalNumber = priceNumber * quantityNumber;
@@ -18653,7 +18818,7 @@
 
 
 
-	$.fn.SetSubtotalAndTotalFromTableRowPriceAndTotalAttendance = function(selectionElement) {
+	$.fn.SetSubtotalAndTotalFromTableRowPriceAndTotalAttendance = function (selectionElement) {
 
 		var commonParentElement = $(selectionElement).closest("tr");
 		var priceNumberElement = $(commonParentElement).find("span.price-amount");
@@ -18668,7 +18833,7 @@
 
 		var priceNumber = Number(priceString);
 		var quantityNumber = Number(quantityString);
-		var totalNumber = Number(ReplaceAll("\\$","", ReplaceAll(",","", totalString)));
+		var totalNumber = Number(ReplaceAll("\\$", "", ReplaceAll(",", "", totalString)));
 		var subtotalNumber = priceNumber * quantityNumber;
 
 		if ($(selectionElement).is(":checked")) {
@@ -18699,23 +18864,23 @@
 
 
 
-	$.fn.ShowAndHideSelectedAndUnselectedCateringSelectionOptions = function() {
+	$.fn.ShowAndHideSelectedAndUnselectedCateringSelectionOptions = function () {
 
 		// for each primary category div
-		$("div.parent_primary-category").each(function(i, primaryCategory) {
+		$("div.parent_primary-category").each(function (i, primaryCategory) {
 
 			var showPrimaryCategory = 0;
 			var parentPrimaryCategoryDivID = $(primaryCategory).attr("id");
 
 			// for each tr
-			$(primaryCategory).find("tbody tr").each(function(i, row) {
+			$(primaryCategory).find("tbody tr").each(function (i, row) {
 
 				var showRow = 0;
 				var quantityInputValueForThisRow = $("div#" + parentPrimaryCategoryDivID + " tr#" + $(row).attr("id") + " input.quantity-input").val();
 				var selectionCheckboxForThisRowIsChecked = $("div#" + parentPrimaryCategoryDivID + " tr#" + $(row).attr("id") + " input.item-selection").is(":checked");
 				// console.log($(row).attr("id"));
 				// if there's a quantity for this row
-				if (typeof(quantityInputValueForThisRow) != "undefined" && quantityInputValueForThisRow != "") {
+				if (typeof (quantityInputValueForThisRow) != "undefined" && quantityInputValueForThisRow != "") {
 					// console.log(row);
 					// set flags to show the row and the primary category div
 					showRow = 1;
@@ -18724,7 +18889,7 @@
 
 				// if there's a checked checkbox for this row
 				if (selectionCheckboxForThisRowIsChecked) {
-					
+
 					// set flags to show the row and the primary category div
 					showRow = 1;
 					showPrimaryCategory = 1;
@@ -18836,18 +19001,18 @@
 			if (directCostsString == "") { directCostsString = "0"; }
 			if (indirectCostsString == "") { indirectCostsString = "0"; }
 			$("input#Total-MOS-Budget").val(numeral(parseFloat(directCostsString) + parseFloat(indirectCostsString)).format('$0,0.00'));
-			if (directCostsString != "0") { 
+			if (directCostsString != "0") {
 				$("input#MOS-Direct-Costs").val(numeral(directCostsString).format('$0,0.00'));
 			}
-			if (indirectCostsString != "0") { 
+			if (indirectCostsString != "0") {
 				$("input#IDC").val(numeral(indirectCostsString).format('$0,0.00'));
 			}
 		}
 
-		if (typeof($("input#Total-Project-Budget").val()) !== "undefined" && $("input#Total-Project-Budget").val() != "" && $("input#Total-Project-Budget").val() != "0") {
+		if (typeof ($("input#Total-Project-Budget").val()) !== "undefined" && $("input#Total-Project-Budget").val() != "" && $("input#Total-Project-Budget").val() != "0") {
 			$("input#Total-Project-Budget").val(numeral($("input#Total-Project-Budget").val().replace("\$", "").replace(/[,]/g, "")).format('$0,0.00'));
 		}
-		if (typeof($("input#Cost-Share").val()) !== "undefined" && $("input#Cost-Share").val() != "" && $("input#Cost-Share").val() != "0") {
+		if (typeof ($("input#Cost-Share").val()) !== "undefined" && $("input#Cost-Share").val() != "" && $("input#Cost-Share").val() != "0") {
 			$("input#Cost-Share").val(numeral($("input#Cost-Share").val().replace("\$", "").replace(/[,]/g, "")).format('$0,0.00'));
 		}
 	};
@@ -18875,7 +19040,7 @@
 
 
 
-	$.fn.ProcessEARAndPARHourAndWageFields = function (hourlyWageFieldID, annualWageFieldID, biweeklyHoursFieldID, annualHoursFieldID) {
+	$.fn.ProcessEARAndPARHourAndWageFields = function (hourlyWageFieldID, annualWageFieldID, biweeklyHoursFieldID, annualHoursFieldID, lastSalaryFieldID) {
 		var earHoursFieldsProcessed = $().ProcessEARAndPARHourFields(biweeklyHoursFieldID, annualHoursFieldID);
 		if (earHoursFieldsProcessed == 1) {
 			var hourlyWageString = $("input#" + hourlyWageFieldID).val().replace("\$", "").replace(/[,]/g, "");
@@ -18883,11 +19048,27 @@
 				var biWeeklyHoursString = $("input#" + biweeklyHoursFieldID).val().replace("\$", "").replace(/[,]/g, "");
 				var hourlyWageIsValid = $().ValidateInRealTimeForPositiveNumberInUSDFormat(hourlyWageString, "input#" + hourlyWageFieldID);
 				var biWeeklyPeriodsPerAnnum = 26;
-				if (hourlyWageIsValid == 0) {
-					$("input#" + annualWageFieldID).val("");
-				} else {
+				if (hourlyWageIsValid == 1) {
+					var annualWageString = parseFloat(hourlyWageString) * parseFloat(biWeeklyHoursString) * biWeeklyPeriodsPerAnnum;
 					$("input#" + hourlyWageFieldID).val(numeral(parseFloat(hourlyWageString)).format('$0,0.00'));
-					$("input#" + annualWageFieldID).val(numeral(parseFloat(hourlyWageString) * parseFloat(biWeeklyHoursString) * biWeeklyPeriodsPerAnnum).format('$0,0.00'));
+					$("input#" + annualWageFieldID).val(numeral(annualWageString).format('$0,0.00'));
+
+					if (lastSalaryFieldID) {
+						var lastSalaryString = $("input#" + lastSalaryFieldID).val().replace("\$", "").replace(/[,]/g, "");
+						if (lastSalaryString != '') {
+							var salaryChangeString = parseFloat(annualWageString) - parseFloat(lastSalaryString);
+							$("input#" + lastSalaryFieldID).val(numeral(parseFloat(lastSalaryString)).format('$0,0.00'));
+							$("input#Salary-Change").val(numeral(parseFloat(salaryChangeString)).format('$0,0.00'));
+							$().SetFieldToRequired('Salary-Change', 'text');
+							$("div#label-and-control_Salary-Change").show("fast").removeClass("hidden");
+							if (salaryChangeString != 0) {
+								$().SetFieldToRequired('Salary-Change-Reason', 'textarea');
+								$("div#label-and-control_Salary-Change-Reason").show("fast").removeClass("hidden");
+							}
+						}
+					}
+				} else {
+					$("input#" + annualWageFieldID).val("");
 				}
 			} else {
 				$("input#" + annualWageFieldID).val('');
@@ -18901,82 +19082,82 @@
 
 
 	$.fn.ProcessEARPercentFields = function (fieldID) {
-			var numeralString = $('input#' + fieldID).val().replace("\%", "").replace(/[,]/g, "");
-			$('input#' + fieldID).val(numeral(parseFloat(numeralString) * .01).format('0.00%'));
+		var numeralString = $('input#' + fieldID).val().replace("\%", "").replace(/[,]/g, "");
+		$('input#' + fieldID).val(numeral(parseFloat(numeralString) * .01).format('0.00%'));
 	};
 
 
 
-	$.fn.ReturnGSEGroups = function() {
+	$.fn.ReturnGSEGroups = function () {
 		// send to caller
 		return {
 			"HRAdmins": [{
-					"name": "Samuel Corey",
-					"email": "scorey@mos.org",
-					"account": "scorey",
-					"accountLong": "i:0#.f|membership|scorey@mos.org"
-				}, {
-					"name": "James Baker",
-					"email": "jbaker@mos.org",
-					"account": "jbaker",
-					"accountLong": "i:0#.f|membership|jbaker@mos.org"
-				}
+				"name": "Samuel Corey",
+				"email": "scorey@mos.org",
+				"account": "scorey",
+				"accountLong": "i:0#.f|membership|scorey@mos.org"
+			}, {
+				"name": "James Baker",
+				"email": "jbaker@mos.org",
+				"account": "jbaker",
+				"accountLong": "i:0#.f|membership|jbaker@mos.org"
+			}
 			],
 			"JobAdmins": [{
-					"name": "HubTester4",
-					"email": "sp4@mos.org",
-					"account": "sp4",
-					"accountLong": "i:0#.f|membership|sp4@mos.org"
-				}/*, {
+				"name": "HubTester4",
+				"email": "sp4@mos.org",
+				"account": "sp4",
+				"accountLong": "i:0#.f|membership|sp4@mos.org"
+			}/*, {
 					"name": "Samuel Corey",
 					"email": "scorey@mos.org",
 					"account": "scorey",
 					"accountLong": "i:0#.f|membership|scorey@mos.org"
 				}*/, {
-					"name": "HubTester8",
-					"email": "sp8@mos.org",
-					"account": "sp8",
-					"accountLong": "i:0#.f|membership|sp8@mos.org"
+				"name": "HubTester8",
+				"email": "sp8@mos.org",
+				"account": "sp8",
+				"accountLong": "i:0#.f|membership|sp8@mos.org"
 				// }, {
 				// 	"name": "James Baker",
 				// 	"email": "jbaker@mos.org",
 				// 	"account": "jbaker",
 				// 	"accountLong": "i:0#.f|membership|jbaker@mos.org"
-				}
+			}
 			],
 			"Managers": [{
-					"name": "HubTester5",
-					"email": "sp5@mos.org",
-					"account": "sp5",
-					"accountLong": "i:0#.f|membership|sp5@mos.org"
-				}, {
-					"name": "HubTester9",
-					"email": "sp9@mos.org",
-					"account": "sp9",
-					"accountLong": "i:0#.f|membership|sp9@mos.org"
-				}, /*{
+				"name": "HubTester5",
+				"email": "sp5@mos.org",
+				"account": "sp5",
+				"accountLong": "i:0#.f|membership|sp5@mos.org"
+			}, {
+				"name": "HubTester9",
+				"email": "sp9@mos.org",
+				"account": "sp9",
+				"accountLong": "i:0#.f|membership|sp9@mos.org"
+			}, /*{
 					"name": "Samuel Corey",
 					"email": "scorey@mos.org",
 					"account": "scorey",
 					"accountLong": "i:0#.f|membership|scorey@mos.org"
 				},*/ {
-					"name": "Ben Wilson",
-					"email": "bwilson@mos.org",
-					"account": "bwilson",
-					"accountLong": "i:0#.f|membership|bwilson@mos.org"
+				"name": "Ben Wilson",
+				"email": "bwilson@mos.org",
+				"account": "bwilson",
+				"accountLong": "i:0#.f|membership|bwilson@mos.org"
 				// }, {
 				// 	"name": "James Baker",
 				// 	"email": "jbaker@mos.org",
 				// 	"account": "jbaker",
 				// 	"accountLong": "i:0#.f|membership|jbaker@mos.org"
-				}
+			}
 			]
 		}
 	};
 
 
 
-	$.fn.ReturnUserIsGSEHRAdmin = function() {
+	$.fn.ReturnUserIsGSEHRAdmin = function () {
 		var userIsGSEHRAdmin = false;
 		var gseGroups = $().ReturnGSEGroups();
 		$.each(gseGroups.HRAdmins, function (i, person) {
@@ -18987,7 +19168,7 @@
 		return userIsGSEHRAdmin;
 	};
 
-	$.fn.ReturnUserIsGSEJobAdmin = function() {
+	$.fn.ReturnUserIsGSEJobAdmin = function () {
 		var userIsGSEJobAdmin = false;
 		var gseGroups = $().ReturnGSEGroups();
 		$.each(gseGroups.JobAdmins, function (i, person) {
@@ -18998,7 +19179,7 @@
 		return userIsGSEJobAdmin;
 	};
 
-	$.fn.ReturnUserIsGSEManager = function() {
+	$.fn.ReturnUserIsGSEManager = function () {
 		var userIsGSEManager = false;
 		var gseGroups = $().ReturnGSEGroups();
 		$.each(gseGroups.Managers, function (i, person) {
@@ -19012,8 +19193,8 @@
 
 
 
-	$.fn.ReturnGPCGroups = function() {
-		
+	$.fn.ReturnGPCGroups = function () {
+
 		// get the config data stored as AllRequestData in /sites/gpc-configuration/Lists/SWFList
 		var allRequestDataObject = $().GetFieldsFromOneRow({
 			"listName": "SWFList",
@@ -19064,17 +19245,17 @@
 		var gpcGroups = {};
 
 		// iterate over the form data keys and values
-		$.each(allRequestDataObject.formData, function(formDatumKey, formDatumValue) {
+		$.each(allRequestDataObject.formData, function (formDatumKey, formDatumValue) {
 			// if this form datum value is a person
 			if (formDatumValue != "") {
 				// if this form datum key matches an element of gpcGroupsKeys
 				if (gpcGroupsKeys.indexOf(formDatumKey) > -1) {
 					// get a new key (for future ease; prefer dot notation)
-					var newKey = ReplaceAll("-","",formDatumKey);
+					var newKey = ReplaceAll("-", "", formDatumKey);
 					// create an empty array using the new key
 					gpcGroups[newKey] = [];
 					// for each person object in this formDatumValue
-					$.each(formDatumValue, function(i, person) {
+					$.each(formDatumValue, function (i, person) {
 						// add the person's name and email to the new array
 						var newPerson = {};
 						newPerson['name'] = person.displayText;
@@ -19093,10 +19274,10 @@
 
 
 
-	$.fn.ReturnUserIsGPCPeopleEditor = function() {
+	$.fn.ReturnUserIsGPCPeopleEditor = function () {
 		var userIsGPCPeopleEditor = false;
 		var gpcGroups = $().ReturnGPCGroups();
-		$.each(gpcGroups.EditGPCPeople, function(i,person) {
+		$.each(gpcGroups.EditGPCPeople, function (i, person) {
 			if (person.accountLong === uData.account) {
 				userIsGPCPeopleEditor = true;
 			}
@@ -19107,11 +19288,11 @@
 
 
 
-	$.fn.SetGPCSubmissionNeedsPeople = function() {
-			
+	$.fn.SetGPCSubmissionNeedsPeople = function () {
+
 		// get gpcGroups (people) data
 		var gpcGroups = $().ReturnGPCGroups();
-		
+
 		// set form config data
 		var spanIDsAndReplacementKeySets = [
 			{
@@ -19167,20 +19348,20 @@
 		];
 
 		// for each form config data set
-		$.each(spanIDsAndReplacementKeySets, function(i,spanIDsAndReplacementKeySet) {
+		$.each(spanIDsAndReplacementKeySets, function (i, spanIDsAndReplacementKeySet) {
 
 			// get the value that will replace the placeholders (and possibly be recorded in hidden fields)
 			var recordedValue = $("input#" + spanIDsAndReplacementKeySet.hiddenrecordKeeperID).val();
 			var replacementValue = '';
 			var replacementPersonObjectsArray = gpcGroups[spanIDsAndReplacementKeySet.replacementKey];
 			var personCount = replacementPersonObjectsArray.length;
-			
+
 			if (personCount == 1) {
 				replacementValue += replacementPersonObjectsArray[0]['name'];
 			} else if (personCount == 2) {
 				replacementValue += replacementPersonObjectsArray[0]['name'] + ' and/or ' + replacementPersonObjectsArray[1]['name'];
 			} else if (personCount > 2) {
-				$.each(replacementPersonObjectsArray, function (i,replacementPersonObject) {
+				$.each(replacementPersonObjectsArray, function (i, replacementPersonObject) {
 					if (i != 0) { replacementValue += ', '; }
 					if (i == (personCount - 1)) { replacementValue += ' and/or '; }
 					replacementValue += replacementPersonObjectsArray[i]['name'];
@@ -19190,25 +19371,25 @@
 			// if a hidden value already exists and the names are not locked down
 			if (recordedValue != "" && $("input#names-locked").val() != "1") {
 				// if the hidden value doesn't match the new value
-				if(recordedValue != replacementValue) {
+				if (recordedValue != replacementValue) {
 					// if a radio button has been selected
 					if ($("input[name='" + spanIDsAndReplacementKeySet.radioSetName + "']").is(":checked")) {
 						// if the value of the selected radio button is not "notApplicable"
 						if ($("input[name='" + spanIDsAndReplacementKeySet.radioSetName + "']:checked").val() != 'notApplicable') {
 							// iterate over all buttons in the group
-							$("input[name='" + spanIDsAndReplacementKeySet.radioSetName + "']").each(function(i, radioButton) {
+							$("input[name='" + spanIDsAndReplacementKeySet.radioSetName + "']").each(function (i, radioButton) {
 								// unset both checked property and checked attribute (the attribute setting is triggered by an event listener in initialization function)
 								$(radioButton).prop('checked', false).removeAttr("checked");
 							});
 
 							// present a message to user
 							var displacementValue = '<p class=\"submission-notice-addition emphasis\">' +
-														recordedValue + '	has been replaced by ' +
-														replacementValue + ' in the Project Needs section of this request. ' +
-													'	Your response has been cleared from the corresponding field. ' +
-													'	Please ensure that relevant needs have been discussed with ' +
-														replacementValue + ' and respond to this field again.' + 
-													'</p>';
+								recordedValue + '	has been replaced by ' +
+								replacementValue + ' in the Project Needs section of this request. ' +
+								'	Your response has been cleared from the corresponding field. ' +
+								'	Please ensure that relevant needs have been discussed with ' +
+								replacementValue + ' and respond to this field again.' +
+								'</p>';
 							$("div#submission-notice").prepend(displacementValue);
 						}
 					}
@@ -19224,15 +19405,15 @@
 
 
 
-	$.fn.ReturnGPCInitialConceptApprovalRequestAdditionalViewAccess = function(arguments) {
-		
+	$.fn.ReturnGPCInitialConceptApprovalRequestAdditionalViewAccess = function (incomingArgs) {
+
 		var gpcGroups = $().ReturnGPCGroups();
 		var hasViewPermission = 0;
 
 		// don't allow view access to requests that are in development -- this is the reason we can't
 		//		just put the relevant names in the ViewAccess column in ComponentLog
-		if (arguments.rData.requestStatus != "In Development") {
-			$.each(gpcGroups.InitialConceptViewAccess, function(i,person) {
+		if (incomingArgs.rData.requestStatus != "In Development") {
+			$.each(gpcGroups.InitialConceptViewAccess, function (i, person) {
 				if (person.accountLong === uData.account) {
 					hasViewPermission = 1;
 				}
@@ -19243,15 +19424,15 @@
 
 
 
-	$.fn.ReturnGPCSubmissionApprovalRequestAdditionalViewAccess = function (arguments) {
-		
+	$.fn.ReturnGPCSubmissionApprovalRequestAdditionalViewAccess = function (incomingArgs) {
+
 		var gpcGroups = $().ReturnGPCGroups();
 		var hasViewPermission = 0;
 
 		// don't allow view access to requests that are in development -- this is the reason we can't
 		//		just put the relevant names in the ViewAccess column in ComponentLog
-		if (arguments.rData.requestStatus != "In Development") {
-			$.each(gpcGroups.SubmissionApprovalViewAccess, function(i,person) {
+		if (incomingArgs.rData.requestStatus != "In Development") {
+			$.each(gpcGroups.SubmissionApprovalViewAccess, function (i, person) {
 				if (person.accountLong === uData.account) {
 					hasViewPermission = 1;
 				}
@@ -19267,8 +19448,8 @@
 
 		var gpcGroups = $().ReturnGPCGroups();
 		var hasViewPermission = 0;
-			
-		$.each(gpcGroups.EditGPCPeople, function(i,person) {
+
+		$.each(gpcGroups.EditGPCPeople, function (i, person) {
 			if (person.accountLong === uData.account) {
 				hasViewPermission = 1;
 			}
@@ -19279,9 +19460,9 @@
 
 
 
-	$.fn.ReturnGPCSubmissionApprovalRequestProjectNarrativeWriteAccess = function(rStatus) {
-		
-		if (typeof(rStatus) == "undefined" || rStatus === null) {
+	$.fn.ReturnGPCSubmissionApprovalRequestProjectNarrativeWriteAccess = function (rStatus) {
+
+		if (typeof (rStatus) == "undefined" || rStatus === null) {
 			rStatus = rData.requestStatus;
 		}
 
@@ -19292,7 +19473,7 @@
 		if (rStatus == 'Pending Approval' || rStatus == 'Approval Pending Comments') {
 
 			// if the current user is one of the people who can edit
-			$.each(gpcGroups.EditProjectNarrative, function(i,person) {
+			$.each(gpcGroups.EditProjectNarrative, function (i, person) {
 				if (person.accountLong == uData.account) {
 					writeAccess = 1;
 				}
@@ -19304,9 +19485,9 @@
 
 
 
-	$.fn.ReturnGPCSubmissionApprovalRequestProjectBudgetWriteAccess = function(rStatus) {
-		
-		if (typeof(rStatus) == "undefined" || rStatus === null) {
+	$.fn.ReturnGPCSubmissionApprovalRequestProjectBudgetWriteAccess = function (rStatus) {
+
+		if (typeof (rStatus) == "undefined" || rStatus === null) {
 			rStatus = rData.requestStatus;
 		}
 
@@ -19317,7 +19498,7 @@
 		if (rStatus == 'Pending Approval' || rStatus == 'Approval Pending Comments') {
 
 			// if the current user is one of the people who can edit
-			$.each(gpcGroups.EditProjectBudget, function(i,person) {
+			$.each(gpcGroups.EditProjectBudget, function (i, person) {
 				if (person.accountLong == uData.account) {
 					writeAccess = 1;
 				}
@@ -19329,9 +19510,9 @@
 
 
 
-	$.fn.ReturnGPCSubmissionApprovalRequestProjectBudgetJustificationWriteAccess = function(rStatus) {
-		
-		if (typeof(rStatus) == "undefined" || rStatus === null) {
+	$.fn.ReturnGPCSubmissionApprovalRequestProjectBudgetJustificationWriteAccess = function (rStatus) {
+
+		if (typeof (rStatus) == "undefined" || rStatus === null) {
 			rStatus = rData.requestStatus;
 		}
 
@@ -19342,7 +19523,7 @@
 		if (rStatus == 'Pending Approval' || rStatus == 'Approval Pending Comments') {
 
 			// if the current user is one of the people who can edit
-			$.each(gpcGroups.EditProjectBudgetJustification, function(i,person) {
+			$.each(gpcGroups.EditProjectBudgetJustification, function (i, person) {
 				if (person.accountLong == uData.account) {
 					writeAccess = 1;
 				}
@@ -19358,12 +19539,12 @@
 
 		var UserIsInFieldOfAllRequestData = 0;
 
-		if (typeof(rData.formData) !== "undefined") {
+		if (typeof (rData.formData) !== "undefined") {
 
 			var fieldPeopleArray = rData['formData'][ReplaceAll("\\.", "", ReplaceAll(" ", "-", fieldName))];
 
 			if (Array.isArray(fieldPeopleArray)) {
-				$.each(fieldPeopleArray, function(i, fieldPerson) {
+				$.each(fieldPeopleArray, function (i, fieldPerson) {
 					if (fieldPerson.account == uData.account) {
 						UserIsInFieldOfAllRequestData = 1;
 					}
@@ -19375,7 +19556,7 @@
 	};
 
 
-	$.fn.SetGPCInitialConceptApprovalRequestNonWriteAccess = function() {
+	$.fn.SetGPCInitialConceptApprovalRequestNonWriteAccess = function () {
 
 		// context:
 		//		1 - some users are given view permissions in other functions
@@ -19406,7 +19587,7 @@
 				// 1 - disable non-file fields
 
 				// handle inputs
-				$("#request-form").find('input').each(function() {
+				$("#request-form").find('input').each(function () {
 					var thisInputID = $(this).attr("id");
 					if (thisInputID.indexOf('TopSpan_HiddenInput') < 0) {
 						var thisInputType = $(this).attr("type");
@@ -19418,14 +19599,14 @@
 				});
 
 				// handle people pickers
-				$("#request-form").find('div[data-control-type="PeoplePicker"]').each(function() {
+				$("#request-form").find('div[data-control-type="PeoplePicker"]').each(function () {
 					var thisPeoplePickerID = $(this).attr("id");
 					$('#' + thisPeoplePickerID).addClass('disabled');
 					$().SetFieldToDisabled('#' + thisPeoplePickerID);
 				});
 
 				// handle selects
-				$("#request-form").find('select').each(function() {
+				$("#request-form").find('select').each(function () {
 					var thisSelectID = $(this).attr("id");
 					$('#' + thisSelectID).addClass('disabled');
 					$().SetFieldToDisabled('#' + thisSelectID);
@@ -19445,12 +19626,12 @@
 				$("div#label-and-control_Requester-Cancellation").hide("fast").addClass("hidden");
 				$("div#label-and-control_Ready-for-Submission-to-Committee").hide("fast").addClass("hidden");
 				$("div#rfp-or-other-website-link_help-note").hide("fast").addClass("hidden");
-				$("input#Proposal-Due-Date").datepicker( "destroy" );
-				$("input#Expected-Decision-Date").datepicker( "destroy" );
-				
+				$("input#Proposal-Due-Date").datepicker("destroy");
+				$("input#Expected-Decision-Date").datepicker("destroy");
+
 
 				// 2 - disable file fields
-				
+
 				// project narrative
 				if ($().ReturnGPCSubmissionApprovalRequestProjectNarrativeWriteAccess() == 0) {
 					$().SetFieldToDisabled("#Project-Description-File");
@@ -19461,7 +19642,7 @@
 
 
 
-	$.fn.SetGPCSubmissionApprovalRequestNonWriteAccess = function() {
+	$.fn.SetGPCSubmissionApprovalRequestNonWriteAccess = function () {
 
 		// context:
 		//		1 - some users are given view permissions in other functions
@@ -19507,7 +19688,7 @@
 				// 1 - disable and make optional non-file fields
 
 				// handle inputs
-				$("#request-form").find('input').each(function() {
+				$("#request-form").find('input').each(function () {
 					var thisInputID = $(this).attr("id");
 					if (thisInputID.indexOf('TopSpan_HiddenInput') < 0) {
 						var thisInputType = $(this).attr("type");
@@ -19517,7 +19698,7 @@
 							$().SetFieldToDisabled('#' + thisInputID);
 							$().SetFieldToOptional(thisInputID, thisInputType);
 						}
-						if (thisInputType === "text" && typeof(thisInputIsDate) !== "undefined" && thisInputIsDate === "true") {
+						if (thisInputType === "text" && typeof (thisInputIsDate) !== "undefined" && thisInputIsDate === "true") {
 							var thisInputDateISO = $().ReturnFormattedDateTime($('#' + thisInputID).val(), 'MMMM D, YYYY', null);
 							$('#' + thisInputID).attr('data-iso-date-on-load', thisInputDateISO);
 						}
@@ -19525,7 +19706,7 @@
 				});
 
 				// handle people pickers
-				$("#request-form").find('div[data-control-type="PeoplePicker"]').each(function() {
+				$("#request-form").find('div[data-control-type="PeoplePicker"]').each(function () {
 					var thisPeoplePickerID = $(this).attr("id");
 					$('#' + thisPeoplePickerID).addClass('disabled');
 					$().SetFieldToDisabled('#' + thisPeoplePickerID);
@@ -19533,7 +19714,7 @@
 				});
 
 				// handle selects
-				$("#request-form").find('select').each(function() {
+				$("#request-form").find('select').each(function () {
 					var thisSelectID = $(this).attr("id");
 					$('#' + thisSelectID).addClass('disabled');
 					$().SetFieldToDisabled('#' + thisSelectID);
@@ -19554,12 +19735,12 @@
 				$("div#label-and-control_Requester-Cancellation").hide("fast").addClass("hidden");
 				$("div#label-and-control_Ready-for-Submission-to-Committee").hide("fast").addClass("hidden");
 				$("div#rfp-or-other-website-link_help-note").hide("fast").addClass("hidden");
-				$("input#Proposal-Due-Date").datepicker( "destroy" );
-				$("input#Expected-Decision-Date").datepicker( "destroy" );
-				
+				$("input#Proposal-Due-Date").datepicker("destroy");
+				$("input#Expected-Decision-Date").datepicker("destroy");
+
 
 				// 2 - disable and make optional file fields
-				
+
 				// project narrative
 				if ($().ReturnGPCSubmissionApprovalRequestProjectNarrativeWriteAccess() == 0) {
 					$().SetFieldToDisabled("#Project-Narrative-File");
@@ -19583,8 +19764,8 @@
 
 
 
-	$.fn.EnableGPCSubmissionApprovalRequestStatusManagement = function() {
-			
+	$.fn.EnableGPCSubmissionApprovalRequestStatusManagement = function () {
+
 		// get gpcGroups (people) data
 		var gpcGroups = $().ReturnGPCGroups();
 		// console.log(gpcGroups);
@@ -19606,17 +19787,17 @@
 
 
 
-	$.fn.RedisableGPCSubmissionApprovalCommitteeResponses = function() {
+	$.fn.RedisableGPCSubmissionApprovalCommitteeResponses = function () {
 
 		/*
 			See comment at beginning of $.fn.EnableGPCSubmissionApprovalCommitteeResponses.
 		*/
 
-		$('div.approver-container').each(function() {
+		$('div.approver-container').each(function () {
 
 			var scopeContainerID = $(this).attr('id');
 
-			$('#' + scopeContainerID + ' input[name^="Approval-Indicator"]').each(function(i, radioButton) {
+			$('#' + scopeContainerID + ' input[name^="Approval-Indicator"]').each(function (i, radioButton) {
 				var radioButtonID = $(radioButton).attr('id');
 				$().SetFieldToDisabled('#' + radioButtonID, "RedisableGPCSubmissionApprovalCommitteeResponses");
 			});
@@ -19629,7 +19810,7 @@
 
 
 
-	$.fn.EnableGPCSubmissionApprovalCommitteeResponses = function() {
+	$.fn.EnableGPCSubmissionApprovalCommitteeResponses = function () {
 
 		/*	For each approval node, the header needs to be set any time it is visible, but the controls should be 
 			enabled only when they can be used. However, the algo for determining each is essentially the same and 
@@ -19638,12 +19819,12 @@
 			and we'll separately re-disable controls when appropriate. 
 		*/
 
-			
+
 		// get gpcGroups (people) data
 		var gpcGroups = $().ReturnGPCGroups();
 
 		// for each approval
-		$('div.approver-container').each(function() {
+		$('div.approver-container').each(function () {
 
 			var scopeContainerID = $(this).attr('id');
 
@@ -19669,18 +19850,18 @@
 			var nameOfPastApprover = $('#' + scopeContainerID + ' input[id^="Approval-Signature"]').val();
 
 			// if there's no one who can approve
-			if (typeof(approvers) == "undefined") {
+			if (typeof (approvers) == "undefined") {
 				// if someone has already approved
 				if (nameOfPastApprover != "") {
 					// use that person's name for the header and otherwise leave the approval alone
 					$('#' + scopeContainerID).find("h3").text(nameOfPastApprover);
-				// if no one has approved yet
+					// if no one has approved yet
 				} else {
 					// hide it
 					$('#' + scopeContainerID).hide("fast").addClass("hidden");
 				}
-			
-			// if there IS at least one person who can approve
+
+				// if there IS at least one person who can approve
 			} else {
 
 				// if someone has already approved but this person IS NOT someone who can approve now
@@ -19701,7 +19882,7 @@
 					// set h3
 					$('#' + scopeContainerID).find("h3").text(namesOfAllApprovers);
 
-				// if no one has approved yet OR if someone has approved and that person is still eligible to approve
+					// if no one has approved yet OR if someone has approved and that person is still eligible to approve
 				} else {
 
 					// set h3
@@ -19716,11 +19897,11 @@
 					var thisUserAccountBrief = ReplaceAll("i:0#.f\\|membership\\|", "", ReplaceAll("@mos.org", "", uData.account.toLowerCase()));
 
 					if (approverAccountsComparisonBank.indexOf(thisUserAccountBrief) > -1) {
-						
+
 						// un-disable fields
-						
+
 						// radio buttons
-						$('#' + scopeContainerID + ' input[name^="Approval-Indicator"]').each(function(i, radioButton) {
+						$('#' + scopeContainerID + ' input[name^="Approval-Indicator"]').each(function (i, radioButton) {
 							var radioButtonID = $(radioButton).attr('id');
 							$().SetFieldToEnabled('#' + radioButtonID);
 						});
@@ -19748,8 +19929,8 @@
 
 
 
-	$.fn.EnableGPCConceptApprovalCommitteeResponses = function() {
-			
+	$.fn.EnableGPCConceptApprovalCommitteeResponses = function () {
+
 		// get gpcGroups (people) data
 		var gpcGroups = $().ReturnGPCGroups();
 
@@ -19768,13 +19949,13 @@
 
 
 
-	$.fn.SetInHouseNeedsSheetRequestAdditionalViewAccess = function() {
+	$.fn.SetInHouseNeedsSheetRequestAdditionalViewAccess = function () {
 		$("input#View-Access").val(mData.viewAccess);
 	};
 
 
 
-	$.fn.ImportGPCConceptRequestDataToGPCSubmissionRequest = function(requestID) {
+	$.fn.ImportGPCConceptRequestDataToGPCSubmissionRequest = function (requestID) {
 
 		var conceptRData = $().GetFieldsFromOneRow({
 			"listName": "swfList",
@@ -19794,34 +19975,34 @@
 
 		var conceptRDataSelected = {};
 
-		if ("Project-Title" in conceptRData.formData){ conceptRDataSelected["Project-Title"] = conceptRData.formData["Project-Title"]; }
-		if ("MOS-Principal-Investigator" in conceptRData.formData){ conceptRDataSelected["MOS-Principal-Investigator"] = conceptRData.formData["MOS-Principal-Investigator"]; }
-		if ("MOS-Co-Investigator" in conceptRData.formData){ conceptRDataSelected["MOS-Co-Investigator"] = conceptRData.formData["MOS-Co-Investigator"]; }
-		if ("Proposal-Developer" in conceptRData.formData){ conceptRDataSelected["Proposal-Developer"] = conceptRData.formData["Proposal-Developer"]; }
-		
-		if ("Funder" in conceptRData.formData){ conceptRDataSelected["Funder"] = conceptRData.formData["Funder"]; }
-		if ("RFP-or-Other-Relevant-Website" in conceptRData.formData){ conceptRDataSelected["RFP-or-Other-Relevant-Website"] = conceptRData.formData["RFP-or-Other-Relevant-Website"]; }
-		if ("Proposal-Type" in conceptRData.formData){ conceptRDataSelected["Proposal-Type"] = conceptRData.formData["Proposal-Type"]; }
-		if ("Proposal-Due-Date" in conceptRData.formData){ conceptRDataSelected["Proposal-Due-Date"] = conceptRData.formData["Proposal-Due-Date"]; }
-		if ("museum-role_primerecipient" in conceptRData.formData){ conceptRDataSelected["museum-role_primerecipient"] = conceptRData.formData["museum-role_primerecipient"]; }
-		if ("museum-role_subawardee" in conceptRData.formData){ conceptRDataSelected["museum-role_subawardee"] = conceptRData.formData["museum-role_subawardee"]; }
-		if ("Prime-Institution" in conceptRData.formData){ conceptRDataSelected["Prime-Institution"] = conceptRData.formData["Prime-Institution"]; }
-		if ("Outside-PI" in conceptRData.formData){ conceptRDataSelected["Outside-PI"] = conceptRData.formData["Outside-PI"]; }
+		if ("Project-Title" in conceptRData.formData) { conceptRDataSelected["Project-Title"] = conceptRData.formData["Project-Title"]; }
+		if ("MOS-Principal-Investigator" in conceptRData.formData) { conceptRDataSelected["MOS-Principal-Investigator"] = conceptRData.formData["MOS-Principal-Investigator"]; }
+		if ("MOS-Co-Investigator" in conceptRData.formData) { conceptRDataSelected["MOS-Co-Investigator"] = conceptRData.formData["MOS-Co-Investigator"]; }
+		if ("Proposal-Developer" in conceptRData.formData) { conceptRDataSelected["Proposal-Developer"] = conceptRData.formData["Proposal-Developer"]; }
 
-		if ("MOS-Direct-Costs" in conceptRData.formData){ conceptRDataSelected["MOS-Direct-Costs"] = conceptRData.formData["MOS-Direct-Costs"]; }
-		if ("IDC" in conceptRData.formData){ conceptRDataSelected["IDC"] = conceptRData.formData["IDC"]; }
-		if ("Total-MOS-Budget" in conceptRData.formData){ conceptRDataSelected["Total-MOS-Budget"] = conceptRData.formData["Total-MOS-Budget"]; }
-		if ("Total-Project-Budget" in conceptRData.formData){ conceptRDataSelected["Total-Project-Budget"] = conceptRData.formData["Total-Project-Budget"]; }
+		if ("Funder" in conceptRData.formData) { conceptRDataSelected["Funder"] = conceptRData.formData["Funder"]; }
+		if ("RFP-or-Other-Relevant-Website" in conceptRData.formData) { conceptRDataSelected["RFP-or-Other-Relevant-Website"] = conceptRData.formData["RFP-or-Other-Relevant-Website"]; }
+		if ("Proposal-Type" in conceptRData.formData) { conceptRDataSelected["Proposal-Type"] = conceptRData.formData["Proposal-Type"]; }
+		if ("Proposal-Due-Date" in conceptRData.formData) { conceptRDataSelected["Proposal-Due-Date"] = conceptRData.formData["Proposal-Due-Date"]; }
+		if ("museum-role_primerecipient" in conceptRData.formData) { conceptRDataSelected["museum-role_primerecipient"] = conceptRData.formData["museum-role_primerecipient"]; }
+		if ("museum-role_subawardee" in conceptRData.formData) { conceptRDataSelected["museum-role_subawardee"] = conceptRData.formData["museum-role_subawardee"]; }
+		if ("Prime-Institution" in conceptRData.formData) { conceptRDataSelected["Prime-Institution"] = conceptRData.formData["Prime-Institution"]; }
+		if ("Outside-PI" in conceptRData.formData) { conceptRDataSelected["Outside-PI"] = conceptRData.formData["Outside-PI"]; }
+
+		if ("MOS-Direct-Costs" in conceptRData.formData) { conceptRDataSelected["MOS-Direct-Costs"] = conceptRData.formData["MOS-Direct-Costs"]; }
+		if ("IDC" in conceptRData.formData) { conceptRDataSelected["IDC"] = conceptRData.formData["IDC"]; }
+		if ("Total-MOS-Budget" in conceptRData.formData) { conceptRDataSelected["Total-MOS-Budget"] = conceptRData.formData["Total-MOS-Budget"]; }
+		if ("Total-Project-Budget" in conceptRData.formData) { conceptRDataSelected["Total-Project-Budget"] = conceptRData.formData["Total-Project-Budget"]; }
 
 
 		PopulateFormData("div#request-form", conceptRDataSelected, "https://bmos.sharepoint.com/sites/vxo-function/Lists/SWFList", requestID, undefined);
 
-		if (typeof($("input#Proposal-Due-Date").val()) != "undefined" && $("input#Proposal-Due-Date").val() != "") {
+		if (typeof ($("input#Proposal-Due-Date").val()) != "undefined" && $("input#Proposal-Due-Date").val() != "") {
 			$("input#Proposal-Due-Date").attr('data-iso-date-on-load', $("input#Proposal-Due-Date").val());
 			$("input#Proposal-Due-Date").val($().ReturnFormattedDateTime($("input#Proposal-Due-Date").val(), null, 'MMMM D, YYYY', 0));
 		}
 
-		if ("museum-role_subawardee" in conceptRData.formData){
+		if ("museum-role_subawardee" in conceptRData.formData) {
 			$("div#label-and-control_Prime-Institution").show("fast").removeClass("hidden");
 			$("div#label-and-control_Outside-PI").show("fast").removeClass("hidden");
 		}
@@ -19829,7 +20010,7 @@
 
 
 
-	$.fn.SetProgressBarValue = function(progressBarID, value) {
+	$.fn.SetProgressBarValue = function (progressBarID, value) {
 		$('#' + progressBarID).attr('value', value)
 	};
 
@@ -19854,7 +20035,7 @@
 		var fileStorageSizeID = $("#" + fileFieldID).find("div.mos-drag-and-drop-file-storage  input.mos-drag-and-drop-file-size").attr("id");
 		var fileStorageTypeClassID = $("#" + fileFieldID).find("div.mos-drag-and-drop-file-storage input.mos-drag-and-drop-file-type-class").attr("id");
 
-		var fileWasAttached = typeof($("#" + fileStorageNameID).val()) !== "undefined" && $("#" + fileStorageNameID).val() !== "";
+		var fileWasAttached = typeof ($("#" + fileStorageNameID).val()) !== "undefined" && $("#" + fileStorageNameID).val() !== "";
 		var fileIsInQuarkFiles = $("div#" + fileFieldID).find("input.mos-drag-and-drop-file-in-quark-files").val();
 
 		// delete file attachment, if it exists and is not a Quark file
@@ -19866,7 +20047,7 @@
 				listName: mData.defaultListNameForSWFRequestData,
 				listItemID: rData.requestID,
 				url: attachmentToDeleteURI,
-				completefunc: function(xData, Status) {
+				completefunc: function (xData, Status) {
 
 					var deletionSuccess = $().HandleListUpdateReturn(xData, Status, 'Hub Attachment Deletion Error');
 
@@ -19899,10 +20080,10 @@
 					}
 				}
 			});
-		// if this is a Quark file or no file was attached
+			// if this is a Quark file or no file was attached
 		} else {
 			// don't try delete the file, but update the UI as if the file was deleted
-						
+
 			// clear hidden input
 			$("#" + fileStorageNameID).val("");
 			$("#" + fileStorageSizeID).val("");
@@ -19930,30 +20111,33 @@
 
 
 	$.fn.UploadRequestFileAttachment = function (file, controlID) {
-		
+
 		// if file exists / is not undefined
-		if (typeof(file) != 'undefined') {
-			
+		if (typeof (file) != 'undefined') {
+
 			// check that file size does not exceed 2GB limit
 			if (file.size <= 2000000000) {
+
+				// disable form submit button; this will be re-enabled when the last modified timestamp is updated
+				$("a#form-submit-button").attr("disabled", "true");
 
 				// unset any validation errors
 
 				$("#" + controlID).closest("div.control").parent("div.label-and-control").removeClass('contains-errors');
 				$("#" + controlID).removeClass('attachment-error');
 				$("#" + controlID).closest("div.control").find('div.error-message').remove();
-				
+
 				// get IDs of DOM elements that will be updated
-				
+
 				// starting from the file input, get parent containers
 				var fileInputID = $("#" + controlID).find("div.mos-drag-and-drop-file-input").attr("id");
 				var filePresentationContainerID = $("#" + controlID).find("a.mos-drag-and-drop-file-container").attr("id");
 				var fileStorageContainerID = $("#" + controlID).find("div.mos-drag-and-drop-file-storage").attr("id");
 				// inside the presentation container
 				var fileUploadIconID = $("#" + filePresentationContainerID).find("div.mos-drag-and-drop-file-upload-icon").attr("id");
-				var filePreviewID  = $("#" + filePresentationContainerID).find("div.mos-drag-and-drop-file-preview").attr("id");
-				var fileNameAndSizePresentationID  = $("#" + filePresentationContainerID).find("div.mos-drag-and-drop-file-name-and-size").attr("id");
-				var fileControlID  = $("#" + filePresentationContainerID).find("div.mos-drag-and-drop-file-control").attr("id");
+				var filePreviewID = $("#" + filePresentationContainerID).find("div.mos-drag-and-drop-file-preview").attr("id");
+				var fileNameAndSizePresentationID = $("#" + filePresentationContainerID).find("div.mos-drag-and-drop-file-name-and-size").attr("id");
+				var fileControlID = $("#" + filePresentationContainerID).find("div.mos-drag-and-drop-file-control").attr("id");
 				var progressBarID = $("#" + filePresentationContainerID).find("div.mos-drag-and-drop-file-progress progress").attr("id");
 				// inside the storage container
 				var fileStorageNameID = $("#" + fileStorageContainerID).find("input.mos-drag-and-drop-file-name").attr("id");
@@ -19966,7 +20150,7 @@
 				var tempSaveSuccess = 0;
 
 				// set the file's name and size in the UI
-				
+
 				// perform some file size conversions
 				var fileSizeInKB = file.size / 1000;
 				var fileSizeInMB = fileSizeInKB / 1000;
@@ -19974,7 +20158,7 @@
 
 				// set fileSizeToReport to the first file size conversion to be less than 4 digits
 				var fileSizeToReport = "";
-				if (Math.round(fileSizeInKB) > 0 && Math.round(fileSizeInKB) < 1000 ) {
+				if (Math.round(fileSizeInKB) > 0 && Math.round(fileSizeInKB) < 1000) {
 					fileSizeToReport = fileSizeInKB;
 					fileSizeToReport = $().ReturnFileSizeFormattedToOneSignificantDigit(fileSizeToReport);
 					fileSizeToReport = fileSizeToReport + " KB";
@@ -20000,7 +20184,7 @@
 				var listItemIDRetrievalPromise = new $.Deferred();
 
 				// if a request ID does not already exist
-				if (typeof(rData.requestID) == undefined || rData.requestID == 0 || rData.requestID == "") {
+				if (typeof (rData.requestID) == undefined || rData.requestID == 0 || rData.requestID == "") {
 
 					// create a request with minimal temporary content and get the request's ID
 					var tempSubmissionValuePairs = [["Title", "Temporary Title"]];
@@ -20010,12 +20194,12 @@
 						batchCmd: 'New',
 						ID: 0,
 						valuepairs: tempSubmissionValuePairs,
-						completefunc: function(xData, Status) {
-							
+						completefunc: function (xData, Status) {
+
 							// error handling
 							tempSaveSuccess = $().HandleListUpdateReturn(xData, Status, 'Hub Temp Save Error');
 							if (tempSaveSuccess != 1) {
-							
+
 								// issue validation error that stops this request from being submitted
 								// issue error message indicating we can't save data for this request right now, but please try again later after refreshing this screen
 								// TO DO
@@ -20034,14 +20218,14 @@
 					listItemIDRetrievalPromise.resolve();
 				}
 
-				$.when(listItemIDRetrievalPromise).done(function() {
-					
+				$.when(listItemIDRetrievalPromise).done(function () {
+
 					var esimatedBytesUploadedPerSecond = 350000; // based purely on observation; upload speeds vary considerably, but this seems to create a relatively smooth UX
 					var uploadProgressPercentage = .1;
 					var uploadComplete = 0;
 
 					$().SetProgressBarValue(progressBarID, uploadProgressPercentage);
-					
+
 					// report 10% progress; this is just to make the user aware that something is happening; 
 					//		this doesn't actually correspond to 10% of anything in particular
 
@@ -20054,11 +20238,11 @@
 						// calculate how many time to report progress
 						var quantityOfProgressReports = Math.floor(file.size / esimatedBytesUploadedPerSecond);
 						// calculate what percentage of progress to report
-						var estimatedProgressPercentage = +(Math.floor( (.8 / quantityOfProgressReports) + "e+2") + "e-2");
+						var estimatedProgressPercentage = +(Math.floor((.8 / quantityOfProgressReports) + "e+2") + "e-2");
 						// dr zhivago 	= 2,293,355 / 250,000 	= 9.17342 	|| .8 / 9.17342 = .0872
 						// ducks 		= 65,802 / 250,000 		= 0.2632 	|| .8 / 0.2632 = 3.0395...
 
-					// if the file size is NOT larger than 250000 bytes, in which case we're going to do only one per-second update
+						// if the file size is NOT larger than 250000 bytes, in which case we're going to do only one per-second update
 					} else {
 						// we'll report the progress one time
 						var quantityOfProgressReports = 1;
@@ -20068,7 +20252,7 @@
 
 					// start async reporting of progress estimates
 					setInterval(
-						function() {
+						function () {
 							if (uploadComplete == 0) {
 								uploadProgressPercentage += estimatedProgressPercentage;
 								// ensure that progress in this stage is never more than 80%
@@ -20080,7 +20264,7 @@
 								$().SetProgressBarValue(progressBarID, uploadProgressPercentage);
 							}
 						}
-					,1000);
+						, 1000);
 
 
 
@@ -20088,16 +20272,16 @@
 					// start the actual file attachment process
 
 					// read the file into memory
-					var getFileBuffer = function(file) {
+					var getFileBuffer = function (file) {
 
 						var deferred = $.Deferred();
 						var reader = new FileReader();
 
-						reader.onload = function(e) {
+						reader.onload = function (e) {
 							deferred.resolve(e.target.result);
 						}
 
-						reader.onerror = function(e) {
+						reader.onerror = function (e) {
 							deferred.reject(e.target.error);
 						}
 
@@ -20107,8 +20291,8 @@
 					};
 
 					// then
-					getFileBuffer(file).then(function(buffer) {
-						
+					getFileBuffer(file).then(function (buffer) {
+
 						var binary = "";
 						var bytes = new Uint8Array(buffer);
 						var i = bytes.byteLength;
@@ -20125,7 +20309,7 @@
 							listItemID: rData.requestID,
 							fileName: file.name,
 							attachment: btoa(binary),
-							completefunc: function(xData, Status) {
+							completefunc: function (xData, Status) {
 
 								// set flag indicating that upload attempt is complete, so that any scheduled incremental progress reports will not occur;
 								//		we don't want progress to jump to 100% and then have an incremental report knock it back down to a lower %
@@ -20133,7 +20317,7 @@
 
 								// determine the success of the attempt
 								var attachmentSaveSuccess = $().HandleListUpdateReturn(xData, Status, 'Hub Attachment Error');
-								
+
 								// if unsuccessful
 								if (attachmentSaveSuccess != 1) {
 									// issue attachment error; tell user to delete this and try again; if get this repeatedly, the file may be corrupted, 
@@ -20141,12 +20325,12 @@
 									// TO DO
 
 									$("#" + controlID).removeClass('attaching  partial-progress').addClass('attachment-error');
-									$().SetErrorMessage($("#" + controlID), 'We weren\'t able to attach this file. Please delete it and try again.' );
+									$().SetErrorMessage($("#" + controlID), 'We weren\'t able to attach this file. Please delete it and try again.');
 
 									$().HandleListUpdateReturn(xData, Status, 'Hub Attachment Error');
 
 
-								// if successful
+									// if successful
 								} else {
 
 									// determine the attached file's URL and the type of preview we'll show
@@ -20182,7 +20366,7 @@
 									uploadProgressPercentage = 1;
 									$().SetProgressBarValue(progressBarID, uploadProgressPercentage);
 									$("#" + controlID).removeClass('partial-progress').addClass('full-progress');
-									setTimeout(function() {
+									setTimeout(function () {
 										$("#" + controlID).removeClass('attaching  full-progress').addClass('attachment-completed');
 										if (fileTypeClass == "specific-image") {
 											$("#" + filePreviewID).css("background-image", "url(" + attachedFileURL + ")");
@@ -20194,28 +20378,30 @@
 									$("input#" + fileStorageSizeID).val(fileSizeToReport);
 									$("input#" + fileStorageTypeClassID).val(fileTypeClass);
 
-									$().UpdateLastModifiedFileAttachment();
-
-									setTimeout(function() {
+									setTimeout(function () {
 										$("#" + fileUploadIconID).css("opacity", 0);
 										$("#" + filePresentationContainerID).attr("href", attachedFileURL);
-										$("#" + controlID).removeClass('populatable').addClass('replaceable')
+										$("#" + controlID).removeClass('populatable').addClass('replaceable');
 									}, 500);
+
+									setTimeout(function () {
+										$().UpdateLastModifiedFileAttachment();
+									}, 5000);
 
 								}
 							}
 						});
 					});
-				
+
 				});
 
-			// if file size exceeds 2 GB
+				// if file size exceeds 2 GB
 			} else {
 				// issue validation error indicating that size is too big
 				// TO DO
 			}
-		
-		// if file does not exist
+
+			// if file does not exist
 		} else {
 			// issue attachment error
 			// TO DO
@@ -20241,9 +20427,11 @@
 					"type": "Number",
 					"value": rData.requestID,
 				}
-			}), 
+			}),
 			rData
 		);
+
+		$("a#form-submit-button").removeAttr("disabled");
 	};
 
 
@@ -20253,7 +20441,7 @@
 		// ============
 		// ---- CONFIG + MAIN QUERIES + GLOBAL VARS
 		// ============
-	    
+
 
 		// data for the current user
 		uData = $().ReturnCurrentUserData();
@@ -20270,41 +20458,41 @@
 		// data for the overview screen for this user
 		oData = $().ReturnThisAppOData();
 
-	    // latest API version; requests use the version of the API with which they were created
-	    mData.apiLatestVersion = '1.0';
-		
+		// latest API version; requests use the version of the API with which they were created
+		mData.apiLatestVersion = '1.0';
+
 		// set screen transition times in ms
 		mData.quickScreenTransitionTime = 1;
 		mData.gracefulgracefulScreenTransitionTime = 750;
 
 		// set global nav
-		mData.globalNavigationList =  	'<ul role="navigation" id="mos_global-navigation">' +
-										'	<li><a href="https://bmos.sharepoint.com/">The Hub</a></li>' +
-										'	<li><a href="https://bmos.sharepoint.com/SitePages/Communities.aspx">Communities</a></li>' +
-										'</ul>';
+		mData.globalNavigationList = '<ul role="navigation" id="mos_global-navigation">' +
+			'	<li><a href="https://bmos.sharepoint.com/">The Hub</a></li>' +
+			'	<li><a href="https://bmos.sharepoint.com/SitePages/Communities.aspx">Communities</a></li>' +
+			'</ul>';
 
 		// swf screens will only be rendered on swf site pages if the page token matches one of the strings in this array
 		mData.swfAppPageTokens = ["App", "app"];
 
-		mData.siteToken = ReturnSiteTokenFromURL ();
-		mData.fullSiteBaseURL = ReturnFullSiteBaseURLFromSitePageURL ();
-		mData.pageToken = ReturnSitePageTokenFromURL ();
+		mData.siteToken = ReturnSiteTokenFromURL();
+		mData.fullSiteBaseURL = ReturnFullSiteBaseURLFromSitePageURL();
+		mData.pageToken = ReturnSitePageTokenFromURL();
 
-		mData.thisPageIsASWFAppPage = ReturnThisPageIsASWFAppPage ();
+		mData.thisPageIsASWFAppPage = ReturnThisPageIsASWFAppPage();
 
-		if (typeof(mData.axle) != "undefined" && mData.axle == 1) {
+		if (typeof (mData.axle) != "undefined" && mData.axle == 1) {
 			mData.componentGroupID = 1;
 		}
-			
-		if (typeof(mData.community) != "undefined" && mData.community == 1) {
+
+		if (typeof (mData.community) != "undefined" && mData.community == 1) {
 			mData.componentGroupID = 2;
 		}
 
-		if (typeof(mData.swf) != "undefined" && mData.swf == 1) {
+		if (typeof (mData.swf) != "undefined" && mData.swf == 1) {
 			mData.componentGroupID = 3;
 		}
 
-		if (typeof(mData.visualization) != "undefined" && mData.visualization == 1) {
+		if (typeof (mData.visualization) != "undefined" && mData.visualization == 1) {
 			mData.componentGroupID = 4;
 		}
 
@@ -20327,41 +20515,41 @@
 					// 	"nameHere": "uriRequestAlternate",
 					// 	"nameInList": "URIRequestAlternate",
 					// 	"linkField": 1
-					}, {
-						"nameHere": "uriRoot",
-						"nameInList": "URIRoot",
-						"linkField": 1
-					}, {
-						"nameHere": "uriWFHistory",
-						"nameInList": "URIWFHistory",
-						"linkField": 1
-					}, {
-						"nameHere": "requiredApproversString",
-						"nameInList": "RequiredApprovers"
-					}, {
-						"nameHere": "componentAdmin",
-						"nameInList": "AdminAccess"
-					}, {
-						"nameHere": "adminContacts",
-						"nameInList": "AdminContacts"
-					}, {
-						"nameHere": "viewAccess",
-						"nameInList": "ViewAccess"
-					}, {
-						"nameHere": "requestName",
-						"nameInList": "RequestName"
-					}, {
-						"nameHere": "adminNotificationPersons",
-						"nameInList": "AdminNotifications"
-					}, {
-						"nameHere": "autoAssignments1",
-						"nameInList": "AutoAssignments1"
-					}, {
-						"nameHere": "autoAssignments2",
-						"nameInList": "AutoAssignments2"
-					}, {
-						"nameHere": "quickLaunches",
-						"nameInList": "QuickLaunches"
+				}, {
+					"nameHere": "uriRoot",
+					"nameInList": "URIRoot",
+					"linkField": 1
+				}, {
+					"nameHere": "uriWFHistory",
+					"nameInList": "URIWFHistory",
+					"linkField": 1
+				}, {
+					"nameHere": "requiredApproversString",
+					"nameInList": "RequiredApprovers"
+				}, {
+					"nameHere": "componentAdmin",
+					"nameInList": "AdminAccess"
+				}, {
+					"nameHere": "adminContacts",
+					"nameInList": "AdminContacts"
+				}, {
+					"nameHere": "viewAccess",
+					"nameInList": "ViewAccess"
+				}, {
+					"nameHere": "requestName",
+					"nameInList": "RequestName"
+				}, {
+					"nameHere": "adminNotificationPersons",
+					"nameInList": "AdminNotifications"
+				}, {
+					"nameHere": "autoAssignments1",
+					"nameInList": "AutoAssignments1"
+				}, {
+					"nameHere": "autoAssignments2",
+					"nameInList": "AutoAssignments2"
+				}, {
+					"nameHere": "quickLaunches",
+					"nameInList": "QuickLaunches"
 				}],
 				"where": {
 					"field": "ComponentID",
@@ -20372,14 +20560,14 @@
 			GetFieldsFromOneRow({
 				"listName": "Component Group Log",
 				"select": [{
-						"nameHere": "componentGrpAdmin",
-						"nameInList": "GroupAdminAccess"
-					}, {
-						"nameHere": "componentGrpAdminNotifications",
-						"nameInList": "GroupAdminNotifications"
-					}, {
-						"nameHere": "devAdminNotificationPersons",
-						"nameInList": "DevAdminNotifications"
+					"nameHere": "componentGrpAdmin",
+					"nameInList": "GroupAdminAccess"
+				}, {
+					"nameHere": "componentGrpAdminNotifications",
+					"nameInList": "GroupAdminNotifications"
+				}, {
+					"nameHere": "devAdminNotificationPersons",
+					"nameInList": "DevAdminNotifications"
 				}],
 				"where": {
 					"field": "ComponentGroupID",
@@ -20469,9 +20657,9 @@
 		allDataRetrievalAndSettingPromises.push($().GetAndSetMaintenanceModeData());
 
 		// wait for all data retrieval / setting promises to complete (pass or fail) 
-		$.when.apply($, allDataRetrievalAndSettingPromises).always(function() {
+		$.when.apply($, allDataRetrievalAndSettingPromises).always(function () {
 
-			console.log('using dev_mos-main_long.1.04 m1 - DevCode4');
+			console.log('using dev_mos-main_long.1.04 m101 - DevCode4');
 
 			$().ConfigureAndShowScreenContainerAndAllScreens();
 		});
@@ -20492,8 +20680,8 @@
 // An interesting error case submitted by Piotr Przybyl: If two <select> options had the same value, the clone() method would select the wrong one in the cloned box. The fix, suggested by Piotr
 // and implemented here, is to use the selectedIndex property on the <select> box itself rather than relying on jQuery's value-based val().
 
-(function(original) {
-	jQuery.fn.clone = function() {
+(function (original) {
+	jQuery.fn.clone = function () {
 		var result = original.apply(this, arguments),
 			my_textareas = this.find('textarea').add(this.filter('textarea')),
 			result_textareas = result.find('textarea').add(result.filter('textarea')),
