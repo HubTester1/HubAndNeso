@@ -16,9 +16,9 @@
 	console.log("using settings m1");
 
 
-
+	// admin screen is hard-coded in API > RenderAdminEventAVOverviewScreen()
 	var oData = {
-		'admin': {
+		/* 'admin': {
 			'buttons': [
 				// {
 				//     "linkType": "goForward",
@@ -183,7 +183,7 @@
 					}
 				]
 			}
-		},
+		}, */
 		'my': {
 			'buttons': [
 			],

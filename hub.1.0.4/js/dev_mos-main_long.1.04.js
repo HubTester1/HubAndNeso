@@ -17197,7 +17197,267 @@
 	// ---- CUSTOM OVERVIEW SCREENS
 
 	$.fn.RenderAdminEventAVOverviewScreen = function () {
-		$("div#overview-table-container").html("<p>This is RenderEventAVScreen.</p>");
+
+		// get date params
+		var startDateFrom = GetParamFromUrl(location.search, 'startDateFrom');
+		var startDateTo = GetParamFromUrl(location.search, 'startDateTo');
+
+		if (startDateFrom == "") {
+			startDateFrom = $().ReturnFormattedDateTime('nowLocal', null, 'YYYY-MM-DD');
+		}
+
+		if (startDateTo == "") {
+			startDateTo = moment(startDateFrom, 'YYYY-MM-DD').add(14, "days").format('YYYY-MM-DD');
+		}
+
+		var tData = {
+			'commonColumns': [
+				{
+					'displayName': 'Request ID',
+					'internalName': 'ID',
+					'formLink': 1
+				}, {
+					'displayName': 'Requested By',
+					'internalName': 'Author',
+					'userName': 1
+				}, {
+					'displayName': 'Talk To',
+					'internalName': 'RequestedFor',
+					'userName': 1
+				}, {
+					'displayName': 'Event Start Date and Time',
+					'internalName': 'EventBeginningDatetime',
+					'groupingFriendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'ddd, MMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+				}, {
+					'displayName': 'Request Date',
+					'internalName': 'RequestDate',
+					'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+				}
+			],
+			'tables': [
+				{
+					'tableID': 'pending-approval',
+					'someColsAreUsers': 1,
+					'grouping': {
+						'zeroIndexedColumnNumber': 3,
+						'numberColsForHeaderToSpan': 4
+					},
+					'customCAMLQuery': '<Where>' +
+						'   <And>' +
+						'       <Eq>' +
+						'           <FieldRef Name="RequestStatus"></FieldRef>' +
+						'           <Value Type="Text">Pending Approval</Value>' +
+						'       </Eq>' +
+						'       <And>' +
+						'           <Geq>' +
+						'               <FieldRef Name="EventBeginningDatetime"></FieldRef>' +
+						'               <Value Type="DateTime" IncludeTimeValue="FALSE">' + startDateFrom + 'T00:00:00Z</Value>' +
+						'           </Geq>' +
+						'           <Leq>' +
+						'               <FieldRef Name="EventBeginningDatetime"></FieldRef>' +
+						'               <Value Type="DateTime" IncludeTimeValue="FALSE">' + startDateTo + 'T00:00:00Z</Value>' +
+						'           </Leq>' +
+						'       </And>' +
+						'   </And>' +
+						'</Where>'
+				}, {
+					'tableID': 'approved',
+					'someColsAreUsers': 1,
+					'grouping': {
+						'zeroIndexedColumnNumber': 3,
+						'numberColsForHeaderToSpan': 6
+					},
+					'customCAMLQuery': '<Where>' +
+						'   <And>' +
+						'       <Eq>' +
+						'           <FieldRef Name="RequestStatus"></FieldRef>' +
+						'           <Value Type="Text">Approved</Value>' +
+						'       </Eq>' +
+						'       <And>' +
+						'           <Geq>' +
+						'               <FieldRef Name="EventBeginningDatetime"></FieldRef>' +
+						'               <Value Type="DateTime" IncludeTimeValue="FALSE">' + startDateFrom + 'T00:00:00Z</Value>' +
+						'           </Geq>' +
+						'           <Leq>' +
+						'               <FieldRef Name="EventBeginningDatetime"></FieldRef>' +
+						'               <Value Type="DateTime" IncludeTimeValue="FALSE">' + startDateTo + 'T00:00:00Z</Value>' +
+						'           </Leq>' +
+						'       </And>' +
+						'   </And>' +
+						'</Where>',
+					'customColumns': [
+						{
+							'displayName': 'Request ID',
+							'internalName': 'ID',
+							'formLink': 1
+						}, {
+							'displayName': 'Requested By',
+							'internalName': 'Author',
+							'userName': 1
+						}, {
+							'displayName': 'Talk To',
+							'internalName': 'RequestedFor',
+							'userName': 1
+						}, {
+							'displayName': 'Event Date and Time',
+							'internalName': 'EventBeginningDatetime',
+							'groupingFriendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'ddd, MMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+						}, {
+							'displayName': 'Request Date',
+							'internalName': 'RequestDate',
+							'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+						}, {
+							'displayName': 'Assigned To',
+							'internalName': 'AssignedTo',
+							'userName': 1
+						}, {
+							'displayName': 'Assignment Date',
+							'internalName': 'AssignmentDate',
+							'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+						}
+					]
+				}, {
+					'tableID': 'closed',
+					'someColsAreUsers': 1,
+					'grouping': {
+						'zeroIndexedColumnNumber': 4,
+						'numberColsForHeaderToSpan': 9
+					},
+					'customCAMLQuery': '<Where>' +
+						'   <And>' +
+						'       <Eq>' +
+						'           <FieldRef Name="EndOfLife"></FieldRef>' +
+						'           <Value Type="Text">1</Value>' +
+						'       </Eq>' +
+						'       <And>' +
+						'           <Geq>' +
+						'               <FieldRef Name="EventBeginningDatetime"></FieldRef>' +
+						'               <Value Type="DateTime" IncludeTimeValue="FALSE">' + startDateFrom + 'T00:00:00Z</Value>' +
+						'           </Geq>' +
+						'           <Leq>' +
+						'               <FieldRef Name="EventBeginningDatetime"></FieldRef>' +
+						'               <Value Type="DateTime" IncludeTimeValue="FALSE">' + startDateTo + 'T00:00:00Z</Value>' +
+						'           </Leq>' +
+						'       </And>' +
+						'   </And>' +
+						'</Where>',
+					'customColumns': [
+						{
+							'displayName': 'Request ID',
+							'internalName': 'ID',
+							'formLink': 1
+						}, {
+							'displayName': 'Request Status',
+							'internalName': 'RequestStatus'
+						}, {
+							'displayName': 'Requested By',
+							'internalName': 'Author',
+							'userName': 1
+						}, {
+							'displayName': 'Talk To',
+							'internalName': 'RequestedFor',
+							'userName': 1
+						}, {
+							'displayName': 'Event Date and Time',
+							'internalName': 'EventBeginningDatetime',
+							'groupingFriendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'ddd, MMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+						}, {
+							'displayName': 'Request Date',
+							'internalName': 'RequestDate',
+							'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+						}, {
+							'displayName': 'Assigned To',
+							'internalName': 'AssignedTo',
+							'userName': 1
+						}, {
+							'displayName': 'Assignment Date',
+							'internalName': 'AssignmentDate',
+							'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+						}, {
+							'displayName': 'Completed By',
+							'internalName': 'CompletedBy',
+							'userName': 1
+						}, {
+							'displayName': 'Completion Date',
+							'internalName': 'CompletionDate',
+							'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+						}
+					]
+				}
+			]
+		};
+
+		// insert container and sub-containers
+		$("div#overview-table-container").prepend('<div id="container_command-bar-and-tables"> \n' +
+			'   <div id="container_command-bar"></div> \n' +
+			'   <div id="table-container"></div> \n' +
+			'</div>');
+
+		var commandBarContents = '<h2 id="header_command-bar">Commands</h2> \n' +
+			'<div id="container_new-request-control"> \n' +
+			'   <a class="button-link button-link_new-item button_swf-new-request-with-datatable" data-button-type="newRequest" href="' + mData.uriAdmin + '">New Request</a> \n' +
+			'</div> \n' +
+			'<ul id="container_tab-controls"> \n' +
+			'   <li><a href="#table-container_pending-approval">Pending Approval</a></li> \n' +
+			'   <li><a href="#table-container_approved">Approved</a></li> \n' +
+			'   <li><a href="#table-container_closed">Closed</a></li> \n' +
+			'</ul> \n' +
+			'<div id="container_date-filter-controls-and-header"> \n' +
+			'   <div id="text_date-filter-controls" class="collapsible">Dates</div> \n' +
+			'   <div id="container_date-filter-controls"> \n' +
+			'        <div class="container_date-filter-control"> \n' +
+			'            <label class="date-selector-label" for="filter--start-date_from">Start Date From</label> \n' +
+			'            <input class="date-selector" id="filter--start-date_from" name="filter--start-date_from" type="text"> \n' +
+			'        </div> \n' +
+			'        <div class="container_date-filter-control"> \n' +
+			'            <label class="date-selector-label" for="filter--start-date_to">Start Date To</label> \n' +
+			'            <input class="date-selector" id="filter--start-date_to" name="filter--start-date_to" type="text"> \n' +
+			'        </div> \n' +
+			'        <div class="container_date-filter-control"> \n' +
+			'            <a id="filter--submit-button">Update</a> \n' +
+			'        </div> \n' +
+			'    </div> \n' +
+			'</div> \n';
+
+
+		$().RenderAllDataTables(tData, "table-container");
+
+		// insert contents into containers
+		$("div#container_command-bar").html(commandBarContents);
+
+		// turn some command bar elements into tab controls and the turn the corresponding contents into tabbed content
+		$("div#container_command-bar-and-tables").tabs();
+
+		// set datepickers on date filter fields
+		$("input#filter--start-date_to, input#filter--start-date_from").datepicker({
+			changeMonth: "true",
+			changeYear: "true",
+			dateFormat: "MM d, yy"
+		});
+
+		// set currently-used dates into date fields
+		$("input#filter--start-date_from").val(moment(startDateFrom, 'YYYY-MM-DD').format('MMMM D, YYYY'));
+		$("input#filter--start-date_to").val(moment(startDateTo, 'YYYY-MM-DD').format('MMMM D, YYYY'));
+
+ 		// listen for date filtering
+		$("a#filter--submit-button").click(function () {
+
+			var startDateFromFieldValue = $("input#filter--start-date_from").val();
+			var startDateToFieldValue = $("input#filter--start-date_to").val();
+
+			if (startDateFromFieldValue == "") {
+				startDateFromFieldValue = $().ReturnFormattedDateTime('nowLocal', null, 'MMMM D, YYYY');
+			}
+
+			if (startDateToFieldValue == "") {
+				startDateToFieldValue = moment(startDateFromFieldValue, 'MMMM D, YYYY').add(14, "days").format('MMMM D, YYYY');
+			}
+
+			var newStartDateFrom = $().ReturnFormattedDateTime(startDateFromFieldValue, null, 'YYYY-MM-DD');
+			var newStartDateTo = $().ReturnFormattedDateTime(startDateToFieldValue, null, 'YYYY-MM-DD');
+
+			window.location = mData.uriAdmin + "?startDateFrom=" + newStartDateFrom + "&startDateTo=" + newStartDateTo;
+		});
 	};
 
 
@@ -20537,9 +20797,9 @@
 			GetFieldsFromOneRow({
 				"listName": "ComponentLog",
 				"select": [{
-					// 	"nameHere": "uriAdmin",
-					// 	"nameInList": "URIAdmin",
-					// 	"linkField": 1
+						"nameHere": "uriAdmin",
+						"nameInList": "URIAdmin",
+						"linkField": 1
 					// }, {
 					// 	"nameHere": "uriRequester",
 					// 	"nameInList": "URIRequester",
