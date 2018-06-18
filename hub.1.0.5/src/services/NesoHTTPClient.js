@@ -24,7 +24,7 @@ export default class NesoHttpClient {
 			// get a promise to post the data
 			axios.post(endpoint, jsonObject, config)
 				// if the promise is resolved with the docs, then resolve this promise with the docs
-				.then((result) => { console.log('service result'); console.log(result); resolve(result); })
+				.then((result) => { resolve(result); })
 				// if the promise is rejected with an error
 				.catch((returnedError) => {
 					// reject this promise with an error

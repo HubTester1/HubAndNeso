@@ -9,8 +9,10 @@ import {
 	AccordionItemTitle,
 	AccordionItemBody,
 } from 'react-accessible-accordion';
+import { scroller } from 'react-scroll';
 import MediaQuery from 'react-responsive';
 import Pagination from 'react-js-pagination';
+import shortid from 'shortid';
 import HcMessagesData from './HcMessagesData';
 import HcMessagesCommandBar from './components/HcMessagesCommandBar/HcMessagesCommandBar';
 import HcMessagesList from './components/HcMessagesList/HcMessagesList';
@@ -21,8 +23,6 @@ import MOSUtilities from '../../services/MOSUtilities';
 import './HcMessages.sass';
 import './HcMessagesSmall.sass';
 import './HcMessagesMediumLarge.sass';
-
-const shortid = require('shortid');
 
 // ----- COMPONENT
 
@@ -81,17 +81,6 @@ export default class HcMessages extends React.Component {
 		this.returnFormFieldContainerClassNameString = 
 			this.returnFormFieldContainerClassNameString.bind(this);
 		this.handleChangedSubject = this.handleChangedSubject.bind(this);
-		// this.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX = this.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.bind(this);
-		// this.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX = this.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.bind(this);
-		// this.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX = this.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.bind(this);
-		// this.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX = this.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.bind(this);
-		// this.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX = this.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.bind(this);
-		// this.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX = this.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.bind(this);
-		// this.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX = this.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.bind(this);
-		// this.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX = this.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.bind(this);
-		// this.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX = this.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.bind(this);
-		// this.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX = this.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.bind(this);
-		// this.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX = this.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.bind(this);
 	}
 	componentDidMount() {
 		if (this.props.allOrTop === 'all') {
@@ -399,7 +388,7 @@ export default class HcMessages extends React.Component {
 			newMessageIsInvalid: undefined,
 			newMessageImageUploadsImpossible: undefined,
 			newMessageSaveFailure: undefined,
-			newMessageSaveSuccess: true,
+			newMessageSaveSuccess: undefined,
 			newMessageIITNotificationFailure: undefined,
 		}));
 	}
@@ -479,6 +468,8 @@ export default class HcMessages extends React.Component {
 	handleClickNewMessageButton(e) {
 		// prevent submitting using the SP form tag
 		e.preventDefault();
+		// reset state
+		this.resetNewMessageStateAndSetSaveSuccess();
 		// set state
 		this.setState(() => ({
 			showNewMessageForm: true,
@@ -574,16 +565,7 @@ export default class HcMessages extends React.Component {
 					handleFileDeletion={this.handleFileDeletion}
 					handleMessageUpdate={this.handleMessageUpdate}
 					handleChangedExpirationDate={this.handleChangedExpirationDate}
-					// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX={this.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX}
-					// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX={this.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX}
-					// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX={this.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX}
-					// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX={this.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX}
-					// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX={this.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX}
 					handleAddMessage={this.handleAddMessage}
-					// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX={this.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX}
-					// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX={this.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX}
-					// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX={this.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX}
-					// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX={this.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX}
 				/>
 				<MediaQuery maxWidth={ScreenSizes.ReturnSmallMax()}>
 					<HcMessagesList
@@ -623,23 +605,19 @@ export default class HcMessages extends React.Component {
 		);
 	}
 	enableMessageUpdate(incomingMessageID, e) {
-		// to do: scroll to form
-		// to do: when you click new message, you're still modifying old message
 		// prevent submitting using the SP form tag
 		e.preventDefault();
+		console.log('enabling msg update');
 		// set state
 		this.state.messagesArray.forEach((message) => {
+			console.log('message');
+			console.log(message);
 			const messageCopy = message;
 			if (messageCopy.messageID === incomingMessageID) {
+				console.log('FOUND THE MESSAGE');
 				if (typeof (messageCopy.expiration) === 'string') {
-					console.log('creating date');
-					/* messageCopy.expirationYear = MOSUtilities.ReturnFormattedDateTime({
-						incomingDateTimeString: messageCopy.expiration,
-						incomingReturnFormat: 
-					}); */
 					messageCopy.expiration = new Date(messageCopy.expiration);
 				}
-				console.log(messageCopy);
 				this.setState({
 					showNewMessageForm: true,
 					updatingMessage: true,
@@ -651,13 +629,19 @@ export default class HcMessages extends React.Component {
 					newMessageImages: messageCopy.images,
 					newMessageSaveSuccess: undefined,
 				});
+				// scroll to form
+				scroller.scrollTo('hc-messages-all', {
+					duration: 500,
+					offset: -70,
+					delay: 0,
+					smooth: 'easeInOutQuart',
+				});
 			}
 		});
 	}
 	handleMessageUpdate(e) {
 		// prevent submitting using the SP form tag
 		e.preventDefault();
-		console.log('handling message update');
 		// if the form is not invalid
 		if (!this.setAndReturnMessageFormIsInvalid()) {
 			// use the message ID + other message properties to construct a new message object
@@ -666,14 +650,22 @@ export default class HcMessages extends React.Component {
 				newMessageTags: [{ name: this.state.newMessageTags[0].name, camlName: this.state.newMessageTags[0].camlName }],
 				newMessageSubject: this.state.newMessageSubject,
 				newMessageBody: this.state.newMessageBody,
-				newMessageImages: this.state.newMessageImages,
+				newMessageImagesToCheck: this.state.newMessageImages,
+				newMessageImages: [],
 				newMessageExpirationDate: this.state.newMessageExpirationDate,
 			};
+			newMessageProperties.newMessageImagesToCheck.forEach((checkingImage) => {
+				const checkingImageCopy = checkingImage;
+				if (!checkingImageCopy.imageKey) {
+					checkingImageCopy.imageKey = shortid.generate();
+				}
+				newMessageProperties.newMessageImages.push(checkingImageCopy);
+			});
 			// send message to Neso
 			HcMessagesData.SendNesoMessagesMessageUpdate(newMessageProperties)
 				.then((response) => {
 					if (!response.data.error) {
-						this.handleSaveSuccess(newMessageProperties);
+						this.handleUpdateSuccess(newMessageProperties);
 					} else {
 						this.handleSaveError();
 					}
@@ -682,6 +674,38 @@ export default class HcMessages extends React.Component {
 					this.handleSaveError();
 				});
 		}
+	}
+	handleUpdateSuccess(newMessageProperties) {
+		this.updateMessageInList(newMessageProperties);
+		this.resetNewMessageStateAndSetSaveSuccess();
+	}
+	updateMessageInList(newMessageProperties) {
+		this.setState((prevState) => {
+			// set up container for updated messages
+			const newMessageArray = [];
+			// iterate over the existing message
+			prevState.messagesArray.forEach((prevMessage) => {
+				const prevMessageCopy = prevMessage;
+				// if this is the message to update
+				if (prevMessageCopy.messageID === newMessageProperties.newMessageID) {
+					// replace previous properties with new properties
+					prevMessageCopy.tags = [newMessageProperties.newMessageTags[0]];
+					prevMessageCopy.subject = newMessageProperties.newMessageSubject;
+					prevMessageCopy.body = newMessageProperties.newMessageBody;
+					prevMessageCopy.images = newMessageProperties.newMessageImages;
+					prevMessageCopy.expirationDate = newMessageProperties.newMessageExpirationDate;
+				}
+				// push message, updated or not, to container
+				newMessageArray.push(prevMessageCopy);
+			});
+			const messagesThisPage =
+				this.returnMessagesThisPage(startingPageNumber, newMessageArray);
+			return {
+				messagesArray: newMessageArray,
+				messagesThisPageSmallScreen: messagesThisPage.messagesThisPageSmallScreen,
+				messagesThisPageLargeScreen: messagesThisPage.messagesThisPageLargeScreen,
+			};
+		});
 	}
 	render() {
 		if (this.props.allOrTop === 'all' && this.props.screenType === 'medium') {

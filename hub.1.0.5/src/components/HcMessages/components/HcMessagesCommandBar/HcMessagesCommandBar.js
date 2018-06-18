@@ -28,7 +28,7 @@ export default class HcMessagesCommandBar extends React.Component {
 		if (this.props.showingNewMessageForm && this.props.updatingMessage) {
 			hideShowButton = {
 				key: 'hideUpdateMessage',
-				name: 'Hide Message Modification',
+				name: 'Cancel Message Modification',
 				icon: 'ChevronUpMed',
 				ariaLabel: 'Hide the message modification form',
 				onClick: this.props.handleClickHideNewMessageButton,
