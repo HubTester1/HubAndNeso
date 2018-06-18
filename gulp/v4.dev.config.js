@@ -36,4 +36,7 @@ module.exports = {
 		folder: 'DevCode4/js',
 		flatten: false,
 	}),
+
+
+	ReturnSWFImporterFile: appToken => `./hub.1.0.4/swf/${appToken}/wpc_importer.html`,
 };

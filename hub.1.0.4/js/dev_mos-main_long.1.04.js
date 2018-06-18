@@ -2050,7 +2050,10 @@
 			mData.adminEmailArray = $().ReturnUserEmailStringAndArray(mData.adminNotificationPersons).array;
 			mData.componentGrpAdminEmailString = $().ReturnUserEmailStringAndArray(mData.componentGrpAdminNotifications).string;
 			mData.componentGrpAdminEmailArray = $().ReturnUserEmailStringAndArray(mData.componentGrpAdminNotifications).array;
-			mData.requiredApproversArray = $().ReturnUserDataFromPersonOrGroupFieldString(mData.requiredApproversString);
+			
+			mData.requiredApproversArray = (mData.requiredApproversString) ? 
+			$().ReturnUserDataFromPersonOrGroupFieldString(mData.requiredApproversString) :
+			[];
 				
 			// THIS REQUEST'S DATA
 			// reset rData and get request id from url param
@@ -20656,7 +20659,7 @@
 		// wait for all data retrieval / setting promises to complete (pass or fail) 
 		$.when.apply($, allDataRetrievalAndSettingPromises).always(function() {
 
-			console.log('using dev_mos-main_long.1.04 m1 - DevCode4');
+			console.log('using dev_mos-main_long.1.04 m101 - DevCode4');
 
 			$().ConfigureAndShowScreenContainerAndAllScreens();
 		});

@@ -43,6 +43,26 @@ gulp.task('watch-push-settings', () => {
 });
 
 
+// push specified settings file to specified location
+gulp.task('push-importer', () =>
+	// for specified settings file
+	gulp.src(gulpV4DevConfig.ReturnSWFImporterFile(argv.app))
+		// replace the standard pipe method
+		.pipe(plumber())
+		// pipe them into a caching proxy 
+		.pipe(cached('spFiles'))
+		// and then to specified SP location
+		.pipe(spSave(
+			gulpBaseConfig.ReturnSPSaveSWFSettingsOptions(argv.app),
+			gulpBaseConfig.ReturnGulpSPSaveCredentials(),
+		)));
+// when the specified settings file changes, push it to specified location
+gulp.task('watch-push-importer', () => {
+	// watch the src style file; upon changes, build dist style file and push it to dev
+	gulp.watch([gulpV4DevConfig.ReturnSWFImporterFile(argv.app)], ['push-importer']);
+});
+
+
 // V4 API & STYLES ---
 
 // DEV
