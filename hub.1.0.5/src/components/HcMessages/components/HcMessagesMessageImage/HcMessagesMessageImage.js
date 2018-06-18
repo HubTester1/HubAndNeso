@@ -17,7 +17,7 @@ const HcMessagesMessageImage = (props) => {
 				<img 
 					id={`hc-messages-message-image_${props.imageID}`}
 					className="hc-messages-message-image"
-					src={props.imageContent.url}
+					src={props.imageContent.urlLarge}
 				/>
 			</div>
 		);

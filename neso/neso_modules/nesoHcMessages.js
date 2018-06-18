@@ -3,6 +3,7 @@
 
 const nesoDBQueries = require('./nesoDBQueries');
 const nesoImages = require('./nesoImages');
+const nesoUtilities = require('./nesoUtilities');
 const fse = require('fs-extra');
 const formidable = require('formidable');
 const shortid = require('shortid');
@@ -47,7 +48,6 @@ module.exports = {
 		nesoDBQueries
 			.UpdateSpecificFieldInSpecificDocsInCollection('hcMessagesSettings', '_id', existingSettings._id, true, 'nextMessageID', newNextMessageID);
 	},
-
 	ReturnHcMessagesWhitelistedDomains: () =>
 		// return a new promise
 		new Promise(((resolve, reject) => {
@@ -267,7 +267,10 @@ module.exports = {
 				messageSubject: incomingMessageCopy.newMessageSubject,
 				messageBody: incomingMessageCopy.newMessageBody,
 				messageImages: imageDataToKeep,
-				messageExpiration: incomingMessageCopy.newMessageExpirationDate,
+				messageExpiration: nesoUtilities
+					.ReturnFormattedDateTime({
+						incomingDateTimeString: incomingMessageCopy.newMessageExpirationDate,
+					}),
 				messageCreated: incomingMessageCopy.newMessageCreated,
 				messageCreator: incomingMessageCopy.newMessageCreator,
 				messageModified: incomingMessageCopy.newMessageCreated,
@@ -279,4 +282,50 @@ module.exports = {
 				// if the promise is rejected with an error, then reject this promise with an error
 				.catch((error) => { reject(error); });
 		})),
+
+	ProcessMessageUpdate: incomingMessage =>
+		// return a new promise
+		new Promise(((resolve, reject) => {
+			// preserve function parameter
+			const incomingMessageCopy = incomingMessage;
+			// weed out some unnecessary image data
+			const imageDataToKeep = [];
+			incomingMessageCopy.newMessageImages.forEach((imageValue) => {
+				imageDataToKeep.push({
+					error: false,
+					name: imageValue.name,
+					key: imageValue.key,
+					urlLarge: imageValue.urlLarge,
+					urlSmall: imageValue.urlSmall,
+				});
+			});
+			const messagePropsToSet = [
+				{ key: 'messageTags', value: incomingMessageCopy.newMessageTags },
+				{ key: 'messageSubject', value: incomingMessageCopy.newMessageSubject },
+				{ key: 'messageBody', value: incomingMessageCopy.newMessageBody },
+				{ key: 'messageImages', value: imageDataToKeep },
+				{ 
+					key: 'messageExpiration', 
+					value: nesoUtilities
+						.ReturnFormattedDateTime({
+							incomingDateTimeString: incomingMessageCopy.newMessageExpirationDate,
+						}),
+				},
+				{
+					key: 'messageModified', 
+					value: nesoUtilities
+						.ReturnFormattedDateTime({
+							incomingDateTimeString: 'nowLocal',
+						}),
+				},
+			];
+			// get a promise to retrieve all documents from the hcMessagesSettings document collection
+			nesoDBQueries
+				.UpdateSpecificFieldsInSpecificDocsInCollection('hcMessages', 'messageID', incomingMessageCopy.newMessageID, false, messagePropsToSet)
+				// if the promise is resolved with the docs, then resolve this promise with the docs
+				.then((result) => { resolve(result); })
+				// if the promise is rejected with an error, then reject this promise with an error
+				.catch((error) => { reject(error); });
+		})),
+
 };

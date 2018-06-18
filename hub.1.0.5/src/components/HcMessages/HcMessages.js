@@ -325,9 +325,6 @@ export default class HcMessages extends React.Component {
 		});
 	}
 	handleChangedExpirationDate(value) {
-		console.log(typeof (value));
-		console.log(value);
-		// console.log(value.toString());
 		if (value) {
 			this.setState(() => ({
 				newMessageExpirationDate: value,
@@ -459,8 +456,6 @@ export default class HcMessages extends React.Component {
 		};
 	}
 	addMessageToList(newMessageProperties) {
-		console.log('adding to list - newMessageProperties');
-		console.log(newMessageProperties);
 		this.setState((prevState) => {
 			const newMessageArray = [{
 				body: newMessageProperties.newMessageBody,
@@ -627,53 +622,66 @@ export default class HcMessages extends React.Component {
 			</div>
 		);
 	}
+	enableMessageUpdate(incomingMessageID, e) {
+		// to do: scroll to form
+		// to do: when you click new message, you're still modifying old message
+		// prevent submitting using the SP form tag
+		e.preventDefault();
+		// set state
+		this.state.messagesArray.forEach((message) => {
+			const messageCopy = message;
+			if (messageCopy.messageID === incomingMessageID) {
+				if (typeof (messageCopy.expiration) === 'string') {
+					console.log('creating date');
+					/* messageCopy.expirationYear = MOSUtilities.ReturnFormattedDateTime({
+						incomingDateTimeString: messageCopy.expiration,
+						incomingReturnFormat: 
+					}); */
+					messageCopy.expiration = new Date(messageCopy.expiration);
+				}
+				console.log(messageCopy);
+				this.setState({
+					showNewMessageForm: true,
+					updatingMessage: true,
+					newMessageID: messageCopy.messageID,
+					newMessageSubject: messageCopy.subject,
+					newMessageTags: [messageCopy.tags[0]],
+					newMessageBody: messageCopy.body,
+					newMessageExpirationDate: messageCopy.expiration,
+					newMessageImages: messageCopy.images,
+					newMessageSaveSuccess: undefined,
+				});
+			}
+		});
+	}
 	handleMessageUpdate(e) {
 		// prevent submitting using the SP form tag
 		e.preventDefault();
 		console.log('handling message update');
 		// if the form is not invalid
 		if (!this.setAndReturnMessageFormIsInvalid()) {
-			console.log('form is valid');
-		} else {
-			console.log('form is NOT valid');
-		}
-
-		// yello
-	}
-	enableMessageUpdate(incomingMessageID, e) {
-		// set state for controlled fields
-		// open form and change button
-		// to do: scroll to form
-		// to do: when you click new message, you're still modifying old message
-
-		// prevent submitting using the SP form tag
-		e.preventDefault();
-		// set state
-		this.state.messagesArray.forEach((message) => {
-			// console.log(message);
-			if (message.messageID === incomingMessageID) {
-				console.log('message');
-				console.log(message);
-				this.setState({
-					showNewMessageForm: true,
-					updatingMessage: true,
-					newMessageID: message.messageID,
-					newMessageSubject: message.subject,
-					newMessageTags: [message.tags[0]],
-					newMessageBody: message.body,
-					// newMessageExpirationDate: message.expirationDate,
-					newMessageImages: message.images,
-					newMessageSaveSuccess: undefined,
-					// newMessageCreated: message.messageCreated,
+			// use the message ID + other message properties to construct a new message object
+			const newMessageProperties = {
+				newMessageID: this.state.newMessageID,
+				newMessageTags: [{ name: this.state.newMessageTags[0].name, camlName: this.state.newMessageTags[0].camlName }],
+				newMessageSubject: this.state.newMessageSubject,
+				newMessageBody: this.state.newMessageBody,
+				newMessageImages: this.state.newMessageImages,
+				newMessageExpirationDate: this.state.newMessageExpirationDate,
+			};
+			// send message to Neso
+			HcMessagesData.SendNesoMessagesMessageUpdate(newMessageProperties)
+				.then((response) => {
+					if (!response.data.error) {
+						this.handleSaveSuccess(newMessageProperties);
+					} else {
+						this.handleSaveError();
+					}
+				})
+				.catch((error) => {
+					this.handleSaveError();
 				});
-				// newMessageExpirationDate: this.state.newMessageExpirationDate,
-				// newMessageKey: shortid.generate(),
-				// newMessageCreated: MOSUtilities.ReturnFormattedDateTime({
-				// 	incomingDateTimeString: 'nowLocal',
-				// }),
-				// newMessageCreator: newMessageCreatorObject,
-			}
-		});
+		}
 	}
 	render() {
 		if (this.props.allOrTop === 'all' && this.props.screenType === 'medium') {

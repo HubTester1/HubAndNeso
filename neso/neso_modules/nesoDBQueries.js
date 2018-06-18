@@ -392,7 +392,63 @@ module.exports = {
 					},
 				);
 			})),
-
+	UpdateSpecificFieldsInSpecificDocsInCollection:
+		(
+			collection,
+			docsSelectionFieldName,
+			docsSelectionFieldValue,
+			docsSelectorIsDocID,
+			changingFieldsArray,
+		) =>
+			// return a new promise
+			new Promise(((resolve, reject) => {
+				// note: setObject MUST be constructed in the following way; 
+				// 		attempts to "optimize" the next two lines result in errors
+				const setObject = {};
+				changingFieldsArray.forEach((changingField) => {
+					setObject[changingField.key] = changingField.value;
+				});
+				
+				// note: setObject MUST be constructed in the following way; 
+				// 		attempts to "optimize" the next two lines result in errors
+				const selectionObject = {};
+				if (docsSelectorIsDocID) {
+					selectionObject[docsSelectionFieldName] = ObjectID(docsSelectionFieldValue);
+				} else {
+					selectionObject[docsSelectionFieldName] = docsSelectionFieldValue;
+				}
+				// use nesoDBConnection object to query db
+				nesoDBConnection.get(collection).update(
+					selectionObject,
+					{ $set: setObject },
+					(error, countsFromMonk) => {
+						// if there was an error
+						if (error) {
+							// construct a custom error
+							const errorToReport = {
+								error: true,
+								mongoDBError: true,
+								mongoDBErrorDetails: error,
+							};
+							// add error to Twitter
+							nesoErrors.ProcessError(errorToReport);
+							// reject this promise with the error
+							reject(errorToReport);
+							// if there was NOT an error
+						} else {
+							// resolve the promise and return the counts of what happened
+							const docCounts = {};
+							if (countsFromMonk.n) { docCounts.matchedDocs = countsFromMonk.n; }
+							if (countsFromMonk.nModified) { docCounts.modifiedDocs = countsFromMonk.nModified; }
+							resolve({
+								error: false,
+								mongoDBError: false,
+								docCounts,
+							});
+						}
+					},
+				);
+			})),
 	DeleteDocFromCollection: (docID, collection) =>
 		// return a new promise
 		new Promise(((resolve, reject) => {
