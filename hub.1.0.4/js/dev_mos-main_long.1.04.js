@@ -397,7 +397,9 @@
 				newTitle = "My Referrals";
 				break;
 
-
+			case "adminEventAV":
+				newTitle = "Admin Event AV Requests";
+				break;
 			case "gseJobsHRAdmin":
 				newTitle = "All GSE Jobs";
 				break;
@@ -467,6 +469,8 @@
 			case "gpcInitialConceptApprovalViewer":
 			case "gpcSubmissionApprovalViewer":
 
+			case "adminEventAV":
+
 			case "adminReferrals":
 			case "myReferrals":
 
@@ -532,6 +536,8 @@
 			case "myRequests":
 			case "gpcInitialConceptApprovalViewer":
 			case "gpcSubmissionApprovalViewer":
+
+			case "adminEventAV":
 
 			case "adminReferrals":
 			case "myReferrals":
@@ -607,6 +613,8 @@
 			case "gpcInitialConceptApprovalViewer":
 			case "gpcSubmissionApprovalViewer":
 
+			case "adminEventAV":
+
 			case "adminReferrals":
 			case "myReferrals":
 
@@ -665,6 +673,10 @@
 				$().ConfigureOverviewScreen("gpcSubmissionApprovalViewer");
 				break;
 
+
+			case "adminEventAV":
+				$().ConfigureOverviewScreen("adminEventAV");
+				break;
 
 			case "adminReferrals":
 				$().ConfigureOverviewScreen("adminReferrals");
@@ -1529,6 +1541,12 @@
 					userNeeedsAlternateOverviewScreen = "myReferrals";
 				} else {
 					userNeeedsAlternateOverviewScreen = "adminReferrals";
+				}
+				break;
+
+			case "Event AV":
+				if (uData.isAdmin === 1) {
+					userNeeedsAlternateOverviewScreen = "adminEventAV";
 				}
 				break;
 
@@ -6337,6 +6355,14 @@
 			$().RenderAllDataTables(oData.gpcSubmissionApprovalViewer.sections, "overview-table-container");
 			$().RenderWorkflowContacts();
 
+
+		} else if (type === "adminEventAV") {
+			// $().RenderOverviewScreenButtons(oData.adminEventAV.buttons, 0);
+			
+			$().RenderAdminEventAVOverviewScreen();
+
+
+			// $().RenderAllDataTables(oData.adminEventAV.sections, "overview-table-container");
 
 		} else if (type === "adminReferrals") {
 			$().RenderOverviewScreenButtons(oData.adminReferrals.buttons, 0);
@@ -17168,6 +17194,13 @@
 	};
 
 
+	// ---- CUSTOM OVERVIEW SCREENS
+
+	$.fn.RenderAdminEventAVOverviewScreen = function () {
+		$("div#overview-table-container").html("<p>This is RenderEventAVScreen.</p>");
+	};
+
+
 	// ---- DATATABLES
 
 
@@ -17640,10 +17673,14 @@
 					debug: false
 				});
 
-				if (typeof(mData.getRequesterFrom) == 'undefined') {
-					var getRequesterFrom = 'Author';
-				} else {
-					var getRequesterFrom = mData.getRequesterFrom;
+				var getRequesterFrom = 'Author';
+				
+
+				if (mData.getRequesterFrom) {
+					getRequesterFrom = mData.getRequesterFrom;
+				}
+				if (t.getRequesterFrom) {
+					getRequesterFrom = t.getRequesterFrom;
 				}
 
 				if (t.basicMyEOLQueryRelevantValue == 0) {

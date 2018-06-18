@@ -197,12 +197,16 @@
 						'displayName': 'Request Nickname',
 						'internalName': 'Title'
 					}, {
+						'displayName': 'Event Name',
+						'internalName': 'EventName'
+					}, {
+						'displayName': 'Event Date and Time',
+						'internalName': 'EventBeginningDatetime',
+						'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+					}, {
 						'displayName': 'Talk To',
 						'internalName': 'RequestedFor',
 						'userName': 1
-					}, {
-						'displayName': "Staff Volunteer Name(s)",
-						'internalName': "StaffVolNames",
 					}, {
 						'displayName': 'Request Date',
 						'internalName': 'RequestDate',
@@ -217,12 +221,14 @@
 						'tableTitle': 'Open',
 						'tableID': 'open',
 						'someColsAreUsers': 1,
-						'basicMyEOLQueryRelevantValue': 0
+						'basicMyEOLQueryRelevantValue': 0,
+						'getRequesterFrom': 'RequestedFor'
 					}, {
 						'tableTitle': 'Closed',
 						'tableID': 'closed',
 						'someColsAreUsers': 1,
-						'basicMyEOLQueryRelevantValue': 1
+						'basicMyEOLQueryRelevantValue': 1,
+						'getRequesterFrom': 'RequestedFor'
 					}
 				]
 			}
