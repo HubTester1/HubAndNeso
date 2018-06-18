@@ -286,7 +286,13 @@
 				'tag': 'div',
 				'end': 1
 
-
+			}, {
+				'elementType': "field",
+				'controlType': "textarea",
+				'fieldName': "Additional Info",
+				'labelContent': "Additional Information",
+				'disabledForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+				'disabledForAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
 
 
 

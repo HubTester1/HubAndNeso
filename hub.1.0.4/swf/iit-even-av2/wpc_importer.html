@@ -24,7 +24,7 @@
         // partial config 
         var mData = {
             'legacyFile': '/sites/iit-even-av2/SiteAssets/avRequests.xml', //https://bmos.sharepoint.com
-            'maxToProcess': 5000,
+            'maxToProcess': 500,
             'newList': 'SWFList',
             'deleteAllItemsBeforeImporting': 1,
             'emailErrorsTo': 'jbaker@mos.org'
@@ -66,7 +66,9 @@
                     var listFields = {};
                     var submissionValuePairs = [];
 
-                    // grab some data that will be used multiple times, that needs to be manipulated, or is otherwise convenient
+					// grab some data that will be used multiple times, that needs to be manipulated, or is otherwise convenient
+					
+
 					var legacyID = $(requestValue).find('legacyID').text();
 					var quarkRequest = 'https://quark.mos.org/getitdone/avrequest/avrequest.php?id=' + legacyID;
                     var beginningDate = $(requestValue).find('date').text();
@@ -101,11 +103,6 @@
 							var onsiteContactName = requesterName;
 							var onsiteContactAccount = email;
 							break;
-						
-
-
-
-
 
 						case "Lew Stevens":
 							var onsiteContactName = "Lew Stevens";
@@ -169,12 +166,6 @@
 							var onsiteContactAccount = "jdillman";
 							break;
 						
-
-
-
-
-
-
                         case "Lisa (lead)":
                             var onsiteContactName = "Lisa Cigna";
                             var onsiteContactAccount = "lcigna";
@@ -404,9 +395,7 @@
                                         '"Request-Status":"' + HtmlEncode(listFields.RequestStatus) + '",' +
                                         '"Requested-For":[{"account": "i:0#.f|membership|' + email + '","displayText":"' + requesterName + '","description":"' + email + '"}],' +
                                         '"Onsite-Contact":[{"account": "i:0#.f|membership|' + onsiteContactAccount + '@mos.org","displayText":"' + onsiteContactName + '","description":"' + onsiteContactAccount + '@mos.org"}],' +
-                                        '"Additional-Information":"' + HtmlEncode($(requestValue).find('specialInstructions').text())  + '",' +
                                         '"Account-Number":"' + HtmlEncode($(requestValue).find('account').text())  + '",' +
-
                                         '"date-input_Event-Beginning-Datetime":"' + HtmlEncode(beginningDateVerbose) + '",' +
                                         '"date-input_Event-Ending-Datetime":"' + HtmlEncode(beginningDateVerbose) + '",' +
 
@@ -476,11 +465,23 @@
 
                     if (assistiveDevice == 1) {
                         allRequestData += '"audio_assistivelisteningdevice":"assistiveListeningDevice",';
-                    }
+					}
+					
 
-                    // if (legacyFileString != "[]") {
-                    //     allRequestData += '"Legacy-Files":' + legacyFileString + ',';
-                    // }
+
+					var rawTextAreaText = $(requestValue).find('specialInstructions').text();
+					// var numberOfLineBreaks = (rawTextAreaText.match(/\n/g) || []).length;
+					var formattedTextAreaText = rawTextAreaText.replace(/\r?\n/g, '%0A');
+					// if (numberOfLineBreaks > 0) {
+					// 	console.log('check text for legacyID = ' + legacyID);
+					// }
+					// console.log('testText');
+					// console.log(testText);
+					// console.log('numberOfLineBreaks');
+					// console.log(numberOfLineBreaks);
+
+
+					allRequestData += '"Additional-Information":"' + HtmlEncode(formattedTextAreaText) + '",';
 
                     // finish off allRequestData
                     allRequestData += '}';
