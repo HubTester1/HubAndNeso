@@ -262,6 +262,21 @@
 
 		'uniqueElements': [
 			{
+				
+
+
+
+				'elementType': 'field',
+				'controlType': 'url',
+				'fieldName': 'Quark Request',
+				'labelContent': 'Quark Request',
+				'editableForNonAdmin': [],
+				'editableForAdmin': [],
+			}, {
+
+
+				
+				
 				"elementType": "field",
 				"controlType": "hidden",
 				"fieldName": "Migrated From Quark",

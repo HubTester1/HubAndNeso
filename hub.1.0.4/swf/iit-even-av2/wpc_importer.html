@@ -24,7 +24,7 @@
         // partial config 
         var mData = {
             'legacyFile': '/sites/iit-even-av2/SiteAssets/avRequests.xml', //https://bmos.sharepoint.com
-            'maxToProcess': 5,
+            'maxToProcess': 5000,
             'newList': 'SWFList',
             'deleteAllItemsBeforeImporting': 1,
             'emailErrorsTo': 'jbaker@mos.org'
@@ -67,7 +67,8 @@
                     var submissionValuePairs = [];
 
                     // grab some data that will be used multiple times, that needs to be manipulated, or is otherwise convenient
-					var legacyID = $(requestValue).find('legacyid').text();
+					var legacyID = $(requestValue).find('legacyID').text();
+					var quarkRequest = 'https://quark.mos.org/getitdone/avrequest/avrequest.php?id=' + legacyID;
                     var beginningDate = $(requestValue).find('date').text();
 					var beginningDateVerbose = moment(beginningDate, "YYYY-MM-DD").format("MMMM D, YYYY");
 
@@ -96,10 +97,83 @@
 
                     switch (onsiteContactNameInFeed) {
                         
-                        case "":
-                            var onsiteContactName = requesterName;
-                            var onsiteContactAccount = email;
-                            break;
+						case "":
+							var onsiteContactName = requesterName;
+							var onsiteContactAccount = email;
+							break;
+						
+
+
+
+
+
+						case "Lew Stevens":
+							var onsiteContactName = "Lew Stevens";
+							var onsiteContactAccount = "lstevens";
+							break;
+
+						case "Lisa/Kate":
+							var onsiteContactName = "Lisa Cigna";
+							var onsiteContactAccount = "lcigna";
+							console.log("------ add Katie Wheaton to Legacy#" + legacyID);
+							break;
+
+						case "Emily Hostetler":
+							var onsiteContactName = "Emily Hostetler";
+							var onsiteContactAccount = "ehostetler";
+							break;
+
+						case "Meghan Carter":
+							var onsiteContactName = "Meghan Carter";
+							var onsiteContactAccount = "mcarter";
+							break;
+
+						case "Maggie Andrews":
+							var onsiteContactName = "Maggie Andrews";
+							var onsiteContactAccount = "mandrews";
+							break;
+
+						case "Kristin S.":
+							var onsiteContactName = "Kristin Sereyko";
+							var onsiteContactAccount = "ksereyko";
+							break;
+
+						case "Alyssa Albert":
+							var onsiteContactName = "Alyssa Albert";
+							var onsiteContactAccount = "aalbert";
+							break;
+
+						case "Cherie/Alyssa/Nora":
+							var onsiteContactName = "Cherie Rivers";
+							var onsiteContactAccount = "crivers";
+							console.log("------ add Alyssa Albert & Nora Yang to Legacy#" + legacyID);
+							break;
+
+						case "Christina Dillard":
+							var onsiteContactName = "Christina Dillard";
+							var onsiteContactAccount = "cdillard";
+							break;
+
+						case "Gina Crotty":
+							var onsiteContactName = "Gina Crotty";
+							var onsiteContactAccount = "gcrotty";
+							break;
+
+						case "Nora Nagle":
+							var onsiteContactName = "Nora Nagle";
+							var onsiteContactAccount = "nnagle";
+							break;
+						
+						case "Jackie Dillman":
+							var onsiteContactName = "Jackie Dillman";
+							var onsiteContactAccount = "jdillman";
+							break;
+						
+
+
+
+
+
 
                         case "Lisa (lead)":
                             var onsiteContactName = "Lisa Cigna";
@@ -114,13 +188,13 @@
                         case "Lisa/Sam":
                             var onsiteContactName = "Samantha Ricciardi";
                             var onsiteContactAccount = "sricciardi";
-                            console.log("add Lisa Cigna to Legacy#" + legacyID);
+                            console.log("------ add Lisa Cigna to Legacy#" + legacyID);
                             break;
 
                         case "Lisa/Victoria":
                             var onsiteContactName = "Victoria Cherubin";
                             var onsiteContactAccount = "vcherubin";
-                            console.log("add Lisa Cigna to Legacy#" + legacyID);
+                            console.log("------ add Lisa Cigna to Legacy#" + legacyID);
                             break;
 
                         case "Marjie MacDonald":
@@ -167,11 +241,16 @@
                             var onsiteContactName = "Jorge Bernal";
                             var onsiteContactAccount = "jbernal";
                             break;
-                        
-                        case "Kate Andersen":
-                            var onsiteContactName = "Kate Andersen";
-                            var onsiteContactAccount = "kandersen";
-                            break;
+
+						case "Kate Andersen":
+							var onsiteContactName = "Kate Andersen";
+							var onsiteContactAccount = "kandersen";
+							break;
+
+						default:
+							console.log(legacyID);
+							console.log(onsiteContactNameInFeed);
+							break;
                 }
                     
 
@@ -241,8 +320,6 @@
 
 
                     $(requestValue).find('legacyFiles legacyFile').each(function (fileIndex, fileValue) {
-						console.log('fileValue');
-						console.log(fileValue);
 						var idSuffix = (fileIndex != 0) ? '-repeat-' + fileIndex : '';
 						allRequestData += '{"ID": "attachment' + idSuffix + '",';
 						if (fileIndex == 0) {
@@ -253,7 +330,7 @@
 						allRequestData += '"mos-drag-and-drop-file-name_Attachment' + idSuffix + '": "' + fileValue.textContent + '",';
 						allRequestData += '"mos-drag-and-drop-file-size_Attachment' + idSuffix + '": "",';
 						allRequestData += '"mos-drag-and-drop-file-type-class_Attachment' + idSuffix + '": "generic-file",';
-						allRequestData += '"mos-drag-and-drop-file-in-quark-files_Attachment' + idSuffix + '":"1",}';
+						allRequestData += '"mos-drag-and-drop-file-in-quark-files_Attachment' + idSuffix + '":"1",},';
                     });
 
 					/*
@@ -313,6 +390,7 @@
 
                     // dynamically set all remaining allRequestData properties
 					allRequestData +=   '"legacy-id":"' + legacyID + '",' +
+										'"Quark-Request":"' + HtmlEncode(quarkRequest) + '",' +
 										'"End-of-Life": "' + listFields.EndOfLife + '",' +
 										'"Request-Nickname":"' + listFields.Title + '",' +
                                         '"Request-Date":"' + listFields.RequestDate + '",' +
@@ -435,7 +513,11 @@
                             } else if (Status == 'Error') {
                                 console.log('Status = Error');
                             } else {
-                                console.log('Created item with ID = ' + $(xData.responseXML).SPFilterNode("z:row").attr("ows_ID"));
+								var newRequestID = $(xData.responseXML).SPFilterNode("z:row").attr("ows_ID");
+								console.log('legacyID ' + legacyID + ' is requestID = ' + newRequestID);
+								// console.log('submissionValuePairs');
+								// console.log(submissionValuePairs);
+								console.log("");
                             }
                         }
                     });
