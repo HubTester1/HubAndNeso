@@ -35,11 +35,16 @@ export default class HcMessagesFiles extends React.Component {
 				{
 					this.props.newMessageImagesAreUploading && 
 					
-					<div className="banner">
-						<Spinner
-							size={SpinnerSize.medium}
-							label="Uploading"
-						/>
+					<div className="hc-messages-images-file-input-container">
+						{/* note: eslint isn't recognizing that Dropzone is associate with this label */}
+						{/* eslint-disable jsx-a11y/label-has-for */}
+						<label htmlFor="hc-messages-images-file-input">Images</label>
+						<div className="banner">
+							<Spinner
+								size={SpinnerSize.medium}
+								label="Uploading"
+							/>
+						</div>
 					</div>
 				}
 				{

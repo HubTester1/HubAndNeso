@@ -151,7 +151,6 @@ export default class HcMessages extends React.Component {
 		return newErrors.newMessageIsInvalid;
 	}
 	handleChangedTags(value) {
-		console.log(value);
 		if (value && value.key) {
 			this.setState(() => ({
 				newMessageTags: [{ camlName: value.key, name: value.text }],
@@ -255,8 +254,8 @@ export default class HcMessages extends React.Component {
 								const previousFileArray = prevState.newMessageImages;
 								const currentFileArray
 									= [...uploadsSucceeded, ...previousFileArray];
-								console.log('the files after dropping and before saving');
-								console.log(currentFileArray);
+								// console.log('the files after dropping and before saving');
+								// console.log(currentFileArray);
 								return {
 									newMessageImagesAreUploading: false,
 									newMessageImages: currentFileArray,
@@ -607,14 +606,12 @@ export default class HcMessages extends React.Component {
 	enableMessageUpdate(incomingMessageID, e) {
 		// prevent submitting using the SP form tag
 		e.preventDefault();
-		console.log('enabling msg update');
 		// set state
 		this.state.messagesArray.forEach((message) => {
-			console.log('message');
-			console.log(message);
 			const messageCopy = message;
 			if (messageCopy.messageID === incomingMessageID) {
-				console.log('FOUND THE MESSAGE');
+				console.log('enabling message update; data:');
+				console.log(messageCopy);
 				if (typeof (messageCopy.expiration) === 'string') {
 					messageCopy.expiration = new Date(messageCopy.expiration);
 				}
