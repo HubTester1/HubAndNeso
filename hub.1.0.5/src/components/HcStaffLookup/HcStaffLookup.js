@@ -13,7 +13,7 @@ import './HcStaffLookupSmall.sass';
 import './HcStaffLookupMediumLarge.sass';
 
 // ----- COMPONENT
-const pStyle = { color: 'white', fontWeight: 'bold' };
+
 export default class HcStaffLookup extends React.Component {
 	constructor(props) {
 		super(props);
@@ -44,9 +44,9 @@ export default class HcStaffLookup extends React.Component {
 						const allKnownPersonas = !thisPersonaAlreadyInPersonas ?
 							[newPersonaData, ...this.state.personas] :
 							this.state.personas;
-							// ensure that anyone deleted from the people picker doesn't
-							// 		still show up in state personas array
-							// set up container for all desired personas
+						// ensure that anyone deleted from the people picker doesn't
+						// 		still show up in state personas array
+						// set up container for all desired personas
 						const allDesiredPersonas = [];
 						// for each person in peoplePickerData
 						peoplePickerData.forEach((pickedPerson) => {
@@ -58,12 +58,10 @@ export default class HcStaffLookup extends React.Component {
 								// if this persona's account matches the picked person's account
 								if (pickedPersonAccount === knownPersona.account) {
 									// add this persona to allDesiredPersonas
-									allDesiredPersonas.push(knownPersona);
+									allDesiredPersonas.unshift(knownPersona);
 								}
 							});
 						});
-						// console.log('allDesiredPersonas');
-						// console.log(allDesiredPersonas);
 						this.setState(prevState => ({
 							personas: allDesiredPersonas,
 						}));
