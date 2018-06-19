@@ -1,32 +1,32 @@
-﻿
+
 <script type="text/javascript">
 
     
     $(document).ready(function () {
         
-        var importEnabledMsg = '<p><strong>Note</strong>: Loading this page causes legacy data to be imported. The console should show import results. A large import may take several minutes and this simple importer doesn\'t provide any user feedback, so just be careful not to close the browser tab early. Disable the import code in SiteAssets > wpc_importer.html.</p>';
-        var importDisabledMsg = '<p><strong>Note</strong>: Import code has been disabled. You can re-enable in SiteAssets > wpc_importer.html.</p>';
+        var importEnabledMsg = '<p id="import-message"><strong>Note</strong>: Loading this page causes legacy data to be imported. The console should show import results. A large import may take several minutes and this simple importer doesn\'t provide any user feedback, so just be careful not to close the browser tab early. Disable the import code in SiteAssets > wpc_importer.html.</p>';
+        var importDisabledMsg = '<p id="import-message"><strong>Note</strong>: Import code has been disabled. You can re-enable in SiteAssets > wpc_importer.html.</p>';
 
 
 
         
-        $('div#all-content-container').append(importDisabledMsg);
+        $('div#DeltaPlaceHolderMain').append(importDisabledMsg);
         
         
 
         // to enable import, remove /**/ and comment out disable section
 
           
-        console.log('m1');
-        /*$('div#all-content-container').append(importEnabledMsg);
+        console.log('importer m2');
+        /* $('div#DeltaPlaceHolderMain').append(importEnabledMsg);
 
 
         // partial config 
         var mData = {
-            'legacyFile': '/sites/iit-event-av/SiteAssets/avRequests.xml', //https://bmos.sharepoint.com
-            'maxToProcess': 50,
+            'legacyFile': '/sites/iit-even-av2/SiteAssets/avRequests.xml', //https://bmos.sharepoint.com
+            'maxToProcess': 500,
             'newList': 'SWFList',
-            'deleteAllItemsBeforeImporting': 0,
+            'deleteAllItemsBeforeImporting': 1,
             'emailErrorsTo': 'jbaker@mos.org'
         }
   
@@ -50,21 +50,30 @@
             dataType: "xml",
         }).done(function (receivedXML) {
 
+			// console.log('receivedXML');
+			// console.log(receivedXML);
+
             // iterate over each legacy request
             $(receivedXML).find('request').each(function (requestIndex, requestValue) {
 
                 // if we haven't surpassed the max to process
                 if (requestIndex < mData.maxToProcess) {
 
+					// console.log('requestValue');
+					// console.log(requestValue);
+
                     // set up empty vars
                     var listFields = {};
                     var submissionValuePairs = [];
 
-                    // grab some data that will be used multiple times, that needs to be manipulated, or is otherwise convenient
-                    var legacyID = $(requestValue).find('legacyID').text();
+					// grab some data that will be used multiple times, that needs to be manipulated, or is otherwise convenient
+					
 
+					var legacyID = $(requestValue).find('legacyID').text();
+					var quarkRequest = 'https://quark.mos.org/getitdone/avrequest/avrequest.php?id=' + legacyID;
                     var beginningDate = $(requestValue).find('date').text();
-                    var beginningDateVerbose = moment(beginningDate, "YYYY-MM-DD").format("MMMM D, YYYY");
+					var beginningDateVerbose = moment(beginningDate, "YYYY-MM-DD").format("MMMM D, YYYY");
+
                     var beginningTime = moment($(requestValue).find('beginningTime').text(), "hh:mma").format("HH:mm:ss");
                     var endingTime = moment($(requestValue).find('endingTime').text(), "hh:mma").format("HH:mm:ss");
                     var eventBeginningDatetime = beginningDate + "T" + beginningTime + "-04:00";
@@ -90,11 +99,73 @@
 
                     switch (onsiteContactNameInFeed) {
                         
-                        case "":
-                            var onsiteContactName = requesterName;
-                            var onsiteContactAccount = email;
-                            break;
+						case "":
+							var onsiteContactName = requesterName;
+							var onsiteContactAccount = email;
+							break;
 
+						case "Lew Stevens":
+							var onsiteContactName = "Lew Stevens";
+							var onsiteContactAccount = "lstevens";
+							break;
+
+						case "Lisa/Kate":
+							var onsiteContactName = "Lisa Cigna";
+							var onsiteContactAccount = "lcigna";
+							console.log("------ add Katie Wheaton to Legacy#" + legacyID);
+							break;
+
+						case "Emily Hostetler":
+							var onsiteContactName = "Emily Hostetler";
+							var onsiteContactAccount = "ehostetler";
+							break;
+
+						case "Meghan Carter":
+							var onsiteContactName = "Meghan Carter";
+							var onsiteContactAccount = "mcarter";
+							break;
+
+						case "Maggie Andrews":
+							var onsiteContactName = "Maggie Andrews";
+							var onsiteContactAccount = "mandrews";
+							break;
+
+						case "Kristin S.":
+							var onsiteContactName = "Kristin Sereyko";
+							var onsiteContactAccount = "ksereyko";
+							break;
+
+						case "Alyssa Albert":
+							var onsiteContactName = "Alyssa Albert";
+							var onsiteContactAccount = "aalbert";
+							break;
+
+						case "Cherie/Alyssa/Nora":
+							var onsiteContactName = "Cherie Rivers";
+							var onsiteContactAccount = "crivers";
+							console.log("------ add Alyssa Albert & Nora Yang to Legacy#" + legacyID);
+							break;
+
+						case "Christina Dillard":
+							var onsiteContactName = "Christina Dillard";
+							var onsiteContactAccount = "cdillard";
+							break;
+
+						case "Gina Crotty":
+							var onsiteContactName = "Gina Crotty";
+							var onsiteContactAccount = "gcrotty";
+							break;
+
+						case "Nora Nagle":
+							var onsiteContactName = "Nora Nagle";
+							var onsiteContactAccount = "nnagle";
+							break;
+						
+						case "Jackie Dillman":
+							var onsiteContactName = "Jackie Dillman";
+							var onsiteContactAccount = "jdillman";
+							break;
+						
                         case "Lisa (lead)":
                             var onsiteContactName = "Lisa Cigna";
                             var onsiteContactAccount = "lcigna";
@@ -108,13 +179,13 @@
                         case "Lisa/Sam":
                             var onsiteContactName = "Samantha Ricciardi";
                             var onsiteContactAccount = "sricciardi";
-                            console.log("add Lisa Cigna to Legacy#" + legacyID);
+                            console.log("------ add Lisa Cigna to Legacy#" + legacyID);
                             break;
 
                         case "Lisa/Victoria":
                             var onsiteContactName = "Victoria Cherubin";
                             var onsiteContactAccount = "vcherubin";
-                            console.log("add Lisa Cigna to Legacy#" + legacyID);
+                            console.log("------ add Lisa Cigna to Legacy#" + legacyID);
                             break;
 
                         case "Marjie MacDonald":
@@ -161,11 +232,16 @@
                             var onsiteContactName = "Jorge Bernal";
                             var onsiteContactAccount = "jbernal";
                             break;
-                        
-                        case "Kate Andersen":
-                            var onsiteContactName = "Kate Andersen";
-                            var onsiteContactAccount = "kandersen";
-                            break;
+
+						case "Kate Andersen":
+							var onsiteContactName = "Kate Andersen";
+							var onsiteContactAccount = "kandersen";
+							break;
+
+						default:
+							console.log(legacyID);
+							console.log(onsiteContactNameInFeed);
+							break;
                 }
                     
 
@@ -202,28 +278,58 @@
                     var cdPlayerKit = $(requestValue).find('cdPlayerKit').text();
                     var assistiveDevice = $(requestValue).find('assistiveDevice').text();
 
-                    var legacyFileArray = [];
-                    $(requestValue).find('legacyFiles legacyFile').each(function (fileIndex, fileValue) {
-                        legacyFileArray.push(fileValue.textContent);
-                    });
-                    var legacyFileString = JSON.stringify(legacyFileArray);
+
+
+
+
+
+
+
+
+
+
+
+
 
 
                     // manually set some basic list fields for this item
                     listFields.NewlyApprovedOrPending = HtmlEncode('0');
                     listFields.BeginningOfLife = HtmlEncode('0');
-                    listFields.EndOfLife = HtmlEncode('0');
-                    listFields.URIAdmin = HtmlEncode('https://bmos.sharepoint.com/sites/iit-event-av/SitePages/Admin%20Event%20AV%20Requests.aspx');
-                    listFields.URIRequest = HtmlEncode('https://bmos.sharepoint.com/sites/iit-event-av/SitePages/Event%20AV%20Request.aspx');
-                    listFields.URIRequester = HtmlEncode('https://bmos.sharepoint.com/sites/iit-event-av/SitePages/My%20Event%20AV%20Requests.aspx');
+					if (requestStatus == "Cancelled") {
+						listFields.EndOfLife = HtmlEncode('1');
+					} else {
+						listFields.EndOfLife = HtmlEncode('0');
+					}
                     listFields.SWFVersion = HtmlEncode('1.0');
                     listFields.RequestVersion = HtmlEncode('1');
-                    listFields.RequestName = HtmlEncode('Event AV');
+					listFields.RequestName = HtmlEncode('Event AV');
+					
+					// manually set some allRequestData properties
+					// files are repeats, so gotta do them first
+					var allRequestData = '{"RepeatedElements": [';
 
-                    // manually set some allRequestData properties
-                    var allRequestData =    '{"RepeatedElements": [],' +
+
+
+                    $(requestValue).find('legacyFiles legacyFile').each(function (fileIndex, fileValue) {
+						var idSuffix = (fileIndex != 0) ? '-repeat-' + fileIndex : '';
+						allRequestData += '{"ID": "attachment' + idSuffix + '",';
+						if (fileIndex == 0) {
+							allRequestData += '"OriginalToRepeat": "undefined",';
+						} else {
+							allRequestData += '"OriginalToRepeat": "attachment",';
+						}
+						allRequestData += '"mos-drag-and-drop-file-name_Attachment' + idSuffix + '": "' + fileValue.textContent + '",';
+						allRequestData += '"mos-drag-and-drop-file-size_Attachment' + idSuffix + '": "",';
+						allRequestData += '"mos-drag-and-drop-file-type-class_Attachment' + idSuffix + '": "generic-file",';
+						allRequestData += '"mos-drag-and-drop-file-in-quark-files_Attachment' + idSuffix + '":"1",},';
+                    });
+
+
+
+                    
+					allRequestData 		+=  '],' + 
+											'"migrated-from-quark": "1",' +
                                             '"Beginning-of-Life": "0",' +
-                                            '"End-of-Life": "0",' +
                                             '"Approval-Newly-Needed-Notify": "none",' +
                                             '"Approval-Not-Needed-Notify": "none",' +
                                             '"Approval-Still-Needed-Notify": "none",' +
@@ -231,9 +337,9 @@
                                              '"Last-Modified-Timestamp-Mismatch": "0",' +
                                             '"Admin-Email": "jpaone@mos.org;krasmussen@mos.org;jrivers@mos.org",'
                                             '"Request-Name": "Event AV",' +
-                                            '"URI-Admin": "https://bmos.sharepoint.com/sites/iit-event-av/SitePages/Admin%20Event%20AV%20Requests.aspx",' +
-                                            '"URI-Requester": "https://bmos.sharepoint.com/sites/iit-event-av/SitePages/Event%20AV%20Request.aspx",' +
-                                            '"URI-Request": "https://bmos.sharepoint.com/sites/iit-event-av/SitePages/My%20Event%20AV%20Requests.aspx",' +
+                                            // '"URI-Admin": "https://bmos.sharepoint.com/sites/iit-event-av/SitePages/Admin%20Event%20AV%20Requests.aspx",' +
+                                            // '"URI-Requester": "https://bmos.sharepoint.com/sites/iit-event-av/SitePages/Event%20AV%20Request.aspx",' +
+                                            // '"URI-Request": "https://bmos.sharepoint.com/sites/iit-event-av/SitePages/My%20Event%20AV%20Requests.aspx",' +
                                             '"SWF-Version": "1.0",' +
                                             '"Request-Version": "1",' +
                                             '"Component-Group-Admin": "6;#James Baker,#i:0#.f|membership|jbaker@mos.org,#jbaker@mos.org,#jbaker@mos.org,#James Baker,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/jbaker_mos_org_MThumb.jpg,#Interactive Media,#Intranet Solutions Project Manager;#20;#Ben Wilson,#i:0#.f|membership|bwilson@mos.org,#bwilson@mos.org,#bwilson@mos.org,#Ben Wilson,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/bwilson_mos_org_MThumb.jpg,#Interactive Media,#Interactive Media Manager",' +
@@ -249,12 +355,16 @@
                     listFields.EventName = HtmlEncode(eventName);
                     listFields.EventBeginningDatetime = HtmlEncode(eventBeginningDatetime);
                     listFields.LegacyID = HtmlEncode(legacyID);
-                    listFields.RequestedFor = "-1;#" + email;
+					listFields.RequestedFor = "-1;#" + email;
+					listFields.RequestedBy = "-1;#" + email;
                     listFields.RequestStatus = HtmlEncode(requestStatus);
                     listFields.RequestDate = HtmlEncode(requestDate);
 
                     // dynamically set all remaining allRequestData properties
-                    allRequestData +=   '"Request-Nickname":"' + listFields.Title + '",' +
+					allRequestData +=   '"legacy-id":"' + legacyID + '",' +
+										'"Quark-Request":"' + HtmlEncode(quarkRequest) + '",' +
+										'"End-of-Life": "' + listFields.EndOfLife + '",' +
+										'"Request-Nickname":"' + listFields.Title + '",' +
                                         '"Request-Date":"' + listFields.RequestDate + '",' +
                                         '"Requester-Name":"' + HtmlEncode(requesterName) + '",' +
                                         '"Requester-Department":"' + HtmlEncode($(requestValue).find('department').text())  + '",' +
@@ -265,10 +375,9 @@
                                         '"Event-Space":"' + HtmlEncode($(requestValue).find('location').text()) + '",' +
                                         '"Request-Status":"' + HtmlEncode(listFields.RequestStatus) + '",' +
                                         '"Requested-For":[{"account": "i:0#.f|membership|' + email + '","displayText":"' + requesterName + '","description":"' + email + '"}],' +
+                                        '"Requested-By":[{"account": "i:0#.f|membership|' + email + '","displayText":"' + requesterName + '","description":"' + email + '"}],' +
                                         '"Onsite-Contact":[{"account": "i:0#.f|membership|' + onsiteContactAccount + '@mos.org","displayText":"' + onsiteContactName + '","description":"' + onsiteContactAccount + '@mos.org"}],' +
-                                        '"Additional-Information":"' + HtmlEncode($(requestValue).find('specialInstructions').text())  + '",' +
                                         '"Account-Number":"' + HtmlEncode($(requestValue).find('account').text())  + '",' +
-
                                         '"date-input_Event-Beginning-Datetime":"' + HtmlEncode(beginningDateVerbose) + '",' +
                                         '"date-input_Event-Ending-Datetime":"' + HtmlEncode(beginningDateVerbose) + '",' +
 
@@ -338,11 +447,23 @@
 
                     if (assistiveDevice == 1) {
                         allRequestData += '"audio_assistivelisteningdevice":"assistiveListeningDevice",';
-                    }
+					}
+					
 
-                    if (legacyFileString != "[]") {
-                        allRequestData += '"Legacy-Files":' + legacyFileString + ',';
-                    }
+
+					var rawTextAreaText = $(requestValue).find('specialInstructions').text();
+					// var numberOfLineBreaks = (rawTextAreaText.match(/\n/g) || []).length;
+					var formattedTextAreaText = rawTextAreaText.replace(/\r?\n/g, '%0A');
+					// if (numberOfLineBreaks > 0) {
+					// 	console.log('check text for legacyID = ' + legacyID);
+					// }
+					// console.log('testText');
+					// console.log(testText);
+					// console.log('numberOfLineBreaks');
+					// console.log(numberOfLineBreaks);
+
+
+					allRequestData += '"Additional-Information":"' + HtmlEncode(formattedTextAreaText) + '",';
 
                     // finish off allRequestData
                     allRequestData += '}';
@@ -375,7 +496,11 @@
                             } else if (Status == 'Error') {
                                 console.log('Status = Error');
                             } else {
-                                console.log('Created item with ID = ' + $(xData.responseXML).SPFilterNode("z:row").attr("ows_ID"));
+								var newRequestID = $(xData.responseXML).SPFilterNode("z:row").attr("ows_ID");
+								console.log('legacyID ' + legacyID + ' is requestID = ' + newRequestID);
+								// console.log('submissionValuePairs');
+								// console.log(submissionValuePairs);
+								console.log("");
                             }
                         }
                     });
@@ -384,7 +509,7 @@
             });
         }).error(function() {
             alert("An error occurred while getting the XML file.");
-        });*/
+        }); */
         
       
       // !!! ---- end import-disabling comment here ---- !!!

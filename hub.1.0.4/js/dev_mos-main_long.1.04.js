@@ -17218,7 +17218,7 @@
 					'formLink': 1
 				}, {
 					'displayName': 'Requested By',
-					'internalName': 'Author',
+					'internalName': 'RequestedBy',
 					'userName': 1
 				}, {
 					'displayName': 'Talk To',
@@ -17292,7 +17292,7 @@
 							'formLink': 1
 						}, {
 							'displayName': 'Requested By',
-							'internalName': 'Author',
+							'internalName': 'RequestedBy',
 							'userName': 1
 						}, {
 							'displayName': 'Talk To',
@@ -17351,7 +17351,7 @@
 							'internalName': 'RequestStatus'
 						}, {
 							'displayName': 'Requested By',
-							'internalName': 'Author',
+							'internalName': 'RequestedBy',
 							'userName': 1
 						}, {
 							'displayName': 'Talk To',

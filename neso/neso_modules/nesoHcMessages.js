@@ -4,6 +4,7 @@
 const nesoDBQueries = require('./nesoDBQueries');
 const nesoImages = require('./nesoImages');
 const nesoUtilities = require('./nesoUtilities');
+const moment = require('moment');
 const fse = require('fs-extra');
 const formidable = require('formidable');
 const shortid = require('shortid');
@@ -267,14 +268,19 @@ module.exports = {
 				messageSubject: incomingMessageCopy.newMessageSubject,
 				messageBody: incomingMessageCopy.newMessageBody,
 				messageImages: imageDataToKeep,
-				messageExpiration: nesoUtilities
-					.ReturnFormattedDateTime({
-						incomingDateTimeString: incomingMessageCopy.newMessageExpirationDate,
-					}),
 				messageCreated: incomingMessageCopy.newMessageCreated,
 				messageCreator: incomingMessageCopy.newMessageCreator,
 				messageModified: incomingMessageCopy.newMessageCreated,
 			};
+			if (incomingMessageCopy.newMessageExpirationDate === '') {
+				messageToInsert.messageExpiration = moment().add(180, 'days');
+			} else {
+				messageToInsert.messageExpiration = nesoUtilities
+					.ReturnFormattedDateTime({
+						incomingDateTimeString: incomingMessageCopy.newMessageExpirationDate,
+					});
+			}
+
 			// get a promise to retrieve all documents from the hcMessagesSettings document collection
 			nesoDBQueries.InsertDocIntoCollection(messageToInsert, 'hcMessages')
 				// if the promise is resolved with the docs, then resolve this promise with the docs
