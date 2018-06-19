@@ -24,9 +24,9 @@
         // partial config 
         var mData = {
             'legacyFile': '/sites/iit-even-av2/SiteAssets/avRequests.xml', //https://bmos.sharepoint.com
-            'maxToProcess': 500,
+            'maxToProcess': 0,
             'newList': 'SWFList',
-            'deleteAllItemsBeforeImporting': 1,
+            'deleteAllItemsBeforeImporting': 0,
             'emailErrorsTo': 'jbaker@mos.org'
         }
   
@@ -318,7 +318,7 @@
 						} else {
 							allRequestData += '"OriginalToRepeat": "attachment",';
 						}
-						allRequestData += '"mos-drag-and-drop-file-name_Attachment' + idSuffix + '": "' + fileValue.textContent + '",';
+						allRequestData += '"mos-drag-and-drop-file-name_Attachment' + idSuffix + '": "' + fileValue.textContent.slice(5) + '",';
 						allRequestData += '"mos-drag-and-drop-file-size_Attachment' + idSuffix + '": "",';
 						allRequestData += '"mos-drag-and-drop-file-type-class_Attachment' + idSuffix + '": "generic-file",';
 						allRequestData += '"mos-drag-and-drop-file-in-quark-files_Attachment' + idSuffix + '":"1",},';

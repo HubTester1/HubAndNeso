@@ -1,7 +1,7 @@
 (function ($) {
 
 	var mData = {
-		'componentID': 120,
+		'componentID': 73,
 		'swf': 1,
 		// 'mosMainKey': 'prod',
 		// 'mosMainKey': 'dev',
@@ -13,7 +13,7 @@
 		'notifications': 1,
 	};
 
-	console.log("using settings m3");
+	console.log("using settings m1");
 
 
 	// admin screen is hard-coded in API > RenderAdminEventAVOverviewScreen()
@@ -273,13 +273,13 @@
 
 
 
-				'elementType': 'field',
-				'controlType': 'url',
-				'fieldName': 'Quark Request',
-				'labelContent': 'Quark Request',
-				'editableForNonAdmin': [],
-				'editableForAdmin': [],
-			}, {
+			// 	'elementType': 'field',
+			// 	'controlType': 'url',
+			// 	'fieldName': 'Quark Request',
+			// 	'labelContent': 'Quark Request',
+			// 	'editableForNonAdmin': [],
+			// 	'editableForAdmin': [],
+			// }, {
 
 
 				
