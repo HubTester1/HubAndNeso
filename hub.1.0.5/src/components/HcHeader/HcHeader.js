@@ -90,7 +90,7 @@ export default class HcHeader extends React.Component {
 		return (
 			<li className="hc-navigation__items__item">
 				<DefaultButton
-					iconProps={{ iconName: 'Edit' }}
+					iconProps={{ iconName: 'EditNote' }}
 					text="Get it Done"
 					className="hc-navigation__items__item__button"
 					onClick={this.handleGetItDoneNavItemClick}

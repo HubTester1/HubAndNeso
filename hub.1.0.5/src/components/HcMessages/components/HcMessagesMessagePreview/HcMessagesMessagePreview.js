@@ -67,24 +67,29 @@ export default class HcMessagesMessagePreview extends React.Component {
 							>
 								<div className="hc-messages-message-body">{this.props.messageContent.body}</div>
 							</Truncate>
-							<button
-								className="hc-messages-message-full-message-button"
-								onClick={this.handleOpenModalClick}
-							>
-								Full message
-							</button>
-							{
-								this.props.messageContent.creator.account === this.props.uData.account &&
-
+							<div className="hc-messages-message-button-container">
 								<button
-									className="hc-messages-message-enable-message-update-button"
-									onClick={
-										e => this.props.enableMessageUpdate(this.props.messageContent.messageID, e)
-									}
+									className="hc-messages-message-full-message-button"
+									onClick={this.handleOpenModalClick}
 								>
-									Modify message
+									Full message
 								</button>
-							}
+								{
+									this.props.messageContent.creator.account === this.props.uData.account &&
+
+									<span className="hc-messages-message-conditional-button-container">
+										<span className="hc-messages-message-conditional-button-separator" />
+										<button
+											className="hc-messages-message-enable-message-update-button"
+											onClick={
+												e => this.props.enableMessageUpdate(this.props.messageContent.messageID, e)
+											}
+										>
+											Modify message
+										</button>
+									</span>
+								}
+							</div>
 							<Modal
 								className="hc-messages-message-full-message-modal"
 								isOpen={this.state.showModalFull}
@@ -110,24 +115,26 @@ export default class HcMessagesMessagePreview extends React.Component {
 							>
 								<div className="hc-messages-message-body">{this.props.messageContent.body}</div>
 							</Truncate>
-							<button
-								className="hc-messages-message-full-message-button"
-								onClick={this.handleOpenInlineFullClick}
-							>
-								Full message
-							</button>
-							{
-								this.props.messageContent.creator.account === this.props.uData.account &&
-
+							<div className="hc-messages-message-button-container">
 								<button
-									className="hc-messages-message-enable-message-update-button"
-									onClick={
-										e => this.props.enableMessageUpdate(this.props.messageContent.messageID, e)
-									}
+									className="hc-messages-message-full-message-button"
+									onClick={this.handleOpenInlineFullClick}
 								>
-									Modify message
+									Full message
 								</button>
-							}
+								{
+									this.props.messageContent.creator.account === this.props.uData.account &&
+
+									<button
+										className="hc-messages-message-enable-message-update-button"
+										onClick={
+											e => this.props.enableMessageUpdate(this.props.messageContent.messageID, e)
+										}
+									>
+										Modify message
+									</button>
+								}
+							</div>
 						</MediaQuery>
 					</div>
 				}

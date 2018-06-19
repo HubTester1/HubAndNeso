@@ -297,6 +297,10 @@
 	&::after
 		content: $ms-icon-code-FullScreen
 
+=icon-edit-after
+	&::after
+		content: $ms-icon-code-Edit
+
 
 // ------------------
 // LIST ITEM ICON BULLET
@@ -370,11 +374,23 @@
 		color: $interactive-active !important
 		background-color: $interactive-light !important
 
-=button-white-outlined
+=button-outlined-default
 	border: .1rem solid $interactive-default
 
 	&:hover
 		border: .1rem solid $interactive-active
+
+=button-outlined-light
+	border: .1rem solid $aqua-2
+
+	&:hover
+		border: .1rem solid $aqua-3
+
+=button-outlined-medium
+	border: .1rem solid $aqua-4
+
+	&:hover
+		border: .1rem solid $aqua-5
 
 =button-light
 	color: $text-on-interactive-light !important
