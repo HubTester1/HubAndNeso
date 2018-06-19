@@ -39,6 +39,7 @@ export default class HcMessagesFiles extends React.Component {
 						{/* note: eslint isn't recognizing that Dropzone is associate with this label */}
 						{/* eslint-disable jsx-a11y/label-has-for */}
 						<label htmlFor="hc-messages-images-file-input">Images</label>
+						{/* to do - need a 1rem margin above this banner */}
 						<div className="banner">
 							<Spinner
 								size={SpinnerSize.medium}
