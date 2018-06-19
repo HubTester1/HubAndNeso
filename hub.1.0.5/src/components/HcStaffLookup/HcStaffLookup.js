@@ -13,7 +13,7 @@ import './HcStaffLookupSmall.sass';
 import './HcStaffLookupMediumLarge.sass';
 
 // ----- COMPONENT
-
+const pStyle = { color: 'white', fontWeight: 'bold' };
 export default class HcStaffLookup extends React.Component {
 	constructor(props) {
 		super(props);
@@ -68,6 +68,10 @@ export default class HcStaffLookup extends React.Component {
 							personas: allDesiredPersonas,
 						}));
 					});
+			} else {
+				this.setState(prevState => ({
+					personas: [],
+				}));
 			}
 		} else {
 			this.setState(() => ({
@@ -128,20 +132,20 @@ export default class HcStaffLookup extends React.Component {
 						principalTypeUser
 					/>
 					{
-						this.state.personas[0] && 
+						this.state.personas[0] &&
 
 						<div className="persona-cards">
 							<h3 className="persona-cards__header">Staff Lookup Results</h3>
 							<ul className="persona-cards__list">
 								{
-									this.state.personas[0] && 
-										this.state.personas.map(personaValue => (
-											<HcStaffLookupPersonaCard
-												key={personaValue.key}
-												personaId={personaValue.key}
-												personaContent={personaValue}
-											/>
-										))
+									this.state.personas[0] &&
+									this.state.personas.map(personaValue => (
+										<HcStaffLookupPersonaCard
+											key={personaValue.key}
+											personaId={personaValue.key}
+											personaContent={personaValue}
+										/>
+									))
 								}
 							</ul>
 						</div>
