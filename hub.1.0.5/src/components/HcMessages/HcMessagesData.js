@@ -20,7 +20,7 @@ export default class HcMessagesData {
 			if (EnvironmentDetector.ReturnIsSPO()) {
 				// get a promise to retrieve the settings
 				NesoHTTPClient
-					.ReturnNesoData('https://neso.mos.org/hcMessages/settings')
+					.ReturnNesoData('https://neso.mos.org:3001/hcMessages/settings')
 					// if the promise is resolved with the settings
 					.then((settingsResults) => {
 						// set up var to receive all tags
@@ -123,7 +123,7 @@ export default class HcMessagesData {
 			if (EnvironmentDetector.ReturnIsSPO()) {
 				// get a promise to retrieve the settings
 				NesoHTTPClient
-					.ReturnNesoData('https://neso.mos.org/hcMessages/descending')
+					.ReturnNesoData('https://neso.mos.org:3001/hcMessages/descending')
 					// if the promise is resolved with the settings
 					.then((messagesResults) => {
 						// set up var to receive all messages
@@ -1008,7 +1008,7 @@ export default class HcMessagesData {
 			if (EnvironmentDetector.ReturnIsSPO()) {
 				// get a promise to retrieve the settings
 				NesoHTTPClient
-					.ReturnNesoData('https://neso.mos.org/hcMessages/descending/limit4')
+					.ReturnNesoData('https://neso.mos.org:3001/hcMessages/descending/limit4')
 					// if the promise is resolved with the settings
 					.then((messagesResults) => {
 						// set up var to receive all messages
@@ -1137,14 +1137,14 @@ export default class HcMessagesData {
 			}
 		}));
 	}
-	static ReturnHcMessagesAllMessagesWSpecifiedTag(tag) {
+	static ReturnHcMessagesAllMessagesWSpecifiedTag(name, camlName) {
 		// return a new promise
 		return new Promise(((resolve, reject) => {
 			// if environment is sharepoint
 			if (EnvironmentDetector.ReturnIsSPO()) {
 				// get a promise to retrieve the settings
 				NesoHTTPClient
-					.ReturnNesoData(`https://neso.mos.org/hcMessages/descending/tagged/${tag}`)
+					.ReturnNesoData(`https://neso.mos.org:3001/hcMessages/descending/tagged/${name}/${camlName}`)
 					// if the promise is resolved with the settings
 					.then((messagesResults) => {
 						// set up var to receive all messages
@@ -2004,7 +2004,7 @@ export default class HcMessagesData {
 			if (EnvironmentDetector.ReturnIsSPO()) {
 				// get a promise to send the email
 				NesoHTTPClient.SendNesoJSONAndReceiveResponse(
-					'https://neso.mos.org/email/send',
+					'https://neso.mos.org:3001/email/send',
 					{
 						to: 'hubhelp@mos.org',
 						from: 'The Hub <noreply@mos.org>',
@@ -2034,7 +2034,7 @@ export default class HcMessagesData {
 			if (EnvironmentDetector.ReturnIsSPO()) {
 				// get a promise to send the email
 				NesoHTTPClient.SendNesoJSONAndReceiveResponse(
-					'https://neso.mos.org/hcMessages/addMessage',
+					'https://neso.mos.org:3001/hcMessages/addMessage',
 					newMessageProperties,
 				)
 					.then((response) => {
@@ -2056,7 +2056,7 @@ export default class HcMessagesData {
 			if (EnvironmentDetector.ReturnIsSPO()) {
 				// get a promise to send the email
 				NesoHTTPClient.SendNesoJSONAndReceiveResponse(
-					'https://neso.mos.org/hcMessages/updateMessage',
+					'https://neso.mos.org:3001/hcMessages/updateMessage',
 					newMessageProperties,
 				)
 					.then((response) => {
@@ -2078,7 +2078,7 @@ export default class HcMessagesData {
 			if (EnvironmentDetector.ReturnIsSPO()) {
 				// get a promise to retrieve the settings
 				NesoHTTPClient
-					.ReturnNesoData('https://neso.mos.org/hcMessages/nextMessageID')
+					.ReturnNesoData('https://neso.mos.org:3001/hcMessages/nextMessageID')
 					// if the promise is resolved with the ID
 					.then((nextMessageIDResults) => {
 						// resolve this promise with the requested items
@@ -2151,7 +2151,7 @@ export default class HcMessagesData {
 		// return a promise to upload the fies
 		return new Promise((resolve, reject) => {
 			// prep data and config for file upload
-			const filesUploadEndPoint = 'https://neso.mos.org/hcMessages/addMessageImages';
+			const filesUploadEndPoint = 'https://neso.mos.org:3001/hcMessages/addMessageImages';
 			const filesUploadConfig = {
 				headers: { 'content-type': 'multipart/form-data' },
 			};

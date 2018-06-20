@@ -504,7 +504,7 @@ export default class HcMessages extends React.Component {
 					}));
 				});
 		} else {
-			HcMessagesData.ReturnHcMessagesAllMessagesWSpecifiedTag(menuItem.name)
+			HcMessagesData.ReturnHcMessagesAllMessagesWSpecifiedTag(menuItem.name, menuItem.key)
 				.then((specifiedMessages) => {
 					const messagesThisPage = 
 						this.returnMessagesThisPage(startingPageNumber, specifiedMessages);

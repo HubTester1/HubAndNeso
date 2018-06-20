@@ -110,15 +110,15 @@ module.exports = {
 				.catch((error) => { reject(error); });
 		})),
 
-	ReturnHcMessagesDescendingWithSpecifiedTag: tag =>
+	ReturnHcMessagesDescendingWithSpecifiedTag: (name, camlName) =>
 		// return a new promise
 		new Promise(((resolve, reject) => {
 			// get a promise to retrieve all documents from the hcMessages document collection
-			nesoDBQueries.ReturnSpecifiedDocsFromCollectionSorted('hcMessages', 'messageTags', tag, 'messageModified', 'descending')
+			nesoDBQueries.ReturnSpecifiedDocsFromCollectionSorted('hcMessages', 'messageTags', [{ name, camlName }], 'messageModified', 'descending')
 				// if the promise is resolved with the docs, then resolve this promise with the docs
-				.then((result) => { resolve(result); })
+				.then((result) => { console.log('RESULT'); console.log(result); resolve(result); })
 				// if the promise is rejected with an error, then reject this promise with an error
-				.catch((error) => { reject(error); });
+				.catch((error) => { console.log('ERROR'); console.log(error); reject(error); });
 		})),
 
 	ProcessNewMessageImages: req =>
@@ -273,7 +273,7 @@ module.exports = {
 				messageModified: incomingMessageCopy.newMessageCreated,
 			};
 			if (incomingMessageCopy.newMessageExpirationDate === '') {
-				messageToInsert.messageExpiration = moment().add(180, 'days');
+				messageToInsert.messageExpiration = moment().add(180, 'days').format();
 			} else {
 				messageToInsert.messageExpiration = nesoUtilities
 					.ReturnFormattedDateTime({

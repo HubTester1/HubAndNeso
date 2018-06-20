@@ -26,6 +26,10 @@ export default class HcMessagesList extends React.Component {
 				</div>
 			);
 		} 
-		return ('Sorry, I can\'t find any messages to show you.');
+		return (
+			<div id="hc-messages-no-messages-message" className="banner">
+				<p className="banner__text">Sorry, I can't find any messages to show you.</p>
+			</div>
+		);
 	}
 }

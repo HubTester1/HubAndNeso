@@ -155,7 +155,7 @@ module.exports = {
 					}
 				});
 		})),
-
+	
 	ReturnAllSpecifiedDocsFromCollection: (collection, query, projection) =>
 		// return a new promise
 		new Promise(((resolve, reject) => {

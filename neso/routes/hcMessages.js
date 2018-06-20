@@ -73,9 +73,9 @@ router.get('/descending/limit4', (req, res, next) => {
 });
 
 // for GET request for /descending
-router.get('/descending/tagged/:tag', (req, res, next) => {
+router.get('/descending/tagged/:name/:camlName', (req, res, next) => {
 	// get a promise to retrieve health status data
-	hcMessages.ReturnHcMessagesDescendingWithSpecifiedTag(req.params.tag)
+	hcMessages.ReturnHcMessagesDescendingWithSpecifiedTag(req.params.name, req.params.camlName)
 		// if the promise is resolved with the docs, then respond with the docs as JSON
 		.then((result) => { res.json(result); })
 		// if the promise is rejected with an error, then respond with the error as JSON
