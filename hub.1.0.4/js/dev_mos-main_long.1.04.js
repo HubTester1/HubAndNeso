@@ -8693,9 +8693,11 @@
 
 		sData.primaryStaffContactArray = JSON.parse($('input#Primary-Staff-Contact_TopSpan_HiddenInput').val());
 		sData.primaryStaffContactName = sData.primaryStaffContactArray[0]["DisplayText"];
+		sData.primaryStaffContactEmail = sData.primaryStaffContactArray[0]["Description"];
 
 		sData.secondaryStaffContactArray = JSON.parse($('input#Secondary-Staff-Contact_TopSpan_HiddenInput').val());
 		sData.secondaryStaffContactName = sData.secondaryStaffContactArray[0]["DisplayText"];
+		sData.secondaryStaffContactEmail = sData.secondaryStaffContactArray[0]["Description"];
 
 		sData.SpecialEventOrProject = $("textarea#Special-Event-or-Project").val();
 
@@ -8732,19 +8734,27 @@
 		// ============
 
 		if (typeof(eData.beginningOfLife) != 'undefined' && eData.beginningOfLife == 1) {
-
+			
 			var recipientEmailArray = [];
 			var otherNotificationsInitialArray = [];
+
+			recipientEmailArray.push(eData.primaryStaffContactEmail);
+			recipientEmailArray.push(eData.secondaryStaffContactEmail);
+			recipientEmailArray.push(eData.requesterEmail);
 
 			if (typeof($('input#Other-Notifications_TopSpan_HiddenInput').val()) !== 'undefined' && $('input#Other-Notifications_TopSpan_HiddenInput').val() !== "") {
 				otherNotificationsInitialArray = JSON.parse($('input#Other-Notifications_TopSpan_HiddenInput').val());
 			}
-
 			$.each(otherNotificationsInitialArray, function(i, otherNotification){
 				recipientEmailArray.push(otherNotification.Description);
 			});
 			$.each(eData.adminEmailArray, function(i, adminEmail){
 				recipientEmailArray.push(adminEmail);
+			});
+
+			var uniqueRecipientEmailArray = [];
+			$.each(recipientEmailArray, function (i, email) {
+				if ($.inArray(email, uniqueRecipientEmailArray) === -1) uniqueRecipientEmailArray.push(email);
 			});
 
 			var beginningOfLifeBodyUnique = '<p>' + eData.requesterName + ' has submitted a new request. You can ' +
@@ -8777,7 +8787,7 @@
 				'</ul>';
 
 			// all
-			$.each(recipientEmailArray, function(i, toRecipient) {
+			$.each(uniqueRecipientEmailArray, function(i, toRecipient) {
 				notificationsToSend.push({
 					'emailType': 'Notification',
 					'caller': 'beginningOfLife all',
@@ -20959,7 +20969,7 @@
 		// wait for all data retrieval / setting promises to complete (pass or fail) 
 		$.when.apply($, allDataRetrievalAndSettingPromises).always(function() {
 
-			console.log('using dev_mos-main_long.1.04 m101 - DevCode4');
+			console.log('using dev_mos-main_long.1.04 m1 - DevCode4');
 
 			$().ConfigureAndShowScreenContainerAndAllScreens();
 		});

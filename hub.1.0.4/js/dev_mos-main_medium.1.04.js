@@ -397,7 +397,9 @@
 				newTitle = "My Referrals";
 				break;
 
-
+			case "adminEventAV":
+				newTitle = "Admin Event AV Requests";
+				break;
 			case "gseJobsHRAdmin":
 				newTitle = "All GSE Jobs";
 				break;
@@ -467,6 +469,8 @@
 			case "gpcInitialConceptApprovalViewer":
 			case "gpcSubmissionApprovalViewer":
 
+			case "adminEventAV":
+
 			case "adminReferrals":
 			case "myReferrals":
 
@@ -532,6 +536,8 @@
 			case "myRequests":
 			case "gpcInitialConceptApprovalViewer":
 			case "gpcSubmissionApprovalViewer":
+
+			case "adminEventAV":
 
 			case "adminReferrals":
 			case "myReferrals":
@@ -607,6 +613,8 @@
 			case "gpcInitialConceptApprovalViewer":
 			case "gpcSubmissionApprovalViewer":
 
+			case "adminEventAV":
+
 			case "adminReferrals":
 			case "myReferrals":
 
@@ -665,6 +673,10 @@
 				$().ConfigureOverviewScreen("gpcSubmissionApprovalViewer");
 				break;
 
+
+			case "adminEventAV":
+				$().ConfigureOverviewScreen("adminEventAV");
+				break;
 
 			case "adminReferrals":
 				$().ConfigureOverviewScreen("adminReferrals");
@@ -1532,6 +1544,12 @@
 				}
 				break;
 
+			case "Event AV":
+				if (uData.isAdmin === 1) {
+					userNeeedsAlternateOverviewScreen = "adminEventAV";
+				}
+				break;
+
 
 
 
@@ -2050,7 +2068,10 @@
 			mData.adminEmailArray = $().ReturnUserEmailStringAndArray(mData.adminNotificationPersons).array;
 			mData.componentGrpAdminEmailString = $().ReturnUserEmailStringAndArray(mData.componentGrpAdminNotifications).string;
 			mData.componentGrpAdminEmailArray = $().ReturnUserEmailStringAndArray(mData.componentGrpAdminNotifications).array;
-			mData.requiredApproversArray = $().ReturnUserDataFromPersonOrGroupFieldString(mData.requiredApproversString);
+
+			mData.requiredApproversArray = (mData.requiredApproversString) ?
+				$().ReturnUserDataFromPersonOrGroupFieldString(mData.requiredApproversString) :
+				[];
 
 			// THIS REQUEST'S DATA
 			// reset rData and get request id from url param
@@ -6335,6 +6356,14 @@
 			$().RenderWorkflowContacts();
 
 
+		} else if (type === "adminEventAV") {
+			// $().RenderOverviewScreenButtons(oData.adminEventAV.buttons, 0);
+
+			$().RenderAdminEventAVOverviewScreen();
+
+
+			// $().RenderAllDataTables(oData.adminEventAV.sections, "overview-table-container");
+
 		} else if (type === "adminReferrals") {
 			$().RenderOverviewScreenButtons(oData.adminReferrals.buttons, 0);
 			$().RenderAllDataTables(oData.adminReferrals.sections, "overview-table-container");
@@ -6440,7 +6469,7 @@
 			var bodyUnique = '<ul>' +
 				'<li>Affected User = ' + uData.name + ' (' + uData.userName + ')</li>' +
 				'<li>Issue Datetime = ' + $().ReturnFormattedDateTime('nowLocal', null, 'MMMM D, YYYY h:mm a') + '</li>' +
-				'<li>Affected System = ' + mData.requestName + '</li>' +
+				'<li>Affected System = ' + 57 + '</li>' +
 				'<li>Affected Request # = ' + rData.requestID + '</li>' +
 				'<li>Browser = ' + uData.browserFamilyAndVersion + '</li>' +
 				'<li>Form Factor = ' + uData.formFactor + '</li>' +
@@ -8664,9 +8693,11 @@
 
 		sData.primaryStaffContactArray = JSON.parse($('input#Primary-Staff-Contact_TopSpan_HiddenInput').val());
 		sData.primaryStaffContactName = sData.primaryStaffContactArray[0]["DisplayText"];
+		sData.primaryStaffContactEmail = sData.primaryStaffContactArray[0]["Description"];
 
 		sData.secondaryStaffContactArray = JSON.parse($('input#Secondary-Staff-Contact_TopSpan_HiddenInput').val());
 		sData.secondaryStaffContactName = sData.secondaryStaffContactArray[0]["DisplayText"];
+		sData.secondaryStaffContactEmail = sData.secondaryStaffContactArray[0]["Description"];
 
 		sData.SpecialEventOrProject = $("textarea#Special-Event-or-Project").val();
 
@@ -8707,15 +8738,23 @@
 			var recipientEmailArray = [];
 			var otherNotificationsInitialArray = [];
 
+			recipientEmailArray.push(eData.primaryStaffContactEmail);
+			recipientEmailArray.push(eData.secondaryStaffContactEmail);
+			recipientEmailArray.push(eData.requesterEmail);
+
 			if (typeof ($('input#Other-Notifications_TopSpan_HiddenInput').val()) !== 'undefined' && $('input#Other-Notifications_TopSpan_HiddenInput').val() !== "") {
 				otherNotificationsInitialArray = JSON.parse($('input#Other-Notifications_TopSpan_HiddenInput').val());
 			}
-
 			$.each(otherNotificationsInitialArray, function (i, otherNotification) {
 				recipientEmailArray.push(otherNotification.Description);
 			});
 			$.each(eData.adminEmailArray, function (i, adminEmail) {
 				recipientEmailArray.push(adminEmail);
+			});
+
+			var uniqueRecipientEmailArray = [];
+			$.each(recipientEmailArray, function (i, email) {
+				if ($.inArray(email, uniqueRecipientEmailArray) === -1) uniqueRecipientEmailArray.push(email);
 			});
 
 			var beginningOfLifeBodyUnique = '<p>' + eData.requesterName + ' has submitted a new request. You can ' +
@@ -8748,7 +8787,7 @@
 				'</ul>';
 
 			// all
-			$.each(recipientEmailArray, function (i, toRecipient) {
+			$.each(uniqueRecipientEmailArray, function (i, toRecipient) {
 				notificationsToSend.push({
 					'emailType': 'Notification',
 					'caller': 'beginningOfLife all',
@@ -11235,9 +11274,14 @@
 
 	$.fn.LoadSelectOptions = function (options, restrictions) {
 		// if a loading function was specified
-		if (typeof (options.function) !== "undefined") {
-			// call the function and pass the select ID
-			CallFunctionFromString(options.function, { 'selectID': this.selector });
+		if (options.function) {
+			var functionParameters = {};
+			if (options.params) {
+				functionParameters = options.params;
+			}
+			functionParameters.selectID = this.selector;
+			// call the function and pass the parameters
+			CallFunctionFromString(options.function, functionParameters);
 			// if a loading function was NOT specified
 		} else {
 			// assume loading from a SharePoint list
@@ -11330,7 +11374,7 @@
 
 
 
-	$.fn.LoadDepartmentSelectOptions = function (selectObject) {
+	$.fn.LoadDepartmentSelectOptions = function (parameters) {
 
 		$.ajax({
 			async: false,
@@ -11340,10 +11384,14 @@
 		})
 			.done(function (returnedDepartments) {
 
-				var selectID = selectObject.selectID;
+				var selectID = parameters.selectID;
 				var departments = returnedDepartments.docs[0].departments;
 				var options = "<option value=''></option>";
 				var currentSelectedText = $(selectID).find("option:selected").text();
+
+				if (parameters.otherOptionPosition && parameters.otherOptionPosition === 'top') {
+					options += "<option value='other'>Other</option>";
+				}
 
 				$.each(departments, function (i, department) {
 					if ($.trim(department) == $.trim(currentSelectedText)) {
@@ -11352,7 +11400,6 @@
 						options += "<option value='" + department + "'>" + department + "</option>";
 					}
 				});
-				options += "<option value='other'>Other</option>";
 
 				$(selectID).append(options);
 			});
@@ -13514,7 +13561,7 @@
 						}
 
 						// if visible, hide
-						stmtsToAdd += '		if ($("' + hdID + '").is(":visible")) { \n' +
+						stmtsToAdd += '		if (!$("' + hdID + '").hasClass("hidden")) { \n' +
 							'			$("' + hdID + '").hide("fast"); \n' +
 							'			$("' + hdID + '").addClass("hidden"); \n' +
 							'		} \n';
@@ -13679,12 +13726,23 @@
 							} else {
 								stmtsToAdd += '	  $("#' + ReplaceAll("\\.", "", ReplaceAll(" ", "-", set.fieldName)) + '").val("' + set.value + '"); \n';
 							}
-						} else if (set.type == "radio") {
-							// to be completed
-						} else if (set.type == "checkbox") {
-							// to be completed
+						} else if (set.type == "checkbox" || set.type == "radio") {
+							if (set.checked == 0) { set.checked = false; }
+							if (set.checked == 1) { set.checked = true; }
+							var inputID = $().ReturnHyphenatedFieldNameOrValue(set.fieldName).toLowerCase() + '_' + $().ReturnHyphenatedFieldNameOrValue(set.valueAffected).toLowerCase();
+							stmtsToAdd += '	  $("#' + inputID + '").prop("checked", ' + set.checked + '); \n';
+							stmtsToAdd += set.checked ?
+								'	  $("#' + inputID + '").attr("checked", true); \n' :
+								'	  $("#' + inputID + '").removeAttr("checked"); \n';
+
 						} else if (set.type == "select") {
-							stmtsToAdd += '	  $("#' + ReplaceAll("\\.", "", ReplaceAll(" ", "-", set.fieldName)) + '").prop("selectedIndex", ' + set.optionIndex + '); \n';
+							if (typeof (set.copyField) != "undefined") {
+								var copyFieldID = $().ReturnHyphenatedFieldNameOrValue(set.copyField);
+								stmtsToAdd += '	  $("#' + ReplaceAll("\\.", "", ReplaceAll(" ", "-", set.fieldName)) + '").prop("selectedIndex", $("#' + copyFieldID + '").prop("selectedIndex")); \n';
+
+							} else {
+								stmtsToAdd += '	  $("#' + ReplaceAll("\\.", "", ReplaceAll(" ", "-", set.fieldName)) + '").prop("selectedIndex", ' + set.optionIndex + '); \n';
+							}
 						} else if (set.type == "datetime") {
 							if (typeof (set.method) != "undefined" && set.method == "dynamic" && typeof (set.valueFromFieldName) != "undefined") {
 								stmtsToAdd += '	  $("input#date-input_' + ReplaceAll("\\.", "", ReplaceAll(" ", "-", set.fieldName)) + '").val($("input#date-input_' + ReplaceAll("\\.", "", ReplaceAll(" ", "-", set.valueFromFieldName)) + '").val()); \n';
@@ -14244,34 +14302,32 @@
 					'	<li><b>Last Name:</b> ' + formData["Hire-Last-Name"] + '</li>' +
 					'	<li><b>Manager / Supervisor:</b> ' + formData["Hire-Manager"][0]["displayText"] + '</li>' +
 					'	<li><b>Department:</b> ' + formData["Hire-Department"] + '</li>' +
-					'	<li><b>Street Address:</b> ' + formData["Hire-Street-Address"] + '</li>' +
-					'	<li><b>City:</b> ' + formData["Hire-City"] + '</li>' +
-					'	<li><b>State:</b> ' + formData["Hire-State"] + '</li>' +
-					'	<li><b>Zip Code:</b> ' + formData["Hire-Zip-Code"] + '</li>' +
-					'	<li><b>Working Title:</b> ' + formData["Hire-Working-Title"] + '</li>' +
-					'	<li><b>Compensation Title:</b> ' + formData["Hire-Compensation-Title"] + '</li>' +
-					'	<li><b>Position Number:</b> ' + formData["Hire-Position-Number"] + '</li>' +
+					'	<li><b>Position Title:</b> ' + formData["Hire-Position-Title"] + '</li>' +
 					'	<li><b>Grade:</b> ' + formData["Hire-Grade"] + '</li>' +
 					'	<li><b>Employee Classification:</b> ' + formData["Hire-Employee-Classification"] + '</li>' +
 					'	<li><b>Scheduled Hours, Biweekly:</b> ' + formData["Hire-Scheduled-Hours-Biweekly"] + '</li>' +
 					'	<li><b>Scheduled Hours, Annually:</b> ' + formData["Hire-Scheduled-Hours-Annually"] + '</li>' +
 					'	<li><b>Proposed Hourly Wage:</b> ' + formData["Hire-Proposed-Hourly-Wage"] + '</li>' +
 					'	<li><b>Proposed Annualized Salary:</b> ' + formData["Hire-Proposed-Annualized-Salary"] + '</li>' +
-					'	<li><b>Start Date:</b> ' + formData["Hire-Start-Date"] + '</li>';
+					'	<li><b>Anticipated Start Date:</b> ' + formData["Hire-Start-Date"] + '</li>';
 				if (formData["Hire-Employee-Classification"] != "Regular FT" && formData["Hire-Employee-Classification"] != "Regular PT") {
-					printContent += '	<li><b>End Date:</b> ' + formData["Hire-End-Date"] + '</li>';
+					printContent += '	<li><b>Anticipated End Date:</b> ' + formData["Hire-End-Date"] + '</li>';
 				}
 				printContent += '	<li><b>Funding Source:</b> ' + formData["Hire-Funding-Source"] + '</li>';
 
-				if (formData["Hire-Funding-Source"] == "Grant Funds") {
-					printContent += '	<li><b>Accounts:</b> <ol>';
+				if (formData["Hire-Funding-Source"] == "Grant Funds" || formData["Hire-Funding-Source"] == "Endowment Funds") {
+					printContent += '	<li><b>Account(s):</b> <ol>';
+					var accountSetIdentifier = 'Hire-account-numbers-set';
 					$.each(formData["RepeatedElements"], function (i, accountSet) {
-						if (i != 0) { accountSetPropertyNameSuffix = '-repeat-' + i; }
-						printContent += '						<li>Account ' + (i + 1) + '<ol>' +
-							'							<li><b>Grant Object Code:</b> ' + accountSet["Grant-Object-Code" + accountSetPropertyNameSuffix] + '</li>' +
-							'							<li><b>Grant Source Code:</b> ' + accountSet["Grant-Source-Code" + accountSetPropertyNameSuffix] + '</li>' +
-							'							<li><b>Percent Salary from this Account:</b> ' + accountSet["Percent-Salary-from-this-Account" + accountSetPropertyNameSuffix] + '</li>' +
-							'						</ol></li>';
+						if (StrInStr(accountSet.ID, accountSetIdentifier)) {
+							accountSetPropertyNameSuffix = StrInStr(accountSet.ID, accountSetIdentifier, 3);
+							printContent += '						<li>Account<ol>' +
+								'							<li><b>Grant Object Code:</b> ' + accountSet["Hire-Grant-Object-Code" + accountSetPropertyNameSuffix] + '</li>' +
+								'							<li><b>Grant Source Code:</b> ' + accountSet["Hire-Grant-Source-Code" + accountSetPropertyNameSuffix] + '</li>' +
+								'							<li><b>Percent Salary from this Account:</b> ' + accountSet["Hire-Percent-Salary-from-this-Account" + accountSetPropertyNameSuffix] + '</li>' +
+								'						</ol></li>';
+						}
+
 					});
 					printContent += '					</ol></li>';
 				}
@@ -14288,6 +14344,9 @@
 
 				var staffUserID = StrInStr(formData["Status-Change-Staff-Member"][0]["description"], '@mos.org', 1);
 
+				console.log('staffUserID');
+				console.log(staffUserID);
+
 				$.ajax({
 					async: false,
 					method: "GET",
@@ -14295,20 +14354,15 @@
 					url: 'https://neso.mos.org/activeDirectory/user/' + staffUserID,
 				})
 					.done(function (returnedUserData) {
+						statusChangeEmployeeData = returnedUserData.docs;
 
-						statusChangeEmployeeData = {
-							'Division': 'This Division',
-							'ID': '789101112',
-							'Department': 'That Dept',
-							'Title': 'My Job Title',
-						};
 						printContent += '<h2>Staff Member</h2>' +
 							'<ul style="margin: 0;">' +
-							'				<li><b>Name:</b> ' + returnedUserData.displayName + '</li>' +
-							'				<li><b>ID:</b> ' + returnedUserData.employeeID + '</li>' +
-							'				<li><b>Department:</b> ' + returnedUserData.department + '</li>' +
-							'				<li><b>Division:</b> ' + returnedUserData.division + '</li>' +
-							'				<li><b>Title:</b> ' + returnedUserData.title + '</li>' +
+							'				<li><b>Name:</b> ' + statusChangeEmployeeData.displayName + '</li>' +
+							'				<li><b>ID:</b> ' + statusChangeEmployeeData.employeeID + '</li>' +
+							'				<li><b>Department:</b> ' + statusChangeEmployeeData.department + '</li>' +
+							'				<li><b>Division:</b> ' + statusChangeEmployeeData.division + '</li>' +
+							'				<li><b>Title:</b> ' + statusChangeEmployeeData.title + '</li>' +
 							'			</ul>';
 
 
@@ -14320,41 +14374,44 @@
 
 							printContent += '<h2>Position Change</h2>' +
 								'<table style="width: 100%;">' +
-								'	<tr style="width: 100%;">' +
-								'		<td style="width: 50%;>' +
-								'			<h3>From</h3>' +
-								'			<ul style="margin: 0;">' +
-								'				<li><b>Working Title:</b> ' + formData["Position-Change-Previous-Working-Title"] + '</li>' +
-								'				<li><b>Compensation Title:</b> ' + formData["Position-Change-Previous-Compensation-Title"] + '</li>' +
-								'				<li><b>Department:</b> ' + formData["Position-Change-Previous-Department"] + '</li>' +
-								'				<li><b>Manager / Supervisor:</b> ' + formData["Position-Change-Previous-Manager"][0]["displayText"] + '</li>' +
-								'				<li><b>Grade:</b> ' + formData["Position-Change-Previous-Grade"] + '</li>' +
-								'				<li><b>Scheduled Hours, Biweekly:</b> ' + formData["Position-Change-Previous-Scheduled-Hours-Biweekly"] + '</li>' +
-								'				<li><b>Scheduled Hours, Annually:</b> ' + formData["Position-Change-Previous-Scheduled-Hours-Annually"] + '</li>' +
-								'				<li><b>Employee Classification:</b> ' + formData["Position-Change-Previous-Employee-Classification"] + '</li>' +
-								'				<li><b>Start Date:</b> ' + formData["Position-Change-Previous-Start-Date"] + '</li>';
+								'	<tr style="width: 100%;">';
 
-							if (formData["Position-Change-Previous-Employee-Classification"] != "Regular FT" && formData["Position-Change-Previous-Employee-Classification"] != "Regular PT") {
-								printContent += '				<li><b>End Date:</b> ' + formData["Position-Change-Previous-End-Date"] + '</li>';
-							}
 
-							printContent += '			</ul>' +
-								'		</td>' +
-								'		<td style="width: 50%;>' +
-								'			<h3>To</h3>' +
+
+							// 				'		<td style="width: 50%;>' +
+							// 				'			<h3>From</h3>' + 
+							// 				'			<ul style="margin: 0;">' + 
+							// 				'				<li><b>Position Title:</b> ' + formData["Position-Change-Previous-Position-Title"] + '</li>' + 
+							// 				'				<li><b>Department:</b> ' + formData["Position-Change-Previous-Department"] + '</li>' + 
+							// 				'				<li><b>Manager / Supervisor:</b> ' + formData["Position-Change-Previous-Manager"][0]["displayText"] + '</li>' + 
+							// 				'				<li><b>Grade:</b> ' + formData["Position-Change-Previous-Grade"] + '</li>' + 
+							// 				'				<li><b>Scheduled Hours, Biweekly:</b> ' + formData["Position-Change-Previous-Scheduled-Hours-Biweekly"] + '</li>' + 
+							// 				'				<li><b>Scheduled Hours, Annually:</b> ' + formData["Position-Change-Previous-Scheduled-Hours-Annually"] + '</li>' + 
+							// 				'				<li><b>Employee Classification:</b> ' + formData["Position-Change-Previous-Employee-Classification"] + '</li>' + 
+							// 				'				<li><b>Start Date:</b> ' + formData["Position-Change-Previous-Start-Date"] + '</li>';
+
+							// if (formData["Position-Change-Previous-Employee-Classification"] != "Regular FT" && formData["Position-Change-Previous-Employee-Classification"] != "Regular PT") {
+							// 	printContent += '				<li><b>End Date:</b> ' + formData["Position-Change-Previous-End-Date"] + '</li>';
+							// }
+
+							// printContent += '			</ul>' + 
+							// 				'		</td>' + 
+
+
+
+							printContent += '		<td style="width: 50%;>' +
 								'			<ul style="margin: 0;">' +
-								'				<li><b>Working Title:</b> ' + formData["Position-Change-Working-Title"] + '</li>' +
-								'				<li><b>Compensation Title:</b> ' + formData["Position-Change-Compensation-Title"] + '</li>' +
+								'				<li><b>Position Title:</b> ' + formData["Position-Change-Position-Title"] + '</li>' +
 								'				<li><b>Department:</b> ' + formData["Position-Change-Department"] + '</li>' +
 								'				<li><b>Manager / Supervisor:</b> ' + formData["Position-Change-Manager"][0]["displayText"] + '</li>' +
 								'				<li><b>Grade:</b> ' + formData["Position-Change-Grade"] + '</li>' +
 								'				<li><b>Scheduled Hours, Biweekly:</b> ' + formData["Position-Change-Scheduled-Hours-Biweekly"] + '</li>' +
 								'				<li><b>Scheduled Hours, Annually:</b> ' + formData["Position-Change-Scheduled-Hours-Annually"] + '</li>' +
 								'				<li><b>Employee Classification:</b> ' + formData["Position-Change-Employee-Classification"] + '</li>' +
-								'				<li><b>Start Date:</b> ' + formData["Position-Change-Start-Date"] + '</li>';
+								'				<li><b>Anticipated Start Date:</b> ' + formData["Position-Change-Start-Date"] + '</li>';
 
 							if (formData["Position-Change-Employee-Classification"] != "Regular FT" && formData["Position-Change-Employee-Classification"] != "Regular PT") {
-								printContent += '				<li><b>End Date:</b> ' + formData["Position-Change-End-Date"] + '</li>';
+								printContent += '				<li><b>Anticipated End Date:</b> ' + formData["Position-Change-End-Date"] + '</li>';
 							}
 
 							printContent += '			</ul>' +
@@ -14365,14 +14422,30 @@
 
 
 
+
+
+
+						// --- TERMINATION
+
+
+						if (typeof (formData["status-change_title-change"]) !== "undefined") {
+							printContent += '<h2>Title Change</h2>' +
+								'<ul style="margin: 0;">' +
+								'	<li><b>Current Position Title:</b> ' + formData["Title-Change-Current-Position-Title"] + '</li>' +
+								'	<li><b>New Position Title:</b> ' + formData["Title-Change-New-Position-Title"] + '</li>';
+						}
+
+
+
+
+
 						// --- ADDITIONAL POSITION
 
 
 						if (typeof (formData["status-change_additional-position"]) !== "undefined") {
 							printContent += '<h2>Additional Position</h2>' +
 								'<ul style="margin: 0;">' +
-								'	<li><b>Working Title:</b> ' + formData["Additional-Position-Working-Title"] + '</li>' +
-								'	<li><b>Compensation Title:</b> ' + formData["Additional-Position-Compensation-Title"] + '</li>' +
+								'	<li><b>Position Title:</b> ' + formData["Additional-Position-Position-Title"] + '</li>' +
 								'	<li><b>Department:</b> ' + formData["Additional-Position-Department"] + '</li>' +
 								'	<li><b>Grade:</b> ' + formData["Additional-Position-Grade"] + '</li>' +
 								'	<li><b>Scheduled Hours, Biweekly:</b> ' + formData["Additional-Position-Scheduled-Hours-Biweekly"] + '</li>' +
@@ -14385,6 +14458,24 @@
 							if (formData["Additional-Position-Employee-Classification"] != "Regular FT" && formData["Additional-Position-Employee-Classification"] != "Regular PT") {
 								printContent += '	<li><b>End Date:</b> ' + formData["Additional-Position-End-Date"] + '</li>';
 							}
+							printContent += '	<li><b>Funding Source:</b> ' + formData["Additional-Position-Funding-Source"] + '</li>';
+
+							if (formData["Additional-Position-Funding-Source"] == "Grant Funds" || formData["Additional-Position-Funding-Source"] == "Endowment Funds") {
+								printContent += '	<li><b>Accounts:</b> <ol>';
+								var accountSetIdentifier = 'Additional-Position-account-numbers-set';
+								$.each(formData["RepeatedElements"], function (i, accountSet) {
+									if (StrInStr(accountSet.ID, accountSetIdentifier)) {
+										accountSetPropertyNameSuffix = StrInStr(accountSet.ID, accountSetIdentifier, 3);
+										printContent += '						<li>Account<ol>' +
+											'							<li><b>Grant Object Code:</b> ' + accountSet["Additional-Position-Grant-Object-Code" + accountSetPropertyNameSuffix] + '</li>' +
+											'							<li><b>Grant Source Code:</b> ' + accountSet["Additional-Position-Grant-Source-Code" + accountSetPropertyNameSuffix] + '</li>' +
+											'							<li><b>Percent Salary from this Account:</b> ' + accountSet["Additional-Position-Percent-Salary-from-this-Account" + accountSetPropertyNameSuffix] + '</li>' +
+											'						</ol></li>';
+									}
+
+								});
+								printContent += '					</ol></li>';
+							}
 						}
 
 
@@ -14395,18 +14486,36 @@
 						if (typeof (formData["status-change_wage-change"]) !== "undefined") {
 							printContent += '<h2>Wage Change</h2>' +
 								'<ul style="margin: 0;">' +
-								'	<li><b>Effective Beginning Date:</b> ' + formData["Wage-Change-Effective-Beginning-Date"] + '</li>' +
+								'	<li><b>Anticipated Start Date:</b> ' + formData["Wage-Change-Effective-Beginning-Date"] + '</li>' +
 								'	<li><b>Department:</b> ' + formData["Wage-Change-Department"] + '</li>' +
 								'	<li><b>Scheduled Hours, Biweekly:</b> ' + formData["Wage-Change-Scheduled-Hours-Biweekly"] + '</li>' +
 								'	<li><b>Scheduled Hours, Annually:</b> ' + formData["Wage-Change-Scheduled-Hours-Annually"] + '</li>' +
-								'	<li><b>Previous Hourly Wage:</b> ' + formData["Wage-Change-Previous-Hourly-Wage"] + '</li>' +
+								// '	<li><b>Previous Hourly Wage:</b> ' + formData["Wage-Change-Previous-Hourly-Wage"] + '</li>' + 
 								'	<li><b>Hourly Wage:</b> ' + formData["Wage-Change-Hourly-Wage"] + '</li>' +
 								'	<li><b>Annualized Salary:</b> ' + formData["Wage-Change-Annualized-Salary"] + '</li>';
 
-							if (formData["Wage-Change-Reason"] == "Other") {
+							if (formData["Wage-Change-Reason"] == "Adjustment") {
 								printContent += '	<li><b>Reason:</b> ' + formData["Wage-Change-Reason-Explanation"] + '</li>';
 							} else {
 								printContent += '	<li><b>Reason:</b> ' + formData["Wage-Change-Reason"] + '</li>';
+							}
+							printContent += '	<li><b>Funding Source:</b> ' + formData["Wage-Change-Funding-Source"] + '</li>';
+
+							if (formData["Wage-Change-Funding-Source"] == "Grant Funds" || formData["Wage-Change-Funding-Source"] == "Endowment Funds") {
+								printContent += '	<li><b>Account(s):</b> <ol>';
+								var accountSetIdentifier = 'Wage-Change-account-numbers-set';
+								$.each(formData["RepeatedElements"], function (i, accountSet) {
+									if (StrInStr(accountSet.ID, accountSetIdentifier)) {
+										accountSetPropertyNameSuffix = StrInStr(accountSet.ID, accountSetIdentifier, 3);
+										printContent += '						<li>Account<ol>' +
+											'							<li><b>Grant Object Code:</b> ' + accountSet["Wage-Change-Grant-Object-Code" + accountSetPropertyNameSuffix] + '</li>' +
+											'							<li><b>Grant Source Code:</b> ' + accountSet["Wage-Change-Grant-Source-Code" + accountSetPropertyNameSuffix] + '</li>' +
+											'							<li><b>Percent Salary from this Account:</b> ' + accountSet["Wage-Change-Percent-Salary-from-this-Account" + accountSetPropertyNameSuffix] + '</li>' +
+											'						</ol></li>';
+									}
+
+								});
+								printContent += '					</ol></li>';
 							}
 						}
 
@@ -14419,12 +14528,35 @@
 						if (typeof (formData["status-change_schedule-change"]) !== "undefined") {
 							printContent += '<h2>Schedule Change</h2>' +
 								'<ul style="margin: 0;">' +
-								'	<li><b>Effective Beginning Date:</b> ' + formData["Schedule-Change-Effective-Beginning-Date"] + '</li>' +
-								'	<li><b>Department:</b> ' + formData["Schedule-Change-Department"] + '</li>' +
-								'	<li><b>Previous Scheduled Hours, Biweekly:</b> ' + formData["Schedule-Change-Previous-Scheduled-Hours-Biweekly"] + '</li>' +
+								'	<li><b>Position Title:</b> ' + formData["Schedule-Change-Position-Title"] + '</li>' +
+								'	<li><b>Anticipated Start Date:</b> ' + formData["Schedule-Change-Effective-Beginning-Date"] + '</li>';
+							if (typeof (formData["Schedule-Change-Effective-End-Date"]) !== "undefined") {
+								printContent += '	<li><b>Anticipated End Date:</b> ' + formData["Schedule-Change-Effective-End-Date"] + '</li>';
+							}
+							printContent += '	<li><b>Department:</b> ' + formData["Schedule-Change-Department"] + '</li>' +
+								// '	<li><b>Previous Scheduled Hours, Biweekly:</b> ' + formData["Schedule-Change-Previous-Scheduled-Hours-Biweekly"] + '</li>' + 
 								'	<li><b>Scheduled Hours, Biweekly:</b> ' + formData["Schedule-Change-Scheduled-Hours-Biweekly"] + '</li>' +
 								'	<li><b>Reason:</b> ' + formData["Schedule-Change-Reason"] + '</li>' +
 								'	<li><b>Funding Source:</b> ' + formData["Schedule-Change-Funding-Source"] + '</li>';
+
+
+							if (formData["Schedule-Change-Funding-Source"] == "Grant Funds" || formData["Schedule-Change-Funding-Source"] == "Endowment Funds") {
+								printContent += '	<li><b>Account(s):</b> <ol>';
+								var accountSetIdentifier = 'Schedule-Change-account-numbers-set';
+								$.each(formData["RepeatedElements"], function (i, accountSet) {
+									if (StrInStr(accountSet.ID, accountSetIdentifier)) {
+										accountSetPropertyNameSuffix = StrInStr(accountSet.ID, accountSetIdentifier, 3);
+										printContent += '						<li>Account<ol>' +
+											'							<li><b>Grant Object Code:</b> ' + accountSet["Schedule-Change-Grant-Object-Code" + accountSetPropertyNameSuffix] + '</li>' +
+											'							<li><b>Grant Source Code:</b> ' + accountSet["Schedule-Change-Grant-Source-Code" + accountSetPropertyNameSuffix] + '</li>' +
+											'							<li><b>Percent Salary from this Account:</b> ' + accountSet["Schedule-Change-Percent-Salary-from-this-Account" + accountSetPropertyNameSuffix] + '</li>' +
+											'						</ol></li>';
+									}
+
+								});
+								printContent += '					</ol></li>';
+							}
+							printContent += '</ul>';
 						}
 
 
@@ -14435,28 +14567,29 @@
 						if (typeof (formData["status-change_temporary-extension"]) !== "undefined") {
 							printContent += '<h2>Temporary Extension</h2>' +
 								'<ul style="margin: 0;">' +
-								'	<li><b>Effective Beginning Date:</b> ' + formData["Temporary-Extension-Effective-Beginning-Date"] + '</li>' +
-								'	<li><b>Effective Ending Date:</b> ' + formData["Temporary-Extension-Effective-Ending-Date"] + '</li>' +
+								'	<li><b>Position Title:</b> ' + formData["Temporary-Extension-Position-Title"] + '</li>' +
+								'	<li><b>Anticipated Start Date:</b> ' + formData["Temporary-Extension-Effective-Beginning-Date"] + '</li>' +
+								'	<li><b>Anticipated End Date:</b> ' + formData["Temporary-Extension-Effective-Ending-Date"] + '</li>' +
 								'	<li><b>Reason:</b> ' + formData["Temporary-Extension-Reason"] + '</li>' +
 								'	<li><b>Funding Source:</b> ' + formData["Temporary-Extension-Funding-Source"] + '</li>';
-						}
 
+							if (formData["Temporary-Extension-Funding-Source"] == "Grant Funds" || formData["Temporary-Extension-Funding-Source"] == "Endowment Funds") {
+								printContent += '	<li><b>Accounts:</b> <ol>';
+								var accountSetIdentifier = 'Temporary-Extension-account-numbers-set';
+								$.each(formData["RepeatedElements"], function (i, accountSet) {
+									if (StrInStr(accountSet.ID, accountSetIdentifier)) {
+										accountSetPropertyNameSuffix = StrInStr(accountSet.ID, accountSetIdentifier, 3);
+										printContent += '						<li>Account<ol>' +
+											'							<li><b>Grant Object Code:</b> ' + accountSet["Temporary-Extension-Grant-Object-Code" + accountSetPropertyNameSuffix] + '</li>' +
+											'							<li><b>Grant Source Code:</b> ' + accountSet["Temporary-Extension-Grant-Source-Code" + accountSetPropertyNameSuffix] + '</li>' +
+											'							<li><b>Percent Salary from this Account:</b> ' + accountSet["Temporary-Extension-Percent-Salary-from-this-Account" + accountSetPropertyNameSuffix] + '</li>' +
+											'						</ol></li>';
+									}
 
-
-						// --- LEAVE
-
-
-						if (typeof (formData["status-change_leave"]) !== "undefined") {
-							printContent += '<h2>Leave</h2>' +
-								'<ul style="margin: 0;">' +
-								'	<li><b>Effective Beginning Date:</b> ' + formData["Leave-Effective-Beginning-Date"] + '</li>' +
-								'	<li><b>Effective Ending Date:</b> ' + formData["Leave-Effective-Ending-Date"] + '</li>';
-
-							if (formData["Leave-Reason"] == "Other") {
-								printContent += '	<li><b>Reason:</b> ' + formData["Leave-Reason-Explanation"] + '</li>';
-							} else {
-								printContent += '	<li><b>Reason:</b> ' + formData["Leave-Reason"] + '</li>';
+								});
+								printContent += '					</ol></li>';
 							}
+
 						}
 
 
@@ -14467,7 +14600,7 @@
 						if (typeof (formData["status-change_termination"]) !== "undefined") {
 							printContent += '<h2>Termination</h2>' +
 								'<ul style="margin: 0;">' +
-								'	<li><b>Job Being Terminated:</b> ' + formData["Job-Being-Terminated"] + '</li>' +
+								'	<li><b>Terminated Position:</b> ' + formData["Job-Being-Terminated"] + '</li>' +
 								'	<li><b>Termination Date:</b> ' + formData["Termination-Date"] + '</li>' +
 								'	<li><b>Last Date Worked:</b> ' + formData["Last-Date-Worked"] + '</li>';
 
@@ -14481,11 +14614,28 @@
 									'	<li><b>Reason Explanation:</b> ' + formData["Involuntary-Termination-Reason-Explanation"] + '</li>';
 							}
 
-							if (formData["Termination-Reason"] == "Other") {
-								printContent += '	<li><b>Reason:</b> Other</li>' +
-									'	<li><b>Reason Explanation:</b> ' + formData["Other-Termination-Reason-Explanation"] + '</li>';
-							}
+							// if (formData["Termination-Reason"] == "Other") {
+							// 	printContent += '	<li><b>Reason:</b> Other</li>' + 
+							// 					'	<li><b>Reason Explanation:</b> ' + formData["Other-Termination-Reason-Explanation"] + '</li>';
+							// }
 						}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 						printContent += '<h2>Approvals</h2>' +
@@ -16100,6 +16250,11 @@
 
 	function ReturnRequestStorageObjectPropertiesAndPushRequestColumns(formElement) {
 
+		// this is probably kinda hokey, but 3 days prior to major release this is what works
+		if (typeof (globalSubmissionValuePairsArray) === "undefined") {
+			globalSubmissionValuePairsArray = [];
+		}
+
 		var formDataString = '';
 
 		// handle inputs that aren't people pickers
@@ -17049,6 +17204,276 @@
 	};
 
 
+	// ---- CUSTOM OVERVIEW SCREENS
+
+	$.fn.RenderAdminEventAVOverviewScreen = function () {
+
+		// get date params
+		var startDateFrom = GetParamFromUrl(location.search, 'startDateFrom');
+		var startDateTo = GetParamFromUrl(location.search, 'startDateTo');
+
+		if (startDateFrom == "") {
+			startDateFrom = $().ReturnFormattedDateTime('nowLocal', null, 'YYYY-MM-DD');
+		}
+
+		if (startDateTo == "") {
+			startDateTo = moment(startDateFrom, 'YYYY-MM-DD').add(14, "days").format('YYYY-MM-DD');
+		}
+
+		var tData = {
+			'commonColumns': [
+				{
+					'displayName': 'Request ID',
+					'internalName': 'ID',
+					'formLink': 1
+				}, {
+					'displayName': 'Requested By',
+					'internalName': 'RequestedBy',
+					'userName': 1
+				}, {
+					'displayName': 'Talk To',
+					'internalName': 'RequestedFor',
+					'userName': 1
+				}, {
+					'displayName': 'Event Start Date and Time',
+					'internalName': 'EventBeginningDatetime',
+					'groupingFriendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'ddd, MMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+				}, {
+					'displayName': 'Request Date',
+					'internalName': 'RequestDate',
+					'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+				}
+			],
+			'tables': [
+				{
+					'tableID': 'pending-approval',
+					'someColsAreUsers': 1,
+					'grouping': {
+						'zeroIndexedColumnNumber': 3,
+						'numberColsForHeaderToSpan': 4
+					},
+					'customCAMLQuery': '<Where>' +
+						'   <And>' +
+						'       <Eq>' +
+						'           <FieldRef Name="RequestStatus"></FieldRef>' +
+						'           <Value Type="Text">Pending Approval</Value>' +
+						'       </Eq>' +
+						'       <And>' +
+						'           <Geq>' +
+						'               <FieldRef Name="EventBeginningDatetime"></FieldRef>' +
+						'               <Value Type="DateTime" IncludeTimeValue="FALSE">' + startDateFrom + 'T00:00:00Z</Value>' +
+						'           </Geq>' +
+						'           <Leq>' +
+						'               <FieldRef Name="EventBeginningDatetime"></FieldRef>' +
+						'               <Value Type="DateTime" IncludeTimeValue="FALSE">' + startDateTo + 'T00:00:00Z</Value>' +
+						'           </Leq>' +
+						'       </And>' +
+						'   </And>' +
+						'</Where>'
+				}, {
+					'tableID': 'approved',
+					'someColsAreUsers': 1,
+					'grouping': {
+						'zeroIndexedColumnNumber': 3,
+						'numberColsForHeaderToSpan': 6
+					},
+					'customCAMLQuery': '<Where>' +
+						'   <And>' +
+						'       <Eq>' +
+						'           <FieldRef Name="RequestStatus"></FieldRef>' +
+						'           <Value Type="Text">Approved</Value>' +
+						'       </Eq>' +
+						'       <And>' +
+						'           <Geq>' +
+						'               <FieldRef Name="EventBeginningDatetime"></FieldRef>' +
+						'               <Value Type="DateTime" IncludeTimeValue="FALSE">' + startDateFrom + 'T00:00:00Z</Value>' +
+						'           </Geq>' +
+						'           <Leq>' +
+						'               <FieldRef Name="EventBeginningDatetime"></FieldRef>' +
+						'               <Value Type="DateTime" IncludeTimeValue="FALSE">' + startDateTo + 'T00:00:00Z</Value>' +
+						'           </Leq>' +
+						'       </And>' +
+						'   </And>' +
+						'</Where>',
+					'customColumns': [
+						{
+							'displayName': 'Request ID',
+							'internalName': 'ID',
+							'formLink': 1
+						}, {
+							'displayName': 'Requested By',
+							'internalName': 'RequestedBy',
+							'userName': 1
+						}, {
+							'displayName': 'Talk To',
+							'internalName': 'RequestedFor',
+							'userName': 1
+						}, {
+							'displayName': 'Event Date and Time',
+							'internalName': 'EventBeginningDatetime',
+							'groupingFriendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'ddd, MMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+						}, {
+							'displayName': 'Request Date',
+							'internalName': 'RequestDate',
+							'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+						}, {
+							'displayName': 'Assigned To',
+							'internalName': 'AssignedTo',
+							'userName': 1
+						}, {
+							'displayName': 'Assignment Date',
+							'internalName': 'AssignmentDate',
+							'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+						}
+					]
+				}, {
+					'tableID': 'closed',
+					'someColsAreUsers': 1,
+					'grouping': {
+						'zeroIndexedColumnNumber': 4,
+						'numberColsForHeaderToSpan': 9
+					},
+					'customCAMLQuery': '<Where>' +
+						'   <And>' +
+						'       <Eq>' +
+						'           <FieldRef Name="EndOfLife"></FieldRef>' +
+						'           <Value Type="Text">1</Value>' +
+						'       </Eq>' +
+						'       <And>' +
+						'           <Geq>' +
+						'               <FieldRef Name="EventBeginningDatetime"></FieldRef>' +
+						'               <Value Type="DateTime" IncludeTimeValue="FALSE">' + startDateFrom + 'T00:00:00Z</Value>' +
+						'           </Geq>' +
+						'           <Leq>' +
+						'               <FieldRef Name="EventBeginningDatetime"></FieldRef>' +
+						'               <Value Type="DateTime" IncludeTimeValue="FALSE">' + startDateTo + 'T00:00:00Z</Value>' +
+						'           </Leq>' +
+						'       </And>' +
+						'   </And>' +
+						'</Where>',
+					'customColumns': [
+						{
+							'displayName': 'Request ID',
+							'internalName': 'ID',
+							'formLink': 1
+						}, {
+							'displayName': 'Request Status',
+							'internalName': 'RequestStatus'
+						}, {
+							'displayName': 'Requested By',
+							'internalName': 'RequestedBy',
+							'userName': 1
+						}, {
+							'displayName': 'Talk To',
+							'internalName': 'RequestedFor',
+							'userName': 1
+						}, {
+							'displayName': 'Event Date and Time',
+							'internalName': 'EventBeginningDatetime',
+							'groupingFriendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'ddd, MMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+						}, {
+							'displayName': 'Request Date',
+							'internalName': 'RequestDate',
+							'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+						}, {
+							'displayName': 'Assigned To',
+							'internalName': 'AssignedTo',
+							'userName': 1
+						}, {
+							'displayName': 'Assignment Date',
+							'internalName': 'AssignmentDate',
+							'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+						}, {
+							'displayName': 'Completed By',
+							'internalName': 'CompletedBy',
+							'userName': 1
+						}, {
+							'displayName': 'Completion Date',
+							'internalName': 'CompletionDate',
+							'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+						}
+					]
+				}
+			]
+		};
+
+		// insert container and sub-containers
+		$("div#overview-table-container").prepend('<div id="container_command-bar-and-tables"> \n' +
+			'   <div id="container_command-bar"></div> \n' +
+			'   <div id="table-container"></div> \n' +
+			'</div>');
+
+		var commandBarContents = '<h2 id="header_command-bar">Commands</h2> \n' +
+			'<div id="container_new-request-control"> \n' +
+			'   <a class="button-link button-link_new-item button_swf-new-request-with-datatable" data-button-type="newRequest" href="' + mData.uriAdmin + '">New Request</a> \n' +
+			'</div> \n' +
+			'<ul id="container_tab-controls"> \n' +
+			'   <li><a href="#table-container_pending-approval">Pending Approval</a></li> \n' +
+			'   <li><a href="#table-container_approved">Approved</a></li> \n' +
+			'   <li><a href="#table-container_closed">Closed</a></li> \n' +
+			'</ul> \n' +
+			'<div id="container_date-filter-controls-and-header"> \n' +
+			'   <div id="text_date-filter-controls" class="collapsible">Dates</div> \n' +
+			'   <div id="container_date-filter-controls"> \n' +
+			'        <div class="container_date-filter-control"> \n' +
+			'            <label class="date-selector-label" for="filter--start-date_from">Start Date From</label> \n' +
+			'            <input class="date-selector" id="filter--start-date_from" name="filter--start-date_from" type="text"> \n' +
+			'        </div> \n' +
+			'        <div class="container_date-filter-control"> \n' +
+			'            <label class="date-selector-label" for="filter--start-date_to">Start Date To</label> \n' +
+			'            <input class="date-selector" id="filter--start-date_to" name="filter--start-date_to" type="text"> \n' +
+			'        </div> \n' +
+			'        <div class="container_date-filter-control"> \n' +
+			'            <a id="filter--submit-button">Update</a> \n' +
+			'        </div> \n' +
+			'    </div> \n' +
+			'</div> \n';
+
+
+		$().RenderAllDataTables(tData, "table-container");
+
+		// insert contents into containers
+		$("div#container_command-bar").html(commandBarContents);
+
+		// turn some command bar elements into tab controls and the turn the corresponding contents into tabbed content
+		$("div#container_command-bar-and-tables").tabs();
+
+		// set datepickers on date filter fields
+		$("input#filter--start-date_to, input#filter--start-date_from").datepicker({
+			changeMonth: "true",
+			changeYear: "true",
+			dateFormat: "MM d, yy"
+		});
+
+		// set currently-used dates into date fields
+		$("input#filter--start-date_from").val(moment(startDateFrom, 'YYYY-MM-DD').format('MMMM D, YYYY'));
+		$("input#filter--start-date_to").val(moment(startDateTo, 'YYYY-MM-DD').format('MMMM D, YYYY'));
+
+		// collapse collapsible
+		$('.collapsible').collapsible();
+
+		// listen for date filtering
+		$("a#filter--submit-button").click(function () {
+
+			var startDateFromFieldValue = $("input#filter--start-date_from").val();
+			var startDateToFieldValue = $("input#filter--start-date_to").val();
+
+			if (startDateFromFieldValue == "") {
+				startDateFromFieldValue = $().ReturnFormattedDateTime('nowLocal', null, 'MMMM D, YYYY');
+			}
+
+			if (startDateToFieldValue == "") {
+				startDateToFieldValue = moment(startDateFromFieldValue, 'MMMM D, YYYY').add(14, "days").format('MMMM D, YYYY');
+			}
+
+			var newStartDateFrom = $().ReturnFormattedDateTime(startDateFromFieldValue, null, 'YYYY-MM-DD');
+			var newStartDateTo = $().ReturnFormattedDateTime(startDateToFieldValue, null, 'YYYY-MM-DD');
+
+			window.location = mData.uriAdmin + "?startDateFrom=" + newStartDateFrom + "&startDateTo=" + newStartDateTo;
+		});
+	};
+
+
 	// ---- DATATABLES
 
 
@@ -17381,22 +17806,6 @@
 					"	</And>" +
 					"</Where>";
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 			} else if (typeof (t.fieldGEQDaysBeforeToday) != "undefined") {
 				query = "<Where>" +
 					"	<Geq>" +
@@ -17537,10 +17946,14 @@
 					debug: false
 				});
 
-				if (typeof (mData.getRequesterFrom) == 'undefined') {
-					var getRequesterFrom = 'Author';
-				} else {
-					var getRequesterFrom = mData.getRequesterFrom;
+				var getRequesterFrom = 'Author';
+
+
+				if (mData.getRequesterFrom) {
+					getRequesterFrom = mData.getRequesterFrom;
+				}
+				if (t.getRequesterFrom) {
+					getRequesterFrom = t.getRequesterFrom;
 				}
 
 				if (t.basicMyEOLQueryRelevantValue == 0) {
@@ -20397,9 +20810,9 @@
 			GetFieldsFromOneRow({
 				"listName": "ComponentLog",
 				"select": [{
-					// 	"nameHere": "uriAdmin",
-					// 	"nameInList": "URIAdmin",
-					// 	"linkField": 1
+					"nameHere": "uriAdmin",
+					"nameInList": "URIAdmin",
+					"linkField": 1
 					// }, {
 					// 	"nameHere": "uriRequester",
 					// 	"nameInList": "URIRequester",
