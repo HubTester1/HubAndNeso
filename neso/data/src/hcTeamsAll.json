@@ -124,11 +124,6 @@
       "pageToken": "Wellness"
    },
    {
-      "name": "Yawkey Gallery, Advancement",
-      "type": "Team",
-      "pageToken": "Yawkey Gallery, Advancement"
-   },
-   {
       "name": "Accessibility",
       "type": "Team",
       "pageToken": "Accessibility"
@@ -142,25 +137,5 @@
       "name": "Information Security Governance Team",
       "type": "Team",
       "pageToken": "Information Security Governance Team"
-   },
-   {
-      "name": "JM Working Group",
-      "type": "Team",
-      "pageToken": "JM Working Group"
-   },
-   {
-      "name": "Maya: Hidden Worlds Revealed Project Team",
-      "type": "Team",
-      "pageToken": "%27Maya%20-%20Hidden%20Worlds%20Revealed%27%20Project%20Team"
-   },
-   {
-      "name": "Tessitura",
-      "type": "Team",
-      "pageToken": "Tessitura"
-   },
-   {
-      "name": "The Science Behind the Stars",
-      "type": "Team",
-      "pageToken": "The Science Behind the Stars"
    }
 ]
