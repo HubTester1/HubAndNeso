@@ -74,6 +74,7 @@ div#hc-staff-lookup
 div#hc-pushed-items
 
 	li.hc-pushed-items-item
+		+font-weight-regular
 		list-style: none
 		margin: 0 0 1rem 0
 
@@ -93,7 +94,31 @@ div#hc-pushed-items
 		&::before
 			+font-size-6
 
-	
+// --- ALL - HC GET IT DONE
+
+div#hc-get-it-done
+
+	div#hc-get-it-done-view-by-group
+
+		div.hc-get-it-done-group
+			margin-bottom: 3rem
+		
+		li.hc-get-it-done-item
+			list-style: none
+
+		div.hc-get-it-done-item,
+		li.hc-get-it-done-item
+			margin: 1rem 0 2rem 0
+
+	div#hc-get-it-done-view-by-alpha
+		
+		li.hc-get-it-done-item
+			list-style: none
+
+	p.hc-get-it-done-item-link-container
+		+font-weight-regular
+		margin-bottom: 0
+
 // --- ALL - HC ORG
 
 div#hc-container

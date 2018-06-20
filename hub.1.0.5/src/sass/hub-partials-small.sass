@@ -205,10 +205,10 @@
 						background-color: $interactive-default
 
 						i.ms-Button-icon
-							color: $yellow-3
+							color: $pink-2
 
 					i.ms-Button-icon
-						color: $orange-6
+						color: $pink-6
 						transition: color .25s
 
 					div.ms-Button-textContainer
@@ -277,6 +277,7 @@
 		div#staff-lookup-and-background-info
 
 			h2
+				+font-size-3
 				margin-bottom: 1rem
 			
 // --- SMALL - HC SECTIONS / ACCORDION
@@ -286,17 +287,16 @@
 	div#hc-container
 		
 		div.hc-sections-container.accordion
-			padding: 4rem 2rem
-			background-image: linear-gradient(to bottom left, $pink-7, $purple-9)
+			// padding: 4rem 2rem
+			// background-image: linear-gradient(to bottom left, $pink-7, $purple-9)
 
 			div.hc-pushed-items.accordion__item,
 			div.hc-get-it-done.accordion__item,
 			div.hc-organization.accordion__item,
 			div.hc-messages-all.accordion__item
-				+round-corners
+				// +round-corners
 				+small-shadow-bottom-right-light-color
-				margin-bottom: 4rem
-				background-color: $grey-1
+				// margin-bottom: 4rem
 				
 				&:hover
 					+small-shadow-bottom-right-medium-color
@@ -305,16 +305,19 @@
 					padding-top: 4rem
 					padding-bottom: 4rem
 					border-bottom: 0
-					background-color: $interactive-default
+					background-color: $grey-16
 
 					h2
+						+font-size-3
+						// +font-weight-semibold
 						color: $white
+						// text-transform: uppercase
 
-				> .accordion__title[aria-expanded='false']
-					+round-corners
+				// > .accordion__title[aria-expanded='false']
+				// 	+round-corners
 
-				> .accordion__title[aria-expanded='true']
-					+round-corners-top
+				// > .accordion__title[aria-expanded='true']
+				// 	+round-corners-top
 
 				> div.accordion__body
 					border-left: 0
@@ -324,6 +327,52 @@
 			// div.hc-get-it-done__title.accordion__title,
 			// div.hc-organization__title.accordion__title,
 			// div.hc-messages-all__title.accordion__title
+
+// --- SMALL - PUSHED ITEMS
+
+@media screen and (max-width: $small-screen-maximum-width)
+
+	div#hc-pushed-items
+
+		ul#hc-pushed-items-list
+			margin-top: 1rem
+			
+			li.hc-pushed-items-item
+				margin-bottom: 2rem
+
+// --- SMALL - HC GET IT DONE
+
+@media screen and (max-width: $small-screen-maximum-width)
+
+	div#hc-get-it-done
+
+		div#hc-get-it-done-view-by-group
+
+			div.hc-get-it-done-group
+				margin-top: 2rem
+
+		div#hc-get-it-done-view-by-alpha
+			
+			li.hc-get-it-done-item
+				margin: 2rem 0 0 0
+
+
+
+
+
+
+
+// --- SMALL - HC ORG
+
+@media screen and (max-width: $small-screen-maximum-width)
+
+	div#hc-organization
+
+		div.accordion__body
+			padding-right: 0
+
+		div.accordion__body.hc-organization__teams__department-member-body
+			padding-right: 2rem
 
 // --- SMALL - MESSAGES
 
@@ -383,18 +432,6 @@
 					+button
 					+button-colored
 					margin: 1rem 0 0 0 !important
-
-// --- SMALL - HC ORG
-
-@media screen and (max-width: $small-screen-maximum-width)
-
-	div#hc-organization
-
-		div.accordion__body
-			padding-right: 0
-
-		div.accordion__body.hc-organization__teams__department-member-body
-			padding-right: 2rem
 
 // --- SMALL - FOOTER
 

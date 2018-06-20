@@ -32,7 +32,7 @@ div#s4-workspace,
 div.ReactModal__Content.ReactModal__Content--after-open.hc-messages-message-full-message-modal,
 div#internet-explorer-upgrade
 	+font-size-5
-	+font-weight-light
+	+font-weight-semilight
 	font-family: 'Segoe UI', 'Segoe', Roboto, Helvetica Neue, Helvetica,  Arial, sans-serif
 	color: $grey-16
 	background-color: $white
@@ -215,14 +215,21 @@ div.ms-TextField-fieldGroup
 		+round-corners
 		border: 0
 
+// MS SURFACES
+	
+div.ms-Callout-main,
+div.ms-ContextualMenu-Callout
+	+round-corners
+	+small-shadow-bottom-right-light-color
+
+	div.ms-Callout-main
+		+round-corners
+
 // DATE PICKER
 
 div.ms-DatePicker-callout
 	+round-corners
 	+small-shadow-bottom-right-medium-color
-
-	div.ms-Callout-main
-		+round-corners
 
 	div.ms-DatePicker-frame
 
@@ -436,11 +443,6 @@ div#hc-container
 				span.ms-CommandBarItem-commandText
 					+font-weight-semibold
 			
-			div.ms-CommandBarItem:first-child
-
-				button.ms-CommandBarItem-link
-					+round-corners-left
-			
 			div.ms-CommandBarItem:last-child
 
 				button.ms-CommandBarItem-link
@@ -448,7 +450,17 @@ div#hc-container
 
 					&:hover
 						+small-shadow-bottom-left-light-color
-			
+				
+			// keep first below last, so that first has priority; in cases of only one button, 
+			// 		first and last are same, but we want the shadow on the right
+			div.ms-CommandBarItem:first-child
+
+				button.ms-CommandBarItem-link
+					+round-corners-left
+
+					&:hover
+						+small-shadow-bottom-right-light-color
+				
 div#hc-container
 	
 	.accordion__body
