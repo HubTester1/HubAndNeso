@@ -2,6 +2,8 @@
 // ----- IMPORTS
 
 import * as React from 'react';
+import MediaQuery from 'react-responsive';
+import ScreenSizes from '../../../../services/ScreenSizes';
 import './HcMessagesMessageImage.sass';
 
 
@@ -14,11 +16,20 @@ const HcMessagesMessageImage = (props) => {
 				id={`hc-messages-message-image-container_${props.imageID}`}
 				className="hc-messages-message-image-container mos-react-component-root"
 			>
-				<img 
-					id={`hc-messages-message-image_${props.imageID}`}
-					className="hc-messages-message-image"
-					src={props.imageContent.urlLarge}
-				/>
+				<MediaQuery minWidth={ScreenSizes.ReturnMediumMin()}>
+					<img
+						id={`hc-messages-message-image_${props.imageID}`}
+						className="hc-messages-message-image"
+						src={props.imageContent.urlLarge}
+					/>
+				</MediaQuery>
+				<MediaQuery maxWidth={ScreenSizes.ReturnSmallMax()}>
+					<img
+						id={`hc-messages-message-image_${props.imageID}`}
+						className="hc-messages-message-image"
+						src={props.imageContent.urlSmall}
+					/>
+				</MediaQuery>
 			</div>
 		);
 	}
