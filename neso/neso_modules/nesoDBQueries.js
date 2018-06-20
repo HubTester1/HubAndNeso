@@ -116,14 +116,9 @@ module.exports = {
 				});
 		})),
 
-	ReturnSpecifiedDocsFromCollectionSorted: (collection, queryField, queryValue, sortField, order) =>
+	ReturnSpecifiedDocsFromCollectionSorted: (collection, queryObject, sortField, order) =>
 		// return a new promise
 		new Promise(((resolve, reject) => {
-			// note: queryObject MUST be constructed in the following way; 
-			// 		attempts to "optimize" the next two lines result in errors
-			const queryObject = {};
-			queryObject[queryField] = queryValue;
-
 			const orderFlag = (order === 'descending') ? -1 : 1;
 			// note: sortObject MUST be constructed in the following way; 
 			// 		attempts to "optimize" the next two lines result in errors
@@ -155,7 +150,7 @@ module.exports = {
 					}
 				});
 		})),
-	
+
 	ReturnAllSpecifiedDocsFromCollection: (collection, query, projection) =>
 		// return a new promise
 		new Promise(((resolve, reject) => {
@@ -334,13 +329,13 @@ module.exports = {
 			});
 		})),
 
-	UpdateSpecificFieldInSpecificDocsInCollection: 
+	UpdateSpecificFieldInSpecificDocsInCollection:
 		(
-			collection, 
-			docsSelectionFieldName, 
-			docsSelectionFieldValue, 
+			collection,
+			docsSelectionFieldName,
+			docsSelectionFieldValue,
 			docsSelectorIsDocID,
-			changingFieldName, 
+			changingFieldName,
 			changingFieldNewValue,
 		) =>
 			// return a new promise
@@ -362,7 +357,7 @@ module.exports = {
 
 				// use nesoDBConnection object to query db
 				nesoDBConnection.get(collection).update(
-					selectionObject, 
+					selectionObject,
 					{ $set: setObject },
 					(error, countsFromMonk) => {
 						// if there was an error
@@ -408,7 +403,7 @@ module.exports = {
 				changingFieldsArray.forEach((changingField) => {
 					setObject[changingField.key] = changingField.value;
 				});
-				
+
 				// note: setObject MUST be constructed in the following way; 
 				// 		attempts to "optimize" the next two lines result in errors
 				const selectionObject = {};

@@ -1,6 +1,8 @@
 
 // ----- PULL IN MODULES
 
+const nesoDBConnection = require('./nesoDBConnection');
+const nesoErrors = require('./nesoErrors');
 const nesoDBQueries = require('./nesoDBQueries');
 const nesoImages = require('./nesoImages');
 const nesoUtilities = require('./nesoUtilities');
@@ -68,57 +70,140 @@ module.exports = {
 
 	ReturnHcMessages: () =>
 		// return a new promise
-		new Promise(((resolve, reject) => {
-			// get a promise to retrieve all documents from the hcMessages document collection
-			nesoDBQueries.ReturnAllDocsFromCollection('hcMessages')
-				// if the promise is resolved with the docs, then resolve this promise with the docs
-				.then((result) => { resolve(result); })
-				// if the promise is rejected with an error, then reject this promise with an error
-				.catch((error) => { reject(error); });
-		})),
+		new Promise((resolve, reject) => {
+			// note: sortObject and projectionObject MUST be constructed in the following way;
+			// 		attempts to "optimize" the relevant lines result in errors
+			const queryObject = {};
+
+			queryObject.messageExpiration = { $gte: new Date() };
+
+			// use nesoDBConnection object to query db
+			nesoDBConnection.get('hcMessages')
+				.find(queryObject, {}, (error, docs) => {
+					// if there was an error
+					if (error) {
+						// construct a custom error
+						const errorToReport = {
+							error: true,
+							mongoDBError: true,
+							mongoDBErrorDetails: error,
+						};
+						// add error to Twitter
+						nesoErrors.ProcessError(errorToReport);
+						// reject this promise with the error
+						reject(errorToReport);
+						// if there was NOT an error
+					} else {
+						// resolve the promise and return the docs
+						resolve({
+							error: false,
+							mongoDBError: false,
+							docs,
+						});
+					}
+				});
+		}),
 
 	ReturnHcMessagesDescending: () =>
 		// return a new promise
-		new Promise(((resolve, reject) => {
-			// get a promise to retrieve all documents from the hcMessages document collection
-			nesoDBQueries.ReturnAllDocsFromCollectionSorted('hcMessages', 'messageModified', 'descending')
-				// if the promise is resolved with the docs, then resolve this promise with the docs
-				.then((result) => { resolve(result); })
-				// if the promise is rejected with an error, then reject this promise with an error
-				.catch((error) => { reject(error); });
-		})),
+		new Promise((resolve, reject) => {
+			// note: sortObject and projectionObject MUST be constructed in the following way;
+			// 		attempts to "optimize" the relevant lines result in errors
+			const sortObject = {};
+			const projectionObject = {};
+			const queryObject = {};
 
-	ReturnHcMessagesDescendingLimit3: () =>
-		// return a new promise
-		new Promise(((resolve, reject) => {
-			// get a promise to retrieve all documents from the hcMessages document collection
-			nesoDBQueries.ReturnLimitedDocsFromCollectionSorted('hcMessages', 'messageModified', 'descending', 3)
-				// if the promise is resolved with the docs, then resolve this promise with the docs
-				.then((result) => { resolve(result); })
-				// if the promise is rejected with an error, then reject this promise with an error
-				.catch((error) => { reject(error); });
-		})),
+			sortObject.messageModified = -1;
+
+			projectionObject.sort = sortObject;
+
+			queryObject.messageExpiration = { $gte: new Date() };
+
+			// use nesoDBConnection object to query db
+			nesoDBConnection.get('hcMessages')
+				.find(queryObject, projectionObject, (error, docs) => {
+					// if there was an error
+					if (error) {
+						// construct a custom error
+						const errorToReport = {
+							error: true,
+							mongoDBError: true,
+							mongoDBErrorDetails: error,
+						};
+						// add error to Twitter
+						nesoErrors.ProcessError(errorToReport);
+						// reject this promise with the error
+						reject(errorToReport);
+						// if there was NOT an error
+					} else {
+						// resolve the promise and return the docs
+						resolve({
+							error: false,
+							mongoDBError: false,
+							docs,
+						});
+					}
+				});
+		}),
 
 	ReturnHcMessagesDescendingLimit4: () =>
 		// return a new promise
-		new Promise(((resolve, reject) => {
-			// get a promise to retrieve all documents from the hcMessages document collection
-			nesoDBQueries.ReturnLimitedDocsFromCollectionSorted('hcMessages', 'messageModified', 'descending', 4)
-				// if the promise is resolved with the docs, then resolve this promise with the docs
-				.then((result) => { resolve(result); })
-				// if the promise is rejected with an error, then reject this promise with an error
-				.catch((error) => { reject(error); });
-		})),
+		new Promise((resolve, reject) => {
+			// note: sortObject and projectionObject MUST be constructed in the following way;
+			// 		attempts to "optimize" the relevant lines result in errors
+			const sortObject = {};
+			const projectionObject = {};
+			const queryObject = {};
+			
+			sortObject.messageModified = -1;
+
+			projectionObject.sort = sortObject;
+			projectionObject.limit = 4;
+
+			queryObject.messageExpiration = { $gte: new Date() };
+
+			// use nesoDBConnection object to query db
+			nesoDBConnection.get('hcMessages')
+				.find(queryObject, projectionObject, (error, docs) => {
+					// if there was an error
+					if (error) {
+						// construct a custom error
+						const errorToReport = {
+							error: true,
+							mongoDBError: true,
+							mongoDBErrorDetails: error,
+						};
+						// add error to Twitter
+						nesoErrors.ProcessError(errorToReport);
+						// reject this promise with the error
+						reject(errorToReport);
+						// if there was NOT an error
+					} else {
+						// resolve the promise and return the docs
+						resolve({
+							error: false,
+							mongoDBError: false,
+							docs,
+						});
+					}
+				});
+		}),
 
 	ReturnHcMessagesDescendingWithSpecifiedTag: (name, camlName) =>
 		// return a new promise
 		new Promise(((resolve, reject) => {
+			// note: queryObject MUST be constructed in the following way; 
+			// 		attempts to "optimize" the next two lines result in errors
+			const queryObject = {};
+			queryObject.messageTags = [{ name, camlName }];
+			queryObject.messageExpiration = { $gte: new Date() };
+
 			// get a promise to retrieve all documents from the hcMessages document collection
-			nesoDBQueries.ReturnSpecifiedDocsFromCollectionSorted('hcMessages', 'messageTags', [{ name, camlName }], 'messageModified', 'descending')
+			nesoDBQueries.ReturnSpecifiedDocsFromCollectionSorted('hcMessages', queryObject, 'messageModified', 'descending')
 				// if the promise is resolved with the docs, then resolve this promise with the docs
-				.then((result) => { console.log('RESULT'); console.log(result); resolve(result); })
+				.then((result) => { resolve(result); })
 				// if the promise is rejected with an error, then reject this promise with an error
-				.catch((error) => { console.log('ERROR'); console.log(error); reject(error); });
+				.catch((error) => { reject(error); });
 		})),
 
 	ProcessNewMessageImages: req =>
@@ -268,17 +353,15 @@ module.exports = {
 				messageSubject: incomingMessageCopy.newMessageSubject,
 				messageBody: incomingMessageCopy.newMessageBody,
 				messageImages: imageDataToKeep,
-				messageCreated: incomingMessageCopy.newMessageCreated,
+				messageCreated: new Date(),
 				messageCreator: incomingMessageCopy.newMessageCreator,
-				messageModified: incomingMessageCopy.newMessageCreated,
+				messageModified: new Date(),
 			};
 			if (incomingMessageCopy.newMessageExpirationDate === '') {
-				messageToInsert.messageExpiration = moment().add(180, 'days').format();
+				messageToInsert.messageExpiration = moment().add(180, 'days').toDate();
 			} else {
-				messageToInsert.messageExpiration = nesoUtilities
-					.ReturnFormattedDateTime({
-						incomingDateTimeString: incomingMessageCopy.newMessageExpirationDate,
-					});
+				messageToInsert.messageExpiration = 
+					moment(incomingMessageCopy.newMessageExpirationDate).toDate();
 			}
 
 			// get a promise to retrieve all documents from the hcMessagesSettings document collection
@@ -312,17 +395,11 @@ module.exports = {
 				{ key: 'messageImages', value: imageDataToKeep },
 				{ 
 					key: 'messageExpiration', 
-					value: nesoUtilities
-						.ReturnFormattedDateTime({
-							incomingDateTimeString: incomingMessageCopy.newMessageExpirationDate,
-						}),
+					value: moment(incomingMessageCopy.newMessageExpirationDate).toDate(),
 				},
 				{
 					key: 'messageModified', 
-					value: nesoUtilities
-						.ReturnFormattedDateTime({
-							incomingDateTimeString: 'nowLocal',
-						}),
+					value: new Date(),
 				},
 			];
 			// get a promise to retrieve all documents from the hcMessagesSettings document collection
