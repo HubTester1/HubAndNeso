@@ -481,6 +481,7 @@
 				+round-corners
 				+small-shadow-bottom-right-light-color
 				list-style: none
+				-webkit-column-break-inside: avoid
 				break-inside: avoid
 				page-break-inside: avoid
 				padding: 2rem
@@ -498,6 +499,7 @@
 					+button
 					+font-weight-regular
 					display: block
+					height: 2rem
 					padding: 0
 					margin: 1rem 0 0 0 !important
 					border: .1rem solid transparent
@@ -507,9 +509,6 @@
 
 					&::after
 						+font-size-7
-
-				button.hc-messages-message-enable-message-update-button
-					height: 2rem
 					
 				&:hover
 					+small-shadow-bottom-right-medium-color
@@ -519,6 +518,7 @@
 					button.hc-messages-message-full-message-button,
 					button.hc-messages-message-enable-message-update-button
 						+button-icon-after
+						height: 4rem
 						padding: 0 2rem
 
 					button.hc-messages-message-full-message-button
@@ -533,13 +533,15 @@
 					button.hc-messages-message-enable-message-update-button
 						+icon-edit-after
 						+button-outlined-default
-						height: 4rem
 						color: $interactive-default
 						background-color: transparent
 
 						&:hover
 							color: $interactive-active
 							background-color: transparent
+
+			li.hc-messages-message-preview-or-inline:first-of-type:last-of-type
+				display: inline-block
 
 	// new message form
 

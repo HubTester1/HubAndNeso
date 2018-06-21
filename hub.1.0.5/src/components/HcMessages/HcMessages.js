@@ -387,7 +387,7 @@ export default class HcMessages extends React.Component {
 			newMessageIsInvalid: undefined,
 			newMessageImageUploadsImpossible: undefined,
 			newMessageSaveFailure: undefined,
-			newMessageSaveSuccess: undefined,
+			newMessageSaveSuccess: true,
 			newMessageIITNotificationFailure: undefined,
 		}));
 	}

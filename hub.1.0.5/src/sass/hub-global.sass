@@ -181,7 +181,35 @@ div.requirement-legend
 			display: inline-block
 			height: 2rem
 			content: ' = required field'
-		
+
+// form field container
+
+div.mos-react-form-field
+	+round-corners
+	margin-top: 1.5rem
+	margin-bottom: 1.5rem
+	
+// errors
+
+div.mos-react-form-field.contains-errors
+	background-color: $pink-2
+	padding: 1rem
+
+	label
+		color: $grey-18
+
+	div.mos-react-form-field-error
+		+font-size-6
+		font-style: italic
+		color: $pink-9
+
+// messages
+
+div.mos-react-form-error-message,
+div.mos-react-form-warning-message,
+div.mos-react-form-success-message
+	margin-top: 1rem
+	
 // requirement indicators
 
 label.ms-Label
@@ -877,7 +905,7 @@ form#aspnetForm
 
 	div.banner--critical
 		color: $pink-8
-		background-color: $pink-1
+		background-color: $pink-2
 
 	div.banner--warning
 		color: $yellow-10
@@ -885,7 +913,7 @@ form#aspnetForm
 
 	div.banner--success
 		color: $green-9
-		background-color: $green-1
+		background-color: $green-2
 
 // PAGINATION
 				

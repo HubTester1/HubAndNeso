@@ -20,9 +20,6 @@ export default class HcMessagesNewMessageForm extends React.Component {
 		// };
 	}
 	render() {
-		// console.log('rendering form');
-		// console.log('props');
-		// console.log(this.props);
 		if (this.props.showNewMessageForm) {
 			return (
 				<div id="hc-messages-new-message-form" className="mos-react-component-root">
@@ -45,7 +42,7 @@ export default class HcMessagesNewMessageForm extends React.Component {
 							tagsArray={this.props.tagsArray}
 							onChanged={this.props.handleChangedTags}
 							selectedKey={this.props.newMessageTags[0].camlName}
-							// tabindex="1"
+							tabindex="1"
 						/>
 						<div className="mos-react-form-field-error">
 							{this.props.newMessageTagsError}
@@ -118,7 +115,7 @@ export default class HcMessagesNewMessageForm extends React.Component {
 						this.props.newMessageSaveFailure &&
 
 						<div id="new-message-save-failure-error-message" className="mos-react-form-error-message banner banner--critical">
-							<p className="banner__text"><span className="urgent">Yikes!</span> We had a problem saving your information.</p>
+							<span className="urgent">Whoopsie!</span> We can&apos;t save your stuff right now. Please try later.
 						</div>
 					}
 					{
@@ -144,7 +141,7 @@ export default class HcMessagesNewMessageForm extends React.Component {
 					{
 						this.props.newMessageSaveSuccess &&
 
-						<div id="new-message-save-success-message" className="message-success-message banner banner--success">
+						<div id="new-message-save-success-message" className="mos-react-form-success-message banner banner--success">
 							<p className="banner__text">Your message was saved.</p>
 						</div>
 					}
