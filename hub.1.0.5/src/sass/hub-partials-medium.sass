@@ -503,9 +503,7 @@
 				button.hc-messages-message-full-message-button,
 				button.hc-messages-message-enable-message-update-button
 					+button
-					// +font-size-6
 					+font-weight-regular
-					// display: block
 					padding: 0
 					margin: 1rem 0 0 0 !important
 					border: .1rem solid transparent
@@ -513,7 +511,7 @@
 					color: $interactive-default
 					transition: color .25s, background-color .25s, border-color .25s, padding .25s, height .25s
 
-					&:after
+					&::after
 						+font-size-7
 
 				button.hc-messages-message-enable-message-update-button
@@ -625,13 +623,6 @@
 
 		label[for='hc-messages-images-file-input']
 			padding: .5rem 0
-
-		button#new-message-save-button
-			+button
-			+button-colored
-			+button-icon-before
-			+icon-save-before
-			margin-top: 2rem !important
 
 // --- MEDIUM - CALENDARDS & SCHEDULES
 

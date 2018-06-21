@@ -395,23 +395,53 @@
 
 	div#hc-messages-all
 
+		div#hc-messages-new-message-form
+			+grid-element-darkened-1
+			padding: 2rem
+
 		ul#hc-messages-list
 
 			li.hc-messages-message-preview
 				list-style: none
-				padding: 2rem
 				background-color: $white
-				margin: 2rem 0 0 0
+				margin: 3rem 0 0 0
 
 				h3.hc-messages-message-subject
 					+font-weight-regular
 					+font-size-4
+				
+				// normal outlined icons
+				
+				button.hc-messages-message-full-message-button,
+				button.hc-messages-message-enable-message-update-button
+					+button
+					+button-icon-after
+					+button-light
+					+font-size-6
+					+font-weight-regular
+					padding: 0 2rem 0 1.5rem
+					margin: 1rem 0 0 0 !important
+					background-color: transparent
+					color: $interactive-default
+					transition: color .25s, background-color .25s, border-color .25s, padding .25s, height .25s
+
+					&::after
+						+font-size-7
+						text-align: center
+
+					span.button-text-container
+						display: none
+
 
 				button.hc-messages-message-full-message-button
-					+button
-					+button-colored
-					display: block
-					margin: 1rem 0 0 0 !important
+					+icon-fullscreen-after
+
+				button.hc-messages-message-enable-message-update-button
+					+icon-edit-after
+					margin: 1rem 0 0 1rem !important
+
+
+				
 
 	// inline full
 

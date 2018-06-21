@@ -484,8 +484,7 @@
 												<div id="loading-spinner"></div>
 											</div>
 		<div id="internet-explorer-upgrade" class="banner banner--critical"    style="display: none;">
-			<p class="banner__text">Internet Explorer was replaced in 2015. Please upgrade from Internet Explorer to Edge, or switch to Chrome or Firefox. If
-				you need assistance doing so, please contact IIT.
+			<p class="banner__text">Internet Explorer was replaced in 2015. Please upgrade from Internet Explorer to Edge, or switch to Chrome or Firefox. If you need assistance doing so, please contact IIT System Support Services at x0130.
 		</div>
 											<div id="hub-central-mount-point"></div>
 											<div id="s4-ribbonrow">

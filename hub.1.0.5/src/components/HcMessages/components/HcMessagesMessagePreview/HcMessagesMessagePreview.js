@@ -72,7 +72,7 @@ export default class HcMessagesMessagePreview extends React.Component {
 									className="hc-messages-message-full-message-button"
 									onClick={this.handleOpenModalClick}
 								>
-									Full message
+									<span className="button-text-container">Full message</span>
 								</button>
 								{
 									this.props.messageContent.creator.account === this.props.uData.account &&
@@ -85,7 +85,7 @@ export default class HcMessagesMessagePreview extends React.Component {
 												e => this.props.enableMessageUpdate(this.props.messageContent.messageID, e)
 											}
 										>
-											Modify message
+											<span className="button-text-container">Modify message</span>
 										</button>
 									</span>
 								}
@@ -120,7 +120,7 @@ export default class HcMessagesMessagePreview extends React.Component {
 									className="hc-messages-message-full-message-button"
 									onClick={this.handleOpenInlineFullClick}
 								>
-									Full message
+									<span className="button-text-container">Full message</span>
 								</button>
 								{
 									this.props.messageContent.creator.account === this.props.uData.account &&
@@ -131,7 +131,7 @@ export default class HcMessagesMessagePreview extends React.Component {
 											e => this.props.enableMessageUpdate(this.props.messageContent.messageID, e)
 										}
 									>
-										Modify message
+										<span className="button-text-container">Modify message</span>
 									</button>
 								}
 							</div>
