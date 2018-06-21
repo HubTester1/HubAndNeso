@@ -235,6 +235,15 @@
 
 	div#hc-staff-lookup
 		flex: 1 0 auto
+
+		ul.persona-cards__list
+			column-count: 2
+			column-gap: 2rem
+
+			li.hc-staff-lookup-persona
+				margin: 0 0 2rem 0
+				break-inside: avoid
+				page-break-inside: avoid
 		
 // --- MEDIUM - GET IT DONE
 
@@ -659,14 +668,6 @@
 			div#hc-organization__teams--other-teams
 				+column
 				width: 30%
-
-		// STAFF LOOKUP
-
-		div#hc-staff-lookup
-
-			div#hc-staff-lookup__picker-and-personas
-				padding: 2rem
-				background-color: $grey-1
 		
 		// MISSION
 

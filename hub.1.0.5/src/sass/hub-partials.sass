@@ -124,28 +124,43 @@ div#hc-container
 
 	div#hc-organization-body
 
+		// COMMAND BAR
+
 		div#hc-organization-command-bar
 			margin-bottom: 2rem
 
+		// DIVS, DEPTS, TEAMS
+
 		a.org-chart-link
 			+button
-			+button-white
-			+button-icon-before
-			+icon-org-chart-before
+			// +button-white
+			// +button-icon-before
+			// +icon-org-chart-before
 
 		a.hub-team-link
 			+button
-			+button-white
-			+button-icon-before
-			+icon-link-before
+			// +button-white
+			// +button-icon-before
+			// +icon-link-before
 
-	div.hc-organization__teams__department-member-body
+		// div.hc-organization__teams__department-member-body
 
-		div.hc-organization-teams-member-persona
-			+small-shadow-bottom-right-very-very-light-color
+		// 	div.hc-organization-teams-member-persona
+		// 		+small-shadow-bottom-right-very-very-light-color
 
-			&:hover
-				+small-shadow-bottom-right-very-light-color
+		// 		&:hover
+		// 			+small-shadow-bottom-right-very-light-color
+
+		// STAFF LOOKUP
+
+		div#hc-staff-lookup
+
+			div#hc-staff-lookup__picker-and-personas
+
+				div#picker
+					+round-corners
+					padding: 2rem
+					background-color: $grey-1
 
 // --- ALL - FOOTER
 

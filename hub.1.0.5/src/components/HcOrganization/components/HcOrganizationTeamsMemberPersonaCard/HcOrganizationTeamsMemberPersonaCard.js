@@ -29,11 +29,8 @@ const HcOrgTeamsMemberPersonaCard = (props) => {
 		>
 			<div className="persona-card-dialog-header">
 				{
-					props.memberContent.photoURL &&
-					<span className="avatar" style={photoStyleObject} />
-				}
-				{
-					!props.memberContent.photoURL &&
+					props.memberContent.firstInitial &&
+					props.memberContent.lastInitial &&
 					<span className="avatar">
 						<span className="avatar-initials">{props.memberContent.firstInitial}{props.memberContent.lastInitial}
 						</span>

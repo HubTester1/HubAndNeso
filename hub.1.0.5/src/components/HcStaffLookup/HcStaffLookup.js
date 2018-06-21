@@ -124,11 +124,13 @@ export default class HcStaffLookup extends React.Component {
 					<h3>Staff Lookup</h3>
 				}
 				<div id="hc-staff-lookup__picker-and-personas">
-					<HcStaffLookupPicker
-						peopleOptions={this.state.peopleOptions}
-						setSelectedPersonasFromPeoplePickerData={this.setSelectedPersonasFromPeoplePickerData}
-						principalTypeUser
-					/>
+					<div id="picker">
+						<HcStaffLookupPicker
+							peopleOptions={this.state.peopleOptions}
+							setSelectedPersonasFromPeoplePickerData={this.setSelectedPersonasFromPeoplePickerData}
+							principalTypeUser
+						/>
+					</div>
 					{
 						this.state.personas[0] &&
 
