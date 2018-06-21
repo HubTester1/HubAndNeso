@@ -46,7 +46,7 @@ export default class HcMessagesMessagePreview extends React.Component {
 		Modal.setAppElement('#hub-central-mount-point');
 		// console.log(this.props.messageContent);
 		return (
-			<li id={`hc-messages-message-preview_${this.props.messageId}`} className="hc-messages-message-preview mos-react-component-root">
+			<li id={`hc-messages-message-preview_${this.props.messageId}`} className="hc-messages-message-preview-or-inline mos-react-component-root">
 				{
 					!this.state.showInlineFull &&
 
@@ -141,12 +141,14 @@ export default class HcMessagesMessagePreview extends React.Component {
 				{
 					this.state.showInlineFull &&
 
-					<HcMessagesMessage
-						messageId={this.props.messageId}
-						messageContent={this.props.messageContent}
-						handleCloseModalClick={this.handleCloseModalClick}
-						handleCloseInlineFullClick={this.handleCloseInlineFullClick}
-					/>
+					<div className="hc-messages-message-inline-message">
+						<HcMessagesMessage
+							messageId={this.props.messageId}
+							messageContent={this.props.messageContent}
+							handleCloseModalClick={this.handleCloseModalClick}
+							handleCloseInlineFullClick={this.handleCloseInlineFullClick}
+						/>
+					</div>
 				}
 			</li>
 		);

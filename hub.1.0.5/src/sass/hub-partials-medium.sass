@@ -393,7 +393,7 @@
 				padding: 0
 				margin: 0
 
-				li.hc-messages-message-preview
+				li.hc-messages-message-preview-or-inline
 					+round-corners
 					+small-shadow-bottom-right-light-color
 					display: block
@@ -462,12 +462,12 @@
 								color: $aqua-5
 								background-color: transparent
 
-				li.hc-messages-message-preview:nth-child(3),
-				li.hc-messages-message-preview:nth-child(4)
+				li.hc-messages-message-preview-or-inline:nth-child(3),
+				li.hc-messages-message-preview-or-inline:nth-child(4)
 					display: none
 
-				li.hc-messages-message-preview:nth-child(2),
-				li.hc-messages-message-preview:nth-child(4)
+				li.hc-messages-message-preview-or-inline:nth-child(2),
+				li.hc-messages-message-preview-or-inline:nth-child(4)
 					margin-bottom: 0
 
 	// all messages
@@ -484,7 +484,7 @@
 			column-count: 4
 			column-gap: 0
 
-			li.hc-messages-message-preview
+			li.hc-messages-message-preview-or-inline
 				+round-corners
 				+small-shadow-bottom-right-light-color
 				list-style: none
@@ -497,7 +497,7 @@
 				border-bottom: 5px solid $white-10-percent
 				transition: border-color .5s, background-color .5s, height .5s
 
-				div.hc-messages-message-preview-truncated-body
+				div.hc-messages-message-preview-or-inline-truncated-body
 					+font-weight-semilight
 
 				button.hc-messages-message-full-message-button,
@@ -559,44 +559,6 @@
 							color: $interactive-active
 							background-color: transparent
 
-		ul.pagination
-			display: block
-			margin-top: 2rem
-			text-align: center
-
-			> li
-				display: inline-block
-				margin: 0
-
-				> a
-					display: inline-block
-					padding: 1rem 2rem
-					color: $text-on-interactive-default !important
-					background-color: $interactive-default
-					transition-property: color, background-color
-					transition-duration: .25s
-
-					&:hover
-						color: $text-on-interactive-active !important
-						background-color: $interactive-active
-
-			> li.disabled a
-				color: $white !important
-				background-color: $grey-12
-				cursor: default
-
-				&:hover
-					color: $white !important
-					background-color: $grey-12
-
-			> li.active a
-				color: $text-on-interactive-active !important
-				background-color: $interactive-active
-
-				&:hover
-					color: $text-on-interactive-active !important
-					background-color: $interactive-active
-
 	// new message form
 
 	div#hc-messages-new-message-form
@@ -611,9 +573,6 @@
 		label.ms-Label,
 		label[for='hc-messages-images-file-input']
 			color: $white
-
-		div.mos-react-form-field
-			padding-bottom: 1rem
 
 		label,
 		span.requirement-indicator

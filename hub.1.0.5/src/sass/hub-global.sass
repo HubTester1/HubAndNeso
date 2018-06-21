@@ -887,7 +887,47 @@ form#aspnetForm
 		color: $green-9
 		background-color: $green-1
 
+// PAGINATION
+				
+div#hc-container
 
+	ul.pagination
+		display: block
+		margin-top: 2rem
+		text-align: center
+
+		> li
+			display: inline-block
+			margin: 0
+
+			> a
+				display: inline-block
+				padding: 1rem 2rem
+				color: $text-on-interactive-default !important
+				background-color: $interactive-default
+				transition-property: color, background-color
+				transition-duration: .25s
+
+				&:hover
+					color: $text-on-interactive-active !important
+					background-color: $interactive-active
+
+		> li.disabled a
+			color: $white !important
+			background-color: $grey-12
+			cursor: default
+
+			&:hover
+				color: $white !important
+				background-color: $grey-12
+
+		> li.active a
+			color: $text-on-interactive-active !important
+			background-color: $interactive-active
+
+			&:hover
+				color: $text-on-interactive-active !important
+				background-color: $interactive-active
 
 
 
