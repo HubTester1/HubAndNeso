@@ -29,15 +29,31 @@ div#internet-explorer-upgrade
 	h6
 		+font-weight-semilight
 
-// --- VERY SMALL - PERSONA CARD
+// --- SMALL - PERSONA CARD
 
-@media screen and (max-width: $very-small-screen-maximum-width)
+@media screen and (max-width: $small-screen-maximum-width)
 
 
 	div#hc-container,
 	div#s4-workspace
 
-		div.div.hc-organization-teams-member-persona,
+		div.hc-organization-teams-member-persona,
+		li.hc-staff-lookup-persona
+
+			div.persona-card-dialog-header
+
+				p.name
+					+font-size-4
+					margin-bottom: 0
+
+// --- VERY SMALL - PERSONA CARD
+
+@media screen and (max-width: $very-small-screen-maximum-width)
+
+	div#hc-container,
+	div#s4-workspace
+
+		div.hc-organization-teams-member-persona,
 		li.hc-staff-lookup-persona
 			+row
 

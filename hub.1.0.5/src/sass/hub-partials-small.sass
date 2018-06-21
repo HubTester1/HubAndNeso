@@ -18,10 +18,16 @@
 @media screen and (max-width: $small-screen-maximum-width)
 	
 	div.hc-header-and-hero-container
+		
 		background-color: $blue-10
 		background-size: 100% auto, 100% auto
 		background-position: top left, top left
-		background-image: linear-gradient(to bottom, $blue-10-70-percent, $blue-10-50-percent 10rem, $blue-10-50-percent 20rem, $blue-10 25rem), url('../../img/bkgrd-milky-way_small.jpg')
+		background-image: linear-gradient(to bottom, $blue-10-70-percent, $blue-10-50-percent 10rem, $blue-10-80-percent 20rem, $blue-10 25rem), url('../../img/bkgrd-milky-way_small.jpg')
+
+		div#hc-staff-lookup
+
+			h2
+				+font-size-3
 
 // --- SMALL - HEADER
 
@@ -287,16 +293,12 @@
 	div#hc-container
 		
 		div.hc-sections-container.accordion
-			// padding: 4rem 2rem
-			// background-image: linear-gradient(to bottom left, $pink-7, $purple-9)
 
 			div.hc-pushed-items.accordion__item,
 			div.hc-get-it-done.accordion__item,
 			div.hc-organization.accordion__item,
 			div.hc-messages-all.accordion__item
-				// +round-corners
 				+small-shadow-bottom-right-light-color
-				// margin-bottom: 4rem
 				
 				&:hover
 					+small-shadow-bottom-right-medium-color
@@ -308,15 +310,7 @@
 
 					h2
 						+font-size-3
-						// +font-weight-semibold
 						color: $white
-						// text-transform: uppercase
-
-				// > .accordion__title[aria-expanded='false']
-				// 	+round-corners
-
-				// > .accordion__title[aria-expanded='true']
-				// 	+round-corners-top
 
 				> div.accordion__body
 					border-left: 0
@@ -326,30 +320,28 @@
 				> .accordion__title
 					background-size: 100% auto, 100% auto
 					background-position: top left, center center
-					background-image: linear-gradient(to bottom, $blue-10-70-percent, $blue-10-50-percent 10rem, $blue-10-50-percent 20rem, $blue-10 25rem), url('../../img/bkgrd-human.jpg')
-
+					background-image: linear-gradient(to right, $aqua-10, $aqua-10-80-percent 15rem, $aqua-10-50-percent 25rem, $aqua-10-70-percent 90%, $aqua-10-90-percent), url('../../img/bkgrd-human.jpg')
 
 			div.hc-get-it-done.accordion__item
 
 				> .accordion__title
 					background-size: 100% auto, 100% auto
 					background-position: top left, center center
-					background-image: linear-gradient(to bottom, $blue-10-70-percent, $blue-10-50-percent 10rem, $blue-10-50-percent 20rem, $blue-10 25rem), url('../../img/bkgrd-drone.jpg')
+					background-image: linear-gradient(to right, $aqua-10, $aqua-10-80-percent 18rem, $aqua-10-50-percent 25rem, $aqua-10-40-percent 90%, $aqua-10-90-percent), url('../../img/bkgrd-drone.jpg')
 
 			div.hc-organization.accordion__item
 
 				> .accordion__title
 					background-size: 100% auto, 100% auto
-					background-position: top left, center center
-					background-image: linear-gradient(to bottom, $blue-10-70-percent, $blue-10-50-percent 10rem, $blue-10-50-percent 20rem, $blue-10 25rem), url('../../img/bkgrd-jellyfish.jpg')
+					background-position: top left, center -4rem
+					background-image: linear-gradient(to right, $aqua-10-60-percent, $aqua-10-60-percent), url('../../img/bkgrd-jellyfish.jpg')
 
 			div.hc-messages-all.accordion__item
 
 				> .accordion__title
 					background-size: 100% auto, 100% auto
 					background-position: top left, center center
-					background-image: linear-gradient(to bottom, $blue-10-70-percent, $blue-10-50-percent 10rem, $blue-10-50-percent 20rem, $blue-10 25rem), url('../../img/bkgrd-architecture.jpg')
-
+					background-image: linear-gradient(to right, $aqua-10, $aqua-10-80-percent 18rem, $aqua-10-50-percent 25rem, $aqua-10-40-percent 90%, $aqua-10-90-percent), url('../../img/bkgrd-architecture.jpg')
 
 // --- SMALL - PUSHED ITEMS
 
