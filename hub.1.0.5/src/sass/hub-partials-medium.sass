@@ -410,7 +410,9 @@
 					button.hc-messages-message-full-message-button,
 					button.hc-messages-message-enable-message-update-button
 						+button
+						display: block
 						padding: 0
+						height: 2rem
 						margin: 1rem 0 0 0 !important
 						border: .1rem solid transparent
 						border: 0
@@ -420,14 +422,7 @@
 
 						&:after
 							+font-size-7
-							
-					span.hc-messages-message-conditional-button-separator
-						display: inline-block
-						padding: 0 1rem
 
-						&::after
-							content: '/'
-					
 					&:hover
 						+small-shadow-bottom-right-medium-color
 						padding: 2rem
@@ -437,12 +432,10 @@
 						button.hc-messages-message-full-message-button,
 						button.hc-messages-message-enable-message-update-button
 							+button-icon-after
+							height: 4rem
 							padding: 0 2rem
 								
-						span.hc-messages-message-conditional-button-separator
-
-							&::after
-								content: ''
+						// span.hc-messages-message-conditional-button-separator
 
 						button.hc-messages-message-full-message-button
 							+icon-fullscreen-after
@@ -504,6 +497,7 @@
 				button.hc-messages-message-enable-message-update-button
 					+button
 					+font-weight-regular
+					display: block
 					padding: 0
 					margin: 1rem 0 0 0 !important
 					border: .1rem solid transparent
@@ -516,13 +510,6 @@
 
 				button.hc-messages-message-enable-message-update-button
 					height: 2rem
-						
-				span.hc-messages-message-conditional-button-separator
-					display: inline-block
-					padding: 0 1rem
-
-					&::after
-						content: '/'
 					
 				&:hover
 					+small-shadow-bottom-right-medium-color
@@ -533,11 +520,6 @@
 					button.hc-messages-message-enable-message-update-button
 						+button-icon-after
 						padding: 0 2rem
-
-					span.hc-messages-message-conditional-button-separator
-
-						&::after
-							content: ''
 
 					button.hc-messages-message-full-message-button
 						+icon-fullscreen-after

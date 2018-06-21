@@ -582,6 +582,8 @@ export default class HcMessages extends React.Component {
 								(this.state.messagesArray.length / messagesPerPageSmallScreen) + 1
 						}
 						onChange={this.handlePageChange}
+						hideDisabled
+						hideFirstLastPages
 					/>
 				</MediaQuery>
 				<MediaQuery minWidth={ScreenSizes.ReturnMediumMin()}>
