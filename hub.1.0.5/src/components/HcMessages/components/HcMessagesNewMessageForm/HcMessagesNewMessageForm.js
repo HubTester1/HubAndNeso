@@ -42,7 +42,7 @@ export default class HcMessagesNewMessageForm extends React.Component {
 							tagsArray={this.props.tagsArray}
 							onChanged={this.props.handleChangedTags}
 							selectedKey={this.props.newMessageTags[0].camlName}
-							tabindex="1"
+							tabIndex="1"
 						/>
 						<div className="mos-react-form-field-error">
 							{this.props.newMessageTagsError}

@@ -9,6 +9,7 @@ const moment = require('moment');
 const nesoActiveDirectory = require('./nesoActiveDirectory');
 const shortID = require('shortid');
 const nesoDBQueries = require('./nesoDBQueries');
+const nesoUtilities = require('./nesoUtilities');
 
 // ----- CONVERSION FUNCTION
 
@@ -144,9 +145,17 @@ module.exports = {
 							];
 							break;
 					}
+					let body = nesoUtilities.ReplaceAll('<font color=\"red\">', '', quarkArray[4]);
+					body = nesoUtilities.ReplaceAll('<\/font>', '', body);
+					body = nesoUtilities.ReplaceAll('�', '', body);
+					
+					hcMessage.messageBody = body;
 					hcMessage.messageSubject = quarkArray[3];
-					hcMessage.messageBody = quarkArray[4];
-					hcMessage.messageExpiration = moment(quarkArray[6], 'MMMM, DD YYYY HH:mm:ss').toDate();
+					if (quarkArray[6]) {
+						hcMessage.messageExpiration = moment(quarkArray[6], 'MMMM, DD YYYY HH:mm:ss').toDate();
+					} else {
+						hcMessage.messageExpiration = moment(quarkArray[7], 'MMMM, DD YYYY HH:mm:ss').add(180, 'days').toDate();
+					}
 					hcMessage.messageCreated = moment(quarkArray[7], 'MMMM, DD YYYY HH:mm:ss').toDate();
 					hcMessage.messageModified = moment(quarkArray[8], 'MMMM, DD YYYY HH:mm:ss').toDate();
 					hcMessage.messageCreator = {

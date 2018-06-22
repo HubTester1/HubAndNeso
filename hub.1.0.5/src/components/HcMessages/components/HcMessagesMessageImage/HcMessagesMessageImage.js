@@ -16,20 +16,37 @@ const HcMessagesMessageImage = (props) => {
 				id={`hc-messages-message-image-container_${props.imageID}`}
 				className="hc-messages-message-image-container mos-react-component-root"
 			>
-				<MediaQuery minWidth={ScreenSizes.ReturnMediumMin()}>
+				{
+					props.imageContent.migratedFromQuark &&
+
 					<img
 						id={`hc-messages-message-image_${props.imageID}`}
 						className="hc-messages-message-image"
-						src={props.imageContent.urlLarge}
+						src={props.imageContent.uriQuark}
 					/>
-				</MediaQuery>
-				<MediaQuery maxWidth={ScreenSizes.ReturnSmallMax()}>
-					<img
-						id={`hc-messages-message-image_${props.imageID}`}
-						className="hc-messages-message-image"
-						src={props.imageContent.urlSmall}
-					/>
-				</MediaQuery>
+				}
+				{
+					props.imageContent.migratedFromQuark &&
+
+					<MediaQuery minWidth={ScreenSizes.ReturnMediumMin()}>
+						<img
+							id={`hc-messages-message-image_${props.imageID}`}
+							className="hc-messages-message-image"
+							src={props.imageContent.urlLarge}
+						/>
+					</MediaQuery>
+				}
+				{
+					props.imageContent.migratedFromQuark &&
+					
+					<MediaQuery maxWidth={ScreenSizes.ReturnSmallMax()}>
+						<img
+							id={`hc-messages-message-image_${props.imageID}`}
+							className="hc-messages-message-image"
+							src={props.imageContent.urlSmall}
+						/>
+					</MediaQuery>
+				}
 			</div>
 		);
 	}
