@@ -42,6 +42,9 @@ export default class HcMessagesMessagePreview extends React.Component {
 	handleCloseInlineFullClick() {
 		this.setState({ showInlineFull: false });
 	}
+	returnHtml(html) {
+		return { __html: `<div>${html}</div>` };
+	}
 	render() {
 		Modal.setAppElement('#hub-central-mount-point');
 		// console.log(this.props.messageContent);
@@ -65,7 +68,7 @@ export default class HcMessagesMessagePreview extends React.Component {
 									<span>...</span>
 								}
 							>
-								<div className="hc-messages-message-body">{this.props.messageContent.body}</div>
+								<div className="hc-messages-message-body" dangerouslySetInnerHTML={this.returnHtml(this.props.messageContent.body)} />
 							</Truncate>
 							<div className="hc-messages-message-button-container">
 								<button
@@ -113,7 +116,7 @@ export default class HcMessagesMessagePreview extends React.Component {
 									<span>...</span>
 								}
 							>
-								<div className="hc-messages-message-body">{this.props.messageContent.body}</div>
+								<div className="hc-messages-message-body" dangerouslySetInnerHTML={this.returnHtml(this.props.messageContent.body)} />
 							</Truncate>
 							<div className="hc-messages-message-button-container">
 								<button

@@ -26,6 +26,7 @@ module.exports = {
 				.then((result) => {
 					const hcMessage = {};
 					hcMessage.messageID = i + 1;
+					hcMessage.migratedFromQuark = true;
 					switch (quarkArray[1]) {
 						case 1:
 							hcMessage.messageTags = [
@@ -146,8 +147,13 @@ module.exports = {
 							break;
 					}
 					let body = nesoUtilities.ReplaceAll('<font color=\"red\">', '', quarkArray[4]);
+					body = nesoUtilities.ReplaceAll('<font size=\"3\">', '', body);
 					body = nesoUtilities.ReplaceAll('<\/font>', '', body);
-					body = nesoUtilities.ReplaceAll('�', '', body);
+					body = nesoUtilities.ReplaceAll('�', '&apos;', body);
+					body = nesoUtilities.ReplaceAll('<h2>', '<h5>', body);
+					body = nesoUtilities.ReplaceAll('</h2>', '</h5>', body);
+					body = nesoUtilities.ReplaceAll('<h1>', '<h4>', body);
+					body = nesoUtilities.ReplaceAll('</h1>', '</h4>', body);
 					
 					hcMessage.messageBody = body;
 					hcMessage.messageSubject = quarkArray[3];
