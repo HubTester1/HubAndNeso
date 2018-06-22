@@ -34,8 +34,8 @@
   "homepage": "https://github.com/HubTester1/HubAndNeso#readme",
   "dependencies": {
     "add": "^2.0.6",
-	"axios": "^0.18.0",
-	"moment": "^2.22.1",
+    "axios": "^0.18.0",
+    "moment": "^2.22.1",
     "office-ui-fabric-react": "^5.107.0",
     "react": "^16.3.2",
     "react-accessible-accordion": "^2.4.0",
