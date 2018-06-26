@@ -1,7 +1,7 @@
 
 module.exports = {
 	ReturnV4ProdStylesSrcFolder: () => './hub.1.0.4/sass',
-	ReturnV4ProdStylesSrcFile: () => './hub.1.0.4/sass/mos.sass',
+	ReturnV4ProdStylesSrcFile: () => './hub.1.0.4/sass/partials/_mos.sass',
 	ReturnV4ProdStylesDistFolder: () => './hub.1.0.4/css',
 	ReturnV4ProdStylesDistFile: () => './hub.1.0.4/css/mos.css',
 	ReturnV4ProdSWFAPIFile: () => './hub.1.0.4/js/mos-main.1.04.js',

@@ -1460,6 +1460,9 @@ div#s4-workspace div.overlay-screen {
     text-align: right;
     padding: 1.3rem 1rem .7rem;
     width: 15rem; }
+  div#s4-workspace div#request-form div.textarea,
+  div#s4-workspace div.overlay-screen div.textarea {
+    padding: 0; }
   div#s4-workspace div#request-form div.control,
   div#s4-workspace div.overlay-screen div.control {
     width: 45rem;

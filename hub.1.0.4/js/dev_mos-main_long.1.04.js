@@ -3591,6 +3591,7 @@
 
 				// if alwaysTalkToRequester, populate and hide relevant fields
 				if (typeof(fData.alwaysTalkToRequester) != 'undefined' && fData.alwaysTalkToRequester === 1) {
+					
 					$('option[value="Self"]').prop('selected', true);
 					$().PutAddtlPeopleInPicker('Requested For', [{
 						'name': uData.name,
@@ -11180,7 +11181,6 @@
 				'Resolved': true
 			});
 		});
-
 		SPClientPeoplePicker_InitStandaloneControlWrapper(metaObject.pickerID, allPeople, schema);
 	};
 
@@ -19411,6 +19411,16 @@
 					"email": "jbaker@mos.org",
 					"account": "jbaker",
 					"accountLong": "i:0#.f|membership|jbaker@mos.org"
+				}, {
+					"name": "HubTester4",
+					"email": "sp4@mos.org",
+					"account": "sp4",
+					"accountLong": "i:0#.f|membership|sp4@mos.org"
+				}, {
+					"name": "HubTester9",
+					"email": "sp9@mos.org",
+					"account": "sp9",
+					"accountLong": "i:0#.f|membership|sp9@mos.org"
 				}
 			],
 			"JobAdmins": [{
@@ -19418,12 +19428,12 @@
 					"email": "sp4@mos.org",
 					"account": "sp4",
 					"accountLong": "i:0#.f|membership|sp4@mos.org"
-				}/*, {
-					"name": "Samuel Corey",
-					"email": "scorey@mos.org",
-					"account": "scorey",
-					"accountLong": "i:0#.f|membership|scorey@mos.org"
-				}*/, {
+				// }, {
+				// 	"name": "Samuel Corey",
+				// 	"email": "scorey@mos.org",
+				// 	"account": "scorey",
+				// 	"accountLong": "i:0#.f|membership|scorey@mos.org"
+				}, {
 					"name": "HubTester8",
 					"email": "sp8@mos.org",
 					"account": "sp8",
@@ -19440,17 +19450,12 @@
 					"email": "sp5@mos.org",
 					"account": "sp5",
 					"accountLong": "i:0#.f|membership|sp5@mos.org"
+				// }, {
+				// 	"name": "Samuel Corey",
+				// 	"email": "scorey@mos.org",
+				// 	"account": "scorey",
+				// 	"accountLong": "i:0#.f|membership|scorey@mos.org"
 				}, {
-					"name": "HubTester9",
-					"email": "sp9@mos.org",
-					"account": "sp9",
-					"accountLong": "i:0#.f|membership|sp9@mos.org"
-				}, /*{
-					"name": "Samuel Corey",
-					"email": "scorey@mos.org",
-					"account": "scorey",
-					"accountLong": "i:0#.f|membership|scorey@mos.org"
-				},*/ {
 					"name": "Ben Wilson",
 					"email": "bwilson@mos.org",
 					"account": "bwilson",
@@ -20809,10 +20814,11 @@
 		mData = $.extend(
 			GetFieldsFromOneRow({
 				"listName": "ComponentLog",
-				"select": [{
-						"nameHere": "uriAdmin",
-						"nameInList": "URIAdmin",
-						"linkField": 1
+				"select": [
+					{
+					// "nameHere": "uriAdmin",
+					// "nameInList": "URIAdmin",
+					// "linkField": 1
 					// }, {
 					// 	"nameHere": "uriRequester",
 					// 	"nameInList": "URIRequester",
@@ -20825,7 +20831,7 @@
 					// 	"nameHere": "uriRequestAlternate",
 					// 	"nameInList": "URIRequestAlternate",
 					// 	"linkField": 1
-					}, {
+					// }, {
 						"nameHere": "uriRoot",
 						"nameInList": "URIRoot",
 						"linkField": 1
@@ -20860,7 +20866,8 @@
 					}, {
 						"nameHere": "quickLaunches",
 						"nameInList": "QuickLaunches"
-				}],
+					}
+				],
 				"where": {
 					"field": "ComponentID",
 					"type": "Number",
