@@ -1,6 +1,13 @@
 (function ($) {
 
 	// GSE Job 2
+	var hrOrHRP = "hr";
+
+	if (hrOrHRP == "hr") {
+		var componentID = 158;
+	} else {
+		var componentID = 20011
+	}
 
 	var mData = {
 		'componentID': 158,
@@ -9,8 +16,9 @@
 		// 'mosMainKey': 'dev',
 		// 'mosMainKey': 'devMedium',
 		'mosMainKey': 'devLong',
+		// "useRecordedMOSMainMajorVersion": 1,
 		'devAdminNotifications': 1,
-		'notifications': 1
+		'notifications': 0
 	};
 
 	console.log("using settings m1");
@@ -23,22 +31,22 @@
 				{
 					"linkType": "newItem",
 					"anchorText": "New Job",
-					"href": "/sites/hr-service-jobs/SitePages/App.aspx?r=0",
+					"href": "/sites/" + hrOrHRP + "-service-jobs/SitePages/App.aspx?r=0",
 					"target": null
 				}, {
 					"linkType": "goForward",
 					"anchorText": "Schedule Calendar",
-					"href": "/sites/hr-service-schedule/SitePages/App.aspx?f=cal",
+					"href": "/sites/" + hrOrHRP + "-service-schedule/SitePages/App.aspx?f=cal",
 					"target": null
 				}, {
 					"linkType": "goForward",
 					"anchorText": "Schedule List",
-					"href": "/sites/hr-service-schedule/SitePages/App.aspx",
+					"href": "/sites/" + hrOrHRP + "-service-schedule/SitePages/App.aspx",
 					"target": null
 				}, {
 					"linkType": "goForward",
 					"anchorText": "Signups",
-					"href": "/sites/hr-service-signup/SitePages/App.aspx",
+					"href": "/sites/" + hrOrHRP + "-service-signup/SitePages/App.aspx",
 					"target": null
 				}
 			],
@@ -100,22 +108,22 @@
 				{
 					"linkType": "newItem",
 					"anchorText": "New Job",
-					"href": "/sites/hr-service-jobs/SitePages/App.aspx?r=0",
+					"href": "/sites/" + hrOrHRP + "-service-jobs/SitePages/App.aspx?r=0",
 					"target": null
 				}, {
 					"linkType": "goForward",
 					"anchorText": "Schedule Calendar",
-					"href": "/sites/hr-service-schedule/SitePages/App.aspx?f=cal",
+					"href": "/sites/" + hrOrHRP + "-service-schedule/SitePages/App.aspx?f=cal",
 					"target": null
 				}, {
 					"linkType": "goForward",
 					"anchorText": "Schedule List",
-					"href": "/sites/hr-service-schedule/SitePages/App.aspx",
+					"href": "/sites/" + hrOrHRP + "-service-schedule/SitePages/App.aspx",
 					"target": null
 				}, {
 					"linkType": "goForward",
 					"anchorText": "My Signups",
-					"href": "/sites/hr-service-signup/SitePages/App.aspx",
+					"href": "/sites/" + hrOrHRP + "-service-signup/SitePages/App.aspx",
 					"target": null
 				}
 			],
@@ -177,22 +185,22 @@
 				{
 					"linkType": "newItem",
 					"anchorText": "New Job",
-					"href": "/sites/hr-service-jobs/SitePages/App.aspx?r=0",
+					"href": "/sites/" + hrOrHRP + "-service-jobs/SitePages/App.aspx?r=0",
 					"target": null
 				}, {
 					"linkType": "goForward",
 					"anchorText": "Schedule Calendar",
-					"href": "/sites/hr-service-schedule/SitePages/App.aspx?f=cal",
+					"href": "/sites/" + hrOrHRP + "-service-schedule/SitePages/App.aspx?f=cal",
 					"target": null
 				}, {
 					"linkType": "goForward",
 					"anchorText": "Schedule List",
-					"href": "/sites/hr-service-schedule/SitePages/App.aspx",
+					"href": "/sites/" + hrOrHRP + "-service-schedule/SitePages/App.aspx",
 					"target": null
 				}, {
 					"linkType": "goForward",
 					"anchorText": "My and My Staff Members' Signups",
-					"href": "/sites/hr-service-signup/SitePages/App.aspx",
+					"href": "/sites/" + hrOrHRP + "-service-signup/SitePages/App.aspx",
 					"target": null
 				}
 			],
@@ -264,21 +272,34 @@
 			'standardButtonElements': 1,
 			'standardComponentGrpAdminOnlyElements': 1
 		},
+
 		'standardChangeNotifications': {
 			'beginningOfLife': { 'admin': 1, 'requester': 1 },
 			'approved': { 'admin': 0, 'requester': 1 },
 			'endOfLife': { 'admin': 1, 'requester': 1 },
 		},
-		'versioningMatters': 0,
 
+		'versioningMatters': 0,
 
 		'uniqueElements': [
 			{
 				'elementType': "markup",
 				'tag': "h3",
-				'content': "Job Basics",
+				'content': "The Job",
 				'begin': 1,
 				'end': 1
+			// }, {
+			// 	'elementType': "markup",
+			// 	'tag': "h3",
+			// 	'content': "Title",
+			// 	'begin': 1,
+			// 	'end': 1
+			// }, {
+			// 	'elementType': "markup",
+			// 	'tag': "p",
+			// 	'content': "100 characters or fewer.",
+			// 	'begin': 1,
+			// 	'end': 1
 			}, {
 				'elementType': "field",
 				'controlType': "text",
@@ -313,6 +334,18 @@
 				'loadOptions': {
 					'function': 'LoadDepartmentSelectOptions'
 				},
+			// }, {
+			// 	'elementType': "markup",
+			// 	'tag': "h3",
+			// 	'content': "Description",
+			// 	'begin': 1,
+			// 	'end': 1
+			// }, {
+			// 	'elementType': "markup",
+			// 	'tag': "p",
+			// 	'content': "8000 characters or fewer.",
+			// 	'begin': 1,
+			// 	'end': 1
 			}, {
 				'elementType': "field",
 				'controlType': "textarea",
@@ -323,6 +356,18 @@
 				'requiredForAdmin': [""],
 				'disabledForNonAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"],
 				'disabledForAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"]
+			// }, {
+			// 	'elementType': "markup",
+			// 	'tag': "h3",
+			// 	'content': "Training",
+			// 	'begin': 1,
+			// 	'end': 1
+			// }, {
+			// 	'elementType': "markup",
+			// 	'tag': "p",
+			// 	'content': "For saftey reasons, staff are not permitted to use forklifts, large ladders, cherry pickers, etc. Sopecify use of any chemicals, tools, solvents, etc. here. 1000 characters or fewer.",
+			// 	'begin': 1,
+			// 	'end': 1
 			}, {
 				'elementType': "field",
 				'controlType': "textarea",
@@ -339,6 +384,18 @@
 				'requiredForAdmin': [""],
 				'disabledForNonAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"],
 				'disabledForAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"]
+			// }, {
+			// 	'elementType': "markup",
+			// 	'tag': "h3",
+			// 	'content': "Dress",
+			// 	'begin': 1,
+			// 	'end': 1
+			// }, {
+			// 	'elementType': "markup",
+			// 	'tag': "p",
+			// 	'content': "Please list any protective devices required for the job such as helmet, saftey goggles, rubber gloves, etc. 500 characters or fewer.",
+			// 	'begin': 1,
+			// 	'end': 1
 			}, {
 				'elementType': "field",
 				'controlType': "textarea",
@@ -355,6 +412,18 @@
 				'requiredForAdmin': [""],
 				'disabledForNonAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"],
 				'disabledForAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"]
+			// }, {
+			// 	'elementType': "markup",
+			// 	'tag': "h3",
+			// 	'content': "Duties",
+			// 	'begin': 1,
+			// 	'end': 1
+			// }, {
+			// 	'elementType': "markup",
+			// 	'tag': "p",
+			// 	'content': "Separate duties by typing 'Enter' or 'Return' key",
+			// 	'begin': 1,
+			// 	'end': 1
 			}, {
 				'elementType': "field",
 				'controlType': "textarea",
@@ -365,30 +434,31 @@
 				'requiredForAdmin': [""],
 				'disabledForNonAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"],
 				'disabledForAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"]
-			}, {
-				'elementType': "markup",
-				'tag': "h3",
-				'content': "Physical Demands",
-				'begin': 1,
-				'end': 1
-			}, {
-				'elementType': "markup",
-				'tag': "h4",
-				'content': "How Much Weight Will Be Handled",
-				'begin': 1,
-				'end': 1
+			// }, {
+			// 	'elementType': "markup",
+			// 	'tag': "h2",
+			// 	'content': "Physical Demands",
+			// 	'begin': 1,
+			// 	'end': 1
+			// }, {
+			// 	'elementType': "markup",
+			// 	'tag': "p",
+			// 	'content': "Please enter ONLY the number, and no symbols or letters, e.g. '%' or 'lbs')",
+			// 	'begin': 1,
+			// 	'end': 1
+			// }, {
+			// 	'elementType': "markup",
+			// 	'tag': "h3",
+			// 	'content': "Requires (lbs.)",
+			// 	'begin': 1,
+			// 	'end': 1
 			}, {
 				'elementType': "field",
 				'controlType': "text",
 				'fieldName': "Physical Demand Lifting",
 				'listFieldName': "PhysicalDemandLifting",
-				'labelContent': "Lifting",
-				"helpNotes": [{
-					"text": "State amounts in pounds, using numerals only",
-					"htmlID": "lifting_help-note",
-					"hideForNonAdmin": ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"],
-					"hideForAdmin": ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"]
-				}],
+				'labelContent': "Weight Required to Lift",
+				// 'htmlClass': 'field-suffix field-suffix--pounds',
 				'requiredForNonAdmin': [""],
 				'requiredForAdmin': [""],
 				'disabledForNonAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"],
@@ -398,13 +468,8 @@
 				'controlType': "text",
 				'fieldName': "Physical Demand Carrying",
 				'listFieldName': "PhysicalDemandCarrying",
-				'labelContent': "Carrying",
-				"helpNotes": [{
-					"text": "State amounts in pounds, using numerals only",
-					"htmlID": "carrying_help-note",
-					"hideForNonAdmin": ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"],
-					"hideForAdmin": ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"]
-				}],
+				'labelContent': "Weight Required to Carry",
+				// 'htmlClass': 'field-suffix field-suffix--pounds',
 				'requiredForNonAdmin': [""],
 				'requiredForAdmin': [""],
 				'disabledForNonAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"],
@@ -414,13 +479,8 @@
 				'controlType': "text",
 				'fieldName': "Physical Demand Pushing",
 				'listFieldName': "PhysicalDemandPushing",
-				'labelContent': "Pushing",
-				"helpNotes": [{
-					"text": "State amounts in pounds, using numerals only",
-					"htmlID": "pushing_help-note",
-					"hideForNonAdmin": ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"],
-					"hideForAdmin": ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"]
-				}],
+				'labelContent': "Weight Required to Push",
+				// 'htmlClass': 'field-suffix field-suffix--pounds',
 				'requiredForNonAdmin': [""],
 				'requiredForAdmin': [""],
 				'disabledForNonAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"],
@@ -430,35 +490,24 @@
 				'controlType': "text",
 				'fieldName': "Physical Demand Pulling",
 				'listFieldName': "PhysicalDemandPulling",
-				'labelContent': "Pulling",
-				"helpNotes": [{
-					"text": "State amounts in pounds, using numerals only",
-					"htmlID": "pulling_help-note",
-					"hideForNonAdmin": ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"],
-					"hideForAdmin": ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"]
-				}],
+				'labelContent': "Weight Required to Pull",
+				// 'htmlClass': 'field-suffix field-suffix--pounds',
 				'requiredForNonAdmin': [""],
 				'requiredForAdmin': [""],
 				'disabledForNonAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"],
 				'disabledForAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"]
-			}, {
-				'elementType': "markup",
-				'tag': "h4",
-				'content': "How Time Will Be Divided",
-				'begin': 1,
-				'end': 1
+			// }, {
+			// 	'elementType': "markup",
+			// 	'tag': "h3",
+			// 	'content': "Time Spent (%)",
+			// 	'begin': 1,
+			// 	'end': 1
 			}, {
 				'elementType': "field",
 				'controlType': "text",
 				'fieldName': "Physical Demand Standing",
 				'listFieldName': "PhysicalDemandStanding",
-				'labelContent': "Standing %",
-				"helpNotes": [{
-					"text": "State percents using numerals only. Percents must total 100.",
-					"htmlID": "standing_help-note",
-					"hideForNonAdmin": ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"],
-					"hideForAdmin": ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"]
-				}],
+				'labelContent': "Percent Time Standing",
 				'requiredForNonAdmin': [""],
 				'requiredForAdmin': [""],
 				'disabledForNonAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"],
@@ -468,13 +517,7 @@
 				'controlType': "text",
 				'fieldName': "Physical Demand Sitting",
 				'listFieldName': "PhysicalDemandSitting",
-				'labelContent': "Sitting %",
-				"helpNotes": [{
-					"text": "State percents using numerals only. Percents must total 100.",
-					"htmlID": "sitting_help-note",
-					"hideForNonAdmin": ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"],
-					"hideForAdmin": ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"]
-				}],
+				'labelContent': "Percent Time Sitting",
 				'requiredForNonAdmin': [""],
 				'requiredForAdmin': [""],
 				'disabledForNonAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"],
@@ -484,13 +527,7 @@
 				'controlType': "text",
 				'fieldName': "Physical Demand Walking",
 				'listFieldName': "PhysicalDemandWalking",
-				'labelContent': "Walking %",
-				"helpNotes": [{
-					"text": "State percents using numerals only. Percents must total 100.",
-					"htmlID": "walking_help-note",
-					"hideForNonAdmin": ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"],
-					"hideForAdmin": ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"]
-				}],
+				'labelContent': "Percent Time Walking",
 				'requiredForNonAdmin': [""],
 				'requiredForAdmin': [""],
 				'disabledForNonAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"],
@@ -508,7 +545,7 @@
 
 	fData.CustomScriptLast = '';
 
-
+	
 	$.fn.ReturnThisAppMData = function () {
 		return mData;
 	}
