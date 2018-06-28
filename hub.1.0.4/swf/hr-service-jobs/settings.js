@@ -10,10 +10,10 @@
 		// 'mosMainKey': 'devMedium',
 		'mosMainKey': 'devLong',
 		'devAdminNotifications': 1,
-		'notifications': 1
+		'notifications': 0
 	};
 
-	console.log("using settings m1");
+	console.log("using settings m4");
 
 	var oData = {
 
@@ -48,26 +48,18 @@
 						'displayName': 'Job ID',
 						'internalName': 'ID',
 						'formLink': 1
-					},
-					{
-						'displayName': 'Nickname',
-						'internalName': 'Title'
-					},
-					{
-						'displayName': 'Reports To',
-						'internalName': 'ReportsTo',
-						'userName': 1
-					},
-					{
+					}, {
 						'displayName': 'Job Title',
 						'internalName': 'JobTitle'
-					},
-					{
+					}, {
+						'displayName': 'Job Admin',
+						'internalName': 'JobAdmin',
+						'userName': 1
+					}, {
 						'displayName': 'Created',
 						'internalName': 'RequestDate',
 						'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
-					},
-					{
+					}, {
 						'displayName': 'Last Modified',
 						'internalName': 'Modified',
 						'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
@@ -85,10 +77,35 @@
 						'someColsAreUsers': 1,
 						'basicRSQueryRelevantStatus': 'Approved'
 					}, {
-						'tableTitle': 'Disapproved',
-						'tableID': 'disapoved',
+						'tableTitle': 'Closed',
+						'tableID': 'closed',
 						'someColsAreUsers': 1,
-						'basicRSQueryRelevantStatus': 'Disapproved'
+						'basicEOLQueryRelevantValue': 1,
+						'customColumns': [
+							{
+								'displayName': 'Request ID',
+								'internalName': 'ID',
+								'formLink': 1
+							}, {
+								'displayName': 'Request Status',
+								'internalName': 'RequestStatus'
+							}, {
+								'displayName': 'Nickname',
+								'internalName': 'Title'
+							}, {
+								'displayName': 'Job Title',
+								'internalName': 'JobTitle'
+							}, {
+								'displayName': 'Created',
+								'internalName': 'RequestDate',
+								'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+							}, {
+								'displayName': 'Last Modified',
+								'internalName': 'Modified',
+								'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+							}
+						]
+
 					}
 				]
 			}
@@ -122,29 +139,20 @@
 			'sections': {
 				'commonColumns': [
 					{
-						'displayName': 'Job ID',
+						'displayName': 'Request ID',
 						'internalName': 'ID',
 						'formLink': 1
-					},
-					{
+					}, {
 						'displayName': 'Nickname',
 						'internalName': 'Title'
-					},
-					{
-						'displayName': 'Reports To',
-						'internalName': 'ReportsTo',
-						'userName': 1
-					},
-					{
+					}, {
 						'displayName': 'Job Title',
 						'internalName': 'JobTitle'
-					},
-					{
+					}, {
 						'displayName': 'Created',
 						'internalName': 'RequestDate',
 						'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
-					},
-					{
+					}, {
 						'displayName': 'Last Modified',
 						'internalName': 'Modified',
 						'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
@@ -155,17 +163,44 @@
 						'tableTitle': 'Pending Approval',
 						'tableID': 'pending-approval',
 						'someColsAreUsers': 1,
-						'myRSQueryRelevantStatus': 'Pending Approval'
+						'myRSQueryRelevantStatus': 'Pending Approval',
+						'getRequesterFrom': 'JobAdmin'
 					}, {
 						'tableTitle': 'Approved',
 						'tableID': 'approved',
 						'someColsAreUsers': 1,
-						'myRSQueryRelevantStatus': 'Approved'
+						'myRSQueryRelevantStatus': 'Approved',
+						'getRequesterFrom': 'JobAdmin'
 					}, {
-						'tableTitle': 'Disapproved',
-						'tableID': 'disapoved',
+						'tableTitle': 'Closed',
+						'tableID': 'closed',
 						'someColsAreUsers': 1,
-						'myRSQueryRelevantStatus': 'Disapproved'
+						'basicMyEOLQueryRelevantValue': 1,
+						'getRequesterFrom': 'JobAdmin',
+						'customColumns': [
+							{
+								'displayName': 'Request ID',
+								'internalName': 'ID',
+								'formLink': 1
+							}, {
+								'displayName': 'Request Status',
+								'internalName': 'RequestStatus'
+							}, {
+								'displayName': 'Nickname',
+								'internalName': 'Title'
+							}, {
+								'displayName': 'Job Title',
+								'internalName': 'JobTitle'
+							}, {
+								'displayName': 'Created',
+								'internalName': 'RequestDate',
+								'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+							}, {
+								'displayName': 'Last Modified',
+								'internalName': 'Modified',
+								'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+							}
+						]
 					}
 				]
 			}
@@ -175,11 +210,6 @@
 		'gseJobsManager': {
 			'buttons': [
 				{
-					"linkType": "newItem",
-					"anchorText": "New Job",
-					"href": "/sites/hr-service-jobs/SitePages/App.aspx?r=0",
-					"target": null
-				}, {
 					"linkType": "goForward",
 					"anchorText": "Schedule Calendar",
 					"href": "/sites/hr-service-schedule/SitePages/App.aspx?f=cal",
@@ -202,26 +232,18 @@
 						'displayName': 'Job ID',
 						'internalName': 'ID',
 						'formLink': 1
-					},
-					{
-						'displayName': 'Nickname',
-						'internalName': 'Title'
-					},
-					{
-						'displayName': 'Reports To',
-						'internalName': 'ReportsTo',
-						'userName': 1
-					},
-					{
+					}, {
 						'displayName': 'Job Title',
 						'internalName': 'JobTitle'
-					},
-					{
+					}, {
+						'displayName': 'Job Admin',
+						'internalName': 'JobAdmin',
+						'userName': 1
+					}, {
 						'displayName': 'Created',
 						'internalName': 'RequestDate',
 						'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
-					},
-					{
+					}, {
 						'displayName': 'Last Modified',
 						'internalName': 'Modified',
 						'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
@@ -232,33 +254,60 @@
 						'tableTitle': 'Pending Approval',
 						'tableID': 'pending-approval',
 						'someColsAreUsers': 1,
-						'myDeptRSQueryRelevantStatus': 'Pending Approval'
+						'basicRSQueryRelevantStatus': 'Pending Approval'
 					}, {
 						'tableTitle': 'Approved',
 						'tableID': 'approved',
 						'someColsAreUsers': 1,
-						'myDeptRSQueryRelevantStatus': 'Approved'
+						'basicRSQueryRelevantStatus': 'Approved'
 					}, {
-						'tableTitle': 'Disapproved',
-						'tableID': 'disapoved',
+						'tableTitle': 'Closed',
+						'tableID': 'closed',
 						'someColsAreUsers': 1,
-						'myDeptRSQueryRelevantStatus': 'Disapproved'
+						'basicEOLQueryRelevantValue': 1,
+						'customColumns': [
+							{
+								'displayName': 'Request ID',
+								'internalName': 'ID',
+								'formLink': 1
+							}, {
+								'displayName': 'Request Status',
+								'internalName': 'RequestStatus'
+							}, {
+								'displayName': 'Nickname',
+								'internalName': 'Title'
+							}, {
+								'displayName': 'Job Title',
+								'internalName': 'JobTitle'
+							}, {
+								'displayName': 'Created',
+								'internalName': 'RequestDate',
+								'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+							}, {
+								'displayName': 'Last Modified',
+								'internalName': 'Modified',
+								'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+							}
+						]
+
 					}
 				]
 			}
 		}
 	};
 
+
 	var fData = {
 		'autoTrackGSEJobStatuses': 1,
-		// to do: set alwaysTalkToRequester
-		// 'alwaysTalkToRequester': 1,
+		'alwaysTalkToRequester': 1,
 		'standardElementGroups': {
 			'standardThisRequestAndRequesterElements': 1,
 			'standardAdminElements': {
 				'changeRequestStatus': [
-					{ "value": "Approve", "display": "Approve this job" },
-					{ "value": "Disapprove", "display": "Disapprove this job" }
+					{ "value": "Approve", "display": "This job is approved" },
+					{ "value": "Disapprove", "display": "This job is disapproved" },
+					{ "value": "Cancel", "display": "This job has been cancelled" },
+					{ "value": "Archive", "display": "This job should be archived" }
 				]
 			},
 			'standardButtonElements': 1,
@@ -274,6 +323,23 @@
 
 		'uniqueElements': [
 			{
+				"elementType": "field",
+				"controlType": "check",
+				"fieldName": "Requester Archival",
+				"choiceSetLabel": "Archival",
+				"choices": [{
+					"value": "archive",
+					"display": "Yes, I wish to archive this request"
+				}],
+				"helpNotes": [{
+					"text": "You won't be able to schedule this job again, but existing schedules for this job will not be automatically cancelled.",
+					"htmlID": "requester-archival_help-note"
+				}],
+				"hideForNonAdmin": ["", "Pending Approval", "Archived", "Disapproved", "Cancelled"],
+				"hideForAdmin": ["", "Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
+				"disabledForNonAdmin": ["Completed", "Disapproved", "Cancelled"],
+				"disabledForAdmin": ["Completed", "Disapproved", "Cancelled"]
+			}, {
 				'elementType': "markup",
 				'tag': "h3",
 				'content': "Job Basics",
@@ -287,19 +353,25 @@
 				'labelContent': "Job Title",
 				'requiredForNonAdmin': [""],
 				'requiredForAdmin': [""],
-				'disabledForNonAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"],
-				'disabledForAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"]
+				'disabledForNonAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
+				'disabledForAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"]
 			}, {
 				'elementType': "field",
 				'controlType': "peoplePicker",
-				'fieldName': "Reports To",
-				'listFieldName': "ReportsTo",
-				'labelContent': "Reports To",
+				'fieldName': "Job Admin",
+				'listFieldName': "JobAdmin",
+				'labelContent': "Job Admin / Reports To",
 				'yieldsViewPermissions': 1,
+				"helpNotes": [{
+					"text": "This person can administer this job on The Hub, and is the person to whom staff members will report when performing this job",
+					"htmlID": "job-admin_help-note",
+					"hideForNonAdmin": ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
+					"hideForAdmin": ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"]
+				}],
 				'requiredForNonAdmin': [""],
 				'requiredForAdmin': [""],
-				'disabledForNonAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"],
-				'disabledForAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"]
+				'disabledForNonAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
+				'disabledForAdmin': ["Completed", "Disapproved", "Cancelled"]
 			}, {
 				'elementType': "field",
 				'controlType': "select",
@@ -308,8 +380,8 @@
 				'labelContent': "Department",
 				'requiredForNonAdmin': [""],
 				'requiredForAdmin': [""],
-				'disabledForNonAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"],
-				'disabledForAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"],
+				'disabledForNonAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
+				'disabledForAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
 				'loadOptions': {
 					'function': 'LoadDepartmentSelectOptions'
 				},
@@ -321,8 +393,8 @@
 				'labelContent': "Job Description",
 				'requiredForNonAdmin': [""],
 				'requiredForAdmin': [""],
-				'disabledForNonAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"],
-				'disabledForAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"]
+				'disabledForNonAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
+				'disabledForAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"]
 			}, {
 				'elementType': "field",
 				'controlType': "textarea",
@@ -332,13 +404,13 @@
 				"helpNotes": [{
 					"text": "For saftey reasons, staff are not permitted to use forklifts, large ladders, cherry pickers, etc. Specify use of any chemicals, tools, solvents, etc.",
 					"htmlID": "training-requirements_help-note",
-					"hideForNonAdmin": ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"],
-					"hideForAdmin": ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"]
+					"hideForNonAdmin": ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
+					"hideForAdmin": ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"]
 				}],
 				'requiredForNonAdmin': [""],
 				'requiredForAdmin': [""],
-				'disabledForNonAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"],
-				'disabledForAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"]
+				'disabledForNonAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
+				'disabledForAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"]
 			}, {
 				'elementType': "field",
 				'controlType': "textarea",
@@ -348,13 +420,13 @@
 				"helpNotes": [{
 					"text": "Protective devices required for the job such as helmet, saftey goggles, rubber gloves, etc.",
 					"htmlID": "dress-requirements_help-note",
-					"hideForNonAdmin": ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"],
-					"hideForAdmin": ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"]
+					"hideForNonAdmin": ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
+					"hideForAdmin": ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"]
 				}],
 				'requiredForNonAdmin': [""],
 				'requiredForAdmin': [""],
-				'disabledForNonAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"],
-				'disabledForAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"]
+				'disabledForNonAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
+				'disabledForAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"]
 			}, {
 				'elementType': "field",
 				'controlType': "textarea",
@@ -363,8 +435,8 @@
 				'labelContent': "Job Duties",
 				'requiredForNonAdmin': [""],
 				'requiredForAdmin': [""],
-				'disabledForNonAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"],
-				'disabledForAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"]
+				'disabledForNonAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
+				'disabledForAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"]
 			}, {
 				'elementType': "markup",
 				'tag': "h3",
@@ -386,13 +458,13 @@
 				"helpNotes": [{
 					"text": "State amounts in pounds, using numerals only",
 					"htmlID": "lifting_help-note",
-					"hideForNonAdmin": ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"],
-					"hideForAdmin": ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"]
+					"hideForNonAdmin": ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
+					"hideForAdmin": ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"]
 				}],
 				'requiredForNonAdmin': [""],
 				'requiredForAdmin': [""],
-				'disabledForNonAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"],
-				'disabledForAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"]
+				'disabledForNonAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
+				'disabledForAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"]
 			}, {
 				'elementType': "field",
 				'controlType': "text",
@@ -402,13 +474,13 @@
 				"helpNotes": [{
 					"text": "State amounts in pounds, using numerals only",
 					"htmlID": "carrying_help-note",
-					"hideForNonAdmin": ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"],
-					"hideForAdmin": ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"]
+					"hideForNonAdmin": ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
+					"hideForAdmin": ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"]
 				}],
 				'requiredForNonAdmin': [""],
 				'requiredForAdmin': [""],
-				'disabledForNonAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"],
-				'disabledForAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"]
+				'disabledForNonAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
+				'disabledForAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"]
 			}, {
 				'elementType': "field",
 				'controlType': "text",
@@ -418,13 +490,13 @@
 				"helpNotes": [{
 					"text": "State amounts in pounds, using numerals only",
 					"htmlID": "pushing_help-note",
-					"hideForNonAdmin": ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"],
-					"hideForAdmin": ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"]
+					"hideForNonAdmin": ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
+					"hideForAdmin": ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"]
 				}],
 				'requiredForNonAdmin': [""],
 				'requiredForAdmin': [""],
-				'disabledForNonAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"],
-				'disabledForAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"]
+				'disabledForNonAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
+				'disabledForAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"]
 			}, {
 				'elementType': "field",
 				'controlType': "text",
@@ -434,13 +506,13 @@
 				"helpNotes": [{
 					"text": "State amounts in pounds, using numerals only",
 					"htmlID": "pulling_help-note",
-					"hideForNonAdmin": ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"],
-					"hideForAdmin": ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"]
+					"hideForNonAdmin": ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
+					"hideForAdmin": ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"]
 				}],
 				'requiredForNonAdmin': [""],
 				'requiredForAdmin': [""],
-				'disabledForNonAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"],
-				'disabledForAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"]
+				'disabledForNonAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
+				'disabledForAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"]
 			}, {
 				'elementType': "markup",
 				'tag': "h4",
@@ -456,13 +528,13 @@
 				"helpNotes": [{
 					"text": "State percents using numerals only. Percents must total 100.",
 					"htmlID": "standing_help-note",
-					"hideForNonAdmin": ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"],
-					"hideForAdmin": ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"]
+					"hideForNonAdmin": ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
+					"hideForAdmin": ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"]
 				}],
 				'requiredForNonAdmin': [""],
 				'requiredForAdmin': [""],
-				'disabledForNonAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"],
-				'disabledForAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"]
+				'disabledForNonAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
+				'disabledForAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"]
 			}, {
 				'elementType': "field",
 				'controlType': "text",
@@ -472,13 +544,13 @@
 				"helpNotes": [{
 					"text": "State percents using numerals only. Percents must total 100.",
 					"htmlID": "sitting_help-note",
-					"hideForNonAdmin": ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"],
-					"hideForAdmin": ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"]
+					"hideForNonAdmin": ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
+					"hideForAdmin": ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"]
 				}],
 				'requiredForNonAdmin': [""],
 				'requiredForAdmin': [""],
-				'disabledForNonAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"],
-				'disabledForAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"]
+				'disabledForNonAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
+				'disabledForAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"]
 			}, {
 				'elementType': "field",
 				'controlType': "text",
@@ -488,13 +560,13 @@
 				"helpNotes": [{
 					"text": "State percents using numerals only. Percents must total 100.",
 					"htmlID": "walking_help-note",
-					"hideForNonAdmin": ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"],
-					"hideForAdmin": ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"]
+					"hideForNonAdmin": ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
+					"hideForAdmin": ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"]
 				}],
 				'requiredForNonAdmin': [""],
 				'requiredForAdmin': [""],
-				'disabledForNonAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"],
-				'disabledForAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"]
+				'disabledForNonAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
+				'disabledForAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"]
 			}
 		]
 	};
@@ -506,7 +578,15 @@
 	fData.CustomScriptFirst = '';
 
 
-	fData.CustomScriptLast = '';
+	fData.CustomScriptLast =	'if ($("input#Request-Status").val() == "") { \n' + 
+								'	$().PutCurrentUserInField("Job Admin"); \n' + 
+								'} \n';
+
+	fData.CustomScriptLast +=	'if ($("input#Request-Status").val() == "Approved") { \n' + 
+								'	$("div#label-and-control_Requester-Cancellation").hide("fast").addClass("hidden"); \n' + 
+								'} \n';
+
+	fData.CustomScriptLast +=	'$("div#label-and-control_Requested-For, div#container_about-the-requester").hide("fast").addClass("hidden"); \n';
 
 
 	$.fn.ReturnThisAppMData = function () {

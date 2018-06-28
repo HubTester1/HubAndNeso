@@ -763,7 +763,30 @@
 
 			setTimeout(function () {
 				// refresh data, as needed, and show overview screen
-				if (options.toScreen === "adminRequests" || options.toScreen === "myRequests") {
+				var overviewScreens = [
+					"adminRequests",
+					"myRequests",
+					"gpcInitialConceptApprovalViewer",
+					"gpcSubmissionApprovalViewer",
+					"adminReferrals",
+					"myReferrals",
+					"adminEventAV",
+					"gseJobsHRAdmin",
+					"gseJobsJobAdmin",
+					"gseJobsManager",
+					"gseSchedulesCalendarHRAdmin",
+					"gseSchedulesCalendarJobAdmin",
+					"gseSchedulesCalendarManager",
+					"gseSchedulesCalendarStaff",
+					"gseSchedulesListHRAdmin",
+					"gseSchedulesListJobAdmin",
+					"gseSchedulesListManager",
+					"gseSchedulesListStaff",
+					"gseSignupsHRAdmin",
+					"gseSignupsManager",
+					"gseSignupsStaff",
+				];
+				if (overviewScreens.indexOf(options.toScreen) > -1) {
 
 					// check to see if we need to stop for maintenance mode
 					$().TryMaintenanceModeThisComponentThisUser();
@@ -870,7 +893,26 @@
 				break;
 			case "adminRequests":
 			case "myRequests":
-				$("div#overview-screen-container").empty().removeClass('my-requests admin-requests');
+			case "gpcInitialConceptApprovalViewer":
+			case "gpcSubmissionApprovalViewer":
+			case "adminReferrals":
+			case "myReferrals":
+			case "adminEventAV":
+			case "gseJobsHRAdmin":
+			case "gseJobsJobAdmin":
+			case "gseJobsManager":
+			case "gseSchedulesCalendarHRAdmin":
+			case "gseSchedulesCalendarJobAdmin":
+			case "gseSchedulesCalendarManager":
+			case "gseSchedulesCalendarStaff":
+			case "gseSchedulesListHRAdmin":
+			case "gseSchedulesListJobAdmin":
+			case "gseSchedulesListManager":
+			case "gseSchedulesListStaff":
+			case "gseSignupsHRAdmin":
+			case "gseSignupsManager":
+			case "gseSignupsStaff":
+				$("div#overview-screen-container").empty().removeClass('adminRequests-requests myRequests-requests gpcInitialConceptApprovalViewer-requests gpcSubmissionApprovalViewer-requests adminReferrals-requests myReferrals-requests adminEventAV-requests gseJobsHRAdmin-requests gseJobsJobAdmin-requests gseJobsManager-requests gseSchedulesCalendarHRAdmin-requests gseSchedulesCalendarJobAdmin-requests gseSchedulesCalendarManager-requests gseSchedulesCalendarStaff-requests gseSchedulesListHRAdmin-requests gseSchedulesListJobAdmin-requests gseSchedulesListManager-requests gseSchedulesListStaff-requests gseSignupsHRAdmin-requests gseSignupsManager-requests gseSignupsStaff-requests');
 				$("div#overview-screen-container").append('<div id="overview-table-container" class="table-container"></div>');
 				break;
 		}
@@ -2478,8 +2520,8 @@
 					"labelContent": "Request ID",
 					"hideForNonAdmin": [""],
 					"hideForAdmin": [""],
-					"disabledForNonAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Disapproved", "Cancelled"],
-					"disabledForAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Disapproved", "Cancelled"]
+					"disabledForNonAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
+					"disabledForAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"]
 				}, {
 					"elementType": "field",
 					"controlType": "text",
@@ -2498,8 +2540,8 @@
 					},
 					"hideForNonAdmin": [""],
 					"hideForAdmin": [""],
-					"disabledForNonAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Disapproved", "Cancelled"],
-					"disabledForAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Disapproved", "Cancelled"]
+					"disabledForNonAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
+					"disabledForAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"]
 				}, {
 					"elementType": "field",
 					"controlType": "text",
@@ -2510,14 +2552,14 @@
 						"text": "Give this request a name you can reference later",
 						"htmlID": "request-nickname_help-note",
 						"urgent": 0,
-						"hideForNonAdmin": ["Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Disapproved", "Cancelled"],
-						"hideForAdmin": ["Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Disapproved", "Cancelled"]
+						"hideForNonAdmin": ["Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
+						"hideForAdmin": ["Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"]
 					}],
 					"requiredForNonAdmin": [""],
 					"requiredForAdmin": [""],
-					"disabledForNonAdmin": ["Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Disapproved", "Cancelled"],
-					"disabledForAdmin": ["Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Disapproved", "Cancelled"],
-					"hideForAdmin": ["Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Disapproved", "Cancelled"]
+					"disabledForNonAdmin": ["Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
+					"disabledForAdmin": ["Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
+					"hideForAdmin": ["Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"]
 				}, {
 					"elementType": "field",
 					"controlType": "select",
@@ -2532,10 +2574,10 @@
 					}],
 					"requiredForNonAdmin": [""],
 					"requiredForAdmin": [""],
-					"hideForNonAdmin": ["Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Disapproved", "Cancelled"],
-					"hideForAdmin": ["Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Disapproved", "Cancelled"],
-					"disabledForNonAdmin": ["Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Text Edited", "Web Live", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Disapproved", "Cancelled"],
-					"disabledForAdmin": ["Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Text Edited", "Web Live", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Disapproved", "Cancelled"],
+					"hideForNonAdmin": ["Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
+					"hideForAdmin": ["Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
+					"disabledForNonAdmin": ["Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Text Edited", "Web Live", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
+					"disabledForAdmin": ["Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Text Edited", "Web Live", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
 					"onChange": [{
 						"thisFieldEquals": ["Self"],
 						"hide": [{
@@ -2574,8 +2616,8 @@
 					"yieldsViewPermissions": 1,
 					"hideForNonAdmin": [""],
 					"hideForAdmin": [""],
-					"disabledForNonAdmin": ["Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Disapproved", "Cancelled"],
-					"disabledForAdmin": ["Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Disapproved", "Cancelled"]
+					"disabledForNonAdmin": ["Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
+					"disabledForAdmin": ["Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"]
 				}, {
 					"elementType": "field",
 					"controlType": "check",
@@ -2585,17 +2627,17 @@
 						"value": "cancel",
 						"display": "Yes, I wish to cancel this request"
 					}],
-					"hideForNonAdmin": ["", "Validator Picked Up", "Loaned", "Completed", "Disapproved", "Cancelled"],
-					"hideForAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Disapproved", "Cancelled"],
-					"disabledForNonAdmin": ["Completed", "Disapproved", "Cancelled"],
-					"disabledForAdmin": ["Completed", "Disapproved", "Cancelled"]
+					"hideForNonAdmin": ["", "Validator Picked Up", "Loaned", "Archived", "Completed", "Archived", "Disapproved", "Cancelled"],
+					"hideForAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Archived", "Completed", "Archived", "Disapproved", "Cancelled"],
+					"disabledForNonAdmin": ["Completed", "Archived", "Disapproved", "Cancelled"],
+					"disabledForAdmin": ["Completed", "Archived", "Disapproved", "Cancelled"]
 					// about the requester
 				}, {
 					"elementType": "markup",
 					"tag": "div",
 					"htmlID": "container_about-the-requester",
 					"begin": 1,
-					"hideForNonAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "Submitted", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Disapproved", "Cancelled"],
+					"hideForNonAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "Submitted", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
 					"hideForAdmin": [""],
 				}, {
 					"elementType": "markup",
@@ -2608,39 +2650,39 @@
 					"controlType": "text",
 					"fieldName": "Requester Name",
 					"labelContent": "Name",
-					"disabledForNonAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Disapproved", "Cancelled"],
-					"disabledForAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Disapproved", "Cancelled"]
+					"disabledForNonAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
+					"disabledForAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"]
 				}, {
 					"elementType": "field",
 					"controlType": "text",
 					"fieldName": "Requester Department",
 					"labelContent": "Department",
-					"disabledForNonAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Disapproved", "Cancelled"],
-					"disabledForAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Disapproved", "Cancelled"]
+					"disabledForNonAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
+					"disabledForAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"]
 				}, {
 					"elementType": "field",
 					"controlType": "text",
 					"fieldName": "Requester Email",
 					"labelContent": "Email",
-					"disabledForNonAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Disapproved", "Cancelled"],
-					"disabledForAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Disapproved", "Cancelled"]
+					"disabledForNonAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
+					"disabledForAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"]
 				}, {
 					"elementType": "field",
 					"controlType": "text",
 					"fieldName": "Requester Phone",
 					"labelContent": "Phone",
-					"disabledForNonAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Disapproved", "Cancelled"],
-					"disabledForAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Disapproved", "Cancelled"]
+					"disabledForNonAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
+					"disabledForAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"]
 				}, {
 					"elementType": "field",
 					"controlType": "text",
 					"fieldName": "Requester Account",
 					"labelContent": "Account",
 					"yieldsViewPermissions": 1,
-					"hideForNonAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Disapproved", "Cancelled"],
-					"hideForAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Disapproved", "Cancelled"],
-					"disabledForNonAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Disapproved", "Cancelled"],
-					"disabledForAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Disapproved", "Cancelled"]
+					"hideForNonAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
+					"hideForAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
+					"disabledForNonAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
+					"disabledForAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"]
 				}, {
 					"elementType": "field",
 					"controlType": "peoplePicker",
@@ -2648,10 +2690,10 @@
 					"labelContent": "Requested By",
 					"listFieldName": "RequestedBy",
 					"yieldsViewPermissions": 1,
-					"hideForNonAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Disapproved", "Cancelled"],
-					"hideForAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Disapproved", "Cancelled"],
-					"disabledForNonAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Disapproved", "Cancelled"],
-					"disabledForAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Disapproved", "Cancelled"]
+					"hideForNonAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
+					"hideForAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
+					"disabledForNonAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
+					"disabledForAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"]
 				}, {
 					"elementType": "markup",
 					"tag": "div",
@@ -2991,7 +3033,7 @@
 						"htmlID": "admin",
 						"content": '',
 						"begin": 1,
-						"hideForNonAdmin": ["", "Open", "Submitted", "In Development", "Pending Revision", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+						"hideForNonAdmin": ["", "Open", "Submitted", "In Development", "Pending Revision", "Pending Approval", "Approved", "Completed", "Archived", "Disapproved", "Cancelled"],
 						"hideForAdmin": [""]
 					}, {
 						"elementType": "markup",
@@ -3004,8 +3046,8 @@
 						"tag": "div",
 						"htmlID": "approval-notification-history",
 						"begin": 1,
-						"hideForNonAdmin": ["", "Open", "Submitted", "In Development", "Pending Revision", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-						"hideForAdmin": ["", "Open", "Submitted", "In Development", "Pending Revision", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
+						"hideForNonAdmin": ["", "Open", "Submitted", "In Development", "Pending Revision", "Pending Approval", "Approved", "Completed", "Archived", "Disapproved", "Cancelled"],
+						"hideForAdmin": ["", "Open", "Submitted", "In Development", "Pending Revision", "Pending Approval", "Approved", "Completed", "Archived", "Disapproved", "Cancelled"]
 					}, {
 						"elementType": "markup",
 						"tag": "h3",
@@ -3043,16 +3085,16 @@
 						"fieldName": "Change Request Status",
 						"labelContent": "Change Request Status",
 						"setOptions": fData.standardElementGroups.standardAdminElements.changeRequestStatus,
-						"hideForNonAdmin": ["Submitted", "Completed", "Disapproved", "Cancelled"],
-						"hideForAdmin": ["Completed", "Disapproved", "Cancelled"],
+						"hideForNonAdmin": ["Submitted", "Completed", "Archived", "Disapproved", "Cancelled"],
+						"hideForAdmin": ["Completed", "Archived", "Disapproved", "Cancelled"],
 					}, {
 						"elementType": "field",
 						"controlType": "text",
 						"fieldName": "Request Status",
 						"listFieldName": "RequestStatus",
 						"labelContent": "Request Status",
-						"disabledForNonAdmin": ["", "Open", "Submitted", "In Development", "Pending Revision", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-						"disabledForAdmin": ["", "Open", "Submitted", "In Development", "Pending Revision", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
+						"disabledForNonAdmin": ["", "Open", "Submitted", "In Development", "Pending Revision", "Pending Approval", "Approved", "Completed", "Archived", "Disapproved", "Cancelled"],
+						"disabledForAdmin": ["", "Open", "Submitted", "In Development", "Pending Revision", "Pending Approval", "Approved", "Completed", "Archived", "Disapproved", "Cancelled"]
 					}, {
 						"elementType": "field",
 						"controlType": "textarea",
@@ -3063,8 +3105,8 @@
 						"controlType": "textarea",
 						"fieldName": "Historical Admin Notes",
 						"labelContent": "Historical Admin Notes",
-						"disabledForNonAdmin": ["", "In Development", "Pending Revision", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-						"disabledForAdmin": ["", "In Development", "Pending Revision", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
+						"disabledForNonAdmin": ["", "In Development", "Pending Revision", "Pending Approval", "Approved", "Completed", "Archived", "Disapproved", "Cancelled"],
+						"disabledForAdmin": ["", "In Development", "Pending Revision", "Pending Approval", "Approved", "Completed", "Archived", "Disapproved", "Cancelled"]
 					}, {
 						"elementType": "markup",
 						"tag": "div",
@@ -4876,7 +4918,7 @@
 					$('input#End-of-Life').val(endOfLife);
 				}
 
-				if (fData.autoTrackGSESignupStatuses === 1 && rData.endOfLife != 1) {
+				if (fData.autoTrackGSEJobStatuses === 1 && rData.endOfLife != 1) {
 
 					$(workingMessage).text("Handling Request Status");
 
@@ -4885,6 +4927,14 @@
 					var endOfLifeIsNew = 0;
 					if (rData.requestStatus == '') {
 						newReqStatus = 'Pending Approval';
+					} else if (rData.requestStatus == 'Pending Approval' && ($('input#requester-cancellation_cancel:checked').length > 0 || $('select#Change-Request-Status option:selected').val() == 'Cancel')) {
+						newReqStatus = 'Cancelled';
+						endOfLife = 1;
+						endOfLifeIsNew = 1;
+					} else if (rData.requestStatus == 'Approved' && ($('input#requester-archival_archive:checked').length > 0 || $('select#Change-Request-Status option:selected').val() == 'Archive')) {
+						newReqStatus = 'Archived';
+						endOfLife = 1;
+						endOfLifeIsNew = 1;
 					} else if (rData.requestStatus == 'Pending Approval' && $('select#Change-Request-Status option:selected').val() == 'Approve') {
 						newReqStatus = 'Approved';
 					} else if (rData.requestStatus == 'Pending Approval' && $('select#Change-Request-Status option:selected').val() == 'Disapprove') {
@@ -4898,11 +4948,35 @@
 					globalRData = rData;
 					$('input#Request-Status').val(newReqStatus);
 					$('input#End-of-Life').val(endOfLife);
-
 				}
-
 				/*
+					// consider
 
+					if (fData.autoTrackGSESignupStatuses === 1 && rData.endOfLife != 1) {
+
+						$(workingMessage).text("Handling Request Status");
+
+						var newReqStatus = '';
+						var endOfLife = 0;
+						var endOfLifeIsNew = 0;
+						if (rData.requestStatus == '') {
+							newReqStatus = 'Pending Approval';
+						} else if (rData.requestStatus == 'Pending Approval' && $('select#Change-Request-Status option:selected').val() == 'Approve') {
+							newReqStatus = 'Approved';
+						} else if (rData.requestStatus == 'Pending Approval' && $('select#Change-Request-Status option:selected').val() == 'Disapprove') {
+							newReqStatus = 'Disapproved';
+							endOfLife = 1;
+							endOfLifeIsNew = 1;
+						}
+						rData.endOfLifeIsNew = endOfLifeIsNew;
+						rData.endOfLife = endOfLife;
+						rData.requestStatus = newReqStatus;
+						globalRData = rData;
+						$('input#Request-Status').val(newReqStatus);
+						$('input#End-of-Life').val(endOfLife);
+
+					}
+				
 					// consider
 
 					if (fData.autoTrackGSEJobStatuses === 1 && rData.endOfLife != 1) {
@@ -11501,6 +11575,16 @@
 
 
 
+	$.fn.PutCurrentUserInField = function (fieldName) {
+		$().PutAddtlPeopleInPicker(fieldName, [{
+			'name': uData.name,
+			'email': uData.email,
+			'account': uData.account
+		}]);
+	};
+
+
+
 	$.fn.AddAssigneesFromFields = function (fields) {
 
 		// this might ought to be combined with with $.fn.PutAddtlPeopleInPicker; impending deadline precludes the research to determine whether or not this would disrupt anything
@@ -17950,6 +18034,28 @@
 					"</Where>";
 			} else if (typeof (t.myRSQueryRelevantStatus) != "undefined") {
 
+				var getRequesterFrom = 'Author';
+				if (t.getRequesterFrom) {
+					getRequesterFrom = t.getRequesterFrom;
+				}
+				if (mData.getRequesterFrom) {
+					getRequesterFrom = mData.getRequesterFrom;
+				}
+
+				query = "<Where>" +
+					"	<And>" +
+					"		 <Eq>" +
+					"			  <FieldRef Name='RequestStatus'></FieldRef>" +
+					"			  <Value Type='Text'>" + t.myRSQueryRelevantStatus + "</Value>" +
+					"		 </Eq>" +
+					"		 <Contains>" +
+					"			  <FieldRef Name='" + getRequesterFrom + "'></FieldRef>" +
+					"			  <Value Type='Text'>" + uData.name + "</Value>" +
+					"		 </Contains>" +
+					"	</And>" +
+					"</Where>";
+			/* } else if (typeof (t.myRSQueryRelevantStatus) != "undefined") {
+
 				if (typeof (mData.getRequesterFrom) == 'undefined') {
 					var getRequesterFrom = 'Author';
 				} else {
@@ -17967,27 +18073,7 @@
 					"			  <Value Type='Text'>" + uData.name + "</Value>" +
 					"		 </Contains>" +
 					"	</And>" +
-					"</Where>";
-			} else if (typeof (t.myRSQueryRelevantStatus) != "undefined") {
-
-				if (typeof (mData.getRequesterFrom) == 'undefined') {
-					var getRequesterFrom = 'Author';
-				} else {
-					var getRequesterFrom = mData.getRequesterFrom;
-				}
-
-				query = "<Where>" +
-					"	<And>" +
-					"		 <Eq>" +
-					"			  <FieldRef Name='RequestStatus'></FieldRef>" +
-					"			  <Value Type='Text'>" + t.myRSQueryRelevantStatus + "</Value>" +
-					"		 </Eq>" +
-					"		 <Contains>" +
-					"			  <FieldRef Name='" + getRequesterFrom + "'></FieldRef>" +
-					"			  <Value Type='Text'>" + uData.name + "</Value>" +
-					"		 </Contains>" +
-					"	</And>" +
-					"</Where>";
+					"</Where>"; */
 
 
 
@@ -18044,79 +18130,6 @@
 					"			<FieldRef Name='" + getRequesterFrom + "'></FieldRef>" +
 					"			<Value Type='Text'>" + uData.name + "</Value>" +
 					"		 </Contains>" +
-					"	</And>" +
-					"</Where>";
-
-			} else if (typeof (t.myDeptRSQueryRelevantStatus) != "undefined") {
-
-				if (typeof (mData.getRequesterFrom) == 'undefined') {
-					var getRequesterFrom = 'Department';
-				} else {
-					var getRequesterFrom = mData.getRequesterFrom;
-				}
-
-				query = "<Where>" +
-					"	<And>" +
-					"		 <Eq>" +
-					"			  <FieldRef Name='RequestStatus'></FieldRef>" +
-					"			  <Value Type='Text'>" + t.myDeptRSQueryRelevantStatus + "</Value>" +
-					"		 </Eq>" +
-					"		 <Contains>" +
-					"			  <FieldRef Name='" + getRequesterFrom + "'></FieldRef>" +
-					"			  <Value Type='Text'>" + uData.dept + "</Value>" +
-					"		 </Contains>" +
-					"	</And>" +
-					"</Where>";
-
-			} else if (typeof (t.myDeptRSQueryRelevantStatusUnassigned) != "undefined") {
-
-				if (typeof (mData.getRequesterFrom) == 'undefined') {
-					var getRequesterFrom = 'Department';
-				} else {
-					var getRequesterFrom = mData.getRequesterFrom;
-				}
-
-				query = "<Where>" +
-					"	<And>" +
-					"		<And>" +
-					"			<Eq>" +
-					"				<FieldRef Name='RequestStatus'></FieldRef>" +
-					"				<Value Type='Text'>" + t.myDeptRSQueryRelevantStatus + "</Value>" +
-					"			</Eq>" +
-					"			<Contains>" +
-					"				<FieldRef Name='" + getRequesterFrom + "'></FieldRef>" +
-					"				<Value Type='Text'>" + uData.dept + "</Value>" +
-					"			</Contains>" +
-					"		</And>" +
-					"		<IsNull>" +
-					"			<FieldRef Name='AssignedTo'></FieldRef>" +
-					"		</IsNull>" +
-					"	</And>" +
-					"</Where>";
-
-			} else if (typeof (t.myDeptRSQueryRelevantStatusAssigned) != "undefined") {
-
-				if (typeof (mData.getRequesterFrom) == 'undefined') {
-					var getRequesterFrom = 'Department';
-				} else {
-					var getRequesterFrom = mData.getRequesterFrom;
-				}
-
-				query = "<Where>" +
-					"	<And>" +
-					"		<And>" +
-					"			<Eq>" +
-					"				<FieldRef Name='RequestStatus'></FieldRef>" +
-					"				<Value Type='Text'>" + t.myDeptRSQueryRelevantStatus + "</Value>" +
-					"			</Eq>" +
-					"			<Contains>" +
-					"				<FieldRef Name='" + getRequesterFrom + "'></FieldRef>" +
-					"				<Value Type='Text'>" + uData.dept + "</Value>" +
-					"			</Contains>" +
-					"		</And>" +
-					"		<IsNotNull>" +
-					"			<FieldRef Name='AssignedTo'></FieldRef>" +
-					"		</IsNotNull>" +
 					"	</And>" +
 					"</Where>";
 
@@ -19715,71 +19728,69 @@
 	$.fn.ReturnGSEGroups = function () {
 		// send to caller
 		return {
-			"HRAdmins": [{
-				"name": "Samuel Corey",
-				"email": "scorey@mos.org",
-				"account": "scorey",
-				"accountLong": "i:0#.f|membership|scorey@mos.org"
-			}, {
-				"name": "James Baker",
-				"email": "jbaker@mos.org",
-				"account": "jbaker",
-				"accountLong": "i:0#.f|membership|jbaker@mos.org"
-			}, {
-				"name": "HubTester4",
-				"email": "sp4@mos.org",
-				"account": "sp4",
-				"accountLong": "i:0#.f|membership|sp4@mos.org"
-			}, {
-				"name": "HubTester9",
-				"email": "sp9@mos.org",
-				"account": "sp9",
-				"accountLong": "i:0#.f|membership|sp9@mos.org"
-			}
+			"HRAdmins": [
+				{
+				// 	"name": "Samuel Corey",
+				// 	"email": "scorey@mos.org",
+				// 	"account": "scorey",
+				// 	"accountLong": "i:0#.f|membership|scorey@mos.org"
+				// }, {
+					"name": "James Baker",
+					"email": "jbaker@mos.org",
+					"account": "jbaker",
+					"accountLong": "i:0#.f|membership|jbaker@mos.org"
+				}, {
+					"name": "HubTester1",
+					"email": "sp1@mos.org",
+					"account": "sp1",
+					"accountLong": "i:0#.f|membership|sp1@mos.org"
+				// }, {
+				// 	"name": "HubTester9",
+				// 	"email": "sp9@mos.org",
+				// 	"account": "sp9",
+				// 	"accountLong": "i:0#.f|membership|sp9@mos.org"
+				}
 			],
-			"JobAdmins": [{
-				"name": "HubTester4",
-				"email": "sp4@mos.org",
-				"account": "sp4",
-				"accountLong": "i:0#.f|membership|sp4@mos.org"
+			"JobAdmins": [
+				{
+					"name": "HubTester2",
+					"email": "sp2@mos.org",
+					"account": "sp2",
+					"accountLong": "i:0#.f|membership|sp2@mos.org"
 				// }, {
 				// 	"name": "Samuel Corey",
 				// 	"email": "scorey@mos.org",
 				// 	"account": "scorey",
 				// 	"accountLong": "i:0#.f|membership|scorey@mos.org"
-			}, {
-				"name": "HubTester8",
-				"email": "sp8@mos.org",
-				"account": "sp8",
-				"accountLong": "i:0#.f|membership|sp8@mos.org"
+				// }, {
+				// 	"name": "HubTester8",
+				// 	"email": "sp8@mos.org",
+				// 	"account": "sp8",
+				// 	"accountLong": "i:0#.f|membership|sp8@mos.org"
 				// }, {
 				// 	"name": "James Baker",
 				// 	"email": "jbaker@mos.org",
 				// 	"account": "jbaker",
 				// 	"accountLong": "i:0#.f|membership|jbaker@mos.org"
-			}
+				}
 			],
-			"Managers": [{
-				"name": "HubTester5",
-				"email": "sp5@mos.org",
-				"account": "sp5",
-				"accountLong": "i:0#.f|membership|sp5@mos.org"
+			"Managers": [
+				{
+					"name": "HubTester3",
+					"email": "sp3@mos.org",
+					"account": "sp3",
+					"accountLong": "i:0#.f|membership|sp3@mos.org"
 				// }, {
 				// 	"name": "Samuel Corey",
 				// 	"email": "scorey@mos.org",
 				// 	"account": "scorey",
 				// 	"accountLong": "i:0#.f|membership|scorey@mos.org"
-			}, {
-				"name": "Ben Wilson",
-				"email": "bwilson@mos.org",
-				"account": "bwilson",
-				"accountLong": "i:0#.f|membership|bwilson@mos.org"
 				// }, {
 				// 	"name": "James Baker",
 				// 	"email": "jbaker@mos.org",
 				// 	"account": "jbaker",
 				// 	"accountLong": "i:0#.f|membership|jbaker@mos.org"
-			}
+				}
 			]
 		}
 	};
@@ -21292,7 +21303,7 @@
 		// wait for all data retrieval / setting promises to complete (pass or fail) 
 		$.when.apply($, allDataRetrievalAndSettingPromises).always(function () {
 
-			console.log('using dev_mos-main_long.1.04 m1 - DevCode4');
+			console.log('using dev_mos-main_long.1.04 m4 - DevCode4');
 
 			$().ConfigureAndShowScreenContainerAndAllScreens();
 		});
