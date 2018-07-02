@@ -5057,7 +5057,6 @@
 						$('input#Request-Status').val(newReqStatus);
 						$('input#End-of-Life').val(endOfLife);
 					}
-
 				*/
 
 				if (fData.autoTrackEventNeedsStatuses === 1) {
@@ -16961,12 +16960,15 @@
 
 
 	function ReturnGSESchedulesSubmissionValuePairArray(form) {
+		console.log(form);
 		/*
 			overview / context notes
 			1. for each date that was added, one row will be created in SWFList
 			2. for each row to be created in SWFList, one array must be added to globalSubmissionValuePairsArrayOfArrays
 			3. each array consists of an element for every SWFList column that will be populated
 			4. one of those elements corresponds to the AllRequestData column
+
+			for each date in the form, add to globalSubmissionValuePairsArrayOfArrays an array of elements for every SWFList column that will be populated
 
 		*/
 
@@ -17055,47 +17057,13 @@
 
 
 
+	/* function ReturnGSESchedulesSubmissionValuePairArrayTest(form) {
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	function ReturnGSESchedulesSubmissionValuePairArrayTest(form) {
-
-		/*
-			overview / context notes
-			1. for each date that was added, one row will be created in SWFList
-			2. for each row to be created in SWFList, one array must be added to globalSubmissionValuePairsArrayOfArrays
-			3. each array consists of an element for every SWFList column that will be populated
-			4. one of those elements corresponds to the AllRequestData column
-
-		*/
+		// 	overview / context notes
+		// 	1. for each date that was added, one row will be created in SWFList
+		// 	2. for each row to be created in SWFList, one array must be added to globalSubmissionValuePairsArrayOfArrays
+		// 	3. each array consists of an element for every SWFList column that will be populated
+		// 	4. one of those elements corresponds to the AllRequestData column
 
 		// set up vars
 		// the dates for which we'll create rows in SWFList
@@ -17163,7 +17131,7 @@
 
 		// return the array
 		return submissionValuePairsArrayOfArraysToReturn;
-	}
+	} */
 
 
 
@@ -17709,7 +17677,7 @@
 						}, {
 							'displayName': 'Event Date and Time',
 							'internalName': 'EventBeginningDatetime',
-							'groupingFriendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'ddd, MMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+							'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'ddd, MMM D, YYYY', 'determineYearDisplayDynamically': 1 }
 						}, {
 							'displayName': 'Request Date',
 							'internalName': 'RequestDate',
@@ -17723,7 +17691,8 @@
 							'internalName': 'AssignmentDate',
 							'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
 						}
-					]
+					],
+					'sortColAndOrder': [3, 'asc']
 				}, {
 					'tableID': 'closed',
 					'someColsAreUsers': 1,
@@ -21303,7 +21272,7 @@
 		// wait for all data retrieval / setting promises to complete (pass or fail) 
 		$.when.apply($, allDataRetrievalAndSettingPromises).always(function () {
 
-			console.log('using dev_mos-main_long.1.04 m4 - DevCode4');
+			console.log('using dev_mos-main_long.1.04 m1 - DevCode4');
 
 			$().ConfigureAndShowScreenContainerAndAllScreens();
 		});

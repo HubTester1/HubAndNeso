@@ -341,7 +341,7 @@
 				"disabledForAdmin": ["Completed", "Disapproved", "Cancelled"]
 			}, {
 				'elementType': "markup",
-				'tag': "h3",
+				'tag': "h2",
 				'content': "Job Basics",
 				'begin': 1,
 				'end': 1

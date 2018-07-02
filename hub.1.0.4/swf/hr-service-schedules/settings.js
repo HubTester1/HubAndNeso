@@ -15,7 +15,7 @@
 		'detailTitle': 'GSE Schedule'
 	};
 
-	console.log("using settings m1");
+	console.log("using settings m4");
 
 	var oData = {
 		
@@ -744,44 +744,48 @@
 
 	var fData = {
 		'autoTrackGSEScheduleStatuses': 1,
-		// to do: set alwaysTalkToRequester
-		// 'alwaysTalkToRequester': 1,
+		'alwaysTalkToRequester': 1,
 		'bypassNormalDataSaving': 1,
 		'customDataSavingFunction': 'ReturnGSESchedulesSubmissionValuePairArray',
 		'standardElementGroups': {
 			'standardThisRequestAndRequesterElements': 1,
-			'standardAdminElements': {
-				'changeRequestStatus': [
-					{ "value": "Approve", "display": "Approve this job" },
-					{ "value": "Disapprove", "display": "Disapprove this job" }
-				]
-			},
+			// 'standardAdminElements': {
+			// 	'changeRequestStatus': [
+			// 		{ "value": "Approve", "display": "Approve this job" },
+			// 		{ "value": "Disapprove", "display": "Disapprove this job" }
+			// 	]
+			// },
 			'standardButtonElements': 1,
 			'standardComponentGrpAdminOnlyElements': 1
 		},
-
-		'standardChangeNotifications': {
-			'beginningOfLife': { 'admin': 1, 'requester': 1 },
-			'approved': { 'admin': 0, 'requester': 1 },
-			'endOfLife': {'admin': 1, 'requester': 1},
-		},
+		// 'standardChangeNotifications': {
+		// 	'beginningOfLife': { 'admin': 1, 'requester': 1 },
+		// 	'approved': { 'admin': 0, 'requester': 1 },
+		// 	'endOfLife': {'admin': 1, 'requester': 1},
+		// },
 		'versioningMatters': 0,
 
 		'uniqueElements': [
 			{
-				'elementType': "field",
-				'controlType': "select",
-				'fieldName': "Department",
-				'labelContent': "Department",
-				'listFieldName': "Department",
-				'loadOptions': {
-					'function': 'LoadDepartmentSelectOptions'
-				},
-				'requiredForNonAdmin': [""],
-				'requiredForAdmin': [""],
-				'disabledForNonAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"],
-				'disabledForAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"],
-			}, {
+			// 	'elementType': "markup",
+			// 	'tag': "h2",
+			// 	'content': "Job",
+			// 	'begin': 1,
+			// 	'end': 1
+			// }, {
+			// 	'elementType': "field",
+			// 	'controlType': "select",
+			// 	'fieldName': "Department",
+			// 	'labelContent': "Department",
+			// 	'listFieldName': "Department",
+			// 	'loadOptions': {
+			// 		'function': 'LoadDepartmentSelectOptions'
+			// 	},
+			// 	'requiredForNonAdmin': [""],
+			// 	'requiredForAdmin': [""],
+			// 	'disabledForNonAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"],
+			// 	'disabledForAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"],
+			// }, {
 				'elementType': "markup",
 				'tag': "h2",
 				'content': "Job",
@@ -849,7 +853,7 @@
 				'end': 1
 			}, {
 				'elementType': "field",
-				'controlType': "text",
+				'controlType': "time",
 				'fieldName': "StartTime",
 				'listFieldName': "StartTime",
 				'labelContent': "Start Time",
@@ -859,10 +863,19 @@
 				'disabledForAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"]
 			}, {
 				'elementType': "field",
-				'controlType': "text",
+				'controlType': "radio",
 				'fieldName': "ShiftLength",
 				'listFieldName': "ShiftLength",
-				'labelContent': "Shift Length",
+				'choiceSetLabel': "Shift Length",
+				"choices": [
+					{
+						"value": "3.5 hours",
+						"display": "This is a half-day shift"
+					}, {
+						"value": "7.5 hours",
+						"display": "This is a full-day shift"
+					}
+				],
 				'requiredForNonAdmin': [""],
 				'requiredForAdmin': [""],
 				'disabledForNonAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"],
@@ -889,16 +902,39 @@
 				'disabledForAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"]
 			}, {
 				'elementType': "field",
-				'controlType': "text",
-				'fieldName': "MealTime",
-				'labelContent': "Meal Time",
+				'controlType': "radio",
+				'fieldName': "LocationIsOffsite",
+				'listFieldName': "LocationIsOffsite",
+				'choiceSetLabel': "Is this location offsite?",
+				"choices": [
+					{
+						"value": "yes",
+						"display": "Yes, this location is offsite"
+					}, {
+						"value": "no",
+						"display": "No, this location is not offsite"
+					}
+				],
+				'requiredForNonAdmin': [""],
+				'requiredForAdmin': [""],
 				'disabledForNonAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"],
 				'disabledForAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"]
 			}, {
 				'elementType': "field",
-				'controlType': "text",
+				'controlType': "time",
+				'fieldName': "MealTime",
+				'labelContent': "Meal Time",
+				'requiredForNonAdmin': [""],
+				'requiredForAdmin': [""],
+				'disabledForNonAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"],
+				'disabledForAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"]
+			}, {
+				'elementType': "field",
+				'controlType': "time",
 				'fieldName': "BreakTime",
 				'labelContent': "Break Time",
+				'requiredForNonAdmin': [""],
+				'requiredForAdmin': [""],
 				'disabledForNonAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"],
 				'disabledForAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"]
 			}, {
@@ -908,33 +944,32 @@
 				'labelContent': "Notes",
 				'disabledForNonAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"],
 				'disabledForAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"]
-			}, {
-				'elementType': "markup",
-				'tag': "h2",
-				'content': "Dates",
-				'begin': 1,
-				'end': 1
+			// }, {
+			// 	'elementType': "markup",
+			// 	'tag': "h2",
+			// 	'content': "Dates",
+			// 	'begin': 1,
+			// 	'end': 1
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
 				'begin': 1,
-				'htmlID': 'offering-datetime-sets',
+				'htmlID': 'gse-schedule-dates',
 				'htmlClass': 'repeating-content-container',
-				'hideForNonAdmin': ['Pending Approval', 'Approved', 'Text Edited', 'Web Live', 'Completed', 'Disapproved', 'Cancelled'],
-				'hideForAdmin': ['Pending Approval', 'Approved', 'Text Edited', 'Web Live', 'Completed', 'Disapproved', 'Cancelled']
+				'hideForNonAdmin': ['Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
+				'hideForAdmin': ['Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled']
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
 				'begin': 1,
-				'htmlID': 'offering-datetime-set',
+				'htmlID': 'gse-schedule-date',
 				'htmlClass': 'repeat-container',
 				'repeatable': 1
 			}, {
 				'elementType': "field",
 				'controlType': "datePicker",
-				'fieldName': "Dates",
-				'htmlClass': "Dates",
-				'labelContent': "Dates",
+				'fieldName': "Date",
+				'labelContent': "Date",
 				'listFieldName': "Date",
 				'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 },
 				'isoFormatOnSubmit': { 'incomingFormat': null, 'returnFormat': null, 'determineYearDisplayDynamically': null },
@@ -950,8 +985,8 @@
 				'htmlClass': "remove-section-anchor",
 				'content': "Remove",
 				'removeThisRepeat': 1,
-				'hideForNonAdmin': ['Pending Approval', 'Approved', 'Text Edited', 'Web Live', 'Completed', 'Disapproved', 'Cancelled'],
-				'hideForAdmin': ['Pending Approval', 'Approved', 'Text Edited', 'Web Live', 'Completed', 'Disapproved', 'Cancelled'],
+				'hideForNonAdmin': ['Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
+				'hideForAdmin': ['Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
@@ -961,18 +996,27 @@
 				'tag': 'a',
 				'begin': 1,
 				'end': 1,
-				'htmlID': 'repeat-offering-datetime-set',
+				'htmlID': 'repeat-gse-schedule-date',
 				'htmlClass': 'repeat-section-anchor',
-				'content': 'Insert another Date',
-				'repeatSectionID': 'offering-datetime-set',
-				'disabledForNonAdmin': ['Pending Approval', 'Approved', 'Text Edited', 'Web Live', 'Completed', 'Disapproved', 'Cancelled'],
+				'content': 'Insert another date',
+				'repeatSectionID': 'gse-schedule-date',
+				'disabledForNonAdmin': ['Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
 				'disabledForAdmin': ['Completed', 'Disapproved', 'Cancelled'],
-				'hideForNonAdmin': ['Pending Approval', 'Approved', 'Text Edited', 'Web Live', 'Completed', 'Disapproved', 'Cancelled'],
-				'hideForAdmin': ['Pending Approval', 'Approved', 'Text Edited', 'Web Live', 'Completed', 'Disapproved', 'Cancelled'],
+				'hideForNonAdmin': ['Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
+				'hideForAdmin': ['Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
 				'end': 1
+			}, {
+				'elementType': "field",
+				'controlType': "text",
+				'fieldName': "RequestStatus",
+				'labelContent': "Request Status",
+				'disabledForNonAdmin': ['', 'Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
+				'disabledForAdmin': ['', 'Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
+				'hideForNonAdmin': ['', 'Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
+				'hideForAdmin': ['', 'Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
 			}
 		]
 	};
