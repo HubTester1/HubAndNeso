@@ -743,10 +743,15 @@
 	};
 
 	var fData = {
-		'autoTrackGSEScheduleStatuses': 1,
+		// 'autoTrackGSEScheduleStatuses': 1,
+		'autoTrackSubmissionAndCancellation': 1,
+		'autoProcessGSEScheduleAndSignupModification': 1,
+		'bypassNormalDataSaving': [''],
+		'customDataSavingFunction': {
+			'useFunction': 'ReturnGSESchedulesSubmissionValuePairArray',
+			'requestStatuses': ['']
+		},
 		'alwaysTalkToRequester': 1,
-		'bypassNormalDataSaving': 1,
-		'customDataSavingFunction': 'ReturnGSESchedulesSubmissionValuePairArray',
 		'standardElementGroups': {
 			'standardThisRequestAndRequesterElements': 1,
 			// 'standardAdminElements': {
@@ -783,8 +788,8 @@
 			// 	},
 			// 	'requiredForNonAdmin': [""],
 			// 	'requiredForAdmin': [""],
-			// 	'disabledForNonAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"],
-			// 	'disabledForAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"],
+			// 	'disabledForNonAdmin': ['Cancelled'],
+			// 	'disabledForAdmin': ['Cancelled'],
 			// }, {
 				'elementType': "markup",
 				'tag': "h2",
@@ -841,8 +846,8 @@
 				// leave this - just signals basic validation to make sure the value is a positive integer
 				'addtlValidationType': 'validPositiveInteger',
 
-				'hideButtonForNonAdmin': ["Pending Approval", "Approval Pending Comments", "Grant Proposal Ready for Submission", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Disapproved", "Cancelled"],
-				'hideButtonForAdmin': ["Pending Approval", "Approval Pending Comments", "Grant Proposal Ready for Submission", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Disapproved", "Cancelled"],
+				'hideButtonForNonAdmin': ['Submitted', "Approval Pending Comments", "Grant Proposal Ready for Submission", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Disapproved", 'Cancelled'],
+				'hideButtonForAdmin': ['Submitted', "Approval Pending Comments", "Grant Proposal Ready for Submission", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Disapproved", 'Cancelled'],
 				"requiredForNonAdmin": [""],
 				"requiredForAdmin": [""]
 			}, {
@@ -857,10 +862,10 @@
 				'fieldName': "StartTime",
 				'listFieldName': "StartTime",
 				'labelContent': "Start Time",
-				'requiredForNonAdmin': [""],
-				'requiredForAdmin': [""],
-				'disabledForNonAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"],
-				'disabledForAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"]
+				// 'requiredForNonAdmin': [""],
+				// 'requiredForAdmin': [""],
+				'disabledForNonAdmin': ['Cancelled'],
+				'disabledForAdmin': ['Cancelled']
 			}, {
 				'elementType': "field",
 				'controlType': "radio",
@@ -876,30 +881,30 @@
 						"display": "This is a full-day shift"
 					}
 				],
-				'requiredForNonAdmin': [""],
-				'requiredForAdmin': [""],
-				'disabledForNonAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"],
-				'disabledForAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"]
+				// 'requiredForNonAdmin': [""],
+				// 'requiredForAdmin': [""],
+				'disabledForNonAdmin': ['Cancelled'],
+				'disabledForAdmin': ['Cancelled']
 			}, {
 				'elementType': "field",
 				'controlType': "text",
 				'fieldName': "NumberOfPositions",
 				'listFieldName': "NumberOfPositions",
 				'labelContent': "Number of Positions",
-				'requiredForNonAdmin': [""],
-				'requiredForAdmin': [""],
-				'disabledForNonAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"],
-				'disabledForAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"]
+				// 'requiredForNonAdmin': [""],
+				// 'requiredForAdmin': [""],
+				'disabledForNonAdmin': ['Cancelled'],
+				'disabledForAdmin': ['Cancelled']
 			}, {
 				'elementType': "field",
 				'controlType': "text",
 				'fieldName': "Location",
 				'listFieldName': "Location",
 				'labelContent': "Location",
-				'requiredForNonAdmin': [""],
-				'requiredForAdmin': [""],
-				'disabledForNonAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"],
-				'disabledForAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"]
+				// 'requiredForNonAdmin': [""],
+				// 'requiredForAdmin': [""],
+				'disabledForNonAdmin': ['Cancelled'],
+				'disabledForAdmin': ['Cancelled']
 			}, {
 				'elementType': "field",
 				'controlType': "radio",
@@ -915,49 +920,57 @@
 						"display": "No, this location is not offsite"
 					}
 				],
-				'requiredForNonAdmin': [""],
-				'requiredForAdmin': [""],
-				'disabledForNonAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"],
-				'disabledForAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"]
+				// 'requiredForNonAdmin': [""],
+				// 'requiredForAdmin': [""],
+				'disabledForNonAdmin': ['Cancelled'],
+				'disabledForAdmin': ['Cancelled']
 			}, {
 				'elementType': "field",
 				'controlType': "time",
 				'fieldName': "MealTime",
 				'labelContent': "Meal Time",
-				'requiredForNonAdmin': [""],
-				'requiredForAdmin': [""],
-				'disabledForNonAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"],
-				'disabledForAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"]
+				// 'requiredForNonAdmin': [""],
+				// 'requiredForAdmin': [""],
+				'disabledForNonAdmin': ['Cancelled'],
+				'disabledForAdmin': ['Cancelled']
 			}, {
 				'elementType': "field",
 				'controlType': "time",
 				'fieldName': "BreakTime",
 				'labelContent': "Break Time",
-				'requiredForNonAdmin': [""],
-				'requiredForAdmin': [""],
-				'disabledForNonAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"],
-				'disabledForAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"]
+				// 'requiredForNonAdmin': [""],
+				// 'requiredForAdmin': [""],
+				'disabledForNonAdmin': ['Cancelled'],
+				'disabledForAdmin': ['Cancelled']
 			}, {
 				'elementType': "field",
 				'controlType': "textarea",
 				'fieldName': "Notes",
 				'labelContent': "Notes",
-				'disabledForNonAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"],
-				'disabledForAdmin': ["Pending Approval", "Approve", "Completed", "Disapprove", "Cancelled"]
-			// }, {
-			// 	'elementType': "markup",
-			// 	'tag': "h2",
-			// 	'content': "Dates",
-			// 	'begin': 1,
-			// 	'end': 1
+				'disabledForNonAdmin': ['Cancelled'],
+				'disabledForAdmin': ['Cancelled']
+			}, {
+				'elementType': "field",
+				'controlType': "datePicker",
+				'fieldName': "Date",
+				'labelContent': "Date",
+				'listFieldName': "Date",
+				'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 },
+				'isoFormatOnSubmit': { 'incomingFormat': null, 'returnFormat': null, 'determineYearDisplayDynamically': null },
+				'requiredForNonAdmin': ['Submitted'],
+				'requiredForAdmin': ['Submitted'],
+				'hideForNonAdmin': [''],
+				'hideForAdmin': [''],
+				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
+				'disabledForAdmin': ['Submitted', 'Cancelled']
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
 				'begin': 1,
 				'htmlID': 'gse-schedule-dates',
 				'htmlClass': 'repeating-content-container',
-				'hideForNonAdmin': ['Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
-				'hideForAdmin': ['Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled']
+				'hideForNonAdmin': ['Submitted', 'Cancelled'],
+				'hideForAdmin': ['Submitted', 'Cancelled']
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
@@ -968,15 +981,14 @@
 			}, {
 				'elementType': "field",
 				'controlType': "datePicker",
-				'fieldName': "Date",
+				'fieldName': "Repeating Date",
 				'labelContent': "Date",
-				'listFieldName': "Date",
 				'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 },
 				'isoFormatOnSubmit': { 'incomingFormat': null, 'returnFormat': null, 'determineYearDisplayDynamically': null },
 				'requiredForNonAdmin': [""],
 				'requiredForAdmin': [""],
-				'disabledForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-				'disabledForAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
+				'disabledForNonAdmin': ['Cancelled'],
+				'disabledForAdmin': ['Cancelled']
 			},  {
 				'elementType': "markup",
 				'tag': "a",
@@ -985,8 +997,8 @@
 				'htmlClass': "remove-section-anchor",
 				'content': "Remove",
 				'removeThisRepeat': 1,
-				'hideForNonAdmin': ['Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
-				'hideForAdmin': ['Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
+				'hideForNonAdmin': ['Submitted', 'Cancelled'],
+				'hideForAdmin': ['Submitted', 'Cancelled'],
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
@@ -1000,10 +1012,10 @@
 				'htmlClass': 'repeat-section-anchor',
 				'content': 'Insert another date',
 				'repeatSectionID': 'gse-schedule-date',
-				'disabledForNonAdmin': ['Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
+				'disabledForNonAdmin': ['Cancelled'],
 				'disabledForAdmin': ['Completed', 'Disapproved', 'Cancelled'],
-				'hideForNonAdmin': ['Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
-				'hideForAdmin': ['Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
+				'hideForNonAdmin': ['Submitted', 'Cancelled'],
+				'hideForAdmin': ['Submitted', 'Cancelled'],
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
@@ -1013,10 +1025,10 @@
 				'controlType': "text",
 				'fieldName': "RequestStatus",
 				'labelContent': "Request Status",
-				'disabledForNonAdmin': ['', 'Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
-				'disabledForAdmin': ['', 'Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
-				'hideForNonAdmin': ['', 'Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
-				'hideForAdmin': ['', 'Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
+				'disabledForNonAdmin': ['', 'Submitted', 'Cancelled'],
+				'disabledForAdmin': ['', 'Submitted', 'Cancelled'],
+				'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
+				'hideForAdmin': ['', 'Submitted', 'Cancelled'],
 			}
 		]
 	};

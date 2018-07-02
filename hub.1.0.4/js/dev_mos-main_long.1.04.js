@@ -4829,6 +4829,7 @@
 
 					$(workingMessage).text("Handling Request Status");
 
+					var previousReqStatus = rData.requestStatus;
 					var newReqStatus = '';
 					var beginningOfLife = 0;
 					var endOfLife = 0;
@@ -4848,6 +4849,7 @@
 					rData.endOfLife = endOfLife;
 					rData.beginningOfLife = beginningOfLife;
 					rData.requestStatus = newReqStatus;
+					rData.previousReqStatus = rData.previousReqStatus;
 					rData = rData;
 					$('input#Request-Status').val(newReqStatus);
 					$('input#Beginning-of-Life').val(endOfLife);
@@ -5033,30 +5035,36 @@
 						$('input#End-of-Life').val(endOfLife);
 					}
 
-					// consider
+				// consider
 
-					if (fData.autoTrackGSEScheduleStatuses === 1 && rData.endofLife != 1) {
-						$(workingMessage).text("Handling Request Status");
-	 
-						var newReqStatus = '';
-						var endOfLife = 0;
-						var endOfLifeIsNew = 0;
-						if (rData.requestStatus == '') {
-							newReqStatus = 'Pending Approval';
-						} else if (rData.requestStatus == 'Pending Approval' && $('select#Change-Request-Status option:selected').val() == 'Approve') {
-							newReqStatus = 'Approved';
-						} else if (rData.requestStatus == 'Pending Approval' && $('select#Change-Request-Status option:selected').val() == 'Close') {
-							newReqStatus = 'Closed';
+				if (fData.autoTrackGSEScheduleStatuses === 1 && rData.endofLife != 1) {
+
+					$(workingMessage).text("Handling Request Status");
+
+					var newReqStatus = '';
+					var beginningOfLife = 0;
+					var endOfLife = 0;
+					var endOfLifeIsNew = 0;
+					if (rData.requestStatus === '') {
+						newReqStatus = 'Submitted';
+						beginningOfLife = 1;
+					} else if (rData.requestStatus === 'Submitted') {
+						if ($('input#requester-cancellation_cancel:checked').length > 0 || $('select#Change-Request-Status option:selected').val() === 'Cancel') {
+							newReqStatus = 'Cancelled';
+							beginningOfLife = 0;
 							endOfLife = 1;
 							endOfLifeIsNew = 1;
 						}
-						rData.endOfLifeIsNew = endOfLifeIsNew;
-						rData.endOfLife = endOfLife;
-						rData.requestStatus = newReqStatus;
-						globalRData = rData;
-						$('input#Request-Status').val(newReqStatus);
-						$('input#End-of-Life').val(endOfLife);
 					}
+					rData.endOfLifeIsNew = endOfLifeIsNew;
+					rData.endOfLife = endOfLife;
+					rData.beginningOfLife = beginningOfLife;
+					rData.requestStatus = newReqStatus;
+					rData = rData;
+					$('input#Request-Status').val(newReqStatus);
+					$('input#Beginning-of-Life').val(endOfLife);
+					$('input#End-of-Life').val(endOfLife);
+				}
 				*/
 
 				if (fData.autoTrackEventNeedsStatuses === 1) {
@@ -6181,6 +6189,47 @@
 
 
 				// ========================================================
+				// HANDLE GSE SCHEDULES & SIGNUPS MODIFICATIONS (if needed)
+				// ========================================================
+
+				if (typeof (fData.autoProcessGSEScheduleAndSignupModification) != 'undefined' && fData.autoProcessGSEScheduleAndSignupModification == 1) {
+
+					$(workingMessage).text("Handling GSE Modifications");
+
+					// if this app is GSE Schedule and this schedule is being cancelled
+
+						// find all of the relevant signups, [change their status to cancelled and email relevant people]
+
+					// if this app is [GSE Signups] and this user is cancelling her signup
+
+						// [change this signup status to cancelled [and email relevant people]]
+
+					// if this app is [GSE Schedule] and schedule data is being modified but schedule is not being cancelled
+
+						// [email everyone signed up for this schedule that information has changed]
+
+				}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+				// ========================================================
 				// MODIFY CONFIRMATION MESSAGE (if needed)
 				// ========================================================
 
@@ -6238,9 +6287,11 @@
 				globalSubmissionValuePairsArrayOfArrays = [];
 
 				// if saving data normally
-				if (typeof (fData.bypassNormalDataSaving) == 'undefined' || fData.bypassNormalDataSaving == 0) {
+				// i.e., if bypassNormalDataSaving is undefined or (it's not set to 1 and it's not set to an array that contains the request status on load)
+				if (typeof (fData.bypassNormalDataSaving) == 'undefined' || (fData.bypassNormalDataSaving != 1 && fData.bypassNormalDataSaving.indexOf(rData.previousReqStatus) == -1)) {
+					console.log('NOT bypassing'); console.log(fData.bypassNormalDataSaving);
 					globalSubmissionValuePairsArrayOfArrays.push(ReturnStandardSubmissionValuePairArray(clonedForm));
-				}
+				} else { console.log('bypassing'); }
 
 				// if augmenting the AllRequestData object with some of the form data as an exceptional occurrence
 				if (typeof (fData.augmentDataWithExceptionalEventOccurrence) != 'undefined' && fData.augmentDataWithExceptionalEventOccurrence == 1) {
@@ -6254,13 +6305,12 @@
 
 
 				// if saving data using a custom function
-				if (typeof (fData.customDataSavingFunction) !== 'undefined') {
-					switch (fData.customDataSavingFunction) {
-						case 'ReturnGSESchedulesSubmissionValuePairArray':
-							globalSubmissionValuePairsArrayOfArrays = ReturnGSESchedulesSubmissionValuePairArray(clonedForm);
-							break;
-						case 'ReturnGSESchedulesSubmissionValuePairArrayTest':
-							globalSubmissionValuePairsArrayOfArrays = ReturnGSESchedulesSubmissionValuePairArrayTest(clonedForm);
+				// i.e., if customDataSavingFunction is NOT undefined and its requestStatuses array contains the request status on load
+				if (typeof (fData.customDataSavingFunction) !== 'undefined' && fData.customDataSavingFunction.requestStatuses.indexOf(rData.previousReqStatus) != -1) {
+					console.log('custom data saving for this status');
+					switch (fData.customDataSavingFunction.useFunction) {
+						case 'ReturnNewGSESchedulesSubmissionValuePairArrayOfArrays':
+							globalSubmissionValuePairsArrayOfArrays = ReturnNewGSESchedulesSubmissionValuePairArrayOfArrays(clonedForm);
 							break;
 					}
 				}
@@ -16959,8 +17009,7 @@
 
 
 
-	function ReturnGSESchedulesSubmissionValuePairArray(form) {
-		console.log(form);
+	function ReturnNewGSESchedulesSubmissionValuePairArrayOfArrays(form) {
 		/*
 			overview / context notes
 			1. for each date that was added, one row will be created in SWFList
@@ -16983,9 +17032,12 @@
 		//		all of the repeatable date fields, we'll match the beginning of the IDs
 		// note: change the partial ID being searched for to correspond to the field name you've chosen for the form; 
 		// 		using the caret character means we'll find every input whose ID *begins* with this partial ID
-		$(form).find('input[class^="date-input"]').each(function () {
+		$(form).find('input[id^="Repeating-Date"]').each(function () {
 			scheduleDates.push($(this).val());
 		});
+
+		console.log('scheduleDates');
+		console.log(scheduleDates);
 
 		// for each date that was found
 		$.each(scheduleDates, function (i, scheduleDate) {
@@ -17057,7 +17109,7 @@
 
 
 
-	/* function ReturnGSESchedulesSubmissionValuePairArrayTest(form) {
+	/* function ReturnNewGSESchedulesSubmissionValuePairArrayOfArraysTest(form) {
 
 		// 	overview / context notes
 		// 	1. for each date that was added, one row will be created in SWFList

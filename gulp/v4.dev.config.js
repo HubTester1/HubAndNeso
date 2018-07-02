@@ -1,7 +1,7 @@
 
 module.exports = {
 	ReturnV4DevStylesSrcFolder: () => './hub.1.0.4/sass',
-	ReturnV4DevStylesSrcFile: () => './hub.1.0.4/sass/mos.sass',
+	ReturnV4DevStylesSrcFile: () => './hub.1.0.4/sass/partials/_mos.sass',
 	ReturnV4DevStylesDistFolder: () => './hub.1.0.4/css',
 	ReturnV4DevStylesDistFile: () => './hub.1.0.4/css/mos.css',
 	ReturnV4DevSWFAPIFile: (apiToken) => {
