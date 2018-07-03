@@ -1070,7 +1070,10 @@
 	fData.CustomScriptLast += '$("select#hours-input_BreakTime option[value=\'T13\']").attr("selected","selected"); \n';
 	fData.CustomScriptLast += '$("select#minutes-input_BreakTime option[value=\':30:00\']").attr("selected","selected"); \n';
 
-	
+	// hidden
+	fData.CustomScriptLast += '$("input#time-storage_StartTime").val("2000-01-01T09:00:00-05:00"); \n';
+	fData.CustomScriptLast += '$("input#time-storage_MealTime").val("2000-01-01T11:00:00-05:00"); \n';
+	fData.CustomScriptLast += '$("input#time-storage_BreakTime").val("2000-01-01T13:30:00-05:00"); \n';
 
 
 	$.fn.ReturnThisAppMData = function () {

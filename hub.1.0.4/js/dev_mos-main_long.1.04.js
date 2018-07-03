@@ -4281,6 +4281,7 @@
 				$("div#persona-card-dialog").dialog("open");
 			});
 
+			// datetime and time elements
 			// when a date or time element changes
 			$("input[id^='date-input_'], select[id^='hours-input_'], select[id^='minutes-input_']").on("change", function () {
 				var container = $(this).closest("div.label-and-control");
@@ -17564,9 +17565,9 @@
 		// dateTime.minute  = :15:00
 
 		dateTime.date = moment(dateTime.date, 'MMMM D, YYYY').format('YYYY-MM-DD');
-		dateTime.timezone = moment(dateTime.date, 'MMMM D, YYYY').format('Z');
+		// dateTime.timezone = moment(dateTime.date, 'MMMM D, YYYY').format('Z');
 
-		return dateTime.date + dateTime.hour + dateTime.minute + dateTime.timezone;
+		return dateTime.date + dateTime.hour + dateTime.minute + 'Z';
 	};
 
 
