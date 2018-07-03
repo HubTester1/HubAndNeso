@@ -2271,35 +2271,118 @@
 				}
 			})
 		);
-		console.log('checking here');
-		console.log(rData);
 
-
-
-		$("div#request-screen-container").append(
-			'<div id="request-detail-display">' + 
+		var opportunityJobDuties = [];
+		rData.GSEJobData.RepeatedElements.forEach((repeatElement) => {
+			// console.log('repeatElement');
+			// console.log(repeatElement);
+			if (StrInStr(repeatElement.ID, 'gse-job-duty') != -1) {
+				// console.log('found a duty');
+				var repeatElementKeys = Object.keys(repeatElement);
+				// console.log('repeatElementKeys');
+				// console.log(repeatElementKeys);
+				repeatElementKeys.forEach((repeatElementKey) => {
+					if (StrInStr(repeatElementKey, 'Job-Duty')) {
+						opportunityJobDuties.push(repeatElement[repeatElementKey]);
+					}
+				});
+			}
+		});
+		var opportunityMarkup =	'<div id="gse-signup-opportunity-display" class="request-detail-display">' + 
 			'	<h3>' + rData.GSEJobData['Job-Title'] + '</h3>' + 
-			'	<p>Positions Available: ' + '' + rData.GSEJobData['Department'] + '</p>' + 
-			'	<p>Reports To: <a href="mailto: ' + rData.GSEJobData['Job-Admin'][0].description + '">' + rData.GSEJobData['Job-Admin'][0].displayText + '</a></p>' + 
-			'	<p>Department: ' + rData.GSEJobData['Department'] + '</p>' + 
-			// '	<p>Job Description: ' + rData.GSEJobData['JobDescription'] + '</p>' + 
-			// '	<p>Training Requirements: ' + rData.GSEJobData['TrainingRequirements'] + '</p>' + 
-			// '	<p>Dress Requirements: ' + rData.GSEJobData['Dress-Requirements'] + '</p>' + 
-			// '	<p>Job Duties: ' + rData.GSEJobData['JobDuties'] + '</p>' + 
-			// '	<p>Physical Requirements:' + 
-			// '	<ul>' + 
-			// '	<li>Lifting:' + rData.GSEJobData['PhysicalDemandLifting'] + ' lbs</li>' + 
-			// '	<li>Carrying:' + rData.GSEJobData['PhysicalDemandCarrying'] + ' lbs</li>' + 
-			// '	<li>Pushing:' + rData.GSEJobData['PhysicalDemandPushing'] + ' lbs</li>' + 
-			// '	<li>Pulling:' + rData.GSEJobData['PhysicalDemandPulling'] + ' lbs</li>' + 
-			// '	<li>Standing:' + rData.GSEJobData['PhysicalDemandStanding'] + '%</li>' + 
-			// '	<li>Sitting:' + rData.GSEJobData['PhysicalDemandSitting'] + '%</li>' + 
-			// '	<li>Walking:' + rData.GSEJobData['PhysicalDemandWalking'] + '%</li>' + 
-			// '	</ul>' + 
-			// '	</p>' + 
-			// '	<input id='submit-signup' type='button' value='Sign Up' />' + 
-			'</div>'
-		);
+			'	<div class="request-detail-display__field">' + 
+			'		<h4>Positions Available</h4>' + 
+					'<span style="background-color: #fcc">X out of </span>' + rData.GSEScheduleData['Number-of-Positions'] + 
+			'	</div>' +
+			'	<div class="request-detail-display__field">' + 
+			'		<h4>On <span style="background-color: #fcc">July 31, 2018</h4>' + 
+					'This <span style="background-color: #fcc">7.5 hour</span> job begins at <span style="background-color: #fcc">9:00 am</span>, with a break at <span style="background-color: #fcc">11:00 am</span> and a meal at <span style="background-color: #fcc">1:00 pm</span>.' + 
+			'	</div>' +
+			'	<div class="request-detail-display__field">' + 
+			'		<h4>Reports To</h4>' + 
+			'		<a href="mailto:' + rData.GSEJobData['Job-Admin'][0].description + '">' + rData.GSEJobData['Job-Admin'][0].displayText + '</a>' + 
+			'	</div>' +
+			'	<div class="request-detail-display__field">' + 
+			'		<h4>Department</h4>' + 
+					rData.GSEJobData['Department'] + 
+			'	</div>' +
+			'	<div class="request-detail-display__field">' + 
+			'		<h4>Job Description</h4>' + 
+					ReplaceAll('%0A', '<br />', rData.GSEJobData['Job-Description']) + 
+			'	</div>';
+
+		if (rData.GSEJobData['Training-Requirements']) {
+			opportunityMarkup +=	'	<div class="request-detail-display__field">' +
+									'		<h4>Training Requirements</h4>' +
+											ReplaceAll('%0A', '<br />', rData.GSEJobData['Training-Requirements']) +
+									'	</div>';
+		}
+
+		opportunityMarkup +=	'	<div class="request-detail-display__field">' + 
+								'		<h4>Dress Requirements</h4>' + 
+								'		Must wear MOS badge above the waist at all times.<br />' + 
+								'		Clothing and shoes must be in good condition.<br />';
+
+		if (rData.GSEJobData['Dress-Requirements']) {
+			opportunityMarkup += ReplaceAll('%0A', '<br />', rData.GSEJobData['Dress-Requirements']);
+		}
+
+		opportunityMarkup +=	'</div>' + 
+			'	<div class="request-detail-display__field">' + 
+			'		<h4>Job Duties</h4>';
+		
+		opportunityJobDutyElement = opportunityJobDuties[1] ? 'li' : 'p';
+
+		if (opportunityJobDuties[1]) {
+			opportunityMarkup += '		<ul>';
+		}
+
+		opportunityJobDuties.forEach((opportunityJobDuty) => {
+			opportunityMarkup += '			<' + opportunityJobDutyElement + '>' + opportunityJobDuty + '</' + opportunityJobDutyElement + '>';
+		});
+
+		if (opportunityJobDuties[1]) {
+			opportunityMarkup += '		</ul>';
+		}
+
+		opportunityMarkup += '	</div>' +
+			'	<div class="request-detail-display__field-set">' + 
+			'		<h4>Physical Requirements</h4>' + 
+			'		<h5>How Much Weight Will Be Handled</h5>' + 
+			'		<ul>' +
+			'			<li>Lifting: ' + 
+							rData.GSEJobData['Physical-Demand-Lifting'] + ' lbs' +
+			'			</li>' +
+			'			<li>Carrying: ' + 
+							rData.GSEJobData['Physical-Demand-Carrying'] + ' lbs' +
+			'			</li>' +
+			'			<li>Pushing: ' + 
+							rData.GSEJobData['Physical-Demand-Pushing'] + ' lbs' +
+			'			</li>' +
+			'			<li>Pulling: ' + 
+							rData.GSEJobData['Physical-Demand-Pulling'] + ' lbs' +
+			'			</li>' +
+			'		</ul>' +
+
+
+
+			'		<h5>How Much Weight Will Be Handled</h5>' + 
+			'		<ul>' +
+			'			<li>Standing: ' + 
+							rData.GSEJobData['Physical-Demand-Standing'] + '%' +
+			'			</li>' +
+			'			<li>Sitting: ' + 
+							rData.GSEJobData['Physical-Demand-Sitting'] + '%' +
+			'			</li>' +
+			'			<li>Walking: ' + 
+							rData.GSEJobData['Physical-Demand-Walking'] + '%' +
+			'			</li>' +
+			'		</ul>' +
+			'	</div>' + 
+			'	<a id="gse-schedule-signup-button" data-button-type="gse-schedule-signup">Sign up</a>' +
+			'</div>';
+
+		$("div#request-screen-container").append(opportunityMarkup);
 
 
 		/* $('#submit-signup').click(function () {

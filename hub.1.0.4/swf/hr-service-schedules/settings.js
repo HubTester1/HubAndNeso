@@ -22,7 +22,7 @@
 		]
 	};
 
-	console.log("using settings m2");
+	console.log("using settings m5");
 
 	var oData = {
 		
@@ -867,7 +867,7 @@
 				'elementType': "field",
 				'controlType': "time",
 				'fieldName': "StartTime",
-				'listFieldName': "StartTime",
+				// 'listFieldName': "StartTime",
 				'labelContent': "Start Time",
 				'requiredForNonAdmin': ['', 'Submitted'],
 				'requiredForAdmin': ['', 'Submitted'],
@@ -877,7 +877,7 @@
 				'elementType': "field",
 				'controlType': "radio",
 				'fieldName': "ShiftLength",
-				'listFieldName': "ShiftLength",
+				// 'listFieldName': "ShiftLength",
 				'choiceSetLabel': "Shift Length",
 				"choices": [
 					{
@@ -895,8 +895,8 @@
 			}, {
 				'elementType': "field",
 				'controlType': "text",
-				'fieldName': "NumberOfPositions",
-				'listFieldName': "NumberOfPositions",
+				'fieldName': "Number of Positions",
+				// 'listFieldName': "NumberOfPositions",
 				'labelContent': "Number of Positions",
 				'requiredForNonAdmin': ['', 'Submitted'],
 				'requiredForAdmin': ['', 'Submitted'],
@@ -906,7 +906,7 @@
 				'elementType': "field",
 				'controlType': "text",
 				'fieldName': "Location",
-				'listFieldName': "Location",
+				// 'listFieldName': "Location",
 				'labelContent': "Location",
 				'requiredForNonAdmin': ['', 'Submitted'],
 				'requiredForAdmin': ['', 'Submitted'],
@@ -916,7 +916,7 @@
 				'elementType': "field",
 				'controlType': "radio",
 				'fieldName': "LocationIsOffsite",
-				'listFieldName': "LocationIsOffsite",
+				// 'listFieldName': "LocationIsOffsite",
 				'choiceSetLabel': "Is this location offsite?",
 				"choices": [
 					{
@@ -1063,7 +1063,7 @@
 	// texts
 	fData.CustomScriptLast += '$("input#Request-Nickname").val("Req Nick");';
 	fData.CustomScriptLast += '$("input#id-or-link_GSE-Job-Request-ID").val("4");';
-	fData.CustomScriptLast += '$("input#NumberOfPositions").val("3");';
+	fData.CustomScriptLast += '$("input#Number-of-Positions").val("3");';
 	fData.CustomScriptLast += '$("input#Location").val("Lobby");';
 	fData.CustomScriptLast += '$("input#Repeating-Date").val("July 29, 2018");';
 	fData.CustomScriptLast += '$("input#Repeating-Date-repeat-1").val("July 30, 2018");';

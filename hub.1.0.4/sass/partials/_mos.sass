@@ -34,13 +34,19 @@ div#printer-content
 		font-size: 4.5rem
 
 	h2
-		font-size: 2.75rem !important
+		font-size: 2.8rem !important
 
 	h3
-		font-size: 2.25rem !important
+		font-size: 2.4rem !important
 
 	h4
+		font-size: 2rem !important
+
+	h5
 		font-size: 1.75rem !important
+
+	h6
+		font-size: 1.5rem !important
 
 	.ms-rtestate-field h1,
 	h1.ms-rteElement-H1,
@@ -559,7 +565,8 @@ div#s4-workspace div#app-container.event-av div#container_command-bar ul#contain
 div#s4-workspace div#app-container.event-av div#container_command-bar div#container_date-filter-controls-and-header a.collapsible-heading-toggle,
 div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button,
 div#s4-workspace div#public-community-page_open-enrollment div.primary-section a,
-a#standard-printer-button-inside-request
+a#standard-printer-button-inside-request,
+div#s4-workspace a#gse-schedule-signup-button
 	+button
 
 	&:hover
@@ -575,7 +582,8 @@ div#s4-workspace div.in-page-persona a.profile,
 div#s4-workspace div#public-community-page_moscars div#call-to-action a,
 div#s4-workspace div#public-community-page_hr div#primary-section_open-enrollment a,
 div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button,
-div#s4-workspace div#public-community-page_open-enrollment div.primary-section a
+div#s4-workspace div#public-community-page_open-enrollment div.primary-section a,
+div#s4-workspace a#gse-schedule-signup-button
 	color: $textOnIntDefault !important
 	background-color: $intDefault !important
 
@@ -834,7 +842,6 @@ div.subsection-container a.repeat-section-anchor
 
 a.remove-section-anchor
 	margin: 0 0 1rem 19.5rem !important
-
 
 div.subsection-container
 
@@ -1829,14 +1836,6 @@ div#s4-workspace
 				width: auto
 
 
-
-
-
-
-
-
-
-
 		// --- USER INPUT CONTROLS - SIMPLE, GENERAL
 
 		input[type="text"],
@@ -1911,7 +1910,7 @@ div#s4-workspace
 
 
 
-		// --- USER INPUT CONTROLS - COMPLEX/UNUSUAL, GENERAL
+		// --- USER INPUT CONTROLS - COMPLEX/UNUSUAL
 
 		// list item chooser
 
@@ -1924,112 +1923,8 @@ div#s4-workspace
 
 		// button with label styles in button section
 
-		
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+		// files
 
 		div.label-and-control.mosFile div.control
 			position: relative
@@ -2626,21 +2521,6 @@ div#app-container textarea.hidden-cloned-textarea
 	padding: .4rem 1rem .4rem
 	border: .1rem solid $grey11
 	visibility: hidden
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -3467,19 +3347,6 @@ div#s4-workspace div#app-container.event-av
 		margin-top: 2rem
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 // --- PUCK QUICK PICK
 
 div#s4-workspace div#app-container.puck-quick-pick
@@ -3526,8 +3393,6 @@ div#s4-workspace div#app-container.puck-quick-pick
 
 				div.field-type-indication
 					+blockHidden
-
-
 
 // --- PUCK CATERING
 
@@ -3662,7 +3527,6 @@ div#s4-workspace div#app-container.puck-catering
 					width: 11rem
 
 
-
 // --- CAFE DEFAULTS
 
 div#app-container.cafe-defaults
@@ -3688,7 +3552,6 @@ div#app-container.cafe-defaults
 			+gridElementDarkened3
 
 
-
 // --- CAFE WEEKLY MENU & SCHEDULE - REQUEST
 
 div#app-container.cafe-weekly-menu-and-schedule
@@ -3711,7 +3574,6 @@ div#app-container.cafe-weekly-menu-and-schedule
 
 		div.repeat-container:nth-child(even) div.even-time-set
 			+gridElementDarkened3
-
 
 
 // --- CAFE WEEKLY MENU & SCHEDULE - DISPLAY
@@ -3809,7 +3671,6 @@ div#mos-display.cafe-weekly-menu-and-schedule
 
 				td.day
 					background-color: $white
-
 
 
 // --- EVENT REQUEST
@@ -3960,6 +3821,30 @@ div#app-container.direct-deposit
 				height: 2rem
 				padding: 0
 				border: none
+
+
+// --- GSE SIGNUP OPPORTUNITY
+
+div#app-container.gse-schedule
+
+	div#gse-signup-opportunity-display
+
+		div.request-detail-display__field,
+		div.request-detail-display__field-set
+			max-width: 66rem
+			margin-bottom: 2rem
+
+			span.request-detail-display__field-label
+				display: block
+				font-size: 1.75rem
+				margin-top: .5rem
+				margin-bottom: .5rem
+
+			span.request-detail-display__field-label-separator
+				+blockHidden
+
+	// button is in the button section
+
 
 
 

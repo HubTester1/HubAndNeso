@@ -13,7 +13,7 @@
 		'notifications': 0
 	};
 
-	console.log("using settings m4");
+	console.log("using settings m5");
 
 	var oData = {
 
@@ -349,7 +349,7 @@
 				'elementType': "field",
 				'controlType': "text",
 				'fieldName': "Job Title",
-				'listFieldName': "JobTitle",
+				// 'listFieldName': "JobTitle",
 				'labelContent': "Job Title",
 				'requiredForNonAdmin': [""],
 				'requiredForAdmin': [""],
@@ -363,7 +363,7 @@
 				'labelContent': "Job Admin / Reports To",
 				'yieldsViewPermissions': 1,
 				"helpNotes": [{
-					"text": "This person can administer this job on The Hub, and is the person to whom staff members will report when performing this job",
+					"text": "This person can administer this job on The Hub, and is the person to whom staff members will report",
 					"htmlID": "job-admin_help-note",
 					"hideForNonAdmin": ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
 					"hideForAdmin": ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"]
@@ -376,7 +376,7 @@
 				'elementType': "field",
 				'controlType': "select",
 				'fieldName': "Department",
-				'listFieldName': "Department",
+				// 'listFieldName': "Department",
 				'labelContent': "Department",
 				'requiredForNonAdmin': [""],
 				'requiredForAdmin': [""],
@@ -389,7 +389,7 @@
 				'elementType': "field",
 				'controlType': "textarea",
 				'fieldName': "Job Description",
-				'listFieldName': "JobDescription",
+				// 'listFieldName': "JobDescription",
 				'labelContent': "Job Description",
 				'requiredForNonAdmin': [""],
 				'requiredForAdmin': [""],
@@ -400,15 +400,15 @@
 				'controlType': "textarea",
 				'fieldName': "Training Requirements",
 				'labelContent': "Training Requirements and Other Special Demands",
-				'listFieldName': "TrainingRequirements",
+				// 'listFieldName': "TrainingRequirements",
 				"helpNotes": [{
-					"text": "For saftey reasons, staff are not permitted to use forklifts, large ladders, cherry pickers, etc. Specify use of any chemicals, tools, solvents, etc.",
+					"text": "Chemicals, tools, solvents, etc. For saftey, use of forklifts, large ladders, cherry pickers, etc. is not allowed.",
 					"htmlID": "training-requirements_help-note",
 					"hideForNonAdmin": ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
 					"hideForAdmin": ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"]
 				}],
-				'requiredForNonAdmin': [""],
-				'requiredForAdmin': [""],
+				// 'requiredForNonAdmin': [""],
+				// 'requiredForAdmin': [""],
 				'disabledForNonAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
 				'disabledForAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"]
 			}, {
@@ -416,27 +416,103 @@
 				'controlType': "textarea",
 				'fieldName': "Dress Requirements",
 				'labelContent': "Dress Requirements",
-				'listFieldName': "DressRequirements",
+				// 'listFieldName': "DressRequirements",
+				"helpNotes": [{
+					"text": "Protective devices such as helmet, saftey goggles, rubber gloves, etc.",
+					"htmlID": "dress-requirements_help-note",
+					"hideForNonAdmin": ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
+					"hideForAdmin": ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"]
+				}],
+				// 'requiredForNonAdmin': [""],
+				// 'requiredForAdmin': [""],
+				'disabledForNonAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
+				'disabledForAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"]
+			
+			
+			
+			
+			
+			}, {
+				'elementType': 'markup',
+				'tag': 'div',
+				'begin': 1,
+				'htmlID': 'gse-job-duties',
+				'htmlClass': 'repeating-content-container',
+				'hideForNonAdmin': ['Submitted', 'Cancelled'],
+				'hideForAdmin': ['Submitted', 'Cancelled']
+			}, {
+				'elementType': 'markup',
+				'tag': 'div',
+				'begin': 1,
+				'htmlID': 'gse-job-duty',
+				'htmlClass': 'repeat-container',
+				'repeatable': 1
+			
+			
+			
+			
+			}, {
+				'elementType': "field",
+				'controlType': "text",
+				'fieldName': "Job Duty",
+				'labelContent': "Job Duty",
 				"helpNotes": [{
 					"text": "Protective devices required for the job such as helmet, saftey goggles, rubber gloves, etc.",
 					"htmlID": "dress-requirements_help-note",
 					"hideForNonAdmin": ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
 					"hideForAdmin": ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"]
 				}],
-				'requiredForNonAdmin': [""],
-				'requiredForAdmin': [""],
-				'disabledForNonAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
-				'disabledForAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"]
+				'requiredForNonAdmin': [''],
+				'requiredForAdmin': [''],
+				'disabledForNonAdmin': ['Cancelled'],
+				'disabledForAdmin': ['Cancelled']
 			}, {
-				'elementType': "field",
-				'controlType': "textarea",
-				'fieldName': "Job Duties",
-				'listFieldName': "JobDuties",
-				'labelContent': "Job Duties",
-				'requiredForNonAdmin': [""],
-				'requiredForAdmin': [""],
-				'disabledForNonAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
-				'disabledForAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"]
+				'elementType': "markup",
+				'tag': "a",
+				'begin': 1,
+				'end': 1,
+				'htmlClass': "remove-section-anchor",
+				'content': "Remove",
+				'removeThisRepeat': 1,
+				'hideForNonAdmin': ['Submitted', 'Cancelled'],
+				'hideForAdmin': ['Submitted', 'Cancelled'],
+			}, {
+				'elementType': 'markup',
+				'tag': 'div',
+				'end': 1,
+			}, {
+				'elementType': 'markup',
+				'tag': 'a',
+				'begin': 1,
+				'end': 1,
+				'htmlID': 'repeat-gse-job-duty',
+				'htmlClass': 'repeat-section-anchor',
+				'content': 'Insert another duty',
+				'repeatSectionID': 'gse-job-duty',
+				'hideForNonAdmin': ['Submitted', 'Cancelled'],
+				'hideForAdmin': ['Submitted', 'Cancelled'],
+			}, {
+				'elementType': 'markup',
+				'tag': 'div',
+				'end': 1
+			
+			
+			
+			
+			
+			
+			
+			
+			// }, {
+			// 	'elementType': "field",
+			// 	'controlType': "textarea",
+			// 	'fieldName': "Job Duties",
+			// 	'listFieldName': "JobDuties",
+			// 	'labelContent': "Job Duties",
+			// 	'requiredForNonAdmin': [""],
+			// 	'requiredForAdmin': [""],
+			// 	'disabledForNonAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
+			// 	'disabledForAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"]
 			}, {
 				'elementType': "markup",
 				'tag': "h3",
@@ -453,7 +529,7 @@
 				'elementType': "field",
 				'controlType': "text",
 				'fieldName': "Physical Demand Lifting",
-				'listFieldName': "PhysicalDemandLifting",
+				// 'listFieldName': "PhysicalDemandLifting",
 				'labelContent': "Lifting",
 				"helpNotes": [{
 					"text": "State amounts in pounds, using numerals only",
@@ -469,7 +545,7 @@
 				'elementType': "field",
 				'controlType': "text",
 				'fieldName': "Physical Demand Carrying",
-				'listFieldName': "PhysicalDemandCarrying",
+				// 'listFieldName': "PhysicalDemandCarrying",
 				'labelContent': "Carrying",
 				"helpNotes": [{
 					"text": "State amounts in pounds, using numerals only",
@@ -485,7 +561,7 @@
 				'elementType': "field",
 				'controlType': "text",
 				'fieldName': "Physical Demand Pushing",
-				'listFieldName': "PhysicalDemandPushing",
+				// 'listFieldName': "PhysicalDemandPushing",
 				'labelContent': "Pushing",
 				"helpNotes": [{
 					"text": "State amounts in pounds, using numerals only",
@@ -501,7 +577,7 @@
 				'elementType': "field",
 				'controlType': "text",
 				'fieldName': "Physical Demand Pulling",
-				'listFieldName': "PhysicalDemandPulling",
+				// 'listFieldName': "PhysicalDemandPulling",
 				'labelContent': "Pulling",
 				"helpNotes": [{
 					"text": "State amounts in pounds, using numerals only",
@@ -523,7 +599,7 @@
 				'elementType': "field",
 				'controlType': "text",
 				'fieldName': "Physical Demand Standing",
-				'listFieldName': "PhysicalDemandStanding",
+				// 'listFieldName': "PhysicalDemandStanding",
 				'labelContent': "Standing %",
 				"helpNotes": [{
 					"text": "State percents using numerals only. Percents must total 100.",
@@ -539,7 +615,7 @@
 				'elementType': "field",
 				'controlType': "text",
 				'fieldName': "Physical Demand Sitting",
-				'listFieldName': "PhysicalDemandSitting",
+				// 'listFieldName': "PhysicalDemandSitting",
 				'labelContent': "Sitting %",
 				"helpNotes": [{
 					"text": "State percents using numerals only. Percents must total 100.",
@@ -555,7 +631,7 @@
 				'elementType': "field",
 				'controlType': "text",
 				'fieldName': "Physical Demand Walking",
-				'listFieldName': "PhysicalDemandWalking",
+				// 'listFieldName': "PhysicalDemandWalking",
 				'labelContent': "Walking %",
 				"helpNotes": [{
 					"text": "State percents using numerals only. Percents must total 100.",
