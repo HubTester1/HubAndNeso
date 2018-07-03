@@ -15,7 +15,7 @@
 		'detailTitle': 'GSE Schedule'
 	};
 
-	console.log("using settings m4");
+	console.log("using settings m2");
 
 	var oData = {
 		
@@ -748,7 +748,7 @@
 		'autoProcessGSEScheduleAndSignupModification': 1,
 		'bypassNormalDataSaving': [''],
 		'customDataSavingFunction': {
-			'useFunction': 'ReturnGSESchedulesSubmissionValuePairArray',
+			'useFunction': 'ReturnNewGSESchedulesSubmissionValuePairArrayOfArrays',
 			'requestStatuses': ['']
 		},
 		'alwaysTalkToRequester': 1,
@@ -846,8 +846,8 @@
 				// leave this - just signals basic validation to make sure the value is a positive integer
 				'addtlValidationType': 'validPositiveInteger',
 
-				'hideButtonForNonAdmin': ['Submitted', "Approval Pending Comments", "Grant Proposal Ready for Submission", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Disapproved", 'Cancelled'],
-				'hideButtonForAdmin': ['Submitted', "Approval Pending Comments", "Grant Proposal Ready for Submission", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Disapproved", 'Cancelled'],
+				'hideButtonForNonAdmin': ['Submitted', 'Cancelled'],
+				'hideButtonForAdmin': ['Submitted', 'Cancelled'],
 				"requiredForNonAdmin": [""],
 				"requiredForAdmin": [""]
 			}, {
@@ -961,8 +961,8 @@
 				'requiredForAdmin': ['Submitted'],
 				'hideForNonAdmin': [''],
 				'hideForAdmin': [''],
-				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
-				'disabledForAdmin': ['Submitted', 'Cancelled']
+				'disabledForNonAdmin': ['Cancelled'],
+				'disabledForAdmin': ['Cancelled']
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
@@ -1012,8 +1012,6 @@
 				'htmlClass': 'repeat-section-anchor',
 				'content': 'Insert another date',
 				'repeatSectionID': 'gse-schedule-date',
-				'disabledForNonAdmin': ['Cancelled'],
-				'disabledForAdmin': ['Completed', 'Disapproved', 'Cancelled'],
 				'hideForNonAdmin': ['Submitted', 'Cancelled'],
 				'hideForAdmin': ['Submitted', 'Cancelled'],
 			}, {
@@ -1023,7 +1021,8 @@
 			}, {
 				'elementType': "field",
 				'controlType': "text",
-				'fieldName': "RequestStatus",
+				'fieldName': "Request Status",
+				'listFieldName': "RequestStatus",
 				'labelContent': "Request Status",
 				'disabledForNonAdmin': ['', 'Submitted', 'Cancelled'],
 				'disabledForAdmin': ['', 'Submitted', 'Cancelled'],
@@ -1040,6 +1039,38 @@
 	fData.CustomScriptFirst = '';
 
 	fData.CustomScriptLast = '';
+
+
+
+
+	// TEMPORARY
+
+	// repeats
+	fData.CustomScriptLast += '$().RepeatElement("gse-schedule-date");';
+	fData.CustomScriptLast += '$().RepeatElement("gse-schedule-date");';
+	
+	// radios / checks
+	fData.CustomScriptLast += '$("input#shiftlength_75-hours").prop("checked", true).attr("checked", true); \n';
+	fData.CustomScriptLast += '$("input#locationisoffsite_no").prop("checked", true).attr("checked", true); \n';
+	
+	// texts
+	fData.CustomScriptLast += '$("input#Request-Nickname").val("Req Nick");';
+	fData.CustomScriptLast += '$("input#id-or-link_GSE-Job-Request-ID").val("4");';
+	fData.CustomScriptLast += '$("input#NumberOfPositions").val("3");';
+	fData.CustomScriptLast += '$("input#Location").val("Lobby");';
+	fData.CustomScriptLast += '$("input#Repeating-Date").val("July 29, 2018");';
+	fData.CustomScriptLast += '$("input#Repeating-Date-repeat-1").val("July 30, 2018");';
+	fData.CustomScriptLast += '$("input#Repeating-Date-repeat-2").val("July 31, 2018");';
+	
+	// selects
+	fData.CustomScriptLast += '$("select#hours-input_StartTime option[value=\'T09\']").attr("selected","selected"); \n';
+	fData.CustomScriptLast += '$("select#minutes-input_StartTime option[value=\':00:00\']").attr("selected","selected"); \n';
+	fData.CustomScriptLast += '$("select#hours-input_MealTime option[value=\'T11\']").attr("selected","selected"); \n';
+	fData.CustomScriptLast += '$("select#minutes-input_MealTime option[value=\':00:00\']").attr("selected","selected"); \n';
+	fData.CustomScriptLast += '$("select#hours-input_BreakTime option[value=\'T13\']").attr("selected","selected"); \n';
+	fData.CustomScriptLast += '$("select#minutes-input_BreakTime option[value=\':30:00\']").attr("selected","selected"); \n';
+
+	
 
 
 	$.fn.ReturnThisAppMData = function () {

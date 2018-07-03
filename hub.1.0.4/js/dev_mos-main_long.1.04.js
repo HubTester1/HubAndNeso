@@ -4849,7 +4849,7 @@
 					rData.endOfLife = endOfLife;
 					rData.beginningOfLife = beginningOfLife;
 					rData.requestStatus = newReqStatus;
-					rData.previousReqStatus = rData.previousReqStatus;
+					rData.previousRequestStatus = previousReqStatus;
 					rData = rData;
 					$('input#Request-Status').val(newReqStatus);
 					$('input#Beginning-of-Life').val(endOfLife);
@@ -6288,10 +6288,11 @@
 
 				// if saving data normally
 				// i.e., if bypassNormalDataSaving is undefined or (it's not set to 1 and it's not set to an array that contains the request status on load)
-				if (typeof (fData.bypassNormalDataSaving) == 'undefined' || (fData.bypassNormalDataSaving != 1 && fData.bypassNormalDataSaving.indexOf(rData.previousReqStatus) == -1)) {
-					console.log('NOT bypassing'); console.log(fData.bypassNormalDataSaving);
+				if (typeof (fData.bypassNormalDataSaving) == 'undefined' || (fData.bypassNormalDataSaving != 1 && fData.bypassNormalDataSaving.indexOf(rData.previousRequestStatus) == -1)) {
+					// console.log('NOT bypassing'); console.log(fData.bypassNormalDataSaving); console.log(rData.previousRequestStatus);
 					globalSubmissionValuePairsArrayOfArrays.push(ReturnStandardSubmissionValuePairArray(clonedForm));
-				} else { console.log('bypassing'); }
+				}
+				//  else { console.log('bypassing'); }
 
 				// if augmenting the AllRequestData object with some of the form data as an exceptional occurrence
 				if (typeof (fData.augmentDataWithExceptionalEventOccurrence) != 'undefined' && fData.augmentDataWithExceptionalEventOccurrence == 1) {
@@ -6306,8 +6307,8 @@
 
 				// if saving data using a custom function
 				// i.e., if customDataSavingFunction is NOT undefined and its requestStatuses array contains the request status on load
-				if (typeof (fData.customDataSavingFunction) !== 'undefined' && fData.customDataSavingFunction.requestStatuses.indexOf(rData.previousReqStatus) != -1) {
-					console.log('custom data saving for this status');
+				if (typeof (fData.customDataSavingFunction) !== 'undefined' && fData.customDataSavingFunction.requestStatuses.indexOf(rData.previousRequestStatus) != -1) {
+					// console.log('custom data saving for this status');
 					switch (fData.customDataSavingFunction.useFunction) {
 						case 'ReturnNewGSESchedulesSubmissionValuePairArrayOfArrays':
 							globalSubmissionValuePairsArrayOfArrays = ReturnNewGSESchedulesSubmissionValuePairArrayOfArrays(clonedForm);
@@ -11217,7 +11218,7 @@
 
 	$.fn.CreateWFHistoryItem = function (d) {
 		// set up vars for new history item
-		if (typeof (rData.requestID) != 'undefined') {
+		if (rData.requestID && rData.requestID != '') {
 			var requestID = rData.requestID;
 		} else {
 			var requestID = 0;
@@ -11236,7 +11237,7 @@
 			ID: 0,
 			valuepairs: historyValuePairs,
 			completefunc: function (xData, Status) {
-				notificationAttemptWFHistorySuccess = $().HandleListUpdateReturn(xData, Status, 'WF History List Error (Notification Attempt)');
+				notificationAttemptWFHistorySuccess = $().HandleListUpdateReturn(xData, Status, 'WF History List Error (CreateWFHistoryItem)');
 			}
 		});
 	};
@@ -17036,8 +17037,8 @@
 			scheduleDates.push($(this).val());
 		});
 
-		console.log('scheduleDates');
-		console.log(scheduleDates);
+		// console.log('scheduleDates');
+		// console.log(scheduleDates);
 
 		// for each date that was found
 		$.each(scheduleDates, function (i, scheduleDate) {
@@ -17082,6 +17083,9 @@
 				// note: because this data / column is handled manually here, don't define a listFieldName for 
 				// 		the corresponding form field in settings.js
 				globalSubmissionValuePairsArray.push(["Date", scheduleDateISO]);
+
+				console.log('ReturnNewGSESchedulesSubmissionValuePairArrayOfArrays - globalSubmissionValuePairsArray');
+				console.log(globalSubmissionValuePairsArray);
 
 				// push globalSubmissionValuePairsArray to the array to return
 				submissionValuePairsArrayOfArraysToReturn.push(globalSubmissionValuePairsArray);
@@ -21324,7 +21328,7 @@
 		// wait for all data retrieval / setting promises to complete (pass or fail) 
 		$.when.apply($, allDataRetrievalAndSettingPromises).always(function () {
 
-			console.log('using dev_mos-main_long.1.04 m1 - DevCode4');
+			console.log('using dev_mos-main_long.1.04 m2 - DevCode4');
 
 			$().ConfigureAndShowScreenContainerAndAllScreens();
 		});
