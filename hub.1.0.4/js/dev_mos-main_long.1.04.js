@@ -377,8 +377,16 @@
 				break;
 			case "newRequest":
 			case "existingRequest":
-				if (typeof (mData.detailTitle) != "undefined") {
-					newTitle = mData.detailTitle;
+				if (mData.detailTitle) {
+					mData.detailTitle.forEach(function (detailTitleObject) {
+						detailTitleObject.roles.forEach(function (titleRole) {
+							uData.roles.forEach(function (userRole) {
+								if (userRole == titleRole) {
+									newTitle = detailTitleObject.title
+								}
+							});
+						});
+					});
 				} else {
 					newTitle = mData.requestName + " Request";
 				}
@@ -1354,7 +1362,13 @@
 
 					$.each(opt.select, function (i, oneField) {
 
-						if (oneField.nameHere === "formData" || oneField.nameHere === "defaultDataForNewRequests") {
+						if (
+							oneField.nameHere === "formData" || 
+							oneField.nameHere === "defaultDataForNewRequests" || 
+							oneField.nameHere === "GSEJobData" || 
+							oneField.nameHere === "GSEScheduleData"
+						) {
+							console.log('found field to interpret');
 
 							var value = $(zRow).attr("ows_" + oneField.nameInList);
 
@@ -1438,7 +1452,12 @@
 
 					$.each(opt.select, function (i, oneField) {
 
-						if (oneField.nameHere === "formData" || oneField.nameHere === "defaultDataForNewRequests") {
+						if (
+							oneField.nameHere === "formData" ||
+							oneField.nameHere === "defaultDataForNewRequests" ||
+							oneField.nameHere === "GSEJobData" ||
+							oneField.nameHere === "GSEScheduleData"
+						) {
 
 							var value = $(zRow).attr("ows_" + oneField.nameInList);
 
@@ -2068,92 +2087,94 @@
 	// ---- MOST FREQUENTLY NEEDED
 
 
-	$.fn.GetJobValues = function (jobId) {
-		// reconsider
-		var options = {
-			"select": [{
-				"nameHere": "formData",
-				"nameInList": "AllRequestData"
-			}],
-			"where": {
-				"field": "ID",
-				"type": "Number",
-				"value": jobId,
-			}
-		};
+	/* 
+		$.fn.GetJobValues = function (jobId) {
+			// reconsider
+			var options = {
+				"select": [{
+					"nameHere": "formData",
+					"nameInList": "AllRequestData"
+				}],
+				"where": {
+					"field": "ID",
+					"type": "Number",
+					"value": jobId,
+				}
+			};
 
-		var jobValues = {};
+			var jobValues = {};
 
-		// assume we're going to query this site's SWFList if a specific list wasn't supplied
-		var opt = $.extend({}, {
-			listName: "SWFList",
-			webURL: "https://bmos.sharepoint.com/sites/hr-service-jobs",
-			completefunc: null
-		}, options);
+			// assume we're going to query this site's SWFList if a specific list wasn't supplied
+			var opt = $.extend({}, {
+				listName: "SWFList",
+				webURL: "https://bmos.sharepoint.com/sites/hr-service-jobs",
+				completefunc: null
+			}, options);
 
-		var query = "<Query>" +
-			"<Where>" +
-			"<Eq>" +
-			"<FieldRef Name='" + opt.where.field + "'></FieldRef>" +
-			"<Value Type='" + opt.where.type + "'>" + opt.where.value + "</Value>" +
-			"</Eq>" +
-			"</Where>" +
-			"</Query>";
+			var query = "<Query>" +
+				"<Where>" +
+				"<Eq>" +
+				"<FieldRef Name='" + opt.where.field + "'></FieldRef>" +
+				"<Value Type='" + opt.where.type + "'>" + opt.where.value + "</Value>" +
+				"</Eq>" +
+				"</Where>" +
+				"</Query>";
 
-		var fields = "<ViewFields>";
-		$.each(opt.select, function (i, oneField) {
-			fields += "<FieldRef Name='" + oneField.nameInList + "' />";
-		});
-		fields += "</ViewFields>";
+			var fields = "<ViewFields>";
+			$.each(opt.select, function (i, oneField) {
+				fields += "<FieldRef Name='" + oneField.nameInList + "' />";
+			});
+			fields += "</ViewFields>";
 
-		$().SPServices({
-			operation: "GetListItems",
-			async: false,
-			webURL: opt.webURL,
-			listName: opt.listName,
-			CAMLViewFields: fields,
-			CAMLQuery: query,
-			CAMLQueryOptions: "<QueryOptions><ExpandUserField>TRUE</ExpandUserField></QueryOptions>",
-			completefunc: function (xData, Status) {
-				$(xData.responseXML).SPFilterNode("z:row").each(function () {
-					var zRow = $(this);
+			$().SPServices({
+				operation: "GetListItems",
+				async: false,
+				webURL: opt.webURL,
+				listName: opt.listName,
+				CAMLViewFields: fields,
+				CAMLQuery: query,
+				CAMLQueryOptions: "<QueryOptions><ExpandUserField>TRUE</ExpandUserField></QueryOptions>",
+				completefunc: function (xData, Status) {
+					$(xData.responseXML).SPFilterNode("z:row").each(function () {
+						var zRow = $(this);
 
-					$.each(opt.select, function (i, oneField) {
+						$.each(opt.select, function (i, oneField) {
 
-						if (oneField.nameHere === "formData" || oneField.nameHere === "defaultDataForNewRequests") {
+							if (oneField.nameHere === "formData" || oneField.nameHere === "defaultDataForNewRequests") {
 
-							var value = $(zRow).attr("ows_" + oneField.nameInList);
+								var value = $(zRow).attr("ows_" + oneField.nameInList);
 
-							var regexOne = new RegExp("\r", "g");
-							var regexTwo = new RegExp("\n", "g");
-							value = value.replace(regexOne, "'");
-							value = value.replace(regexTwo, "'");
+								var regexOne = new RegExp("\r", "g");
+								var regexTwo = new RegExp("\n", "g");
+								value = value.replace(regexOne, "'");
+								value = value.replace(regexTwo, "'");
 
-							eval("var formDataObj=" + value);
+								eval("var formDataObj=" + value);
 
-							jobValues[oneField.nameHere] = formDataObj;
+								jobValues[oneField.nameHere] = formDataObj;
 
-						} else {
+							} else {
 
-							value = $(zRow).attr("ows_" + oneField.nameInList);
+								value = $(zRow).attr("ows_" + oneField.nameInList);
 
-							if (typeof (oneField.linkField) != "undefined") {
-								if (oneField.linkField === 1) {
+								if (typeof (oneField.linkField) != "undefined") {
+									if (oneField.linkField === 1) {
 
-									value = ReplaceAll(",,", "DOUBLECOMMAREPLACEMENT", value);
-									value = value.split(",")[0];
-									value = ReplaceAll("DOUBLECOMMAREPLACEMENT", ",", value);
+										value = ReplaceAll(",,", "DOUBLECOMMAREPLACEMENT", value);
+										value = value.split(",")[0];
+										value = ReplaceAll("DOUBLECOMMAREPLACEMENT", ",", value);
+									}
 								}
+								jobValues[oneField.nameHere] = value;
 							}
-							jobValues[oneField.nameHere] = value;
-						}
+						});
 					});
-				});
-			}
-		});
+				}
+			});
 
-		return jobValues;
-	}
+			return jobValues;
+		}
+	 */
 
 
 
@@ -2206,7 +2227,7 @@
 
 
 	$.fn.ConfigureExistingGSESchedule = function (passedScheduleID) {
-		// reconsider
+
 		/*
 			scorey: here, 
 			 ** query SWFList, build screen 3.1, insert it into the container, listen for the signup button to be clicked, and start trying maintenance mode
@@ -2217,86 +2238,99 @@
 
 		// $("div#request-screen-container").append("<p>This is 3.1 Signup Opportunity for User.</p>");
 
-		if (typeof (passedRequestID) != "undefined" && passedRequestID === "0") {
-			rData = { "requestID": "" };
-		} else {
-			rData = { "requestID": GetParamFromUrl(location.search, "r") };
-		}
+		rData = { "requestID": passedScheduleID };
+		rData = $.extend(
+			rData,
+			$().GetFieldsFromOneRow({
+				"select": [{
+					"nameHere": "jobId",
+					"nameInList": "JobID"
+				}, {
+					"nameHere": "GSEScheduleData",
+					"nameInList": "AllRequestData"
+				}],
+				"where": {
+					"field": "ID",
+					"type": "Number",
+					"value": rData.requestID,
+				}
+			})
+		);
+		rData = $.extend(
+			rData,
+			$().GetFieldsFromOneRow({
+				"select": [{
+					"nameHere": "GSEJobData",
+					"nameInList": "AllRequestData"
+				}],
+				"webURL": "https://bmos.sharepoint.com/sites/hr-service-jobs",
+				"where": {
+					"field": "ID",
+					"type": "Number",
+					"value": rData.jobId,
+				}
+			})
+		);
+		console.log('checking here');
+		console.log(rData);
 
-		if (rData.requestID != "") {
-			rData = $.extend(
-				rData,
-				$().GetFieldsFromOneRow({
-					"select": [{
-						"nameHere": "jobId",
-						"nameInList": "JobID"
-					}, {
-						"nameHere": "formData",
-						"nameInList": "AllRequestData"
-					}],
-					"where": {
-						"field": "ID",
-						"type": "Number",
-						"value": rData.requestID,
-					}
-				})
-			);
 
-			var jobValues = $().GetJobValues(rData.jobId);
 
-			$("div#request-screen-container").append(
-				"<h2>Schedule #" + rData.requestID + "</h2>" +
-				"<p><strong>Job Title: </strong> " + jobValues.formData['JobTitle'] + "</p>" +
-				"<p><strong>Reports To: </strong> <a href='mailto:" + jobValues.formData['ReportsTo'][0].description + "'>" + jobValues.formData['ReportsTo'][0].displayText + "</a></p>" +
-				"<p><strong>Department: </strong> " + jobValues.formData['Department'] + "</p>" +
-				"<p><strong>Job Description: </strong> " + jobValues.formData['JobDescription'] + "</p>" +
-				"<p><strong>Training Requirements: </strong> " + jobValues.formData['TrainingRequirements'] + "</p>" +
-				"<p><strong>Dress Requirements: </strong> " + jobValues.formData['Dress-Requirements'] + "</p>" +
-				"<p><strong>Job Duties: </strong> " + jobValues.formData['JobDuties'] + "</p>" +
-				"<p><strong>Physical Requirements: </strong>" +
-				"<ul>" +
-				"<li><strong>Lifting: </strong>" + jobValues.formData['PhysicalDemandLifting'] + " lbs</li>" +
-				"<li><strong>Carrying: </strong>" + jobValues.formData['PhysicalDemandCarrying'] + " lbs</li>" +
-				"<li><strong>Pushing: </strong>" + jobValues.formData['PhysicalDemandPushing'] + " lbs</li>" +
-				"<li><strong>Pulling: </strong>" + jobValues.formData['PhysicalDemandPulling'] + " lbs</li>" +
-				"<li><strong>Standing: </strong>" + jobValues.formData['PhysicalDemandStanding'] + "%</li>" +
-				"<li><strong>Sitting: </strong>" + jobValues.formData['PhysicalDemandSitting'] + "%</li>" +
-				"<li><strong>Walking: </strong>" + jobValues.formData['PhysicalDemandWalking'] + "%</li>" +
-				"</ul>" +
-				"</p>" +
-				"<input id='submit-signup' type='button' value='Sign Up' />"
-			);
+		$("div#request-screen-container").append(
+			'<div id="request-detail-display">' + 
+			'	<h3>' + rData.GSEJobData['Job-Title'] + '</h3>' + 
+			'	<p>Positions Available: ' + '' + rData.GSEJobData['Department'] + '</p>' + 
+			'	<p>Reports To: <a href="mailto: ' + rData.GSEJobData['Job-Admin'][0].description + '">' + rData.GSEJobData['Job-Admin'][0].displayText + '</a></p>' + 
+			'	<p>Department: ' + rData.GSEJobData['Department'] + '</p>' + 
+			// '	<p>Job Description: ' + rData.GSEJobData['JobDescription'] + '</p>' + 
+			// '	<p>Training Requirements: ' + rData.GSEJobData['TrainingRequirements'] + '</p>' + 
+			// '	<p>Dress Requirements: ' + rData.GSEJobData['Dress-Requirements'] + '</p>' + 
+			// '	<p>Job Duties: ' + rData.GSEJobData['JobDuties'] + '</p>' + 
+			// '	<p>Physical Requirements:' + 
+			// '	<ul>' + 
+			// '	<li>Lifting:' + rData.GSEJobData['PhysicalDemandLifting'] + ' lbs</li>' + 
+			// '	<li>Carrying:' + rData.GSEJobData['PhysicalDemandCarrying'] + ' lbs</li>' + 
+			// '	<li>Pushing:' + rData.GSEJobData['PhysicalDemandPushing'] + ' lbs</li>' + 
+			// '	<li>Pulling:' + rData.GSEJobData['PhysicalDemandPulling'] + ' lbs</li>' + 
+			// '	<li>Standing:' + rData.GSEJobData['PhysicalDemandStanding'] + '%</li>' + 
+			// '	<li>Sitting:' + rData.GSEJobData['PhysicalDemandSitting'] + '%</li>' + 
+			// '	<li>Walking:' + rData.GSEJobData['PhysicalDemandWalking'] + '%</li>' + 
+			// '	</ul>' + 
+			// '	</p>' + 
+			// '	<input id='submit-signup' type='button' value='Sign Up' />' + 
+			'</div>'
+		);
 
-			$('#submit-signup').click(function () {
 
-				var listValuePairs = [
-					['JobID', rData.jobId],
-					['JobTitle', jobValues.formData['JobTitle']],
-					['Date', rData.formData.RepeatedElements[0].Dates],
-					['ScheduleID', rData.requestID],
-					['UserDept', uData.dept],
-					['UserContact', uData.email],
-					['Title', uData.email + ' Signup ' + jobValues.formData['JobTitle']],
-					['RequestStatus', 'Pending Approval'],
-					['BeginningOfLife', 1],
-					['EndOfLife', 0],
-					['NewlyApprovedOrPending', 1],
-					['RequestVersion', 2]
-				];
+		/* $('#submit-signup').click(function () {
 
-				$().SPServices({
-					operation: 'UpdateListItems',
-					listName: "SWFList",
-					webURL: "https://bmos.sharepoint.com/sites/hr-service-signup",
-					batchCmd: 'New',
-					ID: 0,
-					valuepairs: listValuePairs,
-					completefunc: function (xData, Status) {
-						$().HandleListUpdateReturn(xData, Status, 'Hub Location Addition Error');
-					}
-				});
+			var listValuePairs = [
+				['JobID', rData.jobId],
+				['JobTitle', rData.GSEJobData['JobTitle']],
+				['Date', rData.formData.RepeatedElements[0].Dates],
+				['ScheduleID', rData.requestID],
+				['UserDept', uData.dept],
+				['UserContact', uData.email],
+				['Title', uData.email + ' Signup ' + rData.GSEJobData['JobTitle']],
+				['RequestStatus', 'Pending Approval'],
+				['BeginningOfLife', 1],
+				['EndOfLife', 0],
+				['NewlyApprovedOrPending', 1],
+				['RequestVersion', 2]
+			];
+
+			$().SPServices({
+				operation: 'UpdateListItems',
+				listName: "SWFList",
+				webURL: "https://bmos.sharepoint.com/sites/hr-service-signup",
+				batchCmd: 'New',
+				ID: 0,
+				valuepairs: listValuePairs,
+				completefunc: function (xData, Status) {
+					$().HandleListUpdateReturn(xData, Status, 'Hub Location Addition Error');
+				}
 			});
-		}
+		}); */
 	};
 
 
@@ -2306,7 +2340,7 @@
 		// if this is a GSE Sschedule and this user is not HR Admin, Job Admin, or Manager
 		if (mData.requestName === "GSE Schedule" && uData.roles.indexOf("gseUserOnly") > -1) {
 			// forget this function and go to ConfigureExistingGSESchedule instead
-			$().ConfigureExistingGSESchedule();
+			$().ConfigureExistingGSESchedule(passedRequestID);
 			// if this is not a GSE Schedule or this user is HR Admin, Job Admin, or Manager
 		} else {
 
@@ -2321,8 +2355,6 @@
 			if (typeof (mData.devAdminNotifications) != 'undefined' && mData.devAdminNotifications === 1) {
 				mData.adminNotificationPersons = mData.devAdminNotificationPersons;
 			}
-
-			// mData.adminNotificationPersons = '53;#Hub Tester1,#i:0#.f|membership|sp1@mos.org,#sp1@mos.org,#sp1@MOS.ORG,#Hub Tester1,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/sp1_mos_org_MThumb.jpg?t=63655593687,#Interactive Media,#;#6;#James Baker,#i:0#.f|membership|jbaker@mos.org,#jbaker@mos.org,#jbaker@mos.org,#James Baker,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/jbaker_mos_org_MThumb.jpg?t=63616027741,#Interactive Media,#Intranet Solutions Project Manager;#467;#Samuel Corey,#i:0#.f|membership|scorey@mos.org,#scorey@mos.org,#scorey@MOS.ORG,#Samuel Corey,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/scorey_mos_org_MThumb.jpg,#Interactive Media,#Web Developer';
 
 			// set semicolon-delimited string of admin emails
 			mData.adminEmailString = $().ReturnUserEmailStringAndArray(mData.adminNotificationPersons).string;
@@ -2378,11 +2410,6 @@
 						}
 					})
 				);
-
-				// rData.formData = { "Approval-Newly-Needed-Notify": "none" };
-				// rData.requestVersion = "1";
-				// rData.endOfLife = "0";
-				// console.log(rData);
 			}
 
 			if (typeof (rData.requestStatus) === "undefined") {
@@ -17085,8 +17112,8 @@
 				// 		the corresponding form field in settings.js
 				globalSubmissionValuePairsArray.push(["Date", scheduleDateISO]);
 
-				console.log('ReturnNewGSESchedulesSubmissionValuePairArrayOfArrays - globalSubmissionValuePairsArray');
-				console.log(globalSubmissionValuePairsArray);
+				// console.log('ReturnNewGSESchedulesSubmissionValuePairArrayOfArrays - globalSubmissionValuePairsArray');
+				// console.log(globalSubmissionValuePairsArray);
 
 				// push globalSubmissionValuePairsArray to the array to return
 				submissionValuePairsArrayOfArraysToReturn.push(globalSubmissionValuePairsArray);

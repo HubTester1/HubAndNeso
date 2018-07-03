@@ -9,10 +9,17 @@
 		// 'mosMainKey': 'dev',
 		// 'mosMainKey': 'devMedium',
 		'mosMainKey': 'devLong',
-		// "useRecordedMOSMainMajorVersion": 1,
 		'devAdminNotifications': 1,
 		'notifications': 0,
-		'detailTitle': 'GSE Schedule'
+		'detailTitle': [
+			{
+				'roles': ['gseHRAdmin', 'gseJobAdmin', 'gseManager'],
+				'title': 'GSE Schedule'
+			}, {
+				'roles': ['gseUserOnly'],
+				'title': 'GSE Signup Opportunity'
+			}
+		]
 	};
 
 	console.log("using settings m2");
@@ -862,8 +869,8 @@
 				'fieldName': "StartTime",
 				'listFieldName': "StartTime",
 				'labelContent': "Start Time",
-				// 'requiredForNonAdmin': [""],
-				// 'requiredForAdmin': [""],
+				'requiredForNonAdmin': ['', 'Submitted'],
+				'requiredForAdmin': ['', 'Submitted'],
 				'disabledForNonAdmin': ['Cancelled'],
 				'disabledForAdmin': ['Cancelled']
 			}, {
@@ -881,8 +888,8 @@
 						"display": "This is a full-day shift"
 					}
 				],
-				// 'requiredForNonAdmin': [""],
-				// 'requiredForAdmin': [""],
+				'requiredForNonAdmin': ['', 'Submitted'],
+				'requiredForAdmin': ['', 'Submitted'],
 				'disabledForNonAdmin': ['Cancelled'],
 				'disabledForAdmin': ['Cancelled']
 			}, {
@@ -891,8 +898,8 @@
 				'fieldName': "NumberOfPositions",
 				'listFieldName': "NumberOfPositions",
 				'labelContent': "Number of Positions",
-				// 'requiredForNonAdmin': [""],
-				// 'requiredForAdmin': [""],
+				'requiredForNonAdmin': ['', 'Submitted'],
+				'requiredForAdmin': ['', 'Submitted'],
 				'disabledForNonAdmin': ['Cancelled'],
 				'disabledForAdmin': ['Cancelled']
 			}, {
@@ -901,8 +908,8 @@
 				'fieldName': "Location",
 				'listFieldName': "Location",
 				'labelContent': "Location",
-				// 'requiredForNonAdmin': [""],
-				// 'requiredForAdmin': [""],
+				'requiredForNonAdmin': ['', 'Submitted'],
+				'requiredForAdmin': ['', 'Submitted'],
 				'disabledForNonAdmin': ['Cancelled'],
 				'disabledForAdmin': ['Cancelled']
 			}, {
@@ -920,8 +927,8 @@
 						"display": "No, this location is not offsite"
 					}
 				],
-				// 'requiredForNonAdmin': [""],
-				// 'requiredForAdmin': [""],
+				'requiredForNonAdmin': ['', 'Submitted'],
+				'requiredForAdmin': ['', 'Submitted'],
 				'disabledForNonAdmin': ['Cancelled'],
 				'disabledForAdmin': ['Cancelled']
 			}, {
@@ -929,8 +936,8 @@
 				'controlType': "time",
 				'fieldName': "MealTime",
 				'labelContent': "Meal Time",
-				// 'requiredForNonAdmin': [""],
-				// 'requiredForAdmin': [""],
+				'requiredForNonAdmin': ['', 'Submitted'],
+				'requiredForAdmin': ['', 'Submitted'],
 				'disabledForNonAdmin': ['Cancelled'],
 				'disabledForAdmin': ['Cancelled']
 			}, {
@@ -938,8 +945,8 @@
 				'controlType': "time",
 				'fieldName': "BreakTime",
 				'labelContent': "Break Time",
-				// 'requiredForNonAdmin': [""],
-				// 'requiredForAdmin': [""],
+				'requiredForNonAdmin': ['', 'Submitted'],
+				'requiredForAdmin': ['', 'Submitted'],
 				'disabledForNonAdmin': ['Cancelled'],
 				'disabledForAdmin': ['Cancelled']
 			}, {
@@ -985,8 +992,8 @@
 				'labelContent': "Date",
 				'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 },
 				'isoFormatOnSubmit': { 'incomingFormat': null, 'returnFormat': null, 'determineYearDisplayDynamically': null },
-				'requiredForNonAdmin': [""],
-				'requiredForAdmin': [""],
+				'requiredForNonAdmin': [''],
+				'requiredForAdmin': [''],
 				'disabledForNonAdmin': ['Cancelled'],
 				'disabledForAdmin': ['Cancelled']
 			},  {
@@ -1045,7 +1052,7 @@
 
 	// TEMPORARY
 
-	// repeats
+	/* // repeats
 	fData.CustomScriptLast += '$().RepeatElement("gse-schedule-date");';
 	fData.CustomScriptLast += '$().RepeatElement("gse-schedule-date");';
 	
@@ -1071,9 +1078,9 @@
 	fData.CustomScriptLast += '$("select#minutes-input_BreakTime option[value=\':30:00\']").attr("selected","selected"); \n';
 
 	// hidden
-	fData.CustomScriptLast += '$("input#time-storage_StartTime").val("2000-01-01T09:00:00-05:00"); \n';
-	fData.CustomScriptLast += '$("input#time-storage_MealTime").val("2000-01-01T11:00:00-05:00"); \n';
-	fData.CustomScriptLast += '$("input#time-storage_BreakTime").val("2000-01-01T13:30:00-05:00"); \n';
+	fData.CustomScriptLast += '$("input#time-storage_StartTime").val("2000-01-01T09:00:00Z"); \n';
+	fData.CustomScriptLast += '$("input#time-storage_MealTime").val("2000-01-01T11:00:00Z"); \n';
+	fData.CustomScriptLast += '$("input#time-storage_BreakTime").val("2000-01-01T13:30:00Z"); \n'; */
 
 
 	$.fn.ReturnThisAppMData = function () {
