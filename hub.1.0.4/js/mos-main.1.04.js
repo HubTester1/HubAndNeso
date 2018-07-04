@@ -377,8 +377,16 @@
 				break;
 			case "newRequest":
 			case "existingRequest":
-				if (typeof (mData.detailTitle) != "undefined") {
-					newTitle = mData.detailTitle;
+				if (mData.detailTitle) {
+					mData.detailTitle.forEach(function (detailTitleObject) {
+						detailTitleObject.roles.forEach(function (titleRole) {
+							uData.roles.forEach(function (userRole) {
+								if (userRole == titleRole) {
+									newTitle = detailTitleObject.title
+								}
+							});
+						});
+					});
 				} else {
 					newTitle = mData.requestName + " Request";
 				}
@@ -1354,7 +1362,13 @@
 
 					$.each(opt.select, function (i, oneField) {
 
-						if (oneField.nameHere === "formData" || oneField.nameHere === "defaultDataForNewRequests") {
+						if (
+							oneField.nameHere === "formData" ||
+							oneField.nameHere === "defaultDataForNewRequests" ||
+							oneField.nameHere === "GSEJobData" ||
+							oneField.nameHere === "GSEScheduleData"
+						) {
+							console.log('found field to interpret');
 
 							var value = $(zRow).attr("ows_" + oneField.nameInList);
 
@@ -1438,7 +1452,12 @@
 
 					$.each(opt.select, function (i, oneField) {
 
-						if (oneField.nameHere === "formData" || oneField.nameHere === "defaultDataForNewRequests") {
+						if (
+							oneField.nameHere === "formData" ||
+							oneField.nameHere === "defaultDataForNewRequests" ||
+							oneField.nameHere === "GSEJobData" ||
+							oneField.nameHere === "GSEScheduleData"
+						) {
 
 							var value = $(zRow).attr("ows_" + oneField.nameInList);
 
@@ -2068,92 +2087,94 @@
 	// ---- MOST FREQUENTLY NEEDED
 
 
-	$.fn.GetJobValues = function (jobId) {
-		// reconsider
-		var options = {
-			"select": [{
-				"nameHere": "formData",
-				"nameInList": "AllRequestData"
-			}],
-			"where": {
-				"field": "ID",
-				"type": "Number",
-				"value": jobId,
-			}
-		};
+	/* 
+		$.fn.GetJobValues = function (jobId) {
+			// reconsider
+			var options = {
+				"select": [{
+					"nameHere": "formData",
+					"nameInList": "AllRequestData"
+				}],
+				"where": {
+					"field": "ID",
+					"type": "Number",
+					"value": jobId,
+				}
+			};
 
-		var jobValues = {};
+			var jobValues = {};
 
-		// assume we're going to query this site's SWFList if a specific list wasn't supplied
-		var opt = $.extend({}, {
-			listName: "SWFList",
-			webURL: "https://bmos.sharepoint.com/sites/hr-service-jobs",
-			completefunc: null
-		}, options);
+			// assume we're going to query this site's SWFList if a specific list wasn't supplied
+			var opt = $.extend({}, {
+				listName: "SWFList",
+				webURL: "https://bmos.sharepoint.com/sites/hr-service-jobs",
+				completefunc: null
+			}, options);
 
-		var query = "<Query>" +
-			"<Where>" +
-			"<Eq>" +
-			"<FieldRef Name='" + opt.where.field + "'></FieldRef>" +
-			"<Value Type='" + opt.where.type + "'>" + opt.where.value + "</Value>" +
-			"</Eq>" +
-			"</Where>" +
-			"</Query>";
+			var query = "<Query>" +
+				"<Where>" +
+				"<Eq>" +
+				"<FieldRef Name='" + opt.where.field + "'></FieldRef>" +
+				"<Value Type='" + opt.where.type + "'>" + opt.where.value + "</Value>" +
+				"</Eq>" +
+				"</Where>" +
+				"</Query>";
 
-		var fields = "<ViewFields>";
-		$.each(opt.select, function (i, oneField) {
-			fields += "<FieldRef Name='" + oneField.nameInList + "' />";
-		});
-		fields += "</ViewFields>";
+			var fields = "<ViewFields>";
+			$.each(opt.select, function (i, oneField) {
+				fields += "<FieldRef Name='" + oneField.nameInList + "' />";
+			});
+			fields += "</ViewFields>";
 
-		$().SPServices({
-			operation: "GetListItems",
-			async: false,
-			webURL: opt.webURL,
-			listName: opt.listName,
-			CAMLViewFields: fields,
-			CAMLQuery: query,
-			CAMLQueryOptions: "<QueryOptions><ExpandUserField>TRUE</ExpandUserField></QueryOptions>",
-			completefunc: function (xData, Status) {
-				$(xData.responseXML).SPFilterNode("z:row").each(function () {
-					var zRow = $(this);
+			$().SPServices({
+				operation: "GetListItems",
+				async: false,
+				webURL: opt.webURL,
+				listName: opt.listName,
+				CAMLViewFields: fields,
+				CAMLQuery: query,
+				CAMLQueryOptions: "<QueryOptions><ExpandUserField>TRUE</ExpandUserField></QueryOptions>",
+				completefunc: function (xData, Status) {
+					$(xData.responseXML).SPFilterNode("z:row").each(function () {
+						var zRow = $(this);
 
-					$.each(opt.select, function (i, oneField) {
+						$.each(opt.select, function (i, oneField) {
 
-						if (oneField.nameHere === "formData" || oneField.nameHere === "defaultDataForNewRequests") {
+							if (oneField.nameHere === "formData" || oneField.nameHere === "defaultDataForNewRequests") {
 
-							var value = $(zRow).attr("ows_" + oneField.nameInList);
+								var value = $(zRow).attr("ows_" + oneField.nameInList);
 
-							var regexOne = new RegExp("\r", "g");
-							var regexTwo = new RegExp("\n", "g");
-							value = value.replace(regexOne, "'");
-							value = value.replace(regexTwo, "'");
+								var regexOne = new RegExp("\r", "g");
+								var regexTwo = new RegExp("\n", "g");
+								value = value.replace(regexOne, "'");
+								value = value.replace(regexTwo, "'");
 
-							eval("var formDataObj=" + value);
+								eval("var formDataObj=" + value);
 
-							jobValues[oneField.nameHere] = formDataObj;
+								jobValues[oneField.nameHere] = formDataObj;
 
-						} else {
+							} else {
 
-							value = $(zRow).attr("ows_" + oneField.nameInList);
+								value = $(zRow).attr("ows_" + oneField.nameInList);
 
-							if (typeof (oneField.linkField) != "undefined") {
-								if (oneField.linkField === 1) {
+								if (typeof (oneField.linkField) != "undefined") {
+									if (oneField.linkField === 1) {
 
-									value = ReplaceAll(",,", "DOUBLECOMMAREPLACEMENT", value);
-									value = value.split(",")[0];
-									value = ReplaceAll("DOUBLECOMMAREPLACEMENT", ",", value);
+										value = ReplaceAll(",,", "DOUBLECOMMAREPLACEMENT", value);
+										value = value.split(",")[0];
+										value = ReplaceAll("DOUBLECOMMAREPLACEMENT", ",", value);
+									}
 								}
+								jobValues[oneField.nameHere] = value;
 							}
-							jobValues[oneField.nameHere] = value;
-						}
+						});
 					});
-				});
-			}
-		});
+				}
+			});
 
-		return jobValues;
-	}
+			return jobValues;
+		}
+	 */
 
 
 
@@ -2206,7 +2227,7 @@
 
 
 	$.fn.ConfigureExistingGSESchedule = function (passedScheduleID) {
-		// reconsider
+
 		/*
 			scorey: here, 
 			 ** query SWFList, build screen 3.1, insert it into the container, listen for the signup button to be clicked, and start trying maintenance mode
@@ -2217,86 +2238,182 @@
 
 		// $("div#request-screen-container").append("<p>This is 3.1 Signup Opportunity for User.</p>");
 
-		if (typeof (passedRequestID) != "undefined" && passedRequestID === "0") {
-			rData = { "requestID": "" };
-		} else {
-			rData = { "requestID": GetParamFromUrl(location.search, "r") };
-		}
+		rData = { "requestID": passedScheduleID };
+		rData = $.extend(
+			rData,
+			$().GetFieldsFromOneRow({
+				"select": [{
+					"nameHere": "jobId",
+					"nameInList": "JobID"
+				}, {
+					"nameHere": "GSEScheduleData",
+					"nameInList": "AllRequestData"
+				}],
+				"where": {
+					"field": "ID",
+					"type": "Number",
+					"value": rData.requestID,
+				}
+			})
+		);
+		rData = $.extend(
+			rData,
+			$().GetFieldsFromOneRow({
+				"select": [{
+					"nameHere": "GSEJobData",
+					"nameInList": "AllRequestData"
+				}],
+				"webURL": "https://bmos.sharepoint.com/sites/hr-service-jobs",
+				"where": {
+					"field": "ID",
+					"type": "Number",
+					"value": rData.jobId,
+				}
+			})
+		);
 
-		if (rData.requestID != "") {
-			rData = $.extend(
-				rData,
-				$().GetFieldsFromOneRow({
-					"select": [{
-						"nameHere": "jobId",
-						"nameInList": "JobID"
-					}, {
-						"nameHere": "formData",
-						"nameInList": "AllRequestData"
-					}],
-					"where": {
-						"field": "ID",
-						"type": "Number",
-						"value": rData.requestID,
-					}
-				})
-			);
-
-			var jobValues = $().GetJobValues(rData.jobId);
-
-			$("div#request-screen-container").append(
-				"<h2>Schedule #" + rData.requestID + "</h2>" +
-				"<p><strong>Job Title: </strong> " + jobValues.formData['JobTitle'] + "</p>" +
-				"<p><strong>Reports To: </strong> <a href='mailto:" + jobValues.formData['ReportsTo'][0].description + "'>" + jobValues.formData['ReportsTo'][0].displayText + "</a></p>" +
-				"<p><strong>Department: </strong> " + jobValues.formData['Department'] + "</p>" +
-				"<p><strong>Job Description: </strong> " + jobValues.formData['JobDescription'] + "</p>" +
-				"<p><strong>Training Requirements: </strong> " + jobValues.formData['TrainingRequirements'] + "</p>" +
-				"<p><strong>Dress Requirements: </strong> " + jobValues.formData['Dress-Requirements'] + "</p>" +
-				"<p><strong>Job Duties: </strong> " + jobValues.formData['JobDuties'] + "</p>" +
-				"<p><strong>Physical Requirements: </strong>" +
-				"<ul>" +
-				"<li><strong>Lifting: </strong>" + jobValues.formData['PhysicalDemandLifting'] + " lbs</li>" +
-				"<li><strong>Carrying: </strong>" + jobValues.formData['PhysicalDemandCarrying'] + " lbs</li>" +
-				"<li><strong>Pushing: </strong>" + jobValues.formData['PhysicalDemandPushing'] + " lbs</li>" +
-				"<li><strong>Pulling: </strong>" + jobValues.formData['PhysicalDemandPulling'] + " lbs</li>" +
-				"<li><strong>Standing: </strong>" + jobValues.formData['PhysicalDemandStanding'] + "%</li>" +
-				"<li><strong>Sitting: </strong>" + jobValues.formData['PhysicalDemandSitting'] + "%</li>" +
-				"<li><strong>Walking: </strong>" + jobValues.formData['PhysicalDemandWalking'] + "%</li>" +
-				"</ul>" +
-				"</p>" +
-				"<input id='submit-signup' type='button' value='Sign Up' />"
-			);
-
-			$('#submit-signup').click(function () {
-
-				var listValuePairs = [
-					['JobID', rData.jobId],
-					['JobTitle', jobValues.formData['JobTitle']],
-					['Date', rData.formData.RepeatedElements[0].Dates],
-					['ScheduleID', rData.requestID],
-					['UserDept', uData.dept],
-					['UserContact', uData.email],
-					['Title', uData.email + ' Signup ' + jobValues.formData['JobTitle']],
-					['RequestStatus', 'Pending Approval'],
-					['BeginningOfLife', 1],
-					['EndOfLife', 0],
-					['NewlyApprovedOrPending', 1],
-					['RequestVersion', 2]
-				];
-
-				$().SPServices({
-					operation: 'UpdateListItems',
-					listName: "SWFList",
-					webURL: "https://bmos.sharepoint.com/sites/hr-service-signup",
-					batchCmd: 'New',
-					ID: 0,
-					valuepairs: listValuePairs,
-					completefunc: function (xData, Status) {
-						$().HandleListUpdateReturn(xData, Status, 'Hub Location Addition Error');
+		var opportunityJobDuties = [];
+		rData.GSEJobData.RepeatedElements.forEach((repeatElement) => {
+			// console.log('repeatElement');
+			// console.log(repeatElement);
+			if (StrInStr(repeatElement.ID, 'gse-job-duty') != -1) {
+				// console.log('found a duty');
+				var repeatElementKeys = Object.keys(repeatElement);
+				// console.log('repeatElementKeys');
+				// console.log(repeatElementKeys);
+				repeatElementKeys.forEach((repeatElementKey) => {
+					if (StrInStr(repeatElementKey, 'Job-Duty')) {
+						opportunityJobDuties.push(repeatElement[repeatElementKey]);
 					}
 				});
-			});
+			}
+		});
+		var opportunityMarkup = '<div id="gse-signup-opportunity-display" class="request-detail-display">' +
+			'	<h3>' + rData.GSEJobData['Job-Title'] + '</h3>' +
+			'	<div class="request-detail-display__field">' +
+			'		<h4>Positions Available</h4>' +
+			'<span style="background-color: #fcc">X out of </span>' + rData.GSEScheduleData['Number-of-Positions'] +
+			'	</div>' +
+			'	<div class="request-detail-display__field">' +
+			'		<h4>On <span style="background-color: #fcc">July 31, 2018</h4>' +
+			'This <span style="background-color: #fcc">7.5 hour</span> job begins at <span style="background-color: #fcc">9:00 am</span>, with a break at <span style="background-color: #fcc">11:00 am</span> and a meal at <span style="background-color: #fcc">1:00 pm</span>.' +
+			'	</div>' +
+			'	<div class="request-detail-display__field">' +
+			'		<h4>Reports To</h4>' +
+			'		<a href="mailto:' + rData.GSEJobData['Job-Admin'][0].description + '">' + rData.GSEJobData['Job-Admin'][0].displayText + '</a>' +
+			'	</div>' +
+			'	<div class="request-detail-display__field">' +
+			'		<h4>Department</h4>' +
+			rData.GSEJobData['Department'] +
+			'	</div>' +
+			'	<div class="request-detail-display__field">' +
+			'		<h4>Job Description</h4>' +
+			ReplaceAll('%0A', '<br />', rData.GSEJobData['Job-Description']) +
+			'	</div>';
+
+		if (rData.GSEJobData['Training-Requirements']) {
+			opportunityMarkup += '	<div class="request-detail-display__field">' +
+				'		<h4>Training Requirements</h4>' +
+				ReplaceAll('%0A', '<br />', rData.GSEJobData['Training-Requirements']) +
+				'	</div>';
 		}
+
+		opportunityMarkup += '	<div class="request-detail-display__field">' +
+			'		<h4>Dress Requirements</h4>' +
+			'		Must wear MOS badge above the waist at all times.<br />' +
+			'		Clothing and shoes must be in good condition.<br />';
+
+		if (rData.GSEJobData['Dress-Requirements']) {
+			opportunityMarkup += ReplaceAll('%0A', '<br />', rData.GSEJobData['Dress-Requirements']);
+		}
+
+		opportunityMarkup += '</div>' +
+			'	<div class="request-detail-display__field">' +
+			'		<h4>Job Duties</h4>';
+
+		opportunityJobDutyElement = opportunityJobDuties[1] ? 'li' : 'p';
+
+		if (opportunityJobDuties[1]) {
+			opportunityMarkup += '		<ul>';
+		}
+
+		opportunityJobDuties.forEach((opportunityJobDuty) => {
+			opportunityMarkup += '			<' + opportunityJobDutyElement + '>' + opportunityJobDuty + '</' + opportunityJobDutyElement + '>';
+		});
+
+		if (opportunityJobDuties[1]) {
+			opportunityMarkup += '		</ul>';
+		}
+
+		opportunityMarkup += '	</div>' +
+			'	<div class="request-detail-display__field-set">' +
+			'		<h4>Physical Requirements</h4>' +
+			'		<h5>How Much Weight Will Be Handled</h5>' +
+			'		<ul>' +
+			'			<li>Lifting: ' +
+			rData.GSEJobData['Physical-Demand-Lifting'] + ' lbs' +
+			'			</li>' +
+			'			<li>Carrying: ' +
+			rData.GSEJobData['Physical-Demand-Carrying'] + ' lbs' +
+			'			</li>' +
+			'			<li>Pushing: ' +
+			rData.GSEJobData['Physical-Demand-Pushing'] + ' lbs' +
+			'			</li>' +
+			'			<li>Pulling: ' +
+			rData.GSEJobData['Physical-Demand-Pulling'] + ' lbs' +
+			'			</li>' +
+			'		</ul>' +
+
+
+
+			'		<h5>How Much Weight Will Be Handled</h5>' +
+			'		<ul>' +
+			'			<li>Standing: ' +
+			rData.GSEJobData['Physical-Demand-Standing'] + '%' +
+			'			</li>' +
+			'			<li>Sitting: ' +
+			rData.GSEJobData['Physical-Demand-Sitting'] + '%' +
+			'			</li>' +
+			'			<li>Walking: ' +
+			rData.GSEJobData['Physical-Demand-Walking'] + '%' +
+			'			</li>' +
+			'		</ul>' +
+			'	</div>' +
+			'	<a id="gse-schedule-signup-button" data-button-type="gse-schedule-signup">Sign up</a>' +
+			'</div>';
+
+		$("div#request-screen-container").append(opportunityMarkup);
+
+
+		/* $('#submit-signup').click(function () {
+
+			var listValuePairs = [
+				['JobID', rData.jobId],
+				['JobTitle', rData.GSEJobData['JobTitle']],
+				['Date', rData.formData.RepeatedElements[0].Dates],
+				['ScheduleID', rData.requestID],
+				['UserDept', uData.dept],
+				['UserContact', uData.email],
+				['Title', uData.email + ' Signup ' + rData.GSEJobData['JobTitle']],
+				['RequestStatus', 'Pending Approval'],
+				['BeginningOfLife', 1],
+				['EndOfLife', 0],
+				['NewlyApprovedOrPending', 1],
+				['RequestVersion', 2]
+			];
+
+			$().SPServices({
+				operation: 'UpdateListItems',
+				listName: "SWFList",
+				webURL: "https://bmos.sharepoint.com/sites/hr-service-signup",
+				batchCmd: 'New',
+				ID: 0,
+				valuepairs: listValuePairs,
+				completefunc: function (xData, Status) {
+					$().HandleListUpdateReturn(xData, Status, 'Hub Location Addition Error');
+				}
+			});
+		}); */
 	};
 
 
@@ -2306,7 +2423,7 @@
 		// if this is a GSE Sschedule and this user is not HR Admin, Job Admin, or Manager
 		if (mData.requestName === "GSE Schedule" && uData.roles.indexOf("gseUserOnly") > -1) {
 			// forget this function and go to ConfigureExistingGSESchedule instead
-			$().ConfigureExistingGSESchedule();
+			$().ConfigureExistingGSESchedule(passedRequestID);
 			// if this is not a GSE Schedule or this user is HR Admin, Job Admin, or Manager
 		} else {
 
@@ -2322,8 +2439,6 @@
 				mData.adminNotificationPersons = mData.devAdminNotificationPersons;
 			}
 
-			// mData.adminNotificationPersons = '53;#Hub Tester1,#i:0#.f|membership|sp1@mos.org,#sp1@mos.org,#sp1@MOS.ORG,#Hub Tester1,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/sp1_mos_org_MThumb.jpg?t=63655593687,#Interactive Media,#;#6;#James Baker,#i:0#.f|membership|jbaker@mos.org,#jbaker@mos.org,#jbaker@mos.org,#James Baker,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/jbaker_mos_org_MThumb.jpg?t=63616027741,#Interactive Media,#Intranet Solutions Project Manager;#467;#Samuel Corey,#i:0#.f|membership|scorey@mos.org,#scorey@mos.org,#scorey@MOS.ORG,#Samuel Corey,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/scorey_mos_org_MThumb.jpg,#Interactive Media,#Web Developer';
-
 			// set semicolon-delimited string of admin emails
 			mData.adminEmailString = $().ReturnUserEmailStringAndArray(mData.adminNotificationPersons).string;
 			mData.adminEmailArray = $().ReturnUserEmailStringAndArray(mData.adminNotificationPersons).array;
@@ -2332,6 +2447,10 @@
 
 			mData.requiredApproversArray = (mData.requiredApproversString) ?
 				$().ReturnUserDataFromPersonOrGroupFieldString(mData.requiredApproversString) :
+				[];
+
+			mData.conditionalApproversArray = (mData.conditionalApproversString) ?
+				$().ReturnUserDataFromPersonOrGroupFieldString(mData.conditionalApproversString) :
 				[];
 
 			// THIS REQUEST'S DATA
@@ -2378,11 +2497,6 @@
 						}
 					})
 				);
-
-				// rData.formData = { "Approval-Newly-Needed-Notify": "none" };
-				// rData.requestVersion = "1";
-				// rData.endOfLife = "0";
-				// console.log(rData);
 			}
 
 			if (typeof (rData.requestStatus) === "undefined") {
@@ -4281,6 +4395,7 @@
 				$("div#persona-card-dialog").dialog("open");
 			});
 
+			// datetime and time elements
 			// when a date or time element changes
 			$("input[id^='date-input_'], select[id^='hours-input_'], select[id^='minutes-input_']").on("change", function () {
 				var container = $(this).closest("div.label-and-control");
@@ -4829,6 +4944,7 @@
 
 					$(workingMessage).text("Handling Request Status");
 
+					var previousReqStatus = rData.requestStatus;
 					var newReqStatus = '';
 					var beginningOfLife = 0;
 					var endOfLife = 0;
@@ -4848,6 +4964,7 @@
 					rData.endOfLife = endOfLife;
 					rData.beginningOfLife = beginningOfLife;
 					rData.requestStatus = newReqStatus;
+					rData.previousRequestStatus = previousReqStatus;
 					rData = rData;
 					$('input#Request-Status').val(newReqStatus);
 					$('input#Beginning-of-Life').val(endOfLife);
@@ -5033,31 +5150,36 @@
 						$('input#End-of-Life').val(endOfLife);
 					}
 
-					// consider
+				// consider
 
-					if (fData.autoTrackGSEScheduleStatuses === 1 && rData.endofLife != 1) {
-						$(workingMessage).text("Handling Request Status");
-	 
-						var newReqStatus = '';
-						var endOfLife = 0;
-						var endOfLifeIsNew = 0;
-						if (rData.requestStatus == '') {
-							newReqStatus = 'Pending Approval';
-						} else if (rData.requestStatus == 'Pending Approval' && $('select#Change-Request-Status option:selected').val() == 'Approve') {
-							newReqStatus = 'Approved';
-						} else if (rData.requestStatus == 'Pending Approval' && $('select#Change-Request-Status option:selected').val() == 'Close') {
-							newReqStatus = 'Closed';
+				if (fData.autoTrackGSEScheduleStatuses === 1 && rData.endofLife != 1) {
+
+					$(workingMessage).text("Handling Request Status");
+
+					var newReqStatus = '';
+					var beginningOfLife = 0;
+					var endOfLife = 0;
+					var endOfLifeIsNew = 0;
+					if (rData.requestStatus === '') {
+						newReqStatus = 'Submitted';
+						beginningOfLife = 1;
+					} else if (rData.requestStatus === 'Submitted') {
+						if ($('input#requester-cancellation_cancel:checked').length > 0 || $('select#Change-Request-Status option:selected').val() === 'Cancel') {
+							newReqStatus = 'Cancelled';
+							beginningOfLife = 0;
 							endOfLife = 1;
 							endOfLifeIsNew = 1;
 						}
-						rData.endOfLifeIsNew = endOfLifeIsNew;
-						rData.endOfLife = endOfLife;
-						rData.requestStatus = newReqStatus;
-						globalRData = rData;
-						$('input#Request-Status').val(newReqStatus);
-						$('input#End-of-Life').val(endOfLife);
 					}
-
+					rData.endOfLifeIsNew = endOfLifeIsNew;
+					rData.endOfLife = endOfLife;
+					rData.beginningOfLife = beginningOfLife;
+					rData.requestStatus = newReqStatus;
+					rData = rData;
+					$('input#Request-Status').val(newReqStatus);
+					$('input#Beginning-of-Life').val(endOfLife);
+					$('input#End-of-Life').val(endOfLife);
+				}
 				*/
 
 				if (fData.autoTrackEventNeedsStatuses === 1) {
@@ -5674,6 +5796,7 @@
 						var approversOnLoadInitialArray = JSON.parse($('input#Approvers-on-Load_TopSpan_HiddenInput').val());
 					}
 					var requiredApproversToAdd = [];
+					var conditionalApproversToAdd = [];
 					var approversNowToAdd = [];
 
 					var approvalNewlyNeededNotificationArray = [];
@@ -5741,8 +5864,83 @@
 
 
 					// ============
-					// ---- 2. REQUIRED APPROVERS
+					// ---- 2. CONDITIONAL APPROVERS && REQUIRED APPROVERS
 					// ============
+
+					// CONDITIONAL
+
+					// if there are conditional approvers flag is set and there are conditional approvers
+					if (typeof (fData.conditionalApprovals != 'undefined') && mData.conditionalApproversArray.length != 0) {
+
+						// if the specified condition is met
+						if (fData.conditionalApprovals()) {
+
+							// if onlyAutoProcessApprovalsAfterDevelopment is set, then set flag indicating whether or not request is ready for approval
+							if (typeof (fData.onlyAutoProcessApprovalsAfterDevelopment) != "undefined") {
+
+								// readyForApproval = 0
+								var readyForApproval = 0;
+
+								// if RS = "" OR RS == "In Development"
+								if (rData.requestStatus == '' || rData.requestStatus == 'In Development') {
+
+									// if request is marked as ready for approval
+									if ($("input#ready-for-submission-to-committee_yes").is(":checked")) {
+										// set readyForApproval = 1
+										readyForApproval = 1;
+									}
+								}
+							}
+
+							// if onlyAutoProcessApprovalsAfterDevelopment is undefined and RS = "" OR
+							//		onlyAutoProcessApprovalsAfterDevelopment is set and readyForApproval = 1
+							if ((typeof (fData.onlyAutoProcessApprovalsAfterDevelopment) == "undefined" && rData.requestStatus == '') ||
+								(typeof (fData.onlyAutoProcessApprovalsAfterDevelopment) != "undefined" && readyForApproval == 1)) {
+
+								// for each conditional approver
+								$.each(mData.conditionalApproversArray, function (i, r) {
+
+									// set flag indicating that this conditional approver IS NOT in approvers now
+									var conditionalApproverAlreadyAdded = 0;
+
+									// iterate over each approver now
+									$.each(approversNowInitialArray, function (i, approverNow) {
+
+										// if this approver now matches this conditional approver
+										if (r.account == approverNow.Key) {
+
+											// alter flag to indicate that this conditional approver IS in approvers now
+											conditionalApproverAlreadyAdded = 1;
+										}
+									});
+
+									// if flag still indicates that this conditional approver IS NOT in approvers now
+									//		and this conditional approver is not the requester
+									if (conditionalApproverAlreadyAdded == 0 && r.account != $("#Requester-Account").val()) {
+
+										// add this conditional approver's data to conditional
+										conditionalApproversToAdd.push({
+											'name': r.name,
+											'email': r.email.toLowerCase(),
+											'account': r.account
+										});
+									}
+								});
+
+								// add conditional approvers to approvers now
+								$().PutAddtlPeopleInPicker('Approvers', conditionalApproversToAdd);
+
+								// get approvers now again, now that conditional approvers have been added to it
+								if ($('input#Approvers_TopSpan_HiddenInput').val() == "") {
+									var approversNowInitialArray = [];
+								} else {
+									var approversNowInitialArray = JSON.parse($('input#Approvers_TopSpan_HiddenInput').val());
+								}
+							}
+						}
+					}
+
+					// REQUIRED
 
 					// if there are required approvers
 					if (mData.requiredApproversArray.length != 0) {
@@ -6182,6 +6380,47 @@
 
 
 				// ========================================================
+				// HANDLE GSE SCHEDULES & SIGNUPS MODIFICATIONS (if needed)
+				// ========================================================
+
+				if (typeof (fData.autoProcessGSEScheduleAndSignupModification) != 'undefined' && fData.autoProcessGSEScheduleAndSignupModification == 1) {
+
+					$(workingMessage).text("Handling GSE Modifications");
+
+					// if this app is GSE Schedule and this schedule is being cancelled
+
+					// find all of the relevant signups, [change their status to cancelled and email relevant people]
+
+					// if this app is [GSE Signups] and this user is cancelling her signup
+
+					// [change this signup status to cancelled [and email relevant people]]
+
+					// if this app is [GSE Schedule] and schedule data is being modified but schedule is not being cancelled
+
+					// [email everyone signed up for this schedule that information has changed]
+
+				}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+				// ========================================================
 				// MODIFY CONFIRMATION MESSAGE (if needed)
 				// ========================================================
 
@@ -6239,9 +6478,12 @@
 				globalSubmissionValuePairsArrayOfArrays = [];
 
 				// if saving data normally
-				if (typeof (fData.bypassNormalDataSaving) == 'undefined' || fData.bypassNormalDataSaving == 0) {
+				// i.e., if bypassNormalDataSaving is undefined or (it's not set to 1 and it's not set to an array that contains the request status on load)
+				if (typeof (fData.bypassNormalDataSaving) == 'undefined' || (fData.bypassNormalDataSaving != 1 && fData.bypassNormalDataSaving.indexOf(rData.previousRequestStatus) == -1)) {
+					// console.log('NOT bypassing'); console.log(fData.bypassNormalDataSaving); console.log(rData.previousRequestStatus);
 					globalSubmissionValuePairsArrayOfArrays.push(ReturnStandardSubmissionValuePairArray(clonedForm));
 				}
+				//  else { console.log('bypassing'); }
 
 				// if augmenting the AllRequestData object with some of the form data as an exceptional occurrence
 				if (typeof (fData.augmentDataWithExceptionalEventOccurrence) != 'undefined' && fData.augmentDataWithExceptionalEventOccurrence == 1) {
@@ -6255,13 +6497,12 @@
 
 
 				// if saving data using a custom function
-				if (typeof (fData.customDataSavingFunction) !== 'undefined') {
-					switch (fData.customDataSavingFunction) {
-						case 'ReturnGSESchedulesSubmissionValuePairArray':
-							globalSubmissionValuePairsArrayOfArrays = ReturnGSESchedulesSubmissionValuePairArray(clonedForm);
-							break;
-						case 'ReturnGSESchedulesSubmissionValuePairArrayTest':
-							globalSubmissionValuePairsArrayOfArrays = ReturnGSESchedulesSubmissionValuePairArrayTest(clonedForm);
+				// i.e., if customDataSavingFunction is NOT undefined and its requestStatuses array contains the request status on load
+				if (typeof (fData.customDataSavingFunction) !== 'undefined' && fData.customDataSavingFunction.requestStatuses.indexOf(rData.previousRequestStatus) != -1) {
+					// console.log('custom data saving for this status');
+					switch (fData.customDataSavingFunction.useFunction) {
+						case 'ReturnNewGSESchedulesSubmissionValuePairArrayOfArrays':
+							globalSubmissionValuePairsArrayOfArrays = ReturnNewGSESchedulesSubmissionValuePairArrayOfArrays(clonedForm);
 							break;
 					}
 				}
@@ -11168,7 +11409,7 @@
 
 	$.fn.CreateWFHistoryItem = function (d) {
 		// set up vars for new history item
-		if (typeof (rData.requestID) != 'undefined') {
+		if (rData.requestID && rData.requestID != '') {
 			var requestID = rData.requestID;
 		} else {
 			var requestID = 0;
@@ -11187,7 +11428,7 @@
 			ID: 0,
 			valuepairs: historyValuePairs,
 			completefunc: function (xData, Status) {
-				notificationAttemptWFHistorySuccess = $().HandleListUpdateReturn(xData, Status, 'WF History List Error (Notification Attempt)');
+				notificationAttemptWFHistorySuccess = $().HandleListUpdateReturn(xData, Status, 'WF History List Error (CreateWFHistoryItem)');
 			}
 		});
 	};
@@ -16960,13 +17201,15 @@
 
 
 
-	function ReturnGSESchedulesSubmissionValuePairArray(form) {
+	function ReturnNewGSESchedulesSubmissionValuePairArrayOfArrays(form) {
 		/*
 			overview / context notes
 			1. for each date that was added, one row will be created in SWFList
 			2. for each row to be created in SWFList, one array must be added to globalSubmissionValuePairsArrayOfArrays
 			3. each array consists of an element for every SWFList column that will be populated
 			4. one of those elements corresponds to the AllRequestData column
+
+			for each date in the form, add to globalSubmissionValuePairsArrayOfArrays an array of elements for every SWFList column that will be populated
 
 		*/
 
@@ -16981,9 +17224,12 @@
 		//		all of the repeatable date fields, we'll match the beginning of the IDs
 		// note: change the partial ID being searched for to correspond to the field name you've chosen for the form; 
 		// 		using the caret character means we'll find every input whose ID *begins* with this partial ID
-		$(form).find('input[class^="date-input"]').each(function () {
+		$(form).find('input[id^="Repeating-Date"]').each(function () {
 			scheduleDates.push($(this).val());
 		});
+
+		// console.log('scheduleDates');
+		// console.log(scheduleDates);
 
 		// for each date that was found
 		$.each(scheduleDates, function (i, scheduleDate) {
@@ -17029,6 +17275,9 @@
 				// 		the corresponding form field in settings.js
 				globalSubmissionValuePairsArray.push(["Date", scheduleDateISO]);
 
+				// console.log('ReturnNewGSESchedulesSubmissionValuePairArrayOfArrays - globalSubmissionValuePairsArray');
+				// console.log(globalSubmissionValuePairsArray);
+
 				// push globalSubmissionValuePairsArray to the array to return
 				submissionValuePairsArrayOfArraysToReturn.push(globalSubmissionValuePairsArray);
 			}
@@ -17055,47 +17304,13 @@
 
 
 
+	/* function ReturnNewGSESchedulesSubmissionValuePairArrayOfArraysTest(form) {
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	function ReturnGSESchedulesSubmissionValuePairArrayTest(form) {
-
-		/*
-			overview / context notes
-			1. for each date that was added, one row will be created in SWFList
-			2. for each row to be created in SWFList, one array must be added to globalSubmissionValuePairsArrayOfArrays
-			3. each array consists of an element for every SWFList column that will be populated
-			4. one of those elements corresponds to the AllRequestData column
-
-		*/
+		// 	overview / context notes
+		// 	1. for each date that was added, one row will be created in SWFList
+		// 	2. for each row to be created in SWFList, one array must be added to globalSubmissionValuePairsArrayOfArrays
+		// 	3. each array consists of an element for every SWFList column that will be populated
+		// 	4. one of those elements corresponds to the AllRequestData column
 
 		// set up vars
 		// the dates for which we'll create rows in SWFList
@@ -17163,7 +17378,7 @@
 
 		// return the array
 		return submissionValuePairsArrayOfArraysToReturn;
-	}
+	} */
 
 
 
@@ -17540,9 +17755,9 @@
 		// dateTime.minute  = :15:00
 
 		dateTime.date = moment(dateTime.date, 'MMMM D, YYYY').format('YYYY-MM-DD');
-		dateTime.timezone = moment(dateTime.date, 'MMMM D, YYYY').format('Z');
+		// dateTime.timezone = moment(dateTime.date, 'MMMM D, YYYY').format('Z');
 
-		return dateTime.date + dateTime.hour + dateTime.minute + dateTime.timezone;
+		return dateTime.date + dateTime.hour + dateTime.minute + 'Z';
 	};
 
 
@@ -17633,7 +17848,7 @@
 					'internalName': 'RequestedFor',
 					'userName': 1
 				}, {
-					'displayName': 'Event Start Date and Time',
+					'displayName': 'Event Starts',
 					'internalName': 'EventBeginningDatetime',
 					'groupingFriendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'ddd, MMM D, YYYY', 'determineYearDisplayDynamically': 1 }
 				}, {
@@ -17671,10 +17886,70 @@
 				}, {
 					'tableID': 'approved',
 					'someColsAreUsers': 1,
+					'customCAMLQuery': '<Where>' +
+						'   <And>' +
+						'       <Eq>' +
+						'           <FieldRef Name="RequestStatus"></FieldRef>' +
+						'           <Value Type="Text">Approved</Value>' +
+						'       </Eq>' +
+						'       <And>' +
+						'           <Geq>' +
+						'               <FieldRef Name="EventBeginningDatetime"></FieldRef>' +
+						'               <Value Type="DateTime" IncludeTimeValue="FALSE">' + startDateFrom + 'T00:00:00Z</Value>' +
+						'           </Geq>' +
+						'           <Leq>' +
+						'               <FieldRef Name="EventBeginningDatetime"></FieldRef>' +
+						'               <Value Type="DateTime" IncludeTimeValue="FALSE">' + startDateTo + 'T00:00:00Z</Value>' +
+						'           </Leq>' +
+						'       </And>' +
+						'   </And>' +
+						'</Where>',
 					'grouping': {
 						'zeroIndexedColumnNumber': 3,
 						'numberColsForHeaderToSpan': 6
 					},
+					'customColumns': [
+						{
+							'displayName': 'Request ID',
+							'internalName': 'ID',
+							'formLink': 1
+						}, {
+							'displayName': 'Talk To',
+							'internalName': 'RequestedFor',
+							'userName': 1
+						}, {
+							'displayName': 'Event Name',
+							'internalName': 'EventName'
+						}, {
+							'displayName': 'Event Date and Time',
+							'internalName': 'EventBeginningDatetime',
+							'groupingFriendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'ddd, MMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+							// }, {
+							// 	'displayName': 'Start Time',
+							// 	'internalName': 'EventBeginningDatetime',
+							// 	'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'h:mm a' }
+							// }, {
+							// 	'displayName': 'End Time',
+							// 	'internalName': 'EventEndingDatetime',
+							// 	'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'h:mm a' }
+						}, {
+							'displayName': 'Request Date',
+							'internalName': 'RequestDate',
+							'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+						}, {
+							'displayName': 'Assigned To',
+							'internalName': 'AssignedTo',
+							'userName': 1
+						}, {
+							'displayName': 'Assignment Date',
+							'internalName': 'AssignmentDate',
+							'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+						}
+					],
+					'sortColAndOrder': [3, 'asc']
+				}, {
+					'tableID': 'approved-ng',
+					'someColsAreUsers': 1,
 					'customCAMLQuery': '<Where>' +
 						'   <And>' +
 						'       <Eq>' +
@@ -17699,21 +17974,28 @@
 							'internalName': 'ID',
 							'formLink': 1
 						}, {
-							'displayName': 'Requested By',
-							'internalName': 'RequestedBy',
-							'userName': 1
-						}, {
 							'displayName': 'Talk To',
 							'internalName': 'RequestedFor',
 							'userName': 1
 						}, {
-							'displayName': 'Event Date and Time',
-							'internalName': 'EventBeginningDatetime',
-							'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'ddd, MMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+							'displayName': 'Event Name',
+							'internalName': 'EventName'
+							// }, {
+							// 	'displayName': 'Event Date',
+							// 	'internalName': 'EventBeginningDatetime',
+							// 	'groupingFriendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'ddd, MMM D, YYYY', 'determineYearDisplayDynamically': 1 }
 						}, {
-							'displayName': 'Request Date',
-							'internalName': 'RequestDate',
-							'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+							'displayName': 'Event Start Date & Time',
+							'internalName': 'EventBeginningDatetime',
+							'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'ddd, MMM D, YYYY h:mm a', 'determineYearDisplayDynamically': 1 }
+						}, {
+							'displayName': 'Event End Date & Time',
+							'internalName': 'EventEndingDatetime',
+							'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'ddd, MMM D, YYYY h:mm a', 'determineYearDisplayDynamically': 1 }
+							// }, {
+							// 	'displayName': 'Request Date',
+							// 	'internalName': 'RequestDate',
+							// 	'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
 						}, {
 							'displayName': 'Assigned To',
 							'internalName': 'AssignedTo',
@@ -17725,6 +18007,7 @@
 						}
 					],
 					'sortColAndOrder': [3, 'asc']
+
 				}, {
 					'tableID': 'closed',
 					'someColsAreUsers': 1,
@@ -17809,6 +18092,7 @@
 			'<ul id="container_tab-controls"> \n' +
 			'   <li><a href="#table-container_pending-approval">Pending Approval</a></li> \n' +
 			'   <li><a href="#table-container_approved">Approved</a></li> \n' +
+			'   <li><a href="#table-container_approved-ng">Approved NG</a></li> \n' +
 			'   <li><a href="#table-container_closed">Closed</a></li> \n' +
 			'</ul> \n' +
 			'<div id="container_date-filter-controls-and-header"> \n' +
@@ -18055,26 +18339,26 @@
 					"		 </Contains>" +
 					"	</And>" +
 					"</Where>";
-			/* } else if (typeof (t.myRSQueryRelevantStatus) != "undefined") {
-
-				if (typeof (mData.getRequesterFrom) == 'undefined') {
-					var getRequesterFrom = 'Author';
-				} else {
-					var getRequesterFrom = mData.getRequesterFrom;
-				}
-
-				query = "<Where>" +
-					"	<And>" +
-					"		 <Eq>" +
-					"			  <FieldRef Name='RequestStatus'></FieldRef>" +
-					"			  <Value Type='Text'>" + t.myRSQueryRelevantStatus + "</Value>" +
-					"		 </Eq>" +
-					"		 <Contains>" +
-					"			  <FieldRef Name='" + getRequesterFrom + "'></FieldRef>" +
-					"			  <Value Type='Text'>" + uData.name + "</Value>" +
-					"		 </Contains>" +
-					"	</And>" +
-					"</Where>"; */
+				/* } else if (typeof (t.myRSQueryRelevantStatus) != "undefined") {
+	
+					if (typeof (mData.getRequesterFrom) == 'undefined') {
+						var getRequesterFrom = 'Author';
+					} else {
+						var getRequesterFrom = mData.getRequesterFrom;
+					}
+	
+					query = "<Where>" +
+						"	<And>" +
+						"		 <Eq>" +
+						"			  <FieldRef Name='RequestStatus'></FieldRef>" +
+						"			  <Value Type='Text'>" + t.myRSQueryRelevantStatus + "</Value>" +
+						"		 </Eq>" +
+						"		 <Contains>" +
+						"			  <FieldRef Name='" + getRequesterFrom + "'></FieldRef>" +
+						"			  <Value Type='Text'>" + uData.name + "</Value>" +
+						"		 </Contains>" +
+						"	</And>" +
+						"</Where>"; */
 
 
 
@@ -18726,7 +19010,8 @@
 				"pagingType": "simple",
 				"order": opt.sortColAndOrder,
 				"drawCallback": opt.groupingFunction,
-				"columnDefs": opt.columnDefs
+				"columnDefs": opt.columnDefs,
+				"autoWidth": false
 			});
 		}
 	};
@@ -19731,11 +20016,11 @@
 		return {
 			"HRAdmins": [
 				{
-				// 	"name": "Samuel Corey",
-				// 	"email": "scorey@mos.org",
-				// 	"account": "scorey",
-				// 	"accountLong": "i:0#.f|membership|scorey@mos.org"
-				// }, {
+					// 	"name": "Samuel Corey",
+					// 	"email": "scorey@mos.org",
+					// 	"account": "scorey",
+					// 	"accountLong": "i:0#.f|membership|scorey@mos.org"
+					// }, {
 					"name": "James Baker",
 					"email": "jbaker@mos.org",
 					"account": "jbaker",
@@ -19745,11 +20030,11 @@
 					"email": "sp1@mos.org",
 					"account": "sp1",
 					"accountLong": "i:0#.f|membership|sp1@mos.org"
-				// }, {
-				// 	"name": "HubTester9",
-				// 	"email": "sp9@mos.org",
-				// 	"account": "sp9",
-				// 	"accountLong": "i:0#.f|membership|sp9@mos.org"
+					// }, {
+					// 	"name": "HubTester9",
+					// 	"email": "sp9@mos.org",
+					// 	"account": "sp9",
+					// 	"accountLong": "i:0#.f|membership|sp9@mos.org"
 				}
 			],
 			"JobAdmins": [
@@ -19758,21 +20043,21 @@
 					"email": "sp2@mos.org",
 					"account": "sp2",
 					"accountLong": "i:0#.f|membership|sp2@mos.org"
-				// }, {
-				// 	"name": "Samuel Corey",
-				// 	"email": "scorey@mos.org",
-				// 	"account": "scorey",
-				// 	"accountLong": "i:0#.f|membership|scorey@mos.org"
-				// }, {
-				// 	"name": "HubTester8",
-				// 	"email": "sp8@mos.org",
-				// 	"account": "sp8",
-				// 	"accountLong": "i:0#.f|membership|sp8@mos.org"
-				// }, {
-				// 	"name": "James Baker",
-				// 	"email": "jbaker@mos.org",
-				// 	"account": "jbaker",
-				// 	"accountLong": "i:0#.f|membership|jbaker@mos.org"
+					// }, {
+					// 	"name": "Samuel Corey",
+					// 	"email": "scorey@mos.org",
+					// 	"account": "scorey",
+					// 	"accountLong": "i:0#.f|membership|scorey@mos.org"
+					// }, {
+					// 	"name": "HubTester8",
+					// 	"email": "sp8@mos.org",
+					// 	"account": "sp8",
+					// 	"accountLong": "i:0#.f|membership|sp8@mos.org"
+					// }, {
+					// 	"name": "James Baker",
+					// 	"email": "jbaker@mos.org",
+					// 	"account": "jbaker",
+					// 	"accountLong": "i:0#.f|membership|jbaker@mos.org"
 				}
 			],
 			"Managers": [
@@ -19781,16 +20066,16 @@
 					"email": "sp3@mos.org",
 					"account": "sp3",
 					"accountLong": "i:0#.f|membership|sp3@mos.org"
-				// }, {
-				// 	"name": "Samuel Corey",
-				// 	"email": "scorey@mos.org",
-				// 	"account": "scorey",
-				// 	"accountLong": "i:0#.f|membership|scorey@mos.org"
-				// }, {
-				// 	"name": "James Baker",
-				// 	"email": "jbaker@mos.org",
-				// 	"account": "jbaker",
-				// 	"accountLong": "i:0#.f|membership|jbaker@mos.org"
+					// }, {
+					// 	"name": "Samuel Corey",
+					// 	"email": "scorey@mos.org",
+					// 	"account": "scorey",
+					// 	"accountLong": "i:0#.f|membership|scorey@mos.org"
+					// }, {
+					// 	"name": "James Baker",
+					// 	"email": "jbaker@mos.org",
+					// 	"account": "jbaker",
+					// 	"accountLong": "i:0#.f|membership|jbaker@mos.org"
 				}
 			]
 		}
@@ -21170,6 +21455,9 @@
 					}, {
 						"nameHere": "requiredApproversString",
 						"nameInList": "RequiredApprovers"
+					}, {
+						"nameHere": "conditionalApproversString",
+						"nameInList": "ConditionalApprovers"
 					}, {
 						"nameHere": "componentAdmin",
 						"nameInList": "AdminAccess"

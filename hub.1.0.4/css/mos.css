@@ -2383,6 +2383,7 @@ div.ui-dialog div.ui-dialog-titlebar.ui-widget-header thead tr {
 
 div#s4-workspace div.table-container div.dataTables_wrapper,
 div.ui-dialog div.table-container div.dataTables_wrapper {
+  max-width: 100rem;
   margin-bottom: 4rem; }
   div#s4-workspace div.table-container div.dataTables_wrapper div.dataTables_filter,
   div.ui-dialog div.table-container div.dataTables_wrapper div.dataTables_filter {

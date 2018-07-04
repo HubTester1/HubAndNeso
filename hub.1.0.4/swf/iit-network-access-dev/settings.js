@@ -1,19 +1,19 @@
 (function ($) {
 
 	var mData = {
-		"componentID": 79,
+		"componentID": 20022,
 		'swf': 1,
-		'mosMainKey': 'prod',
+		// 'mosMainKey': 'prod',
 		// 'mosMainKey': 'dev',
-		// 'mosMainKey': 'devMedium',
+		'mosMainKey': 'devMedium',
 		// 'mosMainKey': 'devLong',
 		// "useRecordedMOSMainMajorVersion": 1,
 		'currentRequestVersion': 2,
-		'devAdminNotifications': 0,
-		'notifications': 1,
+		'devAdminNotifications': 1,
+		'notifications': 0,
 	};
 
-	console.log("using settings m58");
+	console.log("using settings m3");
 
 
 	var oData = {
@@ -232,6 +232,9 @@
 
 	var fData = {
 		'autoProcessApprovals': 1,
+		'conditionalApprovals': function () {
+			return $("input#is-manager-without-office_yes").is(":checked");
+		},
 		'autoProcessAssignments': 1,
 		'autoDateCompletion': 1,
 		'approvalStmt': 'Approval indicates that the above access should be granted',
@@ -472,6 +475,19 @@
 				'labelContent': "End Date",
 				'disabledForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
 				'disabledForAdmin': ["Completed", "Disapproved", "Cancelled"],
+			}, {
+				'elementType': "field",
+				'controlType': "check",
+				'fieldName': "Is Manager Without Office",
+				'choiceSetLabel': "Is this person a newly hired manager who will not have an office?",
+				'choices': [
+					{
+						'value': "yes",
+						'display': "Yes, this new manager will not have an office"
+					}
+				],
+				'disabledForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+				'disabledForAdmin': ["Completed", "Disapproved", "Cancelled"]
 			}, {
 				'elementType': "field",
 				'controlType': "check",

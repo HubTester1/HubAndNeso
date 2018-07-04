@@ -2449,6 +2449,10 @@
 				$().ReturnUserDataFromPersonOrGroupFieldString(mData.requiredApproversString) :
 				[];
 
+			mData.conditionalApproversArray = (mData.conditionalApproversString) ?
+				$().ReturnUserDataFromPersonOrGroupFieldString(mData.conditionalApproversString) :
+				[];
+
 			// THIS REQUEST'S DATA
 			// reset rData and get request id from url param
 			if (typeof (passedRequestID) != "undefined" && passedRequestID === "0") {
@@ -5792,6 +5796,7 @@
 						var approversOnLoadInitialArray = JSON.parse($('input#Approvers-on-Load_TopSpan_HiddenInput').val());
 					}
 					var requiredApproversToAdd = [];
+					var conditionalApproversToAdd = [];
 					var approversNowToAdd = [];
 
 					var approvalNewlyNeededNotificationArray = [];
@@ -5859,8 +5864,83 @@
 
 
 					// ============
-					// ---- 2. REQUIRED APPROVERS
+					// ---- 2. CONDITIONAL APPROVERS && REQUIRED APPROVERS
 					// ============
+
+					// CONDITIONAL
+
+					// if there are conditional approvers flag is set and there are conditional approvers
+					if (typeof (fData.conditionalApprovals != 'undefined') && mData.conditionalApproversArray.length != 0) {
+
+						// if the specified condition is met
+						if (fData.conditionalApprovals()) {
+
+							// if onlyAutoProcessApprovalsAfterDevelopment is set, then set flag indicating whether or not request is ready for approval
+							if (typeof (fData.onlyAutoProcessApprovalsAfterDevelopment) != "undefined") {
+
+								// readyForApproval = 0
+								var readyForApproval = 0;
+
+								// if RS = "" OR RS == "In Development"
+								if (rData.requestStatus == '' || rData.requestStatus == 'In Development') {
+
+									// if request is marked as ready for approval
+									if ($("input#ready-for-submission-to-committee_yes").is(":checked")) {
+										// set readyForApproval = 1
+										readyForApproval = 1;
+									}
+								}
+							}
+
+							// if onlyAutoProcessApprovalsAfterDevelopment is undefined and RS = "" OR
+							//		onlyAutoProcessApprovalsAfterDevelopment is set and readyForApproval = 1
+							if ((typeof (fData.onlyAutoProcessApprovalsAfterDevelopment) == "undefined" && rData.requestStatus == '') ||
+								(typeof (fData.onlyAutoProcessApprovalsAfterDevelopment) != "undefined" && readyForApproval == 1)) {
+
+								// for each conditional approver
+								$.each(mData.conditionalApproversArray, function (i, r) {
+
+									// set flag indicating that this conditional approver IS NOT in approvers now
+									var conditionalApproverAlreadyAdded = 0;
+
+									// iterate over each approver now
+									$.each(approversNowInitialArray, function (i, approverNow) {
+
+										// if this approver now matches this conditional approver
+										if (r.account == approverNow.Key) {
+
+											// alter flag to indicate that this conditional approver IS in approvers now
+											conditionalApproverAlreadyAdded = 1;
+										}
+									});
+
+									// if flag still indicates that this conditional approver IS NOT in approvers now
+									//		and this conditional approver is not the requester
+									if (conditionalApproverAlreadyAdded == 0 && r.account != $("#Requester-Account").val()) {
+
+										// add this conditional approver's data to conditional
+										conditionalApproversToAdd.push({
+											'name': r.name,
+											'email': r.email.toLowerCase(),
+											'account': r.account
+										});
+									}
+								});
+
+								// add conditional approvers to approvers now
+								$().PutAddtlPeopleInPicker('Approvers', conditionalApproversToAdd);
+
+								// get approvers now again, now that conditional approvers have been added to it
+								if ($('input#Approvers_TopSpan_HiddenInput').val() == "") {
+									var approversNowInitialArray = [];
+								} else {
+									var approversNowInitialArray = JSON.parse($('input#Approvers_TopSpan_HiddenInput').val());
+								}
+							}
+						}
+					}
+
+					// REQUIRED
 
 					// if there are required approvers
 					if (mData.requiredApproversArray.length != 0) {
@@ -17768,7 +17848,7 @@
 					'internalName': 'RequestedFor',
 					'userName': 1
 				}, {
-					'displayName': 'Event Start Date and Time',
+					'displayName': 'Event Starts',
 					'internalName': 'EventBeginningDatetime',
 					'groupingFriendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'ddd, MMM D, YYYY', 'determineYearDisplayDynamically': 1 }
 				}, {
@@ -17806,10 +17886,70 @@
 				}, {
 					'tableID': 'approved',
 					'someColsAreUsers': 1,
+					'customCAMLQuery': '<Where>' +
+						'   <And>' +
+						'       <Eq>' +
+						'           <FieldRef Name="RequestStatus"></FieldRef>' +
+						'           <Value Type="Text">Approved</Value>' +
+						'       </Eq>' +
+						'       <And>' +
+						'           <Geq>' +
+						'               <FieldRef Name="EventBeginningDatetime"></FieldRef>' +
+						'               <Value Type="DateTime" IncludeTimeValue="FALSE">' + startDateFrom + 'T00:00:00Z</Value>' +
+						'           </Geq>' +
+						'           <Leq>' +
+						'               <FieldRef Name="EventBeginningDatetime"></FieldRef>' +
+						'               <Value Type="DateTime" IncludeTimeValue="FALSE">' + startDateTo + 'T00:00:00Z</Value>' +
+						'           </Leq>' +
+						'       </And>' +
+						'   </And>' +
+						'</Where>',
 					'grouping': {
 						'zeroIndexedColumnNumber': 3,
 						'numberColsForHeaderToSpan': 6
 					},
+					'customColumns': [
+						{
+							'displayName': 'Request ID',
+							'internalName': 'ID',
+							'formLink': 1
+						}, {
+							'displayName': 'Talk To',
+							'internalName': 'RequestedFor',
+							'userName': 1
+						}, {
+							'displayName': 'Event Name',
+							'internalName': 'EventName'
+						}, {
+							'displayName': 'Event Date and Time',
+							'internalName': 'EventBeginningDatetime',
+							'groupingFriendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'ddd, MMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+						// }, {
+						// 	'displayName': 'Start Time',
+						// 	'internalName': 'EventBeginningDatetime',
+						// 	'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'h:mm a' }
+						// }, {
+						// 	'displayName': 'End Time',
+						// 	'internalName': 'EventEndingDatetime',
+						// 	'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'h:mm a' }
+						}, {
+							'displayName': 'Request Date',
+							'internalName': 'RequestDate',
+							'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+						}, {
+							'displayName': 'Assigned To',
+							'internalName': 'AssignedTo',
+							'userName': 1
+						}, {
+							'displayName': 'Assignment Date',
+							'internalName': 'AssignmentDate',
+							'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+						}
+					],
+					'sortColAndOrder': [3, 'asc']
+				}, {
+					'tableID': 'approved-ng',
+					'someColsAreUsers': 1,
 					'customCAMLQuery': '<Where>' +
 						'   <And>' +
 						'       <Eq>' +
@@ -17834,21 +17974,28 @@
 							'internalName': 'ID',
 							'formLink': 1
 						}, {
-							'displayName': 'Requested By',
-							'internalName': 'RequestedBy',
-							'userName': 1
-						}, {
 							'displayName': 'Talk To',
 							'internalName': 'RequestedFor',
 							'userName': 1
 						}, {
-							'displayName': 'Event Date and Time',
-							'internalName': 'EventBeginningDatetime',
-							'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'ddd, MMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+							'displayName': 'Event Name',
+							'internalName': 'EventName'
+						// }, {
+						// 	'displayName': 'Event Date',
+						// 	'internalName': 'EventBeginningDatetime',
+						// 	'groupingFriendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'ddd, MMM D, YYYY', 'determineYearDisplayDynamically': 1 }
 						}, {
-							'displayName': 'Request Date',
-							'internalName': 'RequestDate',
-							'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+							'displayName': 'Event Start Date & Time',
+							'internalName': 'EventBeginningDatetime',
+							'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'ddd, MMM D, YYYY h:mm a', 'determineYearDisplayDynamically': 1 }
+						}, {
+							'displayName': 'Event End Date & Time',
+							'internalName': 'EventEndingDatetime',
+							'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'ddd, MMM D, YYYY h:mm a', 'determineYearDisplayDynamically': 1 }
+						// }, {
+						// 	'displayName': 'Request Date',
+						// 	'internalName': 'RequestDate',
+						// 	'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
 						}, {
 							'displayName': 'Assigned To',
 							'internalName': 'AssignedTo',
@@ -17860,6 +18007,7 @@
 						}
 					],
 					'sortColAndOrder': [3, 'asc']
+
 				}, {
 					'tableID': 'closed',
 					'someColsAreUsers': 1,
@@ -17944,6 +18092,7 @@
 			'<ul id="container_tab-controls"> \n' +
 			'   <li><a href="#table-container_pending-approval">Pending Approval</a></li> \n' +
 			'   <li><a href="#table-container_approved">Approved</a></li> \n' +
+			'   <li><a href="#table-container_approved-ng">Approved NG</a></li> \n' +
 			'   <li><a href="#table-container_closed">Closed</a></li> \n' +
 			'</ul> \n' +
 			'<div id="container_date-filter-controls-and-header"> \n' +
@@ -18861,7 +19010,8 @@
 				"pagingType": "simple",
 				"order": opt.sortColAndOrder,
 				"drawCallback": opt.groupingFunction,
-				"columnDefs": opt.columnDefs
+				"columnDefs": opt.columnDefs,
+				"autoWidth": false
 			});
 		}
 	};
@@ -21306,6 +21456,9 @@
 						"nameHere": "requiredApproversString",
 						"nameInList": "RequiredApprovers"
 					}, {
+						"nameHere": "conditionalApproversString",
+						"nameInList": "ConditionalApprovers"
+					}, {
 						"nameHere": "componentAdmin",
 						"nameInList": "AdminAccess"
 					}, {
@@ -21439,7 +21592,7 @@
 		// wait for all data retrieval / setting promises to complete (pass or fail) 
 		$.when.apply($, allDataRetrievalAndSettingPromises).always(function () {
 
-			console.log('using dev_mos-main_long.1.04 m2 - DevCode4');
+			console.log('using dev_mos-main_long.1.04 m4 - DevCode4');
 
 			$().ConfigureAndShowScreenContainerAndAllScreens();
 		});
