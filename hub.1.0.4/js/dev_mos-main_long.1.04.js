@@ -2238,7 +2238,7 @@
 
 		// $("div#request-screen-container").append("<p>This is 3.1 Signup Opportunity for User.</p>");
 
-		rData = { "requestID": passedScheduleID };
+		rData = { "scheduleID": passedScheduleID };
 		rData = $.extend(
 			rData,
 			$().GetFieldsFromOneRow({
@@ -2252,7 +2252,7 @@
 				"where": {
 					"field": "ID",
 					"type": "Number",
-					"value": rData.requestID,
+					"value": rData.scheduleID,
 				}
 			})
 		);
@@ -2271,7 +2271,9 @@
 				}
 			})
 		);
-
+		console.log('rData');
+		console.log(rData);
+		rData.shiftLength = rData['shiftlength_35-hours'] ? '3.5 hours' : '7.5 hours';
 		var opportunityJobDuties = [];
 		rData.GSEJobData.RepeatedElements.forEach((repeatElement) => {
 			// console.log('repeatElement');
@@ -2291,21 +2293,20 @@
 		var opportunityMarkup =	'<div id="gse-signup-opportunity-display" class="request-detail-display">' + 
 			'	<h3>' + rData.GSEJobData['Job-Title'] + '</h3>' + 
 			'	<div class="request-detail-display__field">' + 
-			'		<h4>Positions Available</h4>' + 
-					'<span style="background-color: #fcc">X out of </span>' + rData.GSEScheduleData['Number-of-Positions'] + 
-			'	</div>' +
-			'	<div class="request-detail-display__field">' + 
-			'		<h4>On <span style="background-color: #fcc">July 31, 2018</h4>' + 
-					'This <span style="background-color: #fcc">7.5 hour</span> job begins at <span style="background-color: #fcc">9:00 am</span>, with a break at <span style="background-color: #fcc">11:00 am</span> and a meal at <span style="background-color: #fcc">1:00 pm</span>.' + 
-			'	</div>' +
-			'	<div class="request-detail-display__field">' + 
-			'		<h4>Reports To</h4>' + 
-			'		<a href="mailto:' + rData.GSEJobData['Job-Admin'][0].description + '">' + rData.GSEJobData['Job-Admin'][0].displayText + '</a>' + 
-			'	</div>' +
-			'	<div class="request-detail-display__field">' + 
-			'		<h4>Department</h4>' + 
-					rData.GSEJobData['Department'] + 
-			'	</div>' +
+			'	<h4>Logistics</h4>' + 
+			'	<ul>' + 
+			'		<li>Positions Available: <span style="background-color: #fcc">X </span> out of ' + 
+					rData.GSEScheduleData['Number-of-Positions'] + '</li>' + 
+			'		<li>Date: ' + $().ReturnFormattedDateTime(rData.GSEScheduleData['Date'], null, 'dddd, MMMM D, YYYY', 1) + '</li>' + 
+			'		<li>Length: ' + rData.shiftLength + '</li>' + 
+			'		<li>Start Time: ' + $().ReturnFormattedDateTime(rData.GSEScheduleData['time-storage_StartTime'], null, 'h:mm a') + '</li>' + 
+			'		<li>Break Time: ' + $().ReturnFormattedDateTime(rData.GSEScheduleData['time-storage_BreakTime'], null, 'h:mm a') + '</li>' + 
+			'		<li>Meal Time: ' + $().ReturnFormattedDateTime(rData.GSEScheduleData['time-storage_MealTime'], null, 'h:mm a') + '</li>' + 
+			'		<li>Reporting to: <a href="mailto:' + rData.GSEJobData['Job-Admin'][0].description + '">' + 
+						rData.GSEJobData['Job-Admin'][0].displayText + '</a></li>' + 
+			'		<li>Department: ' + rData.GSEJobData['Department'] + '</li>' + 
+			'	</ul>' + 
+			'	</div>' + 
 			'	<div class="request-detail-display__field">' + 
 			'		<h4>Job Description</h4>' + 
 					ReplaceAll('%0A', '<br />', rData.GSEJobData['Job-Description']) + 
@@ -2385,35 +2386,38 @@
 		$("div#request-screen-container").append(opportunityMarkup);
 
 
-		/* $('#submit-signup').click(function () {
+		$('a#gse-schedule-signup-button').click(function () {
 
-			var listValuePairs = [
-				['JobID', rData.jobId],
-				['JobTitle', rData.GSEJobData['JobTitle']],
-				['Date', rData.formData.RepeatedElements[0].Dates],
-				['ScheduleID', rData.requestID],
-				['UserDept', uData.dept],
-				['UserContact', uData.email],
-				['Title', uData.email + ' Signup ' + rData.GSEJobData['JobTitle']],
-				['RequestStatus', 'Pending Approval'],
-				['BeginningOfLife', 1],
-				['EndOfLife', 0],
-				['NewlyApprovedOrPending', 1],
-				['RequestVersion', 2]
+			mData.adminEmailString = $().ReturnUserEmailStringAndArray(mData.adminNotificationPersons).string;
+			mData.adminEmailArray = $().ReturnUserEmailStringAndArray(mData.adminNotificationPersons).array;
+			mData.componentGrpAdminEmailString = $().ReturnUserEmailStringAndArray(mData.componentGrpAdminNotifications).string;
+			mData.componentGrpAdminEmailArray = $().ReturnUserEmailStringAndArray(mData.componentGrpAdminNotifications).array;
+
+			// needed: -1;#sp1@mos.org
+			console.log('uData');
+			console.log(uData);
+			// 
+			var submissionValuePairsArray = [
+				['JobID', rData.jobID],
+				['ScheduleID', rData.scheduleID],
+				['RequestedFor', '-1;#' + uData.userName]
 			];
 
-			$().SPServices({
+			$().CreateOrUpdateListItem(mData, rData, submissionValuePairsArray, "https://bmos.sharepoint.com/sites/hr-service-signup");
+
+			/* $().SPServices({
 				operation: 'UpdateListItems',
 				listName: "SWFList",
-				webURL: "https://bmos.sharepoint.com/sites/hr-service-signup",
+				webURL: ,
 				batchCmd: 'New',
 				ID: 0,
-				valuepairs: listValuePairs,
+				valuepairs: submissionValuePairsArray,
 				completefunc: function (xData, Status) {
-					$().HandleListUpdateReturn(xData, Status, 'Hub Location Addition Error');
+					signupSuccess = $().HandleListUpdateReturn(xData, Status, 'Hub GSE Signup Error');
+					console.log('signupSuccess = ' + signupSuccess);
 				}
-			});
-		}); */
+			}); */
+		});
 	};
 
 
@@ -5870,7 +5874,7 @@
 					// CONDITIONAL
 
 					// if there are conditional approvers flag is set and there are conditional approvers
-					if (typeof (fData.conditionalApprovals != 'undefined') && mData.conditionalApproversArray.length != 0) {
+					if (typeof (fData.conditionalApprovals) != 'undefined' && mData.conditionalApproversArray.length != 0) {
 
 						// if the specified condition is met
 						if (fData.conditionalApprovals()) {
@@ -7091,6 +7095,15 @@
 		var spErrorCode = $(xData.responseXML).find('ErrorCode').text() != '' ? $(xData.responseXML).find('ErrorCode').text() : '""';
 		var spErrorText = $(xData.responseXML).find('ErrorText').text() != '' && $(xData.responseXML).find('errorstring').text() != '' ? $(xData.responseXML).find('ErrorText').text() + $(xData.responseXML).find('errorstring').text() : '""';
 		var spResponseXMLString = xData.responseXML == null ? 'null' : JSON.stringify(xData.responseXML.xml);
+
+		console.log('Status');
+		console.log(Status);
+
+		console.log('spErrorCode');
+		console.log(spErrorCode);
+
+		console.log('spErrorText');
+		console.log(spErrorText);
 
 		if (Status == 'success' && (spErrorCode == '""' || spErrorCode == '0x00000000') && spErrorText == '""') {
 			return successFlag = 1;
@@ -17062,7 +17075,7 @@
 
 
 
-	$.fn.CreateOrUpdateListItem = function (mData, rData, submissionValuePairsArray) {
+	$.fn.CreateOrUpdateListItem = function (mData, rData, submissionValuePairsArray, webURL) {
 
 		// --- set up internal promise to configure
 
@@ -17082,7 +17095,9 @@
 
 		// send the data to the list
 
-		$().SPServices({
+		console.log(submissionValuePairsArray);
+
+		var updateListItemsOptions = {
 			operation: 'UpdateListItems',
 			listName: mData.defaultListNameForSWFRequestData,
 			batchCmd: batchCommand,
@@ -17122,10 +17137,18 @@
 
 					deferred.resolve();
 
-
 				}
 			}
-		});
+		};
+
+		if (webURL) {
+			updateListItemsOptions.webURL = webURL;
+		}
+
+		console.log('updateListItemsOptions');
+		console.log(updateListItemsOptions);
+
+		$().SPServices(updateListItemsOptions);
 		return deferred.promise();
 	};
 
@@ -21592,7 +21615,7 @@
 		// wait for all data retrieval / setting promises to complete (pass or fail) 
 		$.when.apply($, allDataRetrievalAndSettingPromises).always(function () {
 
-			console.log('using dev_mos-main_long.1.04 m4 - DevCode4');
+			console.log('using dev_mos-main_long.1.04 m3 - DevCode4');
 
 			$().ConfigureAndShowScreenContainerAndAllScreens();
 		});

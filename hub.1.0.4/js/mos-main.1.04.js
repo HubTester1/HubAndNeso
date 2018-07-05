@@ -1363,9 +1363,9 @@
 					$.each(opt.select, function (i, oneField) {
 
 						if (
-							oneField.nameHere === "formData" ||
-							oneField.nameHere === "defaultDataForNewRequests" ||
-							oneField.nameHere === "GSEJobData" ||
+							oneField.nameHere === "formData" || 
+							oneField.nameHere === "defaultDataForNewRequests" || 
+							oneField.nameHere === "GSEJobData" || 
 							oneField.nameHere === "GSEScheduleData"
 						) {
 							console.log('found field to interpret');
@@ -2238,7 +2238,7 @@
 
 		// $("div#request-screen-container").append("<p>This is 3.1 Signup Opportunity for User.</p>");
 
-		rData = { "requestID": passedScheduleID };
+		rData = { "scheduleID": passedScheduleID };
 		rData = $.extend(
 			rData,
 			$().GetFieldsFromOneRow({
@@ -2252,7 +2252,7 @@
 				"where": {
 					"field": "ID",
 					"type": "Number",
-					"value": rData.requestID,
+					"value": rData.scheduleID,
 				}
 			})
 		);
@@ -2271,7 +2271,8 @@
 				}
 			})
 		);
-
+		console.log(rData);
+		rData.shiftLength = rData['shiftlength_35-hours'] ? '3.5 hours' : '7.5 hours';
 		var opportunityJobDuties = [];
 		rData.GSEJobData.RepeatedElements.forEach((repeatElement) => {
 			// console.log('repeatElement');
@@ -2288,49 +2289,48 @@
 				});
 			}
 		});
-		var opportunityMarkup = '<div id="gse-signup-opportunity-display" class="request-detail-display">' +
-			'	<h3>' + rData.GSEJobData['Job-Title'] + '</h3>' +
-			'	<div class="request-detail-display__field">' +
-			'		<h4>Positions Available</h4>' +
-			'<span style="background-color: #fcc">X out of </span>' + rData.GSEScheduleData['Number-of-Positions'] +
-			'	</div>' +
-			'	<div class="request-detail-display__field">' +
-			'		<h4>On <span style="background-color: #fcc">July 31, 2018</h4>' +
-			'This <span style="background-color: #fcc">7.5 hour</span> job begins at <span style="background-color: #fcc">9:00 am</span>, with a break at <span style="background-color: #fcc">11:00 am</span> and a meal at <span style="background-color: #fcc">1:00 pm</span>.' +
-			'	</div>' +
-			'	<div class="request-detail-display__field">' +
-			'		<h4>Reports To</h4>' +
-			'		<a href="mailto:' + rData.GSEJobData['Job-Admin'][0].description + '">' + rData.GSEJobData['Job-Admin'][0].displayText + '</a>' +
-			'	</div>' +
-			'	<div class="request-detail-display__field">' +
-			'		<h4>Department</h4>' +
-			rData.GSEJobData['Department'] +
-			'	</div>' +
-			'	<div class="request-detail-display__field">' +
-			'		<h4>Job Description</h4>' +
-			ReplaceAll('%0A', '<br />', rData.GSEJobData['Job-Description']) +
+		var opportunityMarkup =	'<div id="gse-signup-opportunity-display" class="request-detail-display">' + 
+			'	<h3>' + rData.GSEJobData['Job-Title'] + '</h3>' + 
+			'	<div class="request-detail-display__field">' + 
+			'	<h4>Logistics</h4>' + 
+			'	<ul>' + 
+			'		<li>Positions Available: <span style="background-color: #fcc">X </span> out of ' + 
+					rData.GSEScheduleData['Number-of-Positions'] + '</li>' + 
+			'		<li>Date: ' + $().ReturnFormattedDateTime(rData.GSEScheduleData['Date'], null, 'dddd, MMMM D, YYYY', 1) + '</li>' + 
+			'		<li>Length: ' + rData.shiftLength + '</li>' + 
+			'		<li>Start Time: ' + $().ReturnFormattedDateTime(rData.GSEScheduleData['time-storage_StartTime'], null, 'h:mm a') + '</li>' + 
+			'		<li>Break Time: ' + $().ReturnFormattedDateTime(rData.GSEScheduleData['time-storage_BreakTime'], null, 'h:mm a') + '</li>' + 
+			'		<li>Meal Time: ' + $().ReturnFormattedDateTime(rData.GSEScheduleData['time-storage_MealTime'], null, 'h:mm a') + '</li>' + 
+			'		<li>Reporting to: <a href="mailto:' + rData.GSEJobData['Job-Admin'][0].description + '">' + 
+						rData.GSEJobData['Job-Admin'][0].displayText + '</a></li>' + 
+			'		<li>Department: ' + rData.GSEJobData['Department'] + '</li>' + 
+			'	</ul>' + 
+			'	</div>' + 
+			'	<div class="request-detail-display__field">' + 
+			'		<h4>Job Description</h4>' + 
+					ReplaceAll('%0A', '<br />', rData.GSEJobData['Job-Description']) + 
 			'	</div>';
 
 		if (rData.GSEJobData['Training-Requirements']) {
-			opportunityMarkup += '	<div class="request-detail-display__field">' +
-				'		<h4>Training Requirements</h4>' +
-				ReplaceAll('%0A', '<br />', rData.GSEJobData['Training-Requirements']) +
-				'	</div>';
+			opportunityMarkup +=	'	<div class="request-detail-display__field">' +
+									'		<h4>Training Requirements</h4>' +
+											ReplaceAll('%0A', '<br />', rData.GSEJobData['Training-Requirements']) +
+									'	</div>';
 		}
 
-		opportunityMarkup += '	<div class="request-detail-display__field">' +
-			'		<h4>Dress Requirements</h4>' +
-			'		Must wear MOS badge above the waist at all times.<br />' +
-			'		Clothing and shoes must be in good condition.<br />';
+		opportunityMarkup +=	'	<div class="request-detail-display__field">' + 
+								'		<h4>Dress Requirements</h4>' + 
+								'		Must wear MOS badge above the waist at all times.<br />' + 
+								'		Clothing and shoes must be in good condition.<br />';
 
 		if (rData.GSEJobData['Dress-Requirements']) {
 			opportunityMarkup += ReplaceAll('%0A', '<br />', rData.GSEJobData['Dress-Requirements']);
 		}
 
-		opportunityMarkup += '</div>' +
-			'	<div class="request-detail-display__field">' +
+		opportunityMarkup +=	'</div>' + 
+			'	<div class="request-detail-display__field">' + 
 			'		<h4>Job Duties</h4>';
-
+		
 		opportunityJobDutyElement = opportunityJobDuties[1] ? 'li' : 'p';
 
 		if (opportunityJobDuties[1]) {
@@ -2346,60 +2346,51 @@
 		}
 
 		opportunityMarkup += '	</div>' +
-			'	<div class="request-detail-display__field-set">' +
-			'		<h4>Physical Requirements</h4>' +
-			'		<h5>How Much Weight Will Be Handled</h5>' +
+			'	<div class="request-detail-display__field-set">' + 
+			'		<h4>Physical Requirements</h4>' + 
+			'		<h5>How Much Weight Will Be Handled</h5>' + 
 			'		<ul>' +
-			'			<li>Lifting: ' +
-			rData.GSEJobData['Physical-Demand-Lifting'] + ' lbs' +
+			'			<li>Lifting: ' + 
+							rData.GSEJobData['Physical-Demand-Lifting'] + ' lbs' +
 			'			</li>' +
-			'			<li>Carrying: ' +
-			rData.GSEJobData['Physical-Demand-Carrying'] + ' lbs' +
+			'			<li>Carrying: ' + 
+							rData.GSEJobData['Physical-Demand-Carrying'] + ' lbs' +
 			'			</li>' +
-			'			<li>Pushing: ' +
-			rData.GSEJobData['Physical-Demand-Pushing'] + ' lbs' +
+			'			<li>Pushing: ' + 
+							rData.GSEJobData['Physical-Demand-Pushing'] + ' lbs' +
 			'			</li>' +
-			'			<li>Pulling: ' +
-			rData.GSEJobData['Physical-Demand-Pulling'] + ' lbs' +
+			'			<li>Pulling: ' + 
+							rData.GSEJobData['Physical-Demand-Pulling'] + ' lbs' +
 			'			</li>' +
 			'		</ul>' +
 
 
 
-			'		<h5>How Much Weight Will Be Handled</h5>' +
+			'		<h5>How Much Weight Will Be Handled</h5>' + 
 			'		<ul>' +
-			'			<li>Standing: ' +
-			rData.GSEJobData['Physical-Demand-Standing'] + '%' +
+			'			<li>Standing: ' + 
+							rData.GSEJobData['Physical-Demand-Standing'] + '%' +
 			'			</li>' +
-			'			<li>Sitting: ' +
-			rData.GSEJobData['Physical-Demand-Sitting'] + '%' +
+			'			<li>Sitting: ' + 
+							rData.GSEJobData['Physical-Demand-Sitting'] + '%' +
 			'			</li>' +
-			'			<li>Walking: ' +
-			rData.GSEJobData['Physical-Demand-Walking'] + '%' +
+			'			<li>Walking: ' + 
+							rData.GSEJobData['Physical-Demand-Walking'] + '%' +
 			'			</li>' +
 			'		</ul>' +
-			'	</div>' +
+			'	</div>' + 
 			'	<a id="gse-schedule-signup-button" data-button-type="gse-schedule-signup">Sign up</a>' +
 			'</div>';
 
 		$("div#request-screen-container").append(opportunityMarkup);
 
 
-		/* $('#submit-signup').click(function () {
+		$('a#gse-schedule-signup-button').click(function () {
 
 			var listValuePairs = [
-				['JobID', rData.jobId],
-				['JobTitle', rData.GSEJobData['JobTitle']],
-				['Date', rData.formData.RepeatedElements[0].Dates],
-				['ScheduleID', rData.requestID],
-				['UserDept', uData.dept],
-				['UserContact', uData.email],
-				['Title', uData.email + ' Signup ' + rData.GSEJobData['JobTitle']],
-				['RequestStatus', 'Pending Approval'],
-				['BeginningOfLife', 1],
-				['EndOfLife', 0],
-				['NewlyApprovedOrPending', 1],
-				['RequestVersion', 2]
+				['JobID', rData.jobID],
+				['ScheduleID', rData.scheduleID],
+
 			];
 
 			$().SPServices({
@@ -2410,10 +2401,10 @@
 				ID: 0,
 				valuepairs: listValuePairs,
 				completefunc: function (xData, Status) {
-					$().HandleListUpdateReturn(xData, Status, 'Hub Location Addition Error');
+					$().HandleListUpdateReturn(xData, Status, 'Hub GSE Signup Error');
 				}
 			});
-		}); */
+		});
 	};
 
 
@@ -5870,7 +5861,7 @@
 					// CONDITIONAL
 
 					// if there are conditional approvers flag is set and there are conditional approvers
-					if (typeof (fData.conditionalApprovals != 'undefined') && mData.conditionalApproversArray.length != 0) {
+					if (typeof (fData.conditionalApprovals) != 'undefined' && mData.conditionalApproversArray.length != 0) {
 
 						// if the specified condition is met
 						if (fData.conditionalApprovals()) {
@@ -6389,15 +6380,15 @@
 
 					// if this app is GSE Schedule and this schedule is being cancelled
 
-					// find all of the relevant signups, [change their status to cancelled and email relevant people]
+						// find all of the relevant signups, [change their status to cancelled and email relevant people]
 
 					// if this app is [GSE Signups] and this user is cancelling her signup
 
-					// [change this signup status to cancelled [and email relevant people]]
+						// [change this signup status to cancelled [and email relevant people]]
 
 					// if this app is [GSE Schedule] and schedule data is being modified but schedule is not being cancelled
 
-					// [email everyone signed up for this schedule that information has changed]
+						// [email everyone signed up for this schedule that information has changed]
 
 				}
 
@@ -17924,14 +17915,14 @@
 							'displayName': 'Event Date and Time',
 							'internalName': 'EventBeginningDatetime',
 							'groupingFriendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'ddd, MMM D, YYYY', 'determineYearDisplayDynamically': 1 }
-							// }, {
-							// 	'displayName': 'Start Time',
-							// 	'internalName': 'EventBeginningDatetime',
-							// 	'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'h:mm a' }
-							// }, {
-							// 	'displayName': 'End Time',
-							// 	'internalName': 'EventEndingDatetime',
-							// 	'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'h:mm a' }
+						// }, {
+						// 	'displayName': 'Start Time',
+						// 	'internalName': 'EventBeginningDatetime',
+						// 	'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'h:mm a' }
+						// }, {
+						// 	'displayName': 'End Time',
+						// 	'internalName': 'EventEndingDatetime',
+						// 	'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'h:mm a' }
 						}, {
 							'displayName': 'Request Date',
 							'internalName': 'RequestDate',
@@ -17980,10 +17971,10 @@
 						}, {
 							'displayName': 'Event Name',
 							'internalName': 'EventName'
-							// }, {
-							// 	'displayName': 'Event Date',
-							// 	'internalName': 'EventBeginningDatetime',
-							// 	'groupingFriendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'ddd, MMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+						// }, {
+						// 	'displayName': 'Event Date',
+						// 	'internalName': 'EventBeginningDatetime',
+						// 	'groupingFriendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'ddd, MMM D, YYYY', 'determineYearDisplayDynamically': 1 }
 						}, {
 							'displayName': 'Event Start Date & Time',
 							'internalName': 'EventBeginningDatetime',
@@ -17992,10 +17983,10 @@
 							'displayName': 'Event End Date & Time',
 							'internalName': 'EventEndingDatetime',
 							'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'ddd, MMM D, YYYY h:mm a', 'determineYearDisplayDynamically': 1 }
-							// }, {
-							// 	'displayName': 'Request Date',
-							// 	'internalName': 'RequestDate',
-							// 	'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+						// }, {
+						// 	'displayName': 'Request Date',
+						// 	'internalName': 'RequestDate',
+						// 	'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
 						}, {
 							'displayName': 'Assigned To',
 							'internalName': 'AssignedTo',
@@ -18339,26 +18330,26 @@
 					"		 </Contains>" +
 					"	</And>" +
 					"</Where>";
-				/* } else if (typeof (t.myRSQueryRelevantStatus) != "undefined") {
-	
-					if (typeof (mData.getRequesterFrom) == 'undefined') {
-						var getRequesterFrom = 'Author';
-					} else {
-						var getRequesterFrom = mData.getRequesterFrom;
-					}
-	
-					query = "<Where>" +
-						"	<And>" +
-						"		 <Eq>" +
-						"			  <FieldRef Name='RequestStatus'></FieldRef>" +
-						"			  <Value Type='Text'>" + t.myRSQueryRelevantStatus + "</Value>" +
-						"		 </Eq>" +
-						"		 <Contains>" +
-						"			  <FieldRef Name='" + getRequesterFrom + "'></FieldRef>" +
-						"			  <Value Type='Text'>" + uData.name + "</Value>" +
-						"		 </Contains>" +
-						"	</And>" +
-						"</Where>"; */
+			/* } else if (typeof (t.myRSQueryRelevantStatus) != "undefined") {
+
+				if (typeof (mData.getRequesterFrom) == 'undefined') {
+					var getRequesterFrom = 'Author';
+				} else {
+					var getRequesterFrom = mData.getRequesterFrom;
+				}
+
+				query = "<Where>" +
+					"	<And>" +
+					"		 <Eq>" +
+					"			  <FieldRef Name='RequestStatus'></FieldRef>" +
+					"			  <Value Type='Text'>" + t.myRSQueryRelevantStatus + "</Value>" +
+					"		 </Eq>" +
+					"		 <Contains>" +
+					"			  <FieldRef Name='" + getRequesterFrom + "'></FieldRef>" +
+					"			  <Value Type='Text'>" + uData.name + "</Value>" +
+					"		 </Contains>" +
+					"	</And>" +
+					"</Where>"; */
 
 
 
@@ -20016,11 +20007,11 @@
 		return {
 			"HRAdmins": [
 				{
-					// 	"name": "Samuel Corey",
-					// 	"email": "scorey@mos.org",
-					// 	"account": "scorey",
-					// 	"accountLong": "i:0#.f|membership|scorey@mos.org"
-					// }, {
+				// 	"name": "Samuel Corey",
+				// 	"email": "scorey@mos.org",
+				// 	"account": "scorey",
+				// 	"accountLong": "i:0#.f|membership|scorey@mos.org"
+				// }, {
 					"name": "James Baker",
 					"email": "jbaker@mos.org",
 					"account": "jbaker",
@@ -20030,11 +20021,11 @@
 					"email": "sp1@mos.org",
 					"account": "sp1",
 					"accountLong": "i:0#.f|membership|sp1@mos.org"
-					// }, {
-					// 	"name": "HubTester9",
-					// 	"email": "sp9@mos.org",
-					// 	"account": "sp9",
-					// 	"accountLong": "i:0#.f|membership|sp9@mos.org"
+				// }, {
+				// 	"name": "HubTester9",
+				// 	"email": "sp9@mos.org",
+				// 	"account": "sp9",
+				// 	"accountLong": "i:0#.f|membership|sp9@mos.org"
 				}
 			],
 			"JobAdmins": [
@@ -20043,21 +20034,21 @@
 					"email": "sp2@mos.org",
 					"account": "sp2",
 					"accountLong": "i:0#.f|membership|sp2@mos.org"
-					// }, {
-					// 	"name": "Samuel Corey",
-					// 	"email": "scorey@mos.org",
-					// 	"account": "scorey",
-					// 	"accountLong": "i:0#.f|membership|scorey@mos.org"
-					// }, {
-					// 	"name": "HubTester8",
-					// 	"email": "sp8@mos.org",
-					// 	"account": "sp8",
-					// 	"accountLong": "i:0#.f|membership|sp8@mos.org"
-					// }, {
-					// 	"name": "James Baker",
-					// 	"email": "jbaker@mos.org",
-					// 	"account": "jbaker",
-					// 	"accountLong": "i:0#.f|membership|jbaker@mos.org"
+				// }, {
+				// 	"name": "Samuel Corey",
+				// 	"email": "scorey@mos.org",
+				// 	"account": "scorey",
+				// 	"accountLong": "i:0#.f|membership|scorey@mos.org"
+				// }, {
+				// 	"name": "HubTester8",
+				// 	"email": "sp8@mos.org",
+				// 	"account": "sp8",
+				// 	"accountLong": "i:0#.f|membership|sp8@mos.org"
+				// }, {
+				// 	"name": "James Baker",
+				// 	"email": "jbaker@mos.org",
+				// 	"account": "jbaker",
+				// 	"accountLong": "i:0#.f|membership|jbaker@mos.org"
 				}
 			],
 			"Managers": [
@@ -20066,16 +20057,16 @@
 					"email": "sp3@mos.org",
 					"account": "sp3",
 					"accountLong": "i:0#.f|membership|sp3@mos.org"
-					// }, {
-					// 	"name": "Samuel Corey",
-					// 	"email": "scorey@mos.org",
-					// 	"account": "scorey",
-					// 	"accountLong": "i:0#.f|membership|scorey@mos.org"
-					// }, {
-					// 	"name": "James Baker",
-					// 	"email": "jbaker@mos.org",
-					// 	"account": "jbaker",
-					// 	"accountLong": "i:0#.f|membership|jbaker@mos.org"
+				// }, {
+				// 	"name": "Samuel Corey",
+				// 	"email": "scorey@mos.org",
+				// 	"account": "scorey",
+				// 	"accountLong": "i:0#.f|membership|scorey@mos.org"
+				// }, {
+				// 	"name": "James Baker",
+				// 	"email": "jbaker@mos.org",
+				// 	"account": "jbaker",
+				// 	"accountLong": "i:0#.f|membership|jbaker@mos.org"
 				}
 			]
 		}
@@ -21592,7 +21583,7 @@
 		// wait for all data retrieval / setting promises to complete (pass or fail) 
 		$.when.apply($, allDataRetrievalAndSettingPromises).always(function () {
 
-			console.log('using mos-main.1.04 m1 - DevCode4');
+			console.log('using mos-main.1.04 m1 - Code4');
 
 			$().ConfigureAndShowScreenContainerAndAllScreens();
 		});
