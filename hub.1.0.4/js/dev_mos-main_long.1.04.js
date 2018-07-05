@@ -2403,7 +2403,7 @@
 				['RequestedFor', '-1;#' + uData.userName]
 			];
 
-			$().CreateOrUpdateListItem(mData, rData, submissionValuePairsArray, "https://bmos.sharepoint.com/sites/hr-service-signup");
+			var swfListSaveSuccess = $().CreateOrUpdateListItem(mData, rData, submissionValuePairsArray, "https://bmos.sharepoint.com/sites/hr-service-signup");
 
 			/* $().SPServices({
 				operation: 'UpdateListItems',
@@ -7096,15 +7096,6 @@
 		var spErrorText = $(xData.responseXML).find('ErrorText').text() != '' && $(xData.responseXML).find('errorstring').text() != '' ? $(xData.responseXML).find('ErrorText').text() + $(xData.responseXML).find('errorstring').text() : '""';
 		var spResponseXMLString = xData.responseXML == null ? 'null' : JSON.stringify(xData.responseXML.xml);
 
-		console.log('Status');
-		console.log(Status);
-
-		console.log('spErrorCode');
-		console.log(spErrorCode);
-
-		console.log('spErrorText');
-		console.log(spErrorText);
-
 		if (Status == 'success' && (spErrorCode == '""' || spErrorCode == '0x00000000') && spErrorText == '""') {
 			return successFlag = 1;
 		} else {
@@ -7115,6 +7106,7 @@
 				'<li>Issue Datetime = ' + $().ReturnFormattedDateTime('nowLocal', null, 'MMMM D, YYYY h:mm a') + '</li>' +
 				'<li>Affected System = ' + mData.requestName + '</li>' +
 				'<li>Affected Request # = ' + rData.requestID + '</li>' +
+				'<li>Affected GSE Schedule # = ' + rData.scheduleID + '</li>' +
 				'<li>Browser = ' + uData.browserFamilyAndVersion + '</li>' +
 				'<li>Form Factor = ' + uData.formFactor + '</li>' +
 				'<li>OS = ' + uData.os + '</li>' +
@@ -17095,8 +17087,6 @@
 
 		// send the data to the list
 
-		console.log(submissionValuePairsArray);
-
 		var updateListItemsOptions = {
 			operation: 'UpdateListItems',
 			listName: mData.defaultListNameForSWFRequestData,
@@ -17144,9 +17134,6 @@
 		if (webURL) {
 			updateListItemsOptions.webURL = webURL;
 		}
-
-		console.log('updateListItemsOptions');
-		console.log(updateListItemsOptions);
 
 		$().SPServices(updateListItemsOptions);
 		return deferred.promise();
