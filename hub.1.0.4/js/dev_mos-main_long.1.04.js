@@ -973,15 +973,15 @@
 			overviewScreen = uData.alternateOverviewScreen;
 		}
 
-		// if the URL contains a request ID (r) and it is 0
-		if (rData.requestID != "" && rData.requestID == 0) {
+		// if the URL contains a request ID (r) and it is 0 and the URL does NOT contain a GSE Schedule ID
+		if (rData.requestID != "" && rData.requestID == 0 && rData.gseScheduleID == "") {
 			initialScreen = "newRequest";
 			secondaryScreen = overviewScreen;
-			// if the URL contains a request ID (r) and it is greater than 0
-		} else if (rData.requestID != "" && rData.requestID > 0) {
+		// if the URL contains a request ID (r) greater than 0 -OR- the URL contains a GSE Schedule ID (gseScheduleID) greater than 0
+		} else if ((rData.requestID != "" && rData.requestID > 0) || (rData.gseScheduleID != "" && rData.gseScheduleID > 0)) {
 			initialScreen = "existingRequest";
 			secondaryScreen = overviewScreen;
-			// if the URL does not contain a request ID (r)
+		// if the URL does not contain a request ID (r)
 		} else if (rData.requestID === "") {
 			initialScreen = overviewScreen;
 			secondaryScreen = "newRequest";
@@ -1114,6 +1114,12 @@
 		$("div#request-screen-container").on("click", "a[data-button-type='save']", function () {
 			// Process Submission
 			$().ProcessSubmission();
+		});
+
+		// on clicking Signup; no screen transition happening here
+		$("div#request-screen-container").on("click", "a[data-button-type='gse-schedule-signup']", function () {
+			// Process GSE Signup
+			$().ProcessGSESignup();
 		});
 
 		// on clicking Dismiss; no screen transition happening here
@@ -1365,8 +1371,8 @@
 						if (
 							oneField.nameHere === "formData" || 
 							oneField.nameHere === "defaultDataForNewRequests" || 
-							oneField.nameHere === "GSEJobData" || 
-							oneField.nameHere === "GSEScheduleData"
+							oneField.nameHere === "gseJobData" || 
+							oneField.nameHere === "gseScheduleData"
 						) {
 							console.log('found field to interpret');
 
@@ -1455,8 +1461,8 @@
 						if (
 							oneField.nameHere === "formData" ||
 							oneField.nameHere === "defaultDataForNewRequests" ||
-							oneField.nameHere === "GSEJobData" ||
-							oneField.nameHere === "GSEScheduleData"
+							oneField.nameHere === "gseJobData" ||
+							oneField.nameHere === "gseScheduleData"
 						) {
 
 							var value = $(zRow).attr("ows_" + oneField.nameInList);
@@ -2178,7 +2184,7 @@
 
 
 
-	$.fn.ConfigureExistingGSESignup = function (passedScheduleID) {
+	/* $.fn.ConfigureExistingGSESignup = function (passedScheduleID) {
 		// reconsider
 		if (typeof (passedRequestID) != "undefined" && passedRequestID === "0") {
 			rData = { "requestID": "" };
@@ -2222,7 +2228,7 @@
 		$('#ScheduleID').val(rData['scheduleId']);
 		$('#UserContact').val(rData['userContact']);
 		$('#JobTitle').val(rData['jobTitle']);
-	}
+	} */
 
 
 
@@ -2243,7 +2249,7 @@
 			rData,
 			$().GetFieldsFromOneRow({
 				"select": [{
-					"nameHere": "jobId",
+					"nameHere": "jobID",
 					"nameInList": "JobID"
 				}, {
 					"nameHere": "GSEScheduleData",
@@ -2267,12 +2273,10 @@
 				"where": {
 					"field": "ID",
 					"type": "Number",
-					"value": rData.jobId,
+					"value": rData.jobID,
 				}
 			})
 		);
-		console.log('rData');
-		console.log(rData);
 		rData.shiftLength = rData['shiftlength_35-hours'] ? '3.5 hours' : '7.5 hours';
 		var opportunityJobDuties = [];
 		rData.GSEJobData.RepeatedElements.forEach((repeatElement) => {
@@ -2380,44 +2384,19 @@
 			'			</li>' +
 			'		</ul>' +
 			'	</div>' + 
+			// '	<input id="Request-Nickname" listfieldname="Title" type="hidden" value="' + uData.userName + '-' + rData.jobID + '-' + rData.scheduleID + '">' + 
+			// '	<input id="Schedule-ID" name="schedule-id" listfieldname="ScheduleID" type="hidden" value="' + rData.scheduleID + '">' + 
+			// '	<input id="Job-ID" name="job-id" listfieldname="JobID" type="hidden" value="' + rData.jobID + '">' + 
+			// '	<input id="Requested-For" name="requested-for" listfieldname="JobID" type="hidden" value="' + rData.jobID + '">' + 
+			// '	' + 
 			'	<a id="gse-schedule-signup-button" data-button-type="gse-schedule-signup">Sign up</a>' +
 			'</div>';
 
 		$("div#request-screen-container").append(opportunityMarkup);
-
-
-		$('a#gse-schedule-signup-button').click(function () {
-
-			mData.adminEmailString = $().ReturnUserEmailStringAndArray(mData.adminNotificationPersons).string;
-			mData.adminEmailArray = $().ReturnUserEmailStringAndArray(mData.adminNotificationPersons).array;
-			mData.componentGrpAdminEmailString = $().ReturnUserEmailStringAndArray(mData.componentGrpAdminNotifications).string;
-			mData.componentGrpAdminEmailArray = $().ReturnUserEmailStringAndArray(mData.componentGrpAdminNotifications).array;
-
-			// needed: -1;#sp1@mos.org
-			console.log('uData');
-			console.log(uData);
-			// 
-			var submissionValuePairsArray = [
-				['JobID', rData.jobID],
-				['ScheduleID', rData.scheduleID],
-				['RequestedFor', '-1;#' + uData.userName]
-			];
-
-			var swfListSaveSuccess = $().CreateOrUpdateListItem(mData, rData, submissionValuePairsArray, "https://bmos.sharepoint.com/sites/hr-service-signup");
-
-			/* $().SPServices({
-				operation: 'UpdateListItems',
-				listName: "SWFList",
-				webURL: ,
-				batchCmd: 'New',
-				ID: 0,
-				valuepairs: submissionValuePairsArray,
-				completefunc: function (xData, Status) {
-					signupSuccess = $().HandleListUpdateReturn(xData, Status, 'Hub GSE Signup Error');
-					console.log('signupSuccess = ' + signupSuccess);
-				}
-			}); */
-		});
+		console.log('rData');
+		console.log(rData);
+		console.log('uData');
+		console.log(uData);
 	};
 
 
@@ -2461,6 +2440,7 @@
 			// reset rData and get request id from url param
 			if (typeof (passedRequestID) != "undefined" && passedRequestID === "0") {
 				rData = { "requestID": "" };
+				rData.gseScheduleID = GetParamFromUrl(location.search, "gseScheduleID");
 			} else {
 				rData = { "requestID": GetParamFromUrl(location.search, "r") };
 			}
@@ -2512,7 +2492,7 @@
 				rData.formDataOnLoad.requestStatus = rData.requestStatus;
 			}
 
-			/*
+			/* 
 				// consider
 
 				if (rData.requestID != "") {
@@ -2524,7 +2504,7 @@
 						rData.formDataOnLoad.requestStatus = '';
 					}
 				}
-			*/
+			 */
 
 			// THIS REQUEST'S DEFAULT DATA FOR NEW REQUESTS
 
@@ -3976,6 +3956,59 @@
 				}
 			}
 
+			// if this is a new GSE Signup
+			if (mData.requestName == "GSE Signup" && rData.requestStatus == "" && rData.gseScheduleID != "" && rData.gseScheduleID > 0) {
+
+				rData = $.extend(
+					rData,
+					$().GetFieldsFromOneRow({
+						"select": [{
+							"nameHere": "gseJobID",
+							"nameInList": "JobID"
+						}, {
+							"nameHere": "gseScheduleData",
+							"nameInList": "AllRequestData"
+						}],
+						"webURL": "https://bmos.sharepoint.com/sites/hr-service-schedules",
+						"where": {
+							"field": "ID",
+							"type": "Number",
+							"value": rData.gseScheduleID,
+						}
+					})
+				);
+				rData = $.extend(
+					rData,
+					$().GetFieldsFromOneRow({
+						"select": [{
+							"nameHere": "gseJobData",
+							"nameInList": "AllRequestData"
+						}],
+						"webURL": "https://bmos.sharepoint.com/sites/hr-service-jobs",
+						"where": {
+							"field": "ID",
+							"type": "Number",
+							"value": rData.gseJobID,
+						}
+					})
+				);
+				console.log('rData');
+				console.log(rData);
+				console.log('rData.gseScheduleData');
+				console.log(rData.gseScheduleData);
+				console.log('rData.gseJobData');
+				console.log(rData.gseJobData);
+				// console.log('uData');
+				// console.log(uData);
+				PopulateFormData("div#request-form", rData.gseJobData, mData.uriRoot, rData.requestID, mData.checkForAlternateEventDataToPopulate);
+				PopulateFormData("div#request-form", rData.gseScheduleData, mData.uriRoot, rData.requestID, mData.checkForAlternateEventDataToPopulate);
+				$("input#Request-Nickname").val(rData.gseJobID + '-' + rData.gseScheduleID + '-' + ReplaceAll('@mos.org', '', uData.userName));
+				$("input#Request-Nickname").val(rData.gseJobID + '-' + rData.gseScheduleID + '-' + ReplaceAll('@mos.org', '', uData.userName));
+			}
+
+
+
+
 			// if request is new
 			if (rData.requestStatus === '') {
 
@@ -4513,6 +4546,127 @@
 				$().ConfigureExistingGSESignup();
 			}
 		*/
+	};
+
+	$.fn.ProcessGSESignup = function () {
+
+		// ========================================================
+		// SET UP VARS
+		// ========================================================
+
+		var NowAsFriendlyDateSansYear = $().ReturnFormattedDateTime('nowLocal', null, 'MMMM D');
+		var NowAsFriendlyDateWithYear = $().ReturnFormattedDateTime('nowLocal', null, 'MMMM D, YYYY');
+		var NowAsFriendlyDateTimeSansYear = $().ReturnFormattedDateTime('nowLocal', null, 'MMMM D h:mm a');
+		var NowAsFriendlyDateTimeWithYear = $().ReturnFormattedDateTime('nowLocal', null, 'MMMM D, YYYY h:mm a');
+		var NowAsISOLocal = $().ReturnFormattedDateTime('nowLocal', null, null);
+		var NowAsISOUTC = $().ReturnFormattedDateTime('nowUTC', null, null);
+
+		rData.beginningOfLife = 0;
+		rData.endOfLife = 0;
+		rData.endOfLifeIsNew = 0;
+
+		var workingMessage = $("div#app-container div#overlays-screen-container div#wait-while-working div.message p");
+
+		// ========================================================
+		// LAST MODIFICATION TIMESTAMP
+		// ========================================================
+
+		$(workingMessage).text("Checking some info");
+
+
+		// get last modification date
+		rData = $.extend(
+			$().GetFieldsFromOneRow({
+				'listName': mData.defaultListNameForSWFRequestData,
+				'select': [{
+					'nameHere': 'lastModifiedAtSubmit',
+					'nameInList': 'Modified',
+				}],
+				"where": {
+					"field": "ID",
+					"type": "Number",
+					"value": rData.requestID,
+				}
+			}),
+			rData
+		);
+
+		rData.lastModifiedAtSubmit != rData.lastModifiedAtLoad && rData.lastModifiedAtSubmit != rData.lastModifiedAtAttachment ? rData.lastModMismatch = 1 : rData.lastModMismatch = 0;
+
+		$("input#Last-Modified-Timestamp-at-Submit").val(rData.lastModifiedAtSubmit);
+		$("input#Last-Modified-Timestamp-Mismatch").val(rData.lastModMismatch);
+
+		if (rData.lastModMismatch === 1) {
+			rData = {};
+			$('div#overlays-screen-container').fadeIn(200);
+			$('div#last-modified-mismatch').fadeIn(400);
+		}
+
+		// if (rData.lastModMismatch === 0) {
+		// 	$('div#overlays-screen-container').fadeIn(200);
+		// 	$('div#wait-while-working').fadeIn(400);
+
+
+			// ========================================================
+			// CONVERT FRIENDLY DATES TO ISO ---------------------------------------------- nothing done here yet - requires elements in fData
+			// ========================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		var submissionValuePairsArray = [
+			['Title', uData.userName + '-' + rData.jobID + '-' + rData.scheduleID],
+			['JobID', rData.jobID],
+			['ScheduleID', rData.scheduleID],
+			['RequestedFor', '-1;#' + uData.userName]
+		];
+
+		var swfListSaveSuccess = $().CreateOrUpdateListItem(mData, rData, submissionValuePairsArray, "https://bmos.sharepoint.com/sites/hr-service-signup");
+
+		console.log(swfListSaveSuccess);
 	};
 
 
@@ -12369,6 +12523,10 @@
 		// start building field
 		var field = '<input type="hidden" id="' + e.hypehnatedNameLower + '" name="' + e.hypehnatedNameLower + '"';
 
+		if (typeof (e.listFieldName) !== "undefined") {
+			field += ' listFieldName="' + e.listFieldName + '" ';
+		}
+
 		if (typeof (e.value) !== "undefined") {
 			field += ' value="' + e.value + '"';
 		}
@@ -13611,7 +13769,6 @@
 
 		var formDataCopy = {};
 
-
 		$.each(formData, function (formDatumKey, formDatumValue) {
 			formDataCopy[formDatumKey] = formDatumValue;
 		});
@@ -13639,7 +13796,13 @@
 			}
 		}
 
+		// console.log('formDataCopy');
+		// console.log(formDataCopy);
+
 		for (field in formDataCopy) {
+
+			// console.log('field');
+			// console.log(field);
 
 			// get the field in the form that matches the stored data value
 			element = $(form).find("#" + field);
@@ -21392,6 +21555,9 @@
 
 		// data for a specific request; i.e., will be, largely, data from a row of SWFList
 		rData = { "requestID": GetParamFromUrl(location.search, "r") };
+
+		// data for a specific GSE Schedule
+		rData.gseScheduleID = GetParamFromUrl(location.search, "gseScheduleID");
 
 		// data for the overview screen for this user
 		oData = $().ReturnThisAppOData();

@@ -15,9 +15,9 @@
 			{
 				'roles': ['gseHRAdmin', 'gseJobAdmin', 'gseManager'],
 				'title': 'GSE Schedule'
-			}, {
-				'roles': ['gseUserOnly'],
-				'title': 'GSE Signup Opportunity'
+			// }, {
+			// 	'roles': ['gseUserOnly'],
+			// 	'title': 'GSE Signup Opportunity'
 			}
 		]
 	};
@@ -798,6 +798,17 @@
 			// 	'disabledForNonAdmin': ['Cancelled'],
 			// 	'disabledForAdmin': ['Cancelled'],
 			// }, {
+
+			// 	'elementType': "field",
+			// 	'controlType': "hidden",
+			// 	'fieldName': "Schedule ID",
+			// 	'listFieldName': "ScheduleID",
+			// 	'labelContent': "Schedule ID",
+			// }, {
+
+
+
+
 				'elementType': "markup",
 				'tag': "h2",
 				'content': "Job",
