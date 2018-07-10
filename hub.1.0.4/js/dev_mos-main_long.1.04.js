@@ -4122,7 +4122,38 @@
 
 				rData.gseJobData['Job-Admin-Name'] = rData.gseJobData['Job-Admin'][0].description;
 				rData.gseJobData['Job-Description-Formatted'] = ReplaceAll('%0A', '</p><p>', rData.gseJobData['Job-Description']);
-				rData.gseJobData['Training-Requirements-Formatted'] = ReplaceAll('%0A', '</p><p>', rData.gseJobData['Training-Requirements']);
+				if (rData.gseJobData['Training-Requirements']) {
+					rData.gseJobData['Training-Requirements-Formatted'] = ReplaceAll('%0A', '</p><p>', rData.gseJobData['Training-Requirements']);
+				}
+				if (rData.gseJobData['Dress-Requirements']) {
+					rData.gseJobData['Dress-Requirements-Formatted'] = ReplaceAll('%0A', '</p><p>', rData.gseJobData['Dress-Requirements']);
+				}
+
+				var opportunityJobDuties = [];
+				rData.gseJobData.RepeatedElements.forEach((repeatElement) => {
+					// console.log('repeatElement');
+					// console.log(repeatElement);
+					if (StrInStr(repeatElement.ID, 'gse-job-duty') != -1) {
+						// console.log('found a duty');
+						var repeatElementKeys = Object.keys(repeatElement);
+						// console.log('repeatElementKeys');
+						// console.log(repeatElementKeys);
+						repeatElementKeys.forEach((repeatElementKey) => {
+							if (StrInStr(repeatElementKey, 'Job-Duty')) {
+								opportunityJobDuties.push(repeatElement[repeatElementKey]);
+							}
+						});
+					}
+				});
+
+				var opportunityJobDutyElement = opportunityJobDuties[1] ? 'li' : 'p';
+
+				rData.gseJobData['Job-Duties-List-Items'] = '';
+
+				opportunityJobDuties.forEach((opportunityJobDuty) => {
+					rData.gseJobData['Job-Duties-List-Items'] += '			<' + opportunityJobDutyElement + '>' + opportunityJobDuty + '</' + opportunityJobDutyElement + '>';
+				});
+
 				console.log('rData.gseScheduleData');
 				console.log(rData.gseScheduleData);
 				console.log('rData.gseJobData');

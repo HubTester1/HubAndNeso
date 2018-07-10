@@ -360,93 +360,97 @@
 			}, {
 				'elementType': "markup",
 				'tag': "p",
-				'content': 'Clothing and shoes must be in good condition.',
+				'content': '<span id="Dress-Requirements-Formatted" class="content-placeholder"></span>',
 				'begin': 1,
 				'end': 1
-			// }, {
-			// 	'elementType': "markup",
-			// 	'tag': "h3",
-			// 	'content': '<span id="" class="content-placeholder"></span>',
-			// 	'begin': 1,
-			// 	'end': 1
-			// }, {
-			// 	'elementType': "markup",
-			// 	'tag': "h3",
-			// 	'content': '<span id="" class="content-placeholder"></span>',
-			// 	'begin': 1,
-			// 	'end': 1
-			// }, {
-			// 	'elementType': "markup",
-			// 	'tag': "h3",
-			// 	'content': '<span id="" class="content-placeholder"></span>',
-			// 	'begin': 1,
-			// 	'end': 1
-			// }, {
-			// 	'elementType': "markup",
-			// 	'tag': "h3",
-			// 	'content': '<span id="" class="content-placeholder"></span>',
-			// 	'begin': 1,
-			// 	'end': 1
-			// }, {
-			// 	'elementType': "markup",
-			// 	'tag': "h3",
-			// 	'content': '<span id="" class="content-placeholder"></span>',
-			// 	'begin': 1,
-			// 	'end': 1
-			// }, {
-			// 	'elementType': "markup",
-			// 	'tag': "h3",
-			// 	'content': '<span id="" class="content-placeholder"></span>',
-			// 	'begin': 1,
-			// 	'end': 1
-			// }, {
-			// 	'elementType': "markup",
-			// 	'tag': "h3",
-			// 	'content': '<span id="" class="content-placeholder"></span>',
-			// 	'begin': 1,
-			// 	'end': 1
-			// }, {
-			// 	'elementType': "markup",
-			// 	'tag': "h3",
-			// 	'content': '<span id="" class="content-placeholder"></span>',
-			// 	'begin': 1,
-			// 	'end': 1
-			// }, {
-			// 	'elementType': "markup",
-			// 	'tag': "h3",
-			// 	'content': '<span id="" class="content-placeholder"></span>',
-			// 	'begin': 1,
-			// 	'end': 1
-			// }, {
-			// 	'elementType': "markup",
-			// 	'tag': "h3",
-			// 	'content': '<span id="" class="content-placeholder"></span>',
-			// 	'begin': 1,
-			// 	'end': 1
-			// }, {
-			// 	'elementType': "markup",
-			// 	'tag': "h3",
-			// 	'content': '<span id="" class="content-placeholder"></span>',
-			// 	'begin': 1,
-			// 	'end': 1
-			// }, {
-			// 	'elementType': "markup",
-			// 	'tag': "h3",
-			// 	'content': '<span id="" class="content-placeholder"></span>',
-			// 	'begin': 1,
-			// 	'end': 1
-			// }, {
-			// 	'elementType': "markup",
-			// 	'tag': "h3",
-			// 	'content': '<span id="" class="content-placeholder"></span>',
-			// 	'begin': 1,
-			// 	'end': 1
-			// }, {
-			// 	'elementType': "markup",
-			// 	'tag': "h3",
-			// 	'content': '<span id="" class="content-placeholder"></span>',
-			// 	'begin': 1,
-			// 	'end': 1
+			}, {
+				'elementType': "markup",
+				'tag': "h3",
+				'content': 'Job Duties',
+				'begin': 1,
+				'end': 1
+			}, {
+				'elementType': "markup",
+				'tag': "ul",
+				'content': '<span id="Job-Duties-List-Items" class="content-placeholder"></span>',
+				'begin': 1,
+				'end': 1
+			}, {
+				'elementType': "markup",
+				'tag': "h3",
+				'content': 'Physical Requirements',
+				'begin': 1,
+				'end': 1
+			}, {
+				'elementType': "markup",
+				'tag': "h4",
+				'content': 'How Much Weight Will Be Handled',
+				'begin': 1,
+				'end': 1
+			}, {
+				'elementType': "markup",
+				'tag': "ul",
+				'begin': 1,
+			}, {
+				'elementType': "markup",
+				'tag': "li",
+				'content': 'Lifting: <span id="Physical-Demand-Lifting" class="content-placeholder"></span> lbs',
+				'begin': 1,
+				'end': 1
+			}, {
+				'elementType': "markup",
+				'tag': "li",
+				'content': 'Carrying: <span id="Physical-Demand-Carrying" class="content-placeholder"></span> lbs',
+				'begin': 1,
+				'end': 1
+			}, {
+				'elementType': "markup",
+				'tag': "li",
+				'content': 'Pushing: <span id="Physical-Demand-Pushing" class="content-placeholder"></span> lbs',
+				'begin': 1,
+				'end': 1
+			}, {
+				'elementType': "markup",
+				'tag': "li",
+				'content': 'Pulling: <span id="Physical-Demand-Pulling" class="content-placeholder"></span> lbs',
+				'begin': 1,
+				'end': 1
+			}, {
+				'elementType': "markup",
+				'tag': "ul",
+				'end': 1
+			}, {
+				'elementType': "markup",
+				'tag': "h4",
+				'content': 'How Time Will Be Divided',
+				'begin': 1,
+				'end': 1
+			}, {
+				'elementType': "markup",
+				'tag': "ul",
+				'begin': 1,
+			}, {
+				'elementType': "markup",
+				'tag': "li",
+				'content': 'Standing: <span id="Physical-Demand-Standing" class="content-placeholder"></span>%',
+				'begin': 1,
+				'end': 1
+			}, {
+				'elementType': "markup",
+				'tag': "li",
+				'content': 'Sitting: <span id="Physical-Demand-Sitting" class="content-placeholder"></span>%',
+				'begin': 1,
+				'end': 1
+			}, {
+				'elementType': "markup",
+				'tag': "li",
+				'content': 'Walking: <span id="Physical-Demand-Walking" class="content-placeholder"></span>%',
+				'begin': 1,
+				'end': 1
+			}, {
+				'elementType': "markup",
+				'tag': "ul",
+				'end': 1
 			// }, {
 			// 	'elementType': "markup",
 			// 	'tag': "h3",

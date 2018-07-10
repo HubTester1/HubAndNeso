@@ -464,8 +464,8 @@
 				}],
 				'requiredForNonAdmin': [''],
 				'requiredForAdmin': [''],
-				'disabledForNonAdmin': ['Cancelled'],
-				'disabledForAdmin': ['Cancelled']
+				'disabledForNonAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
+				'disabledForAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"]
 			}, {
 				'elementType': "markup",
 				'tag': "a",
@@ -474,8 +474,8 @@
 				'htmlClass': "remove-section-anchor",
 				'content': "Remove",
 				'removeThisRepeat': 1,
-				'hideForNonAdmin': ['Submitted', 'Cancelled'],
-				'hideForAdmin': ['Submitted', 'Cancelled'],
+				'hideForNonAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
+				'hideForAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
@@ -489,8 +489,8 @@
 				'htmlClass': 'repeat-section-anchor',
 				'content': 'Insert another duty',
 				'repeatSectionID': 'gse-job-duty',
-				'hideForNonAdmin': ['Submitted', 'Cancelled'],
-				'hideForAdmin': ['Submitted', 'Cancelled'],
+				'hideForNonAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
+				'hideForAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
