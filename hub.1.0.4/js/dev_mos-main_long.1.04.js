@@ -3131,7 +3131,7 @@
 						"htmlID": "admin",
 						"content": '',
 						"begin": 1,
-						"hideForNonAdmin": ["", "Open", "Submitted", "In Development", "Pending Revision", "Pending Approval", "Approved", "Completed", "Archived", "Disapproved", "Cancelled"],
+						"hideForNonAdmin": ["", "Open", "Submitted", "Signed Up", "In Development", "Pending Revision", "Pending Approval", "Approved", "Completed", "Credit Granted", "Credit Denied", "Archived", "Disapproved", "Cancelled"],
 						"hideForAdmin": [""]
 					}, {
 						"elementType": "markup",
@@ -3144,8 +3144,8 @@
 						"tag": "div",
 						"htmlID": "approval-notification-history",
 						"begin": 1,
-						"hideForNonAdmin": ["", "Open", "Submitted", "In Development", "Pending Revision", "Pending Approval", "Approved", "Completed", "Archived", "Disapproved", "Cancelled"],
-						"hideForAdmin": ["", "Open", "Submitted", "In Development", "Pending Revision", "Pending Approval", "Approved", "Completed", "Archived", "Disapproved", "Cancelled"]
+						"hideForNonAdmin": ["", "Open", "Submitted", "Signed Up", "In Development", "Pending Revision", "Pending Approval", "Approved", "Completed", "Credit Granted", "Credit Denied", "Archived", "Disapproved", "Cancelled"],
+						"hideForAdmin": ["", "Open", "Submitted", "Signed Up", "In Development", "Pending Revision", "Pending Approval", "Approved", "Completed", "Credit Granted", "Credit Denied", "Archived", "Disapproved", "Cancelled"]
 					}, {
 						"elementType": "markup",
 						"tag": "h3",
@@ -3183,16 +3183,16 @@
 						"fieldName": "Change Request Status",
 						"labelContent": "Change Request Status",
 						"setOptions": fData.standardElementGroups.standardAdminElements.changeRequestStatus,
-						"hideForNonAdmin": ["Submitted", "Completed", "Archived", "Disapproved", "Cancelled"],
-						"hideForAdmin": ["Completed", "Archived", "Disapproved", "Cancelled"],
+						"hideForNonAdmin": ["Submitted", "Signed Up", "Completed", "Credit Granted", "Credit Denied", "Archived", "Disapproved", "Cancelled"],
+						"hideForAdmin": ["Completed", "Credit Granted", "Credit Denied", "Archived", "Disapproved", "Cancelled"],
 					}, {
 						"elementType": "field",
 						"controlType": "text",
 						"fieldName": "Request Status",
 						"listFieldName": "RequestStatus",
 						"labelContent": "Request Status",
-						"disabledForNonAdmin": ["", "Open", "Submitted", "In Development", "Pending Revision", "Pending Approval", "Approved", "Completed", "Archived", "Disapproved", "Cancelled"],
-						"disabledForAdmin": ["", "Open", "Submitted", "In Development", "Pending Revision", "Pending Approval", "Approved", "Completed", "Archived", "Disapproved", "Cancelled"]
+						"disabledForNonAdmin": ["", "Open", "Submitted", "Signed Up", "In Development", "Pending Revision", "Pending Approval", "Approved", "Completed", "Credit Granted", "Credit Denied", "Archived", "Disapproved", "Cancelled"],
+						"disabledForAdmin": ["", "Open", "Submitted", "Signed Up", "In Development", "Pending Revision", "Pending Approval", "Approved", "Completed", "Credit Granted", "Credit Denied", "Archived", "Disapproved", "Cancelled"]
 					}, {
 						"elementType": "field",
 						"controlType": "textarea",
@@ -3203,8 +3203,8 @@
 						"controlType": "textarea",
 						"fieldName": "Historical Admin Notes",
 						"labelContent": "Historical Admin Notes",
-						"disabledForNonAdmin": ["", "In Development", "Pending Revision", "Pending Approval", "Approved", "Completed", "Archived", "Disapproved", "Cancelled"],
-						"disabledForAdmin": ["", "In Development", "Pending Revision", "Pending Approval", "Approved", "Completed", "Archived", "Disapproved", "Cancelled"]
+						"disabledForNonAdmin": ["", "In Development", "Pending Revision", "Pending Approval", "Approved", "Completed", "Credit Granted", "Credit Denied", "Archived", "Disapproved", "Cancelled"],
+						"disabledForAdmin": ["", "In Development", "Pending Revision", "Pending Approval", "Approved", "Completed", "Credit Granted", "Credit Denied", "Archived", "Disapproved", "Cancelled"]
 					}, {
 						"elementType": "markup",
 						"tag": "div",
@@ -3956,8 +3956,8 @@
 				}
 			}
 
-			// if this is a GSE Signup
-			if (mData.requestName == "GSE Signup" && rData.gseScheduleID != "" && rData.gseScheduleID > 0) {
+			// if this is a *new* GSE Signup
+			if (rData.requestStatus == "" && mData.requestName == "GSE Signup" && rData.gseScheduleID != "" && rData.gseScheduleID > 0) {
 
 				rData = $.extend(
 					rData,
@@ -3995,14 +3995,6 @@
 				delete rData.gseJobData['Request-Status'];
 				delete rData.gseScheduleData['Request-Status'];
 
-				console.log('rData');
-				console.log(rData);
-				console.log('rData.gseScheduleData');
-				console.log(rData.gseScheduleData);
-				console.log('rData.gseJobData');
-				console.log(rData.gseJobData);
-				// console.log('uData');
-				// console.log(uData);
 				PopulateFormData("div#request-form", rData.gseJobData, mData.uriRoot, rData.requestID, mData.checkForAlternateEventDataToPopulate);
 				PopulateFormData("div#request-form", rData.gseScheduleData, mData.uriRoot, rData.requestID, mData.checkForAlternateEventDataToPopulate);
 				$("input#Request-Nickname").val(rData.gseJobID + '-' + rData.gseScheduleID + '-' + ReplaceAll('@mos.org', '', uData.userName));
@@ -4010,7 +4002,10 @@
 				$("input#Schedule-ID").val(rData.gseScheduleID);
 			}
 
-
+			// if this is an *existing* GSE Signup
+			if (rData.requestStatus != "" && mData.requestName == "GSE Signup") {
+				$("input#Request-Status-for-Requester").val(rData.requestStatus);
+			}
 
 
 			// if request is new
@@ -5238,8 +5233,16 @@
 					var endOfLifeIsNew = 0;
 					if (rData.requestStatus == '') {
 						newReqStatus = 'Signed Up';
-					} else if (rData.requestStatus == 'Signed Up' && $('input#requester-cancellation_cancel:checked').length > 0) {
+					} else if (rData.requestStatus == 'Signed Up' && ($('input#requester-cancellation_cancel:checked').length > 0 || $('select#Change-Request-Status option:selected').val() == 'Cancel')) {
 						newReqStatus = 'Cancelled';
+						endOfLife = 1;
+						endOfLifeIsNew = 1;
+					} else if (rData.requestStatus == 'Signed Up' && $('select#Change-Request-Status option:selected').val() == 'Grant Credit') {
+						newReqStatus = 'Credit Granted';
+						endOfLife = 1;
+						endOfLifeIsNew = 1;
+					} else if (rData.requestStatus == 'Signed Up' && $('select#Change-Request-Status option:selected').val() == 'Deny Credit') {
+						newReqStatus = 'Credit Denied';
 						endOfLife = 1;
 						endOfLifeIsNew = 1;
 					}

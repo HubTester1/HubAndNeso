@@ -236,27 +236,6 @@
 		'alwaysTalkToRequester': 1,
 		'autoTrackGSESignupStatuses': 1,
 		'standardElementGroups': {
-			'standardThisRequestAndRequesterElements': 1,
-			'standardAdminElements': {
-				'changeRequestStatus': [
-					{ "value": "Grant Credit", "display": "Grant credit for this signup" },
-					{ "value": "Deny Credit", "display": "Deny credit for this signup" },
-					{ "value": "Cancel", "display": "Cancel this signup" },
-				],
-				'additionalAdminFields': [
-					{
-						'elementType': "field",
-						'controlType': "textarea",
-						'fieldName': "Credit Denial Reason",
-						'listFieldName': "CreditDenialReason",
-						'labelContent': "Credit Denial Reason",
-						'disabledForNonAdmin': ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
-						'disabledForAdmin': ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
-						'hideForNonAdmin': ["", "Signed Up", "Credit Granted", "Cancelled"],
-						'hideForAdmin': ["", "Signed Up", "Credit Granted", "Cancelled"],
-					}
-				]
-			},
 			'standardButtonElements': 1,
 			'standardComponentGrpAdminOnlyElements': 1
 		},
@@ -352,6 +331,19 @@
 				'tag': "ul",
 				'end': 1
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 			}, {
 				'elementType': "markup",
 				'tag': "h2",
@@ -359,28 +351,214 @@
 				'begin': 1,
 				'end': 1
 			}, {
-				'elementType': "markup",
-				'tag': "div",
-				'htmlID': 'requirement-legend-for-signup',
-				'htmlClass': 'label-and-control',
-				'content':	'<div class="label"></div><div class="field-type-indication">' + 
-							'<span class="field-type-indicator field-required">' + 
-							'<span class="message message-required"></span></span></div>' + 
-							'<div class="control">= required field</div>',
-				'begin': 1,
-				'end': 1
+				"elementType": "markup",
+				"tag": "div",
+				"htmlClass": "label-and-control",
+				"htmlID": "requirement-legend",
+				"content": '	<div class="label"></div>' +
+					'	<div class="field-type-indication"><span class="field-type-indicator field-required"><span class="message message-required"></span></span></div>' +
+					'	<div class="control">= required field</div>',
+				"begin": 1,
+				"end": 1
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "Request ID",
+				"labelContent": "Signup ID",
+				"hideForNonAdmin": [""],
+				"hideForAdmin": [""],
+				"disabledForNonAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
+				"disabledForAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"]
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "Request Date",
+				"labelContent": "Signup Date",
+				"listFieldName": "RequestDate",
+				"friendlyFormatOnLoad": {
+					'incomingFormat': null,
+					'returnFormat': 'MMMM D, YYYY',
+					'determineYearDisplayDynamically': 1
+				},
+				"isoFormatOnSubmit": {
+					'incomingFormat': null,
+					'returnFormat': null,
+					'determineYearDisplayDynamically': null
+				},
+				"hideForNonAdmin": [""],
+				"hideForAdmin": [""],
+				"disabledForNonAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
+				"disabledForAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"]
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "Request Nickname",
+				"labelContent": "Request Nickname",
+				"listFieldName": "Title",
+				"helpNotes": [{
+					"text": "Give this request a name you can reference later",
+					"htmlID": "request-nickname_help-note",
+					"urgent": 0,
+					"hideForNonAdmin": ["Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
+					"hideForAdmin": ["Signed Up", "Credit Granted", "Credit Denied", "Cancelled"]
+				}],
+				"requiredForNonAdmin": [""],
+				"requiredForAdmin": [""],
+				"disabledForNonAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
+				"disabledForAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
+				"hideForNonAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
+				"hideForAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"]
+			}, {
+				"elementType": "field",
+				"controlType": "select",
+				"fieldName": "Self or Other",
+				"labelContent": "If we have questions, talk to you or someone else?",
+				"setOptions": [{
+					"value": "Self",
+					"display": "Talk to me"
+				}, {
+					"value": "Other",
+					"display": "Talk to someone else"
+				}],
+				"requiredForNonAdmin": [""],
+				"requiredForAdmin": [""],
+				"hideForNonAdmin": ["Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
+				"hideForAdmin": ["Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
+				"disabledForNonAdmin": ["Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
+				"disabledForAdmin": ["Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
+				"onChange": [{
+					"thisFieldEquals": ["Self"],
+					"hide": [{
+						"fieldName": "Requested For"
+					}],
+					"optional": [{
+						"fieldName": "Requested For",
+						"type": "peoplepicker"
+					}],
+					"set": [{
+						"fieldName": "Requested For",
+						"type": "peoplePicker",
+						"value": "currentUser"
+					}]
+				}, {
+					"thisFieldEquals": ["Other"],
+					"show": [{
+						"fieldName": "Requested For"
+					}],
+					"require": [{
+						"fieldName": "Requested For",
+						"type": "peoplepicker"
+					}],
+					"set": [{
+						"fieldName": "Requested For",
+						"type": "peoplePicker",
+						"value": ""
+					}]
+				}]
+			}, {
+				"elementType": "field",
+				"controlType": "peoplePicker",
+				"fieldName": "Requested For",
+				"labelContent": "Who Signed Up",
+				"listFieldName": "RequestedFor",
+				"yieldsViewPermissions": 1,
+				"hideForNonAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
+				"hideForAdmin": [""],
+				"disabledForNonAdmin": ["Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
+				"disabledForAdmin": ["Signed Up", "Credit Granted", "Credit Denied", "Cancelled"]
+			}, {
+				"elementType": "field",
+				"controlType": "check",
+				"fieldName": "Requester Cancellation",
+				"choiceSetLabel": "Cancellation",
+				"choices": [{
+					"value": "cancel",
+					"display": "Yes, I wish to cancel this signup"
+				}],
+				"hideForNonAdmin": ["", "Credit Granted", "Credit Denied", "Cancelled"],
+				"hideForAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
+				"disabledForNonAdmin": ["Credit Granted", "Credit Denied", "Cancelled"],
+				"disabledForAdmin": ["Credit Granted", "Credit Denied", "Cancelled"]
+				// about the requester
+			}, {
+				"elementType": "markup",
+				"tag": "div",
+				"htmlID": "container_about-the-requester",
+				"begin": 1,
+				"hideForNonAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
+				"hideForAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
+			}, {
+				"elementType": "markup",
+				"tag": "h2",
+				"content": "About the Requester",
+				"begin": 1,
+				"end": 1
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "Requester Name",
+				"labelContent": "Name",
+				"disabledForNonAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
+				"disabledForAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"]
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "Requester Department",
+				"labelContent": "Department",
+				"disabledForNonAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
+				"disabledForAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"]
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "Requester Email",
+				"labelContent": "Email",
+				"disabledForNonAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
+				"disabledForAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"]
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "Requester Phone",
+				"labelContent": "Phone",
+				"disabledForNonAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
+				"disabledForAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"]
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "Requester Account",
+				"labelContent": "Account",
+				"yieldsViewPermissions": 1,
+				"hideForNonAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
+				"hideForAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
+				"disabledForNonAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
+				"disabledForAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"]
+			}, {
+				"elementType": "field",
+				"controlType": "peoplePicker",
+				"fieldName": "Requested By",
+				"labelContent": "Requested By",
+				"listFieldName": "RequestedBy",
+				"yieldsViewPermissions": 1,
+				"hideForNonAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
+				"hideForAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
+				"disabledForNonAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
+				"disabledForAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"]
+			}, {
+				"elementType": "markup",
+				"tag": "div",
+				"end": 1
 
 
 
 
 
-				// 
 			}, {
 				'elementType': "field",
 				'controlType': "text",
 				'fieldName': "Job ID",
 				'listFieldName': "JobID",
 				'labelContent': "Job ID",
+				"disabledForNonAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
+				"disabledForAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
 				'hideForNonAdmin': ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
 				'hideForAdmin': ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
 			}, {
@@ -389,22 +567,11 @@
 				'fieldName': "Schedule ID",
 				'listFieldName': "ScheduleID",
 				'labelContent': "Schedule ID",
+				"disabledForNonAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
+				"disabledForAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
 				'hideForNonAdmin': ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
 				'hideForAdmin': ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
 			
-			}, {
-				"elementType": "field",
-				"controlType": "check",
-				"fieldName": "Requester Cancellation",
-				"choiceSetLabel": "Cancellation",
-				"choices": [{
-					"value": "cancel",
-					"display": "Yes, I wish to cancel my signup"
-				}],
-				"hideForNonAdmin": ["", "Credit Granted", "Credit Denied", "Cancelled"],
-				"hideForAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
-				"disabledForNonAdmin": ["", "Credit Granted", "Credit Denied", "Cancelled"],
-				"disabledForAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"]
 			}, {
 				"elementType": "field",
 				"controlType": "check",
@@ -418,28 +585,99 @@
 				"requiredForAdmin": [""],
 				"hideForNonAdmin": ["Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
 				"hideForAdmin": ["Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
-			
-			
-			
-			
-			/* }, {
+			}, {
 				'elementType': "field",
 				'controlType': "text",
-				'fieldName': "Request Status",
-				'listFieldName': "RequestStatus",
+				'fieldName': "Request Status for Requester",
 				'labelContent': "Signup Status",
 				'disabledForNonAdmin': ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
 				'disabledForAdmin': ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
-				// 'hideForNonAdmin': ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
-				// 'hideForAdmin': ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
+				'hideForNonAdmin': ["",],
+				'hideForAdmin': ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
+			
+			
+			
 			}, {
-				'elementType': "markup",
-				'tag': "div",
-				'content': '<div id="gse-schedule-save-button-container"><a data-button-type="save" id="form-submit-button">Save</a></div>' + 
-							'<div id="gse-schedule-exit-button-container"><a data-button-type="noSave" id="exit-sans-save-button" style="background-color: #fcc !important">Go to X</a></div>',
-				'begin': 1,
-				'end': 1 */
+				"elementType": "markup",
+				"tag": "div",
+				"htmlID": "admin",
+				"content": '',
+				"begin": 1,
+				"hideForNonAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
+				"hideForAdmin": [""]
+			}, {
+				"elementType": "markup",
+				"tag": "h3",
+				"content": 'Admin',
+				"begin": 1,
+				"end": 1,
+			}, {
+				"elementType": "field",
+				"controlType": "select",
+				"fieldName": "Change Request Status",
+				"labelContent": "Change Signup Status",
+				"setOptions": [
+					{ "value": "Grant Credit", "display": "Grant credit for this signup" },
+					{ "value": "Deny Credit", "display": "Deny credit for this signup" },
+					{ "value": "Cancel", "display": "Cancel this signup" },
+				],
+				"hideForNonAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
+				"hideForAdmin": ["", "Credit Granted", "Credit Denied", "Cancelled"],
+				"onChange": [{
+					"thisFieldEquals": ["Grant Credit", "Cancel"],
+					"hide": [{
+						"fieldName": "Credit Denial Reason"
+					}],
+					"optional": [{
+						"fieldName": "Credit Denial Reason",
+						"type": "textarea"
+					}]
+				}, {
+					"thisFieldEquals": ["Deny Credit"],
+					"show": [{
+						"fieldName": "Credit Denial Reason"
+					}],
+					"require": [{
+						"fieldName": "Credit Denial Reason",
+						"type": "textarea"
+					}]
+				}]
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "Request Status",
+				"listFieldName": "RequestStatus",
+				"labelContent": "Signup Status",
+				"disabledForNonAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
+				"disabledForAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"]
+			}, {
+				'elementType': "field",
+				'controlType': "textarea",
+				'fieldName': "Credit Denial Reason",
+				'listFieldName': "CreditDenialReason",
+				'labelContent': "Credit Denial Reason",
+				'disabledForNonAdmin': ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
+				'disabledForAdmin': ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
+				'hideForNonAdmin': ["", "Signed Up", "Credit Granted", "Cancelled"],
+				'hideForAdmin': ["", "Signed Up", "Credit Granted", "Cancelled"],
+			}, {
+				"elementType": "field",
+				"controlType": "textarea",
+				"fieldName": "New Admin Notes",
+				"labelContent": "Admin Notes"
+			}, {
+				"elementType": "field",
+				"controlType": "textarea",
+				"fieldName": "Historical Admin Notes",
+				"labelContent": "Historical Admin Notes",
+				"disabledForNonAdmin": ["", "In Development", "Pending Revision", "Pending Approval", "Approved", "Completed", "Credit Granted", "Credit Denied", "Archived", "Disapproved", "Cancelled"],
+				"disabledForAdmin": ["", "In Development", "Pending Revision", "Pending Approval", "Approved", "Completed", "Credit Granted", "Credit Denied", "Archived", "Disapproved", "Cancelled"]
 
+
+			}, {
+				"elementType": "markup",
+				"tag": "div",
+				"end": 1
 
 
 
@@ -457,7 +695,21 @@
 	fData.CustomScriptFirst = '';
 
 
-	fData.CustomScriptLast = '$("h2#header_this-request, div#requirement-legend, div#label-and-control_Request-Nickname, div#submission-notice").addClass("hidden");';
+	fData.CustomScriptLast = '';
+	/* 	'$("h2#header_this-request, div#requirement-legend, ' + 
+								'div#label-and-control_Request-ID, div#label-and-control_Request-Date, ' + 
+								'div#label-and-control_Self-or-Other, div#label-and-control_Requested-For, ' + 
+								'div#label-and-control_Requester-Cancellation, div#container_about-the-requester, ' + 
+								// 'div#XXXXX, div#XXXXX, ' +
+								// 'div#XXXXX, div#XXXXX, ' + 
+								// 'div#XXXXX, div#XXXXX, ' + 
+								// 'div#XXXXX, div#XXXXX, ' + 
+								// 'div#XXXXX, div#XXXXX, ' + 
+								'div#label-and-control_Request-Nickname").addClass("hidden");';
+
+	fData.CustomScriptLast +=	'if ($("input#Request-Status").val() == "") {' + 
+								'	$("div#submission-notice").addClass("hidden");' + 
+								'}'; */
 
 
 
