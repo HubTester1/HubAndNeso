@@ -237,6 +237,27 @@
 		'autoTrackGSESignupStatuses': 1,
 		'standardElementGroups': {
 			'standardThisRequestAndRequesterElements': 1,
+			'standardAdminElements': {
+				'changeRequestStatus': [
+					{ "value": "Grant Credit", "display": "Grant credit for this signup" },
+					{ "value": "Deny Credit", "display": "Deny credit for this signup" },
+					{ "value": "Cancel", "display": "Cancel this signup" },
+				],
+				'additionalAdminFields': [
+					{
+						'elementType': "field",
+						'controlType': "textarea",
+						'fieldName': "Credit Denial Reason",
+						'listFieldName': "CreditDenialReason",
+						'labelContent': "Credit Denial Reason",
+						'disabledForNonAdmin': ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
+						'disabledForAdmin': ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
+						'hideForNonAdmin': ["", "Signed Up", "Credit Granted", "Cancelled"],
+						'hideForAdmin': ["", "Signed Up", "Credit Granted", "Cancelled"],
+					}
+				]
+			},
+			'standardButtonElements': 1,
 			'standardComponentGrpAdminOnlyElements': 1
 		},
 		/* 'standardChangeNotifications': {
@@ -331,29 +352,60 @@
 				'tag': "ul",
 				'end': 1
 
-
-
+			}, {
+				'elementType': "markup",
+				'tag': "h2",
+				'content': 'Signup',
+				'begin': 1,
+				'end': 1
 			}, {
 				'elementType': "field",
 				'controlType': "text",
 				'fieldName': "Job ID",
 				'listFieldName': "JobID",
 				'labelContent': "Job ID",
-				'disabledForNonAdmin': ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
-				'disabledForAdmin': ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
-				// 'hideForNonAdmin': ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
-				// 'hideForAdmin': ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
+				'hideForNonAdmin': ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
+				'hideForAdmin': ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
 			}, {
 				'elementType': "field",
 				'controlType': "text",
 				'fieldName': "Schedule ID",
 				'listFieldName': "ScheduleID",
 				'labelContent': "Schedule ID",
-				'disabledForNonAdmin': ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
-				'disabledForAdmin': ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
-				// 'hideForNonAdmin': ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
-				// 'hideForAdmin': ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
+				'hideForNonAdmin': ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
+				'hideForAdmin': ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
+			
 			}, {
+				"elementType": "field",
+				"controlType": "check",
+				"fieldName": "Requester Cancellation",
+				"choiceSetLabel": "Cancellation",
+				"choices": [{
+					"value": "cancel",
+					"display": "Yes, I wish to cancel my signup"
+				}],
+				"hideForNonAdmin": ["", "Credit Granted", "Credit Denied", "Cancelled"],
+				"hideForAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
+				"disabledForNonAdmin": ["", "Credit Granted", "Credit Denied", "Cancelled"],
+				"disabledForAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"]
+			}, {
+				"elementType": "field",
+				"controlType": "check",
+				"fieldName": "Sign Up",
+				"choiceSetLabel": "Do you wish to sign up?",
+				"choices": [{
+					"value": "signUp",
+					"display": "Yes, I wish to do this job at this date and time"
+				}],
+				"requiredForNonAdmin": [""],
+				"requiredForAdmin": [""],
+				"hideForNonAdmin": ["Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
+				"hideForAdmin": ["Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
+			
+			
+			
+			
+			/* }, {
 				'elementType': "field",
 				'controlType': "text",
 				'fieldName': "Request Status",
@@ -364,22 +416,12 @@
 				// 'hideForNonAdmin': ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
 				// 'hideForAdmin': ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
 			}, {
-				'elementType': "field",
-				'controlType': "textarea",
-				'fieldName': "Credit Denial Reason",
-				'listFieldName': "CreditDenialReason",
-				'labelContent': "Credit Denial Reason",
-				'disabledForNonAdmin': ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
-				'disabledForAdmin': ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
-				// 'hideForNonAdmin': ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
-				// 'hideForAdmin': ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
-			}, {
 				'elementType': "markup",
 				'tag': "div",
 				'content': '<div id="gse-schedule-save-button-container"><a data-button-type="save" id="form-submit-button">Save</a></div>' + 
 							'<div id="gse-schedule-exit-button-container"><a data-button-type="noSave" id="exit-sans-save-button" style="background-color: #fcc !important">Go to X</a></div>',
 				'begin': 1,
-				'end': 1
+				'end': 1 */
 
 
 

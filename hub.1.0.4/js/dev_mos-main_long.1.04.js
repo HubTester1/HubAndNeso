@@ -3956,8 +3956,8 @@
 				}
 			}
 
-			// if this is a new GSE Signup
-			if (mData.requestName == "GSE Signup" && rData.requestStatus == "" && rData.gseScheduleID != "" && rData.gseScheduleID > 0) {
+			// if this is a GSE Signup
+			if (mData.requestName == "GSE Signup" && rData.gseScheduleID != "" && rData.gseScheduleID > 0) {
 
 				rData = $.extend(
 					rData,
@@ -3992,6 +3992,9 @@
 						}
 					})
 				);
+				delete rData.gseJobData['Request-Status'];
+				delete rData.gseScheduleData['Request-Status'];
+
 				console.log('rData');
 				console.log(rData);
 				console.log('rData.gseScheduleData');
@@ -4003,7 +4006,8 @@
 				PopulateFormData("div#request-form", rData.gseJobData, mData.uriRoot, rData.requestID, mData.checkForAlternateEventDataToPopulate);
 				PopulateFormData("div#request-form", rData.gseScheduleData, mData.uriRoot, rData.requestID, mData.checkForAlternateEventDataToPopulate);
 				$("input#Request-Nickname").val(rData.gseJobID + '-' + rData.gseScheduleID + '-' + ReplaceAll('@mos.org', '', uData.userName));
-				$("input#Request-Nickname").val(rData.gseJobID + '-' + rData.gseScheduleID + '-' + ReplaceAll('@mos.org', '', uData.userName));
+				$("input#Job-ID").val(rData.gseJobID);
+				$("input#Schedule-ID").val(rData.gseScheduleID);
 			}
 
 
@@ -5224,35 +5228,30 @@
 					$('input#Request-Status').val(newReqStatus);
 					$('input#End-of-Life').val(endOfLife);
 				}
-				/*
-					// consider
 
-					if (fData.autoTrackGSESignupStatuses === 1 && rData.endOfLife != 1) {
+				if (fData.autoTrackGSESignupStatuses === 1 && rData.endOfLife != 1) {
 
-						$(workingMessage).text("Handling Request Status");
+					$(workingMessage).text("Handling Request Status");
 
-						var newReqStatus = '';
-						var endOfLife = 0;
-						var endOfLifeIsNew = 0;
-						if (rData.requestStatus == '') {
-							newReqStatus = 'Pending Approval';
-						} else if (rData.requestStatus == 'Pending Approval' && $('select#Change-Request-Status option:selected').val() == 'Approve') {
-							newReqStatus = 'Approved';
-						} else if (rData.requestStatus == 'Pending Approval' && $('select#Change-Request-Status option:selected').val() == 'Disapprove') {
-							newReqStatus = 'Disapproved';
-							endOfLife = 1;
-							endOfLifeIsNew = 1;
-						}
-						rData.endOfLifeIsNew = endOfLifeIsNew;
-						rData.endOfLife = endOfLife;
-						rData.requestStatus = newReqStatus;
-						globalRData = rData;
-						$('input#Request-Status').val(newReqStatus);
-						$('input#End-of-Life').val(endOfLife);
-
+					var newReqStatus = '';
+					var endOfLife = 0;
+					var endOfLifeIsNew = 0;
+					if (rData.requestStatus == '') {
+						newReqStatus = 'Signed Up';
+					} else if (rData.requestStatus == 'Signed Up' && $('input#requester-cancellation_cancel:checked').length > 0) {
+						newReqStatus = 'Cancelled';
+						endOfLife = 1;
+						endOfLifeIsNew = 1;
 					}
+					rData.endOfLifeIsNew = endOfLifeIsNew;
+					rData.endOfLife = endOfLife;
+					rData.requestStatus = newReqStatus;
+					globalRData = rData;
+					$('input#Request-Status').val(newReqStatus);
+					$('input#End-of-Life').val(endOfLife);
+				}
 				
-					// consider
+				/*	// consider
 
 					if (fData.autoTrackGSEJobStatuses === 1 && rData.endOfLife != 1) {
 						
