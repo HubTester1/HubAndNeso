@@ -4092,7 +4092,7 @@
 				delete rData.gseScheduleData['Request-Status'];
 				// calculate positions remaining
 				
-				// get the relevant schedule data
+				// prep some of the data before populating fields and placeholders with it
 				var otherSignupsForThisSchedule = $().GetFieldsFromSpecifiedRows({
 					"select": [{
 						"nameHere": "anotherSignupIDThisSchedule",
@@ -4112,15 +4112,17 @@
 						]
 					}
 				});
-				console.log('otherSignupsForThisSchedule.length');
-				console.log(otherSignupsForThisSchedule.length);
 				rData.gseScheduleData['Positions-Available'] = 
 					parseInt(rData.gseScheduleData['Number-of-Positions']) - otherSignupsForThisSchedule.length;
-				
+				rData.gseScheduleData['Friendly-Date'] = $().ReturnFormattedDateTime(rData.gseScheduleData['Date'], null, 'dddd, MMMM D, YYYY', 1);
+				rData.gseScheduleData['Shift-Length'] = rData.gseScheduleData['shiftlength_35-hours'] ? '3.5 hours' : '7 hours';
+				rData.gseScheduleData['Start-Time'] = $().ReturnFormattedDateTime(rData.gseScheduleData['time-storage_StartTime'], null, 'h:mm a');
+				rData.gseScheduleData['Break-Time'] = $().ReturnFormattedDateTime(rData.gseScheduleData['time-storage_BreakTime'], null, 'h:mm a');
+				rData.gseScheduleData['Meal-Time'] = $().ReturnFormattedDateTime(rData.gseScheduleData['time-storage_MealTime'], null, 'h:mm a');
+
 				console.log('rData.gseScheduleData');
 				console.log(rData.gseScheduleData);
-
-
+				
 				// populate the placeholder <span>s with job and schedule data
 				PopulateFormData("div#request-form", rData.gseJobData, mData.uriRoot, rData.requestID, mData.checkForAlternateEventDataToPopulate);
 				PopulateFormData("div#request-form", rData.gseScheduleData, mData.uriRoot, rData.requestID, mData.checkForAlternateEventDataToPopulate);

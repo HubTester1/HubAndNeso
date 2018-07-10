@@ -278,12 +278,48 @@
 							' out of <span id="Number-of-Positions" class="content-placeholder"></span>',
 				'begin': 1,
 				'end': 1
-			// }, {
-			// 	'elementType': "markup",
-			// 	'tag': "h3",
-			// 	'content': '<span id="" class="content-placeholder"></span>',
-			// 	'begin': 1,
-			// 	'end': 1
+			}, {
+				'elementType': "markup",
+				'tag': "li",
+				'content': 'Date: <span id="Friendly-Date" class="content-placeholder"></span>',
+				'begin': 1,
+				'end': 1
+			}, {
+				'elementType': "markup",
+				'tag': "li",
+				'content': 'Shift Length: <span id="Shift-Length" class="content-placeholder"></span>',
+				'begin': 1,
+				'end': 1
+			}, {
+				'elementType': "markup",
+				'tag': "li",
+				'content': 'Start Time: <span id="Start-Time" class="content-placeholder"></span>',
+				'begin': 1,
+				'end': 1
+			}, {
+				'elementType': "markup",
+				'tag': "li",
+				'content': 'Meal Time: <span id="Meal-Time" class="content-placeholder"></span>',
+				'begin': 1,
+				'end': 1
+			}, {
+				'elementType': "markup",
+				'tag': "li",
+				'content': 'Break Time: <span id="Break-Time" class="content-placeholder"></span>',
+				'begin': 1,
+				'end': 1
+			}, {
+				'elementType': "markup",
+				'tag': "li",
+				'content': 'Reporting to: <span id="Job-Admin" class="content-placeholder"></span>',
+				'begin': 1,
+				'end': 1
+			}, {
+				'elementType': "markup",
+				'tag': "li",
+				'content': 'Department: <span id="Department" class="content-placeholder"></span>',
+				'begin': 1,
+				'end': 1
 			// }, {
 			// 	'elementType': "markup",
 			// 	'tag': "h3",
