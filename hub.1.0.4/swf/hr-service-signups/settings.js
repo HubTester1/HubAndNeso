@@ -359,6 +359,23 @@
 				'begin': 1,
 				'end': 1
 			}, {
+				'elementType': "markup",
+				'tag': "div",
+				'htmlID': 'requirement-legend-for-signup',
+				'htmlClass': 'label-and-control',
+				'content':	'<div class="label"></div><div class="field-type-indication">' + 
+							'<span class="field-type-indicator field-required">' + 
+							'<span class="message message-required"></span></span></div>' + 
+							'<div class="control">= required field</div>',
+				'begin': 1,
+				'end': 1
+
+
+
+
+
+				// 
+			}, {
 				'elementType': "field",
 				'controlType': "text",
 				'fieldName': "Job ID",
@@ -440,7 +457,7 @@
 	fData.CustomScriptFirst = '';
 
 
-	fData.CustomScriptLast = '$("h2#header_this-request, div#requirement-legend, div#label-and-control_Request-Nickname").addClass("hidden");';
+	fData.CustomScriptLast = '$("h2#header_this-request, div#requirement-legend, div#label-and-control_Request-Nickname, div#submission-notice").addClass("hidden");';
 
 
 
