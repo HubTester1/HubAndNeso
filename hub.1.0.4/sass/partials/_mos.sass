@@ -34,10 +34,10 @@ div#printer-content
 		font-size: 4.5rem
 
 	h2
-		font-size: 2.8rem !important
+		font-size: 3rem !important
 
 	h3
-		font-size: 2.4rem !important
+		font-size: 2.6rem !important
 
 	h4
 		font-size: 2rem !important
@@ -73,6 +73,10 @@ div#printer-content
 	ul li
 		list-style-type: square
 		list-style-image: url('/sites/hubdev/DevCodeUpdate/css/img/bullet.png')
+
+	p
+		margin: 0
+		padding: 0 0 1rem 0
 
 	a,
 	a:visited,
@@ -565,8 +569,7 @@ div#s4-workspace div#app-container.event-av div#container_command-bar ul#contain
 div#s4-workspace div#app-container.event-av div#container_command-bar div#container_date-filter-controls-and-header a.collapsible-heading-toggle,
 div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button,
 div#s4-workspace div#public-community-page_open-enrollment div.primary-section a,
-a#standard-printer-button-inside-request,
-div#s4-workspace a#gse-schedule-signup-button
+a#standard-printer-button-inside-request
 	+button
 
 	&:hover
@@ -582,8 +585,7 @@ div#s4-workspace div.in-page-persona a.profile,
 div#s4-workspace div#public-community-page_moscars div#call-to-action a,
 div#s4-workspace div#public-community-page_hr div#primary-section_open-enrollment a,
 div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button,
-div#s4-workspace div#public-community-page_open-enrollment div.primary-section a,
-div#s4-workspace a#gse-schedule-signup-button
+div#s4-workspace div#public-community-page_open-enrollment div.primary-section a
 	color: $textOnIntDefault !important
 	background-color: $intDefault !important
 
@@ -3826,25 +3828,24 @@ div#app-container.direct-deposit
 
 // --- GSE SIGNUP OPPORTUNITY
 
-div#app-container.gse-schedule
+div#app-container.gse-signup
 
-	div#gse-signup-opportunity-display
+	div#job-and-schedule-container
+		padding: 2rem
+		background-color: $grey14
 
-		div.request-detail-display__field,
-		div.request-detail-display__field-set
-			max-width: 66rem
-			margin-bottom: 2rem
+		p:empty
+			display: none
+			padding: 0
 
-			span.request-detail-display__field-label
-				display: block
-				font-size: 1.75rem
-				margin-top: .5rem
-				margin-bottom: .5rem
+		span.content-placeholder:empty
+			display: none
+			padding: 0
 
-			span.request-detail-display__field-label-separator
-				+blockHidden
+		span.content-placeholder:empty
+			display: none
+			padding: 0
 
-	// button is in the button section
 
 
 

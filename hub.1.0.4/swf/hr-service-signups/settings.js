@@ -257,6 +257,11 @@
 		'uniqueElements': [
 			{
 				'elementType': "markup",
+				'tag': "div",
+				'htmlID': "job-and-schedule-container",
+				'begin': 1,
+			}, {
+				'elementType': "markup",
 				'tag': "h2",
 				'content': '<span id="Job-Title" class="content-placeholder"></span>',
 				'begin': 1,
@@ -322,28 +327,38 @@
 				'end': 1
 			}, {
 				'elementType': "markup",
+				'tag': "ul",
+				'end': 1
+			}, {
+				'elementType': "markup",
 				'tag': "h3",
 				'content': 'Job Description',
 				'begin': 1,
 				'end': 1
 			}, {
 				'elementType': "markup",
-				'tag': "p",
+				'tag': "div",
 				'content': '<span id="Job-Description-Formatted" class="content-placeholder"></span>',
 				'begin': 1,
 				'end': 1
 			}, {
 				'elementType': "markup",
 				'tag': "h3",
+				'htmlID': 'Training-Requirements-Header',
 				'content': 'Training Requirements',
 				'begin': 1,
-				'end': 1
+				'end': 1,
+				"hideForNonAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
+				"hideForAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
 			}, {
 				'elementType': "markup",
-				'tag': "p",
+				'tag': "div",
+				'htmlID': 'Training-Requirements-Container',
 				'content': '<span id="Training-Requirements-Formatted" class="content-placeholder"></span>',
 				'begin': 1,
-				'end': 1
+				'end': 1,
+				"hideForNonAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
+				"hideForAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
 			}, {
 				'elementType': "markup",
 				'tag': "h3",
@@ -359,10 +374,13 @@
 				'end': 1
 			}, {
 				'elementType': "markup",
-				'tag': "p",
-				'content': '<span id="Dress-Requirements-Formatted" class="content-placeholder"></span>',
+				'tag': "div",
+				'htmlID': 'Dress-Requirements-Container',
+				'content': '<span id="Dress-Requirements-Formatted" class="optional content-placeholder"></span>',
 				'begin': 1,
-				'end': 1
+				'end': 1,
+				"hideForNonAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
+				"hideForAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
 			}, {
 				'elementType': "markup",
 				'tag': "h3",
@@ -451,21 +469,9 @@
 				'elementType': "markup",
 				'tag': "ul",
 				'end': 1
-			// }, {
-			// 	'elementType': "markup",
-			// 	'tag': "h3",
-			// 	'content': '<span id="" class="content-placeholder"></span>',
-			// 	'begin': 1,
-			// 	'end': 1
-			// }, {
-			// 	'elementType': "markup",
-			// 	'tag': "h3",
-			// 	'content': '<span id="" class="content-placeholder"></span>',
-			// 	'begin': 1,
-			// 	'end': 1
 			}, {
 				'elementType': "markup",
-				'tag': "ul",
+				'tag': "div",
 				'end': 1
 
 
@@ -839,21 +845,14 @@
 	fData.CustomScriptFirst = '';
 
 
-	fData.CustomScriptLast = '';
-	/* 	'$("h2#header_this-request, div#requirement-legend, ' + 
-								'div#label-and-control_Request-ID, div#label-and-control_Request-Date, ' + 
-								'div#label-and-control_Self-or-Other, div#label-and-control_Requested-For, ' + 
-								'div#label-and-control_Requester-Cancellation, div#container_about-the-requester, ' + 
-								// 'div#XXXXX, div#XXXXX, ' +
-								// 'div#XXXXX, div#XXXXX, ' + 
-								// 'div#XXXXX, div#XXXXX, ' + 
-								// 'div#XXXXX, div#XXXXX, ' + 
-								// 'div#XXXXX, div#XXXXX, ' + 
-								'div#label-and-control_Request-Nickname").addClass("hidden");';
+	fData.CustomScriptLast = 'if($.trim($("span#Training-Requirements-Formatted").html())!="") {' + 
+							'	$("h3#Training-Requirements-Header").show("fast").removeClass("hidden"); ' +
+							'	$("div#Training-Requirements-Container").show("fast").removeClass("hidden"); ' +
+							'}';
 
-	fData.CustomScriptLast +=	'if ($("input#Request-Status").val() == "") {' + 
-								'	$("div#submission-notice").addClass("hidden");' + 
-								'}'; */
+	fData.CustomScriptLast = 'if($.trim($("span#Dress-Requirements-Formatted").html())!="") {' + 
+							'	$("div#Dress-Requirements-Container").show("fast").removeClass("hidden"); ' +
+							'}';
 
 
 

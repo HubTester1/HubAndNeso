@@ -2318,19 +2318,17 @@
 		$('#ScheduleID').val(rData['scheduleId']);
 		$('#UserContact').val(rData['userContact']);
 		$('#JobTitle').val(rData['jobTitle']);
-	} */
+	}
 
 
 
 	$.fn.ConfigureExistingGSESchedule = function (passedScheduleID) {
 
-		/*
-			scorey: here, 
-			 ** query SWFList, build screen 3.1, insert it into the container, listen for the signup button to be clicked, and start trying maintenance mode
-			 ** look at ConfigureRequest for examples of querying SWFList, instering into the container, listening for button clicks, and trying for maintenance mode
-			 ** in terms of markup / appearance, probably best to model the signup button on the Save button, rather than the buttons at the top of the overview screens
-			 ** clicking the cignup button should either trigger ProcessSubmission function (and that function will need to be modified to create a signup) or a different function
-		*/
+			// scorey: here, 
+			//  ** query SWFList, build screen 3.1, insert it into the container, listen for the signup button to be clicked, and start trying maintenance mode
+			//  ** look at ConfigureRequest for examples of querying SWFList, instering into the container, listening for button clicks, and trying for maintenance mode
+			//  ** in terms of markup / appearance, probably best to model the signup button on the Save button, rather than the buttons at the top of the overview screens
+			//  ** clicking the cignup button should either trigger ProcessSubmission function (and that function will need to be modified to create a signup) or a different function
 
 		// $("div#request-screen-container").append("<p>This is 3.1 Signup Opportunity for User.</p>");
 
@@ -2483,11 +2481,7 @@
 			'</div>';
 
 		$("div#request-screen-container").append(opportunityMarkup);
-		console.log('rData');
-		console.log(rData);
-		console.log('uData');
-		console.log(uData);
-	};
+	}; */
 
 
 
@@ -4121,12 +4115,12 @@
 				rData.gseScheduleData['Meal-Time'] = $().ReturnFormattedDateTime(rData.gseScheduleData['time-storage_MealTime'], null, 'h:mm a');
 
 				rData.gseJobData['Job-Admin-Name'] = rData.gseJobData['Job-Admin'][0].description;
-				rData.gseJobData['Job-Description-Formatted'] = ReplaceAll('%0A', '</p><p>', rData.gseJobData['Job-Description']);
+				rData.gseJobData['Job-Description-Formatted'] = '<p>' + ReplaceAll('%0A', '</p><p>', rData.gseJobData['Job-Description']) + '</p>';
 				if (rData.gseJobData['Training-Requirements']) {
-					rData.gseJobData['Training-Requirements-Formatted'] = ReplaceAll('%0A', '</p><p>', rData.gseJobData['Training-Requirements']);
+					rData.gseJobData['Training-Requirements-Formatted'] = '<p>' + ReplaceAll('%0A', '</p><p>', rData.gseJobData['Training-Requirements']) + '</p>';
 				}
 				if (rData.gseJobData['Dress-Requirements']) {
-					rData.gseJobData['Dress-Requirements-Formatted'] = ReplaceAll('%0A', '</p><p>', rData.gseJobData['Dress-Requirements']);
+					rData.gseJobData['Dress-Requirements-Formatted'] = '<p>' + ReplaceAll('%0A', '</p><p>', rData.gseJobData['Dress-Requirements']) + '</p>';
 				}
 
 				var opportunityJobDuties = [];

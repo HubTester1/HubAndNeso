@@ -25,11 +25,11 @@ div#printer-content {
   div#s4-workspace h2,
   div.ui-dialog h2,
   div#printer-content h2 {
-    font-size: 2.8rem !important; }
+    font-size: 3rem !important; }
   div#s4-workspace h3,
   div.ui-dialog h3,
   div#printer-content h3 {
-    font-size: 2.4rem !important; }
+    font-size: 2.6rem !important; }
   div#s4-workspace h4,
   div.ui-dialog h4,
   div#printer-content h4 {
@@ -85,6 +85,11 @@ div#printer-content {
   div#printer-content ul li {
     list-style-type: square;
     list-style-image: url("/sites/hubdev/DevCodeUpdate/css/img/bullet.png"); }
+  div#s4-workspace p,
+  div.ui-dialog p,
+  div#printer-content p {
+    margin: 0;
+    padding: 0 0 1rem 0; }
   div#s4-workspace a,
   div#s4-workspace a:visited,
   div#s4-workspace ul.cbs-List,
@@ -506,8 +511,7 @@ div#s4-workspace div#app-container.event-av div#container_command-bar ul#contain
 div#s4-workspace div#app-container.event-av div#container_command-bar div#container_date-filter-controls-and-header a.collapsible-heading-toggle,
 div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button,
 div#s4-workspace div#public-community-page_open-enrollment div.primary-section a,
-a#standard-printer-button-inside-request,
-div#s4-workspace a#gse-schedule-signup-button {
+a#standard-printer-button-inside-request {
   display: inline-block;
   float: none !important;
   box-sizing: border-box;
@@ -555,8 +559,7 @@ div#s4-workspace a#gse-schedule-signup-button {
   div#s4-workspace div#app-container.event-av div#container_command-bar div#container_date-filter-controls-and-header a.collapsible-heading-toggle:hover,
   div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button:hover,
   div#s4-workspace div#public-community-page_open-enrollment div.primary-section a:hover,
-  a#standard-printer-button-inside-request:hover,
-  div#s4-workspace a#gse-schedule-signup-button:hover {
+  a#standard-printer-button-inside-request:hover {
     text-decoration: none; }
 
 div#s4-workspace a#form-submit-button,
@@ -568,8 +571,7 @@ div#s4-workspace div.in-page-persona a.profile,
 div#s4-workspace div#public-community-page_moscars div#call-to-action a,
 div#s4-workspace div#public-community-page_hr div#primary-section_open-enrollment a,
 div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button,
-div#s4-workspace div#public-community-page_open-enrollment div.primary-section a,
-div#s4-workspace a#gse-schedule-signup-button {
+div#s4-workspace div#public-community-page_open-enrollment div.primary-section a {
   color: #fff !important;
   background-color: #0072c6 !important; }
   div#s4-workspace a#form-submit-button:hover,
@@ -581,8 +583,7 @@ div#s4-workspace a#gse-schedule-signup-button {
   div#s4-workspace div#public-community-page_moscars div#call-to-action a:hover,
   div#s4-workspace div#public-community-page_hr div#primary-section_open-enrollment a:hover,
   div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button:hover,
-  div#s4-workspace div#public-community-page_open-enrollment div.primary-section a:hover,
-  div#s4-workspace a#gse-schedule-signup-button:hover {
+  div#s4-workspace div#public-community-page_open-enrollment div.primary-section a:hover {
     color: #fff !important;
     background-color: #004f87 !important; }
 
@@ -3185,25 +3186,18 @@ div#app-container.direct-deposit div#request-form table.signature-and-date {
     padding: 0;
     border: none; } }
 
-div#app-container.gse-schedule div#gse-signup-opportunity-display div.request-detail-display__field,
-div#app-container.gse-schedule div#gse-signup-opportunity-display div.request-detail-display__field-set {
-  max-width: 66rem;
-  margin-bottom: 2rem; }
-  div#app-container.gse-schedule div#gse-signup-opportunity-display div.request-detail-display__field span.request-detail-display__field-label,
-  div#app-container.gse-schedule div#gse-signup-opportunity-display div.request-detail-display__field-set span.request-detail-display__field-label {
-    display: block;
-    font-size: 1.75rem;
-    margin-top: .5rem;
-    margin-bottom: .5rem; }
-  div#app-container.gse-schedule div#gse-signup-opportunity-display div.request-detail-display__field span.request-detail-display__field-label-separator,
-  div#app-container.gse-schedule div#gse-signup-opportunity-display div.request-detail-display__field-set span.request-detail-display__field-label-separator {
-    display: block !important;
-    width: 0 !important;
-    height: 0;
-    padding: 0 !important;
-    text-indent: 100%;
-    white-space: nowrap;
-    overflow: hidden; }
+div#app-container.gse-signup div#job-and-schedule-container {
+  padding: 2rem;
+  background-color: #eee; }
+  div#app-container.gse-signup div#job-and-schedule-container p:empty {
+    display: none;
+    padding: 0; }
+  div#app-container.gse-signup div#job-and-schedule-container span.content-placeholder:empty {
+    display: none;
+    padding: 0; }
+  div#app-container.gse-signup div#job-and-schedule-container span.content-placeholder:empty {
+    display: none;
+    padding: 0; }
 
 div#printer-content table.layout-table {
   width: 100%; }
