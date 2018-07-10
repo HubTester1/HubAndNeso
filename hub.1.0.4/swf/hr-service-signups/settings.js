@@ -274,7 +274,7 @@
 			}, {
 				'elementType': "markup",
 				'tag': "li",
-				'content': 'Positions Available <span style="background-color: #fcc" id="" class="content-placeholder">X</span>' + 
+				'content': 'Positions Available <span id="Positions-Available" class="content-placeholder"></span>' + 
 							' out of <span id="Number-of-Positions" class="content-placeholder"></span>',
 				'begin': 1,
 				'end': 1
@@ -594,7 +594,15 @@
 				'disabledForAdmin': ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
 				'hideForNonAdmin': ["",],
 				'hideForAdmin': ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
-			
+			}, {
+				'elementType': "field",
+				'controlType': "textarea",
+				'fieldName': "Credit Denial Reason for Requester",
+				'labelContent': "Credit Denial Reason",
+				'disabledForNonAdmin': ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
+				'disabledForAdmin': ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
+				'hideForNonAdmin': ["", "Signed Up", "Credit Granted", "Cancelled"],
+				'hideForAdmin': ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
 			
 			
 			}, {
@@ -654,10 +662,9 @@
 				'elementType': "field",
 				'controlType': "textarea",
 				'fieldName': "Credit Denial Reason",
-				'listFieldName': "CreditDenialReason",
 				'labelContent': "Credit Denial Reason",
 				'disabledForNonAdmin': ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
-				'disabledForAdmin': ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
+				'disabledForAdmin': ["", "Credit Granted", "Credit Denied", "Cancelled"],
 				'hideForNonAdmin': ["", "Signed Up", "Credit Granted", "Cancelled"],
 				'hideForAdmin': ["", "Signed Up", "Credit Granted", "Cancelled"],
 			}, {

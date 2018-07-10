@@ -1238,6 +1238,96 @@
 
 
 
+	$.fn.GetFieldsFromSpecifiedRows = function (options) {
+
+		var returnValue = [];
+
+		var opt = $.extend({}, {
+			listName: "SWFList",
+			webURL: "https://bmos.sharepoint.com" + _spPageContextInfo.webServerRelativeUrl,
+			completefunc: null
+		}, options);
+
+		// if listname is component log or component group log and no webURL was supplied
+		if ((opt.listName === 'ComponentLog' || opt.listName === 'Component Group Log') && typeof (options.webURL) === 'undefined') {
+			// assume HubProd
+			opt.webURL = 'https://bmos.sharepoint.com/sites/hubprod';
+		}
+
+
+		var query = "<Query>" +
+					"<Where>";
+		if (opt.where.ands) { query += "<And>"; }
+		// curently assumes there are no more than two ands
+		$.each(opt.where.ands, function(i, andObject) {
+			query += "<Eq>" +
+				"<FieldRef Name='" + andObject.field + "'></FieldRef>" +
+				"<Value Type='" + andObject.type + "'>" + andObject.value + "</Value>" +
+				"</Eq>";
+		});
+
+		if (opt.where.ands) { query += "</And>"; }
+		query +=	"</Where>" +
+					"</Query>";
+
+		var fields = "<ViewFields>";
+		$.each(opt.select, function (i, oneField) {
+			fields += " <FieldRef Name='" + oneField.nameInList + "' />";
+		});
+		fields += "</ViewFields>";
+
+		$().SPServices({
+			operation: "GetListItems",
+			async: false,
+			webURL: opt.webURL,
+			listName: opt.listName,
+			CAMLViewFields: fields,
+			CAMLQuery: query,
+			CAMLQueryOptions: "<QueryOptions><ExpandUserField>TRUE</ExpandUserField></QueryOptions>",
+			completefunc: function (xData, Status) {
+				$(xData.responseXML).SPFilterNode("z:row").each(function () {
+					var zRow = $(this);
+					var returnRow = {};
+
+					$.each(opt.select, function (i, oneField) {
+
+						if (oneField.nameHere === "formData") {
+
+							var value = $(zRow).attr("ows_" + oneField.nameInList);
+
+							var regexOne = new RegExp("\r", "g");
+							var regexTwo = new RegExp("\n", "g");
+							value = value.replace(regexOne, "'");
+							value = value.replace(regexTwo, "'");
+
+							eval("var formDataObj=" + value);
+
+							returnRow[oneField.nameHere] = formDataObj;
+
+						} else {
+
+							value = $(zRow).attr("ows_" + oneField.nameInList);
+
+							if (typeof (oneField.linkField) != "undefined") {
+								if (oneField.linkField === 1) {
+									value = value.split(",")[0];
+								}
+							}
+
+							returnRow[oneField.nameHere] = value;
+						}
+
+					});
+
+					returnValue.push(returnRow);
+				});
+			}
+		});
+
+		return returnValue;
+	};
+
+
 
 
 
@@ -3924,15 +4014,14 @@
 			// POPULATE FORM FIELDS & SCRIPT TAG
 			// ========================================================
 
-			// if request is not new, populate form fields with previously-submitted data
-			//		and get approval node scripts
-
 			var approvalNodeScripts = '';
 
+			// if request is new and there is default data for new requests
 			if (rData.requestStatus == "" && typeof (rData.defaultDataForNewRequests) != "undefined") {
 				PopulateFormData("div#request-form", rData.defaultDataForNewRequests, mData.uriRoot, rData.requestID);
 			}
 
+			// if request is not new
 			if (rData.requestStatus != "") {
 
 				// set stored object's data, if any
@@ -3956,9 +4045,14 @@
 				}
 			}
 
-			// if this is a *new* GSE Signup
-			if (rData.requestStatus == "" && mData.requestName == "GSE Signup" && rData.gseScheduleID != "" && rData.gseScheduleID > 0) {
-
+			// if this is a GSE Signup (either new or existing)
+			if (mData.requestName == "GSE Signup") {
+				// if this is an existing GSE Signup, in which case a GSE Schedule ID was not specified in the URL 
+				if (rData.requestStatus != "") {
+					// extract the schedule ID from the saved request data
+					rData.gseScheduleID = rData.formDataOnLoad['Schedule-ID'];
+				}
+				// get the relevant job data
 				rData = $.extend(
 					rData,
 					$().GetFieldsFromOneRow({
@@ -3977,6 +4071,7 @@
 						}
 					})
 				);
+				// get the relevant schedule data
 				rData = $.extend(
 					rData,
 					$().GetFieldsFromOneRow({
@@ -3992,11 +4087,48 @@
 						}
 					})
 				);
+				// delete schedule and job request statuses so that they don't get used as / confused with this signup's status
 				delete rData.gseJobData['Request-Status'];
 				delete rData.gseScheduleData['Request-Status'];
+				// calculate positions remaining
+				
+				// get the relevant schedule data
+				var otherSignupsForThisSchedule = $().GetFieldsFromSpecifiedRows({
+					"select": [{
+						"nameHere": "anotherSignupIDThisSchedule",
+						"nameInList": "ID"
+					}],
+					"where": {
+						"ands": [
+							{
+								"field": "ScheduleID",
+								"type": "Text",
+								"value": rData.gseScheduleID,
+							}, {
+								"field": "RequestStatus",
+								"type": "Text",
+								"value": "Signed Up",
+							}
+						]
+					}
+				});
+				console.log('otherSignupsForThisSchedule.length');
+				console.log(otherSignupsForThisSchedule.length);
+				rData.gseScheduleData['Positions-Available'] = 
+					parseInt(rData.gseScheduleData['Number-of-Positions']) - otherSignupsForThisSchedule.length;
+				
+				console.log('rData.gseScheduleData');
+				console.log(rData.gseScheduleData);
 
+
+				// populate the placeholder <span>s with job and schedule data
 				PopulateFormData("div#request-form", rData.gseJobData, mData.uriRoot, rData.requestID, mData.checkForAlternateEventDataToPopulate);
 				PopulateFormData("div#request-form", rData.gseScheduleData, mData.uriRoot, rData.requestID, mData.checkForAlternateEventDataToPopulate);
+			}
+
+			// if this is a *new* GSE Signup
+			if (rData.requestStatus == "" && mData.requestName == "GSE Signup" && rData.gseScheduleID != "" && rData.gseScheduleID > 0) {
+				// manually populate specific signup fields with user, job, and schedule data
 				$("input#Request-Nickname").val(rData.gseJobID + '-' + rData.gseScheduleID + '-' + ReplaceAll('@mos.org', '', uData.userName));
 				$("input#Job-ID").val(rData.gseJobID);
 				$("input#Schedule-ID").val(rData.gseScheduleID);
@@ -4004,9 +4136,10 @@
 
 			// if this is an *existing* GSE Signup
 			if (rData.requestStatus != "" && mData.requestName == "GSE Signup") {
+				// manually copy some admin data to requester-accessible fields
 				$("input#Request-Status-for-Requester").val(rData.requestStatus);
+				$("textarea#Credit-Denial-Reason-for-Requester").val(rData.formDataOnLoad['Credit-Denial-Reason']);
 			}
-
 
 			// if request is new
 			if (rData.requestStatus === '') {
