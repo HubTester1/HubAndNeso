@@ -274,7 +274,7 @@
 			}, {
 				'elementType': "markup",
 				'tag': "li",
-				'content': 'Positions Available <span id="Positions-Available" class="content-placeholder"></span>' + 
+				'content': 'Positions Available: <span id="Positions-Available" class="content-placeholder"></span>' + 
 							' out of <span id="Number-of-Positions" class="content-placeholder"></span>',
 				'begin': 1,
 				'end': 1
@@ -311,7 +311,7 @@
 			}, {
 				'elementType': "markup",
 				'tag': "li",
-				'content': 'Reporting to: <span id="Job-Admin" class="content-placeholder"></span>',
+				'content': 'Reporting to: <span id="Job-Admin-Name" class="content-placeholder"></span>',
 				'begin': 1,
 				'end': 1
 			}, {
@@ -320,6 +320,103 @@
 				'content': 'Department: <span id="Department" class="content-placeholder"></span>',
 				'begin': 1,
 				'end': 1
+			}, {
+				'elementType': "markup",
+				'tag': "h3",
+				'content': 'Job Description',
+				'begin': 1,
+				'end': 1
+			}, {
+				'elementType': "markup",
+				'tag': "p",
+				'content': '<span id="Job-Description-Formatted" class="content-placeholder"></span>',
+				'begin': 1,
+				'end': 1
+			}, {
+				'elementType': "markup",
+				'tag': "h3",
+				'content': 'Training Requirements',
+				'begin': 1,
+				'end': 1
+			}, {
+				'elementType': "markup",
+				'tag': "p",
+				'content': '<span id="Training-Requirements-Formatted" class="content-placeholder"></span>',
+				'begin': 1,
+				'end': 1
+			}, {
+				'elementType': "markup",
+				'tag': "h3",
+				'content': 'Dress Requirements',
+				'begin': 1,
+				'end': 1
+			}, {
+				'elementType': "markup",
+				'tag': "p",
+				'content': 'Clothing and shoes must be in good condition, and MOS badge ' + 
+							'must be worn above the waist at all times.',
+				'begin': 1,
+				'end': 1
+			}, {
+				'elementType': "markup",
+				'tag': "p",
+				'content': 'Clothing and shoes must be in good condition.',
+				'begin': 1,
+				'end': 1
+			// }, {
+			// 	'elementType': "markup",
+			// 	'tag': "h3",
+			// 	'content': '<span id="" class="content-placeholder"></span>',
+			// 	'begin': 1,
+			// 	'end': 1
+			// }, {
+			// 	'elementType': "markup",
+			// 	'tag': "h3",
+			// 	'content': '<span id="" class="content-placeholder"></span>',
+			// 	'begin': 1,
+			// 	'end': 1
+			// }, {
+			// 	'elementType': "markup",
+			// 	'tag': "h3",
+			// 	'content': '<span id="" class="content-placeholder"></span>',
+			// 	'begin': 1,
+			// 	'end': 1
+			// }, {
+			// 	'elementType': "markup",
+			// 	'tag': "h3",
+			// 	'content': '<span id="" class="content-placeholder"></span>',
+			// 	'begin': 1,
+			// 	'end': 1
+			// }, {
+			// 	'elementType': "markup",
+			// 	'tag': "h3",
+			// 	'content': '<span id="" class="content-placeholder"></span>',
+			// 	'begin': 1,
+			// 	'end': 1
+			// }, {
+			// 	'elementType': "markup",
+			// 	'tag': "h3",
+			// 	'content': '<span id="" class="content-placeholder"></span>',
+			// 	'begin': 1,
+			// 	'end': 1
+			// }, {
+			// 	'elementType': "markup",
+			// 	'tag': "h3",
+			// 	'content': '<span id="" class="content-placeholder"></span>',
+			// 	'begin': 1,
+			// 	'end': 1
+			// }, {
+			// 	'elementType': "markup",
+			// 	'tag': "h3",
+			// 	'content': '<span id="" class="content-placeholder"></span>',
+			// 	'begin': 1,
+			// 	'end': 1
+			// }, {
+			// 	'elementType': "markup",
+			// 	'tag': "h3",
+			// 	'content': '<span id="" class="content-placeholder"></span>',
+			// 	'begin': 1,
+			// 	'end': 1
 			// }, {
 			// 	'elementType': "markup",
 			// 	'tag': "h3",

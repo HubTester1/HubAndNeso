@@ -4120,8 +4120,13 @@
 				rData.gseScheduleData['Break-Time'] = $().ReturnFormattedDateTime(rData.gseScheduleData['time-storage_BreakTime'], null, 'h:mm a');
 				rData.gseScheduleData['Meal-Time'] = $().ReturnFormattedDateTime(rData.gseScheduleData['time-storage_MealTime'], null, 'h:mm a');
 
+				rData.gseJobData['Job-Admin-Name'] = rData.gseJobData['Job-Admin'][0].description;
+				rData.gseJobData['Job-Description-Formatted'] = ReplaceAll('%0A', '</p><p>', rData.gseJobData['Job-Description']);
+				rData.gseJobData['Training-Requirements-Formatted'] = ReplaceAll('%0A', '</p><p>', rData.gseJobData['Training-Requirements']);
 				console.log('rData.gseScheduleData');
 				console.log(rData.gseScheduleData);
+				console.log('rData.gseJobData');
+				console.log(rData.gseJobData);
 				
 				// populate the placeholder <span>s with job and schedule data
 				PopulateFormData("div#request-form", rData.gseJobData, mData.uriRoot, rData.requestID, mData.checkForAlternateEventDataToPopulate);
