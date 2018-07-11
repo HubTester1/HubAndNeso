@@ -377,10 +377,11 @@ module.exports = {
 					const adUsersByDivisionDepartment = {};
 					// iterate over adUsers
 					adUsers.forEach((adUser, adUserIndex) => {
-						// if this user has a division and department 
+						// if this user has a division and department and manager
 						// 		(ReturnAllADUsersFromCSV() will not return anyone without an account)
-						if (typeof (adUser.division) !== 'undefined' && adUser.division !== '' &&
-							typeof (adUser.department) !== 'undefined' && adUser.department !== '') {
+						if (adUser.division && adUser.division !== '' &&
+							adUser.department && adUser.department !== '' && 
+							adUser.manager && adUser.manager !== '') {
 							// get copies of the division and department names without 
 							// 		characters that are illegal as MongoDB key names
 							const adUserDivision = nesoUtilities.ReplaceAll('\\.', '', adUser.division);
@@ -404,36 +405,38 @@ module.exports = {
 							}
 							// determine whether or not this user's manager 
 							// 		is already in adUsersByDivisionDepartment
-							if (adUser.manager !== undefined && adUser.manager !== '') {
-								let thisManagerAlreadyAdded = 0;
-								adUsersByDivisionDepartment[adUserDivision][adUserDepartment].managers
-									.forEach((manager, managerIndex) => {
-										if (manager === adUser.manager) {
-											thisManagerAlreadyAdded = 1;
-										}
+							let thisManagerAlreadyAdded = 0;
+							adUsersByDivisionDepartment[adUserDivision][adUserDepartment].managers
+								.forEach((manager, managerIndex) => {
+									if (manager === adUser.manager) {
+										thisManagerAlreadyAdded = 1;
+									}
+								});
+							// if this user's manager is not already in adUsersByDivisionDepartment
+							if (thisManagerAlreadyAdded === 0) {
+								// get a promise to get this manager's data
+								module.exports.ReturnOneSpecifiedUser(adUser.manager)
+									// if the promise to get all ad users from csv was resolved with the ad users
+									.then((returnManagersUserDataResult) => {
+										// add this user's manager's user data to adUsersByDivisionDepartment
+										adUsersByDivisionDepartment[adUserDivision][adUserDepartment]
+											.managers.push(returnManagersUserDataResult.docs);
+										// add this user to the department
+										adUsersByDivisionDepartment[adUserDivision][adUserDepartment]
+											.members.push(adUser);
+									})
+									// if the promise to get all ad users from csv was rejected with an error
+									.catch((returnManagersUserDataError) => {
+										// add this user's manager's account to adUsersByDivisionDepartment; 
+										// 		an account is better than nothing, and not having the 
+										// 		full data shouldn't be a deal breaker
+										adUsersByDivisionDepartment[adUserDivision][adUserDepartment]
+											.managers.push(adUser.manager);
+										// add this user to the department
+										adUsersByDivisionDepartment[adUserDivision][adUserDepartment]
+											.members.push(adUser);
 									});
-								// if this user's manager is not already in adUsersByDivisionDepartment
-								if (thisManagerAlreadyAdded === 0) {
-									// get a promise to get this manager's data
-									module.exports.ReturnOneSpecifiedUser(adUser.manager)
-										// if the promise to get all ad users from csv was resolved with the ad users
-										.then((returnManagersUserDataResult) => {
-											// add this user's manager's user data to adUsersByDivisionDepartment
-											adUsersByDivisionDepartment[adUserDivision][adUserDepartment]
-												.managers.push(returnManagersUserDataResult.docs);
-										})
-										// if the promise to get all ad users from csv was rejected with an error
-										.catch((returnManagersUserDataError) => {
-											// add this user's manager's account to adUsersByDivisionDepartment; 
-											// 		an account is better than nothing, and not having the 
-											// 		full data shouldn't be a deal breaker
-											adUsersByDivisionDepartment[adUserDivision][adUserDepartment]
-												.managers.push(adUser.manager);
-										});
-								}
 							}
-							// add this user to the department
-							adUsersByDivisionDepartment[adUserDivision][adUserDepartment].members.push(adUser);
 						}
 					});
 					// resolve this promise with a message and the data

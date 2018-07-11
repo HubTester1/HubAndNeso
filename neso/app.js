@@ -184,6 +184,25 @@ app.use((err, req, res, next) => {
 });
 
 // CRON ---
+
+
+// anomoly
+nesoActiveDirectory.ProcessADUsersByDivisionDepartmentData()
+	// if the promise is resolved with the docs, then respond with the docs as JSON
+	.then((result) => {
+		// eslint-disable-next-line no-console
+		console.log('Processed Active Directory Users By Division Department data:');
+		// console.log(result);
+	})
+	// if the promise is rejected with an error, then respond with the error as JSON
+	.catch((error) => {
+		// eslint-disable-next-line no-console
+		console.log('ERROR - Processing Active Directory Users By Division Department data:');
+		// eslint-disable-next-line no-console
+		console.log(error);
+	});
+
+
 // schedule for once per minute
 cron.schedule('* * * * *', () => {
 	// get a promise to process the email queue
