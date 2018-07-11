@@ -15,7 +15,7 @@
 		'notifications': 1,
 	};
 
-	console.log("using settings m3");
+	console.log("using settings m1");
 
 
 

@@ -3735,7 +3735,6 @@
 
 				var permitted = []; // array of non-admin users who have permission to view the form
 				var hasViewingPermissionThisRequest = 0; // this user's permission flag
-
 				// for each element
 				$.each(fData.elements, function (i, elem) {
 					// if it yields view permissions
@@ -3750,17 +3749,14 @@
 						}
 					}
 				});
-
 				$.each(permitted, function (i, p) {
 					if (StrInStr(p, uData.account)) {
 						hasViewingPermissionThisRequest = 1;
 					}
 				});
-
 				if (hasViewingPermissionThisRequest === 0 && typeof (fData.additionalViewPermissionsFunction) != "undefined") {
 					hasViewingPermissionThisRequest = CallFunctionFromString(fData.additionalViewPermissionsFunction, { "rData": rData });
 				}
-
 				if (hasViewingPermissionThisRequest === 0) {
 					$('div#overlays-screen-container').fadeIn(200);
 					$('div#mos-form-no-view-permission').fadeIn(400);
@@ -4702,135 +4698,6 @@
 
 			setInterval(function () { $().TryMaintenanceModeThisComponentThisUser(); }, mData.maintenanceModeCheckFrequency);
 		}
-
-		/*
-			// consider
-
-			if (mData.requestName === "GSE Signup") {
-				$().ConfigureExistingGSESignup();
-			}
-		*/
-	};
-
-	$.fn.ProcessGSESignup = function () {
-
-		// ========================================================
-		// SET UP VARS
-		// ========================================================
-
-		var NowAsFriendlyDateSansYear = $().ReturnFormattedDateTime('nowLocal', null, 'MMMM D');
-		var NowAsFriendlyDateWithYear = $().ReturnFormattedDateTime('nowLocal', null, 'MMMM D, YYYY');
-		var NowAsFriendlyDateTimeSansYear = $().ReturnFormattedDateTime('nowLocal', null, 'MMMM D h:mm a');
-		var NowAsFriendlyDateTimeWithYear = $().ReturnFormattedDateTime('nowLocal', null, 'MMMM D, YYYY h:mm a');
-		var NowAsISOLocal = $().ReturnFormattedDateTime('nowLocal', null, null);
-		var NowAsISOUTC = $().ReturnFormattedDateTime('nowUTC', null, null);
-
-		rData.beginningOfLife = 0;
-		rData.endOfLife = 0;
-		rData.endOfLifeIsNew = 0;
-
-		var workingMessage = $("div#app-container div#overlays-screen-container div#wait-while-working div.message p");
-
-		// ========================================================
-		// LAST MODIFICATION TIMESTAMP
-		// ========================================================
-
-		$(workingMessage).text("Checking some info");
-
-
-		// get last modification date
-		rData = $.extend(
-			$().GetFieldsFromOneRow({
-				'listName': mData.defaultListNameForSWFRequestData,
-				'select': [{
-					'nameHere': 'lastModifiedAtSubmit',
-					'nameInList': 'Modified',
-				}],
-				"where": {
-					"field": "ID",
-					"type": "Number",
-					"value": rData.requestID,
-				}
-			}),
-			rData
-		);
-
-		rData.lastModifiedAtSubmit != rData.lastModifiedAtLoad && rData.lastModifiedAtSubmit != rData.lastModifiedAtAttachment ? rData.lastModMismatch = 1 : rData.lastModMismatch = 0;
-
-		$("input#Last-Modified-Timestamp-at-Submit").val(rData.lastModifiedAtSubmit);
-		$("input#Last-Modified-Timestamp-Mismatch").val(rData.lastModMismatch);
-
-		if (rData.lastModMismatch === 1) {
-			rData = {};
-			$('div#overlays-screen-container').fadeIn(200);
-			$('div#last-modified-mismatch').fadeIn(400);
-		}
-
-		// if (rData.lastModMismatch === 0) {
-		// 	$('div#overlays-screen-container').fadeIn(200);
-		// 	$('div#wait-while-working').fadeIn(400);
-
-
-			// ========================================================
-			// CONVERT FRIENDLY DATES TO ISO ---------------------------------------------- nothing done here yet - requires elements in fData
-			// ========================================================
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-		var submissionValuePairsArray = [
-			['Title', uData.userName + '-' + rData.jobID + '-' + rData.scheduleID],
-			['JobID', rData.jobID],
-			['ScheduleID', rData.scheduleID],
-			['RequestedFor', '-1;#' + uData.userName]
-		];
-
-		var swfListSaveSuccess = $().CreateOrUpdateListItem(mData, rData, submissionValuePairsArray, "https://bmos.sharepoint.com/sites/hr-service-signup");
-
-		console.log(swfListSaveSuccess);
 	};
 
 
@@ -17102,6 +16969,12 @@
 			case "LoadDepartmentSelectOptions":
 				return $().LoadDepartmentSelectOptions(functionArgumentsObject);
 				break;
+
+			case "ReturnUserIsGSEHRAdmin":
+				return $().ReturnUserIsGSEHRAdmin();
+				break;
+
+				
 		}
 	}
 
@@ -20352,106 +20225,90 @@
 
 
 	$.fn.ReturnGSEGroups = function () {
+
+		// get the config data stored as AllRequestData in /sites/hr-service-config/Lists/SWFList
+		var allRequestDataObject = $().GetFieldsFromOneRow({
+			"listName": "SWFList",
+			"webURL": "https://bmos.sharepoint.com/sites/hr-service-config",
+			"select": [{
+				"nameHere": "formData",
+				"nameInList": "AllRequestData"
+			}],
+			"where": {
+				"field": "ID",
+				"type": "Number",
+				"value": 1,
+			}
+		});
+
+		// specify the 'form fields' data to extract from allRequestDataObject
+		var gseGroupsKeys = [
+			'HR-Admins',
+			'Job-Admins'
+		];
+
+		// set up var
+		var gseGroups = {};
+
+		// iterate over the form data keys and values
+		$.each(allRequestDataObject.formData, function (formDatumKey, formDatumValue) {
+			// if this form datum value is a person
+			if (formDatumValue != "") {
+				// if this form datum key matches an element of gseGroupsKeys
+				if (gseGroupsKeys.indexOf(formDatumKey) > -1) {
+					// get a new key (for future ease; prefer dot notation)
+					var newKey = ReplaceAll("-", "", formDatumKey);
+					// create an empty array using the new key
+					gseGroups[newKey] = [];
+					// for each person object in this formDatumValue
+					$.each(formDatumValue, function (i, person) {
+						// add the person's name and email to the new array
+						var newPerson = {};
+						newPerson['name'] = person.displayText;
+						newPerson['email'] = person.description;
+						newPerson['account'] = ReplaceAll("@mos.org", "", person.description.toLowerCase());
+						newPerson['accountLong'] = person.account.toLowerCase();
+						gseGroups[newKey].push(newPerson);
+					});
+				}
+			}
+		});
+
 		// send to caller
-		return {
-			"HRAdmins": [
-				{
-				// 	"name": "Samuel Corey",
-				// 	"email": "scorey@mos.org",
-				// 	"account": "scorey",
-				// 	"accountLong": "i:0#.f|membership|scorey@mos.org"
-				// }, {
-					"name": "James Baker",
-					"email": "jbaker@mos.org",
-					"account": "jbaker",
-					"accountLong": "i:0#.f|membership|jbaker@mos.org"
-				}, {
-					"name": "HubTester1",
-					"email": "sp1@mos.org",
-					"account": "sp1",
-					"accountLong": "i:0#.f|membership|sp1@mos.org"
-				// }, {
-				// 	"name": "HubTester9",
-				// 	"email": "sp9@mos.org",
-				// 	"account": "sp9",
-				// 	"accountLong": "i:0#.f|membership|sp9@mos.org"
-				}
-			],
-			"JobAdmins": [
-				{
-					"name": "HubTester2",
-					"email": "sp2@mos.org",
-					"account": "sp2",
-					"accountLong": "i:0#.f|membership|sp2@mos.org"
-				// }, {
-				// 	"name": "Samuel Corey",
-				// 	"email": "scorey@mos.org",
-				// 	"account": "scorey",
-				// 	"accountLong": "i:0#.f|membership|scorey@mos.org"
-				// }, {
-				// 	"name": "HubTester8",
-				// 	"email": "sp8@mos.org",
-				// 	"account": "sp8",
-				// 	"accountLong": "i:0#.f|membership|sp8@mos.org"
-				// }, {
-				// 	"name": "James Baker",
-				// 	"email": "jbaker@mos.org",
-				// 	"account": "jbaker",
-				// 	"accountLong": "i:0#.f|membership|jbaker@mos.org"
-				}
-			],
-			"Managers": [
-				{
-					"name": "HubTester3",
-					"email": "sp3@mos.org",
-					"account": "sp3",
-					"accountLong": "i:0#.f|membership|sp3@mos.org"
-				// }, {
-				// 	"name": "Samuel Corey",
-				// 	"email": "scorey@mos.org",
-				// 	"account": "scorey",
-				// 	"accountLong": "i:0#.f|membership|scorey@mos.org"
-				// }, {
-				// 	"name": "James Baker",
-				// 	"email": "jbaker@mos.org",
-				// 	"account": "jbaker",
-				// 	"accountLong": "i:0#.f|membership|jbaker@mos.org"
-				}
-			]
-		}
+		return gseGroups;
 	};
 
 
 
 	$.fn.ReturnUserIsGSEHRAdmin = function () {
-		var userIsGSEHRAdmin = false;
+		var userIsGSEHRAdmin = 0;
 		var gseGroups = $().ReturnGSEGroups();
 		$.each(gseGroups.HRAdmins, function (i, person) {
 			if (person.accountLong === uData.account) {
-				userIsGSEHRAdmin = true;
+				userIsGSEHRAdmin = 1;
 			}
 		});
 		return userIsGSEHRAdmin;
 	};
 
 	$.fn.ReturnUserIsGSEJobAdmin = function () {
-		var userIsGSEJobAdmin = false;
+		var userIsGSEJobAdmin = 0;
 		var gseGroups = $().ReturnGSEGroups();
 		$.each(gseGroups.JobAdmins, function (i, person) {
 			if (person.accountLong === uData.account) {
-				userIsGSEJobAdmin = true;
+				userIsGSEJobAdmin = 1;
 			}
 		});
 		return userIsGSEJobAdmin;
 	};
 
 	$.fn.ReturnUserIsGSEManager = function () {
-		var userIsGSEManager = false;
+		var userIsGSEManager = 0;
 		var gseGroups = $().ReturnGSEGroups();
 		$.each(gseGroups.Managers, function (i, person) {
 			if (person) {
 				if (person.accountLong === uData.account) {
-					userIsGSEManager = true;
+					userIsGSEManager = 1;
 				}
 			}
 		});
@@ -20712,19 +20569,19 @@
 
 
 
-	$.fn.ReturnGPCPeopleEditingAccess = function () {
+    $.fn.ReturnGPCPeopleEditingAccess = function() {
 
-		var gpcGroups = $().ReturnGPCGroups();
-		var hasViewPermission = 0;
+        var gpcGroups = $().ReturnGPCGroups();
+        var hasViewPermission = 0;
 
-		$.each(gpcGroups.EditGPCPeople, function (i, person) {
-			if (person.accountLong === uData.account) {
-				hasViewPermission = 1;
-			}
-		});
+        $.each(gpcGroups.EditGPCPeople, function(i, person) {
+            if (person.accountLong === uData.account) {
+                hasViewPermission = 1;
+            }
+        });
 
-		return hasViewPermission;
-	};
+        return hasViewPermission;
+    };
 
 
 
@@ -21872,11 +21729,11 @@
 
 		// if this is a GSE Request
 		if (mData.requestName === "GSE Job" || mData.requestName === "GSE Schedule" || mData.requestName === "GSE Signup" || mData.requestName === "GSE Configuration") {
-			if ($().ReturnUserIsGSEHRAdmin()) {
+			if ($().ReturnUserIsGSEHRAdmin() === 1) {
 				uData.roles.push("gseHRAdmin");
-			} else if ($().ReturnUserIsGSEJobAdmin()) {
+			} else if ($().ReturnUserIsGSEJobAdmin() === 1) {
 				uData.roles.push("gseJobAdmin");
-			} else if ($().ReturnUserIsGSEManager()) {
+			} else if ($().ReturnUserIsGSEManager() === 1) {
 				uData.roles.push("gseManager");
 			} else {
 				uData.roles.push("gseUserOnly");
