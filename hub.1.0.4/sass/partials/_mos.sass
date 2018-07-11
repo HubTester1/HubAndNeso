@@ -113,6 +113,58 @@ a[id*="site_share_button"]
 
 
 // ------------------
+// IE UPGRADE
+// ------------------
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active)
+	form#aspnetForm div#internet-explorer-upgrade
+		display: block !important
+		font-size: 2rem
+		font-weight: 300
+		font-family: 'Segoe UI', 'Segoe', Roboto, Helvetica Neue, Helvetica,  Arial, sans-serif
+		box-sizing: border-box
+		z-index: 1000
+
+	form#aspnetForm div#s4-bodyContainer
+		opacity: 1
+
+
+	form#aspnetForm div#loading-screen
+		display: none
+
+
+
+
+	
+// ------------------
+// BANNERS
+// ------------------
+
+form#aspnetForm
+	
+	div.banner
+		padding: 2rem 5rem
+		background-color: $white
+
+		p.banner__text
+			max-width: 60rem
+			margin: 0 auto
+
+	div.banner--critical
+		color: $darkPink
+		background-color: $veryLightPink
+
+	// div.banner--warning
+	// 	color: $yellow-10
+	// 	background-color: $yellow-1
+
+	// div.banner--success
+	// 	color: $green-9
+	// 	background-color: $green-2
+
+
+
+// ------------------
 // PAGE HEADER
 // ------------------
 
