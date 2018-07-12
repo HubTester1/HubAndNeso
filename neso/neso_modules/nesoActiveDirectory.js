@@ -6,6 +6,8 @@ const csv = require('csvtojson');
 const nesoDBQueries = require('./nesoDBQueries');
 const nesoUtilities = require('./nesoUtilities');
 const nesoErrors = require('./nesoErrors');
+const nesoDBConnection = require('./nesoDBConnection');
+
 
 // ----- DEFINE ACTIVE DIRECTORY FUNCTIONS
 
@@ -13,7 +15,7 @@ module.exports = {
 
 	ReturnADSettings: () =>
 		// return a new promise
-		new Promise(((resolve, reject) => {
+		new Promise((resolve, reject) => {
 			// get a promise to retrieve all documents from the emailSettings document collection
 			nesoDBQueries.ReturnAllDocsFromCollection('adSettings')
 				// if the promise is resolved with the docs, then resolve this promise with the docs
@@ -24,12 +26,11 @@ module.exports = {
 				.catch((error) => {
 					reject(error);
 				});
-		})),
-
+		}),
 
 	ReturnADDataProcessingStatus: () =>
 		// return a new promise
-		new Promise(((resolve, reject) => {
+		new Promise((resolve, reject) => {
 			// get a promise to retrieve all email settings
 			module.exports.ReturnADSettings()
 				// if the promise is resolved with the settings, 
@@ -44,12 +45,11 @@ module.exports = {
 				.catch((error) => {
 					reject(error);
 				});
-		})),
-
+		}),
 
 	ReturnADDataProcessingNow: () =>
 		// return a new promise
-		new Promise(((resolve, reject) => {
+		new Promise((resolve, reject) => {
 			// get a promise to retrieve all email settings
 			module.exports.ReturnADSettings()
 				// if the promise is resolved with the settings, 
@@ -64,12 +64,11 @@ module.exports = {
 				.catch((error) => {
 					reject(error);
 				});
-		})),
-
+		}),
 
 	ReturnADCSVSettings: () =>
 		// return a new promise
-		new Promise(((resolve, reject) => {
+		new Promise((resolve, reject) => {
 			// get a promise to retrieve all email settings
 			module.exports.ReturnADSettings()
 				// if the promise is resolved with the settings, 
@@ -84,12 +83,11 @@ module.exports = {
 				.catch((error) => {
 					reject(error);
 				});
-		})),
-
+		}),
 
 	ReturnADWhitelistedDomains: () =>
 		// return a new promise
-		new Promise(((resolve, reject) => {
+		new Promise((resolve, reject) => {
 			// get a promise to retrieve all email settings
 			module.exports.ReturnADSettings()
 				// if the promise is resolved with the settings, 
@@ -104,12 +102,11 @@ module.exports = {
 				.catch((error) => {
 					reject(error);
 				});
-		})),
-
+		}),
 
 	ReplaceAllADSettings: newSettings =>
 		// return a new promise
-		new Promise(((resolve, reject) => {
+		new Promise((resolve, reject) => {
 			// get a promise to retrieve all email settings
 			module.exports.ReturnADSettings()
 				// if the promise is resolved with the settings, 
@@ -130,12 +127,11 @@ module.exports = {
 				.catch((error) => {
 					reject(error);
 				});
-		})),
-
+		}),
 
 	ReplaceOneADSetting: newSingleSettingObject =>
 		// return a new promise
-		new Promise(((resolve, reject) => {
+		new Promise((resolve, reject) => {
 			// get a promise to retrieve all email settings
 			module.exports.ReturnADSettings()
 				// if the promise is resolved with the settings, 
@@ -164,14 +160,14 @@ module.exports = {
 				.catch((error) => {
 					reject(error);
 				});
-		})),
+		}),
 
 	ReturnNewADUsersFilePathAndName: currentFilePathAndName =>
 		`${currentFilePathAndName.slice(0, currentFilePathAndName.length - 4)}Copy.csv`,
 
 	ReturnAllADUsersFromCSV: () =>
 		// return a new promise
-		new Promise(((resolve, reject) => {
+		new Promise((resolve, reject) => {
 			// get a promise to retrieve excel settings
 			module.exports.ReturnADCSVSettings()
 				// if the promise to retrieve excel settings is resolved with the settings
@@ -318,12 +314,11 @@ module.exports = {
 				.catch((error) => {
 					reject(error);
 				});
-		})),
-
+		}),
 
 	ReturnAllADDepartmentsFromADUsersByDivisionDepartment: () =>
 		// return a new promise
-		new Promise(((resolve, reject) => {
+		new Promise((resolve, reject) => {
 			// get a promise to get all ad users by division and department from the database
 			module.exports.ReturnADUsersByDivisionDepartmentData()
 				// if the promise to get all ad users by division and department from the database 
@@ -361,12 +356,81 @@ module.exports = {
 					// reject this promise with the error
 					reject(returnADUsersByDivisionDepartmentDataError);
 				});
-		})),
+		}),
 
+	ReturnUserNameWeightRelativeToAnother: (a, b) => {
+		if (a.lastName < b.lastName) {
+			return -1;
+		}
+		if (a.lastName > b.lastName) {
+			return 1;
+		}
+		if (a.firstName < b.firstName) {
+			return -1;
+		}
+		if (a.firstName > b.firstName) {
+			return 1;
+		}
+		return 0;
+	},
 
-	ReturnAllADUsersByDivisionDepartmentFromADUsers: () =>
+	ReturnAllADManagersFromADUsersByDivisionDepartment: () =>
 		// return a new promise
-		new Promise(((resolve, reject) => {
+		new Promise((resolve, reject) => {
+			// get a promise to get all ad users by division and department from the database
+			module.exports.ReturnADUsersByDivisionDepartmentData()
+				// if the promise to get all ad users by division and department from the database 
+				// 		was resolved with the data
+				.then((returnADUsersByDivisionDepartmentDataResult) => {
+					// extract the data from the result
+					const adUsersByDivDept = 
+						returnADUsersByDivisionDepartmentDataResult.adUsersByDivisionDepartment[0];
+					// set up empty array to receive the new data
+					const adManagers = [];
+					// iterate over the array of adUsersByDivDept's property keys
+					Object.keys(adUsersByDivDept).forEach((adDivisionKey) => {
+						// if this property key is not for the '_id' property
+						if (adDivisionKey !== '_id') {
+							// iterate over the array of this division object's property keys; 
+							// 		these happen to be department names
+							Object.keys(adUsersByDivDept[adDivisionKey]).forEach((departmentKey) => {
+								adUsersByDivDept[adDivisionKey][departmentKey].managers
+									.forEach((managerProfile) => {
+										let thisManagerAlreadyAdded = false;
+										adManagers.forEach((addedManagerProfile) => {
+											if (
+												managerProfile && managerProfile.account === 
+													addedManagerProfile.account
+											) {
+												thisManagerAlreadyAdded = true;
+											}
+										});
+										if (!thisManagerAlreadyAdded) {
+											adManagers.push(managerProfile);
+										}
+									});
+							});
+						}
+					});
+					// alphabetize the managers
+					adManagers.sort(module.exports.ReturnUserNameWeightRelativeToAnother);
+					// resolve this promise with a message and the data
+					resolve({
+						error: false,
+						mongoDBError: false,
+						adManagers,
+					});
+				})
+				// if the promise to get all ad users from csv was rejected with an error
+				.catch((returnADUsersByDivisionDepartmentDataError) => {
+					// reject this promise with the error
+					reject(returnADUsersByDivisionDepartmentDataError);
+				});
+		}),
+
+	ReturnAllADUsersByDivisionDepartmentFromCSV: () =>
+		// return a new promise
+		new Promise((resolve, reject) => {
 			// get a promise to get all ad users from csv
 			module.exports.ReturnAllADUsersFromCSV()
 				// if the promise to get all ad users from csv was resolved with the ad users
@@ -387,8 +451,6 @@ module.exports = {
 							const adUserDivision = nesoUtilities.ReplaceAll('\\.', '', adUser.division);
 							// console.log(adUserDivision);
 							const adUserDepartment = nesoUtilities.ReplaceAll('\\.', '', adUser.department);
-
-
 							// if this user's division is not already in adUsersByDivisionDepartment
 							if (typeof (adUsersByDivisionDepartment[adUserDivision]) === 'undefined') {
 								// add it as an empty object
@@ -403,47 +465,99 @@ module.exports = {
 								// and add the empty "members" array to the department
 								adUsersByDivisionDepartment[adUserDivision][adUserDepartment].members = [];
 							}
+							// add this user to the department
+							adUsersByDivisionDepartment[adUserDivision][adUserDepartment]
+								.members.push(adUser);
 							// determine whether or not this user's manager 
 							// 		is already in adUsersByDivisionDepartment
-							let thisManagerAlreadyAdded = 0;
+							// set up flag indicating that manager is not already added
+							let thisManagerAlreadyAdded = false;
+							// iterate over manages already added
 							adUsersByDivisionDepartment[adUserDivision][adUserDepartment].managers
 								.forEach((manager, managerIndex) => {
+									// if this already added manager is the user's manager
 									if (manager === adUser.manager) {
-										thisManagerAlreadyAdded = 1;
+										// set flag to indicate that this user's manager was already added
+										thisManagerAlreadyAdded = true;
 									}
 								});
-							// if this user's manager is not already in adUsersByDivisionDepartment
-							if (thisManagerAlreadyAdded === 0) {
-								// get a promise to get this manager's data
-								module.exports.ReturnOneSpecifiedUser(adUser.manager)
-									// if the promise to get all ad users from csv was resolved with the ad users
-									.then((returnManagersUserDataResult) => {
-										// add this user's manager's user data to adUsersByDivisionDepartment
-										adUsersByDivisionDepartment[adUserDivision][adUserDepartment]
-											.managers.push(returnManagersUserDataResult.docs);
-										// add this user to the department
-										adUsersByDivisionDepartment[adUserDivision][adUserDepartment]
-											.members.push(adUser);
-									})
-									// if the promise to get all ad users from csv was rejected with an error
-									.catch((returnManagersUserDataError) => {
-										// add this user's manager's account to adUsersByDivisionDepartment; 
-										// 		an account is better than nothing, and not having the 
-										// 		full data shouldn't be a deal breaker
-										adUsersByDivisionDepartment[adUserDivision][adUserDepartment]
-											.managers.push(adUser.manager);
-										// add this user to the department
-										adUsersByDivisionDepartment[adUserDivision][adUserDepartment]
-											.members.push(adUser);
-									});
+							// if this user's manager is not already added to adUsersByDivisionDepartment
+							if (!thisManagerAlreadyAdded) {
+								// add this user's manager's account to adUsersByDivisionDepartment
+								adUsersByDivisionDepartment[adUserDivision][adUserDepartment]
+									.managers.push(adUser.manager);
 							}
 						}
 					});
-					// resolve this promise with a message and the data
-					resolve({
-						error: false,
-						csvError: false,
-						adUsersByDivisionDepartment,
+					// get an array of adUsersByDivisionDepartment's property keys
+					const adDivisionKeys = Object.keys(adUsersByDivisionDepartment);
+					// set up vars for tracking whether or not all divisions have been processed
+					const adDivisionsQuantity = adDivisionKeys.length;
+					let adDivisionsProcessedQuantity = 0;
+					// effectively, convert department managers from accounts to profiles
+					// iterate over the array of adUsersByDivisionDepartment's property keys
+					adDivisionKeys.forEach((adDivisionKey) => {
+						// increment the number of divisions processed
+						adDivisionsProcessedQuantity += 1;
+						// get an array of this division's property keys
+						const adDepartmentKeys = Object.keys(adUsersByDivisionDepartment[adDivisionKey]);
+						// set up vars for tracking whether or not all departments have been processed
+						const adDepartmentsQuantity = adDepartmentKeys.length;
+						let adDepartmentsProcessedQuantity = 0;
+						// iterate over the array of this division object's property keys; 
+						// 		these are departments
+						adDepartmentKeys.forEach((adDepartmentKey) => {
+							// increment the number of departments processed
+							adDepartmentsProcessedQuantity += 1;
+							// extract a copt of the managers array
+							const thisDeptManagerAccounts = 
+								adUsersByDivisionDepartment[adDivisionKey][adDepartmentKey].managers;
+							// delete the managers array
+							delete adUsersByDivisionDepartment[adDivisionKey][adDepartmentKey].managers;
+							// set up vars for tracking whether or not all departments have been processed
+							const thisDeptManagerAccountsQuantity = thisDeptManagerAccounts.length;
+							let thisDeptManagerAccountsProcessedQuantity = 0;
+							// for each manager account
+							thisDeptManagerAccounts.forEach((managerAccount) => {
+								// try to look up the corresponding user profile
+								nesoDBConnection.get('adUsers').findOne({ account: managerAccount }, {}, (error, doc) => {
+									// if there was an error
+									if (error || !doc) {
+										// log but don't add to the new managers array
+										// console.log('error');
+										// console.log(error);
+										// console.log('doc');
+										// console.log(doc);
+									} else {
+										// if this department doesn't already have a managers array
+										if (!adUsersByDivisionDepartment[adDivisionKey][adDepartmentKey].managers) {
+											// create a new, empty managers array
+											adUsersByDivisionDepartment[adDivisionKey][adDepartmentKey].managers = [];
+										}
+										// add the returned user profile to the new manager array
+										adUsersByDivisionDepartment[adDivisionKey][adDepartmentKey]
+											.managers.push(doc);
+									}
+									// increment the number of this department's manager accounts
+									// 		that have been processed
+									thisDeptManagerAccountsProcessedQuantity += 1;
+									// if we're through processing all manager for all departments 
+									// 		for all divisions
+									if (
+										(adDivisionsQuantity === adDivisionsProcessedQuantity) && 
+										(adDepartmentsQuantity === adDepartmentsProcessedQuantity) && 
+										(thisDeptManagerAccountsQuantity === thisDeptManagerAccountsProcessedQuantity)
+									) {
+										// resolve this promise with a message and the data
+										resolve({
+											error: false,
+											csvError: false,
+											adUsersByDivisionDepartment,
+										});
+									}
+								});
+							});
+						});
 					});
 				})
 				// if the promise to get all ad users from csv was rejected with an error
@@ -451,12 +565,11 @@ module.exports = {
 					// reject this promise with the error
 					reject(returnAllActiveDirectoryUsersFromCSVError);
 				});
-		})),
-
+		}),
 
 	DeleteAllADUsersFromDatabase: () =>
 		// return a new promise
-		new Promise(((resolve, reject) => {
+		new Promise((resolve, reject) => {
 			// get a promise to retrieve all documents from the adDepartments document collection
 			nesoDBQueries.DeleteAllDocsFromCollection('adUsers')
 				// if the promise is resolved with the docs, then resolve this promise with the docs
@@ -467,11 +580,26 @@ module.exports = {
 				.catch((error) => {
 					reject(error);
 				});
-		})),
+		}),
+
+	DeleteAllADManagersFromDatabase: () =>
+		// return a new promise
+		new Promise((resolve, reject) => {
+			// get a promise to retrieve all documents from the adDepartments document collection
+			nesoDBQueries.DeleteAllDocsFromCollection('adManagers')
+				// if the promise is resolved with the docs, then resolve this promise with the docs
+				.then((result) => {
+					resolve(result);
+				})
+				// if the promise is rejected with an error, then reject this promise with an error
+				.catch((error) => {
+					reject(error);
+				});
+		}),
 
 	DeleteAllADDepartmentsFromDatabase: () =>
 		// return a new promise
-		new Promise(((resolve, reject) => {
+		new Promise((resolve, reject) => {
 			// get a promise to retrieve all documents from the adUsers document collection
 			nesoDBQueries.DeleteAllDocsFromCollection('adDepartments')
 				// if the promise is resolved with the docs, then resolve this promise with the docs
@@ -482,11 +610,11 @@ module.exports = {
 				.catch((error) => {
 					reject(error);
 				});
-		})),
+		}),
 
 	DeleteAllADUsersByDivisionDepartmentFromDatabase: () =>
 		// return a new promise
-		new Promise(((resolve, reject) => {
+		new Promise((resolve, reject) => {
 			// get a promise to retrieve all documents 
 			//		from the adUsersByDivisionDepartment document collection
 			nesoDBQueries.DeleteAllDocsFromCollection('adUsersByDivisionDepartment')
@@ -498,12 +626,11 @@ module.exports = {
 				.catch((error) => {
 					reject(error);
 				});
-		})),
-
+		}),
 
 	AddAllADUsersToDatabase: adUsers =>
 		// return a new promise
-		new Promise(((resolve, reject) => {
+		new Promise((resolve, reject) => {
 			// get a promise to retrieve all documents from the emailQueue document collection
 			nesoDBQueries.InsertDocIntoCollection(adUsers, 'adUsers')
 				// if the promise is resolved with the result, then resolve this promise with the result
@@ -514,12 +641,11 @@ module.exports = {
 				.catch((error) => {
 					reject(error);
 				});
-		})),
-
+		}),
 
 	AddAllADUsersByDivisionDepartmentToDatabase: adUsersByDivisionDepartment =>
 		// return a new promise
-		new Promise(((resolve, reject) => {
+		new Promise((resolve, reject) => {
 			// get a promise to retrieve all documents from the emailQueue document collection
 			nesoDBQueries.InsertDocIntoCollection(adUsersByDivisionDepartment, 'adUsersByDivisionDepartment')
 				// if the promise is resolved with the result, then resolve this promise with the result
@@ -530,12 +656,11 @@ module.exports = {
 				.catch((error) => {
 					reject(error);
 				});
-		})),
-
+		}),
 
 	AddAllADDepartmentsToDatabase: adDepartments =>
 		// return a new promise
-		new Promise(((resolve, reject) => {
+		new Promise((resolve, reject) => {
 			// get a promise to retrieve all documents from the emailQueue document collection
 			nesoDBQueries.InsertDocIntoCollection(adDepartments, 'adDepartments')
 				// if the promise is resolved with the result, then resolve this promise with the result
@@ -546,11 +671,26 @@ module.exports = {
 				.catch((error) => {
 					reject(error);
 				});
-		})),
+		}),
+
+	AddAllADManagersToDatabase: adManagers =>
+		// return a new promise
+		new Promise((resolve, reject) => {
+			// get a promise to retrieve all documents from the emailQueue document collection
+			nesoDBQueries.InsertDocIntoCollection(adManagers, 'adManagers')
+				// if the promise is resolved with the result, then resolve this promise with the result
+				.then((result) => {
+					resolve(result);
+				})
+				// if the promise is rejected with an error, then reject this promise with an error
+				.catch((error) => {
+					reject(error);
+				});
+		}),
 
 	ProcessADDepartments: () =>
 		// return a new promise
-		new Promise(((resolve, reject) => {
+		new Promise((resolve, reject) => {
 			// get a promise to retrieve ad processing status
 			module.exports.ReturnADDataProcessingStatus()
 				// if the promise is resolved with the setting
@@ -716,11 +856,181 @@ module.exports = {
 				.catch((error) => {
 					reject(error);
 				});
-		})),
+		}),
+
+	ProcessADManagers: () =>
+		// return a new promise
+		new Promise((resolve, reject) => {
+			// get a promise to retrieve ad processing status
+			module.exports.ReturnADDataProcessingStatus()
+				// if the promise is resolved with the setting
+				.then((adUsersDataProcessingStatus) => {
+					// if it's ok to process ad users
+					if (adUsersDataProcessingStatus.dataProcessingStatus === true) {
+						// get a promise to set dataProcessingNow to true
+						module.exports.ReplaceOneADSetting({
+							dataProcessingNow: true,
+						})
+							// if the promise to set dataProcessingNow to true was resolved
+							.then((replaceOneActiveDirectorySettingResult) => {
+								// get a promise to get all ad users from csv
+								module.exports.ReturnAllADManagersFromADUsersByDivisionDepartment()
+									// if the promise to get all ad users from csv was resolved with the ad users
+									.then((returnAllADManagersFromADUsersByDivisionDepartmentResult) => {
+										// get a promise to delete all ad depts from the database
+										module.exports.DeleteAllADManagersFromDatabase()
+											// if the promise to delete all ad depts from the database was resolved
+											.then((deleteAllADManagersFromDatabaseResult) => {
+												// extract data (just to keep line length short, really)
+												const {
+													adManagers,
+												} =
+													returnAllADManagersFromADUsersByDivisionDepartmentResult;
+												// get a promise to add ad users from csv to the database
+												module.exports
+													.AddAllADManagersToDatabase(adManagers)
+													// if the promise to add ad users from csv to the database was resolved
+													.then((addAllActiveDirectoryManagersToDatabaseResult) => {
+														// get a promise to set dataProcessingNow to false
+														module.exports.ReplaceOneADSetting({
+															dataProcessingNow: false,
+														})
+															// if the promise to set dataProcessingNow 
+															//		to false was resolved with the result
+															.then((replaceOneActiveDirectorySettingSecondResult) => {
+																// resolve this promise with a message
+																resolve({
+																	error: false,
+																});
+															})
+															// if the promise to set dataProcessingNow 
+															//		to false was rejected with an error
+															.catch((error) => {
+																// reject this promise with the error
+																reject(error);
+															});
+													})
+													// if the promise to add ad users from 
+													//		csv to the database was rejected with an error
+													.catch((addAllActiveDirectoryDepartmentsToDatabaseError) => {
+														// get a promise to set dataProcessingNow to false
+														module.exports.ReplaceOneADSetting({
+															dataProcessingNow: false,
+														})
+															// if the promise to set dataProcessingNow 
+															//		to false was resolved with the result
+															.then((replaceOneActiveDirectorySettingSecondResult) => {
+																// reject this promise with the error
+																reject(addAllActiveDirectoryDepartmentsToDatabaseError);
+															})
+															// if the promise to add ad users from 
+															// 		csv to the database was rejected with an error
+															.catch((replaceOneADSettingError) => {
+																// construct a custom error
+																const errorToReport = {
+																	error: true,
+																	mongoDBError: true,
+																	errorCollection: [
+																		addAllActiveDirectoryDepartmentsToDatabaseError
+																			.mongoDBErrorDetails,
+																		replaceOneADSettingError.mongoDBErrorDetails,
+																	],
+																};
+																// process error
+																nesoErrors.ProcessError(errorToReport);
+																// reject this promise with the error
+																reject(errorToReport);
+															});
+													});
+											})
+											// if the promise to delete all ad users from 
+											// 		the database was rejected with an error
+											.catch((deleteAllActiveDirectoryDeptsFromDatabaseError) => {
+												// get a promise to set dataProcessingNow to false
+												module.exports.ReplaceOneADSetting({
+													dataProcessingNow: false,
+												})
+													// if the promise to set dataProcessingNow 
+													// 		to false was resolved with the result
+													.then((replaceOneActiveDirectorySettingSecondResult) => {
+														// reject this promise with the error
+														reject(deleteAllActiveDirectoryDeptsFromDatabaseError);
+													})
+													// if the promise to add ad users from csv 
+													// 		to the database was rejected with an error
+													.catch((replaceOneADSettingError) => {
+														// construct a custom error
+														const errorToReport = {
+															error: true,
+															mongoDBError: true,
+															errorCollection: [
+																deleteAllActiveDirectoryDeptsFromDatabaseError.mongoDBErrorDetails,
+																replaceOneADSettingError.mongoDBErrorDetails,
+															],
+														};
+														// process error
+														nesoErrors.ProcessError(errorToReport);
+														// reject this promise with the error
+														reject(errorToReport);
+													});
+											});
+									})
+									// if the promise to get all ad users from csv was rejected with an error
+									.catch((returnAllADDepartmentsFromADUsersByDivisionDepartmentError) => {
+										// get a promise to set dataProcessingNow to false
+										module.exports.ReplaceOneADSetting({
+											dataProcessingNow: false,
+										})
+											// if the promise to set dataProcessingNow 
+											// 		to false was resolved with the result
+											.then((replaceOneActiveDirectorySettingSecondResult) => {
+												// reject this promise with the error
+												reject(returnAllADDepartmentsFromADUsersByDivisionDepartmentError);
+											})
+											// if the promise to add ad users from csv 
+											// 		to the database was rejected with an error
+											.catch((replaceOneADSettingError) => {
+												// construct a custom error
+												const errorToReport = {
+													error: true,
+													mongoDBError: true,
+													errorCollection: [
+														returnAllADDepartmentsFromADUsersByDivisionDepartmentError
+															.mongoDBErrorDetails,
+														replaceOneADSettingError.mongoDBErrorDetails,
+													],
+												};
+												// process error
+												nesoErrors.ProcessError(errorToReport);
+												// reject this promise with the error
+												reject(errorToReport);
+											});
+									});
+							})
+							// if the promise to set dataProcessingNow to true was rejected with an error, 
+							// 		then reject this promise with the error
+							.catch((error) => {
+								reject(error);
+							});
+						// if it's NOT ok to process ad users
+					} else {
+						// reject this promise with the error
+						reject({
+							error: true,
+							settingsError: 'dataProcessingStatus === false',
+						});
+					}
+				})
+				// if the promise to retrieve ad users processing status is rejected with an error, 
+				// 		then reject this promise with the error
+				.catch((error) => {
+					reject(error);
+				});
+		}),
 
 	ProcessADUsersData: () =>
 		// return a new promise
-		new Promise(((resolve, reject) => {
+		new Promise((resolve, reject) => {
 			// get a promise to retrieve ad processing status
 			module.exports.ReturnADDataProcessingStatus()
 				// if the promise is resolved with the setting
@@ -880,12 +1190,11 @@ module.exports = {
 				.catch((error) => {
 					reject(error);
 				});
-		})),
-
+		}),
 
 	ProcessADUsersByDivisionDepartmentData: () =>
 		// return a new promise
-		new Promise(((resolve, reject) => {
+		new Promise((resolve, reject) => {
 			// get a promise to retrieve ad processing status
 			module.exports.ReturnADDataProcessingStatus()
 				// if the promise is resolved with the setting
@@ -899,7 +1208,7 @@ module.exports = {
 							// if the promise to set dataProcessingNow to true was resolved
 							.then((replaceOneActiveDirectorySettingResult) => {
 								// get a promise to get all ad users from csv
-								module.exports.ReturnAllADUsersByDivisionDepartmentFromADUsers()
+								module.exports.ReturnAllADUsersByDivisionDepartmentFromCSV()
 									// if the promise to get all ad users from csv was resolved with the ad users
 									.then((returnAllADUsersByDivisionDepartmentFromADUsersResult) => {
 										// extract the data from the result
@@ -1052,12 +1361,11 @@ module.exports = {
 				.catch((error) => {
 					reject(error);
 				});
-		})),
-
+		}),
 
 	ReturnADUsersData: () =>
 		// return a new promise
-		new Promise(((resolve, reject) => {
+		new Promise((resolve, reject) => {
 			// get a promise to retrieve all documents from the adUsers document collection
 			nesoDBQueries.ReturnAllDocsFromCollection('adUsers')
 				// if the promise is resolved with the docs, then resolve this promise with the docs
@@ -1068,12 +1376,11 @@ module.exports = {
 				.catch((error) => {
 					reject(error);
 				});
-		})),
-
+		}),
 
 	ReturnOneSpecifiedUser: account =>
 		// return a new promise
-		new Promise(((resolve, reject) => {
+		new Promise((resolve, reject) => {
 			// get a promise to retrieve one specified document from the adUsers document collection
 			// eslint-disable-next-line object-shorthand
 			nesoDBQueries.ReturnOneSpecifiedDocFromCollection('adUsers', {
@@ -1089,12 +1396,11 @@ module.exports = {
 				.catch((error) => {
 					reject(error);
 				});
-		})),
-
+		}),
 
 	ReturnADUsersByDivisionDepartmentData: () =>
 		// return a new promise
-		new Promise(((resolve, reject) => {
+		new Promise((resolve, reject) => {
 			// get a promise to retrieve all documents from the adUsers document collection
 			nesoDBQueries.ReturnAllDocsFromCollection('adUsersByDivisionDepartment')
 				// if the promise is resolved with the docs, then resolve this promise with the docs
@@ -1108,11 +1414,11 @@ module.exports = {
 				.catch((error) => {
 					reject(error);
 				});
-		})),
+		}),
 
 	ReturnADDepartments: () =>
 		// return a new promise
-		new Promise(((resolve, reject) => {
+		new Promise((resolve, reject) => {
 			// get a promise to retrieve all documents from the adUsers document collection
 			nesoDBQueries.ReturnAllDocsFromCollection('adDepartments')
 				// if the promise is resolved with the docs, then resolve this promise with the docs
@@ -1123,11 +1429,11 @@ module.exports = {
 				.catch((error) => {
 					reject(error);
 				});
-		})),
+		}),
 
 	ReturnOneADUserByUserID: userID =>
 		// return a new promise
-		new Promise(((resolve, reject) => {
+		new Promise((resolve, reject) => {
 			// get a promise to retrieve all documents from the adUsers document collection
 			nesoDBQueries.ReturnOneSpecifiedDocFromCollection('adUsers', {
 				account: userID,
@@ -1140,11 +1446,11 @@ module.exports = {
 				.catch((error) => {
 					reject(error);
 				});
-		})),
+		}),
 
 	ReturnAllADUsersWithSpecifiedManager: mgrUserID =>
 		// return a new promise
-		new Promise(((resolve, reject) => {
+		new Promise((resolve, reject) => {
 			// get a promise to retrieve all documents from the adUsers document collection
 			nesoDBQueries.ReturnAllSpecifiedDocsFromCollection('adUsers', {
 				manager: mgrUserID,
@@ -1157,6 +1463,5 @@ module.exports = {
 				.catch((error) => {
 					reject(error);
 				});
-		})),
-
+		}),
 };

@@ -187,17 +187,17 @@ app.use((err, req, res, next) => {
 
 
 // anomoly
-nesoActiveDirectory.ProcessADUsersByDivisionDepartmentData()
+nesoActiveDirectory.ProcessADManagers()
 	// if the promise is resolved with the docs, then respond with the docs as JSON
 	.then((result) => {
 		// eslint-disable-next-line no-console
-		console.log('Processed Active Directory Users By Division Department data:');
+		console.log('Processed Managers data:');
 		// console.log(result);
 	})
 	// if the promise is rejected with an error, then respond with the error as JSON
 	.catch((error) => {
 		// eslint-disable-next-line no-console
-		console.log('ERROR - Processing Active Directory Users By Division Department data:');
+		console.log('ERROR - Processing Managers data:');
 		// eslint-disable-next-line no-console
 		console.log(error);
 	});
@@ -325,6 +325,24 @@ cron.schedule(process.env.nonDivisionDepartmentTeamsProcessingCronSchedule, () =
 			console.log(error);
 		});
 });
+// schedule as specified in environment
+cron.schedule(process.env.adManagerProcessingCronSchedule, () => {
+	nesoActiveDirectory.ProcessADManagers()
+		// if the promise is resolved with the docs, then respond with the docs as JSON
+		.then((result) => {
+			// eslint-disable-next-line no-console
+			// console.log('Processed Active Directory Managers data:');
+			// console.log(result);
+		})
+		// if the promise is rejected with an error, then respond with the error as JSON
+		.catch((error) => {
+			// eslint-disable-next-line no-console
+			console.log('ERROR - Processing Active Directory Managers data:');
+			// eslint-disable-next-line no-console
+			console.log(error);
+		});
+});
+
 // schedule for once per day at 2 am
 cron.schedule('0 2 * * *', () => {
 	// get a promise to empty the tmp directory
