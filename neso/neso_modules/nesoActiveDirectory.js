@@ -1464,4 +1464,67 @@ module.exports = {
 					reject(error);
 				});
 		}),
+
+	ReturnFullDownlineForOneManager: mgrUserID =>
+		// return a new promise
+		new Promise((resolve, reject) => {
+			// note: here, lookup for a user means querying db for the users who report to said user
+			// set up vars
+			// all of the users who in/directly report to specified manager
+			let downline = [];
+			// the users we need to do lookups for; e.g., the specified manager, 
+			// 		the users who report to the specified manager,
+			// 		the users who report to them, and so on
+			const lookupsToBeProcessed = [mgrUserID];
+			// the users we've done lookups for already
+			const lookupsProcessed = [];
+			// flag indicating that we're not yet done doing lookups; when lookupsToBeProcessed is 
+			// 		equal to lookupsProcessed, this will become true
+			// eslint-disable-next-line no-var
+			var lookupsDone = false;
+			// while lookupsDone is false
+			while (!lookupsDone) {
+				// eslint-disable-next-line no-loop-func
+				lookupsToBeProcessed.forEach((neededLookup) => {
+					let thisLookupAlreadyProcessed = false;
+					lookupsProcessed.forEach((processedLookup) => {
+						if (processedLookup === neededLookup) {
+							thisLookupAlreadyProcessed = true;
+						}
+					});
+					if (!thisLookupAlreadyProcessed) {
+						// try to reports for this user
+						nesoDBConnection.get('adUsers').find({ manager: neededLookup }, {}, (error, reports) => {
+							// if there was an error or no results
+							if (error || !reports) {
+								// log but don't do anything else
+								// console.log('error');
+								// console.log(error);
+								// console.log('docs');
+								// console.log(docs);
+							} else {
+								// add results to downline
+								downline = [...downline, ...reports];
+								// add results to lookupsToBeProcessed, in case these users also have reports
+								reports.forEach((report) => {
+									lookupsToBeProcessed.push(report.account);
+								});
+							}
+							// whether or not any reports were found, add neededLookup to lookupsProcessed
+							lookupsProcessed.push(neededLookup);
+						});
+						// if all lookups have been processed
+						if (lookupsToBeProcessed.length === lookupsProcessed.length) {
+							// set flag indicating that lookups are done
+							lookupsDone = true;
+							// ensure uniqueness of downline users
+							// --back here
+							// resolve this promise with the downline
+							console.log(downline);
+							resolve(downline);
+						}
+					}
+				});
+			}
+		}),
 };

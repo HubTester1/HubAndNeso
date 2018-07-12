@@ -185,23 +185,21 @@ app.use((err, req, res, next) => {
 
 // CRON ---
 
-
-// anomoly
-nesoActiveDirectory.ProcessADManagers()
+// aonomaly
+nesoActiveDirectory.ReturnFullDownlineForOneManager('jslakey')
 	// if the promise is resolved with the docs, then respond with the docs as JSON
 	.then((result) => {
 		// eslint-disable-next-line no-console
-		console.log('Processed Managers data:');
+		console.log('Processed Downline data:');
 		// console.log(result);
 	})
 	// if the promise is rejected with an error, then respond with the error as JSON
 	.catch((error) => {
 		// eslint-disable-next-line no-console
-		console.log('ERROR - Processing Managers data:');
+		console.log('ERROR - Processing Downline data:');
 		// eslint-disable-next-line no-console
 		console.log(error);
 	});
-
 
 // schedule for once per minute
 cron.schedule('* * * * *', () => {
@@ -342,7 +340,6 @@ cron.schedule(process.env.adManagerProcessingCronSchedule, () => {
 			console.log(error);
 		});
 });
-
 // schedule for once per day at 2 am
 cron.schedule('0 2 * * *', () => {
 	// get a promise to empty the tmp directory
