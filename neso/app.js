@@ -185,7 +185,21 @@ app.use((err, req, res, next) => {
 
 // CRON ---
 
-// aonomaly
+// anomaly
+/* nesoActiveDirectory.ReturnFullUplineForOneUser('jbaker')
+	// if the promise is resolved with the docs, then respond with the docs as JSON
+	.then((result) => {
+		// eslint-disable-next-line no-console
+		console.log('Processed Upline data:');
+		// console.log(result);
+	})
+	// if the promise is rejected with an error, then respond with the error as JSON
+	.catch((error) => {
+		// eslint-disable-next-line no-console
+		console.log('ERROR - Processing Upline data:');
+		// eslint-disable-next-line no-console
+		console.log(error);
+	});
 nesoActiveDirectory.ReturnFullDownlineForOneManager('jslakey')
 	// if the promise is resolved with the docs, then respond with the docs as JSON
 	.then((result) => {
@@ -197,6 +211,21 @@ nesoActiveDirectory.ReturnFullDownlineForOneManager('jslakey')
 	.catch((error) => {
 		// eslint-disable-next-line no-console
 		console.log('ERROR - Processing Downline data:');
+		// eslint-disable-next-line no-console
+		console.log(error);
+	}); */
+
+nesoActiveDirectory.ProcessADUsersWithUplines()
+	// if the promise is resolved with the docs, then respond with the docs as JSON
+	.then((result) => {
+		// eslint-disable-next-line no-console
+		console.log('Processed AD Users with Uplines data:');
+		// console.log(result);
+	})
+	// if the promise is rejected with an error, then respond with the error as JSON
+	.catch((error) => {
+		// eslint-disable-next-line no-console
+		console.log('ERROR - Processing AD Users with Uplines data:');
 		// eslint-disable-next-line no-console
 		console.log(error);
 	});
@@ -324,22 +353,56 @@ cron.schedule(process.env.nonDivisionDepartmentTeamsProcessingCronSchedule, () =
 		});
 });
 // schedule as specified in environment
-cron.schedule(process.env.adManagerProcessingCronSchedule, () => {
-	nesoActiveDirectory.ProcessADManagers()
+cron.schedule(process.env.adManagerSimpleProcessingCronSchedule, () => {
+	nesoActiveDirectory.ProcessADManagersSimple()
 		// if the promise is resolved with the docs, then respond with the docs as JSON
 		.then((result) => {
 			// eslint-disable-next-line no-console
-			// console.log('Processed Active Directory Managers data:');
+			// console.log('Processed Active Directory Managers Simple data:');
 			// console.log(result);
 		})
 		// if the promise is rejected with an error, then respond with the error as JSON
 		.catch((error) => {
 			// eslint-disable-next-line no-console
-			console.log('ERROR - Processing Active Directory Managers data:');
+			console.log('ERROR - Processing Active Directory Managers Simple data:');
 			// eslint-disable-next-line no-console
 			console.log(error);
 		});
 });
+// schedule as specified in environment
+/* cron.schedule(process.env.adManagerImmediateReportsProcessingCronSchedule, () => {
+	nesoActiveDirectory.ProcessADManagersWithImmediateReports()
+		// if the promise is resolved with the docs, then respond with the docs as JSON
+		.then((result) => {
+			// eslint-disable-next-line no-console
+			// console.log('Processed Active Directory Managers W Immediate Reports data:');
+			// console.log(result);
+		})
+		// if the promise is rejected with an error, then respond with the error as JSON
+		.catch((error) => {
+			// eslint-disable-next-line no-console
+			console.log('ERROR - Processing Active Directory Managers W Immediate Reports data:');
+			// eslint-disable-next-line no-console
+			console.log(error);
+		});
+}); */
+// schedule as specified in environment
+/* cron.schedule(process.env.adManagerAllReportsProcessingCronSchedule, () => {
+	nesoActiveDirectory.ProcessADManagersWithAllReports()
+		// if the promise is resolved with the docs, then respond with the docs as JSON
+		.then((result) => {
+			// eslint-disable-next-line no-console
+			// console.log('Processed Active Directory Managers W All Reports data:');
+			// console.log(result);
+		})
+		// if the promise is rejected with an error, then respond with the error as JSON
+		.catch((error) => {
+			// eslint-disable-next-line no-console
+			console.log('ERROR - Processing Active Directory Managers W All Reports data:');
+			// eslint-disable-next-line no-console
+			console.log(error);
+		});
+}); */
 // schedule for once per day at 2 am
 cron.schedule('0 2 * * *', () => {
 	// get a promise to empty the tmp directory
