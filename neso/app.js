@@ -341,7 +341,7 @@ cron.schedule(process.env.adManagersSimpleProcessingCronSchedule, () => {
 			console.log(error);
 		});
 });
-/* // schedule as specified in environment
+// schedule as specified in environment
 cron.schedule(process.env.adManagersWithFullFlatDownlinesProcessingCronSchedule, () => {
 	nesoActiveDirectory.ProcessADManagersWithFullFlatDownlines()
 	// if the promise is resolved with the docs, then respond with the docs as JSON
@@ -375,23 +375,6 @@ cron.schedule(process.env.adManagersWithFullHierarchicalDownlinesProcessingCronS
 			console.log(error);
 		});
 });
-// schedule as specified in environment
-cron.schedule(process.env.adUsersWithFullFlatUplinesProcessingCronSchedule, () => {
-	nesoActiveDirectory.ProcessADUsersWithFullFlatUplines()
-		// if the promise is resolved with the docs, then respond with the docs as JSON
-		.then((result) => {
-			// eslint-disable-next-line no-console
-			// console.log('Processed Users with Full Flat Uplines data:');
-			// console.log(result);
-		})
-		// if the promise is rejected with an error, then respond with the error as JSON
-		.catch((error) => {
-			// eslint-disable-next-line no-console
-			console.log('ERROR - Processing Users with Full Flat Uplines data:');
-			// eslint-disable-next-line no-console
-			console.log(error);
-		});
-}); */
 // schedule for once per day at 2 am
 cron.schedule('0 2 * * *', () => {
 	// get a promise to empty the tmp directory

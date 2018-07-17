@@ -277,21 +277,6 @@ module.exports = {
 					reject(error);
 				});
 		}),
-
-	DeleteAllADUsersWithFullFlatUplinesFromDatabase: () =>
-		// return a new promise
-		new Promise((resolve, reject) => {
-			// get a promise to retrieve all documents from the adDepartments document collection
-			nesoDBQueries.DeleteAllDocsFromCollection('adUsersWithFullFlatUplines')
-				// if the promise is resolved with the docs, then resolve this promise with the docs
-				.then((result) => {
-					resolve(result);
-				})
-				// if the promise is rejected with an error, then reject this promise with an error
-				.catch((error) => {
-					reject(error);
-				});
-		}),
 	
 	// DB INSERTIONS
 
@@ -377,21 +362,6 @@ module.exports = {
 			// get a promise to insert all documents into the 
 			// 		adManagersWithFullHierarchicalDownlines document collection
 			nesoDBQueries.InsertDocIntoCollection(adManagers, 'adManagersWithFullHierarchicalDownlines')
-				// if the promise is resolved with the result, then resolve this promise with the result
-				.then((result) => {
-					resolve(result);
-				})
-				// if the promise is rejected with an error, then reject this promise with an error
-				.catch((error) => {
-					reject(error);
-				});
-		}),
-
-	AddAllADUsersWithFullFlatUplinesToDatabase: adUsers =>
-		// return a new promise
-		new Promise((resolve, reject) => {
-			// get a promise to retrieve all documents from the emailQueue document collection
-			nesoDBQueries.InsertDocIntoCollection(adUsers, 'adUsersWithFullFlatUplines')
 				// if the promise is resolved with the result, then resolve this promise with the result
 				.then((result) => {
 					resolve(result);
@@ -1096,21 +1066,21 @@ module.exports = {
 							// if the promise to set dataProcessingNow to true was resolved
 							.then((replaceOneActiveDirectorySettingResult) => {
 								// get a promise to get all ad users from csv
-								module.exports.ReturnAllADManagersWithFullHierarchicalDownlinesFromDBQueries()
+								module.exports.ReturnAllADManagersWithFullFlatDownlinesFromDBQueries()
 									// if the promise to get all ad users from csv was resolved with the ad users
-									.then((returnAllADManagersWithFullHierarchicalDownlineFromDBQueriesResult) => {
+									.then((returnResult) => {
 										// get a promise to delete all ad depts from the database
-										module.exports.DeleteAllADManagersWithFullHierarchicalDownlinesFromDatabase()
+										module.exports.DeleteAllADManagersWithFullFlatDownlinesFromDatabase()
 											// if the promise to delete all ad depts from the database was resolved
 											.then((deleteResult) => {
 												// extract data (just to keep line length short, really)
 												const {
 													adManagers,
 												} =
-													returnAllADManagersWithFullHierarchicalDownlineFromDBQueriesResult;
+													returnResult;
 												// get a promise to add ad users from csv to the database
 												module.exports
-													.AddAllADManagersWithFullHierarchicalDownlinesToDatabase(adManagers)
+													.AddAllADManagersWithFullFlatDownlinesToDatabase(adManagers)
 													// if the promise to add ad users from csv to the database was resolved
 													.then((addResult) => {
 														// get a promise to set dataProcessingNow to false
@@ -1388,180 +1358,6 @@ module.exports = {
 													mongoDBError: true,
 													errorCollection: [
 														returnAllADDepartmentsFromADUsersByDivisionDepartmentError
-															.mongoDBErrorDetails,
-														replaceOneADSettingError.mongoDBErrorDetails,
-													],
-												};
-												// process error
-												nesoErrors.ProcessError(errorToReport);
-												// reject this promise with the error
-												reject(errorToReport);
-											});
-									});
-							})
-							// if the promise to set dataProcessingNow to true was rejected with an error, 
-							// 		then reject this promise with the error
-							.catch((error) => {
-								reject(error);
-							});
-						// if it's NOT ok to process ad users
-					} else {
-						// reject this promise with the error
-						reject({
-							error: true,
-							settingsError: 'dataProcessingStatus === false',
-						});
-					}
-				})
-				// if the promise to retrieve ad users processing status is rejected with an error, 
-				// 		then reject this promise with the error
-				.catch((error) => {
-					reject(error);
-				});
-		}),
-	// scheduled
-	ProcessADUsersWithFullFlatUplines: () =>
-		// return a new promise
-		new Promise((resolve, reject) => {
-			// get a promise to retrieve ad processing status
-			module.exports.ReturnADDataProcessingStatus()
-				// if the promise is resolved with the setting
-				.then((adUsersDataProcessingStatus) => {
-					// if it's ok to process ad users
-					if (adUsersDataProcessingStatus.dataProcessingStatus === true) {
-						// get a promise to set dataProcessingNow to true
-						module.exports.ReplaceOneADSetting({
-							dataProcessingNow: true,
-						})
-							// if the promise to set dataProcessingNow to true was resolved
-							.then((replaceOneActiveDirectorySettingResult) => {
-								// get a promise to get all ad users from csv
-								module.exports.ReturnAllADUsersWithUplines()
-									// if the promise to get all ad users from csv was resolved with the ad users
-									.then((returnAllADUsersWithUplinesResult) => {
-										// console.log('returnAllADUsersWithUplinesResult.docs');
-										// console.log(returnAllADUsersWithUplinesResult.docs);
-										// get a promise to delete all ad depts from the database
-										module.exports.DeleteAllADUsersWithUplinesFromDatabase()
-											// if the promise to delete all ad depts from the database was resolved
-											.then((deleteAllADManagersFromDatabaseResult) => {
-												// extract data (just to keep line length short, really)
-												// back here
-												const adUsersWithUplines = returnAllADUsersWithUplinesResult.docs;
-												// const {
-												// 	adUsersWithUplines,
-												// } =
-												// 	returnAllADUsersWithUplinesResult;
-												// get a promise to add ad users from csv to the database
-												module.exports
-													.AddAllADUsersWithFullFlatUplinesToDatabase(adUsersWithUplines)
-													// if the promise to add ad users from csv to the database was resolved
-													.then((addAllADUsersWithUplinesToDatabaseResult) => {
-														// get a promise to set dataProcessingNow to false
-														module.exports.ReplaceOneADSetting({
-															dataProcessingNow: false,
-														})
-															// if the promise to set dataProcessingNow 
-															//		to false was resolved with the result
-															.then((replaceOneActiveDirectorySettingSecondResult) => {
-																// resolve this promise with a message
-																resolve({
-																	error: false,
-																});
-															})
-															// if the promise to set dataProcessingNow 
-															//		to false was rejected with an error
-															.catch((error) => {
-																// reject this promise with the error
-																reject(error);
-															});
-													})
-													// if the promise to add ad users from 
-													//		csv to the database was rejected with an error
-													.catch((addAllADUsersWithUplinesToDatabaseError) => {
-														// get a promise to set dataProcessingNow to false
-														module.exports.ReplaceOneADSetting({
-															dataProcessingNow: false,
-														})
-															// if the promise to set dataProcessingNow 
-															//		to false was resolved with the result
-															.then((replaceOneActiveDirectorySettingSecondResult) => {
-																// reject this promise with the error
-																reject(addAllADUsersWithUplinesToDatabaseError);
-															})
-															// if the promise to add ad users from 
-															// 		csv to the database was rejected with an error
-															.catch((replaceOneADSettingError) => {
-																// construct a custom error
-																const errorToReport = {
-																	error: true,
-																	mongoDBError: true,
-																	errorCollection: [
-																		addAllADUsersWithUplinesToDatabaseError
-																			.mongoDBErrorDetails,
-																		replaceOneADSettingError.mongoDBErrorDetails,
-																	],
-																};
-																// process error
-																nesoErrors.ProcessError(errorToReport);
-																// reject this promise with the error
-																reject(errorToReport);
-															});
-													});
-											})
-											// if the promise to delete all ad users from 
-											// 		the database was rejected with an error
-											.catch((deleteAllActiveDirectoryDeptsFromDatabaseError) => {
-												// get a promise to set dataProcessingNow to false
-												module.exports.ReplaceOneADSetting({
-													dataProcessingNow: false,
-												})
-													// if the promise to set dataProcessingNow 
-													// 		to false was resolved with the result
-													.then((replaceOneActiveDirectorySettingSecondResult) => {
-														// reject this promise with the error
-														reject(deleteAllActiveDirectoryDeptsFromDatabaseError);
-													})
-													// if the promise to add ad users from csv 
-													// 		to the database was rejected with an error
-													.catch((replaceOneADSettingError) => {
-														// construct a custom error
-														const errorToReport = {
-															error: true,
-															mongoDBError: true,
-															errorCollection: [
-																deleteAllActiveDirectoryDeptsFromDatabaseError.mongoDBErrorDetails,
-																replaceOneADSettingError.mongoDBErrorDetails,
-															],
-														};
-														// process error
-														nesoErrors.ProcessError(errorToReport);
-														// reject this promise with the error
-														reject(errorToReport);
-													});
-											});
-									})
-									// if the promise to get all ad users from csv was rejected with an error
-									.catch((returnAllADUsersError) => {
-										// get a promise to set dataProcessingNow to false
-										module.exports.ReplaceOneADSetting({
-											dataProcessingNow: false,
-										})
-											// if the promise to set dataProcessingNow 
-											// 		to false was resolved with the result
-											.then((replaceOneActiveDirectorySettingSecondResult) => {
-												// reject this promise with the error
-												reject(returnAllADUsersError);
-											})
-											// if the promise to add ad users from csv 
-											// 		to the database was rejected with an error
-											.catch((replaceOneADSettingError) => {
-												// construct a custom error
-												const errorToReport = {
-													error: true,
-													mongoDBError: true,
-													errorCollection: [
-														returnAllADUsersError
 															.mongoDBErrorDetails,
 														replaceOneADSettingError.mongoDBErrorDetails,
 													],
@@ -2236,93 +2032,6 @@ module.exports = {
 				});
 		}),
 
-	ReturnAllADUsersWithFullFlatUplines: () =>
-		// return a new promise
-		new Promise((resolve, reject) => {
-			// back here
-			// get a promise to retrieve all documents from the adUsers document collection
-			module.exports.ReturnADUsersData()
-				// if the promise is resolved with the docs, then resolve this promise with the docs
-				.then((adUsersBase) => {
-					/* // set up var to receive users
-					adUsersWithUplines = [];
-					// for 
-					adUsersBase.docs.forEach((adUserBase) => {
-						
-						module.exports.ReturnFullUplineForOneUser()
-						adUserBase
-					}); */
-				})
-				// if the promise is rejected with an error, then reject this promise with an error
-				.catch((error) => { reject(error); });
-		}),
-
-	// special
-	ReturnFullUplineForOneUser: userAccount =>
-		// return a new promise
-		new Promise((resolve, reject) => {
-			nesoDBConnection.get('adUsers')
-				.aggregate([
-					// starting with specified user
-					{ $match: { account: userAccount } },
-					{
-						$graphLookup: {
-							from: 'adUsers',
-							startWith: '$manager',
-							connectFromField: 'manager',
-							connectToField: 'account',
-							as: 'upline',
-						},
-					},
-				])
-				// if the promise is resolved with the docs, then resolve this promise with the docs
-				.then((result) => {
-					result[0].upline.forEach((uplineMember) => {
-						console.log(uplineMember);
-					});
-
-					resolve(result[0].upline);
-				})
-				// if the promise is rejected with an error, then reject this promise with an error
-				.catch((error) => {
-					reject(error);
-				});
-		}),
-	// special
-	ReturnFullFlatDownlineForOneManager: mgrUserID =>
-		// return a new promise
-		new Promise((resolve, reject) => {
-			// get a promise to get all adUsers from the db
-			module.exports.ReturnADUsersData()
-				// if the promise was resolved with the user data
-				.then((result) => {
-					const adUsers = result.docs;
-					// back here
-					// eslint-disable-next-line prefer-const
-					let downline = [];
-					const lookupsToBeProcessed = [mgrUserID];
-					const lookupsProcessed = [];
-					while (lookupsToBeProcessed.length !== lookupsProcessed.length) {
-						lookupsToBeProcessed.forEach((lookupToProcess) => {
-							if (lookupsProcessed.indexOf(lookupToProcess) === -1) {
-								adUsers.forEach((adUser) => {
-									if (adUser.manager === lookupToProcess) {
-										downline.push(adUser);
-										lookupsToBeProcessed.push(adUser.account);
-									}
-								});
-								lookupsProcessed.push(lookupToProcess);
-							}
-						});
-					}
-					console.log('downline');
-					console.log(downline);
-					resolve(downline);
-				})
-				// if the promise was rejected with an error, reject this promise with the error
-				.catch((error) => { reject(error); });
-		}),
-
 	// DATA PULLS
 
 	ReturnADUsersData: () =>
@@ -2349,6 +2058,23 @@ module.exports = {
 				$and: [{
 					account,
 				}],
+			}, {})
+				// if the promise is resolved with the docs, then resolve this promise with the docs
+				.then((result) => {
+					resolve(result);
+				})
+				// if the promise is rejected with an error, then reject this promise with an error
+				.catch((error) => {
+					reject(error);
+				});
+		}),
+
+	ReturnAllADUsersWithSpecifiedManager: mgrAccount =>
+		// return a new promise
+		new Promise((resolve, reject) => {
+			// get a promise to retrieve all documents from the adUsers document collection
+			nesoDBQueries.ReturnAllSpecifiedDocsFromCollection('adUsers', {
+				manager: mgrAccount,
 			}, {})
 				// if the promise is resolved with the docs, then resolve this promise with the docs
 				.then((result) => {
@@ -2393,23 +2119,6 @@ module.exports = {
 				});
 		}),
 
-	ReturnAllADUsersWithSpecifiedManager: mgrAccount =>
-		// return a new promise
-		new Promise((resolve, reject) => {
-			// get a promise to retrieve all documents from the adUsers document collection
-			nesoDBQueries.ReturnAllSpecifiedDocsFromCollection('adUsers', {
-				manager: mgrAccount,
-			}, {})
-				// if the promise is resolved with the docs, then resolve this promise with the docs
-				.then((result) => {
-					resolve(result);
-				})
-				// if the promise is rejected with an error, then reject this promise with an error
-				.catch((error) => {
-					reject(error);
-				});
-		}),
-
 	ReturnAllADManagersSimple: () => 
 		// return a new promise
 		new Promise((resolve, reject) => {
@@ -2420,4 +2129,35 @@ module.exports = {
 				// if the promise is rejected with an error, then reject this promise with an error
 				.catch((error) => { reject(error); });
 		}),
+
+	ReturnFullFlatUplineForOneUser: userAccount =>
+		// return a new promise
+		new Promise((resolve, reject) => {
+			// get a promise to get the user's manager, her manger, and so on, using a graph lookup
+			nesoDBConnection.get('adUsers')
+				.aggregate([
+					{ $match: { account: userAccount } },
+					{
+						$graphLookup: {
+							from: 'adUsers',
+							startWith: '$manager',
+							connectFromField: 'manager',
+							connectToField: 'account',
+							as: 'upline',
+						},
+					},
+				])
+				// if the promise is resolved with the docs, then resolve this promise with the docs
+				.then((result) => {
+					// result[0].upline.forEach((uplineMember) => {
+					// 	console.log(uplineMember);
+					// });
+					resolve(result[0].upline);
+				})
+				// if the promise is rejected with an error, then reject this promise with an error
+				.catch((error) => {
+					reject(error);
+				});
+		}),
+
 };
