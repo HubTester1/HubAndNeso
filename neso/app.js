@@ -200,7 +200,7 @@ app.use((err, req, res, next) => {
 		// eslint-disable-next-line no-console
 		console.log(error);
 	});
-nesoActiveDirectory.ReturnFullDownlineForOneManager('jslakey')
+nesoActiveDirectory.ReturnFullHierarchicalDownlineForOneManager('jslakey')
 	// if the promise is resolved with the docs, then respond with the docs as JSON
 	.then((result) => {
 		// eslint-disable-next-line no-console
@@ -215,7 +215,22 @@ nesoActiveDirectory.ReturnFullDownlineForOneManager('jslakey')
 		console.log(error);
 	}); */
 
-nesoActiveDirectory.ProcessADUsersWithUplines()
+nesoActiveDirectory.ProcessADManagersWithFullHierarchicalDownline()
+	// if the promise is resolved with the docs, then respond with the docs as JSON
+	.then((result) => {
+		// eslint-disable-next-line no-console
+		console.log('Processed Managers with Hierarchical Downlines data:');
+		// console.log(result);
+	})
+	// if the promise is rejected with an error, then respond with the error as JSON
+	.catch((error) => {
+		// eslint-disable-next-line no-console
+		console.log('ERROR - Processing Managers with Hierarchical Downlines data:');
+		// eslint-disable-next-line no-console
+		console.log(error);
+	});
+
+/* nesoActiveDirectory.ProcessADUsersWithUplines()
 	// if the promise is resolved with the docs, then respond with the docs as JSON
 	.then((result) => {
 		// eslint-disable-next-line no-console
@@ -228,7 +243,7 @@ nesoActiveDirectory.ProcessADUsersWithUplines()
 		console.log('ERROR - Processing AD Users with Uplines data:');
 		// eslint-disable-next-line no-console
 		console.log(error);
-	});
+	}); */
 
 // schedule for once per minute
 cron.schedule('* * * * *', () => {
