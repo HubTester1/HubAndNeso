@@ -185,66 +185,6 @@ app.use((err, req, res, next) => {
 
 // CRON ---
 
-// anomaly
-/* nesoActiveDirectory.ReturnFullUplineForOneUser('jbaker')
-	// if the promise is resolved with the docs, then respond with the docs as JSON
-	.then((result) => {
-		// eslint-disable-next-line no-console
-		console.log('Processed Upline data:');
-		// console.log(result);
-	})
-	// if the promise is rejected with an error, then respond with the error as JSON
-	.catch((error) => {
-		// eslint-disable-next-line no-console
-		console.log('ERROR - Processing Upline data:');
-		// eslint-disable-next-line no-console
-		console.log(error);
-	});
-nesoActiveDirectory.ReturnFullHierarchicalDownlineForOneManager('jslakey')
-	// if the promise is resolved with the docs, then respond with the docs as JSON
-	.then((result) => {
-		// eslint-disable-next-line no-console
-		console.log('Processed Downline data:');
-		// console.log(result);
-	})
-	// if the promise is rejected with an error, then respond with the error as JSON
-	.catch((error) => {
-		// eslint-disable-next-line no-console
-		console.log('ERROR - Processing Downline data:');
-		// eslint-disable-next-line no-console
-		console.log(error);
-	}); */
-
-nesoActiveDirectory.ProcessADManagersWithFullHierarchicalDownline()
-	// if the promise is resolved with the docs, then respond with the docs as JSON
-	.then((result) => {
-		// eslint-disable-next-line no-console
-		console.log('Processed Managers with Hierarchical Downlines data:');
-		// console.log(result);
-	})
-	// if the promise is rejected with an error, then respond with the error as JSON
-	.catch((error) => {
-		// eslint-disable-next-line no-console
-		console.log('ERROR - Processing Managers with Hierarchical Downlines data:');
-		// eslint-disable-next-line no-console
-		console.log(error);
-	});
-
-/* nesoActiveDirectory.ProcessADUsersWithUplines()
-	// if the promise is resolved with the docs, then respond with the docs as JSON
-	.then((result) => {
-		// eslint-disable-next-line no-console
-		console.log('Processed AD Users with Uplines data:');
-		// console.log(result);
-	})
-	// if the promise is rejected with an error, then respond with the error as JSON
-	.catch((error) => {
-		// eslint-disable-next-line no-console
-		console.log('ERROR - Processing AD Users with Uplines data:');
-		// eslint-disable-next-line no-console
-		console.log(error);
-	}); */
-
 // schedule for once per minute
 cron.schedule('* * * * *', () => {
 	// get a promise to process the email queue
@@ -368,7 +308,24 @@ cron.schedule(process.env.nonDivisionDepartmentTeamsProcessingCronSchedule, () =
 		});
 });
 // schedule as specified in environment
-cron.schedule(process.env.adManagerSimpleProcessingCronSchedule, () => {
+cron.schedule(process.env.adDepartmentsProcessingCronSchedule, () => {
+	nesoActiveDirectory.ProcessADDepartments()
+		// if the promise is resolved with the docs, then respond with the docs as JSON
+		.then((result) => {
+			// eslint-disable-next-line no-console
+			// console.log('Processed Active Directory Departments data:');
+			// console.log(result);
+		})
+		// if the promise is rejected with an error, then respond with the error as JSON
+		.catch((error) => {
+			// eslint-disable-next-line no-console
+			console.log('ERROR - Processing Active Directory Departments data:');
+			// eslint-disable-next-line no-console
+			console.log(error);
+		});
+});
+// schedule as specified in environment
+cron.schedule(process.env.adManagersSimpleProcessingCronSchedule, () => {
 	nesoActiveDirectory.ProcessADManagersSimple()
 		// if the promise is resolved with the docs, then respond with the docs as JSON
 		.then((result) => {
@@ -384,36 +341,53 @@ cron.schedule(process.env.adManagerSimpleProcessingCronSchedule, () => {
 			console.log(error);
 		});
 });
-// schedule as specified in environment
-/* cron.schedule(process.env.adManagerImmediateReportsProcessingCronSchedule, () => {
-	nesoActiveDirectory.ProcessADManagersWithImmediateReports()
-		// if the promise is resolved with the docs, then respond with the docs as JSON
+/* // schedule as specified in environment
+cron.schedule(process.env.adManagersWithFullFlatDownlinesProcessingCronSchedule, () => {
+	nesoActiveDirectory.ProcessADManagersWithFullFlatDownlines()
+	// if the promise is resolved with the docs, then respond with the docs as JSON
 		.then((result) => {
-			// eslint-disable-next-line no-console
-			// console.log('Processed Active Directory Managers W Immediate Reports data:');
-			// console.log(result);
+		// eslint-disable-next-line no-console
+			console.log('Processed Managers with Full Flat Downlines data:');
+		// console.log(result);
 		})
-		// if the promise is rejected with an error, then respond with the error as JSON
+	// if the promise is rejected with an error, then respond with the error as JSON
 		.catch((error) => {
-			// eslint-disable-next-line no-console
-			console.log('ERROR - Processing Active Directory Managers W Immediate Reports data:');
+		// eslint-disable-next-line no-console
+			console.log('ERROR - Processing Managers with Full Flat Downlines data:');
 			// eslint-disable-next-line no-console
 			console.log(error);
 		});
-}); */
+});
 // schedule as specified in environment
-/* cron.schedule(process.env.adManagerAllReportsProcessingCronSchedule, () => {
-	nesoActiveDirectory.ProcessADManagersWithAllReports()
+cron.schedule(process.env.adManagersWithFullHierarchicalDownlinesProcessingCronSchedule, () => {
+	nesoActiveDirectory.ProcessADManagersWithFullHierarchicalDownlines()
 		// if the promise is resolved with the docs, then respond with the docs as JSON
 		.then((result) => {
 			// eslint-disable-next-line no-console
-			// console.log('Processed Active Directory Managers W All Reports data:');
+			console.log('Processed Managers with Full Hierarchical Downlines data:');
 			// console.log(result);
 		})
 		// if the promise is rejected with an error, then respond with the error as JSON
 		.catch((error) => {
 			// eslint-disable-next-line no-console
-			console.log('ERROR - Processing Active Directory Managers W All Reports data:');
+			console.log('ERROR - Processing Managers with Full Hierarchical Downlines data:');
+			// eslint-disable-next-line no-console
+			console.log(error);
+		});
+});
+// schedule as specified in environment
+cron.schedule(process.env.adUsersWithFullFlatUplinesProcessingCronSchedule, () => {
+	nesoActiveDirectory.ProcessADUsersWithFullFlatUplines()
+		// if the promise is resolved with the docs, then respond with the docs as JSON
+		.then((result) => {
+			// eslint-disable-next-line no-console
+			// console.log('Processed Users with Full Flat Uplines data:');
+			// console.log(result);
+		})
+		// if the promise is rejected with an error, then respond with the error as JSON
+		.catch((error) => {
+			// eslint-disable-next-line no-console
+			console.log('ERROR - Processing Users with Full Flat Uplines data:');
 			// eslint-disable-next-line no-console
 			console.log(error);
 		});

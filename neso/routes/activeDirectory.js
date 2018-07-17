@@ -26,7 +26,7 @@ router.get('/depts', (req, res, next) => {
 // for GET request for /user/:userID
 router.get('/user/:userID', (req, res, next) => {
 	// get a promise to retrieve user data
-	nesoActiveDirectory.ReturnOneADUserByUserID(req.params.userID)
+	nesoActiveDirectory.ReturnOneSpecifiedUser(req.params.userID)
 		// if the promise is resolved with the docs, then respond with the docs as JSON
 		.then((result) => { res.json(result); })
 		// if the promise is rejected with an error, then respond with the error as JSON

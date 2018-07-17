@@ -21,7 +21,7 @@ module.exports = {
 		const messagesRawArrayOfArrays = messagesRaw.DATA;
 		messagesRawArrayOfArrays.forEach((quarkArray, i) => {
 			// get a promise to retrieve user data
-			nesoActiveDirectory.ReturnOneADUserByUserID(quarkArray[9])
+			nesoActiveDirectory.ReturnOneSpecifiedUser(quarkArray[9])
 				// if the promise is resolved with the docs
 				.then((result) => {
 					const hcMessage = {};
