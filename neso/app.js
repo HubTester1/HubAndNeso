@@ -149,8 +149,8 @@ https.createServer(options, app).listen(process.env.httpsPort, () => {
 app.use('/', index);
 app.use('/health', cors(nesoCORS.RequestingDomainWhitelistedForHealthAPI), health);
 app.use('/email', cors(nesoCORS.RequestingDomainWhitelistedForEmailAPI), email);
-app.use('/hrPositions', cors(nesoCORS.RequestingDomainWhitelistedForEmailAPI), hrPositions);
-app.use('/activeDirectory', cors(nesoCORS.RequestingDomainWhitelistedForEmailAPI), activeDirectory);
+app.use('/hrPositions', cors(nesoCORS.RequestingDomainWhitelistedForHRPositionsAPI), hrPositions);
+app.use('/activeDirectory', cors(nesoCORS.RequestingDomainWhitelistedForActiveDirectoryAPI), activeDirectory);
 app.use('/hcMessages', cors(nesoCORS.RequestingDomainWhitelistedForHcMessagesAPI), hcMessages);
 app.use('/hcGetItDone', cors(nesoCORS.RequestingDomainWhitelistedForHcGetItDoneAPI), hcGetItDone);
 app.use('/images', cors(nesoCORS.RequestingDomainWhitelistedForHcGetItDoneAPI), images);

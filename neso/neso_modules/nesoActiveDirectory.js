@@ -235,7 +235,7 @@ module.exports = {
 		// return a new promise
 		new Promise((resolve, reject) => {
 			// get a promise to retrieve all documents from the adDepartments document collection
-			nesoDBQueries.DeleteAllDocsFromCollection('adManagersSimple')
+			nesoDBQueries.DeleteAllDocsFromCollection('adManagersFlat')
 				// if the promise is resolved with the docs, then resolve this promise with the docs
 				.then((result) => {
 					resolve(result);
@@ -329,7 +329,7 @@ module.exports = {
 		// return a new promise
 		new Promise((resolve, reject) => {
 			// get a promise to retrieve all documents from the emailQueue document collection
-			nesoDBQueries.InsertDocIntoCollection(adManagers, 'adManagersSimple')
+			nesoDBQueries.InsertDocIntoCollection(adManagers, 'adManagersFlat')
 				// if the promise is resolved with the result, then resolve this promise with the result
 				.then((result) => {
 					resolve(result);
@@ -1686,12 +1686,13 @@ module.exports = {
 		// return a new promise
 		new Promise((resolve, reject) => {
 			// get a promise to get all ad users by division and department from the database
-			module.exports.ReturnADUsersByDivisionDepartmentData()
+			module.exports.ReturnAllUsersByDivisionDepartment()
 				// if the promise to get all ad users by division and department from the database 
 				// 		was resolved with the data
 				.then((returnADUsersByDivisionDepartmentDataResult) => {
 					// extract the data from the result
-					const adUsersByDivDept = returnADUsersByDivisionDepartmentDataResult.docs[0];
+					const adUsersByDivDept = 
+						returnADUsersByDivisionDepartmentDataResult.adUsersByDivisionDepartment[0];
 					// set up empty object to receive the new data
 					// const adDepartments = {};
 					const adDepartments = {
@@ -1728,7 +1729,7 @@ module.exports = {
 		// return a new promise
 		new Promise((resolve, reject) => {
 			// get a promise to get all ad users by division and department from the database
-			module.exports.ReturnADUsersByDivisionDepartmentData()
+			module.exports.ReturnAllUsersByDivisionDepartment()
 				// if the promise to get all ad users by division and department from the database 
 				// 		was resolved with the data
 				.then((returnADUsersByDivisionDepartmentDataResult) => {
@@ -1784,8 +1785,8 @@ module.exports = {
 			// get promises to retrieve users as division and department hierarchy object
 			// 		and as a flat array
 			Promise.all([
-				module.exports.ReturnADUsersByDivisionDepartmentData(),
-				module.exports.ReturnADUsersData(),
+				module.exports.ReturnAllUsersByDivisionDepartment(),
+				module.exports.ReturnAllUsers(),
 			])
 				// when all promises have resolved
 				.then((adUsersResults) => {
@@ -1898,8 +1899,8 @@ module.exports = {
 			// get promises to retrieve users as division and department hierarchy object
 			// 		and as a flat array
 			Promise.all([
-				module.exports.ReturnADUsersByDivisionDepartmentData(),
-				module.exports.ReturnADUsersData(),
+				module.exports.ReturnAllUsersByDivisionDepartment(),
+				module.exports.ReturnAllUsers(),
 			])
 				// when all promises have resolved
 				.then((adUsersResults) => {
@@ -2034,7 +2035,8 @@ module.exports = {
 
 	// DATA PULLS
 
-	ReturnADUsersData: () =>
+	// user
+	ReturnAllUsers: () =>
 		// return a new promise
 		new Promise((resolve, reject) => {
 			// get a promise to retrieve all documents from the adUsers document collection
@@ -2048,8 +2050,8 @@ module.exports = {
 					reject(error);
 				});
 		}),
-
-	ReturnOneSpecifiedUser: account =>
+	// user
+	ReturnOneUser: account =>
 		// return a new promise
 		new Promise((resolve, reject) => {
 			// get a promise to retrieve one specified document from the adUsers document collection
@@ -2068,25 +2070,8 @@ module.exports = {
 					reject(error);
 				});
 		}),
-
-	ReturnAllADUsersWithSpecifiedManager: mgrAccount =>
-		// return a new promise
-		new Promise((resolve, reject) => {
-			// get a promise to retrieve all documents from the adUsers document collection
-			nesoDBQueries.ReturnAllSpecifiedDocsFromCollection('adUsers', {
-				manager: mgrAccount,
-			}, {})
-				// if the promise is resolved with the docs, then resolve this promise with the docs
-				.then((result) => {
-					resolve(result);
-				})
-				// if the promise is rejected with an error, then reject this promise with an error
-				.catch((error) => {
-					reject(error);
-				});
-		}),
-
-	ReturnADUsersByDivisionDepartmentData: () =>
+	// divisions, departments, users
+	ReturnAllUsersByDivisionDepartment: () =>
 		// return a new promise
 		new Promise((resolve, reject) => {
 			// get a promise to retrieve all documents from the adUsers document collection
@@ -2103,8 +2088,8 @@ module.exports = {
 					reject(error);
 				});
 		}),
-
-	ReturnADDepartments: () =>
+	// departments
+	ReturnAllDepartments: () =>
 		// return a new promise
 		new Promise((resolve, reject) => {
 			// get a promise to retrieve all documents from the adUsers document collection
@@ -2118,25 +2103,100 @@ module.exports = {
 					reject(error);
 				});
 		}),
-
-	ReturnAllADManagersSimple: () => 
+	// managers
+	ReturnAllADManagersFlat: () =>
 		// return a new promise
 		new Promise((resolve, reject) => {
-			// get a promise to retrieve all documents from the adManagersSimple document collection
-			nesoDBQueries.ReturnAllDocsFromCollection('adManagersSimple')
+			// get a promise to retrieve all documents from the adManagersFlat document collection
+			nesoDBQueries.ReturnAllDocsFromCollection('adManagersFlat')
 				// if the promise is resolved with the docs, then resolve this promise with the docs
 				.then((result) => { resolve(result); })
 				// if the promise is rejected with an error, then reject this promise with an error
 				.catch((error) => { reject(error); });
 		}),
-
-	ReturnFullFlatUplineForOneUser: userAccount =>
+	// downline, upline
+	ReturnDirectReportsForOneManager: mgrAccount =>
+		// return a new promise
+		new Promise((resolve, reject) => {
+			// get a promise to retrieve all documents from the adUsers document collection
+			nesoDBQueries.ReturnAllSpecifiedDocsFromCollection('adUsers', {
+				manager: mgrAccount,
+			}, {})
+				// if the promise is resolved with the docs, then resolve this promise with the docs
+				.then((result) => {
+					resolve(result);
+				})
+				// if the promise is rejected with an error, then reject this promise with an error
+				.catch((error) => {
+					reject(error);
+				});
+		}),
+	// downline, upline
+	ReturnAllManagersWithFlatDownline: () =>
+		// return a new promise
+		new Promise((resolve, reject) => {
+			// get a promise to retrieve all documents from the 
+			// 		adManagersWithFullFlatDownlines document collection
+			nesoDBQueries.ReturnAllDocsFromCollection('adManagersWithFullFlatDownlines')
+				// if the promise is resolved with the docs, then resolve this promise with the docs
+				.then((result) => { resolve(result); })
+				// if the promise is rejected with an error, then reject this promise with an error
+				.catch((error) => { reject(error); });
+		}),
+	// downline, upline
+	ReturnAllManagersWithHierarchicalDownline: () =>
+		// return a new promise
+		new Promise((resolve, reject) => {
+			// get a promise to retrieve all documents from the 
+			// 		adManagersWithFullFlatDownlines document collection
+			nesoDBQueries.ReturnAllDocsFromCollection('adManagersWithFullHierarchicalDownlines')
+				// if the promise is resolved with the docs, then resolve this promise with the docs
+				.then((result) => { resolve(result); })
+				// if the promise is rejected with an error, then reject this promise with an error
+				.catch((error) => { reject(error); });
+		}),
+	// downline, upline
+	ReturnOneManagerWithFlatDownline: mgrAccount =>
+		// return a new promise
+		new Promise((resolve, reject) => {
+			// get a promise to retrieve all documents from the adUsers document collection
+			nesoDBQueries.ReturnAllSpecifiedDocsFromCollection('adManagersWithFullFlatDownlines', {
+				account: mgrAccount,
+			}, {})
+				// if the promise is resolved with the docs, then resolve this promise with the docs
+				.then((result) => {
+					resolve(result);
+				})
+				// if the promise is rejected with an error, then reject this promise with an error
+				.catch((error) => {
+					reject(error);
+				});
+		}),
+	// downline, upline
+	ReturnOneManagerWithWithHierarchicalDownline: mgrAccount =>
+		// return a new promise
+		new Promise((resolve, reject) => {
+			// get a promise to retrieve all documents from the adUsers document collection
+			nesoDBQueries.ReturnAllSpecifiedDocsFromCollection('adManagersWithFullHierarchicalDownlines', {
+				account: mgrAccount,
+			}, {})
+				// if the promise is resolved with the docs, then resolve this promise with the docs
+				.then((result) => {
+					resolve(result);
+				})
+				// if the promise is rejected with an error, then reject this promise with an error
+				.catch((error) => {
+					reject(error);
+				});
+		}),
+	// downline, upline
+	ReturnFullFlatUplineForOneUser: account =>
 		// return a new promise
 		new Promise((resolve, reject) => {
 			// get a promise to get the user's manager, her manger, and so on, using a graph lookup
 			nesoDBConnection.get('adUsers')
 				.aggregate([
-					{ $match: { account: userAccount } },
+					{ $match: { account } },
 					{
 						$graphLookup: {
 							from: 'adUsers',
@@ -2159,5 +2219,4 @@ module.exports = {
 					reject(error);
 				});
 		}),
-
 };

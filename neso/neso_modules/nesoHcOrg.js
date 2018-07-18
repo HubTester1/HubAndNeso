@@ -167,7 +167,7 @@ module.exports = {
 	ConstructAndReturnDivDeptsWTeams: () =>
 		new Promise(((resolve, reject) => {
 			const queries = [
-				nesoActiveDirectory.ReturnADUsersByDivisionDepartmentData(),
+				nesoActiveDirectory.ReturnAllUsersByDivisionDepartment(),
 				module.exports.ReturnAllTeams(),
 			];
 			Promise.all(queries)

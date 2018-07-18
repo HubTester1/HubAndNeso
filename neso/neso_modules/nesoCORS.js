@@ -21,7 +21,9 @@ module.exports = {
 			.then((setting) => { 
 				// set options by passing requesting domain and domains whitelisted for
 				// 		the health APT to RequestingDomainInSpecifiedWhitelist
-				const corsOptions = module.exports.RequestingDomainInSpecifiedWhitelist(req.header('Origin'), setting.whitelistedDomains);
+				const corsOptions =
+					module.exports
+						.RequestingDomainInSpecifiedWhitelist(req.header('Origin'), setting.whitelistedDomains);
 				// pass options to callback in the CORS node module so that it can do its business
 				// callback expects two parameters: error and options
 				callback(null, corsOptions);
@@ -38,7 +40,9 @@ module.exports = {
 			.then((setting) => { 
 				// set options by passing requesting domain and domains whitelisted for
 				// 		the health APT to RequestingDomainInSpecifiedWhitelist
-				const corsOptions = module.exports.RequestingDomainInSpecifiedWhitelist(req.header('Origin'), setting.whitelistedDomains);
+				const corsOptions =
+					module.exports
+						.RequestingDomainInSpecifiedWhitelist(req.header('Origin'), setting.whitelistedDomains);
 				// pass options to callback in the CORS node module so that it can do its business
 				// callback expects two parameters: error and options
 				callback(null, corsOptions);
@@ -55,7 +59,9 @@ module.exports = {
 			.then((setting) => {
 				// set options by passing requesting domain and domains whitelisted for
 				// 		the health APT to RequestingDomainInSpecifiedWhitelist
-				const corsOptions = module.exports.RequestingDomainInSpecifiedWhitelist(req.header('Origin'), setting.whitelistedDomains);
+				const corsOptions =
+					module.exports
+						.RequestingDomainInSpecifiedWhitelist(req.header('Origin'), setting.whitelistedDomains);
 				// pass options to callback in the CORS node module so that it can do its business
 				// callback expects two parameters: error and options
 				callback(null, corsOptions);
@@ -72,7 +78,9 @@ module.exports = {
 			.then((setting) => {
 				// set options by passing requesting domain and domains whitelisted for
 				// 		the health APT to RequestingDomainInSpecifiedWhitelist
-				const corsOptions = module.exports.RequestingDomainInSpecifiedWhitelist(req.header('Origin'), setting.whitelistedDomains);
+				const corsOptions =
+					module.exports
+						.RequestingDomainInSpecifiedWhitelist(req.header('Origin'), setting.whitelistedDomains);
 				// pass options to callback in the CORS node module so that it can do its business
 				// callback expects two parameters: error and options
 				callback(null, corsOptions);
@@ -87,11 +95,11 @@ module.exports = {
 		nesoEmail.ReturnEmailWhitelistedDomains()
 			// if the promise is resolved with the setting, then
 			.then((setting) => { 
-				console.log("req.header('Origin')");
-				console.log(req.header('Origin'));
 				// set options by passing requesting domain and domains whitelisted for the email 
 				// 		APT to RequestingDomainInSpecifiedWhitelist
-				const corsOptions = module.exports.RequestingDomainInSpecifiedWhitelist(req.header('Origin'), setting.whitelistedDomains);
+				const corsOptions =
+					module.exports
+						.RequestingDomainInSpecifiedWhitelist(req.header('Origin'), setting.whitelistedDomains);
 				// pass options to callback in the CORS node module so that it can do its business
 				// callback expects two parameters: error and options
 				callback(null, corsOptions);
@@ -109,7 +117,9 @@ module.exports = {
 			.then((setting) => { 
 				// set options by passing requesting domain and domains whitelisted for the 
 				// 		hr positions APT to RequestingDomainInSpecifiedWhitelist
-				const corsOptions = module.exports.RequestingDomainInSpecifiedWhitelist(req.header('Origin'), setting.whitelistedDomains);
+				const corsOptions =
+					module.exports
+						.RequestingDomainInSpecifiedWhitelist(req.header('Origin'), setting.whitelistedDomains);
 				// pass options to callback in the CORS node module so that it can do its business
 				// callback expects two parameters: error and options
 				callback(null, corsOptions);
@@ -121,12 +131,14 @@ module.exports = {
 
 	RequestingDomainWhitelistedForActiveDirectoryAPI: (req, callback) => {
 		// get a promise to retrieve from the db the array of domains whitelisted for the ad users API
-		nesoActiveDirectory.ReturnActiveDirectoryWhitelistedDomains()
+		nesoActiveDirectory.ReturnADWhitelistedDomains()
 			// if the promise is resolved with the setting, then
-			.then((setting) => { 
+			.then((setting) => {
 				// set options by passing requesting domain and domains whitelisted for 
 				// 		the ad users APT to RequestingDomainInSpecifiedWhitelist
-				const corsOptions = module.exports.RequestingDomainInSpecifiedWhitelist(req.header('Origin'), setting.whitelistedDomains);
+				const corsOptions = 
+					module.exports
+						.RequestingDomainInSpecifiedWhitelist(req.header('Origin'), setting.whitelistedDomains);
 				// pass options to callback in the CORS node module so that it can do its business
 				// callback expects two parameters: error and options
 				callback(null, corsOptions);
@@ -144,7 +156,9 @@ module.exports = {
 			.then((setting) => {
 				// set options by passing requesting domain and domains whitelisted for
 				// 		the health APT to RequestingDomainInSpecifiedWhitelist
-				const corsOptions = module.exports.RequestingDomainInSpecifiedWhitelist(req.header('Origin'), setting.whitelistedDomains);
+				const corsOptions =
+					module.exports
+						.RequestingDomainInSpecifiedWhitelist(req.header('Origin'), setting.whitelistedDomains);
 				// pass options to callback in the CORS node module so that it can do its business
 				// callback expects two parameters: error and options
 				callback(null, corsOptions);
