@@ -1745,21 +1745,24 @@ module.exports = {
 							// iterate over the array of this division object's property keys; 
 							// 		these happen to be department names
 							Object.keys(adUsersByDivDept[adDivisionKey]).forEach((departmentKey) => {
-								adUsersByDivDept[adDivisionKey][departmentKey].managers
-									.forEach((managerProfile) => {
-										let thisManagerAlreadyAdded = false;
-										adManagers.forEach((addedManagerProfile) => {
-											if (
-												managerProfile && managerProfile.account ===
-												addedManagerProfile.account
-											) {
-												thisManagerAlreadyAdded = true;
+								// if this department has managers
+								if (adUsersByDivDept[adDivisionKey][departmentKey].managers) {
+									adUsersByDivDept[adDivisionKey][departmentKey].managers
+										.forEach((managerProfile) => {
+											let thisManagerAlreadyAdded = false;
+											adManagers.forEach((addedManagerProfile) => {
+												if (
+													managerProfile && managerProfile.account ===
+													addedManagerProfile.account
+												) {
+													thisManagerAlreadyAdded = true;
+												}
+											});
+											if (!thisManagerAlreadyAdded) {
+												adManagers.push(managerProfile);
 											}
 										});
-										if (!thisManagerAlreadyAdded) {
-											adManagers.push(managerProfile);
-										}
-									});
+								}
 							});
 						}
 					});
