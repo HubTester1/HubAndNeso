@@ -20222,57 +20222,93 @@
 		$('input#' + fieldID).val(numeral(parseFloat(numeralString) * .01).format('0.00%'));
 	};
 
+	$.fn.ReturnManagers = function () {
+		// return a promise to return the managers
+		return new Promise(function (resolve, reject) {
+			// query the api for the data
+			$.ajax({
+				async: false,
+				method: "GET",
+				dataType: "json",
+				url: "https://neso.mos.org/activeDirectory/managers?ts=" + Date.now(),
+			})
+				.done(function (nesoData) {
+					console.log("nesoData:");
+					console.log(nesoData);
+					resolve(hubData);
+				})
+				.fail(function (error) {
+					console.log("no such luck - NESO");
+					console.log(error);
+					reject(error);
+					return deferred.promise();
+				});
+		});
+	};
+
+
+	$.fn.ReturnGSEGroupsFromSP = function {
+		// return a promise to return the managers
+		return new Promise(function (resolve, reject) {
+			// get the config data stored as AllRequestData in /sites/hr-service-config/Lists/SWFList
+			var allRequestDataObject = $().GetFieldsFromOneRow({
+				"listName": "SWFList",
+				"webURL": "https://bmos.sharepoint.com/sites/hr-service-config",
+				"select": [{
+					"nameHere": "formData",
+					"nameInList": "AllRequestData"
+				}],
+				"where": {
+					"field": "ID",
+					"type": "Number",
+					"value": 1,
+				}
+			});
+
+			// specify the 'form fields' data to extract from allRequestDataObject
+			var gseGroupsKeys = [
+				'HR-Admins',
+				'Job-Admins'
+			];
+
+			// set up var
+			var gseGroups = {};
+
+			// iterate over the form data keys and values
+			$.each(allRequestDataObject.formData, function (formDatumKey, formDatumValue) {
+				// if this form datum value is a person
+				if (formDatumValue != "") {
+					// if this form datum key matches an element of gseGroupsKeys
+					if (gseGroupsKeys.indexOf(formDatumKey) > -1) {
+						// get a new key (for future ease; prefer dot notation)
+						var newKey = ReplaceAll("-", "", formDatumKey);
+						// create an empty array using the new key
+						gseGroups[newKey] = [];
+						// for each person object in this formDatumValue
+						$.each(formDatumValue, function (i, person) {
+							// add the person's name and email to the new array
+							var newPerson = {};
+							newPerson['name'] = person.displayText;
+							newPerson['email'] = person.description;
+							newPerson['account'] = ReplaceAll("@mos.org", "", person.description.toLowerCase());
+							newPerson['accountLong'] = person.account.toLowerCase();
+							gseGroups[newKey].push(newPerson);
+						});
+					}
+				}
+			});
+
+			// resolve with the data
+			resolve(gseGroups);
+		});
+	};
+
+
 
 
 	$.fn.ReturnGSEGroups = function () {
 
-		// get the config data stored as AllRequestData in /sites/hr-service-config/Lists/SWFList
-		var allRequestDataObject = $().GetFieldsFromOneRow({
-			"listName": "SWFList",
-			"webURL": "https://bmos.sharepoint.com/sites/hr-service-config",
-			"select": [{
-				"nameHere": "formData",
-				"nameInList": "AllRequestData"
-			}],
-			"where": {
-				"field": "ID",
-				"type": "Number",
-				"value": 1,
-			}
-		});
 
-		// specify the 'form fields' data to extract from allRequestDataObject
-		var gseGroupsKeys = [
-			'HR-Admins',
-			'Job-Admins'
-		];
-
-		// set up var
-		var gseGroups = {};
-
-		// iterate over the form data keys and values
-		$.each(allRequestDataObject.formData, function (formDatumKey, formDatumValue) {
-			// if this form datum value is a person
-			if (formDatumValue != "") {
-				// if this form datum key matches an element of gseGroupsKeys
-				if (gseGroupsKeys.indexOf(formDatumKey) > -1) {
-					// get a new key (for future ease; prefer dot notation)
-					var newKey = ReplaceAll("-", "", formDatumKey);
-					// create an empty array using the new key
-					gseGroups[newKey] = [];
-					// for each person object in this formDatumValue
-					$.each(formDatumValue, function (i, person) {
-						// add the person's name and email to the new array
-						var newPerson = {};
-						newPerson['name'] = person.displayText;
-						newPerson['email'] = person.description;
-						newPerson['account'] = ReplaceAll("@mos.org", "", person.description.toLowerCase());
-						newPerson['accountLong'] = person.account.toLowerCase();
-						gseGroups[newKey].push(newPerson);
-					});
-				}
-			}
-		});
 
 		// send to caller
 		return gseGroups;
