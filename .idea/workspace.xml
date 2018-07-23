@@ -1,0 +1,483 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="730993f0-d452-4efd-9cbd-f8f04d9758eb" name="Default Changelist" comment="" />
+    <ignored path="$PROJECT_DIR$/.tmp/" />
+    <ignored path="$PROJECT_DIR$/temp/" />
+    <ignored path="$PROJECT_DIR$/tmp/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FUSProjectUsageTrigger">
+    <session id="1151827743">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.closed" value="4" />
+          <entry key="project.open.time.2" value="1" />
+          <entry key="project.open.time.4" value="1" />
+          <entry key="project.open.time.5" value="1" />
+          <entry key="project.open.time.6" value="1" />
+          <entry key="project.opened" value="4" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="env" value="1" />
+          <entry key="eslintignore" value="2" />
+          <entry key="gitignore" value="1" />
+          <entry key="js" value="10" />
+          <entry key="json" value="2" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="JSON" value="2" />
+          <entry key="JavaScript" value="10" />
+          <entry key="PLAIN_TEXT" value="4" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.js.language.service.starts">
+        <counts>
+          <entry key="ESLintLanguageService" value="3" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="eslintignore" value="15" />
+          <entry key="js" value="412" />
+          <entry key="txt" value="9" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="JavaScript" value="412" />
+          <entry key="PLAIN_TEXT" value="24" />
+        </counts>
+      </usages-collector>
+    </session>
+  </component>
+  <component name="FileEditorManager">
+    <splitter split-orientation="vertical" split-proportion="0.9">
+      <split-first>
+        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/hub.1.0.4/swf/hr-service-config/settings.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="4180">
+                  <caret line="220" selection-start-line="220" selection-end-line="220" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/hub.1.0.4/js/dev_mos-main_long.1.04.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="-456">
+                  <caret line="20249" column="30" selection-start-line="20249" selection-start-column="9" selection-end-line="20249" selection-end-column="30" />
+                  <folding>
+                    <element signature="n#!!doc" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/.eslintignore">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="57">
+                  <caret line="3" column="13" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-first>
+      <split-second>
+        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/hub.1.0.4/js/dev_mos-main_long.1.04.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="6">
+                  <caret line="21825" column="80" selection-start-line="21825" selection-start-column="52" selection-end-line="21825" selection-end-column="80" />
+                  <folding>
+                    <element signature="n#!!doc" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-second>
+    </splitter>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>returngsegr</find>
+      <find>neso</find>
+      <find>returngsegroups</find>
+      <find>when</find>
+      <find>$.when.apply</find>
+      <find>GetAndSetMaintenanceModeData</find>
+    </findStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/hub.1.0.4/swf/hrp-service-jobs/settings.js" />
+        <option value="$PROJECT_DIR$/gulpfile.js" />
+        <option value="$PROJECT_DIR$/.env" />
+        <option value="$PROJECT_DIR$/.eslintignore" />
+        <option value="$PROJECT_DIR$/hub.1.0.4/js/dev_mos-main_long.1.04.js" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER">
+    <package-json value="$PROJECT_DIR$/package.json" />
+  </component>
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <gulpfiles>
+      <GulpfileState>
+        <gulpfile-path>$PROJECT_DIR$/gulpfile.js</gulpfile-path>
+        <tasks>
+          <GulpTaskState>
+            <task-name>push-settings</task-name>
+          </GulpTaskState>
+          <GulpTaskState>
+            <task-name>watch-push-settings</task-name>
+          </GulpTaskState>
+          <GulpTaskState>
+            <task-name>push-importer</task-name>
+          </GulpTaskState>
+          <GulpTaskState>
+            <task-name>watch-push-importer</task-name>
+          </GulpTaskState>
+          <GulpTaskState>
+            <task-name>4-dev-build-styles</task-name>
+          </GulpTaskState>
+          <GulpTaskState>
+            <task-name>4-dev-push-styles</task-name>
+          </GulpTaskState>
+          <GulpTaskState>
+            <task-name>4-dev-build-push-styles</task-name>
+          </GulpTaskState>
+          <GulpTaskState>
+            <task-name>4-dev-watch-build-push-styles</task-name>
+          </GulpTaskState>
+          <GulpTaskState>
+            <task-name>4-dev-push-api</task-name>
+          </GulpTaskState>
+          <GulpTaskState>
+            <task-name>4-dev-wait-push-api</task-name>
+          </GulpTaskState>
+          <GulpTaskState>
+            <task-name>4-dev-watch-push-api</task-name>
+          </GulpTaskState>
+          <GulpTaskState>
+            <task-name>4-prod-build-styles</task-name>
+          </GulpTaskState>
+          <GulpTaskState>
+            <task-name>4-prod-push-styles</task-name>
+          </GulpTaskState>
+          <GulpTaskState>
+            <task-name>4-prod-build-push-styles</task-name>
+          </GulpTaskState>
+          <GulpTaskState>
+            <task-name>4-prod-watch-build-push-styles</task-name>
+          </GulpTaskState>
+          <GulpTaskState>
+            <task-name>4-prod-push-api</task-name>
+          </GulpTaskState>
+          <GulpTaskState>
+            <task-name>4-prod-wait-push-api</task-name>
+          </GulpTaskState>
+          <GulpTaskState>
+            <task-name>4-prod-watch-push-api</task-name>
+          </GulpTaskState>
+          <GulpTaskState>
+            <task-name>5-dev-build</task-name>
+          </GulpTaskState>
+          <GulpTaskState>
+            <task-name>5-dev-push</task-name>
+          </GulpTaskState>
+          <GulpTaskState>
+            <task-name>5-dev-build-push</task-name>
+          </GulpTaskState>
+          <GulpTaskState>
+            <task-name>5-dev-watch-build-push</task-name>
+          </GulpTaskState>
+          <GulpTaskState>
+            <task-name>5-prod-push-all</task-name>
+          </GulpTaskState>
+          <GulpTaskState>
+            <task-name>5-prod-push-js</task-name>
+          </GulpTaskState>
+          <GulpTaskState>
+            <task-name>5-prod-push-styles</task-name>
+          </GulpTaskState>
+          <GulpTaskState>
+            <task-name>5-prod-push-app-js</task-name>
+          </GulpTaskState>
+          <GulpTaskState>
+            <task-name>5-prod-push-app-all</task-name>
+          </GulpTaskState>
+        </tasks>
+      </GulpfileState>
+    </gulpfiles>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="NodeModulesDirectoryManager">
+    <handled-path value="$PROJECT_DIR$/node_modules" />
+  </component>
+  <component name="NodePackageJsonFileManager">
+    <packageJsonPaths>
+      <path value="$PROJECT_DIR$/package.json" />
+    </packageJsonPaths>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="1806" />
+    <option name="y" value="30" />
+    <option name="width" value="1390" />
+    <option name="height" value="1004" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="HubAndNeso" type="b2602c69:ProjectViewProjectNode" />
+              <item name="HubAndNeso" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="HubAndNeso" type="b2602c69:ProjectViewProjectNode" />
+              <item name="HubAndNeso" type="462c0819:PsiDirectoryNode" />
+              <item name="hub.1.0.4" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="HubAndNeso" type="b2602c69:ProjectViewProjectNode" />
+              <item name="HubAndNeso" type="462c0819:PsiDirectoryNode" />
+              <item name="neso" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="js.buildTools.gulp.gulp_package_dir" value="$PROJECT_DIR$/node_modules/gulp" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../sbDash" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="$PROJECT_DIR$/node_modules/eslint" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="preferences.general" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <gulpfile />
+      <tasks />
+      <arguments />
+      <envs />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="730993f0-d452-4efd-9cbd-f8f04d9758eb" name="Default Changelist" comment="" />
+      <created>1532351437755</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1532351437755</updated>
+      <workItem from="1532351439389" duration="6968000" />
+      <workItem from="1532359877796" duration="3747000" />
+      <workItem from="1532364031521" duration="1678000" />
+      <workItem from="1532365737831" duration="403000" />
+    </task>
+    <task id="LOCAL-00001" summary="Dev phase">
+      <created>1532357212656</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1532357212656</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Dev phase">
+      <created>1532366049565</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1532366049566</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Dev phase">
+      <created>1532366123483</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1532366123483</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="12796000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="1920" y="0" width="1920" height="1038" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.7542017" visible="true" weight="0.17994723" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Gulp" order="2" sideWeight="0.24579832" side_tool="true" visible="true" weight="0.17994723" />
+      <window_info id="npm" order="3" side_tool="true" />
+      <window_info id="Favorites" order="4" side_tool="true" />
+      <window_info anchor="bottom" id="Messages" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32983193" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="8" weight="0.3487395" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.50026387" side_tool="true" weight="0.32983193" />
+      <window_info anchor="bottom" id="Terminal" order="10" sideWeight="0.49973616" weight="0.31932774" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="RECENTLY_FILTERED_USER_GROUPS">
+                <collection />
+              </option>
+              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+                <collection />
+              </option>
+              <option name="COLUMN_ORDER">
+                <list>
+                  <option value="0" />
+                  <option value="1" />
+                  <option value="2" />
+                  <option value="3" />
+                </list>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_NEW_TODO" value="false" />
+    <option name="LOCAL_CHANGES_DETAILS_PREVIEW_SHOWN" value="true" />
+    <MESSAGE value="Dev phase" />
+    <option name="LAST_COMMIT_MESSAGE" value="Dev phase" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/hub.1.0.4/swf/hr-service-jobs/settings.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="486">
+          <caret line="679" column="11" lean-forward="true" selection-start-line="679" selection-start-column="11" selection-end-line="679" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-969" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.env">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="4" column="24" selection-start-line="4" selection-start-column="24" selection-end-line="4" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gulpfile.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hub.1.0.4/swf/hrp-service-jobs/settings.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="659" column="4" selection-start-line="659" selection-start-column="4" selection-end-line="659" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gulp/base.config.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hub.1.0.4/swf/hr-service-config/settings.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4180">
+          <caret line="220" selection-start-line="220" selection-end-line="220" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.eslintignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="57">
+          <caret line="3" column="13" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hub.1.0.4/js/dev_mos-main_long.1.04.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-456">
+          <caret line="20249" column="30" selection-start-line="20249" selection-start-column="9" selection-end-line="20249" selection-end-column="30" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>
