@@ -2796,6 +2796,12 @@ div#s4-workspace div#app-container.event-av div#container_command-bar {
 div#s4-workspace div#app-container.event-av div#container_date-filter-controls {
   padding: 1.5rem 1.5rem 0 0;
   font-weight: 600; }
+  div#s4-workspace div#app-container.event-av div#container_date-filter-controls div#date-filter-controls-notice {
+    max-width: 75%;
+    font-size: 1.3rem;
+    font-style: italic;
+    font-weight: normal;
+    margin-bottom: 1rem; }
   div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control {
     padding: 0 0 1.5rem 1.5rem; }
     div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control label.date-selector-label {

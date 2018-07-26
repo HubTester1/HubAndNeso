@@ -377,8 +377,16 @@
 				break;
 			case "newRequest":
 			case "existingRequest":
-				if (typeof (mData.detailTitle) != "undefined") {
-					newTitle = mData.detailTitle;
+				if (mData.detailTitle) {
+					mData.detailTitle.forEach(function (detailTitleObject) {
+						detailTitleObject.roles.forEach(function (titleRole) {
+							uData.roles.forEach(function (userRole) {
+								if (userRole == titleRole) {
+									newTitle = detailTitleObject.title
+								}
+							});
+						});
+					});
 				} else {
 					newTitle = mData.requestName + " Request";
 				}
@@ -763,7 +771,30 @@
 
 			setTimeout(function () {
 				// refresh data, as needed, and show overview screen
-				if (options.toScreen === "adminRequests" || options.toScreen === "myRequests") {
+				var overviewScreens = [
+					"adminRequests",
+					"myRequests",
+					"gpcInitialConceptApprovalViewer",
+					"gpcSubmissionApprovalViewer",
+					"adminReferrals",
+					"myReferrals",
+					"adminEventAV",
+					"gseJobsHRAdmin",
+					"gseJobsJobAdmin",
+					"gseJobsManager",
+					"gseSchedulesCalendarHRAdmin",
+					"gseSchedulesCalendarJobAdmin",
+					"gseSchedulesCalendarManager",
+					"gseSchedulesCalendarStaff",
+					"gseSchedulesListHRAdmin",
+					"gseSchedulesListJobAdmin",
+					"gseSchedulesListManager",
+					"gseSchedulesListStaff",
+					"gseSignupsHRAdmin",
+					"gseSignupsManager",
+					"gseSignupsStaff",
+				];
+				if (overviewScreens.indexOf(options.toScreen) > -1) {
 
 					// check to see if we need to stop for maintenance mode
 					$().TryMaintenanceModeThisComponentThisUser();
@@ -870,7 +901,26 @@
 				break;
 			case "adminRequests":
 			case "myRequests":
-				$("div#overview-screen-container").empty().removeClass('my-requests admin-requests');
+			case "gpcInitialConceptApprovalViewer":
+			case "gpcSubmissionApprovalViewer":
+			case "adminReferrals":
+			case "myReferrals":
+			case "adminEventAV":
+			case "gseJobsHRAdmin":
+			case "gseJobsJobAdmin":
+			case "gseJobsManager":
+			case "gseSchedulesCalendarHRAdmin":
+			case "gseSchedulesCalendarJobAdmin":
+			case "gseSchedulesCalendarManager":
+			case "gseSchedulesCalendarStaff":
+			case "gseSchedulesListHRAdmin":
+			case "gseSchedulesListJobAdmin":
+			case "gseSchedulesListManager":
+			case "gseSchedulesListStaff":
+			case "gseSignupsHRAdmin":
+			case "gseSignupsManager":
+			case "gseSignupsStaff":
+				$("div#overview-screen-container").empty().removeClass('adminRequests-requests myRequests-requests gpcInitialConceptApprovalViewer-requests gpcSubmissionApprovalViewer-requests adminReferrals-requests myReferrals-requests adminEventAV-requests gseJobsHRAdmin-requests gseJobsJobAdmin-requests gseJobsManager-requests gseSchedulesCalendarHRAdmin-requests gseSchedulesCalendarJobAdmin-requests gseSchedulesCalendarManager-requests gseSchedulesCalendarStaff-requests gseSchedulesListHRAdmin-requests gseSchedulesListJobAdmin-requests gseSchedulesListManager-requests gseSchedulesListStaff-requests gseSignupsHRAdmin-requests gseSignupsManager-requests gseSignupsStaff-requests');
 				$("div#overview-screen-container").append('<div id="overview-table-container" class="table-container"></div>');
 				break;
 		}
@@ -923,12 +973,12 @@
 			overviewScreen = uData.alternateOverviewScreen;
 		}
 
-		// if the URL contains a request ID (r) and it is 0
-		if (rData.requestID != "" && rData.requestID == 0) {
+		// if the URL contains a request ID (r) and it is 0 and the URL does NOT contain a GSE Schedule ID
+		if (rData.requestID != "" && rData.requestID == 0 && rData.gseScheduleID == "") {
 			initialScreen = "newRequest";
 			secondaryScreen = overviewScreen;
-			// if the URL contains a request ID (r) and it is greater than 0
-		} else if (rData.requestID != "" && rData.requestID > 0) {
+			// if the URL contains a request ID (r) greater than 0 -OR- the URL contains a GSE Schedule ID (gseScheduleID) greater than 0
+		} else if ((rData.requestID != "" && rData.requestID > 0) || (rData.gseScheduleID != "" && rData.gseScheduleID > 0)) {
 			initialScreen = "existingRequest";
 			secondaryScreen = overviewScreen;
 			// if the URL does not contain a request ID (r)
@@ -1066,6 +1116,12 @@
 			$().ProcessSubmission();
 		});
 
+		// on clicking Signup; no screen transition happening here
+		$("div#request-screen-container").on("click", "a[data-button-type='gse-schedule-signup']", function () {
+			// Process GSE Signup
+			$().ProcessGSESignup();
+		});
+
 		// on clicking Dismiss; no screen transition happening here
 		$("div#overlays-screen-container").on("click", "a[data-button-type='dismiss']", function () {
 			$('div#overlays-screen-container').fadeOut(200);
@@ -1180,6 +1236,96 @@
 		}
 	};
 
+
+
+	$.fn.GetFieldsFromSpecifiedRows = function (options) {
+
+		var returnValue = [];
+
+		var opt = $.extend({}, {
+			listName: "SWFList",
+			webURL: "https://bmos.sharepoint.com" + _spPageContextInfo.webServerRelativeUrl,
+			completefunc: null
+		}, options);
+
+		// if listname is component log or component group log and no webURL was supplied
+		if ((opt.listName === 'ComponentLog' || opt.listName === 'Component Group Log') && typeof (options.webURL) === 'undefined') {
+			// assume HubProd
+			opt.webURL = 'https://bmos.sharepoint.com/sites/hubprod';
+		}
+
+
+		var query = "<Query>" +
+			"<Where>";
+		if (opt.where.ands) { query += "<And>"; }
+		// curently assumes there are no more than two ands
+		$.each(opt.where.ands, function (i, andObject) {
+			query += "<Eq>" +
+				"<FieldRef Name='" + andObject.field + "'></FieldRef>" +
+				"<Value Type='" + andObject.type + "'>" + andObject.value + "</Value>" +
+				"</Eq>";
+		});
+
+		if (opt.where.ands) { query += "</And>"; }
+		query += "</Where>" +
+			"</Query>";
+
+		var fields = "<ViewFields>";
+		$.each(opt.select, function (i, oneField) {
+			fields += " <FieldRef Name='" + oneField.nameInList + "' />";
+		});
+		fields += "</ViewFields>";
+
+		$().SPServices({
+			operation: "GetListItems",
+			async: false,
+			webURL: opt.webURL,
+			listName: opt.listName,
+			CAMLViewFields: fields,
+			CAMLQuery: query,
+			CAMLQueryOptions: "<QueryOptions><ExpandUserField>TRUE</ExpandUserField></QueryOptions>",
+			completefunc: function (xData, Status) {
+				$(xData.responseXML).SPFilterNode("z:row").each(function () {
+					var zRow = $(this);
+					var returnRow = {};
+
+					$.each(opt.select, function (i, oneField) {
+
+						if (oneField.nameHere === "formData") {
+
+							var value = $(zRow).attr("ows_" + oneField.nameInList);
+
+							var regexOne = new RegExp("\r", "g");
+							var regexTwo = new RegExp("\n", "g");
+							value = value.replace(regexOne, "'");
+							value = value.replace(regexTwo, "'");
+
+							eval("var formDataObj=" + value);
+
+							returnRow[oneField.nameHere] = formDataObj;
+
+						} else {
+
+							value = $(zRow).attr("ows_" + oneField.nameInList);
+
+							if (typeof (oneField.linkField) != "undefined") {
+								if (oneField.linkField === 1) {
+									value = value.split(",")[0];
+								}
+							}
+
+							returnRow[oneField.nameHere] = value;
+						}
+
+					});
+
+					returnValue.push(returnRow);
+				});
+			}
+		});
+
+		return returnValue;
+	};
 
 
 
@@ -1312,7 +1458,13 @@
 
 					$.each(opt.select, function (i, oneField) {
 
-						if (oneField.nameHere === "formData" || oneField.nameHere === "defaultDataForNewRequests") {
+						if (
+							oneField.nameHere === "formData" ||
+							oneField.nameHere === "defaultDataForNewRequests" ||
+							oneField.nameHere === "gseJobData" ||
+							oneField.nameHere === "gseScheduleData"
+						) {
+							console.log('found field to interpret');
 
 							var value = $(zRow).attr("ows_" + oneField.nameInList);
 
@@ -1396,7 +1548,12 @@
 
 					$.each(opt.select, function (i, oneField) {
 
-						if (oneField.nameHere === "formData" || oneField.nameHere === "defaultDataForNewRequests") {
+						if (
+							oneField.nameHere === "formData" ||
+							oneField.nameHere === "defaultDataForNewRequests" ||
+							oneField.nameHere === "gseJobData" ||
+							oneField.nameHere === "gseScheduleData"
+						) {
 
 							var value = $(zRow).attr("ows_" + oneField.nameInList);
 
@@ -2026,17 +2183,305 @@
 	// ---- MOST FREQUENTLY NEEDED
 
 
-	$.fn.ConfigureExistingGSESchedule = function (passedScheduleID) {
-		/*
-			scorey: here, 
-			 ** query SWFList, build screen 3.1, insert it into the container, listen for the signup button to be clicked, and start trying maintenance mode
-			 ** look at ConfigureRequest for examples of querying SWFList, instering into the container, listening for button clicks, and trying for maintenance mode
-			 ** in terms of markup / appearance, probably best to model the signup button on the Save button, rather than the buttons at the top of the overview screens
-			 ** clicking the cignup button should either trigger ProcessSubmission function (and that function will need to be modified to create a signup) or a different function
-		*/
-		$("div#request-screen-container").append("<p>This is 3.1 Signup Opportunity for User.</p>");
+	/* 
+		$.fn.GetJobValues = function (jobId) {
+			// reconsider
+			var options = {
+				"select": [{
+					"nameHere": "formData",
+					"nameInList": "AllRequestData"
+				}],
+				"where": {
+					"field": "ID",
+					"type": "Number",
+					"value": jobId,
+				}
+			};
 
-	};
+			var jobValues = {};
+
+			// assume we're going to query this site's SWFList if a specific list wasn't supplied
+			var opt = $.extend({}, {
+				listName: "SWFList",
+				webURL: "https://bmos.sharepoint.com/sites/hr-service-jobs",
+				completefunc: null
+			}, options);
+
+			var query = "<Query>" +
+				"<Where>" +
+				"<Eq>" +
+				"<FieldRef Name='" + opt.where.field + "'></FieldRef>" +
+				"<Value Type='" + opt.where.type + "'>" + opt.where.value + "</Value>" +
+				"</Eq>" +
+				"</Where>" +
+				"</Query>";
+
+			var fields = "<ViewFields>";
+			$.each(opt.select, function (i, oneField) {
+				fields += "<FieldRef Name='" + oneField.nameInList + "' />";
+			});
+			fields += "</ViewFields>";
+
+			$().SPServices({
+				operation: "GetListItems",
+				async: false,
+				webURL: opt.webURL,
+				listName: opt.listName,
+				CAMLViewFields: fields,
+				CAMLQuery: query,
+				CAMLQueryOptions: "<QueryOptions><ExpandUserField>TRUE</ExpandUserField></QueryOptions>",
+				completefunc: function (xData, Status) {
+					$(xData.responseXML).SPFilterNode("z:row").each(function () {
+						var zRow = $(this);
+
+						$.each(opt.select, function (i, oneField) {
+
+							if (oneField.nameHere === "formData" || oneField.nameHere === "defaultDataForNewRequests") {
+
+								var value = $(zRow).attr("ows_" + oneField.nameInList);
+
+								var regexOne = new RegExp("\r", "g");
+								var regexTwo = new RegExp("\n", "g");
+								value = value.replace(regexOne, "'");
+								value = value.replace(regexTwo, "'");
+
+								eval("var formDataObj=" + value);
+
+								jobValues[oneField.nameHere] = formDataObj;
+
+							} else {
+
+								value = $(zRow).attr("ows_" + oneField.nameInList);
+
+								if (typeof (oneField.linkField) != "undefined") {
+									if (oneField.linkField === 1) {
+
+										value = ReplaceAll(",,", "DOUBLECOMMAREPLACEMENT", value);
+										value = value.split(",")[0];
+										value = ReplaceAll("DOUBLECOMMAREPLACEMENT", ",", value);
+									}
+								}
+								jobValues[oneField.nameHere] = value;
+							}
+						});
+					});
+				}
+			});
+
+			return jobValues;
+		}
+	 */
+
+
+
+	/* $.fn.ConfigureExistingGSESignup = function (passedScheduleID) {
+		// reconsider
+		if (typeof (passedRequestID) != "undefined" && passedRequestID === "0") {
+			rData = { "requestID": "" };
+		} else {
+			rData = { "requestID": GetParamFromUrl(location.search, "r") };
+		}
+
+		if (rData.requestID != "") {
+			rData = $.extend(
+				rData,
+				$().GetFieldsFromOneRow({
+					"select": [{
+						"nameHere": "department",
+						"nameInList": "Department"
+					}, {
+						"nameHere": "jobId",
+						"nameInList": "JobID"
+					}, {
+						"nameHere": "scheduleId",
+						"nameInList": "ScheduleID"
+					}, {
+						"nameHere": "userContact",
+						"nameInList": "UserContact"
+					}, {
+						"nameHere": "jobTitle",
+						"nameInList": "JobTitle"
+					}, {
+						"nameHere": "formData",
+						"nameInList": "AllRequestData"
+					}],
+					"where": {
+						"field": "ID",
+						"type": "Number",
+						"value": rData.requestID,
+					}
+				})
+			);
+		}
+
+		$('#JobID').val(rData['jobId']);
+		$('#ScheduleID').val(rData['scheduleId']);
+		$('#UserContact').val(rData['userContact']);
+		$('#JobTitle').val(rData['jobTitle']);
+	}
+
+
+
+	$.fn.ConfigureExistingGSESchedule = function (passedScheduleID) {
+
+			// scorey: here, 
+			//  ** query SWFList, build screen 3.1, insert it into the container, listen for the signup button to be clicked, and start trying maintenance mode
+			//  ** look at ConfigureRequest for examples of querying SWFList, instering into the container, listening for button clicks, and trying for maintenance mode
+			//  ** in terms of markup / appearance, probably best to model the signup button on the Save button, rather than the buttons at the top of the overview screens
+			//  ** clicking the cignup button should either trigger ProcessSubmission function (and that function will need to be modified to create a signup) or a different function
+
+		// $("div#request-screen-container").append("<p>This is 3.1 Signup Opportunity for User.</p>");
+
+		rData = { "scheduleID": passedScheduleID };
+		rData = $.extend(
+			rData,
+			$().GetFieldsFromOneRow({
+				"select": [{
+					"nameHere": "jobID",
+					"nameInList": "JobID"
+				}, {
+					"nameHere": "GSEScheduleData",
+					"nameInList": "AllRequestData"
+				}],
+				"where": {
+					"field": "ID",
+					"type": "Number",
+					"value": rData.scheduleID,
+				}
+			})
+		);
+		rData = $.extend(
+			rData,
+			$().GetFieldsFromOneRow({
+				"select": [{
+					"nameHere": "GSEJobData",
+					"nameInList": "AllRequestData"
+				}],
+				"webURL": "https://bmos.sharepoint.com/sites/hr-service-jobs",
+				"where": {
+					"field": "ID",
+					"type": "Number",
+					"value": rData.jobID,
+				}
+			})
+		);
+		rData.shiftLength = rData['shiftlength_35-hours'] ? '3.5 hours' : '7.5 hours';
+		var opportunityJobDuties = [];
+		rData.GSEJobData.RepeatedElements.forEach((repeatElement) => {
+			// console.log('repeatElement');
+			// console.log(repeatElement);
+			if (StrInStr(repeatElement.ID, 'gse-job-duty') != -1) {
+				// console.log('found a duty');
+				var repeatElementKeys = Object.keys(repeatElement);
+				// console.log('repeatElementKeys');
+				// console.log(repeatElementKeys);
+				repeatElementKeys.forEach((repeatElementKey) => {
+					if (StrInStr(repeatElementKey, 'Job-Duty')) {
+						opportunityJobDuties.push(repeatElement[repeatElementKey]);
+					}
+				});
+			}
+		});
+		var opportunityMarkup =	'<div id="gse-signup-opportunity-display" class="request-detail-display">' + 
+			'	<h3>' + rData.GSEJobData['Job-Title'] + '</h3>' + 
+			'	<div class="request-detail-display__field">' + 
+			'	<h4>Logistics</h4>' + 
+			'	<ul>' + 
+			'		<li>Positions Available: <span style="background-color: #fcc">X </span> out of ' + 
+					rData.GSEScheduleData['Number-of-Positions'] + '</li>' + 
+			'		<li>Date: ' + $().ReturnFormattedDateTime(rData.GSEScheduleData['Date'], null, 'dddd, MMMM D, YYYY', 1) + '</li>' + 
+			'		<li>Length: ' + rData.shiftLength + '</li>' + 
+			'		<li>Start Time: ' + $().ReturnFormattedDateTime(rData.GSEScheduleData['time-storage_StartTime'], null, 'h:mm a') + '</li>' + 
+			'		<li>Break Time: ' + $().ReturnFormattedDateTime(rData.GSEScheduleData['time-storage_BreakTime'], null, 'h:mm a') + '</li>' + 
+			'		<li>Meal Time: ' + $().ReturnFormattedDateTime(rData.GSEScheduleData['time-storage_MealTime'], null, 'h:mm a') + '</li>' + 
+			'		<li>Reporting to: <a href="mailto:' + rData.GSEJobData['Job-Admin'][0].description + '">' + 
+						rData.GSEJobData['Job-Admin'][0].displayText + '</a></li>' + 
+			'		<li>Department: ' + rData.GSEJobData['Department'] + '</li>' + 
+			'	</ul>' + 
+			'	</div>' + 
+			'	<div class="request-detail-display__field">' + 
+			'		<h4>Job Description</h4>' + 
+					ReplaceAll('%0A', '<br />', rData.GSEJobData['Job-Description']) + 
+			'	</div>';
+
+		if (rData.GSEJobData['Training-Requirements']) {
+			opportunityMarkup +=	'	<div class="request-detail-display__field">' +
+									'		<h4>Training Requirements</h4>' +
+											ReplaceAll('%0A', '<br />', rData.GSEJobData['Training-Requirements']) +
+									'	</div>';
+		}
+
+		opportunityMarkup +=	'	<div class="request-detail-display__field">' + 
+								'		<h4>Dress Requirements</h4>' + 
+								'		Must wear MOS badge above the waist at all times.<br />' + 
+								'		Clothing and shoes must be in good condition.<br />';
+
+		if (rData.GSEJobData['Dress-Requirements']) {
+			opportunityMarkup += ReplaceAll('%0A', '<br />', rData.GSEJobData['Dress-Requirements']);
+		}
+
+		opportunityMarkup +=	'</div>' + 
+			'	<div class="request-detail-display__field">' + 
+			'		<h4>Job Duties</h4>';
+		
+		opportunityJobDutyElement = opportunityJobDuties[1] ? 'li' : 'p';
+
+		if (opportunityJobDuties[1]) {
+			opportunityMarkup += '		<ul>';
+		}
+
+		opportunityJobDuties.forEach((opportunityJobDuty) => {
+			opportunityMarkup += '			<' + opportunityJobDutyElement + '>' + opportunityJobDuty + '</' + opportunityJobDutyElement + '>';
+		});
+
+		if (opportunityJobDuties[1]) {
+			opportunityMarkup += '		</ul>';
+		}
+
+		opportunityMarkup += '	</div>' +
+			'	<div class="request-detail-display__field-set">' + 
+			'		<h4>Physical Requirements</h4>' + 
+			'		<h5>How Much Weight Will Be Handled</h5>' + 
+			'		<ul>' +
+			'			<li>Lifting: ' + 
+							rData.GSEJobData['Physical-Demand-Lifting'] + ' lbs' +
+			'			</li>' +
+			'			<li>Carrying: ' + 
+							rData.GSEJobData['Physical-Demand-Carrying'] + ' lbs' +
+			'			</li>' +
+			'			<li>Pushing: ' + 
+							rData.GSEJobData['Physical-Demand-Pushing'] + ' lbs' +
+			'			</li>' +
+			'			<li>Pulling: ' + 
+							rData.GSEJobData['Physical-Demand-Pulling'] + ' lbs' +
+			'			</li>' +
+			'		</ul>' +
+
+
+
+			'		<h5>How Much Weight Will Be Handled</h5>' + 
+			'		<ul>' +
+			'			<li>Standing: ' + 
+							rData.GSEJobData['Physical-Demand-Standing'] + '%' +
+			'			</li>' +
+			'			<li>Sitting: ' + 
+							rData.GSEJobData['Physical-Demand-Sitting'] + '%' +
+			'			</li>' +
+			'			<li>Walking: ' + 
+							rData.GSEJobData['Physical-Demand-Walking'] + '%' +
+			'			</li>' +
+			'		</ul>' +
+			'	</div>' + 
+			// '	<input id="Request-Nickname" listfieldname="Title" type="hidden" value="' + uData.userName + '-' + rData.jobID + '-' + rData.scheduleID + '">' + 
+			// '	<input id="Schedule-ID" name="schedule-id" listfieldname="ScheduleID" type="hidden" value="' + rData.scheduleID + '">' + 
+			// '	<input id="Job-ID" name="job-id" listfieldname="JobID" type="hidden" value="' + rData.jobID + '">' + 
+			// '	<input id="Requested-For" name="requested-for" listfieldname="JobID" type="hidden" value="' + rData.jobID + '">' + 
+			// '	' + 
+			'	<a id="gse-schedule-signup-button" data-button-type="gse-schedule-signup">Sign up</a>' +
+			'</div>';
+
+		$("div#request-screen-container").append(opportunityMarkup);
+	}; */
 
 
 
@@ -2045,7 +2490,7 @@
 		// if this is a GSE Sschedule and this user is not HR Admin, Job Admin, or Manager
 		if (mData.requestName === "GSE Schedule" && uData.roles.indexOf("gseUserOnly") > -1) {
 			// forget this function and go to ConfigureExistingGSESchedule instead
-			$().ConfigureExistingGSESchedule();
+			$().ConfigureExistingGSESchedule(passedRequestID);
 			// if this is not a GSE Schedule or this user is HR Admin, Job Admin, or Manager
 		} else {
 
@@ -2061,8 +2506,6 @@
 				mData.adminNotificationPersons = mData.devAdminNotificationPersons;
 			}
 
-			// mData.adminNotificationPersons = '53;#Hub Tester1,#i:0#.f|membership|sp1@mos.org,#sp1@mos.org,#sp1@MOS.ORG,#Hub Tester1,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/sp1_mos_org_MThumb.jpg?t=63655593687,#Interactive Media,#;#6;#James Baker,#i:0#.f|membership|jbaker@mos.org,#jbaker@mos.org,#jbaker@mos.org,#James Baker,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/jbaker_mos_org_MThumb.jpg?t=63616027741,#Interactive Media,#Intranet Solutions Project Manager;#467;#Samuel Corey,#i:0#.f|membership|scorey@mos.org,#scorey@mos.org,#scorey@MOS.ORG,#Samuel Corey,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/scorey_mos_org_MThumb.jpg,#Interactive Media,#Web Developer';
-
 			// set semicolon-delimited string of admin emails
 			mData.adminEmailString = $().ReturnUserEmailStringAndArray(mData.adminNotificationPersons).string;
 			mData.adminEmailArray = $().ReturnUserEmailStringAndArray(mData.adminNotificationPersons).array;
@@ -2073,10 +2516,15 @@
 				$().ReturnUserDataFromPersonOrGroupFieldString(mData.requiredApproversString) :
 				[];
 
+			mData.conditionalApproversArray = (mData.conditionalApproversString) ?
+				$().ReturnUserDataFromPersonOrGroupFieldString(mData.conditionalApproversString) :
+				[];
+
 			// THIS REQUEST'S DATA
 			// reset rData and get request id from url param
 			if (typeof (passedRequestID) != "undefined" && passedRequestID === "0") {
 				rData = { "requestID": "" };
+				rData.gseScheduleID = GetParamFromUrl(location.search, "gseScheduleID");
 			} else {
 				rData = { "requestID": GetParamFromUrl(location.search, "r") };
 			}
@@ -2087,7 +2535,7 @@
 			// if there is a request id, then get data for this request
 
 			if (rData.requestID != "") {
-				// console.log("gonna get");
+
 				rData = $.extend(
 					rData,
 					$().GetFieldsFromOneRow({
@@ -2117,11 +2565,6 @@
 						}
 					})
 				);
-
-				// rData.formData = { "Approval-Newly-Needed-Notify": "none" };
-				// rData.requestVersion = "1";
-				// rData.endOfLife = "0";
-				// console.log(rData);
 			}
 
 			if (typeof (rData.requestStatus) === "undefined") {
@@ -2132,6 +2575,20 @@
 				rData.formDataOnLoad = rData.formData;
 				rData.formDataOnLoad.requestStatus = rData.requestStatus;
 			}
+
+			/* 
+				// consider
+
+				if (rData.requestID != "") {
+					if (mData.requestName != "GSE Signup") {
+						rData.formDataOnLoad = rData.formData;
+						rData.formDataOnLoad.requestStatus = rData.requestStatus;
+					} else {
+						rData.formDataOnLoad = [];
+						rData.formDataOnLoad.requestStatus = '';
+					}
+				}
+			 */
 
 			// THIS REQUEST'S DEFAULT DATA FOR NEW REQUESTS
 
@@ -2245,8 +2702,8 @@
 					"labelContent": "Request ID",
 					"hideForNonAdmin": [""],
 					"hideForAdmin": [""],
-					"disabledForNonAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Disapproved", "Cancelled"],
-					"disabledForAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Disapproved", "Cancelled"]
+					"disabledForNonAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
+					"disabledForAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"]
 				}, {
 					"elementType": "field",
 					"controlType": "text",
@@ -2265,8 +2722,8 @@
 					},
 					"hideForNonAdmin": [""],
 					"hideForAdmin": [""],
-					"disabledForNonAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Disapproved", "Cancelled"],
-					"disabledForAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Disapproved", "Cancelled"]
+					"disabledForNonAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
+					"disabledForAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"]
 				}, {
 					"elementType": "field",
 					"controlType": "text",
@@ -2277,14 +2734,14 @@
 						"text": "Give this request a name you can reference later",
 						"htmlID": "request-nickname_help-note",
 						"urgent": 0,
-						"hideForNonAdmin": ["Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Disapproved", "Cancelled"],
-						"hideForAdmin": ["Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Disapproved", "Cancelled"]
+						"hideForNonAdmin": ["Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
+						"hideForAdmin": ["Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"]
 					}],
 					"requiredForNonAdmin": [""],
 					"requiredForAdmin": [""],
-					"disabledForNonAdmin": ["Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Disapproved", "Cancelled"],
-					"disabledForAdmin": ["Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Disapproved", "Cancelled"],
-					"hideForAdmin": ["Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Disapproved", "Cancelled"]
+					"disabledForNonAdmin": ["Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
+					"disabledForAdmin": ["Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
+					"hideForAdmin": ["Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"]
 				}, {
 					"elementType": "field",
 					"controlType": "select",
@@ -2299,10 +2756,10 @@
 					}],
 					"requiredForNonAdmin": [""],
 					"requiredForAdmin": [""],
-					"hideForNonAdmin": ["Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Disapproved", "Cancelled"],
-					"hideForAdmin": ["Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Disapproved", "Cancelled"],
-					"disabledForNonAdmin": ["Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Text Edited", "Web Live", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Disapproved", "Cancelled"],
-					"disabledForAdmin": ["Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Text Edited", "Web Live", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Disapproved", "Cancelled"],
+					"hideForNonAdmin": ["Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
+					"hideForAdmin": ["Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
+					"disabledForNonAdmin": ["Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Text Edited", "Web Live", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
+					"disabledForAdmin": ["Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Text Edited", "Web Live", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
 					"onChange": [{
 						"thisFieldEquals": ["Self"],
 						"hide": [{
@@ -2341,8 +2798,8 @@
 					"yieldsViewPermissions": 1,
 					"hideForNonAdmin": [""],
 					"hideForAdmin": [""],
-					"disabledForNonAdmin": ["Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Disapproved", "Cancelled"],
-					"disabledForAdmin": ["Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Disapproved", "Cancelled"]
+					"disabledForNonAdmin": ["Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
+					"disabledForAdmin": ["Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"]
 				}, {
 					"elementType": "field",
 					"controlType": "check",
@@ -2352,17 +2809,17 @@
 						"value": "cancel",
 						"display": "Yes, I wish to cancel this request"
 					}],
-					"hideForNonAdmin": ["", "Validator Picked Up", "Loaned", "Completed", "Disapproved", "Cancelled"],
-					"hideForAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Disapproved", "Cancelled"],
-					"disabledForNonAdmin": ["Completed", "Disapproved", "Cancelled"],
-					"disabledForAdmin": ["Completed", "Disapproved", "Cancelled"]
+					"hideForNonAdmin": ["", "Validator Picked Up", "Loaned", "Archived", "Completed", "Archived", "Disapproved", "Cancelled"],
+					"hideForAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Archived", "Completed", "Archived", "Disapproved", "Cancelled"],
+					"disabledForNonAdmin": ["Completed", "Archived", "Disapproved", "Cancelled"],
+					"disabledForAdmin": ["Completed", "Archived", "Disapproved", "Cancelled"]
 					// about the requester
 				}, {
 					"elementType": "markup",
 					"tag": "div",
 					"htmlID": "container_about-the-requester",
 					"begin": 1,
-					"hideForNonAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "Submitted", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Disapproved", "Cancelled"],
+					"hideForNonAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "Submitted", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
 					"hideForAdmin": [""],
 				}, {
 					"elementType": "markup",
@@ -2375,39 +2832,39 @@
 					"controlType": "text",
 					"fieldName": "Requester Name",
 					"labelContent": "Name",
-					"disabledForNonAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Disapproved", "Cancelled"],
-					"disabledForAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Disapproved", "Cancelled"]
+					"disabledForNonAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
+					"disabledForAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"]
 				}, {
 					"elementType": "field",
 					"controlType": "text",
 					"fieldName": "Requester Department",
 					"labelContent": "Department",
-					"disabledForNonAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Disapproved", "Cancelled"],
-					"disabledForAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Disapproved", "Cancelled"]
+					"disabledForNonAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
+					"disabledForAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"]
 				}, {
 					"elementType": "field",
 					"controlType": "text",
 					"fieldName": "Requester Email",
 					"labelContent": "Email",
-					"disabledForNonAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Disapproved", "Cancelled"],
-					"disabledForAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Disapproved", "Cancelled"]
+					"disabledForNonAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
+					"disabledForAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"]
 				}, {
 					"elementType": "field",
 					"controlType": "text",
 					"fieldName": "Requester Phone",
 					"labelContent": "Phone",
-					"disabledForNonAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Disapproved", "Cancelled"],
-					"disabledForAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Disapproved", "Cancelled"]
+					"disabledForNonAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
+					"disabledForAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"]
 				}, {
 					"elementType": "field",
 					"controlType": "text",
 					"fieldName": "Requester Account",
 					"labelContent": "Account",
 					"yieldsViewPermissions": 1,
-					"hideForNonAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Disapproved", "Cancelled"],
-					"hideForAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Disapproved", "Cancelled"],
-					"disabledForNonAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Disapproved", "Cancelled"],
-					"disabledForAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Disapproved", "Cancelled"]
+					"hideForNonAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
+					"hideForAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
+					"disabledForNonAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
+					"disabledForAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"]
 				}, {
 					"elementType": "field",
 					"controlType": "peoplePicker",
@@ -2415,10 +2872,10 @@
 					"labelContent": "Requested By",
 					"listFieldName": "RequestedBy",
 					"yieldsViewPermissions": 1,
-					"hideForNonAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Disapproved", "Cancelled"],
-					"hideForAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Disapproved", "Cancelled"],
-					"disabledForNonAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Disapproved", "Cancelled"],
-					"disabledForAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Disapproved", "Cancelled"]
+					"hideForNonAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
+					"hideForAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
+					"disabledForNonAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
+					"disabledForAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"]
 				}, {
 					"elementType": "markup",
 					"tag": "div",
@@ -2758,7 +3215,7 @@
 						"htmlID": "admin",
 						"content": '',
 						"begin": 1,
-						"hideForNonAdmin": ["", "Open", "Submitted", "In Development", "Pending Revision", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+						"hideForNonAdmin": ["", "Open", "Submitted", "Signed Up", "In Development", "Pending Revision", "Pending Approval", "Approved", "Completed", "Credit Granted", "Credit Denied", "Archived", "Disapproved", "Cancelled"],
 						"hideForAdmin": [""]
 					}, {
 						"elementType": "markup",
@@ -2771,8 +3228,8 @@
 						"tag": "div",
 						"htmlID": "approval-notification-history",
 						"begin": 1,
-						"hideForNonAdmin": ["", "Open", "Submitted", "In Development", "Pending Revision", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-						"hideForAdmin": ["", "Open", "Submitted", "In Development", "Pending Revision", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
+						"hideForNonAdmin": ["", "Open", "Submitted", "Signed Up", "In Development", "Pending Revision", "Pending Approval", "Approved", "Completed", "Credit Granted", "Credit Denied", "Archived", "Disapproved", "Cancelled"],
+						"hideForAdmin": ["", "Open", "Submitted", "Signed Up", "In Development", "Pending Revision", "Pending Approval", "Approved", "Completed", "Credit Granted", "Credit Denied", "Archived", "Disapproved", "Cancelled"]
 					}, {
 						"elementType": "markup",
 						"tag": "h3",
@@ -2810,16 +3267,16 @@
 						"fieldName": "Change Request Status",
 						"labelContent": "Change Request Status",
 						"setOptions": fData.standardElementGroups.standardAdminElements.changeRequestStatus,
-						"hideForNonAdmin": ["Submitted", "Completed", "Disapproved", "Cancelled"],
-						"hideForAdmin": ["Completed", "Disapproved", "Cancelled"],
+						"hideForNonAdmin": ["Submitted", "Signed Up", "Completed", "Credit Granted", "Credit Denied", "Archived", "Disapproved", "Cancelled"],
+						"hideForAdmin": ["Completed", "Credit Granted", "Credit Denied", "Archived", "Disapproved", "Cancelled"],
 					}, {
 						"elementType": "field",
 						"controlType": "text",
 						"fieldName": "Request Status",
 						"listFieldName": "RequestStatus",
 						"labelContent": "Request Status",
-						"disabledForNonAdmin": ["", "Open", "Submitted", "In Development", "Pending Revision", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-						"disabledForAdmin": ["", "Open", "Submitted", "In Development", "Pending Revision", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
+						"disabledForNonAdmin": ["", "Open", "Submitted", "Signed Up", "In Development", "Pending Revision", "Pending Approval", "Approved", "Completed", "Credit Granted", "Credit Denied", "Archived", "Disapproved", "Cancelled"],
+						"disabledForAdmin": ["", "Open", "Submitted", "Signed Up", "In Development", "Pending Revision", "Pending Approval", "Approved", "Completed", "Credit Granted", "Credit Denied", "Archived", "Disapproved", "Cancelled"]
 					}, {
 						"elementType": "field",
 						"controlType": "textarea",
@@ -2830,8 +3287,8 @@
 						"controlType": "textarea",
 						"fieldName": "Historical Admin Notes",
 						"labelContent": "Historical Admin Notes",
-						"disabledForNonAdmin": ["", "In Development", "Pending Revision", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-						"disabledForAdmin": ["", "In Development", "Pending Revision", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
+						"disabledForNonAdmin": ["", "In Development", "Pending Revision", "Pending Approval", "Approved", "Completed", "Credit Granted", "Credit Denied", "Archived", "Disapproved", "Cancelled"],
+						"disabledForAdmin": ["", "In Development", "Pending Revision", "Pending Approval", "Approved", "Completed", "Credit Granted", "Credit Denied", "Archived", "Disapproved", "Cancelled"]
 					}, {
 						"elementType": "markup",
 						"tag": "div",
@@ -3278,7 +3735,6 @@
 
 				var permitted = []; // array of non-admin users who have permission to view the form
 				var hasViewingPermissionThisRequest = 0; // this user's permission flag
-
 				// for each element
 				$.each(fData.elements, function (i, elem) {
 					// if it yields view permissions
@@ -3293,17 +3749,14 @@
 						}
 					}
 				});
-
 				$.each(permitted, function (i, p) {
 					if (StrInStr(p, uData.account)) {
 						hasViewingPermissionThisRequest = 1;
 					}
 				});
-
 				if (hasViewingPermissionThisRequest === 0 && typeof (fData.additionalViewPermissionsFunction) != "undefined") {
 					hasViewingPermissionThisRequest = CallFunctionFromString(fData.additionalViewPermissionsFunction, { "rData": rData });
 				}
-
 				if (hasViewingPermissionThisRequest === 0) {
 					$('div#overlays-screen-container').fadeIn(200);
 					$('div#mos-form-no-view-permission').fadeIn(400);
@@ -3432,6 +3885,18 @@
 				}
 			}
 
+			/*
+				// consider
+
+				if (rData.requestID != "" && rData.requestID > 0) {
+					if (mData.requestName != "GSE Signup") {
+						if (typeof(rData.formData['Approval-Nodes-Storage']) != 'undefined') {
+							$("div#all-approvals").html(HtmlDecode(rData.formData['Approval-Nodes-Storage']));
+						}
+					}
+				}
+			*/
+
 			// add a class to form container div to serve as styling hook
 			$("div#request-form, div#overlays-screen-container").addClass(ReplaceAll("\\.", "", ReplaceAll(" ", "-", mData.requestName)).toLowerCase());
 
@@ -3539,15 +4004,14 @@
 			// POPULATE FORM FIELDS & SCRIPT TAG
 			// ========================================================
 
-			// if request is not new, populate form fields with previously-submitted data
-			//		and get approval node scripts
-
 			var approvalNodeScripts = '';
 
+			// if request is new and there is default data for new requests
 			if (rData.requestStatus == "" && typeof (rData.defaultDataForNewRequests) != "undefined") {
 				PopulateFormData("div#request-form", rData.defaultDataForNewRequests, mData.uriRoot, rData.requestID);
 			}
 
+			// if request is not new
 			if (rData.requestStatus != "") {
 
 				// set stored object's data, if any
@@ -3571,6 +4035,140 @@
 				}
 			}
 
+			// if this is a GSE Signup (either new or existing)
+			if (mData.requestName == "GSE Signup") {
+				// if this is an existing GSE Signup, in which case a GSE Schedule ID was not specified in the URL 
+				if (rData.requestStatus != "") {
+					// extract the schedule ID from the saved request data
+					rData.gseScheduleID = rData.formDataOnLoad['Schedule-ID'];
+				}
+				// get the relevant job data
+				rData = $.extend(
+					rData,
+					$().GetFieldsFromOneRow({
+						"select": [{
+							"nameHere": "gseJobID",
+							"nameInList": "JobID"
+						}, {
+							"nameHere": "gseScheduleData",
+							"nameInList": "AllRequestData"
+						}],
+						"webURL": "https://bmos.sharepoint.com/sites/hr-service-schedules",
+						"where": {
+							"field": "ID",
+							"type": "Number",
+							"value": rData.gseScheduleID,
+						}
+					})
+				);
+				// get the relevant schedule data
+				rData = $.extend(
+					rData,
+					$().GetFieldsFromOneRow({
+						"select": [{
+							"nameHere": "gseJobData",
+							"nameInList": "AllRequestData"
+						}],
+						"webURL": "https://bmos.sharepoint.com/sites/hr-service-jobs",
+						"where": {
+							"field": "ID",
+							"type": "Number",
+							"value": rData.gseJobID,
+						}
+					})
+				);
+				// delete schedule and job request statuses so that they don't get used as / confused with this signup's status
+				delete rData.gseJobData['Request-Status'];
+				delete rData.gseScheduleData['Request-Status'];
+				// calculate positions remaining
+
+				// prep some of the data before populating fields and placeholders with it
+				var otherSignupsForThisSchedule = $().GetFieldsFromSpecifiedRows({
+					"select": [{
+						"nameHere": "anotherSignupIDThisSchedule",
+						"nameInList": "ID"
+					}],
+					"where": {
+						"ands": [
+							{
+								"field": "ScheduleID",
+								"type": "Text",
+								"value": rData.gseScheduleID,
+							}, {
+								"field": "RequestStatus",
+								"type": "Text",
+								"value": "Signed Up",
+							}
+						]
+					}
+				});
+				rData.gseScheduleData['Positions-Available'] =
+					parseInt(rData.gseScheduleData['Number-of-Positions']) - otherSignupsForThisSchedule.length;
+				rData.gseScheduleData['Friendly-Date'] = $().ReturnFormattedDateTime(rData.gseScheduleData['Date'], null, 'dddd, MMMM D, YYYY', 1);
+				rData.gseScheduleData['Shift-Length'] = rData.gseScheduleData['shiftlength_35-hours'] ? '3.5 hours' : '7 hours';
+				rData.gseScheduleData['Start-Time'] = $().ReturnFormattedDateTime(rData.gseScheduleData['time-storage_StartTime'], null, 'h:mm a');
+				rData.gseScheduleData['Break-Time'] = $().ReturnFormattedDateTime(rData.gseScheduleData['time-storage_BreakTime'], null, 'h:mm a');
+				rData.gseScheduleData['Meal-Time'] = $().ReturnFormattedDateTime(rData.gseScheduleData['time-storage_MealTime'], null, 'h:mm a');
+
+				rData.gseJobData['Job-Admin-Name'] = rData.gseJobData['Job-Admin'][0].description;
+				rData.gseJobData['Job-Description-Formatted'] = '<p>' + ReplaceAll('%0A', '</p><p>', rData.gseJobData['Job-Description']) + '</p>';
+				if (rData.gseJobData['Training-Requirements']) {
+					rData.gseJobData['Training-Requirements-Formatted'] = '<p>' + ReplaceAll('%0A', '</p><p>', rData.gseJobData['Training-Requirements']) + '</p>';
+				}
+				if (rData.gseJobData['Dress-Requirements']) {
+					rData.gseJobData['Dress-Requirements-Formatted'] = '<p>' + ReplaceAll('%0A', '</p><p>', rData.gseJobData['Dress-Requirements']) + '</p>';
+				}
+
+				var opportunityJobDuties = [];
+				rData.gseJobData.RepeatedElements.forEach((repeatElement) => {
+					// console.log('repeatElement');
+					// console.log(repeatElement);
+					if (StrInStr(repeatElement.ID, 'gse-job-duty') != -1) {
+						// console.log('found a duty');
+						var repeatElementKeys = Object.keys(repeatElement);
+						// console.log('repeatElementKeys');
+						// console.log(repeatElementKeys);
+						repeatElementKeys.forEach((repeatElementKey) => {
+							if (StrInStr(repeatElementKey, 'Job-Duty')) {
+								opportunityJobDuties.push(repeatElement[repeatElementKey]);
+							}
+						});
+					}
+				});
+
+				var opportunityJobDutyElement = opportunityJobDuties[1] ? 'li' : 'p';
+
+				rData.gseJobData['Job-Duties-List-Items'] = '';
+
+				opportunityJobDuties.forEach((opportunityJobDuty) => {
+					rData.gseJobData['Job-Duties-List-Items'] += '			<' + opportunityJobDutyElement + '>' + opportunityJobDuty + '</' + opportunityJobDutyElement + '>';
+				});
+
+				console.log('rData.gseScheduleData');
+				console.log(rData.gseScheduleData);
+				console.log('rData.gseJobData');
+				console.log(rData.gseJobData);
+
+				// populate the placeholder <span>s with job and schedule data
+				PopulateFormData("div#request-form", rData.gseJobData, mData.uriRoot, rData.requestID, mData.checkForAlternateEventDataToPopulate);
+				PopulateFormData("div#request-form", rData.gseScheduleData, mData.uriRoot, rData.requestID, mData.checkForAlternateEventDataToPopulate);
+			}
+
+			// if this is a *new* GSE Signup
+			if (rData.requestStatus == "" && mData.requestName == "GSE Signup" && rData.gseScheduleID != "" && rData.gseScheduleID > 0) {
+				// manually populate specific signup fields with user, job, and schedule data
+				$("input#Request-Nickname").val(rData.gseJobID + '-' + rData.gseScheduleID + '-' + ReplaceAll('@mos.org', '', uData.userName));
+				$("input#Job-ID").val(rData.gseJobID);
+				$("input#Schedule-ID").val(rData.gseScheduleID);
+			}
+
+			// if this is an *existing* GSE Signup
+			if (rData.requestStatus != "" && mData.requestName == "GSE Signup") {
+				// manually copy some admin data to requester-accessible fields
+				$("input#Request-Status-for-Requester").val(rData.requestStatus);
+				$("textarea#Credit-Denial-Reason-for-Requester").val(rData.formDataOnLoad['Credit-Denial-Reason']);
+			}
+
 			// if request is new
 			if (rData.requestStatus === '') {
 
@@ -3591,6 +4189,7 @@
 
 				// if alwaysTalkToRequester, populate and hide relevant fields
 				if (typeof (fData.alwaysTalkToRequester) != 'undefined' && fData.alwaysTalkToRequester === 1) {
+
 					$('option[value="Self"]').prop('selected', true);
 					$().PutAddtlPeopleInPicker('Requested For', [{
 						'name': uData.name,
@@ -3993,6 +4592,7 @@
 				$("div#persona-card-dialog").dialog("open");
 			});
 
+			// datetime and time elements
 			// when a date or time element changes
 			$("input[id^='date-input_'], select[id^='hours-input_'], select[id^='minutes-input_']").on("change", function () {
 				var container = $(this).closest("div.label-and-control");
@@ -4533,6 +5133,7 @@
 
 					$(workingMessage).text("Handling Request Status");
 
+					var previousReqStatus = rData.requestStatus;
 					var newReqStatus = '';
 					var beginningOfLife = 0;
 					var endOfLife = 0;
@@ -4552,6 +5153,7 @@
 					rData.endOfLife = endOfLife;
 					rData.beginningOfLife = beginningOfLife;
 					rData.requestStatus = newReqStatus;
+					rData.previousRequestStatus = previousReqStatus;
 					rData = rData;
 					$('input#Request-Status').val(newReqStatus);
 					$('input#Beginning-of-Life').val(endOfLife);
@@ -4635,6 +5237,10 @@
 						newReqStatus = 'Cancelled';
 						endOfLife = 1;
 						endOfLifeIsNew = 1;
+					} else if (rData.requestStatus == 'Approved' && ($('input#requester-archival_archive:checked').length > 0 || $('select#Change-Request-Status option:selected').val() == 'Archive')) {
+						newReqStatus = 'Archived';
+						endOfLife = 1;
+						endOfLifeIsNew = 1;
 					} else if (rData.requestStatus == 'Pending Approval' && $('select#Change-Request-Status option:selected').val() == 'Approve') {
 						newReqStatus = 'Approved';
 					} else if (rData.requestStatus == 'Pending Approval' && $('select#Change-Request-Status option:selected').val() == 'Disapprove') {
@@ -4650,22 +5256,25 @@
 					$('input#End-of-Life').val(endOfLife);
 				}
 
-				if (fData.autoTrackGSEScheduleStatuses === 1 && rData.endofLife != 1) {
+				if (fData.autoTrackGSESignupStatuses === 1 && rData.endOfLife != 1) {
+
 					$(workingMessage).text("Handling Request Status");
 
 					var newReqStatus = '';
 					var endOfLife = 0;
 					var endOfLifeIsNew = 0;
 					if (rData.requestStatus == '') {
-						newReqStatus = 'Pending Approval';
-					} else if (rData.requestStatus == 'Pending Approval' && ($('input#requester-cancellation_cancel:checked').length > 0 || $('select#Change-Request-Status option:selected').val() == 'Approve')) {
-						newReqStatus = 'Unassigned';
+						newReqStatus = 'Signed Up';
+					} else if (rData.requestStatus == 'Signed Up' && ($('input#requester-cancellation_cancel:checked').length > 0 || $('select#Change-Request-Status option:selected').val() == 'Cancel')) {
+						newReqStatus = 'Cancelled';
 						endOfLife = 1;
 						endOfLifeIsNew = 1;
-					} else if (rData.requestStatus == 'Unassigned' && $('select#Change-Request-Status option:selected').val() == 'Assign') {
-						newReqStatus = 'Assigned';
-					} else if (rData.requestStatus == 'Unapproved' && $('select#Change-Request-Status option:selected').val() == 'Close') {
-						newReqStatus = 'Closed';
+					} else if (rData.requestStatus == 'Signed Up' && $('select#Change-Request-Status option:selected').val() == 'Grant Credit') {
+						newReqStatus = 'Credit Granted';
+						endOfLife = 1;
+						endOfLifeIsNew = 1;
+					} else if (rData.requestStatus == 'Signed Up' && $('select#Change-Request-Status option:selected').val() == 'Deny Credit') {
+						newReqStatus = 'Credit Denied';
 						endOfLife = 1;
 						endOfLifeIsNew = 1;
 					}
@@ -4676,6 +5285,94 @@
 					$('input#Request-Status').val(newReqStatus);
 					$('input#End-of-Life').val(endOfLife);
 				}
+
+				/*	// consider
+
+					if (fData.autoTrackGSEJobStatuses === 1 && rData.endOfLife != 1) {
+						
+						$(workingMessage).text("Handling Request Status");
+	 
+						var newReqStatus = '';
+						var endOfLife = 0;
+						var endOfLifeIsNew = 0;
+						if (rData.requestStatus == '') {
+							newReqStatus = 'Pending Approval';
+						} else if (rData.requestStatus == 'Pending Approval' && ($('input#requester-cancellation_cancel:checked').length > 0 || $('select#Change-Request-Status option:selected').val() == 'Cancel')) {
+							newReqStatus = 'Cancelled';
+							endOfLife = 1;
+							endOfLifeIsNew = 1;
+						} else if (rData.requestStatus == 'Pending Approval' && $('select#Change-Request-Status option:selected').val() == 'Approve') {
+							newReqStatus = 'Approved';
+						} else if (rData.requestStatus == 'Pending Approval' && $('select#Change-Request-Status option:selected').val() == 'Disapprove') {
+							newReqStatus = 'Disapproved';
+							endOfLife = 1;
+							endOfLifeIsNew = 1;
+						}
+						rData.endOfLifeIsNew = endOfLifeIsNew;
+						rData.endOfLife = endOfLife;
+						rData.requestStatus = newReqStatus;
+						globalRData = rData;
+						$('input#Request-Status').val(newReqStatus);
+						$('input#End-of-Life').val(endOfLife);
+					}
+
+					// consider
+
+					if (fData.autoTrackGSEJobStatuses === 1 && rData.endOfLife != 1) {
+						
+						$(workingMessage).text("Handling Request Status");
+	 
+						var newReqStatus = '';
+						var endOfLife = 0;
+						var endOfLifeIsNew = 0;
+						if (rData.requestStatus == '') {
+							newReqStatus = 'Pending Approval';
+						} else if (rData.requestStatus == 'Pending Approval' && $('select#Change-Request-Status option:selected').val() == 'Approve') {
+							newReqStatus = 'Approved';
+						} else if (rData.requestStatus == 'Pending Approval' && $('select#Change-Request-Status option:selected').val() == 'Disapprove') {
+							newReqStatus = 'Disapproved';
+							endOfLife = 1;
+							endOfLifeIsNew = 1;
+						}
+						rData.endOfLifeIsNew = endOfLifeIsNew;
+						rData.endOfLife = endOfLife;
+						rData.requestStatus = newReqStatus;
+						globalRData = rData;
+						$('input#Request-Status').val(newReqStatus);
+						$('input#End-of-Life').val(endOfLife);
+					}
+
+				// consider
+
+				if (fData.autoTrackGSEScheduleStatuses === 1 && rData.endofLife != 1) {
+
+					$(workingMessage).text("Handling Request Status");
+
+					var newReqStatus = '';
+					var beginningOfLife = 0;
+					var endOfLife = 0;
+					var endOfLifeIsNew = 0;
+					if (rData.requestStatus === '') {
+						newReqStatus = 'Submitted';
+						beginningOfLife = 1;
+					} else if (rData.requestStatus === 'Submitted') {
+						if ($('input#requester-cancellation_cancel:checked').length > 0 || $('select#Change-Request-Status option:selected').val() === 'Cancel') {
+							newReqStatus = 'Cancelled';
+							beginningOfLife = 0;
+							endOfLife = 1;
+							endOfLifeIsNew = 1;
+						}
+					}
+					rData.endOfLifeIsNew = endOfLifeIsNew;
+					rData.endOfLife = endOfLife;
+					rData.beginningOfLife = beginningOfLife;
+					rData.requestStatus = newReqStatus;
+					rData = rData;
+					$('input#Request-Status').val(newReqStatus);
+					$('input#Beginning-of-Life').val(endOfLife);
+					$('input#End-of-Life').val(endOfLife);
+				}
+				*/
 
 				if (fData.autoTrackEventNeedsStatuses === 1) {
 
@@ -5291,6 +5988,7 @@
 						var approversOnLoadInitialArray = JSON.parse($('input#Approvers-on-Load_TopSpan_HiddenInput').val());
 					}
 					var requiredApproversToAdd = [];
+					var conditionalApproversToAdd = [];
 					var approversNowToAdd = [];
 
 					var approvalNewlyNeededNotificationArray = [];
@@ -5358,8 +6056,83 @@
 
 
 					// ============
-					// ---- 2. REQUIRED APPROVERS
+					// ---- 2. CONDITIONAL APPROVERS && REQUIRED APPROVERS
 					// ============
+
+					// CONDITIONAL
+
+					// if there are conditional approvers flag is set and there are conditional approvers
+					if (typeof (fData.conditionalApprovals) != 'undefined' && mData.conditionalApproversArray.length != 0) {
+
+						// if the specified condition is met
+						if (fData.conditionalApprovals()) {
+
+							// if onlyAutoProcessApprovalsAfterDevelopment is set, then set flag indicating whether or not request is ready for approval
+							if (typeof (fData.onlyAutoProcessApprovalsAfterDevelopment) != "undefined") {
+
+								// readyForApproval = 0
+								var readyForApproval = 0;
+
+								// if RS = "" OR RS == "In Development"
+								if (rData.requestStatus == '' || rData.requestStatus == 'In Development') {
+
+									// if request is marked as ready for approval
+									if ($("input#ready-for-submission-to-committee_yes").is(":checked")) {
+										// set readyForApproval = 1
+										readyForApproval = 1;
+									}
+								}
+							}
+
+							// if onlyAutoProcessApprovalsAfterDevelopment is undefined and RS = "" OR
+							//		onlyAutoProcessApprovalsAfterDevelopment is set and readyForApproval = 1
+							if ((typeof (fData.onlyAutoProcessApprovalsAfterDevelopment) == "undefined" && rData.requestStatus == '') ||
+								(typeof (fData.onlyAutoProcessApprovalsAfterDevelopment) != "undefined" && readyForApproval == 1)) {
+
+								// for each conditional approver
+								$.each(mData.conditionalApproversArray, function (i, r) {
+
+									// set flag indicating that this conditional approver IS NOT in approvers now
+									var conditionalApproverAlreadyAdded = 0;
+
+									// iterate over each approver now
+									$.each(approversNowInitialArray, function (i, approverNow) {
+
+										// if this approver now matches this conditional approver
+										if (r.account == approverNow.Key) {
+
+											// alter flag to indicate that this conditional approver IS in approvers now
+											conditionalApproverAlreadyAdded = 1;
+										}
+									});
+
+									// if flag still indicates that this conditional approver IS NOT in approvers now
+									//		and this conditional approver is not the requester
+									if (conditionalApproverAlreadyAdded == 0 && r.account != $("#Requester-Account").val()) {
+
+										// add this conditional approver's data to conditional
+										conditionalApproversToAdd.push({
+											'name': r.name,
+											'email': r.email.toLowerCase(),
+											'account': r.account
+										});
+									}
+								});
+
+								// add conditional approvers to approvers now
+								$().PutAddtlPeopleInPicker('Approvers', conditionalApproversToAdd);
+
+								// get approvers now again, now that conditional approvers have been added to it
+								if ($('input#Approvers_TopSpan_HiddenInput').val() == "") {
+									var approversNowInitialArray = [];
+								} else {
+									var approversNowInitialArray = JSON.parse($('input#Approvers_TopSpan_HiddenInput').val());
+								}
+							}
+						}
+					}
+
+					// REQUIRED
 
 					// if there are required approvers
 					if (mData.requiredApproversArray.length != 0) {
@@ -5799,6 +6572,47 @@
 
 
 				// ========================================================
+				// HANDLE GSE SCHEDULES & SIGNUPS MODIFICATIONS (if needed)
+				// ========================================================
+
+				if (typeof (fData.autoProcessGSEScheduleAndSignupModification) != 'undefined' && fData.autoProcessGSEScheduleAndSignupModification == 1) {
+
+					$(workingMessage).text("Handling GSE Modifications");
+
+					// if this app is GSE Schedule and this schedule is being cancelled
+
+					// find all of the relevant signups, [change their status to cancelled and email relevant people]
+
+					// if this app is [GSE Signups] and this user is cancelling her signup
+
+					// [change this signup status to cancelled [and email relevant people]]
+
+					// if this app is [GSE Schedule] and schedule data is being modified but schedule is not being cancelled
+
+					// [email everyone signed up for this schedule that information has changed]
+
+				}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+				// ========================================================
 				// MODIFY CONFIRMATION MESSAGE (if needed)
 				// ========================================================
 
@@ -5856,9 +6670,12 @@
 				globalSubmissionValuePairsArrayOfArrays = [];
 
 				// if saving data normally
-				if (typeof (fData.bypassNormalDataSaving) == 'undefined' || fData.bypassNormalDataSaving == 0) {
+				// i.e., if bypassNormalDataSaving is undefined or (it's not set to 1 and it's not set to an array that contains the request status on load)
+				if (typeof (fData.bypassNormalDataSaving) == 'undefined' || (fData.bypassNormalDataSaving != 1 && fData.bypassNormalDataSaving.indexOf(rData.previousRequestStatus) == -1)) {
+					// console.log('NOT bypassing'); console.log(fData.bypassNormalDataSaving); console.log(rData.previousRequestStatus);
 					globalSubmissionValuePairsArrayOfArrays.push(ReturnStandardSubmissionValuePairArray(clonedForm));
 				}
+				//  else { console.log('bypassing'); }
 
 				// if augmenting the AllRequestData object with some of the form data as an exceptional occurrence
 				if (typeof (fData.augmentDataWithExceptionalEventOccurrence) != 'undefined' && fData.augmentDataWithExceptionalEventOccurrence == 1) {
@@ -5872,13 +6689,12 @@
 
 
 				// if saving data using a custom function
-				if (typeof (fData.customDataSavingFunction) !== 'undefined') {
-					switch (fData.customDataSavingFunction) {
-						case 'ReturnGSESchedulesSubmissionValuePairArray':
-							globalSubmissionValuePairsArrayOfArrays = ReturnStandardSubmissionValuePairArray(clonedForm);
-							break;
-						case 'ReturnGSESchedulesSubmissionValuePairArrayTest':
-							globalSubmissionValuePairsArrayOfArrays = ReturnGSESchedulesSubmissionValuePairArrayTest(clonedForm);
+				// i.e., if customDataSavingFunction is NOT undefined and its requestStatuses array contains the request status on load
+				if (typeof (fData.customDataSavingFunction) !== 'undefined' && fData.customDataSavingFunction.requestStatuses.indexOf(rData.previousRequestStatus) != -1) {
+					// console.log('custom data saving for this status');
+					switch (fData.customDataSavingFunction.useFunction) {
+						case 'ReturnNewGSESchedulesSubmissionValuePairArrayOfArrays':
+							globalSubmissionValuePairsArrayOfArrays = ReturnNewGSESchedulesSubmissionValuePairArrayOfArrays(clonedForm);
 							break;
 					}
 				}
@@ -5895,6 +6711,12 @@
 
 					// save requestID in rData
 					rData.requestID = globalLastRequestIDs[globalLastRequestIDs.length - 1];
+
+					/*
+						// consider
+						rData.requestID = globalLastRequestIDs[0];
+
+					*/
 
 					// -- process notifications
 
@@ -6431,17 +7253,18 @@
 		} else if (type === "gseSignupsHRAdmin") {
 			// scorey: control how oData.gseSignupsHRAdmin gets used to build a screen here
 			$().RenderOverviewScreenButtons(oData.gseSignupsHRAdmin.buttons, 0);
-			$("div#overview-table-container").html("<p>This is 3.2 Signups List for HR Admin (gseSignupsHRAdmin).</p>");
+			//$("div#overview-table-container").html("<p>This is 3.2 Signups List for HR Admin (gseSignupsHRAdmin).</p>");
+			$().RenderAllDataTables(oData.gseSignupsHRAdmin.sections, "overview-table-container");
 		} else if (type === "gseSignupsManager") {
 			// scorey: control how oData.gseSignupsManager gets used to build a screen here
 			$().RenderOverviewScreenButtons(oData.gseSignupsManager.buttons, 0);
-			$("div#overview-table-container").html("<p>This is 3.2 Signups List for Manager (gseSignupsManager).</p>");
+			//$("div#overview-table-container").html("<p>This is 3.2 Signups List for Manager (gseSignupsManager).</p>");
+			$().RenderAllDataTables(oData.gseSignupsManager.sections, "overview-table-container");
 		} else if (type === "gseSignupsStaff") {
 			// scorey: control how oData.gseSignupsStaff gets used to build a screen here
 			$().RenderOverviewScreenButtons(oData.gseSignupsStaff.buttons, 0);
-			$("div#overview-table-container").html("<p>This is 3.2 Signups List for Staff (including Job Admins) (gseSignupsStaff).</p>");
-
-
+			//$("div#overview-table-container").html("<p>This is 3.2 Signups List for Staff (including Job Admins) (gseSignupsStaff).</p>");
+			$().RenderAllDataTables(oData.gseSignupsStaff.sections, "overview-table-container");
 		}
 
 		$("div#overview-screen-container").addClass(type + "-requests");
@@ -6469,8 +7292,9 @@
 			var bodyUnique = '<ul>' +
 				'<li>Affected User = ' + uData.name + ' (' + uData.userName + ')</li>' +
 				'<li>Issue Datetime = ' + $().ReturnFormattedDateTime('nowLocal', null, 'MMMM D, YYYY h:mm a') + '</li>' +
-				'<li>Affected System = ' + 57 + '</li>' +
+				'<li>Affected System = ' + mData.requestName + '</li>' +
 				'<li>Affected Request # = ' + rData.requestID + '</li>' +
+				'<li>Affected GSE Schedule # = ' + rData.scheduleID + '</li>' +
 				'<li>Browser = ' + uData.browserFamilyAndVersion + '</li>' +
 				'<li>Form Factor = ' + uData.formFactor + '</li>' +
 				'<li>OS = ' + uData.os + '</li>' +
@@ -6524,12 +7348,6 @@
 		sData.completedByLinkedNamesString = $().ReturnNamesWLinkedEmailsFromPP('Completed By');
 
 		sData.requestNick = $("input#Request-Nickname").val();
-
-
-
-
-
-
 
 		mData.subjectPreface = mData.requestName + ' Request #' + rData.requestID + ': ';
 
@@ -6913,13 +7731,8 @@
 
 		mData.subjectPreface = mData.requestName + ' Request #' + rData.requestID + ': ';
 
-		mData.uriPageAdmin = mData.uriAdmin;
-		mData.uriPageRequester = mData.uriRequester;
-		mData.uriPageApprover = 'https://bmos.sharepoint.com';
-
-		mData.uriFormAdmin = mData.uriRequest + '?requestID=' + rData.requestID + '&returnURI=' + mData.uriPageAdmin;
-		mData.uriFormRequester = mData.uriRequest + '?requestID=' + rData.requestID + '&returnURI=' + mData.uriPageRequester;
-		mData.uriFormApprover = mData.uriRequest + '?requestID=' + rData.requestID + '&returnURI=' + mData.uriPageApprover;
+		mData.uriOverview = mData.fullSiteBaseURL + "/SitePages/" + mData.pageToken + ".aspx"
+		mData.uriRequest = mData.uriOverview + "?r=" + rData.requestID;
 
 		var eData = $.extend(sData, rData, mData, uData, fData);
 
@@ -6949,9 +7762,9 @@
 							'to': toAdmin,
 							'subject': eData.subjectPreface + 'new request received',
 							'bodyUnique': '<p>' + eData.requesterName + ' has submitted a new request. You can ' +
-								'<a href="' + eData.uriFormAdmin + '">review this request\'s details</a>, ' +
+								'<a href="' + eData.uriRequest + '">review this request\'s details</a>, ' +
 								'<a href="mailto:' + eData.requesterEmail + '">contact the requester</a> ' +
-								'with any questions, or <a href="' + eData.uriPageAdmin + '">' +
+								'with any questions, or <a href="' + eData.uriOverview + '">' +
 								'review other ' + eData.requestName + ' requests</a>.</p>'
 						});
 					});
@@ -6967,9 +7780,9 @@
 						'to': eData.requesterEmail,
 						'subject': eData.subjectPreface + 'new request received',
 						'bodyUnique': '<p>The request you nicknamed "' + eData.requestNick + '" has been received. You can ' +
-							'<a href="' + eData.uriFormRequester + '">review this request\'s details</a>, ' +
+							'<a href="' + eData.uriRequest + '">review this request\'s details</a>, ' +
 							'<a href="mailto:' + eData.adminEmailString + '">contact the admin</a> ' +
-							'with any questions, or <a href="' + eData.uriPageRequester + '">' +
+							'with any questions, or <a href="' + eData.uriOverview + '">' +
 							'review other ' + eData.requestName + ' requests</a>.</p>'
 					});
 				}
@@ -7000,7 +7813,7 @@
 								'caller': 'approved admin',
 								'to': toAdmin,
 								'subject': eData.subjectPreface + eData.requestStatus.toLowerCase(),
-								'bodyUnique': '<p>As needed, <a href="' + eData.uriFormAdmin + '">review the request\'s details</a> ' +
+								'bodyUnique': '<p>As needed, <a href="' + eData.uriRequest + '">review the request\'s details</a> ' +
 									'and contact ' + eData.requestedForLinkedNamesString + '.'
 							});
 						});
@@ -7055,7 +7868,7 @@
 							'to': addressee,
 							'subject': eData.subjectPreface + 'assigned to you',
 							'bodyUnique': '<p>This request has been assigned to you. As needed, ' +
-								'<a href="' + eData.uriFormAdmin + '">review the details of this request</a> ' +
+								'<a href="' + eData.uriRequest + '">review the details of this request</a> ' +
 								'or contact ' + eData.requestedForLinkedNamesString + '.</p>'
 						});
 					});
@@ -7140,7 +7953,7 @@
 						'caller': 'endOfLife requester generic',
 						'to': eData.requesterEmail,
 						'subject': eData.subjectPreface + eData.requestStatus.toLowerCase(),
-						'bodyUnique': '<p>This is the <a href="' + eData.uriFormAdmin + '">request you nicknamed "' + eData.requestNick +
+						'bodyUnique': '<p>This is the <a href="' + eData.uriRequest + '">request you nicknamed "' + eData.requestNick +
 							'"</a>. Please <a href="mailto:' + eData.adminEmailString + '">contact the admin</a> with any ' +
 							'issues related to this request.'
 					});
@@ -10778,7 +11591,7 @@
 
 	$.fn.CreateWFHistoryItem = function (d) {
 		// set up vars for new history item
-		if (typeof (rData.requestID) != 'undefined') {
+		if (rData.requestID && rData.requestID != '') {
 			var requestID = rData.requestID;
 		} else {
 			var requestID = 0;
@@ -10797,7 +11610,7 @@
 			ID: 0,
 			valuepairs: historyValuePairs,
 			completefunc: function (xData, Status) {
-				notificationAttemptWFHistorySuccess = $().HandleListUpdateReturn(xData, Status, 'WF History List Error (Notification Attempt)');
+				notificationAttemptWFHistorySuccess = $().HandleListUpdateReturn(xData, Status, 'WF History List Error (CreateWFHistoryItem)');
 			}
 		});
 	};
@@ -11180,8 +11993,17 @@
 				'Resolved': true
 			});
 		});
-
 		SPClientPeoplePicker_InitStandaloneControlWrapper(metaObject.pickerID, allPeople, schema);
+	};
+
+
+
+	$.fn.PutCurrentUserInField = function (fieldName) {
+		$().PutAddtlPeopleInPicker(fieldName, [{
+			'name': uData.name,
+			'email': uData.email,
+			'account': uData.account
+		}]);
 	};
 
 
@@ -11723,6 +12545,10 @@
 
 		// start building field
 		var field = '<input type="hidden" id="' + e.hypehnatedNameLower + '" name="' + e.hypehnatedNameLower + '"';
+
+		if (typeof (e.listFieldName) !== "undefined") {
+			field += ' listFieldName="' + e.listFieldName + '" ';
+		}
 
 		if (typeof (e.value) !== "undefined") {
 			field += ' value="' + e.value + '"';
@@ -12966,7 +13792,6 @@
 
 		var formDataCopy = {};
 
-
 		$.each(formData, function (formDatumKey, formDatumValue) {
 			formDataCopy[formDatumKey] = formDatumValue;
 		});
@@ -12994,7 +13819,13 @@
 			}
 		}
 
+		// console.log('formDataCopy');
+		// console.log(formDataCopy);
+
 		for (field in formDataCopy) {
+
+			// console.log('field');
+			// console.log(field);
 
 			// get the field in the form that matches the stored data value
 			element = $(form).find("#" + field);
@@ -16127,6 +16958,12 @@
 			case "LoadDepartmentSelectOptions":
 				return $().LoadDepartmentSelectOptions(functionArgumentsObject);
 				break;
+
+			case "ReturnUserIsGSEHRAdmin":
+				return $().ReturnUserIsGSEHRAdmin();
+				break;
+
+
 		}
 	}
 
@@ -16422,7 +17259,7 @@
 
 
 
-	$.fn.CreateOrUpdateListItem = function (mData, rData, submissionValuePairsArray) {
+	$.fn.CreateOrUpdateListItem = function (mData, rData, submissionValuePairsArray, webURL) {
 
 		// --- set up internal promise to configure
 
@@ -16442,7 +17279,7 @@
 
 		// send the data to the list
 
-		$().SPServices({
+		var updateListItemsOptions = {
 			operation: 'UpdateListItems',
 			listName: mData.defaultListNameForSWFRequestData,
 			batchCmd: batchCommand,
@@ -16482,10 +17319,15 @@
 
 					deferred.resolve();
 
-
 				}
 			}
-		});
+		};
+
+		if (webURL) {
+			updateListItemsOptions.webURL = webURL;
+		}
+
+		$().SPServices(updateListItemsOptions);
 		return deferred.promise();
 	};
 
@@ -16561,14 +17403,15 @@
 
 
 
-	function ReturnGSESchedulesSubmissionValuePairArray(form) {
-
+	function ReturnNewGSESchedulesSubmissionValuePairArrayOfArrays(form) {
 		/*
 			overview / context notes
 			1. for each date that was added, one row will be created in SWFList
 			2. for each row to be created in SWFList, one array must be added to globalSubmissionValuePairsArrayOfArrays
 			3. each array consists of an element for every SWFList column that will be populated
 			4. one of those elements corresponds to the AllRequestData column
+
+			for each date in the form, add to globalSubmissionValuePairsArrayOfArrays an array of elements for every SWFList column that will be populated
 
 		*/
 
@@ -16583,9 +17426,12 @@
 		//		all of the repeatable date fields, we'll match the beginning of the IDs
 		// note: change the partial ID being searched for to correspond to the field name you've chosen for the form; 
 		// 		using the caret character means we'll find every input whose ID *begins* with this partial ID
-		$(form).find('input[id^="Name-of-Date-Field"]').each(function () {
+		$(form).find('input[id^="Repeating-Date"]').each(function () {
 			scheduleDates.push($(this).val());
 		});
+
+		// console.log('scheduleDates');
+		// console.log(scheduleDates);
 
 		// for each date that was found
 		$.each(scheduleDates, function (i, scheduleDate) {
@@ -16613,7 +17459,7 @@
 				// 		how the schedule date will be stored; it doesn't correspond to the form you've already created;
 				// 		be aware that in future project stages it may be discovered that a different name makes sense, so
 				// 		this may need to be changed
-				formDataString += '"Name-of-Date-Field": "' + scheduleDateISO + '",';
+				formDataString += '"Date": "' + scheduleDateISO + '",';
 
 				// end building the JSON string that will be stored
 				formDataString += '}';
@@ -16629,7 +17475,10 @@
 				// 		because we will need to query against this column
 				// note: because this data / column is handled manually here, don't define a listFieldName for 
 				// 		the corresponding form field in settings.js
-				submissionValuePairsArray.push(["NameOfDateColumnInSWFList", scheduleDateISO]);
+				globalSubmissionValuePairsArray.push(["Date", scheduleDateISO]);
+
+				// console.log('ReturnNewGSESchedulesSubmissionValuePairArrayOfArrays - globalSubmissionValuePairsArray');
+				// console.log(globalSubmissionValuePairsArray);
 
 				// push globalSubmissionValuePairsArray to the array to return
 				submissionValuePairsArrayOfArraysToReturn.push(globalSubmissionValuePairsArray);
@@ -16657,47 +17506,13 @@
 
 
 
+	/* function ReturnNewGSESchedulesSubmissionValuePairArrayOfArraysTest(form) {
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	function ReturnGSESchedulesSubmissionValuePairArrayTest(form) {
-
-		/*
-			overview / context notes
-			1. for each date that was added, one row will be created in SWFList
-			2. for each row to be created in SWFList, one array must be added to globalSubmissionValuePairsArrayOfArrays
-			3. each array consists of an element for every SWFList column that will be populated
-			4. one of those elements corresponds to the AllRequestData column
-
-		*/
+		// 	overview / context notes
+		// 	1. for each date that was added, one row will be created in SWFList
+		// 	2. for each row to be created in SWFList, one array must be added to globalSubmissionValuePairsArrayOfArrays
+		// 	3. each array consists of an element for every SWFList column that will be populated
+		// 	4. one of those elements corresponds to the AllRequestData column
 
 		// set up vars
 		// the dates for which we'll create rows in SWFList
@@ -16765,7 +17580,7 @@
 
 		// return the array
 		return submissionValuePairsArrayOfArraysToReturn;
-	}
+	} */
 
 
 
@@ -17142,9 +17957,9 @@
 		// dateTime.minute  = :15:00
 
 		dateTime.date = moment(dateTime.date, 'MMMM D, YYYY').format('YYYY-MM-DD');
-		dateTime.timezone = moment(dateTime.date, 'MMMM D, YYYY').format('Z');
+		// dateTime.timezone = moment(dateTime.date, 'MMMM D, YYYY').format('Z');
 
-		return dateTime.date + dateTime.hour + dateTime.minute + dateTime.timezone;
+		return dateTime.date + dateTime.hour + dateTime.minute + 'Z';
 	};
 
 
@@ -17235,7 +18050,7 @@
 					'internalName': 'RequestedFor',
 					'userName': 1
 				}, {
-					'displayName': 'Event Start Date and Time',
+					'displayName': 'Event Starts',
 					'internalName': 'EventBeginningDatetime',
 					'groupingFriendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'ddd, MMM D, YYYY', 'determineYearDisplayDynamically': 1 }
 				}, {
@@ -17258,6 +18073,27 @@
 						'           <FieldRef Name="RequestStatus"></FieldRef>' +
 						'           <Value Type="Text">Pending Approval</Value>' +
 						'       </Eq>' +
+						// '       <And>' +
+						// '           <Geq>' +
+						// '               <FieldRef Name="EventBeginningDatetime"></FieldRef>' +
+						// '               <Value Type="DateTime" IncludeTimeValue="FALSE">' + startDateFrom + 'T00:00:00Z</Value>' +
+						// '           </Geq>' +
+						// '           <Leq>' +
+						// '               <FieldRef Name="EventBeginningDatetime"></FieldRef>' +
+						// '               <Value Type="DateTime" IncludeTimeValue="FALSE">' + startDateTo + 'T00:00:00Z</Value>' +
+						// '           </Leq>' +
+						// '       </And>' +
+						'   </And>' +
+						'</Where>'
+				}, {
+					'tableID': 'approved',
+					'someColsAreUsers': 1,
+					'customCAMLQuery': '<Where>' +
+						'   <And>' +
+						'       <Eq>' +
+						'           <FieldRef Name="RequestStatus"></FieldRef>' +
+						'           <Value Type="Text">Approved</Value>' +
+						'       </Eq>' +
 						'       <And>' +
 						'           <Geq>' +
 						'               <FieldRef Name="EventBeginningDatetime"></FieldRef>' +
@@ -17269,14 +18105,53 @@
 						'           </Leq>' +
 						'       </And>' +
 						'   </And>' +
-						'</Where>'
-				}, {
-					'tableID': 'approved',
-					'someColsAreUsers': 1,
+						'</Where>',
 					'grouping': {
 						'zeroIndexedColumnNumber': 3,
 						'numberColsForHeaderToSpan': 6
 					},
+					'customColumns': [
+						{
+							'displayName': 'Request ID',
+							'internalName': 'ID',
+							'formLink': 1
+						}, {
+							'displayName': 'Talk To',
+							'internalName': 'RequestedFor',
+							'userName': 1
+						}, {
+							'displayName': 'Event Name',
+							'internalName': 'EventName'
+						}, {
+							'displayName': 'Event Date and Time',
+							'internalName': 'EventBeginningDatetime',
+							'groupingFriendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'ddd, MMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+							// }, {
+							// 	'displayName': 'Start Time',
+							// 	'internalName': 'EventBeginningDatetime',
+							// 	'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'h:mm a' }
+							// }, {
+							// 	'displayName': 'End Time',
+							// 	'internalName': 'EventEndingDatetime',
+							// 	'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'h:mm a' }
+						}, {
+							'displayName': 'Request Date',
+							'internalName': 'RequestDate',
+							'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+						}, {
+							'displayName': 'Assigned To',
+							'internalName': 'AssignedTo',
+							'userName': 1
+						}, {
+							'displayName': 'Assignment Date',
+							'internalName': 'AssignmentDate',
+							'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+						}
+					],
+					'sortColAndOrder': [3, 'asc']
+				}, {
+					'tableID': 'approved-ng',
+					'someColsAreUsers': 1,
 					'customCAMLQuery': '<Where>' +
 						'   <And>' +
 						'       <Eq>' +
@@ -17301,21 +18176,28 @@
 							'internalName': 'ID',
 							'formLink': 1
 						}, {
-							'displayName': 'Requested By',
-							'internalName': 'RequestedBy',
-							'userName': 1
-						}, {
 							'displayName': 'Talk To',
 							'internalName': 'RequestedFor',
 							'userName': 1
 						}, {
-							'displayName': 'Event Date and Time',
-							'internalName': 'EventBeginningDatetime',
-							'groupingFriendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'ddd, MMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+							'displayName': 'Event Name',
+							'internalName': 'EventName'
+							// }, {
+							// 	'displayName': 'Event Date',
+							// 	'internalName': 'EventBeginningDatetime',
+							// 	'groupingFriendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'ddd, MMM D, YYYY', 'determineYearDisplayDynamically': 1 }
 						}, {
-							'displayName': 'Request Date',
-							'internalName': 'RequestDate',
-							'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+							'displayName': 'Event Start Date & Time',
+							'internalName': 'EventBeginningDatetime',
+							'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'ddd, MMM D, YYYY h:mm a', 'determineYearDisplayDynamically': 1 }
+						}, {
+							'displayName': 'Event End Date & Time',
+							'internalName': 'EventEndingDatetime',
+							'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'ddd, MMM D, YYYY h:mm a', 'determineYearDisplayDynamically': 1 }
+							// }, {
+							// 	'displayName': 'Request Date',
+							// 	'internalName': 'RequestDate',
+							// 	'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
 						}, {
 							'displayName': 'Assigned To',
 							'internalName': 'AssignedTo',
@@ -17325,7 +18207,9 @@
 							'internalName': 'AssignmentDate',
 							'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
 						}
-					]
+					],
+					'sortColAndOrder': [3, 'asc']
+
 				}, {
 					'tableID': 'closed',
 					'someColsAreUsers': 1,
@@ -17405,16 +18289,18 @@
 
 		var commandBarContents = '<h2 id="header_command-bar">Commands</h2> \n' +
 			'<div id="container_new-request-control"> \n' +
-			'   <a class="button-link button-link_new-item button_swf-new-request-with-datatable" data-button-type="newRequest" href="' + mData.uriAdmin + '">New Request</a> \n' +
+			'   <a class="button-link button-link_new-item button_swf-new-request-with-datatable" data-button-type="newRequest" href="/sites/' + mData.siteToken + '/SitePages/App.aspx?r=0">New Request</a> \n' +
 			'</div> \n' +
 			'<ul id="container_tab-controls"> \n' +
 			'   <li><a href="#table-container_pending-approval">Pending Approval</a></li> \n' +
 			'   <li><a href="#table-container_approved">Approved</a></li> \n' +
+			'   <li><a href="#table-container_approved-ng">Approved NG</a></li> \n' +
 			'   <li><a href="#table-container_closed">Closed</a></li> \n' +
 			'</ul> \n' +
 			'<div id="container_date-filter-controls-and-header"> \n' +
 			'   <div id="text_date-filter-controls" class="collapsible">Dates</div> \n' +
 			'   <div id="container_date-filter-controls"> \n' +
+			'        <div id="date-filter-controls-notice">Date filters are effective for Approved and Closed requests.</div> \n' +
 			'        <div class="container_date-filter-control"> \n' +
 			'            <label class="date-selector-label" for="filter--start-date_from">Start Date From</label> \n' +
 			'            <input class="date-selector" id="filter--start-date_from" name="filter--start-date_from" type="text"> \n' +
@@ -17469,7 +18355,7 @@
 			var newStartDateFrom = $().ReturnFormattedDateTime(startDateFromFieldValue, null, 'YYYY-MM-DD');
 			var newStartDateTo = $().ReturnFormattedDateTime(startDateToFieldValue, null, 'YYYY-MM-DD');
 
-			window.location = mData.uriAdmin + "?startDateFrom=" + newStartDateFrom + "&startDateTo=" + newStartDateTo;
+			window.location = "/sites/" + mData.siteToken + "/SitePages/App.aspx?startDateFrom=" + newStartDateFrom + "&startDateTo=" + newStartDateTo;
 		});
 	};
 
@@ -17636,10 +18522,12 @@
 					"</Where>";
 			} else if (typeof (t.myRSQueryRelevantStatus) != "undefined") {
 
-				if (typeof (mData.getRequesterFrom) == 'undefined') {
-					var getRequesterFrom = 'Author';
-				} else {
-					var getRequesterFrom = mData.getRequesterFrom;
+				var getRequesterFrom = 'Author';
+				if (t.getRequesterFrom) {
+					getRequesterFrom = t.getRequesterFrom;
+				}
+				if (mData.getRequesterFrom) {
+					getRequesterFrom = mData.getRequesterFrom;
 				}
 
 				query = "<Where>" +
@@ -17654,26 +18542,26 @@
 					"		 </Contains>" +
 					"	</And>" +
 					"</Where>";
-			} else if (typeof (t.myRSQueryRelevantStatus) != "undefined") {
-
-				if (typeof (mData.getRequesterFrom) == 'undefined') {
-					var getRequesterFrom = 'Author';
-				} else {
-					var getRequesterFrom = mData.getRequesterFrom;
-				}
-
-				query = "<Where>" +
-					"	<And>" +
-					"		 <Eq>" +
-					"			  <FieldRef Name='RequestStatus'></FieldRef>" +
-					"			  <Value Type='Text'>" + t.myRSQueryRelevantStatus + "</Value>" +
-					"		 </Eq>" +
-					"		 <Contains>" +
-					"			  <FieldRef Name='" + getRequesterFrom + "'></FieldRef>" +
-					"			  <Value Type='Text'>" + uData.name + "</Value>" +
-					"		 </Contains>" +
-					"	</And>" +
-					"</Where>";
+				/* } else if (typeof (t.myRSQueryRelevantStatus) != "undefined") {
+	
+					if (typeof (mData.getRequesterFrom) == 'undefined') {
+						var getRequesterFrom = 'Author';
+					} else {
+						var getRequesterFrom = mData.getRequesterFrom;
+					}
+	
+					query = "<Where>" +
+						"	<And>" +
+						"		 <Eq>" +
+						"			  <FieldRef Name='RequestStatus'></FieldRef>" +
+						"			  <Value Type='Text'>" + t.myRSQueryRelevantStatus + "</Value>" +
+						"		 </Eq>" +
+						"		 <Contains>" +
+						"			  <FieldRef Name='" + getRequesterFrom + "'></FieldRef>" +
+						"			  <Value Type='Text'>" + uData.name + "</Value>" +
+						"		 </Contains>" +
+						"	</And>" +
+						"</Where>"; */
 
 
 
@@ -17730,79 +18618,6 @@
 					"			<FieldRef Name='" + getRequesterFrom + "'></FieldRef>" +
 					"			<Value Type='Text'>" + uData.name + "</Value>" +
 					"		 </Contains>" +
-					"	</And>" +
-					"</Where>";
-
-			} else if (typeof (t.myDeptRSQueryRelevantStatus) != "undefined") {
-
-				if (typeof (mData.getRequesterFrom) == 'undefined') {
-					var getRequesterFrom = 'Department';
-				} else {
-					var getRequesterFrom = mData.getRequesterFrom;
-				}
-
-				query = "<Where>" +
-					"	<And>" +
-					"		 <Eq>" +
-					"			  <FieldRef Name='RequestStatus'></FieldRef>" +
-					"			  <Value Type='Text'>" + t.myDeptRSQueryRelevantStatus + "</Value>" +
-					"		 </Eq>" +
-					"		 <Contains>" +
-					"			  <FieldRef Name='" + getRequesterFrom + "'></FieldRef>" +
-					"			  <Value Type='Text'>" + uData.dept + "</Value>" +
-					"		 </Contains>" +
-					"	</And>" +
-					"</Where>";
-
-			} else if (typeof (t.myDeptRSQueryRelevantStatusUnassigned) != "undefined") {
-
-				if (typeof (mData.getRequesterFrom) == 'undefined') {
-					var getRequesterFrom = 'Department';
-				} else {
-					var getRequesterFrom = mData.getRequesterFrom;
-				}
-
-				query = "<Where>" +
-					"	<And>" +
-					"		<And>" +
-					"			<Eq>" +
-					"				<FieldRef Name='RequestStatus'></FieldRef>" +
-					"				<Value Type='Text'>" + t.myDeptRSQueryRelevantStatus + "</Value>" +
-					"			</Eq>" +
-					"			<Contains>" +
-					"				<FieldRef Name='" + getRequesterFrom + "'></FieldRef>" +
-					"				<Value Type='Text'>" + uData.dept + "</Value>" +
-					"			</Contains>" +
-					"		</And>" +
-					"		<IsNull>" +
-					"			<FieldRef Name='AssignedTo'></FieldRef>" +
-					"		</IsNull>" +
-					"	</And>" +
-					"</Where>";
-
-			} else if (typeof (t.myDeptRSQueryRelevantStatusAssigned) != "undefined") {
-
-				if (typeof (mData.getRequesterFrom) == 'undefined') {
-					var getRequesterFrom = 'Department';
-				} else {
-					var getRequesterFrom = mData.getRequesterFrom;
-				}
-
-				query = "<Where>" +
-					"	<And>" +
-					"		<And>" +
-					"			<Eq>" +
-					"				<FieldRef Name='RequestStatus'></FieldRef>" +
-					"				<Value Type='Text'>" + t.myDeptRSQueryRelevantStatus + "</Value>" +
-					"			</Eq>" +
-					"			<Contains>" +
-					"				<FieldRef Name='" + getRequesterFrom + "'></FieldRef>" +
-					"				<Value Type='Text'>" + uData.dept + "</Value>" +
-					"			</Contains>" +
-					"		</And>" +
-					"		<IsNotNull>" +
-					"			<FieldRef Name='AssignedTo'></FieldRef>" +
-					"		</IsNotNull>" +
 					"	</And>" +
 					"</Where>";
 
@@ -18398,7 +19213,8 @@
 				"pagingType": "simple",
 				"order": opt.sortColAndOrder,
 				"drawCallback": opt.groupingFunction,
-				"columnDefs": opt.columnDefs
+				"columnDefs": opt.columnDefs,
+				"autoWidth": false
 			});
 		}
 	};
@@ -19398,103 +20214,145 @@
 
 
 
+	$.fn.ReturnManagers = function () {
+		var managers = [];
+		// query the api for the data
+		$.ajax({
+			async: false,
+			method: "GET",
+			dataType: "json",
+			url: "https://neso.mos.org/activeDirectory/managers?ts=" + Date.now(),
+		})
+			.done(function (nesoData) {
+				// console.log("nesoData:");
+				// console.log(nesoData);
+				managers = nesoData.docs;
+			})
+			.fail(function (error) {
+				// console.log("no such luck - NESO");
+				// console.log(error);
+				managers = error;
+			});
+		return managers;
+	};
+
+
+
+	$.fn.ReturnGSEGroupsFromSP = function () {
+		// get the config data stored as AllRequestData in /sites/hr-service-config/Lists/SWFList
+		var allRequestDataObject = $().GetFieldsFromOneRow({
+			"listName": "SWFList",
+			"webURL": "https://bmos.sharepoint.com/sites/hr-service-config",
+			"select": [{
+				"nameHere": "formData",
+				"nameInList": "AllRequestData"
+			}],
+			"where": {
+				"field": "ID",
+				"type": "Number",
+				"value": 1,
+			}
+		});
+
+		// specify the 'form fields' data to extract from allRequestDataObject
+		var gseGroupsKeys = [
+			'HR-Admins',
+			'Job-Admins'
+		];
+
+		// set up var
+		var gseGroups = {};
+
+		// iterate over the form data keys and values
+		$.each(allRequestDataObject.formData, function (formDatumKey, formDatumValue) {
+			// if this form datum value is a person
+			if (formDatumValue != "") {
+				// if this form datum key matches an element of gseGroupsKeys
+				if (gseGroupsKeys.indexOf(formDatumKey) > -1) {
+					// get a new key (for future ease; prefer dot notation)
+					var newKey = ReplaceAll("-", "", formDatumKey);
+					// create an empty array using the new key
+					gseGroups[newKey] = [];
+					// for each person object in this formDatumValue
+					$.each(formDatumValue, function (i, person) {
+						// add the person's name and email to the new array
+						var newPerson = {};
+						newPerson['name'] = person.displayText;
+						newPerson['email'] = person.description;
+						newPerson['account'] = ReplaceAll("@mos.org", "", person.description.toLowerCase());
+						newPerson['accountLong'] = person.account.toLowerCase();
+						gseGroups[newKey].push(newPerson);
+					});
+				}
+			}
+		});
+		// return the data
+		return gseGroups;
+	};
+
+
+
 	$.fn.ReturnGSEGroups = function () {
-		// send to caller
-		return {
-			"HRAdmins": [{
-				"name": "Samuel Corey",
-				"email": "scorey@mos.org",
-				"account": "scorey",
-				"accountLong": "i:0#.f|membership|scorey@mos.org"
-			}, {
-				"name": "James Baker",
-				"email": "jbaker@mos.org",
-				"account": "jbaker",
-				"accountLong": "i:0#.f|membership|jbaker@mos.org"
-			}
-			],
-			"JobAdmins": [{
-				"name": "HubTester4",
-				"email": "sp4@mos.org",
-				"account": "sp4",
-				"accountLong": "i:0#.f|membership|sp4@mos.org"
-			}/*, {
-					"name": "Samuel Corey",
-					"email": "scorey@mos.org",
-					"account": "scorey",
-					"accountLong": "i:0#.f|membership|scorey@mos.org"
-				}*/, {
-				"name": "HubTester8",
-				"email": "sp8@mos.org",
-				"account": "sp8",
-				"accountLong": "i:0#.f|membership|sp8@mos.org"
-				// }, {
-				// 	"name": "James Baker",
-				// 	"email": "jbaker@mos.org",
-				// 	"account": "jbaker",
-				// 	"accountLong": "i:0#.f|membership|jbaker@mos.org"
-			}
-			],
-			"Managers": [{
-				"name": "HubTester5",
-				"email": "sp5@mos.org",
-				"account": "sp5",
-				"accountLong": "i:0#.f|membership|sp5@mos.org"
-			}, {
-				"name": "HubTester9",
-				"email": "sp9@mos.org",
-				"account": "sp9",
-				"accountLong": "i:0#.f|membership|sp9@mos.org"
-			}, /*{
-					"name": "Samuel Corey",
-					"email": "scorey@mos.org",
-					"account": "scorey",
-					"accountLong": "i:0#.f|membership|scorey@mos.org"
-				},*/ {
-				"name": "Ben Wilson",
-				"email": "bwilson@mos.org",
-				"account": "bwilson",
-				"accountLong": "i:0#.f|membership|bwilson@mos.org"
-				// }, {
-				// 	"name": "James Baker",
-				// 	"email": "jbaker@mos.org",
-				// 	"account": "jbaker",
-				// 	"accountLong": "i:0#.f|membership|jbaker@mos.org"
-			}
-			]
-		}
+		// get data from SP and Neso
+		var gseGroupsFromSP = $().ReturnGSEGroupsFromSP();
+		var managers = $().ReturnManagers();
+		// set up var to return
+		var gseGroups = gseGroupsFromSP;
+		// add Managers empty array
+		gseGroups.Managers = [];
+		// for each queried manager
+		managers.forEach((manager) => {
+			// push the manager's data to main var
+			gseGroups.Managers.push({
+				account: manager.account,
+				accountLong: 'i:0#.f|membership|' + manager.account + '@mos.org',
+				email: manager.email,
+				name: manager.displayName,
+			});
+		});
+		// manually add sp3
+		gseGroups.Managers.push({
+			account: 'sp3',
+			accountLong: 'i:0#.f|membership|sp3@mos.org',
+			email: 'sp3@mos.org',
+			name: 'Hub Tester3',
+		});
+		// return main var
+		return gseGroups;
 	};
 
 
 
 	$.fn.ReturnUserIsGSEHRAdmin = function () {
-		var userIsGSEHRAdmin = false;
+		var userIsGSEHRAdmin = 0;
 		var gseGroups = $().ReturnGSEGroups();
 		$.each(gseGroups.HRAdmins, function (i, person) {
 			if (person.accountLong === uData.account) {
-				userIsGSEHRAdmin = true;
+				userIsGSEHRAdmin = 1;
 			}
 		});
 		return userIsGSEHRAdmin;
 	};
 
 	$.fn.ReturnUserIsGSEJobAdmin = function () {
-		var userIsGSEJobAdmin = false;
+		var userIsGSEJobAdmin = 0;
 		var gseGroups = $().ReturnGSEGroups();
 		$.each(gseGroups.JobAdmins, function (i, person) {
 			if (person.accountLong === uData.account) {
-				userIsGSEJobAdmin = true;
+				userIsGSEJobAdmin = 1;
 			}
 		});
 		return userIsGSEJobAdmin;
 	};
 
 	$.fn.ReturnUserIsGSEManager = function () {
-		var userIsGSEManager = false;
+		var userIsGSEManager = 0;
 		var gseGroups = $().ReturnGSEGroups();
 		$.each(gseGroups.Managers, function (i, person) {
-			if (person.accountLong === uData.account) {
-				userIsGSEManager = true;
+			if (person) {
+				if (person.accountLong === uData.account) {
+					userIsGSEManager = 1;
+				}
 			}
 		});
 		return userIsGSEManager;
@@ -20765,6 +21623,9 @@
 		// data for a specific request; i.e., will be, largely, data from a row of SWFList
 		rData = { "requestID": GetParamFromUrl(location.search, "r") };
 
+		// data for a specific GSE Schedule
+		rData.gseScheduleID = GetParamFromUrl(location.search, "gseScheduleID");
+
 		// data for the overview screen for this user
 		oData = $().ReturnThisAppOData();
 
@@ -20809,58 +21670,63 @@
 		mData = $.extend(
 			GetFieldsFromOneRow({
 				"listName": "ComponentLog",
-				"select": [{
-					"nameHere": "uriAdmin",
-					"nameInList": "URIAdmin",
-					"linkField": 1
-					// }, {
-					// 	"nameHere": "uriRequester",
-					// 	"nameInList": "URIRequester",
-					// 	"linkField": 1
-					// }, {
-					// 	"nameHere": "uriRequest",
-					// 	"nameInList": "URIRequest",
-					// 	"linkField": 1
-					// }, {
-					// 	"nameHere": "uriRequestAlternate",
-					// 	"nameInList": "URIRequestAlternate",
-					// 	"linkField": 1
-				}, {
-					"nameHere": "uriRoot",
-					"nameInList": "URIRoot",
-					"linkField": 1
-				}, {
-					"nameHere": "uriWFHistory",
-					"nameInList": "URIWFHistory",
-					"linkField": 1
-				}, {
-					"nameHere": "requiredApproversString",
-					"nameInList": "RequiredApprovers"
-				}, {
-					"nameHere": "componentAdmin",
-					"nameInList": "AdminAccess"
-				}, {
-					"nameHere": "adminContacts",
-					"nameInList": "AdminContacts"
-				}, {
-					"nameHere": "viewAccess",
-					"nameInList": "ViewAccess"
-				}, {
-					"nameHere": "requestName",
-					"nameInList": "RequestName"
-				}, {
-					"nameHere": "adminNotificationPersons",
-					"nameInList": "AdminNotifications"
-				}, {
-					"nameHere": "autoAssignments1",
-					"nameInList": "AutoAssignments1"
-				}, {
-					"nameHere": "autoAssignments2",
-					"nameInList": "AutoAssignments2"
-				}, {
-					"nameHere": "quickLaunches",
-					"nameInList": "QuickLaunches"
-				}],
+				"select": [
+					{
+						// "nameHere": "uriAdmin",
+						// "nameInList": "URIAdmin",
+						// "linkField": 1
+						// }, {
+						// 	"nameHere": "uriRequester",
+						// 	"nameInList": "URIRequester",
+						// 	"linkField": 1
+						// }, {
+						// 	"nameHere": "uriRequest",
+						// 	"nameInList": "URIRequest",
+						// 	"linkField": 1
+						// }, {
+						// 	"nameHere": "uriRequestAlternate",
+						// 	"nameInList": "URIRequestAlternate",
+						// 	"linkField": 1
+						// }, {
+						"nameHere": "uriRoot",
+						"nameInList": "URIRoot",
+						"linkField": 1
+					}, {
+						"nameHere": "uriWFHistory",
+						"nameInList": "URIWFHistory",
+						"linkField": 1
+					}, {
+						"nameHere": "requiredApproversString",
+						"nameInList": "RequiredApprovers"
+					}, {
+						"nameHere": "conditionalApproversString",
+						"nameInList": "ConditionalApprovers"
+					}, {
+						"nameHere": "componentAdmin",
+						"nameInList": "AdminAccess"
+					}, {
+						"nameHere": "adminContacts",
+						"nameInList": "AdminContacts"
+					}, {
+						"nameHere": "viewAccess",
+						"nameInList": "ViewAccess"
+					}, {
+						"nameHere": "requestName",
+						"nameInList": "RequestName"
+					}, {
+						"nameHere": "adminNotificationPersons",
+						"nameInList": "AdminNotifications"
+					}, {
+						"nameHere": "autoAssignments1",
+						"nameInList": "AutoAssignments1"
+					}, {
+						"nameHere": "autoAssignments2",
+						"nameInList": "AutoAssignments2"
+					}, {
+						"nameHere": "quickLaunches",
+						"nameInList": "QuickLaunches"
+					}
+				],
 				"where": {
 					"field": "ComponentID",
 					"type": "Number",
@@ -20906,11 +21772,11 @@
 
 		// if this is a GSE Request
 		if (mData.requestName === "GSE Job" || mData.requestName === "GSE Schedule" || mData.requestName === "GSE Signup" || mData.requestName === "GSE Configuration") {
-			if ($().ReturnUserIsGSEHRAdmin()) {
+			if ($().ReturnUserIsGSEHRAdmin() === 1) {
 				uData.roles.push("gseHRAdmin");
-			} else if ($().ReturnUserIsGSEJobAdmin()) {
+			} else if ($().ReturnUserIsGSEJobAdmin() === 1) {
 				uData.roles.push("gseJobAdmin");
-			} else if ($().ReturnUserIsGSEManager()) {
+			} else if ($().ReturnUserIsGSEManager() === 1) {
 				uData.roles.push("gseManager");
 			} else {
 				uData.roles.push("gseUserOnly");
@@ -20969,7 +21835,7 @@
 		// wait for all data retrieval / setting promises to complete (pass or fail) 
 		$.when.apply($, allDataRetrievalAndSettingPromises).always(function () {
 
-			console.log('using dev_mos-main.1.04 m1 - DevCode4');
+			console.log('using dev_mos-main.1.04 m1');
 
 			$().ConfigureAndShowScreenContainerAndAllScreens();
 		});

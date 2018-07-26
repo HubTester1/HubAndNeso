@@ -7349,12 +7349,6 @@
 
 		sData.requestNick = $("input#Request-Nickname").val();
 
-
-
-
-
-
-
 		mData.subjectPreface = mData.requestName + ' Request #' + rData.requestID + ': ';
 
 		mData.uriOverview = mData.fullSiteBaseURL + "/SitePages/" + mData.pageToken + ".aspx"
@@ -7737,13 +7731,8 @@
 
 		mData.subjectPreface = mData.requestName + ' Request #' + rData.requestID + ': ';
 
-		mData.uriPageAdmin = mData.uriAdmin;
-		mData.uriPageRequester = mData.uriRequester;
-		mData.uriPageApprover = 'https://bmos.sharepoint.com';
-
-		mData.uriFormAdmin = mData.uriRequest + '?requestID=' + rData.requestID + '&returnURI=' + mData.uriPageAdmin;
-		mData.uriFormRequester = mData.uriRequest + '?requestID=' + rData.requestID + '&returnURI=' + mData.uriPageRequester;
-		mData.uriFormApprover = mData.uriRequest + '?requestID=' + rData.requestID + '&returnURI=' + mData.uriPageApprover;
+		mData.uriOverview = mData.fullSiteBaseURL + "/SitePages/" + mData.pageToken + ".aspx"
+		mData.uriRequest = mData.uriOverview + "?r=" + rData.requestID;
 
 		var eData = $.extend(sData, rData, mData, uData, fData);
 
@@ -7773,9 +7762,9 @@
 							'to': toAdmin,
 							'subject': eData.subjectPreface + 'new request received',
 							'bodyUnique': '<p>' + eData.requesterName + ' has submitted a new request. You can ' +
-								'<a href="' + eData.uriFormAdmin + '">review this request\'s details</a>, ' +
+								'<a href="' + eData.uriRequest + '">review this request\'s details</a>, ' +
 								'<a href="mailto:' + eData.requesterEmail + '">contact the requester</a> ' +
-								'with any questions, or <a href="' + eData.uriPageAdmin + '">' +
+								'with any questions, or <a href="' + eData.uriOverview + '">' +
 								'review other ' + eData.requestName + ' requests</a>.</p>'
 						});
 					});
@@ -7791,9 +7780,9 @@
 						'to': eData.requesterEmail,
 						'subject': eData.subjectPreface + 'new request received',
 						'bodyUnique': '<p>The request you nicknamed "' + eData.requestNick + '" has been received. You can ' +
-							'<a href="' + eData.uriFormRequester + '">review this request\'s details</a>, ' +
+							'<a href="' + eData.uriRequest + '">review this request\'s details</a>, ' +
 							'<a href="mailto:' + eData.adminEmailString + '">contact the admin</a> ' +
-							'with any questions, or <a href="' + eData.uriPageRequester + '">' +
+							'with any questions, or <a href="' + eData.uriOverview + '">' +
 							'review other ' + eData.requestName + ' requests</a>.</p>'
 					});
 				}
@@ -7824,7 +7813,7 @@
 								'caller': 'approved admin',
 								'to': toAdmin,
 								'subject': eData.subjectPreface + eData.requestStatus.toLowerCase(),
-								'bodyUnique': '<p>As needed, <a href="' + eData.uriFormAdmin + '">review the request\'s details</a> ' +
+								'bodyUnique': '<p>As needed, <a href="' + eData.uriRequest + '">review the request\'s details</a> ' +
 									'and contact ' + eData.requestedForLinkedNamesString + '.'
 							});
 						});
@@ -7879,7 +7868,7 @@
 							'to': addressee,
 							'subject': eData.subjectPreface + 'assigned to you',
 							'bodyUnique': '<p>This request has been assigned to you. As needed, ' +
-								'<a href="' + eData.uriFormAdmin + '">review the details of this request</a> ' +
+								'<a href="' + eData.uriRequest + '">review the details of this request</a> ' +
 								'or contact ' + eData.requestedForLinkedNamesString + '.</p>'
 						});
 					});
@@ -7964,7 +7953,7 @@
 						'caller': 'endOfLife requester generic',
 						'to': eData.requesterEmail,
 						'subject': eData.subjectPreface + eData.requestStatus.toLowerCase(),
-						'bodyUnique': '<p>This is the <a href="' + eData.uriFormAdmin + '">request you nicknamed "' + eData.requestNick +
+						'bodyUnique': '<p>This is the <a href="' + eData.uriRequest + '">request you nicknamed "' + eData.requestNick +
 							'"</a>. Please <a href="mailto:' + eData.adminEmailString + '">contact the admin</a> with any ' +
 							'issues related to this request.'
 					});
@@ -18084,16 +18073,16 @@
 						'           <FieldRef Name="RequestStatus"></FieldRef>' +
 						'           <Value Type="Text">Pending Approval</Value>' +
 						'       </Eq>' +
-						'       <And>' +
-						'           <Geq>' +
-						'               <FieldRef Name="EventBeginningDatetime"></FieldRef>' +
-						'               <Value Type="DateTime" IncludeTimeValue="FALSE">' + startDateFrom + 'T00:00:00Z</Value>' +
-						'           </Geq>' +
-						'           <Leq>' +
-						'               <FieldRef Name="EventBeginningDatetime"></FieldRef>' +
-						'               <Value Type="DateTime" IncludeTimeValue="FALSE">' + startDateTo + 'T00:00:00Z</Value>' +
-						'           </Leq>' +
-						'       </And>' +
+						// '       <And>' +
+						// '           <Geq>' +
+						// '               <FieldRef Name="EventBeginningDatetime"></FieldRef>' +
+						// '               <Value Type="DateTime" IncludeTimeValue="FALSE">' + startDateFrom + 'T00:00:00Z</Value>' +
+						// '           </Geq>' +
+						// '           <Leq>' +
+						// '               <FieldRef Name="EventBeginningDatetime"></FieldRef>' +
+						// '               <Value Type="DateTime" IncludeTimeValue="FALSE">' + startDateTo + 'T00:00:00Z</Value>' +
+						// '           </Leq>' +
+						// '       </And>' +
 						'   </And>' +
 						'</Where>'
 				}, {
@@ -18300,7 +18289,7 @@
 
 		var commandBarContents = '<h2 id="header_command-bar">Commands</h2> \n' +
 			'<div id="container_new-request-control"> \n' +
-			'   <a class="button-link button-link_new-item button_swf-new-request-with-datatable" data-button-type="newRequest" href="' + mData.uriAdmin + '">New Request</a> \n' +
+			'   <a class="button-link button-link_new-item button_swf-new-request-with-datatable" data-button-type="newRequest" href="/sites/' + mData.siteToken + '/SitePages/App.aspx?r=0">New Request</a> \n' +
 			'</div> \n' +
 			'<ul id="container_tab-controls"> \n' +
 			'   <li><a href="#table-container_pending-approval">Pending Approval</a></li> \n' +
@@ -18311,6 +18300,7 @@
 			'<div id="container_date-filter-controls-and-header"> \n' +
 			'   <div id="text_date-filter-controls" class="collapsible">Dates</div> \n' +
 			'   <div id="container_date-filter-controls"> \n' +
+			'        <div id="date-filter-controls-notice">Date filters are effective for Approved and Closed requests.</div> \n' +
 			'        <div class="container_date-filter-control"> \n' +
 			'            <label class="date-selector-label" for="filter--start-date_from">Start Date From</label> \n' +
 			'            <input class="date-selector" id="filter--start-date_from" name="filter--start-date_from" type="text"> \n' +
@@ -18365,7 +18355,7 @@
 			var newStartDateFrom = $().ReturnFormattedDateTime(startDateFromFieldValue, null, 'YYYY-MM-DD');
 			var newStartDateTo = $().ReturnFormattedDateTime(startDateToFieldValue, null, 'YYYY-MM-DD');
 
-			window.location = mData.uriAdmin + "?startDateFrom=" + newStartDateFrom + "&startDateTo=" + newStartDateTo;
+			window.location = "/sites/" + mData.siteToken + "/SitePages/App.aspx?startDateFrom=" + newStartDateFrom + "&startDateTo=" + newStartDateTo;
 		});
 	};
 
@@ -21845,7 +21835,7 @@
 		// wait for all data retrieval / setting promises to complete (pass or fail) 
 		$.when.apply($, allDataRetrievalAndSettingPromises).always(function () {
 
-			console.log('using dev_mos-main_long.1.04 m57 - DevCode4');
+			console.log('using dev_mos-main_long.1.04 m1');
 
 			$().ConfigureAndShowScreenContainerAndAllScreens();
 		});
