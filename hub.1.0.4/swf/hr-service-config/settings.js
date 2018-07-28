@@ -276,7 +276,8 @@
 								'div#label-and-control_Request-ID, div#label-and-control_Request-Date, ' + 
 								'div#label-and-control_Requested-For, ' + 
 								'div#container_about-the-requester, ' + 
-								' div#label-and-control_Requester-Cancellation' + 
+								'div#label-and-control_Requester-Cancellation, ' + 
+								'div#submission-notice' + 
 								'").hide("fast").addClass("hidden");';
 
 	fData.CustomScriptLast += '$("div#mos-form-submission-confirmation a.link_exit").remove();';

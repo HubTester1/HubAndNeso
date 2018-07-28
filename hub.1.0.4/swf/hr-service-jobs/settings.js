@@ -300,6 +300,7 @@
 	var fData = {
 		'autoTrackGSEJobStatuses': 1,
 		'alwaysTalkToRequester': 1,
+		'additionalViewPermissionsFunction': 'ReturnGSEJobRequestAdditionalViewAccess',
 		'standardElementGroups': {
 			'standardThisRequestAndRequesterElements': 1,
 			'standardAdminElements': {

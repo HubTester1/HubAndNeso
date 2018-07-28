@@ -759,8 +759,9 @@
 			'requestStatuses': ['']
 		},
 		'alwaysTalkToRequester': 1,
+		'additionalViewPermissionsFunction': 'ReturnGSEScheduleAdditionalViewAccess',
 		'standardElementGroups': {
-			'standardThisRequestAndRequesterElements': 1,
+			// 'standardThisRequestAndRequesterElements': 1,
 			// 'standardAdminElements': {
 			// 	'changeRequestStatus': [
 			// 		{ "value": "Approve", "display": "Approve this job" },
@@ -779,6 +780,208 @@
 
 		'uniqueElements': [
 			{
+
+
+				"elementType": "markup",
+				"tag": "h2",
+				"content": "This Request",
+				"htmlID": "header_this-request",
+				"begin": 1,
+				"end": 1
+			}, {
+				"elementType": "markup",
+				"tag": "div",
+				"htmlClass": "label-and-control",
+				"htmlID": "requirement-legend",
+				"content": '	<div class="label"></div>' +
+					'	<div class="field-type-indication"><span class="field-type-indicator field-required"><span class="message message-required"></span></span></div>' +
+					'	<div class="control">= required field</div>',
+				"begin": 1,
+				"end": 1
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "Request ID",
+				"labelContent": "Request ID",
+				"hideForNonAdmin": [""],
+				"hideForAdmin": [""],
+				"disabledForNonAdmin": ["", "Submitted", "Cancelled"],
+				"disabledForAdmin": ["", "Submitted", "Cancelled"]
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "Request Date",
+				"labelContent": "Request Date",
+				"listFieldName": "RequestDate",
+				"friendlyFormatOnLoad": {
+					'incomingFormat': null,
+					'returnFormat': 'MMMM D, YYYY',
+					'determineYearDisplayDynamically': 1
+				},
+				"isoFormatOnSubmit": {
+					'incomingFormat': null,
+					'returnFormat': null,
+					'determineYearDisplayDynamically': null
+				},
+				"hideForNonAdmin": [""],
+				"hideForAdmin": [""],
+				"disabledForNonAdmin": ["", "Submitted", "Cancelled"],
+				"disabledForAdmin": ["", "Submitted", "Cancelled"]
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "Request Nickname",
+				"labelContent": "Request Nickname",
+				"listFieldName": "Title",
+				"helpNotes": [{
+					"text": "Give this request a name you can reference later",
+					"htmlID": "request-nickname_help-note",
+					"urgent": 0,
+					"hideForNonAdmin": ["Submitted", "Cancelled"],
+					"hideForAdmin": ["Submitted", "Cancelled"]
+				}],
+				"requiredForNonAdmin": [""],
+				"requiredForAdmin": [""],
+				"disabledForNonAdmin": ["Submitted", "Cancelled"],
+				"disabledForAdmin": ["Submitted", "Cancelled"],
+				"hideForAdmin": ["Submitted", "Cancelled"]
+			}, {
+				"elementType": "field",
+				"controlType": "select",
+				"fieldName": "Self or Other",
+				"labelContent": "If we have questions, talk to you or someone else?",
+				"setOptions": [{
+					"value": "Self",
+					"display": "Talk to me"
+				}, {
+					"value": "Other",
+					"display": "Talk to someone else"
+				}],
+				"requiredForNonAdmin": [""],
+				"requiredForAdmin": [""],
+				"hideForNonAdmin": ["Submitted", "Cancelled"],
+				"hideForAdmin": ["Submitted", "Cancelled"],
+				"disabledForNonAdmin": ["Submitted", "Cancelled"],
+				"disabledForAdmin": ["Submitted", "Cancelled"],
+				"onChange": [{
+					"thisFieldEquals": ["Self"],
+					"hide": [{
+						"fieldName": "Requested For"
+					}],
+					"optional": [{
+						"fieldName": "Requested For",
+						"type": "peoplepicker"
+					}],
+					"set": [{
+						"fieldName": "Requested For",
+						"type": "peoplePicker",
+						"value": "currentUser"
+					}]
+				}, {
+					"thisFieldEquals": ["Other"],
+					"show": [{
+						"fieldName": "Requested For"
+					}],
+					"require": [{
+						"fieldName": "Requested For",
+						"type": "peoplepicker"
+					}],
+					"set": [{
+						"fieldName": "Requested For",
+						"type": "peoplePicker",
+						"value": ""
+					}]
+				}]
+			}, {
+				"elementType": "field",
+				"controlType": "peoplePicker",
+				"fieldName": "Requested For",
+				"labelContent": "If needed, talk to",
+				"listFieldName": "RequestedFor",
+				"hideForNonAdmin": [""],
+				"hideForAdmin": [""],
+				"disabledForNonAdmin": ["Submitted", "Cancelled"],
+				"disabledForAdmin": ["Submitted", "Cancelled"]
+			}, {
+				"elementType": "field",
+				"controlType": "check",
+				"fieldName": "Requester Cancellation",
+				"choiceSetLabel": "Cancellation",
+				"choices": [{
+					"value": "cancel",
+					"display": "Yes, I wish to cancel this request"
+				}],
+				"hideForNonAdmin": ["", "Cancelled"],
+				"hideForAdmin": ["", "Cancelled"],
+				"disabledForNonAdmin": ["Cancelled"],
+				"disabledForAdmin": ["Cancelled"]
+				// about the requester
+			}, {
+				"elementType": "markup",
+				"tag": "div",
+				"htmlID": "container_about-the-requester",
+				"begin": 1,
+				"hideForNonAdmin": ["", "Submitted", "Cancelled"],
+				"hideForAdmin": [""],
+			}, {
+				"elementType": "markup",
+				"tag": "h2",
+				"content": "About the Requester",
+				"begin": 1,
+				"end": 1
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "Requester Name",
+				"labelContent": "Name",
+				"disabledForNonAdmin": ["", "Submitted", "Cancelled"],
+				"disabledForAdmin": ["", "Submitted", "Cancelled"]
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "Requester Department",
+				"labelContent": "Department",
+				"disabledForNonAdmin": ["", "Submitted", "Cancelled"],
+				"disabledForAdmin": ["", "Submitted", "Cancelled"]
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "Requester Email",
+				"labelContent": "Email",
+				"disabledForNonAdmin": ["", "Submitted", "Cancelled"],
+				"disabledForAdmin": ["", "Submitted", "Cancelled"]
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "Requester Phone",
+				"labelContent": "Phone",
+				"disabledForNonAdmin": ["", "Submitted", "Cancelled"],
+				"disabledForAdmin": ["", "Submitted", "Cancelled"]
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "Requester Account",
+				"labelContent": "Account",
+				"hideForNonAdmin": ["", "Submitted", "Cancelled"],
+				"hideForAdmin": ["", "Submitted", "Cancelled"],
+				"disabledForNonAdmin": ["", "Submitted", "Cancelled"],
+				"disabledForAdmin": ["", "Submitted", "Cancelled"]
+			}, {
+				"elementType": "field",
+				"controlType": "peoplePicker",
+				"fieldName": "Requested By",
+				"labelContent": "Requested By",
+				"listFieldName": "RequestedBy",
+				"hideForNonAdmin": ["", "Submitted", "Cancelled"],
+				"hideForAdmin": ["", "Submitted", "Cancelled"],
+				"disabledForNonAdmin": ["", "Submitted", "Cancelled"],
+				"disabledForAdmin": ["", "Submitted", "Cancelled"]
+			}, {
+				"elementType": "markup",
+				"tag": "div",
+				"end": 1
+
+
 			// 	'elementType': "markup",
 			// 	'tag': "h2",
 			// 	'content': "Job",
@@ -808,7 +1011,7 @@
 
 
 
-
+			}, {
 				'elementType': "markup",
 				'tag': "h2",
 				'content': "Job",

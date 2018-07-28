@@ -3732,10 +3732,12 @@
 
 			// if request status != '' and user is not an admin
 			if (rData.requestStatus != "" && uData.isAdmin === 0) {
-
-				var permitted = []; // array of non-admin users who have permission to view the form
-				var hasViewingPermissionThisRequest = 0; // this user's permission flag
-				// for each element
+				console.log('checking permission');
+				// array of non-admin users who have permission to view the form
+				var permitted = [];
+				// this user's permission flag
+				var hasViewingPermissionThisRequest = 0;
+				// for each form element
 				$.each(fData.elements, function (i, elem) {
 					// if it yields view permissions
 					if (typeof (elem.yieldsViewPermissions) != "undefined" && elem.yieldsViewPermissions === 1) {
@@ -3749,15 +3751,22 @@
 						}
 					}
 				});
+				// for each element of permitted
 				$.each(permitted, function (i, p) {
+					// if the element matches the current user
 					if (StrInStr(p, uData.account)) {
+						// set this user's permission flag to 1
 						hasViewingPermissionThisRequest = 1;
 					}
 				});
+				// if this user's permission flag is still not 1 and an additional view permissions function has been designated
 				if (hasViewingPermissionThisRequest === 0 && typeof (fData.additionalViewPermissionsFunction) != "undefined") {
+					// set this user's permission flag to the result of said function
 					hasViewingPermissionThisRequest = CallFunctionFromString(fData.additionalViewPermissionsFunction, { "rData": rData });
 				}
+				// if this user's permission flag is still not 1
 				if (hasViewingPermissionThisRequest === 0) {
+					// show permission denial message and stop any further configuration of this request
 					$('div#overlays-screen-container').fadeIn(200);
 					$('div#mos-form-no-view-permission').fadeIn(400);
 					return;
@@ -16955,15 +16964,21 @@
 				return $().ReturnGPCPeopleEditingAccess();
 				break;
 
-			case "LoadDepartmentSelectOptions":
-				return $().LoadDepartmentSelectOptions(functionArgumentsObject);
+			case "ReturnGSEJobRequestAdditionalViewAccess":
+				return $().ReturnGSEJobRequestAdditionalViewAccess(functionArgumentsObject);
+				break;
+
+			case "ReturnGSEScheduleAdditionalViewAccess":
+				return $().ReturnGSEScheduleAdditionalViewAccess(functionArgumentsObject);
 				break;
 
 			case "ReturnUserIsGSEHRAdmin":
 				return $().ReturnUserIsGSEHRAdmin();
 				break;
-
 				
+			case "LoadDepartmentSelectOptions":
+				return $().LoadDepartmentSelectOptions(functionArgumentsObject);
+				break;
 		}
 	}
 
@@ -20238,6 +20253,95 @@
 
 
 
+	$.fn.ReturnOneManagerWithFlatDownline = function (account) {
+		var managers = [];
+		// if account is sp3
+		if (account === 'sp3') {
+			managers = {
+				"_id": "5b5cbd305eb9590f2c885380",
+				"account": "sp3",
+				"employeeID": "12698",
+				"firstName": "Hub",
+				"lastName": "Tester1",
+				"firstInitial": "H",
+				"lastInitial": "T",
+				"displayName": "Hub Tester1",
+				"title": "Emulated Manager",
+				"email": "sp3@mos.org",
+				"officePhone": "617-589-0143",
+				"mobilePhone": "",
+				"manager": "jslakey",
+				"department": "Interactive Media",
+				"division": "Finance & Systems Services",
+				"securityGroups": [
+					"Budget_Finance"
+				],
+				"downline": [
+					{
+						"_id": "5b5cbd305eb9590f2c885493",
+						"account": "sp2",
+						"employeeID": "10475",
+						"firstName": "Hub",
+						"lastName": "Tester2",
+						"firstInitial": "H",
+						"lastInitial": "T",
+						"displayName": "Hub Tester2",
+						"title": "Audio Visual Production & Services Supervisor",
+						"email": "sp2@mos.org",
+						"officePhone": "617-589-0160",
+						"mobilePhone": "617-571-0214",
+						"manager": "sp3",
+						"department": "Interactive Media",
+						"division": "Finance & Systems Services",
+						"securityGroups": [
+							"AnyConnect VPN Access"
+						]
+					}, {
+						"_id": "5b5cbd305eb9590f2c885493",
+						"account": "sp4",
+						"employeeID": "10475",
+						"firstName": "Hub",
+						"lastName": "Tester4",
+						"firstInitial": "H",
+						"lastInitial": "T",
+						"displayName": "Hub Tester4",
+						"title": "Audio Visual Production & Services Supervisor",
+						"email": "sp4@mos.org",
+						"officePhone": "617-589-0160",
+						"mobilePhone": "617-571-0214",
+						"manager": "sp3",
+						"department": "Interactive Media",
+						"division": "Finance & Systems Services",
+						"securityGroups": [
+							"AnyConnect VPN Access"
+						]
+					}
+				]
+			};
+		} else {
+			// query the api for the data
+			$.ajax({
+				async: false,
+				method: "GET",
+				dataType: "json",
+				url: "https://neso.mos.org/activeDirectory/manager/downline/flat/" + account + "?ts=" + Date.now(),
+			})
+				.done(function (nesoData) {
+					// console.log("nesoData:");
+					// console.log(nesoData);
+					managers = nesoData.docs[0];
+				})
+				.fail(function (error) {
+					// console.log("no such luck - NESO");
+					// console.log(error);
+					managers = error;
+				});
+		}
+		return managers;
+	};
+
+
+
 	$.fn.ReturnGSEGroupsFromSP = function () {
 		// get the config data stored as AllRequestData in /sites/hr-service-config/Lists/SWFList
 		var allRequestDataObject = $().GetFieldsFromOneRow({
@@ -20569,6 +20673,84 @@
 			$("span#" + spanIDsAndReplacementKeySet.negativeLabelSpanID).text(replacementValue);
 			$("input#" + spanIDsAndReplacementKeySet.hiddenrecordKeeperID).val(replacementValue);
 		});
+	};
+
+
+
+	$.fn.ReturnGSEJobRequestAdditionalViewAccess = function (incomingArgs) {
+		// set flag indicating that this user does not have permission; 
+		// 		this flag will be changed to 1 if this request's Job Admin
+		// 		is a member of this user's downline
+		var hasViewPermission = 0;
+		// get array of job admin objects from incoming rData
+		var jobAdminsRawThisRequest = incomingArgs.rData.formData['Job-Admin'];
+		// reduce the array of objects to an array of account strings
+		var jobAdminsThisRequest = [];
+		jobAdminsRawThisRequest.forEach((jobAdminObject) => {
+			jobAdminsThisRequest.push(ReplaceAll('i:0#.f\\|membership\\|', '', ReplaceAll('@mos.org', '', jobAdminObject.account)));
+		});
+		// get this user's account string
+		var thisUserAccountShort = ReplaceAll('i:0#.f\\|membership\\|', '', ReplaceAll('@mos.org', '', uData.account));
+		// get this user's downline as an array of user objects
+		var thisUserWithDownline = $().ReturnOneManagerWithFlatDownline(thisUserAccountShort);
+		var downlineThisUser = thisUserWithDownline.downline;
+		// for each of this request's job admins
+		jobAdminsThisRequest.forEach((jobAdmin) => {
+			// for each of this user's downline members
+			downlineThisUser.forEach((downlineMember) => {
+				// if this job admin matches this downline member
+				if (jobAdmin === downlineMember.account) {
+					// set flag indicating that this user has permission
+					hasViewPermission = 1;
+				}
+			});
+		});
+		// return permission flag
+		return hasViewPermission;
+	};
+
+
+
+	$.fn.ReturnGSEScheduleAdditionalViewAccess = function (incomingArgs) {
+		// set flag indicating that this user does not have permission; 
+		// 		this flag will be changed to 1 if this user is the Job Admin
+		// 		for the job associated with this schedule
+		var hasViewPermission = 0;
+		// get the ID of the job associated with this schedule
+		var jobID = incomingArgs.rData.formData['id-or-link_GSE-Job-Request-ID'];
+		// get the data for the job
+		var jobData = $().GetFieldsFromOneRow({
+			"listName": "swfList",
+			"webURL": "https://bmos.sharepoint.com/sites/hr-service-jobs",
+			"select": [{
+				"nameHere": "formData",
+				"nameInList": "AllRequestData"
+			}],
+			"where": {
+				"field": "ID",
+				"type": "Number",
+				"value": jobID,
+			}
+		});
+		// get array of job admin objects from incoming rData
+		var jobAdminsRawThisJob = jobData.formData['Job-Admin'];
+		// reduce the array of objects to an array of account strings
+		var jobAdminsThisJob = [];
+		jobAdminsRawThisJob.forEach((jobAdminObject) => {
+			jobAdminsThisJob.push(ReplaceAll('i:0#.f\\|membership\\|', '', ReplaceAll('@mos.org', '', jobAdminObject.account)));
+		});
+		// get this user's account string
+		var thisUserAccountShort = ReplaceAll('i:0#.f\\|membership\\|', '', ReplaceAll('@mos.org', '', uData.account));
+		// for each of the job's job admins
+		jobAdminsThisJob.forEach((jobAdmin) => {
+			// if this job admin is this user
+			if (jobAdmin === thisUserAccountShort) {
+				// set flag indicating that this user has permission
+				hasViewPermission = 1;
+			}
+		});
+		// return permission flag
+		return hasViewPermission;
 	};
 
 
@@ -21835,7 +22017,7 @@
 		// wait for all data retrieval / setting promises to complete (pass or fail) 
 		$.when.apply($, allDataRetrievalAndSettingPromises).always(function () {
 
-			console.log('using dev_mos-main_long.1.04 m1');
+			console.log('using dev_mos-main_long.1.04 m2');
 
 			$().ConfigureAndShowScreenContainerAndAllScreens();
 		});
