@@ -362,7 +362,7 @@
 				'elementType': "field",
 				'controlType': "text",
 				'fieldName': "Job Title",
-				// 'listFieldName': "JobTitle",
+				'listFieldName': "JobTitle",
 				'labelContent': "Job Title",
 				'requiredForNonAdmin': [""],
 				'requiredForAdmin': [""],
@@ -445,33 +445,33 @@
 			
 			
 			
-			}, {
-				'elementType': 'markup',
-				'tag': 'div',
-				'begin': 1,
-				'htmlID': 'gse-job-duties',
-				'htmlClass': 'repeating-content-container',
-				'hideForNonAdmin': ['Submitted', 'Cancelled'],
-				'hideForAdmin': ['Submitted', 'Cancelled']
-			}, {
-				'elementType': 'markup',
-				'tag': 'div',
-				'begin': 1,
-				'htmlID': 'gse-job-duty',
-				'htmlClass': 'repeat-container',
-				'repeatable': 1
+			// }, {
+			// 	'elementType': 'markup',
+			// 	'tag': 'div',
+			// 	'begin': 1,
+			// 	'htmlID': 'gse-job-duties',
+			// 	'htmlClass': 'repeating-content-container',
+			// 	'hideForNonAdmin': ['Submitted', 'Cancelled'],
+			// 	'hideForAdmin': ['Submitted', 'Cancelled']
+			// }, {
+			// 	'elementType': 'markup',
+			// 	'tag': 'div',
+			// 	'begin': 1,
+			// 	'htmlID': 'gse-job-duty',
+			// 	'htmlClass': 'repeat-container',
+			// 	'repeatable': 1
 			
 			
 			
 			
 			}, {
 				'elementType': "field",
-				'controlType': "text",
-				'fieldName': "Job Duty",
-				'labelContent': "Job Duty",
+				'controlType': "textarea",
+				'fieldName': "Job Duties",
+				'labelContent': "Job Duties",
 				"helpNotes": [{
-					"text": "Protective devices required for the job such as helmet, saftey goggles, rubber gloves, etc.",
-					"htmlID": "dress-requirements_help-note",
+					"text": "One duty per line",
+					"htmlID": "job-duties_help-note",
 					"hideForNonAdmin": ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
 					"hideForAdmin": ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"]
 				}],
@@ -479,35 +479,35 @@
 				'requiredForAdmin': [''],
 				'disabledForNonAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
 				'disabledForAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"]
-			}, {
-				'elementType': "markup",
-				'tag': "a",
-				'begin': 1,
-				'end': 1,
-				'htmlClass': "remove-section-anchor",
-				'content': "Remove",
-				'removeThisRepeat': 1,
-				'hideForNonAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
-				'hideForAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
-			}, {
-				'elementType': 'markup',
-				'tag': 'div',
-				'end': 1,
-			}, {
-				'elementType': 'markup',
-				'tag': 'a',
-				'begin': 1,
-				'end': 1,
-				'htmlID': 'repeat-gse-job-duty',
-				'htmlClass': 'repeat-section-anchor',
-				'content': 'Insert another duty',
-				'repeatSectionID': 'gse-job-duty',
-				'hideForNonAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
-				'hideForAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
-			}, {
-				'elementType': 'markup',
-				'tag': 'div',
-				'end': 1
+			// }, {
+			// 	'elementType': "markup",
+			// 	'tag': "a",
+			// 	'begin': 1,
+			// 	'end': 1,
+			// 	'htmlClass': "remove-section-anchor",
+			// 	'content': "Remove",
+			// 	'removeThisRepeat': 1,
+			// 	'hideForNonAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
+			// 	'hideForAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
+			// }, {
+			// 	'elementType': 'markup',
+			// 	'tag': 'div',
+			// 	'end': 1,
+			// }, {
+			// 	'elementType': 'markup',
+			// 	'tag': 'a',
+			// 	'begin': 1,
+			// 	'end': 1,
+			// 	'htmlID': 'repeat-gse-job-duty',
+			// 	'htmlClass': 'repeat-section-anchor',
+			// 	'content': 'Insert another duty',
+			// 	'repeatSectionID': 'gse-job-duty',
+			// 	'hideForNonAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
+			// 	'hideForAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
+			// }, {
+			// 	'elementType': 'markup',
+			// 	'tag': 'div',
+			// 	'end': 1
 			
 			
 			
