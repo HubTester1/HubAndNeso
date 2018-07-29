@@ -254,16 +254,28 @@
 						'tableTitle': 'Pending Approval',
 						'tableID': 'pending-approval',
 						'someColsAreUsers': 1,
+						// 'meOrMyDownlineIsRequesterAndRSQuery': {
+						// 	'requestStatus': 'Pending Approval',
+						// 	'getRequesterFrom': 'JobAdmin'
+						// }
 						'basicRSQueryRelevantStatus': 'Pending Approval'
 					}, {
 						'tableTitle': 'Approved',
 						'tableID': 'approved',
 						'someColsAreUsers': 1,
+						// 'meOrMyDownlineIsRequesterAndRSQuery': {
+						// 	'requestStatus': 'Approved',
+						// 	'getRequesterFrom': 'JobAdmin'
+						// }
 						'basicRSQueryRelevantStatus': 'Approved'
 					}, {
 						'tableTitle': 'Closed',
 						'tableID': 'closed',
 						'someColsAreUsers': 1,
+						// 'meOrMyDownlineIsRequesterAndEOL': {
+						// 	'endOfLfe': 1,
+						// 	'getRequesterFrom': 'JobAdmin'
+						// },
 						'basicEOLQueryRelevantValue': 1,
 						'customColumns': [
 							{
