@@ -13867,6 +13867,8 @@
 			} else if ($(element).is("a")) {
 				// console.log($(element));
 
+				// listItemChooser link data gets set here
+
 				if (formDataCopy[field] != '') {
 
 					if ($(element).attr('data-source-type') == 'url') {
@@ -13883,6 +13885,10 @@
 
 					if ($(element).attr('data-source-type') == 'gpc-initial-concept-approval-request') {
 						$(element).attr('href', 'https://bmos.sharepoint.com/sites/gpc-concept/SitePages/App.aspx?r=' + formDataCopy[field]).text('#' + formDataCopy[field]);
+					}
+
+					if ($(element).attr('data-source-type') == 'gse-job-request') {
+						$(element).attr('href', 'https://bmos.sharepoint.com/sites/hr-service-jobs/SitePages/App.aspx?r=' + formDataCopy[field]).text('#' + formDataCopy[field]);
 					}
 
 					if ($(element).attr('data-source-type') == 'file') {

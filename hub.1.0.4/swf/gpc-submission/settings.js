@@ -92,9 +92,6 @@
 								'displayName': 'Proposal Due Date',
 								'internalName': 'ProposalDueDate',
 								'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 0 }
-							}, {
-								'displayName': 'LegacyID',
-								'internalName': 'LegacyID'
 							}
 						],
 						'sortColAndOrder': [0, 'desc']

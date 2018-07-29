@@ -784,7 +784,7 @@
 
 				"elementType": "markup",
 				"tag": "h2",
-				"content": "This Request",
+				"content": "This Schedule",
 				"htmlID": "header_this-request",
 				"begin": 1,
 				"end": 1
@@ -802,7 +802,7 @@
 				"elementType": "field",
 				"controlType": "text",
 				"fieldName": "Request ID",
-				"labelContent": "Request ID",
+				"labelContent": "Schedule ID",
 				"hideForNonAdmin": [""],
 				"hideForAdmin": [""],
 				"disabledForNonAdmin": ["", "Submitted", "Cancelled"],
@@ -811,7 +811,7 @@
 				"elementType": "field",
 				"controlType": "text",
 				"fieldName": "Request Date",
-				"labelContent": "Request Date",
+				"labelContent": "Schedule Creation Date",
 				"listFieldName": "RequestDate",
 				"friendlyFormatOnLoad": {
 					'incomingFormat': null,
@@ -831,10 +831,10 @@
 				"elementType": "field",
 				"controlType": "text",
 				"fieldName": "Request Nickname",
-				"labelContent": "Request Nickname",
+				"labelContent": "Schedule Nickname",
 				"listFieldName": "Title",
 				"helpNotes": [{
-					"text": "Give this request a name you can reference later",
+					"text": "Give this schedule a name you can reference later",
 					"htmlID": "request-nickname_help-note",
 					"urgent": 0,
 					"hideForNonAdmin": ["Submitted", "Cancelled"],
@@ -1259,7 +1259,7 @@
 	//	  (customScriptLast will be appended to auto-generated script)
 	fData.CustomScriptFirst = '';
 
-	fData.CustomScriptLast = '';
+	fData.CustomScriptLast = '$("div#label-and-control_Requested-For").hide("fast").addClass("hidden");';
 
 
 
