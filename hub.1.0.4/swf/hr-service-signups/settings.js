@@ -256,6 +256,16 @@
 
 		'uniqueElements': [
 			{
+				"elementType": "markup",
+				"tag": "div",
+				"htmlID": "no-signups-warning",
+				"content": 'Signups are no longer available.',
+				"begin": 1,
+				"end": 1,
+				"hideForNonAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
+				"hideForAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"]
+				
+			}, {
 				'elementType': "markup",
 				'tag': "div",
 				'htmlID': "job-and-schedule-container",
@@ -465,7 +475,12 @@
 
 
 
-
+			}, {
+				"elementType": "markup",
+				"tag": "div",
+				"htmlID": "non-admin",
+				"content": '',
+				"begin": 1,
 			}, {
 				'elementType': "markup",
 				'tag': "h2",
@@ -693,7 +708,33 @@
 				"disabledForAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
 				'hideForNonAdmin': ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
 				'hideForAdmin': ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
-			
+			}, {
+				'elementType': "field",
+				'controlType': "text",
+				'fieldName': "Positions Available",
+				'labelContent': "Positions Available",
+				"disabledForNonAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
+				"disabledForAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
+				'hideForNonAdmin': ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
+				'hideForAdmin': ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
+			}, {
+				'elementType': "field",
+				'controlType': "text",
+				'fieldName': "Schedule Start Datetime",
+				'labelContent': "Schedule Start Datetime",
+				"disabledForNonAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
+				"disabledForAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
+				'hideForNonAdmin': ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
+				'hideForAdmin': ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
+			}, {
+				'elementType': "field",
+				'controlType': "text",
+				'fieldName': "Current Datetime",
+				'labelContent': "Current Datetime",
+				"disabledForNonAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
+				"disabledForAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
+				'hideForNonAdmin': ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
+				'hideForAdmin': ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
 			}, {
 				"elementType": "field",
 				"controlType": "check",
@@ -725,7 +766,11 @@
 				'disabledForAdmin': ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
 				'hideForNonAdmin': ["", "Signed Up", "Credit Granted", "Cancelled"],
 				'hideForAdmin': ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
-			
+			}, {
+				"elementType": "markup",
+				"tag": "div",
+				"content": '',
+				"end": 1,
 			
 			}, {
 				"elementType": "markup",
@@ -807,12 +852,6 @@
 				"elementType": "markup",
 				"tag": "div",
 				"end": 1
-
-
-
-
-
-
 			}
 		]
 	};
@@ -824,13 +863,25 @@
 	fData.CustomScriptFirst = '';
 
 
-	fData.CustomScriptLast = '';
-	/* if($.trim($("span#Training-Requirements-Formatted").html())!="") {' + 
-							'	$("h3#Training-Requirements-Header").show("fast").removeClass("hidden"); ' +
-							'	$("div#Training-Requirements-Container").show("fast").removeClass("hidden"); ' +
-							'}'; */
-
-
+	fData.CustomScriptLast = 'console.log($("input#Positions-Available").val());' + 
+								'console.log($("input#Schedule-Start-Datetime").val());' + 
+								'console.log($("input#Current-Datetime").val());' + 
+								'console.log($("input#Request-Status").val());' + 
+								'if ($("input#Request-Status").val() === "") {' + 
+								'	var positionsAvailable = parseInt($("input#Positions-Available").val());' + 
+								'	var scheduleStartDatetime = $("input#Schedule-Start-Datetime").val();' + 
+								'	var currentDatetime = $("input#Current-Datetime").val();' + 
+								'	if (' + 
+								'		!(positionsAvailable > 2) || ' + 
+								'		!(moment(scheduleStartDatetime).isAfter(currentDatetime))' + 
+								'	) {' + 
+								'		$().SetFieldToDisabled("#sign-up_signup");' + 
+								'		$("div#non-admin, div#submit-or-exit")' + 
+								'.hide("fast").addClass("hidden");' + 
+								'		$("div#no-signups-warning").show("fast").removeClass("hidden");' + 
+								'	}' + 
+								'}';
+	
 
 
 	$.fn.ReturnThisAppMData = function () {

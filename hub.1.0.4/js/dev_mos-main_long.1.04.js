@@ -4111,6 +4111,11 @@
 						]
 					}
 				});
+
+				var scheduleStartDateTime = rData.gseScheduleData['Date'].substring(0, 10) + ' ' +
+					rData.gseScheduleData['time-storage_StartTime'].substring(11, 16);
+				scheduleStartDateTime = moment.tz(scheduleStartDateTime, "America/New_York").format();
+				var NowAsISOLocal = $().ReturnFormattedDateTime('nowLocal', null, null);
 				rData.gseScheduleData['Positions-Available'] = 
 					parseInt(rData.gseScheduleData['Number-of-Positions']) - otherSignupsForThisSchedule.length;
 				rData.gseScheduleData['Friendly-Date'] = $().ReturnFormattedDateTime(rData.gseScheduleData['Date'], null, 'dddd, MMMM D, YYYY', 1);
@@ -4118,6 +4123,7 @@
 				rData.gseScheduleData['Start-Time'] = $().ReturnFormattedDateTime(rData.gseScheduleData['time-storage_StartTime'].substring(0, 19), null, 'h:mm a');
 				rData.gseScheduleData['Break-Time'] = $().ReturnFormattedDateTime(rData.gseScheduleData['time-storage_BreakTime'].substring(0, 19), null, 'h:mm a');
 				rData.gseScheduleData['Meal-Time'] = $().ReturnFormattedDateTime(rData.gseScheduleData['time-storage_MealTime'].substring(0, 19), null, 'h:mm a');
+				
 
 				rData.gseJobData['Job-Admin-Name'] = rData.gseJobData['Job-Admin'][0].description;
 				rData.gseJobData['Job-Description-Formatted'] = '<p>' + ReplaceAll('%0A', '</p><p>', rData.gseJobData['Job-Description']) + '</p>';
@@ -4208,12 +4214,14 @@
 				$("input#Request-Nickname").val(rData.gseJobID + '-' + rData.gseScheduleID + '-' + ReplaceAll('@mos.org', '', uData.userName));
 				$("input#Job-ID").val(rData.gseJobID);
 				$("input#Schedule-ID").val(rData.gseScheduleID);
+				$("input#Positions-Available").val(rData.gseScheduleData['Positions-Available']);
+				$("input#Schedule-Start-Datetime").val(scheduleStartDateTime);
+				$("input#Current-Datetime").val(NowAsISOLocal);
 			}
 
 			// if this is an *existing* GSE Signup
 			if (rData.requestStatus != "" && mData.requestName == "GSE Signup") {
 				// manually copy some admin data to requester-accessible fields
-				// $("input#Request-ID").val(rData.requestID);
 				$("input#Request-Status-for-Requester").val(rData.requestStatus);
 				$("textarea#Credit-Denial-Reason-for-Requester").val(rData.formDataOnLoad['Credit-Denial-Reason']);
 			}
