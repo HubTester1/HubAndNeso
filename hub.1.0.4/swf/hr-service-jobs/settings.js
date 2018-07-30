@@ -415,7 +415,7 @@
 				'labelContent': "Training Requirements and Other Special Demands",
 				// 'listFieldName': "TrainingRequirements",
 				"helpNotes": [{
-					"text": "Chemicals, tools, solvents, etc. For saftey, use of forklifts, large ladders, cherry pickers, etc. is not allowed.",
+					"text": "Chemicals, tools, solvents, etc. For saftey, use of forklifts, large ladders, cherry pickers, etc. is not allowed. One requirement per line.",
 					"htmlID": "training-requirements_help-note",
 					"hideForNonAdmin": ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
 					"hideForAdmin": ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"]
@@ -431,7 +431,7 @@
 				'labelContent': "Dress Requirements",
 				// 'listFieldName': "DressRequirements",
 				"helpNotes": [{
-					"text": "Protective devices such as helmet, saftey goggles, rubber gloves, etc.",
+					"text": "Protective devices such as helmet, saftey goggles, rubber gloves, etc. One requirement per line.",
 					"htmlID": "dress-requirements_help-note",
 					"hideForNonAdmin": ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
 					"hideForAdmin": ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"]

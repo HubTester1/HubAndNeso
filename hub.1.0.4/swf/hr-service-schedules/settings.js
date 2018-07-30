@@ -909,7 +909,7 @@
 				"choiceSetLabel": "Cancellation",
 				"choices": [{
 					"value": "cancel",
-					"display": "Yes, I wish to cancel this request"
+					"display": "Yes, I wish to cancel this schedule"
 				}],
 				"hideForNonAdmin": ["", "Cancelled"],
 				"hideForAdmin": ["", "Cancelled"],

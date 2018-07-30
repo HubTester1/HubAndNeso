@@ -4115,36 +4115,29 @@
 					parseInt(rData.gseScheduleData['Number-of-Positions']) - otherSignupsForThisSchedule.length;
 				rData.gseScheduleData['Friendly-Date'] = $().ReturnFormattedDateTime(rData.gseScheduleData['Date'], null, 'dddd, MMMM D, YYYY', 1);
 				rData.gseScheduleData['Shift-Length'] = rData.gseScheduleData['shiftlength_35-hours'] ? '3.5 hours' : '7 hours';
-				rData.gseScheduleData['Start-Time'] = $().ReturnFormattedDateTime(rData.gseScheduleData['time-storage_StartTime'], null, 'h:mm a');
-				rData.gseScheduleData['Break-Time'] = $().ReturnFormattedDateTime(rData.gseScheduleData['time-storage_BreakTime'], null, 'h:mm a');
-				rData.gseScheduleData['Meal-Time'] = $().ReturnFormattedDateTime(rData.gseScheduleData['time-storage_MealTime'], null, 'h:mm a');
+				rData.gseScheduleData['Start-Time'] = $().ReturnFormattedDateTime(rData.gseScheduleData['time-storage_StartTime'].substring(0, 19), null, 'h:mm a');
+				rData.gseScheduleData['Break-Time'] = $().ReturnFormattedDateTime(rData.gseScheduleData['time-storage_BreakTime'].substring(0, 19), null, 'h:mm a');
+				rData.gseScheduleData['Meal-Time'] = $().ReturnFormattedDateTime(rData.gseScheduleData['time-storage_MealTime'].substring(0, 19), null, 'h:mm a');
 
 				rData.gseJobData['Job-Admin-Name'] = rData.gseJobData['Job-Admin'][0].description;
 				rData.gseJobData['Job-Description-Formatted'] = '<p>' + ReplaceAll('%0A', '</p><p>', rData.gseJobData['Job-Description']) + '</p>';
 				if (rData.gseJobData['Training-Requirements']) {
 					rData.gseJobData['Training-Requirements-Formatted'] = '<p>' + ReplaceAll('%0A', '</p><p>', rData.gseJobData['Training-Requirements']) + '</p>';
 				}
+				rData.gseJobData['Dress-Requirements-List-Items'] = 
+					'<li>' +
+					'	Clothing and shoes must be in good condition.' +
+					'</li>' + 
+					'<li>' +
+					'	MOS badge must be worn above the waist at all times.' +
+					'</li>';
+
 				if (rData.gseJobData['Dress-Requirements']) {
-					rData.gseJobData['Dress-Requirements-Formatted'] = '<p>' + ReplaceAll('%0A', '</p><p>', rData.gseJobData['Dress-Requirements']) + '</p>';
+					rData.gseJobData['Dress-Requirements-List-Items'] += 
+						'<li>' + ReplaceAll('%0A', '</li><li>', rData.gseJobData['Dress-Requirements']) + '</li>';
 				}
 
-				var opportunityJobDuties = [];
-				rData.gseJobData.RepeatedElements.forEach((repeatElement) => {
-					// console.log('repeatElement');
-					// console.log(repeatElement);
-					if (StrInStr(repeatElement.ID, 'gse-job-duty') != -1) {
-						// console.log('found a duty');
-						var repeatElementKeys = Object.keys(repeatElement);
-						// console.log('repeatElementKeys');
-						// console.log(repeatElementKeys);
-						repeatElementKeys.forEach((repeatElementKey) => {
-							if (StrInStr(repeatElementKey, 'Job-Duty')) {
-								opportunityJobDuties.push(repeatElement[repeatElementKey]);
-							}
-						});
-					}
-				});
-
+				var opportunityJobDuties = rData.gseJobData['Job-Duties'].split("%0A");
 				var opportunityJobDutyElement = opportunityJobDuties[1] ? 'li' : 'p';
 
 				rData.gseJobData['Job-Duties-List-Items'] = '';
@@ -19077,7 +19070,7 @@
 				retVal += moment(dateTimeString, incomingFormat).format(returnFormat);
 			}
 
-			// if incoming format is not null, use it to parse dateTimeString
+		// if incoming format is not null, use it to parse dateTimeString
 		} else {
 
 			// if incomingFormat contains ', YYYY' and dateTimeString doesn't end with that value and determineYearDisplayDynamically == 1

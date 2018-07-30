@@ -365,22 +365,22 @@
 				'content': 'Dress Requirements',
 				'begin': 1,
 				'end': 1
+			// }, {
+			// 	'elementType': "markup",
+			// 	'tag': "p",
+			// 	'content': 'Clothing and shoes must be in good condition, and MOS badge ' + 
+			// 				'must be worn above the waist at all times.',
+			// 	'begin': 1,
+			// 	'end': 1
 			}, {
 				'elementType': "markup",
-				'tag': "p",
-				'content': 'Clothing and shoes must be in good condition, and MOS badge ' + 
-							'must be worn above the waist at all times.',
-				'begin': 1,
-				'end': 1
-			}, {
-				'elementType': "markup",
-				'tag': "div",
+				'tag': "ul",
 				'htmlID': 'Dress-Requirements-Container',
-				'content': '<span id="Dress-Requirements-Formatted" class="optional content-placeholder"></span>',
+				'content': '<span id="Dress-Requirements-List-Items" class="optional content-placeholder"></span>',
 				'begin': 1,
 				'end': 1,
-				"hideForNonAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
-				"hideForAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
+				// "hideForNonAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
+				// "hideForAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
 			}, {
 				'elementType': "markup",
 				'tag': "h3",
@@ -850,9 +850,6 @@
 							'	$("div#Training-Requirements-Container").show("fast").removeClass("hidden"); ' +
 							'}';
 
-	fData.CustomScriptLast = 'if($.trim($("span#Dress-Requirements-Formatted").html())!="") {' + 
-							'	$("div#Dress-Requirements-Container").show("fast").removeClass("hidden"); ' +
-							'}';
 
 
 
