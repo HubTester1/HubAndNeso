@@ -1245,8 +1245,8 @@
 				'tag': 'div',
 				'begin': 1,
 				'htmlID': 'signup-people',
-				// 'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
-				// 'hideForAdmin': ['', 'Submitted', 'Cancelled']
+				'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
+				'hideForAdmin': ['', 'Submitted', 'Cancelled']
 			}, {
 				'elementType': 'markup',
 				'tag': 'h2',
@@ -1275,8 +1275,8 @@
 				'begin': 1,
 				'htmlID': 'signups',
 				'htmlClass': 'repeating-content-container',
-				// 'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
-				// 'hideForAdmin': ['', 'Submitted', 'Cancelled']
+				'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
+				'hideForAdmin': ['', 'Submitted', 'Cancelled']
 			}, {
 				'elementType': 'markup',
 				'tag': 'h2',
@@ -1401,8 +1401,7 @@
 
 	fData.CustomScriptLast = '$("div#label-and-control_Requested-For").hide("fast").addClass("hidden");';
 
-
-
+	fData.CustomScriptLast += '$().EnableGSEScheduleSignupDisplaysAndResponses(); \n';
 
 	// TEMPORARY
 
