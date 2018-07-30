@@ -4194,6 +4194,8 @@
 				console.log(rData.gseScheduleData);
 				console.log('rData.gseJobData');
 				console.log(rData.gseJobData);
+				console.log('rData.formDataOnLoad');
+				console.log(rData.formDataOnLoad);
 				
 				// populate the placeholder <span>s with job and schedule data
 				PopulateFormData("div#request-form", rData.gseJobData, mData.uriRoot, rData.requestID, mData.checkForAlternateEventDataToPopulate);
@@ -4211,6 +4213,7 @@
 			// if this is an *existing* GSE Signup
 			if (rData.requestStatus != "" && mData.requestName == "GSE Signup") {
 				// manually copy some admin data to requester-accessible fields
+				$("input#Request-ID").val(rData.requestID);
 				$("input#Request-Status-for-Requester").val(rData.requestStatus);
 				$("textarea#Credit-Denial-Reason-for-Requester").val(rData.formDataOnLoad['Credit-Denial-Reason']);
 			}
@@ -4235,7 +4238,6 @@
 
 				// if alwaysTalkToRequester, populate and hide relevant fields
 				if (typeof (fData.alwaysTalkToRequester) != 'undefined' && fData.alwaysTalkToRequester === 1) {
-
 					$('option[value="Self"]').prop('selected', true);
 					$().PutAddtlPeopleInPicker('Requested For', [{
 						'name': uData.name,
@@ -4244,7 +4246,6 @@
 					}]);
 					$("div#label-and-control_Self-or-Other").hide("fast").addClass("hidden");
 				}
-
 			}
 
 			// set "button" link href
