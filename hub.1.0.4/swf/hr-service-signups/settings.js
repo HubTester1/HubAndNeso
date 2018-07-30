@@ -368,7 +368,7 @@
 				'elementType': "markup",
 				'tag': "ul",
 				'htmlID': 'Dress-Requirements-Container',
-				'content': '<span id="Dress-Requirements-List-Items" class="optional content-placeholder"></span>',
+				'content': '<span id="Dress-Requirements-List-Items" class="content-placeholder"></span>',
 				'begin': 1,
 				'end': 1,
 			}, {
@@ -873,7 +873,7 @@
 								'	var scheduleStartDatetime = $("input#Schedule-Start-Datetime").val();' + 
 								'	var currentDatetime = $("input#Current-Datetime").val();' + 
 								'	if (' + 
-								'		!(positionsAvailable > 2) || ' + 
+								'		!(positionsAvailable > 0) || ' + 
 								'		!(moment(scheduleStartDatetime).isAfter(currentDatetime))' + 
 								'	) {' + 
 								'		$().SetFieldToDisabled("#sign-up_signup");' + 

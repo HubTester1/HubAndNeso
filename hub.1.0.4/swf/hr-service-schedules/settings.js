@@ -1239,6 +1239,146 @@
 				'elementType': 'markup',
 				'tag': 'div',
 				'end': 1
+
+			}, {
+				'elementType': 'markup',
+				'tag': 'div',
+				'begin': 1,
+				'htmlID': 'signup-people',
+				// 'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
+				// 'hideForAdmin': ['', 'Submitted', 'Cancelled']
+			}, {
+				'elementType': 'markup',
+				'tag': 'h2',
+				'content': 'Signups',
+				'begin': 1,
+				'end': 1,
+			}, {
+				'elementType': "markup",
+				'tag': "ul",
+				'htmlID': 'Signup-People-List',
+				'content': '<span id="Signup-People-List-Items" class="content-placeholder"></span>',
+				'begin': 1,
+				'end': 1,
+
+			}, {
+				'elementType': 'markup',
+				'tag': 'div',
+				'end': 1,
+
+
+
+
+			}, {
+				'elementType': 'markup',
+				'tag': 'div',
+				'begin': 1,
+				'htmlID': 'signups',
+				'htmlClass': 'repeating-content-container',
+				// 'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
+				// 'hideForAdmin': ['', 'Submitted', 'Cancelled']
+			}, {
+				'elementType': 'markup',
+				'tag': 'h2',
+				'content': 'Signups',
+				'begin': 1,
+				'end': 1,
+			}, {
+				'elementType': 'markup',
+				'tag': 'div',
+				'begin': 1,
+				'htmlID': 'signup',
+				'htmlClass': 'repeat-container',
+				'repeatable': 1
+			}, {
+				'elementType': 'markup',
+				'tag': 'h3',
+				'begin': 1,
+			}, {
+				'elementType': 'markup',
+				'tag': 'span',
+				'htmlID': 'Signup-Name',
+				'htmlClass': "content-placeholder",
+				'begin': 1,
+				'end': 1,
+			}, {
+				'elementType': 'markup',
+				'tag': 'h3',
+				'content': '<span id="Signup-Name" class="content-placeholder"></span>',
+				'end': 1,
+			}, {
+				'elementType': "field",
+				'controlType': "text",
+				'fieldName': "Signup ID",
+				'labelContent': "Signup ID",
+				'disabledForNonAdmin': ['', 'Submitted', 'Cancelled'],
+				'disabledForAdmin': ['', 'Submitted', 'Cancelled'],
+				// 'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
+				// 'hideForAdmin': ['', 'Submitted', 'Cancelled'],
+			}, {
+				'elementType': "field",
+				'controlType': "radio",
+				'fieldName': "Signup Credit",
+				'choiceSetLabel': "Grant credit?",
+				"choices": [
+					{
+						"value": "yes",
+						"display": "Yes, grant this person credit for this job, date, and time"
+					}, {
+						"value": "no",
+						"display": "No, deny this person credit for this job, date, and time"
+					}
+				],
+				'disabledForNonAdmin': ['', 'Submitted', 'Cancelled'],
+				'disabledForAdmin': ['', 'Submitted', 'Cancelled']
+			}, {
+				'elementType': "field",
+				'controlType': "textarea",
+				'fieldName': "Signup Credit Denial Reason",
+				'labelContent': "Why is credit denied?",
+				'disabledForNonAdmin': ['', 'Submitted', 'Cancelled'],
+				'disabledForAdmin': ['', 'Submitted', 'Cancelled'],
+				'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
+				'hideForAdmin': ['', 'Submitted', 'Cancelled'],
+
+			// }, {
+			// 	'elementType': "markup",
+			// 	'tag': "a",
+			// 	'begin': 1,
+			// 	'end': 1,
+			// 	'htmlClass': "remove-section-anchor",
+			// 	'content': "Remove",
+			// 	'removeThisRepeat': 1,
+			// 	'hideForNonAdmin': ['Submitted', 'Cancelled'],
+			// 	'hideForAdmin': ['Submitted', 'Cancelled'],
+			}, {
+				'elementType': 'markup',
+				'tag': 'div',
+				'end': 1,
+			// }, {
+			// 	'elementType': 'markup',
+			// 	'tag': 'a',
+			// 	'begin': 1,
+			// 	'end': 1,
+			// 	'htmlID': 'repeat-signup',
+			// 	'htmlClass': 'repeat-section-anchor',
+			// 	'content': 'Insert another signup',
+			// 	'repeatSectionID': 'signup',
+				// 'hideForNonAdmin': ['Submitted', 'Cancelled'],
+				// 'hideForAdmin': ['Submitted', 'Cancelled'],
+			}, {
+				'elementType': 'markup',
+				'tag': 'div',
+				'end': 1
+
+
+
+
+
+
+
+
+
 			}, {
 				'elementType': "field",
 				'controlType': "text",

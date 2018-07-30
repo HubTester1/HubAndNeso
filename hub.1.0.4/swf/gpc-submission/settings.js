@@ -2473,16 +2473,16 @@
 				"choices": [{
 					"value": "approve",
 					"display": "I approve"
-/*					},{
+					/* },{
 						"value": "disapprove",
-						"display": "I disapprove"
-*/					}, {
+						"display": "I disapprove"*/
+					}, {
 					"value": "needInfo",
 					"display": "Approval withheld pending comments"
 				}],
 				'disabledForNonAdmin': ['', 'In Development', 'Pending Approval', 'Approval Pending Comments', 'Grant Proposal Ready for Submission', 'Grant Proposal Submitted', 'Grant Awarded', 'Grant Declined', 'Completed', 'Disapproved', 'Cancelled'],
 				'disabledForAdmin': ['', 'In Development', 'Pending Approval', 'Approval Pending Comments', 'Grant Proposal Ready for Submission', 'Grant Proposal Submitted', 'Grant Awarded', 'Grant Declined', 'Completed', 'Disapproved', 'Cancelled'],
-/*				'helpNotes': [
+				/* 'helpNotes': [
 					{
 						'text': approvalStmt,
 						'htmlID': 'approval-indicator_help-note-1_EEP',
@@ -2493,8 +2493,8 @@
 						'hideForNonAdmin': ['', 'In Development', 'Pending Approval', 'Approval Pending Comments', 'Grant Proposal Ready for Submission', 'Grant Proposal Submitted', 'Grant Awarded', 'Grant Declined', 'Completed', 'Disapproved', 'Cancelled'],
 						'hideForAdmin': ['', 'In Development', 'Pending Approval', 'Approval Pending Comments', 'Grant Proposal Ready for Submission', 'Grant Proposal Submitted', 'Grant Awarded', 'Grant Declined', 'Completed', 'Disapproved', 'Cancelled'],
 					}
-				]
-*/			}, {
+				] */
+			}, {
 				"elementType": "field",
 				"controlType": "text",
 				"fieldName": "Approval Signature - EEP",
@@ -2549,16 +2549,16 @@
 				"choices": [{
 					"value": "approve",
 					"display": "I approve"
-/*					},{
+					/* },{
 						"value": "disapprove",
-						"display": "I disapprove"
-*/					}, {
+						"display": "I disapprove" */
+					}, {
 					"value": "needInfo",
 					"display": "Approval withheld pending comments"
 				}],
 				'disabledForNonAdmin': ['', 'In Development', 'Pending Approval', 'Approval Pending Comments', 'Grant Proposal Ready for Submission', 'Grant Proposal Submitted', 'Grant Awarded', 'Grant Declined', 'Completed', 'Disapproved', 'Cancelled'],
 				'disabledForAdmin': ['', 'In Development', 'Pending Approval', 'Approval Pending Comments', 'Grant Proposal Ready for Submission', 'Grant Proposal Submitted', 'Grant Awarded', 'Grant Declined', 'Completed', 'Disapproved', 'Cancelled'],
-/*				'helpNotes': [
+				/* 'helpNotes': [
 					{
 						'text': approvalStmt,
 						'htmlID': 'approval-indicator_help-note-1_CFG',
@@ -2569,8 +2569,8 @@
 						'hideForNonAdmin': ['', 'In Development', 'Pending Approval', 'Approval Pending Comments', 'Grant Proposal Ready for Submission', 'Grant Proposal Submitted', 'Grant Awarded', 'Grant Declined', 'Completed', 'Disapproved', 'Cancelled'],
 						'hideForAdmin': ['', 'In Development', 'Pending Approval', 'Approval Pending Comments', 'Grant Proposal Ready for Submission', 'Grant Proposal Submitted', 'Grant Awarded', 'Grant Declined', 'Completed', 'Disapproved', 'Cancelled'],
 					}
-				]
-*/			}, {
+				] */
+			}, {
 				"elementType": "field",
 				"controlType": "text",
 				"fieldName": "Approval Signature - CFG",

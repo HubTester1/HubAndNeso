@@ -2487,7 +2487,7 @@
 
 	$.fn.ConfigureRequest = function (passedRequestID) {
 
-		// if this is a GSE Sschedule and this user is not HR Admin, Job Admin, or Manager
+		// if this is a GSE Schedule and this user is not HR Admin, Job Admin, or Manager
 		if (mData.requestName === "GSE Schedule" && uData.roles.indexOf("gseUserOnly") > -1) {
 			// forget this function and go to ConfigureExistingGSESchedule instead
 			$().ConfigureExistingGSESchedule(passedRequestID);
@@ -4020,8 +4020,89 @@
 				PopulateFormData("div#request-form", rData.defaultDataForNewRequests, mData.uriRoot, rData.requestID);
 			}
 
-			// if request is not new
-			if (rData.requestStatus != "") {
+			// if request is not new and this is not a GSE Signup
+			if (rData.requestStatus != "" && mData.requestName != "GSE Signup") {
+
+
+
+
+
+
+
+				// if this is a GSE Schedule (either new or existing)
+				if (mData.requestName == "GSE Schedule") {
+					// get the relevant signups
+					var gseSignupsArray = $().GetFieldsFromSpecifiedRows({
+						"select": [{
+							"nameHere": "signupID",
+							"nameInList": "ID"
+						}, {
+							"nameHere": "formData",
+							"nameInList": "AllRequestData"
+						}],
+						"webURL": "https://bmos.sharepoint.com/sites/hr-service-signups",
+						"where": {
+							"ands": [
+								{
+									"field": "ScheduleID",
+									"type": "Text",
+									"value": rData.formData['Request-ID'],
+								}, {
+									"field": "RequestStatus",
+									"type": "Text",
+									"value": "Signed Up",
+								}
+							]
+						}
+					});
+					console.log('gseSignupsArray');
+					console.log(gseSignupsArray);
+					console.log('rData.formData');
+					console.log(rData.formData);
+					// if the RepeatedElements array doesn't already exist
+					if (!rData.formData.RepeatedElements) {
+						// create it
+						rData.formData.RepeatedElements = [];
+					}
+					// for each signup
+					gseSignupsArray.forEach((signup, index) => {
+						// create a repeat object
+						var repeatObject = {};
+						if (index === 0) {
+							repeatObject.ID = "signup";
+							repeatObject.OriginalToRepeat = "undefined";
+							repeatObject['Signup-Name'] = signup.formData["Requested-For"][0].displayText;
+							repeatObject['Signup-ID'] = signup.signupID;
+							// repeatObject.XXXXX = XXXXX;
+							// repeatObject.XXXXX = XXXXX;
+						} else {
+							repeatObject.ID = "signup-repeat-" + index;
+							repeatObject.OriginalToRepeat = "signup";
+							repeatObject['Signup-Name-repeat-' + index] = signup.formData["Requested-For"][0].displayText;
+							repeatObject['Signup-ID-repeat-' + index] = signup.signupID;
+							// repeatObject.XXXXX = XXXXX;
+							// repeatObject.XXXXX = XXXXX;
+						}
+						// push the repeat object to the RepeatedElements array
+						rData.formData.RepeatedElements.push(repeatObject);
+						// if the signup people list items property doesn't already exist
+						if (!rData.formData['Signup-People-List-Items']) {
+							// create it
+							rData.formData['Signup-People-List-Items'] = '';
+						}
+						// add a list item to the signup people list items property
+						rData.formData['Signup-People-List-Items'] += '<li>' + signup.formData["Requested-For"][0].displayText + '</li>';
+					});
+				}
+
+
+
+
+
+
+
+
+
 
 				// set stored object's data, if any
 				if (typeof (rData.formData) != "undefined") {
@@ -4086,9 +4167,14 @@
 						}
 					})
 				);
-				// delete schedule and job request statuses so that they don't get used as / confused with this signup's status
+				// delete schedule and job data so that they don't get used as / confused with this signup's data
 				delete rData.gseJobData['Request-Status'];
 				delete rData.gseScheduleData['Request-Status'];
+				delete rData.gseJobData['Requested-For'];
+				delete rData.gseScheduleData['Requested-For'];
+				delete rData.gseJobData['Request-ID'];
+				delete rData.gseScheduleData['Request-ID'];
+				
 				// calculate positions remaining
 				
 				// prep some of the data before populating fields and placeholders with it
@@ -4246,6 +4332,8 @@
 
 				// if alwaysTalkToRequester, populate and hide relevant fields
 				if (typeof (fData.alwaysTalkToRequester) != 'undefined' && fData.alwaysTalkToRequester === 1) {
+					console.log('populating');
+					console.log(uData);
 					$('option[value="Self"]').prop('selected', true);
 					$().PutAddtlPeopleInPicker('Requested For', [{
 						'name': uData.name,
@@ -14089,7 +14177,7 @@
 
 		// --- update ID, for, aria-described-by attributes on new repeat's descendant elements
 		$('#' + newRepeatID)
-			.find('[id^="label-and-control"], label, div.label > span, span.field-type-indicator, div.help-text, :input, a, div.mos-drag-and-drop-file-attachment, div.mos-drag-and-drop-file-attachment div, div.mos-drag-and-drop-file-attachment progress') // div.mos-drag-and-drop-file-attachment, div.mos-drag-and-drop-file-input, a.mos-drag-and-drop-file-container div, a.mos-drag-and-drop-file-container progress
+			.find('[id^="label-and-control"], label, div.label > span, span.content-placeholder, span.field-type-indicator, div.help-text, :input, a, div.mos-drag-and-drop-file-attachment, div.mos-drag-and-drop-file-attachment div, div.mos-drag-and-drop-file-attachment progress')
 			.each(function () {
 
 				// console.log($(this));
