@@ -259,6 +259,7 @@
 				"elementType": "markup",
 				"tag": "div",
 				"htmlID": "no-signups-warning",
+				"htmlClass": "banner banner--warning",
 				"content": 'Signups are no longer available.',
 				"begin": 1,
 				"end": 1,

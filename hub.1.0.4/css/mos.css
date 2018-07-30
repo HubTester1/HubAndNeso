@@ -198,6 +198,14 @@ form#aspnetForm div.banner--critical {
   color: #a30c5e;
   background-color: #ffd6e7; }
 
+form#aspnetForm div.banner--warning {
+  color: #3d2b00;
+  background-color: #ffef94; }
+
+form#aspnetForm div.banner--success {
+  color: #107c10;
+  background-color: #d4f8d1; }
+
 div#s4-workspace div#s4-titlerow a,
 div#s4-workspace div#s4-titlerow a:link,
 div#s4-workspace div#s4-titlerow a:visited,
@@ -3228,6 +3236,10 @@ div#app-container.gse-signup div#job-and-schedule-container {
   div#app-container.gse-signup div#job-and-schedule-container span.content-placeholder:empty {
     display: none;
     padding: 0; }
+
+div#app-container.gse-signup div#no-signups-warning {
+  font-size: 2rem !important;
+  margin-bottom: 2rem; }
 
 div#printer-content table.layout-table {
   width: 100%; }
