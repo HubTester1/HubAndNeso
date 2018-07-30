@@ -4121,30 +4121,74 @@
 
 				rData.gseJobData['Job-Admin-Name'] = rData.gseJobData['Job-Admin'][0].description;
 				rData.gseJobData['Job-Description-Formatted'] = '<p>' + ReplaceAll('%0A', '</p><p>', rData.gseJobData['Job-Description']) + '</p>';
-				if (rData.gseJobData['Training-Requirements']) {
-					rData.gseJobData['Training-Requirements-Formatted'] = '<p>' + ReplaceAll('%0A', '</p><p>', rData.gseJobData['Training-Requirements']) + '</p>';
-				}
-				rData.gseJobData['Dress-Requirements-List-Items'] = 
-					'<li>' +
-					'	Clothing and shoes must be in good condition.' +
-					'</li>' + 
-					'<li>' +
-					'	MOS badge must be worn above the waist at all times.' +
-					'</li>';
 
+				// training requirements
+				// get array of requirements
+				var opportunityTrainingReqs = rData.gseJobData['Training-Requirements'].split("%0A");
+				// if there's at least one duty
+				if (opportunityTrainingReqs[0]) {
+					// start with a header
+					rData.gseJobData['Training-Requirements-Formatted'] = '<h3>Training Requirements</h3>';
+					// if there's more than one, we'll create list items; otherwise, paragraph
+					var opportunityTrainingReqElement = opportunityTrainingReqs[1] ? 'li' : 'p';
+					// if there's more than one, start list
+					if (opportunityTrainingReqs[1]) {
+						rData.gseJobData['Training-Requirements-Formatted'] += '<ul>';
+					}
+					// for each in array, add markup
+					opportunityTrainingReqs.forEach((opportunityTrainingReq) => {
+						rData.gseJobData['Training-Requirements-Formatted'] +=
+							'<' + opportunityTrainingReqElement + '>' +
+							opportunityTrainingReq +
+						'</' + opportunityTrainingReqElement + '>';
+					});
+					// if there's more than one, end list
+					if (opportunityTrainingReqs[1]) {
+						rData.gseJobData['Training-Requirements-Formatted'] += '</ul>';
+					}
+				}
+
+				// dress requirements
+				// start with the two persistent requirements
+				rData.gseJobData['Dress-Requirements-List-Items'] = 
+					'<li>Clothing and shoes must be in good condition.</li>' + 
+					'<li>MOS badge must be worn above the waist at all times.</li>';
+				// add any other requirements
 				if (rData.gseJobData['Dress-Requirements']) {
 					rData.gseJobData['Dress-Requirements-List-Items'] += 
 						'<li>' + ReplaceAll('%0A', '</li><li>', rData.gseJobData['Dress-Requirements']) + '</li>';
 				}
 
+				// job duties
+				// get array of duties
 				var opportunityJobDuties = rData.gseJobData['Job-Duties'].split("%0A");
-				var opportunityJobDutyElement = opportunityJobDuties[1] ? 'li' : 'p';
+				// if there's at least one duty
+				if (opportunityJobDuties[0]) {
+					// start with a header
+					rData.gseJobData['Job-Duties-Formatted'] = '<h3>Job Duties</h3>';
+					// if there's more than one, we'll create list items; otherwise, paragraph
+					var opportunityJobDutyElement = opportunityJobDuties[1] ? 'li' : 'p';
+					// if there's more than one, start list
+					if (opportunityTrainingReqs[1]) {
+						rData.gseJobData['Job-Duties-Formatted'] += '<ul>';
+					}
+					// for each in array, add markup
+					opportunityJobDuties.forEach((opportunityJobDuty) => {
+						rData.gseJobData['Job-Duties-Formatted'] += 
+							'<' + opportunityJobDutyElement + '>' + 
+							opportunityJobDuty + 
+							'</' + opportunityJobDutyElement + '>';
+					});
+					// if there's more than one, start list
+					if (opportunityTrainingReqs[1]) {
+						rData.gseJobData['Job-Duties-Formatted'] += '<ul>';
+					}
+				}
 
-				rData.gseJobData['Job-Duties-List-Items'] = '';
-
-				opportunityJobDuties.forEach((opportunityJobDuty) => {
-					rData.gseJobData['Job-Duties-List-Items'] += '			<' + opportunityJobDutyElement + '>' + opportunityJobDuty + '</' + opportunityJobDutyElement + '>';
-				});
+				if (rData.gseScheduleData['Notes']) {
+					rData.gseScheduleData['Notes-Formatted'] = '<h3>Notes</h3>' +
+						'<p>' + ReplaceAll('%0A', '</p><p>', rData.gseScheduleData['Notes']) + '</p>';					
+				}
 
 				console.log('rData.gseScheduleData');
 				console.log(rData.gseScheduleData);
@@ -17255,7 +17299,7 @@
 		});
 
 		// handle links for url, file, and event request fields
-		$(formElement).find('a[data-source-type="url"], a[data-source-type="file"], a[data-source-type="event-space-request"], a[data-source-type="event-needs-request"], a[data-source-type="gpc-initial-concept-approval-request"]').each(function () {
+		$(formElement).find('a[data-source-type="url"], a[data-source-type="file"], a[data-source-type="event-space-request"], a[data-source-type="event-needs-request"], a[data-source-type="gpc-initial-concept-approval-request"], a[data-source-type="gse-job-request"]').each(function () {
 			id = this.id;
 
 			value = HtmlEncode(ReplaceAll("#", "", $(this).text()));
@@ -17381,39 +17425,6 @@
 		// return the array
 		return globalSubmissionValuePairsArray;
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -22016,7 +22027,7 @@
 		// wait for all data retrieval / setting promises to complete (pass or fail) 
 		$.when.apply($, allDataRetrievalAndSettingPromises).always(function () {
 
-			console.log('using dev_mos-main_long.1.04 m2');
+			console.log('using dev_mos-main_long.1.04 m1');
 
 			$().ConfigureAndShowScreenContainerAndAllScreens();
 		});

@@ -343,35 +343,16 @@
 				'end': 1
 			}, {
 				'elementType': "markup",
-				'tag': "h3",
-				'htmlID': 'Training-Requirements-Header',
-				'content': 'Training Requirements',
-				'begin': 1,
-				'end': 1,
-				"hideForNonAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
-				"hideForAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
-			}, {
-				'elementType': "markup",
 				'tag': "div",
-				'htmlID': 'Training-Requirements-Container',
 				'content': '<span id="Training-Requirements-Formatted" class="content-placeholder"></span>',
 				'begin': 1,
 				'end': 1,
-				"hideForNonAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
-				"hideForAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
 			}, {
 				'elementType': "markup",
 				'tag': "h3",
 				'content': 'Dress Requirements',
 				'begin': 1,
 				'end': 1
-			// }, {
-			// 	'elementType': "markup",
-			// 	'tag': "p",
-			// 	'content': 'Clothing and shoes must be in good condition, and MOS badge ' + 
-			// 				'must be worn above the waist at all times.',
-			// 	'begin': 1,
-			// 	'end': 1
 			}, {
 				'elementType': "markup",
 				'tag': "ul",
@@ -379,18 +360,16 @@
 				'content': '<span id="Dress-Requirements-List-Items" class="optional content-placeholder"></span>',
 				'begin': 1,
 				'end': 1,
-				// "hideForNonAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
-				// "hideForAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
 			}, {
 				'elementType': "markup",
-				'tag': "h3",
-				'content': 'Job Duties',
+				'tag': "div",
+				'content': '<span id="Job-Duties-Formatted" class="content-placeholder"></span>',
 				'begin': 1,
 				'end': 1
 			}, {
 				'elementType': "markup",
-				'tag': "ul",
-				'content': '<span id="Job-Duties-List-Items" class="content-placeholder"></span>',
+				'tag': "div",
+				'content': '<span id="Notes-Formatted" class="content-placeholder"></span>',
 				'begin': 1,
 				'end': 1
 			}, {
@@ -845,10 +824,11 @@
 	fData.CustomScriptFirst = '';
 
 
-	fData.CustomScriptLast = 'if($.trim($("span#Training-Requirements-Formatted").html())!="") {' + 
+	fData.CustomScriptLast = '';
+	/* if($.trim($("span#Training-Requirements-Formatted").html())!="") {' + 
 							'	$("h3#Training-Requirements-Header").show("fast").removeClass("hidden"); ' +
 							'	$("div#Training-Requirements-Container").show("fast").removeClass("hidden"); ' +
-							'}';
+							'}'; */
 
 
 
