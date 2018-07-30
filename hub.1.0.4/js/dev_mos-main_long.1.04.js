@@ -4213,7 +4213,7 @@
 			// if this is an *existing* GSE Signup
 			if (rData.requestStatus != "" && mData.requestName == "GSE Signup") {
 				// manually copy some admin data to requester-accessible fields
-				$("input#Request-ID").val(rData.requestID);
+				// $("input#Request-ID").val(rData.requestID);
 				$("input#Request-Status-for-Requester").val(rData.requestStatus);
 				$("textarea#Credit-Denial-Reason-for-Requester").val(rData.formDataOnLoad['Credit-Denial-Reason']);
 			}

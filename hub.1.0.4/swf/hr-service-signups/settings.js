@@ -486,7 +486,7 @@
 				"elementType": "field",
 				"controlType": "text",
 				"fieldName": "Request ID",
-				"labelContent": "Signup ID",
+				"labelContent": "Schedule ID",
 				"hideForNonAdmin": [""],
 				"hideForAdmin": [""],
 				"disabledForNonAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
