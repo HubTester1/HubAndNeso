@@ -21408,41 +21408,21 @@
 
 	$.fn.EnableGSEScheduleSignupDisplaysAndResponses = function () {
 		if ($("input#Request-Status").val() === "Submitted" || $("input#Request-Status").val() === "Completed") {
-			var scheduleStartDateTime = rData.formData['Date'].substring(0, 10) + ' ' +
+			var scheduleStartDatetime = rData.formData['Date'].substring(0, 10) + ' ' +
 				rData.formData['time-storage_StartTime'].substring(11, 16);
-			scheduleStartDateTime = moment.tz(scheduleStartDateTime, "America/New_York").format();
+			scheduleStartDatetime = moment.tz(scheduleStartDatetime, "America/New_York").format();
 			var nowAsISOLocal = $().ReturnFormattedDateTime('nowLocal', null, null);
-			console.log('scheduleStartDateTime');
-			console.log(scheduleStartDateTime);
-			console.log('nowAsISOLocal');
-			console.log(nowAsISOLocal);
-			if (moment(scheduleStartDatetime).isAfter(nowAsISOLocal)) {
-				console.log('is after');
+			if (moment(scheduleStartDatetime).isBefore(nowAsISOLocal)) {
 				$("div#signup-people").show("fast").removeClass("hidden");
 			} else {
-				console.log('is NOT after');
 				$("div#signups").show("fast").removeClass("hidden");
-				$().SetFieldToEnabled('signup-credit_yes');
-				$().SetFieldToEnabled('signup-credit_no');
+				$().SetFieldToEnabled('Signup-Credit'); // Tuesday here
+				$().SetFieldToEnabled('signup-credit_no'); // Tuesday here
 				$().SetFieldToRequired('Signup-Credit', 'radio');
 			}
 		}
 	};
-/* 
-								'' +
-								'	var positionsAvailable = parseInt($("input#Positions-Available").val());' +
-								'	var scheduleStartDatetime = $("input#Schedule-Start-Datetime").val();' +
-								'	var currentDatetime = $("input#Current-Datetime").val();' +
-								'	if (' +
-								'		!(positionsAvailable > 0) || ' +
-								'		!(moment(scheduleStartDatetime).isAfter(currentDatetime))' +
-								'	) {' +
-								'		$().SetFieldToDisabled("#sign-up_signup");' +
-								'		$("div#non-admin, div#submit-or-exit")' +
-								'.hide("fast").addClass("hidden");' +
-								'		$("div#no-signups-warning").show("fast").removeClass("hidden");' +
-								'	}' +
- */	
+
 	
 	 
  	$.fn.SetInHouseNeedsSheetRequestAdditionalViewAccess = function () {
