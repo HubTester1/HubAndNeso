@@ -18189,7 +18189,8 @@
 						'zeroIndexedColumnNumber': 3,
 						'numberColsForHeaderToSpan': 4
 					},
-					'customCAMLQuery': '<Where>' +
+					'basicRSQueryRelevantStatus': 'Pending Approval',
+					/* 'customCAMLQuery': '<Where>' +
 						'   <And>' +
 						'       <Eq>' +
 						'           <FieldRef Name="RequestStatus"></FieldRef>' +
@@ -18206,7 +18207,7 @@
 						// '           </Leq>' +
 						// '       </And>' +
 						'   </And>' +
-						'</Where>'
+						'</Where>' */
 				}, {
 					'tableID': 'approved',
 					'someColsAreUsers': 1,
