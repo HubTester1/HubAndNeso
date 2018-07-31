@@ -750,9 +750,8 @@
 	};
 
 	var fData = {
-		// 'autoTrackGSEScheduleStatuses': 1,
-		'autoTrackSubmissionAndCancellation': 1,
-		'autoProcessGSEScheduleAndSignupModification': 1,
+		'autoTrackGSEScheduleStatuses': 1,
+		'autoProcessGSESignupCreditFromSchedule': 1,
 		'bypassNormalDataSaving': [''],
 		'customDataSavingFunction': {
 			'useFunction': 'ReturnNewGSESchedulesSubmissionValuePairArrayOfArrays',
@@ -761,13 +760,11 @@
 		'alwaysTalkToRequester': 1,
 		'additionalViewPermissionsFunction': 'ReturnGSEScheduleAdditionalViewAccess',
 		'standardElementGroups': {
-			// 'standardThisRequestAndRequesterElements': 1,
-			// 'standardAdminElements': {
-			// 	'changeRequestStatus': [
-			// 		{ "value": "Approve", "display": "Approve this job" },
-			// 		{ "value": "Disapprove", "display": "Disapprove this job" }
-			// 	]
-			// },
+			'standardAdminElements': {
+				'changeRequestStatus': [
+					{ "value": "Cancel", "display": "This schedule is cancelled" }
+				]
+			},
 			'standardButtonElements': 1,
 			'standardComponentGrpAdminOnlyElements': 1
 		},
@@ -1371,25 +1368,6 @@
 				'elementType': 'markup',
 				'tag': 'div',
 				'end': 1
-
-
-
-
-
-
-
-
-
-			}, {
-				'elementType': "field",
-				'controlType': "text",
-				'fieldName': "Request Status",
-				'listFieldName': "RequestStatus",
-				'labelContent': "Request Status",
-				'disabledForNonAdmin': ['', 'Submitted', 'Cancelled'],
-				'disabledForAdmin': ['', 'Submitted', 'Cancelled'],
-				'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
-				'hideForAdmin': ['', 'Submitted', 'Cancelled'],
 			}
 		]
 	};
@@ -1402,9 +1380,7 @@
 
 	fData.CustomScriptLast = '$("div#label-and-control_Requested-For").hide("fast").addClass("hidden");';
 
-	fData.CustomScriptLast += '$("div#signups").show("fast").removeClass("hidden"); \n';
-
-	// fData.CustomScriptLast += '$().EnableGSEScheduleSignupDisplaysAndResponses(); \n';
+	fData.CustomScriptLast += '$().EnableGSEScheduleSignupDisplaysAndResponses(); \n';
 
 	// TEMPORARY
 

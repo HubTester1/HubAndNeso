@@ -5428,69 +5428,12 @@
 					$('input#Request-Status').val(newReqStatus);
 					$('input#End-of-Life').val(endOfLife);
 				}
-				
-				/*	// consider
 
-					if (fData.autoTrackGSEJobStatuses === 1 && rData.endOfLife != 1) {
-						
-						$(workingMessage).text("Handling Request Status");
-	 
-						var newReqStatus = '';
-						var endOfLife = 0;
-						var endOfLifeIsNew = 0;
-						if (rData.requestStatus == '') {
-							newReqStatus = 'Pending Approval';
-						} else if (rData.requestStatus == 'Pending Approval' && ($('input#requester-cancellation_cancel:checked').length > 0 || $('select#Change-Request-Status option:selected').val() == 'Cancel')) {
-							newReqStatus = 'Cancelled';
-							endOfLife = 1;
-							endOfLifeIsNew = 1;
-						} else if (rData.requestStatus == 'Pending Approval' && $('select#Change-Request-Status option:selected').val() == 'Approve') {
-							newReqStatus = 'Approved';
-						} else if (rData.requestStatus == 'Pending Approval' && $('select#Change-Request-Status option:selected').val() == 'Disapprove') {
-							newReqStatus = 'Disapproved';
-							endOfLife = 1;
-							endOfLifeIsNew = 1;
-						}
-						rData.endOfLifeIsNew = endOfLifeIsNew;
-						rData.endOfLife = endOfLife;
-						rData.requestStatus = newReqStatus;
-						globalRData = rData;
-						$('input#Request-Status').val(newReqStatus);
-						$('input#End-of-Life').val(endOfLife);
-					}
-
-					// consider
-
-					if (fData.autoTrackGSEJobStatuses === 1 && rData.endOfLife != 1) {
-						
-						$(workingMessage).text("Handling Request Status");
-	 
-						var newReqStatus = '';
-						var endOfLife = 0;
-						var endOfLifeIsNew = 0;
-						if (rData.requestStatus == '') {
-							newReqStatus = 'Pending Approval';
-						} else if (rData.requestStatus == 'Pending Approval' && $('select#Change-Request-Status option:selected').val() == 'Approve') {
-							newReqStatus = 'Approved';
-						} else if (rData.requestStatus == 'Pending Approval' && $('select#Change-Request-Status option:selected').val() == 'Disapprove') {
-							newReqStatus = 'Disapproved';
-							endOfLife = 1;
-							endOfLifeIsNew = 1;
-						}
-						rData.endOfLifeIsNew = endOfLifeIsNew;
-						rData.endOfLife = endOfLife;
-						rData.requestStatus = newReqStatus;
-						globalRData = rData;
-						$('input#Request-Status').val(newReqStatus);
-						$('input#End-of-Life').val(endOfLife);
-					}
-
-				// consider
-
-				if (fData.autoTrackGSEScheduleStatuses === 1 && rData.endofLife != 1) {
+				if (fData.autoTrackGSEScheduleStatuses === 1 && rData.endOfLife != 1) {
 
 					$(workingMessage).text("Handling Request Status");
 
+					var previousReqStatus = rData.requestStatus;
 					var newReqStatus = '';
 					var beginningOfLife = 0;
 					var endOfLife = 0;
@@ -5504,18 +5447,42 @@
 							beginningOfLife = 0;
 							endOfLife = 1;
 							endOfLifeIsNew = 1;
+						} else {
+							// alter flags from their defaults if there are disapproved or blank approval nodes
+							var someCreditNodesAreBlank = 0;
+							$('div#signups div#signup').each(function (i, a) {
+								var grantButtonChecked = 0;
+								var denyButtonChecked = 0;
+
+								if ($(this).find('input[value="yes"]').is(':checked')) {
+									grantButtonChecked = 1;
+								}
+								if ($(this).find('input[value="no"]').is(':checked')) {
+									denyButtonChecked = 1;
+								}
+
+								if (grantButtonChecked == 0 && denyButtonChecked == 0) {
+									someCreditNodesAreBlank = 1;
+								}
+							});
+							if (someCreditNodesAreBlank === 0) {
+								newReqStatus = 'Completed';
+								beginningOfLife = 0;
+								endOfLife = 1;
+								endOfLifeIsNew = 1;
+							}
 						}
 					}
 					rData.endOfLifeIsNew = endOfLifeIsNew;
 					rData.endOfLife = endOfLife;
 					rData.beginningOfLife = beginningOfLife;
 					rData.requestStatus = newReqStatus;
+					rData.previousRequestStatus = previousReqStatus;
 					rData = rData;
 					$('input#Request-Status').val(newReqStatus);
 					$('input#Beginning-of-Life').val(endOfLife);
 					$('input#End-of-Life').val(endOfLife);
 				}
-				*/
 
 				if (fData.autoTrackEventNeedsStatuses === 1) {
 
@@ -5976,6 +5943,26 @@
 					$('input#Beginning-of-Life').val(endOfLife);
 					$('input#End-of-Life').val(endOfLife);
 				}
+
+
+				// ========================================================
+				// PROCESS GSE SIGNUP CREDIT FROM SCHEDULE (if appropriate)
+				// ========================================================
+
+
+				if (typeof (fData.autoProcessGSESignupCreditFromSchedule) != 'undefined' && fData.autoProcessGSESignupCreditFromSchedule == 1) {
+
+					$(workingMessage).text("Handling GSE Modifications");
+					// Wednesday here
+					// if this schedule is being cancelled
+
+						// change each signup to cancelled
+
+					// if this schedule is newly completed
+
+						// change each signup accordingly
+				}
+
 
 
 				// ========================================================
@@ -6715,47 +6702,6 @@
 
 
 				// ========================================================
-				// HANDLE GSE SCHEDULES & SIGNUPS MODIFICATIONS (if needed)
-				// ========================================================
-
-				if (typeof (fData.autoProcessGSEScheduleAndSignupModification) != 'undefined' && fData.autoProcessGSEScheduleAndSignupModification == 1) {
-
-					$(workingMessage).text("Handling GSE Modifications");
-
-					// if this app is GSE Schedule and this schedule is being cancelled
-
-						// find all of the relevant signups, [change their status to cancelled and email relevant people]
-
-					// if this app is [GSE Signups] and this user is cancelling her signup
-
-						// [change this signup status to cancelled [and email relevant people]]
-
-					// if this app is [GSE Schedule] and schedule data is being modified but schedule is not being cancelled
-
-						// [email everyone signed up for this schedule that information has changed]
-
-				}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-				// ========================================================
 				// MODIFY CONFIRMATION MESSAGE (if needed)
 				// ========================================================
 
@@ -6788,16 +6734,6 @@
 						$('div#mos-form-submission-confirmation').addClass('contains-additional-message');
 					}
 				}
-
-
-
-
-
-
-
-
-
-
 
 
 				// ========================================================
