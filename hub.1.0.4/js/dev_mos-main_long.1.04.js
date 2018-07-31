@@ -12393,6 +12393,9 @@
 			if (typeof (e.repeatable) != "undefined") {
 				markup += ' data-repeatable="Y" ';
 			}
+			if (typeof (e.bypassSavingChildren) != "undefined") {
+				markup += ' data-bypass-saving-children="Y" ';
+			}
 			if (typeof (e.dataAttributes) != "undefined") {
 				$.each(e.dataAttributes, function (i, dataAttribute) {
 					markup += ' data-' + dataAttribute.key + '="' + dataAttribute.value + '" ';
@@ -14195,6 +14198,11 @@
 				// if id exists, update it
 				if (typeof ($(this).attr('id')) != 'undefined') {
 					$(this).attr('id', $(this).attr('id') + '-repeat-' + newRepeatDescendantIDNumber);
+				}
+
+				// if name exists, update it
+				if (typeof ($(this).attr('name')) != 'undefined') {
+					$(this).attr('name', $(this).attr('name') + '-repeat-' + newRepeatDescendantIDNumber);
 				}
 
 				// if for exists, update it
@@ -17498,11 +17506,14 @@
 		// handle the repeatables
 		formDataString += '"RepeatedElements": [';
 		$(form).find('[data-repeatable]').each(function () {
-			var repeatableString = '{"ID": "' + $(this).attr('id') + '",';
-			repeatableString += '"OriginalToRepeat": "' + $(this).attr('data-original-to-repeat') + '",';
-			repeatableString += ReturnRequestStorageObjectPropertiesAndPushRequestColumns(this);
-			repeatableString += '},';
-			formDataString += repeatableString;
+			var bypassSavingChildren = $(this).attr('data-bypass-saving-children');
+			if (bypassSavingChildren != 'Y') {
+				var repeatableString = '{"ID": "' + $(this).attr('id') + '",';
+				repeatableString += '"OriginalToRepeat": "' + $(this).attr('data-original-to-repeat') + '",';
+				repeatableString += ReturnRequestStorageObjectPropertiesAndPushRequestColumns(this);
+				repeatableString += '},';
+				formDataString += repeatableString;
+			}
 			$(this).remove();
 		});
 		formDataString += '],';
@@ -21413,13 +21424,42 @@
 				rData.formData['time-storage_StartTime'].substring(11, 16);
 			scheduleStartDatetime = moment.tz(scheduleStartDatetime, "America/New_York").format();
 			var nowAsISOLocal = $().ReturnFormattedDateTime('nowLocal', null, null);
-			if (moment(scheduleStartDatetime).isBefore(nowAsISOLocal)) {
+			if (moment(scheduleStartDatetime).isAfter(nowAsISOLocal)) {
 				$("div#signup-people").show("fast").removeClass("hidden");
 			} else {
+				var radioButtonIDs = [];
+				// for each repeat
+				$("div#signups").find("div.repeat-container").each(function() {
+					
+					// for each radio button
+					$(this).find("input[type='radio']").each(function(index, value) {
+						var radioButtonID = $(this).attr("id");
+						$().SetFieldToEnabled('#' + radioButtonID);
+						radioButtonIDs.push(radioButtonID);
+						if (index === 0) {
+							$().SetFieldToRequired(radioButtonID, 'radio');
+						}
+					});
+				});
+				radioButtonIDs.forEach((radioButtonID) => {
+					$("input#" + radioButtonID).change(function () {
+						var denialContainerID = $(this)
+							.closest('div.repeat-container')
+							.find('div[id^="label-and-control_Signup-Credit-Denial-Reason"]')
+							.attr('id');
+						var denialControlID = $("div#" + denialContainerID)
+							.find("textarea[id^='Signup-Credit-Denial-Reason']")
+							.attr('id');
+						if ($(this).val() === 'yes') {
+							$().SetFieldToOptional(denialControlID, 'textarea');
+							$("div#" + denialContainerID).hide("fast").addClass("hidden");
+						} else {
+							$().SetFieldToRequired(denialControlID, 'textarea');
+							$("div#" + denialContainerID).show("fast").removeClass("hidden");
+						}
+					});
+				});
 				$("div#signups").show("fast").removeClass("hidden");
-				$().SetFieldToEnabled('Signup-Credit'); // Tuesday here
-				$().SetFieldToEnabled('signup-credit_no'); // Tuesday here
-				$().SetFieldToRequired('Signup-Credit', 'radio');
 			}
 		}
 	};
@@ -22144,7 +22184,7 @@
 		// wait for all data retrieval / setting promises to complete (pass or fail) 
 		$.when.apply($, allDataRetrievalAndSettingPromises).always(function () {
 
-			console.log('using dev_mos-main_long.1.04 m1');
+			console.log('using dev_mos-main_long.1.04 m2');
 
 			$().ConfigureAndShowScreenContainerAndAllScreens();
 		});

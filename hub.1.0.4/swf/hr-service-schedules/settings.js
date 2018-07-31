@@ -1289,7 +1289,8 @@
 				'begin': 1,
 				'htmlID': 'signup',
 				'htmlClass': 'repeat-container',
-				'repeatable': 1
+				'repeatable': 1,
+				'bypassSavingChildren': 1
 			}, {
 				'elementType': 'markup',
 				'tag': 'h3',
@@ -1313,8 +1314,8 @@
 				'labelContent': "Signup ID",
 				'disabledForNonAdmin': ['', 'Submitted', 'Cancelled'],
 				'disabledForAdmin': ['', 'Submitted', 'Cancelled'],
-				// 'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
-				// 'hideForAdmin': ['', 'Submitted', 'Cancelled'],
+				'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
+				'hideForAdmin': ['', 'Submitted', 'Cancelled'],
 			}, {
 				'elementType': "field",
 				'controlType': "radio",
@@ -1330,7 +1331,7 @@
 					}
 				],
 				'disabledForNonAdmin': ['', 'Submitted', 'Cancelled'],
-				'disabledForAdmin': ['', 'Submitted', 'Cancelled']
+				'disabledForAdmin': ['', 'Submitted', 'Cancelled'],
 			}, {
 				'elementType': "field",
 				'controlType': "textarea",
@@ -1401,7 +1402,9 @@
 
 	fData.CustomScriptLast = '$("div#label-and-control_Requested-For").hide("fast").addClass("hidden");';
 
-	fData.CustomScriptLast += '$().EnableGSEScheduleSignupDisplaysAndResponses(); \n';
+	fData.CustomScriptLast += '$("div#signups").show("fast").removeClass("hidden"); \n';
+
+	// fData.CustomScriptLast += '$().EnableGSEScheduleSignupDisplaysAndResponses(); \n';
 
 	// TEMPORARY
 
