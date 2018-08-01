@@ -479,11 +479,11 @@
 				'elementType': "field",
 				'controlType': "check",
 				'fieldName': "Is Manager Without Office",
-				'choiceSetLabel': "Is this person a manager who does not have an office?",
+				'choiceSetLabel': "Is this person a manager, with direct reports, who does not have an office?",
 				'choices': [
 					{
 						'value': "yes",
-						'display': "Yes, this manager does not have an office"
+						'display': "Yes, this person is a manager, with direct reports, who does not have an office"
 					}
 				],
 				'disabledForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
