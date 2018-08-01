@@ -5953,17 +5953,78 @@
 				if (typeof (fData.autoProcessGSESignupCreditFromSchedule) != 'undefined' && fData.autoProcessGSESignupCreditFromSchedule == 1) {
 
 					$(workingMessage).text("Handling GSE Modifications");
-					// Wednesday here
+					
 					// if this schedule is being cancelled
 
 						// change each signup to cancelled
 
 					// if this schedule is newly completed
+					if (
+						rData.requestStatus === 'Completed' &&
+						rData.endOfLife === 1 &&
+						rData.endOfLifeIsNew === 1
+					) {
+						// start an array of signup credit objects
+						var signupCredits = [];
+						// for each signup
+						$('div#signups div.repeat-container').each(function (i, a) {
+							// start a new signup credit object
+							var signupCredit = {};
+							// get id and granted values from the DOM
+							signupCredit.signupID = $(this).find('input[id^="Signup-ID"]').val();
+							signupCredit.creditGranted = 
+								$(this).find('input[value="yes"]').is(':checked');
+							// if credit wasn't granted
+							if (!signupCredit.creditGranted) {
+								// get a denial reason from the DOM
+								$(this).find('textarea[id^="Signup-Credit-Denial-Reason"]').val();
+							}
+							// push the signup credit object to the signup credits array
+							signupCredits.push(signupCredit);
+						});
+						// for each extracted signup credit
+						signupCredits.forEach((signupCredit) => {
+							// get the corresponding row from the GSE Signup SWFList
+							console.log(signupCredit.signupID);
+							signupCredit = $.extend($().GetFieldsFromOneRow({
+								"select": [{
+								// 	"nameHere": "requestStatus",
+								// 	"nameInList": "RequestStatus"
+								// }, {
+								// 	"nameHere": "endOfLife",
+								// 	"nameInList": "EndOfLife"
+								// }, {
+								// 	"nameHere": "lastModifiedAtLoad",
+								// 	"nameInList": "Modified"
+								// }, {
+								// 	"nameHere": "requesterID",
+								// 	"nameInList": "Author"
+								// }, {
+									"nameHere": "formData",
+									"nameInList": "AllRequestData"
+								// }, {
+								// 	"nameHere": "requestVersion",
+								// 	"nameInList": "RequestVersion"
+								}],
+								"webURL": "https://bmos.sharepoint.com/sites/hr-service-signups",
+								"where": {
+									"field": "ID",
+									"type": "Number",
+									"value": signupCredit.signupID,
+								}
+							}),
+								signupCredit
+							);
+							console.log(signupCredit.formData);
 
-						// change each signup accordingly
+							
+							// set signupCredit.newRequestStatus to "Credit Granted", "Credit Denied"[, or "Cancelled"] - THURSDAY - consider handling cancellation in same code as grant / deny
+							// in formData, modify Request-Status and, if needed, add Credit-Denial-Reason-for-Requester
+							// update SWFList
+
+						});
+					}
 				}
-
-
 
 				// ========================================================
 				// ADD TO CALENDAR (if appropriate)
@@ -13712,9 +13773,9 @@
 
 			if (type == "radio" || type == "check" || type == "checkorradio") {
 				// repeat function needs to alter input names before this can begin to be made to work
-				//$('input[name^="' + id + '-repeat"]').each(function () {
-				//	 repeatIDs.push($(this).attr('id'));
-				//});
+				$('input[name^="' + id + '-repeat"]').each(function () {
+					 repeatIDs.push($(this).attr('name'));
+				});
 			} else if (type == "peoplepicker") {
 				// repeat function needs to alter people picker IDs before this can begin to be made to work
 				//$('#' + id + '_TopSpan_HiddenInput').each(function () {
@@ -21364,19 +21425,31 @@
 				$("div#signup-people").show("fast").removeClass("hidden");
 			} else {
 				var radioButtonIDs = [];
-				// for each repeat
+				// enable and require radio buttons
 				$("div#signups").find("div.repeat-container").each(function() {
-					
-					// for each radio button
 					$(this).find("input[type='radio']").each(function(index, value) {
 						var radioButtonID = $(this).attr("id");
 						$().SetFieldToEnabled('#' + radioButtonID);
 						radioButtonIDs.push(radioButtonID);
 						if (index === 0) {
-							$().SetFieldToRequired(radioButtonID, 'radio');
+							// pre-release pinch - this should really use SetFieldToRequired 
+							// 		function, but that function uses ids in some places and names
+							// 		in others but only accepts id parameter and if passing 
+							// 		name or id as id then problems occur
+							$('input[id="' + radioButtonID + '"]').addClass('required');
+							$('#' + radioButtonID).closest("div.control")
+								.prev("div.field-type-indication")
+								.children("span.field-type-indicator")
+								.removeClass("field-optional")
+								.addClass("field-required")
+									.children("span.message")
+									.removeClass("message-optional")
+									.addClass("message-required")
+									.text("Required Field");
 						}
 					});
 				});
+				// listen for changes on radio buttons
 				radioButtonIDs.forEach((radioButtonID) => {
 					$("input#" + radioButtonID).change(function () {
 						var denialContainerID = $(this)
@@ -21388,9 +21461,11 @@
 							.attr('id');
 						if ($(this).val() === 'yes') {
 							$().SetFieldToOptional(denialControlID, 'textarea');
+							$().SetFieldToDisabled('#' + denialControlID);
 							$("div#" + denialContainerID).hide("fast").addClass("hidden");
 						} else {
 							$().SetFieldToRequired(denialControlID, 'textarea');
+							$().SetFieldToEnabled('#' + denialControlID);
 							$("div#" + denialContainerID).show("fast").removeClass("hidden");
 						}
 					});

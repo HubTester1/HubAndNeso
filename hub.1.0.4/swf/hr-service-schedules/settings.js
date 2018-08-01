@@ -752,7 +752,7 @@
 	var fData = {
 		'autoTrackGSEScheduleStatuses': 1,
 		'autoProcessGSESignupCreditFromSchedule': 1,
-		'bypassNormalDataSaving': [''],
+		'bypassNormalDataSaving': ['', 'Submitted', 'Completed'],
 		'customDataSavingFunction': {
 			'useFunction': 'ReturnNewGSESchedulesSubmissionValuePairArrayOfArrays',
 			'requestStatuses': ['']
@@ -802,8 +802,8 @@
 				"labelContent": "Schedule ID",
 				"hideForNonAdmin": [""],
 				"hideForAdmin": [""],
-				"disabledForNonAdmin": ["", "Submitted", "Cancelled"],
-				"disabledForAdmin": ["", "Submitted", "Cancelled"]
+				"disabledForNonAdmin": ["", "Submitted", "Completed", "Cancelled"],
+				"disabledForAdmin": ["", "Submitted", "Completed", "Cancelled"]
 			}, {
 				"elementType": "field",
 				"controlType": "text",
@@ -822,8 +822,8 @@
 				},
 				"hideForNonAdmin": [""],
 				"hideForAdmin": [""],
-				"disabledForNonAdmin": ["", "Submitted", "Cancelled"],
-				"disabledForAdmin": ["", "Submitted", "Cancelled"]
+				"disabledForNonAdmin": ["", "Submitted", "Completed", "Cancelled"],
+				"disabledForAdmin": ["", "Submitted", "Completed", "Cancelled"]
 			}, {
 				"elementType": "field",
 				"controlType": "text",
@@ -834,14 +834,14 @@
 					"text": "Give this schedule a name you can reference later",
 					"htmlID": "request-nickname_help-note",
 					"urgent": 0,
-					"hideForNonAdmin": ["Submitted", "Cancelled"],
-					"hideForAdmin": ["Submitted", "Cancelled"]
+					"hideForNonAdmin": ["Submitted", "Completed", "Cancelled"],
+					"hideForAdmin": ["Submitted", "Completed", "Cancelled"]
 				}],
 				"requiredForNonAdmin": [""],
 				"requiredForAdmin": [""],
-				"disabledForNonAdmin": ["Submitted", "Cancelled"],
-				"disabledForAdmin": ["Submitted", "Cancelled"],
-				"hideForAdmin": ["Submitted", "Cancelled"]
+				"disabledForNonAdmin": ["Submitted", "Completed", "Cancelled"],
+				"disabledForAdmin": ["Submitted", "Completed", "Cancelled"],
+				"hideForAdmin": ["Submitted", "Completed", "Cancelled"]
 			}, {
 				"elementType": "field",
 				"controlType": "select",
@@ -856,10 +856,10 @@
 				}],
 				"requiredForNonAdmin": [""],
 				"requiredForAdmin": [""],
-				"hideForNonAdmin": ["Submitted", "Cancelled"],
-				"hideForAdmin": ["Submitted", "Cancelled"],
-				"disabledForNonAdmin": ["Submitted", "Cancelled"],
-				"disabledForAdmin": ["Submitted", "Cancelled"],
+				"hideForNonAdmin": ["Submitted", "Completed", "Cancelled"],
+				"hideForAdmin": ["Submitted", "Completed", "Cancelled"],
+				"disabledForNonAdmin": ["Submitted", "Completed", "Cancelled"],
+				"disabledForAdmin": ["Submitted", "Completed", "Cancelled"],
 				"onChange": [{
 					"thisFieldEquals": ["Self"],
 					"hide": [{
@@ -897,8 +897,8 @@
 				"listFieldName": "RequestedFor",
 				"hideForNonAdmin": [""],
 				"hideForAdmin": [""],
-				"disabledForNonAdmin": ["Submitted", "Cancelled"],
-				"disabledForAdmin": ["Submitted", "Cancelled"]
+				"disabledForNonAdmin": ["Submitted", "Completed", "Cancelled"],
+				"disabledForAdmin": ["Submitted", "Completed", "Cancelled"]
 			}, {
 				"elementType": "field",
 				"controlType": "check",
@@ -908,8 +908,8 @@
 					"value": "cancel",
 					"display": "Yes, I wish to cancel this schedule"
 				}],
-				"hideForNonAdmin": ["", "Cancelled"],
-				"hideForAdmin": ["", "Cancelled"],
+				"hideForNonAdmin": ["", "Completed", "Cancelled"],
+				"hideForAdmin": ["", "Completed", "Cancelled"],
 				"disabledForNonAdmin": ["Cancelled"],
 				"disabledForAdmin": ["Cancelled"]
 				// about the requester
@@ -918,7 +918,7 @@
 				"tag": "div",
 				"htmlID": "container_about-the-requester",
 				"begin": 1,
-				"hideForNonAdmin": ["", "Submitted", "Cancelled"],
+				"hideForNonAdmin": ["", "Submitted", "Completed", "Cancelled"],
 				"hideForAdmin": [""],
 			}, {
 				"elementType": "markup",
@@ -931,48 +931,48 @@
 				"controlType": "text",
 				"fieldName": "Requester Name",
 				"labelContent": "Name",
-				"disabledForNonAdmin": ["", "Submitted", "Cancelled"],
-				"disabledForAdmin": ["", "Submitted", "Cancelled"]
+				"disabledForNonAdmin": ["", "Submitted", "Completed", "Cancelled"],
+				"disabledForAdmin": ["", "Submitted", "Completed", "Cancelled"]
 			}, {
 				"elementType": "field",
 				"controlType": "text",
 				"fieldName": "Requester Department",
 				"labelContent": "Department",
-				"disabledForNonAdmin": ["", "Submitted", "Cancelled"],
-				"disabledForAdmin": ["", "Submitted", "Cancelled"]
+				"disabledForNonAdmin": ["", "Submitted", "Completed", "Cancelled"],
+				"disabledForAdmin": ["", "Submitted", "Completed", "Cancelled"]
 			}, {
 				"elementType": "field",
 				"controlType": "text",
 				"fieldName": "Requester Email",
 				"labelContent": "Email",
-				"disabledForNonAdmin": ["", "Submitted", "Cancelled"],
-				"disabledForAdmin": ["", "Submitted", "Cancelled"]
+				"disabledForNonAdmin": ["", "Submitted", "Completed", "Cancelled"],
+				"disabledForAdmin": ["", "Submitted", "Completed", "Cancelled"]
 			}, {
 				"elementType": "field",
 				"controlType": "text",
 				"fieldName": "Requester Phone",
 				"labelContent": "Phone",
-				"disabledForNonAdmin": ["", "Submitted", "Cancelled"],
-				"disabledForAdmin": ["", "Submitted", "Cancelled"]
+				"disabledForNonAdmin": ["", "Submitted", "Completed", "Cancelled"],
+				"disabledForAdmin": ["", "Submitted", "Completed", "Cancelled"]
 			}, {
 				"elementType": "field",
 				"controlType": "text",
 				"fieldName": "Requester Account",
 				"labelContent": "Account",
-				"hideForNonAdmin": ["", "Submitted", "Cancelled"],
-				"hideForAdmin": ["", "Submitted", "Cancelled"],
-				"disabledForNonAdmin": ["", "Submitted", "Cancelled"],
-				"disabledForAdmin": ["", "Submitted", "Cancelled"]
+				"hideForNonAdmin": ["", "Submitted", "Completed", "Cancelled"],
+				"hideForAdmin": ["", "Submitted", "Completed", "Cancelled"],
+				"disabledForNonAdmin": ["", "Submitted", "Completed", "Cancelled"],
+				"disabledForAdmin": ["", "Submitted", "Completed", "Cancelled"]
 			}, {
 				"elementType": "field",
 				"controlType": "peoplePicker",
 				"fieldName": "Requested By",
 				"labelContent": "Requested By",
 				"listFieldName": "RequestedBy",
-				"hideForNonAdmin": ["", "Submitted", "Cancelled"],
-				"hideForAdmin": ["", "Submitted", "Cancelled"],
-				"disabledForNonAdmin": ["", "Submitted", "Cancelled"],
-				"disabledForAdmin": ["", "Submitted", "Cancelled"]
+				"hideForNonAdmin": ["", "Submitted", "Completed", "Cancelled"],
+				"hideForAdmin": ["", "Submitted", "Completed", "Cancelled"],
+				"disabledForNonAdmin": ["", "Submitted", "Completed", "Cancelled"],
+				"disabledForAdmin": ["", "Submitted", "Completed", "Cancelled"]
 			}, {
 				"elementType": "markup",
 				"tag": "div",
@@ -1064,8 +1064,8 @@
 				// leave this - just signals basic validation to make sure the value is a positive integer
 				'addtlValidationType': 'validPositiveInteger',
 
-				'hideButtonForNonAdmin': ['Submitted', 'Cancelled'],
-				'hideButtonForAdmin': ['Submitted', 'Cancelled'],
+				'hideButtonForNonAdmin': ['Submitted', 'Completed', 'Cancelled'],
+				'hideButtonForAdmin': ['Submitted', 'Completed', 'Cancelled'],
 				"requiredForNonAdmin": [""],
 				"requiredForAdmin": [""]
 			}, {
@@ -1187,8 +1187,8 @@
 				'begin': 1,
 				'htmlID': 'gse-schedule-dates',
 				'htmlClass': 'repeating-content-container',
-				'hideForNonAdmin': ['Submitted', 'Cancelled'],
-				'hideForAdmin': ['Submitted', 'Cancelled']
+				'hideForNonAdmin': ['Submitted', 'Completed', 'Cancelled'],
+				'hideForAdmin': ['Submitted', 'Completed', 'Cancelled']
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
@@ -1215,8 +1215,8 @@
 				'htmlClass': "remove-section-anchor",
 				'content': "Remove",
 				'removeThisRepeat': 1,
-				'hideForNonAdmin': ['Submitted', 'Cancelled'],
-				'hideForAdmin': ['Submitted', 'Cancelled'],
+				'hideForNonAdmin': ['Submitted', 'Completed', 'Cancelled'],
+				'hideForAdmin': ['Submitted', 'Completed', 'Cancelled'],
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
@@ -1230,8 +1230,8 @@
 				'htmlClass': 'repeat-section-anchor',
 				'content': 'Insert another date',
 				'repeatSectionID': 'gse-schedule-date',
-				'hideForNonAdmin': ['Submitted', 'Cancelled'],
-				'hideForAdmin': ['Submitted', 'Cancelled'],
+				'hideForNonAdmin': ['Submitted', 'Completed', 'Cancelled'],
+				'hideForAdmin': ['Submitted', 'Completed', 'Cancelled'],
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
@@ -1242,8 +1242,8 @@
 				'tag': 'div',
 				'begin': 1,
 				'htmlID': 'signup-people',
-				'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
-				'hideForAdmin': ['', 'Submitted', 'Cancelled']
+				'hideForNonAdmin': ['', 'Submitted', 'Completed', 'Cancelled'],
+				'hideForAdmin': ['', 'Submitted', 'Completed', 'Cancelled']
 			}, {
 				'elementType': 'markup',
 				'tag': 'h2',
@@ -1272,8 +1272,8 @@
 				'begin': 1,
 				'htmlID': 'signups',
 				'htmlClass': 'repeating-content-container',
-				'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
-				'hideForAdmin': ['', 'Submitted', 'Cancelled']
+				'hideForNonAdmin': ['', 'Submitted', 'Completed', 'Cancelled'],
+				'hideForAdmin': ['', 'Submitted', 'Completed', 'Cancelled']
 			}, {
 				'elementType': 'markup',
 				'tag': 'h2',
@@ -1309,10 +1309,10 @@
 				'controlType': "text",
 				'fieldName': "Signup ID",
 				'labelContent': "Signup ID",
-				'disabledForNonAdmin': ['', 'Submitted', 'Cancelled'],
-				'disabledForAdmin': ['', 'Submitted', 'Cancelled'],
-				'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
-				'hideForAdmin': ['', 'Submitted', 'Cancelled'],
+				'disabledForNonAdmin': ['', 'Submitted', 'Completed', 'Cancelled'],
+				'disabledForAdmin': ['', 'Submitted', 'Completed', 'Cancelled'],
+				'hideForNonAdmin': ['', 'Submitted', 'Completed', 'Cancelled'],
+				'hideForAdmin': ['', 'Submitted', 'Completed', 'Cancelled'],
 			}, {
 				'elementType': "field",
 				'controlType': "radio",
@@ -1327,17 +1327,17 @@
 						"display": "No, deny this person credit for this job, date, and time"
 					}
 				],
-				'disabledForNonAdmin': ['', 'Submitted', 'Cancelled'],
-				'disabledForAdmin': ['', 'Submitted', 'Cancelled'],
+				'disabledForNonAdmin': ['', 'Submitted', 'Completed', 'Cancelled'],
+				'disabledForAdmin': ['', 'Submitted', 'Completed', 'Cancelled'],
 			}, {
 				'elementType': "field",
 				'controlType': "textarea",
 				'fieldName': "Signup Credit Denial Reason",
 				'labelContent': "Why is credit denied?",
-				'disabledForNonAdmin': ['', 'Submitted', 'Cancelled'],
-				'disabledForAdmin': ['', 'Submitted', 'Cancelled'],
-				'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
-				'hideForAdmin': ['', 'Submitted', 'Cancelled'],
+				'disabledForNonAdmin': ['', 'Submitted', 'Completed', 'Cancelled'],
+				'disabledForAdmin': ['', 'Submitted', 'Completed', 'Cancelled'],
+				'hideForNonAdmin': ['', 'Submitted', 'Completed', 'Cancelled'],
+				'hideForAdmin': ['', 'Submitted', 'Completed', 'Cancelled'],
 
 			// }, {
 			// 	'elementType': "markup",
@@ -1347,8 +1347,8 @@
 			// 	'htmlClass': "remove-section-anchor",
 			// 	'content': "Remove",
 			// 	'removeThisRepeat': 1,
-			// 	'hideForNonAdmin': ['Submitted', 'Cancelled'],
-			// 	'hideForAdmin': ['Submitted', 'Cancelled'],
+			// 	'hideForNonAdmin': ['Submitted', 'Completed', 'Cancelled'],
+			// 	'hideForAdmin': ['Submitted', 'Completed', 'Cancelled'],
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
@@ -1362,8 +1362,8 @@
 			// 	'htmlClass': 'repeat-section-anchor',
 			// 	'content': 'Insert another signup',
 			// 	'repeatSectionID': 'signup',
-				// 'hideForNonAdmin': ['Submitted', 'Cancelled'],
-				// 'hideForAdmin': ['Submitted', 'Cancelled'],
+				// 'hideForNonAdmin': ['Submitted', 'Completed', 'Cancelled'],
+				// 'hideForAdmin': ['Submitted', 'Completed', 'Cancelled'],
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
