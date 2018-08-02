@@ -18168,54 +18168,30 @@
 		var tData = {
 			'commonColumns': [
 				{
+					'displayName': 'Event Start Date & Time',
+					'internalName': 'EventBeginningDatetime',
+					'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'ddd, MMM D, YYYY h:mm a', 'determineYearDisplayDynamically': 1 }
+				}, {
+					'displayName': 'Event End Date & Time',
+					'internalName': 'EventEndingDatetime',
+					'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'ddd, MMM D, YYYY h:mm a', 'determineYearDisplayDynamically': 1 }
+				}, {
+					'displayName': 'Event Name',
+					'internalName': 'EventName'
+				}, {
+					'displayName': 'Space',
+					'internalName': 'EventSpace'
+				}, {
 					'displayName': 'Request ID',
 					'internalName': 'ID',
 					'formLink': 1
-				}, {
-					'displayName': 'Requested By',
-					'internalName': 'RequestedBy',
-					'userName': 1
-				}, {
-					'displayName': 'Talk To',
-					'internalName': 'RequestedFor',
-					'userName': 1
-				}, {
-					'displayName': 'Event Starts',
-					'internalName': 'EventBeginningDatetime',
-					'groupingFriendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'ddd, MMM D, YYYY', 'determineYearDisplayDynamically': 1 }
-				}, {
-					'displayName': 'Request Date',
-					'internalName': 'RequestDate',
-					'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
 				}
 			],
 			'tables': [
 				{
 					'tableID': 'pending-approval',
 					'someColsAreUsers': 1,
-					'grouping': {
-						'zeroIndexedColumnNumber': 3,
-						'numberColsForHeaderToSpan': 4
-					},
 					'basicRSQueryRelevantStatus': 'Pending Approval',
-					/* 'customCAMLQuery': '<Where>' +
-						'   <And>' +
-						'       <Eq>' +
-						'           <FieldRef Name="RequestStatus"></FieldRef>' +
-						'           <Value Type="Text">Pending Approval</Value>' +
-						'       </Eq>' +
-						// '       <And>' +
-						// '           <Geq>' +
-						// '               <FieldRef Name="EventBeginningDatetime"></FieldRef>' +
-						// '               <Value Type="DateTime" IncludeTimeValue="FALSE">' + startDateFrom + 'T00:00:00Z</Value>' +
-						// '           </Geq>' +
-						// '           <Leq>' +
-						// '               <FieldRef Name="EventBeginningDatetime"></FieldRef>' +
-						// '               <Value Type="DateTime" IncludeTimeValue="FALSE">' + startDateTo + 'T00:00:00Z</Value>' +
-						// '           </Leq>' +
-						// '       </And>' +
-						'   </And>' +
-						'</Where>' */
 				}, {
 					'tableID': 'approved',
 					'someColsAreUsers': 1,
@@ -18237,87 +18213,8 @@
 						'       </And>' +
 						'   </And>' +
 						'</Where>',
-					'grouping': {
-						'zeroIndexedColumnNumber': 3,
-						'numberColsForHeaderToSpan': 6
-					},
 					'customColumns': [
 						{
-							'displayName': 'Request ID',
-							'internalName': 'ID',
-							'formLink': 1
-						}, {
-							'displayName': 'Talk To',
-							'internalName': 'RequestedFor',
-							'userName': 1
-						}, {
-							'displayName': 'Event Name',
-							'internalName': 'EventName'
-						}, {
-							'displayName': 'Event Date and Time',
-							'internalName': 'EventBeginningDatetime',
-							'groupingFriendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'ddd, MMM D, YYYY', 'determineYearDisplayDynamically': 1 }
-						// }, {
-						// 	'displayName': 'Start Time',
-						// 	'internalName': 'EventBeginningDatetime',
-						// 	'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'h:mm a' }
-						// }, {
-						// 	'displayName': 'End Time',
-						// 	'internalName': 'EventEndingDatetime',
-						// 	'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'h:mm a' }
-						}, {
-							'displayName': 'Request Date',
-							'internalName': 'RequestDate',
-							'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
-						}, {
-							'displayName': 'Assigned To',
-							'internalName': 'AssignedTo',
-							'userName': 1
-						}, {
-							'displayName': 'Assignment Date',
-							'internalName': 'AssignmentDate',
-							'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
-						}
-					],
-					'sortColAndOrder': [3, 'asc']
-				}, {
-					'tableID': 'approved-ng',
-					'someColsAreUsers': 1,
-					'customCAMLQuery': '<Where>' +
-						'   <And>' +
-						'       <Eq>' +
-						'           <FieldRef Name="RequestStatus"></FieldRef>' +
-						'           <Value Type="Text">Approved</Value>' +
-						'       </Eq>' +
-						'       <And>' +
-						'           <Geq>' +
-						'               <FieldRef Name="EventBeginningDatetime"></FieldRef>' +
-						'               <Value Type="DateTime" IncludeTimeValue="FALSE">' + startDateFrom + 'T00:00:00Z</Value>' +
-						'           </Geq>' +
-						'           <Leq>' +
-						'               <FieldRef Name="EventBeginningDatetime"></FieldRef>' +
-						'               <Value Type="DateTime" IncludeTimeValue="FALSE">' + startDateTo + 'T00:00:00Z</Value>' +
-						'           </Leq>' +
-						'       </And>' +
-						'   </And>' +
-						'</Where>',
-					'customColumns': [
-						{
-							'displayName': 'Request ID',
-							'internalName': 'ID',
-							'formLink': 1
-						}, {
-							'displayName': 'Talk To',
-							'internalName': 'RequestedFor',
-							'userName': 1
-						}, {
-							'displayName': 'Event Name',
-							'internalName': 'EventName'
-						// }, {
-						// 	'displayName': 'Event Date',
-						// 	'internalName': 'EventBeginningDatetime',
-						// 	'groupingFriendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'ddd, MMM D, YYYY', 'determineYearDisplayDynamically': 1 }
-						}, {
 							'displayName': 'Event Start Date & Time',
 							'internalName': 'EventBeginningDatetime',
 							'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'ddd, MMM D, YYYY h:mm a', 'determineYearDisplayDynamically': 1 }
@@ -18325,29 +18222,27 @@
 							'displayName': 'Event End Date & Time',
 							'internalName': 'EventEndingDatetime',
 							'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'ddd, MMM D, YYYY h:mm a', 'determineYearDisplayDynamically': 1 }
-						// }, {
-						// 	'displayName': 'Request Date',
-						// 	'internalName': 'RequestDate',
-						// 	'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+						}, {
+							'displayName': 'Event Name',
+							'internalName': 'EventName'
+						}, {
+							'displayName': 'Space',
+							'internalName': 'EventSpace'
 						}, {
 							'displayName': 'Assigned To',
 							'internalName': 'AssignedTo',
 							'userName': 1
 						}, {
-							'displayName': 'Assignment Date',
-							'internalName': 'AssignmentDate',
-							'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+							'displayName': 'Request ID',
+							'internalName': 'ID',
+							'formLink': 1
 						}
 					],
-					'sortColAndOrder': [3, 'asc']
+					// 'sortColAndOrder': [1, 'asc']
 
 				}, {
 					'tableID': 'closed',
 					'someColsAreUsers': 1,
-					'grouping': {
-						'zeroIndexedColumnNumber': 4,
-						'numberColsForHeaderToSpan': 9
-					},
 					'customCAMLQuery': '<Where>' +
 						'   <And>' +
 						'       <Eq>' +
@@ -18368,46 +18263,32 @@
 						'</Where>',
 					'customColumns': [
 						{
-							'displayName': 'Request ID',
-							'internalName': 'ID',
-							'formLink': 1
-						}, {
-							'displayName': 'Request Status',
-							'internalName': 'RequestStatus'
-						}, {
-							'displayName': 'Requested By',
-							'internalName': 'RequestedBy',
-							'userName': 1
-						}, {
-							'displayName': 'Talk To',
-							'internalName': 'RequestedFor',
-							'userName': 1
-						}, {
-							'displayName': 'Event Date and Time',
+							'displayName': 'Event Start Date & Time',
 							'internalName': 'EventBeginningDatetime',
-							'groupingFriendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'ddd, MMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+							'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'ddd, MMM D, YYYY h:mm a', 'determineYearDisplayDynamically': 1 }
 						}, {
-							'displayName': 'Request Date',
-							'internalName': 'RequestDate',
-							'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+							'displayName': 'Event End Date & Time',
+							'internalName': 'EventEndingDatetime',
+							'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'ddd, MMM D, YYYY h:mm a', 'determineYearDisplayDynamically': 1 }
+						}, {
+							'displayName': 'Event Name',
+							'internalName': 'EventName'
+						}, {
+							'displayName': 'Space',
+							'internalName': 'EventSpace'
 						}, {
 							'displayName': 'Assigned To',
 							'internalName': 'AssignedTo',
 							'userName': 1
 						}, {
-							'displayName': 'Assignment Date',
-							'internalName': 'AssignmentDate',
-							'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+							'displayName': 'Request Status',
+							'internalName': 'RequestStatus'
 						}, {
-							'displayName': 'Completed By',
-							'internalName': 'CompletedBy',
-							'userName': 1
-						}, {
-							'displayName': 'Completion Date',
-							'internalName': 'CompletionDate',
-							'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+							'displayName': 'Request ID',
+							'internalName': 'ID',
+							'formLink': 1
 						}
-					]
+					],
 				}
 			]
 		};
@@ -18425,7 +18306,6 @@
 			'<ul id="container_tab-controls"> \n' +
 			'   <li><a href="#table-container_pending-approval">Pending Approval</a></li> \n' +
 			'   <li><a href="#table-container_approved">Approved</a></li> \n' +
-			'   <li><a href="#table-container_approved-ng">Approved NG</a></li> \n' +
 			'   <li><a href="#table-container_closed">Closed</a></li> \n' +
 			'</ul> \n' +
 			'<div id="container_date-filter-controls-and-header"> \n' +

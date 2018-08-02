@@ -3,10 +3,10 @@
 	var mData = {
 		'componentID': 73,
 		'swf': 1,
-		'mosMainKey': 'prod',
+		// 'mosMainKey': 'prod',
 		// 'mosMainKey': 'dev',
 		// 'mosMainKey': 'devMedium',
-		// 'mosMainKey': 'devLong',
+		'mosMainKey': 'devLong',
 		// "useRecordedMOSMainMajorVersion": 1,
 		'currentRequestVersion': 1,
 		'devAdminNotifications': 0,
@@ -367,7 +367,7 @@
 				'hideForNonAdmin': ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
 				'hideForAdmin': ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
 				"disabledForNonAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-				"disabledForAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"], */
+				"disabledForAdmin": [], */
 			}, {
 				'elementType': 'field',
 				'controlType': 'text',
@@ -377,16 +377,17 @@
 				'requiredForNonAdmin': [''],
 				'requiredForAdmin': [''],
 				"disabledForNonAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-				"disabledForAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+				"disabledForAdmin": [],
 			}, {
 				'elementType': 'field',
 				'controlType': 'text',
 				'fieldName': 'Event Space',
+				'listFieldName': 'EventSpace',
 				'labelContent': 'Space',
 				'requiredForNonAdmin': [''],
 				'requiredForAdmin': [''],
 				"disabledForNonAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-				"disabledForAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+				"disabledForAdmin": [],
 			}, {
 				'elementType': 'field',
 				'controlType': 'datetime',
@@ -396,7 +397,7 @@
 				'requiredForNonAdmin': [''],
 				'requiredForAdmin': [''],
 				"disabledForNonAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-				"disabledForAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+				"disabledForAdmin": [],
 			}, {
 				'elementType': 'field',
 				'controlType': 'datetime',
@@ -406,7 +407,7 @@
 				'requiredForNonAdmin': [''],
 				'requiredForAdmin': [''],
 				"disabledForNonAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-				"disabledForAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+				"disabledForAdmin": [],
 			}, {
 				"elementType": "field",
 				"controlType": "peoplePicker",
@@ -416,14 +417,14 @@
 				'requiredForNonAdmin': [''],
 				'requiredForAdmin': [''],
 				"disabledForNonAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-				"disabledForAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+				"disabledForAdmin": [],
 			}, {
 				'elementType': 'field',
 				'controlType': 'text',
 				'fieldName': 'Account Number',
 				'labelContent': 'Account #',
 				"disabledForNonAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-				"disabledForAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+				"disabledForAdmin": [],
 
 
 
@@ -511,9 +512,9 @@
 				'fieldName': 'Attachment',
 				'labelContent': 'Attachment',
 				'populatableForNonAdmin': [""],
-				'populatableForAdmin': [""],
+				'populatableForAdmin': ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
 				'replaceableForNonAdmin': [""],
-				'replaceableForAdmin': [""],
+				'replaceableForAdmin': ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
 			}, {
 				'elementType': "markup",
 				'tag': "a",
@@ -581,7 +582,7 @@
 				'requiredForAdmin': [''],
 				'requiredForNonAdmin': [''],
 				"disabledForNonAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-				"disabledForAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+				"disabledForAdmin": [],
 			}, {
 				'elementType': 'field',
 				'controlType': 'check',
@@ -594,7 +595,7 @@
 					}
 				],
 				"disabledForNonAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-				"disabledForAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+				"disabledForAdmin": [],
 			}, {
 				'elementType': 'field',
 				'controlType': 'check',
@@ -613,7 +614,7 @@
 					}
 				],
 				"disabledForNonAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-				"disabledForAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+				"disabledForAdmin": [],
 			}, {
 				'elementType': 'field',
 				'controlType': 'check',
@@ -638,7 +639,7 @@
 					}
 				],
 				"disabledForNonAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-				"disabledForAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+				"disabledForAdmin": [],
 			}, {
 				'elementType': 'markup',
 				'tag': 'h2',
@@ -651,7 +652,7 @@
 				'fieldName': 'Additional Information',
 				'labelContent': 'Additional Information',
 				"disabledForNonAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-				"disabledForAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+				"disabledForAdmin": [],
 			}
 		]
 	};
