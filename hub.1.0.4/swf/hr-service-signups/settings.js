@@ -8,7 +8,6 @@
 		// 'mosMainKey': 'devMedium',
 		'mosMainKey': 'devLong',
 		// "useRecordedMOSMainMajorVersion": 1,
-		'currentRequestVersion': 2,
 		'devAdminNotifications': 1,
 		'notifications': 0,
 		'detailTitle': [

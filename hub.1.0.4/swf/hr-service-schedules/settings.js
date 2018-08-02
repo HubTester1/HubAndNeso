@@ -22,7 +22,7 @@
 		]
 	};
 
-	console.log("using settings m5");
+	console.log("using settings m1");
 
 	var oData = {
 		
@@ -752,7 +752,7 @@
 	var fData = {
 		'autoTrackGSEScheduleStatuses': 1,
 		'autoProcessGSESignupCreditFromSchedule': 1,
-		'bypassNormalDataSaving': ['', 'Submitted', 'Completed'],
+		'bypassNormalDataSaving': [''],
 		'customDataSavingFunction': {
 			'useFunction': 'ReturnNewGSESchedulesSubmissionValuePairArrayOfArrays',
 			'requestStatuses': ['']
@@ -1254,7 +1254,7 @@
 				'elementType': "markup",
 				'tag': "ul",
 				'htmlID': 'Signup-People-List',
-				'content': '<span id="Signup-People-List-Items" class="content-placeholder"></span>',
+				'content': '<span id="Signup-People-List-Items" class="content-placeholder">I can\'t find any signups to show you.</span>',
 				'begin': 1,
 				'end': 1,
 
@@ -1272,8 +1272,8 @@
 				'begin': 1,
 				'htmlID': 'signups',
 				'htmlClass': 'repeating-content-container',
-				'hideForNonAdmin': ['', 'Submitted', 'Completed', 'Cancelled'],
-				'hideForAdmin': ['', 'Submitted', 'Completed', 'Cancelled']
+				'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
+				'hideForAdmin': ['', 'Submitted', 'Cancelled']
 			}, {
 				'elementType': 'markup',
 				'tag': 'h2',
@@ -1327,8 +1327,8 @@
 						"display": "No, deny this person credit for this job, date, and time"
 					}
 				],
-				'disabledForNonAdmin': ['', 'Submitted', 'Completed', 'Cancelled'],
-				'disabledForAdmin': ['', 'Submitted', 'Completed', 'Cancelled'],
+				'disabledForNonAdmin': ['', 'Submitted', 'Cancelled'],
+				'disabledForAdmin': ['', 'Submitted', 'Cancelled'],
 			}, {
 				'elementType': "field",
 				'controlType': "textarea",
@@ -1368,6 +1368,21 @@
 				'elementType': 'markup',
 				'tag': 'div',
 				'end': 1
+			}, {
+				"elementType": "markup",
+				"tag": "h2",
+				"content": "Status",
+				"begin": 1,
+				"end": 1
+			}, {
+				'elementType': "field",
+				'controlType': "text",
+				'fieldName': "Request Status for Requester",
+				'labelContent': "Schedule Status",
+				'disabledForNonAdmin': ['', 'Submitted', 'Completed', 'Cancelled'],
+				'disabledForAdmin': ['', 'Submitted', 'Completed', 'Cancelled'],
+				'hideForNonAdmin': [''],
+				'hideForAdmin': ['', 'Submitted', 'Completed', 'Cancelled'],
 			}
 		]
 	};
