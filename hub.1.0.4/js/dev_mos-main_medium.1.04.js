@@ -977,11 +977,11 @@
 		if (rData.requestID != "" && rData.requestID == 0 && rData.gseScheduleID == "") {
 			initialScreen = "newRequest";
 			secondaryScreen = overviewScreen;
-		// if the URL contains a request ID (r) greater than 0 -OR- the URL contains a GSE Schedule ID (gseScheduleID) greater than 0
+			// if the URL contains a request ID (r) greater than 0 -OR- the URL contains a GSE Schedule ID (gseScheduleID) greater than 0
 		} else if ((rData.requestID != "" && rData.requestID > 0) || (rData.gseScheduleID != "" && rData.gseScheduleID > 0)) {
 			initialScreen = "existingRequest";
 			secondaryScreen = overviewScreen;
-		// if the URL does not contain a request ID (r)
+			// if the URL does not contain a request ID (r)
 		} else if (rData.requestID === "") {
 			initialScreen = overviewScreen;
 			secondaryScreen = "newRequest";
@@ -1256,10 +1256,10 @@
 
 
 		var query = "<Query>" +
-					"<Where>";
+			"<Where>";
 		if (opt.where.ands) { query += "<And>"; }
 		// curently assumes there are no more than two ands
-		$.each(opt.where.ands, function(i, andObject) {
+		$.each(opt.where.ands, function (i, andObject) {
 			query += "<Eq>" +
 				"<FieldRef Name='" + andObject.field + "'></FieldRef>" +
 				"<Value Type='" + andObject.type + "'>" + andObject.value + "</Value>" +
@@ -1267,8 +1267,8 @@
 		});
 
 		if (opt.where.ands) { query += "</And>"; }
-		query +=	"</Where>" +
-					"</Query>";
+		query += "</Where>" +
+			"</Query>";
 
 		var fields = "<ViewFields>";
 		$.each(opt.select, function (i, oneField) {
@@ -1459,9 +1459,9 @@
 					$.each(opt.select, function (i, oneField) {
 
 						if (
-							oneField.nameHere === "formData" || 
-							oneField.nameHere === "defaultDataForNewRequests" || 
-							oneField.nameHere === "gseJobData" || 
+							oneField.nameHere === "formData" ||
+							oneField.nameHere === "defaultDataForNewRequests" ||
+							oneField.nameHere === "gseJobData" ||
 							oneField.nameHere === "gseScheduleData"
 						) {
 							console.log('found field to interpret');
@@ -4174,9 +4174,9 @@
 				delete rData.gseScheduleData['Requested-For'];
 				delete rData.gseJobData['Request-ID'];
 				delete rData.gseScheduleData['Request-ID'];
-				
+
 				// calculate positions remaining
-				
+
 				// prep some of the data before populating fields and placeholders with it
 				var otherSignupsForThisSchedule = $().GetFieldsFromSpecifiedRows({
 					"select": [{
@@ -4202,14 +4202,14 @@
 					rData.gseScheduleData['time-storage_StartTime'].substring(11, 16);
 				scheduleStartDateTime = moment.tz(scheduleStartDateTime, "America/New_York").format();
 				var NowAsISOLocal = $().ReturnFormattedDateTime('nowLocal', null, null);
-				rData.gseScheduleData['Positions-Available'] = 
+				rData.gseScheduleData['Positions-Available'] =
 					parseInt(rData.gseScheduleData['Number-of-Positions']) - otherSignupsForThisSchedule.length;
 				rData.gseScheduleData['Friendly-Date'] = $().ReturnFormattedDateTime(rData.gseScheduleData['Date'], null, 'dddd, MMMM D, YYYY', 1);
 				rData.gseScheduleData['Shift-Length'] = rData.gseScheduleData['shiftlength_35-hours'] ? '3.5 hours' : '7 hours';
 				rData.gseScheduleData['Start-Time'] = $().ReturnFormattedDateTime(rData.gseScheduleData['time-storage_StartTime'].substring(0, 19), null, 'h:mm a');
 				rData.gseScheduleData['Break-Time'] = $().ReturnFormattedDateTime(rData.gseScheduleData['time-storage_BreakTime'].substring(0, 19), null, 'h:mm a');
 				rData.gseScheduleData['Meal-Time'] = $().ReturnFormattedDateTime(rData.gseScheduleData['time-storage_MealTime'].substring(0, 19), null, 'h:mm a');
-				
+
 
 				rData.gseJobData['Job-Admin-Name'] = rData.gseJobData['Job-Admin'][0].description;
 				rData.gseJobData['Job-Description-Formatted'] = '<p>' + ReplaceAll('%0A', '</p><p>', rData.gseJobData['Job-Description']) + '</p>';
@@ -4232,7 +4232,7 @@
 						rData.gseJobData['Training-Requirements-Formatted'] +=
 							'<' + opportunityTrainingReqElement + '>' +
 							opportunityTrainingReq +
-						'</' + opportunityTrainingReqElement + '>';
+							'</' + opportunityTrainingReqElement + '>';
 					});
 					// if there's more than one, end list
 					if (opportunityTrainingReqs[1]) {
@@ -4242,12 +4242,12 @@
 
 				// dress requirements
 				// start with the two persistent requirements
-				rData.gseJobData['Dress-Requirements-List-Items'] = 
-					'<li>Clothing and shoes must be in good condition.</li>' + 
+				rData.gseJobData['Dress-Requirements-List-Items'] =
+					'<li>Clothing and shoes must be in good condition.</li>' +
 					'<li>MOS badge must be worn above the waist at all times.</li>';
 				// add any other requirements
 				if (rData.gseJobData['Dress-Requirements']) {
-					rData.gseJobData['Dress-Requirements-List-Items'] += 
+					rData.gseJobData['Dress-Requirements-List-Items'] +=
 						'<li>' + ReplaceAll('%0A', '</li><li>', rData.gseJobData['Dress-Requirements']) + '</li>';
 				}
 
@@ -4266,9 +4266,9 @@
 					}
 					// for each in array, add markup
 					opportunityJobDuties.forEach((opportunityJobDuty) => {
-						rData.gseJobData['Job-Duties-Formatted'] += 
-							'<' + opportunityJobDutyElement + '>' + 
-							opportunityJobDuty + 
+						rData.gseJobData['Job-Duties-Formatted'] +=
+							'<' + opportunityJobDutyElement + '>' +
+							opportunityJobDuty +
 							'</' + opportunityJobDutyElement + '>';
 					});
 					// if there's more than one, start list
@@ -4279,7 +4279,7 @@
 
 				if (rData.gseScheduleData['Notes']) {
 					rData.gseScheduleData['Notes-Formatted'] = '<h3>Notes</h3>' +
-						'<p>' + ReplaceAll('%0A', '</p><p>', rData.gseScheduleData['Notes']) + '</p>';					
+						'<p>' + ReplaceAll('%0A', '</p><p>', rData.gseScheduleData['Notes']) + '</p>';
 				}
 
 				console.log('rData.gseScheduleData');
@@ -4288,7 +4288,7 @@
 				console.log(rData.gseJobData);
 				console.log('rData.formDataOnLoad');
 				console.log(rData.formDataOnLoad);
-				
+
 				// populate the placeholder <span>s with job and schedule data
 				PopulateFormData("div#request-form", rData.gseJobData, mData.uriRoot, rData.requestID, mData.checkForAlternateEventDataToPopulate);
 				PopulateFormData("div#request-form", rData.gseScheduleData, mData.uriRoot, rData.requestID, mData.checkForAlternateEventDataToPopulate);
@@ -5428,69 +5428,12 @@
 					$('input#Request-Status').val(newReqStatus);
 					$('input#End-of-Life').val(endOfLife);
 				}
-				
-				/*	// consider
 
-					if (fData.autoTrackGSEJobStatuses === 1 && rData.endOfLife != 1) {
-						
-						$(workingMessage).text("Handling Request Status");
-	 
-						var newReqStatus = '';
-						var endOfLife = 0;
-						var endOfLifeIsNew = 0;
-						if (rData.requestStatus == '') {
-							newReqStatus = 'Pending Approval';
-						} else if (rData.requestStatus == 'Pending Approval' && ($('input#requester-cancellation_cancel:checked').length > 0 || $('select#Change-Request-Status option:selected').val() == 'Cancel')) {
-							newReqStatus = 'Cancelled';
-							endOfLife = 1;
-							endOfLifeIsNew = 1;
-						} else if (rData.requestStatus == 'Pending Approval' && $('select#Change-Request-Status option:selected').val() == 'Approve') {
-							newReqStatus = 'Approved';
-						} else if (rData.requestStatus == 'Pending Approval' && $('select#Change-Request-Status option:selected').val() == 'Disapprove') {
-							newReqStatus = 'Disapproved';
-							endOfLife = 1;
-							endOfLifeIsNew = 1;
-						}
-						rData.endOfLifeIsNew = endOfLifeIsNew;
-						rData.endOfLife = endOfLife;
-						rData.requestStatus = newReqStatus;
-						globalRData = rData;
-						$('input#Request-Status').val(newReqStatus);
-						$('input#End-of-Life').val(endOfLife);
-					}
-
-					// consider
-
-					if (fData.autoTrackGSEJobStatuses === 1 && rData.endOfLife != 1) {
-						
-						$(workingMessage).text("Handling Request Status");
-	 
-						var newReqStatus = '';
-						var endOfLife = 0;
-						var endOfLifeIsNew = 0;
-						if (rData.requestStatus == '') {
-							newReqStatus = 'Pending Approval';
-						} else if (rData.requestStatus == 'Pending Approval' && $('select#Change-Request-Status option:selected').val() == 'Approve') {
-							newReqStatus = 'Approved';
-						} else if (rData.requestStatus == 'Pending Approval' && $('select#Change-Request-Status option:selected').val() == 'Disapprove') {
-							newReqStatus = 'Disapproved';
-							endOfLife = 1;
-							endOfLifeIsNew = 1;
-						}
-						rData.endOfLifeIsNew = endOfLifeIsNew;
-						rData.endOfLife = endOfLife;
-						rData.requestStatus = newReqStatus;
-						globalRData = rData;
-						$('input#Request-Status').val(newReqStatus);
-						$('input#End-of-Life').val(endOfLife);
-					}
-
-				// consider
-
-				if (fData.autoTrackGSEScheduleStatuses === 1 && rData.endofLife != 1) {
+				if (fData.autoTrackGSEScheduleStatuses === 1 && rData.endOfLife != 1) {
 
 					$(workingMessage).text("Handling Request Status");
 
+					var previousReqStatus = rData.requestStatus;
 					var newReqStatus = '';
 					var beginningOfLife = 0;
 					var endOfLife = 0;
@@ -5504,18 +5447,42 @@
 							beginningOfLife = 0;
 							endOfLife = 1;
 							endOfLifeIsNew = 1;
+						} else {
+							// alter flags from their defaults if there are disapproved or blank approval nodes
+							var someCreditNodesAreBlank = 0;
+							$('div#signups div#signup').each(function (i, a) {
+								var grantButtonChecked = 0;
+								var denyButtonChecked = 0;
+
+								if ($(this).find('input[value="yes"]').is(':checked')) {
+									grantButtonChecked = 1;
+								}
+								if ($(this).find('input[value="no"]').is(':checked')) {
+									denyButtonChecked = 1;
+								}
+
+								if (grantButtonChecked == 0 && denyButtonChecked == 0) {
+									someCreditNodesAreBlank = 1;
+								}
+							});
+							if (someCreditNodesAreBlank === 0) {
+								newReqStatus = 'Completed';
+								beginningOfLife = 0;
+								endOfLife = 1;
+								endOfLifeIsNew = 1;
+							}
 						}
 					}
 					rData.endOfLifeIsNew = endOfLifeIsNew;
 					rData.endOfLife = endOfLife;
 					rData.beginningOfLife = beginningOfLife;
 					rData.requestStatus = newReqStatus;
+					rData.previousRequestStatus = previousReqStatus;
 					rData = rData;
 					$('input#Request-Status').val(newReqStatus);
 					$('input#Beginning-of-Life').val(endOfLife);
 					$('input#End-of-Life').val(endOfLife);
 				}
-				*/
 
 				if (fData.autoTrackEventNeedsStatuses === 1) {
 
@@ -5977,6 +5944,151 @@
 					$('input#End-of-Life').val(endOfLife);
 				}
 
+
+				// ========================================================
+				// PROCESS GSE SIGNUP CREDIT FROM SCHEDULE (if appropriate)
+				// ========================================================
+
+
+				if (typeof (fData.autoProcessGSESignupCreditFromSchedule) != 'undefined' && fData.autoProcessGSESignupCreditFromSchedule == 1) {
+
+					$(workingMessage).text("Handling GSE Modifications");
+
+					// if this schedule is newly completed or cancelled
+					if (
+						(rData.requestStatus === 'Completed' || rData.requestStatus === 'Cancelled') &&
+						rData.endOfLife === 1 &&
+						rData.endOfLifeIsNew === 1
+					) {
+						// start an array to store the signup credit objects that will be extracted
+						var signupCredits = [];
+						// for each signup
+						$('div#signups div.repeat-container').each(function (i, a) {
+							// start a new signup credit object
+							var signupCredit = {};
+							// set request status and get id and granted values from the DOM
+							signupCredit.signupID = $(this).find('input[id^="Signup-ID"]').val();
+							// if credit is being granted or denied
+							if (rData.requestStatus === 'Completed') {
+								signupCredit.creditGranted =
+									$(this).find('input[value="yes"]').is(':checked');
+								// if credit is being denied
+								if (!signupCredit.creditGranted) {
+									// get a denial reason from the DOM
+									signupCredit.creditDenialReason =
+										$(this).find('textarea[id^="Signup-Credit-Denial-Reason"]').val();
+									// set new request status to denied
+									signupCredit.requestStatus = "Credit Denied"
+								} else {
+									// set new request status to granted
+									signupCredit.requestStatus = "Credit Granted"
+								}
+							} else {
+								// set new request status to granted
+								signupCredit.requestStatus = "Cancelled"
+							}
+							// push the signup credit object to the signup credits array
+							signupCredits.push(signupCredit);
+						});
+						// for each extracted signup credit object
+						signupCredits.forEach((signupCredit) => {
+							// get the corresponding row from the GSE Signup SWFList
+							console.log(signupCredit.signupID);
+							signupCredit = $.extend($().GetFieldsFromOneRow({
+								"select": [{
+									// 	"nameHere": "requestStatus",
+									// 	"nameInList": "RequestStatus"
+									// }, {
+									// 	"nameHere": "endOfLife",
+									// 	"nameInList": "EndOfLife"
+									// }, {
+									// 	"nameHere": "lastModifiedAtLoad",
+									// 	"nameInList": "Modified"
+									// }, {
+									// 	"nameHere": "requesterID",
+									// 	"nameInList": "Author"
+									// }, {
+									"nameHere": "formData",
+									"nameInList": "AllRequestData"
+									// }, {
+									// 	"nameHere": "requestVersion",
+									// 	"nameInList": "RequestVersion"
+								}],
+								"webURL": "https://bmos.sharepoint.com/sites/hr-service-signups",
+								"where": {
+									"field": "ID",
+									"type": "Number",
+									"value": signupCredit.signupID,
+								}
+							}),
+								signupCredit
+							);
+							// modify formData
+							signupCredit.formData['Request-Status'] = signupCredit.requestStatus;
+							if (signupCredit.creditDenialReason) {
+								signupCredit.formData['Credit-Denial-Reason'] = signupCredit.creditDenialReason;
+							}
+							// set submission value pairs array
+							signupCredit.submissionValuePairsArray = [
+
+							];
+
+							console.log(signupCredit);
+
+							/* // update SWFList
+							var updateListItemsOptions = {
+								operation: 'UpdateListItems',
+								listName: 'SWFList',
+								webURL: 'https://bmos.sharepoint.com/sites/hr-service-signups',
+								batchCmd: 'Update',
+								ID: signupCredit.signupID,
+								valuepairs: signupCredit.submissionValuePairsArray,
+								completefunc: function (xData, Status) {
+
+
+									// determine success of save; then...
+									var swfListSaveSuccess = $().HandleListUpdateReturn(xData, Status, 'Hub SWF List Item Error');
+
+									// if swfList save was NOT successful
+									if (swfListSaveSuccess == 0) {
+
+										// send error emails from queue, then...
+										$().SendEmails(globalErrorEmailsToSend).then(function () {
+											// display messages
+											$('div#wait-while-working').fadeOut(200);
+											if (batchCommand == 'New') {
+												$('div#swfList-error_new-request').fadeIn(200);
+											} else {
+												$('div#swfList-error_updated-request').fadeIn(200);
+											}
+										});
+
+										// --- signify completion
+
+										// deferred.resolve();
+
+										// if swfList save was successful
+									} else if (swfListSaveSuccess == 1) {
+
+										var requestID = $(xData.responseXML).SPFilterNode("z:row").attr("ows_ID");
+										globalLastRequestIDs.push(requestID);
+
+										// --- signify completion
+
+										deferred.resolve();
+
+									}
+								}
+							};
+
+							if (webURL) {
+								updateListItemsOptions.webURL = webURL;
+							}
+
+							$().SPServices(updateListItemsOptions); */
+						});
+					}
+				}
 
 				// ========================================================
 				// ADD TO CALENDAR (if appropriate)
@@ -6715,47 +6827,6 @@
 
 
 				// ========================================================
-				// HANDLE GSE SCHEDULES & SIGNUPS MODIFICATIONS (if needed)
-				// ========================================================
-
-				if (typeof (fData.autoProcessGSEScheduleAndSignupModification) != 'undefined' && fData.autoProcessGSEScheduleAndSignupModification == 1) {
-
-					$(workingMessage).text("Handling GSE Modifications");
-
-					// if this app is GSE Schedule and this schedule is being cancelled
-
-						// find all of the relevant signups, [change their status to cancelled and email relevant people]
-
-					// if this app is [GSE Signups] and this user is cancelling her signup
-
-						// [change this signup status to cancelled [and email relevant people]]
-
-					// if this app is [GSE Schedule] and schedule data is being modified but schedule is not being cancelled
-
-						// [email everyone signed up for this schedule that information has changed]
-
-				}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-				// ========================================================
 				// MODIFY CONFIRMATION MESSAGE (if needed)
 				// ========================================================
 
@@ -6788,16 +6859,6 @@
 						$('div#mos-form-submission-confirmation').addClass('contains-additional-message');
 					}
 				}
-
-
-
-
-
-
-
-
-
-
 
 
 				// ========================================================
@@ -12393,6 +12454,9 @@
 			if (typeof (e.repeatable) != "undefined") {
 				markup += ' data-repeatable="Y" ';
 			}
+			if (typeof (e.bypassSavingChildren) != "undefined") {
+				markup += ' data-bypass-saving-children="Y" ';
+			}
 			if (typeof (e.dataAttributes) != "undefined") {
 				$.each(e.dataAttributes, function (i, dataAttribute) {
 					markup += ' data-' + dataAttribute.key + '="' + dataAttribute.value + '" ';
@@ -13773,9 +13837,9 @@
 
 			if (type == "radio" || type == "check" || type == "checkorradio") {
 				// repeat function needs to alter input names before this can begin to be made to work
-				//$('input[name^="' + id + '-repeat"]').each(function () {
-				//	 repeatIDs.push($(this).attr('id'));
-				//});
+				$('input[name^="' + id + '-repeat"]').each(function () {
+					repeatIDs.push($(this).attr('name'));
+				});
 			} else if (type == "peoplepicker") {
 				// repeat function needs to alter people picker IDs before this can begin to be made to work
 				//$('#' + id + '_TopSpan_HiddenInput').each(function () {
@@ -14195,6 +14259,11 @@
 				// if id exists, update it
 				if (typeof ($(this).attr('id')) != 'undefined') {
 					$(this).attr('id', $(this).attr('id') + '-repeat-' + newRepeatDescendantIDNumber);
+				}
+
+				// if name exists, update it
+				if (typeof ($(this).attr('name')) != 'undefined') {
+					$(this).attr('name', $(this).attr('name') + '-repeat-' + newRepeatDescendantIDNumber);
 				}
 
 				// if for exists, update it
@@ -17115,7 +17184,7 @@
 			case "ReturnUserIsGSEHRAdmin":
 				return $().ReturnUserIsGSEHRAdmin();
 				break;
-				
+
 			case "LoadDepartmentSelectOptions":
 				return $().LoadDepartmentSelectOptions(functionArgumentsObject);
 				break;
@@ -17498,11 +17567,14 @@
 		// handle the repeatables
 		formDataString += '"RepeatedElements": [';
 		$(form).find('[data-repeatable]').each(function () {
-			var repeatableString = '{"ID": "' + $(this).attr('id') + '",';
-			repeatableString += '"OriginalToRepeat": "' + $(this).attr('data-original-to-repeat') + '",';
-			repeatableString += ReturnRequestStorageObjectPropertiesAndPushRequestColumns(this);
-			repeatableString += '},';
-			formDataString += repeatableString;
+			var bypassSavingChildren = $(this).attr('data-bypass-saving-children');
+			if (bypassSavingChildren != 'Y') {
+				var repeatableString = '{"ID": "' + $(this).attr('id') + '",';
+				repeatableString += '"OriginalToRepeat": "' + $(this).attr('data-original-to-repeat') + '",';
+				repeatableString += ReturnRequestStorageObjectPropertiesAndPushRequestColumns(this);
+				repeatableString += '},';
+				formDataString += repeatableString;
+			}
 			$(this).remove();
 		});
 		formDataString += '],';
@@ -18160,54 +18232,30 @@
 		var tData = {
 			'commonColumns': [
 				{
+					'displayName': 'Event Start Date & Time',
+					'internalName': 'EventBeginningDatetime',
+					'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'ddd, MMM D, YYYY h:mm a', 'determineYearDisplayDynamically': 1 }
+				}, {
+					'displayName': 'Event End Date & Time',
+					'internalName': 'EventEndingDatetime',
+					'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'ddd, MMM D, YYYY h:mm a', 'determineYearDisplayDynamically': 1 }
+				}, {
+					'displayName': 'Event Name',
+					'internalName': 'EventName'
+				}, {
+					'displayName': 'Space',
+					'internalName': 'EventSpace'
+				}, {
 					'displayName': 'Request ID',
 					'internalName': 'ID',
 					'formLink': 1
-				}, {
-					'displayName': 'Requested By',
-					'internalName': 'RequestedBy',
-					'userName': 1
-				}, {
-					'displayName': 'Talk To',
-					'internalName': 'RequestedFor',
-					'userName': 1
-				}, {
-					'displayName': 'Event Starts',
-					'internalName': 'EventBeginningDatetime',
-					'groupingFriendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'ddd, MMM D, YYYY', 'determineYearDisplayDynamically': 1 }
-				}, {
-					'displayName': 'Request Date',
-					'internalName': 'RequestDate',
-					'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
 				}
 			],
 			'tables': [
 				{
 					'tableID': 'pending-approval',
 					'someColsAreUsers': 1,
-					'grouping': {
-						'zeroIndexedColumnNumber': 3,
-						'numberColsForHeaderToSpan': 4
-					},
 					'basicRSQueryRelevantStatus': 'Pending Approval',
-					/* 'customCAMLQuery': '<Where>' +
-						'   <And>' +
-						'       <Eq>' +
-						'           <FieldRef Name="RequestStatus"></FieldRef>' +
-						'           <Value Type="Text">Pending Approval</Value>' +
-						'       </Eq>' +
-						// '       <And>' +
-						// '           <Geq>' +
-						// '               <FieldRef Name="EventBeginningDatetime"></FieldRef>' +
-						// '               <Value Type="DateTime" IncludeTimeValue="FALSE">' + startDateFrom + 'T00:00:00Z</Value>' +
-						// '           </Geq>' +
-						// '           <Leq>' +
-						// '               <FieldRef Name="EventBeginningDatetime"></FieldRef>' +
-						// '               <Value Type="DateTime" IncludeTimeValue="FALSE">' + startDateTo + 'T00:00:00Z</Value>' +
-						// '           </Leq>' +
-						// '       </And>' +
-						'   </And>' +
-						'</Where>' */
 				}, {
 					'tableID': 'approved',
 					'someColsAreUsers': 1,
@@ -18229,87 +18277,8 @@
 						'       </And>' +
 						'   </And>' +
 						'</Where>',
-					'grouping': {
-						'zeroIndexedColumnNumber': 3,
-						'numberColsForHeaderToSpan': 6
-					},
 					'customColumns': [
 						{
-							'displayName': 'Request ID',
-							'internalName': 'ID',
-							'formLink': 1
-						}, {
-							'displayName': 'Talk To',
-							'internalName': 'RequestedFor',
-							'userName': 1
-						}, {
-							'displayName': 'Event Name',
-							'internalName': 'EventName'
-						}, {
-							'displayName': 'Event Date and Time',
-							'internalName': 'EventBeginningDatetime',
-							'groupingFriendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'ddd, MMM D, YYYY', 'determineYearDisplayDynamically': 1 }
-						// }, {
-						// 	'displayName': 'Start Time',
-						// 	'internalName': 'EventBeginningDatetime',
-						// 	'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'h:mm a' }
-						// }, {
-						// 	'displayName': 'End Time',
-						// 	'internalName': 'EventEndingDatetime',
-						// 	'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'h:mm a' }
-						}, {
-							'displayName': 'Request Date',
-							'internalName': 'RequestDate',
-							'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
-						}, {
-							'displayName': 'Assigned To',
-							'internalName': 'AssignedTo',
-							'userName': 1
-						}, {
-							'displayName': 'Assignment Date',
-							'internalName': 'AssignmentDate',
-							'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
-						}
-					],
-					'sortColAndOrder': [3, 'asc']
-				}, {
-					'tableID': 'approved-ng',
-					'someColsAreUsers': 1,
-					'customCAMLQuery': '<Where>' +
-						'   <And>' +
-						'       <Eq>' +
-						'           <FieldRef Name="RequestStatus"></FieldRef>' +
-						'           <Value Type="Text">Approved</Value>' +
-						'       </Eq>' +
-						'       <And>' +
-						'           <Geq>' +
-						'               <FieldRef Name="EventBeginningDatetime"></FieldRef>' +
-						'               <Value Type="DateTime" IncludeTimeValue="FALSE">' + startDateFrom + 'T00:00:00Z</Value>' +
-						'           </Geq>' +
-						'           <Leq>' +
-						'               <FieldRef Name="EventBeginningDatetime"></FieldRef>' +
-						'               <Value Type="DateTime" IncludeTimeValue="FALSE">' + startDateTo + 'T00:00:00Z</Value>' +
-						'           </Leq>' +
-						'       </And>' +
-						'   </And>' +
-						'</Where>',
-					'customColumns': [
-						{
-							'displayName': 'Request ID',
-							'internalName': 'ID',
-							'formLink': 1
-						}, {
-							'displayName': 'Talk To',
-							'internalName': 'RequestedFor',
-							'userName': 1
-						}, {
-							'displayName': 'Event Name',
-							'internalName': 'EventName'
-						// }, {
-						// 	'displayName': 'Event Date',
-						// 	'internalName': 'EventBeginningDatetime',
-						// 	'groupingFriendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'ddd, MMM D, YYYY', 'determineYearDisplayDynamically': 1 }
-						}, {
 							'displayName': 'Event Start Date & Time',
 							'internalName': 'EventBeginningDatetime',
 							'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'ddd, MMM D, YYYY h:mm a', 'determineYearDisplayDynamically': 1 }
@@ -18317,29 +18286,27 @@
 							'displayName': 'Event End Date & Time',
 							'internalName': 'EventEndingDatetime',
 							'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'ddd, MMM D, YYYY h:mm a', 'determineYearDisplayDynamically': 1 }
-						// }, {
-						// 	'displayName': 'Request Date',
-						// 	'internalName': 'RequestDate',
-						// 	'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+						}, {
+							'displayName': 'Event Name',
+							'internalName': 'EventName'
+						}, {
+							'displayName': 'Space',
+							'internalName': 'EventSpace'
 						}, {
 							'displayName': 'Assigned To',
 							'internalName': 'AssignedTo',
 							'userName': 1
 						}, {
-							'displayName': 'Assignment Date',
-							'internalName': 'AssignmentDate',
-							'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+							'displayName': 'Request ID',
+							'internalName': 'ID',
+							'formLink': 1
 						}
 					],
-					'sortColAndOrder': [3, 'asc']
+					// 'sortColAndOrder': [1, 'asc']
 
 				}, {
 					'tableID': 'closed',
 					'someColsAreUsers': 1,
-					'grouping': {
-						'zeroIndexedColumnNumber': 4,
-						'numberColsForHeaderToSpan': 9
-					},
 					'customCAMLQuery': '<Where>' +
 						'   <And>' +
 						'       <Eq>' +
@@ -18360,46 +18327,32 @@
 						'</Where>',
 					'customColumns': [
 						{
-							'displayName': 'Request ID',
-							'internalName': 'ID',
-							'formLink': 1
-						}, {
-							'displayName': 'Request Status',
-							'internalName': 'RequestStatus'
-						}, {
-							'displayName': 'Requested By',
-							'internalName': 'RequestedBy',
-							'userName': 1
-						}, {
-							'displayName': 'Talk To',
-							'internalName': 'RequestedFor',
-							'userName': 1
-						}, {
-							'displayName': 'Event Date and Time',
+							'displayName': 'Event Start Date & Time',
 							'internalName': 'EventBeginningDatetime',
-							'groupingFriendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'ddd, MMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+							'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'ddd, MMM D, YYYY h:mm a', 'determineYearDisplayDynamically': 1 }
 						}, {
-							'displayName': 'Request Date',
-							'internalName': 'RequestDate',
-							'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+							'displayName': 'Event End Date & Time',
+							'internalName': 'EventEndingDatetime',
+							'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'ddd, MMM D, YYYY h:mm a', 'determineYearDisplayDynamically': 1 }
+						}, {
+							'displayName': 'Event Name',
+							'internalName': 'EventName'
+						}, {
+							'displayName': 'Space',
+							'internalName': 'EventSpace'
 						}, {
 							'displayName': 'Assigned To',
 							'internalName': 'AssignedTo',
 							'userName': 1
 						}, {
-							'displayName': 'Assignment Date',
-							'internalName': 'AssignmentDate',
-							'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+							'displayName': 'Request Status',
+							'internalName': 'RequestStatus'
 						}, {
-							'displayName': 'Completed By',
-							'internalName': 'CompletedBy',
-							'userName': 1
-						}, {
-							'displayName': 'Completion Date',
-							'internalName': 'CompletionDate',
-							'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+							'displayName': 'Request ID',
+							'internalName': 'ID',
+							'formLink': 1
 						}
-					]
+					],
 				}
 			]
 		};
@@ -18417,7 +18370,6 @@
 			'<ul id="container_tab-controls"> \n' +
 			'   <li><a href="#table-container_pending-approval">Pending Approval</a></li> \n' +
 			'   <li><a href="#table-container_approved">Approved</a></li> \n' +
-			'   <li><a href="#table-container_approved-ng">Approved NG</a></li> \n' +
 			'   <li><a href="#table-container_closed">Closed</a></li> \n' +
 			'</ul> \n' +
 			'<div id="container_date-filter-controls-and-header"> \n' +
@@ -18665,26 +18617,26 @@
 					"		 </Contains>" +
 					"	</And>" +
 					"</Where>";
-			/* } else if (typeof (t.myRSQueryRelevantStatus) != "undefined") {
-
-				if (typeof (mData.getRequesterFrom) == 'undefined') {
-					var getRequesterFrom = 'Author';
-				} else {
-					var getRequesterFrom = mData.getRequesterFrom;
-				}
-
-				query = "<Where>" +
-					"	<And>" +
-					"		 <Eq>" +
-					"			  <FieldRef Name='RequestStatus'></FieldRef>" +
-					"			  <Value Type='Text'>" + t.myRSQueryRelevantStatus + "</Value>" +
-					"		 </Eq>" +
-					"		 <Contains>" +
-					"			  <FieldRef Name='" + getRequesterFrom + "'></FieldRef>" +
-					"			  <Value Type='Text'>" + uData.name + "</Value>" +
-					"		 </Contains>" +
-					"	</And>" +
-					"</Where>"; */
+				/* } else if (typeof (t.myRSQueryRelevantStatus) != "undefined") {
+	
+					if (typeof (mData.getRequesterFrom) == 'undefined') {
+						var getRequesterFrom = 'Author';
+					} else {
+						var getRequesterFrom = mData.getRequesterFrom;
+					}
+	
+					query = "<Where>" +
+						"	<And>" +
+						"		 <Eq>" +
+						"			  <FieldRef Name='RequestStatus'></FieldRef>" +
+						"			  <Value Type='Text'>" + t.myRSQueryRelevantStatus + "</Value>" +
+						"		 </Eq>" +
+						"		 <Contains>" +
+						"			  <FieldRef Name='" + getRequesterFrom + "'></FieldRef>" +
+						"			  <Value Type='Text'>" + uData.name + "</Value>" +
+						"		 </Contains>" +
+						"	</And>" +
+						"</Where>"; */
 
 
 
@@ -19179,7 +19131,7 @@
 				retVal += moment(dateTimeString, incomingFormat).format(returnFormat);
 			}
 
-		// if incoming format is not null, use it to parse dateTimeString
+			// if incoming format is not null, use it to parse dateTimeString
 		} else {
 
 			// if incomingFormat contains ', YYYY' and dateTimeString doesn't end with that value and determineYearDisplayDynamically == 1
@@ -20902,19 +20854,19 @@
 
 
 
-    $.fn.ReturnGPCPeopleEditingAccess = function() {
+	$.fn.ReturnGPCPeopleEditingAccess = function () {
 
-        var gpcGroups = $().ReturnGPCGroups();
-        var hasViewPermission = 0;
+		var gpcGroups = $().ReturnGPCGroups();
+		var hasViewPermission = 0;
 
-        $.each(gpcGroups.EditGPCPeople, function(i, person) {
-            if (person.accountLong === uData.account) {
-                hasViewPermission = 1;
-            }
-        });
+		$.each(gpcGroups.EditGPCPeople, function (i, person) {
+			if (person.accountLong === uData.account) {
+				hasViewPermission = 1;
+			}
+		});
 
-        return hasViewPermission;
-    };
+		return hasViewPermission;
+	};
 
 
 
@@ -21413,20 +21365,63 @@
 				rData.formData['time-storage_StartTime'].substring(11, 16);
 			scheduleStartDatetime = moment.tz(scheduleStartDatetime, "America/New_York").format();
 			var nowAsISOLocal = $().ReturnFormattedDateTime('nowLocal', null, null);
-			if (moment(scheduleStartDatetime).isBefore(nowAsISOLocal)) {
+			if (moment(scheduleStartDatetime).isAfter(nowAsISOLocal)) {
 				$("div#signup-people").show("fast").removeClass("hidden");
 			} else {
+				var radioButtonIDs = [];
+				// enable and require radio buttons
+				$("div#signups").find("div.repeat-container").each(function () {
+					$(this).find("input[type='radio']").each(function (index, value) {
+						var radioButtonID = $(this).attr("id");
+						$().SetFieldToEnabled('#' + radioButtonID);
+						radioButtonIDs.push(radioButtonID);
+						if (index === 0) {
+							// pre-release pinch - this should really use SetFieldToRequired 
+							// 		function, but that function uses ids in some places and names
+							// 		in others but only accepts id parameter and if passing 
+							// 		name or id as id then problems occur
+							$('input[id="' + radioButtonID + '"]').addClass('required');
+							$('#' + radioButtonID).closest("div.control")
+								.prev("div.field-type-indication")
+								.children("span.field-type-indicator")
+								.removeClass("field-optional")
+								.addClass("field-required")
+								.children("span.message")
+								.removeClass("message-optional")
+								.addClass("message-required")
+								.text("Required Field");
+						}
+					});
+				});
+				// listen for changes on radio buttons
+				radioButtonIDs.forEach((radioButtonID) => {
+					$("input#" + radioButtonID).change(function () {
+						var denialContainerID = $(this)
+							.closest('div.repeat-container')
+							.find('div[id^="label-and-control_Signup-Credit-Denial-Reason"]')
+							.attr('id');
+						var denialControlID = $("div#" + denialContainerID)
+							.find("textarea[id^='Signup-Credit-Denial-Reason']")
+							.attr('id');
+						if ($(this).val() === 'yes') {
+							$().SetFieldToOptional(denialControlID, 'textarea');
+							$().SetFieldToDisabled('#' + denialControlID);
+							$("div#" + denialContainerID).hide("fast").addClass("hidden");
+						} else {
+							$().SetFieldToRequired(denialControlID, 'textarea');
+							$().SetFieldToEnabled('#' + denialControlID);
+							$("div#" + denialContainerID).show("fast").removeClass("hidden");
+						}
+					});
+				});
 				$("div#signups").show("fast").removeClass("hidden");
-				$().SetFieldToEnabled('Signup-Credit'); // Tuesday here
-				$().SetFieldToEnabled('signup-credit_no'); // Tuesday here
-				$().SetFieldToRequired('Signup-Credit', 'radio');
 			}
 		}
 	};
 
-	
-	 
- 	$.fn.SetInHouseNeedsSheetRequestAdditionalViewAccess = function () {
+
+
+	$.fn.SetInHouseNeedsSheetRequestAdditionalViewAccess = function () {
 		$("input#View-Access").val(mData.viewAccess);
 	};
 

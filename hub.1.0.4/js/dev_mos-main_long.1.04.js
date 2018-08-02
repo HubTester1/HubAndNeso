@@ -5954,35 +5954,43 @@
 
 					$(workingMessage).text("Handling GSE Modifications");
 					
-					// if this schedule is being cancelled
-
-						// change each signup to cancelled
-
-					// if this schedule is newly completed
+					// if this schedule is newly completed or cancelled
 					if (
-						rData.requestStatus === 'Completed' &&
+						(rData.requestStatus === 'Completed' || rData.requestStatus === 'Cancelled') &&
 						rData.endOfLife === 1 &&
 						rData.endOfLifeIsNew === 1
 					) {
-						// start an array of signup credit objects
+						// start an array to store the signup credit objects that will be extracted
 						var signupCredits = [];
 						// for each signup
 						$('div#signups div.repeat-container').each(function (i, a) {
 							// start a new signup credit object
 							var signupCredit = {};
-							// get id and granted values from the DOM
+							// set request status and get id and granted values from the DOM
 							signupCredit.signupID = $(this).find('input[id^="Signup-ID"]').val();
-							signupCredit.creditGranted = 
-								$(this).find('input[value="yes"]').is(':checked');
-							// if credit wasn't granted
-							if (!signupCredit.creditGranted) {
-								// get a denial reason from the DOM
-								$(this).find('textarea[id^="Signup-Credit-Denial-Reason"]').val();
+							// if credit is being granted or denied
+							if (rData.requestStatus === 'Completed') {
+								signupCredit.creditGranted =
+									$(this).find('input[value="yes"]').is(':checked');
+								// if credit is being denied
+								if (!signupCredit.creditGranted) {
+									// get a denial reason from the DOM
+									signupCredit.creditDenialReason = 
+										$(this).find('textarea[id^="Signup-Credit-Denial-Reason"]').val();
+									// set new request status to denied
+									signupCredit.requestStatus = "Credit Denied"
+								} else {
+									// set new request status to granted
+									signupCredit.requestStatus = "Credit Granted"
+								}
+							} else {
+								// set new request status to granted
+								signupCredit.requestStatus = "Cancelled"
 							}
 							// push the signup credit object to the signup credits array
 							signupCredits.push(signupCredit);
 						});
-						// for each extracted signup credit
+						// for each extracted signup credit object
 						signupCredits.forEach((signupCredit) => {
 							// get the corresponding row from the GSE Signup SWFList
 							console.log(signupCredit.signupID);
@@ -6015,13 +6023,69 @@
 							}),
 								signupCredit
 							);
-							console.log(signupCredit.formData);
+							// modify formData
+							signupCredit.formData['Request-Status'] = signupCredit.requestStatus;
+							if (signupCredit.creditDenialReason) {
+								signupCredit.formData['Credit-Denial-Reason'] = signupCredit.creditDenialReason;
+							}
+							// set submission value pairs array
+							signupCredit.submissionValuePairsArray = [
 
-							
-							// set signupCredit.newRequestStatus to "Credit Granted", "Credit Denied"[, or "Cancelled"] - THURSDAY - consider handling cancellation in same code as grant / deny
-							// in formData, modify Request-Status and, if needed, add Credit-Denial-Reason-for-Requester
-							// update SWFList
+							];
 
+							console.log(signupCredit);
+
+							/* // update SWFList
+							var updateListItemsOptions = {
+								operation: 'UpdateListItems',
+								listName: 'SWFList',
+								webURL: 'https://bmos.sharepoint.com/sites/hr-service-signups',
+								batchCmd: 'Update',
+								ID: signupCredit.signupID,
+								valuepairs: signupCredit.submissionValuePairsArray,
+								completefunc: function (xData, Status) {
+
+
+									// determine success of save; then...
+									var swfListSaveSuccess = $().HandleListUpdateReturn(xData, Status, 'Hub SWF List Item Error');
+
+									// if swfList save was NOT successful
+									if (swfListSaveSuccess == 0) {
+
+										// send error emails from queue, then...
+										$().SendEmails(globalErrorEmailsToSend).then(function () {
+											// display messages
+											$('div#wait-while-working').fadeOut(200);
+											if (batchCommand == 'New') {
+												$('div#swfList-error_new-request').fadeIn(200);
+											} else {
+												$('div#swfList-error_updated-request').fadeIn(200);
+											}
+										});
+
+										// --- signify completion
+
+										// deferred.resolve();
+
+										// if swfList save was successful
+									} else if (swfListSaveSuccess == 1) {
+
+										var requestID = $(xData.responseXML).SPFilterNode("z:row").attr("ows_ID");
+										globalLastRequestIDs.push(requestID);
+
+										// --- signify completion
+
+										deferred.resolve();
+
+									}
+								}
+							};
+
+							if (webURL) {
+								updateListItemsOptions.webURL = webURL;
+							}
+
+							$().SPServices(updateListItemsOptions); */
 						});
 					}
 				}
