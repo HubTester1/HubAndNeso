@@ -4017,8 +4017,6 @@
 						]
 					}
 				});
-				console.log('gseSignupsArray');
-				console.log(gseSignupsArray);
 				// if the RepeatedElements array doesn't already exist
 				if (!rData.formData.RepeatedElements) {
 					// create it
@@ -4026,8 +4024,6 @@
 				}
 				// for each signup
 				gseSignupsArray.forEach((signup, index) => {
-					console.log("signup.formData['Request-Status']");
-					console.log(signup.formData['Request-Status']);
 					// create a repeat object
 					var repeatObject = {};
 					if (index === 0) {
@@ -4037,8 +4033,8 @@
 						repeatObject['Signup-ID'] = signup.signupID;
 						if (signup.formData['Request-Status'] === 'Credit Granted') {
 							repeatObject['signup-credit_yes'] = 'yes';
-						} else if (signup.formData['Request-Status'] === 'Credit Granted') {
-							repeatObject['signup-credit_yes'] = 'no';
+						} else if (signup.formData['Request-Status'] === 'Credit Denied') {
+							repeatObject['signup-credit_no'] = 'no';
 							repeatObject['Signup-Credit-Denial-Reason'] = signup.formData['Signup-Credit-Denial-Reason'];
 						}
 						// repeatObject.XXXXX = XXXXX;
@@ -4049,8 +4045,8 @@
 						repeatObject['Signup-ID-repeat-' + index] = signup.signupID;
 						if (signup.formData['Request-Status'] === 'Credit Granted') {
 							repeatObject['signup-credit_yes-repeat-' + index] = 'yes';
-						} else if (signup.formData['Request-Status'] === 'Credit Granted') {
-							repeatObject['signup-credit_yes-repeat-' + index] = 'no';
+						} else if (signup.formData['Request-Status'] === 'Credit Denied') {
+							repeatObject['signup-credit_no-repeat-' + index] = 'no';
 							repeatObject['Signup-Credit-Denial-Reason-repeat-' + index] = signup.formData['Signup-Credit-Denial-Reason'];
 						}
 						// repeatObject.XXXXX = XXXXX;
@@ -4068,15 +4064,6 @@
 				console.log('rData.formData');
 				console.log(rData.formData);
 			}
-
-
-
-
-
-
-
-
-
 
 			// set stored object's data, if any
 			if (typeof (rData.formData) != "undefined") {
@@ -13972,8 +13959,6 @@
 
 		for (field in formDataCopy) {
 
-			// console.log('field');
-			// console.log(field);
 
 			// get the field in the form that matches the stored data value
 			element = $(form).find("#" + field);
@@ -14054,6 +14039,10 @@
 				// console.log(field);
 				// console.log($(element));
 				if ($(element).attr("type") == "radio" || $(element).attr("type") == "checkbox") {
+					console.log(field);
+					console.log($(element));
+					console.log(fData.saveApprovalFields);
+					console.log(StrInStr(element.selector, '#approval-indicator'));
 					if ((typeof (fData.saveApprovalFields) != 'undefined' && fData.saveApprovalFields == 1) || (StrInStr(element.selector, '#approval-indicator') == false)) {
 						$(element).attr("checked", true);
 					}
