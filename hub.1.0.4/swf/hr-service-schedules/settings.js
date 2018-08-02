@@ -919,7 +919,7 @@
 				"htmlID": "container_about-the-requester",
 				"begin": 1,
 				"hideForNonAdmin": ["", "Submitted", "Completed", "Cancelled"],
-				"hideForAdmin": [""],
+				"hideForAdmin": ["", "Submitted", "Completed", "Cancelled"],
 			}, {
 				"elementType": "markup",
 				"tag": "h2",
@@ -1373,7 +1373,9 @@
 				"tag": "h2",
 				"content": "Status",
 				"begin": 1,
-				"end": 1
+				"end": 1,
+				'hideForNonAdmin': [''],
+				'hideForAdmin': ['', 'Submitted', 'Completed', 'Cancelled'],
 			}, {
 				'elementType': "field",
 				'controlType': "text",

@@ -4037,7 +4037,6 @@
 							repeatObject['signup-credit_no'] = 'no';
 							repeatObject['Signup-Credit-Denial-Reason'] = signup.formData['Signup-Credit-Denial-Reason'];
 						}
-						// repeatObject.XXXXX = XXXXX;
 					} else {
 						repeatObject.ID = "signup-repeat-" + index;
 						repeatObject.OriginalToRepeat = "signup";
@@ -4049,7 +4048,6 @@
 							repeatObject['signup-credit_no-repeat-' + index] = 'no';
 							repeatObject['Signup-Credit-Denial-Reason-repeat-' + index] = signup.formData['Signup-Credit-Denial-Reason'];
 						}
-						// repeatObject.XXXXX = XXXXX;
 					}
 					// push the repeat object to the RepeatedElements array
 					rData.formData.RepeatedElements.push(repeatObject);
@@ -4061,8 +4059,6 @@
 					// add a list item to the signup people list items property
 					rData.formData['Signup-People-List-Items'] += '<li>' + signup.formData["Requested-For"][0].displayText + '</li>';
 				});
-				console.log('rData.formData');
-				console.log(rData.formData);
 			}
 
 			// set stored object's data, if any
@@ -14039,10 +14035,6 @@
 				// console.log(field);
 				// console.log($(element));
 				if ($(element).attr("type") == "radio" || $(element).attr("type") == "checkbox") {
-					console.log(field);
-					console.log($(element));
-					console.log(fData.saveApprovalFields);
-					console.log(StrInStr(element.selector, '#approval-indicator'));
 					if ((typeof (fData.saveApprovalFields) != 'undefined' && fData.saveApprovalFields == 1) || (StrInStr(element.selector, '#approval-indicator') == false)) {
 						$(element).attr("checked", true);
 					}
