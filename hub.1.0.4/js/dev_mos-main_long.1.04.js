@@ -4275,6 +4275,7 @@
 			$("input#Request-Status-for-Requester").val(rData.requestStatus);
 		}
 
+
 		// if request is new
 		if (rData.requestStatus === '') {
 
@@ -4295,8 +4296,6 @@
 
 			// if alwaysTalkToRequester, populate and hide relevant fields
 			if (typeof (fData.alwaysTalkToRequester) != 'undefined' && fData.alwaysTalkToRequester === 1) {
-				console.log('populating');
-				console.log(uData);
 				$('option[value="Self"]').prop('selected', true);
 				$().PutAddtlPeopleInPicker('Requested For', [{
 					'name': uData.name,
@@ -4521,6 +4520,10 @@
 			}
 		});
 
+		// for each radio button with checked attribute
+		$('div#request-form').find('input[checked]').each(function () {
+			$(this).prop('checked', true);
+		});
 
 		// modify submission notice & button text, as needed
 		if (typeof (fData.conditionalSubmissionNoticesAndButtonValues) != "undefined") {
@@ -5411,7 +5414,6 @@
 							endOfLife = 1;
 							endOfLifeIsNew = 1;
 						} else {
-							// alter flags from their defaults if there are disapproved or blank approval nodes
 							var someCreditNodesAreBlank = 0;
 							$('div#signups div#signup').each(function (i, a) {
 								var grantButtonChecked = 0;
@@ -5923,83 +5925,83 @@
 						rData.endOfLife === 1 &&
 						rData.endOfLifeIsNew === 1
 					) {
-						// start an array to store the signup credit objects that will be extracted
-						var signupCredits = [];
+						// start an array to store the signup modification objects that will be extracted
+						var signupMods = [];
 						// for each signup
 						$('div#signups div.repeat-container').each(function (i, a) {
-							// start a new signup credit object
-							var signupCredit = {};
+							// start a new signup modification object
+							var signupMod = {};
 							// set request status and get id and granted values from the DOM
-							signupCredit.signupID = $(this).find('input[id^="Signup-ID"]').val();
+							signupMod.signupID = $(this).find('input[id^="Signup-ID"]').val();
 							// if credit is being granted or denied
 							if (rData.requestStatus === 'Completed') {
-								signupCredit.creditGranted =
+								signupMod.creditGranted =
 									$(this).find('input[value="yes"]').is(':checked');
 								// if credit is being denied
-								if (!signupCredit.creditGranted) {
+								if (!signupMod.creditGranted) {
 									// get a denial reason from the DOM
-									signupCredit.creditDenialReason = 
+									signupMod.creditDenialReason =
 										$(this).find('textarea[id^="Signup-Credit-Denial-Reason"]').val();
 									// set new request status to denied
-									signupCredit.requestStatus = "Credit Denied"
+									signupMod.requestStatus = "Credit Denied"
 								} else {
 									// set new request status to granted
-									signupCredit.requestStatus = "Credit Granted"
+									signupMod.requestStatus = "Credit Granted"
 								}
 							} else {
 								// set new request status to granted
-								signupCredit.requestStatus = "Cancelled"
+								signupMod.requestStatus = "Cancelled"
 							}
 							// push the signup credit object to the signup credits array
-							signupCredits.push(signupCredit);
+							signupMods.push(signupMod);
 						});
 						// for each extracted signup credit object
-						signupCredits.forEach((signupCredit) => {
+						signupMods.forEach((signupMod) => {
 							// get the corresponding row from the GSE Signup SWFList
-							console.log(signupCredit.signupID);
-							signupCredit = $.extend($().GetFieldsFromOneRow({
+							console.log(signupMod.signupID);
+							signupMod = $.extend($().GetFieldsFromOneRow({
 								"select": [{
-								// 	"nameHere": "requestStatus",
-								// 	"nameInList": "RequestStatus"
-								// }, {
-								// 	"nameHere": "endOfLife",
-								// 	"nameInList": "EndOfLife"
-								// }, {
-								// 	"nameHere": "lastModifiedAtLoad",
-								// 	"nameInList": "Modified"
-								// }, {
-								// 	"nameHere": "requesterID",
-								// 	"nameInList": "Author"
-								// }, {
+									// 	"nameHere": "requestStatus",
+									// 	"nameInList": "RequestStatus"
+									// }, {
+									// 	"nameHere": "endOfLife",
+									// 	"nameInList": "EndOfLife"
+									// }, {
+									// 	"nameHere": "lastModifiedAtLoad",
+									// 	"nameInList": "Modified"
+									// }, {
+									// 	"nameHere": "requesterID",
+									// 	"nameInList": "Author"
+									// }, {
 									"nameHere": "formData",
 									"nameInList": "AllRequestData"
-								// }, {
-								// 	"nameHere": "requestVersion",
-								// 	"nameInList": "RequestVersion"
+									// }, {
+									// 	"nameHere": "requestVersion",
+									// 	"nameInList": "RequestVersion"
 								}],
 								"webURL": "https://bmos.sharepoint.com/sites/hr-service-signups",
 								"where": {
 									"field": "ID",
 									"type": "Number",
-									"value": signupCredit.signupID,
+									"value": signupMod.signupID,
 								}
 							}),
-								signupCredit
+								signupMod
 							);
 							// modify formData
-							signupCredit.formData['Request-Status'] = signupCredit.requestStatus;
-							if (signupCredit.creditDenialReason) {
-								signupCredit.formData['Signup-Credit-Denial-Reason'] = signupCredit.creditDenialReason;
+							signupMod.formData['Request-Status'] = signupMod.requestStatus;
+							if (signupMod.creditDenialReason) {
+								signupMod.formData['Signup-Credit-Denial-Reason'] = signupMod.creditDenialReason;
 							}
 							// set submission value pairs array
-							signupCredit.submissionValuePairsArray = [
-								['RequestStatus', signupCredit.requestStatus],
+							signupMod.submissionValuePairsArray = [
+								['RequestStatus', signupMod.requestStatus],
 								['BeginningOfLife', 0],
 								['EndOfLife', 1],
-								['AllRequestData', CDataWrap(JSON.stringify(signupCredit.formData))]
+								['AllRequestData', CDataWrap(JSON.stringify(signupMod.formData))]
 							];
 
-							console.log(signupCredit);
+							console.log(signupMod);
 
 							// update SWFList
 							var updateListItemsOptions = {
@@ -6007,8 +6009,8 @@
 								listName: 'SWFList',
 								webURL: 'https://bmos.sharepoint.com/sites/hr-service-signups',
 								batchCmd: 'Update',
-								ID: signupCredit.signupID,
-								valuepairs: signupCredit.submissionValuePairsArray,
+								ID: signupMod.signupID,
+								valuepairs: signupMod.submissionValuePairsArray,
 								completefunc: function (xData, Status) {
 									// determine success of save; then...
 									// var swfListSaveSuccess = 
@@ -7361,7 +7363,7 @@
 		} else if (type === "gseSchedulesListHRAdmin") {
 			// scorey: control how oData.gseSchedulesListHRAdmin gets used to build a screen here
 			$().RenderOverviewScreenButtons(oData.gseSchedulesListHRAdmin.buttons, 0);
-			// $("div#overview-table-container").html("<p>This is 2.3 Schedules List for HR Admin (gseSchedulesListHRAdmin).</p>");
+			$("div#overview-table-container").html("<p>This is 2.3 Schedules List for HR Admin (gseSchedulesListHRAdmin).</p>");
 			$().RenderAllDataTables(oData.gseSchedulesListHRAdmin.sections, "overview-table-container");
 		} else if (type === "gseSchedulesListJobAdmin") {
 			// scorey: control how oData.gseSchedulesListJobAdmin gets used to build a screen here
@@ -13922,7 +13924,6 @@
 	function PopulateFormData(form, formData, uriRoot, requestID, checkForAlternateEventDataToPopulate) {
 
 		var formDataCopy = {};
-
 		$.each(formData, function (formDatumKey, formDatumValue) {
 			formDataCopy[formDatumKey] = formDatumValue;
 		});
@@ -13950,11 +13951,7 @@
 			}
 		}
 
-		// console.log('formDataCopy');
-		// console.log(formDataCopy);
-
 		for (field in formDataCopy) {
-
 
 			// get the field in the form that matches the stored data value
 			element = $(form).find("#" + field);
@@ -14127,8 +14124,6 @@
 			lastRepeatIDNumber = Number($("[id^='" + originalToRepeat + "-repeat']").last().attr('id').slice(-1));
 		}
 
-
-
 		// --- determine the id of the element after which to insert the repeat
 
 		// if no repeats were found
@@ -14141,8 +14136,6 @@
 			var insertAfterID = originalToRepeat + '-repeat-' + lastRepeatIDNumber;
 		}
 
-
-
 		// --- use submittedID for newRepeatID, or construct a new one
 
 		// if there's a submittedID
@@ -14153,9 +14146,7 @@
 		} else {
 			// construct a new one
 			var newRepeatID = originalToRepeat + "-repeat-" + (lastRepeatIDNumber + 1);
-		}
-
-
+		}		
 
 		// --- create and insert the new repeat; give it the appropriate ID and data-original-to-repeat values
 		$("#" + insertAfterID).after($("#" + originalToRepeat).clone().attr("id", newRepeatID).attr("data-original-to-repeat", originalToRepeat));
@@ -14231,7 +14222,8 @@
 					break;
 				case 'checkbox':
 				case 'radio':
-					this.checked = false;
+					$(this).removeAttr('checked');
+					$(this).prop('checked', false);
 			}
 		});
 
@@ -17406,8 +17398,6 @@
 
 
 	$.fn.CreateOrUpdateListItem = function (mData, rData, submissionValuePairsArray, webURL) {
-
-		console.log(submissionValuePairsArray);
 
 		// --- set up internal promise to configure
 
@@ -22074,7 +22064,7 @@
 		// wait for all data retrieval / setting promises to complete (pass or fail) 
 		$.when.apply($, allDataRetrievalAndSettingPromises).always(function () {
 
-			console.log('using dev_mos-main_long.1.04 m4');
+			console.log('using dev_mos-main_long.1.04 m5');
 
 			$().ConfigureAndShowScreenContainerAndAllScreens();
 		});

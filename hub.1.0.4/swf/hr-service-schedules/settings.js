@@ -57,22 +57,22 @@
 						'displayName': 'Request ID',
 						'internalName': 'ID',
 						'formLink': 1
-					}, {
-						'displayName': 'Requested By',
-						'internalName': 'Author',
-						'userName': 1
-					}, {
-						'displayName': 'Start Time',
-						'internalName': 'StartTime'
-					}, {
-						'displayName': "Shift Length",
-						'internalName': "ShiftLength",
-					}, {
-						'displayName': "Number of Positions",
-						'internalName': "NumberOfPositions",
-					}, {
-						'displayName': "Location",
-						'internalName': "Location",
+					// }, {
+					// 	'displayName': 'Requested By',
+					// 	'internalName': 'Author',
+					// 	'userName': 1
+					// }, {
+					// 	'displayName': 'Start Time',
+					// 	'internalName': 'StartTime'
+					// }, {
+					// 	'displayName': "Shift Length",
+					// 	'internalName': "ShiftLength",
+					// }, {
+					// 	'displayName': "Number of Positions",
+					// 	'internalName': "NumberOfPositions",
+					// }, {
+					// 	'displayName': "Location",
+					// 	'internalName': "Location",
 					}, {
 						'displayName': "JobID",
 						'internalName': "JobID",
@@ -80,54 +80,28 @@
 						'displayName': "Date",
 						'internalName': "Date",
 						'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
-					}, {
-						'displayName': 'Request Date',
-						'internalName': 'RequestDate',
-						'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+					// }, {
+					// 	'displayName': 'Request Date',
+					// 	'internalName': 'RequestDate',
+					// 	'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
 					}
 				],
 				'tables': [
 					{
-						'tableTitle': 'Unapproved',
-						'tableID': 'pending-approval',
+						'tableTitle': 'Submitted',
+						'tableID': 'submitted',
 						'someColsAreUsers': 1,
-						'basicRSQueryRelevantStatus': 'Pending Approval'
-					}, {
-						'tableTitle': 'Unassigned',
-						'tableID': 'unassigned',
-						'someColsAreUsers': 1,
-						'customCAMLQuery': '<Where>' +
-											'  <And>' +
-											'	<Eq>' +
-											'	  <FieldRef Name="RequestStatus"></FieldRef>' +
-											'	  <Value Type="Text">Approved</Value>' +
-											'	</Eq>' +
-											'	<IsNull>' +
-											'	  <FieldRef Name="AssignedTo"></FieldRef>' +
-											'	</IsNull>' +
-											'  </And>' +
-											'</Where>'
-					}, {
-						'tableTitle': 'Assigned',
-						'tableID': 'assigned',
-						'someColsAreUsers': 1,
-						'customCAMLQuery': '<Where>' +
-											'  <And>' +
-											'	<Eq>' +
-											'	  <FieldRef Name="RequestStatus"></FieldRef>' +
-											'	  <Value Type="Text">Approved</Value>' +
-											'	</Eq>' +
-											'	<IsNotNull>' +
-											'	  <FieldRef Name="AssignedTo"></FieldRef>' +
-											'	</IsNotNull>' +
-											'  </And>' +
-											'</Where>'
-					}, {
-						'tableTitle': 'Closed',
-						'tableID': 'closed',
-						'someColsAreUsers': 1,
-						'sortColAndOrder': [0, 'desc'],
-						'basicEOLQueryRelevantValue': 1
+						'basicRSQueryRelevantStatus': 'Submitted'
+					// }, {
+					// 	'tableTitle': 'Completed',
+					// 	'tableID': 'completed',
+					// 	'someColsAreUsers': 1,
+					// 	'basicRSQueryRelevantStatus': 'Completed'
+					// }, {
+					// 	'tableTitle': 'Cancelled',
+					// 	'tableID': 'cancelled',
+					// 	'someColsAreUsers': 1,
+					// 	'basicRSQueryRelevantStatus': 'Cancelled'
 					}
 				]
 			}
