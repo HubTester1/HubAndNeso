@@ -389,7 +389,7 @@
 				'elementType': "field",
 				'controlType': "select",
 				'fieldName': "Department",
-				// 'listFieldName': "Department",
+				'listFieldName': "Department",
 				'labelContent': "Department",
 				'requiredForNonAdmin': [""],
 				'requiredForAdmin': [""],
