@@ -579,6 +579,7 @@
 			case "gseSchedulesCalendarStaff":
 				$().ReplacePageTitle(newTitle);
 				$("div#overview-screen-container").fadeIn(mData.gracefulScreenTransitionTime).removeClass("hidden");
+				$('div#overview-screen-container').fullCalendar('render');
 				$('#s4-workspace').scrollTop(0);
 				break;
 
@@ -7372,7 +7373,7 @@
 
 		} else if (type === "gseSchedulesCalendarHRAdmin") {
 			// scorey: control how oData.gseSchedulesCalendarHRAdmin gets used to build a screen here
-			$("div#overview-table-container").html("<p>This is 2.2 Schedules Calendar for HR Admin (gseSchedulesCalendarHRAdmin).</p>");
+			// $("div#overview-table-container").html("<p>This is 2.2 Schedules Calendar for HR Admin (gseSchedulesCalendarHRAdmin).</p>");
 			$().RenderCalendarForGSESchedules(oData.gseSchedulesCalendarHRAdmin.buttons, 'gseHRAdmin');
 		} else if (type === "gseSchedulesCalendarJobAdmin") {
 			// scorey: control how oData.gseSchedulesCalendarJobAdmin gets used to build a screen here
@@ -18877,7 +18878,6 @@
 	$.fn.RenderCalendarForGSESchedules = function (buttons, relevantRole) {
 		var viewToUse = GetParamFromUrl(location.search, 'view');
 		var dateToUse = GetParamFromUrl(location.search, 'date');
-		var buyOutToUse = GetParamFromUrl(location.search, 'buyoutID');
 		var gseSchedulesArray = [];
 		var allEvents = [];
 		if (!viewToUse || viewToUse == "") { viewToUse = 'month'; }
@@ -18901,22 +18901,97 @@
 				'value': 'Submitted',
 			}
 		});
+
+		// console.log(gseSchedulesArray);
 		gseSchedulesArray.forEach((schedule) => {
 			var eventItem = {
-				'start': ReturnFormattedDateTime(schedule.formData['Date'], null, 'YYYY-MM-DDT') +
-					ReturnFormattedDateTime(schedule.formData['time-storage_StartTime'], null, 'HH:mm:ss'),
+				'start': $().ReturnFormattedDateTime(schedule.formData['Date'], null, 'YYYY-MM-DDT') +
+					$().ReturnFormattedDateTime(schedule.formData['time-storage_StartTime'], null, 'HH:mm:ss'),
 				'title': schedule.formData['Location'],
 			}
+			allEvents.push(eventItem);
+		});
+
+		console.log('allEvents');
+		console.log(allEvents);
+
+		console.log('viewToUse');
+		console.log(viewToUse);
+
+		console.log('dateToUse');
+		console.log(dateToUse);
+
+		$("div#overview-screen-container").fullCalendar({
+			allDayDefault: true,
+			lazyFetching: false,
+			eventOrder: "start",
+			header: {
+				// right and center are reversed, because our CSS implements obedience to the accessibility imperative that DOM elements exist 
+				//      (and are thus encountered by assistive technologies) in the same order in which they're presented to sighted users
+				left: "",
+				right: "prevYear,prev,title,next,nextYear",
+				center: "today,basicDay,basicWeek,month"
+			},
+			defaultView: viewToUse,
+			defaultDate: dateToUse,
+			dayClick: function (date, jsEvent, view) {
+				location.href = location.protocol + "//" + location.hostname + location.pathname + "?f=cal&view=basicDay&date=" + $(this).attr("data-date");
+			},
+			theme: true,
+			eventClick: function (event, jsEvent, view) {
+
+				console.log('event clicked');
+
+				/* // close the dialog box
+				$("div#dialog").dialog("close");
+
+				// populate the dialog box
+				var dialogTitleBarContent = "<h2 class=\"ui-dialog-buyout-title-date-and-time-range\"> \n" +
+					"   <span class=\"ui-dialog-buyout-title-date\">" + event.formattedDate + "</span> \n" +
+					"   <span class=\"ui-dialog-title-buyout-start-time\">" + event.formattedStartTime + "</span> \n" +
+					"   <span class=\"ui-dialog-title-buyout-times-separator\"> &ndash; </span> \n" +
+					"   <span class=\"ui-dialog-title-buyout-end-time\">" + event.formattedEndTime + "</span> \n" +
+					"</h2> \n";
+
+				if (typeof (event.location) != "undefined") {
+					dialogTitleBarContent += "<p class=\"ui-dialog-title-buyout-location\">" + event.location + "</p> \n";
+				}
+
+
+
+				$("div.ui-dialog-titlebar span.ui-dialog-title").html(dialogTitleBarContent);
+
+				var slicedTitle = StrInStr(event.title, " ").slice(3);
+				var dialogBodyContent = "<p class=\"ui-dialog-buyout-title\">" + slicedTitle + "</p> \n" +
+					"<ul> \n";
+
+				$(["count", "notes"]).each(function (i, o) {
+					if (typeof (event[o]) != "undefined") {
+						dialogBodyContent += "	<li class=\"event-" + o + "\">" + $().ReturnStringWithInitialCap(o) + ": " + event[o] + "</li>";
+					}
+				});
+				dialogBodyContent += "	<li class=\"event-contact\">Contact: " + event.contactLinkedName + "</li> \n" +
+					"	<li class=\"event-id\">Event ID: " + event.eventID + "</li>" +
+					"</ul> \n" +
+					"<a class=\"ui-dialog-button\" href=\"" + event.editURL + "\">Edit / Delete</a>";
+
+				$("div#dialog").html(dialogBodyContent);
+
+				// position the dialog box
+				$("div#dialog").dialog("option", "position", { my: "left bottom", at: "right top", of: jsEvent });
+
+				// open the dialog box
+				$("div#dialog").dialog("open"); */
+			},
+			events: allEvents
+
 		});
 
 
-
-		console.log(gseSchedulesArray);
-
-	//	overview-screen-container
+		$("div.fc-toolbar, div.fc-view-container").fadeTo(1000, 1);
 
 
-	}
+	};
 
 
 

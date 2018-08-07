@@ -4064,13 +4064,14 @@ body.product-timeline
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
-//			BUYOUTS, MUSEUM-WIDE CALENDARS
+//			BUYOUTS, MUSEUM-WIDE CALENDARS, GSE CALENDAR
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
 // button styles are in button section
 
 div#museum-event-calendar-container,
-div#buyout-calendar-container
+div#buyout-calendar-container,
+div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests
 
 	div.fc-toolbar
 		height: 4.5rem
@@ -4150,7 +4151,8 @@ div#buyout-calendar-container
 				background-color: $darkGreen
 
 div#buyout-calendar-container,
-div#museum-event-calendar-container
+div#museum-event-calendar-container,
+div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests
 
 	div.fc-view-container
 		opacity: 0
@@ -4192,6 +4194,14 @@ div#museum-event-calendar-container
 	a.fc-event.stearns-gallery
 		background-color: $darkGreen
 		color: $textOnDarkGreen !important
+
+
+div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests
+
+	.fc-day.ui-widget-content.fc-past
+		background-color: #e0e0e0
+		border: 1px solid #e0e0e0
+
 
 div.ui-dialog#buyout-calendar-item-dialog,
 div.ui-dialog#museum-calendar-item-dialog

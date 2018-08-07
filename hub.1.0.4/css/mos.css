@@ -3369,31 +3369,38 @@ body.product-timeline div.ui-dialog#product-timeline-item-dialog div.ui-dialog-c
   padding: 1rem 0; }
 
 div#museum-event-calendar-container div.fc-toolbar,
-div#buyout-calendar-container div.fc-toolbar {
+div#buyout-calendar-container div.fc-toolbar,
+div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-toolbar {
   height: 4.5rem;
   margin-bottom: 1rem;
   opacity: 0; }
   div#museum-event-calendar-container div.fc-toolbar div.fc-left,
-  div#buyout-calendar-container div.fc-toolbar div.fc-left {
+  div#buyout-calendar-container div.fc-toolbar div.fc-left,
+  div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-toolbar div.fc-left {
     float: left;
     height: 4.5rem; }
   div#museum-event-calendar-container div.fc-toolbar div.fc-right,
-  div#buyout-calendar-container div.fc-toolbar div.fc-right {
+  div#buyout-calendar-container div.fc-toolbar div.fc-right,
+  div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-toolbar div.fc-right {
     float: none;
     display: inline-block;
     height: 4.5rem; }
     div#museum-event-calendar-container div.fc-toolbar div.fc-right > div,
-    div#buyout-calendar-container div.fc-toolbar div.fc-right > div {
+    div#buyout-calendar-container div.fc-toolbar div.fc-right > div,
+    div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-toolbar div.fc-right > div {
       height: 4.5rem; }
   div#museum-event-calendar-container div.fc-toolbar div.fc-center,
-  div#buyout-calendar-container div.fc-toolbar div.fc-center {
+  div#buyout-calendar-container div.fc-toolbar div.fc-center,
+  div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-toolbar div.fc-center {
     float: right;
     height: 4.5rem; }
     div#museum-event-calendar-container div.fc-toolbar div.fc-center > div,
-    div#buyout-calendar-container div.fc-toolbar div.fc-center > div {
+    div#buyout-calendar-container div.fc-toolbar div.fc-center > div,
+    div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-toolbar div.fc-center > div {
       height: 4.5rem; }
   div#museum-event-calendar-container div.fc-toolbar h2,
-  div#buyout-calendar-container div.fc-toolbar h2 {
+  div#buyout-calendar-container div.fc-toolbar h2,
+  div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-toolbar h2 {
     display: inline-block;
     font-size: 3.75rem !important;
     line-height: 3.75rem !important;
@@ -3440,11 +3447,13 @@ div#buyout-calendar-container div#buyouts-metadata {
       background-color: #107c10; }
 
 div#buyout-calendar-container div.fc-view-container,
-div#museum-event-calendar-container div.fc-view-container {
+div#museum-event-calendar-container div.fc-view-container,
+div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-view-container {
   opacity: 0; }
 
 div#buyout-calendar-container a.fc-event,
-div#museum-event-calendar-container a.fc-event {
+div#museum-event-calendar-container a.fc-event,
+div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests a.fc-event {
   font-size: 1.3rem;
   line-height: 2rem;
   border-radius: 0;
@@ -3455,39 +3464,50 @@ div#museum-event-calendar-container a.fc-event {
   color: #fff !important; }
 
 div#buyout-calendar-container a.fc-event.mugar-omni-theater,
-div#museum-event-calendar-container a.fc-event.mugar-omni-theater {
+div#museum-event-calendar-container a.fc-event.mugar-omni-theater,
+div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests a.fc-event.mugar-omni-theater {
   background-color: #ff9a1f;
   color: #222 !important; }
 
 div#buyout-calendar-container a.fc-event.three-d-digital-cinema,
-div#museum-event-calendar-container a.fc-event.three-d-digital-cinema {
+div#museum-event-calendar-container a.fc-event.three-d-digital-cinema,
+div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests a.fc-event.three-d-digital-cinema {
   background-color: #ff5498;
   color: #111 !important; }
 
 div#buyout-calendar-container a.fc-event.butterfly-garden,
-div#museum-event-calendar-container a.fc-event.butterfly-garden {
+div#museum-event-calendar-container a.fc-event.butterfly-garden,
+div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests a.fc-event.butterfly-garden {
   background-color: #cd3ff2;
   color: #111 !important; }
 
 div#buyout-calendar-container a.fc-event.charles-hayden-planetarium,
-div#museum-event-calendar-container a.fc-event.charles-hayden-planetarium {
+div#museum-event-calendar-container a.fc-event.charles-hayden-planetarium,
+div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests a.fc-event.charles-hayden-planetarium {
   background-color: #45b1ff;
   color: #000 !important; }
 
 div#buyout-calendar-container a.fc-event.skyline-room,
-div#museum-event-calendar-container a.fc-event.skyline-room {
+div#museum-event-calendar-container a.fc-event.skyline-room,
+div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests a.fc-event.skyline-room {
   background-color: #71e667;
   color: #111 !important; }
 
 div#buyout-calendar-container a.fc-event.nichols-gallery,
-div#museum-event-calendar-container a.fc-event.nichols-gallery {
+div#museum-event-calendar-container a.fc-event.nichols-gallery,
+div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests a.fc-event.nichols-gallery {
   background-color: #a30c5e;
   color: #fff !important; }
 
 div#buyout-calendar-container a.fc-event.stearns-gallery,
-div#museum-event-calendar-container a.fc-event.stearns-gallery {
+div#museum-event-calendar-container a.fc-event.stearns-gallery,
+div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests a.fc-event.stearns-gallery {
   background-color: #107c10;
   color: #fff !important; }
+
+div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests .fc-day.ui-widget-content.fc-past {
+  background-color: #e0e0e0;
+  border: 1px solid #e0e0e0; }
 
 div.ui-dialog#buyout-calendar-item-dialog div.ui-dialog-titlebar span.ui-dialog-title,
 div.ui-dialog#museum-calendar-item-dialog div.ui-dialog-titlebar span.ui-dialog-title {
