@@ -1257,19 +1257,29 @@
 
 		var query = "<Query>" +
 					"<Where>";
-		if (opt.where.ands) { query += "<And>"; }
-		// curently assumes there are no more than two ands
-		$.each(opt.where.ands, function(i, andObject) {
-			if (!andObject.operator) {
-				andObject.operator = 'Eq';
-			}
-			query += "<" + andObject.operator + ">" +
-				"<FieldRef Name='" + andObject.field + "'></FieldRef>" +
-				"<Value Type='" + andObject.type + "'>" + andObject.value + "</Value>" +
-				"</" + andObject.operator + ">";
-		});
+		if (opt.where.ands) { 
+			query += "<And>";
+			// curently assumes there are no more than two ands
+			$.each(opt.where.ands, function(i, andObject) {
+				if (!andObject.operator) {
+					andObject.operator = 'Eq';
+				}
+				query += "<" + andObject.operator + ">" +
+					"<FieldRef Name='" + andObject.field + "'></FieldRef>" +
+					"<Value Type='" + andObject.type + "'>" + andObject.value + "</Value>" +
+					"</" + andObject.operator + ">";
+			});
 
-		if (opt.where.ands) { query += "</And>"; }
+			query += "</And>";
+		}
+
+		if (opt.where.field) {
+			query += "<Eq>" +
+			"<FieldRef Name='" + opt.where.field + "'></FieldRef>" +
+				"<Value Type='" + opt.where.type + "'>" + opt.where.value + "</Value>"
+			"</Eq>";
+		}
+
 		query +=	"</Where>" +
 					"</Query>";
 
@@ -7363,8 +7373,8 @@
 		} else if (type === "gseSchedulesListHRAdmin") {
 			// scorey: control how oData.gseSchedulesListHRAdmin gets used to build a screen here
 			$().RenderOverviewScreenButtons(oData.gseSchedulesListHRAdmin.buttons, 0);
-			$("div#overview-table-container").html("<p>This is 2.3 Schedules List for HR Admin (gseSchedulesListHRAdmin).</p>");
-			$().RenderAllDataTables(oData.gseSchedulesListHRAdmin.sections, "overview-table-container");
+			// $("div#overview-table-container").html("<p>This is 2.3 Schedules List for HR Admin (gseSchedulesListHRAdmin).</p>");
+			$().RenderAllDataTablesForGSESchedule(oData.gseSchedulesListHRAdmin.sections, "overview-table-container", 'gseHRAdmin');
 		} else if (type === "gseSchedulesListJobAdmin") {
 			// scorey: control how oData.gseSchedulesListJobAdmin gets used to build a screen here
 			$().RenderOverviewScreenButtons(oData.gseSchedulesListJobAdmin.buttons, 0);
@@ -18841,6 +18851,227 @@
 
 
 
+	$.fn.RenderAllDataTablesForGSESchedule = function (sections, targetID, relevantRole) {
+
+		$.each(sections.tables, function (i, t) {
+
+			// var setupStartTime = Date.now();
+
+			var columns = [];
+			var query = '';
+			var camlViewFields = "";
+			var lookupFields = [];
+			var datatableFields = [];
+			var theadDetails = "";
+
+			if (typeof (t.customColumns) != "undefined") {
+				columns = t.customColumns;
+			} else {
+				columns = sections.commonColumns;
+			}
+
+
+			if (typeof (t.sortColAndOrder) == 'undefined') {
+				t.sortColAndOrder = [0, 'asc'];
+			}
+
+			if (typeof (t.webURL) == 'undefined') {
+				mData = $.extend(
+					$().GetFieldsFromOneRow({
+						"listName": "ComponentLog",
+						"select": [{
+							"nameHere": "uriRoot",
+							"nameInList": "URIRoot",
+							"linkField": 1
+						}],
+						"where": {
+							"field": "ComponentID",
+							"type": "Number",
+							"value": mData.componentID,
+						}
+					}),
+					mData
+				);
+
+				t.webURL = StrInStr(mData.uriRoot, '/Lists/SWFList', 1);
+			}
+
+			$.each(columns, function (i, column) {
+				if (column.displayName && column.internalName && column.internalName != "") {
+					camlViewFields += "<FieldRef Name='" + column.internalName + "' />";
+					datatableFields.push({
+						"data": column.internalName
+					});
+				} else if (column.displayName && column.dataName && column.dataName != "") {
+					datatableFields.push({
+						"data": column.dataName
+					});
+				} else if (!column.displayName && column.internalName && column.internalName != "") {
+					camlViewFields += "<FieldRef Name='" + column.internalName + "' />";
+				}
+
+				if (column.displayName && column.displayName != "") {
+					theadDetails += "<th>" + column.displayName + "</th>";
+				}
+				if (column.internalName != "" && typeof (column.formLink) !== "undefined") {
+					lookupFields.push({
+						"internalName": column.internalName,
+						"anchorNoHref": 0,
+						"formLink": column.formLink,
+						"userName": 0,
+						"friendlyFormatOnLoad": 0,
+						"groupingFriendlyFormatOnLoad": 0
+					});
+				} else if (column.internalName != "" && typeof (column.anchorNoHref) !== "undefined") {
+					lookupFields.push({
+						"internalName": column.internalName,
+						"anchorNoHref": column.anchorNoHref,
+						"formLink": 0,
+						"userName": 0,
+						"friendlyFormatOnLoad": 0,
+						"groupingFriendlyFormatOnLoad": 0
+					});
+				} else if (column.internalName != "" && typeof (column.userName) !== "undefined") {
+					lookupFields.push({
+						"internalName": column.internalName,
+						"anchorNoHref": 0,
+						"formLink": 0,
+						"userName": column.userName,
+						"friendlyFormatOnLoad": 0,
+						"groupingFriendlyFormatOnLoad": 0
+					});
+				} else if (column.internalName != "" && typeof (column.friendlyFormatOnLoad) !== "undefined") {
+					lookupFields.push({
+						"internalName": column.internalName,
+						"anchorNoHref": 0,
+						"formLink": 0,
+						"userName": 0,
+						"friendlyFormatOnLoad": column.friendlyFormatOnLoad,
+						"groupingFriendlyFormatOnLoad": 0
+					});
+				} else if (column.internalName != "" && typeof (column.groupingFriendlyFormatOnLoad) !== "undefined") {
+					lookupFields.push({
+						"internalName": column.internalName,
+						"anchorNoHref": 0,
+						"formLink": 0,
+						"userName": 0,
+						"friendlyFormatOnLoad": 0,
+						"groupingFriendlyFormatOnLoad": column.groupingFriendlyFormatOnLoad
+					});
+				} else {
+					lookupFields.push({
+						"internalName": column.internalName,
+						"anchorNoHref": 0,
+						"formLink": 0,
+						"userName": 0,
+						"friendlyFormatOnLoad": 0,
+						"groupingFriendlyFormatOnLoad": 0
+					});
+				}
+			});
+
+			if (typeof (t.basicRSQueryRelevantStatus) != "undefined") {
+				query = "<Where>" +
+					"	<Eq>" +
+					"		 <FieldRef Name='RequestStatus'></FieldRef>" +
+					"		 <Value Type='Text'>" + t.basicRSQueryRelevantStatus + "</Value>" +
+					"	</Eq>" +
+					"</Where>";
+			}
+
+			var baseListForDatatable = $().GetListDataForDatatable({
+				'listName': 'SWFList',
+				'webURL': t.webURL,
+				'query': query,
+				'someColsAreUsers': t.someColsAreUsers,
+				'viewFields': camlViewFields,
+				'lookupFields': lookupFields,
+				'formURI': mData.formURI,
+				'returnURI': mData.returnURI
+			});
+
+			var augmentedListForDatatable = [];
+
+			console.log(baseListForDatatable);
+
+			baseListForDatatable.forEach((tableRow) => {
+				var gseSignupsMarkup = '<ul>';
+
+				// get the relevant signups
+				var gseSignupsArray = $().GetFieldsFromSpecifiedRows({
+					"select": [{
+						"nameHere": "signupID",
+						"nameInList": "ID"
+					}, {
+						"nameHere": "formData",
+						"nameInList": "AllRequestData"
+					}],
+					"webURL": "https://bmos.sharepoint.com/sites/hr-service-signups",
+					"where": {
+						"ands": [
+							{
+								"field": "ScheduleID",
+								"type": "Text",
+								"value": tableRow.ID,
+							}, {
+								"field": "RequestStatus",
+								"type": "Text",
+								"operator": "Neq",
+								"value": "Cancelled",
+							}
+						]
+					}
+				});
+
+				// for each signup
+				gseSignupsArray.forEach((signup, index) => {
+					gseSignupsMarkup += '<li>' + $().RenderPersonLinks(signup.formData["Requested-For"]);
+					if (signup.formData['Request-Status'] === 'Credit Granted') {
+						gseSignupsMarkup += ' - Credit Granted';
+					} else if (signup.formData['Request-Status'] === 'Credit Denied') {
+						gseSignupsMarkup += ' - Credit Denied';
+					}
+					gseSignupsMarkup += '</li>';
+				});
+				gseSignupsMarkup += '</ul>';
+				tableRow.Signups = gseSignupsMarkup;
+
+				var gseJobAdminRaw = $().GetFieldsFromOneRow({
+					"select": [{
+						"nameHere": "JobAdmin",
+						"nameInList": "JobAdmin"
+					}],
+					"webURL": "https://bmos.sharepoint.com/sites/hr-service-jobs",
+					"where": {
+						"field": "ID",
+						"type": "Number",
+						"value": tableRow.JobID,
+					}
+				})
+				if (gseJobAdminRaw) {
+					tableRow.JobAdmin = $().RenderPersonLinks(gseJobAdminRaw.JobAdmin);
+				} else {
+					tableRow.JobAdmin = '';
+				}
+				augmentedListForDatatable.push(tableRow);
+			});
+
+			console.log(augmentedListForDatatable);
+
+			$().RenderListAsDatatable({
+				'tableTitle': t.tableTitle,
+				'tableID': t.tableID,
+				'theadDetails': theadDetails,
+				'listForDatatable': augmentedListForDatatable,
+				'datatableFields': datatableFields,
+				'sortColAndOrder': t.sortColAndOrder,
+				'grouping': t.grouping,
+				'targetID': targetID,
+			});
+		});
+	};
+
+
 	$.fn.GetListDataForDatatable = function (options) {
 
 		var returnValue = [];
@@ -18925,37 +19156,49 @@
 
 
 
-	$.fn.RenderPersonLinks = function (usersString) {
+	$.fn.RenderPersonLinks = function (usersRaw) {
 
-		// console.log(usersString);
+		// console.log(usersRaw);
 
 		var returnValue = "";
-		var userArray = usersString.split(";#");
+		if (typeof(usersRaw) === 'string') {
+			var userArray = usersRaw.split(";#");
 
-		$.each(userArray, function (i, userData) {
+			$.each(userArray, function (i, userData) {
 
-			if (isNaN(userData) != false) {
+				if (isNaN(userData) != false) {
 
-				var userDataSplit = userData.split("#");
+					var userDataSplit = userData.split("#");
 
-				if (StrInStr(userDataSplit[4], "@mos.org,", 1) != false) {
-					var userID = StrInStr(userDataSplit[4], "@mos.org,", 1);
-				} else if (StrInStr(userDataSplit[4], "@MOS.ORG,", 1) != false) {
-					var userID = StrInStr(userDataSplit[4], "@MOS.ORG,", 1);
-				} else {
-					var userID = userDataSplit[4];
+					if (StrInStr(userDataSplit[4], "@mos.org,", 1) != false) {
+						var userID = StrInStr(userDataSplit[4], "@mos.org,", 1);
+					} else if (StrInStr(userDataSplit[4], "@MOS.ORG,", 1) != false) {
+						var userID = StrInStr(userDataSplit[4], "@MOS.ORG,", 1);
+					} else {
+						var userID = userDataSplit[4];
+					}
+
+					if (StrInStr(userDataSplit[5], ",", 1) == false) {
+						var userName = userDataSplit[5];
+					} else {
+						var userName = StrInStr(userDataSplit[5], ",", 1);
+					}
+
+					returnValue += '<div><a href="https://bmos-my.sharepoint.com/person.aspx?user=' + userID + '" target="_blank">' + userName + '</a></div>';
 				}
-
-				if (StrInStr(userDataSplit[5], ",", 1) == false) {
-					var userName = userDataSplit[5];
+			});
+		} else if (typeof (usersRaw) === 'object') {
+			$.each(usersRaw, function (i, userData) {
+				if (StrInStr(userData.description, "@mos.org,", 1) != false) {
+					var userID = StrInStr(userData.description, "@mos.org,", 1);
+				} else if (StrInStr(userData.description, "@MOS.ORG,", 1) != false) {
+					var userID = StrInStr(userData.description, "@MOS.ORG,", 1);
 				} else {
-					var userName = StrInStr(userDataSplit[5], ",", 1);
+					var userID = userData.description;
 				}
-
-				returnValue += '<div><a href="https://bmos-my.sharepoint.com/person.aspx?user=' + userID + '" target="_blank">' + userName + '</a></div>';
-			}
-		});
-
+				returnValue += '<div><a href="https://bmos-my.sharepoint.com/person.aspx?user=' + userID + '" target="_blank">' + userData.displayText + '</a></div>';
+			});
+		}
 		return returnValue;
 	};
 
@@ -22064,7 +22307,7 @@
 		// wait for all data retrieval / setting promises to complete (pass or fail) 
 		$.when.apply($, allDataRetrievalAndSettingPromises).always(function () {
 
-			console.log('using dev_mos-main_long.1.04 m5');
+			console.log('using dev_mos-main_long.1.04 m6');
 
 			$().ConfigureAndShowScreenContainerAndAllScreens();
 		});

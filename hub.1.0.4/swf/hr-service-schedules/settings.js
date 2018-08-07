@@ -22,7 +22,7 @@
 		]
 	};
 
-	console.log("using settings m1");
+	console.log("using settings m2");
 
 	var oData = {
 		
@@ -54,36 +54,34 @@
 			'sections': {
 				'commonColumns': [
 					{
-						'displayName': 'Request ID',
+						'displayName': 'Schedule ID',
 						'internalName': 'ID',
-						'formLink': 1
-					// }, {
-					// 	'displayName': 'Requested By',
-					// 	'internalName': 'Author',
-					// 	'userName': 1
-					// }, {
-					// 	'displayName': 'Start Time',
-					// 	'internalName': 'StartTime'
-					// }, {
-					// 	'displayName': "Shift Length",
-					// 	'internalName': "ShiftLength",
-					// }, {
-					// 	'displayName': "Number of Positions",
-					// 	'internalName': "NumberOfPositions",
-					// }, {
-					// 	'displayName': "Location",
-					// 	'internalName': "Location",
+						'dialogButton': 1
 					}, {
-						'displayName': "JobID",
-						'internalName': "JobID",
+						'displayName': "Job Admin",
+						'dataName': "JobAdmin",
 					}, {
 						'displayName': "Date",
 						'internalName': "Date",
 						'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
-					// }, {
-					// 	'displayName': 'Request Date',
-					// 	'internalName': 'RequestDate',
-					// 	'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+					}, {
+						'displayName': 'Start Time',
+						'internalName': 'StartTime',
+						'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'h:mm a' }
+					}, {
+						'displayName': "Schedule Length",
+						'internalName': "ShiftLength",
+					}, {
+						'displayName': "Location",
+						'internalName': "Location",
+					}, {
+						'displayName': "Number of Positions",
+						'internalName': "NumberOfPositions",
+					}, {
+						'displayName': "Signups",
+						'dataName': "Signups",
+					}, {
+						'internalName': "JobID",
 					}
 				],
 				'tables': [
@@ -1052,7 +1050,7 @@
 				'elementType': "field",
 				'controlType': "time",
 				'fieldName': "StartTime",
-				// 'listFieldName': "StartTime",
+				'listFieldName': "StartTime",
 				'labelContent': "Start Time",
 				'requiredForNonAdmin': ['', 'Submitted'],
 				'requiredForAdmin': ['', 'Submitted'],
@@ -1062,7 +1060,7 @@
 				'elementType': "field",
 				'controlType': "radio",
 				'fieldName': "ShiftLength",
-				// 'listFieldName': "ShiftLength",
+				'listFieldName': "ShiftLength",
 				'choiceSetLabel': "Shift Length",
 				"choices": [
 					{
@@ -1081,7 +1079,7 @@
 				'elementType': "field",
 				'controlType': "text",
 				'fieldName': "Number of Positions",
-				// 'listFieldName': "NumberOfPositions",
+				'listFieldName': "NumberOfPositions",
 				'labelContent': "Number of Positions",
 				'requiredForNonAdmin': ['', 'Submitted'],
 				'requiredForAdmin': ['', 'Submitted'],
@@ -1091,7 +1089,7 @@
 				'elementType': "field",
 				'controlType': "text",
 				'fieldName': "Location",
-				// 'listFieldName': "Location",
+				'listFieldName': "Location",
 				'labelContent': "Location",
 				'requiredForNonAdmin': ['', 'Submitted'],
 				'requiredForAdmin': ['', 'Submitted'],
