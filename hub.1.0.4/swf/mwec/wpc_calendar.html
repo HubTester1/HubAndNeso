@@ -101,8 +101,11 @@
 						eventItemString = eventItemString.replace(regexTwo, "'");
 						eval("var eventItem=" + eventItemString);
 						eventItem.ID = $(this).attr("ows_ID");
+
 						if (typeof (eventItem["Requested-For"]) == "object") {
-							eventItem.contactLinkedName = "<a target=\"_blank\" href=\"https://bmos-my.sharepoint.com/_layouts/15/me.aspx?p=" + StrInStr(eventItem["Requested-For"][0]["description"], "@", 1) + "%40mos.org&v=profile\">" + eventItem["Requested-For"][0]["displayText"] + "</a>";
+							eventItem.contactLinkedName = "<a target=\"_blank\" href=\"https://bmos-my.sharepoint.com/_layouts/15/me.aspx?p=" +
+									StrInStr(eventItem["Requested-For"][0]["description"], "@", 1) + "%40mos.org&v=profile\">" +
+									eventItem["Requested-For"][0]["displayText"] + "</a>";
 						} else {
 							eventItem.contactLinkedName = "";
 						}

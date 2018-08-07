@@ -1278,7 +1278,7 @@
 		if (opt.where.field) {
 			query += "<Eq>" +
 			"<FieldRef Name='" + opt.where.field + "'></FieldRef>" +
-				"<Value Type='" + opt.where.type + "'>" + opt.where.value + "</Value>"
+				"<Value Type='" + opt.where.type + "'>" + opt.where.value + "</Value>" +
 			"</Eq>";
 		}
 
@@ -1291,6 +1291,15 @@
 		});
 		fields += "</ViewFields>";
 
+		// console.log('opt.webURL');
+		// console.log(opt.webURL);
+		// console.log('opt.listName');
+		// console.log(opt.listName);
+		// console.log('fields');
+		// console.log(fields);
+		// console.log('query');
+		// console.log(query);
+
 		$().SPServices({
 			operation: "GetListItems",
 			async: false,
@@ -1300,6 +1309,12 @@
 			CAMLQuery: query,
 			CAMLQueryOptions: "<QueryOptions><ExpandUserField>TRUE</ExpandUserField></QueryOptions>",
 			completefunc: function (xData, Status) {
+
+				// console.log('xData');
+				// console.log(xData);
+				// console.log('Status');
+				// console.log(Status);
+
 				$(xData.responseXML).SPFilterNode("z:row").each(function () {
 					var zRow = $(this);
 					var returnRow = {};
@@ -18860,8 +18875,47 @@
 	};
 
 	$.fn.RenderCalendarForGSESchedules = function (buttons, relevantRole) {
-		$("div#overview-table-container")
-			.html("<p>Inside the function.</p>");
+		var viewToUse = GetParamFromUrl(location.search, 'view');
+		var dateToUse = GetParamFromUrl(location.search, 'date');
+		var buyOutToUse = GetParamFromUrl(location.search, 'buyoutID');
+		var gseSchedulesArray = [];
+		var allEvents = [];
+		if (!viewToUse || viewToUse == "") { viewToUse = 'month'; }
+		if (!dateToUse || dateToUse == "") {
+			dateToUse =
+				$().ReturnFormattedDateTime('nowUTC', 'YYYY-MM-DDTHH:mm:ssZ', 'YYYY-MM-DD', 0);
+		}
+		// get the relevant signups
+		gseSchedulesArray = $().GetFieldsFromSpecifiedRows({
+			'select': [{
+			// 	'nameHere': 'scheduleID',
+			// 	'nameInList': 'ID'
+			// }, {
+				'nameHere': 'formData',
+				'nameInList': 'AllRequestData'
+			}],
+			'webURL': 'https://bmos.sharepoint.com/sites/hr-service-schedules',
+			'where': {
+				'field': 'RequestStatus',
+				'type': 'Text',
+				'value': 'Submitted',
+			}
+		});
+		gseSchedulesArray.forEach((schedule) => {
+			var eventItem = {
+				'start': ReturnFormattedDateTime(schedule.formData['Date'], null, 'YYYY-MM-DDT') +
+					ReturnFormattedDateTime(schedule.formData['time-storage_StartTime'], null, 'HH:mm:ss'),
+				'title': schedule.formData['Location'],
+			}
+		});
+
+
+
+		console.log(gseSchedulesArray);
+
+	//	overview-screen-container
+
+
 	}
 
 
@@ -18879,7 +18933,7 @@
 			var datatableFields = [];
 			var theadDetails = "";
 
-			t.webURL = 'https://bmos.sharepoint.com/sites/hr-service-schedules'
+			t.webURL = 'https://bmos.sharepoint.com/sites/hr-service-schedules';
 
 			if (typeof (t.customColumns) != "undefined") {
 				columns = t.customColumns;
