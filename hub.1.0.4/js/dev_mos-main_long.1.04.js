@@ -922,6 +922,8 @@
 			case "gseSignupsStaff":
 				$("div#overview-screen-container").empty().removeClass('adminRequests-requests myRequests-requests gpcInitialConceptApprovalViewer-requests gpcSubmissionApprovalViewer-requests adminReferrals-requests myReferrals-requests adminEventAV-requests gseJobsHRAdmin-requests gseJobsJobAdmin-requests gseJobsManager-requests gseSchedulesCalendarHRAdmin-requests gseSchedulesCalendarJobAdmin-requests gseSchedulesCalendarManager-requests gseSchedulesCalendarStaff-requests gseSchedulesListHRAdmin-requests gseSchedulesListJobAdmin-requests gseSchedulesListManager-requests gseSchedulesListStaff-requests gseSignupsHRAdmin-requests gseSignupsManager-requests gseSignupsStaff-requests');
 				$("div#overview-screen-container").append('<div id="overview-table-container" class="table-container"></div>');
+			case "gseSchedulesListHRAdmin":
+				$("div#gse-schedule-card-dialog").remove();
 				break;
 		}
 	};
@@ -4017,7 +4019,7 @@
 							{
 								"field": "ScheduleID",
 								"type": "Text",
-								"value": rData.formData['Request-ID'],
+								"value": rData.requestID,
 							}, {
 								"field": "RequestStatus",
 								"type": "Text",
@@ -4027,6 +4029,7 @@
 						]
 					}
 				});
+
 				// if the RepeatedElements array doesn't already exist
 				if (!rData.formData.RepeatedElements) {
 					// create it
@@ -7354,8 +7357,8 @@
 
 		} else if (type === "gseSchedulesCalendarHRAdmin") {
 			// scorey: control how oData.gseSchedulesCalendarHRAdmin gets used to build a screen here
-			$().RenderOverviewScreenButtons(oData.gseSchedulesCalendarHRAdmin.buttons, 0);
 			$("div#overview-table-container").html("<p>This is 2.2 Schedules Calendar for HR Admin (gseSchedulesCalendarHRAdmin).</p>");
+			$().RenderCalendarForGSESchedules(oData.gseSchedulesCalendarHRAdmin.buttons, 'gseHRAdmin');
 		} else if (type === "gseSchedulesCalendarJobAdmin") {
 			// scorey: control how oData.gseSchedulesCalendarJobAdmin gets used to build a screen here
 			$().RenderOverviewScreenButtons(oData.gseSchedulesCalendarJobAdmin.buttons, 0);
@@ -7374,7 +7377,14 @@
 			// scorey: control how oData.gseSchedulesListHRAdmin gets used to build a screen here
 			$().RenderOverviewScreenButtons(oData.gseSchedulesListHRAdmin.buttons, 0);
 			// $("div#overview-table-container").html("<p>This is 2.3 Schedules List for HR Admin (gseSchedulesListHRAdmin).</p>");
-			$().RenderAllDataTablesForGSESchedule(oData.gseSchedulesListHRAdmin.sections, "overview-table-container", 'gseHRAdmin');
+			$().RenderAllDataTablesForGSESchedules(oData.gseSchedulesListHRAdmin.sections, "overview-table-container", 'gseHRAdmin');
+			$().RenderOverviewScreenDialogForGSESchedules('gseHRAdmin');
+
+		
+		
+		
+		
+		
 		} else if (type === "gseSchedulesListJobAdmin") {
 			// scorey: control how oData.gseSchedulesListJobAdmin gets used to build a screen here
 			$().RenderOverviewScreenButtons(oData.gseSchedulesListJobAdmin.buttons, 0);
@@ -18849,9 +18859,14 @@
 		});
 	};
 
+	$.fn.RenderCalendarForGSESchedules = function (buttons, relevantRole) {
+		$("div#overview-table-container")
+			.html("<p>Inside the function.</p>");
+	}
 
 
-	$.fn.RenderAllDataTablesForGSESchedule = function (sections, targetID, relevantRole) {
+
+	$.fn.RenderAllDataTablesForGSESchedules = function (sections, targetID, relevantRole) {
 
 		$.each(sections.tables, function (i, t) {
 
@@ -18864,36 +18879,16 @@
 			var datatableFields = [];
 			var theadDetails = "";
 
+			t.webURL = 'https://bmos.sharepoint.com/sites/hr-service-schedules'
+
 			if (typeof (t.customColumns) != "undefined") {
 				columns = t.customColumns;
 			} else {
 				columns = sections.commonColumns;
 			}
 
-
 			if (typeof (t.sortColAndOrder) == 'undefined') {
 				t.sortColAndOrder = [0, 'asc'];
-			}
-
-			if (typeof (t.webURL) == 'undefined') {
-				mData = $.extend(
-					$().GetFieldsFromOneRow({
-						"listName": "ComponentLog",
-						"select": [{
-							"nameHere": "uriRoot",
-							"nameInList": "URIRoot",
-							"linkField": 1
-						}],
-						"where": {
-							"field": "ComponentID",
-							"type": "Number",
-							"value": mData.componentID,
-						}
-					}),
-					mData
-				);
-
-				t.webURL = StrInStr(mData.uriRoot, '/Lists/SWFList', 1);
 			}
 
 			$.each(columns, function (i, column) {
@@ -18913,32 +18908,15 @@
 				if (column.displayName && column.displayName != "") {
 					theadDetails += "<th>" + column.displayName + "</th>";
 				}
-				if (column.internalName != "" && typeof (column.formLink) !== "undefined") {
-					lookupFields.push({
-						"internalName": column.internalName,
-						"anchorNoHref": 0,
-						"formLink": column.formLink,
-						"userName": 0,
-						"friendlyFormatOnLoad": 0,
-						"groupingFriendlyFormatOnLoad": 0
-					});
-				} else if (column.internalName != "" && typeof (column.anchorNoHref) !== "undefined") {
-					lookupFields.push({
-						"internalName": column.internalName,
-						"anchorNoHref": column.anchorNoHref,
-						"formLink": 0,
-						"userName": 0,
-						"friendlyFormatOnLoad": 0,
-						"groupingFriendlyFormatOnLoad": 0
-					});
-				} else if (column.internalName != "" && typeof (column.userName) !== "undefined") {
+				if (column.internalName != "" && typeof (column.gseSchedulesDialogButton) !== "undefined") {
 					lookupFields.push({
 						"internalName": column.internalName,
 						"anchorNoHref": 0,
 						"formLink": 0,
-						"userName": column.userName,
+						"userName": 0,
 						"friendlyFormatOnLoad": 0,
-						"groupingFriendlyFormatOnLoad": 0
+						"groupingFriendlyFormatOnLoad": 0,
+						"gseSchedulesDialogButton": 1
 					});
 				} else if (column.internalName != "" && typeof (column.friendlyFormatOnLoad) !== "undefined") {
 					lookupFields.push({
@@ -18948,15 +18926,6 @@
 						"userName": 0,
 						"friendlyFormatOnLoad": column.friendlyFormatOnLoad,
 						"groupingFriendlyFormatOnLoad": 0
-					});
-				} else if (column.internalName != "" && typeof (column.groupingFriendlyFormatOnLoad) !== "undefined") {
-					lookupFields.push({
-						"internalName": column.internalName,
-						"anchorNoHref": 0,
-						"formLink": 0,
-						"userName": 0,
-						"friendlyFormatOnLoad": 0,
-						"groupingFriendlyFormatOnLoad": column.groupingFriendlyFormatOnLoad
 					});
 				} else {
 					lookupFields.push({
@@ -18991,8 +18960,6 @@
 			});
 
 			var augmentedListForDatatable = [];
-
-			console.log(baseListForDatatable);
 
 			baseListForDatatable.forEach((tableRow) => {
 				var gseSignupsMarkup = '<ul>';
@@ -19036,6 +19003,8 @@
 				gseSignupsMarkup += '</ul>';
 				tableRow.Signups = gseSignupsMarkup;
 
+				tableRow.PositionsAvailable = (tableRow.NumberOfPositions - gseSignupsArray.length) + ' / ' + tableRow.NumberOfPositions;
+
 				var gseJobAdminRaw = $().GetFieldsFromOneRow({
 					"select": [{
 						"nameHere": "JobAdmin",
@@ -19047,7 +19016,7 @@
 						"type": "Number",
 						"value": tableRow.JobID,
 					}
-				})
+				});
 				if (gseJobAdminRaw) {
 					tableRow.JobAdmin = $().RenderPersonLinks(gseJobAdminRaw.JobAdmin);
 				} else {
@@ -19125,6 +19094,10 @@
 
 								itemDataForReturn[lookupField.internalName] = "<a class='anchor_no-href'>" + thisItem.attr("ows_" + lookupField.internalName) + "</a>";
 
+							} else if (lookupField.gseSchedulesDialogButton == 1) {
+
+								itemDataForReturn[lookupField.internalName] = "<button class='gse-schedules-dialog-button'>" + thisItem.attr("ows_" + lookupField.internalName) + "</button>";
+
 							} else if (lookupField.userName == 1) {
 
 								itemDataForReturn[lookupField.internalName] = $().RenderPersonLinks(thisItem.attr("ows_" + lookupField.internalName));
@@ -19152,6 +19125,115 @@
 		});
 
 		return returnValue;
+	};
+
+
+
+	$.fn.RenderOverviewScreenDialogForGSESchedules = function () {
+		// append, initialize contact dialog
+		$("div#app-container").append("<div id=\"gse-schedule-card-dialog\"></div>");
+		$("div#gse-schedule-card-dialog").dialog({
+			autoOpen: false,
+			draggable: true,
+			show: {
+				effect: "bounce",
+				times: 2,
+				duration: 500
+			},
+			width: 400,
+		});
+		// listen for button click; populate and open dialog
+
+		$('div#overview-table-container').on('click', 'button.gse-schedules-dialog-button', function (e) {
+			e.preventDefault();
+			// close and empty
+			$("div#gse-schedule-card-dialog").dialog("close");
+			$("div[aria-describedby='gse-schedule-card-dialog'] div.ui-dialog-titlebar span.ui-dialog-title").empty();
+			$("div#gse-schedule-card-dialog").empty();
+
+			// retrieve data
+			var userProfileValues = {};
+			$().SPServices({
+				operation: "GetUserProfileByName",
+				async: false,
+				AccountName: $(this).closest("span.sp-peoplepicker-userSpan").attr("sid"),
+				completefunc: function (xData, Status) {
+					$(xData.responseXML).SPFilterNode("PropertyData").each(function () {
+						userProfileValues[$(this).find("Name").text()] = $(this).find("Value").text();
+					});
+				}
+			});
+
+			// create and insert header
+
+			var dialogHeader = '<span id="gse-schedule-card-dialog-header"> \n' +
+				'	<span id="avatar" \n';
+
+			if (userProfileValues.PictureURL != "") {
+				dialogHeader += '		 style="background-image: url(\'' + userProfileValues.PictureURL + '\')"> \n';
+			} else {
+				userProfileValues.firstInitial = userProfileValues.FirstName.slice(0, 1).toUpperCase();
+				userProfileValues.lastInitial = userProfileValues.LastName.slice(0, 1).toUpperCase();
+				dialogHeader += '		 ><span id="avatar-initials">' + userProfileValues.firstInitial + userProfileValues.lastInitial + '</span> \n';
+			}
+
+			dialogHeader += '	</span> \n' +
+				'	<span id="name_title_department"> \n';
+
+			if (typeof (userProfileValues.PreferredName) != 'undefined' && userProfileValues.PreferredName != '') {
+				dialogHeader += '		 <span id="name">' + userProfileValues.PreferredName + '</span> \n';
+			}
+
+			if (typeof (userProfileValues.Title) != 'undefined' && userProfileValues.Title != '') {
+				dialogHeader += '		 <span id="title">' + userProfileValues.Title + '</span> \n';
+			}
+
+			if (typeof (userProfileValues.Department) != 'undefined' && userProfileValues.Department != '') {
+				dialogHeader += '		 <span id="department">' + userProfileValues.Department + '</span> \n';
+			}
+
+			dialogHeader += '	</span></span> \n';
+
+			$("div[aria-describedby='gse-schedule-card-dialog'] div.ui-dialog-titlebar span.ui-dialog-title").append(dialogHeader);
+
+			// create and insert body
+
+			var dialogBody = '<ul id="gse-schedule-card-dialog-body"> \n';
+
+			if (typeof (userProfileValues.WorkPhone) != 'undefined' && typeof (userProfileValues.CellPhone) != 'undefined' && userProfileValues.WorkPhone != '' && userProfileValues.CellPhone != '') {
+				dialogBody += '	<li id="phone-numbers">\n' +
+					'		 <ul>\n' +
+					'			  <li id="business-phone-number">Business: ' + userProfileValues.WorkPhone + '</li> \n' +
+					'			  <li id="mobile-phone-number">Mobile: ' + userProfileValues.CellPhone + '</li> \n' +
+					'		 </ul>\n' +
+					'	</li> \n';
+			} else if (typeof (userProfileValues.WorkPhone) != 'undefined' && userProfileValues.WorkPhone != '') {
+				dialogBody += '	<li id="business-phone-number">Business: ' + userProfileValues.WorkPhone + '</li> \n';
+			} else if (typeof (userProfileValues.WorkPhone) != 'undefined' && userProfileValues.WorkPhone != '') {
+				dialogBody += '	<li id="mobile-phone-number">Mobile: ' + userProfileValues.CellPhone + '</li> \n';
+			}
+
+			if (typeof (userProfileValues.WorkEmail) != 'undefined' && userProfileValues.WorkEmail != '') {
+				dialogBody += '	<li id="email"><a href="mailto:' + userProfileValues.WorkEmail + '">' + userProfileValues.WorkEmail + '</a></li> \n';
+			}
+
+			if (typeof (userProfileValues["SPS-gse-schedulelSiteCapabilities"]) != 'undefined' && userProfileValues["SPS-gse-schedulelSiteCapabilities"] != '') {
+				dialogBody += '	<li id="profile"><a href="https://bmos-my.sharepoint.com/_layouts/15/me.aspx?u=' + userProfileValues["msOnline-ObjectId"] + '" target="_blank">Profile</a></li> \n';
+			}
+
+			dialogBody += '</ul> \n';
+
+			$("div#gse-schedule-card-dialog").append(dialogBody);
+
+			// position and open
+
+			$("div#gse-schedule-card-dialog").dialog("option", "position", {
+				my: "left bottom-20",
+				of: this,
+				collision: "fit"
+			});
+			$("div#gse-schedule-card-dialog").dialog("open");
+		});
 	};
 
 
@@ -21579,8 +21661,11 @@
 			$("div#signups").find("div.repeat-container").each(function () {
 				$(this).find("textarea[id^='Signup-Credit-Denial-Reason']")
 					.each(function (index, value) {
+						console.log('found textarea');
+						console.log($(this).attr("id"));
 						if($(this).val() !== '') {
-							$(this).show("fast").removeClass("hidden");
+							var containerSelector = '#label-and-control_' + $(this).attr("id");
+							$(containerSelector).show("fast").removeClass("hidden");
 						}
 					});
 			});

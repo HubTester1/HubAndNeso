@@ -42,7 +42,7 @@
 				}, {
 					"linkType": "goForward",
 					"anchorText": "Schedule Calendar",
-					"href": "/sites/hr-service-schedule/SitePages/App.aspx?f=cal",
+					"href": "/sites/hr-service-schedules/SitePages/App.aspx?f=cal",
 					"target": null
 				}, {
 					"linkType": "goForward",
@@ -56,7 +56,7 @@
 					{
 						'displayName': 'Schedule ID',
 						'internalName': 'ID',
-						'dialogButton': 1
+						'gseSchedulesDialogButton': 1
 					}, {
 						'displayName': "Job Admin",
 						'dataName': "JobAdmin",
@@ -75,11 +75,13 @@
 						'displayName': "Location",
 						'internalName': "Location",
 					}, {
-						'displayName': "Number of Positions",
-						'internalName': "NumberOfPositions",
+						'displayName': "Positions Available",
+						'dataName': "PositionsAvailable",
 					}, {
 						'displayName': "Signups",
 						'dataName': "Signups",
+					}, {
+						'internalName': "NumberOfPositions",
 					}, {
 						'internalName': "JobID",
 					}
@@ -90,16 +92,16 @@
 						'tableID': 'submitted',
 						'someColsAreUsers': 1,
 						'basicRSQueryRelevantStatus': 'Submitted'
-					// }, {
-					// 	'tableTitle': 'Completed',
-					// 	'tableID': 'completed',
-					// 	'someColsAreUsers': 1,
-					// 	'basicRSQueryRelevantStatus': 'Completed'
-					// }, {
-					// 	'tableTitle': 'Cancelled',
-					// 	'tableID': 'cancelled',
-					// 	'someColsAreUsers': 1,
-					// 	'basicRSQueryRelevantStatus': 'Cancelled'
+					}, {
+						'tableTitle': 'Completed',
+						'tableID': 'completed',
+						'someColsAreUsers': 1,
+						'basicRSQueryRelevantStatus': 'Completed'
+					}, {
+						'tableTitle': 'Cancelled',
+						'tableID': 'cancelled',
+						'someColsAreUsers': 1,
+						'basicRSQueryRelevantStatus': 'Cancelled'
 					}
 				]
 			}
@@ -121,7 +123,7 @@
 				}, {
 					"linkType": "goForward",
 					"anchorText": "Schedule Calendar",
-					"href": "/sites/hr-service-schedule/SitePages/App.aspx?f=cal",
+					"href": "/sites/hr-service-schedules/SitePages/App.aspx?f=cal",
 					"target": null
 				}, {
 					"linkType": "goForward",
@@ -202,7 +204,7 @@
 				}, {
 					"linkType": "goForward",
 					"anchorText": "Schedule Calendar",
-					"href": "/sites/hr-service-schedule/SitePages/App.aspx?f=cal",
+					"href": "/sites/hr-service-schedules/SitePages/App.aspx?f=cal",
 					"target": null
 				}, {
 					"linkType": "goForward",
@@ -284,7 +286,7 @@
 				}, {
 					"linkType": "goForward",
 					"anchorText": "GSE Signup Option Calendar",
-					"href": "/sites/hr-service-schedule/SitePages/App.aspx?f=cal",
+					"href": "/sites/hr-service-schedules/SitePages/App.aspx?f=cal",
 					"target": null
 				}
 			],
@@ -367,7 +369,7 @@
 				}, {
 					"linkType": "goForward",
 					"anchorText": "Schedule List",
-					"href": "/sites/hr-service-schedule/SitePages/App.aspx",
+					"href": "/sites/hr-service-schedules/SitePages/App.aspx",
 					"target": null
 				}, {
 					"linkType": "goForward",
@@ -543,7 +545,7 @@
 				}, {
 					"linkType": "goForward",
 					"anchorText": "Schedule List",
-					"href": "/sites/hr-service-schedule/SitePages/App.aspx",
+					"href": "/sites/hr-service-schedules/SitePages/App.aspx",
 					"target": null
 				}, {
 					"linkType": "goForward",
@@ -604,7 +606,7 @@
 				}, {
 					"linkType": "goForward",
 					"anchorText": "Schedule List",
-					"href": "/sites/hr-service-schedule/SitePages/App.aspx",
+					"href": "/sites/hr-service-schedules/SitePages/App.aspx",
 					"target": null
 				}, {
 					"linkType": "goForward",
@@ -670,7 +672,7 @@
 				}, {
 					"linkType": "goForward",
 					"anchorText": "Schedule Calendar",
-					"href": "/sites/hr-service-schedule/SitePages/App.aspx?f=cal",
+					"href": "/sites/hr-service-schedules/SitePages/App.aspx?f=cal",
 					"target": null
 				}, {
 					"linkType": "goForward",
