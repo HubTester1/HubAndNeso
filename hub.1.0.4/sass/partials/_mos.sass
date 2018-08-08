@@ -4196,22 +4196,17 @@ div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests
 		color: $textOnDarkGreen !important
 
 
-div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests
-
-	.fc-day.ui-widget-content.fc-past
-		background-color: #e0e0e0
-		border: 1px solid #e0e0e0
-
-
 div.ui-dialog#buyout-calendar-item-dialog,
-div.ui-dialog#museum-calendar-item-dialog
+div.ui-dialog#museum-calendar-item-dialog,
+div[aria-describedby='gse-schedule-card-dialog']
 
 	div.ui-dialog-titlebar
 
 		span.ui-dialog-title
 			white-space: normal
 
-			h2.ui-dialog-buyout-title-date-and-time-range
+			h2.ui-dialog-buyout-title-date-and-time-range,
+			h2.gse-schedules-dialog-date-and-time-range
 				white-space: nowrap
 				font-size: 2rem !important
 				font-weight: 300
@@ -4230,11 +4225,27 @@ div.ui-dialog#museum-calendar-item-dialog
 
 	div.ui-dialog-content
 
-		p.ui-dialog-buyout-title
-			font-size: 3rem
+		p.ui-dialog-buyout-title,
+		p.gse-schedule-card-dialog-job-title
+			font-size: 2.6rem
 			font-weight: 300
 			margin: 0
 			padding: 1rem 0
+
+
+
+div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests
+
+	.fc-day.ui-widget-content.fc-past
+		background-color: #e0e0e0
+		border: 1px solid #e0e0e0
+
+
+
+
+
+
+
 
 
 

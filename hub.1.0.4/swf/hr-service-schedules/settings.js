@@ -359,8 +359,6 @@
 					"anchorText": "New Schedule",
 					"href": "/sites/hr-service-schedules/SitePages/App.aspx?r=0",
 					"target": null
-
-
 				}, {
 					"linkType": "goForward",
 					"anchorText": "Jobs",

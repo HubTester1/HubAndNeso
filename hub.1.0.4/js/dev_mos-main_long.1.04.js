@@ -18876,6 +18876,7 @@
 	};
 
 	$.fn.RenderCalendarForGSESchedules = function (buttons, relevantRole) {
+		var nowAsISOLocal = $().ReturnFormattedDateTime('nowLocal', null, null);
 		var viewToUse = GetParamFromUrl(location.search, 'view');
 		var dateToUse = GetParamFromUrl(location.search, 'date');
 		var gseSchedulesArray = [];
@@ -18887,13 +18888,21 @@
 		}
 		// get the relevant signups
 		gseSchedulesArray = $().GetFieldsFromSpecifiedRows({
-			'select': [{
-			// 	'nameHere': 'scheduleID',
-			// 	'nameInList': 'ID'
-			// }, {
-				'nameHere': 'formData',
-				'nameInList': 'AllRequestData'
-			}],
+			'select': [
+				{
+					'nameHere': 'ScheduleID',
+					'nameInList': 'ID'
+				}, {
+					'nameHere': 'JobID',
+					'nameInList': 'JobID'
+				}, {
+					'nameHere': 'NumberOfPositions',
+					'nameInList': 'NumberOfPositions'
+				}, {
+					'nameHere': 'formData',
+					'nameInList': 'AllRequestData'
+				}
+			],
 			'webURL': 'https://bmos.sharepoint.com/sites/hr-service-schedules',
 			'where': {
 				'field': 'RequestStatus',
@@ -18902,25 +18911,80 @@
 			}
 		});
 
-		// console.log(gseSchedulesArray);
+		console.log(gseSchedulesArray);
 		gseSchedulesArray.forEach((schedule) => {
+			var jobData = $().ReturnGSEJobDataForCalendarItem(schedule.JobID);
+			// console.log('jobData');
+			// console.log(jobData);
+			var signupsData = $().ReturnGSESignupDataForCalendarItem(schedule.ScheduleID);
+			var isoStartDatetime = schedule.formData['Date'].slice(0, 10) + schedule.formData['time-storage_StartTime'].slice(10, 19);
+			var isoEndDatetime = schedule.formData['shiftlength_35-hours'] ?
+				moment(isoStartDatetime).add(3.5, 'hours') :
+				moment(isoStartDatetime).add(7, 'hours');
+			var length = schedule.formData['shiftlength_35-hours'] ? '3.5 hours' : '7 hours';
+			var formattedStartTime = 
+				$().ReturnFormattedDateTime(isoStartDatetime, null, "h:mma", 0);
+			formattedStartTime = formattedStartTime.slice(0, formattedStartTime.length - 1);
+			var formattedEndTime = $().ReturnFormattedDateTime(isoEndDatetime, null, "h:mma", 0);
+			formattedEndTime = formattedEndTime.slice(0, formattedEndTime.length - 1);
+			var formattedDate = $().ReturnFormattedDateTime(isoStartDatetime, null, "ddd, M/D/YYYY", 0);
+			
 			var eventItem = {
-				'start': $().ReturnFormattedDateTime(schedule.formData['Date'], null, 'YYYY-MM-DDT') +
-					$().ReturnFormattedDateTime(schedule.formData['time-storage_StartTime'], null, 'HH:mm:ss'),
-				'title': schedule.formData['Location'],
+				'eventID': schedule.ScheduleID,
+				'start': isoStartDatetime,
+				'end': isoEndDatetime,
+				'title': formattedStartTime + ' | ' + jobData.JobTitle,
+				
+				'jobID': schedule.JobID,
+				'scheduleID': schedule.ScheduleID,
+				'formattedStartTime': formattedStartTime,
+				'formattedEndTime': formattedEndTime,
+				'formattedDate': formattedDate,
+				'jobAdmin': jobData.JobAdmin,
+				'length': length,
+				'location': schedule.formData['Location'],
+				'jobTitle': jobData.JobTitle,
+				'jobDescription': '<p>' + ReplaceAll('%0A', '</p><p>', jobData.formData['Job-Description']) + '</p>',
+				'quantitySignups': signupsData.length,
+				'quantityPositions': schedule.NumberOfPositions,
+				'jobURL': '/sites/hr-service-jobs/SitePages/App.aspx?r=' + schedule.JobID,
+				'scheduleURL': '/sites/hr-service-schedules/SitePages/App.aspx?r=' + schedule.ScheduleID,
+			};
+
+			// console.log('signupsData');
+			// console.log(signupsData);
+			// console.log('uData');
+			// console.log(uData);
+			// console.log('signupPersons');
+			signupsData.forEach((signup) => {
+				var signupPersonArray = $().ReturnUserDataFromPersonOrGroupFieldString(signup.signupPerson);
+				if (signupPersonArray[0].account === uData.account) {
+					eventItem.mySignupID = signup.signupID;
+				}
+			});
+
+			if (eventItem.mySignupID) {
+				eventItem.mySignupURL = '/sites/hr-service-signups/SitePages/App.aspx?r=' + eventItem.mySignupID;
+			} else {
+				eventItem.signupURL = '/sites/hr-service-signups/SitePages/App.aspx?r=0&gseScheduleID=' + schedule.ScheduleID;
 			}
+
 			allEvents.push(eventItem);
 		});
 
-		console.log('allEvents');
-		console.log(allEvents);
+		// console.log('allEvents');
+		// console.log(allEvents);
 
-		console.log('viewToUse');
-		console.log(viewToUse);
+		// console.log('viewToUse');
+		// console.log(viewToUse);
 
-		console.log('dateToUse');
-		console.log(dateToUse);
+		// console.log('dateToUse');
+		// console.log(dateToUse);
 
+		// console.log('buttons');
+		// console.log(buttons);
+		console.log('nowAsISOLocal');
+		console.log(nowAsISOLocal);
 		$("div#overview-screen-container").fullCalendar({
 			allDayDefault: true,
 			lazyFetching: false,
@@ -18935,62 +18999,146 @@
 			defaultView: viewToUse,
 			defaultDate: dateToUse,
 			dayClick: function (date, jsEvent, view) {
-				location.href = location.protocol + "//" + location.hostname + location.pathname + "?f=cal&view=basicDay&date=" + $(this).attr("data-date");
+				console.log(date);
+				console.log(jsEvent);
+				console.log(view);
+				if (moment(date._d).isAfter(nowAsISOLocal)) {
+					var addScheduleURL = '/sites/hr-service-schedules/SitePages/App.aspx?r=0&d=' + date._i;
+					window.open(addScheduleURL, '_blank');
+				}
+			},
+			dayRender: function (date, cell) {
+				// console.log('date');
+				// console.log(date);
+				// console.log('cell');
+				// console.log(cell);
+				if (cell[0].classList.contains('fc-future')) {
+					var addLinkMarkup = '<a class="add-schedule" ' + 
+						'href="/sites/hr-service-schedules/SitePages/App.aspx?r=0&d=' + date._i + 
+						'" target="_blank">Add</a>';
+					cell.append(addLinkMarkup);
+				}
+				
 			},
 			theme: true,
 			eventClick: function (event, jsEvent, view) {
 
-				console.log('event clicked');
-
-				/* // close the dialog box
+				// close the dialog box
 				$("div#dialog").dialog("close");
 
 				// populate the dialog box
-				var dialogTitleBarContent = "<h2 class=\"ui-dialog-buyout-title-date-and-time-range\"> \n" +
-					"   <span class=\"ui-dialog-buyout-title-date\">" + event.formattedDate + "</span> \n" +
-					"   <span class=\"ui-dialog-title-buyout-start-time\">" + event.formattedStartTime + "</span> \n" +
-					"   <span class=\"ui-dialog-title-buyout-times-separator\"> &ndash; </span> \n" +
-					"   <span class=\"ui-dialog-title-buyout-end-time\">" + event.formattedEndTime + "</span> \n" +
-					"</h2> \n";
 
-				if (typeof (event.location) != "undefined") {
-					dialogTitleBarContent += "<p class=\"ui-dialog-title-buyout-location\">" + event.location + "</p> \n";
+				var dialogTitleBarContent = '<h2 class="gse-schedules-dialog-date-and-time-range">' +
+					'<span class="gse-schedules-dialog-date">' + event.formattedDate + '</span> ' +
+					'<span class="gse-schedules-dialog-start-time">' + event.formattedStartTime + '</span>' +
+					'<span class="gse-schedules-dialog-times-separator"> &ndash; </span>' +
+					'<span class="gse-schedules-dialog-end-time">' + event.formattedEndTime + '</span>' +
+					'</h2>';
+
+				$("div[aria-describedby='gse-schedule-card-dialog'] div.ui-dialog-titlebar span.ui-dialog-title").html(dialogTitleBarContent);
+
+				var dialogBodyContent = '<p class="gse-schedule-card-dialog-job-title">' + event.jobTitle + '</p>';
+				
+				if (relevantRole === 'gseHRAdmin') {
+					dialogBodyContent += '<a id="gse-schedule-card-dialog-job-link" href="' + 
+						event.jobURL + '" target="_blank">Job Details</a>';
+					dialogBodyContent += '<a id="gse-schedule-card-dialog-schedule-link" href="' + 
+						event.scheduleURL + '" target="_blank">Schedule Details</a>';
 				}
 
-
-
-				$("div.ui-dialog-titlebar span.ui-dialog-title").html(dialogTitleBarContent);
-
-				var slicedTitle = StrInStr(event.title, " ").slice(3);
-				var dialogBodyContent = "<p class=\"ui-dialog-buyout-title\">" + slicedTitle + "</p> \n" +
-					"<ul> \n";
-
-				$(["count", "notes"]).each(function (i, o) {
-					if (typeof (event[o]) != "undefined") {
-						dialogBodyContent += "	<li class=\"event-" + o + "\">" + $().ReturnStringWithInitialCap(o) + ": " + event[o] + "</li>";
-					}
-				});
-				dialogBodyContent += "	<li class=\"event-contact\">Contact: " + event.contactLinkedName + "</li> \n" +
-					"	<li class=\"event-id\">Event ID: " + event.eventID + "</li>" +
-					"</ul> \n" +
-					"<a class=\"ui-dialog-button\" href=\"" + event.editURL + "\">Edit / Delete</a>";
-
-				$("div#dialog").html(dialogBodyContent);
+				if (event.mySignupURL) {
+					dialogBodyContent += '<a id="gse-schedule-card-dialog-my-signup-link" href="' + 
+						event.mySignupURL + '" target="_blank">My Signup</a>';
+				} else {
+					dialogBodyContent += '<a id="gse-schedule-card-dialog-signup-opportunity-link" href="' + 
+						event.signupURL + '" target="_blank">Signup Opportunity</a>';
+				}
+				
+				$("div#gse-schedule-card-dialog").html(dialogBodyContent);
 
 				// position the dialog box
-				$("div#dialog").dialog("option", "position", { my: "left bottom", at: "right top", of: jsEvent });
+				$("div#gse-schedule-card-dialog").dialog("option", "position", { my: "left bottom", at: "right top", of: jsEvent });
 
 				// open the dialog box
-				$("div#dialog").dialog("open"); */
+				$("div#gse-schedule-card-dialog").dialog("open");
 			},
 			events: allEvents
 
+		});
+
+		var buttonsMarkup = $().ReturnButtonsMarkup(buttons);
+		$("div.fc-toolbar div.fc-left").append(buttonsMarkup);
+		$("div#app-container").append("<div id=\"gse-schedule-card-dialog\"></div>");
+
+		$("div#gse-schedule-card-dialog").dialog({
+			autoOpen: false,
+			draggable: true,
+			modal: true,
+			show: {
+				effect: "bounce",
+				times: 2,
+				duration: 500
+			},
+			width: 400,
 		});
 
 
 		$("div.fc-toolbar, div.fc-view-container").fadeTo(1000, 1);
 
 
+	};
+
+	$.fn.ReturnGSEJobDataForCalendarItem = function (jobID) {
+		return $().GetFieldsFromOneRow({
+			'listName': 'SWFList',
+			'webURL': 'https://bmos.sharepoint.com/sites/hr-service-jobs',
+			'select': [
+				{
+					'nameHere': 'JobTitle',
+					'nameInList': 'JobTitle',
+				}, {
+					'nameHere': 'JobAdmin',
+					'nameInList': 'JobAdmin'
+				}, {
+					'nameHere': 'formData',
+					'nameInList': 'AllRequestData'
+				}
+			],
+			'where': {
+				'field': 'ID',
+				'type': 'Number',
+				'value': jobID,
+			}
+		});
+	};
+
+
+
+	$.fn.ReturnGSESignupDataForCalendarItem = function (scheduleID) {
+		return $().GetFieldsFromSpecifiedRows({
+			"select": [{
+				"nameHere": "signupID",
+				"nameInList": "ID"
+			}, {
+				"nameHere": "signupPerson",
+				"nameInList": "RequestedFor"
+			}],
+			"webURL": "https://bmos.sharepoint.com/sites/hr-service-signups",
+			"where": {
+				"ands": [
+					{
+						"field": "ScheduleID",
+						"type": "Text",
+						"value": scheduleID,
+					}, {
+						"field": "RequestStatus",
+						"type": "Text",
+						"operator": "Neq",
+						"value": "Cancelled",
+					}
+				]
+			}
+		});
 	};
 
 
@@ -19576,6 +19724,13 @@
 
 
 	$.fn.RenderAdditionalButtons = function (buttons) {
+		var buttonsMarkup = $().ReturnButtonsMarkup(buttons);
+		$("#overview-table-container").before(buttonsMarkup);
+	};
+
+
+
+	$.fn.ReturnButtonsMarkup = function (buttons) {
 		var buttonsMarkup = "";
 		$.each(buttons, function (i, button) {
 			// business rule: even if there's a function restricting rendering permission, the button will always render for admins; if this changes, 
@@ -19588,7 +19743,7 @@
 				}
 			}
 		});
-		$("#overview-table-container").before(buttonsMarkup);
+		return buttonsMarkup
 	};
 
 
