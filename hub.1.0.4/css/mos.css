@@ -2756,6 +2756,9 @@ div#app-container.network-access div#overlays-screen-container div#mos-form-subm
 div#app-container.network-access div#overlays-screen-container div#mos-form-submission-confirmation.contains-additional-message a.link_exit {
   margin: 4rem 0 0 0; }
 
+div#app-container.overnight-bike-cage-parking div#request-form ul#terms-and-conditions {
+  margin: 10px 0px 0px 22.4rem; }
+
 div#app-container.overnight-parking div#request-form ul#terms-and-conditions {
   margin: 10px 0px 0px 22.4rem; }
 
@@ -3539,11 +3542,11 @@ div[aria-describedby='gse-schedule-card-dialog'] div.ui-dialog-titlebar span.ui-
     color: #666; }
 
 div.ui-dialog#buyout-calendar-item-dialog div.ui-dialog-content p.ui-dialog-buyout-title,
-div.ui-dialog#buyout-calendar-item-dialog div.ui-dialog-content p.ui-dialog-gse-job-title,
+div.ui-dialog#buyout-calendar-item-dialog div.ui-dialog-content p.gse-schedule-card-dialog-job-title,
 div.ui-dialog#museum-calendar-item-dialog div.ui-dialog-content p.ui-dialog-buyout-title,
-div.ui-dialog#museum-calendar-item-dialog div.ui-dialog-content p.ui-dialog-gse-job-title,
+div.ui-dialog#museum-calendar-item-dialog div.ui-dialog-content p.gse-schedule-card-dialog-job-title,
 div[aria-describedby='gse-schedule-card-dialog'] div.ui-dialog-content p.ui-dialog-buyout-title,
-div[aria-describedby='gse-schedule-card-dialog'] div.ui-dialog-content p.ui-dialog-gse-job-title {
+div[aria-describedby='gse-schedule-card-dialog'] div.ui-dialog-content p.gse-schedule-card-dialog-job-title {
   font-size: 2.6rem;
   font-weight: 300;
   margin: 0;
