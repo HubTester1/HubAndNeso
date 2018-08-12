@@ -1,0 +1,115 @@
+﻿
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        // maintenance mode
+        var allSWFsInMaintenance = $().ReturnMaintenanceModeAllSWFs();
+        var thisSWFInMainenanceMode = $().ReturnMaintenanceModeThisSWF(location);
+        if (allSWFsInMaintenance == false && thisSWFInMainenanceMode == false) {
+
+            console.log("using admin 1");
+
+            // configure additional buttons here
+            var bData = [];
+
+            // configure tables here
+            var tData = {
+                'commonColumns': [
+                    {
+                        'displayName': 'Request ID',
+                        'internalName': 'ID',
+                        'formLink': 1
+                    }, {
+                        'displayName': 'Requested By',
+                        'internalName': 'Author',
+                        'userName': 1
+                    }, {
+                        'displayName': 'Talk To',
+                        'internalName': 'RequestedFor',
+                        'userName': 1
+                    }, {
+                        'displayName': 'Make',
+                        'internalName': 'VehicleMake',
+                    }, {
+                        'displayName': 'Model',
+                        'internalName': 'VehicleModel',
+                    }, {
+                        'displayName': 'License Plate Number',
+                        'internalName': 'LicensePlateNumber',
+                    }, {
+                        'displayName': 'License Plate State',
+                        'internalName': 'LicensePlateState',
+                    }, {
+                        'displayName': 'Beginning',
+                        'internalName': 'Beginning',
+                        'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY h:mm a', 'determineYearDisplayDynamically': 1 }
+                    }, {
+                        'displayName': 'Ending',
+                        'internalName': 'Ending',
+                        'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY h:mm a', 'determineYearDisplayDynamically': 1 }
+                    }, {
+                        'displayName': 'Request Date',
+                        'internalName': 'RequestDate',
+                        'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+                    }, {
+                        'displayName': 'Modified By',
+                        'internalName': 'Editor',
+                        'userName': 1
+                    }, {
+                        'displayName': 'Modified',
+                        'internalName': 'Modified',
+                        'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY h:mm a', 'determineYearDisplayDynamically': 1 }
+                    }
+                ],
+                'tables': [
+                    {
+                        'tableTitle': 'Pending Approval',
+                        'tableID': 'pending-approval',
+                        'someColsAreUsers': 1,
+                        'basicRSQueryRelevantStatus': 'Pending Approval',
+                    }, {
+                        'tableTitle': 'Today and Upcoming Approved',
+                        'tableID': 'today-and-upcoming-approved',
+                        'someColsAreUsers': 1,
+                        'rsQueryAndFieldGEQDate': ['Approved', 'Ending', moment().format('YYYY-MM-DD') + ' 00:00:00']
+                   }, {
+                        'tableTitle': 'Past Approved',
+                        'tableID': 'past-approved',
+                        'someColsAreUsers': 1,
+                        'rsQueryAndFieldLTDate': ['Approved', 'Ending', moment().format('YYYY-MM-DD') + ' 00:00:00']
+                     }, {
+                        'tableTitle': 'Cancelled',
+                        'tableID': 'cancelled',
+                        'someColsAreUsers': 1,
+                        'basicRSQueryRelevantStatus': 'Cancelled',
+                     }, {
+                        'tableTitle': 'Disapproved',
+                        'tableID': 'disapproved',
+                        'someColsAreUsers': 1,
+                        'basicRSQueryRelevantStatus': 'Disapproved',
+                    }
+                ]
+            };
+
+
+
+            // ----- nothing below should need to be configured for a new SWF
+
+            mData = $().ReturnThisSiteSettings();
+            $().InitializeAdminPage(mData, tData, bData);
+
+        } else {
+            $().RenderMaintenanceMessage();
+        }
+    });
+
+</script>
+
+
+
+<!-- all content -->
+<div id="all-content-container">
+    <div id="table-container"></div>
+    <div id="overlays-container"></div>
+</div>

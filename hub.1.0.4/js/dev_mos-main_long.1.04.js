@@ -7106,7 +7106,7 @@
 							}
 						}
 
-						// if processing mc project request notifications
+						// if processing test request notifications
 						if (typeof (fData.testNotifications) != "undefined") {
 
 							// if NOT just saving an allowed change after EOL has already been reached

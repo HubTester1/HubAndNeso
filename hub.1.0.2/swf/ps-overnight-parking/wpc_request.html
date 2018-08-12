@@ -1,0 +1,306 @@
+﻿
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        // maintenance mode
+        var allSWFsInMaintenance = $().ReturnMaintenanceModeAllSWFs();
+        var thisSWFInMainenanceMode = $().ReturnMaintenanceModeThisSWF(location);
+        if (allSWFsInMaintenance == false && thisSWFInMainenanceMode == false) {
+
+            console.log('using request 1');
+
+            // metadata
+            var mData = {
+                'autoTrackPendingAndApproval': 1,
+                'standardElementGroups': {
+                    'standardThisRequestAndRequesterElements': 1,
+                    'standardAdminElements': {
+                        'changeRequestStatus': [
+                            { "value": "Approve", "display": "This request is approved" },
+                            { "value": "Disapprove", "display": "This request is disapproved" },
+                            { "value": "Cancel", "display": "This request has been cancelled" }
+                        ],
+                    },
+                    'standardButtonElements': 1,
+                    'standardComponentGrpAdminOnlyElements': 1
+                },
+                'superSimpleChangeNotifications': {
+                    'beginningOfLife': { 'admin': 1, 'requester': 1 },
+                    'endOfLife': { 'admin': ['Cancelled'], 'requester': 1 }
+                },
+                'versioningMatters': 0
+            };
+
+
+
+            // form elements
+            var elements = [
+                {
+                    'elementType': 'markup',
+                    'tag': 'h2',
+                    'content': 'What, Where, & When',
+                    'begin': 1,
+                    'end': 1
+                }, {
+                    "elementType": "field",
+                    "controlType": "text",
+                    "fieldName": "Vehicle Make",
+                    "labelContent": "Make",
+                    "listFieldName": "VehicleMake",
+                    "disabledForNonAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+                    "disabledForAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+                    "requiredForNonAdmin": [""],
+                    "requiredForAdmin": [""]
+                }, {
+                    "elementType": "field",
+                    "controlType": "text",
+                    "fieldName": "Vehicle Model",
+                    "labelContent": "Model",
+                    "listFieldName": "VehicleModel",
+                    "disabledForNonAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+                    "disabledForAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+                    "requiredForNonAdmin": [""],
+                    "requiredForAdmin": [""]
+                }, {
+                    "elementType": "field",
+                    "controlType": "text",
+                    "fieldName": "License Plate Number",
+                    "labelContent": "License Plate Number",
+                    "listFieldName": "LicensePlateNumber",
+                    "disabledForNonAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+                    "disabledForAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+                    "requiredForNonAdmin": [""],
+                    "requiredForAdmin": [""]
+                }, {
+                    "elementType": "field",
+                    "controlType": "text",
+                    "fieldName": "License Plate State",
+                    "labelContent": "License Plate State",
+                    "listFieldName": "LicensePlateState",
+                    "disabledForNonAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+                    "disabledForAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+                    "requiredForNonAdmin": [""],
+                    "requiredForAdmin": [""]
+                }, {
+                    'elementType': "field",
+                    'controlType': "radio",
+                    'fieldName': "Location",
+                    'choiceSetLabel': "Location",
+                    'choices': [
+                            {
+                                'value': "Level 4",
+                                'display': "Level 4"
+                            }, {
+                                'value': "Level 5",
+                                'display': "Level 5"
+                            }
+                    ],
+                    'requiredForNonAdmin': [""],
+                    'requiredForAdmin': [""],
+                    'disabledForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+                    'disabledForAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+                    "helpNotes": [
+                            {
+                                "text": "Overnight parking is permitted only on levels 4 or 5",
+                                "htmlID": "location_help-note",
+                                "urgent": 0,
+                                "hideForNonAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+                                "hideForAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
+                            }
+                    ]
+                }, {
+                    'elementType': 'field',
+                    'controlType': 'datetime',
+                    'fieldName': 'Beginning Datetime',
+                    'labelContent': 'Beginning',
+                    'listFieldName': 'Beginning',
+                    'disabledForNonAdmin': ['Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
+                    'disabledForAdmin': ['Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
+                    "requiredForNonAdmin": [""],
+                    "requiredForAdmin": [""]
+                }, {
+                    'elementType': 'field',
+                    'controlType': 'datetime',
+                    'fieldName': 'End Datetime',
+                    'labelContent': 'Ending',
+                    'listFieldName': 'Ending',
+                    'disabledForNonAdmin': ['Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
+                    'disabledForAdmin': ['Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
+                    "requiredForNonAdmin": [""],
+                    "requiredForAdmin": [""]
+                }, {
+                    'elementType': 'markup',
+                    'tag': 'h2',
+                    'content': 'Emergency Contact Info',
+                    'begin': 1,
+                    'end': 1
+                }, {
+                    "elementType": "field",
+                    "controlType": "text",
+                    "fieldName": "Emergency Contact Number",
+                    "labelContent": "Phone",
+                    "disabledForNonAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+                    "disabledForAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+                    "requiredForNonAdmin": [""],
+                    "requiredForAdmin": [""],
+                    "helpNotes": [
+                            {
+                                "text": "E.g., 617-723-2500",
+                                "htmlID": "emergency-contact-number_help-note",
+                                "urgent": 0,
+                                "hideForNonAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+                                "hideForAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
+                            }
+                    ],
+                    'addtlValidationType': 'validPhone'
+                }, {
+                    "elementType": "field",
+                    "controlType": "text",
+                    "fieldName": "Emergency Contact Name",
+                    "labelContent": "Name",
+                    "disabledForNonAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+                    "disabledForAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+                    "helpNotes": [
+                            {
+                                "text": "If someone other than yourself",
+                                "htmlID": "emergency-contact-name_help-note",
+                                "urgent": 0,
+                                "hideForNonAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+                                "hideForAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
+                            }
+                    ]
+                }, {
+                    'elementType': 'markup',
+                    'tag': 'h2',
+                    'content': 'Other',
+                    'begin': 1,
+                    'end': 1
+                }, {
+                    "elementType": "field",
+                    "controlType": "textarea",
+                    "fieldName": "Additional Information",
+                    "labelContent": "Additional Information",
+                    "disabledForNonAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+                    "disabledForAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+                }, {
+                    'elementType': "field",
+                    'controlType': "check",
+                    'fieldName': "Agrees To Terms",
+                    'choiceSetLabel': "Terms & Conditions",
+                    'choices': [
+                            {
+                                'value': "agrees",
+                                'display': "I have read and understood the following terms and conditions"
+                            }
+                    ],
+                    "hideForNonAdmin": [],
+                    "hideForAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+                    'disabledForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+                    'disabledForAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+                    "requiredForNonAdmin": [""],
+                    "requiredForAdmin": [""]
+                }, {
+                    "elementType": "markup",
+                    "tag": "ul",
+                    "htmlID": "terms-and-conditions",
+                    "content": '<li>Garage hours are 5am - 12am. It will not be opened after hours unless special arrangements ' +
+                                '   have been made with the Public Safety Department <em>prior</em> to the start date of this request.</li>' +
+                                '<li>Overnight parking is <strong>not permitted</strong> during required offsite parking time periods.</li>' +
+                                '<li>The Museum assumes no liability for any vehicles parked in the garage.</li>',
+                    "begin": 1,
+                    "end": 1,
+                    "hideForAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+/*                }, {
+                    "elementType": "markup",
+                    "tag": "div",
+                    "htmlID": "admin",
+                    "content": '',
+                    "begin": 1,
+                    "hideForNonAdmin": ["", "Submitted", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+                    "hideForAdmin": [""]
+                }, {
+                    "elementType": "markup",
+                    "tag": "h2",
+                    "content": 'Admin',
+                    "begin": 1,
+                    "end": 1,
+                }, {
+                    "elementType": "markup",
+                    "tag": "h3",
+                    "content": 'Request Status and Notes',
+                    "begin": 1,
+                    "end": 1,
+                    "hideForNonAdmin": ["Submitted", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+                    "hideForAdmin": ["Submitted", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
+                }, {
+                    "elementType": "field",
+                    "controlType": "select",
+                    "fieldName": "Change Request Status",
+                    "labelContent": "Change Request Status",
+                    "setOptions": [
+                        { "value": "Approve", "display": "This request is approved" },
+                        { "value": "Disapprove", "display": "This request is disapproved" },
+                        { "value": "Cancel", "display": "This request has been cancelled" }
+                    ],
+                    "hideForNonAdmin": ["Submitted", "Approved", "Completed", "Disapproved", "Cancelled"],
+                    "hideForAdmin": ["Submitted", "Approved", "Completed", "Disapproved", "Cancelled"]
+                }, {
+                    "elementType": "field",
+                    "controlType": "text",
+                    "fieldName": "Request Status",
+                    "listFieldName": "RequestStatus",
+                    "labelContent": "Request Status",
+                    "disabledForNonAdmin": ["", "Submitted", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+                    "disabledForAdmin": ["", "Submitted", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
+                }, {
+                    "elementType": "field",
+                    "controlType": "textarea",
+                    "fieldName": "New Admin Notes",
+                    "labelContent": "Admin Notes"
+                }, {
+                    "elementType": "field",
+                    "controlType": "textarea",
+                    "fieldName": "Historical Admin Notes",
+                    "labelContent": "Historical Admin Notes",
+                    "disabledForNonAdmin": ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+                    "disabledForAdmin": ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
+                }, {
+                    "elementType": "markup",
+                    "tag": "div",
+                    "end": 1*/
+                }
+
+            ];
+
+
+
+            // configure customScript for this SWF here
+            //      (customScriptFirst will be prepended to auto-generated script)
+            //      (customScriptLast will be appended to auto-generated script)
+            var customScriptFirst = '';
+            var customScriptLast = '';
+
+
+
+            // ----- nothing below should need to be configured for a new SWF
+
+            mData = $.extend(
+                $().ReturnThisSiteSettings(),
+                mData
+            );
+            $().InitializeForm(mData, elements, customScriptFirst, customScriptLast);
+        } else {
+            $().RenderMaintenanceMessage();
+        }
+    });
+
+</script>
+
+
+
+<!-- all content -->
+<div id="all-content-container">
+    <div id="mos-form" class="mos-form-section"></div>
+    <script id="mos-form-script" type="text/javascript"></script>
+</div>

@@ -1,0 +1,298 @@
+﻿
+<script type="text/javascript">
+
+    
+    $(document).ready(function () {
+        
+        var importEnabledMsg = '<p><strong>Note</strong>: Loading this page causes SWF data to be converted. The console should show conversion results. A large conversion may take several minutes and this simple converter doesn\'t provide any user feedback, so just be careful not to close the browser tab early. Disable the conversion code in SiteAssets > wpc_converter.html.</p>';
+        var importDisabledMsg = '<p><strong>Note</strong>: Conversion code has been disabled. You can re-enable in SiteAssets > wpc_converter.html.</p>';
+
+
+
+        $('div#all-content-container').append(importDisabledMsg);
+        
+        
+
+        // to enable import, remove /**/ 
+        // and comment out disable section
+
+        
+        /*
+        $('div#all-content-container').append(importEnabledMsg);
+
+
+          // partial config 
+          var mData = {
+              "listName": "SWFList",
+              "fieldsToConvert": [
+                  "Requested-For",
+                  "Requested-By",
+                  //"Approvers-on-Load",
+                  //"Approvers",
+                  //"Assigned-To-on-Load",
+                  //"Assigned-To",
+                  //"Completed-By"
+              ]
+          }
+  
+
+          // who to send error emails to
+          var emailErrorsTo = 'jbaker@mos.org';
+  
+          // get list items' IDs
+          var allListDataPromise = $().SPServices.SPGetListItemsJson({
+              //webURL: "",
+              listName: mData.listName,
+              //viewName: "",
+              //CAMLQuery: "",
+              CAMLViewFields: "<ViewFields Properties='True'><FieldRef Name='ID'/><FieldRef Name='AllRequestData'/></ViewFields>",
+              //CAMLRowLimit: "1",
+              //CAMLQueryOptions: "<QueryOptions><ExpandUserField>TRUE</ExpandUserField></QueryOptions>",
+              //changeToken: "",
+              //contains: "",
+              //mapping: null,
+              //mappingOverrides: "",
+              debug: true
+          });
+  
+  
+          $.when(allListDataPromise).done(function () {
+  
+              // get the list items as an array
+              var allListData = this.data;
+  
+              console.log('using m15');
+
+              // for each list item
+              $.each(allListData, function (i, item) {
+
+                  // get AllRequestData field as a string and 
+                  //    run some replacements on it so that it can be parsed into an object
+                  var allRequestDataString = ReplaceAll('",}', '"}', item.AllRequestData);
+                  allRequestDataString = ReplaceAll('},]', '}]', allRequestDataString);
+                  allRequestDataString = ReplaceAll('\r', 'xyz123', allRequestDataString);
+                  allRequestDataString = ReplaceAll('\n', '', allRequestDataString);
+
+                  // parse AllRequestData field string into an object
+                  allRequestDataObject = JSON.parse(allRequestDataString);
+
+                  // for each field that is to have its data converted
+                  $.each(mData.fieldsToConvert, function (i, f) {
+
+                      // if that field contains data
+                      if (typeof (allRequestDataObject[f]) != 'undefined') {
+
+                          // split the data into an array of individual person accounts
+                          var peopleIncoming = allRequestDataObject[f].split(";");
+                          // start the new string of converted data; will be formatted as an array of person objects
+                          var peopleConverted = '[';
+                          // set delimiter used to prepend people; will change to comma after first person
+                          var peopleConvertedSeparator = '';
+
+                          // for each person account in the array
+                          $.each(peopleIncoming, function (i, p) {
+                              
+                              // if the person account isn't a blank string
+                              if (p != '') {
+
+                                  // get the data from their user profile
+                                  var userProfileValues = {};
+                                  $().SPServices({
+                                      operation: "GetUserProfileByName",
+                                      async: false,
+                                      AccountName: p,
+                                      completefunc: function (xData, Status) {
+                                          $(xData.responseXML).SPFilterNode("PropertyData").each(function () {
+                                              userProfileValues[$(this).find("Name").text()] = $(this).find("Value").text();
+                                          });
+                                      }
+                                  });
+
+                                  // add the user profile values to the converted data; formatted as prepended person object
+                                  peopleConverted += peopleConvertedSeparator +
+                                                        '{' +
+                                                        '"account": "' + userProfileValues.AccountName + '",' +
+                                                        '"displayText": "' + userProfileValues.PreferredName + '",' +
+                                                        '"description": "' + userProfileValues.UserName.toLowerCase() + '"' +
+                                                        '}';
+
+                                  // change the blank separator to a comma to prepend people beyond the first
+                                  peopleConvertedSeparator = ',';
+
+                              }
+
+                          });
+
+
+
+                          // finish up the string of converted data; i.e., close out the array formatting
+                          peopleConverted += ']';
+
+                          // assign the field in allRequestDataObject to the converted data string
+                          //console.log(peopleConverted);
+                          allRequestDataObject[f] = JSON.parse(peopleConverted);
+                          //console.log('peopleConverted');
+                          //console.log(peopleConverted);
+                          //console.log('JSON.stringify(peopleConverted)');
+                          //console.log(JSON.stringify(peopleConverted));
+
+
+                      }
+                  });
+
+
+
+
+
+
+
+
+
+                  // reset allRequestDataString to a stringified allRequestDataObject
+                  allRequestDataString = JSON.stringify(allRequestDataObject);
+
+                  // reverse the new line replacements that were done on the string
+                  allRequestDataString = ReplaceAll("xyz123 xyz123", "\r \r", allRequestDataString);
+
+                  // reset item.AllRequestData to allRequestDataString
+                  item.AllRequestData = allRequestDataString;
+
+                  // update item in list
+                  $().SPServices({
+                      operation: "UpdateListItems",
+                      async: false,
+                      listName: mData.listName,
+                      batchCmd: "Update",
+                      valuepairs: [["AllRequestData", CDataWrap(item.AllRequestData)]],
+                      ID: item.ID,
+                      completefunc: function (xData, Status) {
+                            var errorCode = $(xData.responseXML).find('ErrorCode').text();
+                            if (errorCode != '0x00000000') {
+                                if (errorCode == '') { errorCode = 'nada'; }
+                                console.log('error = ' + errorCode + '; item ID = ' + item.ID);
+                                console.log(xData);
+                                //console.log('submissionValuePairs');
+                                //console.log(submissionValuePairs);
+                                //var emailBody = 'error = ' + errorCode + '; item ID = ' + item.ID;
+                                //SendErrorEmail('noreply@mos.org', emailErrorsTo, emailBody, 'Hub conversion error: ' + errorCode)
+                            } else if (Status == 'Error') {
+                                console.log('Status = Error');
+                            } else {
+                                console.log('Updated item #' + $(xData.responseXML).SPFilterNode("z:row").attr("ows_ID"));
+                            }
+                      }
+                  });
+              });
+          });
+
+        
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        */
+      // !!! ---- end import-disabling comment here ---- !!!
+
+
+
+      });
+
+  
+      function HtmlEncode(str) {
+          return String(str).replace(/&/g, '&amp;').replace(/"/g, '&quot;');
+          // .replace(/'/g, '&#39;')
+          // .replace(/</g, '&lt;')
+          // .replace(/>/g, '&gt;');
+      }
+
+      function ReplaceAll(find, replace, str) {
+          return str.replace(new RegExp(find, 'g'), replace);
+      }
+
+  
+      function CDataWrap(value) {
+          return "<![CDATA[" + value + "]]>";
+      }
+  
+      function ReturnFriendlyDateWYear (dateTimeString) {
+  
+          // config locale
+          moment.locale('en');
+  
+          return moment(dateTimeString, 'YYYY-MM-DD').format('MMMM D, YYYY');
+      }
+  
+      function StrInStr(haystack, needle, bool) {
+  
+          var pos = 0;
+          haystack += '';
+          pos = haystack.toLowerCase()
+          .indexOf((needle + '')
+          .toLowerCase());
+  
+          if (pos == -1) {
+              return false;
+          } else {
+              if (bool == 1) {
+                  return haystack.substr(0, pos);
+              } else {
+                  return haystack.slice(pos);
+              }
+          }
+      }
+  
+      function SendErrorEmail(from, to, body, subject) {
+  
+          var siteurl = _spPageContextInfo.webServerRelativeUrl;
+  
+          var urlTemplate = siteurl + "/_api/SP.Utilities.Utility.SendEmail";
+          $.ajax({
+              contentType: 'application/json',
+              url: urlTemplate,
+              type: "POST",
+              data: JSON.stringify({
+                  'properties': {
+                      '__metadata': { 'type': 'SP.Utilities.EmailProperties' },
+                      'From': from,
+                      'To': { 'results': [to] },
+                      'Body': body,
+                      'Subject': subject
+                  }
+              }
+            ),
+              headers: {
+                  "Accept": "application/json;odata=verbose",
+                  "content-type": "application/json;odata=verbose",
+                  "X-RequestDigest": $("#__REQUESTDIGEST").val()
+              },
+              success: function (data) {
+              },
+              error: function (err) {
+                  console.log('SendErrorEmail also had an error: ' + JSON.stringify(err));
+              }
+          });
+      
+
+      }
+      
+</script>
+
+
+
+<!-- all content -->
+<div id="all-content-container"></div>

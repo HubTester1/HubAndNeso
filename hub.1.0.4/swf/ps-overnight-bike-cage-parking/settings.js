@@ -180,7 +180,6 @@
 			'standardButtonElements': 1,
 			'standardComponentGrpAdminOnlyElements': 1
 		},
-		'testNotifications': 1,
 		'versioningMatters': 0,
 
 

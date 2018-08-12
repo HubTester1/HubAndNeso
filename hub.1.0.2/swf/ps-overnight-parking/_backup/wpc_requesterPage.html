@@ -1,0 +1,81 @@
+﻿
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        // maintenance mode
+        var allSWFsInMaintenance = $().ReturnMaintenanceModeAllSWFs();
+        var thisSWFInMainenanceMode = $().ReturnMaintenanceModeThisSWF(location);
+        if (allSWFsInMaintenance == false && thisSWFInMainenanceMode == false) {
+
+
+
+            // configure tables here
+            var tData = {
+                'commonColumns': [
+                    {
+                        'displayName': 'Request ID',
+                        'internalName': 'ID',
+                        'formLink': 1
+                    }, {
+                        'displayName': 'Request Nickname',
+                        'internalName': 'Title'
+                    }, {
+                        'displayName': 'Talk To',
+                        'internalName': 'RequestedFor',
+                        'userName': 1
+                    }, {
+                        'displayName': 'Beginning',
+                        'internalName': 'Beginning',
+                        'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY h:mm a', 'determineYearDisplayDynamically': 1 }
+                    }, {
+                        'displayName': 'Ending',
+                        'internalName': 'Ending',
+                        'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY h:mm a', 'determineYearDisplayDynamically': 1 }
+                    }, {
+                        'displayName': 'Request Date',
+                        'internalName': 'RequestDate',
+                        'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+                    }, {
+                        'displayName': 'Request Status',
+                        'internalName': 'RequestStatus'
+                    }
+                ],
+                'tables': [
+                    {
+                        'tableTitle': 'Open',
+                        'tableID': 'open',
+                        'someColsAreUsers': 1,
+                        'basicMyEOLQueryRelevantValue': 0
+                    }, {
+                        'tableTitle': 'Closed',
+                        'tableID': 'closed',
+                        'someColsAreUsers': 1,
+                        'basicMyEOLQueryRelevantValue': 1
+                    }
+                ]
+            };
+
+
+
+            // ----- nothing below should need to be configured for a new SWF
+
+            mData = $().ReturnThisSiteSettings();
+            var requestID = $().GetParamFromUrl(location.search, 'requestID');
+            $().LoadSWFFunctions(mData, requestID);
+            $().InitializeRequesterPage(mData, tData);
+
+        } else {
+            $().RenderMaintenanceMessage();
+        }
+    });
+
+</script>
+
+
+
+<!-- all content -->
+<div id="all-content-container">
+    <div id="table-container"></div>
+    <div id="overlays-container"></div>
+</div>
