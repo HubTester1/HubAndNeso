@@ -1,0 +1,265 @@
+<script type="text/javascript">
+
+	$(document).ready(function () {
+
+		// maintenance mode
+		var allSWFsInMaintenance = $().ReturnMaintenanceModeAllSWFs();
+		var thisSWFInMainenanceMode = $().ReturnMaintenanceModeThisSWF(location);
+		if (allSWFsInMaintenance == false && thisSWFInMainenanceMode == false) {
+
+			console.log("using admin 1");
+
+			// configure additional buttons here
+			var bData = [];
+
+			// configure tables here
+			var tData = {
+				'commonColumns': [
+					{
+						'displayName': 'Request ID',
+						'internalName': 'ID',
+						'formLink': 1
+					}, {
+						'displayName': 'Requested By',
+						'internalName': 'Author',
+						'userName': 1
+					}, {
+						'displayName': 'Talk To',
+						'internalName': 'RequestedFor',
+						'userName': 1
+					}, {
+						'displayName': 'Beginning Date - Requested',
+						'internalName': 'LoanBeginningDateRequested',
+						'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+					}, {
+						'displayName': 'Beginning Time - Requested',
+						'internalName': 'LoanBeginningTimeRequested',
+					}, {
+						'displayName': 'Beginning Date - Actual',
+						'internalName': 'LoanBeginningDateActual',
+						'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+					}, {
+						'displayName': 'End Date - Requested',
+						'internalName': 'LoanEndDateRequested',
+						'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+					}, {
+						'displayName': 'End Time - Requested',
+						'internalName': 'LoanEndTimeRequested',
+					}, {
+						'displayName': 'Loaned By',
+						'internalName': 'LoanedBy',
+						'userName': 1
+					}, {
+						'displayName': 'Loaned To',
+						'internalName': 'LoanedTo',
+						'userName': 1
+					}, {
+						'displayName': 'Computers',
+						'internalName': 'ComputersBoolean',
+					}, {
+						'displayName': 'Computer Quantity',
+						'internalName': 'ComputersQuantity',
+					}, {
+						'displayName': 'Request Date',
+						'internalName': 'RequestDate',
+						'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+					}
+				],
+				'tables': [
+					{
+						'tableTitle': 'Unapproved',
+						'tableID': 'pending-approval',
+						'someColsAreUsers': 1,
+						'basicRSQueryRelevantStatus': 'Pending Approval',
+						'sortColAndOrder': [4, 'asc'],
+						'customColumns': [
+							{
+								'displayName': 'Request ID',
+								'internalName': 'ID',
+								'formLink': 1
+							}, {
+								'displayName': 'Requested By',
+								'internalName': 'Author',
+								'userName': 1
+							}, {
+								'displayName': 'Talk To',
+								'internalName': 'RequestedFor',
+								'userName': 1
+							}, {
+								'displayName': 'Beginning Date - Requested',
+								'internalName': 'LoanBeginningDateRequested',
+								'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+							}, {
+								'displayName': 'Beginning Time - Requested',
+								'internalName': 'LoanBeginningTimeRequested',
+							}, {
+								'displayName': 'End Date - Requested',
+								'internalName': 'LoanEndDateRequested',
+								'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+							}, {
+								'displayName': 'End Time - Requested',
+								'internalName': 'LoanEndTimeRequested',
+							}, {
+								'displayName': 'Computers',
+								'internalName': 'ComputersBoolean',
+							}, {
+								'displayName': 'Computer Quantity',
+								'internalName': 'ComputersQuantity',
+							}, {
+								'displayName': 'Request Date',
+								'internalName': 'RequestDate',
+								'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+							}
+						]
+					}, {
+						'tableTitle': 'Unloaned',
+						'tableID': 'unloaned',
+						'someColsAreUsers': 1,
+						'customCAMLQuery': '<Where>' +
+							'  <And>' +
+							'    <Eq>' +
+							'      <FieldRef Name="RequestStatus"></FieldRef>' +
+							'      <Value Type="Text">Approved</Value>' +
+							'    </Eq>' +
+							'    <IsNull>' +
+							'      <FieldRef Name="LoanedTo"></FieldRef>' +
+							'    </IsNull>' +
+							'  </And>' +
+							'</Where>',
+						'sortColAndOrder': [4, 'asc'],
+						'customColumns': [
+							{
+								'displayName': 'Request ID',
+								'internalName': 'ID',
+								'formLink': 1
+							}, {
+								'displayName': 'Requested By',
+								'internalName': 'Author',
+								'userName': 1
+							}, {
+								'displayName': 'Talk To',
+								'internalName': 'RequestedFor',
+								'userName': 1
+							}, {
+								'displayName': 'Beginning Date - Requested',
+								'internalName': 'LoanBeginningDateRequested',
+								'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+							}, {
+								'displayName': 'Beginning Time - Requested',
+								'internalName': 'LoanBeginningTimeRequested',
+							}, {
+								'displayName': 'End Date - Requested',
+								'internalName': 'LoanEndDateRequested',
+								'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+							}, {
+								'displayName': 'End Time - Requested',
+								'internalName': 'LoanEndTimeRequested',
+							}, {
+								'displayName': 'Computers',
+								'internalName': 'ComputersBoolean',
+							}, {
+								'displayName': 'Computer Quantity',
+								'internalName': 'ComputersQuantity',
+							}, {
+								'displayName': 'Request Date',
+								'internalName': 'RequestDate',
+								'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+							}
+						]
+					}, {
+						'tableTitle': 'Loaned',
+						'tableID': 'loaned',
+						'someColsAreUsers': 1,
+						'basicRSQueryRelevantStatus': 'Loaned',
+						'sortColAndOrder': [4, 'asc'],
+					}, {
+						'tableTitle': 'Closed',
+						'tableID': 'closed',
+						'someColsAreUsers': 1,
+						'basicEOLQueryRelevantValue': 1,
+						'sortColAndOrder': [4, 'desc'],
+						'customColumns': [
+							{
+								'displayName': 'Request ID',
+								'internalName': 'ID',
+								'formLink': 1
+							}, {
+								'displayName': 'Requested By',
+								'internalName': 'Author',
+								'userName': 1
+							}, {
+								'displayName': 'Talk To',
+								'internalName': 'RequestedFor',
+								'userName': 1
+							}, {
+								'displayName': 'Request Status',
+								'internalName': 'RequestStatus',
+							}, {
+								'displayName': 'Beginning Date - Requested',
+								'internalName': 'LoanBeginningDateRequested',
+								'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+							}, {
+								'displayName': 'Beginning Time - Requested',
+								'internalName': 'LoanBeginningTimeRequested',
+							}, {
+								'displayName': 'Beginning Date - Actual',
+								'internalName': 'LoanBeginningDateActual',
+								'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+							}, {
+								'displayName': 'End Date - Requested',
+								'internalName': 'LoanEndDateRequested',
+								'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+							}, {
+								'displayName': 'End Time - Requested',
+								'internalName': 'LoanEndTimeRequested',
+							}, {
+								'displayName': 'End Date - Actual',
+								'internalName': 'LoanEndDateActual',
+								'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+							}, {
+								'displayName': 'Loaned By',
+								'internalName': 'LoanedBy',
+								'userName': 1
+							}, {
+								'displayName': 'Loaned To',
+								'internalName': 'LoanedTo',
+								'userName': 1
+							}, {
+								'displayName': 'Returned By',
+								'internalName': 'ReturnedBy',
+								'userName': 1
+							}, {
+								'displayName': 'Returned To',
+								'internalName': 'ReturnedTo',
+								'userName': 1
+							}, {
+								'displayName': 'Request Date',
+								'internalName': 'RequestDate',
+								'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+							}
+						]
+					}
+				]
+			};
+
+
+
+			// ----- nothing below should need to be configured for a new SWF
+
+			mData = $().ReturnThisSiteSettings();
+			$().InitializeAdminPage(mData, tData, bData);
+
+		} else {
+			$().RenderMaintenanceMessage();
+		}
+	});
+
+</script>
+
+
+
+<!-- all content -->
+<div id="all-content-container">
+	<div id="table-container"></div>
+	<div id="overlays-container"></div>
+</div>
