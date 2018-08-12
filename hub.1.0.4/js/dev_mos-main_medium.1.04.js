@@ -579,6 +579,7 @@
 			case "gseSchedulesCalendarStaff":
 				$().ReplacePageTitle(newTitle);
 				$("div#overview-screen-container").fadeIn(mData.gracefulScreenTransitionTime).removeClass("hidden");
+				$('div#overview-screen-container').fullCalendar('render');
 				$('#s4-workspace').scrollTop(0);
 				break;
 
@@ -922,6 +923,8 @@
 			case "gseSignupsStaff":
 				$("div#overview-screen-container").empty().removeClass('adminRequests-requests myRequests-requests gpcInitialConceptApprovalViewer-requests gpcSubmissionApprovalViewer-requests adminReferrals-requests myReferrals-requests adminEventAV-requests gseJobsHRAdmin-requests gseJobsJobAdmin-requests gseJobsManager-requests gseSchedulesCalendarHRAdmin-requests gseSchedulesCalendarJobAdmin-requests gseSchedulesCalendarManager-requests gseSchedulesCalendarStaff-requests gseSchedulesListHRAdmin-requests gseSchedulesListJobAdmin-requests gseSchedulesListManager-requests gseSchedulesListStaff-requests gseSignupsHRAdmin-requests gseSignupsManager-requests gseSignupsStaff-requests');
 				$("div#overview-screen-container").append('<div id="overview-table-container" class="table-container"></div>');
+			case "gseSchedulesListHRAdmin":
+				$("div#gse-schedule-card-dialog").remove();
 				break;
 		}
 	};
@@ -1257,16 +1260,29 @@
 
 		var query = "<Query>" +
 			"<Where>";
-		if (opt.where.ands) { query += "<And>"; }
-		// curently assumes there are no more than two ands
-		$.each(opt.where.ands, function (i, andObject) {
-			query += "<Eq>" +
-				"<FieldRef Name='" + andObject.field + "'></FieldRef>" +
-				"<Value Type='" + andObject.type + "'>" + andObject.value + "</Value>" +
-				"</Eq>";
-		});
+		if (opt.where.ands) {
+			query += "<And>";
+			// curently assumes there are no more than two ands
+			$.each(opt.where.ands, function (i, andObject) {
+				if (!andObject.operator) {
+					andObject.operator = 'Eq';
+				}
+				query += "<" + andObject.operator + ">" +
+					"<FieldRef Name='" + andObject.field + "'></FieldRef>" +
+					"<Value Type='" + andObject.type + "'>" + andObject.value + "</Value>" +
+					"</" + andObject.operator + ">";
+			});
 
-		if (opt.where.ands) { query += "</And>"; }
+			query += "</And>";
+		}
+
+		if (opt.where.field) {
+			query += "<Eq>" +
+				"<FieldRef Name='" + opt.where.field + "'></FieldRef>" +
+				"<Value Type='" + opt.where.type + "'>" + opt.where.value + "</Value>" +
+				"</Eq>";
+		}
+
 		query += "</Where>" +
 			"</Query>";
 
@@ -1275,6 +1291,15 @@
 			fields += " <FieldRef Name='" + oneField.nameInList + "' />";
 		});
 		fields += "</ViewFields>";
+
+		// console.log('opt.webURL');
+		// console.log(opt.webURL);
+		// console.log('opt.listName');
+		// console.log(opt.listName);
+		// console.log('fields');
+		// console.log(fields);
+		// console.log('query');
+		// console.log(query);
 
 		$().SPServices({
 			operation: "GetListItems",
@@ -1285,6 +1310,12 @@
 			CAMLQuery: query,
 			CAMLQueryOptions: "<QueryOptions><ExpandUserField>TRUE</ExpandUserField></QueryOptions>",
 			completefunc: function (xData, Status) {
+
+				// console.log('xData');
+				// console.log(xData);
+				// console.log('Status');
+				// console.log(Status);
+
 				$(xData.responseXML).SPFilterNode("z:row").each(function () {
 					var zRow = $(this);
 					var returnRow = {};
@@ -2487,828 +2518,596 @@
 
 	$.fn.ConfigureRequest = function (passedRequestID) {
 
-		// if this is a GSE Schedule and this user is not HR Admin, Job Admin, or Manager
-		if (mData.requestName === "GSE Schedule" && uData.roles.indexOf("gseUserOnly") > -1) {
-			// forget this function and go to ConfigureExistingGSESchedule instead
-			$().ConfigureExistingGSESchedule(passedRequestID);
-			// if this is not a GSE Schedule or this user is HR Admin, Job Admin, or Manager
+		// ========================================================
+		// SET UP VARS
+		// ========================================================
+
+		// console.log('betweenLoadingAndInitialization time = ' + (Date.now() - loadingFinishTime)/1000 + ' seconds');
+
+		// if mData.adminNotificationPersons === 1, overwrite the admin notifications data pulled from Component Log with
+		//		data from Component Group Log
+		if (typeof (mData.devAdminNotifications) != 'undefined' && mData.devAdminNotifications === 1) {
+			mData.adminNotificationPersons = mData.devAdminNotificationPersons;
+		}
+
+		// set semicolon-delimited string of admin emails
+		mData.adminEmailString = $().ReturnUserEmailStringAndArray(mData.adminNotificationPersons).string;
+		mData.adminEmailArray = $().ReturnUserEmailStringAndArray(mData.adminNotificationPersons).array;
+		mData.componentGrpAdminEmailString = $().ReturnUserEmailStringAndArray(mData.componentGrpAdminNotifications).string;
+		mData.componentGrpAdminEmailArray = $().ReturnUserEmailStringAndArray(mData.componentGrpAdminNotifications).array;
+
+		mData.requiredApproversArray = (mData.requiredApproversString) ?
+			$().ReturnUserDataFromPersonOrGroupFieldString(mData.requiredApproversString) :
+			[];
+
+		mData.conditionalApproversArray = (mData.conditionalApproversString) ?
+			$().ReturnUserDataFromPersonOrGroupFieldString(mData.conditionalApproversString) :
+			[];
+
+		// THIS REQUEST'S DATA
+		// reset rData and get request id from url param
+		if (typeof (passedRequestID) != "undefined" && passedRequestID === "0") {
+			rData = { "requestID": "" };
+			rData.gseScheduleID = GetParamFromUrl(location.search, "gseScheduleID");
 		} else {
+			rData = { "requestID": GetParamFromUrl(location.search, "r") };
+		}
 
-			// ========================================================
-			// SET UP VARS
-			// ========================================================
+		// if request id is undefined or "0", then this is a new request, which is signified everywhere by an empty id string
+		if (typeof (rData.requestID) === "undefined" || rData.requestID === "0") { rData.requestID = ""; }
 
-			// console.log('betweenLoadingAndInitialization time = ' + (Date.now() - loadingFinishTime)/1000 + ' seconds');
+		// if there is a request id, then get data for this request
+		if (rData.requestID != "") {
 
-			// if mData.adminNotificationPersons === 1, overwrite the admin notifications data pulled from Component Log with
-			//		data from Component Group Log
-			if (typeof (mData.devAdminNotifications) != 'undefined' && mData.devAdminNotifications === 1) {
-				mData.adminNotificationPersons = mData.devAdminNotificationPersons;
-			}
-
-			// set semicolon-delimited string of admin emails
-			mData.adminEmailString = $().ReturnUserEmailStringAndArray(mData.adminNotificationPersons).string;
-			mData.adminEmailArray = $().ReturnUserEmailStringAndArray(mData.adminNotificationPersons).array;
-			mData.componentGrpAdminEmailString = $().ReturnUserEmailStringAndArray(mData.componentGrpAdminNotifications).string;
-			mData.componentGrpAdminEmailArray = $().ReturnUserEmailStringAndArray(mData.componentGrpAdminNotifications).array;
-
-			mData.requiredApproversArray = (mData.requiredApproversString) ?
-				$().ReturnUserDataFromPersonOrGroupFieldString(mData.requiredApproversString) :
-				[];
-
-			mData.conditionalApproversArray = (mData.conditionalApproversString) ?
-				$().ReturnUserDataFromPersonOrGroupFieldString(mData.conditionalApproversString) :
-				[];
-
-			// THIS REQUEST'S DATA
-			// reset rData and get request id from url param
-			if (typeof (passedRequestID) != "undefined" && passedRequestID === "0") {
-				rData = { "requestID": "" };
-				rData.gseScheduleID = GetParamFromUrl(location.search, "gseScheduleID");
-			} else {
-				rData = { "requestID": GetParamFromUrl(location.search, "r") };
-			}
-
-			// if request id is undefined or "0", then this is a new request, which is signified everywhere by an empty id string
-			if (typeof (rData.requestID) === "undefined" || rData.requestID === "0") { rData.requestID = ""; }
-
-			// if there is a request id, then get data for this request
-
-			if (rData.requestID != "") {
-
-				rData = $.extend(
-					rData,
-					$().GetFieldsFromOneRow({
-						"select": [{
-							"nameHere": "requestStatus",
-							"nameInList": "RequestStatus"
-						}, {
-							"nameHere": "endOfLife",
-							"nameInList": "EndOfLife"
-						}, {
-							"nameHere": "lastModifiedAtLoad",
-							"nameInList": "Modified"
-						}, {
-							"nameHere": "requesterID",
-							"nameInList": "Author"
-						}, {
-							"nameHere": "formData",
-							"nameInList": "AllRequestData"
-						}, {
-							"nameHere": "requestVersion",
-							"nameInList": "RequestVersion"
-						}],
-						"where": {
-							"field": "ID",
-							"type": "Number",
-							"value": rData.requestID,
-						}
-					})
-				);
-			}
-
-			if (typeof (rData.requestStatus) === "undefined") {
-				rData.requestStatus = "";
-			}
-
-			if (rData.requestID != "") {
-				rData.formDataOnLoad = rData.formData;
-				rData.formDataOnLoad.requestStatus = rData.requestStatus;
-			}
-
-			/* 
-				// consider
-
-				if (rData.requestID != "") {
-					if (mData.requestName != "GSE Signup") {
-						rData.formDataOnLoad = rData.formData;
-						rData.formDataOnLoad.requestStatus = rData.requestStatus;
-					} else {
-						rData.formDataOnLoad = [];
-						rData.formDataOnLoad.requestStatus = '';
+			rData = $.extend(
+				rData,
+				$().GetFieldsFromOneRow({
+					"select": [{
+						"nameHere": "requestStatus",
+						"nameInList": "RequestStatus"
+					}, {
+						"nameHere": "endOfLife",
+						"nameInList": "EndOfLife"
+					}, {
+						"nameHere": "lastModifiedAtLoad",
+						"nameInList": "Modified"
+					}, {
+						"nameHere": "requesterID",
+						"nameInList": "Author"
+					}, {
+						"nameHere": "formData",
+						"nameInList": "AllRequestData"
+					}, {
+						"nameHere": "requestVersion",
+						"nameInList": "RequestVersion"
+					}],
+					"where": {
+						"field": "ID",
+						"type": "Number",
+						"value": rData.requestID,
 					}
-				}
-			 */
+				})
+			);
+		}
+		if (typeof (rData.requestStatus) === "undefined") {
+			rData.requestStatus = "";
+		}
 
-			// THIS REQUEST'S DEFAULT DATA FOR NEW REQUESTS
+		if (rData.requestID != "") {
+			rData.formDataOnLoad = rData.formData;
+			rData.formDataOnLoad.requestStatus = rData.requestStatus;
+		}
 
-			if (typeof (mData.defaultDataForNewRequests) != "undefined") {
-				rData = $.extend($().GetFieldsFromOneRow({
-					'webURL': mData.defaultDataForNewRequests.webURL,
-					'listName': mData.defaultDataForNewRequests.listName,
-					'select': mData.defaultDataForNewRequests.select,
-					'where': mData.defaultDataForNewRequests.where,
-				}), rData);
+		// THIS REQUEST'S DEFAULT DATA FOR NEW REQUESTS
+
+		if (typeof (mData.defaultDataForNewRequests) != "undefined") {
+			rData = $.extend($().GetFieldsFromOneRow({
+				'webURL': mData.defaultDataForNewRequests.webURL,
+				'listName': mData.defaultDataForNewRequests.listName,
+				'select': mData.defaultDataForNewRequests.select,
+				'where': mData.defaultDataForNewRequests.where,
+			}), rData);
+		}
+
+		// CAPTURE MACHINE DATA
+		uData.browserFamilyAndVersion = bowser.name + ' ' + bowser.version;
+
+		if (typeof (bowser.mobile) != 'undefined' && bowser.mobile === true) {
+			uData.formFactor = 'mobile';
+		} else if (typeof (bowser.tablet) != 'undefined' && bowser.tablet === true) {
+			uData.formFactor = 'tablet';
+		} else {
+			uData.formFactor = 'probably desktop';
+		}
+
+		if (typeof (bowser.android) != 'undefined' && bowser.android === true) {
+			uData.os = 'Android';
+		} else if (typeof (bowser.ios) != 'undefined' && bowser.ios === true) {
+			if (typeof (bowser.ipad) != 'undefined' && bowser.ipad === true) {
+				uData.os = 'iOS (iPad)';
+			} else if (typeof (bowser.iphone) != 'undefined' && bowser.iphone === true) {
+				uData.os = 'iOS (iPhone)';
+			} else if (typeof (bowser.ipod) != 'undefined' && bowser.ipod === true) {
+				uData.os = 'iOS (iPhod)';
 			}
+		} else if (typeof (bowser.windowsphone) != 'undefined' && bowser.windowsphone === true) {
+			uData.os = 'Windows Phone';
+		} else if (typeof (bowser.mac) != 'undefined' && bowser.mac === true) {
+			uData.os = 'Mac';
+		} else if (typeof (bowser.linux) != 'undefined' && bowser.linux === true) {
+			uData.os = 'Linux';
+		} else {
+			uData.os = 'Probably Windows';
+		}
 
-			// CAPTURE MACHINE DATA
-			uData.browserFamilyAndVersion = bowser.name + ' ' + bowser.version;
+		if (typeof (bowser.osversion) != 'undefined') {
+			uData.os = uData.os + ' ' + bowser.osversion;
+		}
 
-			if (typeof (bowser.mobile) != 'undefined' && bowser.mobile === true) {
-				uData.formFactor = 'mobile';
-			} else if (typeof (bowser.tablet) != 'undefined' && bowser.tablet === true) {
-				uData.formFactor = 'tablet';
+		// COMBINE STANDARD AND UNIQUE FORM ELEMENTS
+
+		if (typeof (fData.standardElementGroups.standardPrintButton) != "undefined") {
+
+			var standardPrintButton = [
+				{
+					'elementType': 'markup',
+					'tag': 'a',
+					'htmlID': 'standard-printer-button-inside-request',
+					'content': fData.standardElementGroups.standardPrintButton.buttonText,
+					'dataAttributes': [{
+						'key': 'print-function',
+						'value': fData.standardElementGroups.standardPrintButton.printFunction
+					}],
+					'begin': 1,
+					'end': 1,
+					// 'hideForNonAdmin': [""],
+					// 'hideForAdmin': [""],
+				}
+			];
+
+			if (typeof (fData.standardElementGroups.standardPrintButton.hideForNonAdmin) !== "undefined") {
+				standardPrintButton[0]["hideForNonAdmin"] = fData.standardElementGroups.standardPrintButton.hideForNonAdmin;
 			} else {
-				uData.formFactor = 'probably desktop';
+				standardPrintButton[0]["hideForNonAdmin"] = [""];
 			}
 
-			if (typeof (bowser.android) != 'undefined' && bowser.android === true) {
-				uData.os = 'Android';
-			} else if (typeof (bowser.ios) != 'undefined' && bowser.ios === true) {
-				if (typeof (bowser.ipad) != 'undefined' && bowser.ipad === true) {
-					uData.os = 'iOS (iPad)';
-				} else if (typeof (bowser.iphone) != 'undefined' && bowser.iphone === true) {
-					uData.os = 'iOS (iPhone)';
-				} else if (typeof (bowser.ipod) != 'undefined' && bowser.ipod === true) {
-					uData.os = 'iOS (iPhod)';
-				}
-			} else if (typeof (bowser.windowsphone) != 'undefined' && bowser.windowsphone === true) {
-				uData.os = 'Windows Phone';
-			} else if (typeof (bowser.mac) != 'undefined' && bowser.mac === true) {
-				uData.os = 'Mac';
-			} else if (typeof (bowser.linux) != 'undefined' && bowser.linux === true) {
-				uData.os = 'Linux';
+			if (typeof (fData.standardElementGroups.standardPrintButton.hideForAdmin) !== "undefined") {
+				standardPrintButton[0]["hideForAdmin"] = fData.standardElementGroups.standardPrintButton.hideForAdmin;
 			} else {
-				uData.os = 'Probably Windows';
+				standardPrintButton[0]["hideForAdmin"] = [""];
 			}
+		}
 
-			if (typeof (bowser.osversion) != 'undefined') {
-				uData.os = uData.os + ' ' + bowser.osversion;
+		var standardThisRequestAndRequesterElements = [
+			// this request
+			{
+				"elementType": "markup",
+				"tag": "div",
+				"htmlID": "print-to-screen",
+				"begin": 1,
+				"end": 1
+			}, {
+				"elementType": "markup",
+				"tag": "h2",
+				"content": "This Request",
+				"htmlID": "header_this-request",
+				"begin": 1,
+				"end": 1
+			}, {
+				"elementType": "markup",
+				"tag": "div",
+				"htmlClass": "label-and-control",
+				"htmlID": "requirement-legend",
+				"content": '	<div class="label"></div>' +
+					'	<div class="field-type-indication"><span class="field-type-indicator field-required"><span class="message message-required"></span></span></div>' +
+					'	<div class="control">= required field</div>',
+				"begin": 1,
+				"end": 1
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "Request ID",
+				"labelContent": "Request ID",
+				"hideForNonAdmin": [""],
+				"hideForAdmin": [""],
+				"disabledForNonAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
+				"disabledForAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"]
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "Request Date",
+				"labelContent": "Request Date",
+				"listFieldName": "RequestDate",
+				"friendlyFormatOnLoad": {
+					'incomingFormat': null,
+					'returnFormat': 'MMMM D, YYYY',
+					'determineYearDisplayDynamically': 1
+				},
+				"isoFormatOnSubmit": {
+					'incomingFormat': null,
+					'returnFormat': null,
+					'determineYearDisplayDynamically': null
+				},
+				"hideForNonAdmin": [""],
+				"hideForAdmin": [""],
+				"disabledForNonAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
+				"disabledForAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"]
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "Request Nickname",
+				"labelContent": "Request Nickname",
+				"listFieldName": "Title",
+				"helpNotes": [{
+					"text": "Give this request a name you can reference later",
+					"htmlID": "request-nickname_help-note",
+					"urgent": 0,
+					"hideForNonAdmin": ["Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
+					"hideForAdmin": ["Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"]
+				}],
+				"requiredForNonAdmin": [""],
+				"requiredForAdmin": [""],
+				"disabledForNonAdmin": ["Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
+				"disabledForAdmin": ["Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
+				"hideForAdmin": ["Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"]
+			}, {
+				"elementType": "field",
+				"controlType": "select",
+				"fieldName": "Self or Other",
+				"labelContent": "If we have questions, talk to you or someone else?",
+				"setOptions": [{
+					"value": "Self",
+					"display": "Talk to me"
+				}, {
+					"value": "Other",
+					"display": "Talk to someone else"
+				}],
+				"requiredForNonAdmin": [""],
+				"requiredForAdmin": [""],
+				"hideForNonAdmin": ["Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
+				"hideForAdmin": ["Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
+				"disabledForNonAdmin": ["Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Text Edited", "Web Live", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
+				"disabledForAdmin": ["Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Text Edited", "Web Live", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
+				"onChange": [{
+					"thisFieldEquals": ["Self"],
+					"hide": [{
+						"fieldName": "Requested For"
+					}],
+					"optional": [{
+						"fieldName": "Requested For",
+						"type": "peoplepicker"
+					}],
+					"set": [{
+						"fieldName": "Requested For",
+						"type": "peoplePicker",
+						"value": "currentUser"
+					}]
+				}, {
+					"thisFieldEquals": ["Other"],
+					"show": [{
+						"fieldName": "Requested For"
+					}],
+					"require": [{
+						"fieldName": "Requested For",
+						"type": "peoplepicker"
+					}],
+					"set": [{
+						"fieldName": "Requested For",
+						"type": "peoplePicker",
+						"value": ""
+					}]
+				}]
+			}, {
+				"elementType": "field",
+				"controlType": "peoplePicker",
+				"fieldName": "Requested For",
+				"labelContent": "If needed, talk to",
+				"listFieldName": "RequestedFor",
+				"yieldsViewPermissions": 1,
+				"hideForNonAdmin": [""],
+				"hideForAdmin": [""],
+				"disabledForNonAdmin": ["Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
+				"disabledForAdmin": ["Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"]
+			}, {
+				"elementType": "field",
+				"controlType": "check",
+				"fieldName": "Requester Cancellation",
+				"choiceSetLabel": "Cancellation",
+				"choices": [{
+					"value": "cancel",
+					"display": "Yes, I wish to cancel this request"
+				}],
+				"hideForNonAdmin": ["", "Validator Picked Up", "Loaned", "Archived", "Completed", "Archived", "Disapproved", "Cancelled"],
+				"hideForAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Archived", "Completed", "Archived", "Disapproved", "Cancelled"],
+				"disabledForNonAdmin": ["Completed", "Archived", "Disapproved", "Cancelled"],
+				"disabledForAdmin": ["Completed", "Archived", "Disapproved", "Cancelled"]
+				// about the requester
+			}, {
+				"elementType": "markup",
+				"tag": "div",
+				"htmlID": "container_about-the-requester",
+				"begin": 1,
+				"hideForNonAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "Submitted", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
+				"hideForAdmin": [""],
+			}, {
+				"elementType": "markup",
+				"tag": "h2",
+				"content": "About the Requester",
+				"begin": 1,
+				"end": 1
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "Requester Name",
+				"labelContent": "Name",
+				"disabledForNonAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
+				"disabledForAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"]
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "Requester Department",
+				"labelContent": "Department",
+				"disabledForNonAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
+				"disabledForAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"]
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "Requester Email",
+				"labelContent": "Email",
+				"disabledForNonAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
+				"disabledForAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"]
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "Requester Phone",
+				"labelContent": "Phone",
+				"disabledForNonAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
+				"disabledForAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"]
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "Requester Account",
+				"labelContent": "Account",
+				"yieldsViewPermissions": 1,
+				"hideForNonAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
+				"hideForAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
+				"disabledForNonAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
+				"disabledForAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"]
+			}, {
+				"elementType": "field",
+				"controlType": "peoplePicker",
+				"fieldName": "Requested By",
+				"labelContent": "Requested By",
+				"listFieldName": "RequestedBy",
+				"yieldsViewPermissions": 1,
+				"hideForNonAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
+				"hideForAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
+				"disabledForNonAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
+				"disabledForAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"]
+			}, {
+				"elementType": "markup",
+				"tag": "div",
+				"end": 1
 			}
+		];
 
-			// COMBINE STANDARD AND UNIQUE FORM ELEMENTS
-
-			if (typeof (fData.standardElementGroups.standardPrintButton) != "undefined") {
-
-				var standardPrintButton = [
-					{
-						'elementType': 'markup',
-						'tag': 'a',
-						'htmlID': 'standard-printer-button-inside-request',
-						'content': fData.standardElementGroups.standardPrintButton.buttonText,
-						'dataAttributes': [{
-							'key': 'print-function',
-							'value': fData.standardElementGroups.standardPrintButton.printFunction
-						}],
-						'begin': 1,
-						'end': 1,
-						// 'hideForNonAdmin': [""],
-						// 'hideForAdmin': [""],
-					}
-				];
-
-				if (typeof (fData.standardElementGroups.standardPrintButton.hideForNonAdmin) !== "undefined") {
-					standardPrintButton[0]["hideForNonAdmin"] = fData.standardElementGroups.standardPrintButton.hideForNonAdmin;
-				} else {
-					standardPrintButton[0]["hideForNonAdmin"] = [""];
-				}
-
-				if (typeof (fData.standardElementGroups.standardPrintButton.hideForAdmin) !== "undefined") {
-					standardPrintButton[0]["hideForAdmin"] = fData.standardElementGroups.standardPrintButton.hideForAdmin;
-				} else {
-					standardPrintButton[0]["hideForAdmin"] = [""];
-				}
+		var standardApprovalElements = [
+			{
+				"elementType": "markup",
+				"tag": "div",
+				"htmlID": "container_approvals",
+				"begin": 1,
+			}, {
+				"elementType": "markup",
+				"tag": "h2",
+				"htmlID": "header_approvals",
+				"content": "Approvals",
+				"begin": 1,
+				"end": 1
+			}, {
+				"elementType": "markup",
+				"tag": "div",
+				"htmlID": "swf-specific-approval-preface",
+				"htmlClass": "preface",
+				"begin": 1,
+				"end": 1,
+				"hideForNonAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+				"hideForAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
+			}, {
+				"elementType": "markup",
+				"tag": "div",
+				"htmlClass": "preface",
+				"content": "By submitting this request, you approve it. For any additional person whose approval will be required, " +
+					"enter a name or mos.org email address in the Approvers field.",
+				"begin": 1,
+				"end": 1,
+				"hideForNonAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+				"hideForAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
+			}, {
+				"elementType": "markup",
+				"tag": "div",
+				"htmlClass": "preface",
+				"content": "To remove an unneeded approver, select the \"X\" to the right of the name.",
+				"begin": 1,
+				"end": 1,
+				"hideForNonAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+				"hideForAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
+			}, {
+				"elementType": "markup",
+				"tag": "div",
+				"htmlClass": "preface",
+				"content": "Here to approve? Just find your name and set the corresponding approval indicator " +
+					"to 'I approve'. If your approval has been requested in error, please " +
+					"<a href='' class='link_admin-email'>contact the admin</a>.",
+				"htmlID": "approval-instructions",
+				"begin": 1,
+				"end": 1,
+				"hideForNonAdmin": ["", "In Development", "Approved", "Completed", "Disapproved", "Cancelled"],
+				"hideForAdmin": ["", "In Development", "Approved", "Completed", "Disapproved", "Cancelled"]
+			}, {
+				"elementType": "markup",
+				"tag": "div",
+				"htmlClass": "preface",
+				"content": "Here to approve? No need. Someone has already disapproved this request.",
+				"htmlClass": "urgent",
+				"htmlID": "disregard-approval-notice",
+				"begin": 1,
+				"end": 1,
+				"hideForNonAdmin": ["", "In Development", "Pending Approval", "Approved", "Completed", "Cancelled"],
+				"hideForAdmin": ["", "In Development", "Pending Approval", "Approved", "Completed", "Cancelled"]
+			}, {
+				"elementType": "markup",
+				"tag": "div",
+				"htmlClass": "preface",
+				"content": "Admin - If the approval requirements are incorrect, " +
+					"<ul>" +
+					"	<li>Delete an unneeded approver by selecting the \"X\" to the right of the name.</li>" +
+					"	<li>Add a needed approver by entering a name or mos.org email address in the Approvers field.</li>" +
+					"	<li>Added and deleted approvers will be notified automatically.</li>" +
+					"<ul>",
+				"begin": 1,
+				"end": 1,
+				"hideForNonAdmin": ["", "In Development", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+				"hideForAdmin": ["", "In Development", "Completed", "Disapproved", "Cancelled"]
+			}, {
+				"elementType": "field",
+				"controlType": "peoplePicker",
+				"fieldName": "Approvers on Load",
+				"labelContent": "Approvers on Load",
+				"hideForNonAdmin": ["", "In Development", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+				"hideForAdmin": ["", "In Development", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+				"disabledForNonAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+				"disabledForAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
+			}, {
+				"elementType": "field",
+				"controlType": "peoplePicker",
+				"fieldName": "Approvers",
+				"labelContent": "Approvers",
+				"yieldsViewPermissions": 1,
+				"hideForNonAdmin": ["Completed", "Disapproved", "Cancelled"],
+				"hideForAdmin": ["Completed", "Disapproved", "Cancelled"],
+				"disabledForNonAdmin": ["Completed", "Disapproved", "Cancelled"],
+				"disabledForAdmin": ["Completed", "Disapproved", "Cancelled"],
+				"helpNotes": [{
+					"text": "All and only the the people listed here will be required to approve this request",
+					"htmlID": "approvers-people-picker_help-note",
+					"urgent": 0
+				}]
+			}, {
+				"elementType": "markup",
+				"tag": "div",
+				"htmlID": "all-approvals",
+				"content": '',
+				"begin": 1,
+				"end": 1
+			}, {
+				"elementType": "markup",
+				"tag": "div",
+				"end": 1
 			}
+		];
 
-			var standardThisRequestAndRequesterElements = [
-				// this request
+		if (typeof (fData.standardElementGroups.standardAdminAssignmentCompletionElements) != "undefined") {
+
+			var standardAdminAssignmentCompletionElements1 = [
 				{
 					"elementType": "markup",
 					"tag": "div",
-					"htmlID": "print-to-screen",
+					"htmlID": "admin",
+					"content": '',
 					"begin": 1,
-					"end": 1
+					"hideForNonAdmin": ["", "Submitted", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+					"hideForAdmin": [""]
 				}, {
 					"elementType": "markup",
 					"tag": "h2",
-					"content": "This Request",
-					"htmlID": "header_this-request",
+					"content": 'Admin',
 					"begin": 1,
-					"end": 1
+					"end": 1,
 				}, {
 					"elementType": "markup",
 					"tag": "div",
-					"htmlClass": "label-and-control",
-					"htmlID": "requirement-legend",
-					"content": '	<div class="label"></div>' +
-						'	<div class="field-type-indication"><span class="field-type-indicator field-required"><span class="message message-required"></span></span></div>' +
-						'	<div class="control">= required field</div>',
+					"htmlID": "approval-notification-history",
 					"begin": 1,
-					"end": 1
+					"hideForNonAdmin": ["", "Submitted", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+					"hideForAdmin": ["", "Submitted", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
 				}, {
-					"elementType": "field",
-					"controlType": "text",
-					"fieldName": "Request ID",
-					"labelContent": "Request ID",
-					"hideForNonAdmin": [""],
-					"hideForAdmin": [""],
-					"disabledForNonAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
-					"disabledForAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"]
+					"elementType": "markup",
+					"tag": "h3",
+					"content": 'Approval Notification History',
+					"begin": 1,
+					"end": 1,
 				}, {
-					"elementType": "field",
-					"controlType": "text",
-					"fieldName": "Request Date",
-					"labelContent": "Request Date",
-					"listFieldName": "RequestDate",
-					"friendlyFormatOnLoad": {
-						'incomingFormat': null,
-						'returnFormat': 'MMMM D, YYYY',
-						'determineYearDisplayDynamically': 1
-					},
-					"isoFormatOnSubmit": {
-						'incomingFormat': null,
-						'returnFormat': null,
-						'determineYearDisplayDynamically': null
-					},
-					"hideForNonAdmin": [""],
-					"hideForAdmin": [""],
-					"disabledForNonAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
-					"disabledForAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"]
+					"elementType": "markup",
+					"tag": "table",
+					"htmlID": "table_approval-notification-history",
+					"content": '  <thead>' +
+						'		 <tr>' +
+						'			  <th id="th_recipient">Recipient</th>' +
+						'			  <th id="th_needed-or-not">Needed or Not Needed</th>' +
+						'			  <th id="th_date">Date & Time</th>' +
+						'		 </tr>' +
+						'	</thead>' +
+						'	<tbody>' +
+						'	</tbody>',
+					"begin": 1,
+					"end": 1,
 				}, {
-					"elementType": "field",
-					"controlType": "text",
-					"fieldName": "Request Nickname",
-					"labelContent": "Request Nickname",
-					"listFieldName": "Title",
-					"helpNotes": [{
-						"text": "Give this request a name you can reference later",
-						"htmlID": "request-nickname_help-note",
-						"urgent": 0,
-						"hideForNonAdmin": ["Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
-						"hideForAdmin": ["Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"]
-					}],
-					"requiredForNonAdmin": [""],
-					"requiredForAdmin": [""],
-					"disabledForNonAdmin": ["Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
-					"disabledForAdmin": ["Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
-					"hideForAdmin": ["Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"]
+					"elementType": "markup",
+					"tag": "div",
+					"end": 1,
+				}, {
+					"elementType": "markup",
+					"tag": "h3",
+					"content": 'Request Status and Notes',
+					"begin": 1,
+					"end": 1,
 				}, {
 					"elementType": "field",
 					"controlType": "select",
-					"fieldName": "Self or Other",
-					"labelContent": "If we have questions, talk to you or someone else?",
-					"setOptions": [{
-						"value": "Self",
-						"display": "Talk to me"
-					}, {
-						"value": "Other",
-						"display": "Talk to someone else"
-					}],
-					"requiredForNonAdmin": [""],
-					"requiredForAdmin": [""],
-					"hideForNonAdmin": ["Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
-					"hideForAdmin": ["Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
-					"disabledForNonAdmin": ["Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Text Edited", "Web Live", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
-					"disabledForAdmin": ["Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Text Edited", "Web Live", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
-					"onChange": [{
-						"thisFieldEquals": ["Self"],
-						"hide": [{
-							"fieldName": "Requested For"
-						}],
-						"optional": [{
-							"fieldName": "Requested For",
-							"type": "peoplepicker"
-						}],
-						"set": [{
-							"fieldName": "Requested For",
-							"type": "peoplePicker",
-							"value": "currentUser"
-						}]
-					}, {
-						"thisFieldEquals": ["Other"],
-						"show": [{
-							"fieldName": "Requested For"
-						}],
-						"require": [{
-							"fieldName": "Requested For",
-							"type": "peoplepicker"
-						}],
-						"set": [{
-							"fieldName": "Requested For",
-							"type": "peoplePicker",
-							"value": ""
-						}]
-					}]
+					"fieldName": "Change Request Status",
+					"labelContent": "Change Request Status",
+					"setOptions": fData.standardElementGroups.standardAdminAssignmentCompletionElements.changeRequestStatus,
+					"hideForNonAdmin": ["Submitted", "Completed", "Disapproved", "Cancelled"],
+					"hideForAdmin": ["Submitted", "Completed", "Disapproved", "Cancelled"],
+					'onChange': [
+						{ "thisFieldEquals": ["Approve"], "require": [{ "fieldName": "Assigned To", "type": "peoplepicker" }], "enable": [{ "fieldName": "Assigned To", "type": "peoplepicker" }], "show": [{ "divID": "assignment" }] },
+						{ "thisFieldEquals": ["Complete"], "require": [{ "fieldName": "Completed By", "type": "peoplepicker" }], "enable": [{ "fieldName": "Completed By", "type": "peoplepicker" }], "show": [{ "divID": "completion" }, { "divID": "assignment" }] },
+						{ "thisFieldEquals": ["", "Cancel", "Disapprove"], "optional": [{ "fieldName": "Assigned To", "type": "peoplepicker" }, { "fieldName": "Completed By", "type": "peoplepicker" }], "disable": [{ "fieldName": "Assigned To", "type": "peoplepicker" }, { "fieldName": "Completed By", "type": "peoplepicker" }], "hide": [{ "divID": "completion" }, { "divID": "assignment" }] },
+					],
 				}, {
 					"elementType": "field",
-					"controlType": "peoplePicker",
-					"fieldName": "Requested For",
-					"labelContent": "If needed, talk to",
-					"listFieldName": "RequestedFor",
-					"yieldsViewPermissions": 1,
-					"hideForNonAdmin": [""],
-					"hideForAdmin": [""],
-					"disabledForNonAdmin": ["Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
-					"disabledForAdmin": ["Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"]
+					"controlType": "text",
+					"fieldName": "Request Status",
+					"listFieldName": "RequestStatus",
+					"labelContent": "Request Status",
+					"disabledForNonAdmin": ["", "Submitted", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+					"disabledForAdmin": ["", "Submitted", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
 				}, {
 					"elementType": "field",
-					"controlType": "check",
-					"fieldName": "Requester Cancellation",
-					"choiceSetLabel": "Cancellation",
-					"choices": [{
-						"value": "cancel",
-						"display": "Yes, I wish to cancel this request"
-					}],
-					"hideForNonAdmin": ["", "Validator Picked Up", "Loaned", "Archived", "Completed", "Archived", "Disapproved", "Cancelled"],
-					"hideForAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Archived", "Completed", "Archived", "Disapproved", "Cancelled"],
-					"disabledForNonAdmin": ["Completed", "Archived", "Disapproved", "Cancelled"],
-					"disabledForAdmin": ["Completed", "Archived", "Disapproved", "Cancelled"]
-					// about the requester
+					"controlType": "textarea",
+					"fieldName": "New Admin Notes",
+					"labelContent": "Admin Notes"
+				}, {
+					"elementType": "field",
+					"controlType": "textarea",
+					"fieldName": "Historical Admin Notes",
+					"labelContent": "Historical Admin Notes",
+					"disabledForNonAdmin": ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+					"disabledForAdmin": ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
 				}, {
 					"elementType": "markup",
 					"tag": "div",
-					"htmlID": "container_about-the-requester",
-					"begin": 1,
-					"hideForNonAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "Submitted", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
-					"hideForAdmin": [""],
-				}, {
-					"elementType": "markup",
-					"tag": "h2",
-					"content": "About the Requester",
-					"begin": 1,
-					"end": 1
-				}, {
-					"elementType": "field",
-					"controlType": "text",
-					"fieldName": "Requester Name",
-					"labelContent": "Name",
-					"disabledForNonAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
-					"disabledForAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"]
-				}, {
-					"elementType": "field",
-					"controlType": "text",
-					"fieldName": "Requester Department",
-					"labelContent": "Department",
-					"disabledForNonAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
-					"disabledForAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"]
-				}, {
-					"elementType": "field",
-					"controlType": "text",
-					"fieldName": "Requester Email",
-					"labelContent": "Email",
-					"disabledForNonAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
-					"disabledForAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"]
-				}, {
-					"elementType": "field",
-					"controlType": "text",
-					"fieldName": "Requester Phone",
-					"labelContent": "Phone",
-					"disabledForNonAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
-					"disabledForAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"]
-				}, {
-					"elementType": "field",
-					"controlType": "text",
-					"fieldName": "Requester Account",
-					"labelContent": "Account",
-					"yieldsViewPermissions": 1,
-					"hideForNonAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
-					"hideForAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
-					"disabledForNonAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
-					"disabledForAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"]
-				}, {
-					"elementType": "field",
-					"controlType": "peoplePicker",
-					"fieldName": "Requested By",
-					"labelContent": "Requested By",
-					"listFieldName": "RequestedBy",
-					"yieldsViewPermissions": 1,
-					"hideForNonAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
-					"hideForAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
-					"disabledForNonAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"],
-					"disabledForAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Submitted", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "In Development", "Pending Approval", "Approved", "Grant Proposal Submitted", "Grant Awarded", "Grant Declined", "Loaned", "Completed", "Archived", "Disapproved", "Cancelled"]
-				}, {
-					"elementType": "markup",
-					"tag": "div",
-					"end": 1
+					"end": 1,
 				}
 			];
 
-			var standardApprovalElements = [
-				{
-					"elementType": "markup",
-					"tag": "div",
-					"htmlID": "container_approvals",
-					"begin": 1,
-				}, {
-					"elementType": "markup",
-					"tag": "h2",
-					"htmlID": "header_approvals",
-					"content": "Approvals",
-					"begin": 1,
-					"end": 1
-				}, {
-					"elementType": "markup",
-					"tag": "div",
-					"htmlID": "swf-specific-approval-preface",
-					"htmlClass": "preface",
-					"begin": 1,
-					"end": 1,
-					"hideForNonAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-					"hideForAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
-				}, {
-					"elementType": "markup",
-					"tag": "div",
-					"htmlClass": "preface",
-					"content": "By submitting this request, you approve it. For any additional person whose approval will be required, " +
-						"enter a name or mos.org email address in the Approvers field.",
-					"begin": 1,
-					"end": 1,
-					"hideForNonAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-					"hideForAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
-				}, {
-					"elementType": "markup",
-					"tag": "div",
-					"htmlClass": "preface",
-					"content": "To remove an unneeded approver, select the \"X\" to the right of the name.",
-					"begin": 1,
-					"end": 1,
-					"hideForNonAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-					"hideForAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
-				}, {
-					"elementType": "markup",
-					"tag": "div",
-					"htmlClass": "preface",
-					"content": "Here to approve? Just find your name and set the corresponding approval indicator " +
-						"to 'I approve'. If your approval has been requested in error, please " +
-						"<a href='' class='link_admin-email'>contact the admin</a>.",
-					"htmlID": "approval-instructions",
-					"begin": 1,
-					"end": 1,
-					"hideForNonAdmin": ["", "In Development", "Approved", "Completed", "Disapproved", "Cancelled"],
-					"hideForAdmin": ["", "In Development", "Approved", "Completed", "Disapproved", "Cancelled"]
-				}, {
-					"elementType": "markup",
-					"tag": "div",
-					"htmlClass": "preface",
-					"content": "Here to approve? No need. Someone has already disapproved this request.",
-					"htmlClass": "urgent",
-					"htmlID": "disregard-approval-notice",
-					"begin": 1,
-					"end": 1,
-					"hideForNonAdmin": ["", "In Development", "Pending Approval", "Approved", "Completed", "Cancelled"],
-					"hideForAdmin": ["", "In Development", "Pending Approval", "Approved", "Completed", "Cancelled"]
-				}, {
-					"elementType": "markup",
-					"tag": "div",
-					"htmlClass": "preface",
-					"content": "Admin - If the approval requirements are incorrect, " +
-						"<ul>" +
-						"	<li>Delete an unneeded approver by selecting the \"X\" to the right of the name.</li>" +
-						"	<li>Add a needed approver by entering a name or mos.org email address in the Approvers field.</li>" +
-						"	<li>Added and deleted approvers will be notified automatically.</li>" +
-						"<ul>",
-					"begin": 1,
-					"end": 1,
-					"hideForNonAdmin": ["", "In Development", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-					"hideForAdmin": ["", "In Development", "Completed", "Disapproved", "Cancelled"]
-				}, {
-					"elementType": "field",
-					"controlType": "peoplePicker",
-					"fieldName": "Approvers on Load",
-					"labelContent": "Approvers on Load",
-					"hideForNonAdmin": ["", "In Development", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-					"hideForAdmin": ["", "In Development", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-					"disabledForNonAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-					"disabledForAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
-				}, {
-					"elementType": "field",
-					"controlType": "peoplePicker",
-					"fieldName": "Approvers",
-					"labelContent": "Approvers",
-					"yieldsViewPermissions": 1,
-					"hideForNonAdmin": ["Completed", "Disapproved", "Cancelled"],
-					"hideForAdmin": ["Completed", "Disapproved", "Cancelled"],
-					"disabledForNonAdmin": ["Completed", "Disapproved", "Cancelled"],
-					"disabledForAdmin": ["Completed", "Disapproved", "Cancelled"],
-					"helpNotes": [{
-						"text": "All and only the the people listed here will be required to approve this request",
-						"htmlID": "approvers-people-picker_help-note",
-						"urgent": 0
-					}]
-				}, {
-					"elementType": "markup",
-					"tag": "div",
-					"htmlID": "all-approvals",
-					"content": '',
-					"begin": 1,
-					"end": 1
-				}, {
-					"elementType": "markup",
-					"tag": "div",
-					"end": 1
-				}
-			];
-
-			if (typeof (fData.standardElementGroups.standardAdminAssignmentCompletionElements) != "undefined") {
-
-				var standardAdminAssignmentCompletionElements1 = [
-					{
-						"elementType": "markup",
-						"tag": "div",
-						"htmlID": "admin",
-						"content": '',
-						"begin": 1,
-						"hideForNonAdmin": ["", "Submitted", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-						"hideForAdmin": [""]
-					}, {
-						"elementType": "markup",
-						"tag": "h2",
-						"content": 'Admin',
-						"begin": 1,
-						"end": 1,
-					}, {
-						"elementType": "markup",
-						"tag": "div",
-						"htmlID": "approval-notification-history",
-						"begin": 1,
-						"hideForNonAdmin": ["", "Submitted", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-						"hideForAdmin": ["", "Submitted", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
-					}, {
-						"elementType": "markup",
-						"tag": "h3",
-						"content": 'Approval Notification History',
-						"begin": 1,
-						"end": 1,
-					}, {
-						"elementType": "markup",
-						"tag": "table",
-						"htmlID": "table_approval-notification-history",
-						"content": '  <thead>' +
-							'		 <tr>' +
-							'			  <th id="th_recipient">Recipient</th>' +
-							'			  <th id="th_needed-or-not">Needed or Not Needed</th>' +
-							'			  <th id="th_date">Date & Time</th>' +
-							'		 </tr>' +
-							'	</thead>' +
-							'	<tbody>' +
-							'	</tbody>',
-						"begin": 1,
-						"end": 1,
-					}, {
-						"elementType": "markup",
-						"tag": "div",
-						"end": 1,
-					}, {
-						"elementType": "markup",
-						"tag": "h3",
-						"content": 'Request Status and Notes',
-						"begin": 1,
-						"end": 1,
-					}, {
-						"elementType": "field",
-						"controlType": "select",
-						"fieldName": "Change Request Status",
-						"labelContent": "Change Request Status",
-						"setOptions": fData.standardElementGroups.standardAdminAssignmentCompletionElements.changeRequestStatus,
-						"hideForNonAdmin": ["Submitted", "Completed", "Disapproved", "Cancelled"],
-						"hideForAdmin": ["Submitted", "Completed", "Disapproved", "Cancelled"],
-						'onChange': [
-							{ "thisFieldEquals": ["Approve"], "require": [{ "fieldName": "Assigned To", "type": "peoplepicker" }], "enable": [{ "fieldName": "Assigned To", "type": "peoplepicker" }], "show": [{ "divID": "assignment" }] },
-							{ "thisFieldEquals": ["Complete"], "require": [{ "fieldName": "Completed By", "type": "peoplepicker" }], "enable": [{ "fieldName": "Completed By", "type": "peoplepicker" }], "show": [{ "divID": "completion" }, { "divID": "assignment" }] },
-							{ "thisFieldEquals": ["", "Cancel", "Disapprove"], "optional": [{ "fieldName": "Assigned To", "type": "peoplepicker" }, { "fieldName": "Completed By", "type": "peoplepicker" }], "disable": [{ "fieldName": "Assigned To", "type": "peoplepicker" }, { "fieldName": "Completed By", "type": "peoplepicker" }], "hide": [{ "divID": "completion" }, { "divID": "assignment" }] },
-						],
-					}, {
-						"elementType": "field",
-						"controlType": "text",
-						"fieldName": "Request Status",
-						"listFieldName": "RequestStatus",
-						"labelContent": "Request Status",
-						"disabledForNonAdmin": ["", "Submitted", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-						"disabledForAdmin": ["", "Submitted", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
-					}, {
-						"elementType": "field",
-						"controlType": "textarea",
-						"fieldName": "New Admin Notes",
-						"labelContent": "Admin Notes"
-					}, {
-						"elementType": "field",
-						"controlType": "textarea",
-						"fieldName": "Historical Admin Notes",
-						"labelContent": "Historical Admin Notes",
-						"disabledForNonAdmin": ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-						"disabledForAdmin": ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
-					}, {
-						"elementType": "markup",
-						"tag": "div",
-						"end": 1,
-					}
-				];
-
-				var standardAdminAssignmentCompletionElements2 = [
-					{
-						"elementType": "markup",
-						"tag": "div",
-						"htmlID": "assignment",
-						"hideForNonAdmin": ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-						"hideForAdmin": ["", "Pending Approval"],
-						"begin": 1,
-					}, {
-						"elementType": "markup",
-						"tag": "h3",
-						"content": 'Assignment',
-						"begin": 1,
-						"end": 1
-					}, {
-						"elementType": "field",
-						"controlType": "peoplePicker",
-						"fieldName": "Assigned To on Load",
-						"labelContent": "Assigned To on Load",
-						"yieldsViewPermissions": 1,
-						"hideForNonAdmin": ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-						"hideForAdmin": ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-						"disabledForNonAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-						"disabledForAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
-					}, {
-						"elementType": "field",
-						"controlType": "peoplePicker",
-						"fieldName": "Assigned To",
-						"labelContent": "Assigned To",
-						"listFieldName": "AssignedTo",
-						"disabledForNonAdmin": ["Pending Approval", "Completed", "Disapproved", "Cancelled"],
-						"disabledForAdmin": ["Pending Approval", "Completed", "Disapproved", "Cancelled"]
-					}, {
-						"elementType": "field",
-						"controlType": "datePicker",
-						"fieldName": "Assignment Date",
-						"labelContent": "Assignment Date",
-						"listFieldName": "AssignmentDate",
-						"friendlyFormatOnLoad": {
-							'incomingFormat': null,
-							'returnFormat': 'MMMM D, YYYY',
-							'determineYearDisplayDynamically': 1
-						},
-						"isoFormatOnSubmit": {
-							'incomingFormat': null,
-							'returnFormat': null,
-							'determineYearDisplayDynamically': null
-						},
-						"disabledForNonAdmin": ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-						"disabledForAdmin": ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-						"hideForNonAdmin": ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-						"hideForAdmin": ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
-					}, {
-						"elementType": "markup",
-						"tag": "div",
-						"end": 1
-					}, {
-						"elementType": "markup",
-						"tag": "div",
-						"htmlID": "completion",
-						"hideForNonAdmin": ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-						"hideForAdmin": ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-						"begin": 1,
-					}, {
-						"elementType": "markup",
-						"tag": "h3",
-						"content": 'Completion',
-						"begin": 1,
-						"end": 1
-					}, {
-						"elementType": "field",
-						"controlType": "peoplePicker",
-						"fieldName": "Completed By",
-						"labelContent": "Completed By",
-						"listFieldName": "CompletedBy",
-						"disabledForNonAdmin": ["Pending Approval", "Disapproved", "Cancelled"],
-						"disabledForAdmin": ["Pending Approval", "Disapproved", "Cancelled"]
-					}, {
-						"elementType": "field",
-						"controlType": "datePicker",
-						"fieldName": "Completion Date",
-						"labelContent": "Completion Date",
-						"listFieldName": "CompletionDate",
-						"friendlyFormatOnLoad": {
-							'incomingFormat': null,
-							'returnFormat': 'MMMM D, YYYY',
-							'determineYearDisplayDynamically': 1
-						},
-						"isoFormatOnSubmit": {
-							'incomingFormat': null,
-							'returnFormat': null,
-							'determineYearDisplayDynamically': null
-						},
-						"disabledForNonAdmin": ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-						"disabledForAdmin": ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-						"hideForNonAdmin": ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-						"hideForAdmin": ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
-					}, {
-						"elementType": "markup",
-						"tag": "div",
-						"end": 1,
-					}
-				];
-
-
-				if (typeof (fData.standardElementGroups.standardAdminAssignmentCompletionElements.additionalAdminFields) != "undefined") {
-					var standardAdminAssignmentCompletionElements = standardAdminAssignmentCompletionElements1.concat(fData.standardElementGroups.standardAdminAssignmentCompletionElements.additionalAdminFields).concat(standardAdminAssignmentCompletionElements2);
-				} else {
-					var standardAdminAssignmentCompletionElements = standardAdminAssignmentCompletionElements1.concat(standardAdminAssignmentCompletionElements2);
-				}
-			}
-
-			if (fData.standardElementGroups.standardAdminElements != undefined) {
-
-				var standardAdminElements1 = [
-					{
-						"elementType": "markup",
-						"tag": "div",
-						"htmlID": "admin",
-						"content": '',
-						"begin": 1,
-						"hideForNonAdmin": ["", "Open", "Submitted", "Signed Up", "In Development", "Pending Revision", "Pending Approval", "Approved", "Completed", "Credit Granted", "Credit Denied", "Archived", "Disapproved", "Cancelled"],
-						"hideForAdmin": [""]
-					}, {
-						"elementType": "markup",
-						"tag": "h2",
-						"content": 'Admin',
-						"begin": 1,
-						"end": 1,
-					}, {
-						"elementType": "markup",
-						"tag": "div",
-						"htmlID": "approval-notification-history",
-						"begin": 1,
-						"hideForNonAdmin": ["", "Open", "Submitted", "Signed Up", "In Development", "Pending Revision", "Pending Approval", "Approved", "Completed", "Credit Granted", "Credit Denied", "Archived", "Disapproved", "Cancelled"],
-						"hideForAdmin": ["", "Open", "Submitted", "Signed Up", "In Development", "Pending Revision", "Pending Approval", "Approved", "Completed", "Credit Granted", "Credit Denied", "Archived", "Disapproved", "Cancelled"]
-					}, {
-						"elementType": "markup",
-						"tag": "h3",
-						"content": 'Approval Notification History',
-						"begin": 1,
-						"end": 1,
-					}, {
-						"elementType": "markup",
-						"tag": "table",
-						"htmlID": "table_approval-notification-history",
-						"content": '  <thead>' +
-							'		 <tr>' +
-							'			  <th id="th_recipient">Recipient</th>' +
-							'			  <th id="th_needed-or-not">Needed or Not Needed</th>' +
-							'			  <th id="th_date">Date & Time</th>' +
-							'		 </tr>' +
-							'	</thead>' +
-							'	<tbody>' +
-							'	</tbody>',
-						"begin": 1,
-						"end": 1,
-					}, {
-						"elementType": "markup",
-						"tag": "div",
-						"end": 1,
-					}, {
-						"elementType": "markup",
-						"tag": "h3",
-						"content": 'Request Status and Notes',
-						"begin": 1,
-						"end": 1,
-					}, {
-						"elementType": "field",
-						"controlType": "select",
-						"fieldName": "Change Request Status",
-						"labelContent": "Change Request Status",
-						"setOptions": fData.standardElementGroups.standardAdminElements.changeRequestStatus,
-						"hideForNonAdmin": ["Submitted", "Signed Up", "Completed", "Credit Granted", "Credit Denied", "Archived", "Disapproved", "Cancelled"],
-						"hideForAdmin": ["Completed", "Credit Granted", "Credit Denied", "Archived", "Disapproved", "Cancelled"],
-					}, {
-						"elementType": "field",
-						"controlType": "text",
-						"fieldName": "Request Status",
-						"listFieldName": "RequestStatus",
-						"labelContent": "Request Status",
-						"disabledForNonAdmin": ["", "Open", "Submitted", "Signed Up", "In Development", "Pending Revision", "Pending Approval", "Approved", "Completed", "Credit Granted", "Credit Denied", "Archived", "Disapproved", "Cancelled"],
-						"disabledForAdmin": ["", "Open", "Submitted", "Signed Up", "In Development", "Pending Revision", "Pending Approval", "Approved", "Completed", "Credit Granted", "Credit Denied", "Archived", "Disapproved", "Cancelled"]
-					}, {
-						"elementType": "field",
-						"controlType": "textarea",
-						"fieldName": "New Admin Notes",
-						"labelContent": "Admin Notes"
-					}, {
-						"elementType": "field",
-						"controlType": "textarea",
-						"fieldName": "Historical Admin Notes",
-						"labelContent": "Historical Admin Notes",
-						"disabledForNonAdmin": ["", "In Development", "Pending Revision", "Pending Approval", "Approved", "Completed", "Credit Granted", "Credit Denied", "Archived", "Disapproved", "Cancelled"],
-						"disabledForAdmin": ["", "In Development", "Pending Revision", "Pending Approval", "Approved", "Completed", "Credit Granted", "Credit Denied", "Archived", "Disapproved", "Cancelled"]
-					}, {
-						"elementType": "markup",
-						"tag": "div",
-						"end": 1
-					}
-				];
-
-				if (typeof (fData.standardElementGroups.standardAdminElements.additionalAdminFields) != "undefined") {
-					var standardAdminElements = standardAdminElements1.concat(fData.standardElementGroups.standardAdminElements.additionalAdminFields);
-				} else {
-					var standardAdminElements = standardAdminElements1;
-				}
-			}
-
-			var standardAssignmentElements = [
+			var standardAdminAssignmentCompletionElements2 = [
 				{
 					"elementType": "markup",
 					"tag": "div",
 					"htmlID": "assignment",
-					"hideForNonAdmin": ["", "Pending Approval", "Name Change Pending Approval; Other Work Approved", "Approved", "Completed", "Disapproved", "Cancelled"],
+					"hideForNonAdmin": ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
 					"hideForAdmin": ["", "Pending Approval"],
 					"begin": 1,
 				}, {
@@ -3323,10 +3122,10 @@
 					"fieldName": "Assigned To on Load",
 					"labelContent": "Assigned To on Load",
 					"yieldsViewPermissions": 1,
-					"hideForNonAdmin": ["", "Pending Approval", "Name Change Pending Approval; Other Work Approved", "Approved", "Completed", "Disapproved", "Cancelled"],
-					"hideForAdmin": ["", "Pending Approval", "Name Change Pending Approval; Other Work Approved", "Approved", "Completed", "Disapproved", "Cancelled"],
-					"disabledForNonAdmin": ["Pending Approval", "Name Change Pending Approval; Other Work Approved", "Approved", "Completed", "Disapproved", "Cancelled"],
-					"disabledForAdmin": ["Pending Approval", "Name Change Pending Approval; Other Work Approved", "Approved", "Completed", "Disapproved", "Cancelled"]
+					"hideForNonAdmin": ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+					"hideForAdmin": ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+					"disabledForNonAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+					"disabledForAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
 				}, {
 					"elementType": "field",
 					"controlType": "peoplePicker",
@@ -3351,24 +3150,20 @@
 						'returnFormat': null,
 						'determineYearDisplayDynamically': null
 					},
-					"disabledForNonAdmin": ["", "Pending Approval", "Name Change Pending Approval; Other Work Approved", "Approved", "Completed", "Disapproved", "Cancelled"],
-					"disabledForAdmin": ["", "Pending Approval", "Name Change Pending Approval; Other Work Approved", "Approved", "Completed", "Disapproved", "Cancelled"],
-					"hideForNonAdmin": ["", "Pending Approval", "Name Change Pending Approval; Other Work Approved", "Approved", "Completed", "Disapproved", "Cancelled"],
-					"hideForAdmin": ["", "Pending Approval", "Name Change Pending Approval; Other Work Approved", "Approved", "Completed", "Disapproved", "Cancelled"]
+					"disabledForNonAdmin": ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+					"disabledForAdmin": ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+					"hideForNonAdmin": ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+					"hideForAdmin": ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
 				}, {
 					"elementType": "markup",
 					"tag": "div",
 					"end": 1
-				}
-			];
-
-			var standardCompletionElements = [
-				{
+				}, {
 					"elementType": "markup",
 					"tag": "div",
 					"htmlID": "completion",
-					"hideForNonAdmin": ["", "Pending Approval", "Name Change Pending Approval; Other Work Approved", "Approved", "Completed", "Disapproved", "Cancelled"],
-					"hideForAdmin": ["", "Pending Approval", "Name Change Pending Approval; Other Work Approved", "Approved", "Completed", "Disapproved", "Cancelled"],
+					"hideForNonAdmin": ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+					"hideForAdmin": ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
 					"begin": 1,
 				}, {
 					"elementType": "markup",
@@ -3382,8 +3177,8 @@
 					"fieldName": "Completed By",
 					"labelContent": "Completed By",
 					"listFieldName": "CompletedBy",
-					"disabledForNonAdmin": ["Pending Approval", "Name Change Pending Approval; Other Work Approved", "Disapproved", "Cancelled"],
-					"disabledForAdmin": ["Pending Approval", "Name Change Pending Approval; Other Work Approved", "Disapproved", "Cancelled"]
+					"disabledForNonAdmin": ["Pending Approval", "Disapproved", "Cancelled"],
+					"disabledForAdmin": ["Pending Approval", "Disapproved", "Cancelled"]
 				}, {
 					"elementType": "field",
 					"controlType": "datePicker",
@@ -3400,10 +3195,10 @@
 						'returnFormat': null,
 						'determineYearDisplayDynamically': null
 					},
-					"disabledForNonAdmin": ["", "Pending Approval", "Name Change Pending Approval; Other Work Approved", "Approved", "Completed", "Disapproved", "Cancelled"],
-					"disabledForAdmin": ["", "Pending Approval", "Name Change Pending Approval; Other Work Approved", "Approved", "Completed", "Disapproved", "Cancelled"],
-					"hideForNonAdmin": ["", "Pending Approval", "Name Change Pending Approval; Other Work Approved", "Approved", "Completed", "Disapproved", "Cancelled"],
-					"hideForAdmin": ["", "Pending Approval", "Name Change Pending Approval; Other Work Approved", "Approved", "Completed", "Disapproved", "Cancelled"]
+					"disabledForNonAdmin": ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+					"disabledForAdmin": ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+					"hideForNonAdmin": ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+					"hideForAdmin": ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
 				}, {
 					"elementType": "markup",
 					"tag": "div",
@@ -3411,1436 +3206,1636 @@
 				}
 			];
 
-			var standardButtonElements = [
+
+			if (typeof (fData.standardElementGroups.standardAdminAssignmentCompletionElements.additionalAdminFields) != "undefined") {
+				var standardAdminAssignmentCompletionElements = standardAdminAssignmentCompletionElements1.concat(fData.standardElementGroups.standardAdminAssignmentCompletionElements.additionalAdminFields).concat(standardAdminAssignmentCompletionElements2);
+			} else {
+				var standardAdminAssignmentCompletionElements = standardAdminAssignmentCompletionElements1.concat(standardAdminAssignmentCompletionElements2);
+			}
+		}
+
+		if (fData.standardElementGroups.standardAdminElements != undefined) {
+
+			var standardAdminElements1 = [
 				{
 					"elementType": "markup",
 					"tag": "div",
-					"htmlID": "submit-or-exit",
-					"content": '	<div class="label-and-control">' +
-						'	 <div class="label"></div>' +
-						'	 <div class="field-type-indication"></div>' +
-						'	 <div class="control">' +
-						'		<div id="submission-notice">Please check your information before saving it. ' +
-						'			You won\'t be able to make edits afterward.</div>' +
-						'		<a data-button-type="save" id="form-submit-button">Save</a>' +
-						'	</div>' +
-						'	</div>' +
-						'	<div class="label-and-control">' +
-						'		<div class="label"></div>' +
-						'		<div class="field-type-indication"></div>' +
-						'		<div class="control"><a data-button-type="noSave" id="exit-sans-save-button">Don\'t Save</a></div>' +
-						'	</div>',
+					"htmlID": "admin",
+					"content": '',
+					"begin": 1,
+					"hideForNonAdmin": ["", "Open", "Submitted", "Signed Up", "In Development", "Pending Revision", "Pending Approval", "Approved", "Completed", "Credit Granted", "Credit Denied", "Archived", "Disapproved", "Cancelled"],
+					"hideForAdmin": [""]
+				}, {
+					"elementType": "markup",
+					"tag": "h2",
+					"content": 'Admin',
 					"begin": 1,
 					"end": 1,
-					"hideForNonAdmin": ["Completed", "Disapproved", "Cancelled"]
-				}
-			];
-
-			var standardButtonElementsInitiallyHidden = [
-				{
+				}, {
 					"elementType": "markup",
 					"tag": "div",
-					"htmlID": "submit-or-exit",
-					"content": '	<div class="label-and-control">' +
-						'	 <div class="label"></div>' +
-						'	 <div class="field-type-indication"></div>' +
-						'	 <div class="control">' +
-						'		<div id="submission-notice">Please check your information before saving it. ' +
-						'			You won\'t be able to make edits afterward.</div>' +
-						'		<a data-button-type="save" id="form-submit-button">Save</a>' +
-						'	</div>' +
-						'	</div>' +
-						'	<div class="label-and-control">' +
-						'		<div class="label"></div>' +
-						'		<div class="field-type-indication"></div>' +
-						'		<div class="control"><a data-button-type="noSave" id="exit-sans-save-button">Don\'t Save</a></div>' +
-						'	</div>',
+					"htmlID": "approval-notification-history",
+					"begin": 1,
+					"hideForNonAdmin": ["", "Open", "Submitted", "Signed Up", "In Development", "Pending Revision", "Pending Approval", "Approved", "Completed", "Credit Granted", "Credit Denied", "Archived", "Disapproved", "Cancelled"],
+					"hideForAdmin": ["", "Open", "Submitted", "Signed Up", "In Development", "Pending Revision", "Pending Approval", "Approved", "Completed", "Credit Granted", "Credit Denied", "Archived", "Disapproved", "Cancelled"]
+				}, {
+					"elementType": "markup",
+					"tag": "h3",
+					"content": 'Approval Notification History',
 					"begin": 1,
 					"end": 1,
-					"hideForAdmin": [""],
-					"hideForNonAdmin": ["", "Completed", "Disapproved", "Cancelled"]
-				}
-			];
-
-			var standardComponentGrpAdminOnlyElements = [
-				{
+				}, {
 					"elementType": "markup",
-					"tag": "div",
-					"htmlID": "component-group-admin-only",
+					"tag": "table",
+					"htmlID": "table_approval-notification-history",
+					"content": '  <thead>' +
+						'		 <tr>' +
+						'			  <th id="th_recipient">Recipient</th>' +
+						'			  <th id="th_needed-or-not">Needed or Not Needed</th>' +
+						'			  <th id="th_date">Date & Time</th>' +
+						'		 </tr>' +
+						'	</thead>' +
+						'	<tbody>' +
+						'	</tbody>',
 					"begin": 1,
-					"hideForNonAdmin": ["", "Submitted", "In Development", "Pending Revision", "Pending Approval", "Name Change Pending Approval; Other Work Approved", "Approved", "Completed", "Disapproved", "Cancelled"],
-					"hideForAdmin": ["", "Submitted", "In Development", "Pending Revision", "Pending Approval", "Name Change Pending Approval; Other Work Approved", "Approved", "Completed", "Disapproved", "Cancelled"],
-				}, {
-					"elementType": "field",
-					"controlType": "textarea",
-					"fieldName": "Approval Nodes Storage",
-					"labelContent": "Approval Nodes Storage"
-				}, {
-					"elementType": "field",
-					"controlType": "textarea",
-					"fieldName": "Approval Nodes Script Storage",
-					"labelContent": "Approval Nodes Script Storage"
-				}, {
-					"elementType": "field",
-					"controlType": "textarea",
-					"fieldName": "Approval Notification Rows Storage",
-					"labelContent": "Approval Notification Rows Storage"
-				}, {
-					"elementType": "field",
-					"controlType": "textarea",
-					"fieldName": "Approval Notification Rows Storage",
-					"labelContent": "Approval Notification Rows Storage"
-				}, {
-					"elementType": "field",
-					"controlType": "text",
-					"fieldName": "Beginning of Life",
-					"labelContent": "Beginning of Life",
-					"listFieldName": "BeginningOfLife",
-				}, {
-					"elementType": "field",
-					"controlType": "text",
-					"fieldName": "End of Life",
-					"labelContent": "End of Life",
-					"listFieldName": "EndOfLife",
-				}, {
-					"elementType": "field",
-					"controlType": "text",
-					"fieldName": "Approval Newly Needed Notify",
-					"labelContent": "Approval Newly Needed Notify",
-					"listFieldName": "ApprovalNewlyNeededNotify",
-				}, {
-					"elementType": "field",
-					"controlType": "text",
-					"fieldName": "Approval Not Needed Notify",
-					"labelContent": "Approval Not Needed Notify",
-					"listFieldName": "ApprovalNotNeededNotify",
-				}, {
-					"elementType": "field",
-					"controlType": "text",
-					"fieldName": "Approval Still Needed Notify",
-					"labelContent": "Approval Still Needed Notify",
-					"listFieldName": "ApprovalStillNeededNotify",
-				}, {
-					"elementType": "field",
-					"controlType": "text",
-					"fieldName": "Newly Approved or Pending",
-					"labelContent": "Newly Approved or Pending",
-					"listFieldName": "NewlyApprovedOrPending",
-				}, {
-					"elementType": "field",
-					"controlType": "text",
-					"fieldName": "Auto Assignments 1",
-					"labelContent": "Auto Assignments 1",
-				}, {
-					"elementType": "field",
-					"controlType": "text",
-					"fieldName": "Auto Assignments 2",
-					"labelContent": "Auto Assignments 2",
-				}, {
-					"elementType": "field",
-					"controlType": "text",
-					"fieldName": "Work Newly Needed Notify",
-					"labelContent": "Work Newly Needed Notify",
-					"listFieldName": "WorkNewlyNeededNotify",
-				}, {
-					"elementType": "field",
-					"controlType": "text",
-					"fieldName": "Work Not Needed Notify",
-					"labelContent": "Work Not Needed Notify",
-					"listFieldName": "WorkNotNeededNotify",
-				}, {
-					"elementType": "field",
-					"controlType": "text",
-					"fieldName": "Newly Assigned",
-					"labelContent": "Newly Assigned",
-					"listFieldName": "NewlyAssigned",
-				}, {
-					"elementType": "field",
-					"controlType": "text",
-					"fieldName": "Last Modified Timestamp at Load",
-					"labelContent": "Last Modified Timestamp at Load",
-				}, {
-					"elementType": "field",
-					"controlType": "text",
-					"fieldName": "Last Modified Timestamp at Submit",
-					"labelContent": "Last Modified Timestamp at Submit",
-				}, {
-					"elementType": "field",
-					"controlType": "text",
-					"fieldName": "Last Modified Timestamp Mismatch",
-					"labelContent": "Last Modified Timestamp Mismatch",
-				}, {
-					"elementType": "field",
-					"controlType": "text",
-					"fieldName": "Admin Email",
-					"labelContent": "Admin Email",
-					"listFieldName": "AdminEmail",
-				}, {
-					"elementType": "field",
-					"controlType": "text",
-					"fieldName": "Request Name",
-					"labelContent": "Request Name",
-					"listFieldName": "RequestName",
-				}, {
-					"elementType": "field",
-					"controlType": "text",
-					"fieldName": "Required Approvers",
-					"labelContent": "Required Approvers",
-				}, {
-					"elementType": "field",
-					"controlType": "text",
-					"fieldName": "URI Admin",
-					"labelContent": "URI Admin",
-					"listFieldName": "URIAdmin",
-				}, {
-					"elementType": "field",
-					"controlType": "text",
-					"fieldName": "URI Requester",
-					"labelContent": "URI Requester",
-					"listFieldName": "URIRequester",
-				}, {
-					"elementType": "field",
-					"controlType": "text",
-					"fieldName": "URI Request",
-					"labelContent": "URI Request",
-					"listFieldName": "URIRequest",
-				}, {
-					"elementType": "field",
-					"controlType": "text",
-					"fieldName": "SWF Version",
-					"labelContent": "SWF Version",
-					"listFieldName": "SWFVersion"
-				}, {
-					"elementType": "field",
-					"controlType": "text",
-					"fieldName": "Request Version",
-					"labelContent": "Request Version",
-					"listFieldName": "RequestVersion"
-				}, {
-					"elementType": "field",
-					"controlType": "text",
-					"fieldName": "Component Group Admin",
-					"labelContent": "Component Group Admin",
-				}, {
-					"elementType": "field",
-					"controlType": "text",
-					"fieldName": "Component Admin",
-					"labelContent": "Component Admin",
-				}, {
-					"elementType": "field",
-					"controlType": "text",
-					"fieldName": "View Access",
-					"labelContent": "View Access",
-					"yieldsViewPermissions": 1,
-				}, {
-					"elementType": "field",
-					"controlType": "text",
-					"fieldName": "Current User Display Name",
-					"labelContent": "Current User Display Name",
-				}, {
-					"elementType": "field",
-					"controlType": "text",
-					"fieldName": "Current User Name",
-					"labelContent": "Current User Name",
-				}, {
-					"elementType": "field",
-					"controlType": "text",
-					"fieldName": "Current User Account",
-					"labelContent": "Current User Account",
-				}, {
-					"elementType": "field",
-					"controlType": "text",
-					"fieldName": "Current User is Admin",
-					"labelContent": "Current User is Admin",
-				}, {
-					"elementType": "field",
-					"controlType": "text",
-					"fieldName": "Current User is Component Group Admin",
-					"labelContent": "Current User is Component Group Admin",
-				}, {
-					"elementType": "field",
-					"controlType": "textarea",
-					"fieldName": "User Machine History",
-					"labelContent": "User Machine History",
-				}, {
-					"elementType": "field",
-					"controlType": "text",
-					"fieldName": "Component ID",
-					"labelContent": "Component ID",
+					"end": 1,
 				}, {
 					"elementType": "markup",
 					"tag": "div",
 					"end": 1,
+				}, {
+					"elementType": "markup",
+					"tag": "h3",
+					"content": 'Request Status and Notes',
+					"begin": 1,
+					"end": 1,
+				}, {
+					"elementType": "field",
+					"controlType": "select",
+					"fieldName": "Change Request Status",
+					"labelContent": "Change Request Status",
+					"setOptions": fData.standardElementGroups.standardAdminElements.changeRequestStatus,
+					"hideForNonAdmin": ["Submitted", "Signed Up", "Completed", "Credit Granted", "Credit Denied", "Archived", "Disapproved", "Cancelled"],
+					"hideForAdmin": ["Completed", "Credit Granted", "Credit Denied", "Archived", "Disapproved", "Cancelled"],
+				}, {
+					"elementType": "field",
+					"controlType": "text",
+					"fieldName": "Request Status",
+					"listFieldName": "RequestStatus",
+					"labelContent": "Request Status",
+					"disabledForNonAdmin": ["", "Open", "Submitted", "Signed Up", "In Development", "Pending Revision", "Pending Approval", "Approved", "Completed", "Credit Granted", "Credit Denied", "Archived", "Disapproved", "Cancelled"],
+					"disabledForAdmin": ["", "Open", "Submitted", "Signed Up", "In Development", "Pending Revision", "Pending Approval", "Approved", "Completed", "Credit Granted", "Credit Denied", "Archived", "Disapproved", "Cancelled"]
+				}, {
+					"elementType": "field",
+					"controlType": "textarea",
+					"fieldName": "New Admin Notes",
+					"labelContent": "Admin Notes"
+				}, {
+					"elementType": "field",
+					"controlType": "textarea",
+					"fieldName": "Historical Admin Notes",
+					"labelContent": "Historical Admin Notes",
+					"disabledForNonAdmin": ["", "In Development", "Pending Revision", "Pending Approval", "Approved", "Completed", "Credit Granted", "Credit Denied", "Archived", "Disapproved", "Cancelled"],
+					"disabledForAdmin": ["", "In Development", "Pending Revision", "Pending Approval", "Approved", "Completed", "Credit Granted", "Credit Denied", "Archived", "Disapproved", "Cancelled"]
+				}, {
+					"elementType": "markup",
+					"tag": "div",
+					"end": 1
 				}
 			];
 
-			if (typeof (fData.standardElementGroups) != "undefined") {
+			if (typeof (fData.standardElementGroups.standardAdminElements.additionalAdminFields) != "undefined") {
+				var standardAdminElements = standardAdminElements1.concat(fData.standardElementGroups.standardAdminElements.additionalAdminFields);
+			} else {
+				var standardAdminElements = standardAdminElements1;
+			}
+		}
 
-				if (fData.standardElementGroups.standardPrintButton != undefined) {
-					fData.elements = standardPrintButton;
+		var standardAssignmentElements = [
+			{
+				"elementType": "markup",
+				"tag": "div",
+				"htmlID": "assignment",
+				"hideForNonAdmin": ["", "Pending Approval", "Name Change Pending Approval; Other Work Approved", "Approved", "Completed", "Disapproved", "Cancelled"],
+				"hideForAdmin": ["", "Pending Approval"],
+				"begin": 1,
+			}, {
+				"elementType": "markup",
+				"tag": "h3",
+				"content": 'Assignment',
+				"begin": 1,
+				"end": 1
+			}, {
+				"elementType": "field",
+				"controlType": "peoplePicker",
+				"fieldName": "Assigned To on Load",
+				"labelContent": "Assigned To on Load",
+				"yieldsViewPermissions": 1,
+				"hideForNonAdmin": ["", "Pending Approval", "Name Change Pending Approval; Other Work Approved", "Approved", "Completed", "Disapproved", "Cancelled"],
+				"hideForAdmin": ["", "Pending Approval", "Name Change Pending Approval; Other Work Approved", "Approved", "Completed", "Disapproved", "Cancelled"],
+				"disabledForNonAdmin": ["Pending Approval", "Name Change Pending Approval; Other Work Approved", "Approved", "Completed", "Disapproved", "Cancelled"],
+				"disabledForAdmin": ["Pending Approval", "Name Change Pending Approval; Other Work Approved", "Approved", "Completed", "Disapproved", "Cancelled"]
+			}, {
+				"elementType": "field",
+				"controlType": "peoplePicker",
+				"fieldName": "Assigned To",
+				"labelContent": "Assigned To",
+				"listFieldName": "AssignedTo",
+				"disabledForNonAdmin": ["Pending Approval", "Completed", "Disapproved", "Cancelled"],
+				"disabledForAdmin": ["Pending Approval", "Completed", "Disapproved", "Cancelled"]
+			}, {
+				"elementType": "field",
+				"controlType": "datePicker",
+				"fieldName": "Assignment Date",
+				"labelContent": "Assignment Date",
+				"listFieldName": "AssignmentDate",
+				"friendlyFormatOnLoad": {
+					'incomingFormat': null,
+					'returnFormat': 'MMMM D, YYYY',
+					'determineYearDisplayDynamically': 1
+				},
+				"isoFormatOnSubmit": {
+					'incomingFormat': null,
+					'returnFormat': null,
+					'determineYearDisplayDynamically': null
+				},
+				"disabledForNonAdmin": ["", "Pending Approval", "Name Change Pending Approval; Other Work Approved", "Approved", "Completed", "Disapproved", "Cancelled"],
+				"disabledForAdmin": ["", "Pending Approval", "Name Change Pending Approval; Other Work Approved", "Approved", "Completed", "Disapproved", "Cancelled"],
+				"hideForNonAdmin": ["", "Pending Approval", "Name Change Pending Approval; Other Work Approved", "Approved", "Completed", "Disapproved", "Cancelled"],
+				"hideForAdmin": ["", "Pending Approval", "Name Change Pending Approval; Other Work Approved", "Approved", "Completed", "Disapproved", "Cancelled"]
+			}, {
+				"elementType": "markup",
+				"tag": "div",
+				"end": 1
+			}
+		];
+
+		var standardCompletionElements = [
+			{
+				"elementType": "markup",
+				"tag": "div",
+				"htmlID": "completion",
+				"hideForNonAdmin": ["", "Pending Approval", "Name Change Pending Approval; Other Work Approved", "Approved", "Completed", "Disapproved", "Cancelled"],
+				"hideForAdmin": ["", "Pending Approval", "Name Change Pending Approval; Other Work Approved", "Approved", "Completed", "Disapproved", "Cancelled"],
+				"begin": 1,
+			}, {
+				"elementType": "markup",
+				"tag": "h3",
+				"content": 'Completion',
+				"begin": 1,
+				"end": 1
+			}, {
+				"elementType": "field",
+				"controlType": "peoplePicker",
+				"fieldName": "Completed By",
+				"labelContent": "Completed By",
+				"listFieldName": "CompletedBy",
+				"disabledForNonAdmin": ["Pending Approval", "Name Change Pending Approval; Other Work Approved", "Disapproved", "Cancelled"],
+				"disabledForAdmin": ["Pending Approval", "Name Change Pending Approval; Other Work Approved", "Disapproved", "Cancelled"]
+			}, {
+				"elementType": "field",
+				"controlType": "datePicker",
+				"fieldName": "Completion Date",
+				"labelContent": "Completion Date",
+				"listFieldName": "CompletionDate",
+				"friendlyFormatOnLoad": {
+					'incomingFormat': null,
+					'returnFormat': 'MMMM D, YYYY',
+					'determineYearDisplayDynamically': 1
+				},
+				"isoFormatOnSubmit": {
+					'incomingFormat': null,
+					'returnFormat': null,
+					'determineYearDisplayDynamically': null
+				},
+				"disabledForNonAdmin": ["", "Pending Approval", "Name Change Pending Approval; Other Work Approved", "Approved", "Completed", "Disapproved", "Cancelled"],
+				"disabledForAdmin": ["", "Pending Approval", "Name Change Pending Approval; Other Work Approved", "Approved", "Completed", "Disapproved", "Cancelled"],
+				"hideForNonAdmin": ["", "Pending Approval", "Name Change Pending Approval; Other Work Approved", "Approved", "Completed", "Disapproved", "Cancelled"],
+				"hideForAdmin": ["", "Pending Approval", "Name Change Pending Approval; Other Work Approved", "Approved", "Completed", "Disapproved", "Cancelled"]
+			}, {
+				"elementType": "markup",
+				"tag": "div",
+				"end": 1,
+			}
+		];
+
+		var standardButtonElements = [
+			{
+				"elementType": "markup",
+				"tag": "div",
+				"htmlID": "submit-or-exit",
+				"content": '	<div class="label-and-control">' +
+					'	 <div class="label"></div>' +
+					'	 <div class="field-type-indication"></div>' +
+					'	 <div class="control">' +
+					'		<div id="submission-notice">Please check your information before saving it. ' +
+					'			You won\'t be able to make edits afterward.</div>' +
+					'		<a data-button-type="save" id="form-submit-button">Save</a>' +
+					'	</div>' +
+					'	</div>' +
+					'	<div class="label-and-control">' +
+					'		<div class="label"></div>' +
+					'		<div class="field-type-indication"></div>' +
+					'		<div class="control"><a data-button-type="noSave" id="exit-sans-save-button">Don\'t Save</a></div>' +
+					'	</div>',
+				"begin": 1,
+				"end": 1,
+				"hideForNonAdmin": ["Completed", "Disapproved", "Cancelled"]
+			}
+		];
+
+		var standardButtonElementsInitiallyHidden = [
+			{
+				"elementType": "markup",
+				"tag": "div",
+				"htmlID": "submit-or-exit",
+				"content": '	<div class="label-and-control">' +
+					'	 <div class="label"></div>' +
+					'	 <div class="field-type-indication"></div>' +
+					'	 <div class="control">' +
+					'		<div id="submission-notice">Please check your information before saving it. ' +
+					'			You won\'t be able to make edits afterward.</div>' +
+					'		<a data-button-type="save" id="form-submit-button">Save</a>' +
+					'	</div>' +
+					'	</div>' +
+					'	<div class="label-and-control">' +
+					'		<div class="label"></div>' +
+					'		<div class="field-type-indication"></div>' +
+					'		<div class="control"><a data-button-type="noSave" id="exit-sans-save-button">Don\'t Save</a></div>' +
+					'	</div>',
+				"begin": 1,
+				"end": 1,
+				"hideForAdmin": [""],
+				"hideForNonAdmin": ["", "Completed", "Disapproved", "Cancelled"]
+			}
+		];
+
+		var standardComponentGrpAdminOnlyElements = [
+			{
+				"elementType": "markup",
+				"tag": "div",
+				"htmlID": "component-group-admin-only",
+				"begin": 1,
+				"hideForNonAdmin": ["", "Submitted", "In Development", "Pending Revision", "Pending Approval", "Name Change Pending Approval; Other Work Approved", "Approved", "Completed", "Disapproved", "Cancelled"],
+				"hideForAdmin": ["", "Submitted", "In Development", "Pending Revision", "Pending Approval", "Name Change Pending Approval; Other Work Approved", "Approved", "Completed", "Disapproved", "Cancelled"],
+			}, {
+				"elementType": "field",
+				"controlType": "textarea",
+				"fieldName": "Approval Nodes Storage",
+				"labelContent": "Approval Nodes Storage"
+			}, {
+				"elementType": "field",
+				"controlType": "textarea",
+				"fieldName": "Approval Nodes Script Storage",
+				"labelContent": "Approval Nodes Script Storage"
+			}, {
+				"elementType": "field",
+				"controlType": "textarea",
+				"fieldName": "Approval Notification Rows Storage",
+				"labelContent": "Approval Notification Rows Storage"
+			}, {
+				"elementType": "field",
+				"controlType": "textarea",
+				"fieldName": "Approval Notification Rows Storage",
+				"labelContent": "Approval Notification Rows Storage"
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "Beginning of Life",
+				"labelContent": "Beginning of Life",
+				"listFieldName": "BeginningOfLife",
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "End of Life",
+				"labelContent": "End of Life",
+				"listFieldName": "EndOfLife",
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "Approval Newly Needed Notify",
+				"labelContent": "Approval Newly Needed Notify",
+				"listFieldName": "ApprovalNewlyNeededNotify",
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "Approval Not Needed Notify",
+				"labelContent": "Approval Not Needed Notify",
+				"listFieldName": "ApprovalNotNeededNotify",
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "Approval Still Needed Notify",
+				"labelContent": "Approval Still Needed Notify",
+				"listFieldName": "ApprovalStillNeededNotify",
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "Newly Approved or Pending",
+				"labelContent": "Newly Approved or Pending",
+				"listFieldName": "NewlyApprovedOrPending",
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "Auto Assignments 1",
+				"labelContent": "Auto Assignments 1",
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "Auto Assignments 2",
+				"labelContent": "Auto Assignments 2",
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "Work Newly Needed Notify",
+				"labelContent": "Work Newly Needed Notify",
+				"listFieldName": "WorkNewlyNeededNotify",
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "Work Not Needed Notify",
+				"labelContent": "Work Not Needed Notify",
+				"listFieldName": "WorkNotNeededNotify",
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "Newly Assigned",
+				"labelContent": "Newly Assigned",
+				"listFieldName": "NewlyAssigned",
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "Last Modified Timestamp at Load",
+				"labelContent": "Last Modified Timestamp at Load",
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "Last Modified Timestamp at Submit",
+				"labelContent": "Last Modified Timestamp at Submit",
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "Last Modified Timestamp Mismatch",
+				"labelContent": "Last Modified Timestamp Mismatch",
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "Admin Email",
+				"labelContent": "Admin Email",
+				"listFieldName": "AdminEmail",
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "Request Name",
+				"labelContent": "Request Name",
+				"listFieldName": "RequestName",
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "Required Approvers",
+				"labelContent": "Required Approvers",
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "URI Admin",
+				"labelContent": "URI Admin",
+				"listFieldName": "URIAdmin",
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "URI Requester",
+				"labelContent": "URI Requester",
+				"listFieldName": "URIRequester",
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "URI Request",
+				"labelContent": "URI Request",
+				"listFieldName": "URIRequest",
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "SWF Version",
+				"labelContent": "SWF Version",
+				"listFieldName": "SWFVersion"
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "Request Version",
+				"labelContent": "Request Version",
+				"listFieldName": "RequestVersion"
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "Component Group Admin",
+				"labelContent": "Component Group Admin",
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "Component Admin",
+				"labelContent": "Component Admin",
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "View Access",
+				"labelContent": "View Access",
+				"yieldsViewPermissions": 1,
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "Current User Display Name",
+				"labelContent": "Current User Display Name",
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "Current User Name",
+				"labelContent": "Current User Name",
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "Current User Account",
+				"labelContent": "Current User Account",
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "Current User is Admin",
+				"labelContent": "Current User is Admin",
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "Current User is Component Group Admin",
+				"labelContent": "Current User is Component Group Admin",
+			}, {
+				"elementType": "field",
+				"controlType": "textarea",
+				"fieldName": "User Machine History",
+				"labelContent": "User Machine History",
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "Component ID",
+				"labelContent": "Component ID",
+			}, {
+				"elementType": "markup",
+				"tag": "div",
+				"end": 1,
+			}
+		];
+
+		if (typeof (fData.standardElementGroups) != "undefined") {
+
+			if (fData.standardElementGroups.standardPrintButton != undefined) {
+				fData.elements = standardPrintButton;
+			} else {
+				fData.elements = [];
+			}
+
+			if (fData.standardElementGroups.standardThisRequestAndRequesterElements != undefined) {
+				fData.elements = fData.elements.concat(standardThisRequestAndRequesterElements);
+			}
+
+			fData.elements = fData.elements.concat($().ReturnUniqueElementsOfCorrectVersion());
+
+			if (fData.standardElementGroups.standardApprovalElements != undefined) {
+				fData.elements = fData.elements.concat(standardApprovalElements);
+			}
+
+			if (fData.standardElementGroups.standardAdminAssignmentCompletionElements != undefined) {
+				fData.elements = fData.elements.concat(standardAdminAssignmentCompletionElements);
+			}
+
+			if (fData.standardElementGroups.standardAdminElements != undefined) {
+				fData.elements = fData.elements.concat(standardAdminElements);
+			}
+
+			if (fData.standardElementGroups.standardAdminNotesElements != undefined) {
+				fData.elements = fData.elements.concat(standardAdminNotesElements);
+			}
+
+			if (fData.standardElementGroups.standardAssignmentElements != undefined) {
+				fData.elements = fData.elements.concat(standardAssignmentElements);
+			}
+
+			if (fData.standardElementGroups.standardCompletionElements != undefined) {
+				fData.elements = fData.elements.concat(standardCompletionElements);
+			}
+
+			if (fData.standardElementGroups.standardButtonElements != undefined) {
+				fData.elements = fData.elements.concat(standardButtonElements);
+			}
+
+			if (fData.standardElementGroups.standardButtonElementsInitiallyHidden != undefined) {
+				fData.elements = fData.elements.concat(standardButtonElementsInitiallyHidden);
+			}
+
+			if (fData.standardElementGroups.standardComponentGrpAdminOnlyElements != undefined) {
+				fData.elements = fData.elements.concat(standardComponentGrpAdminOnlyElements);
+			}
+		}
+
+
+		// ========================================================
+		// ENSURE VIEW PERMISSION
+		// ========================================================
+
+		// if request status != '' and user is not an admin
+		if (rData.requestStatus != "" && uData.isAdmin === 0) {
+			console.log('checking permission');
+			// array of non-admin users who have permission to view the form
+			var permitted = [];
+			// this user's permission flag
+			var hasViewingPermissionThisRequest = 0;
+			// for each form element
+			$.each(fData.elements, function (i, elem) {
+				// if it yields view permissions
+				if (typeof (elem.yieldsViewPermissions) != "undefined" && elem.yieldsViewPermissions === 1) {
+					// push its value to permitted
+					if (typeof (rData.formData[$().ReturnHyphenatedFieldNameOrValue(elem.fieldName)]) === 'string') {
+						permitted.push(rData.formData[$().ReturnHyphenatedFieldNameOrValue(elem.fieldName)]);
+					} else if (typeof (rData.formData[$().ReturnHyphenatedFieldNameOrValue(elem.fieldName)]) === 'object') {
+						$.each(rData.formData[$().ReturnHyphenatedFieldNameOrValue(elem.fieldName)], function (i, p) {
+							permitted.push(p.account);
+						});
+					}
+				}
+			});
+			// for each element of permitted
+			$.each(permitted, function (i, p) {
+				// if the element matches the current user
+				if (StrInStr(p, uData.account)) {
+					// set this user's permission flag to 1
+					hasViewingPermissionThisRequest = 1;
+				}
+			});
+			// if this user's permission flag is still not 1 and an additional view permissions function has been designated
+			if (hasViewingPermissionThisRequest === 0 && typeof (fData.additionalViewPermissionsFunction) != "undefined") {
+				// set this user's permission flag to the result of said function
+				hasViewingPermissionThisRequest = CallFunctionFromString(fData.additionalViewPermissionsFunction, { "rData": rData });
+			}
+			// if this user's permission flag is still not 1
+			if (hasViewingPermissionThisRequest === 0) {
+				// show permission denial message and stop any further configuration of this request
+				$('div#overlays-screen-container').fadeIn(200);
+				$('div#mos-form-no-view-permission').fadeIn(400);
+				return;
+			}
+		}
+
+
+
+		// ========================================================
+		// BUILD FORM MARKUP & PARTIAL SCRIPT; INSERT FORM MARKUP
+		// ========================================================
+
+		var formMarkup = '';
+
+		var formScript = '';
+
+		$.each(fData.elements, function (i, elem) {
+
+			switch (elem.elementType) {
+				case "field":
+
+					switch (elem.controlType) {
+
+						case "text":
+							formMarkup += $().BuildTextField(elem);
+							formScript += $().BuildScript(elem);
+							break;
+
+						case "textarea":
+							formMarkup += $().BuildTextAreaField(elem);
+							formScript += $().BuildScript(elem);
+							break;
+
+						case "select":
+							formMarkup += $().BuildSelectField(elem);
+							formScript += $().BuildScript(elem);
+							break;
+
+						case "listItemChooser":
+							formMarkup += $().BuildListItemChooserField(elem);
+							formScript += $().BuildScript(elem);
+							break;
+
+						case "buttonWithLabel":
+							formMarkup += $().BuildButtonWithLabelField(elem);
+							break;
+
+						case "peoplePicker":
+							formMarkup += $().BuildPeoplePickerField(elem);
+							formScript += $().BuildScript(elem);
+							break;
+
+						case "radio":
+						case "check":
+							formMarkup += $().BuildRadioButtonsOrCheckboxes(elem);
+							formScript += $().BuildScript(elem);
+							break;
+
+						case "datePicker":
+							formMarkup += $().BuildDatePicker(elem);
+							formScript += $().BuildScript(elem);
+							break;
+
+						case "time":
+							formMarkup += $().BuildTime(elem);
+							formScript += $().BuildScript(elem);
+							break;
+
+						case "datetime":
+							formMarkup += $().BuildDatetime(elem);
+							formScript += $().BuildScript(elem);
+							break;
+
+						case "file":
+							formMarkup += $().BuildFileField(elem);
+							formScript += $().BuildScript(elem);
+							break;
+
+						case "mosFile":
+							formMarkup += $().BuildMOSFileField(elem);
+							formScript += $().BuildScript(elem);
+							break;
+
+						case "legacyFileSet":
+							formMarkup += $().BuildLegacyFileSetField(elem);
+							formScript += $().BuildScript(elem);
+							break;
+
+						case "url":
+							formMarkup += $().BuildURLField(elem);
+							formScript += $().BuildScript(elem);
+							break;
+
+						case "phone":
+							formMarkup += $().BuildPhoneField(elem);
+							formScript += $().BuildScript(elem);
+							break;
+
+						case "hidden":
+							formMarkup += $().BuildHiddenField(elem);
+							formScript += $().BuildScript(elem);
+							break;
+					}
+					break;
+
+				case "multifield":
+					formMarkup += $().BuildMultifield(elem);
+					formScript += $().BuildScript(elem);
+					break;
+
+				case "markup":
+					formMarkup += $().BuildMarkup(elem);
+					formScript += $().BuildScript(elem);
+					break;
+			}
+		});
+
+		// insert base markup into form container div
+		$("div#request-screen-container").append('<div id="request-form">' + formMarkup + '</div>');
+
+		// insert approval nodes, if any
+		if (rData.requestID != "" && rData.requestID > 0) {
+			if (typeof (rData.formData['Approval-Nodes-Storage']) != 'undefined') {
+				$("div#all-approvals").html(HtmlDecode(rData.formData['Approval-Nodes-Storage']));
+			}
+		}
+
+		// add a class to form container div to serve as styling hook
+		$("div#request-form, div#overlays-screen-container").addClass(ReplaceAll("\\.", "", ReplaceAll(" ", "-", mData.requestName)).toLowerCase());
+
+		// ========================================================
+		// CREATE, FORMAT FORM FIELD CONTROLS
+		// ========================================================
+
+		// for each div with relevant attribute, create PeoplePicker control
+		$("div[data-control-type='PeoplePicker']").each(function () {
+			var peoplePickerDiv = $(this).attr("ID");
+			InitializePeoplePicker(peoplePickerDiv);
+		});
+
+		// format field requirements
+		//		do this before populating form; population will repeat the original, as needed;
+		//		assumption here is that if the original is required, then all repeats should be required, too;
+		//		therefore, require the original before repeating it
+		$('div#request-form').find('.required').each(function () {
+			$(this).SetFieldToRequired($(this).attr("id"));
+		});
+
+		// disable appropriate fields
+		//		do this before populating form; population will repeat the original, as needed;
+		//		assumption here is that if the original is disabled, then all repeats should be disabled, too;
+		//		therefore, disable the original before repeating it
+		$('div#request-form').find('.disabled').each(function () {
+			$(this).SetFieldToDisabled('#' + $(this).attr("id"));
+		});
+
+		// load select options, set datepickers on appropriate fields
+		$.each(fData.elements, function (i, elem) {
+
+			if (elem.controlType === "select") {
+				if (typeof (elem.loadOptions) != "undefined") {
+					if (typeof (elem.restrictions) === "undefined") {
+						$("#" + ReplaceAll("\\.", "", ReplaceAll(" ", "-", elem.fieldName))).LoadSelectOptions(elem.loadOptions);
+					} else {
+						$("#" + ReplaceAll("\\.", "", ReplaceAll(" ", "-", elem.fieldName))).LoadSelectOptions(elem.loadOptions, elem.restrictions);
+					}
+				}
+			}
+			if (elem.controlType === "datePicker") {
+				// if this field is not readonly or disabled
+				if (!($("#" + ReplaceAll("\\.", "", ReplaceAll(" ", "-", elem.fieldName)))[0].hasAttribute("readonly")) && !($("#" + ReplaceAll("\\.", "", ReplaceAll(" ", "-", elem.fieldName)))[0].hasAttribute("disabled"))) {
+					$("#" + ReplaceAll("\\.", "", ReplaceAll(" ", "-", elem.fieldName))).datepicker({
+						changeMonth: "true",
+						changeYear: "true",
+						dateFormat: "MM d, yy"
+					});
+				}
+			}
+			if (elem.controlType === "datetime") {
+				// if this field is not readonly or disabled
+				if (!($("#date-input_" + ReplaceAll("\\.", "", ReplaceAll(" ", "-", elem.fieldName)))[0].hasAttribute("readonly")) && !($("#date-input_" + ReplaceAll("\\.", "", ReplaceAll(" ", "-", elem.fieldName)))[0].hasAttribute("disabled"))) {
+					$("#date-input_" + ReplaceAll("\\.", "", ReplaceAll(" ", "-", elem.fieldName))).datepicker({
+						changeMonth: "true",
+						changeYear: "true",
+						dateFormat: "MM d, yy"
+					});
+				}
+			}
+			if (elem.controlType === "datetime" || elem.controlType === "time") {
+				if (typeof (elem.hoursRestrictions) === "undefined") {
+					$("#hours-input_" + ReplaceAll("\\.", "", ReplaceAll(" ", "-", elem.fieldName))).LoadSelectOptions({
+						listName: "Hours",
+						firstOptionText: "",
+						displayField: "Title",
+						valueField: "fy2v",
+						orderField: "Order",
+					});
 				} else {
-					fData.elements = [];
-				}
-
-				if (fData.standardElementGroups.standardThisRequestAndRequesterElements != undefined) {
-					fData.elements = fData.elements.concat(standardThisRequestAndRequesterElements);
-				}
-
-				fData.elements = fData.elements.concat($().ReturnUniqueElementsOfCorrectVersion());
-
-				if (fData.standardElementGroups.standardApprovalElements != undefined) {
-					fData.elements = fData.elements.concat(standardApprovalElements);
-				}
-
-				if (fData.standardElementGroups.standardAdminAssignmentCompletionElements != undefined) {
-					fData.elements = fData.elements.concat(standardAdminAssignmentCompletionElements);
-				}
-
-				if (fData.standardElementGroups.standardAdminElements != undefined) {
-					fData.elements = fData.elements.concat(standardAdminElements);
-				}
-
-				if (fData.standardElementGroups.standardAdminNotesElements != undefined) {
-					fData.elements = fData.elements.concat(standardAdminNotesElements);
-				}
-
-				if (fData.standardElementGroups.standardAssignmentElements != undefined) {
-					fData.elements = fData.elements.concat(standardAssignmentElements);
-				}
-
-				if (fData.standardElementGroups.standardCompletionElements != undefined) {
-					fData.elements = fData.elements.concat(standardCompletionElements);
-				}
-
-				if (fData.standardElementGroups.standardButtonElements != undefined) {
-					fData.elements = fData.elements.concat(standardButtonElements);
-				}
-
-				if (fData.standardElementGroups.standardButtonElementsInitiallyHidden != undefined) {
-					fData.elements = fData.elements.concat(standardButtonElementsInitiallyHidden);
-				}
-
-				if (fData.standardElementGroups.standardComponentGrpAdminOnlyElements != undefined) {
-					fData.elements = fData.elements.concat(standardComponentGrpAdminOnlyElements);
-				}
-			}
-
-
-			// ========================================================
-			// ENSURE VIEW PERMISSION
-			// ========================================================
-
-			// if request status != '' and user is not an admin
-			if (rData.requestStatus != "" && uData.isAdmin === 0) {
-				console.log('checking permission');
-				// array of non-admin users who have permission to view the form
-				var permitted = [];
-				// this user's permission flag
-				var hasViewingPermissionThisRequest = 0;
-				// for each form element
-				$.each(fData.elements, function (i, elem) {
-					// if it yields view permissions
-					if (typeof (elem.yieldsViewPermissions) != "undefined" && elem.yieldsViewPermissions === 1) {
-						// push its value to permitted
-						if (typeof (rData.formData[$().ReturnHyphenatedFieldNameOrValue(elem.fieldName)]) === 'string') {
-							permitted.push(rData.formData[$().ReturnHyphenatedFieldNameOrValue(elem.fieldName)]);
-						} else if (typeof (rData.formData[$().ReturnHyphenatedFieldNameOrValue(elem.fieldName)]) === 'object') {
-							$.each(rData.formData[$().ReturnHyphenatedFieldNameOrValue(elem.fieldName)], function (i, p) {
-								permitted.push(p.account);
-							});
-						}
-					}
-				});
-				// for each element of permitted
-				$.each(permitted, function (i, p) {
-					// if the element matches the current user
-					if (StrInStr(p, uData.account)) {
-						// set this user's permission flag to 1
-						hasViewingPermissionThisRequest = 1;
-					}
-				});
-				// if this user's permission flag is still not 1 and an additional view permissions function has been designated
-				if (hasViewingPermissionThisRequest === 0 && typeof (fData.additionalViewPermissionsFunction) != "undefined") {
-					// set this user's permission flag to the result of said function
-					hasViewingPermissionThisRequest = CallFunctionFromString(fData.additionalViewPermissionsFunction, { "rData": rData });
-				}
-				// if this user's permission flag is still not 1
-				if (hasViewingPermissionThisRequest === 0) {
-					// show permission denial message and stop any further configuration of this request
-					$('div#overlays-screen-container').fadeIn(200);
-					$('div#mos-form-no-view-permission').fadeIn(400);
-					return;
-				}
-			}
-
-
-
-			// ========================================================
-			// BUILD FORM MARKUP & PARTIAL SCRIPT; INSERT FORM MARKUP
-			// ========================================================
-
-			var formMarkup = '';
-
-			var formScript = '';
-
-			$.each(fData.elements, function (i, elem) {
-
-				switch (elem.elementType) {
-					case "field":
-
-						switch (elem.controlType) {
-
-							case "text":
-								formMarkup += $().BuildTextField(elem);
-								formScript += $().BuildScript(elem);
-								break;
-
-							case "textarea":
-								formMarkup += $().BuildTextAreaField(elem);
-								formScript += $().BuildScript(elem);
-								break;
-
-							case "select":
-								formMarkup += $().BuildSelectField(elem);
-								formScript += $().BuildScript(elem);
-								break;
-
-							case "listItemChooser":
-								formMarkup += $().BuildListItemChooserField(elem);
-								formScript += $().BuildScript(elem);
-								break;
-
-							case "buttonWithLabel":
-								formMarkup += $().BuildButtonWithLabelField(elem);
-								break;
-
-							case "peoplePicker":
-								formMarkup += $().BuildPeoplePickerField(elem);
-								formScript += $().BuildScript(elem);
-								break;
-
-							case "radio":
-							case "check":
-								formMarkup += $().BuildRadioButtonsOrCheckboxes(elem);
-								formScript += $().BuildScript(elem);
-								break;
-
-							case "datePicker":
-								formMarkup += $().BuildDatePicker(elem);
-								formScript += $().BuildScript(elem);
-								break;
-
-							case "time":
-								formMarkup += $().BuildTime(elem);
-								formScript += $().BuildScript(elem);
-								break;
-
-							case "datetime":
-								formMarkup += $().BuildDatetime(elem);
-								formScript += $().BuildScript(elem);
-								break;
-
-							case "file":
-								formMarkup += $().BuildFileField(elem);
-								formScript += $().BuildScript(elem);
-								break;
-
-							case "mosFile":
-								formMarkup += $().BuildMOSFileField(elem);
-								formScript += $().BuildScript(elem);
-								break;
-
-							case "legacyFileSet":
-								formMarkup += $().BuildLegacyFileSetField(elem);
-								formScript += $().BuildScript(elem);
-								break;
-
-							case "url":
-								formMarkup += $().BuildURLField(elem);
-								formScript += $().BuildScript(elem);
-								break;
-
-							case "phone":
-								formMarkup += $().BuildPhoneField(elem);
-								formScript += $().BuildScript(elem);
-								break;
-
-							case "hidden":
-								formMarkup += $().BuildHiddenField(elem);
-								formScript += $().BuildScript(elem);
-								break;
-						}
-						break;
-
-					case "multifield":
-						formMarkup += $().BuildMultifield(elem);
-						formScript += $().BuildScript(elem);
-						break;
-
-					case "markup":
-						formMarkup += $().BuildMarkup(elem);
-						formScript += $().BuildScript(elem);
-						break;
-				}
-			});
-
-			// insert base markup into form container div
-			$("div#request-screen-container").append('<div id="request-form">' + formMarkup + '</div>');
-
-			// insert approval nodes, if any
-			if (rData.requestID != "" && rData.requestID > 0) {
-				if (typeof (rData.formData['Approval-Nodes-Storage']) != 'undefined') {
-					$("div#all-approvals").html(HtmlDecode(rData.formData['Approval-Nodes-Storage']));
-				}
-			}
-
-			/*
-				// consider
-
-				if (rData.requestID != "" && rData.requestID > 0) {
-					if (mData.requestName != "GSE Signup") {
-						if (typeof(rData.formData['Approval-Nodes-Storage']) != 'undefined') {
-							$("div#all-approvals").html(HtmlDecode(rData.formData['Approval-Nodes-Storage']));
-						}
-					}
-				}
-			*/
-
-			// add a class to form container div to serve as styling hook
-			$("div#request-form, div#overlays-screen-container").addClass(ReplaceAll("\\.", "", ReplaceAll(" ", "-", mData.requestName)).toLowerCase());
-
-			// ========================================================
-			// CREATE, FORMAT FORM FIELD CONTROLS
-			// ========================================================
-
-			// for each div with relevant attribute, create PeoplePicker control
-			$("div[data-control-type='PeoplePicker']").each(function () {
-				var peoplePickerDiv = $(this).attr("ID");
-				InitializePeoplePicker(peoplePickerDiv);
-			});
-
-			// format field requirements
-			//		do this before populating form; population will repeat the original, as needed;
-			//		assumption here is that if the original is required, then all repeats should be required, too;
-			//		therefore, require the original before repeating it
-			$('div#request-form').find('.required').each(function () {
-				$(this).SetFieldToRequired($(this).attr("id"));
-			});
-
-			// disable appropriate fields
-			//		do this before populating form; population will repeat the original, as needed;
-			//		assumption here is that if the original is disabled, then all repeats should be disabled, too;
-			//		therefore, disable the original before repeating it
-			$('div#request-form').find('.disabled').each(function () {
-				$(this).SetFieldToDisabled('#' + $(this).attr("id"));
-			});
-
-			// load select options, set datepickers on appropriate fields
-			$.each(fData.elements, function (i, elem) {
-
-				if (elem.controlType === "select") {
-					if (typeof (elem.loadOptions) != "undefined") {
-						if (typeof (elem.restrictions) === "undefined") {
-							$("#" + ReplaceAll("\\.", "", ReplaceAll(" ", "-", elem.fieldName))).LoadSelectOptions(elem.loadOptions);
-						} else {
-							$("#" + ReplaceAll("\\.", "", ReplaceAll(" ", "-", elem.fieldName))).LoadSelectOptions(elem.loadOptions, elem.restrictions);
-						}
-					}
-				}
-				if (elem.controlType === "datePicker") {
-					// if this field is not readonly or disabled
-					if (!($("#" + ReplaceAll("\\.", "", ReplaceAll(" ", "-", elem.fieldName)))[0].hasAttribute("readonly")) && !($("#" + ReplaceAll("\\.", "", ReplaceAll(" ", "-", elem.fieldName)))[0].hasAttribute("disabled"))) {
-						$("#" + ReplaceAll("\\.", "", ReplaceAll(" ", "-", elem.fieldName))).datepicker({
-							changeMonth: "true",
-							changeYear: "true",
-							dateFormat: "MM d, yy"
-						});
-					}
-				}
-				if (elem.controlType === "datetime") {
-					// if this field is not readonly or disabled
-					if (!($("#date-input_" + ReplaceAll("\\.", "", ReplaceAll(" ", "-", elem.fieldName)))[0].hasAttribute("readonly")) && !($("#date-input_" + ReplaceAll("\\.", "", ReplaceAll(" ", "-", elem.fieldName)))[0].hasAttribute("disabled"))) {
-						$("#date-input_" + ReplaceAll("\\.", "", ReplaceAll(" ", "-", elem.fieldName))).datepicker({
-							changeMonth: "true",
-							changeYear: "true",
-							dateFormat: "MM d, yy"
-						});
-					}
-				}
-				if (elem.controlType === "datetime" || elem.controlType === "time") {
-					if (typeof (elem.hoursRestrictions) === "undefined") {
-						$("#hours-input_" + ReplaceAll("\\.", "", ReplaceAll(" ", "-", elem.fieldName))).LoadSelectOptions({
-							listName: "Hours",
-							firstOptionText: "",
-							displayField: "Title",
-							valueField: "fy2v",
-							orderField: "Order",
-						});
-					} else {
-						$("#hours-input_" + ReplaceAll("\\.", "", ReplaceAll(" ", "-", elem.fieldName))).LoadSelectOptions({
-							listName: "Hours",
-							firstOptionText: "",
-							displayField: "Title",
-							valueField: "fy2v",
-							orderField: "Order",
-							restrictions: elem.hoursRestrictions
-						});
-					}
-					if (typeof (elem.minutesRestrictions) === "undefined") {
-						$("#minutes-input_" + ReplaceAll("\\.", "", ReplaceAll(" ", "-", elem.fieldName))).LoadSelectOptions({
-							listName: "Minutes",
-							firstOptionText: "",
-							displayField: "Title",
-							valueField: "amky",
-							orderField: "Order"
-						});
-					} else {
-						$("#minutes-input_" + ReplaceAll("\\.", "", ReplaceAll(" ", "-", elem.fieldName))).LoadSelectOptions({
-							listName: "Minutes",
-							firstOptionText: "",
-							displayField: "Title",
-							valueField: "amky",
-							orderField: "Order",
-							restrictions: elem.minutesRestrictions
-						});
-					}
-				}
-			});
-
-
-
-			// ========================================================
-			// POPULATE FORM FIELDS & SCRIPT TAG
-			// ========================================================
-
-			var approvalNodeScripts = '';
-
-			// if request is new and there is default data for new requests
-			if (rData.requestStatus == "" && typeof (rData.defaultDataForNewRequests) != "undefined") {
-				PopulateFormData("div#request-form", rData.defaultDataForNewRequests, mData.uriRoot, rData.requestID);
-			}
-
-			// if request is not new and this is not a GSE Signup
-			if (rData.requestStatus != "" && mData.requestName != "GSE Signup") {
-
-
-
-
-
-
-
-				// if this is a GSE Schedule (either new or existing)
-				if (mData.requestName == "GSE Schedule") {
-					// get the relevant signups
-					var gseSignupsArray = $().GetFieldsFromSpecifiedRows({
-						"select": [{
-							"nameHere": "signupID",
-							"nameInList": "ID"
-						}, {
-							"nameHere": "formData",
-							"nameInList": "AllRequestData"
-						}],
-						"webURL": "https://bmos.sharepoint.com/sites/hr-service-signups",
-						"where": {
-							"ands": [
-								{
-									"field": "ScheduleID",
-									"type": "Text",
-									"value": rData.formData['Request-ID'],
-								}, {
-									"field": "RequestStatus",
-									"type": "Text",
-									"value": "Signed Up",
-								}
-							]
-						}
-					});
-					console.log('gseSignupsArray');
-					console.log(gseSignupsArray);
-					console.log('rData.formData');
-					console.log(rData.formData);
-					// if the RepeatedElements array doesn't already exist
-					if (!rData.formData.RepeatedElements) {
-						// create it
-						rData.formData.RepeatedElements = [];
-					}
-					// for each signup
-					gseSignupsArray.forEach((signup, index) => {
-						// create a repeat object
-						var repeatObject = {};
-						if (index === 0) {
-							repeatObject.ID = "signup";
-							repeatObject.OriginalToRepeat = "undefined";
-							repeatObject['Signup-Name'] = signup.formData["Requested-For"][0].displayText;
-							repeatObject['Signup-ID'] = signup.signupID;
-							// repeatObject.XXXXX = XXXXX;
-							// repeatObject.XXXXX = XXXXX;
-						} else {
-							repeatObject.ID = "signup-repeat-" + index;
-							repeatObject.OriginalToRepeat = "signup";
-							repeatObject['Signup-Name-repeat-' + index] = signup.formData["Requested-For"][0].displayText;
-							repeatObject['Signup-ID-repeat-' + index] = signup.signupID;
-							// repeatObject.XXXXX = XXXXX;
-							// repeatObject.XXXXX = XXXXX;
-						}
-						// push the repeat object to the RepeatedElements array
-						rData.formData.RepeatedElements.push(repeatObject);
-						// if the signup people list items property doesn't already exist
-						if (!rData.formData['Signup-People-List-Items']) {
-							// create it
-							rData.formData['Signup-People-List-Items'] = '';
-						}
-						// add a list item to the signup people list items property
-						rData.formData['Signup-People-List-Items'] += '<li>' + signup.formData["Requested-For"][0].displayText + '</li>';
+					$("#hours-input_" + ReplaceAll("\\.", "", ReplaceAll(" ", "-", elem.fieldName))).LoadSelectOptions({
+						listName: "Hours",
+						firstOptionText: "",
+						displayField: "Title",
+						valueField: "fy2v",
+						orderField: "Order",
+						restrictions: elem.hoursRestrictions
 					});
 				}
-
-
-
-
-
-
-
-
-
-
-				// set stored object's data, if any
-				if (typeof (rData.formData) != "undefined") {
-					PopulateFormData("div#request-form", rData.formData, mData.uriRoot, rData.requestID, mData.checkForAlternateEventDataToPopulate);
-				}
-
-				// set rData and mData values that are displayed to user
-				$("input#Request-ID").val(rData.requestID);
-				$("input#Request-Status").val(rData.requestStatus);
-				$("a.link_admin-email").attr("href", "mailto:" + mData.adminEmailString);
-
-				// set notification history rows, if any
-				if (typeof ($('textarea#Approval-Notification-Rows-Storage').val()) != "undefined") {
-					$("table#table_approval-notification-history tbody").append($('textarea#Approval-Notification-Rows-Storage').val());
-				}
-
-				// get approval node scripts, if any
-				if (typeof ($('textarea#Approval-Nodes-Script-Storage').val()) != "undefined") {
-					approvalNodeScripts += ReplaceAll("'", "", $('textarea#Approval-Nodes-Script-Storage').val());
+				if (typeof (elem.minutesRestrictions) === "undefined") {
+					$("#minutes-input_" + ReplaceAll("\\.", "", ReplaceAll(" ", "-", elem.fieldName))).LoadSelectOptions({
+						listName: "Minutes",
+						firstOptionText: "",
+						displayField: "Title",
+						valueField: "amky",
+						orderField: "Order"
+					});
+				} else {
+					$("#minutes-input_" + ReplaceAll("\\.", "", ReplaceAll(" ", "-", elem.fieldName))).LoadSelectOptions({
+						listName: "Minutes",
+						firstOptionText: "",
+						displayField: "Title",
+						valueField: "amky",
+						orderField: "Order",
+						restrictions: elem.minutesRestrictions
+					});
 				}
 			}
+		});
 
-			// if this is a GSE Signup (either new or existing)
-			if (mData.requestName == "GSE Signup") {
-				// if this is an existing GSE Signup, in which case a GSE Schedule ID was not specified in the URL 
-				if (rData.requestStatus != "") {
-					// extract the schedule ID from the saved request data
-					rData.gseScheduleID = rData.formDataOnLoad['Schedule-ID'];
-				}
-				// get the relevant job data
-				rData = $.extend(
-					rData,
-					$().GetFieldsFromOneRow({
-						"select": [{
-							"nameHere": "gseJobID",
-							"nameInList": "JobID"
-						}, {
-							"nameHere": "gseScheduleData",
-							"nameInList": "AllRequestData"
-						}],
-						"webURL": "https://bmos.sharepoint.com/sites/hr-service-schedules",
-						"where": {
-							"field": "ID",
-							"type": "Number",
-							"value": rData.gseScheduleID,
-						}
-					})
-				);
-				// get the relevant schedule data
-				rData = $.extend(
-					rData,
-					$().GetFieldsFromOneRow({
-						"select": [{
-							"nameHere": "gseJobData",
-							"nameInList": "AllRequestData"
-						}],
-						"webURL": "https://bmos.sharepoint.com/sites/hr-service-jobs",
-						"where": {
-							"field": "ID",
-							"type": "Number",
-							"value": rData.gseJobID,
-						}
-					})
-				);
-				// delete schedule and job data so that they don't get used as / confused with this signup's data
-				delete rData.gseJobData['Request-Status'];
-				delete rData.gseScheduleData['Request-Status'];
-				delete rData.gseJobData['Requested-For'];
-				delete rData.gseScheduleData['Requested-For'];
-				delete rData.gseJobData['Request-ID'];
-				delete rData.gseScheduleData['Request-ID'];
 
-				// calculate positions remaining
 
-				// prep some of the data before populating fields and placeholders with it
-				var otherSignupsForThisSchedule = $().GetFieldsFromSpecifiedRows({
+		// ========================================================
+		// POPULATE FORM FIELDS & SCRIPT TAG
+		// ========================================================
+
+		var approvalNodeScripts = '';
+
+		// if request is new and there is default data for new requests
+		if (rData.requestStatus == "" && typeof (rData.defaultDataForNewRequests) != "undefined") {
+			PopulateFormData("div#request-form", rData.defaultDataForNewRequests, mData.uriRoot, rData.requestID);
+		}
+
+		// if request is not new and this is not a GSE Signup
+		if (rData.requestStatus != "" && mData.requestName != "GSE Signup") {
+			// if this is a GSE Schedule (either new or existing)
+			if (mData.requestName == "GSE Schedule") {
+				// get the relevant signups
+				var gseSignupsArray = $().GetFieldsFromSpecifiedRows({
 					"select": [{
-						"nameHere": "anotherSignupIDThisSchedule",
+						"nameHere": "signupID",
 						"nameInList": "ID"
+					}, {
+						"nameHere": "formData",
+						"nameInList": "AllRequestData"
 					}],
+					"webURL": "https://bmos.sharepoint.com/sites/hr-service-signups",
 					"where": {
 						"ands": [
 							{
 								"field": "ScheduleID",
 								"type": "Text",
-								"value": rData.gseScheduleID,
+								"value": rData.requestID,
 							}, {
 								"field": "RequestStatus",
 								"type": "Text",
-								"value": "Signed Up",
+								"operator": "Neq",
+								"value": "Cancelled",
 							}
 						]
 					}
 				});
 
-				var scheduleStartDateTime = rData.gseScheduleData['Date'].substring(0, 10) + ' ' +
-					rData.gseScheduleData['time-storage_StartTime'].substring(11, 16);
-				scheduleStartDateTime = moment.tz(scheduleStartDateTime, "America/New_York").format();
-				var NowAsISOLocal = $().ReturnFormattedDateTime('nowLocal', null, null);
-				rData.gseScheduleData['Positions-Available'] =
-					parseInt(rData.gseScheduleData['Number-of-Positions']) - otherSignupsForThisSchedule.length;
-				rData.gseScheduleData['Friendly-Date'] = $().ReturnFormattedDateTime(rData.gseScheduleData['Date'], null, 'dddd, MMMM D, YYYY', 1);
-				rData.gseScheduleData['Shift-Length'] = rData.gseScheduleData['shiftlength_35-hours'] ? '3.5 hours' : '7 hours';
-				rData.gseScheduleData['Start-Time'] = $().ReturnFormattedDateTime(rData.gseScheduleData['time-storage_StartTime'].substring(0, 19), null, 'h:mm a');
-				rData.gseScheduleData['Break-Time'] = $().ReturnFormattedDateTime(rData.gseScheduleData['time-storage_BreakTime'].substring(0, 19), null, 'h:mm a');
-				rData.gseScheduleData['Meal-Time'] = $().ReturnFormattedDateTime(rData.gseScheduleData['time-storage_MealTime'].substring(0, 19), null, 'h:mm a');
-
-
-				rData.gseJobData['Job-Admin-Name'] = rData.gseJobData['Job-Admin'][0].description;
-				rData.gseJobData['Job-Description-Formatted'] = '<p>' + ReplaceAll('%0A', '</p><p>', rData.gseJobData['Job-Description']) + '</p>';
-
-				// training requirements
-				// get array of requirements
-				var opportunityTrainingReqs = rData.gseJobData['Training-Requirements'].split("%0A");
-				// if there's at least one duty
-				if (opportunityTrainingReqs[0]) {
-					// start with a header
-					rData.gseJobData['Training-Requirements-Formatted'] = '<h3>Training Requirements</h3>';
-					// if there's more than one, we'll create list items; otherwise, paragraph
-					var opportunityTrainingReqElement = opportunityTrainingReqs[1] ? 'li' : 'p';
-					// if there's more than one, start list
-					if (opportunityTrainingReqs[1]) {
-						rData.gseJobData['Training-Requirements-Formatted'] += '<ul>';
+				// if the RepeatedElements array doesn't already exist
+				if (!rData.formData.RepeatedElements) {
+					// create it
+					rData.formData.RepeatedElements = [];
+				}
+				// for each signup
+				gseSignupsArray.forEach((signup, index) => {
+					// create a repeat object
+					var repeatObject = {};
+					if (index === 0) {
+						repeatObject.ID = "signup";
+						repeatObject.OriginalToRepeat = "undefined";
+						repeatObject['Signup-Name'] = signup.formData['Requested-For'][0].displayText;
+						repeatObject['Signup-ID'] = signup.signupID;
+						if (signup.formData['Request-Status'] === 'Credit Granted') {
+							repeatObject['signup-credit_yes'] = 'yes';
+						} else if (signup.formData['Request-Status'] === 'Credit Denied') {
+							repeatObject['signup-credit_no'] = 'no';
+							repeatObject['Signup-Credit-Denial-Reason'] = signup.formData['Signup-Credit-Denial-Reason'];
+						}
+					} else {
+						repeatObject.ID = "signup-repeat-" + index;
+						repeatObject.OriginalToRepeat = "signup";
+						repeatObject['Signup-Name-repeat-' + index] = signup.formData["Requested-For"][0].displayText;
+						repeatObject['Signup-ID-repeat-' + index] = signup.signupID;
+						if (signup.formData['Request-Status'] === 'Credit Granted') {
+							repeatObject['signup-credit_yes-repeat-' + index] = 'yes';
+						} else if (signup.formData['Request-Status'] === 'Credit Denied') {
+							repeatObject['signup-credit_no-repeat-' + index] = 'no';
+							repeatObject['Signup-Credit-Denial-Reason-repeat-' + index] = signup.formData['Signup-Credit-Denial-Reason'];
+						}
 					}
-					// for each in array, add markup
-					opportunityTrainingReqs.forEach((opportunityTrainingReq) => {
-						rData.gseJobData['Training-Requirements-Formatted'] +=
-							'<' + opportunityTrainingReqElement + '>' +
-							opportunityTrainingReq +
-							'</' + opportunityTrainingReqElement + '>';
-					});
-					// if there's more than one, end list
-					if (opportunityTrainingReqs[1]) {
-						rData.gseJobData['Training-Requirements-Formatted'] += '</ul>';
+					// push the repeat object to the RepeatedElements array
+					rData.formData.RepeatedElements.push(repeatObject);
+					// if the signup people list items property doesn't already exist
+					if (!rData.formData['Signup-People-List-Items']) {
+						// create it
+						rData.formData['Signup-People-List-Items'] = '';
 					}
-				}
-
-				// dress requirements
-				// start with the two persistent requirements
-				rData.gseJobData['Dress-Requirements-List-Items'] =
-					'<li>Clothing and shoes must be in good condition.</li>' +
-					'<li>MOS badge must be worn above the waist at all times.</li>';
-				// add any other requirements
-				if (rData.gseJobData['Dress-Requirements']) {
-					rData.gseJobData['Dress-Requirements-List-Items'] +=
-						'<li>' + ReplaceAll('%0A', '</li><li>', rData.gseJobData['Dress-Requirements']) + '</li>';
-				}
-
-				// job duties
-				// get array of duties
-				var opportunityJobDuties = rData.gseJobData['Job-Duties'].split("%0A");
-				// if there's at least one duty
-				if (opportunityJobDuties[0]) {
-					// start with a header
-					rData.gseJobData['Job-Duties-Formatted'] = '<h3>Job Duties</h3>';
-					// if there's more than one, we'll create list items; otherwise, paragraph
-					var opportunityJobDutyElement = opportunityJobDuties[1] ? 'li' : 'p';
-					// if there's more than one, start list
-					if (opportunityTrainingReqs[1]) {
-						rData.gseJobData['Job-Duties-Formatted'] += '<ul>';
-					}
-					// for each in array, add markup
-					opportunityJobDuties.forEach((opportunityJobDuty) => {
-						rData.gseJobData['Job-Duties-Formatted'] +=
-							'<' + opportunityJobDutyElement + '>' +
-							opportunityJobDuty +
-							'</' + opportunityJobDutyElement + '>';
-					});
-					// if there's more than one, start list
-					if (opportunityTrainingReqs[1]) {
-						rData.gseJobData['Job-Duties-Formatted'] += '<ul>';
-					}
-				}
-
-				if (rData.gseScheduleData['Notes']) {
-					rData.gseScheduleData['Notes-Formatted'] = '<h3>Notes</h3>' +
-						'<p>' + ReplaceAll('%0A', '</p><p>', rData.gseScheduleData['Notes']) + '</p>';
-				}
-
-				console.log('rData.gseScheduleData');
-				console.log(rData.gseScheduleData);
-				console.log('rData.gseJobData');
-				console.log(rData.gseJobData);
-				console.log('rData.formDataOnLoad');
-				console.log(rData.formDataOnLoad);
-
-				// populate the placeholder <span>s with job and schedule data
-				PopulateFormData("div#request-form", rData.gseJobData, mData.uriRoot, rData.requestID, mData.checkForAlternateEventDataToPopulate);
-				PopulateFormData("div#request-form", rData.gseScheduleData, mData.uriRoot, rData.requestID, mData.checkForAlternateEventDataToPopulate);
+					// add a list item to the signup people list items property
+					rData.formData['Signup-People-List-Items'] += '<li>' + signup.formData["Requested-For"][0].displayText + '</li>';
+				});
 			}
 
-			// if this is a *new* GSE Signup
-			if (rData.requestStatus == "" && mData.requestName == "GSE Signup" && rData.gseScheduleID != "" && rData.gseScheduleID > 0) {
-				// manually populate specific signup fields with user, job, and schedule data
-				$("input#Request-Nickname").val(rData.gseJobID + '-' + rData.gseScheduleID + '-' + ReplaceAll('@mos.org', '', uData.userName));
-				$("input#Job-ID").val(rData.gseJobID);
-				$("input#Schedule-ID").val(rData.gseScheduleID);
-				$("input#Positions-Available").val(rData.gseScheduleData['Positions-Available']);
-				$("input#Schedule-Start-Datetime").val(scheduleStartDateTime);
-				$("input#Current-Datetime").val(NowAsISOLocal);
+			// set stored object's data, if any
+			if (typeof (rData.formData) != "undefined") {
+				PopulateFormData("div#request-form", rData.formData, mData.uriRoot, rData.requestID, mData.checkForAlternateEventDataToPopulate);
 			}
 
-			// if this is an *existing* GSE Signup
-			if (rData.requestStatus != "" && mData.requestName == "GSE Signup") {
-				// manually copy some admin data to requester-accessible fields
-				$("input#Request-Status-for-Requester").val(rData.requestStatus);
-				$("textarea#Credit-Denial-Reason-for-Requester").val(rData.formDataOnLoad['Credit-Denial-Reason']);
+			// set rData and mData values that are displayed to user
+			$("input#Request-ID").val(rData.requestID);
+			$("input#Request-Status").val(rData.requestStatus);
+			$("a.link_admin-email").attr("href", "mailto:" + mData.adminEmailString);
+
+			// set notification history rows, if any
+			if (typeof ($('textarea#Approval-Notification-Rows-Storage').val()) != "undefined") {
+				$("table#table_approval-notification-history tbody").append($('textarea#Approval-Notification-Rows-Storage').val());
 			}
 
-			// if request is new
-			if (rData.requestStatus === '') {
-
-				// set current user's data as requester's data
-				$('input#Requester-Name').val(uData.name);
-				$('input#Requester-Department').val(uData.dept);
-				$('input#Requester-Email').val(uData.email.toLowerCase());
-				$('input#Requester-Phone').val(uData.phone);
-				$('input#Requester-Account').val(uData.account);
-
-				// if designated, set current user's dept as event dept
-				if (typeof (mData.autoPopulateEventDeparment) != 'undefined' && mData.autoPopulateEventDeparment === 1) {
-					$('input#Event-Department').val(uData.dept);
-				}
-
-				// set required approvers
-				$("input#Required-Approvers").val(mData.requiredApproversString);
-
-				// if alwaysTalkToRequester, populate and hide relevant fields
-				if (typeof (fData.alwaysTalkToRequester) != 'undefined' && fData.alwaysTalkToRequester === 1) {
-					console.log('populating');
-					console.log(uData);
-					$('option[value="Self"]').prop('selected', true);
-					$().PutAddtlPeopleInPicker('Requested For', [{
-						'name': uData.name,
-						'email': uData.email,
-						'account': uData.account
-					}]);
-					$("div#label-and-control_Self-or-Other").hide("fast").addClass("hidden");
-				}
+			// get approval node scripts, if any
+			if (typeof ($('textarea#Approval-Nodes-Script-Storage').val()) != "undefined") {
+				approvalNodeScripts += ReplaceAll("'", "", $('textarea#Approval-Nodes-Script-Storage').val());
 			}
+		}
 
-			// set "button" link href
-			$("a.link_exit, a.link_exit-sans-save").attr("href", rData.returnURI);
-
-			// set field values for developer's convenience and to record version numbers
-			$("input#Last-Modified-Timestamp-at-Load").val(rData.lastModifiedAtLoad);
-			$("input#Admin-Email").val(mData.adminEmailString);
-			$("input#Request-Name").val(mData.requestName);
-			$("input#Auto-Assignments-1").val(mData.autoAssignments1);
-			$("input#Auto-Assignments-2").val(mData.autoAssignments2);
-			$("input#URI-Admin").val(mData.uriAdmin);
-			$("input#URI-Requester").val(mData.uriRequester);
-			$("input#URI-Request").val(mData.uriRequest);
-			if (rData.requestStatus === '') {
-				$("input#SWF-Version").val(mData.apiLatestVersion);
-				$("input#Request-Version").val(mData.currentRequestVersion);
-			}
-			$("input#Component-Group-Admin").val(mData.componentGrpAdmin);
-			$("input#Component-Admin").val(mData.componentAdmin);
-			$("input#Current-User-Display-Name").val(uData.name);
-			$("input#Current-User-Name").val(uData.userName);
-			$('input#Current-User-Account').val(uData.Name);
-			$("input#Current-User-is-Admin").val(uData.isAdmin);
-			$("input#Current-User-is-Component-Group-Admin").val(uData.isComponentGrpAdmin);
-			$("input#Component-ID").val(mData.componentID);
-			// concatenate built and stored scripts and append inside script#request-form-script
-
-
-
-
-			$("div#request-screen-container").append('<script id="request-form-script" type="text/javascript"> \n\n$( document ).ready(function() { \n\n' + fData.CustomScriptFirst + '\n\n' + formScript + '\n\n' + approvalNodeScripts + '\n\n' + fData.CustomScriptLast + '\n\n}); \n\n</script> \n');
-
-
-
-			// ========================================================
-			// CLEAR FORM FIELDS
-			// ========================================================
-
-			$("input#Last-Modified-Timestamp-at-Submit").val();
-			$("input#Last-Modified-Timestamp-Mismatch").val();
-			$("select#Change-Request-Status").val();
-			$("input#requester-reversion-to-pending-revision_revert").prop('checked', false).attr("checked", false);
-			$("input#requester-restart-approval-process_ready").prop('checked', false).attr("checked", false);
-			$("textarea#Admin-To-Requester-Message-Addendum").val();
-			$("input#Approval-Newly-Needed-Notify").val("none");
-			$("input#Approval-Not-Needed-Notify").val("none");
-			$("input#Approval-Still-Needed-Notify").val("none");
-			$("input#Newly-Approved-or-Pending").val(0);
-
+		// if this is a GSE Signup (either new or existing)
+		if (mData.requestName == "GSE Signup") {
+			// if this is an existing GSE Signup, in which case a GSE Schedule ID was not specified in the URL 
 			if (rData.requestStatus != "") {
-
-				// clear stuff that's only for new requests
-				$("input#Required-Approvers").val();
-				$("input#Beginning-of-Life").val();
-
+				// extract the schedule ID from the saved request data
+				rData.gseScheduleID = rData.formDataOnLoad['Schedule-ID'];
 			}
+			// get the relevant job data
+			rData = $.extend(
+				rData,
+				$().GetFieldsFromOneRow({
+					"select": [{
+						"nameHere": "gseJobID",
+						"nameInList": "JobID"
+					}, {
+						"nameHere": "gseScheduleData",
+						"nameInList": "AllRequestData"
+					}],
+					"webURL": "https://bmos.sharepoint.com/sites/hr-service-schedules",
+					"where": {
+						"field": "ID",
+						"type": "Number",
+						"value": rData.gseScheduleID,
+					}
+				})
+			);
+			// get the relevant schedule data
+			rData = $.extend(
+				rData,
+				$().GetFieldsFromOneRow({
+					"select": [{
+						"nameHere": "gseJobData",
+						"nameInList": "AllRequestData"
+					}],
+					"webURL": "https://bmos.sharepoint.com/sites/hr-service-jobs",
+					"where": {
+						"field": "ID",
+						"type": "Number",
+						"value": rData.gseJobID,
+					}
+				})
+			);
+			// delete schedule and job data so that they don't get used as / confused with this signup's data
+			delete rData.gseJobData['Request-Status'];
+			delete rData.gseScheduleData['Request-Status'];
+			delete rData.gseJobData['Requested-For'];
+			delete rData.gseScheduleData['Requested-For'];
+			delete rData.gseJobData['Request-ID'];
+			delete rData.gseScheduleData['Request-ID'];
 
+			// calculate positions remaining
 
-
-			// ========================================================
-			// FORMAT FORM
-			// ========================================================
-
-			// set friendly formats on date fields designated in mData.elements
-			$.each(fData.elements, function (i, elem) {
-
-				// if element needs its date value formatted on load
-				if (typeof (elem.friendlyFormatOnLoad) != "undefined") {
-
-					// determine the date field selector from the element's other properties
-					var fieldSelector = "#" + ReplaceAll("\\.", "", ReplaceAll(" ", "-", elem.fieldName));
-
-					// if the field has a value
-					if (typeof ($(fieldSelector).val()) != "undefined" && $(fieldSelector).val() != "") {
-						// console.log("this field has a value");
-
-						// if the field is disabled or readonly
-						if (typeof ($(fieldSelector).attr('disabled')) != "undefined" || typeof ($(fieldSelector).attr('readonly')) != "undefined") {
-							// console.log("this field is disabled/RO");
-
-							// if this date needs to be re-stored in iso format
-							if (typeof (elem.isoFormatOnSubmit) != "undefined") {
-								// console.log("has isoFormatOnSubmit");
-								// store the db-stored date in the markup
-								//		(it'll be re-used for db storage upon submit, in case 
-								//		 friendly format doesn't include year)
-								$(fieldSelector).attr('data-iso-date-on-load', $(fieldSelector).val());
-							}
+			// prep some of the data before populating fields and placeholders with it
+			var otherSignupsForThisSchedule = $().GetFieldsFromSpecifiedRows({
+				"select": [{
+					"nameHere": "anotherSignupIDThisSchedule",
+					"nameInList": "ID"
+				}],
+				"where": {
+					"ands": [
+						{
+							"field": "ScheduleID",
+							"type": "Text",
+							"value": rData.gseScheduleID,
+						}, {
+							"field": "RequestStatus",
+							"type": "Text",
+							"value": "Signed Up",
 						}
-						// get the formatted value using the field value and the properties of friendlyFormatOnLoad
-						$(fieldSelector).val($().ReturnFormattedDateTime($(fieldSelector).val(), elem.friendlyFormatOnLoad.incomingFormat, elem.friendlyFormatOnLoad.returnFormat, elem.friendlyFormatOnLoad.determineYearDisplayDynamically));
-					}
-				}
-
-				// if element needs its date value formatted on load
-				if (typeof (elem.setDateFromURLOnLoad) != "undefined") {
-
-					// determine the date field selector from the element's other properties
-					var fieldSelector = "#" + ReplaceAll("\\.", "", ReplaceAll(" ", "-", elem.fieldName));
-
-					// get the iso-formatted date from the URL
-					var dateToSetISO = GetParamFromUrl(location.search, elem.setDateFromURLOnLoad.parameter);
-
-					// get the date in friendly format (datepicker-matching format)
-					var dateToSetSpecifiedFormat = $().ReturnFormattedDateTime(dateToSetISO, null, elem.setDateFromURLOnLoad.returnFormat, elem.setDateFromURLOnLoad.determineYearDisplayDynamically);
-
-					// set the field
-					$(fieldSelector).val(dateToSetSpecifiedFormat);
-				}
-			});
-
-			// show approval notification history if it contains data
-			if ($("table#table_approval-notification-history tbody tr").length) {
-				$("div#approval-notification-history").show("fast").removeClass("hidden");
-			}
-
-			// show assignment date if it contains data
-			if ($("input#Assignment-Date").val() != "") {
-				$("div#label-and-control_Assignment-Date").show("fast").removeClass("hidden");
-			}
-
-			// show completion date if it contains data
-			if ($("input#Completion-Date").val() != "") {
-				$("div#label-and-control_Completion-Date").show("fast").removeClass("hidden");
-			}
-
-			// append approvalPreface, if appropriate
-			if (typeof (mData.approvalPreface) != 'undefined') {
-				$('div#swf-specific-approval-preface').html(mData.approvalPreface);
-			}
-
-			// enable approval radio buttons and notes for this user, as relevant
-			if (rData.endOfLife != 1) {
-				$('div[data-approver-email="' + uData.email.toLowerCase() + '"] input[name^="Approval-Indicator_"]').prop("disabled", false);
-				$('div[data-approver-email="' + uData.email.toLowerCase() + '"] textarea[id^="Approval-Notes_"]').prop("disabled", false);
-			}
-
-			// if request is at end of life and there are no approval nodes, hide 'Approvals' header
-			if (rData.endOfLife === 1 && $("div#all-approvals").children().length === 0) {
-				$('h2#header_approvals').addClass('hidden');
-			}
-
-			// if there are no historical admin notes, hide the textarea
-			//		(otherwise, it breaks up the vertical rhythm)
-			if (typeof ($('textarea#Historical-Admin-Notes').val()) === 'undefined') {
-				$('div#label-and-control_Historical-Admin-Notes').addClass('hidden');
-			} else if ($('textarea#Historical-Admin-Notes').val() === '') {
-				$('div#label-and-control_Historical-Admin-Notes').addClass('hidden');
-			}
-
-			// if there are no historical other preservable notes, hide the textarea
-			//		(otherwise, it breaks up the vertical rhythm)
-			if (typeof ($('textarea#Historical-Other-Preservable-Notes').val()) === 'undefined') {
-				$('div#label-and-control_Historical-Other-Preservable-Notes').addClass('hidden');
-			} else if ($('textarea#Historical-Other-Preservable-Notes').val() === '') {
-				$('div#label-and-control_Historical-Other-Preservable-Notes').addClass('hidden');
-			}
-
-			// if there are historical admin notes, resize the textarea to fit all of them
-			if (typeof ($('textarea#Historical-Admin-Notes').val()) != 'undefined' && $('textarea#Historical-Admin-Notes').val() != '') {
-				$().ResizeTextareaToFitAllContents('Historical-Admin-Notes');
-			}
-
-			// if there are historical other preservable notes, resize the textarea to fit all of them
-			if (typeof ($('textarea#Historical-Other-Preservable-Notes').val()) != 'undefined' && $('textarea#Historical-Other-Preservable-Notes').val() != '') {
-				$().ResizeTextareaToFitAllContents('Historical-Other-Preservable-Notes');
-			}
-
-			// if RS = Completed, show completion info
-			if (rData.requestStatus === "Completed") {
-				$("div#completion").removeClass("hidden");
-			}
-
-			// for each mos file field
-			$("div.mos-drag-and-drop-file-attachment").each(function () {
-				var thisFileFieldID = $(this).attr("ID");
-				var thisFileName = $("div#" + thisFileFieldID).find("input.mos-drag-and-drop-file-name").val();
-
-				// if the hidden inputs have been populated with data by PopulateFormData(), then set the UI to present the file info to the 
-				if (typeof (thisFileName) == "string" && thisFileName != "") {
-
-					var thisFileIsInQuarkFiles = $("div#" + thisFileFieldID).find("input.mos-drag-and-drop-file-in-quark-files").val();
-					var thisFileURI = "";
-
-					if (thisFileIsInQuarkFiles == "1") {
-						var legacyID = $("input#legacy-id").val();
-						thisFileURI = mData.fullSiteBaseURL + "/QuarkFiles/" + legacyID + "/" + thisFileName;
-					} else {
-						thisFileURI = mData.fullSiteBaseURL + "/Lists/SWFList/Attachments/" + rData.requestID + "/" + thisFileName;
-					}
-
-					var fileInputID = $("#" + thisFileFieldID).find("div.mos-drag-and-drop-file-input").attr("id");
-					var thisfileNameFormatted = ReplaceAll(' ', '%20', thisFileName);
-
-					var thisFileSize = $("div#" + thisFileFieldID).find("input.mos-drag-and-drop-file-size").val();
-					var thisFileTypeClass = $("div#" + thisFileFieldID).find("input.mos-drag-and-drop-file-type-class").val();
-					var filePresentationContainerID = $("#" + thisFileFieldID).find("a.mos-drag-and-drop-file-container").attr("id");
-					var fileUploadIconID = $("#" + filePresentationContainerID).find("div.mos-drag-and-drop-file-upload-icon").attr("id");
-					var filePreviewID = $("#" + filePresentationContainerID).find("div.mos-drag-and-drop-file-preview").attr("id");
-					var fileNameAndSizePresentationID = $("#" + filePresentationContainerID).find("div.mos-drag-and-drop-file-name-and-size").attr("id");
-					var fileControlID = $("#" + filePresentationContainerID).find("div.mos-drag-and-drop-file-control").attr("id");
-					var progressBarID = $("#" + filePresentationContainerID).find("div.mos-drag-and-drop-file-progress progress").attr("id");
-
-					// set the UI
-					$("#" + fileNameAndSizePresentationID).find("div.mos-drag-and-drop-file-name").text(thisFileName);
-					$("#" + fileNameAndSizePresentationID).find("div.mos-drag-and-drop-file-size").text(thisFileSize);
-					$("#" + thisFileFieldID).removeClass("populatable").addClass("attached");
-					if (thisFileTypeClass == "specific-image") {
-						$("#" + filePreviewID).css("background-image", "url(" + thisFileURI + ")");
-					}
-					$("#" + filePreviewID).addClass(thisFileTypeClass);
-					$("#" + filePresentationContainerID).attr("href", thisFileURI);
+					]
 				}
 			});
 
+			var scheduleStartDateTime = rData.gseScheduleData['Date'].substring(0, 10) + ' ' +
+				rData.gseScheduleData['time-storage_StartTime'].substring(11, 16);
+			scheduleStartDateTime = moment.tz(scheduleStartDateTime, "America/New_York").format();
+			var NowAsISOLocal = $().ReturnFormattedDateTime('nowLocal', null, null);
+			rData.gseScheduleData['Positions-Available'] =
+				parseInt(rData.gseScheduleData['Number-of-Positions']) - otherSignupsForThisSchedule.length;
+			rData.gseScheduleData['Friendly-Date'] = $().ReturnFormattedDateTime(rData.gseScheduleData['Date'], null, 'dddd, MMMM D, YYYY', 1);
+			rData.gseScheduleData['Shift-Length'] = rData.gseScheduleData['shiftlength_35-hours'] ? '3.5 hours' : '7 hours';
+			rData.gseScheduleData['Start-Time'] = $().ReturnFormattedDateTime(rData.gseScheduleData['time-storage_StartTime'].substring(0, 19), null, 'h:mm a');
+			rData.gseScheduleData['Break-Time'] = $().ReturnFormattedDateTime(rData.gseScheduleData['time-storage_BreakTime'].substring(0, 19), null, 'h:mm a');
+			rData.gseScheduleData['Meal-Time'] = $().ReturnFormattedDateTime(rData.gseScheduleData['time-storage_MealTime'].substring(0, 19), null, 'h:mm a');
 
-			// modify submission notice & button text, as needed
-			if (typeof (fData.conditionalSubmissionNoticesAndButtonValues) != "undefined") {
-				$.each(fData.conditionalSubmissionNoticesAndButtonValues, function (i, noticeAndORValue) {
-					if (noticeAndORValue.condition()) {
-						if (typeof (noticeAndORValue.submissionNotice) != "undefined") {
-							$("div#submission-notice").html(noticeAndORValue.submissionNotice);
-						}
-						if (typeof (noticeAndORValue.buttonValue) != "undefined") {
-							$("input#form-submit-button").attr("value", noticeAndORValue.buttonValue);
-						}
-						if (typeof (noticeAndORValue.buttonWidth) != "undefined") {
-							$("input#form-submit-button").css("width", noticeAndORValue.buttonWidth);
-							$("a.link_exit-sans-save").css("width", noticeAndORValue.buttonWidth);
-						}
-					}
+
+			rData.gseJobData['Job-Admin-Name'] = rData.gseJobData['Job-Admin'][0].description;
+			rData.gseJobData['Job-Description-Formatted'] = '<p>' + ReplaceAll('%0A', '</p><p>', rData.gseJobData['Job-Description']) + '</p>';
+
+			// training requirements
+			// get array of requirements
+			var opportunityTrainingReqs = rData.gseJobData['Training-Requirements'].split("%0A");
+			// if there's at least one duty
+			if (opportunityTrainingReqs[0]) {
+				// start with a header
+				rData.gseJobData['Training-Requirements-Formatted'] = '<h3>Training Requirements</h3>';
+				// if there's more than one, we'll create list items; otherwise, paragraph
+				var opportunityTrainingReqElement = opportunityTrainingReqs[1] ? 'li' : 'p';
+				// if there's more than one, start list
+				if (opportunityTrainingReqs[1]) {
+					rData.gseJobData['Training-Requirements-Formatted'] += '<ul>';
+				}
+				// for each in array, add markup
+				opportunityTrainingReqs.forEach((opportunityTrainingReq) => {
+					rData.gseJobData['Training-Requirements-Formatted'] +=
+						'<' + opportunityTrainingReqElement + '>' +
+						opportunityTrainingReq +
+						'</' + opportunityTrainingReqElement + '>';
 				});
+				// if there's more than one, end list
+				if (opportunityTrainingReqs[1]) {
+					rData.gseJobData['Training-Requirements-Formatted'] += '</ul>';
+				}
 			}
 
+			// dress requirements
+			// start with the two persistent requirements
+			rData.gseJobData['Dress-Requirements-List-Items'] =
+				'<li>Clothing and shoes must be in good condition.</li>' +
+				'<li>MOS badge must be worn above the waist at all times.</li>';
+			// add any other requirements
+			if (rData.gseJobData['Dress-Requirements']) {
+				rData.gseJobData['Dress-Requirements-List-Items'] +=
+					'<li>' + ReplaceAll('%0A', '</li><li>', rData.gseJobData['Dress-Requirements']) + '</li>';
+			}
 
-			// append, initialize contact dialog
-			$("div#app-container").append("<div id=\"persona-card-dialog\"></div>");
+			// job duties
+			// get array of duties
+			var opportunityJobDuties = rData.gseJobData['Job-Duties'].split("%0A");
+			// if there's at least one duty
+			if (opportunityJobDuties[0]) {
+				// start with a header
+				rData.gseJobData['Job-Duties-Formatted'] = '<h3>Job Duties</h3>';
+				// if there's more than one, we'll create list items; otherwise, paragraph
+				var opportunityJobDutyElement = opportunityJobDuties[1] ? 'li' : 'p';
+				// if there's more than one, start list
+				if (opportunityTrainingReqs[1]) {
+					rData.gseJobData['Job-Duties-Formatted'] += '<ul>';
+				}
+				// for each in array, add markup
+				opportunityJobDuties.forEach((opportunityJobDuty) => {
+					rData.gseJobData['Job-Duties-Formatted'] +=
+						'<' + opportunityJobDutyElement + '>' +
+						opportunityJobDuty +
+						'</' + opportunityJobDutyElement + '>';
+				});
+				// if there's more than one, start list
+				if (opportunityTrainingReqs[1]) {
+					rData.gseJobData['Job-Duties-Formatted'] += '<ul>';
+				}
+			}
 
-			$("div#persona-card-dialog").dialog({
-				autoOpen: false,
-				draggable: true,
-				show: {
-					effect: "bounce",
-					times: 2,
-					duration: 500
-				},
-				width: 400,
+			if (rData.gseScheduleData['Notes']) {
+				rData.gseScheduleData['Notes-Formatted'] = '<h3>Notes</h3>' +
+					'<p>' + ReplaceAll('%0A', '</p><p>', rData.gseScheduleData['Notes']) + '</p>';
+			}
+
+			console.log('rData.gseScheduleData');
+			console.log(rData.gseScheduleData);
+			console.log('rData.gseJobData');
+			console.log(rData.gseJobData);
+			console.log('rData.formDataOnLoad');
+			console.log(rData.formDataOnLoad);
+
+			// populate the placeholder <span>s with job and schedule data
+			PopulateFormData("div#request-form", rData.gseJobData, mData.uriRoot, rData.requestID, mData.checkForAlternateEventDataToPopulate);
+			PopulateFormData("div#request-form", rData.gseScheduleData, mData.uriRoot, rData.requestID, mData.checkForAlternateEventDataToPopulate);
+		}
+
+		// if this is a *new* GSE Signup
+		if (rData.requestStatus == "" && mData.requestName == "GSE Signup" && rData.gseScheduleID != "" && rData.gseScheduleID > 0) {
+			// manually populate specific signup fields with user, job, and schedule data
+			$("input#Request-Nickname").val(rData.gseJobID + '-' + rData.gseScheduleID + '-' + ReplaceAll('@mos.org', '', uData.userName));
+			$("input#Job-ID").val(rData.gseJobID);
+			$("input#Schedule-ID").val(rData.gseScheduleID);
+			$("input#Positions-Available").val(rData.gseScheduleData['Positions-Available']);
+			$("input#Schedule-Start-Datetime").val(scheduleStartDateTime);
+			$("input#Current-Datetime").val(NowAsISOLocal);
+		}
+
+		// if this is an *existing* GSE Signup
+		if (rData.requestStatus != "" && mData.requestName == "GSE Signup") {
+			// manually copy some admin data to requester-accessible fields
+			$("input#Request-Status-for-Requester").val(rData.requestStatus);
+			$("textarea#Credit-Denial-Reason-for-Requester").val(rData.formDataOnLoad['Credit-Denial-Reason']);
+		}
+
+		// if this is an *existing* GSE Schedule
+		if (rData.requestStatus != "" && mData.requestName == "GSE Schedule") {
+			// manually copy some admin data to requester-accessible fields
+			$("input#Request-Status-for-Requester").val(rData.requestStatus);
+		}
+
+
+		// if request is new
+		if (rData.requestStatus === '') {
+
+			// set current user's data as requester's data
+			$('input#Requester-Name').val(uData.name);
+			$('input#Requester-Department').val(uData.dept);
+			$('input#Requester-Email').val(uData.email.toLowerCase());
+			$('input#Requester-Phone').val(uData.phone);
+			$('input#Requester-Account').val(uData.account);
+
+			// if designated, set current user's dept as event dept
+			if (typeof (mData.autoPopulateEventDeparment) != 'undefined' && mData.autoPopulateEventDeparment === 1) {
+				$('input#Event-Department').val(uData.dept);
+			}
+
+			// set required approvers
+			$("input#Required-Approvers").val(mData.requiredApproversString);
+
+			// if alwaysTalkToRequester, populate and hide relevant fields
+			if (typeof (fData.alwaysTalkToRequester) != 'undefined' && fData.alwaysTalkToRequester === 1) {
+				$('option[value="Self"]').prop('selected', true);
+				$().PutAddtlPeopleInPicker('Requested For', [{
+					'name': uData.name,
+					'email': uData.email,
+					'account': uData.account
+				}]);
+				$("div#label-and-control_Self-or-Other").hide("fast").addClass("hidden");
+			}
+		}
+
+		// set "button" link href
+		$("a.link_exit, a.link_exit-sans-save").attr("href", rData.returnURI);
+
+		// set field values for developer's convenience and to record version numbers
+		$("input#Last-Modified-Timestamp-at-Load").val(rData.lastModifiedAtLoad);
+		$("input#Admin-Email").val(mData.adminEmailString);
+		$("input#Request-Name").val(mData.requestName);
+		$("input#Auto-Assignments-1").val(mData.autoAssignments1);
+		$("input#Auto-Assignments-2").val(mData.autoAssignments2);
+		$("input#URI-Admin").val(mData.uriAdmin);
+		$("input#URI-Requester").val(mData.uriRequester);
+		$("input#URI-Request").val(mData.uriRequest);
+		if (rData.requestStatus === '') {
+			$("input#SWF-Version").val(mData.apiLatestVersion);
+			$("input#Request-Version").val(mData.currentRequestVersion);
+		}
+		$("input#Component-Group-Admin").val(mData.componentGrpAdmin);
+		$("input#Component-Admin").val(mData.componentAdmin);
+		$("input#Current-User-Display-Name").val(uData.name);
+		$("input#Current-User-Name").val(uData.userName);
+		$('input#Current-User-Account').val(uData.Name);
+		$("input#Current-User-is-Admin").val(uData.isAdmin);
+		$("input#Current-User-is-Component-Group-Admin").val(uData.isComponentGrpAdmin);
+		$("input#Component-ID").val(mData.componentID);
+		// concatenate built and stored scripts and append inside script#request-form-script
+
+
+
+
+		$("div#request-screen-container").append('<script id="request-form-script" type="text/javascript"> \n\n$( document ).ready(function() { \n\n' + fData.CustomScriptFirst + '\n\n' + formScript + '\n\n' + approvalNodeScripts + '\n\n' + fData.CustomScriptLast + '\n\n}); \n\n</script> \n');
+
+
+
+		// ========================================================
+		// CLEAR FORM FIELDS
+		// ========================================================
+
+		$("input#Last-Modified-Timestamp-at-Submit").val();
+		$("input#Last-Modified-Timestamp-Mismatch").val();
+		$("select#Change-Request-Status").val();
+		$("input#requester-reversion-to-pending-revision_revert").prop('checked', false).attr("checked", false);
+		$("input#requester-restart-approval-process_ready").prop('checked', false).attr("checked", false);
+		$("textarea#Admin-To-Requester-Message-Addendum").val();
+		$("input#Approval-Newly-Needed-Notify").val("none");
+		$("input#Approval-Not-Needed-Notify").val("none");
+		$("input#Approval-Still-Needed-Notify").val("none");
+		$("input#Newly-Approved-or-Pending").val(0);
+
+		if (rData.requestStatus != "") {
+
+			// clear stuff that's only for new requests
+			$("input#Required-Approvers").val();
+			$("input#Beginning-of-Life").val();
+
+		}
+
+
+
+		// ========================================================
+		// FORMAT FORM
+		// ========================================================
+
+		// set friendly formats on date fields designated in mData.elements
+		$.each(fData.elements, function (i, elem) {
+
+			// if element needs its date value formatted on load
+			if (typeof (elem.friendlyFormatOnLoad) != "undefined") {
+
+				// determine the date field selector from the element's other properties
+				var fieldSelector = "#" + ReplaceAll("\\.", "", ReplaceAll(" ", "-", elem.fieldName));
+
+				// if the field has a value
+				if (typeof ($(fieldSelector).val()) != "undefined" && $(fieldSelector).val() != "") {
+					// console.log("this field has a value");
+
+					// if the field is disabled or readonly
+					if (typeof ($(fieldSelector).attr('disabled')) != "undefined" || typeof ($(fieldSelector).attr('readonly')) != "undefined") {
+						// console.log("this field is disabled/RO");
+
+						// if this date needs to be re-stored in iso format
+						if (typeof (elem.isoFormatOnSubmit) != "undefined") {
+							// console.log("has isoFormatOnSubmit");
+							// store the db-stored date in the markup
+							//		(it'll be re-used for db storage upon submit, in case 
+							//		 friendly format doesn't include year)
+							$(fieldSelector).attr('data-iso-date-on-load', $(fieldSelector).val());
+						}
+					}
+					// get the formatted value using the field value and the properties of friendlyFormatOnLoad
+					$(fieldSelector).val($().ReturnFormattedDateTime($(fieldSelector).val(), elem.friendlyFormatOnLoad.incomingFormat, elem.friendlyFormatOnLoad.returnFormat, elem.friendlyFormatOnLoad.determineYearDisplayDynamically));
+				}
+			}
+
+			// if element needs its date value formatted on load
+			if (typeof (elem.setDateFromURLOnLoad) != "undefined") {
+
+				// determine the date field selector from the element's other properties
+				var fieldSelector = "#" + ReplaceAll("\\.", "", ReplaceAll(" ", "-", elem.fieldName));
+
+				// get the iso-formatted date from the URL
+				var dateToSetISO = GetParamFromUrl(location.search, elem.setDateFromURLOnLoad.parameter);
+
+				// get the date in friendly format (datepicker-matching format)
+				var dateToSetSpecifiedFormat = $().ReturnFormattedDateTime(dateToSetISO, null, elem.setDateFromURLOnLoad.returnFormat, elem.setDateFromURLOnLoad.determineYearDisplayDynamically);
+
+				// set the field
+				$(fieldSelector).val(dateToSetSpecifiedFormat);
+			}
+		});
+
+		// show approval notification history if it contains data
+		if ($("table#table_approval-notification-history tbody tr").length) {
+			$("div#approval-notification-history").show("fast").removeClass("hidden");
+		}
+
+		// show assignment date if it contains data
+		if ($("input#Assignment-Date").val() != "") {
+			$("div#label-and-control_Assignment-Date").show("fast").removeClass("hidden");
+		}
+
+		// show completion date if it contains data
+		if ($("input#Completion-Date").val() != "") {
+			$("div#label-and-control_Completion-Date").show("fast").removeClass("hidden");
+		}
+
+		// append approvalPreface, if appropriate
+		if (typeof (mData.approvalPreface) != 'undefined') {
+			$('div#swf-specific-approval-preface').html(mData.approvalPreface);
+		}
+
+		// enable approval radio buttons and notes for this user, as relevant
+		if (rData.endOfLife != 1) {
+			$('div[data-approver-email="' + uData.email.toLowerCase() + '"] input[name^="Approval-Indicator_"]').prop("disabled", false);
+			$('div[data-approver-email="' + uData.email.toLowerCase() + '"] textarea[id^="Approval-Notes_"]').prop("disabled", false);
+		}
+
+		// if request is at end of life and there are no approval nodes, hide 'Approvals' header
+		if (rData.endOfLife === 1 && $("div#all-approvals").children().length === 0) {
+			$('h2#header_approvals').addClass('hidden');
+		}
+
+		// if there are no historical admin notes, hide the textarea
+		//		(otherwise, it breaks up the vertical rhythm)
+		if (typeof ($('textarea#Historical-Admin-Notes').val()) === 'undefined') {
+			$('div#label-and-control_Historical-Admin-Notes').addClass('hidden');
+		} else if ($('textarea#Historical-Admin-Notes').val() === '') {
+			$('div#label-and-control_Historical-Admin-Notes').addClass('hidden');
+		}
+
+		// if there are no historical other preservable notes, hide the textarea
+		//		(otherwise, it breaks up the vertical rhythm)
+		if (typeof ($('textarea#Historical-Other-Preservable-Notes').val()) === 'undefined') {
+			$('div#label-and-control_Historical-Other-Preservable-Notes').addClass('hidden');
+		} else if ($('textarea#Historical-Other-Preservable-Notes').val() === '') {
+			$('div#label-and-control_Historical-Other-Preservable-Notes').addClass('hidden');
+		}
+
+		// if there are historical admin notes, resize the textarea to fit all of them
+		if (typeof ($('textarea#Historical-Admin-Notes').val()) != 'undefined' && $('textarea#Historical-Admin-Notes').val() != '') {
+			$().ResizeTextareaToFitAllContents('Historical-Admin-Notes');
+		}
+
+		// if there are historical other preservable notes, resize the textarea to fit all of them
+		if (typeof ($('textarea#Historical-Other-Preservable-Notes').val()) != 'undefined' && $('textarea#Historical-Other-Preservable-Notes').val() != '') {
+			$().ResizeTextareaToFitAllContents('Historical-Other-Preservable-Notes');
+		}
+
+		// if RS = Completed, show completion info
+		if (rData.requestStatus === "Completed") {
+			$("div#completion").removeClass("hidden");
+		}
+
+		// for each mos file field
+		$("div.mos-drag-and-drop-file-attachment").each(function () {
+			var thisFileFieldID = $(this).attr("ID");
+			var thisFileName = $("div#" + thisFileFieldID).find("input.mos-drag-and-drop-file-name").val();
+
+			// if the hidden inputs have been populated with data by PopulateFormData(), then set the UI to present the file info to the 
+			if (typeof (thisFileName) == "string" && thisFileName != "") {
+
+				var thisFileIsInQuarkFiles = $("div#" + thisFileFieldID).find("input.mos-drag-and-drop-file-in-quark-files").val();
+				var thisFileURI = "";
+
+				if (thisFileIsInQuarkFiles == "1") {
+					var legacyID = $("input#legacy-id").val();
+					thisFileURI = mData.fullSiteBaseURL + "/QuarkFiles/" + legacyID + "/" + thisFileName;
+				} else {
+					thisFileURI = mData.fullSiteBaseURL + "/Lists/SWFList/Attachments/" + rData.requestID + "/" + thisFileName;
+				}
+
+				var fileInputID = $("#" + thisFileFieldID).find("div.mos-drag-and-drop-file-input").attr("id");
+				var thisfileNameFormatted = ReplaceAll(' ', '%20', thisFileName);
+
+				var thisFileSize = $("div#" + thisFileFieldID).find("input.mos-drag-and-drop-file-size").val();
+				var thisFileTypeClass = $("div#" + thisFileFieldID).find("input.mos-drag-and-drop-file-type-class").val();
+				var filePresentationContainerID = $("#" + thisFileFieldID).find("a.mos-drag-and-drop-file-container").attr("id");
+				var fileUploadIconID = $("#" + filePresentationContainerID).find("div.mos-drag-and-drop-file-upload-icon").attr("id");
+				var filePreviewID = $("#" + filePresentationContainerID).find("div.mos-drag-and-drop-file-preview").attr("id");
+				var fileNameAndSizePresentationID = $("#" + filePresentationContainerID).find("div.mos-drag-and-drop-file-name-and-size").attr("id");
+				var fileControlID = $("#" + filePresentationContainerID).find("div.mos-drag-and-drop-file-control").attr("id");
+				var progressBarID = $("#" + filePresentationContainerID).find("div.mos-drag-and-drop-file-progress progress").attr("id");
+
+				// set the UI
+				$("#" + fileNameAndSizePresentationID).find("div.mos-drag-and-drop-file-name").text(thisFileName);
+				$("#" + fileNameAndSizePresentationID).find("div.mos-drag-and-drop-file-size").text(thisFileSize);
+				$("#" + thisFileFieldID).removeClass("populatable").addClass("attached");
+				if (thisFileTypeClass == "specific-image") {
+					$("#" + filePreviewID).css("background-image", "url(" + thisFileURI + ")");
+				}
+				$("#" + filePreviewID).addClass(thisFileTypeClass);
+				$("#" + filePresentationContainerID).attr("href", thisFileURI);
+			}
+		});
+
+		// for each radio button with checked attribute
+		$('div#request-form').find('input[checked]').each(function () {
+			$(this).prop('checked', true);
+		});
+
+		// modify submission notice & button text, as needed
+		if (typeof (fData.conditionalSubmissionNoticesAndButtonValues) != "undefined") {
+			$.each(fData.conditionalSubmissionNoticesAndButtonValues, function (i, noticeAndORValue) {
+				if (noticeAndORValue.condition()) {
+					if (typeof (noticeAndORValue.submissionNotice) != "undefined") {
+						$("div#submission-notice").html(noticeAndORValue.submissionNotice);
+					}
+					if (typeof (noticeAndORValue.buttonValue) != "undefined") {
+						$("input#form-submit-button").attr("value", noticeAndORValue.buttonValue);
+					}
+					if (typeof (noticeAndORValue.buttonWidth) != "undefined") {
+						$("input#form-submit-button").css("width", noticeAndORValue.buttonWidth);
+						$("a.link_exit-sans-save").css("width", noticeAndORValue.buttonWidth);
+					}
+				}
 			});
+		}
+
+
+		// append, initialize contact dialog
+		$("div#app-container").append("<div id=\"persona-card-dialog\"></div>");
+
+		$("div#persona-card-dialog").dialog({
+			autoOpen: false,
+			draggable: true,
+			show: {
+				effect: "bounce",
+				times: 2,
+				duration: 500
+			},
+			width: 400,
+		});
 
 
 
-			// ========================================================
-			// BEGIN LISTENING FOR EVENTS
-			// ========================================================
+		// ========================================================
+		// BEGIN LISTENING FOR EVENTS
+		// ========================================================
 
-			// when user clicks link tester, open corresponding link in new tab
-			$('a.link-tester').click(function () {
-				window.open($(this).closest('div.control').find('input[type="url"]').val(), '_blank');
+		// when user clicks link tester, open corresponding link in new tab
+		$('a.link-tester').click(function () {
+			window.open($(this).closest('div.control').find('input[type="url"]').val(), '_blank');
+		});
+
+		// when approved or disapproved, set signature and date
+		$('input[name^="Approval-Indicator"]').change(function () {
+			$(this).closest('div.approver-container').find('input[id^="Approval-Signature"]').val(uData.name).attr('value', uData.name);
+			$(this).closest('div.approver-container').find('input[id^="Approval-Date"]').val($().ReturnFormattedDateTime('nowLocal', null, 'MMMM D, YYYY')).attr('value', $().ReturnFormattedDateTime('nowLocal', null, 'MMMM D, YYYY'));
+		});
+
+		// when a radio button is clicked, set its "checked" attribute
+		//		and remove that attribute from others with same name
+		$("input[type='radio']").change(function () {
+
+			// get this radio button's id
+			var clickedID = $(this).attr("id");
+
+			// get this radio button's name
+			var clickedName = $(this).attr("name");
+
+			// set "checked" attribute on this radio button
+			$(this).attr("checked", true);
+
+			// iterate over all other radio buttons with the same name
+			$("input[name='" + clickedName + "']").each(function (i, sameName) {
+
+				// if this radio button isn't the one that was clicked
+				if ($(sameName).attr("id") != clickedID) {
+
+					// remove its "checked" attribute
+					$(sameName).removeAttr("checked");
+				}
 			});
+		});
 
-			// when approved or disapproved, set signature and date
-			$('input[name^="Approval-Indicator"]').change(function () {
-				$(this).closest('div.approver-container').find('input[id^="Approval-Signature"]').val(uData.name).attr('value', uData.name);
-				$(this).closest('div.approver-container').find('input[id^="Approval-Date"]').val($().ReturnFormattedDateTime('nowLocal', null, 'MMMM D, YYYY')).attr('value', $().ReturnFormattedDateTime('nowLocal', null, 'MMMM D, YYYY'));
-			});
-
-			// when a radio button is clicked, set its "checked" attribute
-			//		and remove that attribute from others with same name
-			$("input[type='radio']").change(function () {
-
-				// get this radio button's id
-				var clickedID = $(this).attr("id");
-
-				// get this radio button's name
-				var clickedName = $(this).attr("name");
-
-				// set "checked" attribute on this radio button
+		// when a checkbox is clicked, set / remove its "checked" attribute
+		$("input[type='checkbox']").change(function () {
+			if ($(this).is(":checked")) {
 				$(this).attr("checked", true);
+			} else {
+				$(this).removeAttr("checked");
+			}
+		});
 
-				// iterate over all other radio buttons with the same name
-				$("input[name='" + clickedName + "']").each(function (i, sameName) {
+		// when resolved PeoplePicker entity is clicked, open the corresponding persona card
+		$('div#request-form').on('click', 'span.ms-entity-resolved', function () {
 
-					// if this radio button isn't the one that was clicked
-					if ($(sameName).attr("id") != clickedID) {
+			// close and empty
 
-						// remove its "checked" attribute
-						$(sameName).removeAttr("checked");
-					}
-				});
+			$("div#persona-card-dialog").dialog("close");
+			$("div[aria-describedby='persona-card-dialog'] div.ui-dialog-titlebar span.ui-dialog-title").empty();
+			$("div#persona-card-dialog").empty();
+
+			var userProfileValues = {};
+			$().SPServices({
+				operation: "GetUserProfileByName",
+				async: false,
+				AccountName: $(this).closest("span.sp-peoplepicker-userSpan").attr("sid"),
+				completefunc: function (xData, Status) {
+					$(xData.responseXML).SPFilterNode("PropertyData").each(function () {
+						userProfileValues[$(this).find("Name").text()] = $(this).find("Value").text();
+					});
+				}
 			});
 
-			// when a checkbox is clicked, set / remove its "checked" attribute
-			$("input[type='checkbox']").change(function () {
-				if ($(this).is(":checked")) {
-					$(this).attr("checked", true);
+			// create and insert header
+
+			var dialogHeader = '<span id="persona-card-dialog-header"> \n' +
+				'	<span id="avatar" \n';
+
+			if (userProfileValues.PictureURL != "") {
+				dialogHeader += '		 style="background-image: url(\'' + userProfileValues.PictureURL + '\')"> \n';
+			} else {
+				userProfileValues.firstInitial = userProfileValues.FirstName.slice(0, 1).toUpperCase();
+				userProfileValues.lastInitial = userProfileValues.LastName.slice(0, 1).toUpperCase();
+				dialogHeader += '		 ><span id="avatar-initials">' + userProfileValues.firstInitial + userProfileValues.lastInitial + '</span> \n';
+			}
+
+			dialogHeader += '	</span> \n' +
+				'	<span id="name_title_department"> \n';
+
+			if (typeof (userProfileValues.PreferredName) != 'undefined' && userProfileValues.PreferredName != '') {
+				dialogHeader += '		 <span id="name">' + userProfileValues.PreferredName + '</span> \n';
+			}
+
+			if (typeof (userProfileValues.Title) != 'undefined' && userProfileValues.Title != '') {
+				dialogHeader += '		 <span id="title">' + userProfileValues.Title + '</span> \n';
+			}
+
+			if (typeof (userProfileValues.Department) != 'undefined' && userProfileValues.Department != '') {
+				dialogHeader += '		 <span id="department">' + userProfileValues.Department + '</span> \n';
+			}
+
+			dialogHeader += '	</span></span> \n';
+
+			$("div[aria-describedby='persona-card-dialog'] div.ui-dialog-titlebar span.ui-dialog-title").append(dialogHeader);
+
+			// create and insert body
+
+			var dialogBody = '<ul id="persona-card-dialog-body"> \n';
+
+			if (typeof (userProfileValues.WorkPhone) != 'undefined' && typeof (userProfileValues.CellPhone) != 'undefined' && userProfileValues.WorkPhone != '' && userProfileValues.CellPhone != '') {
+				dialogBody += '	<li id="phone-numbers">\n' +
+					'		 <ul>\n' +
+					'			  <li id="business-phone-number">Business: ' + userProfileValues.WorkPhone + '</li> \n' +
+					'			  <li id="mobile-phone-number">Mobile: ' + userProfileValues.CellPhone + '</li> \n' +
+					'		 </ul>\n' +
+					'	</li> \n';
+			} else if (typeof (userProfileValues.WorkPhone) != 'undefined' && userProfileValues.WorkPhone != '') {
+				dialogBody += '	<li id="business-phone-number">Business: ' + userProfileValues.WorkPhone + '</li> \n';
+			} else if (typeof (userProfileValues.WorkPhone) != 'undefined' && userProfileValues.WorkPhone != '') {
+				dialogBody += '	<li id="mobile-phone-number">Mobile: ' + userProfileValues.CellPhone + '</li> \n';
+			}
+
+			if (typeof (userProfileValues.WorkEmail) != 'undefined' && userProfileValues.WorkEmail != '') {
+				dialogBody += '	<li id="email"><a href="mailto:' + userProfileValues.WorkEmail + '">' + userProfileValues.WorkEmail + '</a></li> \n';
+			}
+
+			if (typeof (userProfileValues["SPS-PersonalSiteCapabilities"]) != 'undefined' && userProfileValues["SPS-PersonalSiteCapabilities"] != '') {
+				dialogBody += '	<li id="profile"><a href="https://bmos-my.sharepoint.com/_layouts/15/me.aspx?u=' + userProfileValues["msOnline-ObjectId"] + '" target="_blank">Profile</a></li> \n';
+			}
+
+			dialogBody += '</ul> \n';
+
+			$("div#persona-card-dialog").append(dialogBody);
+
+			// position and open
+
+			$("div#persona-card-dialog").dialog("option", "position", {
+				my: "left bottom-20",
+				of: this,
+				collision: "fit"
+			});
+			$("div#persona-card-dialog").dialog("open");
+		});
+
+		// datetime and time elements
+		// when a date or time element changes
+		$("input[id^='date-input_'], select[id^='hours-input_'], select[id^='minutes-input_']").on("change", function () {
+			var container = $(this).closest("div.label-and-control");
+			if ($(container).find("input[id^='date-input_']").length === 0) {
+				var timeOnly = 1;
+				var hoursID = $(container).find("select[id^='hours-input_']").attr("id");
+				var minutesID = $(container).find("select[id^='minutes-input_']").attr("id");
+				var storageID = $(container).find("input[id^='time-storage_']").attr("id");
+			} else {
+				var timeOnly = 0;
+				var dateID = $(container).find("input[id^='date-input_']").attr("id");
+				var hoursID = $(container).find("select[id^='hours-input_']").attr("id");
+				var minutesID = $(container).find("select[id^='minutes-input_']").attr("id");
+				var storageID = $(container).find("input[id^='datetime-storage_']").attr("id");
+			}
+
+			if (timeOnly === 1) {
+				if ($("#" + hoursID).val().length > 0 && $("#" + minutesID).val().length > 0) {
+					$("#" + storageID).val($().ReturnISODateTimeFromParts({ "date": "January 01, 2000", "hour": $("#" + hoursID).val(), "minute": $("#" + minutesID).val() }));
 				} else {
-					$(this).removeAttr("checked");
+					$("#" + storageID).val("");
 				}
-			});
-
-			// when resolved PeoplePicker entity is clicked, open the corresponding persona card
-			$('div#request-form').on('click', 'span.ms-entity-resolved', function () {
-
-				// close and empty
-
-				$("div#persona-card-dialog").dialog("close");
-				$("div[aria-describedby='persona-card-dialog'] div.ui-dialog-titlebar span.ui-dialog-title").empty();
-				$("div#persona-card-dialog").empty();
-
-				var userProfileValues = {};
-				$().SPServices({
-					operation: "GetUserProfileByName",
-					async: false,
-					AccountName: $(this).closest("span.sp-peoplepicker-userSpan").attr("sid"),
-					completefunc: function (xData, Status) {
-						$(xData.responseXML).SPFilterNode("PropertyData").each(function () {
-							userProfileValues[$(this).find("Name").text()] = $(this).find("Value").text();
-						});
-					}
-				});
-
-				// create and insert header
-
-				var dialogHeader = '<span id="persona-card-dialog-header"> \n' +
-					'	<span id="avatar" \n';
-
-				if (userProfileValues.PictureURL != "") {
-					dialogHeader += '		 style="background-image: url(\'' + userProfileValues.PictureURL + '\')"> \n';
+			} else {
+				if ($("#" + dateID).val().length > 0 && $("#" + hoursID).val().length > 0 && $("#" + minutesID).val().length > 0) {
+					$("#" + storageID).val($().ReturnISODateTimeFromParts({ "date": $("#" + dateID).val(), "hour": $("#" + hoursID).val(), "minute": $("#" + minutesID).val() }));
 				} else {
-					userProfileValues.firstInitial = userProfileValues.FirstName.slice(0, 1).toUpperCase();
-					userProfileValues.lastInitial = userProfileValues.LastName.slice(0, 1).toUpperCase();
-					dialogHeader += '		 ><span id="avatar-initials">' + userProfileValues.firstInitial + userProfileValues.lastInitial + '</span> \n';
+					$("#" + storageID).val("");
 				}
+			}
+		});
 
-				dialogHeader += '	</span> \n' +
-					'	<span id="name_title_department"> \n';
+		// when a printer button is clicked
+		$("a#standard-printer-button-inside-request").on("click", function () {
+			var printFunction = $(this).attr("data-print-function");
+			var printContent = [$("textarea#All-Request-Data").val()];
+			CallFunctionFromString(printFunction, printContent);
+		});
 
-				if (typeof (userProfileValues.PreferredName) != 'undefined' && userProfileValues.PreferredName != '') {
-					dialogHeader += '		 <span id="name">' + userProfileValues.PreferredName + '</span> \n';
-				}
-
-				if (typeof (userProfileValues.Title) != 'undefined' && userProfileValues.Title != '') {
-					dialogHeader += '		 <span id="title">' + userProfileValues.Title + '</span> \n';
-				}
-
-				if (typeof (userProfileValues.Department) != 'undefined' && userProfileValues.Department != '') {
-					dialogHeader += '		 <span id="department">' + userProfileValues.Department + '</span> \n';
-				}
-
-				dialogHeader += '	</span></span> \n';
-
-				$("div[aria-describedby='persona-card-dialog'] div.ui-dialog-titlebar span.ui-dialog-title").append(dialogHeader);
-
-				// create and insert body
-
-				var dialogBody = '<ul id="persona-card-dialog-body"> \n';
-
-				if (typeof (userProfileValues.WorkPhone) != 'undefined' && typeof (userProfileValues.CellPhone) != 'undefined' && userProfileValues.WorkPhone != '' && userProfileValues.CellPhone != '') {
-					dialogBody += '	<li id="phone-numbers">\n' +
-						'		 <ul>\n' +
-						'			  <li id="business-phone-number">Business: ' + userProfileValues.WorkPhone + '</li> \n' +
-						'			  <li id="mobile-phone-number">Mobile: ' + userProfileValues.CellPhone + '</li> \n' +
-						'		 </ul>\n' +
-						'	</li> \n';
-				} else if (typeof (userProfileValues.WorkPhone) != 'undefined' && userProfileValues.WorkPhone != '') {
-					dialogBody += '	<li id="business-phone-number">Business: ' + userProfileValues.WorkPhone + '</li> \n';
-				} else if (typeof (userProfileValues.WorkPhone) != 'undefined' && userProfileValues.WorkPhone != '') {
-					dialogBody += '	<li id="mobile-phone-number">Mobile: ' + userProfileValues.CellPhone + '</li> \n';
-				}
-
-				if (typeof (userProfileValues.WorkEmail) != 'undefined' && userProfileValues.WorkEmail != '') {
-					dialogBody += '	<li id="email"><a href="mailto:' + userProfileValues.WorkEmail + '">' + userProfileValues.WorkEmail + '</a></li> \n';
-				}
-
-				if (typeof (userProfileValues["SPS-PersonalSiteCapabilities"]) != 'undefined' && userProfileValues["SPS-PersonalSiteCapabilities"] != '') {
-					dialogBody += '	<li id="profile"><a href="https://bmos-my.sharepoint.com/_layouts/15/me.aspx?u=' + userProfileValues["msOnline-ObjectId"] + '" target="_blank">Profile</a></li> \n';
-				}
-
-				dialogBody += '</ul> \n';
-
-				$("div#persona-card-dialog").append(dialogBody);
-
-				// position and open
-
-				$("div#persona-card-dialog").dialog("option", "position", {
-					my: "left bottom-20",
-					of: this,
-					collision: "fit"
-				});
-				$("div#persona-card-dialog").dialog("open");
-			});
-
-			// datetime and time elements
-			// when a date or time element changes
-			$("input[id^='date-input_'], select[id^='hours-input_'], select[id^='minutes-input_']").on("change", function () {
-				var container = $(this).closest("div.label-and-control");
-				if ($(container).find("input[id^='date-input_']").length === 0) {
-					var timeOnly = 1;
-					var hoursID = $(container).find("select[id^='hours-input_']").attr("id");
-					var minutesID = $(container).find("select[id^='minutes-input_']").attr("id");
-					var storageID = $(container).find("input[id^='time-storage_']").attr("id");
-				} else {
-					var timeOnly = 0;
-					var dateID = $(container).find("input[id^='date-input_']").attr("id");
-					var hoursID = $(container).find("select[id^='hours-input_']").attr("id");
-					var minutesID = $(container).find("select[id^='minutes-input_']").attr("id");
-					var storageID = $(container).find("input[id^='datetime-storage_']").attr("id");
-				}
-
-				if (timeOnly === 1) {
-					if ($("#" + hoursID).val().length > 0 && $("#" + minutesID).val().length > 0) {
-						$("#" + storageID).val($().ReturnISODateTimeFromParts({ "date": "January 01, 2000", "hour": $("#" + hoursID).val(), "minute": $("#" + minutesID).val() }));
-					} else {
-						$("#" + storageID).val("");
-					}
-				} else {
-					if ($("#" + dateID).val().length > 0 && $("#" + hoursID).val().length > 0 && $("#" + minutesID).val().length > 0) {
-						$("#" + storageID).val($().ReturnISODateTimeFromParts({ "date": $("#" + dateID).val(), "hour": $("#" + hoursID).val(), "minute": $("#" + minutesID).val() }));
-					} else {
-						$("#" + storageID).val("");
-					}
-				}
-			});
-
-			// when a printer button is clicked
-			$("a#standard-printer-button-inside-request").on("click", function () {
-				var printFunction = $(this).attr("data-print-function");
-				var printContent = [$("textarea#All-Request-Data").val()];
-				CallFunctionFromString(printFunction, printContent);
-			});
-
-			// when replaceable file attachment deletion control is clicked, display confirmation, overlay
-			$('div#request-form').on('click', 'div.mos-drag-and-drop-file-control', function (clickEvent) {
-				// prevent default behaviour
-				clickEvent.preventDefault();
-				// record which file field is relevant
-				rData.lastUsedFileFieldID = $(this).closest("div.mos-drag-and-drop-file-attachment").attr("ID");
-				// if there was never a file attached
-				if ($(this).closest("div.mos-drag-and-drop-file-attachment").hasClass("attachment-error")) {
-					// delete the file attachment
-					$().DeleteRequestFileAttachment(rData.lastUsedFileFieldID);
-					// if there was a file attached
-				} else {
-					// present the confirmation
-					$('div#overlays-screen-container').fadeIn(200);
-					$('div#delete-file-attachment').fadeIn(400);
-				}
-			});
-
-			// when file attachment deletion confirmation button is clicked, delete the file, clear the data, hide confirmation overlay, and inform the user
-			$("div#overlays-screen-container").on("click", "a[data-button-type='file-deletion-confirmation']", function () {
+		// when replaceable file attachment deletion control is clicked, display confirmation, overlay
+		$('div#request-form').on('click', 'div.mos-drag-and-drop-file-control', function (clickEvent) {
+			// prevent default behaviour
+			clickEvent.preventDefault();
+			// record which file field is relevant
+			rData.lastUsedFileFieldID = $(this).closest("div.mos-drag-and-drop-file-attachment").attr("ID");
+			// if there was never a file attached
+			if ($(this).closest("div.mos-drag-and-drop-file-attachment").hasClass("attachment-error")) {
 				// delete the file attachment
 				$().DeleteRequestFileAttachment(rData.lastUsedFileFieldID);
-			});
+				// if there was a file attached
+			} else {
+				// present the confirmation
+				$('div#overlays-screen-container').fadeIn(200);
+				$('div#delete-file-attachment').fadeIn(400);
+			}
+		});
 
-			var chosenFiles = false;
+		// when file attachment deletion confirmation button is clicked, delete the file, clear the data, hide confirmation overlay, and inform the user
+		$("div#overlays-screen-container").on("click", "a[data-button-type='file-deletion-confirmation']", function () {
+			// delete the file attachment
+			$().DeleteRequestFileAttachment(rData.lastUsedFileFieldID);
+		});
 
-			$("div#request-form").on('drag dragstart dragend dragover dragenter dragleave drop', 'div.mos-drag-and-drop-file-attachment', function (e) {
-				e.preventDefault();
-				e.stopPropagation();
+		var chosenFiles = false;
+
+		$("div#request-form").on('drag dragstart dragend dragover dragenter dragleave drop', 'div.mos-drag-and-drop-file-attachment', function (e) {
+			e.preventDefault();
+			e.stopPropagation();
+		})
+			.on('dragover dragenter', function () {
+				$(this).addClass('dragged-over');
+				$(this).find("div.mos-drag-and-drop-file-input label").html("Drop here.");
 			})
-				.on('dragover dragenter', function () {
-					$(this).addClass('dragged-over');
-					$(this).find("div.mos-drag-and-drop-file-input label").html("Drop here.");
-				})
-				.on('dragleave dragend drop', function () {
-					$(this).removeClass('dragged-over');
-					$(this).find("div.mos-drag-and-drop-file-input label").html("<span class=\"mos-file-selection-prompt\">Tap or click here to select a file</span>"); // Drop a file here, or 
-				})
-				.on('drop', function (e) {
-					var controlID = this.id;
-					chosenFiles = e.originalEvent.dataTransfer.files;
-					$.each(chosenFiles, function (i, chosenFile) {
-						$().UploadRequestFileAttachment(chosenFile, controlID);
-					});
-				});
-
-			$("div#request-form").on("change", "div.mos-drag-and-drop-file-attachment div.mos-drag-and-drop-file-input input.mos-file-selector", function (e) {
-				var fileInputID = this.id;
-				var controlID = $("#" + fileInputID).closest('div.mos-drag-and-drop-file-attachment').attr("id");
-				chosenFiles = e.target.files;
+			.on('dragleave dragend drop', function () {
+				$(this).removeClass('dragged-over');
+				$(this).find("div.mos-drag-and-drop-file-input label").html("<span class=\"mos-file-selection-prompt\">Tap or click here to select a file</span>"); // Drop a file here, or 
+			})
+			.on('drop', function (e) {
+				var controlID = this.id;
+				chosenFiles = e.originalEvent.dataTransfer.files;
 				$.each(chosenFiles, function (i, chosenFile) {
 					$().UploadRequestFileAttachment(chosenFile, controlID);
 				});
 			});
 
+		$("div#request-form").on("change", "div.mos-drag-and-drop-file-attachment div.mos-drag-and-drop-file-input input.mos-file-selector", function (e) {
+			var fileInputID = this.id;
+			var controlID = $("#" + fileInputID).closest('div.mos-drag-and-drop-file-attachment').attr("id");
+			chosenFiles = e.target.files;
+			$.each(chosenFiles, function (i, chosenFile) {
+				$().UploadRequestFileAttachment(chosenFile, controlID);
+			});
+		});
 
 
-			// ========================================================
-			// PRESENT FORM TO USER & BEGIN MONITORING MAINTENANCE MODE
-			// ========================================================
 
-			$("div#request-form").fadeTo(1, 1);
+		// ========================================================
+		// PRESENT FORM TO USER & BEGIN MONITORING MAINTENANCE MODE
+		// ========================================================
 
-			//  console.log('total screen initialization time = ' + (Date.now() - loadingStartTime)/1000 + ' seconds');
+		$("div#request-form").fadeTo(1, 1);
 
-			setInterval(function () { $().TryMaintenanceModeThisComponentThisUser(); }, mData.maintenanceModeCheckFrequency);
-		}
+		//  console.log('total screen initialization time = ' + (Date.now() - loadingStartTime)/1000 + ' seconds');
+
+		setInterval(function () { $().TryMaintenanceModeThisComponentThisUser(); }, mData.maintenanceModeCheckFrequency);
+
 	};
 
 
@@ -5448,7 +5443,6 @@
 							endOfLife = 1;
 							endOfLifeIsNew = 1;
 						} else {
-							// alter flags from their defaults if there are disapproved or blank approval nodes
 							var someCreditNodesAreBlank = 0;
 							$('div#signups div#signup').each(function (i, a) {
 								var grantButtonChecked = 0;
@@ -5960,41 +5954,41 @@
 						rData.endOfLife === 1 &&
 						rData.endOfLifeIsNew === 1
 					) {
-						// start an array to store the signup credit objects that will be extracted
-						var signupCredits = [];
+						// start an array to store the signup modification objects that will be extracted
+						var signupMods = [];
 						// for each signup
 						$('div#signups div.repeat-container').each(function (i, a) {
-							// start a new signup credit object
-							var signupCredit = {};
+							// start a new signup modification object
+							var signupMod = {};
 							// set request status and get id and granted values from the DOM
-							signupCredit.signupID = $(this).find('input[id^="Signup-ID"]').val();
+							signupMod.signupID = $(this).find('input[id^="Signup-ID"]').val();
 							// if credit is being granted or denied
 							if (rData.requestStatus === 'Completed') {
-								signupCredit.creditGranted =
+								signupMod.creditGranted =
 									$(this).find('input[value="yes"]').is(':checked');
 								// if credit is being denied
-								if (!signupCredit.creditGranted) {
+								if (!signupMod.creditGranted) {
 									// get a denial reason from the DOM
-									signupCredit.creditDenialReason =
+									signupMod.creditDenialReason =
 										$(this).find('textarea[id^="Signup-Credit-Denial-Reason"]').val();
 									// set new request status to denied
-									signupCredit.requestStatus = "Credit Denied"
+									signupMod.requestStatus = "Credit Denied"
 								} else {
 									// set new request status to granted
-									signupCredit.requestStatus = "Credit Granted"
+									signupMod.requestStatus = "Credit Granted"
 								}
 							} else {
 								// set new request status to granted
-								signupCredit.requestStatus = "Cancelled"
+								signupMod.requestStatus = "Cancelled"
 							}
 							// push the signup credit object to the signup credits array
-							signupCredits.push(signupCredit);
+							signupMods.push(signupMod);
 						});
 						// for each extracted signup credit object
-						signupCredits.forEach((signupCredit) => {
+						signupMods.forEach((signupMod) => {
 							// get the corresponding row from the GSE Signup SWFList
-							console.log(signupCredit.signupID);
-							signupCredit = $.extend($().GetFieldsFromOneRow({
+							console.log(signupMod.signupID);
+							signupMod = $.extend($().GetFieldsFromOneRow({
 								"select": [{
 									// 	"nameHere": "requestStatus",
 									// 	"nameInList": "RequestStatus"
@@ -6018,74 +6012,41 @@
 								"where": {
 									"field": "ID",
 									"type": "Number",
-									"value": signupCredit.signupID,
+									"value": signupMod.signupID,
 								}
 							}),
-								signupCredit
+								signupMod
 							);
 							// modify formData
-							signupCredit.formData['Request-Status'] = signupCredit.requestStatus;
-							if (signupCredit.creditDenialReason) {
-								signupCredit.formData['Credit-Denial-Reason'] = signupCredit.creditDenialReason;
+							signupMod.formData['Request-Status'] = signupMod.requestStatus;
+							if (signupMod.creditDenialReason) {
+								signupMod.formData['Signup-Credit-Denial-Reason'] = signupMod.creditDenialReason;
 							}
 							// set submission value pairs array
-							signupCredit.submissionValuePairsArray = [
-
+							signupMod.submissionValuePairsArray = [
+								['RequestStatus', signupMod.requestStatus],
+								['BeginningOfLife', 0],
+								['EndOfLife', 1],
+								['AllRequestData', CDataWrap(JSON.stringify(signupMod.formData))]
 							];
 
-							console.log(signupCredit);
+							console.log(signupMod);
 
-							/* // update SWFList
+							// update SWFList
 							var updateListItemsOptions = {
 								operation: 'UpdateListItems',
 								listName: 'SWFList',
 								webURL: 'https://bmos.sharepoint.com/sites/hr-service-signups',
 								batchCmd: 'Update',
-								ID: signupCredit.signupID,
-								valuepairs: signupCredit.submissionValuePairsArray,
+								ID: signupMod.signupID,
+								valuepairs: signupMod.submissionValuePairsArray,
 								completefunc: function (xData, Status) {
-
-
 									// determine success of save; then...
-									var swfListSaveSuccess = $().HandleListUpdateReturn(xData, Status, 'Hub SWF List Item Error');
-
-									// if swfList save was NOT successful
-									if (swfListSaveSuccess == 0) {
-
-										// send error emails from queue, then...
-										$().SendEmails(globalErrorEmailsToSend).then(function () {
-											// display messages
-											$('div#wait-while-working').fadeOut(200);
-											if (batchCommand == 'New') {
-												$('div#swfList-error_new-request').fadeIn(200);
-											} else {
-												$('div#swfList-error_updated-request').fadeIn(200);
-											}
-										});
-
-										// --- signify completion
-
-										// deferred.resolve();
-
-										// if swfList save was successful
-									} else if (swfListSaveSuccess == 1) {
-
-										var requestID = $(xData.responseXML).SPFilterNode("z:row").attr("ows_ID");
-										globalLastRequestIDs.push(requestID);
-
-										// --- signify completion
-
-										deferred.resolve();
-
-									}
+									// var swfListSaveSuccess = 
+									$().HandleListUpdateReturn(xData, Status, 'Hub SWF List Item Error');
 								}
 							};
-
-							if (webURL) {
-								updateListItemsOptions.webURL = webURL;
-							}
-
-							$().SPServices(updateListItemsOptions); */
+							$().SPServices(updateListItemsOptions);
 						});
 					}
 				}
@@ -6916,12 +6877,6 @@
 					// save requestID in rData
 					rData.requestID = globalLastRequestIDs[globalLastRequestIDs.length - 1];
 
-					/*
-						// consider
-						rData.requestID = globalLastRequestIDs[0];
-
-					*/
-
 					// -- process notifications
 
 					// create promise to process any needed notifications
@@ -7151,7 +7106,7 @@
 							}
 						}
 
-						// if processing mc project request notifications
+						// if processing test request notifications
 						if (typeof (fData.testNotifications) != "undefined") {
 
 							// if NOT just saving an allowed change after EOL has already been reached
@@ -7418,8 +7373,8 @@
 
 		} else if (type === "gseSchedulesCalendarHRAdmin") {
 			// scorey: control how oData.gseSchedulesCalendarHRAdmin gets used to build a screen here
-			$().RenderOverviewScreenButtons(oData.gseSchedulesCalendarHRAdmin.buttons, 0);
-			$("div#overview-table-container").html("<p>This is 2.2 Schedules Calendar for HR Admin (gseSchedulesCalendarHRAdmin).</p>");
+			// $("div#overview-table-container").html("<p>This is 2.2 Schedules Calendar for HR Admin (gseSchedulesCalendarHRAdmin).</p>");
+			$().RenderCalendarForGSESchedules(oData.gseSchedulesCalendarHRAdmin.buttons, 'gseHRAdmin');
 		} else if (type === "gseSchedulesCalendarJobAdmin") {
 			// scorey: control how oData.gseSchedulesCalendarJobAdmin gets used to build a screen here
 			$().RenderOverviewScreenButtons(oData.gseSchedulesCalendarJobAdmin.buttons, 0);
@@ -7438,7 +7393,14 @@
 			// scorey: control how oData.gseSchedulesListHRAdmin gets used to build a screen here
 			$().RenderOverviewScreenButtons(oData.gseSchedulesListHRAdmin.buttons, 0);
 			// $("div#overview-table-container").html("<p>This is 2.3 Schedules List for HR Admin (gseSchedulesListHRAdmin).</p>");
-			$().RenderAllDataTables(oData.gseSchedulesListHRAdmin.sections, "overview-table-container");
+			$().RenderAllDataTablesForGSESchedules(oData.gseSchedulesListHRAdmin.sections, "overview-table-container", 'gseHRAdmin');
+			$().RenderOverviewScreenDialogForGSESchedules('gseHRAdmin');
+
+
+
+
+
+
 		} else if (type === "gseSchedulesListJobAdmin") {
 			// scorey: control how oData.gseSchedulesListJobAdmin gets used to build a screen here
 			$().RenderOverviewScreenButtons(oData.gseSchedulesListJobAdmin.buttons, 0);
@@ -13998,7 +13960,6 @@
 	function PopulateFormData(form, formData, uriRoot, requestID, checkForAlternateEventDataToPopulate) {
 
 		var formDataCopy = {};
-
 		$.each(formData, function (formDatumKey, formDatumValue) {
 			formDataCopy[formDatumKey] = formDatumValue;
 		});
@@ -14026,13 +13987,7 @@
 			}
 		}
 
-		// console.log('formDataCopy');
-		// console.log(formDataCopy);
-
 		for (field in formDataCopy) {
-
-			// console.log('field');
-			// console.log(field);
 
 			// get the field in the form that matches the stored data value
 			element = $(form).find("#" + field);
@@ -14205,8 +14160,6 @@
 			lastRepeatIDNumber = Number($("[id^='" + originalToRepeat + "-repeat']").last().attr('id').slice(-1));
 		}
 
-
-
 		// --- determine the id of the element after which to insert the repeat
 
 		// if no repeats were found
@@ -14219,8 +14172,6 @@
 			var insertAfterID = originalToRepeat + '-repeat-' + lastRepeatIDNumber;
 		}
 
-
-
 		// --- use submittedID for newRepeatID, or construct a new one
 
 		// if there's a submittedID
@@ -14232,8 +14183,6 @@
 			// construct a new one
 			var newRepeatID = originalToRepeat + "-repeat-" + (lastRepeatIDNumber + 1);
 		}
-
-
 
 		// --- create and insert the new repeat; give it the appropriate ID and data-original-to-repeat values
 		$("#" + insertAfterID).after($("#" + originalToRepeat).clone().attr("id", newRepeatID).attr("data-original-to-repeat", originalToRepeat));
@@ -14309,7 +14258,8 @@
 					break;
 				case 'checkbox':
 				case 'radio':
-					this.checked = false;
+					$(this).removeAttr('checked');
+					$(this).prop('checked', false);
 			}
 		});
 
@@ -18718,6 +18668,19 @@
 					"		  </Geq>" +
 					"	 </And>" +
 					"</Where>";
+			} else if (typeof (t.rsQueryAndFieldGEQToday) != "undefined") {
+				query = "<Where>" +
+					"	 <And>" +
+					"		  <Eq>" +
+					"				<FieldRef Name='RequestStatus'></FieldRef>" +
+					"				<Value Type='Text'>" + t.rsQueryAndFieldGEQToday.requestStatus + "</Value>" +
+					"		  </Eq>" +
+					"		  <Geq>" +
+					"			  <FieldRef Name='" + t.rsQueryAndFieldGEQToday.field + "'></FieldRef>" +
+					"			  <Value Type='DateTime'>" + moment().format('YYYY-MM-DD') + ' 00:00:00' + "</Value>" +
+					"		  </Geq>" +
+					"	 </And>" +
+					"</Where>";
 			} else if (typeof (t.rsQueryAndFieldLTDate) != "undefined") {
 				query = "<Where>" +
 					"	 <And>" +
@@ -18728,6 +18691,19 @@
 					"		  <Lt>" +
 					"			  <FieldRef Name='" + t.rsQueryAndFieldLTDate[1] + "'></FieldRef>" +
 					"			  <Value Type='DateTime'>" + t.rsQueryAndFieldLTDate[2] + "</Value>" +
+					"		  </Lt>" +
+					"	 </And>" +
+					"</Where>";
+			} else if (typeof (t.rsQueryAndFieldLTToday) != "undefined") {
+				query = "<Where>" +
+					"	 <And>" +
+					"		  <Eq>" +
+					"				<FieldRef Name='RequestStatus'></FieldRef>" +
+					"				<Value Type='Text'>" + t.rsQueryAndFieldLTToday.asdfasdf + "</Value>" +
+					"		  </Eq>" +
+					"		  <Lt>" +
+					"			  <FieldRef Name='" + t.rsQueryAndFieldLTToday.asdasdgf + "'></FieldRef>" +
+					"			  <Value Type='DateTime'>" + moment().format('YYYY-MM-DD') + ' 00:00:00' + "</Value>" +
 					"		  </Lt>" +
 					"	 </And>" +
 					"</Where>";
@@ -18777,6 +18753,37 @@
 					"		 </And>" +
 					"	</And>" +
 					"</Where>";
+			} else if (typeof (t.MyRSQueryAndFieldGEQToday) != "undefined") {
+
+				var myName = $().SPServices.SPGetCurrentUser({
+					fieldName: "Title",
+					debug: false
+				});
+
+				if (typeof (mData.getRequesterFrom) == 'undefined') {
+					var getRequesterFrom = 'Author';
+				} else {
+					var getRequesterFrom = mData.getRequesterFrom;
+				}
+
+				query = "<Where>" +
+					"	 <And>" +
+					"		  <Eq>" +
+					"				<FieldRef Name='RequestStatus'></FieldRef>" +
+					"				<Value Type='Text'>" + t.MyRSQueryAndFieldGEQToday.requestStatus + "</Value>" +
+					"		  </Eq>" +
+					"		  <And>" +
+					"			  <Geq>" +
+					"					<FieldRef Name='" + t.MyRSQueryAndFieldGEQToday.field + "'></FieldRef>" +
+					"					<Value Type='DateTime'>" + moment().format('YYYY-MM-DD') + " 00:00:00</Value>" +
+					"			  </Geq>" +
+					"			  <Contains>" +
+					"					<FieldRef Name='" + getRequesterFrom + "'></FieldRef>" +
+					"					<Value Type='Text'>" + uData.name + "</Value>" +
+					"			  </Contains>" +
+					"		 </And>" +
+					"	</And>" +
+					"</Where>";
 			} else if (typeof (t.MyRSQueryAndFieldLTDate) != "undefined") {
 
 				var myName = $().SPServices.SPGetCurrentUser({
@@ -18800,6 +18807,37 @@
 					"			  <Lt>" +
 					"					<FieldRef Name='" + t.MyRSQueryAndFieldLTDate[1] + "'></FieldRef>" +
 					"					<Value Type='DateTime'>" + t.MyRSQueryAndFieldLTDate[2] + "</Value>" +
+					"			  </Lt>" +
+					"			  <Contains>" +
+					"					<FieldRef Name='" + getRequesterFrom + "'></FieldRef>" +
+					"					<Value Type='Text'>" + uData.name + "</Value>" +
+					"			  </Contains>" +
+					"		  </And>" +
+					"	 </And>" +
+					"</Where>";
+			} else if (typeof (t.MyRSQueryAndFieldLTToday) != "undefined") {
+
+				var myName = $().SPServices.SPGetCurrentUser({
+					fieldName: "Title",
+					debug: false
+				});
+
+				if (typeof (mData.getRequesterFrom) == 'undefined') {
+					var getRequesterFrom = 'Author';
+				} else {
+					var getRequesterFrom = mData.getRequesterFrom;
+				}
+
+				query = "<Where>" +
+					"	 <And>" +
+					"		  <Eq>" +
+					"				<FieldRef Name='RequestStatus'></FieldRef>" +
+					"				<Value Type='Text'>" + t.MyRSQueryAndFieldLTToday.requestStatus + "</Value>" +
+					"		  </Eq>" +
+					"		  <And>" +
+					"			  <Lt>" +
+					"					<FieldRef Name='" + t.MyRSQueryAndFieldLTToday.field + "'></FieldRef>" +
+					"					<Value Type='DateTime'>" + moment().format('YYYY-MM-DD') + " 00:00:00</Value>" +
 					"			  </Lt>" +
 					"			  <Contains>" +
 					"					<FieldRef Name='" + getRequesterFrom + "'></FieldRef>" +
@@ -18925,6 +18963,447 @@
 		});
 	};
 
+	$.fn.RenderCalendarForGSESchedules = function (buttons, relevantRole) {
+		var nowAsISOLocal = $().ReturnFormattedDateTime('nowLocal', null, null);
+		var viewToUse = GetParamFromUrl(location.search, 'view');
+		var dateToUse = GetParamFromUrl(location.search, 'date');
+		var gseSchedulesArray = [];
+		var allEvents = [];
+		if (!viewToUse || viewToUse == "") { viewToUse = 'month'; }
+		if (!dateToUse || dateToUse == "") {
+			dateToUse =
+				$().ReturnFormattedDateTime('nowUTC', 'YYYY-MM-DDTHH:mm:ssZ', 'YYYY-MM-DD', 0);
+		}
+		// get the relevant signups
+		gseSchedulesArray = $().GetFieldsFromSpecifiedRows({
+			'select': [
+				{
+					'nameHere': 'ScheduleID',
+					'nameInList': 'ID'
+				}, {
+					'nameHere': 'JobID',
+					'nameInList': 'JobID'
+				}, {
+					'nameHere': 'NumberOfPositions',
+					'nameInList': 'NumberOfPositions'
+				}, {
+					'nameHere': 'formData',
+					'nameInList': 'AllRequestData'
+				}
+			],
+			'webURL': 'https://bmos.sharepoint.com/sites/hr-service-schedules',
+			'where': {
+				'field': 'RequestStatus',
+				'type': 'Text',
+				'value': 'Submitted',
+			}
+		});
+
+		console.log(gseSchedulesArray);
+		gseSchedulesArray.forEach((schedule) => {
+			var jobData = $().ReturnGSEJobDataForCalendarItem(schedule.JobID);
+			// console.log('jobData');
+			// console.log(jobData);
+			var signupsData = $().ReturnGSESignupDataForCalendarItem(schedule.ScheduleID);
+			var isoStartDatetime = schedule.formData['Date'].slice(0, 10) + schedule.formData['time-storage_StartTime'].slice(10, 19);
+			var isoEndDatetime = schedule.formData['shiftlength_35-hours'] ?
+				moment(isoStartDatetime).add(3.5, 'hours') :
+				moment(isoStartDatetime).add(7, 'hours');
+			var length = schedule.formData['shiftlength_35-hours'] ? '3.5 hours' : '7 hours';
+			var formattedStartTime =
+				$().ReturnFormattedDateTime(isoStartDatetime, null, "h:mma", 0);
+			formattedStartTime = formattedStartTime.slice(0, formattedStartTime.length - 1);
+			var formattedEndTime = $().ReturnFormattedDateTime(isoEndDatetime, null, "h:mma", 0);
+			formattedEndTime = formattedEndTime.slice(0, formattedEndTime.length - 1);
+			var formattedDate = $().ReturnFormattedDateTime(isoStartDatetime, null, "ddd, M/D/YYYY", 0);
+
+			var eventItem = {
+				'eventID': schedule.ScheduleID,
+				'start': isoStartDatetime,
+				'end': isoEndDatetime,
+				'title': formattedStartTime + ' | ' + jobData.JobTitle,
+
+				'jobID': schedule.JobID,
+				'scheduleID': schedule.ScheduleID,
+				'formattedStartTime': formattedStartTime,
+				'formattedEndTime': formattedEndTime,
+				'formattedDate': formattedDate,
+				'jobAdmin': jobData.JobAdmin,
+				'length': length,
+				'location': schedule.formData['Location'],
+				'jobTitle': jobData.JobTitle,
+				'jobDescription': '<p>' + ReplaceAll('%0A', '</p><p>', jobData.formData['Job-Description']) + '</p>',
+				'quantitySignups': signupsData.length,
+				'quantityPositions': schedule.NumberOfPositions,
+				'jobURL': '/sites/hr-service-jobs/SitePages/App.aspx?r=' + schedule.JobID,
+				'scheduleURL': '/sites/hr-service-schedules/SitePages/App.aspx?r=' + schedule.ScheduleID,
+			};
+
+			// console.log('signupsData');
+			// console.log(signupsData);
+			// console.log('uData');
+			// console.log(uData);
+			// console.log('signupPersons');
+			signupsData.forEach((signup) => {
+				var signupPersonArray = $().ReturnUserDataFromPersonOrGroupFieldString(signup.signupPerson);
+				if (signupPersonArray[0].account === uData.account) {
+					eventItem.mySignupID = signup.signupID;
+				}
+			});
+
+			if (eventItem.mySignupID) {
+				eventItem.mySignupURL = '/sites/hr-service-signups/SitePages/App.aspx?r=' + eventItem.mySignupID;
+			} else {
+				eventItem.signupURL = '/sites/hr-service-signups/SitePages/App.aspx?r=0&gseScheduleID=' + schedule.ScheduleID;
+			}
+
+			allEvents.push(eventItem);
+		});
+
+		// console.log('allEvents');
+		// console.log(allEvents);
+
+		// console.log('viewToUse');
+		// console.log(viewToUse);
+
+		// console.log('dateToUse');
+		// console.log(dateToUse);
+
+		// console.log('buttons');
+		// console.log(buttons);
+		console.log('nowAsISOLocal');
+		console.log(nowAsISOLocal);
+		$("div#overview-screen-container").fullCalendar({
+			allDayDefault: true,
+			lazyFetching: false,
+			eventOrder: "start",
+			header: {
+				// right and center are reversed, because our CSS implements obedience to the accessibility imperative that DOM elements exist 
+				//      (and are thus encountered by assistive technologies) in the same order in which they're presented to sighted users
+				left: "",
+				right: "prevYear,prev,title,next,nextYear",
+				center: "today,basicDay,basicWeek,month"
+			},
+			defaultView: viewToUse,
+			defaultDate: dateToUse,
+			dayClick: function (date, jsEvent, view) {
+				console.log(date);
+				console.log(jsEvent);
+				console.log(view);
+				if (moment(date._d).isAfter(nowAsISOLocal)) {
+					var addScheduleURL = '/sites/hr-service-schedules/SitePages/App.aspx?r=0&d=' + date._i;
+					window.open(addScheduleURL, '_blank');
+				}
+			},
+			dayRender: function (date, cell) {
+				// console.log('date');
+				// console.log(date);
+				// console.log('cell');
+				// console.log(cell);
+				if (cell[0].classList.contains('fc-future')) {
+					var addLinkMarkup = '<a class="add-schedule" ' +
+						'href="/sites/hr-service-schedules/SitePages/App.aspx?r=0&d=' + date._i +
+						'" target="_blank">Add</a>';
+					cell.append(addLinkMarkup);
+				}
+
+			},
+			theme: true,
+			eventClick: function (event, jsEvent, view) {
+
+				// close the dialog box
+				$("div#dialog").dialog("close");
+
+				// populate the dialog box
+
+				var dialogTitleBarContent = '<h2 class="gse-schedules-dialog-date-and-time-range">' +
+					'<span class="gse-schedules-dialog-date">' + event.formattedDate + '</span> ' +
+					'<span class="gse-schedules-dialog-start-time">' + event.formattedStartTime + '</span>' +
+					'<span class="gse-schedules-dialog-times-separator"> &ndash; </span>' +
+					'<span class="gse-schedules-dialog-end-time">' + event.formattedEndTime + '</span>' +
+					'</h2>';
+
+				$("div[aria-describedby='gse-schedule-card-dialog'] div.ui-dialog-titlebar span.ui-dialog-title").html(dialogTitleBarContent);
+
+				var dialogBodyContent = '<p class="gse-schedule-card-dialog-job-title">' + event.jobTitle + '</p>';
+
+				if (relevantRole === 'gseHRAdmin') {
+					dialogBodyContent += '<a id="gse-schedule-card-dialog-job-link" href="' +
+						event.jobURL + '" target="_blank">Job Details</a>';
+					dialogBodyContent += '<a id="gse-schedule-card-dialog-schedule-link" href="' +
+						event.scheduleURL + '" target="_blank">Schedule Details</a>';
+				}
+
+				if (event.mySignupURL) {
+					dialogBodyContent += '<a id="gse-schedule-card-dialog-my-signup-link" href="' +
+						event.mySignupURL + '" target="_blank">My Signup</a>';
+				} else {
+					dialogBodyContent += '<a id="gse-schedule-card-dialog-signup-opportunity-link" href="' +
+						event.signupURL + '" target="_blank">Signup Opportunity</a>';
+				}
+
+				$("div#gse-schedule-card-dialog").html(dialogBodyContent);
+
+				// position the dialog box
+				$("div#gse-schedule-card-dialog").dialog("option", "position", { my: "left bottom", at: "right top", of: jsEvent });
+
+				// open the dialog box
+				$("div#gse-schedule-card-dialog").dialog("open");
+			},
+			events: allEvents
+
+		});
+
+		var buttonsMarkup = $().ReturnButtonsMarkup(buttons);
+		$("div.fc-toolbar div.fc-left").append(buttonsMarkup);
+		$("div#app-container").append("<div id=\"gse-schedule-card-dialog\"></div>");
+
+		$("div#gse-schedule-card-dialog").dialog({
+			autoOpen: false,
+			draggable: true,
+			modal: true,
+			show: {
+				effect: "bounce",
+				times: 2,
+				duration: 500
+			},
+			width: 400,
+		});
+
+
+		$("div.fc-toolbar, div.fc-view-container").fadeTo(1000, 1);
+
+
+	};
+
+	$.fn.ReturnGSEJobDataForCalendarItem = function (jobID) {
+		return $().GetFieldsFromOneRow({
+			'listName': 'SWFList',
+			'webURL': 'https://bmos.sharepoint.com/sites/hr-service-jobs',
+			'select': [
+				{
+					'nameHere': 'JobTitle',
+					'nameInList': 'JobTitle',
+				}, {
+					'nameHere': 'JobAdmin',
+					'nameInList': 'JobAdmin'
+				}, {
+					'nameHere': 'formData',
+					'nameInList': 'AllRequestData'
+				}
+			],
+			'where': {
+				'field': 'ID',
+				'type': 'Number',
+				'value': jobID,
+			}
+		});
+	};
+
+
+
+	$.fn.ReturnGSESignupDataForCalendarItem = function (scheduleID) {
+		return $().GetFieldsFromSpecifiedRows({
+			"select": [{
+				"nameHere": "signupID",
+				"nameInList": "ID"
+			}, {
+				"nameHere": "signupPerson",
+				"nameInList": "RequestedFor"
+			}],
+			"webURL": "https://bmos.sharepoint.com/sites/hr-service-signups",
+			"where": {
+				"ands": [
+					{
+						"field": "ScheduleID",
+						"type": "Text",
+						"value": scheduleID,
+					}, {
+						"field": "RequestStatus",
+						"type": "Text",
+						"operator": "Neq",
+						"value": "Cancelled",
+					}
+				]
+			}
+		});
+	};
+
+
+
+	$.fn.RenderAllDataTablesForGSESchedules = function (sections, targetID, relevantRole) {
+
+		$.each(sections.tables, function (i, t) {
+
+			// var setupStartTime = Date.now();
+
+			var columns = [];
+			var query = '';
+			var camlViewFields = "";
+			var lookupFields = [];
+			var datatableFields = [];
+			var theadDetails = "";
+
+			t.webURL = 'https://bmos.sharepoint.com/sites/hr-service-schedules';
+
+			if (typeof (t.customColumns) != "undefined") {
+				columns = t.customColumns;
+			} else {
+				columns = sections.commonColumns;
+			}
+
+			if (typeof (t.sortColAndOrder) == 'undefined') {
+				t.sortColAndOrder = [0, 'asc'];
+			}
+
+			$.each(columns, function (i, column) {
+				if (column.displayName && column.internalName && column.internalName != "") {
+					camlViewFields += "<FieldRef Name='" + column.internalName + "' />";
+					datatableFields.push({
+						"data": column.internalName
+					});
+				} else if (column.displayName && column.dataName && column.dataName != "") {
+					datatableFields.push({
+						"data": column.dataName
+					});
+				} else if (!column.displayName && column.internalName && column.internalName != "") {
+					camlViewFields += "<FieldRef Name='" + column.internalName + "' />";
+				}
+
+				if (column.displayName && column.displayName != "") {
+					theadDetails += "<th>" + column.displayName + "</th>";
+				}
+				if (column.internalName != "" && typeof (column.gseSchedulesDialogButton) !== "undefined") {
+					lookupFields.push({
+						"internalName": column.internalName,
+						"anchorNoHref": 0,
+						"formLink": 0,
+						"userName": 0,
+						"friendlyFormatOnLoad": 0,
+						"groupingFriendlyFormatOnLoad": 0,
+						"gseSchedulesDialogButton": 1
+					});
+				} else if (column.internalName != "" && typeof (column.friendlyFormatOnLoad) !== "undefined") {
+					lookupFields.push({
+						"internalName": column.internalName,
+						"anchorNoHref": 0,
+						"formLink": 0,
+						"userName": 0,
+						"friendlyFormatOnLoad": column.friendlyFormatOnLoad,
+						"groupingFriendlyFormatOnLoad": 0
+					});
+				} else {
+					lookupFields.push({
+						"internalName": column.internalName,
+						"anchorNoHref": 0,
+						"formLink": 0,
+						"userName": 0,
+						"friendlyFormatOnLoad": 0,
+						"groupingFriendlyFormatOnLoad": 0
+					});
+				}
+			});
+
+			if (typeof (t.basicRSQueryRelevantStatus) != "undefined") {
+				query = "<Where>" +
+					"	<Eq>" +
+					"		 <FieldRef Name='RequestStatus'></FieldRef>" +
+					"		 <Value Type='Text'>" + t.basicRSQueryRelevantStatus + "</Value>" +
+					"	</Eq>" +
+					"</Where>";
+			}
+
+			var baseListForDatatable = $().GetListDataForDatatable({
+				'listName': 'SWFList',
+				'webURL': t.webURL,
+				'query': query,
+				'someColsAreUsers': t.someColsAreUsers,
+				'viewFields': camlViewFields,
+				'lookupFields': lookupFields,
+				'formURI': mData.formURI,
+				'returnURI': mData.returnURI
+			});
+
+			var augmentedListForDatatable = [];
+
+			baseListForDatatable.forEach((tableRow) => {
+				var gseSignupsMarkup = '<ul>';
+
+				// get the relevant signups
+				var gseSignupsArray = $().GetFieldsFromSpecifiedRows({
+					"select": [{
+						"nameHere": "signupID",
+						"nameInList": "ID"
+					}, {
+						"nameHere": "formData",
+						"nameInList": "AllRequestData"
+					}],
+					"webURL": "https://bmos.sharepoint.com/sites/hr-service-signups",
+					"where": {
+						"ands": [
+							{
+								"field": "ScheduleID",
+								"type": "Text",
+								"value": tableRow.ID,
+							}, {
+								"field": "RequestStatus",
+								"type": "Text",
+								"operator": "Neq",
+								"value": "Cancelled",
+							}
+						]
+					}
+				});
+
+				// for each signup
+				gseSignupsArray.forEach((signup, index) => {
+					gseSignupsMarkup += '<li>' + $().RenderPersonLinks(signup.formData["Requested-For"]);
+					if (signup.formData['Request-Status'] === 'Credit Granted') {
+						gseSignupsMarkup += ' - Credit Granted';
+					} else if (signup.formData['Request-Status'] === 'Credit Denied') {
+						gseSignupsMarkup += ' - Credit Denied';
+					}
+					gseSignupsMarkup += '</li>';
+				});
+				gseSignupsMarkup += '</ul>';
+				tableRow.Signups = gseSignupsMarkup;
+
+				tableRow.PositionsAvailable = (tableRow.NumberOfPositions - gseSignupsArray.length) + ' / ' + tableRow.NumberOfPositions;
+
+				var gseJobAdminRaw = $().GetFieldsFromOneRow({
+					"select": [{
+						"nameHere": "JobAdmin",
+						"nameInList": "JobAdmin"
+					}],
+					"webURL": "https://bmos.sharepoint.com/sites/hr-service-jobs",
+					"where": {
+						"field": "ID",
+						"type": "Number",
+						"value": tableRow.JobID,
+					}
+				});
+				if (gseJobAdminRaw) {
+					tableRow.JobAdmin = $().RenderPersonLinks(gseJobAdminRaw.JobAdmin);
+				} else {
+					tableRow.JobAdmin = '';
+				}
+				augmentedListForDatatable.push(tableRow);
+			});
+
+			console.log(augmentedListForDatatable);
+
+			$().RenderListAsDatatable({
+				'tableTitle': t.tableTitle,
+				'tableID': t.tableID,
+				'theadDetails': theadDetails,
+				'listForDatatable': augmentedListForDatatable,
+				'datatableFields': datatableFields,
+				'sortColAndOrder': t.sortColAndOrder,
+				'grouping': t.grouping,
+				'targetID': targetID,
+			});
+		});
+	};
 
 
 	$.fn.GetListDataForDatatable = function (options) {
@@ -18980,6 +19459,10 @@
 
 								itemDataForReturn[lookupField.internalName] = "<a class='anchor_no-href'>" + thisItem.attr("ows_" + lookupField.internalName) + "</a>";
 
+							} else if (lookupField.gseSchedulesDialogButton == 1) {
+
+								itemDataForReturn[lookupField.internalName] = "<button class='gse-schedules-dialog-button'>" + thisItem.attr("ows_" + lookupField.internalName) + "</button>";
+
 							} else if (lookupField.userName == 1) {
 
 								itemDataForReturn[lookupField.internalName] = $().RenderPersonLinks(thisItem.attr("ows_" + lookupField.internalName));
@@ -19011,37 +19494,158 @@
 
 
 
-	$.fn.RenderPersonLinks = function (usersString) {
+	$.fn.RenderOverviewScreenDialogForGSESchedules = function () {
+		// append, initialize contact dialog
+		$("div#app-container").append("<div id=\"gse-schedule-card-dialog\"></div>");
+		$("div#gse-schedule-card-dialog").dialog({
+			autoOpen: false,
+			draggable: true,
+			show: {
+				effect: "bounce",
+				times: 2,
+				duration: 500
+			},
+			width: 400,
+		});
+		// listen for button click; populate and open dialog
 
-		// console.log(usersString);
+		$('div#overview-table-container').on('click', 'button.gse-schedules-dialog-button', function (e) {
+			e.preventDefault();
+			// close and empty
+			$("div#gse-schedule-card-dialog").dialog("close");
+			$("div[aria-describedby='gse-schedule-card-dialog'] div.ui-dialog-titlebar span.ui-dialog-title").empty();
+			$("div#gse-schedule-card-dialog").empty();
+
+			// retrieve data
+			var userProfileValues = {};
+			$().SPServices({
+				operation: "GetUserProfileByName",
+				async: false,
+				AccountName: $(this).closest("span.sp-peoplepicker-userSpan").attr("sid"),
+				completefunc: function (xData, Status) {
+					$(xData.responseXML).SPFilterNode("PropertyData").each(function () {
+						userProfileValues[$(this).find("Name").text()] = $(this).find("Value").text();
+					});
+				}
+			});
+
+			// create and insert header
+
+			var dialogHeader = '<span id="gse-schedule-card-dialog-header"> \n' +
+				'	<span id="avatar" \n';
+
+			if (userProfileValues.PictureURL != "") {
+				dialogHeader += '		 style="background-image: url(\'' + userProfileValues.PictureURL + '\')"> \n';
+			} else {
+				userProfileValues.firstInitial = userProfileValues.FirstName.slice(0, 1).toUpperCase();
+				userProfileValues.lastInitial = userProfileValues.LastName.slice(0, 1).toUpperCase();
+				dialogHeader += '		 ><span id="avatar-initials">' + userProfileValues.firstInitial + userProfileValues.lastInitial + '</span> \n';
+			}
+
+			dialogHeader += '	</span> \n' +
+				'	<span id="name_title_department"> \n';
+
+			if (typeof (userProfileValues.PreferredName) != 'undefined' && userProfileValues.PreferredName != '') {
+				dialogHeader += '		 <span id="name">' + userProfileValues.PreferredName + '</span> \n';
+			}
+
+			if (typeof (userProfileValues.Title) != 'undefined' && userProfileValues.Title != '') {
+				dialogHeader += '		 <span id="title">' + userProfileValues.Title + '</span> \n';
+			}
+
+			if (typeof (userProfileValues.Department) != 'undefined' && userProfileValues.Department != '') {
+				dialogHeader += '		 <span id="department">' + userProfileValues.Department + '</span> \n';
+			}
+
+			dialogHeader += '	</span></span> \n';
+
+			$("div[aria-describedby='gse-schedule-card-dialog'] div.ui-dialog-titlebar span.ui-dialog-title").append(dialogHeader);
+
+			// create and insert body
+
+			var dialogBody = '<ul id="gse-schedule-card-dialog-body"> \n';
+
+			if (typeof (userProfileValues.WorkPhone) != 'undefined' && typeof (userProfileValues.CellPhone) != 'undefined' && userProfileValues.WorkPhone != '' && userProfileValues.CellPhone != '') {
+				dialogBody += '	<li id="phone-numbers">\n' +
+					'		 <ul>\n' +
+					'			  <li id="business-phone-number">Business: ' + userProfileValues.WorkPhone + '</li> \n' +
+					'			  <li id="mobile-phone-number">Mobile: ' + userProfileValues.CellPhone + '</li> \n' +
+					'		 </ul>\n' +
+					'	</li> \n';
+			} else if (typeof (userProfileValues.WorkPhone) != 'undefined' && userProfileValues.WorkPhone != '') {
+				dialogBody += '	<li id="business-phone-number">Business: ' + userProfileValues.WorkPhone + '</li> \n';
+			} else if (typeof (userProfileValues.WorkPhone) != 'undefined' && userProfileValues.WorkPhone != '') {
+				dialogBody += '	<li id="mobile-phone-number">Mobile: ' + userProfileValues.CellPhone + '</li> \n';
+			}
+
+			if (typeof (userProfileValues.WorkEmail) != 'undefined' && userProfileValues.WorkEmail != '') {
+				dialogBody += '	<li id="email"><a href="mailto:' + userProfileValues.WorkEmail + '">' + userProfileValues.WorkEmail + '</a></li> \n';
+			}
+
+			if (typeof (userProfileValues["SPS-gse-schedulelSiteCapabilities"]) != 'undefined' && userProfileValues["SPS-gse-schedulelSiteCapabilities"] != '') {
+				dialogBody += '	<li id="profile"><a href="https://bmos-my.sharepoint.com/_layouts/15/me.aspx?u=' + userProfileValues["msOnline-ObjectId"] + '" target="_blank">Profile</a></li> \n';
+			}
+
+			dialogBody += '</ul> \n';
+
+			$("div#gse-schedule-card-dialog").append(dialogBody);
+
+			// position and open
+
+			$("div#gse-schedule-card-dialog").dialog("option", "position", {
+				my: "left bottom-20",
+				of: this,
+				collision: "fit"
+			});
+			$("div#gse-schedule-card-dialog").dialog("open");
+		});
+	};
+
+
+
+	$.fn.RenderPersonLinks = function (usersRaw) {
+
+		// console.log(usersRaw);
 
 		var returnValue = "";
-		var userArray = usersString.split(";#");
+		if (typeof (usersRaw) === 'string') {
+			var userArray = usersRaw.split(";#");
 
-		$.each(userArray, function (i, userData) {
+			$.each(userArray, function (i, userData) {
 
-			if (isNaN(userData) != false) {
+				if (isNaN(userData) != false) {
 
-				var userDataSplit = userData.split("#");
+					var userDataSplit = userData.split("#");
 
-				if (StrInStr(userDataSplit[4], "@mos.org,", 1) != false) {
-					var userID = StrInStr(userDataSplit[4], "@mos.org,", 1);
-				} else if (StrInStr(userDataSplit[4], "@MOS.ORG,", 1) != false) {
-					var userID = StrInStr(userDataSplit[4], "@MOS.ORG,", 1);
-				} else {
-					var userID = userDataSplit[4];
+					if (StrInStr(userDataSplit[4], "@mos.org,", 1) != false) {
+						var userID = StrInStr(userDataSplit[4], "@mos.org,", 1);
+					} else if (StrInStr(userDataSplit[4], "@MOS.ORG,", 1) != false) {
+						var userID = StrInStr(userDataSplit[4], "@MOS.ORG,", 1);
+					} else {
+						var userID = userDataSplit[4];
+					}
+
+					if (StrInStr(userDataSplit[5], ",", 1) == false) {
+						var userName = userDataSplit[5];
+					} else {
+						var userName = StrInStr(userDataSplit[5], ",", 1);
+					}
+
+					returnValue += '<div><a href="https://bmos-my.sharepoint.com/person.aspx?user=' + userID + '" target="_blank">' + userName + '</a></div>';
 				}
-
-				if (StrInStr(userDataSplit[5], ",", 1) == false) {
-					var userName = userDataSplit[5];
+			});
+		} else if (typeof (usersRaw) === 'object') {
+			$.each(usersRaw, function (i, userData) {
+				if (StrInStr(userData.description, "@mos.org,", 1) != false) {
+					var userID = StrInStr(userData.description, "@mos.org,", 1);
+				} else if (StrInStr(userData.description, "@MOS.ORG,", 1) != false) {
+					var userID = StrInStr(userData.description, "@MOS.ORG,", 1);
 				} else {
-					var userName = StrInStr(userDataSplit[5], ",", 1);
+					var userID = userData.description;
 				}
-
-				returnValue += '<div><a href="https://bmos-my.sharepoint.com/person.aspx?user=' + userID + '" target="_blank">' + userName + '</a></div>';
-			}
-		});
-
+				returnValue += '<div><a href="https://bmos-my.sharepoint.com/person.aspx?user=' + userID + '" target="_blank">' + userData.displayText + '</a></div>';
+			});
+		}
 		return returnValue;
 	};
 
@@ -19208,6 +19812,13 @@
 
 
 	$.fn.RenderAdditionalButtons = function (buttons) {
+		var buttonsMarkup = $().ReturnButtonsMarkup(buttons);
+		$("#overview-table-container").before(buttonsMarkup);
+	};
+
+
+
+	$.fn.ReturnButtonsMarkup = function (buttons) {
 		var buttonsMarkup = "";
 		$.each(buttons, function (i, button) {
 			// business rule: even if there's a function restricting rendering permission, the button will always render for admins; if this changes, 
@@ -19220,7 +19831,7 @@
 				}
 			}
 		});
-		$("#overview-table-container").before(buttonsMarkup);
+		return buttonsMarkup
 	};
 
 
@@ -21360,7 +21971,7 @@
 
 
 	$.fn.EnableGSEScheduleSignupDisplaysAndResponses = function () {
-		if ($("input#Request-Status").val() === "Submitted" || $("input#Request-Status").val() === "Completed") {
+		if ($("input#Request-Status").val() === "Submitted") {
 			var scheduleStartDatetime = rData.formData['Date'].substring(0, 10) + ' ' +
 				rData.formData['time-storage_StartTime'].substring(11, 16);
 			scheduleStartDatetime = moment.tz(scheduleStartDatetime, "America/New_York").format();
@@ -21369,6 +21980,8 @@
 				$("div#signup-people").show("fast").removeClass("hidden");
 			} else {
 				var radioButtonIDs = [];
+				// hide cancellation checkbox
+				$("div#label-and-control_Requester-Cancellation").hide("fast").addClass("hidden");
 				// enable and require radio buttons
 				$("div#signups").find("div.repeat-container").each(function () {
 					$(this).find("input[type='radio']").each(function (index, value) {
@@ -21416,6 +22029,18 @@
 				});
 				$("div#signups").show("fast").removeClass("hidden");
 			}
+		} else if ($("input#Request-Status").val() === "Completed") {
+			$("div#signups").find("div.repeat-container").each(function () {
+				$(this).find("textarea[id^='Signup-Credit-Denial-Reason']")
+					.each(function (index, value) {
+						console.log('found textarea');
+						console.log($(this).attr("id"));
+						if ($(this).val() !== '') {
+							var containerSelector = '#label-and-control_' + $(this).attr("id");
+							$(containerSelector).show("fast").removeClass("hidden");
+						}
+					});
+			});
 		}
 	};
 

@@ -18668,6 +18668,19 @@
 					"		  </Geq>" +
 					"	 </And>" +
 					"</Where>";
+			} else if (typeof (t.rsQueryAndFieldGEQToday) != "undefined") {
+				query = "<Where>" +
+					"	 <And>" +
+					"		  <Eq>" +
+					"				<FieldRef Name='RequestStatus'></FieldRef>" +
+					"				<Value Type='Text'>" + t.rsQueryAndFieldGEQToday.requestStatus + "</Value>" +
+					"		  </Eq>" +
+					"		  <Geq>" +
+					"			  <FieldRef Name='" + t.rsQueryAndFieldGEQToday.field + "'></FieldRef>" +
+					"			  <Value Type='DateTime'>" + moment().format('YYYY-MM-DD') + ' 00:00:00' + "</Value>" +
+					"		  </Geq>" +
+					"	 </And>" +
+					"</Where>";
 			} else if (typeof (t.rsQueryAndFieldLTDate) != "undefined") {
 				query = "<Where>" +
 					"	 <And>" +
@@ -18678,6 +18691,19 @@
 					"		  <Lt>" +
 					"			  <FieldRef Name='" + t.rsQueryAndFieldLTDate[1] + "'></FieldRef>" +
 					"			  <Value Type='DateTime'>" + t.rsQueryAndFieldLTDate[2] + "</Value>" +
+					"		  </Lt>" +
+					"	 </And>" +
+					"</Where>";
+			} else if (typeof (t.rsQueryAndFieldLTToday) != "undefined") {
+				query = "<Where>" +
+					"	 <And>" +
+					"		  <Eq>" +
+					"				<FieldRef Name='RequestStatus'></FieldRef>" +
+					"				<Value Type='Text'>" + t.rsQueryAndFieldLTToday.asdfasdf + "</Value>" +
+					"		  </Eq>" +
+					"		  <Lt>" +
+					"			  <FieldRef Name='" + t.rsQueryAndFieldLTToday.asdasdgf + "'></FieldRef>" +
+					"			  <Value Type='DateTime'>" + moment().format('YYYY-MM-DD') + ' 00:00:00' + "</Value>" +
 					"		  </Lt>" +
 					"	 </And>" +
 					"</Where>";
@@ -18727,6 +18753,37 @@
 					"		 </And>" +
 					"	</And>" +
 					"</Where>";
+			} else if (typeof (t.MyRSQueryAndFieldGEQToday) != "undefined") {
+
+				var myName = $().SPServices.SPGetCurrentUser({
+					fieldName: "Title",
+					debug: false
+				});
+
+				if (typeof (mData.getRequesterFrom) == 'undefined') {
+					var getRequesterFrom = 'Author';
+				} else {
+					var getRequesterFrom = mData.getRequesterFrom;
+				}
+
+				query = "<Where>" +
+					"	 <And>" +
+					"		  <Eq>" +
+					"				<FieldRef Name='RequestStatus'></FieldRef>" +
+					"				<Value Type='Text'>" + t.MyRSQueryAndFieldGEQToday.requestStatus + "</Value>" +
+					"		  </Eq>" +
+					"		  <And>" +
+					"			  <Geq>" +
+					"					<FieldRef Name='" + t.MyRSQueryAndFieldGEQToday.field + "'></FieldRef>" +
+					"					<Value Type='DateTime'>" + moment().format('YYYY-MM-DD') + " 00:00:00</Value>" +
+					"			  </Geq>" +
+					"			  <Contains>" +
+					"					<FieldRef Name='" + getRequesterFrom + "'></FieldRef>" +
+					"					<Value Type='Text'>" + uData.name + "</Value>" +
+					"			  </Contains>" +
+					"		 </And>" +
+					"	</And>" +
+					"</Where>";
 			} else if (typeof (t.MyRSQueryAndFieldLTDate) != "undefined") {
 
 				var myName = $().SPServices.SPGetCurrentUser({
@@ -18750,6 +18807,37 @@
 					"			  <Lt>" +
 					"					<FieldRef Name='" + t.MyRSQueryAndFieldLTDate[1] + "'></FieldRef>" +
 					"					<Value Type='DateTime'>" + t.MyRSQueryAndFieldLTDate[2] + "</Value>" +
+					"			  </Lt>" +
+					"			  <Contains>" +
+					"					<FieldRef Name='" + getRequesterFrom + "'></FieldRef>" +
+					"					<Value Type='Text'>" + uData.name + "</Value>" +
+					"			  </Contains>" +
+					"		  </And>" +
+					"	 </And>" +
+					"</Where>";
+			} else if (typeof (t.MyRSQueryAndFieldLTToday) != "undefined") {
+
+				var myName = $().SPServices.SPGetCurrentUser({
+					fieldName: "Title",
+					debug: false
+				});
+
+				if (typeof (mData.getRequesterFrom) == 'undefined') {
+					var getRequesterFrom = 'Author';
+				} else {
+					var getRequesterFrom = mData.getRequesterFrom;
+				}
+
+				query = "<Where>" +
+					"	 <And>" +
+					"		  <Eq>" +
+					"				<FieldRef Name='RequestStatus'></FieldRef>" +
+					"				<Value Type='Text'>" + t.MyRSQueryAndFieldLTToday.requestStatus + "</Value>" +
+					"		  </Eq>" +
+					"		  <And>" +
+					"			  <Lt>" +
+					"					<FieldRef Name='" + t.MyRSQueryAndFieldLTToday.field + "'></FieldRef>" +
+					"					<Value Type='DateTime'>" + moment().format('YYYY-MM-DD') + " 00:00:00</Value>" +
 					"			  </Lt>" +
 					"			  <Contains>" +
 					"					<FieldRef Name='" + getRequesterFrom + "'></FieldRef>" +
@@ -22676,7 +22764,7 @@
 		// wait for all data retrieval / setting promises to complete (pass or fail) 
 		$.when.apply($, allDataRetrievalAndSettingPromises).always(function () {
 
-			console.log('using dev_mos-main_long.1.04 m6');
+			console.log('using dev_mos-main_long.1.04 m1');
 
 			$().ConfigureAndShowScreenContainerAndAllScreens();
 		});
