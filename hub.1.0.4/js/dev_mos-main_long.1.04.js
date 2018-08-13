@@ -19128,17 +19128,21 @@
 				var dialogBodyContent = '<p class="gse-schedule-card-dialog-job-title">' + event.jobTitle + '</p>';
 				
 				if (relevantRole === 'gseHRAdmin') {
-					dialogBodyContent += '<a id="gse-schedule-card-dialog-job-link" href="' + 
+					dialogBodyContent += '<a id="gse-schedule-card-dialog-job-link" ' + 
+						'class="gse-schedule-card-dialog-button" href="' + 
 						event.jobURL + '" target="_blank">Job Details</a>';
-					dialogBodyContent += '<a id="gse-schedule-card-dialog-schedule-link" href="' + 
+					dialogBodyContent += '<a id="gse-schedule-card-dialog-schedule-link" ' + 
+						'class="gse-schedule-card-dialog-button" href="' + 
 						event.scheduleURL + '" target="_blank">Schedule Details</a>';
 				}
 
 				if (event.mySignupURL) {
-					dialogBodyContent += '<a id="gse-schedule-card-dialog-my-signup-link" href="' + 
+					dialogBodyContent += '<a id="gse-schedule-card-dialog-my-signup-link" ' + 
+						'class="gse-schedule-card-dialog-button" href="' + 
 						event.mySignupURL + '" target="_blank">My Signup</a>';
 				} else {
-					dialogBodyContent += '<a id="gse-schedule-card-dialog-signup-opportunity-link" href="' + 
+					dialogBodyContent += '<a id="gse-schedule-card-dialog-signup-opportunity-link" ' + 
+						'class="gse-schedule-card-dialog-button" href="' + 
 						event.signupURL + '" target="_blank">Signup Opportunity</a>';
 				}
 				
