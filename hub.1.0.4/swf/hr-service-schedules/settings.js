@@ -351,6 +351,9 @@
 			}
 		},
 		
+
+
+
 		// screen 2.2
 		'gseSchedulesCalendarHRAdmin': {
 			'buttons': [
@@ -530,11 +533,9 @@
 			'buttons': [
 				{
 					"linkType": "newItem",
-					"anchorText": "New Job",
-					"href": "/sites/hr-service-jobs/SitePages/App.aspx?r=0",
+					"anchorText": "New Schedule",
+					"href": "/sites/hr-service-schedules/SitePages/App.aspx?r=0",
 					"target": null
-
-
 				}, {
 					"linkType": "goForward",
 					"anchorText": "My Jobs",
@@ -658,23 +659,13 @@
 		'gseSchedulesCalendarStaff': {
 			'buttons': [
 				{
-					"linkType": "newItem",
-					"anchorText": "New Schedule",
-					"href": "/sites/hr-service-schedules/SitePages/App.aspx?r=0",
+					"linkType": "goForward",
+					"anchorText": "Signup Opportunities List",
+					"href": "/sites/hr-service-schedules/SitePages/App.aspx",
 					"target": null
 				}, {
 					"linkType": "goForward",
-					"anchorText": "Jobs",
-					"href": "/sites/hr-service-jobs/SitePages/App.aspx",
-					"target": null
-				}, {
-					"linkType": "goForward",
-					"anchorText": "Schedule Calendar",
-					"href": "/sites/hr-service-schedules/SitePages/App.aspx?f=cal",
-					"target": null
-				}, {
-					"linkType": "goForward",
-					"anchorText": "Signups",
+					"anchorText": "My Signups",
 					"href": "/sites/hr-service-signup/SitePages/App.aspx",
 					"target": null
 				}

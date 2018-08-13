@@ -622,7 +622,8 @@ div#s4-workspace div#app-container.event-av div#container_command-bar div#contai
 div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button,
 div#s4-workspace div#public-community-page_open-enrollment div.primary-section a,
 a#standard-printer-button-inside-request,
-a.gse-schedule-card-dialog-button
+a#gse-schedule-card-dialog-my-signup-link,
+a#gse-schedule-card-dialog-signup-opportunity-link
 	+button
 
 	&:hover
@@ -639,7 +640,8 @@ div#s4-workspace div#public-community-page_moscars div#call-to-action a,
 div#s4-workspace div#public-community-page_hr div#primary-section_open-enrollment a,
 div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button,
 div#s4-workspace div#public-community-page_open-enrollment div.primary-section a,
-a.gse-schedule-card-dialog-button
+a#gse-schedule-card-dialog-my-signup-link,
+a#gse-schedule-card-dialog-signup-opportunity-link
 	color: $textOnIntDefault !important
 	background-color: $intDefault !important
 
@@ -3892,6 +3894,19 @@ div#app-container.direct-deposit
 				height: 2rem
 				padding: 0
 				border: none
+	
+
+
+// --- GSE SCHEDULES CALENDAR
+
+div.gse-schedule-card-dialog-link-container
+	margin-bottom: .5rem
+
+	&:first-child
+		margin-top: 1rem
+
+
+
 
 
 // --- GSE SIGNUP OPPORTUNITY
@@ -4080,7 +4095,10 @@ body.product-timeline
 
 div#museum-event-calendar-container,
 div#buyout-calendar-container,
-div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests
+div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests,
+div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests,
+div#overview-screen-container.gseSchedulesCalendarManager-requests,
+div#overview-screen-container.gseSchedulesCalendarStaff-requests
 
 	div.fc-toolbar
 		height: 4.5rem
@@ -4105,6 +4123,9 @@ div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests
 
 			> div
 				height: 4.5rem
+
+			button.ui-button
+				text-transform: capitalize
 
 		h2
 			display: inline-block
@@ -4161,10 +4182,28 @@ div#buyout-calendar-container
 
 div#buyout-calendar-container,
 div#museum-event-calendar-container,
-div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests
+div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests,
+div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests,
+div#overview-screen-container.gseSchedulesCalendarManager-requests,
+div#overview-screen-container.gseSchedulesCalendarStaff-requests
 
 	div.fc-view-container
 		opacity: 0
+
+	div.fc-bg
+
+		td.fc-day
+			padding: 1rem .2rem .2rem 4.5rem !important
+			
+	div.fc-content-skeleton
+
+		td.fc-day-number
+			padding: .5rem .2rem .2rem 1.5rem !important
+			font-size: 2rem
+			text-align: left
+
+		td.fc-day-number.add-schedule-on-click
+			cursor: pointer
 
 	a.fc-event
 		font-size: 1.3rem
@@ -4234,8 +4273,7 @@ div[aria-describedby='gse-schedule-card-dialog']
 
 	div.ui-dialog-content
 
-		p.ui-dialog-buyout-title,
-		p.gse-schedule-card-dialog-job-title
+		p.ui-dialog-buyout-title
 			font-size: 2.6rem
 			font-weight: 300
 			margin: 0
@@ -4243,7 +4281,10 @@ div[aria-describedby='gse-schedule-card-dialog']
 
 
 
-div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests
+div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests,
+div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests,
+div#overview-screen-container.gseSchedulesCalendarManager-requests,
+div#overview-screen-container.gseSchedulesCalendarStaff-requests
 
 	.fc-day.ui-widget-content.fc-past
 		background-color: #e0e0e0

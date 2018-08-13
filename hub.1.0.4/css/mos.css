@@ -544,7 +544,8 @@ div#s4-workspace div#app-container.event-av div#container_command-bar div#contai
 div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button,
 div#s4-workspace div#public-community-page_open-enrollment div.primary-section a,
 a#standard-printer-button-inside-request,
-a.gse-schedule-card-dialog-button {
+a#gse-schedule-card-dialog-my-signup-link,
+a#gse-schedule-card-dialog-signup-opportunity-link {
   display: inline-block;
   float: none !important;
   box-sizing: border-box;
@@ -593,7 +594,8 @@ a.gse-schedule-card-dialog-button {
   div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button:hover,
   div#s4-workspace div#public-community-page_open-enrollment div.primary-section a:hover,
   a#standard-printer-button-inside-request:hover,
-  a.gse-schedule-card-dialog-button:hover {
+  a#gse-schedule-card-dialog-my-signup-link:hover,
+  a#gse-schedule-card-dialog-signup-opportunity-link:hover {
     text-decoration: none; }
 
 div#s4-workspace a#form-submit-button,
@@ -606,7 +608,8 @@ div#s4-workspace div#public-community-page_moscars div#call-to-action a,
 div#s4-workspace div#public-community-page_hr div#primary-section_open-enrollment a,
 div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button,
 div#s4-workspace div#public-community-page_open-enrollment div.primary-section a,
-a.gse-schedule-card-dialog-button {
+a#gse-schedule-card-dialog-my-signup-link,
+a#gse-schedule-card-dialog-signup-opportunity-link {
   color: #fff !important;
   background-color: #0072c6 !important; }
   div#s4-workspace a#form-submit-button:hover,
@@ -619,7 +622,8 @@ a.gse-schedule-card-dialog-button {
   div#s4-workspace div#public-community-page_hr div#primary-section_open-enrollment a:hover,
   div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button:hover,
   div#s4-workspace div#public-community-page_open-enrollment div.primary-section a:hover,
-  a.gse-schedule-card-dialog-button:hover {
+  a#gse-schedule-card-dialog-my-signup-link:hover,
+  a#gse-schedule-card-dialog-signup-opportunity-link:hover {
     color: #fff !important;
     background-color: #004f87 !important; }
 
@@ -3231,6 +3235,11 @@ div#app-container.direct-deposit div#request-form table.signature-and-date {
     padding: 0;
     border: none; } }
 
+div.gse-schedule-card-dialog-link-container {
+  margin-bottom: .5rem; }
+  div.gse-schedule-card-dialog-link-container:first-child {
+    margin-top: 1rem; }
+
 div#app-container.gse-signup div#job-and-schedule-container {
   padding: 2rem;
   background-color: #eee; }
@@ -3377,37 +3386,65 @@ body.product-timeline div.ui-dialog#product-timeline-item-dialog div.ui-dialog-c
 
 div#museum-event-calendar-container div.fc-toolbar,
 div#buyout-calendar-container div.fc-toolbar,
-div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-toolbar {
+div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-toolbar,
+div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests div.fc-toolbar,
+div#overview-screen-container.gseSchedulesCalendarManager-requests div.fc-toolbar,
+div#overview-screen-container.gseSchedulesCalendarStaff-requests div.fc-toolbar {
   height: 4.5rem;
   margin-bottom: 1rem;
   opacity: 0; }
   div#museum-event-calendar-container div.fc-toolbar div.fc-left,
   div#buyout-calendar-container div.fc-toolbar div.fc-left,
-  div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-toolbar div.fc-left {
+  div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-toolbar div.fc-left,
+  div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests div.fc-toolbar div.fc-left,
+  div#overview-screen-container.gseSchedulesCalendarManager-requests div.fc-toolbar div.fc-left,
+  div#overview-screen-container.gseSchedulesCalendarStaff-requests div.fc-toolbar div.fc-left {
     float: left;
     height: 4.5rem; }
   div#museum-event-calendar-container div.fc-toolbar div.fc-right,
   div#buyout-calendar-container div.fc-toolbar div.fc-right,
-  div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-toolbar div.fc-right {
+  div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-toolbar div.fc-right,
+  div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests div.fc-toolbar div.fc-right,
+  div#overview-screen-container.gseSchedulesCalendarManager-requests div.fc-toolbar div.fc-right,
+  div#overview-screen-container.gseSchedulesCalendarStaff-requests div.fc-toolbar div.fc-right {
     float: none;
     display: inline-block;
     height: 4.5rem; }
     div#museum-event-calendar-container div.fc-toolbar div.fc-right > div,
     div#buyout-calendar-container div.fc-toolbar div.fc-right > div,
-    div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-toolbar div.fc-right > div {
+    div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-toolbar div.fc-right > div,
+    div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests div.fc-toolbar div.fc-right > div,
+    div#overview-screen-container.gseSchedulesCalendarManager-requests div.fc-toolbar div.fc-right > div,
+    div#overview-screen-container.gseSchedulesCalendarStaff-requests div.fc-toolbar div.fc-right > div {
       height: 4.5rem; }
   div#museum-event-calendar-container div.fc-toolbar div.fc-center,
   div#buyout-calendar-container div.fc-toolbar div.fc-center,
-  div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-toolbar div.fc-center {
+  div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-toolbar div.fc-center,
+  div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests div.fc-toolbar div.fc-center,
+  div#overview-screen-container.gseSchedulesCalendarManager-requests div.fc-toolbar div.fc-center,
+  div#overview-screen-container.gseSchedulesCalendarStaff-requests div.fc-toolbar div.fc-center {
     float: right;
     height: 4.5rem; }
     div#museum-event-calendar-container div.fc-toolbar div.fc-center > div,
     div#buyout-calendar-container div.fc-toolbar div.fc-center > div,
-    div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-toolbar div.fc-center > div {
+    div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-toolbar div.fc-center > div,
+    div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests div.fc-toolbar div.fc-center > div,
+    div#overview-screen-container.gseSchedulesCalendarManager-requests div.fc-toolbar div.fc-center > div,
+    div#overview-screen-container.gseSchedulesCalendarStaff-requests div.fc-toolbar div.fc-center > div {
       height: 4.5rem; }
+    div#museum-event-calendar-container div.fc-toolbar div.fc-center button.ui-button,
+    div#buyout-calendar-container div.fc-toolbar div.fc-center button.ui-button,
+    div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-toolbar div.fc-center button.ui-button,
+    div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests div.fc-toolbar div.fc-center button.ui-button,
+    div#overview-screen-container.gseSchedulesCalendarManager-requests div.fc-toolbar div.fc-center button.ui-button,
+    div#overview-screen-container.gseSchedulesCalendarStaff-requests div.fc-toolbar div.fc-center button.ui-button {
+      text-transform: capitalize; }
   div#museum-event-calendar-container div.fc-toolbar h2,
   div#buyout-calendar-container div.fc-toolbar h2,
-  div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-toolbar h2 {
+  div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-toolbar h2,
+  div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests div.fc-toolbar h2,
+  div#overview-screen-container.gseSchedulesCalendarManager-requests div.fc-toolbar h2,
+  div#overview-screen-container.gseSchedulesCalendarStaff-requests div.fc-toolbar h2 {
     display: inline-block;
     font-size: 3.75rem !important;
     line-height: 3.75rem !important;
@@ -3455,12 +3492,44 @@ div#buyout-calendar-container div#buyouts-metadata {
 
 div#buyout-calendar-container div.fc-view-container,
 div#museum-event-calendar-container div.fc-view-container,
-div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-view-container {
+div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-view-container,
+div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests div.fc-view-container,
+div#overview-screen-container.gseSchedulesCalendarManager-requests div.fc-view-container,
+div#overview-screen-container.gseSchedulesCalendarStaff-requests div.fc-view-container {
   opacity: 0; }
+
+div#buyout-calendar-container div.fc-bg td.fc-day,
+div#museum-event-calendar-container div.fc-bg td.fc-day,
+div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-bg td.fc-day,
+div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests div.fc-bg td.fc-day,
+div#overview-screen-container.gseSchedulesCalendarManager-requests div.fc-bg td.fc-day,
+div#overview-screen-container.gseSchedulesCalendarStaff-requests div.fc-bg td.fc-day {
+  padding: 1rem .2rem .2rem 4.5rem !important; }
+
+div#buyout-calendar-container div.fc-content-skeleton td.fc-day-number,
+div#museum-event-calendar-container div.fc-content-skeleton td.fc-day-number,
+div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-content-skeleton td.fc-day-number,
+div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests div.fc-content-skeleton td.fc-day-number,
+div#overview-screen-container.gseSchedulesCalendarManager-requests div.fc-content-skeleton td.fc-day-number,
+div#overview-screen-container.gseSchedulesCalendarStaff-requests div.fc-content-skeleton td.fc-day-number {
+  padding: .5rem .2rem .2rem 1.5rem !important;
+  font-size: 2rem;
+  text-align: left; }
+
+div#buyout-calendar-container div.fc-content-skeleton td.fc-day-number.add-schedule-on-click,
+div#museum-event-calendar-container div.fc-content-skeleton td.fc-day-number.add-schedule-on-click,
+div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-content-skeleton td.fc-day-number.add-schedule-on-click,
+div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests div.fc-content-skeleton td.fc-day-number.add-schedule-on-click,
+div#overview-screen-container.gseSchedulesCalendarManager-requests div.fc-content-skeleton td.fc-day-number.add-schedule-on-click,
+div#overview-screen-container.gseSchedulesCalendarStaff-requests div.fc-content-skeleton td.fc-day-number.add-schedule-on-click {
+  cursor: pointer; }
 
 div#buyout-calendar-container a.fc-event,
 div#museum-event-calendar-container a.fc-event,
-div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests a.fc-event {
+div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests a.fc-event,
+div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests a.fc-event,
+div#overview-screen-container.gseSchedulesCalendarManager-requests a.fc-event,
+div#overview-screen-container.gseSchedulesCalendarStaff-requests a.fc-event {
   font-size: 1.3rem;
   line-height: 2rem;
   border-radius: 0;
@@ -3472,43 +3541,64 @@ div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests a.fc-event {
 
 div#buyout-calendar-container a.fc-event.mugar-omni-theater,
 div#museum-event-calendar-container a.fc-event.mugar-omni-theater,
-div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests a.fc-event.mugar-omni-theater {
+div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests a.fc-event.mugar-omni-theater,
+div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests a.fc-event.mugar-omni-theater,
+div#overview-screen-container.gseSchedulesCalendarManager-requests a.fc-event.mugar-omni-theater,
+div#overview-screen-container.gseSchedulesCalendarStaff-requests a.fc-event.mugar-omni-theater {
   background-color: #ff9a1f;
   color: #222 !important; }
 
 div#buyout-calendar-container a.fc-event.three-d-digital-cinema,
 div#museum-event-calendar-container a.fc-event.three-d-digital-cinema,
-div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests a.fc-event.three-d-digital-cinema {
+div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests a.fc-event.three-d-digital-cinema,
+div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests a.fc-event.three-d-digital-cinema,
+div#overview-screen-container.gseSchedulesCalendarManager-requests a.fc-event.three-d-digital-cinema,
+div#overview-screen-container.gseSchedulesCalendarStaff-requests a.fc-event.three-d-digital-cinema {
   background-color: #ff5498;
   color: #111 !important; }
 
 div#buyout-calendar-container a.fc-event.butterfly-garden,
 div#museum-event-calendar-container a.fc-event.butterfly-garden,
-div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests a.fc-event.butterfly-garden {
+div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests a.fc-event.butterfly-garden,
+div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests a.fc-event.butterfly-garden,
+div#overview-screen-container.gseSchedulesCalendarManager-requests a.fc-event.butterfly-garden,
+div#overview-screen-container.gseSchedulesCalendarStaff-requests a.fc-event.butterfly-garden {
   background-color: #cd3ff2;
   color: #111 !important; }
 
 div#buyout-calendar-container a.fc-event.charles-hayden-planetarium,
 div#museum-event-calendar-container a.fc-event.charles-hayden-planetarium,
-div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests a.fc-event.charles-hayden-planetarium {
+div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests a.fc-event.charles-hayden-planetarium,
+div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests a.fc-event.charles-hayden-planetarium,
+div#overview-screen-container.gseSchedulesCalendarManager-requests a.fc-event.charles-hayden-planetarium,
+div#overview-screen-container.gseSchedulesCalendarStaff-requests a.fc-event.charles-hayden-planetarium {
   background-color: #45b1ff;
   color: #000 !important; }
 
 div#buyout-calendar-container a.fc-event.skyline-room,
 div#museum-event-calendar-container a.fc-event.skyline-room,
-div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests a.fc-event.skyline-room {
+div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests a.fc-event.skyline-room,
+div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests a.fc-event.skyline-room,
+div#overview-screen-container.gseSchedulesCalendarManager-requests a.fc-event.skyline-room,
+div#overview-screen-container.gseSchedulesCalendarStaff-requests a.fc-event.skyline-room {
   background-color: #71e667;
   color: #111 !important; }
 
 div#buyout-calendar-container a.fc-event.nichols-gallery,
 div#museum-event-calendar-container a.fc-event.nichols-gallery,
-div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests a.fc-event.nichols-gallery {
+div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests a.fc-event.nichols-gallery,
+div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests a.fc-event.nichols-gallery,
+div#overview-screen-container.gseSchedulesCalendarManager-requests a.fc-event.nichols-gallery,
+div#overview-screen-container.gseSchedulesCalendarStaff-requests a.fc-event.nichols-gallery {
   background-color: #a30c5e;
   color: #fff !important; }
 
 div#buyout-calendar-container a.fc-event.stearns-gallery,
 div#museum-event-calendar-container a.fc-event.stearns-gallery,
-div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests a.fc-event.stearns-gallery {
+div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests a.fc-event.stearns-gallery,
+div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests a.fc-event.stearns-gallery,
+div#overview-screen-container.gseSchedulesCalendarManager-requests a.fc-event.stearns-gallery,
+div#overview-screen-container.gseSchedulesCalendarStaff-requests a.fc-event.stearns-gallery {
   background-color: #107c10;
   color: #fff !important; }
 
@@ -3546,17 +3636,17 @@ div[aria-describedby='gse-schedule-card-dialog'] div.ui-dialog-titlebar span.ui-
     color: #666; }
 
 div.ui-dialog#buyout-calendar-item-dialog div.ui-dialog-content p.ui-dialog-buyout-title,
-div.ui-dialog#buyout-calendar-item-dialog div.ui-dialog-content p.gse-schedule-card-dialog-job-title,
 div.ui-dialog#museum-calendar-item-dialog div.ui-dialog-content p.ui-dialog-buyout-title,
-div.ui-dialog#museum-calendar-item-dialog div.ui-dialog-content p.gse-schedule-card-dialog-job-title,
-div[aria-describedby='gse-schedule-card-dialog'] div.ui-dialog-content p.ui-dialog-buyout-title,
-div[aria-describedby='gse-schedule-card-dialog'] div.ui-dialog-content p.gse-schedule-card-dialog-job-title {
+div[aria-describedby='gse-schedule-card-dialog'] div.ui-dialog-content p.ui-dialog-buyout-title {
   font-size: 2.6rem;
   font-weight: 300;
   margin: 0;
   padding: 1rem 0; }
 
-div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests .fc-day.ui-widget-content.fc-past {
+div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests .fc-day.ui-widget-content.fc-past,
+div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests .fc-day.ui-widget-content.fc-past,
+div#overview-screen-container.gseSchedulesCalendarManager-requests .fc-day.ui-widget-content.fc-past,
+div#overview-screen-container.gseSchedulesCalendarStaff-requests .fc-day.ui-widget-content.fc-past {
   background-color: #e0e0e0;
   border: 1px solid #e0e0e0; }
 

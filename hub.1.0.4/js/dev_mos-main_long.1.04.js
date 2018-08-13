@@ -423,10 +423,10 @@
 				newTitle = "All GSE Schedules";
 				break;
 			case "gseSchedulesCalendarJobAdmin":
-				newTitle = "My GSE Schedules";
+				newTitle = "All GSE Schedules";
 				break;
 			case "gseSchedulesCalendarManager":
-				newTitle = "GSE Schedules";
+				newTitle = "All GSE Schedules";
 				break;
 			case "gseSchedulesCalendarStaff":
 				newTitle = "GSE Signup Opportunities";
@@ -7372,21 +7372,17 @@
 
 
 		} else if (type === "gseSchedulesCalendarHRAdmin") {
-			// scorey: control how oData.gseSchedulesCalendarHRAdmin gets used to build a screen here
 			// $("div#overview-table-container").html("<p>This is 2.2 Schedules Calendar for HR Admin (gseSchedulesCalendarHRAdmin).</p>");
 			$().RenderCalendarForGSESchedules(oData.gseSchedulesCalendarHRAdmin.buttons, 'gseHRAdmin');
 		} else if (type === "gseSchedulesCalendarJobAdmin") {
-			// scorey: control how oData.gseSchedulesCalendarJobAdmin gets used to build a screen here
-			$().RenderOverviewScreenButtons(oData.gseSchedulesCalendarJobAdmin.buttons, 0);
-			$("div#overview-table-container").html("<p>This is 2.2 Schedules Calendar for Job Admin (gseSchedulesCalendarJobAdmin).</p>");
+			// $("div#overview-table-container").html("<p>This is 2.2 Schedules Calendar for Job Admin (gseSchedulesCalendarJobAdmin).</p>");
+			$().RenderCalendarForGSESchedules(oData.gseSchedulesCalendarJobAdmin.buttons, 'gseJobAdmin');
 		} else if (type === "gseSchedulesCalendarManager") {
-			// scorey: control how oData.gseSchedulesCalendarManager gets used to build a screen here
-			$().RenderOverviewScreenButtons(oData.gseSchedulesCalendarManager.buttons, 0);
-			$("div#overview-table-container").html("<p>This is 2.2 Schedules Calendar for Manager (gseSchedulesCalendarManager).</p>");
+			// $("div#overview-table-container").html("<p>This is 2.2 Schedules Calendar for Manager (gseSchedulesCalendarManager).</p>");
+			$().RenderCalendarForGSESchedules(oData.gseSchedulesCalendarManager.buttons, 'gseManager');
 		} else if (type === "gseSchedulesCalendarStaff") {
-			// scorey: control how oData.gseSchedulesCalendarStaff gets used to build a screen here
-			$().RenderOverviewScreenButtons(oData.gseSchedulesCalendarStaff.buttons, 0);
-			$("div#overview-table-container").html("<p>This is 2.2 Schedules Calendar for Staff (gseSchedulesCalendarStaff).</p>");
+			// $("div#overview-table-container").html("<p>This is 2.2 Schedules Calendar for Staff (gseSchedulesCalendarStaff).</p>");
+			$().RenderCalendarForGSESchedules(oData.gseSchedulesCalendarStaff.buttons, 'gseUserOnly');
 
 
 		} else if (type === "gseSchedulesListHRAdmin") {
@@ -19016,6 +19012,9 @@
 			var formattedEndTime = $().ReturnFormattedDateTime(isoEndDatetime, null, "h:mma", 0);
 			formattedEndTime = formattedEndTime.slice(0, formattedEndTime.length - 1);
 			var formattedDate = $().ReturnFormattedDateTime(isoStartDatetime, null, "ddd, M/D/YYYY", 0);
+			var isInFuture = moment(nowAsISOLocal).isBefore(isoStartDatetime) ? 
+				true : false;
+
 			
 			var eventItem = {
 				'eventID': schedule.ScheduleID,
@@ -19028,11 +19027,12 @@
 				'formattedStartTime': formattedStartTime,
 				'formattedEndTime': formattedEndTime,
 				'formattedDate': formattedDate,
+				'isInFuture': isInFuture,
 				'jobAdmin': jobData.JobAdmin,
 				'length': length,
 				'location': schedule.formData['Location'],
 				'jobTitle': jobData.JobTitle,
-				'jobDescription': '<p>' + ReplaceAll('%0A', '</p><p>', jobData.formData['Job-Description']) + '</p>',
+				'jobDescription': '<p>' + ReplaceAll('%0A', '</p><p>', ReplaceAll('%0A%0A', '%0A', jobData.formData['Job-Description'])) + '</p>',
 				'quantitySignups': signupsData.length,
 				'quantityPositions': schedule.NumberOfPositions,
 				'jobURL': '/sites/hr-service-jobs/SitePages/App.aspx?r=' + schedule.JobID,
@@ -19060,8 +19060,8 @@
 			allEvents.push(eventItem);
 		});
 
-		// console.log('allEvents');
-		// console.log(allEvents);
+		console.log('allEvents');
+		console.log(allEvents);
 
 		// console.log('viewToUse');
 		// console.log(viewToUse);
@@ -19071,8 +19071,8 @@
 
 		// console.log('buttons');
 		// console.log(buttons);
-		console.log('nowAsISOLocal');
-		console.log(nowAsISOLocal);
+		// console.log('nowAsISOLocal');
+		// console.log(nowAsISOLocal);
 		$("div#overview-screen-container").fullCalendar({
 			allDayDefault: true,
 			lazyFetching: false,
@@ -19087,12 +19087,17 @@
 			defaultView: viewToUse,
 			defaultDate: dateToUse,
 			dayClick: function (date, jsEvent, view) {
-				console.log(date);
-				console.log(jsEvent);
-				console.log(view);
-				if (moment(date._d).isAfter(nowAsISOLocal)) {
-					var addScheduleURL = '/sites/hr-service-schedules/SitePages/App.aspx?r=0&d=' + date._i;
-					window.open(addScheduleURL, '_blank');
+				// console.log(date);
+				// console.log(jsEvent);
+				// console.log(view);
+
+				// to do: consider moving this to a generic event listener if we're not sending a date in the URL
+
+				if (relevantRole === 'gseHRAdmin' || relevantRole === 'gseJobAdmin') {
+					if (moment(date._d).isAfter(nowAsISOLocal) && relevantRole === 'gseHRAdmin') {
+						var addScheduleURL = '/sites/hr-service-schedules/SitePages/App.aspx?r=0&d=' + date._i;
+						window.open(addScheduleURL, '_blank');
+					}
 				}
 			},
 			dayRender: function (date, cell) {
@@ -19100,11 +19105,33 @@
 				// console.log(date);
 				// console.log('cell');
 				// console.log(cell);
-				if (cell[0].classList.contains('fc-future')) {
-					var addLinkMarkup = '<a class="add-schedule" ' + 
-						'href="/sites/hr-service-schedules/SitePages/App.aspx?r=0&d=' + date._i + 
-						'" target="_blank">Add</a>';
-					cell.append(addLinkMarkup);
+				if (relevantRole === 'gseHRAdmin' || relevantRole === 'gseJobAdmin') {
+					if (cell[0].classList.contains('fc-future')) {
+						var addLinkMarkup = '<a class="add-schedule" ' + 
+							'href="/sites/hr-service-schedules/SitePages/App.aspx?r=0&d=' + date._i + 
+							'" target="_blank">Add</a>';
+						cell.append(addLinkMarkup);
+						var headClassSelector = '';
+						if (cell.hasClass('fc-sun')) {
+							headClassSelector = 'fc-sun';
+						} else if (cell.hasClass('fc-mon')) {
+							headClassSelector = 'fc-mon';
+						} else if (cell.hasClass('fc-tue')) {
+							headClassSelector = 'fc-tue';
+						} else if (cell.hasClass('fc-wed')) {
+							headClassSelector = 'fc-wed';
+						} else if (cell.hasClass('fc-thu')) {
+							headClassSelector = 'fc-thu';
+						} else if (cell.hasClass('fc-fri')) {
+							headClassSelector = 'fc-fri';
+						} else if (cell.hasClass('fc-sat')) {
+							headClassSelector = 'fc-sat';
+						}
+						cell.closest('div.fc-row')
+							.find('div.fc-content-skeleton')
+							.find('td.' + headClassSelector)
+							.addClass('add-schedule-on-click');
+					}
 				}
 				
 			},
@@ -19125,25 +19152,37 @@
 
 				$("div[aria-describedby='gse-schedule-card-dialog'] div.ui-dialog-titlebar span.ui-dialog-title").html(dialogTitleBarContent);
 
-				var dialogBodyContent = '<p class="gse-schedule-card-dialog-job-title">' + event.jobTitle + '</p>';
-				
-				if (relevantRole === 'gseHRAdmin') {
-					dialogBodyContent += '<a id="gse-schedule-card-dialog-job-link" ' + 
-						'class="gse-schedule-card-dialog-button" href="' + 
-						event.jobURL + '" target="_blank">Job Details</a>';
-					dialogBodyContent += '<a id="gse-schedule-card-dialog-schedule-link" ' + 
-						'class="gse-schedule-card-dialog-button" href="' + 
-						event.scheduleURL + '" target="_blank">Schedule Details</a>';
-				}
+				var dialogBodyContent = 
+					'<h3 class="gse-schedule-card-dialog-job-title">' + event.jobTitle + '</h3>' + 
+					event.jobDescription + 
+					'<div class="gse-schedule-card-dialog-links-container">';
 
 				if (event.mySignupURL) {
-					dialogBodyContent += '<a id="gse-schedule-card-dialog-my-signup-link" ' + 
+					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' + 
+						'<a id="gse-schedule-card-dialog-my-signup-link" ' + 
 						'class="gse-schedule-card-dialog-button" href="' + 
-						event.mySignupURL + '" target="_blank">My Signup</a>';
+						event.mySignupURL + '" target="_blank">More / My Signup</a></div>';
+				} else if (event.isInFuture) {
+					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' + 
+						'<a id="gse-schedule-card-dialog-signup-opportunity-link" ' + 
+						'class="gse-schedule-card-dialog-button" href="' + 
+						event.signupURL + '" target="_blank">More / Sign Up</a></div>';
 				} else {
-					dialogBodyContent += '<a id="gse-schedule-card-dialog-signup-opportunity-link" ' + 
-						'class="gse-schedule-card-dialog-button" href="' + 
-						event.signupURL + '" target="_blank">Signup Opportunity</a>';
+					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' +
+						'<a id="gse-schedule-card-dialog-signup-opportunity-link" ' +
+						'class="gse-schedule-card-dialog-button" href="' +
+						event.signupURL + '" target="_blank">More</a></div>';
+				}
+
+				if (relevantRole === 'gseHRAdmin' || relevantRole === 'gseJobAdmin') {
+					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' +
+						'<a id="gse-schedule-card-dialog-job-link" ' +
+						'class="gse-schedule-card-dialog-button" href="' +
+						event.jobURL + '" target="_blank">Job Details</a></div>';
+					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' +
+						'<a id="gse-schedule-card-dialog-schedule-link" ' +
+						'class="gse-schedule-card-dialog-button" href="' +
+						event.scheduleURL + '" target="_blank">Schedule Details</a></div>';
 				}
 				
 				$("div#gse-schedule-card-dialog").html(dialogBodyContent);
