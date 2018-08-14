@@ -56,7 +56,6 @@
 					{
 						'displayName': 'Schedule ID',
 						'internalName': 'ID',
-						// 'gseSchedulesDialogButton': 1
 					}, {
 						'displayName': "Job Admin",
 						'dataName': "JobAdmin",

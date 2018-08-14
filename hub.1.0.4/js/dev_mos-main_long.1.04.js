@@ -19341,6 +19341,78 @@
 
 
 
+	$.fn.ReturnDataForDataTableForGSESchedules = function(dataSource, relevantRole) {
+		var submittedTableData = [];
+		augmentedSchedulesSubmitted.forEach((schedule) => {
+			var row = {};
+			var isoStartDatetime = schedule.formData['Date'].slice(0, 10) + schedule.formData['time-storage_StartTime'].slice(10, 19);
+			row.Date = $().ReturnSortableDate(isoStartDatetime, null, 'MMMM D, YYYY', 1);
+			row.ID = schedule.ScheduleID;
+			row.JobAdmin = $().RenderPersonLinks(schedule.Job.JobAdmin);
+			row.JobID = schedule.Job.JobID;
+			row.JobTitle = schedule.Job.JobTitle;
+			row.Location = schedule.formData['Location'];
+			row.NumberOfPositions = schedule.NumberOfPositions;
+			if (schedule.Signups) {
+				row.PositionsAvailable = schedule.NumberOfPositions - schedule.Signups.length;
+			} else {
+				row.PositionsAvailable = schedule.NumberOfPositions
+			}
+			row.ShiftLength = schedule.formData['shiftlength_35-hours'] ? '3.5 hours' : '7.5 hours'
+			row.Signups = '<ul>';
+			if (schedule.Signups) {
+				schedule.Signups.forEach((signup, index) => {
+					row.Signups += '<li>' + $().RenderPersonLinks(signup.formData["Requested-For"]);
+					if (signup.formData['Request-Status'] === 'Credit Granted') {
+						row.Signups += ' - Credit Granted';
+					} else if (signup.formData['Request-Status'] === 'Credit Denied') {
+						row.Signups += ' - Credit Denied';
+					}
+					row.Signups += '</li>';
+				});
+			}
+			row.Signups += '</ul>';
+			row.StartTime = $().ReturnSortableDate(isoStartDatetime, null, 'h:mm a', 1);
+			// row.XXXXXXXX = schedule.XXXXXXXX;
+			submittedTableData.push(row);
+		});
+
+		var theadDetails =
+			'<th>Schedule ID</th>' +
+			'<th>Job Title</th>' +
+			'<th>Date</th>' +
+			'<th>Start Time</th>' +
+			'<th>Job Admin</th>' +
+			'<th>Schedule Length</th>' +
+			'<th>Location</th>' +
+			'<th>Positions Available</th>' +
+			'<th>Signups</th>';
+
+		var datatableFields = [
+			{
+				'data': 'ID'
+			}, {
+				'data': 'JobTitle'
+			}, {
+				'data': 'Date'
+			}, {
+				'data': 'StartTime'
+			}, {
+				'data': 'JobAdmin'
+			}, {
+				'data': 'ShiftLength'
+			}, {
+				'data': 'Location'
+			}, {
+				'data': 'PositionsAvailable'
+			}, {
+				'data': 'Signups'
+			}
+		];
+	}
+
+
+
 	$.fn.RenderAllDataTablesForGSESchedules = function (sections, targetID, relevantRole) {
 		var augmentedSchedulesSubmitted = [];
 		var augmentedSchedulesCompleted = [];
@@ -19403,15 +19475,6 @@
 			]
 		});
 
-		console.log('gseSchedulesArray');
-		console.log(gseSchedulesArray);
-
-		console.log('gseJobsArray');
-		console.log(gseJobsArray);
-
-		console.log('gseSignupsArray');
-		console.log(gseSignupsArray);
-
 		gseSchedulesArray.forEach((schedule) => {
 			var scheduleCopy = schedule;
 			gseJobsArray.forEach((job) => {
@@ -19436,77 +19499,49 @@
 			}
 		});
 
-		// build submitted table
-		var submittedTableData = [];
-		augmentedSchedulesSubmitted.forEach((schedule) => {
-			var row = {};
-			var isoStartDatetime = schedule.formData['Date'].slice(0, 10) + schedule.formData['time-storage_StartTime'].slice(10, 19);
-			row.Date = $().ReturnSortableDate(isoStartDatetime, null, 'MMMM D, YYYY', 1);
-			row.ID = schedule.ScheduleID;
-			row.JobAdmin = $().RenderPersonLinks(schedule.Job.JobAdmin);
-			row.JobID = schedule.Job.JobID;
-			row.JobTitle = schedule.Job.JobTitle;
-			row.Location = schedule.formData['Location'];
-			row.NumberOfPositions = schedule.NumberOfPositions;
-			if (schedule.Signups) {
-				row.PositionsAvailable = schedule.NumberOfPositions - schedule.Signups.length;
-			} else {
-				row.PositionsAvailable = schedule.NumberOfPositions
-			}
-			row.ShiftLength = schedule.formData['shiftlength_35-hours'] ? '3.5 hours' : '7.5 hours'
-			row.Signups = '<ul>';
-			if (schedule.Signups) {
-				schedule.Signups.forEach((signup, index) => {
-					row.Signups += '<li>' + $().RenderPersonLinks(signup.formData["Requested-For"]);
-					if (signup.formData['Request-Status'] === 'Credit Granted') {
-						row.Signups += ' - Credit Granted';
-					} else if (signup.formData['Request-Status'] === 'Credit Denied') {
-						row.Signups += ' - Credit Denied';
+		// determine which tables to render
+		var tablesToRender = [];
+		if (relevantRole === 'gseHRAdmin') {
+			tablesToRender.push({
+				'tableTitle': 'Submitted',
+				'tableID': 'submitted',
+				'columns': [
+					{
+						'displayName': "Schedule ID",
+						'dataName': "ID",
+					}, {
+						'displayName': "Options",
+						'dataName': "Options",
+					}, {
+						'displayName': "Job Title",
+						'dataName': "JobTitle",
+					}, {
+						'displayName': "Date",
+						'dataName': "Date",
+					}, {
+						'displayName': "Start Time",
+						'dataName': "StartTime",
+					}, {
+						'displayName': "Job Admin",
+						'dataName': "JobAdmin",
+					}, {
+						'displayName': "Schedule Length",
+						'dataName': "ShiftLength",
+					}, {
+						'displayName': "Location",
+						'dataName': "Location",
+					}, {
+						'displayName': "Positions Available",
+						'dataName': "PositionsAvailable",
+					}, {
+						'displayName': "Signups",
+						'dataName': "Signups",
 					}
-					row.Signups += '</li>';
-				});
-			}
-			row.Signups += '</ul>';
-			row.StartTime = $().ReturnSortableDate(isoStartDatetime, null, 'h:mm a', 1);
-			// row.XXXXXXXX = schedule.XXXXXXXX;
-			submittedTableData.push(row);
-		});
+				]
+			});
+		}
 
-		var theadDetails = 
-			'<th>Schedule ID</th>' + 
-			'<th>Job Title</th>' + 
-			'<th>Date</th>' + 
-			'<th>Start Time</th>' + 
-			'<th>Job Admin</th>' + 
-			'<th>Schedule Length</th>' + 
-			'<th>Location</th>' + 
-			'<th>Positions Available</th>' + 
-			'<th>Signups</th>';
-
-		var datatableFields = [
-			{
-				'data': 'ID'
-			}, {
-				'data': 'JobTitle'
-			}, {
-				'data': 'Date'
-			}, {
-				'data': 'StartTime'
-			}, {
-				'data': 'JobAdmin'
-			}, {
-				'data': 'ShiftLength'
-			}, {
-				'data': 'Location'
-			}, {
-				'data': 'PositionsAvailable'
-			}, {
-				'data': 'Signups'
-			}
-
-
-		];
-
+		
 
 		$().RenderListAsDatatable({
 			'tableTitle': 'Submitted',
