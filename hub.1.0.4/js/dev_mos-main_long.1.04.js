@@ -1378,11 +1378,7 @@
 			opt.webURL = 'https://bmos.sharepoint.com/sites/hubprod';
 		}
 
-		var query = "<Query>" +
-			"	<OrderBy>" +
-			"		<FieldRef Name='" + opt.order.field + "' Ascending='" + opt.order.ascending + "'></FieldRef>" +
-			"	</OrderBy>" +
-			"</Query>";
+		var query = "<Query></Query>";
 
 		var fields = "<ViewFields>";
 		$.each(opt.select, function (i, oneField) {
@@ -7386,44 +7382,32 @@
 
 
 		} else if (type === "gseSchedulesListHRAdmin") {
-			// scorey: control how oData.gseSchedulesListHRAdmin gets used to build a screen here
 			$().RenderOverviewScreenButtons(oData.gseSchedulesListHRAdmin.buttons, 0);
-			// $("div#overview-table-container").html("<p>This is 2.3 Schedules List for HR Admin (gseSchedulesListHRAdmin).</p>");
 			$().RenderAllDataTablesForGSESchedules(oData.gseSchedulesListHRAdmin.sections, "overview-table-container", 'gseHRAdmin');
-			$().RenderOverviewScreenDialogForGSESchedules('gseHRAdmin');
-
-		
-		
-		
-		
-		
 		} else if (type === "gseSchedulesListJobAdmin") {
-			// scorey: control how oData.gseSchedulesListJobAdmin gets used to build a screen here
 			$().RenderOverviewScreenButtons(oData.gseSchedulesListJobAdmin.buttons, 0);
-			// $("div#overview-table-container").html("<p>This is 2.3 Schedules List for Job Admin (gseSchedulesListJobAdmin).</p>");
-			$().RenderAllDataTables(oData.gseSchedulesListJobAdmin.sections, "overview-table-container");
+			$().RenderAllDataTablesForGSESchedules(oData.gseSchedulesListJobAdmin.sections, "overview-table-container", 'gseJobAdmin');
 		} else if (type === "gseSchedulesListManager") {
-			// scorey: control how oData.gseSchedulesListManager gets used to build a screen here
 			$().RenderOverviewScreenButtons(oData.gseSchedulesListManager.buttons, 0);
-			// $("div#overview-table-container").html("<p>This is 2.3 Schedules List for Manager (gseSchedulesListManager).</p>");
-			$().RenderAllDataTables(oData.gseSchedulesListManager.sections, "overview-table-container");
+			$().RenderAllDataTablesForGSESchedules(oData.gseSchedulesListManager.sections, "overview-table-container", 'gseManager');
 		} else if (type === "gseSchedulesListStaff") {
-			// scorey: control how oData.gseSchedulesListStaff gets used to build a screen here
 			$().RenderOverviewScreenButtons(oData.gseSchedulesListStaff.buttons, 0);
-			// $("div#overview-table-container").html("<p>This is 2.3 Schedules List for Staff (gseSchedulesListStaff).</p>");
-			$().RenderAllDataTables(oData.gseSchedulesListStaff.sections, "overview-table-container");
+			$().RenderAllDataTablesForGSESchedules(oData.gseSchedulesListStaff.sections, "overview-table-container", 'gseUserOnly');
+		
+		
+		
+		
+		
+		
 		} else if (type === "gseSignupsHRAdmin") {
-			// scorey: control how oData.gseSignupsHRAdmin gets used to build a screen here
 			$().RenderOverviewScreenButtons(oData.gseSignupsHRAdmin.buttons, 0);
 			//$("div#overview-table-container").html("<p>This is 3.2 Signups List for HR Admin (gseSignupsHRAdmin).</p>");
 			$().RenderAllDataTables(oData.gseSignupsHRAdmin.sections, "overview-table-container");
 		} else if (type === "gseSignupsManager") {
-			// scorey: control how oData.gseSignupsManager gets used to build a screen here
 			$().RenderOverviewScreenButtons(oData.gseSignupsManager.buttons, 0);
 			//$("div#overview-table-container").html("<p>This is 3.2 Signups List for Manager (gseSignupsManager).</p>");
 			$().RenderAllDataTables(oData.gseSignupsManager.sections, "overview-table-container");
 		} else if (type === "gseSignupsStaff") {
-			// scorey: control how oData.gseSignupsStaff gets used to build a screen here
 			$().RenderOverviewScreenButtons(oData.gseSignupsStaff.buttons, 0);
 			//$("div#overview-table-container").html("<p>This is 3.2 Signups List for Staff (including Job Admins) (gseSignupsStaff).</p>");
 			$().RenderAllDataTables(oData.gseSignupsStaff.sections, "overview-table-container");
@@ -18946,6 +18930,25 @@
 				'returnURI': mData.returnURI
 			});
 
+			/* console.log('t.tableTitle');
+			console.log(t.tableTitle);
+
+			console.log('t.tableID');
+			console.log(t.tableID);
+
+			console.log('theadDetails');
+			console.log(theadDetails);
+
+			console.log('listForDatatable');
+			console.log(listForDatatable);
+
+			console.log('XXXXXX');
+			console.log(XXXXXX);
+
+			console.log('XXXXXX');
+			console.log(XXXXXX); */
+
+
 			$().RenderListAsDatatable({
 				'tableTitle': t.tableTitle,
 				'tableID': t.tableID,
@@ -18959,19 +18962,21 @@
 		});
 	};
 
+
+
 	$.fn.RenderCalendarForGSESchedules = function (buttons, relevantRole) {
 		var nowAsISOLocal = $().ReturnFormattedDateTime('nowLocal', null, null);
 		var viewToUse = GetParamFromUrl(location.search, 'view');
 		var dateToUse = GetParamFromUrl(location.search, 'date');
-		var gseSchedulesArray = [];
 		var allEvents = [];
 		if (!viewToUse || viewToUse == "") { viewToUse = 'month'; }
 		if (!dateToUse || dateToUse == "") {
 			dateToUse =
 				$().ReturnFormattedDateTime('nowUTC', 'YYYY-MM-DDTHH:mm:ssZ', 'YYYY-MM-DD', 0);
 		}
-		// get the relevant signups
-		gseSchedulesArray = $().GetFieldsFromSpecifiedRows({
+		// get all relevant schedules
+		var gseSchedulesArray = $().GetFieldsFromSpecifiedRows({
+			'webURL': 'https://bmos.sharepoint.com/sites/hr-service-schedules',
 			'select': [
 				{
 					'nameHere': 'ScheduleID',
@@ -18987,20 +18992,82 @@
 					'nameInList': 'AllRequestData'
 				}
 			],
-			'webURL': 'https://bmos.sharepoint.com/sites/hr-service-schedules',
 			'where': {
 				'field': 'RequestStatus',
 				'type': 'Text',
 				'value': 'Submitted',
 			}
 		});
+		// get all relevant jobs
+		var gseJobsArray = $().GetFieldsFromSpecifiedRows({
+			'webURL': 'https://bmos.sharepoint.com/sites/hr-service-jobs',
+			'select': [
+				{
+					'nameHere': 'JobID',
+					'nameInList': 'ID',
+				}, {
+					'nameHere': 'JobTitle',
+					'nameInList': 'JobTitle',
+				}, {
+					'nameHere': 'JobAdmin',
+					'nameInList': 'JobAdmin'
+				}, {
+					'nameHere': 'formData',
+					'nameInList': 'AllRequestData'
+				}
+			],
+			'where': {
+				'field': 'RequestStatus',
+				'type': 'Text',
+				'value': 'Approved',
+			}
+		});
+		// get all relevant signups
+		var gseSignupsArray = $().GetFieldsFromSpecifiedRows({
+			"webURL": "https://bmos.sharepoint.com/sites/hr-service-signups",
+			"select": [{
+				"nameHere": "SignupID",
+				"nameInList": "ID"
+			}, {
+				"nameHere": "SignupPerson",
+				"nameInList": "RequestedFor"
+			}, {
+				"nameHere": "ScheduleID",
+				"nameInList": "ScheduleID"
+			}],
+			'where': {
+				'field': 'RequestStatus',
+				'type': 'Text',
+				'value': 'Signed Up',
+			}
+		});
 
+		console.log('gseSchedulesArray');
 		console.log(gseSchedulesArray);
+
+		console.log('gseJobsArray');
+		console.log(gseJobsArray);
+
+		console.log('gseSignupsArray');
+		console.log(gseSignupsArray);
+
+
+
+
 		gseSchedulesArray.forEach((schedule) => {
-			var jobData = $().ReturnGSEJobDataForCalendarItem(schedule.JobID);
-			// console.log('jobData');
-			// console.log(jobData);
-			var signupsData = $().ReturnGSESignupDataForCalendarItem(schedule.ScheduleID);
+			var jobThisSchedule = {};
+			var signupsThisSchedule = [];
+			gseJobsArray.forEach((job) => {
+				if (job.JobID === schedule.JobID) {
+					jobThisSchedule = job;
+				}
+			});
+			gseSignupsArray.forEach((signup) => {
+				if (signup.ScheduleID === schedule.ScheduleID) {
+					signupsThisSchedule.push(signup);
+				}
+			});
+			
 			var isoStartDatetime = schedule.formData['Date'].slice(0, 10) + schedule.formData['time-storage_StartTime'].slice(10, 19);
 			var isoEndDatetime = schedule.formData['shiftlength_35-hours'] ?
 				moment(isoStartDatetime).add(3.5, 'hours') :
@@ -19020,7 +19087,7 @@
 				'eventID': schedule.ScheduleID,
 				'start': isoStartDatetime,
 				'end': isoEndDatetime,
-				'title': formattedStartTime + ' | ' + jobData.JobTitle,
+				'title': formattedStartTime + ' | ' + jobThisSchedule.JobTitle,
 				
 				'jobID': schedule.JobID,
 				'scheduleID': schedule.ScheduleID,
@@ -19028,26 +19095,26 @@
 				'formattedEndTime': formattedEndTime,
 				'formattedDate': formattedDate,
 				'isInFuture': isInFuture,
-				'jobAdmin': jobData.JobAdmin,
+				'jobAdmin': jobThisSchedule.JobAdmin,
 				'length': length,
 				'location': schedule.formData['Location'],
-				'jobTitle': jobData.JobTitle,
-				'jobDescription': '<p>' + ReplaceAll('%0A', '</p><p>', ReplaceAll('%0A%0A', '%0A', jobData.formData['Job-Description'])) + '</p>',
-				'quantitySignups': signupsData.length,
+				'jobTitle': jobThisSchedule.JobTitle,
+				'jobDescription': '<p>' + ReplaceAll('%0A', '</p><p>', ReplaceAll('%0A%0A', '%0A', jobThisSchedule.formData['Job-Description'])) + '</p>',
+				'quantitySignups': signupsThisSchedule.length,
 				'quantityPositions': schedule.NumberOfPositions,
 				'jobURL': '/sites/hr-service-jobs/SitePages/App.aspx?r=' + schedule.JobID,
 				'scheduleURL': '/sites/hr-service-schedules/SitePages/App.aspx?r=' + schedule.ScheduleID,
 			};
 
-			// console.log('signupsData');
-			// console.log(signupsData);
+			// console.log('signupsThisSchedule');
+			// console.log(signupsThisSchedule);
 			// console.log('uData');
 			// console.log(uData);
 			// console.log('signupPersons');
-			signupsData.forEach((signup) => {
-				var signupPersonArray = $().ReturnUserDataFromPersonOrGroupFieldString(signup.signupPerson);
+			signupsThisSchedule.forEach((signup) => {
+				var signupPersonArray = $().ReturnUserDataFromPersonOrGroupFieldString(signup.SignupPerson);
 				if (signupPersonArray[0].account === uData.account) {
-					eventItem.mySignupID = signup.signupID;
+					eventItem.mySignupID = signup.SignupID;
 				}
 			});
 
@@ -19060,8 +19127,8 @@
 			allEvents.push(eventItem);
 		});
 
-		console.log('allEvents');
-		console.log(allEvents);
+		// console.log('allEvents');
+		// console.log(allEvents);
 
 		// console.log('viewToUse');
 		// console.log(viewToUse);
@@ -19219,7 +19286,7 @@
 
 	};
 
-	$.fn.ReturnGSEJobDataForCalendarItem = function (jobID) {
+	/* $.fn.ReturnGSEJobDataForCalendarItem = function (jobID) {
 		return $().GetFieldsFromOneRow({
 			'listName': 'SWFList',
 			'webURL': 'https://bmos.sharepoint.com/sites/hr-service-jobs',
@@ -19241,11 +19308,11 @@
 				'value': jobID,
 			}
 		});
-	};
+	}; */
 
 
 
-	$.fn.ReturnGSESignupDataForCalendarItem = function (scheduleID) {
+	/* $.fn.ReturnGSESignupDataForCalendarItem = function (scheduleID) {
 		return $().GetFieldsFromSpecifiedRows({
 			"select": [{
 				"nameHere": "signupID",
@@ -19270,13 +19337,190 @@
 				]
 			}
 		});
-	};
+	}; */
 
 
 
 	$.fn.RenderAllDataTablesForGSESchedules = function (sections, targetID, relevantRole) {
+		var augmentedSchedulesSubmitted = [];
+		var augmentedSchedulesCompleted = [];
+		var augmentedSchedulesCancelled = [];
+		// get all schedules
+		var gseSchedulesArray = $().GetFieldsFromAllRows({
+			'webURL': 'https://bmos.sharepoint.com/sites/hr-service-schedules',
+			'select': [
+				{
+					'nameHere': 'ScheduleID',
+					'nameInList': 'ID'
+				}, {
+					'nameHere': 'JobID',
+					'nameInList': 'JobID'
+				}, {
+					'nameHere': 'NumberOfPositions',
+					'nameInList': 'NumberOfPositions'
+				}, {
+					'nameHere': 'formData',
+					'nameInList': 'AllRequestData'
+				}
+			]
+		});
+		// get all jobs
+		var gseJobsArray = $().GetFieldsFromAllRows({
+			'webURL': 'https://bmos.sharepoint.com/sites/hr-service-jobs',
+			'select': [
+				{
+					'nameHere': 'JobID',
+					'nameInList': 'ID',
+				}, {
+					'nameHere': 'JobTitle',
+					'nameInList': 'JobTitle',
+				}, {
+					'nameHere': 'JobAdmin',
+					'nameInList': 'JobAdmin'
+				}, {
+					'nameHere': 'formData',
+					'nameInList': 'AllRequestData'
+				}
+			]
+		});
+		// get all signups
+		var gseSignupsArray = $().GetFieldsFromAllRows({
+			"webURL": "https://bmos.sharepoint.com/sites/hr-service-signups",
+			"select": [
+				{
+					"nameHere": "SignupID",
+					"nameInList": "ID"
+				}, {
+					"nameHere": "SignupPerson",
+					"nameInList": "RequestedFor"
+				}, {
+					"nameHere": "ScheduleID",
+					"nameInList": "ScheduleID"
+				}, {
+					'nameHere': 'formData',
+					'nameInList': 'AllRequestData'
+				}
+			]
+		});
 
-		$.each(sections.tables, function (i, t) {
+		console.log('gseSchedulesArray');
+		console.log(gseSchedulesArray);
+
+		console.log('gseJobsArray');
+		console.log(gseJobsArray);
+
+		console.log('gseSignupsArray');
+		console.log(gseSignupsArray);
+
+		gseSchedulesArray.forEach((schedule) => {
+			var scheduleCopy = schedule;
+			gseJobsArray.forEach((job) => {
+				if (job.JobID === schedule.JobID) {
+					scheduleCopy.Job = job;
+				}
+			});
+			gseSignupsArray.forEach((signup) => {
+				if (signup.ScheduleID === schedule.ScheduleID) {
+					if (!scheduleCopy.Signups) {
+						scheduleCopy.Signups = [];
+					}
+					scheduleCopy.Signups.push(signup);
+				}
+			});
+			if (schedule.formData['Request-Status'] === 'Submitted') {
+				augmentedSchedulesSubmitted.push(scheduleCopy);
+			} else if (schedule.formData['Request-Status'] === 'Completed') {
+				augmentedSchedulesCompleted.push(scheduleCopy);
+			} else if (schedule.formData['Request-Status'] === 'Cancelled') {
+				augmentedSchedulesCancelled.push(scheduleCopy);
+			}
+		});
+
+		// build submitted table
+		var submittedTableData = [];
+		augmentedSchedulesSubmitted.forEach((schedule) => {
+			var row = {};
+			var isoStartDatetime = schedule.formData['Date'].slice(0, 10) + schedule.formData['time-storage_StartTime'].slice(10, 19);
+			row.Date = $().ReturnSortableDate(isoStartDatetime, null, 'MMMM D, YYYY', 1);
+			row.ID = schedule.ScheduleID;
+			row.JobAdmin = $().RenderPersonLinks(schedule.Job.JobAdmin);
+			row.JobID = schedule.Job.JobID;
+			row.JobTitle = schedule.Job.JobTitle;
+			row.Location = schedule.formData['Location'];
+			row.NumberOfPositions = schedule.NumberOfPositions;
+			if (schedule.Signups) {
+				row.PositionsAvailable = schedule.NumberOfPositions - schedule.Signups.length;
+			} else {
+				row.PositionsAvailable = schedule.NumberOfPositions
+			}
+			row.ShiftLength = schedule.formData['shiftlength_35-hours'] ? '3.5 hours' : '7.5 hours'
+			row.Signups = '<ul>';
+			if (schedule.Signups) {
+				schedule.Signups.forEach((signup, index) => {
+					row.Signups += '<li>' + $().RenderPersonLinks(signup.formData["Requested-For"]);
+					if (signup.formData['Request-Status'] === 'Credit Granted') {
+						row.Signups += ' - Credit Granted';
+					} else if (signup.formData['Request-Status'] === 'Credit Denied') {
+						row.Signups += ' - Credit Denied';
+					}
+					row.Signups += '</li>';
+				});
+			}
+			row.Signups += '</ul>';
+			row.StartTime = $().ReturnSortableDate(isoStartDatetime, null, 'h:mm a', 1);
+			// row.XXXXXXXX = schedule.XXXXXXXX;
+			submittedTableData.push(row);
+		});
+
+		var theadDetails = 
+			'<th>Schedule ID</th>' + 
+			'<th>Job Title</th>' + 
+			'<th>Date</th>' + 
+			'<th>Start Time</th>' + 
+			'<th>Job Admin</th>' + 
+			'<th>Schedule Length</th>' + 
+			'<th>Location</th>' + 
+			'<th>Positions Available</th>' + 
+			'<th>Signups</th>';
+
+		var datatableFields = [
+			{
+				'data': 'ID'
+			}, {
+				'data': 'JobTitle'
+			}, {
+				'data': 'Date'
+			}, {
+				'data': 'StartTime'
+			}, {
+				'data': 'JobAdmin'
+			}, {
+				'data': 'ShiftLength'
+			}, {
+				'data': 'Location'
+			}, {
+				'data': 'PositionsAvailable'
+			}, {
+				'data': 'Signups'
+			}
+
+
+		];
+
+
+		$().RenderListAsDatatable({
+			'tableTitle': 'Submitted',
+			'tableID': 'submitted',
+			'theadDetails': theadDetails,
+			'listForDatatable': submittedTableData,
+			'datatableFields': datatableFields,
+			'sortColAndOrder': [[2, 'asc'], [3, 'asc']],
+			'targetID': targetID,
+		});
+
+
+
+		/* $.each(sections.tables, function (i, t) {
 
 			// var setupStartTime = Date.now();
 
@@ -19316,17 +19560,18 @@
 				if (column.displayName && column.displayName != "") {
 					theadDetails += "<th>" + column.displayName + "</th>";
 				}
-				if (column.internalName != "" && typeof (column.gseSchedulesDialogButton) !== "undefined") {
-					lookupFields.push({
-						"internalName": column.internalName,
-						"anchorNoHref": 0,
-						"formLink": 0,
-						"userName": 0,
-						"friendlyFormatOnLoad": 0,
-						"groupingFriendlyFormatOnLoad": 0,
-						"gseSchedulesDialogButton": 1
-					});
-				} else if (column.internalName != "" && typeof (column.friendlyFormatOnLoad) !== "undefined") {
+				// if (column.internalName != "" && typeof (column.gseSchedulesDialogButton) !== "undefined") {
+				// 	lookupFields.push({
+				// 		"internalName": column.internalName,
+				// 		"anchorNoHref": 0,
+				// 		"formLink": 0,
+				// 		"userName": 0,
+				// 		"friendlyFormatOnLoad": 0,
+				// 		"groupingFriendlyFormatOnLoad": 0,
+				// 		"gseSchedulesDialogButton": 1
+				// 	});
+				// } else 
+				if (column.internalName != "" && typeof (column.friendlyFormatOnLoad) !== "undefined") {
 					lookupFields.push({
 						"internalName": column.internalName,
 						"anchorNoHref": 0,
@@ -19433,6 +19678,7 @@
 				augmentedListForDatatable.push(tableRow);
 			});
 
+			console.log('augmentedListForDatatable');
 			console.log(augmentedListForDatatable);
 
 			$().RenderListAsDatatable({
@@ -19445,7 +19691,7 @@
 				'grouping': t.grouping,
 				'targetID': targetID,
 			});
-		});
+		}); */
 	};
 
 
@@ -19502,9 +19748,9 @@
 
 								itemDataForReturn[lookupField.internalName] = "<a class='anchor_no-href'>" + thisItem.attr("ows_" + lookupField.internalName) + "</a>";
 
-							} else if (lookupField.gseSchedulesDialogButton == 1) {
+							/* } else if (lookupField.gseSchedulesDialogButton == 1) {
 
-								itemDataForReturn[lookupField.internalName] = "<button class='gse-schedules-dialog-button'>" + thisItem.attr("ows_" + lookupField.internalName) + "</button>";
+								itemDataForReturn[lookupField.internalName] = "<button class='gse-schedules-dialog-button'>" + thisItem.attr("ows_" + lookupField.internalName) + "</button>"; */
 
 							} else if (lookupField.userName == 1) {
 
@@ -19537,7 +19783,7 @@
 
 
 
-	$.fn.RenderOverviewScreenDialogForGSESchedules = function () {
+	/* $.fn.RenderOverviewScreenDialogForGSESchedules = function () {
 		// append, initialize contact dialog
 		$("div#app-container").append("<div id=\"gse-schedule-card-dialog\"></div>");
 		$("div#gse-schedule-card-dialog").dialog({
@@ -19642,7 +19888,7 @@
 			});
 			$("div#gse-schedule-card-dialog").dialog("open");
 		});
-	};
+	}; */
 
 
 

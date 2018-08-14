@@ -56,7 +56,7 @@
 					{
 						'displayName': 'Schedule ID',
 						'internalName': 'ID',
-						'gseSchedulesDialogButton': 1
+						// 'gseSchedulesDialogButton': 1
 					}, {
 						'displayName': "Job Admin",
 						'dataName': "JobAdmin",
@@ -280,12 +280,12 @@
 			'buttons': [
 				{
 					"linkType": "goForward",
-					"anchorText": "My GSE Signups",
+					"anchorText": "My Signups",
 					"href": "/sites/hr-service-signup/SitePages/App.aspx",
 					"target": null
 				}, {
 					"linkType": "goForward",
-					"anchorText": "GSE Signup Option Calendar",
+					"anchorText": "Signup Opportunities Calendar",
 					"href": "/sites/hr-service-schedules/SitePages/App.aspx?f=cal",
 					"target": null
 				}
