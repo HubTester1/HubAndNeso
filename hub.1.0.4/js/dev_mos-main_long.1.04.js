@@ -19341,7 +19341,7 @@
 
 
 
-	$.fn.ReturnDataForDataTableForGSESchedules = function(dataSource, relevantRole) {
+	$.fn.ReturnDataForDataTableForGSESchedules = function(table, dataSource, relevantRole) {
 		var submittedTableData = [];
 		augmentedSchedulesSubmitted.forEach((schedule) => {
 			var row = {};
@@ -19409,6 +19409,14 @@
 				'data': 'Signups'
 			}
 		];
+
+
+
+
+		if (typeof (t.sortColAndOrder) == 'undefined') {
+			t.sortColAndOrder = [0, 'asc'];
+		}
+
 	}
 
 
@@ -19474,7 +19482,7 @@
 				}
 			]
 		});
-
+		// mashup the data
 		gseSchedulesArray.forEach((schedule) => {
 			var scheduleCopy = schedule;
 			gseJobsArray.forEach((job) => {
@@ -19543,7 +19551,7 @@
 
 		
 
-		$().RenderListAsDatatable({
+		/* $().RenderListAsDatatable({
 			'tableTitle': 'Submitted',
 			'tableID': 'submitted',
 			'theadDetails': theadDetails,
@@ -19551,7 +19559,7 @@
 			'datatableFields': datatableFields,
 			'sortColAndOrder': [[2, 'asc'], [3, 'asc']],
 			'targetID': targetID,
-		});
+		}); */
 
 
 
@@ -23088,7 +23096,7 @@
 		// wait for all data retrieval / setting promises to complete (pass or fail) 
 		$.when.apply($, allDataRetrievalAndSettingPromises).always(function () {
 
-			console.log('using dev_mos-main_long.1.04 m1');
+			console.log('using dev_mos-main_long.1.04 m2');
 
 			$().ConfigureAndShowScreenContainerAndAllScreens();
 		});

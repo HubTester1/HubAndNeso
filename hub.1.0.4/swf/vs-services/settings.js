@@ -231,8 +231,6 @@
 				'controlType': "textarea",
 				'fieldName': "Additional Comments",
 				'labelContent': "Additional Comments",
-				'requiredForNonAdmin': [""],
-				'requiredForAdmin': [""],
 				"disabledForNonAdmin": ['Submitted', 'Cancelled'],
 				"disabledForAdmin": ['Submitted', 'Cancelled']
 			}, {
