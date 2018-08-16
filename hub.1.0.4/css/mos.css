@@ -2524,6 +2524,9 @@ div.ui-dialog div.table-container div.dataTables_wrapper {
           margin-left: .5rem;
           content: '\E04A';
           font-size: 1rem; }
+      div#s4-workspace div.table-container div.dataTables_wrapper table.dataTable tbody td div.small-in-column,
+      div.ui-dialog div.table-container div.dataTables_wrapper table.dataTable tbody td div.small-in-column {
+        text-align: center; }
     div#s4-workspace div.table-container div.dataTables_wrapper table.dataTable tbody tr.group,
     div.ui-dialog div.table-container div.dataTables_wrapper table.dataTable tbody tr.group {
       font-size: 1.7rem;

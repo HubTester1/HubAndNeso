@@ -19051,9 +19051,6 @@
 		console.log('gseSignupsArray');
 		console.log(gseSignupsArray);
 
-
-
-
 		gseSchedulesArray.forEach((schedule) => {
 			var jobThisSchedule = {};
 			var signupsThisSchedule = [];
@@ -19360,21 +19357,23 @@
 			var row = {};
 			var isoStartDatetime = schedule.formData['Date'].slice(0, 10) + schedule.formData['time-storage_StartTime'].slice(10, 19);
 			row.Date = $().ReturnSortableDate(isoStartDatetime, null, 'MMMM D, YYYY', 1);
-			row.ID = schedule.ScheduleID;
+			row.IDMarkup = '<div class="small-in-column">' + schedule.ScheduleID + '</div>';
 			row.JobAdmin = $().RenderPersonLinks(schedule.Job.JobAdmin);
 			row.JobID = schedule.Job.JobID;
 			row.JobTitle = schedule.Job.JobTitle;
 			row.Location = schedule.formData['Location'];
 			row.NumberOfPositions = schedule.NumberOfPositions;
 			if (schedule.Signups) {
-				row.PositionsAvailable = schedule.NumberOfPositions - schedule.Signups.length;
+				row.PositionsAvailable = '<div class="small-in-column">' + 
+					(schedule.NumberOfPositions - schedule.Signups.length) + '</div>';
 			} else {
-				row.PositionsAvailable = schedule.NumberOfPositions
+				row.PositionsAvailable = '<div class="small-in-column">' + 
+					schedule.NumberOfPositions + '</div>';
 			}
 			row.ShiftLength = schedule.formData['shiftlength_35-hours'] ? '3.5 hours' : '7.5 hours'
 			row.Signups = '<ul>';
 			if (schedule.Signups) {
-				schedule.Signups.forEach((signup, index) => {
+				schedule.Signups.forEach((signup) => {
 					row.Signups += '<li>' + $().RenderPersonLinks(signup.formData["Requested-For"]);
 					if (signup.formData['Request-Status'] === 'Credit Granted') {
 						row.Signups += ' - Credit Granted';
@@ -19386,13 +19385,42 @@
 			}
 			row.Signups += '</ul>';
 			row.StartTime = $().ReturnSortableDate(isoStartDatetime, null, 'h:mm a', 1);
+			if (schedule.Signups) {
+				schedule.Signups.forEach((signup) => {
+					var signupPersonArray = $().ReturnUserDataFromPersonOrGroupFieldString(signup.SignupPerson);
+					if (signupPersonArray[0].account === uData.account) {
+						row.mySignupID = signup.SignupID;
+					}
+				});
+			}
+			if (row.mySignupID) {
+				row.viewURL = '/sites/hr-service-signups/SitePages/App.aspx?r=' + row.mySignupID;
+			} else {
+				row.viewURL = '/sites/hr-service-signups/SitePages/App.aspx?r=0&gseScheduleID=' + schedule.ScheduleID;
+			}
 			if (relevantRole === 'gseHRAdmin') {
-				row.Options = '<div><a class="link-in-swf-datatable" ' + 
-					'href="/sites/hr-service-signups/SitePages/App.aspx?r=0&gseScheduleID=' + schedule.ScheduleID + '" ' + 
-					'target="_blank">View</a></div>' + 
-					'<div><a class="link-in-swf-datatable" ' + 
-					'href="/sites/hr-service-schedules/SitePages/App.aspx?r=' + schedule.ScheduleID + '" ' + 
+				row.Options = '<div><a class="link-in-swf-datatable" ' +
+					'href="' + row.viewURL + '" ' +
+					'target="_blank">View</a></div>' +
+					'<div><a class="link-in-swf-datatable" ' +
+					'href="/sites/hr-service-schedules/SitePages/App.aspx?r=' + schedule.ScheduleID + '" ' +
 					'target="_blank">Edit</a></div >';
+			}
+			if (relevantRole === 'gseJobAdmin') {
+				row.Options = '<div><a class="link-in-swf-datatable" ' +
+					'href="' + row.viewURL + '" ' +
+					'target="_blank">View</a></div>';
+				var jobAdminArray = $().ReturnUserDataFromPersonOrGroupFieldString(schedule.Job.JobAdmin);
+				if (jobAdminArray[0].account === uData.account) {
+					row.Options += '<div><a class="link-in-swf-datatable" ' +
+						'href="/sites/hr-service-schedules/SitePages/App.aspx?r=' + schedule.ScheduleID + '" ' +
+						'target="_blank">Edit</a></div >';
+				}
+			}
+			if (relevantRole === 'gseManager' || relevantRole === 'gseUserOnly') {
+				row.ViewByIDLink =
+					'<a href="' + row.viewURL + '" class="link_request-id" target="_blank">' + 
+					schedule.ScheduleID + '</a>';
 			}
 			tableConfig.datatableData.push(row);
 		});
@@ -19402,6 +19430,8 @@
 
 
 	$.fn.RenderAllDataTablesForGSESchedules = function (targetID, relevantRole) {
+		var renderPrepStartTime = Date.now();
+		
 		var augmentedSchedulesSubmitted = [];
 		var augmentedSchedulesCompleted = [];
 		var augmentedSchedulesCancelled = [];
@@ -19488,14 +19518,14 @@
 		});
 		// determine which tables to render
 		var tablesToRender = [];
-		if (relevantRole === 'gseHRAdmin') {
+		if (relevantRole === 'gseHRAdmin' || relevantRole === 'gseJobAdmin') {
 			tablesToRender.push({
 				'tableTitle': 'Submitted',
 				'tableID': 'submitted',
 				'columns': [
 					{
 						'displayName': "Schedule ID",
-						'dataName': "ID",
+						'dataName': "IDMarkup",
 					}, {
 						'displayName': "Options",
 						'dataName': "Options",
@@ -19509,11 +19539,11 @@
 						'displayName': "Start Time",
 						'dataName': "StartTime",
 					}, {
-						'displayName': "Job Admin",
-						'dataName': "JobAdmin",
-					}, {
 						'displayName': "Schedule Length",
 						'dataName': "ShiftLength",
+					}, {
+						'displayName': "Job Admin",
+						'dataName': "JobAdmin",
 					}, {
 						'displayName': "Location",
 						'dataName': "Location",
@@ -19528,12 +19558,151 @@
 				'sortColAndOrder': [[3, 'asc'], [4, 'asc']],
 				'dataSource': augmentedSchedulesSubmitted
 			});
+			tablesToRender.push({
+				'tableTitle': 'Completed',
+				'tableID': 'completed',
+				'columns': [
+					{
+						'displayName': "Schedule ID",
+						'dataName': "IDMarkup",
+					}, {
+						'displayName': "Options",
+						'dataName': "Options",
+					}, {
+						'displayName': "Job Title",
+						'dataName': "JobTitle",
+					}, {
+						'displayName': "Date",
+						'dataName': "Date",
+					}, {
+						'displayName': "Start Time",
+						'dataName': "StartTime",
+					}, {
+						'displayName': "Schedule Length",
+						'dataName': "ShiftLength",
+					}, {
+						'displayName': "Job Admin",
+						'dataName': "JobAdmin",
+					}, {
+						'displayName': "Location",
+						'dataName': "Location",
+					}, {
+						'displayName': "Signups",
+						'dataName': "Signups",
+					}
+				],
+				'sortColAndOrder': [[3, 'asc'], [4, 'asc']],
+				'dataSource': augmentedSchedulesCompleted
+			});
+			tablesToRender.push({
+				'tableTitle': 'Cancelled',
+				'tableID': 'cancelled',
+				'columns': [
+					{
+						'displayName': "Schedule ID",
+						'dataName': "IDMarkup",
+					}, {
+						'displayName': "Options",
+						'dataName': "Options",
+					}, {
+						'displayName': "Job Title",
+						'dataName': "JobTitle",
+					}, {
+						'displayName': "Date",
+						'dataName': "Date",
+					}, {
+						'displayName': "Start Time",
+						'dataName': "StartTime",
+					}, {
+						'displayName': "Schedule Length",
+						'dataName': "ShiftLength",
+					}, {
+						'displayName': "Job Admin",
+						'dataName': "JobAdmin",
+					}, {
+						'displayName': "Location",
+						'dataName': "Location",
+					}
+				],
+				'sortColAndOrder': [[3, 'asc'], [4, 'asc']],
+				'dataSource': augmentedSchedulesCancelled
+			});
 		}
+		if (relevantRole === 'gseManager') {
+			tablesToRender.push({
+				'tableID': 'submitted',
+				'columns': [
+					{
+						'displayName': "Schedule ID",
+						'dataName': "ViewByIDLink",
+					}, {
+						'displayName': "Job Title",
+						'dataName': "JobTitle",
+					}, {
+						'displayName': "Date",
+						'dataName': "Date",
+					}, {
+						'displayName': "Start Time",
+						'dataName': "StartTime",
+					}, {
+						'displayName': "Schedule Length",
+						'dataName': "ShiftLength",
+					}, {
+						'displayName': "Job Admin",
+						'dataName': "JobAdmin",
+					}, {
+						'displayName': "Location",
+						'dataName': "Location",
+					}, {
+						'displayName': "Positions Available",
+						'dataName': "PositionsAvailable",
+					}
+				],
+				'sortColAndOrder': [[2, 'asc'], [3, 'asc']],
+				'dataSource': augmentedSchedulesSubmitted
+			});
+		}
+		if (relevantRole === 'gseUserOnly') {
+			tablesToRender.push({
+				'tableID': 'submitted',
+				'columns': [
+					{
+						'displayName': "Schedule ID",
+						'dataName': "ViewByIDLink",
+					}, {
+						'displayName': "Job Title",
+						'dataName': "JobTitle",
+					}, {
+						'displayName': "Date",
+						'dataName': "Date",
+					}, {
+						'displayName': "Start Time",
+						'dataName': "StartTime",
+					}, {
+						'displayName': "Schedule Length",
+						'dataName': "ShiftLength",
+					}, {
+						'displayName': "Reports To",
+						'dataName': "JobAdmin",
+					}, {
+						'displayName': "Location",
+						'dataName': "Location",
+					}, {
+						'displayName': "Positions Available",
+						'dataName': "PositionsAvailable",
+					}
+				],
+				'sortColAndOrder': [[2, 'asc'], [3, 'asc']],
+				'dataSource': augmentedSchedulesSubmitted
+			});
+		}
+
 		tablesToRender.forEach((t) => {
 			var thisTableConfig = $().ReturnDataAndConfigForDataTableForGSESchedules(t, relevantRole);
 			if (!t.sortColAndOrder) {
 				t.sortColAndOrder = [0, 'asc'];
 			}
+			console.log('render prep time = ' + (Date.now() - renderPrepStartTime) / 1000 + ' seconds');
 			$().RenderListAsDatatable({
 				'tableTitle': t.tableTitle,
 				'tableID': t.tableID,
