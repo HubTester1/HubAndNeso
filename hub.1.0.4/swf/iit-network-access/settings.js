@@ -539,7 +539,7 @@
 				'elementType': "field",
 				'controlType': "check",
 				'fieldName': "Needs Intranet",
-				'choiceSetLabel': "Needs Access to a Part of Quark or the Hub?",
+				'choiceSetLabel': "Needs Access to a Part of Quark or The Hub?",
 				'choices': [
 					{
 						'value': "needsIntranet",
@@ -576,7 +576,7 @@
 				'disabledForAdmin': ["Completed", "Disapproved", "Cancelled"],
 				'helpNotes': [
 					{
-						'text': "E.g., https'://matrix.mos.org/depts/iit",
+						'text': "E.g., https://bmos.sharepoint.com/sites/iit-network-access",
 						'htmlID': "intranet-url_help-note",
 						'hideForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
 						'hideForAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
