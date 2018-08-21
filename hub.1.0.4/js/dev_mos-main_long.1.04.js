@@ -2588,7 +2588,6 @@
 		if (typeof (rData.requestStatus) === "undefined") {
 			rData.requestStatus = "";
 		}
-
 		if (rData.requestID != "") {
 			rData.formDataOnLoad = rData.formData;
 			rData.formDataOnLoad.requestStatus = rData.requestStatus;
@@ -4114,6 +4113,7 @@
 				// extract the schedule ID from the saved request data
 				rData.gseScheduleID = rData.formDataOnLoad['Schedule-ID'];
 			}
+
 			// get the relevant job data
 			rData = $.extend(
 				rData,
@@ -17415,6 +17415,10 @@
 
 	$.fn.CreateOrUpdateListItem = function (mData, rData, submissionValuePairsArray, webURL) {
 
+		console.log('CreateOrUpdateListItem');
+		console.log('submissionValuePairsArray');
+		console.log(submissionValuePairsArray);
+
 		// --- set up internal promise to configure
 
 		var deferred = $.Deferred();
@@ -18964,6 +18968,417 @@
 
 
 
+	$.fn.CreateFakeGSEStuff = function (jobs, schedules, signups) {
+		var newJobsQuantity = 100;
+		var newSchedulesQuantity = 400;
+		var newSignupsPerSchedule = 2;
+		var originalJobData = jobs[0];
+		var originalScheduleData = schedules[0];
+		var originalSignupData = signups[0];
+		var originalJobID = '15';
+		var originalScheduleID = '72';
+		var originalSignupID = '25';
+		var originalJobKeys = Object.keys(originalJobData);
+		var newJobs = [];
+		var newSchedules = [];
+		var newSignups = [];
+
+		
+
+		// delete all jobs but the original
+		/* $().SPServices.SPUpdateMultipleListItems({
+			webURL: "https://bmos.sharepoint.com/sites/hr-service-jobs",
+			listName: 'SWFList',
+			CAMLQuery: "<Query><Where><Neq>" + 
+				"<FieldRef Name='ID'></FieldRef>" + 
+				"<Value Type='Number'>" + originalJobID + "</Value>" +
+				"</Neq></Where></Query>",
+
+			batchCmd: "Delete",
+			//valuepairs: [],
+			debug: false,
+			completefunc: function (xData, Status) { console.log('deleted in CreateFakeGSEStuff'); }
+		});
+
+		// create new jobs
+		for (let index = 0; index < newJobsQuantity; index++) {
+			var submissionValuePairs = [
+				[
+					"RequestDate",
+					"2018-08-20T14:55:02-04:00"
+				],
+				[
+					"Title",
+					"Nick"
+				],
+				[
+					"JobTitle",
+					"Aritifical Job"
+				],
+				[
+					"RequestStatus",
+					"Approved"
+				],
+				[
+					"BeginningOfLife",
+					"1"
+				],
+				[
+					"EndOfLife",
+					"0"
+				],
+				[
+					"ApprovalNewlyNeededNotify",
+					"none"
+				],
+				[
+					"ApprovalNotNeededNotify",
+					"none"
+				],
+				[
+					"ApprovalStillNeededNotify",
+					"none"
+				],
+				[
+					"NewlyApprovedOrPending",
+					"0"
+				],
+				[
+					"AdminEmail",
+					"jbaker@mos.org"
+				],
+				[
+					"RequestName",
+					"GSE Job"
+				],
+				[
+					"SWFVersion",
+					"1.0"
+				],
+				[
+					"RequestedFor",
+					"-1;#sp1@mos.org"
+				],
+				[
+					"RequestedBy",
+					""
+				],
+				[
+					"JobAdmin",
+					"-1;#sp1@mos.org"
+				],
+				[
+					"AllRequestData",
+					"<![CDATA[{\"RepeatedElements\": [],\"Request-Date\":\"2018-08-20T14:55:02-04:00\",\"Request-Nickname\":\"Nick\",\"Requester-Name\":\"Hub Tester1\",\"Requester-Department\":\"Interactive Media\",\"Requester-Email\":\"sp1@mos.org\",\"Requester-Phone\":\"617-589-3142\",\"Requester-Account\":\"i:0#.f|membership|sp1@mos.org\",\"Job-Title\":\"Aritifical Job\",\"Physical-Demand-Lifting\":\"1\",\"Physical-Demand-Carrying\":\"1\",\"Physical-Demand-Pushing\":\"1\",\"Physical-Demand-Pulling\":\"1\",\"Physical-Demand-Standing\":\"10\",\"Physical-Demand-Sitting\":\"10\",\"Physical-Demand-Walking\":\"80\",\"Request-Status\":\"Approved\",\"Beginning-of-Life\":\"1\",\"End-of-Life\":\"0\",\"Approval-Newly-Needed-Notify\":\"none\",\"Approval-Not-Needed-Notify\":\"none\",\"Approval-Still-Needed-Notify\":\"none\",\"Newly-Approved-or-Pending\":\"0\",\"Last-Modified-Timestamp-Mismatch\":\"0\",\"Admin-Email\":\"jbaker@mos.org\",\"Request-Name\":\"GSE Job\",\"SWF-Version\":\"1.0\",\"Component-Group-Admin\":\"872;#Hub Tester10,#i:0#.f|membership|sp10@mos.org,#sp10@mos.org,#sp10@MOS.ORG,#Hub Tester10,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/sp10_mos_org_MThumb.jpg,#Interactive Media,#;#873;#Hub Tester11,#i:0#.f|membership|sp11@mos.org,#sp11@mos.org,#sp11@MOS.ORG,#Hub Tester11,#,#Interactive Media,#;#6;#James Baker,#i:0#.f|membership|jbaker@mos.org,#jbaker@mos.org,#jbaker@mos.org,#James Baker,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/jbaker_mos_org_MThumb.jpg?t=63616027741,#Interactive Media,#Intranet Solutions Project Manager;#20;#Ben Wilson,#i:0#.f|membership|bwilson@mos.org,#bwilson@mos.org,#bwilson@mos.org,#Ben Wilson,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/bwilson_mos_org_MThumb.jpg,#Interactive Media,#Director of Digital &amp; Interactive Media;#467;#Samuel Corey,#i:0#.f|membership|scorey@mos.org,#scorey@mos.org,#scorey@MOS.ORG,#Samuel Corey,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/scorey_mos_org_MThumb.jpg,#Interactive Media,#Web Developer\",\"Component-Admin\":\"30;#Christine Flebbe,#i:0#.f|membership|cflebbe@mos.org,#cflebbe@mos.org,#cflebbe@mos.org,#Christine Flebbe,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/cflebbe_mos_org_MThumb.jpg,#Human Resources,#Manager,, Compensation &amp; Benefits;#427;#Lorah Broderick,#i:0#.f|membership|lbroderick@mos.org,#lbroderick@mos.org,#lbroderick@mos.org,#Lorah Broderick,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/lsnow_mos_org_MThumb.jpg,#Human Resources,#Benefits &amp; Employee Programs Administrator;#29;#Margo Smith,#i:0#.f|membership|msmith@mos.org,#msmith@mos.org,#msmith@mos.org,#Margo Smith,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/msmith_mos_org_MThumb.jpg,#Human Resources,#Manager,, Talent Acquisition &amp; Development\",\"Current-User-Display-Name\":\"Hub Tester1\",\"Current-User-Name\":\"sp1@mos.org\",\"Current-User-is-Admin\":\"1\",\"Current-User-is-Component-Group-Admin\":\"0\",\"Component-ID\":\"158\",\"Self-or-Other\":\"Talk to me\",\"Department\":\"Accessibility\",\"Job-Description\":\"This is the Job Description.\",\"Training-Requirements\":\"These are the.%0ATraining requirements.\",\"Dress-Requirements\":\"These are the.%0ADress requirements.\",\"Job-Duties\":\"These are the.%0AJob duties.\",\"User-Machine-History\":\"August 20, 2018 2:55 pm - Firefox 61.0 - probably desktop - Linux %0A %0A\",\"Requested-For\":[{\"account\": \"i:0#.f|membership|sp1@mos.org\",\"displayText\": \"Hub Tester1\",\"description\": \"sp1@mos.org\"}],\"Requested-By\":\"\",\"Job-Admin\":[{\"account\": \"i:0#.f|membership|sp1@mos.org\",\"displayText\": \"Hub Tester1\",\"description\": \"sp1@mos.org\"}]}]]>"
+				]
+			];
+			$().SPServices({
+				operation: 'UpdateListItems',
+				webURL: "https://bmos.sharepoint.com/sites/hr-service-jobs",
+				listName: 'SWFList',
+				batchCmd: 'New',
+				ID: 0,
+				valuepairs: submissionValuePairs,
+				completefunc: function (xData, Status) {
+					var errorCode = $(xData.responseXML).find('ErrorCode').text();
+					if (errorCode != '0x00000000') {
+						if (errorCode == '') { errorCode = '""'; }
+						console.log('errorCode = ' + errorCode);
+						// console.log('submissionValuePairs');
+						console.log(submissionValuePairs);
+						console.log("");
+						//var emailBody = 'error = ' + errorCode + '; legacy ID = ' + $(requestValue).find('legacyID').text() + '; name = ' + lastName + ', ' + firstName;
+						//SendErrorEmail('noreply@mos.org', emailErrorsTo, emailBody, 'Hub migration error: ' + errorCode)
+					} else if (Status == 'Error') {
+						console.log('Status = Error');
+						// console.log('submissionValuePairs');
+						console.log(submissionValuePairs);
+						console.log("");
+					} else {
+						var newRequestID = $(xData.responseXML).SPFilterNode("z:row").attr("ows_ID");
+						console.log('submissionValuePairs');
+						console.log(submissionValuePairs);
+						console.log("");
+					}
+				}
+			});
+		} */
+
+
+		// delete all schedules but the original
+		/* $().SPServices.SPUpdateMultipleListItems({
+			webURL: "https://bmos.sharepoint.com/sites/hr-service-schedules",
+			listName: 'SWFList',
+			CAMLQuery: "<Query><Where><Neq>" + 
+				"<FieldRef Name='ID'></FieldRef>" + 
+				"<Value Type='Number'>" + originalScheduleID + "</Value>" +
+				"</Neq></Where></Query>",
+
+			batchCmd: "Delete",
+			//valuepairs: [],
+			debug: false,
+			completefunc: function (xData, Status) { console.log('deleted in CreateFakeGSEStuff'); }
+		});
+
+		// create new schedules
+		for (let index = 0; index < newSchedulesQuantity; index++) {
+			var submissionValuePairs = [
+				[
+					"RequestDate",
+					"2018-08-20T15:11:26-04:00"
+				],
+				[
+					"Title",
+					"Aritificial Schedule"
+				],
+				[
+					"StartTime",
+					"2000-01-01T09:00:00Z"
+				],
+				[
+					"ShiftLength",
+					"7.5 hours"
+				],
+				[
+					"NumberOfPositions",
+					"3"
+				],
+				[
+					"Location",
+					"Planetarium"
+				],
+				[
+					"RequestStatus",
+					"Submitted"
+				],
+				[
+					"BeginningOfLife",
+					"0"
+				],
+				[
+					"EndOfLife",
+					"0"
+				],
+				[
+					"ApprovalNewlyNeededNotify",
+					"none"
+				],
+				[
+					"ApprovalNotNeededNotify",
+					"none"
+				],
+				[
+					"ApprovalStillNeededNotify",
+					"none"
+				],
+				[
+					"NewlyApprovedOrPending",
+					"0"
+				],
+				[
+					"AdminEmail",
+					"jbaker@mos.org"
+				],
+				[
+					"RequestName",
+					"GSE Schedule"
+				],
+				[
+					"SWFVersion",
+					"1.0"
+				],
+				[
+					"RequestedFor",
+					"-1;#sp2@mos.org"
+				],
+				[
+					"RequestedBy",
+					""
+				]
+			];
+
+			console.log('days to add');
+			console.log((newSchedulesQuantity / 365) * index);
+
+			var newScheduleDate = moment("2018-07-01T00:00:00-04:00").add(((365 / newSchedulesQuantity) * index), 'days').format('YYYY-MM-DDTHH:mm:ssZ');
+			var newScheduleJobID = Math.floor(122 + (index / 4)).toString();
+
+			submissionValuePairs.push([
+				"Date",
+				newScheduleDate
+			]);
+			submissionValuePairs.push([
+				"JobID",
+				newScheduleJobID
+			]);
+			submissionValuePairs.push([
+				"AllRequestData",
+				"<![CDATA[{\"RepeatedElements\": [],\"Request-Date\":\"2018-08-20T15:11:26-04:00\",\"Request-Nickname\":\"Aritificial Schedule\",\"Requester-Name\":\"Hub Tester2\",\"Requester-Department\":\"Interactive Media\",\"Requester-Email\":\"sp2@mos.org\",\"Requester-Phone\":\"617-589-3142\",\"Requester-Account\":\"i:0#.f|membership|sp2@mos.org\",\"id-or-link_GSE-Job-Request-ID\":\"" + newScheduleJobID + "\",\"Job-Title\":\"Evening Planetarium Assistant\",\"time-storage_StartTime\":\"2000-01-01T09:00:00Z\",\"shiftlength_75-hours\":\"7.5 hours\",\"Number-of-Positions\":\"3\",\"Location\":\"Planetarium\",\"locationisoffsite_no\":\"no\",\"time-storage_MealTime\":\"2000-01-01T11:00:00Z\",\"time-storage_BreakTime\":\"2000-01-01T14:30:00Z\",\"Repeating-Date\":\"2018-07-02T00:00:00-04:00\",\"Request-Status\":\"Submitted\",\"Beginning-of-Life\":\"0\",\"End-of-Life\":\"0\",\"Approval-Newly-Needed-Notify\":\"none\",\"Approval-Not-Needed-Notify\":\"none\",\"Approval-Still-Needed-Notify\":\"none\",\"Newly-Approved-or-Pending\":\"0\",\"Last-Modified-Timestamp-Mismatch\":\"0\",\"Admin-Email\":\"jbaker@mos.org\",\"Request-Name\":\"GSE Schedule\",\"SWF-Version\":\"1.0\",\"Component-Group-Admin\":\"872;#Hub Tester10,#i:0#.f|membership|sp10@mos.org,#sp10@mos.org,#sp10@MOS.ORG,#Hub Tester10,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/sp10_mos_org_MThumb.jpg,#Interactive Media,#;#873;#Hub Tester11,#i:0#.f|membership|sp11@mos.org,#sp11@mos.org,#sp11@MOS.ORG,#Hub Tester11,#,#Interactive Media,#;#6;#James Baker,#i:0#.f|membership|jbaker@mos.org,#jbaker@mos.org,#jbaker@mos.org,#James Baker,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/jbaker_mos_org_MThumb.jpg?t=63616027741,#Interactive Media,#Intranet Solutions Project Manager;#20;#Ben Wilson,#i:0#.f|membership|bwilson@mos.org,#bwilson@mos.org,#bwilson@mos.org,#Ben Wilson,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/bwilson_mos_org_MThumb.jpg,#Interactive Media,#Director of Digital &amp; Interactive Media;#467;#Samuel Corey,#i:0#.f|membership|scorey@mos.org,#scorey@mos.org,#scorey@MOS.ORG,#Samuel Corey,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/scorey_mos_org_MThumb.jpg,#Interactive Media,#Web Developer\",\"Component-Admin\":\"30;#Christine Flebbe,#i:0#.f|membership|cflebbe@mos.org,#cflebbe@mos.org,#cflebbe@mos.org,#Christine Flebbe,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/cflebbe_mos_org_MThumb.jpg,#Human Resources,#Manager,, Compensation &amp; Benefits;#427;#Lorah Broderick,#i:0#.f|membership|lbroderick@mos.org,#lbroderick@mos.org,#lbroderick@mos.org,#Lorah Broderick,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/lsnow_mos_org_MThumb.jpg,#Human Resources,#Benefits &amp; Employee Programs Administrator;#29;#Margo Smith,#i:0#.f|membership|msmith@mos.org,#msmith@mos.org,#msmith@mos.org,#Margo Smith,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/msmith_mos_org_MThumb.jpg,#Human Resources,#Manager,, Talent Acquisition &amp; Development\",\"Current-User-Display-Name\":\"Hub Tester2\",\"Current-User-Name\":\"sp2@mos.org\",\"Current-User-is-Admin\":\"0\",\"Current-User-is-Component-Group-Admin\":\"0\",\"Component-ID\":\"159\",\"Self-or-Other\":\"Talk to me\",\"hours-input_StartTime\":\"9 AM\",\"minutes-input_StartTime\":\"00\",\"hours-input_MealTime\":\"11 AM\",\"minutes-input_MealTime\":\"00\",\"hours-input_BreakTime\":\"2 PM\",\"minutes-input_BreakTime\":\"30\",\"Job-Description\":\"Assist our evening Planetarium presenters with taking tickets and seating for the 7:30, 8:30, and 9:30 PM Planetarium shows, then stay and watch the shows themselves.%0A%0AParagraph Two. The quick brown fox jumps over the lazy dog.\",\"Notes\":\"Some schedule notes.\",\"User-Machine-History\":\"August 20, 2018 3:11 pm - Firefox 61.0 - probably desktop - Linux %0A %0A\",\"Requested-For\":[{\"account\": \"i:0#.f|membership|sp2@mos.org\",\"displayText\": \"Hub Tester2\",\"description\": \"sp2@mos.org\"}],\"Requested-By\":\"\",\"Date\": \"" + newScheduleDate + "\"}]]>"
+			]);
+			
+
+			$().SPServices({
+				operation: 'UpdateListItems',
+				webURL: "https://bmos.sharepoint.com/sites/hr-service-schedules",
+				listName: 'SWFList',
+				batchCmd: 'New',
+				ID: 0,
+				valuepairs: submissionValuePairs,
+				completefunc: function (xData, Status) {
+					var errorCode = $(xData.responseXML).find('ErrorCode').text();
+					if (errorCode != '0x00000000') {
+						if (errorCode == '') { errorCode = '""'; }
+						console.log('errorCode = ' + errorCode);
+						// console.log('submissionValuePairs');
+						console.log(submissionValuePairs);
+						console.log("");
+						//var emailBody = 'error = ' + errorCode + '; legacy ID = ' + $(requestValue).find('legacyID').text() + '; name = ' + lastName + ', ' + firstName;
+						//SendErrorEmail('noreply@mos.org', emailErrorsTo, emailBody, 'Hub migration error: ' + errorCode)
+					} else if (Status == 'Error') {
+						console.log('Status = Error');
+						// console.log('submissionValuePairs');
+						console.log(submissionValuePairs);
+						console.log("");
+					} else {
+						var newRequestID = $(xData.responseXML).SPFilterNode("z:row").attr("ows_ID");
+						console.log('submissionValuePairs');
+						console.log(submissionValuePairs);
+						console.log("");
+					}
+				}
+			});
+		} */
+
+		// delete previous signups
+		$().SPServices.SPUpdateMultipleListItems({
+			webURL: "https://bmos.sharepoint.com/sites/hr-service-signups",
+			listName: 'SWFList',
+			CAMLQuery: "<Query><Where><Neq>" + 
+				"<FieldRef Name='ID'></FieldRef>" + 
+				"<Value Type='Number'>" + originalSignupID + "</Value>" +
+				"</Neq></Where></Query>",
+
+			batchCmd: "Delete",
+			//valuepairs: [],
+			debug: false,
+			completefunc: function (xData, Status) { console.log('deleted in CreateFakeGSEStuff'); }
+		});
+
+		// create new signups
+		schedules.forEach((schedule, index) => {
+			var submissionValuePairs1, submissionValuePairs2;
+			submissionValuePairs1 = submissionValuePairs2 = [
+				[
+					"RequestDate",
+					"2018-08-21T09:46:44-04:00"
+				],
+				[
+					"Title",
+					"221-1704-sp4"
+				],
+				[
+					"RequestStatus",
+					"Signed Up"
+				],
+				[
+					"BeginningOfLife",
+					"1"
+				],
+				[
+					"EndOfLife",
+					"0"
+				],
+				[
+					"ApprovalNewlyNeededNotify",
+					"none"
+				],
+				[
+					"ApprovalNotNeededNotify",
+					"none"
+				],
+				[
+					"ApprovalStillNeededNotify",
+					"none"
+				],
+				[
+					"NewlyApprovedOrPending",
+					"0"
+				],
+				[
+					"AdminEmail",
+					"jbaker@mos.org"
+				],
+				[
+					"RequestName",
+					"GSE Signup"
+				],
+				[
+					"SWFVersion",
+					"1.0"
+				],
+				[
+					"RequestedBy",
+					""
+				],
+				[
+					"JobID",
+					schedule.JobID
+				],
+				[
+					"ScheduleID",
+					schedule.ScheduleID
+				],
+				[
+					"AllRequestData",
+					"<![CDATA[{\"RepeatedElements\": [],\"Request-Date\":\"2018-08-21T09:46:44-04:00\",\"Request-Nickname\":\"221-1704-sp4\",\"Requester-Name\":\"Hub Tester4\",\"Requester-Department\":\"Interactive Media\",\"Requester-Email\":\"sp4@mos.org\",\"Requester-Account\":\"i:0#.f|membership|sp4@mos.org\",\"Job-ID\":\"221\",\"Schedule-ID\":\"" + schedule.ScheduleID + "\",\"Positions-Available\":\"3\",\"Schedule-Start-Datetime\":\"2019-06-15T09:00:00-04:00\",\"Current-Datetime\":\"2018-08-21T09:45:22-04:00\",\"sign-up_signup\":\"signUp\",\"Request-Status\":\"Signed Up\",\"Beginning-of-Life\":\"1\",\"End-of-Life\":\"0\",\"Approval-Newly-Needed-Notify\":\"none\",\"Approval-Not-Needed-Notify\":\"none\",\"Approval-Still-Needed-Notify\":\"none\",\"Newly-Approved-or-Pending\":\"0\",\"Last-Modified-Timestamp-Mismatch\":\"0\",\"Admin-Email\":\"jbaker@mos.org\",\"Request-Name\":\"GSE Signup\",\"SWF-Version\":\"1.0\",\"Component-Group-Admin\":\"872;#Hub Tester10,#i:0#.f|membership|sp10@mos.org,#sp10@mos.org,#sp10@MOS.ORG,#Hub Tester10,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/sp10_mos_org_MThumb.jpg,#Interactive Media,#;#873;#Hub Tester11,#i:0#.f|membership|sp11@mos.org,#sp11@mos.org,#sp11@MOS.ORG,#Hub Tester11,#,#Interactive Media,#;#6;#James Baker,#i:0#.f|membership|jbaker@mos.org,#jbaker@mos.org,#jbaker@mos.org,#James Baker,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/jbaker_mos_org_MThumb.jpg?t=63616027741,#Interactive Media,#Intranet Solutions Project Manager;#20;#Ben Wilson,#i:0#.f|membership|bwilson@mos.org,#bwilson@mos.org,#bwilson@mos.org,#Ben Wilson,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/bwilson_mos_org_MThumb.jpg,#Interactive Media,#Director of Digital &amp; Interactive Media;#467;#Samuel Corey,#i:0#.f|membership|scorey@mos.org,#scorey@mos.org,#scorey@MOS.ORG,#Samuel Corey,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/scorey_mos_org_MThumb.jpg,#Interactive Media,#Web Developer\",\"Component-Admin\":\"30;#Christine Flebbe,#i:0#.f|membership|cflebbe@mos.org,#cflebbe@mos.org,#cflebbe@mos.org,#Christine Flebbe,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/cflebbe_mos_org_MThumb.jpg,#Human Resources,#Manager,, Compensation &amp; Benefits;#427;#Lorah Broderick,#i:0#.f|membership|lbroderick@mos.org,#lbroderick@mos.org,#lbroderick@mos.org,#Lorah Broderick,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/lsnow_mos_org_MThumb.jpg,#Human Resources,#Benefits &amp; Employee Programs Administrator;#29;#Margo Smith,#i:0#.f|membership|msmith@mos.org,#msmith@mos.org,#msmith@mos.org,#Margo Smith,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/msmith_mos_org_MThumb.jpg,#Human Resources,#Manager,, Talent Acquisition &amp; Development\",\"Current-User-Display-Name\":\"Hub Tester4\",\"Current-User-Name\":\"sp4@mos.org\",\"Current-User-is-Admin\":\"0\",\"Current-User-is-Component-Group-Admin\":\"0\",\"Component-ID\":\"160\",\"Self-or-Other\":\"Talk to me\",\"User-Machine-History\":\"August 21, 2018 9:46 am - Firefox 61.0 - probably desktop - Linux %0A %0AAugust 20, 2018 3:11 pm - Firefox 61.0 - probably desktop - Linux %0A %0A\",\"Requested-For\":[{\"account\": \"i:0#.f|membership|sp4@mos.org\",\"displayText\": \"Hub Tester4\",\"description\": \"sp4@mos.org\"}],\"Requested-By\":\"\"}]]>"
+				]
+			];
+			submissionValuePairs1.push([
+				"RequestedFor",
+				"-1;#sp4@mos.org"
+			]);
+			submissionValuePairs2.push([
+				"RequestedFor",
+				"-1;#sp5@mos.org"
+			]);
+
+			[submissionValuePairs1, submissionValuePairs2].forEach((submissionValuePairs) => {
+				$().SPServices({
+					operation: 'UpdateListItems',
+					webURL: "https://bmos.sharepoint.com/sites/hr-service-signups",
+					listName: 'SWFList',
+					batchCmd: 'New',
+					ID: 0,
+					valuepairs: submissionValuePairs,
+					completefunc: function (xData, Status) {
+						var errorCode = $(xData.responseXML).find('ErrorCode').text();
+						if (errorCode != '0x00000000') {
+							if (errorCode == '') { errorCode = '""'; }
+							console.log('errorCode = ' + errorCode);
+							// console.log('submissionValuePairs');
+							console.log(submissionValuePairs);
+							console.log("");
+							//var emailBody = 'error = ' + errorCode + '; legacy ID = ' + $(requestValue).find('legacyID').text() + '; name = ' + lastName + ', ' + firstName;
+							//SendErrorEmail('noreply@mos.org', emailErrorsTo, emailBody, 'Hub migration error: ' + errorCode)
+						} else if (Status == 'Error') {
+							console.log('Status = Error');
+							// console.log('submissionValuePairs');
+							console.log(submissionValuePairs);
+							console.log("");
+						} else {
+							var newRequestID = $(xData.responseXML).SPFilterNode("z:row").attr("ows_ID");
+							console.log('submissionValuePairs');
+							console.log(submissionValuePairs);
+							console.log("");
+						}
+					}
+				});
+			});
+		});
+	};
+
+
+
 	$.fn.RenderCalendarForGSESchedules = function (buttons, relevantRole) {
 		var nowAsISOLocal = $().ReturnFormattedDateTime('nowLocal', null, null);
 		var viewToUse = GetParamFromUrl(location.search, 'view');
@@ -19042,6 +19457,8 @@
 			}
 		});
 
+		$().CreateFakeGSEStuff(gseJobsArray, gseSchedulesArray, gseSignupsArray);
+
 		console.log('gseSchedulesArray');
 		console.log(gseSchedulesArray);
 
@@ -19051,6 +19468,7 @@
 		console.log('gseSignupsArray');
 		console.log(gseSignupsArray);
 
+
 		gseSchedulesArray.forEach((schedule) => {
 			var jobThisSchedule = {};
 			var signupsThisSchedule = [];
@@ -19059,6 +19477,16 @@
 					jobThisSchedule = job;
 				}
 			});
+			if (jobThisSchedule == {}) {
+				console.log('schedule.JobID');
+				console.log(schedule.JobID);
+			}
+			if (!jobThisSchedule.formData) {
+				console.log('schedule.JobID');
+				console.log(schedule.JobID);
+				console.log('gseJobsArray');
+				console.log(gseJobsArray);
+			}
 			gseSignupsArray.forEach((signup) => {
 				if (signup.ScheduleID === schedule.ScheduleID) {
 					signupsThisSchedule.push(signup);
@@ -22286,7 +22714,10 @@
 				rData.formData['time-storage_StartTime'].substring(11, 16);
 			scheduleStartDatetime = moment.tz(scheduleStartDatetime, "America/New_York").format();
 			var nowAsISOLocal = $().ReturnFormattedDateTime('nowLocal', null, null);
-			if (moment(scheduleStartDatetime).isAfter(nowAsISOLocal)) {
+			if (
+				moment(scheduleStartDatetime).isAfter(nowAsISOLocal) || 
+				$('input#Signup-ID').val() == ''
+			) {
 				$("div#signup-people").show("fast").removeClass("hidden");
 			} else {
 				var radioButtonIDs = [];
@@ -22413,6 +22844,42 @@
 			$("div#label-and-control_Prime-Institution").show("fast").removeClass("hidden");
 			$("div#label-and-control_Outside-PI").show("fast").removeClass("hidden");
 		}
+	};
+
+
+
+	$.fn.ImportGSEJobRequestDataToGSESchedule = function (jobID) {
+
+		var jobData = $().GetFieldsFromOneRow({
+			"listName": "swfList",
+			"webURL": "https://bmos.sharepoint.com/sites/hr-service-jobs",
+			"select": [{
+				"nameHere": "formData",
+				"nameInList": "AllRequestData"
+			}],
+			"where": {
+				"field": "ID",
+				"type": "Number",
+				"value": jobID,
+			}
+		});
+
+		console.log(jobData);
+
+		var jobDataSelected = {};
+
+		if ("Job-Title" in jobData.formData) {
+			jobDataSelected["Job-Title"] = jobData.formData["Job-Title"];
+		} else {
+			jobDataSelected["Job-Title"] = 'Job Title could not be found';
+		}
+		if ("Job-Description" in jobData.formData) {
+			jobDataSelected["Job-Description"] = jobData.formData["Job-Description"];
+		} else {
+			jobDataSelected["Job-Description"] = 'Job Description could not be found';
+		}
+		PopulateFormData("div#request-form", jobDataSelected, "https://bmos.sharepoint.com/sites/hr-service-schedules/Lists/SWFList", jobID, undefined);
+
 	};
 
 

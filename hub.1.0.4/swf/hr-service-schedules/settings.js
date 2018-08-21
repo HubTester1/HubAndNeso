@@ -1023,13 +1023,31 @@
 						}
 					]
 				},
-				// leave this - just signals basic validation to make sure the value is a positive integer
 				'addtlValidationType': 'validPositiveInteger',
-
 				'hideButtonForNonAdmin': ['Submitted', 'Completed', 'Cancelled'],
 				'hideButtonForAdmin': ['Submitted', 'Completed', 'Cancelled'],
 				"requiredForNonAdmin": [""],
 				"requiredForAdmin": [""]
+			}, {
+				'elementType': "field",
+				'controlType': "text",
+				'fieldName': "Job Title",
+				'labelContent': "Job Title",
+				'requiredForNonAdmin': ['', 'Submitted'],
+				'requiredForAdmin': ['', 'Submitted'],
+				'disabledForNonAdmin': ['', 'Submitted', 'Completed', 'Cancelled'],
+				'disabledForAdmin': ['', 'Submitted', 'Completed', 'Cancelled']
+			}, {
+				'elementType': "field",
+				'controlType': "textarea",
+				'fieldName': "Job Description",
+				'labelContent': "Job Description",
+				'requiredForNonAdmin': ['', 'Submitted'],
+				'requiredForAdmin': ['', 'Submitted'],
+				'disabledForNonAdmin': ['', 'Submitted', 'Completed', 'Cancelled'],
+				'disabledForAdmin': ['', 'Submitted', 'Completed', 'Cancelled']
+			
+			
 			}, {
 				'elementType': "markup",
 				'tag': "h2",
@@ -1360,6 +1378,23 @@
 	fData.CustomScriptLast = '$("div#label-and-control_Requested-For").hide("fast").addClass("hidden");';
 
 	fData.CustomScriptLast += '$().EnableGSEScheduleSignupDisplaysAndResponses(); \n';
+
+	fData.CustomScriptLast += '$("input#id-or-link_GSE-Job-Request-ID").change(function() { \n' + 
+								'	$().ImportGSEJobRequestDataToGSESchedule($("input#id-or-link_GSE-Job-Request-ID").val()); \n' + 
+								'}); \n';
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	// TEMPORARY
 
