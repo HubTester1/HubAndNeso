@@ -51,7 +51,7 @@
 					"target": null
 				}
 			],
-			'sections': {
+			/* 'sections': {
 				'commonColumns': [
 					{
 						'displayName': 'Schedule ID',
@@ -103,7 +103,7 @@
 						'basicRSQueryRelevantStatus': 'Cancelled'
 					}
 				]
-			}
+			} */
 		},
 		
 		// screen 2.3
@@ -131,7 +131,7 @@
 					"target": null
 				}
 			],
-			'sections': {
+			/* 'sections': {
 				'commonColumns': [
 					{
 						'displayName': 'Request ID',
@@ -189,7 +189,7 @@
 						'myRSQueryRelevantStatusAssigned': 'Approved'
 					}
 				]
-			}
+			} */
 		},
 		
 		// screen 2.3
@@ -212,7 +212,7 @@
 					"target": null
 				}
 			],
-			'sections': {
+			/* 'sections': {
 				'commonColumns': [
 					{
 						'displayName': 'Request ID',
@@ -271,7 +271,7 @@
 						'myDeptRSQueryRelevantStatus': 'Closed'
 					}
 				]
-			}
+			} */
 		},
 		
 		// screen 2.3
@@ -289,7 +289,7 @@
 					"target": null
 				}
 			],
-			'sections': {
+			/* 'sections': {
 				'commonColumns': [
 					{
 						'displayName': 'Request ID',
@@ -347,7 +347,7 @@
 						'myRSQueryRelevantStatusAssigned': 'Approved'
 					}
 				]
-			}
+			} */
 		},
 		
 

@@ -11,6 +11,15 @@ router.get('/', (req, res, next) => {
 	// respond with a simple message
 	res.send("Ain't nothin' here.");
 });
+// for GET request for /users
+router.get('/users', (req, res, next) => {
+	// get a promise to retrieve user data
+	nesoActiveDirectory.ReturnAllUsers()
+		// if the promise is resolved with the docs, then respond with the docs as JSON
+		.then((result) => { res.json(result); })
+		// if the promise is rejected with an error, then respond with the error as JSON
+		.catch((error) => { res.json(error); });
+});
 // for GET request for /user/:account
 router.get('/user/:account', (req, res, next) => {
 	// get a promise to retrieve user data

@@ -4107,7 +4107,7 @@
 		}
 
 		// if this is a GSE Signup (either new or existing)
-		if (mData.requestName == "GSE Signup") {
+		if (mData.requestName == "GSE Signup" && GetParamFromUrl(location.search, "r") !== '') {
 			// if this is an existing GSE Signup, in which case a GSE Schedule ID was not specified in the URL 
 			if (rData.requestStatus != "") {
 				// extract the schedule ID from the saved request data
@@ -7401,20 +7401,14 @@
 		
 		} else if (type === "gseSignupsHRAdmin") {
 			$().RenderOverviewScreenButtons(oData.gseSignupsHRAdmin.buttons, 0);
-			//$("div#overview-table-container").html("<p>This is 3.2 Signups List for HR Admin (gseSignupsHRAdmin).</p>");
-			$().RenderAllDataTables(oData.gseSignupsHRAdmin.sections, "overview-table-container");
+			$().RenderAllDataTablesForGSESignupsForHRAdmin("overview-table-container", 'gseHRAdmin');
 		} else if (type === "gseSignupsManager") {
 			$().RenderOverviewScreenButtons(oData.gseSignupsManager.buttons, 0);
-			//$("div#overview-table-container").html("<p>This is 3.2 Signups List for Manager (gseSignupsManager).</p>");
-			$().RenderAllDataTables(oData.gseSignupsManager.sections, "overview-table-container");
+			$().RenderAllDataTablesForGSESignups("overview-table-container", 'gseManager');
 		} else if (type === "gseSignupsStaff") {
 			$().RenderOverviewScreenButtons(oData.gseSignupsStaff.buttons, 0);
-			//$("div#overview-table-container").html("<p>This is 3.2 Signups List for Staff (including Job Admins) (gseSignupsStaff).</p>");
-			$().RenderAllDataTables(oData.gseSignupsStaff.sections, "overview-table-container");
+			$().RenderAllDataTablesForGSESignupsForUsers("overview-table-container", 'gseUserOnly');
 		}
-
-		console.log('type');
-		console.log(type);
 
 		$("div#overview-screen-container").addClass(type + "-requests");
 		setInterval(function () { $().TryMaintenanceModeThisComponentThisUser(); }, mData.maintenanceModeCheckFrequency);
@@ -19796,60 +19790,6 @@
 
 	};
 
-	/* $.fn.ReturnGSEJobDataForCalendarItem = function (jobID) {
-		return $().GetFieldsFromOneRow({
-			'listName': 'SWFList',
-			'webURL': 'https://bmos.sharepoint.com/sites/hr-service-jobs',
-			'select': [
-				{
-					'nameHere': 'JobTitle',
-					'nameInList': 'JobTitle',
-				}, {
-					'nameHere': 'JobAdmin',
-					'nameInList': 'JobAdmin'
-				}, {
-					'nameHere': 'formData',
-					'nameInList': 'AllRequestData'
-				}
-			],
-			'where': {
-				'field': 'ID',
-				'type': 'Number',
-				'value': jobID,
-			}
-		});
-	}; */
-
-
-
-	/* $.fn.ReturnGSESignupDataForCalendarItem = function (scheduleID) {
-		return $().GetFieldsFromSpecifiedRows({
-			"select": [{
-				"nameHere": "signupID",
-				"nameInList": "ID"
-			}, {
-				"nameHere": "signupPerson",
-				"nameInList": "RequestedFor"
-			}],
-			"webURL": "https://bmos.sharepoint.com/sites/hr-service-signups",
-			"where": {
-				"ands": [
-					{
-						"field": "ScheduleID",
-						"type": "Text",
-						"value": scheduleID,
-					}, {
-						"field": "RequestStatus",
-						"type": "Text",
-						"operator": "Neq",
-						"value": "Cancelled",
-					}
-				]
-			}
-		});
-	}; */
-
-
 
 	$.fn.ReturnDataAndConfigForDataTableForGSESchedules = function (table, relevantRole) {
 
@@ -19938,7 +19878,44 @@
 			tableConfig.datatableData.push(row);
 		});
 		return tableConfig;
-	}
+	};
+
+
+
+	$.fn.ReturnDataAndConfigForDataTableForGSESignups = function (table, relevantRole) {
+
+		var tableConfig = {
+			'datatableFields': [],
+			'theadDetails': '',
+			'datatableData': [],
+		};
+
+		$.each(table.columns, function (i, column) {
+			tableConfig.datatableFields.push({
+				"data": column.dataName
+			});
+			tableConfig.theadDetails += "<th>" + column.displayName + "</th>";
+		});
+		console.log('table.dataSource');
+		console.log(table.dataSource);
+
+		table.dataSource.forEach((signup) => {
+			var row = {};
+			var isoStartDatetime = signup.Schedule.Date.slice(0, 10) + signup.Schedule.StartTime.slice(10, 19);
+			row.Date = $().ReturnSortableDate(isoStartDatetime, null, 'MMMM D, YYYY', 1);
+			row.StartTime = $().ReturnSortableDate(isoStartDatetime, null, 'h:mm a', 1);
+			row.IDMarkup = "<a href = \"" + mData.fullSiteBaseURL + "/SitePages/App.aspx?r=" + signup.SignupID +
+				"\" data-button-type=\"existingRequest\" " +
+				"data-request-id=\"" + signup.SignupID + "\"" +
+				"class=\"link_request-id\">" +
+				signup.SignupID + "</a>";
+			row.JobTitle = signup.Job.JobTitle;
+			row.ShiftLength = signup.Schedule.ShiftLength;
+			row.Location = signup.Schedule.Location;
+			tableConfig.datatableData.push(row);
+		});
+		return tableConfig;
+	};
 
 
 
@@ -20180,7 +20157,7 @@
 				'tableID': 'submitted',
 				'columns': [
 					{
-						'displayName': "Schedule ID",
+						'displayName': "Opportunity",
 						'dataName': "ViewByIDLink",
 					}, {
 						'displayName': "Job Title",
@@ -20192,7 +20169,7 @@
 						'displayName': "Start Time",
 						'dataName': "StartTime",
 					}, {
-						'displayName': "Schedule Length",
+						'displayName': "Length",
 						'dataName': "ShiftLength",
 					}, {
 						'displayName': "Reports To",
@@ -20228,6 +20205,265 @@
 		});
 	};
 
+
+
+	$.fn.RenderAllDataTablesForGSESignupsForHRAdmin = function (targetID, relevantRole) {
+		console.log('RenderAllDataTablesForGSESignupsForHRAdmin');
+		var renderPrepStartTime = Date.now();
+		var managersWithDownline = $().ReturnManagersWithFullHierarchicalDownline();
+		console.log(managersWithDownline);
+		managersWithDownline.forEach((manager) => {
+			var managerSectionMarkup = '<div class="manager-name collapsible">' + 
+				manager.displayName + '</div> \n' + 
+				'<div class="manager-content">';
+
+			var downlineDivisionKeys = Object.keys(manager.downline);
+			downlineDivisionKeys.forEach((divisionKey) => {
+				var downlineDepartmentKeys = Object.keys(manager.downline[divisionKey]);
+				downlineDepartmentKeys.forEach((departmentKey) => {
+					managerSectionMarkup += '<div class="department-name collapsible">' +
+						departmentKey + '</div> \n' +
+						'<div class="department-content">Hello</div>';
+				});
+			});
+			managerSectionMarkup += '</div>'
+			$("#" + targetID).append(managerSectionMarkup);
+		});
+
+
+		// collapse collapsible
+		$('.collapsible').collapsible();
+		console.log('render prep time = ' + (Date.now() - renderPrepStartTime) / 1000 + ' seconds');
+	};
+
+
+
+	$.fn.RenderAllDataTablesForGSESignupsForUsers = function (targetID, relevantRole) {
+
+		console.log('uData');
+		console.log(uData);
+		var renderPrepStartTime = Date.now();
+		var tablesToRender = [];
+		if (relevantRole === 'gseUserOnly') {
+			var augmentedSignupsPending = [];
+			var augmentedSignupsGranted = [];
+			var augmentedSignupsDenied = [];
+			var augmentedSignupsCancelled = [];
+			// get my signups
+			var gseSignupsArray = $().GetFieldsFromSpecifiedRows({
+				"select": [
+					{
+						"nameHere": "SignupID",
+						"nameInList": "ID"
+					}, {
+						"nameHere": "JobID",
+						"nameInList": "JobID"
+					}, {
+						"nameHere": "ScheduleID",
+						"nameInList": "ScheduleID"
+					}, {
+						"nameHere": "RequestStatus",
+						"nameInList": "RequestStatus"
+					}
+				],
+				"webURL": "https://bmos.sharepoint.com/sites/hr-service-signups",
+				"where": {
+					"field": "RequestedFor",
+					"type": "Text",
+					"value": uData.name,
+				}
+			});
+			// get all schedules
+			var gseSchedulesArray = $().GetFieldsFromAllRows({
+				'webURL': 'https://bmos.sharepoint.com/sites/hr-service-schedules',
+				'select': [
+					{
+						'nameHere': 'ScheduleID',
+						'nameInList': 'ID'
+					}, {
+						'nameHere': 'Date',
+						'nameInList': 'Date'
+					}, {
+						'nameHere': 'StartTime',
+						'nameInList': 'StartTime'
+					}, {
+						'nameHere': 'Location',
+						'nameInList': 'Location'
+					}, {
+						'nameHere': 'ShiftLength',
+						'nameInList': 'ShiftLength'
+					}
+				]
+			});
+			// get all jobs
+			var gseJobsArray = $().GetFieldsFromAllRows({
+				'webURL': 'https://bmos.sharepoint.com/sites/hr-service-jobs',
+				'select': [
+					{
+						'nameHere': 'JobID',
+						'nameInList': 'ID',
+					}, {
+						'nameHere': 'JobTitle',
+						'nameInList': 'JobTitle',
+					}
+				]
+			});
+			// mashup the data
+			gseSignupsArray.forEach((signup) => {
+				var signupCopy = signup;
+				gseJobsArray.forEach((job) => {
+					if (job.JobID === signup.JobID) {
+						signupCopy.Job = job;
+					}
+				});
+				gseSchedulesArray.forEach((schedule) => {
+					if (schedule.ScheduleID === signup.ScheduleID) {
+						signupCopy.Schedule = schedule;
+					}
+				});
+				switch (signup.RequestStatus) {
+					case 'Signed Up':
+						augmentedSignupsPending.push(signupCopy);
+						break;
+					case 'Credit Granted':
+						augmentedSignupsGranted.push(signupCopy);
+						break;
+					case 'Credit Denied':
+						augmentedSignupsDenied.push(signupCopy);
+						break;
+					case 'Cancelled':
+						augmentedSignupsCancelled.push(signupCopy);
+						break;
+				}
+			});
+			tablesToRender.push({
+				'tableTitle': 'Credit Pending',
+				'tableID': 'credit-pending',
+				'columns': [
+					{
+						'displayName': "Signup ID",
+						'dataName': "IDMarkup",
+					}, {
+						'displayName': "Job Title",
+						'dataName': "JobTitle",
+					}, {
+						'displayName': "Date",
+						'dataName': "Date",
+					}, {
+						'displayName': "Start Time",
+						'dataName': "StartTime",
+					}, {
+						'displayName': "Schedule Length",
+						'dataName': "ShiftLength",
+					}, {
+						'displayName': "Location",
+						'dataName': "Location",
+					}
+				],
+				'sortColAndOrder': [[3, 'asc'], [4, 'asc']],
+				'dataSource': augmentedSignupsPending
+			});
+			tablesToRender.push({
+				'tableTitle': 'Credit Granted',
+				'tableID': 'credit-granted',
+				'columns': [
+					{
+						'displayName': "Signup ID",
+						'dataName': "IDMarkup",
+					}, {
+						'displayName': "Job Title",
+						'dataName': "JobTitle",
+					}, {
+						'displayName': "Date",
+						'dataName': "Date",
+					}, {
+						'displayName': "Start Time",
+						'dataName': "StartTime",
+					}, {
+						'displayName': "Schedule Length",
+						'dataName': "ShiftLength",
+					}, {
+						'displayName': "Location",
+						'dataName': "Location",
+					}
+				],
+				'sortColAndOrder': [[3, 'asc'], [4, 'asc']],
+				'dataSource': augmentedSignupsGranted
+			});
+			tablesToRender.push({
+				'tableTitle': 'Credit Denied',
+				'tableID': 'credit-denied',
+				'columns': [
+					{
+						'displayName': "Signup ID",
+						'dataName': "IDMarkup",
+					}, {
+						'displayName': "Job Title",
+						'dataName': "JobTitle",
+					}, {
+						'displayName': "Date",
+						'dataName': "Date",
+					}, {
+						'displayName': "Start Time",
+						'dataName': "StartTime",
+					}, {
+						'displayName': "Schedule Length",
+						'dataName': "ShiftLength",
+					}, {
+						'displayName': "Location",
+						'dataName': "Location",
+					}
+				],
+				'sortColAndOrder': [[3, 'asc'], [4, 'asc']],
+				'dataSource': augmentedSignupsDenied
+			});
+			tablesToRender.push({
+				'tableTitle': 'Cancelled',
+				'tableID': 'cancelled',
+				'columns': [
+					{
+						'displayName': "Signup ID",
+						'dataName': "IDMarkup",
+					}, {
+						'displayName': "Job Title",
+						'dataName': "JobTitle",
+					}, {
+						'displayName': "Date",
+						'dataName': "Date",
+					}, {
+						'displayName': "Start Time",
+						'dataName': "StartTime",
+					}, {
+						'displayName': "Schedule Length",
+						'dataName': "ShiftLength",
+					}, {
+						'displayName': "Location",
+						'dataName': "Location",
+					}
+				],
+				'sortColAndOrder': [[3, 'asc'], [4, 'asc']],
+				'dataSource': augmentedSignupsCancelled
+			});
+			tablesToRender.forEach((t) => {
+				var thisTableConfig = $().ReturnDataAndConfigForDataTableForGSESignups(t, relevantRole);
+				if (!t.sortColAndOrder) {
+					t.sortColAndOrder = [0, 'asc'];
+				}
+				$().RenderListAsDatatable({
+					'tableTitle': t.tableTitle,
+					'tableID': t.tableID,
+					'theadDetails': thisTableConfig.theadDetails,
+					'listForDatatable': thisTableConfig.datatableData,
+					'datatableFields': thisTableConfig.datatableFields,
+					'sortColAndOrder': t.sortColAndOrder,
+					'targetID': targetID,
+				});
+			});
+			console.log('render prep time = ' + (Date.now() - renderPrepStartTime) / 1000 + ' seconds');
+		}
+	};
+
+	
 
 	$.fn.GetListDataForDatatable = function (options) {
 
@@ -21731,6 +21967,54 @@
 			method: "GET",
 			dataType: "json",
 			url: "https://neso.mos.org/activeDirectory/managers?ts=" + Date.now(),
+		})
+			.done(function (nesoData) {
+				// console.log("nesoData:");
+				// console.log(nesoData);
+				managers = nesoData.docs;
+			})
+			.fail(function (error) {
+				// console.log("no such luck - NESO");
+				// console.log(error);
+				managers = error;
+			});
+		return managers;
+	};
+
+
+
+	$.fn.ReturnManagersWithFullHierarchicalDownline = function () {
+		var managers = [];
+		// query the api for the data
+		$.ajax({
+			async: false,
+			method: "GET",
+			dataType: "json",
+			url: "https://neso.mos.org/activeDirectory/managers/downline/hierarchical?ts=" + Date.now(),
+		})
+			.done(function (nesoData) {
+				// console.log("nesoData:");
+				// console.log(nesoData);
+				managers = nesoData.docs;
+			})
+			.fail(function (error) {
+				// console.log("no such luck - NESO");
+				// console.log(error);
+				managers = error;
+			});
+		return managers;
+	};
+
+
+
+	$.fn.ReturnUsers = function () {
+		var managers = [];
+		// query the api for the data
+		$.ajax({
+			async: false,
+			method: "GET",
+			dataType: "json",
+			url: "https://neso.mos.org/activeDirectory/users?ts=" + Date.now(),
 		})
 			.done(function (nesoData) {
 				// console.log("nesoData:");

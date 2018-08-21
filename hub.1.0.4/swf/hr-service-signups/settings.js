@@ -43,7 +43,7 @@
 					"target": null
 				}
 			],
-			'sections': {
+			/* 'sections': {
 				'commonColumns': [
 					{
 						'displayName': 'Request ID',
@@ -81,7 +81,7 @@
 						'basicMyEOLQueryRelevantValue': 1
 					}
 				]
-			}
+			} */
 		},
 
 		// screen 3.2
@@ -104,7 +104,7 @@
 					"target": null
 				}
 			],
-			'sections': {
+			/* 'sections': {
 				'commonColumns': [
 					{
 						'displayName': 'Request ID',
@@ -142,7 +142,7 @@
 						'basicMyEOLQueryRelevantValue': 1
 					}
 				]
-			}
+			} */
 		},
 
 		// screen 3.2
@@ -160,10 +160,6 @@
 					"href": "/sites/hr-service-schedule/SitePages/App.aspx",
 					"target": null,
 					"restrictedToRoles": ["gseUserOnly"]
-
-
-
-
 				}, {
 					"linkType": "goForward",
 					"anchorText": "My Jobs",
@@ -182,14 +178,9 @@
 					"href": "/sites/hr-service-schedule/SitePages/App.aspx",
 					"target": null,
 					"restrictedToRoles": ["gseJobAdmin"]
-
-
-
-
-
 				}
 			],
-			'sections': {
+			/* 'sections': {
 				'commonColumns': [
 					{
 						'displayName': 'Request ID',
@@ -216,18 +207,18 @@
 				],
 				'tables': [
 					{
-						'tableTitle': 'Open',
-						'tableID': 'open',
+						'tableTitle': 'Coming',
+						'tableID': 'coming',
 						'someColsAreUsers': 1,
 						'basicMyEOLQueryRelevantValue': 0
 					}, {
-						'tableTitle': 'Closed',
-						'tableID': 'closed',
+						'tableTitle': 'Past',
+						'tableID': 'past',
 						'someColsAreUsers': 1,
 						'basicMyEOLQueryRelevantValue': 1
 					}
 				]
-			}
+			} */
 		}
 	};
 
