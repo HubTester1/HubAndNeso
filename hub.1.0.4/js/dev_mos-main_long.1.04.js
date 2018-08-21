@@ -7413,6 +7413,9 @@
 			$().RenderAllDataTables(oData.gseSignupsStaff.sections, "overview-table-container");
 		}
 
+		console.log('type');
+		console.log(type);
+
 		$("div#overview-screen-container").addClass(type + "-requests");
 		setInterval(function () { $().TryMaintenanceModeThisComponentThisUser(); }, mData.maintenanceModeCheckFrequency);
 	}
@@ -19249,7 +19252,7 @@
 			});
 		} */
 
-		// delete previous signups
+		/* // delete previous signups
 		$().SPServices.SPUpdateMultipleListItems({
 			webURL: "https://bmos.sharepoint.com/sites/hr-service-signups",
 			listName: 'SWFList',
@@ -19266,8 +19269,7 @@
 
 		// create new signups
 		schedules.forEach((schedule, index) => {
-			var submissionValuePairs1, submissionValuePairs2;
-			submissionValuePairs1 = submissionValuePairs2 = [
+			var submissionValuePairs1 = [
 				[
 					"RequestDate",
 					"2018-08-21T09:46:44-04:00"
@@ -19329,18 +19331,86 @@
 					schedule.ScheduleID
 				],
 				[
+					"RequestedFor",
+					"-1;#sp4@mos.org"
+				],
+				[
 					"AllRequestData",
 					"<![CDATA[{\"RepeatedElements\": [],\"Request-Date\":\"2018-08-21T09:46:44-04:00\",\"Request-Nickname\":\"221-1704-sp4\",\"Requester-Name\":\"Hub Tester4\",\"Requester-Department\":\"Interactive Media\",\"Requester-Email\":\"sp4@mos.org\",\"Requester-Account\":\"i:0#.f|membership|sp4@mos.org\",\"Job-ID\":\"221\",\"Schedule-ID\":\"" + schedule.ScheduleID + "\",\"Positions-Available\":\"3\",\"Schedule-Start-Datetime\":\"2019-06-15T09:00:00-04:00\",\"Current-Datetime\":\"2018-08-21T09:45:22-04:00\",\"sign-up_signup\":\"signUp\",\"Request-Status\":\"Signed Up\",\"Beginning-of-Life\":\"1\",\"End-of-Life\":\"0\",\"Approval-Newly-Needed-Notify\":\"none\",\"Approval-Not-Needed-Notify\":\"none\",\"Approval-Still-Needed-Notify\":\"none\",\"Newly-Approved-or-Pending\":\"0\",\"Last-Modified-Timestamp-Mismatch\":\"0\",\"Admin-Email\":\"jbaker@mos.org\",\"Request-Name\":\"GSE Signup\",\"SWF-Version\":\"1.0\",\"Component-Group-Admin\":\"872;#Hub Tester10,#i:0#.f|membership|sp10@mos.org,#sp10@mos.org,#sp10@MOS.ORG,#Hub Tester10,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/sp10_mos_org_MThumb.jpg,#Interactive Media,#;#873;#Hub Tester11,#i:0#.f|membership|sp11@mos.org,#sp11@mos.org,#sp11@MOS.ORG,#Hub Tester11,#,#Interactive Media,#;#6;#James Baker,#i:0#.f|membership|jbaker@mos.org,#jbaker@mos.org,#jbaker@mos.org,#James Baker,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/jbaker_mos_org_MThumb.jpg?t=63616027741,#Interactive Media,#Intranet Solutions Project Manager;#20;#Ben Wilson,#i:0#.f|membership|bwilson@mos.org,#bwilson@mos.org,#bwilson@mos.org,#Ben Wilson,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/bwilson_mos_org_MThumb.jpg,#Interactive Media,#Director of Digital &amp; Interactive Media;#467;#Samuel Corey,#i:0#.f|membership|scorey@mos.org,#scorey@mos.org,#scorey@MOS.ORG,#Samuel Corey,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/scorey_mos_org_MThumb.jpg,#Interactive Media,#Web Developer\",\"Component-Admin\":\"30;#Christine Flebbe,#i:0#.f|membership|cflebbe@mos.org,#cflebbe@mos.org,#cflebbe@mos.org,#Christine Flebbe,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/cflebbe_mos_org_MThumb.jpg,#Human Resources,#Manager,, Compensation &amp; Benefits;#427;#Lorah Broderick,#i:0#.f|membership|lbroderick@mos.org,#lbroderick@mos.org,#lbroderick@mos.org,#Lorah Broderick,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/lsnow_mos_org_MThumb.jpg,#Human Resources,#Benefits &amp; Employee Programs Administrator;#29;#Margo Smith,#i:0#.f|membership|msmith@mos.org,#msmith@mos.org,#msmith@mos.org,#Margo Smith,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/msmith_mos_org_MThumb.jpg,#Human Resources,#Manager,, Talent Acquisition &amp; Development\",\"Current-User-Display-Name\":\"Hub Tester4\",\"Current-User-Name\":\"sp4@mos.org\",\"Current-User-is-Admin\":\"0\",\"Current-User-is-Component-Group-Admin\":\"0\",\"Component-ID\":\"160\",\"Self-or-Other\":\"Talk to me\",\"User-Machine-History\":\"August 21, 2018 9:46 am - Firefox 61.0 - probably desktop - Linux %0A %0AAugust 20, 2018 3:11 pm - Firefox 61.0 - probably desktop - Linux %0A %0A\",\"Requested-For\":[{\"account\": \"i:0#.f|membership|sp4@mos.org\",\"displayText\": \"Hub Tester4\",\"description\": \"sp4@mos.org\"}],\"Requested-By\":\"\"}]]>"
 				]
 			];
-			submissionValuePairs1.push([
-				"RequestedFor",
-				"-1;#sp4@mos.org"
-			]);
-			submissionValuePairs2.push([
-				"RequestedFor",
-				"-1;#sp5@mos.org"
-			]);
+
+			var submissionValuePairs2 = [
+				[
+					"RequestDate",
+					"2018-08-21T09:46:44-04:00"
+				],
+				[
+					"Title",
+					"221-1704-sp4"
+				],
+				[
+					"RequestStatus",
+					"Signed Up"
+				],
+				[
+					"BeginningOfLife",
+					"1"
+				],
+				[
+					"EndOfLife",
+					"0"
+				],
+				[
+					"ApprovalNewlyNeededNotify",
+					"none"
+				],
+				[
+					"ApprovalNotNeededNotify",
+					"none"
+				],
+				[
+					"ApprovalStillNeededNotify",
+					"none"
+				],
+				[
+					"NewlyApprovedOrPending",
+					"0"
+				],
+				[
+					"AdminEmail",
+					"jbaker@mos.org"
+				],
+				[
+					"RequestName",
+					"GSE Signup"
+				],
+				[
+					"SWFVersion",
+					"1.0"
+				],
+				[
+					"RequestedBy",
+					""
+				],
+				[
+					"JobID",
+					schedule.JobID
+				],
+				[
+					"ScheduleID",
+					schedule.ScheduleID
+				],
+				[
+					"RequestedFor",
+					"-1;#sp5@mos.org"
+				],
+				[
+					"AllRequestData",
+					"<![CDATA[{\"RepeatedElements\": [],\"Request-Date\":\"2018-08-21T09:46:44-04:00\",\"Request-Nickname\":\"221-1704-sp4\",\"Requester-Name\":\"Hub Tester4\",\"Requester-Department\":\"Interactive Media\",\"Requester-Email\":\"sp4@mos.org\",\"Requester-Account\":\"i:0#.f|membership|sp4@mos.org\",\"Job-ID\":\"221\",\"Schedule-ID\":\"" + schedule.ScheduleID + "\",\"Positions-Available\":\"3\",\"Schedule-Start-Datetime\":\"2019-06-15T09:00:00-04:00\",\"Current-Datetime\":\"2018-08-21T09:45:22-04:00\",\"sign-up_signup\":\"signUp\",\"Request-Status\":\"Signed Up\",\"Beginning-of-Life\":\"1\",\"End-of-Life\":\"0\",\"Approval-Newly-Needed-Notify\":\"none\",\"Approval-Not-Needed-Notify\":\"none\",\"Approval-Still-Needed-Notify\":\"none\",\"Newly-Approved-or-Pending\":\"0\",\"Last-Modified-Timestamp-Mismatch\":\"0\",\"Admin-Email\":\"jbaker@mos.org\",\"Request-Name\":\"GSE Signup\",\"SWF-Version\":\"1.0\",\"Component-Group-Admin\":\"872;#Hub Tester10,#i:0#.f|membership|sp10@mos.org,#sp10@mos.org,#sp10@MOS.ORG,#Hub Tester10,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/sp10_mos_org_MThumb.jpg,#Interactive Media,#;#873;#Hub Tester11,#i:0#.f|membership|sp11@mos.org,#sp11@mos.org,#sp11@MOS.ORG,#Hub Tester11,#,#Interactive Media,#;#6;#James Baker,#i:0#.f|membership|jbaker@mos.org,#jbaker@mos.org,#jbaker@mos.org,#James Baker,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/jbaker_mos_org_MThumb.jpg?t=63616027741,#Interactive Media,#Intranet Solutions Project Manager;#20;#Ben Wilson,#i:0#.f|membership|bwilson@mos.org,#bwilson@mos.org,#bwilson@mos.org,#Ben Wilson,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/bwilson_mos_org_MThumb.jpg,#Interactive Media,#Director of Digital &amp; Interactive Media;#467;#Samuel Corey,#i:0#.f|membership|scorey@mos.org,#scorey@mos.org,#scorey@MOS.ORG,#Samuel Corey,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/scorey_mos_org_MThumb.jpg,#Interactive Media,#Web Developer\",\"Component-Admin\":\"30;#Christine Flebbe,#i:0#.f|membership|cflebbe@mos.org,#cflebbe@mos.org,#cflebbe@mos.org,#Christine Flebbe,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/cflebbe_mos_org_MThumb.jpg,#Human Resources,#Manager,, Compensation &amp; Benefits;#427;#Lorah Broderick,#i:0#.f|membership|lbroderick@mos.org,#lbroderick@mos.org,#lbroderick@mos.org,#Lorah Broderick,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/lsnow_mos_org_MThumb.jpg,#Human Resources,#Benefits &amp; Employee Programs Administrator;#29;#Margo Smith,#i:0#.f|membership|msmith@mos.org,#msmith@mos.org,#msmith@mos.org,#Margo Smith,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/msmith_mos_org_MThumb.jpg,#Human Resources,#Manager,, Talent Acquisition &amp; Development\",\"Current-User-Display-Name\":\"Hub Tester4\",\"Current-User-Name\":\"sp4@mos.org\",\"Current-User-is-Admin\":\"0\",\"Current-User-is-Component-Group-Admin\":\"0\",\"Component-ID\":\"160\",\"Self-or-Other\":\"Talk to me\",\"User-Machine-History\":\"August 21, 2018 9:46 am - Firefox 61.0 - probably desktop - Linux %0A %0AAugust 20, 2018 3:11 pm - Firefox 61.0 - probably desktop - Linux %0A %0A\",\"Requested-For\":[{\"account\": \"i:0#.f|membership|sp5@mos.org\",\"displayText\": \"Hub Tester4\",\"description\": \"sp5@mos.org\"}],\"Requested-By\":\"\"}]]>"
+				]
+			];
+
 
 			[submissionValuePairs1, submissionValuePairs2].forEach((submissionValuePairs) => {
 				$().SPServices({
@@ -19374,7 +19444,7 @@
 					}
 				});
 			});
-		});
+		}); */
 	};
 
 
@@ -19389,6 +19459,11 @@
 			dateToUse =
 				$().ReturnFormattedDateTime('nowUTC', 'YYYY-MM-DDTHH:mm:ssZ', 'YYYY-MM-DD', 0);
 		}
+
+
+		var renderPrepStartTime = Date.now();
+
+
 		// get all relevant schedules
 		var gseSchedulesArray = $().GetFieldsFromSpecifiedRows({
 			'webURL': 'https://bmos.sharepoint.com/sites/hr-service-schedules',
@@ -19457,7 +19532,7 @@
 			}
 		});
 
-		$().CreateFakeGSEStuff(gseJobsArray, gseSchedulesArray, gseSignupsArray);
+		// $().CreateFakeGSEStuff(gseJobsArray, gseSchedulesArray, gseSignupsArray);
 
 		console.log('gseSchedulesArray');
 		console.log(gseSchedulesArray);
@@ -19531,6 +19606,7 @@
 				'scheduleURL': '/sites/hr-service-schedules/SitePages/App.aspx?r=' + schedule.ScheduleID,
 			};
 
+			
 			// console.log('signupsThisSchedule');
 			// console.log(signupsThisSchedule);
 			// console.log('uData');
@@ -19551,6 +19627,8 @@
 
 			allEvents.push(eventItem);
 		});
+
+		console.log('render prep time = ' + (Date.now() - renderPrepStartTime) / 1000 + ' seconds');
 
 		// console.log('allEvents');
 		// console.log(allEvents);
@@ -19646,8 +19724,15 @@
 
 				var dialogBodyContent = 
 					'<h3 class="gse-schedule-card-dialog-job-title">' + event.jobTitle + '</h3>' + 
-					event.jobDescription + 
-					'<div class="gse-schedule-card-dialog-links-container">';
+					event.jobDescription;
+
+				if (event.isInFuture) {
+					dialogBodyContent += '<p>Signups Available: ' + 
+					(event.quantityPositions - event.quantitySignups) + 
+					' / ' + event.quantityPositions;
+				}
+
+				dialogBodyContent += '<div class="gse-schedule-card-dialog-links-container">';
 
 				if (event.mySignupURL) {
 					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' + 
