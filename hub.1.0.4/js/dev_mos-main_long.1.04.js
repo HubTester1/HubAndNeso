@@ -19246,8 +19246,8 @@
 			});
 		} */
 
-		/* // delete previous signups
-		$().SPServices.SPUpdateMultipleListItems({
+		// delete previous signups
+		/* $().SPServices.SPUpdateMultipleListItems({
 			webURL: "https://bmos.sharepoint.com/sites/hr-service-signups",
 			listName: 'SWFList',
 			CAMLQuery: "<Query><Where><Neq>" + 
@@ -19262,7 +19262,11 @@
 		});
 
 		// create new signups
+		var userBank = ['jbabineau', 'jbaker', 'cgbrown', 'lbrunetto', 'bhamtil', 'shubbard', 'jmcgraw', 'jrivers', 'bwilson'];
+
 		schedules.forEach((schedule, index) => {
+			var user1 = userBank[Math.floor(Math.random() * userBank.length)];
+			var user2 = userBank[Math.floor(Math.random() * userBank.length)];
 			var submissionValuePairs1 = [
 				[
 					"RequestDate",
@@ -19326,11 +19330,11 @@
 				],
 				[
 					"RequestedFor",
-					"-1;#sp4@mos.org"
+					"-1;#" + user1 + "@mos.org"
 				],
 				[
 					"AllRequestData",
-					"<![CDATA[{\"RepeatedElements\": [],\"Request-Date\":\"2018-08-21T09:46:44-04:00\",\"Request-Nickname\":\"221-1704-sp4\",\"Requester-Name\":\"Hub Tester4\",\"Requester-Department\":\"Interactive Media\",\"Requester-Email\":\"sp4@mos.org\",\"Requester-Account\":\"i:0#.f|membership|sp4@mos.org\",\"Job-ID\":\"221\",\"Schedule-ID\":\"" + schedule.ScheduleID + "\",\"Positions-Available\":\"3\",\"Schedule-Start-Datetime\":\"2019-06-15T09:00:00-04:00\",\"Current-Datetime\":\"2018-08-21T09:45:22-04:00\",\"sign-up_signup\":\"signUp\",\"Request-Status\":\"Signed Up\",\"Beginning-of-Life\":\"1\",\"End-of-Life\":\"0\",\"Approval-Newly-Needed-Notify\":\"none\",\"Approval-Not-Needed-Notify\":\"none\",\"Approval-Still-Needed-Notify\":\"none\",\"Newly-Approved-or-Pending\":\"0\",\"Last-Modified-Timestamp-Mismatch\":\"0\",\"Admin-Email\":\"jbaker@mos.org\",\"Request-Name\":\"GSE Signup\",\"SWF-Version\":\"1.0\",\"Component-Group-Admin\":\"872;#Hub Tester10,#i:0#.f|membership|sp10@mos.org,#sp10@mos.org,#sp10@MOS.ORG,#Hub Tester10,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/sp10_mos_org_MThumb.jpg,#Interactive Media,#;#873;#Hub Tester11,#i:0#.f|membership|sp11@mos.org,#sp11@mos.org,#sp11@MOS.ORG,#Hub Tester11,#,#Interactive Media,#;#6;#James Baker,#i:0#.f|membership|jbaker@mos.org,#jbaker@mos.org,#jbaker@mos.org,#James Baker,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/jbaker_mos_org_MThumb.jpg?t=63616027741,#Interactive Media,#Intranet Solutions Project Manager;#20;#Ben Wilson,#i:0#.f|membership|bwilson@mos.org,#bwilson@mos.org,#bwilson@mos.org,#Ben Wilson,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/bwilson_mos_org_MThumb.jpg,#Interactive Media,#Director of Digital &amp; Interactive Media;#467;#Samuel Corey,#i:0#.f|membership|scorey@mos.org,#scorey@mos.org,#scorey@MOS.ORG,#Samuel Corey,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/scorey_mos_org_MThumb.jpg,#Interactive Media,#Web Developer\",\"Component-Admin\":\"30;#Christine Flebbe,#i:0#.f|membership|cflebbe@mos.org,#cflebbe@mos.org,#cflebbe@mos.org,#Christine Flebbe,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/cflebbe_mos_org_MThumb.jpg,#Human Resources,#Manager,, Compensation &amp; Benefits;#427;#Lorah Broderick,#i:0#.f|membership|lbroderick@mos.org,#lbroderick@mos.org,#lbroderick@mos.org,#Lorah Broderick,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/lsnow_mos_org_MThumb.jpg,#Human Resources,#Benefits &amp; Employee Programs Administrator;#29;#Margo Smith,#i:0#.f|membership|msmith@mos.org,#msmith@mos.org,#msmith@mos.org,#Margo Smith,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/msmith_mos_org_MThumb.jpg,#Human Resources,#Manager,, Talent Acquisition &amp; Development\",\"Current-User-Display-Name\":\"Hub Tester4\",\"Current-User-Name\":\"sp4@mos.org\",\"Current-User-is-Admin\":\"0\",\"Current-User-is-Component-Group-Admin\":\"0\",\"Component-ID\":\"160\",\"Self-or-Other\":\"Talk to me\",\"User-Machine-History\":\"August 21, 2018 9:46 am - Firefox 61.0 - probably desktop - Linux %0A %0AAugust 20, 2018 3:11 pm - Firefox 61.0 - probably desktop - Linux %0A %0A\",\"Requested-For\":[{\"account\": \"i:0#.f|membership|sp4@mos.org\",\"displayText\": \"Hub Tester4\",\"description\": \"sp4@mos.org\"}],\"Requested-By\":\"\"}]]>"
+					"<![CDATA[{\"RepeatedElements\": [],\"Request-Date\":\"2018-08-21T09:46:44-04:00\",\"Request-Nickname\":\"221-1704-sp4\",\"Requester-Name\":\"Hub Tester4\",\"Requester-Department\":\"Interactive Media\",\"Requester-Email\":\"sp4@mos.org\",\"Requester-Account\":\"i:0#.f|membership|" + user1 + "@mos.org\",\"Job-ID\":\"221\",\"Schedule-ID\":\"" + schedule.ScheduleID + "\",\"Positions-Available\":\"3\",\"Schedule-Start-Datetime\":\"2019-06-15T09:00:00-04:00\",\"Current-Datetime\":\"2018-08-21T09:45:22-04:00\",\"sign-up_signup\":\"signUp\",\"Request-Status\":\"Signed Up\",\"Beginning-of-Life\":\"1\",\"End-of-Life\":\"0\",\"Approval-Newly-Needed-Notify\":\"none\",\"Approval-Not-Needed-Notify\":\"none\",\"Approval-Still-Needed-Notify\":\"none\",\"Newly-Approved-or-Pending\":\"0\",\"Last-Modified-Timestamp-Mismatch\":\"0\",\"Admin-Email\":\"jbaker@mos.org\",\"Request-Name\":\"GSE Signup\",\"SWF-Version\":\"1.0\",\"Component-Group-Admin\":\"872;#Hub Tester10,#i:0#.f|membership|sp10@mos.org,#sp10@mos.org,#sp10@MOS.ORG,#Hub Tester10,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/sp10_mos_org_MThumb.jpg,#Interactive Media,#;#873;#Hub Tester11,#i:0#.f|membership|sp11@mos.org,#sp11@mos.org,#sp11@MOS.ORG,#Hub Tester11,#,#Interactive Media,#;#6;#James Baker,#i:0#.f|membership|jbaker@mos.org,#jbaker@mos.org,#jbaker@mos.org,#James Baker,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/jbaker_mos_org_MThumb.jpg?t=63616027741,#Interactive Media,#Intranet Solutions Project Manager;#20;#Ben Wilson,#i:0#.f|membership|bwilson@mos.org,#bwilson@mos.org,#bwilson@mos.org,#Ben Wilson,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/bwilson_mos_org_MThumb.jpg,#Interactive Media,#Director of Digital &amp; Interactive Media;#467;#Samuel Corey,#i:0#.f|membership|scorey@mos.org,#scorey@mos.org,#scorey@MOS.ORG,#Samuel Corey,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/scorey_mos_org_MThumb.jpg,#Interactive Media,#Web Developer\",\"Component-Admin\":\"30;#Christine Flebbe,#i:0#.f|membership|cflebbe@mos.org,#cflebbe@mos.org,#cflebbe@mos.org,#Christine Flebbe,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/cflebbe_mos_org_MThumb.jpg,#Human Resources,#Manager,, Compensation &amp; Benefits;#427;#Lorah Broderick,#i:0#.f|membership|lbroderick@mos.org,#lbroderick@mos.org,#lbroderick@mos.org,#Lorah Broderick,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/lsnow_mos_org_MThumb.jpg,#Human Resources,#Benefits &amp; Employee Programs Administrator;#29;#Margo Smith,#i:0#.f|membership|msmith@mos.org,#msmith@mos.org,#msmith@mos.org,#Margo Smith,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/msmith_mos_org_MThumb.jpg,#Human Resources,#Manager,, Talent Acquisition &amp; Development\",\"Current-User-Display-Name\":\"Hub Tester4\",\"Current-User-Name\":\"sp4@mos.org\",\"Current-User-is-Admin\":\"0\",\"Current-User-is-Component-Group-Admin\":\"0\",\"Component-ID\":\"160\",\"Self-or-Other\":\"Talk to me\",\"User-Machine-History\":\"August 21, 2018 9:46 am - Firefox 61.0 - probably desktop - Linux %0A %0AAugust 20, 2018 3:11 pm - Firefox 61.0 - probably desktop - Linux %0A %0A\",\"Requested-For\":[{\"account\": \"i:0#.f|membership|" + user1 + "@mos.org\",\"displayText\": \"Hub Tester4\",\"description\": \"sp4@mos.org\"}],\"Requested-By\":\"\"}]]>"
 				]
 			];
 
@@ -19397,11 +19401,11 @@
 				],
 				[
 					"RequestedFor",
-					"-1;#sp5@mos.org"
+					"-1;#" + user2 + "@mos.org"
 				],
 				[
 					"AllRequestData",
-					"<![CDATA[{\"RepeatedElements\": [],\"Request-Date\":\"2018-08-21T09:46:44-04:00\",\"Request-Nickname\":\"221-1704-sp4\",\"Requester-Name\":\"Hub Tester4\",\"Requester-Department\":\"Interactive Media\",\"Requester-Email\":\"sp4@mos.org\",\"Requester-Account\":\"i:0#.f|membership|sp4@mos.org\",\"Job-ID\":\"221\",\"Schedule-ID\":\"" + schedule.ScheduleID + "\",\"Positions-Available\":\"3\",\"Schedule-Start-Datetime\":\"2019-06-15T09:00:00-04:00\",\"Current-Datetime\":\"2018-08-21T09:45:22-04:00\",\"sign-up_signup\":\"signUp\",\"Request-Status\":\"Signed Up\",\"Beginning-of-Life\":\"1\",\"End-of-Life\":\"0\",\"Approval-Newly-Needed-Notify\":\"none\",\"Approval-Not-Needed-Notify\":\"none\",\"Approval-Still-Needed-Notify\":\"none\",\"Newly-Approved-or-Pending\":\"0\",\"Last-Modified-Timestamp-Mismatch\":\"0\",\"Admin-Email\":\"jbaker@mos.org\",\"Request-Name\":\"GSE Signup\",\"SWF-Version\":\"1.0\",\"Component-Group-Admin\":\"872;#Hub Tester10,#i:0#.f|membership|sp10@mos.org,#sp10@mos.org,#sp10@MOS.ORG,#Hub Tester10,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/sp10_mos_org_MThumb.jpg,#Interactive Media,#;#873;#Hub Tester11,#i:0#.f|membership|sp11@mos.org,#sp11@mos.org,#sp11@MOS.ORG,#Hub Tester11,#,#Interactive Media,#;#6;#James Baker,#i:0#.f|membership|jbaker@mos.org,#jbaker@mos.org,#jbaker@mos.org,#James Baker,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/jbaker_mos_org_MThumb.jpg?t=63616027741,#Interactive Media,#Intranet Solutions Project Manager;#20;#Ben Wilson,#i:0#.f|membership|bwilson@mos.org,#bwilson@mos.org,#bwilson@mos.org,#Ben Wilson,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/bwilson_mos_org_MThumb.jpg,#Interactive Media,#Director of Digital &amp; Interactive Media;#467;#Samuel Corey,#i:0#.f|membership|scorey@mos.org,#scorey@mos.org,#scorey@MOS.ORG,#Samuel Corey,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/scorey_mos_org_MThumb.jpg,#Interactive Media,#Web Developer\",\"Component-Admin\":\"30;#Christine Flebbe,#i:0#.f|membership|cflebbe@mos.org,#cflebbe@mos.org,#cflebbe@mos.org,#Christine Flebbe,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/cflebbe_mos_org_MThumb.jpg,#Human Resources,#Manager,, Compensation &amp; Benefits;#427;#Lorah Broderick,#i:0#.f|membership|lbroderick@mos.org,#lbroderick@mos.org,#lbroderick@mos.org,#Lorah Broderick,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/lsnow_mos_org_MThumb.jpg,#Human Resources,#Benefits &amp; Employee Programs Administrator;#29;#Margo Smith,#i:0#.f|membership|msmith@mos.org,#msmith@mos.org,#msmith@mos.org,#Margo Smith,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/msmith_mos_org_MThumb.jpg,#Human Resources,#Manager,, Talent Acquisition &amp; Development\",\"Current-User-Display-Name\":\"Hub Tester4\",\"Current-User-Name\":\"sp4@mos.org\",\"Current-User-is-Admin\":\"0\",\"Current-User-is-Component-Group-Admin\":\"0\",\"Component-ID\":\"160\",\"Self-or-Other\":\"Talk to me\",\"User-Machine-History\":\"August 21, 2018 9:46 am - Firefox 61.0 - probably desktop - Linux %0A %0AAugust 20, 2018 3:11 pm - Firefox 61.0 - probably desktop - Linux %0A %0A\",\"Requested-For\":[{\"account\": \"i:0#.f|membership|sp5@mos.org\",\"displayText\": \"Hub Tester4\",\"description\": \"sp5@mos.org\"}],\"Requested-By\":\"\"}]]>"
+					"<![CDATA[{\"RepeatedElements\": [],\"Request-Date\":\"2018-08-21T09:46:44-04:00\",\"Request-Nickname\":\"221-1704-sp4\",\"Requester-Name\":\"Hub Tester4\",\"Requester-Department\":\"Interactive Media\",\"Requester-Email\":\"sp4@mos.org\",\"Requester-Account\":\"i:0#.f|membership|" + user2 + "@mos.org\",\"Job-ID\":\"221\",\"Schedule-ID\":\"" + schedule.ScheduleID + "\",\"Positions-Available\":\"3\",\"Schedule-Start-Datetime\":\"2019-06-15T09:00:00-04:00\",\"Current-Datetime\":\"2018-08-21T09:45:22-04:00\",\"sign-up_signup\":\"signUp\",\"Request-Status\":\"Signed Up\",\"Beginning-of-Life\":\"1\",\"End-of-Life\":\"0\",\"Approval-Newly-Needed-Notify\":\"none\",\"Approval-Not-Needed-Notify\":\"none\",\"Approval-Still-Needed-Notify\":\"none\",\"Newly-Approved-or-Pending\":\"0\",\"Last-Modified-Timestamp-Mismatch\":\"0\",\"Admin-Email\":\"jbaker@mos.org\",\"Request-Name\":\"GSE Signup\",\"SWF-Version\":\"1.0\",\"Component-Group-Admin\":\"872;#Hub Tester10,#i:0#.f|membership|sp10@mos.org,#sp10@mos.org,#sp10@MOS.ORG,#Hub Tester10,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/sp10_mos_org_MThumb.jpg,#Interactive Media,#;#873;#Hub Tester11,#i:0#.f|membership|sp11@mos.org,#sp11@mos.org,#sp11@MOS.ORG,#Hub Tester11,#,#Interactive Media,#;#6;#James Baker,#i:0#.f|membership|jbaker@mos.org,#jbaker@mos.org,#jbaker@mos.org,#James Baker,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/jbaker_mos_org_MThumb.jpg?t=63616027741,#Interactive Media,#Intranet Solutions Project Manager;#20;#Ben Wilson,#i:0#.f|membership|bwilson@mos.org,#bwilson@mos.org,#bwilson@mos.org,#Ben Wilson,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/bwilson_mos_org_MThumb.jpg,#Interactive Media,#Director of Digital &amp; Interactive Media;#467;#Samuel Corey,#i:0#.f|membership|scorey@mos.org,#scorey@mos.org,#scorey@MOS.ORG,#Samuel Corey,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/scorey_mos_org_MThumb.jpg,#Interactive Media,#Web Developer\",\"Component-Admin\":\"30;#Christine Flebbe,#i:0#.f|membership|cflebbe@mos.org,#cflebbe@mos.org,#cflebbe@mos.org,#Christine Flebbe,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/cflebbe_mos_org_MThumb.jpg,#Human Resources,#Manager,, Compensation &amp; Benefits;#427;#Lorah Broderick,#i:0#.f|membership|lbroderick@mos.org,#lbroderick@mos.org,#lbroderick@mos.org,#Lorah Broderick,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/lsnow_mos_org_MThumb.jpg,#Human Resources,#Benefits &amp; Employee Programs Administrator;#29;#Margo Smith,#i:0#.f|membership|msmith@mos.org,#msmith@mos.org,#msmith@mos.org,#Margo Smith,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/msmith_mos_org_MThumb.jpg,#Human Resources,#Manager,, Talent Acquisition &amp; Development\",\"Current-User-Display-Name\":\"Hub Tester4\",\"Current-User-Name\":\"sp4@mos.org\",\"Current-User-is-Admin\":\"0\",\"Current-User-is-Component-Group-Admin\":\"0\",\"Component-ID\":\"160\",\"Self-or-Other\":\"Talk to me\",\"User-Machine-History\":\"August 21, 2018 9:46 am - Firefox 61.0 - probably desktop - Linux %0A %0AAugust 20, 2018 3:11 pm - Firefox 61.0 - probably desktop - Linux %0A %0A\",\"Requested-For\":[{\"account\": \"i:0#.f|membership|" + user2 + "@mos.org\",\"displayText\": \"Hub Tester4\",\"description\": \"sp4@mos.org\"}],\"Requested-By\":\"\"}]]>"
 				]
 			];
 
@@ -19900,6 +19904,10 @@
 		console.log(table.dataSource);
 
 		table.dataSource.forEach((signup) => {
+			if (!signup.Job) {
+				console.log('NO JOB');
+				console.log(signup);
+			}
 			var row = {};
 			var isoStartDatetime = signup.Schedule.Date.slice(0, 10) + signup.Schedule.StartTime.slice(10, 19);
 			row.Date = $().ReturnSortableDate(isoStartDatetime, null, 'MMMM D, YYYY', 1);
@@ -20208,28 +20216,180 @@
 
 
 	$.fn.RenderAllDataTablesForGSESignupsForHRAdmin = function (targetID, relevantRole) {
-		console.log('RenderAllDataTablesForGSESignupsForHRAdmin');
 		var renderPrepStartTime = Date.now();
 		var managersWithDownline = $().ReturnManagersWithFullHierarchicalDownline();
+		console.log('managersWithDownline');
 		console.log(managersWithDownline);
+		// get, mash up, all GSE data
+		var augmentedSignups = {};
+		// get all signups
+		var gseSignupsArray = $().GetFieldsFromAllRows({
+			"webURL": "https://bmos.sharepoint.com/sites/hr-service-signups",
+			"select": [
+				{
+					"nameHere": "SignupID",
+					"nameInList": "ID"
+				}, {
+					"nameHere": "SignupPerson",
+					"nameInList": "RequestedFor"
+				}, {
+					"nameHere": "ScheduleID",
+					"nameInList": "ScheduleID"
+				}, {
+					"nameHere": "JobID",
+					"nameInList": "JobID"
+				}, {
+					'nameHere': 'formData',
+					'nameInList': 'AllRequestData'
+				}
+			]
+		});
+		// get all schedules
+		var gseSchedulesArray = $().GetFieldsFromAllRows({
+			'webURL': 'https://bmos.sharepoint.com/sites/hr-service-schedules',
+			'select': [
+				{
+					'nameHere': 'ScheduleID',
+					'nameInList': 'ID'
+				}, {
+					'nameHere': 'Date',
+					'nameInList': 'Date'
+				}, {
+					'nameHere': 'StartTime',
+					'nameInList': 'StartTime'
+				}, {
+					'nameHere': 'Location',
+					'nameInList': 'Location'
+				}, {
+					'nameHere': 'ShiftLength',
+					'nameInList': 'ShiftLength'
+				}
+			]
+		});
+		// get all jobs
+		var gseJobsArray = $().GetFieldsFromAllRows({
+			'webURL': 'https://bmos.sharepoint.com/sites/hr-service-jobs',
+			'select': [
+				{
+					'nameHere': 'JobID',
+					'nameInList': 'ID',
+				}, {
+					'nameHere': 'JobTitle',
+					'nameInList': 'JobTitle',
+				}
+			]
+		});
+		// mashup the data
+		gseSignupsArray.forEach((signup) => {
+			var signupCopy = signup;
+			gseJobsArray.forEach((job) => {
+				if (job.JobID === signup.JobID) {
+					signupCopy.Job = job;
+				}
+			});
+			gseSchedulesArray.forEach((schedule) => {
+				if (schedule.ScheduleID === signup.ScheduleID) {
+					signupCopy.Schedule = schedule;
+				}
+			});
+			var userKey = 
+				ReplaceAll('@mos.org', '', ReplaceAll('i:0#.f\\|membership\\|', '', signup.formData['Requester-Account']));
+			if (!augmentedSignups[userKey]) {
+				augmentedSignups[userKey] = [];
+			}
+			augmentedSignups[userKey].push(signupCopy);
+		});
+
+		console.log('augmentedSignups');
+		console.log(augmentedSignups);
+
 		managersWithDownline.forEach((manager) => {
-			var managerSectionMarkup = '<div class="manager-name collapsible">' + 
-				manager.displayName + '</div> \n' + 
-				'<div class="manager-content">';
+			var managerContainerID = 'manger-content_' + manager.account;
+			var managerSectionMarkup = 
+				'<h2 class="manager-name collapsible">' + manager.displayName + '</h2> \n' + 
+				'<div id="' + managerContainerID + '" class="manager-content"></div>';
+			$("#" + targetID).append(managerSectionMarkup);
 
 			var downlineDivisionKeys = Object.keys(manager.downline);
 			downlineDivisionKeys.forEach((divisionKey) => {
 				var downlineDepartmentKeys = Object.keys(manager.downline[divisionKey]);
 				downlineDepartmentKeys.forEach((departmentKey) => {
-					managerSectionMarkup += '<div class="department-name collapsible">' +
-						departmentKey + '</div> \n' +
-						'<div class="department-content">Hello</div>';
+					var departmentKeySanitized = 
+						ReplaceAll(' ', '-', ReplaceAll('&', 'and', ReplaceAll('/', 'and', ReplaceAll('\'', '', departmentKey))));
+					var departmentContainerID = 
+						'department-content_' + departmentKeySanitized + 
+						'_for-' + manager.account;
+					var departmentSectionMarkup = 
+						'<h3 class="department-name collapsible">' + departmentKey + '</h3> \n' +
+						'<div id="' + departmentContainerID + '" class="department-content"></div>';
+					$("#" + managerContainerID).append(departmentSectionMarkup);
+					
+					
+					manager.downline[divisionKey][departmentKey].forEach((user) => {
+						var userContainerID = 
+							'user-content_' + user.account + '_for-' + departmentKeySanitized + '_for-' + manager.account;
+						var userDetailsContainerID = 
+							'user-details_' + user.account + '_for-' + departmentKeySanitized + '_for-' + manager.account;
+						var userSectionMarkup = 
+							'<div id="' + userContainerID + '" class="user-content">' +
+							'<h4>' + user.displayName + '</h4>' +
+							'<table><thead><tr><th></th><th></th></tr></thead><tbody><tr><td></td><td></td></tr></tbody></table>';
+						if (augmentedSignups[user.account]) {
+							userSectionMarkup += 
+								'<button class="user-detail-control collapsible">Details</button> \n' +
+								'<div id="' + userDetailsContainerID + '" class="user-content"></div>';
+						}
+						userSectionMarkup += '</div>';
+						// console.log('appending to: #' + departmentContainerID);
+						// console.log(userSectionMarkup);
+
+						$("#" + departmentContainerID).append(userSectionMarkup);
+						if (augmentedSignups[user.account]) {
+							var t = {
+								// 'tableTitle': 'Cancelled',
+								'tableID': 'user-datatable_' + user.account + '_for-' + manager.account,
+								'columns': [
+									{
+										'displayName': "Signup ID",
+										'dataName': "IDMarkup",
+									}, {
+										'displayName': "Job Title",
+										'dataName': "JobTitle",
+									}, {
+										'displayName': "Date",
+										'dataName': "Date",
+									}, {
+										'displayName': "Start Time",
+										'dataName': "StartTime",
+									}, {
+										'displayName': "Schedule Length",
+										'dataName': "ShiftLength",
+									}, {
+										'displayName': "Location",
+										'dataName': "Location",
+									}
+								],
+								'sortColAndOrder': [[3, 'asc'], [4, 'asc']],
+								'dataSource': augmentedSignups[user.account]
+							};
+							var thisTableConfig = $().ReturnDataAndConfigForDataTableForGSESignups(t, relevantRole);
+							if (!t.sortColAndOrder) {
+								t.sortColAndOrder = [0, 'asc'];
+							}
+							$().RenderListAsDatatable({
+								'tableTitle': t.tableTitle,
+								'tableID': t.tableID,
+								'theadDetails': thisTableConfig.theadDetails,
+								'listForDatatable': thisTableConfig.datatableData,
+								'datatableFields': thisTableConfig.datatableFields,
+								'sortColAndOrder': t.sortColAndOrder,
+								'targetID': userDetailsContainerID,
+							});
+						}
+					});
 				});
 			});
-			managerSectionMarkup += '</div>'
-			$("#" + targetID).append(managerSectionMarkup);
 		});
-
 
 		// collapse collapsible
 		$('.collapsible').collapsible();
@@ -20243,6 +20403,7 @@
 		console.log('uData');
 		console.log(uData);
 		var renderPrepStartTime = Date.now();
+
 		var tablesToRender = [];
 		if (relevantRole === 'gseUserOnly') {
 			var augmentedSignupsPending = [];
