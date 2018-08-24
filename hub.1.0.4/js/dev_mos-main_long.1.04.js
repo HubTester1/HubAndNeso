@@ -4264,12 +4264,12 @@
 					'<p>' + ReplaceAll('%0A', '</p><p>', rData.gseScheduleData['Notes']) + '</p>';					
 			}
 
-			console.log('rData.gseScheduleData');
-			console.log(rData.gseScheduleData);
-			console.log('rData.gseJobData');
-			console.log(rData.gseJobData);
-			console.log('rData.formDataOnLoad');
-			console.log(rData.formDataOnLoad);
+			// console.log('rData.gseScheduleData');
+			// console.log(rData.gseScheduleData);
+			// console.log('rData.gseJobData');
+			// console.log(rData.gseJobData);
+			// console.log('rData.formDataOnLoad');
+			// console.log(rData.formDataOnLoad);
 			
 			// populate the placeholder <span>s with job and schedule data
 			PopulateFormData("div#request-form", rData.gseJobData, mData.uriRoot, rData.requestID, mData.checkForAlternateEventDataToPopulate);
@@ -5983,7 +5983,7 @@
 						// for each extracted signup credit object
 						signupMods.forEach((signupMod) => {
 							// get the corresponding row from the GSE Signup SWFList
-							console.log(signupMod.signupID);
+							// console.log(signupMod.signupID);
 							signupMod = $.extend($().GetFieldsFromOneRow({
 								"select": [{
 									// 	"nameHere": "requestStatus",
@@ -6026,7 +6026,7 @@
 								['AllRequestData', CDataWrap(JSON.stringify(signupMod.formData))]
 							];
 
-							console.log(signupMod);
+							// console.log(signupMod);
 
 							// update SWFList
 							var updateListItemsOptions = {
@@ -7401,7 +7401,7 @@
 		
 		} else if (type === "gseSignupsHRAdmin") {
 			$().RenderOverviewScreenButtons(oData.gseSignupsHRAdmin.buttons, 0);
-			$().RenderAllDataTablesForGSESignupsForHRAdmin("overview-table-container", 'gseHRAdmin');
+			$().RenderAllSimpleMarkupForGSESignupsForHRAdmin("overview-table-container", 'gseHRAdmin');
 		} else if (type === "gseSignupsManager") {
 			$().RenderOverviewScreenButtons(oData.gseSignupsManager.buttons, 0);
 			$().RenderAllDataTablesForGSESignups("overview-table-container", 'gseManager');
@@ -14939,7 +14939,7 @@
 		formData = formData.substring(0, formData.length - 1);
 		// end building the JSON string that will be stored
 		formData += '}';
-		console.log(formData);
+		// console.log(formData);
 		// get object from string
 		formData = JSON.parse(formData);
 		return formData;
@@ -17412,10 +17412,6 @@
 
 	$.fn.CreateOrUpdateListItem = function (mData, rData, submissionValuePairsArray, webURL) {
 
-		console.log('CreateOrUpdateListItem');
-		console.log('submissionValuePairsArray');
-		console.log(submissionValuePairsArray);
-
 		// --- set up internal promise to configure
 
 		var deferred = $.Deferred();
@@ -19532,14 +19528,14 @@
 
 		// $().CreateFakeGSEStuff(gseJobsArray, gseSchedulesArray, gseSignupsArray);
 
-		console.log('gseSchedulesArray');
-		console.log(gseSchedulesArray);
+		// console.log('gseSchedulesArray');
+		// console.log(gseSchedulesArray);
 
-		console.log('gseJobsArray');
-		console.log(gseJobsArray);
+		// console.log('gseJobsArray');
+		// console.log(gseJobsArray);
 
-		console.log('gseSignupsArray');
-		console.log(gseSignupsArray);
+		// console.log('gseSignupsArray');
+		// console.log(gseSignupsArray);
 
 
 		gseSchedulesArray.forEach((schedule) => {
@@ -19550,16 +19546,6 @@
 					jobThisSchedule = job;
 				}
 			});
-			if (jobThisSchedule == {}) {
-				console.log('schedule.JobID');
-				console.log(schedule.JobID);
-			}
-			if (!jobThisSchedule.formData) {
-				console.log('schedule.JobID');
-				console.log(schedule.JobID);
-				console.log('gseJobsArray');
-				console.log(gseJobsArray);
-			}
 			gseSignupsArray.forEach((signup) => {
 				if (signup.ScheduleID === schedule.ScheduleID) {
 					signupsThisSchedule.push(signup);
@@ -19900,14 +19886,14 @@
 			});
 			tableConfig.theadDetails += "<th>" + column.displayName + "</th>";
 		});
-		console.log('table.dataSource');
-		console.log(table.dataSource);
+		// console.log('table.dataSource');
+		// console.log(table.dataSource);
 
 		table.dataSource.forEach((signup) => {
-			if (!signup.Job) {
-				console.log('NO JOB');
-				console.log(signup);
-			}
+			// if (!signup.Job) {
+			// 	console.log('NO JOB');
+			// 	console.log(signup);
+			// }
 			var row = {};
 			var isoStartDatetime = signup.Schedule.Date.slice(0, 10) + signup.Schedule.StartTime.slice(10, 19);
 			row.Date = $().ReturnSortableDate(isoStartDatetime, null, 'MMMM D, YYYY', 1);
@@ -20215,11 +20201,170 @@
 
 
 
-	$.fn.RenderAllDataTablesForGSESignupsForHRAdmin = function (targetID, relevantRole) {
-		var renderPrepStartTime = Date.now();
-		var managersWithDownline = $().ReturnManagersWithFullHierarchicalDownline();
-		console.log('managersWithDownline');
-		console.log(managersWithDownline);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	// ===============================
+	$.fn.ReturnManagerSimpleMarkupForGSESignups = function (manager, signups, relevantRole, renderManagerName) {
+		var managerContainerID = 'manger-content_' + manager.account;
+		var managerMarkup = '';
+		if (renderManagerName) {
+			managerMarkup += '<h2 class="manager-name collapsible">' + 
+				manager.displayName + '</h2> \n';
+		}
+			
+		managerMarkup += '<div id="' + managerContainerID + '" class="manager-content">';
+
+		var downlineDivisionKeys = Object.keys(manager.downline);
+		downlineDivisionKeys.forEach((divisionKey) => {
+			var downlineDepartmentKeys = Object.keys(manager.downline[divisionKey]);
+			downlineDepartmentKeys.forEach((departmentKey) => {
+				managerMarkup += 
+					$().ReturnDepartmentSimpleMarkupForGSESignups(manager, signups, relevantRole, departmentKey, divisionKey);
+			});
+		});
+		managerMarkup += '</div>';
+		return managerMarkup;
+	};
+
+
+
+	$.fn.ReturnDepartmentSimpleMarkupForGSESignups = function (manager, signups, relevantRole, departmentKey, divisionKey) {
+		var departmentKeySanitized = 
+			ReplaceAll(' ', '-', ReplaceAll('&', 'and', ReplaceAll('/', 'and', ReplaceAll('\'', '', departmentKey))));
+		var departmentContainerID = 
+			'department-content_' + departmentKeySanitized +
+			'_for-' + manager.account;
+		var departmentMarkup = 
+			'<h3 class="department-name">' + departmentKey + '</h3> \n' +
+			'<div id="' + departmentContainerID + '" class="department-content"> \n';
+			
+		if (manager.downline[divisionKey]) {
+			manager.downline[divisionKey][departmentKey].forEach((user) => {
+				departmentMarkup +=
+					$().ReturnUserSimpleMarkupForGSESignups(manager.account, signups, relevantRole, departmentKeySanitized, user);
+			});
+		}
+		departmentMarkup += '</div>';
+		return departmentMarkup;
+	};
+
+
+
+	$.fn.ReturnUserSimpleMarkupForGSESignups = function (managerAccount, signups, relevantRole, departmentKeySanitized, user) {
+		var userContainerID =
+			'user-content_' + user.account + '_for-' + departmentKeySanitized + '_for-' + managerAccount;
+		var userDetailsContainerID =
+			'user-details_' + user.account + '_for-' + departmentKeySanitized + '_for-' + managerAccount;
+		var userMarkup =
+			'<div id="' + userContainerID + '" class="user-content">' +
+			'<h4>' + user.displayName + '</h4>';
+		userMarkup += $().ReturnUserSummarySimpleMarkupForGSESignups(signups[user.account]);
+		if (signups[user.account]) {
+			userMarkup +=
+				'<button class="user-detail-control">Details</button> \n' +
+				'<div id="' + userDetailsContainerID + '" class="user-content">' + 
+				// $().ReturnUserDetailsSimpleMarkupForGSESignups(signups[user.account], relevantRole, ) + 
+				'</div>';
+		}
+		userMarkup += '</div>';
+		return userMarkup;
+	};
+
+	$.fn.ReturnUserSummarySimpleMarkupForGSESignups = function (signupsThisUser) {
+		var totalCount = 0;
+		var creditGrantedCount = 0;
+		var creditDeniedCount = 0;
+		var creditPendingCount = 0;
+		if (signupsThisUser) {
+			totalCount = signupsThisUser.length;
+			signupsThisUser.forEach((signup) => {
+				switch (signup.formData['Request-Status']) {
+					case 'Signed Up':
+						creditPendingCount += 1;
+						break;
+					case 'Credit Denied':
+						creditDeniedCount += 1;
+						break;
+					case 'Credit Granted':
+						creditGrantedCount += 1;
+						break;
+				}
+			});
+		}
+		return '<table class="user-summary"><thead><tr>' + 
+			'<th>Total</th><th>Credit Granted</th><th>Credit Denied</th><th>Credit Pending</th>' + 
+			'</tr></thead><tbody><tr>' + 
+			'<td>' + totalCount + '</td>' + 
+			'<td>' + creditGrantedCount + '</td>' + 
+			'<td>' + creditDeniedCount + '</td>' + 
+			'<td>' + creditPendingCount + '</td>' + 
+			'</tr></tbody></table>';
+	};
+
+
+
+	$.fn.ReturnUserDetailsSimpleMarkupForGSESignups = function (signups, relevantRole) {
+		var detailsMarkup = '<table class="user-details"><thead><tr>' +
+			'<th>Signup ID</th>' +
+			'<th>Job Title</th>';
+		if (relevantRole === 'gseHRAdmin') {
+			detailsMarkup += '<th>Job Admin</th>';
+		}
+		if (relevantRole === 'gseManager') {
+			detailsMarkup += '<th>Reporting To</th>';
+		}
+		detailsMarkup += '<th>Date</th>' +
+			// '<th>Start Time</th>' +
+			'<th>Schedule Length</th>' +
+			'<th>Status</th>' +
+			'</tr></thead><tbody>';
+		signups.forEach((signup) => {
+			detailsMarkup += $().ReturnUserDetailRowSimpleMarkupForGSESignups(signup);
+		});
+		detailsMarkup += '</tbody></table>';
+		return detailsMarkup;
+	};
+
+
+
+
+
+
+
+
+
+
+
+	$.fn.ReturnUserDetailRowSimpleMarkupForGSESignups = function (signup) {
+		// console.log('signup');
+		// console.log(signup);
+		// var isoStartDatetime = signup.Schedule.Date.slice(0, 10) + signup.Schedule.StartTime.slice(10, 19);
+		return '<tr>' +
+			'<td>' + signup.SignupID + '</td>' +
+			'<td>' + signup.Job.JobTitle + '</td>' +
+			'<td>' + $().RenderPersonLinks(signup.Job.JobAdmin) + '</td>' + 
+			'<td>' + $().ReturnFormattedDateTime(signup.Schedule.Date, null, 'MMMM D, YYYY') + '</td>' +
+			// '<td>' + $().ReturnFormattedDateTime(isoStartDatetime, null, 'h:mm a') + '</td>' +
+			'<td>' + signup.Schedule.ShiftLength + '</td>' +
+			'<td>' + signup.formData['Request-Status'] + '</td>' +
+			'</tr>';
+	};
+
+
+	$.fn.ReturnAllAugmentedSignupsForGSESignupsOverviews = function() {
 		// get, mash up, all GSE data
 		var augmentedSignups = {};
 		// get all signups
@@ -20276,6 +20421,9 @@
 				}, {
 					'nameHere': 'JobTitle',
 					'nameInList': 'JobTitle',
+				}, {
+					'nameHere': 'JobAdmin',
+					'nameInList': 'JobAdmin'
 				}
 			]
 		});
@@ -20292,116 +20440,168 @@
 					signupCopy.Schedule = schedule;
 				}
 			});
-			var userKey = 
+			var userKey =
 				ReplaceAll('@mos.org', '', ReplaceAll('i:0#.f\\|membership\\|', '', signup.formData['Requester-Account']));
 			if (!augmentedSignups[userKey]) {
 				augmentedSignups[userKey] = [];
 			}
 			augmentedSignups[userKey].push(signupCopy);
 		});
+		// return
+		return augmentedSignups;
+	};
 
-		console.log('augmentedSignups');
-		console.log(augmentedSignups);
 
+	$.fn.RenderAllSimpleMarkupForGSESignupsForHRAdmin = function (targetID, relevantRole) {
+		var renderPrepStartTime = Date.now();
+		var relevantManager = 'imiaoulis';
+		var allMarkup = '';
+		var managersWithDownline = $().ReturnManagersWithFullHierarchicalDownline();
+		var augmentedSignups = $().ReturnAllAugmentedSignupsForGSESignupsOverviews();
 		managersWithDownline.forEach((manager) => {
+			
 			var managerContainerID = 'manger-content_' + manager.account;
-			var managerSectionMarkup = 
-				'<h2 class="manager-name collapsible">' + manager.displayName + '</h2> \n' + 
-				'<div id="' + managerContainerID + '" class="manager-content"></div>';
-			$("#" + targetID).append(managerSectionMarkup);
+			var managerMarkup = '';
+			// if (renderManagerName) {
+			managerMarkup += '<h2 class="manager-name collapsible">' +
+				manager.displayName + '</h2> \n';
+			// }
+
+			managerMarkup += '<div id="' + managerContainerID + '" class="manager-content">';
 
 			var downlineDivisionKeys = Object.keys(manager.downline);
 			downlineDivisionKeys.forEach((divisionKey) => {
 				var downlineDepartmentKeys = Object.keys(manager.downline[divisionKey]);
 				downlineDepartmentKeys.forEach((departmentKey) => {
-					var departmentKeySanitized = 
+					var departmentKeySanitized =
 						ReplaceAll(' ', '-', ReplaceAll('&', 'and', ReplaceAll('/', 'and', ReplaceAll('\'', '', departmentKey))));
-					var departmentContainerID = 
-						'department-content_' + departmentKeySanitized + 
+					var departmentContainerID =
+						'department-content_' + departmentKeySanitized +
 						'_for-' + manager.account;
-					var departmentSectionMarkup = 
-						'<h3 class="department-name collapsible">' + departmentKey + '</h3> \n' +
-						'<div id="' + departmentContainerID + '" class="department-content"></div>';
-					$("#" + managerContainerID).append(departmentSectionMarkup);
-					
-					
-					manager.downline[divisionKey][departmentKey].forEach((user) => {
-						var userContainerID = 
-							'user-content_' + user.account + '_for-' + departmentKeySanitized + '_for-' + manager.account;
-						var userDetailsContainerID = 
-							'user-details_' + user.account + '_for-' + departmentKeySanitized + '_for-' + manager.account;
-						var userSectionMarkup = 
-							'<div id="' + userContainerID + '" class="user-content">' +
-							'<h4>' + user.displayName + '</h4>' +
-							'<table><thead><tr><th></th><th></th></tr></thead><tbody><tr><td></td><td></td></tr></tbody></table>';
-						if (augmentedSignups[user.account]) {
-							userSectionMarkup += 
-								'<button class="user-detail-control collapsible">Details</button> \n' +
-								'<div id="' + userDetailsContainerID + '" class="user-content"></div>';
-						}
-						userSectionMarkup += '</div>';
-						// console.log('appending to: #' + departmentContainerID);
-						// console.log(userSectionMarkup);
+					var departmentMarkup =
+						'<h3 class="department-name">' + departmentKey + '</h3> \n' +
+						'<div id="' + departmentContainerID + '" class="department-content"> \n';
 
-						$("#" + departmentContainerID).append(userSectionMarkup);
-						if (augmentedSignups[user.account]) {
-							var t = {
-								// 'tableTitle': 'Cancelled',
-								'tableID': 'user-datatable_' + user.account + '_for-' + manager.account,
-								'columns': [
-									{
-										'displayName': "Signup ID",
-										'dataName': "IDMarkup",
-									}, {
-										'displayName': "Job Title",
-										'dataName': "JobTitle",
-									}, {
-										'displayName': "Date",
-										'dataName': "Date",
-									}, {
-										'displayName': "Start Time",
-										'dataName': "StartTime",
-									}, {
-										'displayName': "Schedule Length",
-										'dataName': "ShiftLength",
-									}, {
-										'displayName': "Location",
-										'dataName': "Location",
+					if (manager.downline[divisionKey]) {
+						manager.downline[divisionKey][departmentKey].forEach((user) => {
+							var userContainerID =
+								'user-content_' + user.account + '_for-' + departmentKeySanitized + '_for-' + manager.account;
+							var userDetailsContainerID =
+								'user-details_' + user.account + '_for-' + departmentKeySanitized + '_for-' + manager.account;
+							var userMarkup =
+								'<div id="' + userContainerID + '" class="user-content">' +
+								'<h4>' + user.displayName + '</h4>';
+
+							var totalCount = 0;
+							var creditGrantedCount = 0;
+							var creditDeniedCount = 0;
+							var creditPendingCount = 0;
+							if (augmentedSignups[user.account]) {
+								totalCount = augmentedSignups[user.account].length;
+								augmentedSignups[user.account].forEach((signup) => {
+									switch (signup.formData['Request-Status']) {
+										case 'Signed Up':
+											creditPendingCount += 1;
+											break;
+										case 'Credit Denied':
+											creditDeniedCount += 1;
+											break;
+										case 'Credit Granted':
+											creditGrantedCount += 1;
+											break;
 									}
-								],
-								'sortColAndOrder': [[3, 'asc'], [4, 'asc']],
-								'dataSource': augmentedSignups[user.account]
-							};
-							var thisTableConfig = $().ReturnDataAndConfigForDataTableForGSESignups(t, relevantRole);
-							if (!t.sortColAndOrder) {
-								t.sortColAndOrder = [0, 'asc'];
+								});
 							}
-							$().RenderListAsDatatable({
-								'tableTitle': t.tableTitle,
-								'tableID': t.tableID,
-								'theadDetails': thisTableConfig.theadDetails,
-								'listForDatatable': thisTableConfig.datatableData,
-								'datatableFields': thisTableConfig.datatableFields,
-								'sortColAndOrder': t.sortColAndOrder,
-								'targetID': userDetailsContainerID,
-							});
-						}
-					});
+							userMarkup += '<table class="user-summary"><thead><tr>' +
+								'<th>Total</th><th>Credit Granted</th><th>Credit Denied</th><th>Credit Pending</th>' +
+								'</tr></thead><tbody><tr>' +
+								'<td>' + totalCount + '</td>' +
+								'<td>' + creditGrantedCount + '</td>' +
+								'<td>' + creditDeniedCount + '</td>' +
+								'<td>' + creditPendingCount + '</td>' +
+								'</tr></tbody></table>';
+
+							/* userMarkup += $().ReturnUserSummarySimpleMarkupForGSESignups(signups[user.account]); */
+							if (augmentedSignups[user.account]) {
+								userMarkup +=
+									'<button class="user-detail-control">Details</button> \n';
+									
+									
+									
+									/* +
+									'<div id="' + userDetailsContainerID + '" class="user-content">';
+
+								var detailsMarkup = '<table class="user-details"><thead><tr>' +
+									'<th>Signup ID</th>' +
+									'<th>Job Title</th>';
+								if (relevantRole === 'gseHRAdmin') {
+									detailsMarkup += '<th>Job Admin</th>';
+								}
+								if (relevantRole === 'gseManager') {
+									detailsMarkup += '<th>Reporting To</th>';
+								}
+								detailsMarkup += '<th>Date</th>' +
+									// '<th>Start Time</th>' +
+									'<th>Schedule Length</th>' +
+									'<th>Status</th>' +
+									'</tr></thead><tbody>';
+								augmentedSignups[user.account].forEach((signup) => {
+									detailsMarkup += '<tr>' +
+										'<td>' + signup.SignupID + '</td>' +
+										'<td>' + signup.Job.JobTitle + '</td>' +
+										'<td>' + $().RenderPersonLinks(signup.Job.JobAdmin) + '</td>' +
+										'<td>' + $().ReturnFormattedDateTime(signup.Schedule.Date, null, 'MMMM D, YYYY') + '</td>' +
+										// '<td>' + $().ReturnFormattedDateTime(isoStartDatetime, null, 'h:mm a') + '</td>' +
+										'<td>' + signup.Schedule.ShiftLength + '</td>' +
+										'<td>' + signup.formData['Request-Status'] + '</td>' +
+										'</tr>';
+									// detailsMarkup += $().ReturnUserDetailRowSimpleMarkupForGSESignups(signup);
+								});
+								detailsMarkup += '</tbody></table>';
+								userMarkup += detailsMarkup;
+
+								// userMarkup += $().ReturnUserDetailsSimpleMarkupForGSESignups(signups[user.account], relevantRole, );
+								userMarkup += '</div>'; */
+							}
+							userMarkup += '</div>';
+							departmentMarkup += userMarkup;
+
+
+							/* departmentMarkup +=
+								$().ReturnUserSimpleMarkupForGSESignups(manager.account, signups, relevantRole, departmentKeySanitized, user); */
+						});
+					}
+					departmentMarkup += '</div>';
+					managerMarkup += departmentMarkup;
+
+					/* managerMarkup +=
+						$().ReturnDepartmentSimpleMarkupForGSESignups(manager, signups, relevantRole, departmentKey, divisionKey); */
 				});
 			});
+			managerMarkup += '</div>';
+			allMarkup += managerMarkup;
+			
+			
+			/* allMarkup +=
+				$().ReturnManagerSimpleMarkupForGSESignups(managerWithDownline, augmentedSignups, relevantRole, true); */
 		});
-
-		// collapse collapsible
+		$("#" + targetID).append(allMarkup);
 		$('.collapsible').collapsible();
+		$("#" + targetID).on('click', 'button.user-detail-control', function (e) {
+			e.preventDefault();
+			console.log('details clicked');
+			console.log(augmentedSignups);
+		});
 		console.log('render prep time = ' + (Date.now() - renderPrepStartTime) / 1000 + ' seconds');
+
 	};
 
 
 
 	$.fn.RenderAllDataTablesForGSESignupsForUsers = function (targetID, relevantRole) {
 
-		console.log('uData');
-		console.log(uData);
+		// console.log('uData');
+		// console.log(uData);
 		var renderPrepStartTime = Date.now();
 
 		var tablesToRender = [];
@@ -23304,8 +23504,8 @@
 			$("div#signups").find("div.repeat-container").each(function () {
 				$(this).find("textarea[id^='Signup-Credit-Denial-Reason']")
 					.each(function (index, value) {
-						console.log('found textarea');
-						console.log($(this).attr("id"));
+						// console.log('found textarea');
+						// console.log($(this).attr("id"));
 						if($(this).val() !== '') {
 							var containerSelector = '#label-and-control_' + $(this).attr("id");
 							$(containerSelector).show("fast").removeClass("hidden");
@@ -23394,7 +23594,7 @@
 			}
 		});
 
-		console.log(jobData);
+		// console.log(jobData);
 
 		var jobDataSelected = {};
 
