@@ -542,6 +542,8 @@ div#s4-workspace div#app-container.event-av div#container_command-bar div#contai
 div#s4-workspace div#app-container.event-av div#container_command-bar ul#container_tab-controls li a,
 div#s4-workspace div#app-container.event-av div#container_command-bar div#container_date-filter-controls-and-header a.collapsible-heading-toggle,
 div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button,
+div#s4-workspace div#app-container.gse-signup div#container_command-bar div#container_filter-controls-and-header a.collapsible-heading-toggle,
+div#s4-workspace div#app-container.gse-signup div#container_command-bar div#container_filter-controls-and-header a#filter_submit-button,
 div#s4-workspace div#public-community-page_open-enrollment div.primary-section a,
 a#standard-printer-button-inside-request,
 a#gse-schedule-card-dialog-my-signup-link,
@@ -592,6 +594,8 @@ a#gse-schedule-card-dialog-signup-opportunity-link {
   div#s4-workspace div#app-container.event-av div#container_command-bar ul#container_tab-controls li a:hover,
   div#s4-workspace div#app-container.event-av div#container_command-bar div#container_date-filter-controls-and-header a.collapsible-heading-toggle:hover,
   div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button:hover,
+  div#s4-workspace div#app-container.gse-signup div#container_command-bar div#container_filter-controls-and-header a.collapsible-heading-toggle:hover,
+  div#s4-workspace div#app-container.gse-signup div#container_command-bar div#container_filter-controls-and-header a#filter_submit-button:hover,
   div#s4-workspace div#public-community-page_open-enrollment div.primary-section a:hover,
   a#standard-printer-button-inside-request:hover,
   a#gse-schedule-card-dialog-my-signup-link:hover,
@@ -607,6 +611,7 @@ div#s4-workspace div.in-page-persona a.profile,
 div#s4-workspace div#public-community-page_moscars div#call-to-action a,
 div#s4-workspace div#public-community-page_hr div#primary-section_open-enrollment a,
 div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button,
+div#s4-workspace div#app-container.gse-signup div#container_command-bar div#container_filter-controls-and-header a#filter_submit-button,
 div#s4-workspace div#public-community-page_open-enrollment div.primary-section a,
 a#gse-schedule-card-dialog-my-signup-link,
 a#gse-schedule-card-dialog-signup-opportunity-link {
@@ -621,6 +626,7 @@ a#gse-schedule-card-dialog-signup-opportunity-link {
   div#s4-workspace div#public-community-page_moscars div#call-to-action a:hover,
   div#s4-workspace div#public-community-page_hr div#primary-section_open-enrollment a:hover,
   div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button:hover,
+  div#s4-workspace div#app-container.gse-signup div#container_command-bar div#container_filter-controls-and-header a#filter_submit-button:hover,
   div#s4-workspace div#public-community-page_open-enrollment div.primary-section a:hover,
   a#gse-schedule-card-dialog-my-signup-link:hover,
   a#gse-schedule-card-dialog-signup-opportunity-link:hover {
@@ -677,6 +683,7 @@ div#app-container a.command-bar-button,
 div#s4-workspace div#app-container.event-av div#container_command-bar div#container_new-request-control a,
 div#s4-workspace div#app-container.event-av div#container_command-bar ul#container_tab-controls li a,
 div#s4-workspace div#app-container.event-av div#container_command-bar div#container_date-filter-controls-and-header a.collapsible-heading-toggle,
+div#s4-workspace div#app-container.gse-signup div#container_command-bar div#container_filter-controls-and-header a.collapsible-heading-toggle,
 a#standard-printer-button-inside-request {
   color: #004f87 !important;
   background-color: #e3f3ff !important; }
@@ -695,6 +702,7 @@ a#standard-printer-button-inside-request {
   div#s4-workspace div#app-container.event-av div#container_command-bar div#container_new-request-control a:hover,
   div#s4-workspace div#app-container.event-av div#container_command-bar ul#container_tab-controls li a:hover,
   div#s4-workspace div#app-container.event-av div#container_command-bar div#container_date-filter-controls-and-header a.collapsible-heading-toggle:hover,
+  div#s4-workspace div#app-container.gse-signup div#container_command-bar div#container_filter-controls-and-header a.collapsible-heading-toggle:hover,
   a#standard-printer-button-inside-request:hover {
     color: #003a63 !important;
     background-color: #a6dbff !important; }
@@ -769,6 +777,7 @@ a.show-default-station-times:before,
 a.hide-default-station-times:before,
 button.cafe-button:before,
 div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button:before,
+div#s4-workspace div#app-container.gse-signup div#container_command-bar div#container_filter-controls-and-header a#filter_submit-button:before,
 a#standard-printer-button-inside-request:before {
   display: inline-block;
   font-family: 'Office365Icons';
@@ -803,7 +812,8 @@ a.id-or-link_list-item-chooser:before {
 a.show-default-station-times:before {
   content: '\E236'; }
 
-div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button:before {
+div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button:before,
+div#s4-workspace div#app-container.gse-signup div#container_command-bar div#container_filter-controls-and-header a#filter_submit-button:before {
   content: '\E034'; }
 
 a#Import-from-Event-Request:before,
@@ -3259,6 +3269,38 @@ div#app-container.gse-signup div#job-and-schedule-container {
 div#app-container.gse-signup div#no-signups-warning {
   font-size: 2rem !important;
   margin-bottom: 2rem; }
+
+div#s4-workspace div#app-container.gse-signup div#container_command-bar-and-data div#container_command-bar {
+  color: #333;
+  background-color: #eee;
+  display: inline-block; }
+  div#s4-workspace div#app-container.gse-signup div#container_command-bar-and-data div#container_command-bar a {
+    color: #004f87 !important; }
+    div#s4-workspace div#app-container.gse-signup div#container_command-bar-and-data div#container_command-bar a:hover {
+      color: #003a63 !important; }
+  div#s4-workspace div#app-container.gse-signup div#container_command-bar-and-data div#container_command-bar div.container_link,
+  div#s4-workspace div#app-container.gse-signup div#container_command-bar-and-data div#container_command-bar div#container_filter-controls-and-header {
+    display: table-cell;
+    vertical-align: top; }
+  div#s4-workspace div#app-container.gse-signup div#container_command-bar-and-data div#container_command-bar div#container_filter-controls-and-header div#text_filter-controls a.collapsible-heading-toggle {
+    display: block; }
+
+div#s4-workspace div#app-container.gse-signup div#container_command-bar-and-data div#container_filter-controls {
+  padding: 1.5rem 1.5rem 0 0;
+  font-weight: 600; }
+  div#s4-workspace div#app-container.gse-signup div#container_command-bar-and-data div#container_filter-controls div.container_filter-control {
+    padding: 0 0 1.5rem 1.5rem; }
+    div#s4-workspace div#app-container.gse-signup div#container_command-bar-and-data div#container_filter-controls div.container_filter-control label {
+      display: inline-block;
+      width: 6rem;
+      text-align: right; }
+    div#s4-workspace div#app-container.gse-signup div#container_command-bar-and-data div#container_filter-controls div.container_filter-control select {
+      width: 20rem; }
+    div#s4-workspace div#app-container.gse-signup div#container_command-bar-and-data div#container_filter-controls div.container_filter-control a#filter_submit-button {
+      margin: 0 0 0 6.5rem !important; }
+
+div#s4-workspace div#app-container.gse-signup div.table-container {
+  margin-top: 2rem; }
 
 div#printer-content table.layout-table {
   width: 100%; }

@@ -7334,13 +7334,7 @@
 
 
 		} else if (type === "adminEventAV") {
-			// $().RenderOverviewScreenButtons(oData.adminEventAV.buttons, 0);
-
 			$().RenderAdminEventAVOverviewScreen();
-
-
-			// $().RenderAllDataTables(oData.adminEventAV.sections, "overview-table-container");
-
 		} else if (type === "adminReferrals") {
 			$().RenderOverviewScreenButtons(oData.adminReferrals.buttons, 0);
 			$().RenderAllDataTables(oData.adminReferrals.sections, "overview-table-container");
@@ -7400,7 +7394,7 @@
 		
 		
 		} else if (type === "gseSignupsHRAdmin") {
-			$().RenderOverviewScreenButtons(oData.gseSignupsHRAdmin.buttons, 0);
+			// $().RenderOverviewScreenButtons(oData.gseSignupsHRAdmin.buttons, 0);
 			$().RenderAllSimpleMarkupForGSESignupsForHRAdmin("overview-table-container", 'gseHRAdmin');
 		} else if (type === "gseSignupsManager") {
 			$().RenderOverviewScreenButtons(oData.gseSignupsManager.buttons, 0);
@@ -18316,8 +18310,6 @@
 			'        </div> \n' +
 			'    </div> \n' +
 			'</div> \n';
-
-
 		$().RenderAllDataTables(tData, "table-container");
 
 		// insert contents into containers
@@ -20452,13 +20444,130 @@
 	};
 
 
+
+	$.fn.ReturnFiscalYearSelectOptions = function (startingYearOfFirstFiscalYear, startingYearOfLastFiscalYear, startWithBlank, startingYearOfSelectedFiscalYear) {
+		// four-digit year numbers; i.e., params of 2018 and 2018 signifies one year
+		var optionsMarkup = '';
+		var optionStartingYear;
+		var optionEndingYear;
+		var selectedAttribute = '';
+		if (startWithBlank) {
+			optionsMarkup += '<option value=""></option>';
+		}
+		for (
+			optionStartingYear = startingYearOfFirstFiscalYear;
+			optionStartingYear <= startingYearOfLastFiscalYear;
+			optionStartingYear++
+		) {
+			optionEndingYear = optionStartingYear + 1;
+			if (startingYearOfSelectedFiscalYear && startingYearOfSelectedFiscalYear == optionStartingYear) {
+				selectedAttribute = ' selected ';
+			}
+			optionsMarkup += '<option value="' + optionStartingYear + 
+				'"' + selectedAttribute + '>July 1, ' + optionStartingYear + 
+				' - June 30, ' + optionEndingYear + 
+				'</option>';
+		} 
+		return optionsMarkup;
+	};
+
+	function CompareUsersByLastName(a, b) {
+		if (a.lastName < b.lastName)
+			return -1;
+		if (a.lastName > b.lastName)
+			return 1;
+		return 0;
+	}
+
+	
+
+	$.fn.ReturnManagerSelectOptions = function (managersArray, selectedManagerAccount, startWithBlank) {
+		var managersMarkup = '';
+		managersArray.sort(CompareUsersByLastName);
+		if (startWithBlank) {
+			managersMarkup += '<option value=""></option>';
+		}
+		managersArray.forEach((manager) => {
+			var selectedAttribute = '';
+			if (manager.account === selectedManagerAccount) {
+				selectedAttribute = ' selected ';
+			}
+			managersMarkup += '<option value="' + manager.account + '"' + 
+				selectedAttribute + '>' + manager.displayName + '</option>';
+		});
+		return managersMarkup;
+	};
+
+
+
 	$.fn.RenderAllSimpleMarkupForGSESignupsForHRAdmin = function (targetID, relevantRole) {
 		var renderPrepStartTime = Date.now();
-		var relevantManager = 'imiaoulis';
+
+		// set options for the fiscal year filters
+		var testDate = '2021-09-11';
+		var startingYearOfFirstFiscalYear = 2018;
+		var thisYear = $().ReturnFormattedDateTime(testDate, null, 'YYYY');
+		var startingYearOfLastFiscalYear = moment(testDate).isAfter(thisYear + '-06-30') ?
+			parseInt(thisYear) :
+			parseInt(thisYear) - 1;
+
+		var selectedManager = GetParamFromUrl(location.search, "m");
+		var selectedYear = GetParamFromUrl(location.search, "y");
 		var allMarkup = '';
 		var managersWithDownline = $().ReturnManagersWithFullHierarchicalDownline();
 		var augmentedSignups = $().ReturnAllAugmentedSignupsForGSESignupsOverviews();
-		managersWithDownline.forEach((manager) => {
+
+		console.log(selectedManager);
+		console.log(selectedYear);
+		console.log(managersWithDownline);
+		console.log(augmentedSignups);
+
+		$("#" + targetID).append('<div id="container_command-bar-and-data"> \n' +
+			'   <div id="container_command-bar"></div> \n' +
+			'   <div id="container_data"></div> \n' +
+			'</div>');
+
+		var commandBarContents =
+			'<div class="container_link">' + 
+			'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-jobs/SitePages/App.aspx">Jobs</a> \n' + 
+			'</div>' + 
+			'<div class="container_link">' + 
+			'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-schedule/SitePages/App.aspx?f=cal">Schedule Calendar</a> \n' +
+			'</div>' +
+			'<div class="container_link">' + 
+			'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-schedule/SitePages/App.aspx">Schedule List</a> \n' +
+			'</div>' +
+			'<div id="container_filter-controls-and-header"> \n' +
+			'   <div id="text_filter-controls" class="collapsible">Filters</div> \n' +
+			'   <div id="container_filter-controls"> \n' +
+			'   	<div class="container_filter-control"> \n' +
+			'   		<label for="filter_year">Year</label> \n' +
+			'   		<select id="filter_year" name="filter_year"> \n' +
+			'				' + $().ReturnFiscalYearSelectOptions(startingYearOfFirstFiscalYear, startingYearOfLastFiscalYear, true, selectedYear) + ' \n' +
+			'			</select>' +
+			'		</div>' + 
+			'   	<div class="container_filter-control"> \n' +
+			'   		<label for="filter_manager">Manager</label> \n' +
+			'   		<select id="filter_manager" name="filter_manager"> \n' +
+			'				' + $().ReturnManagerSelectOptions(managersWithDownline, selectedManager, true) + ' \n' +
+			'			</select>' +
+			'		</div>' + 
+			'   	<div class="container_filter-control"> \n' +
+			'			<a id="filter_submit-button">Update</a>' +
+			'		</div>' + 
+			'    </div> \n' +
+			'</div> \n';
+		$("div#container_command-bar").html(commandBarContents);
+
+
+
+
+
+
+
+
+
+		/* managersWithDownline.forEach((manager) => {
 			
 			var managerContainerID = 'manger-content_' + manager.account;
 			var managerMarkup = '';
@@ -20521,7 +20630,7 @@
 								'<td>' + creditPendingCount + '</td>' +
 								'</tr></tbody></table>';
 
-							/* userMarkup += $().ReturnUserSummarySimpleMarkupForGSESignups(signups[user.account]); */
+							// userMarkup += $().ReturnUserSummarySimpleMarkupForGSESignups(signups[user.account]);
 							if (augmentedSignups[user.account]) {
 								userMarkup +=
 									'<button class="user-detail-control">Details</button> \n';
@@ -20561,39 +20670,51 @@
 								userMarkup += detailsMarkup;
 
 								// userMarkup += $().ReturnUserDetailsSimpleMarkupForGSESignups(signups[user.account], relevantRole, );
-								userMarkup += '</div>'; */
+								// userMarkup += '</div>';
 							}
 							userMarkup += '</div>';
 							departmentMarkup += userMarkup;
 
 
-							/* departmentMarkup +=
-								$().ReturnUserSimpleMarkupForGSESignups(manager.account, signups, relevantRole, departmentKeySanitized, user); */
+							// departmentMarkup +=
+							// 	$().ReturnUserSimpleMarkupForGSESignups(manager.account, signups, relevantRole, departmentKeySanitized, user);
 						});
 					}
 					departmentMarkup += '</div>';
 					managerMarkup += departmentMarkup;
 
-					/* managerMarkup +=
-						$().ReturnDepartmentSimpleMarkupForGSESignups(manager, signups, relevantRole, departmentKey, divisionKey); */
+					// managerMarkup +=
+					// 	$().ReturnDepartmentSimpleMarkupForGSESignups(manager, signups, relevantRole, departmentKey, divisionKey);
 				});
 			});
 			managerMarkup += '</div>';
 			allMarkup += managerMarkup;
 			
 			
-			/* allMarkup +=
-				$().ReturnManagerSimpleMarkupForGSESignups(managerWithDownline, augmentedSignups, relevantRole, true); */
+			// allMarkup +=
+			// 	$().ReturnManagerSimpleMarkupForGSESignups(managerWithDownline, augmentedSignups, relevantRole, true);
 		});
 		$("#" + targetID).append(allMarkup);
-		$('.collapsible').collapsible();
 		$("#" + targetID).on('click', 'button.user-detail-control', function (e) {
 			e.preventDefault();
 			console.log('details clicked');
 			console.log(augmentedSignups);
 		});
-		console.log('render prep time = ' + (Date.now() - renderPrepStartTime) / 1000 + ' seconds');
+		console.log('render prep time = ' + (Date.now() - renderPrepStartTime) / 1000 + ' seconds'); */
+		$('.collapsible').collapsible();
 
+		// listen for date filtering
+		$("a#filter_submit-button").click(function () {
+			var selectedStartYear = $("select#filter_year").val();
+			var selectedManager = $("select#filter_manager").val();
+			if (selectedStartYear == '') {
+				selectedStartYear = $().ReturnFormattedDateTime('nowLocal', null, 'YYYY');
+			}
+			if (selectedManager == '') {
+				selectedManager = 'imiaoulis';
+			}
+			window.location = "/sites/" + mData.siteToken + "/SitePages/App.aspx?m=" + selectedManager + "&y=" + selectedStartYear;
+		});
 	};
 
 

@@ -620,6 +620,8 @@ div#s4-workspace div#app-container.event-av div#container_command-bar div#contai
 div#s4-workspace div#app-container.event-av div#container_command-bar ul#container_tab-controls li a,
 div#s4-workspace div#app-container.event-av div#container_command-bar div#container_date-filter-controls-and-header a.collapsible-heading-toggle,
 div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button,
+div#s4-workspace div#app-container.gse-signup div#container_command-bar div#container_filter-controls-and-header a.collapsible-heading-toggle,
+div#s4-workspace div#app-container.gse-signup div#container_command-bar div#container_filter-controls-and-header a#filter_submit-button,
 div#s4-workspace div#public-community-page_open-enrollment div.primary-section a,
 a#standard-printer-button-inside-request,
 a#gse-schedule-card-dialog-my-signup-link,
@@ -639,6 +641,7 @@ div#s4-workspace div.in-page-persona a.profile,
 div#s4-workspace div#public-community-page_moscars div#call-to-action a,
 div#s4-workspace div#public-community-page_hr div#primary-section_open-enrollment a,
 div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button,
+div#s4-workspace div#app-container.gse-signup div#container_command-bar div#container_filter-controls-and-header a#filter_submit-button,
 div#s4-workspace div#public-community-page_open-enrollment div.primary-section a,
 a#gse-schedule-card-dialog-my-signup-link,
 a#gse-schedule-card-dialog-signup-opportunity-link
@@ -689,6 +692,7 @@ div#app-container a.command-bar-button,
 div#s4-workspace div#app-container.event-av div#container_command-bar div#container_new-request-control a,
 div#s4-workspace div#app-container.event-av div#container_command-bar ul#container_tab-controls li a,
 div#s4-workspace div#app-container.event-av div#container_command-bar div#container_date-filter-controls-and-header a.collapsible-heading-toggle,
+div#s4-workspace div#app-container.gse-signup div#container_command-bar div#container_filter-controls-and-header a.collapsible-heading-toggle,
 a#standard-printer-button-inside-request
 	color: $blue5 !important
 	background-color: $blue0 !important
@@ -778,6 +782,7 @@ a.show-default-station-times,
 a.hide-default-station-times,
 button.cafe-button,
 div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button,
+div#s4-workspace div#app-container.gse-signup div#container_command-bar div#container_filter-controls-and-header a#filter_submit-button,
 a#standard-printer-button-inside-request
 	&:before
 		+fontIcon
@@ -818,7 +823,8 @@ a.show-default-station-times
 	&:before
 		+fontIconChevronThickDown
 
-div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button
+div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button,
+div#s4-workspace div#app-container.gse-signup div#container_command-bar div#container_filter-controls-and-header a#filter_submit-button
 
 	&:before
 		+fontIconRefresh
@@ -3910,8 +3916,6 @@ div.gse-schedule-card-dialog-link-container
 
 
 
-
-
 // --- GSE SIGNUP OPPORTUNITY
 
 div#app-container.gse-signup
@@ -3935,6 +3939,52 @@ div#app-container.gse-signup
 	div#no-signups-warning
 		font-size: 2rem !important
 		margin-bottom: 2rem
+
+	
+
+// --- GSE SIGNUPS OVERVIEW FOR HRADMIN
+
+div#s4-workspace div#app-container.gse-signup
+
+	div#container_command-bar-and-data
+
+		div#container_command-bar
+			+gridElementDarkened1
+			display: inline-block
+
+			div.container_link,
+			div#container_filter-controls-and-header
+				+col
+
+			div#container_filter-controls-and-header div#text_filter-controls
+				a.collapsible-heading-toggle
+					display: block
+
+		div#container_filter-controls
+			padding: 1.5rem 1.5rem 0 0
+			font-weight: 600
+
+			div.container_filter-control
+				padding: 0 0 1.5rem 1.5rem
+
+				label
+					display: inline-block
+					width: 6rem
+					text-align: right
+
+				select
+					width: 20rem
+
+				a#filter_submit-button
+					margin: 0 0 0 6.5rem !important
+
+	div.table-container
+		margin-top: 2rem
+
+
+
+
+
 
 
 
