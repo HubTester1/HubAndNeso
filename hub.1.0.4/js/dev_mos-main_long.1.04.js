@@ -20450,7 +20450,7 @@
 		var optionsMarkup = '';
 		var optionStartingYear;
 		var optionEndingYear;
-		var selectedAttribute = '';
+		
 		if (startWithBlank) {
 			optionsMarkup += '<option value=""></option>';
 		}
@@ -20459,6 +20459,7 @@
 			optionStartingYear <= startingYearOfLastFiscalYear;
 			optionStartingYear++
 		) {
+			var selectedAttribute = '';
 			optionEndingYear = optionStartingYear + 1;
 			if (startingYearOfSelectedFiscalYear && startingYearOfSelectedFiscalYear == optionStartingYear) {
 				selectedAttribute = ' selected ';
@@ -20503,24 +20504,25 @@
 	$.fn.RenderAllSimpleMarkupForGSESignupsForHRAdmin = function (targetID, relevantRole) {
 		var renderPrepStartTime = Date.now();
 
-		// set options for the fiscal year filters
-		var testDate = '2021-09-11';
+		// first section is all about getting and setting filters and filter controls
+		// 		(and adjacent controls)
 		var startingYearOfFirstFiscalYear = 2018;
-		var thisYear = $().ReturnFormattedDateTime(testDate, null, 'YYYY');
-		var startingYearOfLastFiscalYear = moment(testDate).isAfter(thisYear + '-06-30') ?
+		var thisYear = $().ReturnFormattedDateTime('nowLocal', null, 'YYYY');
+		var startingYearOfLastFiscalYear = moment().isAfter(thisYear + '-06-30') ?
 			parseInt(thisYear) :
 			parseInt(thisYear) - 1;
 
 		var selectedManager = GetParamFromUrl(location.search, "m");
-		var selectedYear = GetParamFromUrl(location.search, "y");
-		var allMarkup = '';
+		var selectedStartYear = GetParamFromUrl(location.search, "y");
+		if (!selectedStartYear || selectedStartYear == '') {
+			selectedStartYear = moment().isAfter(thisYear + '-06-30') ?
+				parseInt(thisYear) :
+				parseInt(thisYear) - 1;
+		}
+		if (!selectedManager || selectedManager == '') {
+			selectedManager = 'imiaoulis';
+		}
 		var managersWithDownline = $().ReturnManagersWithFullHierarchicalDownline();
-		var augmentedSignups = $().ReturnAllAugmentedSignupsForGSESignupsOverviews();
-
-		console.log(selectedManager);
-		console.log(selectedYear);
-		console.log(managersWithDownline);
-		console.log(augmentedSignups);
 
 		$("#" + targetID).append('<div id="container_command-bar-and-data"> \n' +
 			'   <div id="container_command-bar"></div> \n' +
@@ -20543,7 +20545,7 @@
 			'   	<div class="container_filter-control"> \n' +
 			'   		<label for="filter_year">Year</label> \n' +
 			'   		<select id="filter_year" name="filter_year"> \n' +
-			'				' + $().ReturnFiscalYearSelectOptions(startingYearOfFirstFiscalYear, startingYearOfLastFiscalYear, true, selectedYear) + ' \n' +
+			'				' + $().ReturnFiscalYearSelectOptions(startingYearOfFirstFiscalYear, startingYearOfLastFiscalYear, true, selectedStartYear) + ' \n' +
 			'			</select>' +
 			'		</div>' + 
 			'   	<div class="container_filter-control"> \n' +
@@ -20558,85 +20560,95 @@
 			'    </div> \n' +
 			'</div> \n';
 		$("div#container_command-bar").html(commandBarContents);
+		var augmentedSignups = $().ReturnAllAugmentedSignupsForGSESignupsOverviews(selectedStartYear);
+		var selectedManagerWithDownline;
+
+		managersWithDownline.forEach((manager) => {
+			if (manager.account === selectedManager) {
+				selectedManagerWithDownline = manager;
+			}
+		});
+
+		var allMarkup = '';
+
+		var downlineDivisionKeys = Object.keys(selectedManagerWithDownline.downline);
+		downlineDivisionKeys.forEach((divisionKey) => {
+			var downlineDepartmentKeys = Object.keys(selectedManagerWithDownline.downline[divisionKey]);
+			downlineDepartmentKeys.forEach((departmentKey) => {
+				var departmentKeySanitized =
+					ReplaceAll(' ', '-', ReplaceAll('&', 'and', ReplaceAll('/', 'and', ReplaceAll('\'', '', departmentKey))));
+				var departmentContainerID =
+					'department-content_' + departmentKeySanitized +
+					'_for-' + selectedManagerWithDownline.account;
+				var departmentMarkup =
+					'<h3 class="department-name">' + departmentKey + '</h3> \n' +
+					'<div id="' + departmentContainerID + '" class="department-content"> \n' + 
+					'	<table class="user-summary">' + 
+					'		<thead><tr>' +
+					'			<th></th><th>Total</th><th>Credit Granted</th><th>Credit Denied</th><th>Credit Pending</th>' +
+					'		</tr></thead>' + 
+					'		<tbody>';
+
+				if (selectedManagerWithDownline.downline[divisionKey]) {
+					selectedManagerWithDownline.downline[divisionKey][departmentKey].forEach((user) => {
+						var totalCount = 0;
+						var creditGrantedCount = 0;
+						var creditDeniedCount = 0;
+						var creditPendingCount = 0;
+						if (augmentedSignups[user.account]) {
+							totalCount = augmentedSignups[user.account].length;
+							augmentedSignups[user.account].forEach((signup) => {
+								switch (signup.formData['Request-Status']) {
+									case 'Signed Up':
+										creditPendingCount += 1;
+										break;
+									case 'Credit Denied':
+										creditDeniedCount += 1;
+										break;
+									case 'Credit Granted':
+										creditGrantedCount += 1;
+										break;
+								}
+							});
+						}
+						departmentMarkup += '<tr>';
+						departmentMarkup += totalCount > 0 ?
+							'<td><button class="user-detail-control" data-user-account="' + user.account + '">' + user.displayName + '</button></td>' : 
+							'<td>' + user.displayName + '</td>';
+						departmentMarkup += '<td>' + totalCount + '</td>' +
+							'<td>' + creditGrantedCount + '</td>' +
+							'<td>' + creditDeniedCount + '</td>' +
+							'<td>' + creditPendingCount + '</td>' +
+							'</tr>';
+					});
+				}
+				departmentMarkup += '</tbody></table></div>';
+				allMarkup += departmentMarkup;
+			});
+		});
+		$("#" + targetID).append(allMarkup);
+		$("#app-container").append('<div id="gse-signups-user-detail-dialog"></div>');
+		$("div#gse-signups-user-detail-dialog").dialog({
+			autoOpen: false,
+			draggable: true,
+			show: { effect: "bounce", times: 2, duration: 500 },
+			width: 1200,
+			maxHeight: 600,
+		});
+		$('div[aria-describedby="gse-signups-user-detail-dialog"] div.ui-dialog-titlebar span.ui-dialog-title').append('<span class="gse-signups-user-detail-dialog-header">Signup Details</span>');
+		$("div#gse-signups-user-detail-dialog").append('<div id="gse-signups-user-detail-table-container" class="table-container"></div>');
+		
+		
+		// listen for button clicking
+		$("#" + targetID).on('click', 'button.user-detail-control', function (e) {
+			e.preventDefault();
+			var clickedUserAccount = $(this).attr('data-user-account');
+			console.log('details clicked');
+			console.log(clickedUserAccount);
+			console.log(augmentedSignups[clickedUserAccount]);
+/* 
 
 
-
-
-
-
-
-
-
-		/* managersWithDownline.forEach((manager) => {
-			
-			var managerContainerID = 'manger-content_' + manager.account;
-			var managerMarkup = '';
-			// if (renderManagerName) {
-			managerMarkup += '<h2 class="manager-name collapsible">' +
-				manager.displayName + '</h2> \n';
-			// }
-
-			managerMarkup += '<div id="' + managerContainerID + '" class="manager-content">';
-
-			var downlineDivisionKeys = Object.keys(manager.downline);
-			downlineDivisionKeys.forEach((divisionKey) => {
-				var downlineDepartmentKeys = Object.keys(manager.downline[divisionKey]);
-				downlineDepartmentKeys.forEach((departmentKey) => {
-					var departmentKeySanitized =
-						ReplaceAll(' ', '-', ReplaceAll('&', 'and', ReplaceAll('/', 'and', ReplaceAll('\'', '', departmentKey))));
-					var departmentContainerID =
-						'department-content_' + departmentKeySanitized +
-						'_for-' + manager.account;
-					var departmentMarkup =
-						'<h3 class="department-name">' + departmentKey + '</h3> \n' +
-						'<div id="' + departmentContainerID + '" class="department-content"> \n';
-
-					if (manager.downline[divisionKey]) {
-						manager.downline[divisionKey][departmentKey].forEach((user) => {
-							var userContainerID =
-								'user-content_' + user.account + '_for-' + departmentKeySanitized + '_for-' + manager.account;
-							var userDetailsContainerID =
-								'user-details_' + user.account + '_for-' + departmentKeySanitized + '_for-' + manager.account;
-							var userMarkup =
-								'<div id="' + userContainerID + '" class="user-content">' +
-								'<h4>' + user.displayName + '</h4>';
-
-							var totalCount = 0;
-							var creditGrantedCount = 0;
-							var creditDeniedCount = 0;
-							var creditPendingCount = 0;
-							if (augmentedSignups[user.account]) {
-								totalCount = augmentedSignups[user.account].length;
-								augmentedSignups[user.account].forEach((signup) => {
-									switch (signup.formData['Request-Status']) {
-										case 'Signed Up':
-											creditPendingCount += 1;
-											break;
-										case 'Credit Denied':
-											creditDeniedCount += 1;
-											break;
-										case 'Credit Granted':
-											creditGrantedCount += 1;
-											break;
-									}
-								});
-							}
-							userMarkup += '<table class="user-summary"><thead><tr>' +
-								'<th>Total</th><th>Credit Granted</th><th>Credit Denied</th><th>Credit Pending</th>' +
-								'</tr></thead><tbody><tr>' +
-								'<td>' + totalCount + '</td>' +
-								'<td>' + creditGrantedCount + '</td>' +
-								'<td>' + creditDeniedCount + '</td>' +
-								'<td>' + creditPendingCount + '</td>' +
-								'</tr></tbody></table>';
-
-							// userMarkup += $().ReturnUserSummarySimpleMarkupForGSESignups(signups[user.account]);
-							if (augmentedSignups[user.account]) {
-								userMarkup +=
-									'<button class="user-detail-control">Details</button> \n';
-									
-									
-									
 									/* +
 									'<div id="' + userDetailsContainerID + '" class="user-content">';
 
@@ -20671,36 +20683,15 @@
 
 								// userMarkup += $().ReturnUserDetailsSimpleMarkupForGSESignups(signups[user.account], relevantRole, );
 								// userMarkup += '</div>';
-							}
-							userMarkup += '</div>';
-							departmentMarkup += userMarkup;
+								*/
 
 
-							// departmentMarkup +=
-							// 	$().ReturnUserSimpleMarkupForGSESignups(manager.account, signups, relevantRole, departmentKeySanitized, user);
-						});
-					}
-					departmentMarkup += '</div>';
-					managerMarkup += departmentMarkup;
+ */
 
-					// managerMarkup +=
-					// 	$().ReturnDepartmentSimpleMarkupForGSESignups(manager, signups, relevantRole, departmentKey, divisionKey);
-				});
-			});
-			managerMarkup += '</div>';
-			allMarkup += managerMarkup;
-			
-			
-			// allMarkup +=
-			// 	$().ReturnManagerSimpleMarkupForGSESignups(managerWithDownline, augmentedSignups, relevantRole, true);
+			$("div#gse-signups-user-detail-table-container").append('<p>Appended here</p>');
+			$("div#gse-signups-user-detail-dialog").dialog("open");
 		});
-		$("#" + targetID).append(allMarkup);
-		$("#" + targetID).on('click', 'button.user-detail-control', function (e) {
-			e.preventDefault();
-			console.log('details clicked');
-			console.log(augmentedSignups);
-		});
-		console.log('render prep time = ' + (Date.now() - renderPrepStartTime) / 1000 + ' seconds'); */
+		console.log('render prep time = ' + (Date.now() - renderPrepStartTime) / 1000 + ' seconds');
 		$('.collapsible').collapsible();
 
 		// listen for date filtering
@@ -20708,7 +20699,9 @@
 			var selectedStartYear = $("select#filter_year").val();
 			var selectedManager = $("select#filter_manager").val();
 			if (selectedStartYear == '') {
-				selectedStartYear = $().ReturnFormattedDateTime('nowLocal', null, 'YYYY');
+				selectedStartYear = moment().isAfter(thisYear + '-06-30') ?
+					parseInt(thisYear) :
+					parseInt(thisYear) - 1;
 			}
 			if (selectedManager == '') {
 				selectedManager = 'imiaoulis';
