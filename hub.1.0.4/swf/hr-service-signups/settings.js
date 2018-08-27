@@ -24,7 +24,7 @@
 	var oData = {
 
 		// screen 3.2
-		'gseSignupsHRAdmin': {
+		/* 'gseSignupsHRAdmin': {
 			'buttons': [
 				{
 					"linkType": "goForward",
@@ -43,7 +43,7 @@
 					"target": null
 				}
 			],
-			/* 'sections': {
+			'sections': {
 				'commonColumns': [
 					{
 						'displayName': 'Request ID',
@@ -81,11 +81,11 @@
 						'basicMyEOLQueryRelevantValue': 1
 					}
 				]
-			} */
-		},
+			}
+		}, */
 
 		// screen 3.2
-		'gseSignupsManager': {
+		/* 'gseSignupsManager': {
 			'buttons': [
 				{
 					"linkType": "goForward",
@@ -104,7 +104,7 @@
 					"target": null
 				}
 			],
-			/* 'sections': {
+			'sections': {
 				'commonColumns': [
 					{
 						'displayName': 'Request ID',
@@ -142,8 +142,8 @@
 						'basicMyEOLQueryRelevantValue': 1
 					}
 				]
-			} */
-		},
+			}
+		}, */
 
 		// screen 3.2
 		'gseSignupsStaff': {

@@ -7062,11 +7062,9 @@
 		
 		
 		} else if (type === "gseSignupsHRAdmin") {
-			// $().RenderOverviewScreenButtons(oData.gseSignupsHRAdmin.buttons, 0);
-			$().RenderAllSimpleMarkupForGSESignupsForHRAdmin("overview-table-container", 'gseHRAdmin');
+			$().RenderAllSimpleMarkupForGSESignupsForHRAdminOrManager("overview-table-container", 'gseHRAdmin');
 		} else if (type === "gseSignupsManager") {
-			$().RenderOverviewScreenButtons(oData.gseSignupsManager.buttons, 0);
-			$().RenderAllDataTablesForGSESignups("overview-table-container", 'gseManager');
+			$().RenderAllSimpleMarkupForGSESignupsForHRAdminOrManager("overview-table-container", 'gseManager');
 		} else if (type === "gseSignupsStaff") {
 			$().RenderOverviewScreenButtons(oData.gseSignupsStaff.buttons, 0);
 			$().RenderAllDataTablesForGSESignupsForUsers("overview-table-container", 'gseUserOnly');
@@ -19840,7 +19838,7 @@
 
 
 
-	function CompareUsersByLastName(a, b) {
+	function CompareUsersByLastNameForArraySorting(a, b) {
 		if (a.lastName < b.lastName)
 			return -1;
 		if (a.lastName > b.lastName)
@@ -19849,10 +19847,19 @@
 	}
 
 
+	function CompareElementsForArraySorting(a, b) {
+		if (a < b)
+			return -1;
+		if (a > b)
+			return 1;
+		return 0;
+	}
+
+
 
 	$.fn.ReturnManagerSelectOptions = function (managersArray, selectedManagerAccount, startWithBlank) {
 		var managersMarkup = '';
-		managersArray.sort(CompareUsersByLastName);
+		managersArray.sort(CompareUsersByLastNameForArraySorting);
 		if (startWithBlank) {
 			managersMarkup += '<option value=""></option>';
 		}
@@ -19869,7 +19876,7 @@
 
 
 
-	$.fn.RenderAllSimpleMarkupForGSESignupsForHRAdmin = function (targetID, relevantRole) {
+	$.fn.RenderAllSimpleMarkupForGSESignupsForHRAdminOrManager = function (targetID, relevantRole) {
 		var renderPrepStartTime = Date.now();
 
 		// first section is all about getting and setting filters and filter controls
@@ -19880,15 +19887,22 @@
 			parseInt(thisYear) :
 			parseInt(thisYear) - 1;
 
-		var selectedManager = GetParamFromUrl(location.search, "m");
+		var selectedManager;
 		var selectedStartYear = GetParamFromUrl(location.search, "y");
 		if (!selectedStartYear || selectedStartYear == '') {
 			selectedStartYear = moment().isAfter(thisYear + '-06-30') ?
 				parseInt(thisYear) :
 				parseInt(thisYear) - 1;
 		}
-		if (!selectedManager || selectedManager == '') {
-			selectedManager = 'imiaoulis';
+		if (relevantRole === 'gseHRAdmin') {
+			selectedManager = GetParamFromUrl(location.search, "m");
+			if (!selectedManager || selectedManager == '') {
+				selectedManager = 'imiaoulis';
+			}
+		}
+		if (relevantRole === 'gseManager') {
+			selectedManager = 'bwilson';
+			// selectedManager = uData.account;
 		}
 		var managersWithDownline = $().ReturnManagersWithFullHierarchicalDownline();
 
@@ -19897,36 +19911,64 @@
 			'   <div id="container_data"></div> \n' +
 			'</div>');
 
-		var commandBarContents =
-			'<div class="container_link">' + 
-			'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-jobs/SitePages/App.aspx">Jobs</a> \n' + 
-			'</div>' + 
-			'<div class="container_link">' + 
-			'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-schedule/SitePages/App.aspx?f=cal">Schedule Calendar</a> \n' +
-			'</div>' +
-			'<div class="container_link">' + 
-			'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-schedule/SitePages/App.aspx">Schedule List</a> \n' +
-			'</div>' +
-			'<div id="container_filter-controls-and-header"> \n' +
-			'   <div id="text_filter-controls" class="collapsible">Filters</div> \n' +
-			'   <div id="container_filter-controls"> \n' +
-			'   	<div class="container_filter-control"> \n' +
-			'   		<label for="filter_year">Year</label> \n' +
-			'   		<select id="filter_year" name="filter_year"> \n' +
-			'				' + $().ReturnFiscalYearSelectOptions(startingYearOfFirstFiscalYear, startingYearOfLastFiscalYear, true, selectedStartYear) + ' \n' +
-			'			</select>' +
-			'		</div>' + 
-			'   	<div class="container_filter-control"> \n' +
-			'   		<label for="filter_manager">Manager</label> \n' +
-			'   		<select id="filter_manager" name="filter_manager"> \n' +
-			'				' + $().ReturnManagerSelectOptions(managersWithDownline, selectedManager, true) + ' \n' +
-			'			</select>' +
-			'		</div>' + 
-			'   	<div class="container_filter-control"> \n' +
-			'			<a id="filter_submit-button">Update</a>' +
-			'		</div>' + 
-			'    </div> \n' +
-			'</div> \n';
+		var commandBarContents = '';
+		if (relevantRole === 'gseHRAdmin') {
+			commandBarContents += '<div class="container_link">' +
+				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-jobs/SitePages/App.aspx">Jobs</a> \n' +
+				'</div>' +
+				'<div class="container_link">' +
+				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-schedule/SitePages/App.aspx?f=cal">Schedule Calendar</a> \n' +
+				'</div>' +
+				'<div class="container_link">' +
+				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-schedule/SitePages/App.aspx">Schedule List</a> \n' +
+				'</div>' +
+				'<div id="container_filter-controls-and-header"> \n' +
+				'   <div id="text_filter-controls" class="collapsible">Manager & Year</div> \n' +
+				'   <div id="container_filter-controls"> \n' +
+				'   	<div class="container_filter-control"> \n' +
+				'   		<label for="filter_year">Year</label> \n' +
+				'   		<select id="filter_year" name="filter_year"> \n' +
+				'				' + $().ReturnFiscalYearSelectOptions(startingYearOfFirstFiscalYear, startingYearOfLastFiscalYear, true, selectedStartYear) + ' \n' +
+				'			</select>' +
+				'		</div>' +
+				'   	<div class="container_filter-control"> \n' +
+				'   		<label for="filter_manager">Manager</label> \n' +
+				'   		<select id="filter_manager" name="filter_manager"> \n' +
+				'				' + $().ReturnManagerSelectOptions(managersWithDownline, selectedManager, true) + ' \n' +
+				'			</select>' +
+				'		</div>' +
+				'   	<div class="container_filter-control"> \n' +
+				'			<a id="filter_submit-button">Update</a>' +
+				'		</div>' +
+				'    </div> \n' +
+				'</div> \n';
+		}
+		if (relevantRole === 'gseManager') {
+			commandBarContents += '<div class="container_link">' +
+				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-jobs/SitePages/App.aspx">My and My Staff Members\' Jobs</a> \n' +
+				'</div>' +
+				'<div class="container_link">' +
+				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-schedule/SitePages/App.aspx?f=cal">Schedule Calendar</a> \n' +
+				'</div>' +
+				'<div class="container_link">' +
+				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-schedule/SitePages/App.aspx">Schedule List</a> \n' +
+				'</div>' +
+				'<div id="container_filter-controls-and-header"> \n' +
+				'   <div id="text_filter-controls" class="collapsible">Year</div> \n' +
+				'   <div id="container_filter-controls"> \n' +
+				'   	<div class="container_filter-control"> \n' +
+				'   		<label for="filter_year">Year</label> \n' +
+				'   		<select id="filter_year" name="filter_year"> \n' +
+				'				' + $().ReturnFiscalYearSelectOptions(startingYearOfFirstFiscalYear, startingYearOfLastFiscalYear, true, selectedStartYear) + ' \n' +
+				'			</select>' +
+				'		</div>' +
+				'   	<div class="container_filter-control"> \n' +
+				'			<a id="filter_submit-button">Update</a>' +
+				'		</div>' +
+				'    </div> \n' +
+				'</div> \n';
+		}
+			
 		$("div#container_command-bar").html(commandBarContents);
 		var augmentedSignups = $().ReturnAllAugmentedSignupsForGSESignupsOverviews(selectedStartYear);
 		var selectedManagerWithDownline;
@@ -19938,27 +19980,35 @@
 		});
 
 		var allMarkup = '';
+		var departmentMarkups = {};
 
 		var downlineDivisionKeys = Object.keys(selectedManagerWithDownline.downline);
 		downlineDivisionKeys.forEach((divisionKey) => {
 			var downlineDepartmentKeys = Object.keys(selectedManagerWithDownline.downline[divisionKey]);
+			console.log('downlineDepartmentKeys');
+			console.log(downlineDepartmentKeys);
+			// downlineDepartmentKeys.sort(CompareElementsForArraySorting);
 			downlineDepartmentKeys.forEach((departmentKey) => {
 				var departmentKeySanitized =
 					ReplaceAll(' ', '-', ReplaceAll('&', 'and', ReplaceAll('/', 'and', ReplaceAll('\'', '', departmentKey))));
 				var departmentContainerID =
-					'department-content_' + departmentKeySanitized +
-					'_for-' + selectedManagerWithDownline.account;
+					'department-content_' + departmentKeySanitized;
 				var departmentMarkup =
+					'<div class="department-container">' + 
 					'<h3 class="department-name">' + departmentKey + '</h3> \n' +
 					'<div id="' + departmentContainerID + '" class="department-content"> \n' + 
-					'	<table class="user-summary">' + 
+					'	<table class="gse-signups-user-summary">' + 
 					'		<thead><tr>' +
-					'			<th></th><th>Total</th><th>Credit Granted</th><th>Credit Denied</th><th>Credit Pending</th>' +
+					'			<th></th><th class="small-column-header">Total</th>' + 
+					'			<th class="small-column-header">Credit Granted</th>' + 
+					'			<th class="small-column-header">Credit Denied</th>' + 
+					'			<th class="small-column-header">Credit Pending</th>' + 
 					'		</tr></thead>' + 
 					'		<tbody>';
 
 				if (selectedManagerWithDownline.downline[divisionKey]) {
-					selectedManagerWithDownline.downline[divisionKey][departmentKey].forEach((user) => {
+					selectedManagerWithDownline.downline[divisionKey][departmentKey].forEach((user, index) => {
+						var evenOrOdd = ((index % 2) == 0) ? 'odd' : 'even';
 						var totalCount = 0;
 						var creditGrantedCount = 0;
 						var creditDeniedCount = 0;
@@ -19979,40 +20029,47 @@
 								}
 							});
 						}
-						departmentMarkup += '<tr>';
+						departmentMarkup += '<tr class="' + evenOrOdd + '">';
 						departmentMarkup += totalCount > 0 ?
-							'<td><button class="user-detail-control" data-user-account="' + user.account + '">' + user.displayName + '</button></td>' : 
-							'<td>' + user.displayName + '</td>';
-						departmentMarkup += '<td>' + totalCount + '</td>' +
-							'<td>' + creditGrantedCount + '</td>' +
-							'<td>' + creditDeniedCount + '</td>' +
-							'<td>' + creditPendingCount + '</td>' +
+							'<td><button class="gse-signups-user-detail-control" data-user-account="' + user.account + '" data-user-name="' + user.displayName + '">' + user.displayName + '</button></td>' : 
+							'<td><div class="small-in-column">' + user.displayName + '</div></td>';
+						departmentMarkup += '<td><div class="small-in-column">' + totalCount + '</div></td>' +
+							'<td><div class="small-in-column">' + creditGrantedCount + '</div></td>' +
+							'<td><div class="small-in-column">' + creditDeniedCount + '</div></td>' +
+							'<td><div class="small-in-column">' + creditPendingCount + '</div></td>' +
 							'</tr>';
 					});
 				}
-				departmentMarkup += '</tbody></table></div>';
-				allMarkup += departmentMarkup;
+				departmentMarkup += '</tbody></table></div></div>';
+				departmentMarkups[departmentKeySanitized] = departmentMarkup;
 			});
 		});
-		$("#" + targetID).append(allMarkup);
+		var departmentMarkupsKeys = Object.keys(departmentMarkups);
+		departmentMarkupsKeys.sort(CompareElementsForArraySorting);
+		departmentMarkupsKeys.forEach((departmentMarkupKey) => {
+			allMarkup += departmentMarkups[departmentMarkupKey];
+		});
+		$("#container_data").append(allMarkup);
 		$("#app-container").append('<div id="gse-signups-user-detail-dialog"></div>');
 		$("div#gse-signups-user-detail-dialog").dialog({
 			autoOpen: false,
 			draggable: true,
 			show: { effect: "bounce", times: 2, duration: 500 },
-			width: 600,
+			width: 800,
 			maxHeight: 600,
 		});
 		$("div#gse-signups-user-detail-dialog").append('<div id="gse-signups-user-detail-table-container" class="table-container"></div>');
 		
 		
 		// listen for button clicking
-		$("#" + targetID).on('click', 'button.user-detail-control', function (e) {
+		$("#" + targetID).on('click', 'button.gse-signups-user-detail-control', function (e) {
 			e.preventDefault();
 			var clickedUserAccount = $(this).attr('data-user-account');
-			$('div[aria-describedby="gse-signups-user-detail-dialog"] div.ui-dialog-titlebar span.ui-dialog-title').append('<span class="gse-signups-user-detail-dialog-header">Signup Details for ' + clickedUserAccount + '</span>');
+			var clickedUserName = $(this).attr('data-user-name');
+			$('div[aria-describedby="gse-signups-user-detail-dialog"] div.ui-dialog-titlebar span.ui-dialog-title').empty();
+			$('div[aria-describedby="gse-signups-user-detail-dialog"] div.ui-dialog-titlebar span.ui-dialog-title').append('<span class="gse-signups-user-detail-dialog-header">Signup Details for ' + clickedUserName + '</span>');
 
-			var detailsMarkup = '<div id="user-details_' + clickedUserAccount + '" class="user-content">' + '<table class="user-details"><thead><tr>' +
+			var detailsMarkup = '<div id="user-details_' + clickedUserAccount + '" class="user-content">' + '<table class="gse-signups-user-details"><thead><tr>' +
 				'<th>Signup ID</th>' +
 				'<th>Job Title</th>';
 			if (relevantRole === 'gseHRAdmin') {
@@ -20021,16 +20078,23 @@
 			if (relevantRole === 'gseManager') {
 				detailsMarkup += '<th>Reporting To</th>';
 			}
-			detailsMarkup += '<th>Date</th>' +
+			detailsMarkup += '<th>Date</th>' + 
 				'<th>Start Time</th>' +
 				'<th>Schedule Length</th>' +
 				'<th>Status</th>' +
 				'</tr></thead><tbody>';
-			augmentedSignups[clickedUserAccount].forEach((signup) => {
+			augmentedSignups[clickedUserAccount].forEach((signup, index) => {
+				var evenOrOdd = ((index % 2) == 0) ? 'odd' : 'even';
 				var isoStartDatetime = signup.Schedule.Date.slice(0, 10) + signup.Schedule.StartTime.slice(10, 19);
-				detailsMarkup += '<tr>' +
-					'<td>' + signup.SignupID + '</td>' +
-					'<td>' + signup.Job.JobTitle + '</td>' +
+				detailsMarkup += '<tr class="' + evenOrOdd + '">';
+
+				if (relevantRole === 'gseHRAdmin') {
+					detailsMarkup += '<td><a href="https://bmos.sharepoint.com/sites/hr-service-signups/SitePages/App.aspx?r=' + signup.SignupID + '" data-button-type="existingRequest" data-request-id="' + signup.SignupID + '" class="link_request-id">' + signup.SignupID + '</a></td>';
+				}
+				if (relevantRole === 'gseManager') {
+					detailsMarkup += '<td>' + signup.SignupID + '</td>';
+				}
+				detailsMarkup += '<td>' + signup.Job.JobTitle + '</td>' +
 					'<td>' + $().RenderPersonLinks(signup.Job.JobAdmin) + '</td>' +
 					'<td>' + $().ReturnFormattedDateTime(isoStartDatetime, null, 'MMMM D, YYYY') + '</td>' +
 					'<td>' + $().ReturnFormattedDateTime(isoStartDatetime, null, 'h:mm a') + '</td>' +

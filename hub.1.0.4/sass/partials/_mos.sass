@@ -778,6 +778,7 @@ div.fc-toolbar button.fc-nextYear-button,
 a.button-link_new-item,
 div.ui-dialog div.ui-dialog-content.ui-widget-content div.table-container div.dataTables_wrapper table.dataTable a.anchor_no-href,
 a.id-or-link_list-item-chooser,
+button.gse-signups-user-detail-control,
 a.show-default-station-times,
 a.hide-default-station-times,
 button.cafe-button,
@@ -806,6 +807,7 @@ div.ui-dialog div.ui-dialog-titlebar.ui-widget-header button.ui-button span.ui-i
 		+fontIconX
 
 a.anchor_list-item-chooser,
+button.gse-signups-user-detail-control,
 .collapsible-heading a.collapsible-heading-toggle,
 a.hide-default-station-times
 
@@ -2802,7 +2804,8 @@ div.ui-dialog
 
 	div.ui-dialog-titlebar.ui-widget-header
 
-		span.list-dialog-header
+		span.list-dialog-header,
+		span.gse-signups-user-detail-dialog-header
 			font-size: 2.75rem !important
 			font-weight: 300
 
@@ -2842,82 +2845,88 @@ div.ui-dialog
 					color: $grey4
 					border: none
 
-		table.dataTable
-			border-spacing: 0
+	table.dataTable,
+	table.gse-signups-user-summary,
+	table.gse-signups-user-details
+		border-spacing: 0
 
-			thead
+		thead
 
-				th
-					padding: .8rem 2.4rem .8rem .8rem
-					font-weight: 500
-					border: none
+			th
+				padding: .8rem 2.4rem .8rem .8rem
+				font-weight: 500
+				border: none
 
-				th.sorting,
-				th.sorting_asc_disabled,
-				th.sorting_desc_disabled
-					background: none
+			th.small-column-header
+				padding: .8rem 1rem
+				text-align: center
 
-				th.sorting_asc,
-				th.sorting_desc
-					padding: .8rem 2.4rem
+			th.sorting,
+			th.sorting_asc_disabled,
+			th.sorting_desc_disabled
+				background: none
 
-					&:before
+			th.sorting_asc,
+			th.sorting_desc
+				padding: .8rem 2.4rem
+
+				&:before
+					+fontIcon
+					+fontIconBefore
+
+			th.sorting_asc
+
+				&:before
+
+					+fontIconArrowUp2
+
+			th.sorting_desc
+
+				&:before
+
+					+fontIconArrowDown2
+
+		tbody
+
+			td
+				padding: .8rem
+
+				a.link_request-id
+					display: block
+					padding: .5rem 0
+					width: 100%
+					text-align: center
+					cursor: pointer
+
+					&:after
 						+fontIcon
-						+fontIconBefore
+						+fontIconAfter
+						+fontIconArrowRight
+						font-size: 1rem
 
-				th.sorting_asc
+				div.small-in-column
+					text-align: center
 
-					&:before
+			tr.group
+				font-size: 1.7rem
+				font-weight: 300
 
-						+fontIconArrowUp2
+			tr.odd
+				+gridElementDarkened1
 
-				th.sorting_desc
+				td.sorting_1
+					+gridElementDarkened2
 
-					&:before
+			tr.even
+				// no darkening
 
-						+fontIconArrowDown2
-
-			tbody
-
-				td
-					padding: .8rem
-
-					a.link_request-id
-						display: block
-						padding: .5rem 0
-						width: 100%
-						text-align: center
-						cursor: pointer
-
-						&:after
-							+fontIcon
-							+fontIconAfter
-							+fontIconArrowRight
-							font-size: 1rem
-
-					div.small-in-column
-						text-align: center
-
-				tr.group
-					font-size: 1.7rem
-					font-weight: 300
-
-				tr.odd
+				td.sorting_1
 					+gridElementDarkened1
 
-					td.sorting_1
-						+gridElementDarkened2
-
-				tr.even
-					// no darkening
-
-					td.sorting_1
-						+gridElementDarkened1
-
-		div.dataTables_paginate
-			float: none
-			text-align: left
-			margin-top: 1rem
+	div.dataTables_paginate
+		float: none
+		text-align: left
+		margin-top: 1rem
 
 // set magnifying glass into search box - different positions for page and dialog box
 div#s4-workspace div.table-container div.dataTables_wrapper	div.dataTables_filter:after,
@@ -3978,8 +3987,15 @@ div#s4-workspace div#app-container.gse-signup
 				a#filter_submit-button
 					margin: 0 0 0 6.5rem !important
 
-	div.table-container
-		margin-top: 2rem
+		div#container_data
+			margin-top: 1rem
+			
+			div.department-container
+				margin-bottom: 2rem
+
+				button.gse-signups-user-detail-control
+					+buttonLikeLink
+
 
 
 

@@ -773,6 +773,7 @@ div.fc-toolbar button.fc-nextYear-button:before,
 a.button-link_new-item:before,
 div.ui-dialog div.ui-dialog-content.ui-widget-content div.table-container div.dataTables_wrapper table.dataTable a.anchor_no-href:before,
 a.id-or-link_list-item-chooser:before,
+button.gse-signups-user-detail-control:before,
 a.show-default-station-times:before,
 a.hide-default-station-times:before,
 button.cafe-button:before,
@@ -801,6 +802,7 @@ div.ui-dialog div.ui-dialog-titlebar.ui-widget-header button.ui-button span.ui-i
   content: '\E042'; }
 
 a.anchor_list-item-chooser:before,
+button.gse-signups-user-detail-control:before,
 .collapsible-heading a.collapsible-heading-toggle:before,
 a.hide-default-station-times:before {
   content: '\E235'; }
@@ -2424,7 +2426,9 @@ div.ui-dialog p.message_no-requests-found {
   margin-bottom: 4rem; }
 
 div#s4-workspace div.ui-dialog-titlebar.ui-widget-header span.list-dialog-header,
-div.ui-dialog div.ui-dialog-titlebar.ui-widget-header span.list-dialog-header {
+div#s4-workspace div.ui-dialog-titlebar.ui-widget-header span.gse-signups-user-detail-dialog-header,
+div.ui-dialog div.ui-dialog-titlebar.ui-widget-header span.list-dialog-header,
+div.ui-dialog div.ui-dialog-titlebar.ui-widget-header span.gse-signups-user-detail-dialog-header {
   font-size: 2.75rem !important;
   font-weight: 300; }
 
@@ -2472,30 +2476,122 @@ div.ui-dialog div.table-container div.dataTables_wrapper {
         width: 22.2rem;
         color: #444;
         border: none; }
-  div#s4-workspace div.table-container div.dataTables_wrapper table.dataTable,
-  div.ui-dialog div.table-container div.dataTables_wrapper table.dataTable {
-    border-spacing: 0; }
-    div#s4-workspace div.table-container div.dataTables_wrapper table.dataTable thead th,
-    div.ui-dialog div.table-container div.dataTables_wrapper table.dataTable thead th {
-      padding: .8rem 2.4rem .8rem .8rem;
-      font-weight: 500;
-      border: none; }
-    div#s4-workspace div.table-container div.dataTables_wrapper table.dataTable thead th.sorting,
-    div#s4-workspace div.table-container div.dataTables_wrapper table.dataTable thead th.sorting_asc_disabled,
-    div#s4-workspace div.table-container div.dataTables_wrapper table.dataTable thead th.sorting_desc_disabled,
-    div.ui-dialog div.table-container div.dataTables_wrapper table.dataTable thead th.sorting,
-    div.ui-dialog div.table-container div.dataTables_wrapper table.dataTable thead th.sorting_asc_disabled,
-    div.ui-dialog div.table-container div.dataTables_wrapper table.dataTable thead th.sorting_desc_disabled {
-      background: none; }
-    div#s4-workspace div.table-container div.dataTables_wrapper table.dataTable thead th.sorting_asc,
-    div#s4-workspace div.table-container div.dataTables_wrapper table.dataTable thead th.sorting_desc,
-    div.ui-dialog div.table-container div.dataTables_wrapper table.dataTable thead th.sorting_asc,
-    div.ui-dialog div.table-container div.dataTables_wrapper table.dataTable thead th.sorting_desc {
-      padding: .8rem 2.4rem; }
-      div#s4-workspace div.table-container div.dataTables_wrapper table.dataTable thead th.sorting_asc:before,
-      div#s4-workspace div.table-container div.dataTables_wrapper table.dataTable thead th.sorting_desc:before,
-      div.ui-dialog div.table-container div.dataTables_wrapper table.dataTable thead th.sorting_asc:before,
-      div.ui-dialog div.table-container div.dataTables_wrapper table.dataTable thead th.sorting_desc:before {
+
+div#s4-workspace table.dataTable,
+div#s4-workspace table.gse-signups-user-summary,
+div#s4-workspace table.gse-signups-user-details,
+div.ui-dialog table.dataTable,
+div.ui-dialog table.gse-signups-user-summary,
+div.ui-dialog table.gse-signups-user-details {
+  border-spacing: 0; }
+  div#s4-workspace table.dataTable thead th,
+  div#s4-workspace table.gse-signups-user-summary thead th,
+  div#s4-workspace table.gse-signups-user-details thead th,
+  div.ui-dialog table.dataTable thead th,
+  div.ui-dialog table.gse-signups-user-summary thead th,
+  div.ui-dialog table.gse-signups-user-details thead th {
+    padding: .8rem 2.4rem .8rem .8rem;
+    font-weight: 500;
+    border: none; }
+  div#s4-workspace table.dataTable thead th.small-column-header,
+  div#s4-workspace table.gse-signups-user-summary thead th.small-column-header,
+  div#s4-workspace table.gse-signups-user-details thead th.small-column-header,
+  div.ui-dialog table.dataTable thead th.small-column-header,
+  div.ui-dialog table.gse-signups-user-summary thead th.small-column-header,
+  div.ui-dialog table.gse-signups-user-details thead th.small-column-header {
+    padding: .8rem 1rem;
+    text-align: center; }
+  div#s4-workspace table.dataTable thead th.sorting,
+  div#s4-workspace table.dataTable thead th.sorting_asc_disabled,
+  div#s4-workspace table.dataTable thead th.sorting_desc_disabled,
+  div#s4-workspace table.gse-signups-user-summary thead th.sorting,
+  div#s4-workspace table.gse-signups-user-summary thead th.sorting_asc_disabled,
+  div#s4-workspace table.gse-signups-user-summary thead th.sorting_desc_disabled,
+  div#s4-workspace table.gse-signups-user-details thead th.sorting,
+  div#s4-workspace table.gse-signups-user-details thead th.sorting_asc_disabled,
+  div#s4-workspace table.gse-signups-user-details thead th.sorting_desc_disabled,
+  div.ui-dialog table.dataTable thead th.sorting,
+  div.ui-dialog table.dataTable thead th.sorting_asc_disabled,
+  div.ui-dialog table.dataTable thead th.sorting_desc_disabled,
+  div.ui-dialog table.gse-signups-user-summary thead th.sorting,
+  div.ui-dialog table.gse-signups-user-summary thead th.sorting_asc_disabled,
+  div.ui-dialog table.gse-signups-user-summary thead th.sorting_desc_disabled,
+  div.ui-dialog table.gse-signups-user-details thead th.sorting,
+  div.ui-dialog table.gse-signups-user-details thead th.sorting_asc_disabled,
+  div.ui-dialog table.gse-signups-user-details thead th.sorting_desc_disabled {
+    background: none; }
+  div#s4-workspace table.dataTable thead th.sorting_asc,
+  div#s4-workspace table.dataTable thead th.sorting_desc,
+  div#s4-workspace table.gse-signups-user-summary thead th.sorting_asc,
+  div#s4-workspace table.gse-signups-user-summary thead th.sorting_desc,
+  div#s4-workspace table.gse-signups-user-details thead th.sorting_asc,
+  div#s4-workspace table.gse-signups-user-details thead th.sorting_desc,
+  div.ui-dialog table.dataTable thead th.sorting_asc,
+  div.ui-dialog table.dataTable thead th.sorting_desc,
+  div.ui-dialog table.gse-signups-user-summary thead th.sorting_asc,
+  div.ui-dialog table.gse-signups-user-summary thead th.sorting_desc,
+  div.ui-dialog table.gse-signups-user-details thead th.sorting_asc,
+  div.ui-dialog table.gse-signups-user-details thead th.sorting_desc {
+    padding: .8rem 2.4rem; }
+    div#s4-workspace table.dataTable thead th.sorting_asc:before,
+    div#s4-workspace table.dataTable thead th.sorting_desc:before,
+    div#s4-workspace table.gse-signups-user-summary thead th.sorting_asc:before,
+    div#s4-workspace table.gse-signups-user-summary thead th.sorting_desc:before,
+    div#s4-workspace table.gse-signups-user-details thead th.sorting_asc:before,
+    div#s4-workspace table.gse-signups-user-details thead th.sorting_desc:before,
+    div.ui-dialog table.dataTable thead th.sorting_asc:before,
+    div.ui-dialog table.dataTable thead th.sorting_desc:before,
+    div.ui-dialog table.gse-signups-user-summary thead th.sorting_asc:before,
+    div.ui-dialog table.gse-signups-user-summary thead th.sorting_desc:before,
+    div.ui-dialog table.gse-signups-user-details thead th.sorting_asc:before,
+    div.ui-dialog table.gse-signups-user-details thead th.sorting_desc:before {
+      display: inline-block;
+      font-family: 'Office365Icons';
+      font-size: inherit;
+      font-weight: inherit;
+      color: inherit;
+      text-rendering: auto;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      margin-right: .5rem; }
+  div#s4-workspace table.dataTable thead th.sorting_asc:before,
+  div#s4-workspace table.gse-signups-user-summary thead th.sorting_asc:before,
+  div#s4-workspace table.gse-signups-user-details thead th.sorting_asc:before,
+  div.ui-dialog table.dataTable thead th.sorting_asc:before,
+  div.ui-dialog table.gse-signups-user-summary thead th.sorting_asc:before,
+  div.ui-dialog table.gse-signups-user-details thead th.sorting_asc:before {
+    content: '\E27A'; }
+  div#s4-workspace table.dataTable thead th.sorting_desc:before,
+  div#s4-workspace table.gse-signups-user-summary thead th.sorting_desc:before,
+  div#s4-workspace table.gse-signups-user-details thead th.sorting_desc:before,
+  div.ui-dialog table.dataTable thead th.sorting_desc:before,
+  div.ui-dialog table.gse-signups-user-summary thead th.sorting_desc:before,
+  div.ui-dialog table.gse-signups-user-details thead th.sorting_desc:before {
+    content: '\E27B'; }
+  div#s4-workspace table.dataTable tbody td,
+  div#s4-workspace table.gse-signups-user-summary tbody td,
+  div#s4-workspace table.gse-signups-user-details tbody td,
+  div.ui-dialog table.dataTable tbody td,
+  div.ui-dialog table.gse-signups-user-summary tbody td,
+  div.ui-dialog table.gse-signups-user-details tbody td {
+    padding: .8rem; }
+    div#s4-workspace table.dataTable tbody td a.link_request-id,
+    div#s4-workspace table.gse-signups-user-summary tbody td a.link_request-id,
+    div#s4-workspace table.gse-signups-user-details tbody td a.link_request-id,
+    div.ui-dialog table.dataTable tbody td a.link_request-id,
+    div.ui-dialog table.gse-signups-user-summary tbody td a.link_request-id,
+    div.ui-dialog table.gse-signups-user-details tbody td a.link_request-id {
+      display: block;
+      padding: .5rem 0;
+      width: 100%;
+      text-align: center;
+      cursor: pointer; }
+      div#s4-workspace table.dataTable tbody td a.link_request-id:after,
+      div#s4-workspace table.gse-signups-user-summary tbody td a.link_request-id:after,
+      div#s4-workspace table.gse-signups-user-details tbody td a.link_request-id:after,
+      div.ui-dialog table.dataTable tbody td a.link_request-id:after,
+      div.ui-dialog table.gse-signups-user-summary tbody td a.link_request-id:after,
+      div.ui-dialog table.gse-signups-user-details tbody td a.link_request-id:after {
         display: inline-block;
         font-family: 'Office365Icons';
         font-size: inherit;
@@ -2504,78 +2600,96 @@ div.ui-dialog div.table-container div.dataTables_wrapper {
         text-rendering: auto;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
-        margin-right: .5rem; }
-    div#s4-workspace div.table-container div.dataTables_wrapper table.dataTable thead th.sorting_asc:before,
-    div.ui-dialog div.table-container div.dataTables_wrapper table.dataTable thead th.sorting_asc:before {
-      content: '\E27A'; }
-    div#s4-workspace div.table-container div.dataTables_wrapper table.dataTable thead th.sorting_desc:before,
-    div.ui-dialog div.table-container div.dataTables_wrapper table.dataTable thead th.sorting_desc:before {
-      content: '\E27B'; }
-    div#s4-workspace div.table-container div.dataTables_wrapper table.dataTable tbody td,
-    div.ui-dialog div.table-container div.dataTables_wrapper table.dataTable tbody td {
-      padding: .8rem; }
-      div#s4-workspace div.table-container div.dataTables_wrapper table.dataTable tbody td a.link_request-id,
-      div.ui-dialog div.table-container div.dataTables_wrapper table.dataTable tbody td a.link_request-id {
-        display: block;
-        padding: .5rem 0;
-        width: 100%;
-        text-align: center;
-        cursor: pointer; }
-        div#s4-workspace div.table-container div.dataTables_wrapper table.dataTable tbody td a.link_request-id:after,
-        div.ui-dialog div.table-container div.dataTables_wrapper table.dataTable tbody td a.link_request-id:after {
-          display: inline-block;
-          font-family: 'Office365Icons';
-          font-size: inherit;
-          font-weight: inherit;
-          color: inherit;
-          text-rendering: auto;
-          -webkit-font-smoothing: antialiased;
-          -moz-osx-font-smoothing: grayscale;
-          margin-left: .5rem;
-          content: '\E04A';
-          font-size: 1rem; }
-      div#s4-workspace div.table-container div.dataTables_wrapper table.dataTable tbody td div.small-in-column,
-      div.ui-dialog div.table-container div.dataTables_wrapper table.dataTable tbody td div.small-in-column {
-        text-align: center; }
-    div#s4-workspace div.table-container div.dataTables_wrapper table.dataTable tbody tr.group,
-    div.ui-dialog div.table-container div.dataTables_wrapper table.dataTable tbody tr.group {
-      font-size: 1.7rem;
-      font-weight: 300; }
-    div#s4-workspace div.table-container div.dataTables_wrapper table.dataTable tbody tr.odd,
-    div.ui-dialog div.table-container div.dataTables_wrapper table.dataTable tbody tr.odd {
-      color: #333;
-      background-color: #eee; }
-      div#s4-workspace div.table-container div.dataTables_wrapper table.dataTable tbody tr.odd a,
-      div.ui-dialog div.table-container div.dataTables_wrapper table.dataTable tbody tr.odd a {
-        color: #004f87 !important; }
-        div#s4-workspace div.table-container div.dataTables_wrapper table.dataTable tbody tr.odd a:hover,
-        div.ui-dialog div.table-container div.dataTables_wrapper table.dataTable tbody tr.odd a:hover {
-          color: #003a63 !important; }
-      div#s4-workspace div.table-container div.dataTables_wrapper table.dataTable tbody tr.odd td.sorting_1,
-      div.ui-dialog div.table-container div.dataTables_wrapper table.dataTable tbody tr.odd td.sorting_1 {
-        color: #222;
-        background-color: #ddd; }
-        div#s4-workspace div.table-container div.dataTables_wrapper table.dataTable tbody tr.odd td.sorting_1 a,
-        div.ui-dialog div.table-container div.dataTables_wrapper table.dataTable tbody tr.odd td.sorting_1 a {
-          color: #003a63 !important; }
-          div#s4-workspace div.table-container div.dataTables_wrapper table.dataTable tbody tr.odd td.sorting_1 a:hover,
-          div.ui-dialog div.table-container div.dataTables_wrapper table.dataTable tbody tr.odd td.sorting_1 a:hover {
-            color: #002a47 !important; }
-    div#s4-workspace div.table-container div.dataTables_wrapper table.dataTable tbody tr.even td.sorting_1,
-    div.ui-dialog div.table-container div.dataTables_wrapper table.dataTable tbody tr.even td.sorting_1 {
-      color: #333;
-      background-color: #eee; }
-      div#s4-workspace div.table-container div.dataTables_wrapper table.dataTable tbody tr.even td.sorting_1 a,
-      div.ui-dialog div.table-container div.dataTables_wrapper table.dataTable tbody tr.even td.sorting_1 a {
-        color: #004f87 !important; }
-        div#s4-workspace div.table-container div.dataTables_wrapper table.dataTable tbody tr.even td.sorting_1 a:hover,
-        div.ui-dialog div.table-container div.dataTables_wrapper table.dataTable tbody tr.even td.sorting_1 a:hover {
-          color: #003a63 !important; }
-  div#s4-workspace div.table-container div.dataTables_wrapper div.dataTables_paginate,
-  div.ui-dialog div.table-container div.dataTables_wrapper div.dataTables_paginate {
-    float: none;
-    text-align: left;
-    margin-top: 1rem; }
+        margin-left: .5rem;
+        content: '\E04A';
+        font-size: 1rem; }
+    div#s4-workspace table.dataTable tbody td div.small-in-column,
+    div#s4-workspace table.gse-signups-user-summary tbody td div.small-in-column,
+    div#s4-workspace table.gse-signups-user-details tbody td div.small-in-column,
+    div.ui-dialog table.dataTable tbody td div.small-in-column,
+    div.ui-dialog table.gse-signups-user-summary tbody td div.small-in-column,
+    div.ui-dialog table.gse-signups-user-details tbody td div.small-in-column {
+      text-align: center; }
+  div#s4-workspace table.dataTable tbody tr.group,
+  div#s4-workspace table.gse-signups-user-summary tbody tr.group,
+  div#s4-workspace table.gse-signups-user-details tbody tr.group,
+  div.ui-dialog table.dataTable tbody tr.group,
+  div.ui-dialog table.gse-signups-user-summary tbody tr.group,
+  div.ui-dialog table.gse-signups-user-details tbody tr.group {
+    font-size: 1.7rem;
+    font-weight: 300; }
+  div#s4-workspace table.dataTable tbody tr.odd,
+  div#s4-workspace table.gse-signups-user-summary tbody tr.odd,
+  div#s4-workspace table.gse-signups-user-details tbody tr.odd,
+  div.ui-dialog table.dataTable tbody tr.odd,
+  div.ui-dialog table.gse-signups-user-summary tbody tr.odd,
+  div.ui-dialog table.gse-signups-user-details tbody tr.odd {
+    color: #333;
+    background-color: #eee; }
+    div#s4-workspace table.dataTable tbody tr.odd a,
+    div#s4-workspace table.gse-signups-user-summary tbody tr.odd a,
+    div#s4-workspace table.gse-signups-user-details tbody tr.odd a,
+    div.ui-dialog table.dataTable tbody tr.odd a,
+    div.ui-dialog table.gse-signups-user-summary tbody tr.odd a,
+    div.ui-dialog table.gse-signups-user-details tbody tr.odd a {
+      color: #004f87 !important; }
+      div#s4-workspace table.dataTable tbody tr.odd a:hover,
+      div#s4-workspace table.gse-signups-user-summary tbody tr.odd a:hover,
+      div#s4-workspace table.gse-signups-user-details tbody tr.odd a:hover,
+      div.ui-dialog table.dataTable tbody tr.odd a:hover,
+      div.ui-dialog table.gse-signups-user-summary tbody tr.odd a:hover,
+      div.ui-dialog table.gse-signups-user-details tbody tr.odd a:hover {
+        color: #003a63 !important; }
+    div#s4-workspace table.dataTable tbody tr.odd td.sorting_1,
+    div#s4-workspace table.gse-signups-user-summary tbody tr.odd td.sorting_1,
+    div#s4-workspace table.gse-signups-user-details tbody tr.odd td.sorting_1,
+    div.ui-dialog table.dataTable tbody tr.odd td.sorting_1,
+    div.ui-dialog table.gse-signups-user-summary tbody tr.odd td.sorting_1,
+    div.ui-dialog table.gse-signups-user-details tbody tr.odd td.sorting_1 {
+      color: #222;
+      background-color: #ddd; }
+      div#s4-workspace table.dataTable tbody tr.odd td.sorting_1 a,
+      div#s4-workspace table.gse-signups-user-summary tbody tr.odd td.sorting_1 a,
+      div#s4-workspace table.gse-signups-user-details tbody tr.odd td.sorting_1 a,
+      div.ui-dialog table.dataTable tbody tr.odd td.sorting_1 a,
+      div.ui-dialog table.gse-signups-user-summary tbody tr.odd td.sorting_1 a,
+      div.ui-dialog table.gse-signups-user-details tbody tr.odd td.sorting_1 a {
+        color: #003a63 !important; }
+        div#s4-workspace table.dataTable tbody tr.odd td.sorting_1 a:hover,
+        div#s4-workspace table.gse-signups-user-summary tbody tr.odd td.sorting_1 a:hover,
+        div#s4-workspace table.gse-signups-user-details tbody tr.odd td.sorting_1 a:hover,
+        div.ui-dialog table.dataTable tbody tr.odd td.sorting_1 a:hover,
+        div.ui-dialog table.gse-signups-user-summary tbody tr.odd td.sorting_1 a:hover,
+        div.ui-dialog table.gse-signups-user-details tbody tr.odd td.sorting_1 a:hover {
+          color: #002a47 !important; }
+  div#s4-workspace table.dataTable tbody tr.even td.sorting_1,
+  div#s4-workspace table.gse-signups-user-summary tbody tr.even td.sorting_1,
+  div#s4-workspace table.gse-signups-user-details tbody tr.even td.sorting_1,
+  div.ui-dialog table.dataTable tbody tr.even td.sorting_1,
+  div.ui-dialog table.gse-signups-user-summary tbody tr.even td.sorting_1,
+  div.ui-dialog table.gse-signups-user-details tbody tr.even td.sorting_1 {
+    color: #333;
+    background-color: #eee; }
+    div#s4-workspace table.dataTable tbody tr.even td.sorting_1 a,
+    div#s4-workspace table.gse-signups-user-summary tbody tr.even td.sorting_1 a,
+    div#s4-workspace table.gse-signups-user-details tbody tr.even td.sorting_1 a,
+    div.ui-dialog table.dataTable tbody tr.even td.sorting_1 a,
+    div.ui-dialog table.gse-signups-user-summary tbody tr.even td.sorting_1 a,
+    div.ui-dialog table.gse-signups-user-details tbody tr.even td.sorting_1 a {
+      color: #004f87 !important; }
+      div#s4-workspace table.dataTable tbody tr.even td.sorting_1 a:hover,
+      div#s4-workspace table.gse-signups-user-summary tbody tr.even td.sorting_1 a:hover,
+      div#s4-workspace table.gse-signups-user-details tbody tr.even td.sorting_1 a:hover,
+      div.ui-dialog table.dataTable tbody tr.even td.sorting_1 a:hover,
+      div.ui-dialog table.gse-signups-user-summary tbody tr.even td.sorting_1 a:hover,
+      div.ui-dialog table.gse-signups-user-details tbody tr.even td.sorting_1 a:hover {
+        color: #003a63 !important; }
+
+div#s4-workspace div.dataTables_paginate,
+div.ui-dialog div.dataTables_paginate {
+  float: none;
+  text-align: left;
+  margin-top: 1rem; }
 
 div#s4-workspace div.table-container div.dataTables_wrapper div.dataTables_filter:after,
 div.ui-dialog div.table-container div.dataTables_wrapper div.dataTables_filter:after {
@@ -3299,8 +3413,26 @@ div#s4-workspace div#app-container.gse-signup div#container_command-bar-and-data
     div#s4-workspace div#app-container.gse-signup div#container_command-bar-and-data div#container_filter-controls div.container_filter-control a#filter_submit-button {
       margin: 0 0 0 6.5rem !important; }
 
-div#s4-workspace div#app-container.gse-signup div.table-container {
-  margin-top: 2rem; }
+div#s4-workspace div#app-container.gse-signup div#container_command-bar-and-data div#container_data {
+  margin-top: 1rem; }
+  div#s4-workspace div#app-container.gse-signup div#container_command-bar-and-data div#container_data div.department-container {
+    margin-bottom: 2rem; }
+    div#s4-workspace div#app-container.gse-signup div#container_command-bar-and-data div#container_data div.department-container button.gse-signups-user-detail-control {
+      min-width: 0;
+      padding: 0;
+      border: 0;
+      background-color: transparent;
+      margin-left: none;
+      font-family: "Segoe UI","Segoe", Tahoma, Helvetica Neue, Helvetica, Arial, sans-serif;
+      font-size: 1.3rem;
+      font-weight: 400;
+      cursor: pointer;
+      text-decoration: none;
+      color: #0072c6 !important;
+      transition: color 250ms; }
+      div#s4-workspace div#app-container.gse-signup div#container_command-bar-and-data div#container_data div.department-container button.gse-signups-user-detail-control:hover {
+        text-decoration: none;
+        color: #004f87 !important; }
 
 div#printer-content table.layout-table {
   width: 100%; }
