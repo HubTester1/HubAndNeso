@@ -12143,8 +12143,7 @@
 
 
 	$.fn.BuildMultifield = function (e) {
-
-		e.hypehnatedName = $().ReturnHyphenatedFieldNameOrValue(e.fieldName);
+		e.hypehnatedName = $().ReturnHyphenatedFieldNameOrValue(e.multifieldName);
 		e.hypehnatedNameLower = e.hypehnatedName.toLowerCase();
 
 		// start building field

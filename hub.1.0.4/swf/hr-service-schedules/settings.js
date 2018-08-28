@@ -939,37 +939,6 @@
 				"elementType": "markup",
 				"tag": "div",
 				"end": 1
-
-
-			// 	'elementType': "markup",
-			// 	'tag': "h2",
-			// 	'content': "Job",
-			// 	'begin': 1,
-			// 	'end': 1
-			// }, {
-			// 	'elementType': "field",
-			// 	'controlType': "select",
-			// 	'fieldName': "Department",
-			// 	'labelContent': "Department",
-			// 	'listFieldName': "Department",
-			// 	'loadOptions': {
-			// 		'function': 'LoadDepartmentSelectOptions'
-			// 	},
-			// 	'requiredForNonAdmin': [""],
-			// 	'requiredForAdmin': [""],
-			// 	'disabledForNonAdmin': ['Cancelled'],
-			// 	'disabledForAdmin': ['Cancelled'],
-			// }, {
-
-			// 	'elementType': "field",
-			// 	'controlType': "hidden",
-			// 	'fieldName': "Schedule ID",
-			// 	'listFieldName': "ScheduleID",
-			// 	'labelContent': "Schedule ID",
-			// }, {
-
-
-
 			}, {
 				'elementType': "markup",
 				'tag': "h2",
@@ -1147,7 +1116,976 @@
 				'labelContent': "Notes",
 				'disabledForNonAdmin': ['Cancelled'],
 				'disabledForAdmin': ['Cancelled']
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 			}, {
+				'elementType': 'field',
+				'controlType': 'radio',
+				'fieldName': 'Individual or Pattern',
+				'choiceSetLabel': 'Use Individual Dates or a Pattern of Repeating Dates?',
+				'choices': [
+					{
+						'value': 'individual',
+						'display': 'Individual Dates'
+					}, {
+						'value': 'pattern',
+						'display': 'Pattern of Repeating Dates'
+					}
+				],
+				"requiredForNonAdmin": [""],
+				"requiredForAdmin": [""],
+				'onChange': [
+					{ 'thisFieldEquals': ['individual'], 'show': [{ 'divID': 'simple-dates' }], 'require': [{ 'fieldName': 'Repeating Date', 'type': 'datepicker', 'repeatable': 1 }], 'hide': [{ 'divID': 'pattern-and-range' }], 'optional': [{ 'fieldName': 'Pattern Basis', 'type': 'select' }, { 'fieldName': 'Start Date', 'type': 'datePicker' }, { 'fieldName': 'Ending Basis', 'type': 'select' }] },
+					{ 'thisFieldEquals': ['pattern'], 'show': [{ 'divID': 'pattern-and-range' }], 'require': [{ 'fieldName': 'Pattern Basis', 'type': 'select' }, { 'fieldName': 'Start Date', 'type': 'datePicker' }, { 'fieldName': 'Ending Basis', 'type': 'select' }], 'hide': [{ 'divID': 'simple-dates' }], 'optional': [{ 'fieldName': 'Repeating Date', 'type': 'datepicker', 'repeatable': 1 }] },
+				],
+
+
+
+
+
+ 			}, {
+				'elementType': 'field',
+				'controlType': 'check',
+				'fieldName': 'Change Pattern of Repeating Dates',
+				'choiceSetLabel': 'Change Pattern of Repeating Dates',
+				'choices': [
+					{
+						'value': 'yes',
+						'display': 'Yes, I want to change the pattern'
+					}
+				],
+				'hideForNonAdmin': ["", "Completed", "Cancelled"],
+				'hideForAdmin': ["", "Completed", "Cancelled"],
+				'helpNotes': [
+					{
+						'text': "This will cause any changes to specific occurrences in the series to be cancelled.",
+						'htmlID': "pattern-change-warning",
+					}, {
+						'text': "If there were changes to specific occurrences in the series, the changes will be cancelled and those occurrences will match the series again.",
+						'htmlID': "pattern-change-urgent-warning",
+						'emphasis': 1,
+						'hideForNonAdmin': ["", "Submitted", "Completed", "Cancelled"],
+						'hideForAdmin': ["", "Submitted", "Completed", "Cancelled"]
+					}
+				],
+				'onChange': [
+					{
+						'thisFieldIsChecked': 1,
+						'disable': [{ 'fieldName': 'Change Pattern of Repeating Dates', 'inputIDs': ['change-pattern-of-repeating-dates_yes'] }],
+						'enable': [
+							{ 'fieldName': 'Pattern Basis' },
+							{ 'fieldName': 'X Days' },
+							{ 'fieldName': 'X Weeks' },
+							{
+								'fieldName': 'Days of Week for X Weeks', 'inputIDs': [
+									'days-of-week-for-x-weeks_1',
+									'days-of-week-for-x-weeks_2',
+									'days-of-week-for-x-weeks_3',
+									'days-of-week-for-x-weeks_4',
+									'days-of-week-for-x-weeks_5',
+									'days-of-week-for-x-weeks_6',
+									'days-of-week-for-x-weeks_7',
+								]
+							},
+							{ 'fieldName': 'X Months For Same Day' },
+							{ 'fieldName': 'Day of Month for X Months' },
+							{ 'fieldName': 'X Months For Same Week' },
+							{ 'fieldName': 'Ordinal and Day of Week For X Months For Same Week', 'selectIDs': ['Ordinal-For-Day-of-Week-For-X-Months-For-Same-Week', 'Days-of-Week-For-X-Months-For-Same-Week'] },
+							{ 'fieldName': 'Month and Date for Same Date Each Year', 'selectIDs': ['Months-for-Same-Date-Each-Year'], 'inputIDs': ['Date-for-Same-Date-Each-Year'] },
+							{ 'fieldName': 'Ordinal and Day of Week For Same Week Each Year', 'selectIDs': ['Ordinal-For-Same-Week-Each-Year', 'Days-of-Week-For-Same-Week-Each-Year'] },
+							{ 'fieldName': 'Months for Same Week Each Year' },
+							{ 'fieldName': 'Start Date' },
+							{ 'fieldName': 'Ending Basis' },
+							{ 'fieldName': 'Qty Occurrences' },
+							{ 'fieldName': 'Ending Date' },
+						],
+						'show': [{ 'noteID': "pattern-change-urgent-warning" }],
+						'hide': [{ 'noteID': "pattern-change-warning" }]
+					},
+				],
+
+
+
+
+
+
+
+			}, {
+				'elementType': 'markup',
+				'tag': 'div',
+				'begin': 1,
+				'htmlID': 'simple-dates',
+				'htmlClass': 'repeating-content-container',
+				'hideForNonAdmin': ["", "Submitted", "Completed", "Cancelled"],
+				'hideForAdmin': ["", "Submitted", "Completed", "Cancelled"]
+			}, {
+				'elementType': 'markup',
+				'tag': 'div',
+				'begin': 1,
+				'htmlID': 'simple-date',
+				'htmlClass': 'repeat-container',
+				'repeatable': 1
+			}, {
+				'elementType': 'field',
+				'controlType': 'datePicker',
+				'fieldName': 'Repeating Date',
+				'labelContent': 'Date',
+				'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 0 },
+				'isoFormatOnSubmit': { 'incomingFormat': 'MMMM D, YYYY', 'returnFormat': null, 'determineYearDisplayDynamically': null },
+			}, {
+				'elementType': 'markup',
+				'tag': 'a',
+				'begin': 1,
+				'end': 1,
+				'htmlClass': 'remove-section-anchor',
+				'content': 'Remove this Date',
+				'removeThisRepeat': 1,
+			}, {
+				'elementType': 'markup',
+				'tag': 'div',
+				'end': 1,
+			}, {
+				'elementType': 'markup',
+				'tag': 'a',
+				'begin': 1,
+				'end': 1,
+				'htmlID': 'repeat-simple-date',
+				'htmlClass': 'repeat-section-anchor',
+				'content': 'Insert a Date',
+				'repeatSectionID': 'simple-date',
+			}, {
+				'elementType': 'markup',
+				'tag': 'div',
+				'end': 1
+
+
+
+
+
+
+
+
+
+
+			}, {
+				'elementType': 'markup',
+				'tag': 'div',
+				'begin': 1,
+				'htmlID': 'pattern-and-range',
+				'hideForNonAdmin': ["", "Submitted", "Completed", "Cancelled"],
+				'hideForAdmin': ["", "Submitted", "Completed", "Cancelled"]
+
+
+
+
+
+
+
+
+
+
+
+
+			}, {
+				'elementType': 'markup',
+				'tag': 'div',
+				'begin': 1,
+				'htmlID': 'pattern-basis',
+			}, {
+				'elementType': 'field',
+				'controlType': 'select',
+				'fieldName': 'Pattern Basis',
+				'labelContent': 'Occurs',
+				"setOptions": [
+					{ "value": "xDays", "display": "Every given number of days" },
+					{ "value": "weekdays", "display": "Every weekday" },
+					{ "value": "xWeeks", "display": "Every given number of weeks" },
+					{ "value": "monthlySameDay", "display": "The same day every given number of months" },
+					{ "value": "monthlySameWeek", "display": "The same week every given number of months" },
+					{ "value": "yearlySameDay", "display": "The same day each year" },
+					{ "value": "yearlySameWeek", "display": "The same week each year" }
+				],
+				'disabledForNonAdmin': ["Submitted", "Completed", "Cancelled"],
+				'disabledForAdmin': ["Submitted", "Completed", "Cancelled"],
+				"onChange": [
+					{
+						"thisFieldEquals": ["xDays"],
+
+						"show": [{ "divID": "pattern_x-days" }],
+						"require": [{ "fieldName": "X Days", "type": "text" }],
+						"hide": [
+							{ "divID": "pattern_x-weeks" },
+							{ "divID": "pattern_monthly-same-day" },
+							{ "divID": "pattern_monthly-same-week" },
+							{ "divID": "pattern_yearly-same-day" },
+							{ "divID": "pattern_yearly-same-week" }
+						],
+						"optional": [
+							{ "fieldName": "X Weeks", "type": "text" },
+							{ "fieldName": "Days of Week for X Weeks", "type": "check" },
+							{ "fieldName": "X Months For Same Day", "type": "text" },
+							{ "fieldName": "Day of Month for X Months", "type": "text" },
+							{ "fieldName": "X Months For Same Week", "type": "text" },
+							{ "fieldName": "Ordinal For Day of Week For X Months For Same Week", "type": "select" },
+							{ "fieldName": "Days of Week For X Months For Same Week", "type": "select" },
+							{ "fieldName": "Months for Same Date Each Year", "type": "select" },
+							{ "fieldName": "Date for Same Date Each Year", "type": "text" },
+							{ "fieldName": "Ordinal For Same Week Each Year", "type": "select" },
+							{ "fieldName": "Days of Week For Same Week Each Year", "type": "select" },
+							{ "fieldName": "Months for Same Week Each Year", "type": "select" },
+						],
+					}, {
+						"thisFieldEquals": ["weekdays"],
+
+						"hide": [
+							{ "divID": "pattern_x-days" },
+							{ "divID": "pattern_x-weeks" },
+							{ "divID": "pattern_monthly-same-day" },
+							{ "divID": "pattern_monthly-same-week" },
+							{ "divID": "pattern_yearly-same-day" },
+							{ "divID": "pattern_yearly-same-week" }
+						],
+						"optional": [
+							{ "fieldName": "X Days", "type": "text" },
+							{ "fieldName": "X Weeks", "type": "text" },
+							{ "fieldName": "Days of Week for X Weeks", "type": "check" },
+							{ "fieldName": "X Months For Same Day", "type": "text" },
+							{ "fieldName": "Day of Month for X Months", "type": "text" },
+							{ "fieldName": "X Months For Same Week", "type": "text" },
+							{ "fieldName": "Ordinal For Day of Week For X Months For Same Week", "type": "select" },
+							{ "fieldName": "Days of Week For X Months For Same Week", "type": "select" },
+							{ "fieldName": "Months for Same Date Each Year", "type": "select" },
+							{ "fieldName": "Date for Same Date Each Year", "type": "text" },
+							{ "fieldName": "Ordinal For Same Week Each Year", "type": "select" },
+							{ "fieldName": "Days of Week For Same Week Each Year", "type": "select" },
+							{ "fieldName": "Months for Same Week Each Year", "type": "select" },
+						],
+					}, {
+						"thisFieldEquals": ["xWeeks"],
+
+						"show": [{ "divID": "pattern_x-weeks" },],
+						"require": [
+							{ "fieldName": "X Weeks", "type": "text" },
+							{ "fieldName": "Days of Week for X Weeks", "type": "check" },
+						],
+						"hide": [
+							{ "divID": "pattern_x-days" },
+							{ "divID": "pattern_monthly-same-day" },
+							{ "divID": "pattern_monthly-same-week" },
+							{ "divID": "pattern_yearly-same-day" },
+							{ "divID": "pattern_yearly-same-week" }
+						],
+						"optional": [
+							{ "fieldName": "X Days", "type": "text" },
+							{ "fieldName": "X Months For Same Day", "type": "text" },
+							{ "fieldName": "Day of Month for X Months", "type": "text" },
+							{ "fieldName": "X Months For Same Week", "type": "text" },
+							{ "fieldName": "Ordinal For Day of Week For X Months For Same Week", "type": "select" },
+							{ "fieldName": "Days of Week For X Months For Same Week", "type": "select" },
+							{ "fieldName": "Months for Same Date Each Year", "type": "select" },
+							{ "fieldName": "Date for Same Date Each Year", "type": "text" },
+							{ "fieldName": "Ordinal For Same Week Each Year", "type": "select" },
+							{ "fieldName": "Days of Week For Same Week Each Year", "type": "select" },
+							{ "fieldName": "Months for Same Week Each Year", "type": "select" },
+						],
+					}, {
+						"thisFieldEquals": ["monthlySameDay"],
+
+						"show": [{ "divID": "pattern_monthly-same-day" },],
+						"require": [
+							{ "fieldName": "X Months For Same Day", "type": "text" },
+							{ "fieldName": "Day of Month for X Months", "type": "text" },
+						],
+						"hide": [
+							{ "divID": "pattern_x-days" },
+							{ "divID": "pattern_x-weeks" },
+							{ "divID": "pattern_monthly-same-week" },
+							{ "divID": "pattern_yearly-same-day" },
+							{ "divID": "pattern_yearly-same-week" }
+						],
+						"optional": [
+							{ "fieldName": "X Days", "type": "text" },
+							{ "fieldName": "X Weeks", "type": "text" },
+							{ "fieldName": "Days of Week for X Weeks", "type": "check" },
+							{ "fieldName": "X Months For Same Week", "type": "text" },
+							{ "fieldName": "Ordinal For Day of Week For X Months For Same Week", "type": "select" },
+							{ "fieldName": "Days of Week For X Months For Same Week", "type": "select" },
+							{ "fieldName": "Months for Same Date Each Year", "type": "select" },
+							{ "fieldName": "Date for Same Date Each Year", "type": "text" },
+							{ "fieldName": "Ordinal For Same Week Each Year", "type": "select" },
+							{ "fieldName": "Days of Week For Same Week Each Year", "type": "select" },
+							{ "fieldName": "Months for Same Week Each Year", "type": "select" },
+						],
+					}, {
+						"thisFieldEquals": ["monthlySameWeek"],
+
+						"show": [{ "divID": "pattern_monthly-same-week" },],
+						"require": [
+							{ "fieldName": "X Months For Same Week", "type": "text" },
+							{ "fieldName": "Ordinal For Day of Week For X Months For Same Week", "type": "select" },
+							{ "fieldName": "Days of Week For X Months For Same Week", "type": "select" },
+						],
+						"hide": [
+							{ "divID": "pattern_x-days" },
+							{ "divID": "pattern_x-weeks" },
+							{ "divID": "pattern_monthly-same-day" },
+							{ "divID": "pattern_yearly-same-day" },
+							{ "divID": "pattern_yearly-same-week" }
+						],
+						"optional": [
+							{ "fieldName": "X Days", "type": "text" },
+							{ "fieldName": "X Weeks", "type": "text" },
+							{ "fieldName": "Days of Week for X Weeks", "type": "check" },
+							{ "fieldName": "X Months For Same Day", "type": "text" },
+							{ "fieldName": "Day of Month for X Months", "type": "text" },
+							{ "fieldName": "Months for Same Date Each Year", "type": "select" },
+							{ "fieldName": "Date for Same Date Each Year", "type": "text" },
+							{ "fieldName": "Ordinal For Same Week Each Year", "type": "select" },
+							{ "fieldName": "Days of Week For Same Week Each Year", "type": "select" },
+							{ "fieldName": "Months for Same Week Each Year", "type": "select" },
+						],
+					}, {
+						"thisFieldEquals": ["yearlySameDay"],
+
+						"show": [{ "divID": "pattern_yearly-same-day" },],
+						"require": [
+							{ "fieldName": "Months for Same Date Each Year", "type": "select" },
+							{ "fieldName": "Date for Same Date Each Year", "type": "text" },
+						],
+						"hide": [
+							{ "divID": "pattern_x-days" },
+							{ "divID": "pattern_x-weeks" },
+							{ "divID": "pattern_monthly-same-day" },
+							{ "divID": "pattern_monthly-same-week" },
+							{ "divID": "pattern_yearly-same-week" }
+						],
+						"optional": [
+							{ "fieldName": "X Days", "type": "text" },
+							{ "fieldName": "X Weeks", "type": "text" },
+							{ "fieldName": "Days of Week for X Weeks", "type": "check" },
+							{ "fieldName": "X Months For Same Day", "type": "text" },
+							{ "fieldName": "Day of Month for X Months", "type": "text" },
+							{ "fieldName": "X Months For Same Week", "type": "text" },
+							{ "fieldName": "Ordinal For Day of Week For X Months For Same Week", "type": "select" },
+							{ "fieldName": "Days of Week For X Months For Same Week", "type": "select" },
+							{ "fieldName": "Ordinal For Same Week Each Year", "type": "select" },
+							{ "fieldName": "Days of Week For Same Week Each Year", "type": "select" },
+							{ "fieldName": "Months for Same Week Each Year", "type": "select" },
+						],
+						"set": [
+							{
+								"fieldName": "Date for Same Date Each Year",
+								"type": "text",
+								"method": "dynamic",
+								"value": "$().ReturnFormattedDateTime('nowLocal', null, 'D', null)"
+							}
+						]
+					}, {
+						"thisFieldEquals": ["yearlySameWeek"],
+
+						"show": [{ "divID": "pattern_yearly-same-week" }],
+						"require": [
+							{ "fieldName": "Ordinal For Same Week Each Year", "type": "select" },
+							{ "fieldName": "Days of Week For Same Week Each Year", "type": "select" },
+							{ "fieldName": "Months for Same Week Each Year", "type": "select" },
+						],
+						"hide": [
+							{ "divID": "pattern_x-days" },
+							{ "divID": "pattern_x-weeks" },
+							{ "divID": "pattern_monthly-same-day" },
+							{ "divID": "pattern_monthly-same-week" },
+							{ "divID": "pattern_yearly-same-day" },
+						],
+						"optional": [
+							{ "fieldName": "X Days", "type": "text" },
+							{ "fieldName": "X Weeks", "type": "text" },
+							{ "fieldName": "Days of Week for X Weeks", "type": "check" },
+							{ "fieldName": "X Months For Same Day", "type": "text" },
+							{ "fieldName": "Day of Month for X Months", "type": "text" },
+							{ "fieldName": "X Months For Same Week", "type": "text" },
+							{ "fieldName": "Ordinal For Day of Week For X Months For Same Week", "type": "select" },
+							{ "fieldName": "Days of Week For X Months For Same Week", "type": "select" },
+							{ "fieldName": "Months for Same Date Each Year", "type": "select" },
+							{ "fieldName": "Date for Same Date Each Year", "type": "text" },
+						],
+					}
+
+				]
+			}, {
+				'elementType': 'markup',
+				'tag': 'div',
+				'end': 1
+
+
+
+
+
+
+			}, {
+				'elementType': 'markup',
+				'tag': 'div',
+				'begin': 1,
+				'htmlID': 'pattern_x-days',
+				'hideForNonAdmin': ["", "Submitted", "Completed", "Cancelled"],
+				'hideForAdmin': ["", "Submitted", "Completed", "Cancelled"]
+
+				// X days
+
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "X Days",
+				"labelContent": "Every",
+				'disabledForNonAdmin': ["Submitted", "Completed", "Cancelled"],
+				'disabledForAdmin': ["Submitted", "Completed", "Cancelled"],
+				"helpNotes": [
+					{
+						"text": "day(s)",
+						"htmlID": "x-days_help-note",
+						"urgent": 0,
+					}
+				],
+
+
+			}, {
+				'elementType': 'markup',
+				'tag': 'div',
+				'end': 1
+
+
+
+
+			}, {
+				'elementType': 'markup',
+				'tag': 'div',
+				'begin': 1,
+				'htmlID': 'pattern_x-weeks',
+				'hideForNonAdmin': ["", "Submitted", "Completed", "Cancelled"],
+				'hideForAdmin': ["", "Submitted", "Completed", "Cancelled"]
+
+				// Weekly
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "X Weeks",
+				"labelContent": "Every",
+				'disabledForNonAdmin': ["Submitted", "Completed", "Cancelled"],
+				'disabledForAdmin': ["Submitted", "Completed", "Cancelled"],
+				"helpNotes": [
+					{
+						"text": "week(s)",
+						"htmlID": "x-weeks_help-note",
+						"urgent": 0,
+					}
+				],
+			}, {
+				"elementType": "field",
+				"controlType": "check",
+				"fieldName": "Days of Week for X Weeks",
+				"choiceSetLabel": "On",
+				"choices": [
+					{
+						"value": "1",
+						"display": "Sunday"
+					}, {
+						"value": "2",
+						"display": "Monday"
+					}, {
+						"value": "3",
+						"display": "Tuesday"
+					}, {
+						"value": "4",
+						"display": "Wednesday"
+					}, {
+						"value": "5",
+						"display": "Thursday"
+					}, {
+						"value": "6",
+						"display": "Friday"
+					}, {
+						"value": "7",
+						"display": "Saturday"
+					}
+				],
+				'disabledForNonAdmin': ["Submitted", "Completed", "Cancelled"],
+				'disabledForAdmin': ["Submitted", "Completed", "Cancelled"],
+			}, {
+				'elementType': 'markup',
+				'tag': 'div',
+				'end': 1
+
+
+
+
+			}, {
+				'elementType': 'markup',
+				'tag': 'div',
+				'begin': 1,
+				'htmlID': 'pattern_monthly-same-day',
+				'hideForNonAdmin': ["", "Submitted", "Completed", "Cancelled"],
+				'hideForAdmin': ["", "Submitted", "Completed", "Cancelled"]
+
+				// Monthly same day
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "X Months For Same Day",
+				"labelContent": "Every",
+				'disabledForNonAdmin': ["Submitted", "Completed", "Cancelled"],
+				'disabledForAdmin': ["Submitted", "Completed", "Cancelled"],
+				"helpNotes": [
+					{
+						"text": "month(s)",
+						"htmlID": "x-months-for-same-day_help-note",
+						"urgent": 0,
+					}
+				],
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "Day of Month for X Months",
+				"labelContent": "On",
+				'disabledForNonAdmin': ["Submitted", "Completed", "Cancelled"],
+				'disabledForAdmin': ["Submitted", "Completed", "Cancelled"],
+				"helpNotes": [
+					{
+						"text": "day of month",
+						"htmlID": "day-of-month-for-x-months_help-note",
+						"urgent": 0,
+					}
+				],
+			}, {
+				'elementType': 'markup',
+				'tag': 'div',
+				'end': 1
+
+
+
+
+			}, {
+				'elementType': 'markup',
+				'tag': 'div',
+				'begin': 1,
+				'htmlID': 'pattern_monthly-same-week',
+				'hideForNonAdmin': ["", "Submitted", "Completed", "Cancelled"],
+				'hideForAdmin': ["", "Submitted", "Completed", "Cancelled"]
+
+				// Monthly same week
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "X Months For Same Week",
+				"labelContent": "Every",
+				'disabledForNonAdmin': ["Submitted", "Completed", "Cancelled"],
+				'disabledForAdmin': ["Submitted", "Completed", "Cancelled"],
+				"helpNotes": [
+					{
+						"text": "month(s)",
+						"htmlID": "x-months-for-same-week_help-note",
+						"urgent": 0,
+					}
+				],
+			}, {
+				'elementType': 'multifield',
+				'multifieldName': 'Ordinal and Day of Week For X Months For Same Week',
+				'labelContent': 'On <span class="hidden">Which Day of the Month?</span>',
+				'subfields': [
+					{
+						'controlType': 'select',
+						'subfieldName': 'Ordinal For Day of Week For X Months For Same Week',
+						"setOptions": [
+							{ "value": "1", "display": "First" },
+							{ "value": "2", "display": "Second" },
+							{ "value": "3", "display": "Third" },
+							{ "value": "4", "display": "Fourth" }
+						],
+						'disabledForNonAdmin': ["Submitted", "Completed", "Cancelled"],
+						'disabledForAdmin': ["Submitted", "Completed", "Cancelled"],
+					}, {
+						'controlType': 'select',
+						'subfieldName': 'Days of Week For X Months For Same Week',
+						"setOptions": [
+							{ "value": "Sunday", "display": "Sunday" },
+							{ "value": "Monday", "display": "Monday" },
+							{ "value": "Tuesday", "display": "Tuesday" },
+							{ "value": "Wednesday", "display": "Wednesday" },
+							{ "value": "Thursday", "display": "Thursday" },
+							{ "value": "Friday", "display": "Friday" },
+							{ "value": "Saturday", "display": "Saturday" }
+						],
+						'disabledForNonAdmin': ["Submitted", "Completed", "Cancelled"],
+						'disabledForAdmin': ["Submitted", "Completed", "Cancelled"],
+					}
+				]
+			}, {
+				'elementType': 'markup',
+				'tag': 'div',
+				'end': 1
+
+
+
+
+			}, {
+				'elementType': 'markup',
+				'tag': 'div',
+				'begin': 1,
+				'htmlID': 'pattern_yearly-same-day',
+				'hideForNonAdmin': ["", "Submitted", "Completed", "Cancelled"],
+				'hideForAdmin': ["", "Submitted", "Completed", "Cancelled"]
+
+				// Yearly same day
+
+			}, {
+				'elementType': 'multifield',
+				'multifieldName': 'Month and Date for Same Date Each Year',
+				'labelContent': 'On <span class="hidden">Which Day of the Month?</span>',
+				'subfields': [
+					{
+						'controlType': 'select',
+						'subfieldName': 'Months for Same Date Each Year',
+						"setOptions": [
+							{ "value": "1", "display": "January" },
+							{ "value": "2", "display": "February" },
+							{ "value": "3", "display": "March" },
+							{ "value": "4", "display": "April" },
+							{ "value": "5", "display": "May" },
+							{ "value": "6", "display": "June" },
+							{ "value": "7", "display": "July" },
+							{ "value": "8", "display": "August" },
+							{ "value": "9", "display": "September" },
+							{ "value": "10", "display": "October" },
+							{ "value": "11", "display": "November" },
+							{ "value": "12", "display": "December" }
+						],
+						'disabledForNonAdmin': ["Submitted", "Completed", "Cancelled"],
+						'disabledForAdmin': ["Submitted", "Completed", "Cancelled"],
+					}, {
+						'controlType': 'text',
+						'subfieldName': 'Date for Same Date Each Year',
+						'disabledForNonAdmin': ["Submitted", "Completed", "Cancelled"],
+						'disabledForAdmin': ["Submitted", "Completed", "Cancelled"],
+					}
+				]
+				//}, {
+				//    'elementType': 'field',
+				//    'controlType': 'select',
+				//    'fieldName': 'Months for Same Date Each Year',
+				//    'labelContent': 'On <span class="hidden">Which Month</span>',
+				//    "setOptions": [
+				//        { "value": "1", "display": "January" },
+				//        { "value": "2", "display": "February" },
+				//        { "value": "3", "display": "March" },
+				//        { "value": "4", "display": "April" },
+				//        { "value": "5", "display": "May" },
+				//        { "value": "6", "display": "June" },
+				//        { "value": "7", "display": "July" },
+				//        { "value": "8", "display": "August" },
+				//        { "value": "9", "display": "September" },
+				//        { "value": "10", "display": "October" },
+				//        { "value": "11", "display": "November" },
+				//        { "value": "12", "display": "December" }
+				//    ],
+				//}, {
+				//    "elementType": "field",
+				//    "controlType": "text",
+				//    "fieldName": "Date for Same Date Each Year",
+				//    "labelContent": '<span class="hidden">On Which Day of the Month</span>',
+			}, {
+				'elementType': 'markup',
+				'tag': 'div',
+				'end': 1
+
+
+
+
+			}, {
+				'elementType': 'markup',
+				'tag': 'div',
+				'begin': 1,
+				'htmlID': 'pattern_yearly-same-week',
+				'hideForNonAdmin': ["", "Submitted", "Completed", "Cancelled"],
+				'hideForAdmin': ["", "Submitted", "Completed", "Cancelled"]
+
+				// Yearly same week
+
+
+
+
+
+
+			}, {
+				'elementType': 'multifield',
+				'multifieldName': 'Ordinal and Day of Week For Same Week Each Year',
+				'labelContent': 'On <span class="hidden">Which Week?</span>',
+				'subfields': [
+					{
+						'controlType': 'select',
+						'subfieldName': 'Ordinal For Same Week Each Year',
+						"setOptions": [
+							{ "value": "1", "display": "First" },
+							{ "value": "2", "display": "Second" },
+							{ "value": "3", "display": "Third" },
+							{ "value": "4", "display": "Fourth" }
+						],
+						'disabledForNonAdmin': ["Submitted", "Completed", "Cancelled"],
+						'disabledForAdmin': ["Submitted", "Completed", "Cancelled"],
+					}, {
+						'controlType': 'select',
+						'subfieldName': 'Days of Week For Same Week Each Year',
+						"setOptions": [
+							{ "value": "Sunday", "display": "Sunday" },
+							{ "value": "Monday", "display": "Monday" },
+							{ "value": "Tuesday", "display": "Tuesday" },
+							{ "value": "Wednesday", "display": "Wednesday" },
+							{ "value": "Thursday", "display": "Thursday" },
+							{ "value": "Friday", "display": "Friday" },
+							{ "value": "Saturday", "display": "Saturday" }
+						],
+						'disabledForNonAdmin': ["Submitted", "Completed", "Cancelled"],
+						'disabledForAdmin': ["Submitted", "Completed", "Cancelled"],
+					}
+				]
+
+
+				//}, {
+				//    'elementType': 'field',
+				//    'controlType': 'select',
+				//    'fieldName': 'Ordinal For Same Week Each Year',
+				//    'labelContent': 'On <span class="hidden">Which Week</span>',
+				//    "setOptions": [
+				//        { "value": "1", "display": "First" },
+				//        { "value": "2", "display": "Second" },
+				//        { "value": "3", "display": "Third" },
+				//        { "value": "4", "display": "Fourth" }
+				//    ],
+				//}, {
+				//    'elementType': 'field',
+				//    'controlType': 'select',
+				//    'fieldName': 'Days of Week For Same Week Each Year',
+				//    'labelContent': '<span class="hidden">On Which Day of the Week</span>',
+				//    "setOptions": [
+				//        { "value": "Sunday", "display": "Sunday" },
+				//        { "value": "Monday", "display": "Monday" },
+				//        { "value": "Tuesday", "display": "Tuesday" },
+				//        { "value": "Wednesday", "display": "Wednesday" },
+				//        { "value": "Thursday", "display": "Thursday" },
+				//        { "value": "Friday", "display": "Friday" },
+				//        { "value": "Saturday", "display": "Saturday" }
+				//    ],
+
+
+
+
+			}, {
+				'elementType': 'field',
+				'controlType': 'select',
+				'fieldName': 'Months for Same Week Each Year',
+				'labelContent': 'In',
+				"setOptions": [
+					{ "value": "1", "display": "January" },
+					{ "value": "2", "display": "February" },
+					{ "value": "3", "display": "March" },
+					{ "value": "4", "display": "April" },
+					{ "value": "5", "display": "May" },
+					{ "value": "6", "display": "June" },
+					{ "value": "7", "display": "July" },
+					{ "value": "8", "display": "August" },
+					{ "value": "9", "display": "September" },
+					{ "value": "10", "display": "October" },
+					{ "value": "11", "display": "November" },
+					{ "value": "12", "display": "December" }
+				],
+				'disabledForNonAdmin': ["Submitted", "Completed", "Cancelled"],
+				'disabledForAdmin': ["Submitted", "Completed", "Cancelled"],
+			}, {
+				'elementType': 'markup',
+				'tag': 'div',
+				'end': 1
+
+
+
+
+
+
+
+
+
+
+
+
+			}, {
+				'elementType': 'field',
+				'controlType': 'datePicker',
+				'fieldName': 'Start Date',
+				'labelContent': 'Start Date',
+				'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 0 },
+				'isoFormatOnSubmit': { 'incomingFormat': 'MMMM D, YYYY', 'returnFormat': null, 'determineYearDisplayDynamically': null },
+				'disabledForNonAdmin': ["Submitted", "Completed", "Cancelled"],
+				'disabledForAdmin': ["Submitted", "Completed", "Cancelled"],
+			}, {
+				'elementType': 'field',
+				'controlType': 'select',
+				'fieldName': 'Ending Basis',
+				'labelContent': 'Ends',
+				"setOptions": [
+					{ "value": "never", "display": "Never" },
+					{ "value": "xOccurrences", "display": "After a given number of occurrences" },
+					{ "value": "date", "display": "By a date" }
+				],
+				'disabledForNonAdmin': ["Submitted", "Completed", "Cancelled"],
+				'disabledForAdmin': ["Submitted", "Completed", "Cancelled"],
+				"onChange": [
+					{
+						"thisFieldEquals": ["never"],
+						"show": [],
+						"require": [],
+						"hide": [
+							{ "divID": "range_x-occurrences" },
+							{ "divID": "range_ending-date" },
+						],
+						"optional": [
+							{ "fieldName": "Qty Occurrences", "type": "text" },
+							{ "fieldName": "Ending Date", "type": "text" },
+						]
+					}, {
+						"thisFieldEquals": ["xOccurrences"],
+						"show": [{ "divID": "range_x-occurrences" }],
+						"require": [{ "fieldName": "Qty Occurrences", "type": "text" }],
+						"hide": [{ "divID": "range_ending-date" }],
+						"optional": [{ "fieldName": "Ending Date", "type": "datepicker" }]
+					}, {
+						"thisFieldEquals": ["date"],
+						"show": [{ "divID": "range_ending-date" }],
+						"require": [{ "fieldName": "Ending Date", "type": "datepicker" }],
+						"hide": [{ "divID": "range_x-occurrences" }],
+						"optional": [{ "fieldName": "Qty Occurrences", "type": "text" }]
+					}
+				]
+
+			}, {
+				'elementType': 'markup',
+				'tag': 'div',
+				'begin': 1,
+				'htmlID': 'range_x-occurrences',
+				"hideForNonAdmin": ["", "Submitted", "Completed", "Cancelled"],
+				"hideForAdmin": ["", "Submitted", "Completed", "Cancelled"],
+
+				// X occurrences
+
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "Qty Occurrences",
+				"labelContent": "Number of Occurrences",
+				'disabledForNonAdmin': ["Submitted", "Completed", "Cancelled"],
+				'disabledForAdmin': ["Submitted", "Completed", "Cancelled"],
+			}, {
+				'elementType': 'markup',
+				'tag': 'div',
+				'end': 1
+
+
+			}, {
+				'elementType': 'markup',
+				'tag': 'div',
+				'begin': 1,
+				'htmlID': 'range_ending-date',
+				"hideForNonAdmin": ["", "Submitted", "Completed", "Cancelled"],
+				"hideForAdmin": ["", "Submitted", "Completed", "Cancelled"],
+
+				// By date
+
+
+
+
+			}, {
+				"elementType": "field",
+				"controlType": "datePicker",
+				"fieldName": "Ending Date",
+				"labelContent": "Ending Date",
+				'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 0 },
+				'isoFormatOnSubmit': { 'incomingFormat': 'MMMM D, YYYY', 'returnFormat': null, 'determineYearDisplayDynamically': null },
+				'disabledForNonAdmin': ["Submitted", "Completed", "Cancelled"],
+				'disabledForAdmin': ["Submitted", "Completed", "Cancelled"],
+			}, {
+				'elementType': 'markup',
+				'tag': 'div',
+				'end': 1
+
+
+			}, {
+				'elementType': 'markup',
+				'tag': 'div',
+				'end': 1
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "Request Status",
+				"listFieldName": "RequestStatus",
+				"labelContent": "Request Status",
+				"disabledForNonAdmin": ["", "Submitted", "Completed", "Cancelled"],
+				"disabledForAdmin": ["", "Submitted", "Completed", "Cancelled"],
+				"hideForNonAdmin": ["", "Submitted", "Completed", "Cancelled"],
+				"hideForAdmin": ["", "Submitted", "Completed", "Cancelled"],
+
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+				/* }, {
 				'elementType': "field",
 				'controlType': "datePicker",
 				'fieldName': "Date",
@@ -1215,7 +2153,7 @@
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
-				'end': 1
+				'end': 1 */
 
 			}, {
 				'elementType': 'markup',
@@ -1242,10 +2180,6 @@
 				'elementType': 'markup',
 				'tag': 'div',
 				'end': 1,
-
-
-
-
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',

@@ -3274,33 +3274,52 @@ div#app-container.museum-wide-event-calendar div#request-form input#X-Months-For
 div#app-container.museum-wide-event-calendar div#request-form input#Day-of-Month-for-X-Months,
 div#app-container.museum-wide-event-calendar div#request-form input#X-Months-For-Same-Week,
 div#app-container.museum-wide-event-calendar div#request-form input#Date-for-Same-Date-Each-Year,
-div#app-container.museum-wide-event-calendar div#request-form input#Qty-Occurrences {
-  width: 3rem !important; }
+div#app-container.museum-wide-event-calendar div#request-form input#Qty-Occurrences,
+div#app-container.gse-schedule div#request-form input#X-Days,
+div#app-container.gse-schedule div#request-form input#X-Weeks,
+div#app-container.gse-schedule div#request-form input#X-Months-For-Same-Day,
+div#app-container.gse-schedule div#request-form input#Day-of-Month-for-X-Months,
+div#app-container.gse-schedule div#request-form input#X-Months-For-Same-Week,
+div#app-container.gse-schedule div#request-form input#Date-for-Same-Date-Each-Year,
+div#app-container.gse-schedule div#request-form input#Qty-Occurrences {
+  width: 3.5rem !important;
+  text-align: center; }
 
 div#app-container.museum-wide-event-calendar div#request-form div#x-days_help-note,
 div#app-container.museum-wide-event-calendar div#request-form div#x-weeks_help-note,
 div#app-container.museum-wide-event-calendar div#request-form div#x-months-for-same-day_help-note,
 div#app-container.museum-wide-event-calendar div#request-form div#day-of-month-for-x-months_help-note,
-div#app-container.museum-wide-event-calendar div#request-form div#x-months-for-same-week_help-note {
+div#app-container.museum-wide-event-calendar div#request-form div#x-months-for-same-week_help-note,
+div#app-container.gse-schedule div#request-form div#x-days_help-note,
+div#app-container.gse-schedule div#request-form div#x-weeks_help-note,
+div#app-container.gse-schedule div#request-form div#x-months-for-same-day_help-note,
+div#app-container.gse-schedule div#request-form div#day-of-month-for-x-months_help-note,
+div#app-container.gse-schedule div#request-form div#x-months-for-same-week_help-note {
   display: inline-block;
   margin-left: .3rem;
   font-style: normal;
   color: #444; }
 
-div#app-container.museum-wide-event-calendar div#request-form div#Days-of-Week-for-X-Weeks div.choice-container {
+div#app-container.museum-wide-event-calendar div#request-form div#Days-of-Week-for-X-Weeks div.choice-container,
+div#app-container.gse-schedule div#request-form div#Days-of-Week-for-X-Weeks div.choice-container {
   display: inline-block;
   margin-right: 1.5rem; }
 
 div#app-container.museum-wide-event-calendar div#request-form select#Ordinal-For-Day-of-Week-For-X-Months-For-Same-Week,
-div#app-container.museum-wide-event-calendar div#request-form select#Ordinal-For-Same-Week-Each-Year {
+div#app-container.museum-wide-event-calendar div#request-form select#Ordinal-For-Same-Week-Each-Year,
+div#app-container.gse-schedule div#request-form select#Ordinal-For-Day-of-Week-For-X-Months-For-Same-Week,
+div#app-container.gse-schedule div#request-form select#Ordinal-For-Same-Week-Each-Year {
   width: 7.5rem !important; }
 
 div#app-container.museum-wide-event-calendar div#request-form select#Days-of-Week-For-X-Months-For-Same-Week,
-div#app-container.museum-wide-event-calendar div#request-form select#Days-of-Week-For-Same-Week-Each-Year {
+div#app-container.museum-wide-event-calendar div#request-form select#Days-of-Week-For-Same-Week-Each-Year,
+div#app-container.gse-schedule div#request-form select#Days-of-Week-For-X-Months-For-Same-Week,
+div#app-container.gse-schedule div#request-form select#Days-of-Week-For-Same-Week-Each-Year {
   width: 12.5rem !important;
   margin-left: .3rem; }
 
-div#app-container.museum-wide-event-calendar div#request-form select#Months-for-Same-Date-Each-Year {
+div#app-container.museum-wide-event-calendar div#request-form select#Months-for-Same-Date-Each-Year,
+div#app-container.gse-schedule div#request-form select#Months-for-Same-Date-Each-Year {
   width: 12.5rem !important; }
 
 div#app-container.cafe-defaults div#request-form a.show-default-station-times,
