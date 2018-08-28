@@ -671,6 +671,14 @@
 								'	$().PutCurrentUserInField("Job Admin"); \n' + 
 								'} \n';
 
+	fData.CustomScriptLast += '$("input#Physical-Demand-Lifting, input#Physical-Demand-Carrying, input#Physical-Demand-Pushing, input#Physical-Demand-Pulling").on("change", function() { \n' +
+		'	$().ProcessGSEJobPhysicalDemandPoundFields();\n' +
+		'}); \n';
+
+	fData.CustomScriptLast += '$("input#Physical-Demand-Standing, input#Physical-Demand-Sitting, input#Physical-Demand-Walking").on("change", function() { \n' +
+		'	$().ProcessGSEJobPhysicalDemandTimeFields();\n' +
+		'}); \n';
+
 	fData.CustomScriptLast +=	'if ($("input#Request-Status").val() == "Approved") { \n' + 
 								'	$("div#label-and-control_Requester-Cancellation").hide("fast").addClass("hidden"); \n' + 
 								'} \n';

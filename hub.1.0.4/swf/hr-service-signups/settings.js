@@ -150,13 +150,13 @@
 			'buttons': [
 				{
 					"linkType": "goForward",
-					"anchorText": "GSE Signup Option Calendar",
+					"anchorText": "GSE Signup Opportunities Calendar",
 					"href": "/sites/hr-service-schedule/SitePages/App.aspx?f=cal",
 					"target": null,
 					"restrictedToRoles": ["gseUserOnly"]
 				}, {
 					"linkType": "goForward",
-					"anchorText": "GSE Signup Option List",
+					"anchorText": "GSE Signup Opportunities List",
 					"href": "/sites/hr-service-schedule/SitePages/App.aspx",
 					"target": null,
 					"restrictedToRoles": ["gseUserOnly"]

@@ -1854,9 +1854,6 @@
 		personaSet += '<h2>Request Admins</h2>';
 
 		$.each(personArray, function (i, person) {
-
-
-
 			person.nameParts = person.name.split(" ");
 			person.firstInitial = person.nameParts[0].slice(0, 1).toUpperCase();
 			person.lastInitial = person.nameParts[1].slice(0, 1).toUpperCase();
@@ -11261,6 +11258,16 @@
 
 
 
+	$.fn.ValidateInRealTimeForPositiveIntegerOrZero = function (value, element) {
+		if (!(/^[0-9]*[1-9][0-9]*$/.test(value)) && parseInt(value) != 0) {
+			$().SetErrorMessage(element, 'Please enter a valid positive integer or zero');
+		} else {
+			$().RemoveErrorMessage(element);
+		}
+	};
+
+
+
 	$.fn.ValidateInRealTimeForPositiveInteger = function (value, element) {
 		if (!(/^[0-9]*[1-9][0-9]*$/.test(value))) {
 			$().SetErrorMessage(element, 'Please enter a valid positive integer');
@@ -19979,15 +19986,14 @@
 			}
 		});
 
+		console.log(selectedManagerWithDownline);
+
 		var allMarkup = '';
 		var departmentMarkups = {};
 
 		var downlineDivisionKeys = Object.keys(selectedManagerWithDownline.downline);
 		downlineDivisionKeys.forEach((divisionKey) => {
 			var downlineDepartmentKeys = Object.keys(selectedManagerWithDownline.downline[divisionKey]);
-			console.log('downlineDepartmentKeys');
-			console.log(downlineDepartmentKeys);
-			// downlineDepartmentKeys.sort(CompareElementsForArraySorting);
 			downlineDepartmentKeys.forEach((departmentKey) => {
 				var departmentKeySanitized =
 					ReplaceAll(' ', '-', ReplaceAll('&', 'and', ReplaceAll('/', 'and', ReplaceAll('\'', '', departmentKey))));
@@ -20007,6 +20013,10 @@
 					'		<tbody>';
 
 				if (selectedManagerWithDownline.downline[divisionKey]) {
+					if (selectedManagerWithDownline.department === departmentKey) {
+						selectedManagerWithDownline.downline[divisionKey][departmentKey].push(selectedManagerWithDownline);
+						selectedManagerWithDownline.downline[divisionKey][departmentKey].sort(CompareUsersByLastNameForArraySorting);
+					}
 					selectedManagerWithDownline.downline[divisionKey][departmentKey].forEach((user, index) => {
 						var evenOrOdd = ((index % 2) == 0) ? 'odd' : 'even';
 						var totalCount = 0;
@@ -21633,6 +21643,53 @@
 				}
 		  }
 	};*/
+
+
+
+	$.fn.ProcessGSEJobPhysicalDemandPoundFields = function () {
+		var liftingNumber = $("input#Physical-Demand-Lifting").val();
+		if (liftingNumber) {
+			$().ValidateInRealTimeForPositiveIntegerOrZero(liftingNumber, "input#Physical-Demand-Lifting");
+		}
+		var carryingNumber = $("input#Physical-Demand-Carrying").val();
+		if (carryingNumber) {
+			$().ValidateInRealTimeForPositiveIntegerOrZero(carryingNumber, "input#Physical-Demand-Carrying");
+		}
+		var pushingNumber = $("input#Physical-Demand-Pushing").val();
+		if (pushingNumber) {
+			$().ValidateInRealTimeForPositiveIntegerOrZero(pushingNumber, "input#Physical-Demand-Pushing");
+		}
+		var pullingNumber = $("input#Physical-Demand-Pulling").val();
+		if (pullingNumber) {
+			$().ValidateInRealTimeForPositiveIntegerOrZero(pullingNumber, "input#Physical-Demand-Pulling");
+		}
+	};
+
+
+
+	$.fn.ProcessGSEJobPhysicalDemandTimeFields = function () {
+		var standingNumber = $("input#Physical-Demand-Standing").val();
+		if (standingNumber) {
+			$().ValidateInRealTimeForPositiveIntegerOrZero(standingNumber, "input#Physical-Demand-Standing");
+		}
+		var sittingNumber = $("input#Physical-Demand-Sitting").val();
+		if (sittingNumber) {
+			$().ValidateInRealTimeForPositiveIntegerOrZero(sittingNumber, "input#Physical-Demand-Sitting");
+		}
+		var walkingNumber = $("input#Physical-Demand-Walking").val();
+		if (walkingNumber) {
+			$().ValidateInRealTimeForPositiveIntegerOrZero(walkingNumber, "input#Physical-Demand-Walking");
+		}
+		if (standingNumber && sittingNumber && walkingNumber) {
+			if ((parseInt(standingNumber) + parseInt(sittingNumber) + parseInt(walkingNumber)) != 100) {
+				$().SetErrorMessage("input#Physical-Demand-Standing", 'Time percentages must add up to 100%');
+				$().SetErrorMessage("input#Physical-Demand-Sitting", 'Time percentages must add up to 100%');
+				$().SetErrorMessage("input#Physical-Demand-Walking", 'Time percentages must add up to 100%');
+			}
+		}
+		
+
+	};
 
 
 
