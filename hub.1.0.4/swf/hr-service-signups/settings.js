@@ -454,18 +454,6 @@
 				'tag': "div",
 				'end': 1
 
-
-
-
-
-
-
-
-
-
-
-
-
 			}, {
 				"elementType": "markup",
 				"tag": "div",
