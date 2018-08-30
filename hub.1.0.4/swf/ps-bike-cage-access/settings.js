@@ -10,10 +10,10 @@
 		// 'mosMainKey': 'devLong',
 		// "useRecordedMOSMainMajorVersion": 1,
 		'devAdminNotifications': 0,
-		'notifications': 1,
+		'notifications': 0,
 	};
 
-	console.log("using settings m1");
+	console.log("using settings m3");
 
 
 
@@ -107,7 +107,8 @@
 
 
 	var fData = {
-		'autoTrackPendingAndApprovalAndNoLongerNeeded': 1,
+		// 'autoTrackPendingAndApprovalAndNoLongerNeeded': 1,
+		'tempApprove': 1,
 		'standardElementGroups': {
 			'standardThisRequestAndRequesterElements': 1,
 			'standardAdminElements': {
@@ -193,6 +194,22 @@
 
 
 	fData.CustomScriptLast = '';
+
+
+
+
+	fData.CustomScriptLast += '$("input#Request-Nickname").val("Created by Public Safety"); \n';
+	fData.CustomScriptLast += '$("select#Self-or-Other option[value=\'Self\']").attr("selected","selected"); \n';
+	fData.CustomScriptLast += '$("div#label-and-control_Request-Nickname, div#label-and-control_Agreement").hide("fast").addClass("hidden"); \n';
+	fData.CustomScriptLast += '$("div#label-and-control_Self-or-Other").hide("fast").addClass("hidden"); \n';
+	fData.CustomScriptLast += '$("div#label-and-control_Requested-For").show("fast").removeClass("hidden"); \n';
+	fData.CustomScriptLast += '$("label[for=\'Requested-For_TopSpan_EditorInput\']").text("Biker"); \n';
+	fData.CustomScriptLast += '$().SetFieldToRequired("Requested-For"); \n';
+	fData.CustomScriptLast += '$("input#agreement_agreed").prop("checked", true).attr("checked", true); \n';
+
+
+
+
 
 	$.fn.ReturnThisAppMData = function () {
 		return mData;

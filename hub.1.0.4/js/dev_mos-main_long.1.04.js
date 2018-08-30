@@ -4576,8 +4576,6 @@
 				$('div#overlays-screen-container').fadeIn(200);
 				$('div#wait-while-working').fadeIn(400);
 
-
-
 				// ========================================================
 				// CONVERT FRIENDLY DATES TO ISO
 				// ========================================================
@@ -4614,8 +4612,6 @@
 						});
 					}
 				});
-
-
 
 				// ========================================================
 				// SET, CLEAR NON-APPROVAL, NON-RS FIELDS
@@ -5423,6 +5419,19 @@
 					}
 					rData.endOfLifeIsNew = endOfLifeIsNew;
 					rData.endOfLife = endOfLife;
+					rData.requestStatus = newReqStatus;
+					rData = rData;
+					$('input#Request-Status').val(newReqStatus);
+					$('input#End-of-Life').val(endOfLife);
+				}
+
+				if (fData.tempApprove) {
+
+					$(workingMessage).text("Handling Request Status");
+
+					var newReqStatus = 'Approved';
+					rData.endOfLifeIsNew = 0;
+					rData.endOfLife = 0;
 					rData.requestStatus = newReqStatus;
 					rData = rData;
 					$('input#Request-Status').val(newReqStatus);
@@ -11242,7 +11251,6 @@
 		} else if (msg == "") {
 			msg = 'Cannot be blank';
 		}
-
 		if ($(element).closest("div.control").parent("div.label-and-control").hasClass("contains-errors") == false) {
 			$(element).closest("div.control").append("<div class='error-message'>" + msg + "</div>");
 			$(element).closest("div.control").parent("div.label-and-control").addClass("contains-errors");
@@ -13406,6 +13414,9 @@
 				$('#date-input_' + id).addClass("required");
 				$('#hours-input_' + id).addClass("required");
 				$('#minutes-input_' + id).addClass("required");
+			} else if (type == "time") {
+				$('#hours-input_' + id).addClass("required");
+				$('#minutes-input_' + id).addClass("required");
 			}
 		} else if (typeof ($('#' + id).attr('data-control-type') != 'undefined')) {
 			if ($('#' + id).attr('data-control-type') == 'PeoplePicker') {
@@ -13424,6 +13435,8 @@
 			$('#id-or-link_' + id).closest("div.control").prev("div.field-type-indication").children("span.field-type-indicator").removeClass("field-optional").addClass("field-required").children("span.message").removeClass("message-optional").addClass("message-required").text("Required Field");
 		} else if ($('#date-input_' + id).length) {
 			$('#date-input_' + id).closest("div.control").prev("div.field-type-indication").children("span.field-type-indicator").removeClass("field-optional").addClass("field-required").children("span.message").removeClass("message-optional").addClass("message-required").text("Required Field");
+		} else if ($('#hours-input_' + id).length) {
+			$('#hours-input_' + id).closest("div.control").prev("div.field-type-indication").children("span.field-type-indicator").removeClass("field-optional").addClass("field-required").children("span.message").removeClass("message-optional").addClass("message-required").text("Required Field");
 		}
 
 		// if repeatable == 1, call this function again
@@ -13462,7 +13475,6 @@
 
 
 	$.fn.SetFieldToOptional = function (id, type, repeatable) {
-
 		if (typeof (type) != "undefined") {
 			type = type.toLowerCase();
 			if (type == "radio" || type == "check" || type == "checkorradio") {
@@ -13475,6 +13487,9 @@
 				$('#id-or-link_' + id).removeClass("required");
 			} else if (type == "datetime") {
 				$('#date-input_' + id).removeClass("required");
+				$('#hours-input_' + id).removeClass("required");
+				$('#minutes-input_' + id).removeClass("required");
+			} else if (type == "time") {
 				$('#hours-input_' + id).removeClass("required");
 				$('#minutes-input_' + id).removeClass("required");
 			}
@@ -13490,10 +13505,11 @@
 		if ($('#' + id).length) {
 			$('#' + id).closest("div.control").prev("div.field-type-indication").children("span.field-type-indicator").removeClass("field-required").addClass("field-optional").children("span.message").removeClass("message-required").addClass("message-optional").text("Optional Field");
 		} else if ($('#id-or-link_' + id).length) {
-			console.log("found the field for real");
 			$('#id-or-link_' + id).closest("div.control").prev("div.field-type-indication").children("span.field-type-indicator").removeClass("field-required").addClass("field-optional").children("span.message").removeClass("message-required").addClass("message-optional").text("Optional Field");
 		} else if ($('#date-input_' + id).length) {
 			$('#date-input_' + id).closest("div.control").prev("div.field-type-indication").children("span.field-type-indicator").removeClass("field-required").addClass("field-optional").children("span.message").removeClass("message-required").addClass("message-optional").text("Optional Field");
+		} else if ($('#hours-input_' + id).length) {
+			$('#hours-input_' + id).closest("div.control").prev("div.field-type-indication").children("span.field-type-indicator").removeClass("field-required").addClass("field-optional").children("span.message").removeClass("message-required").addClass("message-optional").text("Optional Field");
 		}
 
 		// if repeatable == 1, call this function again
@@ -14024,6 +14040,16 @@
 					} else if (chg.thisFieldIsPositiveInteger == 0) {
 						stmtsToAdd += '	if (!(/^[0-9]*[1-9][0-9]*$/.test($(this).val()))) { \n';
 					}
+				} else if (typeof (chg.fieldIsPositiveInteger) != "undefined") {
+					if (chg.fieldIsPositiveInteger.value == 1) {
+						stmtsToAdd += '	if (/^[0-9]*[1-9][0-9]*$/.test($("#' +
+							$().ReturnHyphenatedFieldNameOrValue(chg.fieldIsPositiveInteger.fieldName) +
+							'").val())) { \n';
+					} else if (chg.fieldIsPositiveInteger.value == 0) {
+						stmtsToAdd += '	if (!(/^[0-9]*[1-9][0-9]*$/.test($("#' +
+							$().ReturnHyphenatedFieldNameOrValue(chg.fieldIsPositiveInteger.fieldName) +
+							'").val()))) { \n';
+					}
 				} else if (typeof (chg.thisFieldIsChecked) != "undefined") {
 					if (chg.thisFieldIsChecked == 1) {
 						stmtsToAdd += '	if ($(this).is(":checked")) { \n';
@@ -14214,10 +14240,10 @@
 							'repeatable': 0
 						}, req);
 						// if not required, require
-						stmtsToAdd += '		if (!$("#label-and-control_' + ReplaceAll("\\.", "", ReplaceAll(" ", "-", req.fieldName)) + ' div.field-type-indication span.field-type-indicator").hasClass("field-required")) { \n' +
+						/* stmtsToAdd += '		if (!$("#label-and-control_' + ReplaceAll("\\.", "", ReplaceAll(" ", "-", req.fieldName)) + ' div.field-type-indication span.field-type-indicator").hasClass("field-required")) { \n' +
 							'			$(this).SetFieldToRequired("' + ReplaceAll("\\.", "", ReplaceAll(" ", "-", req.fieldName)) + '", "' + req.type + '", "' + req.repeatable + '"); \n' +
-							'		} \n';
-
+							'		} \n'; */
+						stmtsToAdd += '		$(this).SetFieldToRequired("' + ReplaceAll("\\.", "", ReplaceAll(" ", "-", req.fieldName)) + '", "' + req.type + '", "' + req.repeatable + '"); \n';
 					});
 
 				}
@@ -14233,9 +14259,10 @@
 							'repeatable': 0
 						}, optl);
 						// if not optional, make optional
-						stmtsToAdd += '		if ($("#label-and-control_' + ReplaceAll("\\.", "", ReplaceAll(" ", "-", optl.fieldName)) + ' div.field-type-indication span.field-type-indicator").hasClass("field-required")) { \n' +
+						/* stmtsToAdd += '		if ($("#label-and-control_' + ReplaceAll("\\.", "", ReplaceAll(" ", "-", optl.fieldName)) + ' div.field-type-indication span.field-type-indicator").hasClass("field-required")) { \n' +
 							'			$(this).SetFieldToOptional("' + ReplaceAll("\\.", "", ReplaceAll(" ", "-", optl.fieldName)) + '", "' + optl.type + '", "' + optl.repeatable + '"); \n' +
-							'		} \n';
+							'		} \n'; */
+						stmtsToAdd += '		$(this).SetFieldToOptional("' + ReplaceAll("\\.", "", ReplaceAll(" ", "-", optl.fieldName)) + '", "' + optl.type + '", "' + optl.repeatable + '"); \n';
 					});
 
 				}
@@ -14399,6 +14426,22 @@
 						}
 					});
 
+				}
+
+				// if this change includes a setError
+				if (typeof (chg.setError) != "undefined") {
+					// for each value in the setError array
+					$.each(chg.setError, function (i, setError) {
+						stmtsToAdd += '		$().SetErrorMessage("#' + ReplaceAll("\\.", "", ReplaceAll(" ", "-", setError.fieldName)) + '", "' + setError.message + '"); \n';
+					});
+				}
+
+				// if this change includes a removeError
+				if (typeof (chg.removeError) != "undefined") {
+					// for each value in the removeError array
+					$.each(chg.removeError, function (i, removeError) {
+						stmtsToAdd += '		$().RemoveErrorMessage("#' + ReplaceAll("\\.", "", ReplaceAll(" ", "-", removeError.fieldName)) + '"); \n';
+					});
 				}
 
 				if (typeof (chg.addlAndConditions) != "undefined" || typeof (chg.addlOrConditions) != "undefined") {
@@ -17200,17 +17243,124 @@
 		var submissionValuePairsArrayOfArraysToReturn = [];
 
 		// get the dates; we'll create one row in SWFList for each date
-		// note: the repeatable dates will create inputs with IDs that begin the same way but are unique; 
-		// 		if that's confusing, then add some dates to a form and inspect the inputs' IDs; to get
-		//		all of the repeatable date fields, we'll match the beginning of the IDs
-		// note: change the partial ID being searched for to correspond to the field name you've chosen for the form; 
-		// 		using the caret character means we'll find every input whose ID *begins* with this partial ID
-		$(form).find('input[id^="Repeating-Date"]').each(function () {
-			scheduleDates.push($(this).val());
-		});
+		
+		if ($("input#individual-or-pattern_individual").is(":checked")) {
+			$(form).find('input[id^="Repeating-Date"]').each(function () {
+				scheduleDates.push($(this).val());
+			});
+		} else {
+			var patternDates;
 
-		// console.log('scheduleDates');
-		// console.log(scheduleDates);
+			switch ($('select#Pattern-Basis').val()) {
+
+				case "xDays":
+					switch ($('select#Ending-Basis').val()) {
+						case "xOccurrences":
+							patternDates = $().GenerateDatesForEveryXDaysEndAfterYOccurrences($('input#X-Days').val(), $('input#Start-Date').val(), $('input#Qty-Occurrences').val());
+							break;
+						case "date":
+							patternDates = $().GenerateDatesForEveryXDaysEndByDateY($('input#X-Days').val(), $('input#Start-Date').val(), $('input#Ending-Date').val());
+							break;
+					}
+					break;
+
+				case "weekdays":
+					switch ($('select#Ending-Basis').val()) {
+						case "xOccurrences":
+							patternDates = $().GenerateDatesForEveryWeekdayEndAfterXOccurrences($('input#Start-Date').val(), $('input#Qty-Occurrences').val());
+							break;
+						case "date":
+							patternDates = $().GenerateDatesForEveryWeekdayEndByDateX($('input#Start-Date').val(), $('input#Ending-Date').val());
+							break;
+					}
+					break;
+
+				case "xWeeks":
+					var daysOfWeek = [];
+					if ($('input#days-of-week-for-x-weeks_1').is(":checked")) {
+						daysOfWeek.push("Sunday");
+					}
+					if ($('input#days-of-week-for-x-weeks_2').is(":checked")) {
+						daysOfWeek.push("Monday");
+					}
+					if ($('input#days-of-week-for-x-weeks_3').is(":checked")) {
+						daysOfWeek.push("Tuesday");
+					}
+					if ($('input#days-of-week-for-x-weeks_4').is(":checked")) {
+						daysOfWeek.push("Wednesday");
+					}
+					if ($('input#days-of-week-for-x-weeks_5').is(":checked")) {
+						daysOfWeek.push("Thursday");
+					}
+					if ($('input#days-of-week-for-x-weeks_6').is(":checked")) {
+						daysOfWeek.push("Friday");
+					}
+					if ($('input#days-of-week-for-x-weeks_7').is(":checked")) {
+						daysOfWeek.push("Saturday");
+					}
+
+					switch ($('select#Ending-Basis').val()) {
+						case "xOccurrences":
+							patternDates = $().GenerateDatesForEveryXWeeksOnYDaysEndAfterZOccurrences($('input#X-Weeks').val(), daysOfWeek, $('input#Start-Date').val(), $('input#Qty-Occurrences').val());
+							break;
+						case "date":
+							patternDates = $().GenerateDatesForEveryXWeeksOnYDaysEndByDateZ($('input#X-Weeks').val(), daysOfWeek, $('input#Start-Date').val(), $('input#Ending-Date').val());
+							break;
+					}
+					break;
+
+				case "monthlySameDay":
+					switch ($('select#Ending-Basis').val()) {
+						case "xOccurrences":
+							patternDates = $().GenerateDatesForEveryXDaysOfEveryYMonthsEndAfterYOccurrences($('input#Day-of-Month-for-X-Months').val(), $('input#X-Months-For-Same-Day').val(), $('input#Start-Date').val(), $('input#Qty-Occurrences').val());
+							break;
+						case "date":
+							patternDates = $().GenerateDatesForEveryXDaysOfEveryYMonthsEndByDateY($('input#Day-of-Month-for-X-Months').val(), $('input#X-Months-For-Same-Day').val(), $('input#Start-Date').val(), $('input#Ending-Date').val());
+							break;
+					}
+					break;
+
+				case "monthlySameWeek":
+					var xVar = $('select#Ordinal-For-Day-of-Week-For-X-Months-For-Same-Week').val();
+					switch ($('select#Ending-Basis').val()) {
+						case "xOccurrences":
+							patternDates = $().GenerateDatesForEveryXYDayOfEveryZMonthsEndAfterYOccurrences(xVar, $('select#Days-of-Week-For-X-Months-For-Same-Week').val(), $('input#X-Months-For-Same-Week').val(), $('input#Start-Date').val(), $('input#Qty-Occurrences').val());
+							break;
+						case "date":
+							patternDates = $().GenerateDatesForEveryXYDayOfEveryZMonthsEndByDateY(xVar, $('select#Days-of-Week-For-X-Months-For-Same-Week').val(), $('input#X-Months-For-Same-Week').val(), $('input#Start-Date').val(), $('input#Ending-Date').val());
+							break;
+					}
+					break;
+
+				case "yearlySameDay":
+					switch ($('select#Ending-Basis').val()) {
+						case "xOccurrences":
+							patternDates = $().GenerateDatesForEveryXDayYMonthEveryYearEndAfterYOccurrences($('select#Months-for-Same-Date-Each-Year').val(), $('input#Monthly-Date-for-Same-Date-Each-Year').val(), $('input#Start-Date').val(), $('input#Qty-Occurrences').val());
+							break;
+						case "date":
+							patternDates = $().GenerateDatesForEveryXDayYMonthEveryYearEndByDateY($('select#Months-for-Same-Date-Each-Year').val(), $('input#Monthly-Date-for-Same-Date-Each-Year').val(), $('input#Start-Date').val(), $('input#Ending-Date').val());
+							break;
+					}
+					break;
+
+				case "yearlySameWeek":
+					var xVar = $('select#Ordinal-For-Same-Week-Each-Year').val();
+					var zVar = $('select#Months-for-Same-Week-Each-Year').val();
+					switch ($('select#Ending-Basis').val()) {
+						case "xOccurrences":
+							patternDates = $().GenerateDatesForEveryXYDayZMonthEveryYearEndAfterYOccurrences(xVar, $('select#Days-of-Week-For-Same-Week-Each-Year').val(), zVar, $('input#Start-Date').val(), $('input#Qty-Occurrences').val());
+							break;
+						case "date":
+							patternDates = $().GenerateDatesForEveryXYDayZMonthEveryYearEndByDateY(xVar, $('select#Days-of-Week-For-Same-Week-Each-Year').val(), zVar, $('input#Start-Date').val(), $('input#Ending-Date').val());
+							break;
+					}
+					break;
+
+			} // end generation of patterned dates
+			patternDates.forEach((patternDate) => {
+				scheduleDates.push($().ReturnFormattedDateTime(patternDate, null, null, null));
+			});
+		}
 
 		// for each date that was found
 		$.each(scheduleDates, function (i, scheduleDate) {
@@ -21074,12 +21224,11 @@
 		// yearly - every X (ordinal/last) Y (day of week) of Z month - custom start date - end by date A
 		moment.locale('en');
 		moment.suppressDeprecationWarnings = true;
-		var startDate = "01/01/2016";
-		var xVar = 1; // every X (ordinal)
-		var yVar = "Monday"; // day of week
-		var zVar = 1; // month
-		var aVar = "10/31/2020"; // end by date A
-
+		// var startDate = "01/01/2016";
+		// var xVar = 1; // every X (ordinal)
+		// var yVar = "Monday"; // day of week
+		// var zVar = 1; // month
+		// var aVar = "10/31/2020"; // end by date A
 		var ocurrencePattern = moment().recur(startDate, aVar).every(yVar).daysOfWeek().every(xVar - 1).weeksOfMonthByDay().every(zVar - 1).monthsOfYear(); //.subtract(1, 'days')
 		return allOcurrences = ocurrencePattern.all("L");
 	};
@@ -23072,7 +23221,7 @@
 
 		var jobDataSelected = {};
 
-		if ("Job-Title" in jobData.formData) {
+		/* if ("Job-Title" in jobData.formData) {
 			jobDataSelected["Job-Title"] = jobData.formData["Job-Title"];
 		} else {
 			jobDataSelected["Job-Title"] = 'Job Title could not be found';
@@ -23081,7 +23230,7 @@
 			jobDataSelected["Job-Description"] = jobData.formData["Job-Description"];
 		} else {
 			jobDataSelected["Job-Description"] = 'Job Description could not be found';
-		}
+		} */
 		PopulateFormData("div#request-form", jobDataSelected, "https://bmos.sharepoint.com/sites/hr-service-schedules/Lists/SWFList", jobID, undefined);
 
 	};
@@ -23745,7 +23894,7 @@
 		// wait for all data retrieval / setting promises to complete (pass or fail) 
 		$.when.apply($, allDataRetrievalAndSettingPromises).always(function () {
 
-			console.log('using dev_mos-main_long.1.04 m2');
+			console.log('using dev_mos-main_long.1.04 m3');
 
 			$().ConfigureAndShowScreenContainerAndAllScreens();
 		});

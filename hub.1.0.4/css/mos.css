@@ -3274,6 +3274,7 @@ div#app-container.museum-wide-event-calendar div#request-form input#X-Months-For
 div#app-container.museum-wide-event-calendar div#request-form input#Day-of-Month-for-X-Months,
 div#app-container.museum-wide-event-calendar div#request-form input#X-Months-For-Same-Week,
 div#app-container.museum-wide-event-calendar div#request-form input#Date-for-Same-Date-Each-Year,
+div#app-container.museum-wide-event-calendar div#request-form input#Monthly-Date-for-Same-Date-Each-Year,
 div#app-container.museum-wide-event-calendar div#request-form input#Qty-Occurrences,
 div#app-container.gse-schedule div#request-form input#X-Days,
 div#app-container.gse-schedule div#request-form input#X-Weeks,
@@ -3281,8 +3282,9 @@ div#app-container.gse-schedule div#request-form input#X-Months-For-Same-Day,
 div#app-container.gse-schedule div#request-form input#Day-of-Month-for-X-Months,
 div#app-container.gse-schedule div#request-form input#X-Months-For-Same-Week,
 div#app-container.gse-schedule div#request-form input#Date-for-Same-Date-Each-Year,
+div#app-container.gse-schedule div#request-form input#Monthly-Date-for-Same-Date-Each-Year,
 div#app-container.gse-schedule div#request-form input#Qty-Occurrences {
-  width: 3.5rem !important;
+  width: 4rem !important;
   text-align: center; }
 
 div#app-container.museum-wide-event-calendar div#request-form div#x-days_help-note,

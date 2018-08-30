@@ -997,24 +997,24 @@
 				'hideButtonForAdmin': ['Submitted', 'Completed', 'Cancelled'],
 				"requiredForNonAdmin": [""],
 				"requiredForAdmin": [""]
-			}, {
-				'elementType': "field",
-				'controlType': "text",
-				'fieldName': "Job Title",
-				'labelContent': "Job Title",
-				'requiredForNonAdmin': ['', 'Submitted'],
-				'requiredForAdmin': ['', 'Submitted'],
-				'disabledForNonAdmin': ['', 'Submitted', 'Completed', 'Cancelled'],
-				'disabledForAdmin': ['', 'Submitted', 'Completed', 'Cancelled']
-			}, {
-				'elementType': "field",
-				'controlType': "textarea",
-				'fieldName': "Job Description",
-				'labelContent': "Job Description",
-				'requiredForNonAdmin': ['', 'Submitted'],
-				'requiredForAdmin': ['', 'Submitted'],
-				'disabledForNonAdmin': ['', 'Submitted', 'Completed', 'Cancelled'],
-				'disabledForAdmin': ['', 'Submitted', 'Completed', 'Cancelled']
+			// }, {
+			// 	'elementType': "field",
+			// 	'controlType': "text",
+			// 	'fieldName': "Job Title",
+			// 	'labelContent': "Job Title",
+			// 	'requiredForNonAdmin': ['', 'Submitted'],
+			// 	'requiredForAdmin': ['', 'Submitted'],
+			// 	'disabledForNonAdmin': ['', 'Submitted', 'Completed', 'Cancelled'],
+			// 	'disabledForAdmin': ['', 'Submitted', 'Completed', 'Cancelled']
+			// }, {
+			// 	'elementType': "field",
+			// 	'controlType': "textarea",
+			// 	'fieldName': "Job Description",
+			// 	'labelContent': "Job Description",
+			// 	'requiredForNonAdmin': ['', 'Submitted'],
+			// 	'requiredForAdmin': ['', 'Submitted'],
+			// 	'disabledForNonAdmin': ['', 'Submitted', 'Completed', 'Cancelled'],
+			// 	'disabledForAdmin': ['', 'Submitted', 'Completed', 'Cancelled']
 			
 			
 			}, {
@@ -1051,7 +1051,36 @@
 				'requiredForNonAdmin': ['', 'Submitted'],
 				'requiredForAdmin': ['', 'Submitted'],
 				'disabledForNonAdmin': ['Cancelled'],
-				'disabledForAdmin': ['Cancelled']
+				'disabledForAdmin': ['Cancelled'],
+				"onChange": [
+					{
+						"thisFieldEquals": ["3.5 hours"],
+						"hide": [
+							{ "fieldName": "Meal Time" },
+							{ "fieldName": "Break Time" },
+						],
+						"optional": [
+							{ "fieldName": "Meal Time", "type": "time" },
+							{ "fieldName": "Break Time", "type": "time" },
+						],
+					}, {
+						"thisFieldEquals": ["7.5 hours"],
+						"show": [
+							{ "fieldName": "Meal Time" },
+							{ "fieldName": "Break Time" },
+						],
+						"require": [
+							{ "fieldName": "Meal Time", "type": "time" },
+							{ "fieldName": "Break Time", "type": "time" },
+						],
+					}
+				]
+
+
+
+
+
+
 			}, {
 				'elementType': "field",
 				'controlType': "text",
@@ -1094,19 +1123,19 @@
 			}, {
 				'elementType': "field",
 				'controlType': "time",
-				'fieldName': "MealTime",
+				'fieldName': "Meal Time",
 				'labelContent': "Meal Time",
-				'requiredForNonAdmin': ['', 'Submitted'],
-				'requiredForAdmin': ['', 'Submitted'],
+				'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
+				'hideForAdmin': ['', 'Submitted', 'Cancelled'],
 				'disabledForNonAdmin': ['Cancelled'],
 				'disabledForAdmin': ['Cancelled']
 			}, {
 				'elementType': "field",
 				'controlType': "time",
-				'fieldName': "BreakTime",
+				'fieldName': "Break Time",
 				'labelContent': "Break Time",
-				'requiredForNonAdmin': ['', 'Submitted'],
-				'requiredForAdmin': ['', 'Submitted'],
+				'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
+				'hideForAdmin': ['', 'Submitted', 'Cancelled'],
 				'disabledForNonAdmin': ['Cancelled'],
 				'disabledForAdmin': ['Cancelled']
 			}, {
@@ -1153,16 +1182,50 @@
 				],
 				"requiredForNonAdmin": [""],
 				"requiredForAdmin": [""],
+				'hideForNonAdmin': ["Submitted", "Completed", "Cancelled"],
+				'hideForAdmin': ["Submitted", "Completed", "Cancelled"],
+				'helpNotes': [
+					{
+						'text': "Must be tomorrow or later. Earlier dates will be ignored.",
+						'htmlID': "future-warning",
+						'hideForNonAdmin': ["Completed", "Cancelled"],
+						'hideForAdmin': ["Completed", "Cancelled"]
+					}, {
+						'text': "This will create individual schdules for the dates that fit your pattern. Your pattern won't be saved, but you'll be able to edit or cancel the individual schedules.",
+						'htmlID': "individual-date-warning",
+						'emphasis': 1,
+						'hideForNonAdmin': ["", "Submitted", "Completed", "Cancelled"],
+						'hideForAdmin': ["", "Submitted", "Completed", "Cancelled"]
+					}
+				],
 				'onChange': [
-					{ 'thisFieldEquals': ['individual'], 'show': [{ 'divID': 'simple-dates' }], 'require': [{ 'fieldName': 'Repeating Date', 'type': 'datepicker', 'repeatable': 1 }], 'hide': [{ 'divID': 'pattern-and-range' }], 'optional': [{ 'fieldName': 'Pattern Basis', 'type': 'select' }, { 'fieldName': 'Start Date', 'type': 'datePicker' }, { 'fieldName': 'Ending Basis', 'type': 'select' }] },
-					{ 'thisFieldEquals': ['pattern'], 'show': [{ 'divID': 'pattern-and-range' }], 'require': [{ 'fieldName': 'Pattern Basis', 'type': 'select' }, { 'fieldName': 'Start Date', 'type': 'datePicker' }, { 'fieldName': 'Ending Basis', 'type': 'select' }], 'hide': [{ 'divID': 'simple-dates' }], 'optional': [{ 'fieldName': 'Repeating Date', 'type': 'datepicker', 'repeatable': 1 }] },
+					{ 
+						'thisFieldEquals': ['individual'],
+						'show': [{ 'divID': 'simple-dates' }],
+						'require': [{ 'fieldName': 'Repeating Date', 'type': 'datepicker', 'repeatable': 1 }],
+						'hide': [{ 'divID': 'pattern-and-range' }],
+						'optional': [
+							{ 'fieldName': 'Pattern Basis', 'type': 'select' }, 
+							{ 'fieldName': 'Start Date', 'type': 'datePicker' }, 
+							{ 'fieldName': 'Ending Basis', 'type': 'select' }
+						]
+					}, { 
+						'thisFieldEquals': ['pattern'],
+						'show': [
+							{ 'divID': 'pattern-and-range' },
+							{ 'noteID': "individual-date-warning" }
+						],
+						'require': [
+							{ 'fieldName': 'Pattern Basis', 'type': 'select' }, 
+							{ 'fieldName': 'Start Date', 'type': 'datePicker' }, 
+							{ 'fieldName': 'Ending Basis', 'type': 'select' }
+						], 
+						'hide': [{ 'divID': 'simple-dates' }], 
+						'optional': [{ 'fieldName': 'Repeating Date', 'type': 'datepicker', 'repeatable': 1 }]
+					},
 				],
 
-
-
-
-
- 			}, {
+ 			/* }, {
 				'elementType': 'field',
 				'controlType': 'check',
 				'fieldName': 'Change Pattern of Repeating Dates',
@@ -1210,7 +1273,7 @@
 							{ 'fieldName': 'Day of Month for X Months' },
 							{ 'fieldName': 'X Months For Same Week' },
 							{ 'fieldName': 'Ordinal and Day of Week For X Months For Same Week', 'selectIDs': ['Ordinal-For-Day-of-Week-For-X-Months-For-Same-Week', 'Days-of-Week-For-X-Months-For-Same-Week'] },
-							{ 'fieldName': 'Month and Date for Same Date Each Year', 'selectIDs': ['Months-for-Same-Date-Each-Year'], 'inputIDs': ['Date-for-Same-Date-Each-Year'] },
+							{ 'fieldName': 'Month and Monthly Date for Same Date Each Year', 'selectIDs': ['Months-for-Same-Date-Each-Year'], 'inputIDs': ['Date-for-Same-Date-Each-Year'] },
 							{ 'fieldName': 'Ordinal and Day of Week For Same Week Each Year', 'selectIDs': ['Ordinal-For-Same-Week-Each-Year', 'Days-of-Week-For-Same-Week-Each-Year'] },
 							{ 'fieldName': 'Months for Same Week Each Year' },
 							{ 'fieldName': 'Start Date' },
@@ -1221,7 +1284,7 @@
 						'show': [{ 'noteID': "pattern-change-urgent-warning" }],
 						'hide': [{ 'noteID': "pattern-change-warning" }]
 					},
-				],
+				], */
 
 
 
@@ -1348,7 +1411,7 @@
 							{ "fieldName": "Ordinal For Day of Week For X Months For Same Week", "type": "select" },
 							{ "fieldName": "Days of Week For X Months For Same Week", "type": "select" },
 							{ "fieldName": "Months for Same Date Each Year", "type": "select" },
-							{ "fieldName": "Date for Same Date Each Year", "type": "text" },
+							{ "fieldName": "Monthly Date for Same Date Each Year", "type": "text" },
 							{ "fieldName": "Ordinal For Same Week Each Year", "type": "select" },
 							{ "fieldName": "Days of Week For Same Week Each Year", "type": "select" },
 							{ "fieldName": "Months for Same Week Each Year", "type": "select" },
@@ -1374,7 +1437,7 @@
 							{ "fieldName": "Ordinal For Day of Week For X Months For Same Week", "type": "select" },
 							{ "fieldName": "Days of Week For X Months For Same Week", "type": "select" },
 							{ "fieldName": "Months for Same Date Each Year", "type": "select" },
-							{ "fieldName": "Date for Same Date Each Year", "type": "text" },
+							{ "fieldName": "Monthly Date for Same Date Each Year", "type": "text" },
 							{ "fieldName": "Ordinal For Same Week Each Year", "type": "select" },
 							{ "fieldName": "Days of Week For Same Week Each Year", "type": "select" },
 							{ "fieldName": "Months for Same Week Each Year", "type": "select" },
@@ -1402,7 +1465,7 @@
 							{ "fieldName": "Ordinal For Day of Week For X Months For Same Week", "type": "select" },
 							{ "fieldName": "Days of Week For X Months For Same Week", "type": "select" },
 							{ "fieldName": "Months for Same Date Each Year", "type": "select" },
-							{ "fieldName": "Date for Same Date Each Year", "type": "text" },
+							{ "fieldName": "Monthly Date for Same Date Each Year", "type": "text" },
 							{ "fieldName": "Ordinal For Same Week Each Year", "type": "select" },
 							{ "fieldName": "Days of Week For Same Week Each Year", "type": "select" },
 							{ "fieldName": "Months for Same Week Each Year", "type": "select" },
@@ -1430,7 +1493,7 @@
 							{ "fieldName": "Ordinal For Day of Week For X Months For Same Week", "type": "select" },
 							{ "fieldName": "Days of Week For X Months For Same Week", "type": "select" },
 							{ "fieldName": "Months for Same Date Each Year", "type": "select" },
-							{ "fieldName": "Date for Same Date Each Year", "type": "text" },
+							{ "fieldName": "Monthly Date for Same Date Each Year", "type": "text" },
 							{ "fieldName": "Ordinal For Same Week Each Year", "type": "select" },
 							{ "fieldName": "Days of Week For Same Week Each Year", "type": "select" },
 							{ "fieldName": "Months for Same Week Each Year", "type": "select" },
@@ -1458,7 +1521,7 @@
 							{ "fieldName": "X Months For Same Day", "type": "text" },
 							{ "fieldName": "Day of Month for X Months", "type": "text" },
 							{ "fieldName": "Months for Same Date Each Year", "type": "select" },
-							{ "fieldName": "Date for Same Date Each Year", "type": "text" },
+							{ "fieldName": "Monthly Date for Same Date Each Year", "type": "text" },
 							{ "fieldName": "Ordinal For Same Week Each Year", "type": "select" },
 							{ "fieldName": "Days of Week For Same Week Each Year", "type": "select" },
 							{ "fieldName": "Months for Same Week Each Year", "type": "select" },
@@ -1469,7 +1532,7 @@
 						"show": [{ "divID": "pattern_yearly-same-day" },],
 						"require": [
 							{ "fieldName": "Months for Same Date Each Year", "type": "select" },
-							{ "fieldName": "Date for Same Date Each Year", "type": "text" },
+							{ "fieldName": "Monthly Date for Same Date Each Year", "type": "text" },
 						],
 						"hide": [
 							{ "divID": "pattern_x-days" },
@@ -1493,7 +1556,7 @@
 						],
 						"set": [
 							{
-								"fieldName": "Date for Same Date Each Year",
+								"fieldName": "Monthly Date for Same Date Each Year",
 								"type": "text",
 								"method": "dynamic",
 								"value": "$().ReturnFormattedDateTime('nowLocal', null, 'D', null)"
@@ -1525,7 +1588,7 @@
 							{ "fieldName": "Ordinal For Day of Week For X Months For Same Week", "type": "select" },
 							{ "fieldName": "Days of Week For X Months For Same Week", "type": "select" },
 							{ "fieldName": "Months for Same Date Each Year", "type": "select" },
-							{ "fieldName": "Date for Same Date Each Year", "type": "text" },
+							{ "fieldName": "Monthly Date for Same Date Each Year", "type": "text" },
 						],
 					}
 
@@ -1564,8 +1627,19 @@
 						"urgent": 0,
 					}
 				],
-
-
+				'onChange': [
+					{
+						'thisFieldIsPositiveInteger': 1,
+						'removeError': [
+							{ 'fieldName': "X Days" }
+						]
+					}, {
+						'thisFieldIsPositiveInteger': 0,
+						'setError': [
+							{ 'fieldName': "X Days", "message": "Please enter a valid positive integer" }
+						]
+					}
+				],
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
@@ -1595,6 +1669,19 @@
 						"text": "week(s)",
 						"htmlID": "x-weeks_help-note",
 						"urgent": 0,
+					}
+				],
+				'onChange': [
+					{
+						'thisFieldIsPositiveInteger': 1,
+						'removeError': [
+							{ 'fieldName': "X Weeks" }
+						]
+					}, {
+						'thisFieldIsPositiveInteger': 0,
+						'setError': [
+							{ 'fieldName': "X Weeks", "message": "Please enter a valid positive integer" }
+						]
 					}
 				],
 			}, {
@@ -1659,6 +1746,19 @@
 						"urgent": 0,
 					}
 				],
+				'onChange': [
+					{
+						'thisFieldIsPositiveInteger': 1,
+						'removeError': [
+							{ 'fieldName': "X Months For Same Day" }
+						]
+					}, {
+						'thisFieldIsPositiveInteger': 0,
+						'setError': [
+							{ 'fieldName': "X Months For Same Day", "message": "Please enter a valid positive integer" }
+						]
+					}
+				],
 			}, {
 				"elementType": "field",
 				"controlType": "text",
@@ -1671,6 +1771,19 @@
 						"text": "day of month",
 						"htmlID": "day-of-month-for-x-months_help-note",
 						"urgent": 0,
+					}
+				],
+				'onChange': [
+					{
+						'thisFieldIsPositiveInteger': 1,
+						'removeError': [
+							{ 'fieldName': "Day of Month for X Months" }
+						]
+					}, {
+						'thisFieldIsPositiveInteger': 0,
+						'setError': [
+							{ 'fieldName': "Day of Month for X Months", "message": "Please enter a valid positive integer" }
+						]
 					}
 				],
 			}, {
@@ -1702,6 +1815,19 @@
 						"text": "month(s)",
 						"htmlID": "x-months-for-same-week_help-note",
 						"urgent": 0,
+					}
+				],
+				'onChange': [
+					{
+						'thisFieldIsPositiveInteger': 1,
+						'removeError': [
+							{ 'fieldName': "X Months For Same Week" }
+						]
+					}, {
+						'thisFieldIsPositiveInteger': 0,
+						'setError': [
+							{ 'fieldName': "X Months For Same Week", "message": "Please enter a valid positive integer" }
+						]
 					}
 				],
 			}, {
@@ -1756,7 +1882,7 @@
 
 			}, {
 				'elementType': 'multifield',
-				'multifieldName': 'Month and Date for Same Date Each Year',
+				'multifieldName': 'Month and Monthly Date for Same Date Each Year',
 				'labelContent': 'On <span class="hidden">Which Day of the Month?</span>',
 				'subfields': [
 					{
@@ -1780,11 +1906,31 @@
 						'disabledForAdmin': ["Submitted", "Completed", "Cancelled"],
 					}, {
 						'controlType': 'text',
-						'subfieldName': 'Date for Same Date Each Year',
+						'subfieldName': 'Monthly Date for Same Date Each Year',
 						'disabledForNonAdmin': ["Submitted", "Completed", "Cancelled"],
 						'disabledForAdmin': ["Submitted", "Completed", "Cancelled"],
 					}
-				]
+				],
+				'onChange': [
+					{
+						'fieldIsPositiveInteger': {
+							"fieldName": "Monthly Date for Same Date Each Year",
+							"value": 1
+						},
+						'removeError': [
+							{ 'fieldName': "Monthly Date for Same Date Each Year" }
+						]
+					}, {
+						'fieldIsPositiveInteger': {
+							"fieldName": "Monthly Date for Same Date Each Year",
+							"value": 0
+						},
+						'setError': [
+							{ 'fieldName': "Monthly Date for Same Date Each Year", "message": "Please enter a valid positive integer" }
+						]
+					}
+				],
+
 				//}, {
 				//    'elementType': 'field',
 				//    'controlType': 'select',
@@ -1807,7 +1953,7 @@
 				//}, {
 				//    "elementType": "field",
 				//    "controlType": "text",
-				//    "fieldName": "Date for Same Date Each Year",
+				//    "fieldName": "Monthly Date for Same Date Each Year",
 				//    "labelContent": '<span class="hidden">On Which Day of the Month</span>',
 			}, {
 				'elementType': 'markup',
@@ -1947,7 +2093,7 @@
 				'fieldName': 'Ending Basis',
 				'labelContent': 'Ends',
 				"setOptions": [
-					{ "value": "never", "display": "Never" },
+					// { "value": "never", "display": "Never" },
 					{ "value": "xOccurrences", "display": "After a given number of occurrences" },
 					{ "value": "date", "display": "By a date" }
 				],
@@ -1998,6 +2144,19 @@
 				"labelContent": "Number of Occurrences",
 				'disabledForNonAdmin': ["Submitted", "Completed", "Cancelled"],
 				'disabledForAdmin': ["Submitted", "Completed", "Cancelled"],
+				'onChange': [
+					{
+						'thisFieldIsPositiveInteger': 1,
+						'removeError': [
+							{ 'fieldName': "Qty Occurrences" }
+						]
+					}, {
+						'thisFieldIsPositiveInteger': 0,
+						'setError': [
+							{ 'fieldName': "Qty Occurrences", "message": "Please enter a valid positive integer" }
+						]
+					}
+				],
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
@@ -2036,16 +2195,6 @@
 				'elementType': 'markup',
 				'tag': 'div',
 				'end': 1
-			}, {
-				"elementType": "field",
-				"controlType": "text",
-				"fieldName": "Request Status",
-				"listFieldName": "RequestStatus",
-				"labelContent": "Request Status",
-				"disabledForNonAdmin": ["", "Submitted", "Completed", "Cancelled"],
-				"disabledForAdmin": ["", "Submitted", "Completed", "Cancelled"],
-				"hideForNonAdmin": ["", "Submitted", "Completed", "Cancelled"],
-				"hideForAdmin": ["", "Submitted", "Completed", "Cancelled"],
 
 			
 			
@@ -2085,7 +2234,7 @@
 			
 			
 			
-				/* }, {
+			}, {
 				'elementType': "field",
 				'controlType': "datePicker",
 				'fieldName': "Date",
@@ -2099,7 +2248,7 @@
 				'hideForAdmin': [''],
 				'disabledForNonAdmin': ['Cancelled'],
 				'disabledForAdmin': ['Cancelled']
-			}, {
+			/* }, {
 				'elementType': 'markup',
 				'tag': 'div',
 				'begin': 1,
@@ -2317,11 +2466,17 @@
 								'	$().ImportGSEJobRequestDataToGSESchedule($("input#id-or-link_GSE-Job-Request-ID").val()); \n' + 
 								'}); \n';
 
+	fData.CustomScriptLast += 'if ($("input#shiftlength_75-hours").is(":checked")) { \n' +
+								'   $("div#label-and-control_Meal-Time").show("fast").removeClass("hidden"); \n' +
+								'   $("div#label-and-control_Break-Time").show("fast").removeClass("hidden"); \n' +
+								'} \n';
+
+	fData.CustomScriptLast += '$("input#Number-of-Positions").change(function() { \n' +
+		'	$().ValidateInRealTimeForPositiveInteger($("input#Number-of-Positions").val(), "input#Number-of-Positions"); \n' +
+		'}); \n';
 
 
-
-
-
+// Number of Positions
 
 
 
@@ -2334,33 +2489,33 @@
 
 	/* // repeats
 	fData.CustomScriptLast += '$().RepeatElement("gse-schedule-date");';
-	fData.CustomScriptLast += '$().RepeatElement("gse-schedule-date");';
+	fData.CustomScriptLast += '$().RepeatElement("gse-schedule-date");'; */
 	
 	// radios / checks
-	fData.CustomScriptLast += '$("input#shiftlength_75-hours").prop("checked", true).attr("checked", true); \n';
+	fData.CustomScriptLast += '$("input#shiftlength_35-hours").prop("checked", true).attr("checked", true); \n';
 	fData.CustomScriptLast += '$("input#locationisoffsite_no").prop("checked", true).attr("checked", true); \n';
 	
 	// texts
 	fData.CustomScriptLast += '$("input#Request-Nickname").val("Req Nick");';
-	fData.CustomScriptLast += '$("input#id-or-link_GSE-Job-Request-ID").val("4");';
+	fData.CustomScriptLast += '$("input#id-or-link_GSE-Job-Request-ID").val("122");';
 	fData.CustomScriptLast += '$("input#Number-of-Positions").val("3");';
 	fData.CustomScriptLast += '$("input#Location").val("Lobby");';
-	fData.CustomScriptLast += '$("input#Repeating-Date").val("July 29, 2018");';
-	fData.CustomScriptLast += '$("input#Repeating-Date-repeat-1").val("July 30, 2018");';
-	fData.CustomScriptLast += '$("input#Repeating-Date-repeat-2").val("July 31, 2018");';
+	// fData.CustomScriptLast += '$("input#Repeating-Date").val("July 29, 2018");';
+	// fData.CustomScriptLast += '$("input#Repeating-Date-repeat-1").val("July 30, 2018");';
+	// fData.CustomScriptLast += '$("input#Repeating-Date-repeat-2").val("July 31, 2018");';
 	
 	// selects
 	fData.CustomScriptLast += '$("select#hours-input_StartTime option[value=\'T09\']").attr("selected","selected"); \n';
 	fData.CustomScriptLast += '$("select#minutes-input_StartTime option[value=\':00:00\']").attr("selected","selected"); \n';
-	fData.CustomScriptLast += '$("select#hours-input_MealTime option[value=\'T11\']").attr("selected","selected"); \n';
-	fData.CustomScriptLast += '$("select#minutes-input_MealTime option[value=\':00:00\']").attr("selected","selected"); \n';
-	fData.CustomScriptLast += '$("select#hours-input_BreakTime option[value=\'T13\']").attr("selected","selected"); \n';
-	fData.CustomScriptLast += '$("select#minutes-input_BreakTime option[value=\':30:00\']").attr("selected","selected"); \n';
+	// fData.CustomScriptLast += '$("select#hours-input_MealTime option[value=\'T11\']").attr("selected","selected"); \n';
+	// fData.CustomScriptLast += '$("select#minutes-input_MealTime option[value=\':00:00\']").attr("selected","selected"); \n';
+	// fData.CustomScriptLast += '$("select#hours-input_BreakTime option[value=\'T13\']").attr("selected","selected"); \n';
+	// fData.CustomScriptLast += '$("select#minutes-input_BreakTime option[value=\':30:00\']").attr("selected","selected"); \n';
 
 	// hidden
 	fData.CustomScriptLast += '$("input#time-storage_StartTime").val("2000-01-01T09:00:00Z"); \n';
-	fData.CustomScriptLast += '$("input#time-storage_MealTime").val("2000-01-01T11:00:00Z"); \n';
-	fData.CustomScriptLast += '$("input#time-storage_BreakTime").val("2000-01-01T13:30:00Z"); \n'; */
+	// fData.CustomScriptLast += '$("input#time-storage_MealTime").val("2000-01-01T11:00:00Z"); \n';
+	// fData.CustomScriptLast += '$("input#time-storage_BreakTime").val("2000-01-01T13:30:00Z"); \n';
 
 
 	$.fn.ReturnThisAppMData = function () {
