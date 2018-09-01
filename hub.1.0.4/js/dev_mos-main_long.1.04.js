@@ -1277,10 +1277,18 @@
 		}
 
 		if (opt.where.field) {
-			query += "<Eq>" +
-			"<FieldRef Name='" + opt.where.field + "'></FieldRef>" +
-				"<Value Type='" + opt.where.type + "'>" + opt.where.value + "</Value>" +
-			"</Eq>";
+			query += "<Eq>";
+			if (opt.where.value) {
+				query += "<FieldRef Name='" + opt.where.field + "'></FieldRef>";
+				"<Value Type='" + opt.where.type + "'>" + opt.where.value + "</Value>";
+			} else if (opt.where.values) {
+				query += "<Values>";
+				opt.where.values.sourceArray.forEach((item) => {
+					query += "<Value Type='" + opt.where.type + "'>" + item[opt.where.values.property] + "</Value>";
+				});
+				query += "</Values>";
+			}
+			query += "</Eq>";
 		}
 
 		query +=	"</Where>" +
@@ -7040,27 +7048,27 @@
 
 
 		} else if (type === "gseSchedulesCalendarHRAdmin") {
-			$().RenderCalendarForGSESchedules(oData.gseSchedulesCalendarHRAdmin.buttons, 'gseHRAdmin');
+			$().RenderCommandBarAndCalendarForGSESchedules(oData.gseSchedulesCalendarHRAdmin.buttons, 'gseHRAdmin');
 		} else if (type === "gseSchedulesCalendarJobAdmin") {
-			$().RenderCalendarForGSESchedules(oData.gseSchedulesCalendarJobAdmin.buttons, 'gseJobAdmin');
+			$().RenderCommandBarAndCalendarForGSESchedules(oData.gseSchedulesCalendarJobAdmin.buttons, 'gseJobAdmin');
 		} else if (type === "gseSchedulesCalendarManager") {
-			$().RenderCalendarForGSESchedules(oData.gseSchedulesCalendarManager.buttons, 'gseManager');
+			$().RenderCommandBarAndCalendarForGSESchedules(oData.gseSchedulesCalendarManager.buttons, 'gseManager');
 		} else if (type === "gseSchedulesCalendarStaff") {
-			$().RenderCalendarForGSESchedules(oData.gseSchedulesCalendarStaff.buttons, 'gseUserOnly');
+			$().RenderCommandBarAndCalendarForGSESchedules(oData.gseSchedulesCalendarStaff.buttons, 'gseUserOnly');
 
 
 		} else if (type === "gseSchedulesListHRAdmin") {
-			$().RenderOverviewScreenButtons(oData.gseSchedulesListHRAdmin.buttons, 0);
-			$().RenderAllDataTablesForGSESchedules("overview-table-container", 'gseHRAdmin');
+			// $().RenderOverviewScreenButtons(oData.gseSchedulesListHRAdmin.buttons, 0);
+			$().RenderCommandBarAndDataTablesForGSESchedules(oData.gseSchedulesListHRAdmin.buttons, "overview-table-container", 'gseHRAdmin');
 		} else if (type === "gseSchedulesListJobAdmin") {
-			$().RenderOverviewScreenButtons(oData.gseSchedulesListJobAdmin.buttons, 0);
-			$().RenderAllDataTablesForGSESchedules("overview-table-container", 'gseJobAdmin');
+			// $().RenderOverviewScreenButtons(oData.gseSchedulesListJobAdmin.buttons, 0);
+			$().RenderCommandBarAndDataTablesForGSESchedules(oData.gseSchedulesListJobAdmin.buttons, "overview-table-container", 'gseJobAdmin');
 		} else if (type === "gseSchedulesListManager") {
-			$().RenderOverviewScreenButtons(oData.gseSchedulesListManager.buttons, 0);
-			$().RenderAllDataTablesForGSESchedules("overview-table-container", 'gseManager');
+			// $().RenderOverviewScreenButtons(oData.gseSchedulesListManager.buttons, 0);
+			$().RenderCommandBarAndDataTablesForGSESchedules(oData.gseSchedulesListManager.buttons, "overview-table-container", 'gseManager');
 		} else if (type === "gseSchedulesListStaff") {
-			$().RenderOverviewScreenButtons(oData.gseSchedulesListStaff.buttons, 0);
-			$().RenderAllDataTablesForGSESchedules("overview-table-container", 'gseUserOnly');
+			// $().RenderOverviewScreenButtons(oData.gseSchedulesListStaff.buttons, 0);
+			$().RenderCommandBarAndDataTablesForGSESchedules(oData.gseSchedulesListStaff.buttons, "overview-table-container", 'gseUserOnly');
 		
 		
 		
@@ -19156,7 +19164,7 @@
 
 
 
-	$.fn.RenderCalendarForGSESchedules = function (buttons, relevantRole) {
+	$.fn.RenderCommandBarAndCalendarForGSESchedules = function (buttons, relevantRole) {
 		var nowAsISOLocal = $().ReturnFormattedDateTime('nowLocal', null, null);
 		var viewToUse = GetParamFromUrl(location.search, 'view');
 		var dateToUse = GetParamFromUrl(location.search, 'date');
@@ -19587,94 +19595,60 @@
 	};
 
 
-
-	$.fn.RenderAllDataTablesForGSESchedules = function (targetID, relevantRole) {
+	$.fn.RenderCommandBarAndDataTablesForGSESchedules = function (buttons, targetID, relevantRole) {
 		var renderPrepStartTime = Date.now();
-		
-		var augmentedSchedulesSubmitted = [];
-		var augmentedSchedulesCompleted = [];
-		var augmentedSchedulesCancelled = [];
-		// get all schedules
-		var gseSchedulesArray = $().GetFieldsFromAllRows({
-			'webURL': 'https://bmos.sharepoint.com/sites/hr-service-schedules',
-			'select': [
-				{
-					'nameHere': 'ScheduleID',
-					'nameInList': 'ID'
-				}, {
-					'nameHere': 'JobID',
-					'nameInList': 'JobID'
-				}, {
-					'nameHere': 'NumberOfPositions',
-					'nameInList': 'NumberOfPositions'
-				}, {
-					'nameHere': 'formData',
-					'nameInList': 'AllRequestData'
-				}
-			]
-		});
-		// get all jobs
-		var gseJobsArray = $().GetFieldsFromAllRows({
-			'webURL': 'https://bmos.sharepoint.com/sites/hr-service-jobs',
-			'select': [
-				{
-					'nameHere': 'JobID',
-					'nameInList': 'ID',
-				}, {
-					'nameHere': 'JobTitle',
-					'nameInList': 'JobTitle',
-				}, {
-					'nameHere': 'JobAdmin',
-					'nameInList': 'JobAdmin'
-				}, {
-					'nameHere': 'formData',
-					'nameInList': 'AllRequestData'
-				}
-			]
-		});
-		// get all signups
-		var gseSignupsArray = $().GetFieldsFromAllRows({
-			"webURL": "https://bmos.sharepoint.com/sites/hr-service-signups",
-			"select": [
-				{
-					"nameHere": "SignupID",
-					"nameInList": "ID"
-				}, {
-					"nameHere": "SignupPerson",
-					"nameInList": "RequestedFor"
-				}, {
-					"nameHere": "ScheduleID",
-					"nameInList": "ScheduleID"
-				}, {
-					'nameHere': 'formData',
-					'nameInList': 'AllRequestData'
-				}
-			]
-		});
-		// mashup the data
-		gseSchedulesArray.forEach((schedule) => {
-			var scheduleCopy = schedule;
-			gseJobsArray.forEach((job) => {
-				if (job.JobID === schedule.JobID) {
-					scheduleCopy.Job = job;
-				}
-			});
-			gseSignupsArray.forEach((signup) => {
-				if (signup.ScheduleID === schedule.ScheduleID) {
-					if (!scheduleCopy.Signups) {
-						scheduleCopy.Signups = [];
-					}
-					scheduleCopy.Signups.push(signup);
-				}
-			});
-			if (schedule.formData['Request-Status'] === 'Submitted') {
-				augmentedSchedulesSubmitted.push(scheduleCopy);
-			} else if (schedule.formData['Request-Status'] === 'Completed') {
-				augmentedSchedulesCompleted.push(scheduleCopy);
-			} else if (schedule.formData['Request-Status'] === 'Cancelled') {
-				augmentedSchedulesCancelled.push(scheduleCopy);
-			}
-		});
+		var startingYearOfFirstFiscalYear = 2018;
+		var thisYear = $().ReturnFormattedDateTime('nowLocal', null, 'YYYY');
+		var startingYearOfLastFiscalYear = moment().isAfter(thisYear + '-06-30') ?
+			parseInt(thisYear) :
+			parseInt(thisYear) - 1;
+
+		var selectedStartYear = GetParamFromUrl(location.search, "y");
+		if (!selectedStartYear || selectedStartYear == '') {
+			selectedStartYear = moment().isAfter(thisYear + '-06-30') ?
+				parseInt(thisYear) :
+				parseInt(thisYear) - 1;
+		}
+
+		$("#" + targetID).append('<div id="container_command-bar-and-data"> \n' +
+			'   <div id="container_command-bar"></div> \n' +
+			'   <div id="container_data"></div> \n' +
+			'</div>');
+
+		var commandBarContents = '';
+		if (relevantRole === 'gseHRAdmin') {
+			commandBarContents += 
+				'<div class="container_link">' +
+				'	<a class="button-link button-link_new-item undefined command-bar-button" data-button-type="newRequest" href="https://bmos.sharepoint.com/sites/hr-service-schedules/SitePages/App.aspx?r=0">New Schedule</a>' + 
+				'</div>' +
+				'<div class="container_link">' +
+				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-jobs/SitePages/App.aspx">Jobs</a> \n' +
+				'</div>' +
+				'<div class="container_link">' +
+				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-schedule/SitePages/App.aspx?f=cal">Schedule Calendar</a> \n' +
+				'</div>' +
+				'<div class="container_link">' +
+				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-signup/SitePages/App.aspx">Signups</a> \n' +
+				'</div>' +
+				'<div id="container_filter-controls-and-header"> \n' +
+				'   <div id="text_filter-controls" class="collapsible">Year</div> \n' +
+				'   <div id="container_filter-controls"> \n' +
+				'   	<div class="container_filter-control"> \n' +
+				'   		<label for="filter_year">Year</label> \n' +
+				'   		<select id="filter_year" name="filter_year"> \n' +
+				'				' + $().ReturnFiscalYearSelectOptions(startingYearOfFirstFiscalYear, startingYearOfLastFiscalYear, true, selectedStartYear) + ' \n' +
+				'			</select>' +
+				'		</div>' +
+				'   	<div class="container_filter-control"> \n' +
+				'			<a id="filter_submit-button">Update</a>' +
+				'		</div>' +
+				'    </div> \n' +
+				'</div> \n';
+		}
+		$("div#container_command-bar").html(commandBarContents);
+
+		var augmentedSchedules = $().ReturnAllAugmentedSchedulesForGSESchedulesOverviews(selectedStartYear);
+
 		// determine which tables to render
 		var tablesToRender = [];
 		if (relevantRole === 'gseHRAdmin' || relevantRole === 'gseJobAdmin') {
@@ -19715,7 +19689,7 @@
 					}
 				],
 				'sortColAndOrder': [[3, 'asc'], [4, 'asc']],
-				'dataSource': augmentedSchedulesSubmitted
+				'dataSource': augmentedSchedules.submitted
 			});
 			tablesToRender.push({
 				'tableTitle': 'Completed',
@@ -19751,7 +19725,7 @@
 					}
 				],
 				'sortColAndOrder': [[3, 'asc'], [4, 'asc']],
-				'dataSource': augmentedSchedulesCompleted
+				'dataSource': augmentedSchedules.completed
 			});
 			tablesToRender.push({
 				'tableTitle': 'Cancelled',
@@ -19784,7 +19758,7 @@
 					}
 				],
 				'sortColAndOrder': [[3, 'asc'], [4, 'asc']],
-				'dataSource': augmentedSchedulesCancelled
+				'dataSource': augmentedSchedules.cancelled
 			});
 		}
 		if (relevantRole === 'gseManager') {
@@ -19818,7 +19792,7 @@
 					}
 				],
 				'sortColAndOrder': [[2, 'asc'], [3, 'asc']],
-				'dataSource': augmentedSchedulesSubmitted
+				'dataSource': augmentedSchedules.submitted
 			});
 		}
 		if (relevantRole === 'gseUserOnly') {
@@ -19852,7 +19826,7 @@
 					}
 				],
 				'sortColAndOrder': [[2, 'asc'], [3, 'asc']],
-				'dataSource': augmentedSchedulesSubmitted
+				'dataSource': augmentedSchedules.submitted
 			});
 		}
 
@@ -19861,7 +19835,6 @@
 			if (!t.sortColAndOrder) {
 				t.sortColAndOrder = [0, 'asc'];
 			}
-			console.log('render prep time = ' + (Date.now() - renderPrepStartTime) / 1000 + ' seconds');
 			$().RenderListAsDatatable({
 				'tableTitle': t.tableTitle,
 				'tableID': t.tableID,
@@ -19872,11 +19845,146 @@
 				'targetID': targetID,
 			});
 		});
+
+		// collapse filters
+		$('.collapsible').collapsible();
+
+		console.log('render prep time = ' + (Date.now() - renderPrepStartTime) / 1000 + ' seconds');
+		// listen for date and manager filtering
+		$("a#filter_submit-button").click(function () {
+			var selectedStartYear = $("select#filter_year").val();
+			if (selectedStartYear == '') {
+				selectedStartYear = moment().isAfter(thisYear + '-06-30') ?
+					parseInt(thisYear) :
+					parseInt(thisYear) - 1;
+			}
+			window.location = "/sites/" + mData.siteToken + "/SitePages/App.aspx?y=" + selectedStartYear;
+		});
 	};
 
 
 
-	$.fn.ReturnAllAugmentedSignupsForGSESignupsOverviews = function() {
+	$.fn.ReturnAllAugmentedSchedulesForGSESchedulesOverviews = function(selectedStartYear) {
+
+		var beginningOfFiscalYear = selectedStartYear + '-07-01T00:00:00Z';
+		var endOfFiscalYear = (parseInt(selectedStartYear) + 1) + '-06-30T00:00:00Z';
+		var augmentedSchedules = {};
+		augmentedSchedules.submitted = [];
+		augmentedSchedules.completed = [];
+		augmentedSchedules.cancelled = [];
+
+		// get specified fiscal year's schedules
+		var gseSchedulesArray = $().GetFieldsFromSpecifiedRows({
+			'webURL': 'https://bmos.sharepoint.com/sites/hr-service-schedules',
+			'select': [
+				{
+					'nameHere': 'ScheduleID',
+					'nameInList': 'ID'
+				}, {
+					'nameHere': 'JobID',
+					'nameInList': 'JobID'
+				}, {
+					'nameHere': 'NumberOfPositions',
+					'nameInList': 'NumberOfPositions'
+				}, {
+					'nameHere': 'formData',
+					'nameInList': 'AllRequestData'
+				}
+			],
+			"where": {
+				"ands": [
+					{
+						"field": "Date",
+						"type": "DateTime",
+						"operator": "Geq",
+						"value": beginningOfFiscalYear,
+					}, {
+						"field": "Date",
+						"type": "DateTime",
+						"operator": "Leq",
+						"value": endOfFiscalYear,
+					}
+				]
+			}
+		});
+		// get all jobs
+		var gseJobsArray = $().GetFieldsFromAllRows({
+			'webURL': 'https://bmos.sharepoint.com/sites/hr-service-jobs',
+			'select': [
+				{
+					'nameHere': 'JobID',
+					'nameInList': 'ID',
+				}, {
+					'nameHere': 'JobTitle',
+					'nameInList': 'JobTitle',
+				}, {
+					'nameHere': 'JobAdmin',
+					'nameInList': 'JobAdmin'
+				}, {
+					'nameHere': 'formData',
+					'nameInList': 'AllRequestData'
+				}
+			]
+		});
+		// get all signups
+		var gseSignupsArray = $().GetFieldsFromSpecifiedRows({
+			"webURL": "https://bmos.sharepoint.com/sites/hr-service-signups",
+			"select": [
+				{
+					"nameHere": "SignupID",
+					"nameInList": "ID"
+				}, {
+					"nameHere": "SignupPerson",
+					"nameInList": "RequestedFor"
+				}, {
+					"nameHere": "ScheduleID",
+					"nameInList": "ScheduleID"
+				}, {
+					'nameHere': 'formData',
+					'nameInList': 'AllRequestData'
+				}
+			],
+			"where": {
+				"field": "ScheduleID",
+				"type": "Text",
+				"operator": "Eq",
+				"values": {
+					"sourceArray": gseSchedulesArray,
+					"property": "ScheduleID"
+				}
+			}
+		});
+		// mashup the data
+		gseSchedulesArray.forEach((schedule) => {
+			var scheduleCopy = schedule;
+			gseJobsArray.forEach((job) => {
+				if (job.JobID === schedule.JobID) {
+					scheduleCopy.Job = job;
+				}
+			});
+			gseSignupsArray.forEach((signup) => {
+				if (signup.ScheduleID === schedule.ScheduleID) {
+					if (!scheduleCopy.Signups) {
+						scheduleCopy.Signups = [];
+					}
+					scheduleCopy.Signups.push(signup);
+				}
+			});
+			if (schedule.formData['Request-Status'] === 'Submitted') {
+				augmentedSchedules.submitted.push(scheduleCopy);
+			} else if (schedule.formData['Request-Status'] === 'Completed') {
+				augmentedSchedules.completed.push(scheduleCopy);
+			} else if (schedule.formData['Request-Status'] === 'Cancelled') {
+				augmentedSchedules.cancelled.push(scheduleCopy);
+			}
+		});
+		// return
+		return augmentedSchedules;
+	};
+
+
+
+	$.fn.ReturnAllAugmentedSignupsForGSESignupsOverviews = function(selectedStartYear) {
 		// get, mash up, all GSE data
 		var augmentedSignups = {};
 		// get all signups
@@ -20057,6 +20165,7 @@
 			}
 		}
 		if (relevantRole === 'gseManager') {
+			// to do: use real user account below, not bwilson
 			selectedManager = 'bwilson';
 			// selectedManager = uData.account;
 		}
@@ -23894,7 +24003,7 @@
 		// wait for all data retrieval / setting promises to complete (pass or fail) 
 		$.when.apply($, allDataRetrievalAndSettingPromises).always(function () {
 
-			console.log('using dev_mos-main_long.1.04 m3');
+			console.log('using dev_mos-main_long.1.04 m4');
 
 			$().ConfigureAndShowScreenContainerAndAllScreens();
 		});

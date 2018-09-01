@@ -311,9 +311,7 @@ function ReturnURLToLoad (file, mData) {
 	} else if (debugMode) {
 		urlToLoad += "?v=" + timestamp;
 	}
-    
 	return urlToLoad;
-
 }
 
 

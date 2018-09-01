@@ -39,6 +39,9 @@
 			$.holdReady(true);
 	</script>
 	<script>
+		console.log('using master m1');
+	</script>
+	<script>
 		var s = document.createElement('script');
 		s.type = "text/javascript";
 		s.src = "/sites/hubprod/Code4/js/mos-loader.js?ts=" + Date.now();
@@ -57,7 +60,7 @@
 	<script type="text/javascript" src="/sites/hubdev/DevCode4/js/dev_mos-main_long.1.04.js"></script>
 	
 	<SharePoint:CssRegistration Name="/sites/hubprod/Code4/css/libs/_libs.concatenated.1.0.css" runat="server" />
-	<SharePoint:CssRegistration Name="/sites/hubprod/Code4/css/mos.css" runat="server" />
+	<SharePoint:CssRegistration Name="/sites/hubdev/DevCode4/css/mos.css" runat="server" />
 	 -->
 	
 	<style>

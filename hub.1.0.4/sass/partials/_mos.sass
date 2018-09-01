@@ -622,6 +622,8 @@ div#s4-workspace div#app-container.event-av div#container_command-bar div#contai
 div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button,
 div#s4-workspace div#app-container.gse-signup div#container_command-bar div#container_filter-controls-and-header a.collapsible-heading-toggle,
 div#s4-workspace div#app-container.gse-signup div#container_command-bar div#container_filter-controls-and-header a#filter_submit-button,
+div#s4-workspace div#app-container.gse-schedule div#container_command-bar div#container_filter-controls-and-header a.collapsible-heading-toggle,
+div#s4-workspace div#app-container.gse-schedule div#container_command-bar div#container_filter-controls-and-header a#filter_submit-button,
 div#s4-workspace div#public-community-page_open-enrollment div.primary-section a,
 a#standard-printer-button-inside-request,
 a#gse-schedule-card-dialog-my-signup-link,
@@ -642,6 +644,7 @@ div#s4-workspace div#public-community-page_moscars div#call-to-action a,
 div#s4-workspace div#public-community-page_hr div#primary-section_open-enrollment a,
 div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button,
 div#s4-workspace div#app-container.gse-signup div#container_command-bar div#container_filter-controls-and-header a#filter_submit-button,
+div#s4-workspace div#app-container.gse-schedule div#container_command-bar div#container_filter-controls-and-header a#filter_submit-button,
 div#s4-workspace div#public-community-page_open-enrollment div.primary-section a,
 a#gse-schedule-card-dialog-my-signup-link,
 a#gse-schedule-card-dialog-signup-opportunity-link
@@ -693,6 +696,7 @@ div#s4-workspace div#app-container.event-av div#container_command-bar div#contai
 div#s4-workspace div#app-container.event-av div#container_command-bar ul#container_tab-controls li a,
 div#s4-workspace div#app-container.event-av div#container_command-bar div#container_date-filter-controls-and-header a.collapsible-heading-toggle,
 div#s4-workspace div#app-container.gse-signup div#container_command-bar div#container_filter-controls-and-header a.collapsible-heading-toggle,
+div#s4-workspace div#app-container.gse-schedule div#container_command-bar div#container_filter-controls-and-header a.collapsible-heading-toggle,
 a#standard-printer-button-inside-request
 	color: $blue5 !important
 	background-color: $blue0 !important
@@ -784,6 +788,7 @@ a.hide-default-station-times,
 button.cafe-button,
 div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button,
 div#s4-workspace div#app-container.gse-signup div#container_command-bar div#container_filter-controls-and-header a#filter_submit-button,
+div#s4-workspace div#app-container.gse-schedule div#container_command-bar div#container_filter-controls-and-header a#filter_submit-button,
 a#standard-printer-button-inside-request
 	&:before
 		+fontIcon
@@ -826,7 +831,8 @@ a.show-default-station-times
 		+fontIconChevronThickDown
 
 div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button,
-div#s4-workspace div#app-container.gse-signup div#container_command-bar div#container_filter-controls-and-header a#filter_submit-button
+div#s4-workspace div#app-container.gse-signup div#container_command-bar div#container_filter-controls-and-header a#filter_submit-button,
+div#s4-workspace div#app-container.gse-schedule div#container_command-bar div#container_filter-controls-and-header a#filter_submit-button
 
 	&:before
 		+fontIconRefresh
@@ -3954,10 +3960,12 @@ div#app-container.gse-signup
 
 	
 
-// --- GSE SIGNUPS OVERVIEW FOR HRADMIN
+// --- GSE SCHEDULES & SIGNUPS OVERVIEW - COMMAND BARS
+	// signups: hradmin and manager only
 
-div#s4-workspace div#app-container.gse-signup
-
+div#s4-workspace div#app-container.gse-signup,
+div#s4-workspace div#app-container.gse-schedule
+	
 	div#container_command-bar-and-data
 
 		div#container_command-bar
@@ -3989,6 +3997,14 @@ div#s4-workspace div#app-container.gse-signup
 
 				a#filter_submit-button
 					margin: 0 0 0 6.5rem !important
+
+
+
+
+
+div#s4-workspace div#app-container.gse-signup
+	
+	div#container_command-bar-and-data
 
 		div#container_data
 			margin-top: 1rem
