@@ -450,9 +450,9 @@
 			case "gseSignupsHRAdmin":
 				newTitle = "All GSE Signups";
 				break;
-			// case "gseSignupsJobAdmin":
-			// 	newTitle = "My GSE Signups";
-			// 	break;
+			case "gseSignupsJobAdmin":
+				newTitle = "My GSE Signups";
+				break;
 			case "gseSignupsManager":
 				newTitle = "My and My Staff Members' GSE Signups";
 				break;
@@ -492,7 +492,7 @@
 			case "gseSchedulesListStaff":
 
 			case "gseSignupsHRAdmin":
-			// case "gseSignupsJobAdmin":
+			case "gseSignupsJobAdmin":
 			case "gseSignupsManager":
 			case "gseSignupsStaff":
 				if (addBrowserHistoryEntry === 1) { $().AddBrowserHistoryEntry(toScreen, newTitle, "App.aspx"); }
@@ -560,7 +560,7 @@
 			case "gseSchedulesListStaff":
 
 			case "gseSignupsHRAdmin":
-			// case "gseSignupsJobAdmin":
+			case "gseSignupsJobAdmin":
 			case "gseSignupsManager":
 			case "gseSignupsStaff":
 
@@ -642,6 +642,7 @@
 			case "gseSchedulesCalendarStaff":
 
 			case "gseSignupsHRAdmin":
+			case "gseSignupsJobAdmin":
 			case "gseSignupsManager":
 			case "gseSignupsStaff":
 				$("div#overview-screen-container").fadeOut(mData.gracefulScreenTransitionTime).addClass("hidden");
@@ -737,9 +738,9 @@
 			case "gseSignupsHRAdmin":
 				$().ConfigureOverviewScreen("gseSignupsHRAdmin");
 				break;
-			// case "gseSignupsJobAdmin":
-			// 	$().ConfigureOverviewScreen("gseSignupsJobAdmin");
-			// 	break;
+			case "gseSignupsJobAdmin":
+				$().ConfigureOverviewScreen("gseSignupsJobAdmin");
+				break;
 			case "gseSignupsManager":
 				$().ConfigureOverviewScreen("gseSignupsManager");
 				break;
@@ -792,6 +793,7 @@
 					"gseSchedulesListManager",
 					"gseSchedulesListStaff",
 					"gseSignupsHRAdmin",
+					"gseSignupsJobAdmin",
 					"gseSignupsManager",
 					"gseSignupsStaff",
 				];
@@ -919,9 +921,10 @@
 			case "gseSchedulesListManager":
 			case "gseSchedulesListStaff":
 			case "gseSignupsHRAdmin":
+			case "gseSignupsJobAdmin":
 			case "gseSignupsManager":
 			case "gseSignupsStaff":
-				$("div#overview-screen-container").empty().removeClass('adminRequests-requests myRequests-requests gpcInitialConceptApprovalViewer-requests gpcSubmissionApprovalViewer-requests adminReferrals-requests myReferrals-requests adminEventAV-requests gseJobsHRAdmin-requests gseJobsJobAdmin-requests gseJobsManager-requests gseSchedulesCalendarHRAdmin-requests gseSchedulesCalendarJobAdmin-requests gseSchedulesCalendarManager-requests gseSchedulesCalendarStaff-requests gseSchedulesListHRAdmin-requests gseSchedulesListJobAdmin-requests gseSchedulesListManager-requests gseSchedulesListStaff-requests gseSignupsHRAdmin-requests gseSignupsManager-requests gseSignupsStaff-requests');
+				$("div#overview-screen-container").empty().removeClass('adminRequests-requests myRequests-requests gpcInitialConceptApprovalViewer-requests gpcSubmissionApprovalViewer-requests adminReferrals-requests myReferrals-requests adminEventAV-requests gseJobsHRAdmin-requests gseJobsJobAdmin-requests gseJobsManager-requests gseSchedulesCalendarHRAdmin-requests gseSchedulesCalendarJobAdmin-requests gseSchedulesCalendarManager-requests gseSchedulesCalendarStaff-requests gseSchedulesListHRAdmin-requests gseSchedulesListJobAdmin-requests gseSchedulesListManager-requests gseSchedulesListStaff-requests gseSignupsHRAdmin-requests gseSignupsJobAdmin-requests gseSignupsManager-requests gseSignupsStaff-requests');
 				$("div#overview-screen-container").append('<div id="overview-table-container" class="table-container"></div>');
 			case "gseSchedulesListHRAdmin":
 				$("div#gse-schedule-card-dialog").remove();
@@ -1277,18 +1280,21 @@
 		}
 
 		if (opt.where.field) {
-			query += "<Eq>";
 			if (opt.where.value) {
+				query += "<Eq>";
 				query += "<FieldRef Name='" + opt.where.field + "'></FieldRef>";
 				"<Value Type='" + opt.where.type + "'>" + opt.where.value + "</Value>";
+				query += "</Eq>";
 			} else if (opt.where.values) {
+				query += "<In>";
+				query += "<FieldRef Name='" + opt.where.field + "'></FieldRef>";
 				query += "<Values>";
 				opt.where.values.sourceArray.forEach((item) => {
 					query += "<Value Type='" + opt.where.type + "'>" + item[opt.where.values.property] + "</Value>";
 				});
 				query += "</Values>";
+				query += "</In>";
 			}
-			query += "</Eq>";
 		}
 
 		query +=	"</Where>" +
@@ -1353,9 +1359,7 @@
 	};
 
 
-
-
-
+	
 	$.fn.GetFieldsFromAllRows = function (options) {
 
 		var returnValue = [];
@@ -1758,8 +1762,8 @@
 			case "GSE Signup":
 				if (uData.roles.indexOf("gseHRAdmin") > -1) {
 					userNeeedsAlternateOverviewScreen = "gseSignupsHRAdmin";
-					// } else if (uData.roles.indexOf("gseJobAdmin") > -1) {
-					// 	userNeeedsAlternateOverviewScreen = "gseSignupsJobAdmin";
+				} else if (uData.roles.indexOf("gseJobAdmin") > -1) {
+					userNeeedsAlternateOverviewScreen = "gseSignupsJobAdmin";
 				} else if (uData.roles.indexOf("gseManager") > -1) {
 					userNeeedsAlternateOverviewScreen = "gseSignupsManager";
 				} else {
@@ -2181,6 +2185,73 @@
 		// console.log("inMaintenanceMode = " + inMaintenanceMode);
 		return inMaintenanceMode;
 	}
+
+
+
+	$.fn.ReturnFiscalYearSelectOptions = function (startingYearOfFirstFiscalYear, startingYearOfLastFiscalYear, startWithBlank, startingYearOfSelectedFiscalYear) {
+		// four-digit year numbers; i.e., params of 2018 and 2018 signifies one year
+		var optionsMarkup = '';
+		var optionStartingYear;
+		var optionEndingYear;
+
+		if (startWithBlank) {
+			optionsMarkup += '<option value=""></option>';
+		}
+		for (
+			optionStartingYear = startingYearOfFirstFiscalYear;
+			optionStartingYear <= startingYearOfLastFiscalYear;
+			optionStartingYear++
+		) {
+			var selectedAttribute = '';
+			optionEndingYear = optionStartingYear + 1;
+			if (startingYearOfSelectedFiscalYear && startingYearOfSelectedFiscalYear == optionStartingYear) {
+				selectedAttribute = ' selected ';
+			}
+			optionsMarkup += '<option value="' + optionStartingYear +
+				'"' + selectedAttribute + '>July 1, ' + optionStartingYear +
+				' - June 30, ' + optionEndingYear +
+				'</option>';
+		}
+		return optionsMarkup;
+	};
+
+
+
+	function CompareUsersByLastNameForArraySorting(a, b) {
+		if (a.lastName < b.lastName)
+			return -1;
+		if (a.lastName > b.lastName)
+			return 1;
+		return 0;
+	}
+
+
+	function CompareElementsForArraySorting(a, b) {
+		if (a < b)
+			return -1;
+		if (a > b)
+			return 1;
+		return 0;
+	}
+
+
+
+	$.fn.ReturnManagerSelectOptions = function (managersArray, selectedManagerAccount, startWithBlank) {
+		var managersMarkup = '';
+		managersArray.sort(CompareUsersByLastNameForArraySorting);
+		if (startWithBlank) {
+			managersMarkup += '<option value=""></option>';
+		}
+		managersArray.forEach((manager) => {
+			var selectedAttribute = '';
+			if (manager.account === selectedManagerAccount) {
+				selectedAttribute = ' selected ';
+			}
+			managersMarkup += '<option value="' + manager.account + '"' +
+				selectedAttribute + '>' + manager.displayName + '</option>';
+		});
+		return managersMarkup;
+	};
 
 
 
@@ -7026,7 +7097,7 @@
 
 
 		} else if (type === "adminEventAV") {
-			$().RenderAdminEventAVOverviewScreen();
+			$().RenderCommandBarAndDatatablesForEventAVForAdmin();
 		} else if (type === "adminReferrals") {
 			$().RenderOverviewScreenButtons(oData.adminReferrals.buttons, 0);
 			$().RenderAllDataTables(oData.adminReferrals.sections, "overview-table-container");
@@ -7076,12 +7147,13 @@
 		
 		
 		} else if (type === "gseSignupsHRAdmin") {
-			$().RenderAllSimpleMarkupForGSESignupsForHRAdminOrManager("overview-table-container", 'gseHRAdmin');
+			$().RenderCommandBarAndMarkupForGSESignupsForHRAdminOrManager("overview-table-container", 'gseHRAdmin');
 		} else if (type === "gseSignupsManager") {
-			$().RenderAllSimpleMarkupForGSESignupsForHRAdminOrManager("overview-table-container", 'gseManager');
+			$().RenderCommandBarAndMarkupForGSESignupsForHRAdminOrManager("overview-table-container", 'gseManager');
+		} else if (type === "gseSignupsJobAdmin") {
+			$().RenderCommandBarAndDataTablesForGSESignupsForJobAdminOrUser("overview-table-container", 'gseJobAdmin');
 		} else if (type === "gseSignupsStaff") {
-			$().RenderOverviewScreenButtons(oData.gseSignupsStaff.buttons, 0);
-			$().RenderAllDataTablesForGSESignupsForUsers("overview-table-container", 'gseUserOnly');
+			$().RenderCommandBarAndDataTablesForGSESignupsForJobAdminOrUser("overview-table-container", 'gseUserOnly');
 		}
 
 		$("div#overview-screen-container").addClass(type + "-requests");
@@ -17865,7 +17937,7 @@
 
 	// ---- CUSTOM OVERVIEW SCREENS
 
-	$.fn.RenderAdminEventAVOverviewScreen = function () {
+	$.fn.RenderCommandBarAndDatatablesForEventAVForAdmin = function () {
 
 		// get date params
 		var startDateFrom = GetParamFromUrl(location.search, 'startDateFrom');
@@ -18081,605 +18153,6 @@
 			window.location = "/sites/" + mData.siteToken + "/SitePages/App.aspx?startDateFrom=" + newStartDateFrom + "&startDateTo=" + newStartDateTo;
 		});
 	};
-
-
-	// ---- DATATABLES
-
-
-	$.fn.RenderAllDataTables = function (sections, targetID) {
-
-		$.each(sections.tables, function (i, t) {
-
-			// var setupStartTime = Date.now();
-
-			var columns = [];
-			var query = '';
-			var camlViewFields = "";
-			var lookupFields = [];
-			var datatableFields = [];
-			var theadDetails = "";
-
-			if (typeof (t.customColumns) != "undefined") {
-				columns = t.customColumns;
-			} else {
-				columns = sections.commonColumns;
-			}
-
-			if (typeof (t.sortColAndOrder) == 'undefined') {
-				t.sortColAndOrder = [0, 'asc'];
-			}
-
-			if (typeof (t.webURL) == 'undefined') {
-				mData = $.extend(
-					$().GetFieldsFromOneRow({
-						"listName": "ComponentLog",
-						"select": [{
-							"nameHere": "uriRoot",
-							"nameInList": "URIRoot",
-							"linkField": 1
-						}],
-						"where": {
-							"field": "ComponentID",
-							"type": "Number",
-							"value": mData.componentID,
-						}
-					}),
-					mData
-				);
-
-				t.webURL = StrInStr(mData.uriRoot, '/Lists/SWFList', 1);
-			}
-
-			$.each(columns, function (i, column) {
-				if (column.internalName != "") {
-					camlViewFields += "<FieldRef Name='" + column.internalName + "' />";
-					datatableFields.push({
-						"data": column.internalName
-					});
-				}
-				if (column.displayName != "") {
-					theadDetails += "<th>" + column.displayName + "</th>";
-				}
-				if (column.internalName != "" && typeof (column.formLink) !== "undefined") {
-					lookupFields.push({
-						"internalName": column.internalName,
-						"anchorNoHref": 0,
-						"formLink": column.formLink,
-						"userName": 0,
-						"friendlyFormatOnLoad": 0,
-						"groupingFriendlyFormatOnLoad": 0
-					});
-				} else if (column.internalName != "" && typeof (column.anchorNoHref) !== "undefined") {
-					lookupFields.push({
-						"internalName": column.internalName,
-						"anchorNoHref": column.anchorNoHref,
-						"formLink": 0,
-						"userName": 0,
-						"friendlyFormatOnLoad": 0,
-						"groupingFriendlyFormatOnLoad": 0
-					});
-				} else if (column.internalName != "" && typeof (column.userName) !== "undefined") {
-					lookupFields.push({
-						"internalName": column.internalName,
-						"anchorNoHref": 0,
-						"formLink": 0,
-						"userName": column.userName,
-						"friendlyFormatOnLoad": 0,
-						"groupingFriendlyFormatOnLoad": 0
-					});
-				} else if (column.internalName != "" && typeof (column.friendlyFormatOnLoad) !== "undefined") {
-					lookupFields.push({
-						"internalName": column.internalName,
-						"anchorNoHref": 0,
-						"formLink": 0,
-						"userName": 0,
-						"friendlyFormatOnLoad": column.friendlyFormatOnLoad,
-						"groupingFriendlyFormatOnLoad": 0
-					});
-				} else if (column.internalName != "" && typeof (column.groupingFriendlyFormatOnLoad) !== "undefined") {
-					lookupFields.push({
-						"internalName": column.internalName,
-						"anchorNoHref": 0,
-						"formLink": 0,
-						"userName": 0,
-						"friendlyFormatOnLoad": 0,
-						"groupingFriendlyFormatOnLoad": column.groupingFriendlyFormatOnLoad
-					});
-				} else {
-					lookupFields.push({
-						"internalName": column.internalName,
-						"anchorNoHref": 0,
-						"formLink": 0,
-						"userName": 0,
-						"friendlyFormatOnLoad": 0,
-						"groupingFriendlyFormatOnLoad": 0
-					});
-				}
-			});
-
-			if (typeof (t.basicRSQueryRelevantStatus) != "undefined") {
-				query = "<Where>" +
-					"	<Eq>" +
-					"		 <FieldRef Name='RequestStatus'></FieldRef>" +
-					"		 <Value Type='Text'>" + t.basicRSQueryRelevantStatus + "</Value>" +
-					"	</Eq>" +
-					"</Where>";
-			} else if (typeof (t.basicRSQueryTwoRelevantStatuses) != "undefined") {
-				query = "<Where>" +
-					"	<Or>" +
-					"		<Eq>" +
-					"			<FieldRef Name='RequestStatus'></FieldRef>" +
-					"			<Value Type='Text'>" + t.basicRSQueryTwoRelevantStatuses[0] + "</Value>" +
-					"		</Eq>" +
-					"		<Eq>" +
-					"			<FieldRef Name='RequestStatus'></FieldRef>" +
-					"			<Value Type='Text'>" + t.basicRSQueryTwoRelevantStatuses[1] + "</Value>" +
-					"		</Eq>" +
-					"	</Or>" +
-					"</Where>";
-			} else if (typeof (t.myRSQueryTwoRelevantStatuses) != "undefined") {
-
-				if (typeof (mData.getRequesterFrom) == 'undefined') {
-					var getRequesterFrom = 'Author';
-				} else {
-					var getRequesterFrom = mData.getRequesterFrom;
-				}
-
-				query = "<Where>" +
-					"	<And>" +
-					"	<Or>" +
-					"		<Eq>" +
-					"			<FieldRef Name='RequestStatus'></FieldRef>" +
-					"			<Value Type='Text'>" + t.myRSQueryTwoRelevantStatuses[0] + "</Value>" +
-					"		</Eq>" +
-					"		<Eq>" +
-					"			<FieldRef Name='RequestStatus'></FieldRef>" +
-					"			<Value Type='Text'>" + t.myRSQueryTwoRelevantStatuses[1] + "</Value>" +
-					"		</Eq>" +
-					"	</Or>" +
-					"		 <Contains>" +
-					"			  <FieldRef Name='" + getRequesterFrom + "'></FieldRef>" +
-					"			  <Value Type='Text'>" + uData.name + "</Value>" +
-					"		 </Contains>" +
-					"	</And>" +
-					"</Where>";
-			} else if (typeof (t.myRSQueryRelevantStatus) != "undefined") {
-
-				var getRequesterFrom = 'Author';
-				if (t.getRequesterFrom) {
-					getRequesterFrom = t.getRequesterFrom;
-				}
-				if (mData.getRequesterFrom) {
-					getRequesterFrom = mData.getRequesterFrom;
-				}
-
-				query = "<Where>" +
-					"	<And>" +
-					"		 <Eq>" +
-					"			  <FieldRef Name='RequestStatus'></FieldRef>" +
-					"			  <Value Type='Text'>" + t.myRSQueryRelevantStatus + "</Value>" +
-					"		 </Eq>" +
-					"		 <Contains>" +
-					"			  <FieldRef Name='" + getRequesterFrom + "'></FieldRef>" +
-					"			  <Value Type='Text'>" + uData.name + "</Value>" +
-					"		 </Contains>" +
-					"	</And>" +
-					"</Where>";
-			/* } else if (typeof (t.myRSQueryRelevantStatus) != "undefined") {
-
-				if (typeof (mData.getRequesterFrom) == 'undefined') {
-					var getRequesterFrom = 'Author';
-				} else {
-					var getRequesterFrom = mData.getRequesterFrom;
-				}
-
-				query = "<Where>" +
-					"	<And>" +
-					"		 <Eq>" +
-					"			  <FieldRef Name='RequestStatus'></FieldRef>" +
-					"			  <Value Type='Text'>" + t.myRSQueryRelevantStatus + "</Value>" +
-					"		 </Eq>" +
-					"		 <Contains>" +
-					"			  <FieldRef Name='" + getRequesterFrom + "'></FieldRef>" +
-					"			  <Value Type='Text'>" + uData.name + "</Value>" +
-					"		 </Contains>" +
-					"	</And>" +
-					"</Where>"; */
-
-
-
-
-
-
-
-
-
-			} else if (typeof (t.myRSQueryRelevantStatusUnassigned) != "undefined") {
-				if (typeof (mData.getRequesterFrom) == 'undefined') {
-					var getRequesterFrom = 'Author';
-				} else {
-					var getRequesterFrom = mData.getRequesterFrom;
-				}
-
-				query = "<Where>" +
-					"	<And>" +
-					"		<And>" +
-					"			<Eq>" +
-					"				<FieldRef Name='RequestStatus'></FieldRef>" +
-					"				<Value Type='Text'>" + t.myRSQueryRelevantStatus + "</Value>" +
-					"			</Eq>" +
-					"			<IsNull>" +
-					"				<FieldRef Name='AssignedTo'></FieldRef>" +
-					"			</IsNull>" +
-					"		</And>" +
-					"		<Contains>" +
-					"			<FieldRef Name='" + getRequesterFrom + "'></FieldRef>" +
-					"			<Value Type='Text'>" + uData.name + "</Value>" +
-					"		 </Contains>" +
-					"	</And>" +
-					"</Where>";
-
-			} else if (typeof (t.myRSQueryRelevantStatusAssigned) != "undefined") {
-				if (typeof (mData.getRequesterFrom) == 'undefined') {
-					var getRequesterFrom = 'Author';
-				} else {
-					var getRequesterFrom = mData.getRequesterFrom;
-				}
-
-				query = "<Where>" +
-					"	<And>" +
-					"		<And>" +
-					"			<Eq>" +
-					"				<FieldRef Name='RequestStatus'></FieldRef>" +
-					"				<Value Type='Text'>" + t.myRSQueryRelevantStatus + "</Value>" +
-					"			</Eq>" +
-					"			<IsNotNull>" +
-					"				<FieldRef Name='AssignedTo'></FieldRef>" +
-					"			</IsNotNull>" +
-					"		</And>" +
-					"		<Contains>" +
-					"			<FieldRef Name='" + getRequesterFrom + "'></FieldRef>" +
-					"			<Value Type='Text'>" + uData.name + "</Value>" +
-					"		 </Contains>" +
-					"	</And>" +
-					"</Where>";
-
-			} else if (typeof (t.fieldGEQDaysBeforeToday) != "undefined") {
-				query = "<Where>" +
-					"	<Geq>" +
-					"		 <FieldRef Name='" + t.fieldGEQDaysBeforeToday[0] + "'></FieldRef>" +
-					"		 <Value Type='DateTime'>" +
-					"			  <Today OffsetDays='" + (-1 * t.fieldGEQDaysBeforeToday[1]) + "' />" +
-					"		 </Value>" +
-					"	</Geq>" +
-					"</Where>";
-			} else if (typeof (t.rsQueryAndFieldGEQDate) != "undefined") {
-				query = "<Where>" +
-					"	 <And>" +
-					"		  <Eq>" +
-					"				<FieldRef Name='RequestStatus'></FieldRef>" +
-					"				<Value Type='Text'>" + t.rsQueryAndFieldGEQDate[0] + "</Value>" +
-					"		  </Eq>" +
-					"		  <Geq>" +
-					"			  <FieldRef Name='" + t.rsQueryAndFieldGEQDate[1] + "'></FieldRef>" +
-					"			  <Value Type='DateTime'>" + t.rsQueryAndFieldGEQDate[2] + "</Value>" +
-					"		  </Geq>" +
-					"	 </And>" +
-					"</Where>";
-			} else if (typeof (t.rsQueryAndFieldGEQToday) != "undefined") {
-				query = "<Where>" +
-					"	 <And>" +
-					"		  <Eq>" +
-					"				<FieldRef Name='RequestStatus'></FieldRef>" +
-					"				<Value Type='Text'>" + t.rsQueryAndFieldGEQToday.requestStatus + "</Value>" +
-					"		  </Eq>" +
-					"		  <Geq>" +
-					"			  <FieldRef Name='" + t.rsQueryAndFieldGEQToday.field + "'></FieldRef>" +
-					"			  <Value Type='DateTime'>" + moment().format('YYYY-MM-DD') + ' 00:00:00' + "</Value>" +
-					"		  </Geq>" +
-					"	 </And>" +
-					"</Where>";
-			} else if (typeof (t.rsQueryAndFieldLTDate) != "undefined") {
-				query = "<Where>" +
-					"	 <And>" +
-					"		  <Eq>" +
-					"				<FieldRef Name='RequestStatus'></FieldRef>" +
-					"				<Value Type='Text'>" + t.rsQueryAndFieldLTDate[0] + "</Value>" +
-					"		  </Eq>" +
-					"		  <Lt>" +
-					"			  <FieldRef Name='" + t.rsQueryAndFieldLTDate[1] + "'></FieldRef>" +
-					"			  <Value Type='DateTime'>" + t.rsQueryAndFieldLTDate[2] + "</Value>" +
-					"		  </Lt>" +
-					"	 </And>" +
-					"</Where>";
-			} else if (typeof (t.rsQueryAndFieldLTToday) != "undefined") {
-				query = "<Where>" +
-					"	 <And>" +
-					"		  <Eq>" +
-					"				<FieldRef Name='RequestStatus'></FieldRef>" +
-					"				<Value Type='Text'>" + t.rsQueryAndFieldLTToday.asdfasdf + "</Value>" +
-					"		  </Eq>" +
-					"		  <Lt>" +
-					"			  <FieldRef Name='" + t.rsQueryAndFieldLTToday.asdasdgf + "'></FieldRef>" +
-					"			  <Value Type='DateTime'>" + moment().format('YYYY-MM-DD') + ' 00:00:00' + "</Value>" +
-					"		  </Lt>" +
-					"	 </And>" +
-					"</Where>";
-			} else if (typeof (t.rsQueryAndFieldGEQDaysBeforeToday) != "undefined") {
-				query = "<Where>" +
-					"	 <And>" +
-					"		  <Eq>" +
-					"				<FieldRef Name='RequestStatus'></FieldRef>" +
-					"				<Value Type='Text'>" + t.rsQueryAndFieldGEQDaysBeforeToday[0] + "</Value>" +
-					"		  </Eq>" +
-					"		  <Geq>" +
-					"			  <FieldRef Name='" + t.rsQueryAndFieldGEQDaysBeforeToday[1] + "'></FieldRef>" +
-					"			  <Value Type='DateTime'>" +
-					"					<Today OffsetDays='" + (-1 * t.rsQueryAndFieldGEQDaysBeforeToday[2]) + "' />" +
-					"			  </Value>" +
-					"		  </Geq>" +
-					"	 </And>" +
-					"</Where>";
-			} else if (typeof (t.MyRSQueryAndFieldGEQDate) != "undefined") {
-
-				var myName = $().SPServices.SPGetCurrentUser({
-					fieldName: "Title",
-					debug: false
-				});
-
-				if (typeof (mData.getRequesterFrom) == 'undefined') {
-					var getRequesterFrom = 'Author';
-				} else {
-					var getRequesterFrom = mData.getRequesterFrom;
-				}
-
-				query = "<Where>" +
-					"	 <And>" +
-					"		  <Eq>" +
-					"				<FieldRef Name='RequestStatus'></FieldRef>" +
-					"				<Value Type='Text'>" + t.MyRSQueryAndFieldGEQDate[0] + "</Value>" +
-					"		  </Eq>" +
-					"		  <And>" +
-					"			  <Geq>" +
-					"					<FieldRef Name='" + t.MyRSQueryAndFieldGEQDate[1] + "'></FieldRef>" +
-					"					<Value Type='DateTime'>" + t.MyRSQueryAndFieldGEQDate[2] + "</Value>" +
-					"			  </Geq>" +
-					"			  <Contains>" +
-					"					<FieldRef Name='" + getRequesterFrom + "'></FieldRef>" +
-					"					<Value Type='Text'>" + uData.name + "</Value>" +
-					"			  </Contains>" +
-					"		 </And>" +
-					"	</And>" +
-					"</Where>";
-			} else if (typeof (t.MyRSQueryAndFieldGEQToday) != "undefined") {
-
-				var myName = $().SPServices.SPGetCurrentUser({
-					fieldName: "Title",
-					debug: false
-				});
-
-				if (typeof (mData.getRequesterFrom) == 'undefined') {
-					var getRequesterFrom = 'Author';
-				} else {
-					var getRequesterFrom = mData.getRequesterFrom;
-				}
-
-				query = "<Where>" +
-					"	 <And>" +
-					"		  <Eq>" +
-					"				<FieldRef Name='RequestStatus'></FieldRef>" +
-					"				<Value Type='Text'>" + t.MyRSQueryAndFieldGEQToday.requestStatus + "</Value>" +
-					"		  </Eq>" +
-					"		  <And>" +
-					"			  <Geq>" +
-					"					<FieldRef Name='" + t.MyRSQueryAndFieldGEQToday.field + "'></FieldRef>" +
-					"					<Value Type='DateTime'>" + moment().format('YYYY-MM-DD') + " 00:00:00</Value>" +
-					"			  </Geq>" +
-					"			  <Contains>" +
-					"					<FieldRef Name='" + getRequesterFrom + "'></FieldRef>" +
-					"					<Value Type='Text'>" + uData.name + "</Value>" +
-					"			  </Contains>" +
-					"		 </And>" +
-					"	</And>" +
-					"</Where>";
-			} else if (typeof (t.MyRSQueryAndFieldLTDate) != "undefined") {
-
-				var myName = $().SPServices.SPGetCurrentUser({
-					fieldName: "Title",
-					debug: false
-				});
-
-				if (typeof (mData.getRequesterFrom) == 'undefined') {
-					var getRequesterFrom = 'Author';
-				} else {
-					var getRequesterFrom = mData.getRequesterFrom;
-				}
-
-				query = "<Where>" +
-					"	 <And>" +
-					"		  <Eq>" +
-					"				<FieldRef Name='RequestStatus'></FieldRef>" +
-					"				<Value Type='Text'>" + t.MyRSQueryAndFieldLTDate[0] + "</Value>" +
-					"		  </Eq>" +
-					"		  <And>" +
-					"			  <Lt>" +
-					"					<FieldRef Name='" + t.MyRSQueryAndFieldLTDate[1] + "'></FieldRef>" +
-					"					<Value Type='DateTime'>" + t.MyRSQueryAndFieldLTDate[2] + "</Value>" +
-					"			  </Lt>" +
-					"			  <Contains>" +
-					"					<FieldRef Name='" + getRequesterFrom + "'></FieldRef>" +
-					"					<Value Type='Text'>" + uData.name + "</Value>" +
-					"			  </Contains>" +
-					"		  </And>" +
-					"	 </And>" +
-					"</Where>";
-			} else if (typeof (t.MyRSQueryAndFieldLTToday) != "undefined") {
-
-				var myName = $().SPServices.SPGetCurrentUser({
-					fieldName: "Title",
-					debug: false
-				});
-
-				if (typeof (mData.getRequesterFrom) == 'undefined') {
-					var getRequesterFrom = 'Author';
-				} else {
-					var getRequesterFrom = mData.getRequesterFrom;
-				}
-
-				query = "<Where>" +
-					"	 <And>" +
-					"		  <Eq>" +
-					"				<FieldRef Name='RequestStatus'></FieldRef>" +
-					"				<Value Type='Text'>" + t.MyRSQueryAndFieldLTToday.requestStatus + "</Value>" +
-					"		  </Eq>" +
-					"		  <And>" +
-					"			  <Lt>" +
-					"					<FieldRef Name='" + t.MyRSQueryAndFieldLTToday.field + "'></FieldRef>" +
-					"					<Value Type='DateTime'>" + moment().format('YYYY-MM-DD') + " 00:00:00</Value>" +
-					"			  </Lt>" +
-					"			  <Contains>" +
-					"					<FieldRef Name='" + getRequesterFrom + "'></FieldRef>" +
-					"					<Value Type='Text'>" + uData.name + "</Value>" +
-					"			  </Contains>" +
-					"		  </And>" +
-					"	 </And>" +
-					"</Where>";
-			} else if (typeof (t.basicEOLQueryRelevantValue) != "undefined") {
-				if (t.basicEOLQueryRelevantValue == 0) {
-					query = "<Where>" +
-						"	<Or>" +
-						"		 <Eq>" +
-						"			  <FieldRef Name='EndOfLife'></FieldRef>" +
-						"			  <Value Type='Text'>0</Value>" +
-						"		  </Eq>" +
-						"		 <IsNull>" +
-						"			  <FieldRef Name='EndOfLife'></FieldRef>" +
-						"		 </IsNull>" +
-						"	</Or>" +
-						"</Where>";
-				} else if (t.basicEOLQueryRelevantValue == 1) {
-					query = "<Where>" +
-						"	<Eq>" +
-						"		 <FieldRef Name='EndOfLife'></FieldRef>" +
-						"		 <Value Type='Text'>1</Value>" +
-						"	</Eq>" +
-						"</Where>";
-				}
-			} else if (typeof (t.basicMyEOLQueryRelevantValue) != "undefined") {
-
-				var myName = $().SPServices.SPGetCurrentUser({
-					fieldName: "Title",
-					debug: false
-				});
-
-				var getRequesterFrom = 'Author';
-
-
-				if (mData.getRequesterFrom) {
-					getRequesterFrom = mData.getRequesterFrom;
-				}
-				if (t.getRequesterFrom) {
-					getRequesterFrom = t.getRequesterFrom;
-				}
-
-				if (t.basicMyEOLQueryRelevantValue == 0) {
-					query = "<Where>" +
-						"	<And>" +
-						"		<Or>" +
-						"			 <Eq>" +
-						"				  <FieldRef Name='EndOfLife'></FieldRef>" +
-						"				  <Value Type='Text'>0</Value>" +
-						"			  </Eq>" +
-						"			 <IsNull>" +
-						"				  <FieldRef Name='EndOfLife'></FieldRef>" +
-						"			 </IsNull>" +
-						"		</Or>" +
-						"		 <Contains>" +
-						"			  <FieldRef Name='" + getRequesterFrom + "'></FieldRef>" +
-						"			  <Value Type='Text'>" + uData.name + "</Value>" +
-						"		 </Contains>" +
-						"	</And>" +
-						"</Where>";
-				} else if (t.basicMyEOLQueryRelevantValue == 1) {
-					query = "<Where>" +
-						"	<And>" +
-						"		 <Eq>" +
-						"			  <FieldRef Name='EndOfLife'></FieldRef>" +
-						"			  <Value Type='Text'>1</Value>" +
-						"		 </Eq>" +
-						"		 <Contains>" +
-						"			  <FieldRef Name='" + getRequesterFrom + "'></FieldRef>" +
-						"			  <Value Type='Text'>" + uData.name + "</Value>" +
-						"		 </Contains>" +
-						"	</And>" +
-						"</Where>";
-				}
-			} else if (typeof (t.basicMyAllQueryRelevantValue) != "undefined") {
-
-				var myName = $().SPServices.SPGetCurrentUser({
-					fieldName: "Title",
-					debug: false
-				});
-
-				if (typeof (mData.getRequesterFrom) == 'undefined') {
-					var getRequesterFrom = 'Author';
-				} else {
-					var getRequesterFrom = mData.getRequesterFrom;
-				}
-
-				query = "<Where>" +
-					"	<Contains>" +
-					"		<FieldRef Name='" + getRequesterFrom + "'></FieldRef>" +
-					"			<Value Type='Text'>" + uData.name + "</Value>" +
-					"		</Contains>" +
-					"</Where>";
-			} else if (typeof (t.customCAMLQuery) != "undefined") {
-				query = ReplaceAll('myName', uData.name, t.customCAMLQuery);
-			}
-
-			var listForDatatable = $().GetListDataForDatatable({
-				'listName': 'SWFList',
-				'webURL': t.webURL,
-				'query': query,
-				'someColsAreUsers': t.someColsAreUsers,
-				'viewFields': camlViewFields,
-				'lookupFields': lookupFields,
-				'formURI': mData.formURI,
-				'returnURI': mData.returnURI
-			});
-
-			/* console.log('t.tableTitle');
-			console.log(t.tableTitle);
-
-			console.log('t.tableID');
-			console.log(t.tableID);
-
-			console.log('theadDetails');
-			console.log(theadDetails);
-
-			console.log('listForDatatable');
-			console.log(listForDatatable);
-
-			console.log('XXXXXX');
-			console.log(XXXXXX);
-
-			console.log('XXXXXX');
-			console.log(XXXXXX); */
-
-
-			$().RenderListAsDatatable({
-				'tableTitle': t.tableTitle,
-				'tableID': t.tableID,
-				'theadDetails': theadDetails,
-				'listForDatatable': listForDatatable,
-				'datatableFields': datatableFields,
-				'sortColAndOrder': t.sortColAndOrder,
-				'grouping': t.grouping,
-				'targetID': targetID,
-			});
-		});
-	};
-
 
 
 	$.fn.CreateFakeGSEStuff = function (jobs, schedules, signups) {
@@ -19164,440 +18637,21 @@
 
 
 
-	$.fn.RenderCommandBarAndCalendarForGSESchedules = function (buttons, relevantRole) {
-		var nowAsISOLocal = $().ReturnFormattedDateTime('nowLocal', null, null);
-		var viewToUse = GetParamFromUrl(location.search, 'view');
-		var dateToUse = GetParamFromUrl(location.search, 'date');
-		var allEvents = [];
-		if (!viewToUse || viewToUse == "") { viewToUse = 'month'; }
-		if (!dateToUse || dateToUse == "") {
-			dateToUse =
-				$().ReturnFormattedDateTime('nowUTC', 'YYYY-MM-DDTHH:mm:ssZ', 'YYYY-MM-DD', 0);
-		}
-
-
-		var renderPrepStartTime = Date.now();
-
-
-		// get all relevant schedules
-		var gseSchedulesArray = $().GetFieldsFromSpecifiedRows({
-			'webURL': 'https://bmos.sharepoint.com/sites/hr-service-schedules',
-			'select': [
-				{
-					'nameHere': 'ScheduleID',
-					'nameInList': 'ID'
-				}, {
-					'nameHere': 'JobID',
-					'nameInList': 'JobID'
-				}, {
-					'nameHere': 'NumberOfPositions',
-					'nameInList': 'NumberOfPositions'
-				}, {
-					'nameHere': 'formData',
-					'nameInList': 'AllRequestData'
-				}
-			],
-			'where': {
-				'field': 'RequestStatus',
-				'type': 'Text',
-				'value': 'Submitted',
-			}
-		});
-		// get all relevant jobs
-		var gseJobsArray = $().GetFieldsFromSpecifiedRows({
-			'webURL': 'https://bmos.sharepoint.com/sites/hr-service-jobs',
-			'select': [
-				{
-					'nameHere': 'JobID',
-					'nameInList': 'ID',
-				}, {
-					'nameHere': 'JobTitle',
-					'nameInList': 'JobTitle',
-				}, {
-					'nameHere': 'JobAdmin',
-					'nameInList': 'JobAdmin'
-				}, {
-					'nameHere': 'formData',
-					'nameInList': 'AllRequestData'
-				}
-			],
-			'where': {
-				'field': 'RequestStatus',
-				'type': 'Text',
-				'value': 'Approved',
-			}
-		});
-		// get all relevant signups
-		var gseSignupsArray = $().GetFieldsFromSpecifiedRows({
-			"webURL": "https://bmos.sharepoint.com/sites/hr-service-signups",
-			"select": [{
-				"nameHere": "SignupID",
-				"nameInList": "ID"
-			}, {
-				"nameHere": "SignupPerson",
-				"nameInList": "RequestedFor"
-			}, {
-				"nameHere": "ScheduleID",
-				"nameInList": "ScheduleID"
-			}],
-			'where': {
-				'field': 'RequestStatus',
-				'type': 'Text',
-				'value': 'Signed Up',
-			}
-		});
-
-		// $().CreateFakeGSEStuff(gseJobsArray, gseSchedulesArray, gseSignupsArray);
-
-		gseSchedulesArray.forEach((schedule) => {
-			var jobThisSchedule = {};
-			var signupsThisSchedule = [];
-			gseJobsArray.forEach((job) => {
-				if (job.JobID === schedule.JobID) {
-					jobThisSchedule = job;
-				}
-			});
-			gseSignupsArray.forEach((signup) => {
-				if (signup.ScheduleID === schedule.ScheduleID) {
-					signupsThisSchedule.push(signup);
-				}
-			});
-			
-			var isoStartDatetime = schedule.formData['Date'].slice(0, 10) + schedule.formData['time-storage_StartTime'].slice(10, 19);
-			var isoEndDatetime = schedule.formData['shiftlength_35-hours'] ?
-				moment(isoStartDatetime).add(3.5, 'hours') :
-				moment(isoStartDatetime).add(7, 'hours');
-			var length = schedule.formData['shiftlength_35-hours'] ? '3.5 hours' : '7 hours';
-			var formattedStartTime = 
-				$().ReturnFormattedDateTime(isoStartDatetime, null, "h:mma", 0);
-			formattedStartTime = formattedStartTime.slice(0, formattedStartTime.length - 1);
-			var formattedEndTime = $().ReturnFormattedDateTime(isoEndDatetime, null, "h:mma", 0);
-			formattedEndTime = formattedEndTime.slice(0, formattedEndTime.length - 1);
-			var formattedDate = $().ReturnFormattedDateTime(isoStartDatetime, null, "ddd, M/D/YYYY", 0);
-			var isInFuture = moment(nowAsISOLocal).isBefore(isoStartDatetime) ? 
-				true : false;
-
-			
-			var eventItem = {
-				'eventID': schedule.ScheduleID,
-				'start': isoStartDatetime,
-				'end': isoEndDatetime,
-				'title': formattedStartTime + ' | ' + jobThisSchedule.JobTitle,
-				
-				'jobID': schedule.JobID,
-				'scheduleID': schedule.ScheduleID,
-				'formattedStartTime': formattedStartTime,
-				'formattedEndTime': formattedEndTime,
-				'formattedDate': formattedDate,
-				'isInFuture': isInFuture,
-				'jobAdmin': jobThisSchedule.JobAdmin,
-				'length': length,
-				'location': schedule.formData['Location'],
-				'jobTitle': jobThisSchedule.JobTitle,
-				'jobDescription': '<p>' + ReplaceAll('%0A', '</p><p>', ReplaceAll('%0A%0A', '%0A', jobThisSchedule.formData['Job-Description'])) + '</p>',
-				'quantitySignups': signupsThisSchedule.length,
-				'quantityPositions': schedule.NumberOfPositions,
-				'jobURL': '/sites/hr-service-jobs/SitePages/App.aspx?r=' + schedule.JobID,
-				'scheduleURL': '/sites/hr-service-schedules/SitePages/App.aspx?r=' + schedule.ScheduleID,
-			};
-
-			
-			// console.log('signupsThisSchedule');
-			// console.log(signupsThisSchedule);
-			// console.log('uData');
-			// console.log(uData);
-			// console.log('signupPersons');
-			signupsThisSchedule.forEach((signup) => {
-				var signupPersonArray = $().ReturnUserDataFromPersonOrGroupFieldString(signup.SignupPerson);
-				if (signupPersonArray[0].account === uData.account) {
-					eventItem.mySignupID = signup.SignupID;
-				}
-			});
-
-			if (eventItem.mySignupID) {
-				eventItem.mySignupURL = '/sites/hr-service-signups/SitePages/App.aspx?r=' + eventItem.mySignupID;
-			} else {
-				eventItem.signupURL = '/sites/hr-service-signups/SitePages/App.aspx?r=0&gseScheduleID=' + schedule.ScheduleID;
-			}
-
-			allEvents.push(eventItem);
-		});
-
-		console.log('render prep time = ' + (Date.now() - renderPrepStartTime) / 1000 + ' seconds');
-
-		$("div#overview-screen-container").fullCalendar({
-			allDayDefault: true,
-			lazyFetching: false,
-			eventOrder: "start",
-			header: {
-				// right and center are reversed, because our CSS implements obedience to the accessibility imperative that DOM elements exist 
-				//      (and are thus encountered by assistive technologies) in the same order in which they're presented to sighted users
-				left: "",
-				right: "prevYear,prev,title,next,nextYear",
-				center: "today,basicDay,basicWeek,month"
-			},
-			defaultView: viewToUse,
-			defaultDate: dateToUse,
-			dayClick: function (date, jsEvent, view) {
-				// to do: consider moving this to a generic event listener if we're not sending a date in the URL
-
-				if (relevantRole === 'gseHRAdmin' || relevantRole === 'gseJobAdmin') {
-					if (moment(date._d).isAfter(nowAsISOLocal) && relevantRole === 'gseHRAdmin') {
-						var addScheduleURL = '/sites/hr-service-schedules/SitePages/App.aspx?r=0&d=' + date._i;
-						window.open(addScheduleURL, '_blank');
-					}
-				}
-			},
-			dayRender: function (date, cell) {
-				if (relevantRole === 'gseHRAdmin' || relevantRole === 'gseJobAdmin') {
-					if (cell[0].classList.contains('fc-future')) {
-						var addLinkMarkup = '<a class="add-schedule" ' + 
-							'href="/sites/hr-service-schedules/SitePages/App.aspx?r=0&d=' + date._i + 
-							'" target="_blank">Add</a>';
-						cell.append(addLinkMarkup);
-						var headClassSelector = '';
-						if (cell.hasClass('fc-sun')) {
-							headClassSelector = 'fc-sun';
-						} else if (cell.hasClass('fc-mon')) {
-							headClassSelector = 'fc-mon';
-						} else if (cell.hasClass('fc-tue')) {
-							headClassSelector = 'fc-tue';
-						} else if (cell.hasClass('fc-wed')) {
-							headClassSelector = 'fc-wed';
-						} else if (cell.hasClass('fc-thu')) {
-							headClassSelector = 'fc-thu';
-						} else if (cell.hasClass('fc-fri')) {
-							headClassSelector = 'fc-fri';
-						} else if (cell.hasClass('fc-sat')) {
-							headClassSelector = 'fc-sat';
-						}
-						cell.closest('div.fc-row')
-							.find('div.fc-content-skeleton')
-							.find('td.' + headClassSelector)
-							.addClass('add-schedule-on-click');
-					}
-				}
-				
-			},
-			theme: true,
-			eventClick: function (event, jsEvent, view) {
-
-				// close the dialog box
-				$("div#dialog").dialog("close");
-
-				// populate the dialog box
-
-				var dialogTitleBarContent = '<h2 class="gse-schedules-dialog-date-and-time-range">' +
-					'<span class="gse-schedules-dialog-date">' + event.formattedDate + '</span> ' +
-					'<span class="gse-schedules-dialog-start-time">' + event.formattedStartTime + '</span>' +
-					'<span class="gse-schedules-dialog-times-separator"> &ndash; </span>' +
-					'<span class="gse-schedules-dialog-end-time">' + event.formattedEndTime + '</span>' +
-					'</h2>';
-
-				$("div[aria-describedby='gse-schedule-card-dialog'] div.ui-dialog-titlebar span.ui-dialog-title").html(dialogTitleBarContent);
-
-				var dialogBodyContent = 
-					'<h3 class="gse-schedule-card-dialog-job-title">' + event.jobTitle + '</h3>' + 
-					event.jobDescription;
-
-				if (event.isInFuture) {
-					dialogBodyContent += '<p>Signups Available: ' + 
-					(event.quantityPositions - event.quantitySignups) + 
-					' / ' + event.quantityPositions;
-				}
-
-				dialogBodyContent += '<div class="gse-schedule-card-dialog-links-container">';
-
-				if (event.mySignupURL) {
-					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' + 
-						'<a id="gse-schedule-card-dialog-my-signup-link" ' + 
-						'class="gse-schedule-card-dialog-button" href="' + 
-						event.mySignupURL + '" target="_blank">More / My Signup</a></div>';
-				} else if (event.isInFuture) {
-					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' + 
-						'<a id="gse-schedule-card-dialog-signup-opportunity-link" ' + 
-						'class="gse-schedule-card-dialog-button" href="' + 
-						event.signupURL + '" target="_blank">More / Sign Up</a></div>';
-				} else {
-					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' +
-						'<a id="gse-schedule-card-dialog-signup-opportunity-link" ' +
-						'class="gse-schedule-card-dialog-button" href="' +
-						event.signupURL + '" target="_blank">More</a></div>';
-				}
-
-				if (relevantRole === 'gseHRAdmin' || relevantRole === 'gseJobAdmin') {
-					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' +
-						'<a id="gse-schedule-card-dialog-job-link" ' +
-						'class="gse-schedule-card-dialog-button" href="' +
-						event.jobURL + '" target="_blank">Job Details</a></div>';
-					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' +
-						'<a id="gse-schedule-card-dialog-schedule-link" ' +
-						'class="gse-schedule-card-dialog-button" href="' +
-						event.scheduleURL + '" target="_blank">Schedule Details</a></div>';
-				}
-				
-				$("div#gse-schedule-card-dialog").html(dialogBodyContent);
-
-				// position the dialog box
-				$("div#gse-schedule-card-dialog").dialog("option", "position", { my: "left bottom", at: "right top", of: jsEvent });
-
-				// open the dialog box
-				$("div#gse-schedule-card-dialog").dialog("open");
-			},
-			events: allEvents
-
-		});
-
-		var buttonsMarkup = $().ReturnButtonsMarkup(buttons);
-		$("div.fc-toolbar div.fc-left").append(buttonsMarkup);
-		$("div#app-container").append("<div id=\"gse-schedule-card-dialog\"></div>");
-
-		$("div#gse-schedule-card-dialog").dialog({
-			autoOpen: false,
-			draggable: true,
-			modal: true,
-			show: {
-				effect: "bounce",
-				times: 2,
-				duration: 500
-			},
-			width: 400,
-		});
-
-
-		$("div.fc-toolbar, div.fc-view-container").fadeTo(1000, 1);
-
-
-	};
-
-
-	$.fn.ReturnDataAndConfigForDataTableForGSESchedules = function (table, relevantRole) {
-
-		var tableConfig = {
-			'datatableFields': [],
-			'theadDetails': '',
-			'datatableData': [],
-		};
-
-		$.each(table.columns, function (i, column) {
-			tableConfig.datatableFields.push({
-				"data": column.dataName
-			});
-			tableConfig.theadDetails += "<th>" + column.displayName + "</th>";
-		});
-
-		table.dataSource.forEach((schedule) => {
-			var row = {};
-			var isoStartDatetime = schedule.formData['Date'].slice(0, 10) + schedule.formData['time-storage_StartTime'].slice(10, 19);
-			row.Date = $().ReturnSortableDate(isoStartDatetime, null, 'MMMM D, YYYY', 1);
-			row.IDMarkup = '<div class="small-in-column">' + schedule.ScheduleID + '</div>';
-			row.JobAdmin = $().RenderPersonLinks(schedule.Job.JobAdmin);
-			row.JobID = schedule.Job.JobID;
-			row.JobTitle = schedule.Job.JobTitle;
-			row.Location = schedule.formData['Location'];
-			row.NumberOfPositions = schedule.NumberOfPositions;
-			if (schedule.Signups) {
-				row.PositionsAvailable = '<div class="small-in-column">' + 
-					(schedule.NumberOfPositions - schedule.Signups.length) + '</div>';
-			} else {
-				row.PositionsAvailable = '<div class="small-in-column">' + 
-					schedule.NumberOfPositions + '</div>';
-			}
-			row.ShiftLength = schedule.formData['shiftlength_35-hours'] ? '3.5 hours' : '7.5 hours'
-			row.Signups = '<ul>';
-			if (schedule.Signups) {
-				schedule.Signups.forEach((signup) => {
-					row.Signups += '<li>' + $().RenderPersonLinks(signup.formData["Requested-For"]);
-					if (signup.formData['Request-Status'] === 'Credit Granted') {
-						row.Signups += ' - Credit Granted';
-					} else if (signup.formData['Request-Status'] === 'Credit Denied') {
-						row.Signups += ' - Credit Denied';
-					}
-					row.Signups += '</li>';
-				});
-			}
-			row.Signups += '</ul>';
-			row.StartTime = $().ReturnSortableDate(isoStartDatetime, null, 'h:mm a', 1);
-			if (schedule.Signups) {
-				schedule.Signups.forEach((signup) => {
-					var signupPersonArray = $().ReturnUserDataFromPersonOrGroupFieldString(signup.SignupPerson);
-					if (signupPersonArray[0].account === uData.account) {
-						row.mySignupID = signup.SignupID;
-					}
-				});
-			}
-			if (row.mySignupID) {
-				row.viewURL = '/sites/hr-service-signups/SitePages/App.aspx?r=' + row.mySignupID;
-			} else {
-				row.viewURL = '/sites/hr-service-signups/SitePages/App.aspx?r=0&gseScheduleID=' + schedule.ScheduleID;
-			}
-			if (relevantRole === 'gseHRAdmin') {
-				row.Options = '<div><a class="link-in-swf-datatable" ' +
-					'href="' + row.viewURL + '" ' +
-					'target="_blank">View</a></div>' +
-					'<div><a class="link-in-swf-datatable" ' +
-					'href="/sites/hr-service-schedules/SitePages/App.aspx?r=' + schedule.ScheduleID + '" ' +
-					'target="_blank">Edit</a></div >';
-			}
-			if (relevantRole === 'gseJobAdmin') {
-				row.Options = '<div><a class="link-in-swf-datatable" ' +
-					'href="' + row.viewURL + '" ' +
-					'target="_blank">View</a></div>';
-				var jobAdminArray = $().ReturnUserDataFromPersonOrGroupFieldString(schedule.Job.JobAdmin);
-				if (jobAdminArray[0].account === uData.account) {
-					row.Options += '<div><a class="link-in-swf-datatable" ' +
-						'href="/sites/hr-service-schedules/SitePages/App.aspx?r=' + schedule.ScheduleID + '" ' +
-						'target="_blank">Edit</a></div >';
-				}
-			}
-			if (relevantRole === 'gseManager' || relevantRole === 'gseUserOnly') {
-				row.ViewByIDLink =
-					'<a href="' + row.viewURL + '" class="link_request-id" target="_blank">' + 
-					schedule.ScheduleID + '</a>';
-			}
-			tableConfig.datatableData.push(row);
-		});
-		return tableConfig;
-	};
+	// -- GSEs
 
 
 
-	$.fn.ReturnDataAndConfigForDataTableForGSESignups = function (table, relevantRole) {
+	// - main markup collection and rendering
 
-		var tableConfig = {
-			'datatableFields': [],
-			'theadDetails': '',
-			'datatableData': [],
-		};
-
-		$.each(table.columns, function (i, column) {
-			tableConfig.datatableFields.push({
-				"data": column.dataName
-			});
-			tableConfig.theadDetails += "<th>" + column.displayName + "</th>";
-		});
-		table.dataSource.forEach((signup) => {
-			var row = {};
-			var isoStartDatetime = signup.Schedule.Date.slice(0, 10) + signup.Schedule.StartTime.slice(10, 19);
-			row.Date = $().ReturnSortableDate(isoStartDatetime, null, 'MMMM D, YYYY', 1);
-			row.StartTime = $().ReturnSortableDate(isoStartDatetime, null, 'h:mm a', 1);
-			row.IDMarkup = "<a href = \"" + mData.fullSiteBaseURL + "/SitePages/App.aspx?r=" + signup.SignupID +
-				"\" data-button-type=\"existingRequest\" " +
-				"data-request-id=\"" + signup.SignupID + "\"" +
-				"class=\"link_request-id\">" +
-				signup.SignupID + "</a>";
-			row.JobTitle = signup.Job.JobTitle;
-			row.ShiftLength = signup.Schedule.ShiftLength;
-			row.Location = signup.Schedule.Location;
-			tableConfig.datatableData.push(row);
-		});
-		return tableConfig;
-	};
-
-
+	// schedules list
 	$.fn.RenderCommandBarAndDataTablesForGSESchedules = function (buttons, targetID, relevantRole) {
 		var renderPrepStartTime = Date.now();
+
 		var startingYearOfFirstFiscalYear = 2018;
+		// var thisYear = 2022;
+		// var startingYearOfLastFiscalYear = moment('2022-09-08').isAfter(thisYear + '-06-30') ?
+		// 	parseInt(thisYear) :
+		// 	parseInt(thisYear) - 1;
 		var thisYear = $().ReturnFormattedDateTime('nowLocal', null, 'YYYY');
 		var startingYearOfLastFiscalYear = moment().isAfter(thisYear + '-06-30') ?
 			parseInt(thisYear) :
@@ -19616,10 +18670,10 @@
 			'</div>');
 
 		var commandBarContents = '';
-		if (relevantRole === 'gseHRAdmin') {
-			commandBarContents += 
+		if (relevantRole === 'gseHRAdmin' || relevantRole === 'gseJobAdmin') {
+			commandBarContents +=
 				'<div class="container_link">' +
-				'	<a class="button-link button-link_new-item undefined command-bar-button" data-button-type="newRequest" href="https://bmos.sharepoint.com/sites/hr-service-schedules/SitePages/App.aspx?r=0">New Schedule</a>' + 
+				'	<a class="button-link button-link_new-item undefined command-bar-button" data-button-type="newRequest" href="https://bmos.sharepoint.com/sites/hr-service-schedules/SitePages/App.aspx?r=0">New Schedule</a>' +
 				'</div>' +
 				'<div class="container_link">' +
 				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-jobs/SitePages/App.aspx">Jobs</a> \n' +
@@ -19634,8 +18688,7 @@
 				'   <div id="text_filter-controls" class="collapsible">Year</div> \n' +
 				'   <div id="container_filter-controls"> \n' +
 				'   	<div class="container_filter-control"> \n' +
-				'   		<label for="filter_year">Year</label> \n' +
-				'   		<select id="filter_year" name="filter_year"> \n' +
+				'   		<label for="filter_year">Year</label><select id="filter_year" name="filter_year"> \n' +
 				'				' + $().ReturnFiscalYearSelectOptions(startingYearOfFirstFiscalYear, startingYearOfLastFiscalYear, true, selectedStartYear) + ' \n' +
 				'			</select>' +
 				'		</div>' +
@@ -19647,7 +18700,7 @@
 		}
 		$("div#container_command-bar").html(commandBarContents);
 
-		var augmentedSchedules = $().ReturnAllAugmentedSchedulesForGSESchedulesOverviews(selectedStartYear);
+		var augmentedSchedules = $().ReturnSelectedAugmentedSchedulesForGSESchedulesOverviews(selectedStartYear);
 
 		// determine which tables to render
 		var tablesToRender = [];
@@ -19831,7 +18884,834 @@
 		}
 
 		tablesToRender.forEach((t) => {
-			var thisTableConfig = $().ReturnDataAndConfigForDataTableForGSESchedules(t, relevantRole);
+			var thisTableConfig = $().ReturnDatatableSettingsAndDataForGSESchedules(t, relevantRole);
+			if (!t.sortColAndOrder) {
+				t.sortColAndOrder = [0, 'asc'];
+			}
+			$().RenderListAsDatatable({
+				'tableTitle': t.tableTitle,
+				'tableID': t.tableID,
+				'theadDetails': thisTableConfig.theadDetails,
+				'listForDatatable': thisTableConfig.datatableData,
+				'datatableFields': thisTableConfig.datatableFields,
+				'sortColAndOrder': t.sortColAndOrder,
+				'targetID': targetID,
+			});
+		});
+
+		// add extra class for styling hook
+		$('div#app-container').addClass('gse-schedule-list');
+
+		// collapse filters
+		$('.collapsible').collapsible();
+
+		console.log('render prep time = ' + (Date.now() - renderPrepStartTime) / 1000 + ' seconds');
+		// listen for date filtering
+		$("a#filter_submit-button").click(function () {
+			var selectedStartYear = $("select#filter_year").val();
+			if (selectedStartYear == '') {
+				selectedStartYear = moment().isAfter(thisYear + '-06-30') ?
+					parseInt(thisYear) :
+					parseInt(thisYear) - 1;
+			}
+			window.location = "/sites/" + mData.siteToken + "/SitePages/App.aspx?y=" + selectedStartYear;
+		});
+	};
+
+
+	// schedules calendar
+	$.fn.RenderCommandBarAndCalendarForGSESchedules = function (buttons, relevantRole) {
+		
+		var startingYearOfFirstFiscalYear = 2018;
+		// var thisYear = 2022;
+		// var startingYearOfLastFiscalYear = moment('2022-09-08').isAfter(thisYear + '-06-30') ?
+		// 	parseInt(thisYear) :
+		// 	parseInt(thisYear) - 1;
+		var thisYear = $().ReturnFormattedDateTime('nowLocal', null, 'YYYY');
+		var startingYearOfLastFiscalYear = moment().isAfter(thisYear + '-06-30') ?
+			parseInt(thisYear) :
+			parseInt(thisYear) - 1;
+
+
+		var selectedStartYear = GetParamFromUrl(location.search, "y");
+		if (!selectedStartYear || selectedStartYear == '') {
+			selectedStartYear = moment().isAfter(thisYear + '-06-30') ?
+				parseInt(thisYear) :
+				parseInt(thisYear) - 1;
+		}
+
+
+		
+		var nowAsISOLocal = $().ReturnFormattedDateTime('nowLocal', null, null);
+		var viewToUse = GetParamFromUrl(location.search, 'view');
+		var dateToUse = GetParamFromUrl(location.search, 'date');
+		if (!viewToUse || viewToUse == "") { viewToUse = 'month'; }
+		if (!dateToUse || dateToUse == "") {
+			dateToUse =
+				$().ReturnFormattedDateTime('nowUTC', 'YYYY-MM-DDTHH:mm:ssZ', 'YYYY-MM-DD', 0);
+		}
+
+		var renderPrepStartTime = Date.now();
+
+		var augmentedSchedules = $().ReturnSelectedAugmentedSchedulesForGSESchedulesCalendar(selectedStartYear, nowAsISOLocal);
+
+		console.log('render prep time = ' + (Date.now() - renderPrepStartTime) / 1000 + ' seconds');
+
+		$("div#overview-screen-container").fullCalendar({
+			allDayDefault: true,
+			lazyFetching: false,
+			eventOrder: "start",
+			header: {
+				// right and center are reversed, because our CSS implements obedience to the accessibility imperative that DOM elements exist 
+				//      (and are thus encountered by assistive technologies) in the same order in which they're presented to sighted users
+				left: "",
+				right: "prevYear,prev,title,next,nextYear",
+				center: "today,basicDay,basicWeek,month"
+			},
+			validRange: {
+				start: selectedStartYear + '06-30',
+				end: (parseInt(selectedStartYear) + 1) + '2017-06-01'
+			},
+			/* views: {
+				month: {
+					titleFormat: 'YYYY, MM, DD'
+				},
+				week: {
+					titleFormat: 'YYYY, MM, DD'
+				},
+				day: {
+					titleFormat: 'YYYY, MM, DD'
+				},
+			}, */
+			defaultView: viewToUse,
+			defaultDate: dateToUse,
+			/* dayClick: function (date, jsEvent, view) {
+				// to do: consider moving this to a generic event listener if we're not sending a date in the URL
+
+				if (relevantRole === 'gseHRAdmin' || relevantRole === 'gseJobAdmin') {
+					if (moment(date._d).isAfter(nowAsISOLocal) && relevantRole === 'gseHRAdmin') {
+						var addScheduleURL = '/sites/hr-service-schedules/SitePages/App.aspx?r=0&d=' + date._i;
+						window.open(addScheduleURL, '_blank');
+					}
+				}
+			},
+			dayRender: function (date, cell) {
+				if (relevantRole === 'gseHRAdmin' || relevantRole === 'gseJobAdmin') {
+					if (cell[0].classList.contains('fc-future')) {
+						var addLinkMarkup = '<a class="add-schedule" ' + 
+							'href="/sites/hr-service-schedules/SitePages/App.aspx?r=0&d=' + date._i + 
+							'" target="_blank">Add</a>';
+						cell.append(addLinkMarkup);
+						var headClassSelector = '';
+						if (cell.hasClass('fc-sun')) {
+							headClassSelector = 'fc-sun';
+						} else if (cell.hasClass('fc-mon')) {
+							headClassSelector = 'fc-mon';
+						} else if (cell.hasClass('fc-tue')) {
+							headClassSelector = 'fc-tue';
+						} else if (cell.hasClass('fc-wed')) {
+							headClassSelector = 'fc-wed';
+						} else if (cell.hasClass('fc-thu')) {
+							headClassSelector = 'fc-thu';
+						} else if (cell.hasClass('fc-fri')) {
+							headClassSelector = 'fc-fri';
+						} else if (cell.hasClass('fc-sat')) {
+							headClassSelector = 'fc-sat';
+						}
+						cell.closest('div.fc-row')
+							.find('div.fc-content-skeleton')
+							.find('td.' + headClassSelector)
+							.addClass('add-schedule-on-click');
+					}
+				}
+				
+			}, */
+			theme: true,
+			eventClick: function (event, jsEvent, view) {
+
+				// close the dialog box
+				$("div#dialog").dialog("close");
+
+				// populate the dialog box
+
+				var dialogTitleBarContent = '<h2 class="gse-schedules-dialog-date-and-time-range">' +
+					'<span class="gse-schedules-dialog-date">' + event.formattedDate + '</span> ' +
+					'<span class="gse-schedules-dialog-start-time">' + event.formattedStartTime + '</span>' +
+					'<span class="gse-schedules-dialog-times-separator"> &ndash; </span>' +
+					'<span class="gse-schedules-dialog-end-time">' + event.formattedEndTime + '</span>' +
+					'</h2>';
+
+				$("div[aria-describedby='gse-schedule-card-dialog'] div.ui-dialog-titlebar span.ui-dialog-title").html(dialogTitleBarContent);
+
+				var dialogBodyContent = 
+					'<h3 class="gse-schedule-card-dialog-job-title">' + event.jobTitle + '</h3>' + 
+					event.jobDescription;
+
+				if (event.isInFuture) {
+					dialogBodyContent += '<p>Signups Available: ' + 
+					(event.quantityPositions - event.quantitySignups) + 
+					' / ' + event.quantityPositions;
+				}
+
+				dialogBodyContent += '<div class="gse-schedule-card-dialog-links-container">';
+
+				if (event.mySignupURL) {
+					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' + 
+						'<a id="gse-schedule-card-dialog-my-signup-link" ' + 
+						'class="gse-schedule-card-dialog-button" href="' + 
+						event.mySignupURL + '" target="_blank">More / My Signup</a></div>';
+				} else if (event.isInFuture) {
+					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' + 
+						'<a id="gse-schedule-card-dialog-signup-opportunity-link" ' + 
+						'class="gse-schedule-card-dialog-button" href="' + 
+						event.signupURL + '" target="_blank">More / Sign Up</a></div>';
+				} else {
+					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' +
+						'<a id="gse-schedule-card-dialog-signup-opportunity-link" ' +
+						'class="gse-schedule-card-dialog-button" href="' +
+						event.signupURL + '" target="_blank">More</a></div>';
+				}
+
+				if (relevantRole === 'gseHRAdmin' || relevantRole === 'gseJobAdmin') {
+					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' +
+						'<a id="gse-schedule-card-dialog-job-link" ' +
+						'class="gse-schedule-card-dialog-button" href="' +
+						event.jobURL + '" target="_blank">Job Details</a></div>';
+					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' +
+						'<a id="gse-schedule-card-dialog-schedule-link" ' +
+						'class="gse-schedule-card-dialog-button" href="' +
+						event.scheduleURL + '" target="_blank">Schedule Details</a></div>';
+				}
+				
+				$("div#gse-schedule-card-dialog").html(dialogBodyContent);
+
+				// position the dialog box
+				$("div#gse-schedule-card-dialog").dialog("option", "position", { my: "left bottom", at: "right top", of: jsEvent });
+
+				// open the dialog box
+				$("div#gse-schedule-card-dialog").dialog("open");
+			},
+			events: augmentedSchedules
+
+		});
+
+		$("div.fc-toolbar div.fc-left").append('<div id="container_command-bar"></div>');
+
+		var buttonDivs = $().ReturnButtonsMarkupWithContainerDivs(buttons);
+		var buttonOverflowMenu = $().ReturnButtonsMarkupAsOverflowMenu(buttons);
+
+		var commandBarContents = '';
+
+		commandBarContents +=
+			'<div id="container_navigation-controls-expanded"> \n' +
+				buttonDivs + 
+			'</div> \n';
+
+
+		
+		commandBarContents += 
+			'<div id="container_filter-controls-and-header"> \n' +
+			'   <div id="text_filter-controls" class="collapsible">Year</div> \n' +
+			'   <div id="container_filter-controls"> \n' +
+			'   	<div class="container_filter-control"> \n' +
+			'   		<label for="filter_year">Year</label><select id="filter_year" name="filter_year"> \n' +
+			'				' + $().ReturnFiscalYearSelectOptions(startingYearOfFirstFiscalYear, startingYearOfLastFiscalYear, true, selectedStartYear) + ' \n' +
+			'			</select>' +
+			'		</div>' +
+			'   	<div class="container_filter-control"> \n' +
+			'			<a id="filter_submit-button">Update</a>' +
+			'		</div>' +
+			'    </div> \n' +
+			'</div> \n';
+		
+		commandBarContents += buttonOverflowMenu;
+
+		$("div#container_command-bar").append(commandBarContents);
+
+		// add extra class for styling hook
+		$('div#app-container').addClass('gse-schedule-calendar');
+
+		// collapse filters
+		$('.collapsible').collapsible();
+
+
+
+
+
+
+
+
+
+
+
+		$("div#app-container").append("<div id=\"gse-schedule-card-dialog\"></div>");
+
+		$("div#gse-schedule-card-dialog").dialog({
+			autoOpen: false,
+			draggable: true,
+			modal: true,
+			show: {
+				effect: "bounce",
+				times: 2,
+				duration: 500
+			},
+			width: 400,
+		});
+
+
+		$("div.fc-toolbar, div.fc-view-container").fadeTo(1000, 1);
+
+		// listen for date filtering
+		$("a#filter_submit-button").click(function () {
+			var selectedStartYear = $("select#filter_year").val();
+			if (selectedStartYear == '') {
+				selectedStartYear = moment().isAfter(thisYear + '-06-30') ?
+					parseInt(thisYear) :
+					parseInt(thisYear) - 1;
+			}
+			window.location = "/sites/" + mData.siteToken + "/SitePages/App.aspx?f=cal&y=" + selectedStartYear;
+		});
+	};
+
+
+	// signups list
+	$.fn.RenderCommandBarAndMarkupForGSESignupsForHRAdminOrManager = function (targetID, relevantRole) {
+		var renderPrepStartTime = Date.now();
+
+		// first section is all about getting and setting filters and filter controls
+		// 		(and adjacent controls)
+		var startingYearOfFirstFiscalYear = 2018;
+		// var thisYear = 2022;
+		// var startingYearOfLastFiscalYear = moment('2022-09-08').isAfter(thisYear + '-06-30') ?
+		// 	parseInt(thisYear) :
+		// 	parseInt(thisYear) - 1;
+		var thisYear = $().ReturnFormattedDateTime('nowLocal', null, 'YYYY');
+		var startingYearOfLastFiscalYear = moment().isAfter(thisYear + '-06-30') ?
+			parseInt(thisYear) :
+			parseInt(thisYear) - 1;
+
+		var selectedManager;
+		var selectedStartYear = GetParamFromUrl(location.search, "y");
+		if (!selectedStartYear || selectedStartYear == '') {
+			selectedStartYear = moment().isAfter(thisYear + '-06-30') ?
+				parseInt(thisYear) :
+				parseInt(thisYear) - 1;
+		}
+		if (relevantRole === 'gseHRAdmin') {
+			selectedManager = GetParamFromUrl(location.search, "m");
+			if (!selectedManager || selectedManager == '') {
+				selectedManager = 'imiaoulis';
+			}
+		}
+		if (relevantRole === 'gseManager') {
+			// to do: use real user account below, not bwilson
+			selectedManager = 'bwilson';
+			// selectedManager = uData.account;
+		}
+		var managersWithDownline = $().ReturnManagersWithFullHierarchicalDownline();
+
+		$("#" + targetID).append('<div id="container_command-bar-and-data"> \n' +
+			'   <div id="container_command-bar"></div> \n' +
+			'   <div id="container_data"></div> \n' +
+			'</div>');
+
+		var commandBarContents = '';
+		if (relevantRole === 'gseHRAdmin') {
+			commandBarContents += '<div class="container_link">' +
+				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-jobs/SitePages/App.aspx">Jobs</a> \n' +
+				'</div>' +
+				'<div class="container_link">' +
+				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-schedule/SitePages/App.aspx?f=cal">Schedule Calendar</a> \n' +
+				'</div>' +
+				'<div class="container_link">' +
+				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-schedule/SitePages/App.aspx">Schedule List</a> \n' +
+				'</div>' +
+				'<div id="container_filter-controls-and-header"> \n' +
+				'   <div id="text_filter-controls" class="collapsible">Manager & Year</div> \n' +
+				'   <div id="container_filter-controls"> \n' +
+				'   	<div class="container_filter-control"> \n' +
+				'   		<label for="filter_year">Year</label><select id="filter_year" name="filter_year"> \n' +
+				'				' + $().ReturnFiscalYearSelectOptions(startingYearOfFirstFiscalYear, startingYearOfLastFiscalYear, true, selectedStartYear) + ' \n' +
+				'			</select>' +
+				'		</div>' +
+				'   	<div class="container_filter-control"> \n' +
+				'   		<label for="filter_manager">Manager</label><select id="filter_manager" name="filter_manager"> \n' +
+				'				' + $().ReturnManagerSelectOptions(managersWithDownline, selectedManager, true) + ' \n' +
+				'			</select>' +
+				'		</div>' +
+				'   	<div class="container_filter-control"> \n' +
+				'			<a id="filter_submit-button">Update</a>' +
+				'		</div>' +
+				'    </div> \n' +
+				'</div> \n';
+		}
+		if (relevantRole === 'gseManager') {
+			commandBarContents += '<div class="container_link">' +
+				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-jobs/SitePages/App.aspx">My and My Staff Members\' Jobs</a> \n' +
+				'</div>' +
+				'<div class="container_link">' +
+				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-schedule/SitePages/App.aspx?f=cal">Schedule Calendar</a> \n' +
+				'</div>' +
+				'<div class="container_link">' +
+				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-schedule/SitePages/App.aspx">Schedule List</a> \n' +
+				'</div>' +
+				'<div id="container_filter-controls-and-header"> \n' +
+				'   <div id="text_filter-controls" class="collapsible">Year</div> \n' +
+				'   <div id="container_filter-controls"> \n' +
+				'   	<div class="container_filter-control"> \n' +
+				'   		<label for="filter_year">Year</label><select id="filter_year" name="filter_year"> \n' +
+				'				' + $().ReturnFiscalYearSelectOptions(startingYearOfFirstFiscalYear, startingYearOfLastFiscalYear, true, selectedStartYear) + ' \n' +
+				'			</select>' +
+				'		</div>' +
+				'   	<div class="container_filter-control"> \n' +
+				'			<a id="filter_submit-button">Update</a>' +
+				'		</div>' +
+				'    </div> \n' +
+				'</div> \n';
+		}
+
+		$("div#container_command-bar").html(commandBarContents);
+		var augmentedSignups = $().ReturnSelectedAugmentedSignupsForGSESignupsOverviews(selectedStartYear);
+		var selectedManagerWithDownline;
+
+		managersWithDownline.forEach((manager) => {
+			if (manager.account === selectedManager) {
+				selectedManagerWithDownline = manager;
+			}
+		});
+
+		var allMarkup = '';
+		var departmentMarkups = {};
+
+		var downlineDivisionKeys = Object.keys(selectedManagerWithDownline.downline);
+		downlineDivisionKeys.forEach((divisionKey) => {
+			var downlineDepartmentKeys = Object.keys(selectedManagerWithDownline.downline[divisionKey]);
+			downlineDepartmentKeys.forEach((departmentKey) => {
+				var departmentKeySanitized =
+					ReplaceAll(' ', '-', ReplaceAll('&', 'and', ReplaceAll('/', 'and', ReplaceAll('\'', '', departmentKey))));
+				var departmentContainerID =
+					'department-content_' + departmentKeySanitized;
+				var departmentMarkup =
+					'<div class="department-container">' +
+					'<h3 class="department-name">' + departmentKey + '</h3> \n' +
+					'<div id="' + departmentContainerID + '" class="department-content"> \n' +
+					'	<table class="gse-signups-user-summary">' +
+					'		<thead><tr>' +
+					'			<th></th><th class="small-column-header">Total</th>' +
+					'			<th class="small-column-header">Credit Granted</th>' +
+					'			<th class="small-column-header">Credit Denied</th>' +
+					'			<th class="small-column-header">Credit Pending</th>' +
+					'		</tr></thead>' +
+					'		<tbody>';
+
+				if (selectedManagerWithDownline.downline[divisionKey]) {
+					if (selectedManagerWithDownline.department === departmentKey) {
+						selectedManagerWithDownline.downline[divisionKey][departmentKey].push(selectedManagerWithDownline);
+						selectedManagerWithDownline.downline[divisionKey][departmentKey].sort(CompareUsersByLastNameForArraySorting);
+					}
+					selectedManagerWithDownline.downline[divisionKey][departmentKey].forEach((user, index) => {
+						var evenOrOdd = ((index % 2) == 0) ? 'odd' : 'even';
+						var totalCount = 0;
+						var creditGrantedCount = 0;
+						var creditDeniedCount = 0;
+						var creditPendingCount = 0;
+						if (augmentedSignups[user.account]) {
+							totalCount = augmentedSignups[user.account].length;
+							augmentedSignups[user.account].forEach((signup) => {
+								switch (signup.formData['Request-Status']) {
+									case 'Signed Up':
+										creditPendingCount += 1;
+										break;
+									case 'Credit Denied':
+										creditDeniedCount += 1;
+										break;
+									case 'Credit Granted':
+										creditGrantedCount += 1;
+										break;
+								}
+							});
+						}
+						departmentMarkup += '<tr class="' + evenOrOdd + '">';
+						departmentMarkup += totalCount > 0 ?
+							'<td><button class="gse-signups-user-detail-control" data-user-account="' + user.account + '" data-user-name="' + user.displayName + '">' + user.displayName + '</button></td>' :
+							'<td>' + user.displayName + '</td>';
+						departmentMarkup += '<td><div class="small-in-column">' + totalCount + '</div></td>' +
+							'<td><div class="small-in-column">' + creditGrantedCount + '</div></td>' +
+							'<td><div class="small-in-column">' + creditDeniedCount + '</div></td>' +
+							'<td><div class="small-in-column">' + creditPendingCount + '</div></td>' +
+							'</tr>';
+					});
+				}
+				departmentMarkup += '</tbody></table></div></div>';
+				departmentMarkups[departmentKeySanitized] = departmentMarkup;
+			});
+		});
+		var departmentMarkupsKeys = Object.keys(departmentMarkups);
+		departmentMarkupsKeys.sort(CompareElementsForArraySorting);
+		departmentMarkupsKeys.forEach((departmentMarkupKey) => {
+			allMarkup += departmentMarkups[departmentMarkupKey];
+		});
+		$("#container_data").append(allMarkup);
+		$("#app-container").append('<div id="gse-signups-user-detail-dialog"></div>');
+		$("div#gse-signups-user-detail-dialog").dialog({
+			autoOpen: false,
+			draggable: true,
+			show: { effect: "bounce", times: 2, duration: 500 },
+			width: 800,
+			maxHeight: 600,
+		});
+		$("div#gse-signups-user-detail-dialog").append('<div id="gse-signups-user-detail-table-container" class="table-container"></div>');
+
+
+		// listen for button clicking
+		$("#" + targetID).on('click', 'button.gse-signups-user-detail-control', function (e) {
+			e.preventDefault();
+			var clickedUserAccount = $(this).attr('data-user-account');
+			var clickedUserName = $(this).attr('data-user-name');
+			$('div[aria-describedby="gse-signups-user-detail-dialog"] div.ui-dialog-titlebar span.ui-dialog-title').empty();
+			$('div[aria-describedby="gse-signups-user-detail-dialog"] div.ui-dialog-titlebar span.ui-dialog-title').append('<span class="gse-signups-user-detail-dialog-header">Signup Details for ' + clickedUserName + '</span>');
+
+			var detailsMarkup = '<div id="user-details_' + clickedUserAccount + '" class="user-content">' + '<table class="gse-signups-user-details"><thead><tr>' +
+				'<th>Signup ID</th>' +
+				'<th>Job Title</th>';
+			if (relevantRole === 'gseHRAdmin') {
+				detailsMarkup += '<th>Job Admin</th>';
+			}
+			if (relevantRole === 'gseManager') {
+				detailsMarkup += '<th>Reporting To</th>';
+			}
+			detailsMarkup += '<th>Date</th>' +
+				'<th>Start Time</th>' +
+				'<th>Schedule Length</th>' +
+				'<th>Status</th>' +
+				'</tr></thead><tbody>';
+			augmentedSignups[clickedUserAccount].forEach((signup, index) => {
+				var evenOrOdd = ((index % 2) == 0) ? 'odd' : 'even';
+				var isoStartDatetime = signup.Schedule.Date.slice(0, 10) + signup.Schedule.StartTime.slice(10, 19);
+				detailsMarkup += '<tr class="' + evenOrOdd + '">';
+
+				if (relevantRole === 'gseHRAdmin') {
+					detailsMarkup += '<td><a href="https://bmos.sharepoint.com/sites/hr-service-signups/SitePages/App.aspx?r=' + signup.SignupID + '" data-button-type="existingRequest" data-request-id="' + signup.SignupID + '" class="link_request-id">' + signup.SignupID + '</a></td>';
+				}
+				if (relevantRole === 'gseManager') {
+					detailsMarkup += '<td>' + signup.SignupID + '</td>';
+				}
+				detailsMarkup += '<td>' + signup.Job.JobTitle + '</td>' +
+					'<td>' + $().RenderPersonLinks(signup.Job.JobAdmin) + '</td>' +
+					'<td>' + $().ReturnFormattedDateTime(isoStartDatetime, null, 'MMMM D, YYYY') + '</td>' +
+					'<td>' + $().ReturnFormattedDateTime(isoStartDatetime, null, 'h:mm a') + '</td>' +
+					'<td>' + signup.Schedule.ShiftLength + '</td>' +
+					'<td>' + signup.formData['Request-Status'] + '</td>' +
+					'</tr>';
+			});
+			detailsMarkup += '</tbody></table></div>';
+
+			$("div#gse-signups-user-detail-table-container").append(detailsMarkup);
+			$("div#gse-signups-user-detail-dialog").dialog("open");
+		});
+
+		// collapse filters
+		$('.collapsible').collapsible();
+
+		console.log('render prep time = ' + (Date.now() - renderPrepStartTime) / 1000 + ' seconds');
+		// listen for date and manager filtering
+		$("a#filter_submit-button").click(function () {
+			var selectedStartYear = $("select#filter_year").val();
+			var selectedManager = $("select#filter_manager").val();
+			if (selectedStartYear == '') {
+				selectedStartYear = moment().isAfter(thisYear + '-06-30') ?
+					parseInt(thisYear) :
+					parseInt(thisYear) - 1;
+			}
+			if (selectedManager == '') {
+				selectedManager = 'imiaoulis';
+			}
+			window.location = "/sites/" + mData.siteToken + "/SitePages/App.aspx?m=" + selectedManager + "&y=" + selectedStartYear;
+		});
+	};
+
+
+	// signups list
+	$.fn.RenderCommandBarAndDataTablesForGSESignupsForJobAdminOrUser = function (targetID, relevantRole) {
+		var startingYearOfFirstFiscalYear = 2018;
+		var thisYear = 2022;
+		var startingYearOfLastFiscalYear = moment('2022-09-08').isAfter(thisYear + '-06-30') ?
+			parseInt(thisYear) :
+			parseInt(thisYear) - 1;
+		// var thisYear = $().ReturnFormattedDateTime('nowLocal', null, 'YYYY');
+		// var startingYearOfLastFiscalYear = moment().isAfter(thisYear + '-06-30') ?
+		// 	parseInt(thisYear) :
+		// 	parseInt(thisYear) - 1;
+
+		var selectedStartYear = GetParamFromUrl(location.search, "y");
+		if (!selectedStartYear || selectedStartYear == '') {
+			selectedStartYear = moment().isAfter(thisYear + '-06-30') ?
+				parseInt(thisYear) :
+				parseInt(thisYear) - 1;
+		}
+		var renderPrepStartTime = Date.now();
+
+		var tablesToRender = [];
+		// if (relevantRole === 'gseUserOnly') {
+		var augmentedSignupsPending = [];
+		var augmentedSignupsGranted = [];
+		var augmentedSignupsDenied = [];
+		var augmentedSignupsCancelled = [];
+		// get my signups
+		var gseSignupsArray = $().GetFieldsFromSpecifiedRows({
+			"select": [
+				{
+					"nameHere": "SignupID",
+					"nameInList": "ID"
+				}, {
+					"nameHere": "JobID",
+					"nameInList": "JobID"
+				}, {
+					"nameHere": "ScheduleID",
+					"nameInList": "ScheduleID"
+				}, {
+					"nameHere": "RequestStatus",
+					"nameInList": "RequestStatus"
+				}
+			],
+			"webURL": "https://bmos.sharepoint.com/sites/hr-service-signups",
+			"where": {
+				"field": "RequestedFor",
+				"type": "Text",
+				"value": uData.name,
+			}
+		});
+		// get all schedules
+		var gseSchedulesArray = $().GetFieldsFromAllRows({
+			'webURL': 'https://bmos.sharepoint.com/sites/hr-service-schedules',
+			'select': [
+				{
+					'nameHere': 'ScheduleID',
+					'nameInList': 'ID'
+				}, {
+					'nameHere': 'Date',
+					'nameInList': 'Date'
+				}, {
+					'nameHere': 'StartTime',
+					'nameInList': 'StartTime'
+				}, {
+					'nameHere': 'Location',
+					'nameInList': 'Location'
+				}, {
+					'nameHere': 'ShiftLength',
+					'nameInList': 'ShiftLength'
+				}
+			]
+		});
+		// get all jobs
+		var gseJobsArray = $().GetFieldsFromAllRows({
+			'webURL': 'https://bmos.sharepoint.com/sites/hr-service-jobs',
+			'select': [
+				{
+					'nameHere': 'JobID',
+					'nameInList': 'ID',
+				}, {
+					'nameHere': 'JobTitle',
+					'nameInList': 'JobTitle',
+				}
+			]
+		});
+		// mashup the data
+		gseSignupsArray.forEach((signup) => {
+			var signupCopy = signup;
+			gseJobsArray.forEach((job) => {
+				if (job.JobID === signup.JobID) {
+					signupCopy.Job = job;
+				}
+			});
+			gseSchedulesArray.forEach((schedule) => {
+				if (schedule.ScheduleID === signup.ScheduleID) {
+					signupCopy.Schedule = schedule;
+				}
+			});
+			switch (signup.RequestStatus) {
+				case 'Signed Up':
+					augmentedSignupsPending.push(signupCopy);
+					break;
+				case 'Credit Granted':
+					augmentedSignupsGranted.push(signupCopy);
+					break;
+				case 'Credit Denied':
+					augmentedSignupsDenied.push(signupCopy);
+					break;
+				case 'Cancelled':
+					augmentedSignupsCancelled.push(signupCopy);
+					break;
+			}
+		});
+
+
+		$("#" + targetID).append('<div id="container_command-bar-and-data"> \n' +
+			'   <div id="container_command-bar"></div> \n' +
+			'   <div id="container_data"></div> \n' +
+			'</div>');
+
+		var commandBarContents = '';
+
+		if (relevantRole === 'gseJobAdmin') {
+			commandBarContents +=
+				'<div class="container_link">' +
+				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-jobs/SitePages/App.aspx">Jobs</a> \n' +
+				'</div>' +
+				'<div class="container_link">' +
+				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-schedule/SitePages/App.aspx?f=cal">Schedule Calendar</a> \n' +
+				'</div>' +
+				'<div class="container_link">' +
+				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-schedule/SitePages/App.aspx">Schedule List</a> \n' +
+				'</div>' +
+				'<div id="container_filter-controls-and-header"> \n' +
+				'   <div id="text_filter-controls" class="collapsible">Year</div> \n' +
+				'   <div id="container_filter-controls"> \n' +
+				'   	<div class="container_filter-control"> \n' +
+				'   		<label for="filter_year">Year</label><select id="filter_year" name="filter_year"> \n' +
+				'				' + $().ReturnFiscalYearSelectOptions(startingYearOfFirstFiscalYear, startingYearOfLastFiscalYear, true, selectedStartYear) + ' \n' +
+				'			</select>' +
+				'		</div>' +
+				'   	<div class="container_filter-control"> \n' +
+				'			<a id="filter_submit-button">Update</a>' +
+				'		</div>' +
+				'    </div> \n' +
+				'</div> \n';
+		}
+		if (relevantRole === 'gseUserOnly') {
+			commandBarContents +=
+				'<div class="container_link">' +
+				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-schedule/SitePages/App.aspx?f=cal">GSE Signup Opportunities Calendar</a> \n' +
+				'</div>' +
+				'<div class="container_link">' +
+				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-schedule/SitePages/App.aspx">GSE Signup Opportunities List</a> \n' +
+				'</div>' +
+				'<div id="container_filter-controls-and-header"> \n' +
+				'   <div id="text_filter-controls" class="collapsible">Year</div> \n' +
+				'   <div id="container_filter-controls"> \n' +
+				'   	<div class="container_filter-control"> \n' +
+				'   		<label for="filter_year">Year</label><select id="filter_year" name="filter_year"> \n' +
+				'				' + $().ReturnFiscalYearSelectOptions(startingYearOfFirstFiscalYear, startingYearOfLastFiscalYear, true, selectedStartYear) + ' \n' +
+				'			</select>' +
+				'		</div>' +
+				'   	<div class="container_filter-control"> \n' +
+				'			<a id="filter_submit-button">Update</a>' +
+				'		</div>' +
+				'    </div> \n' +
+				'</div> \n';
+		}
+		$("div#container_command-bar").html(commandBarContents);
+
+		tablesToRender.push({
+			'tableTitle': 'Credit Pending',
+			'tableID': 'credit-pending',
+			'columns': [
+				{
+					'displayName': "Signup ID",
+					'dataName': "IDMarkup",
+				}, {
+					'displayName': "Job Title",
+					'dataName': "JobTitle",
+				}, {
+					'displayName': "Date",
+					'dataName': "Date",
+				}, {
+					'displayName': "Start Time",
+					'dataName': "StartTime",
+				}, {
+					'displayName': "Schedule Length",
+					'dataName': "ShiftLength",
+				}, {
+					'displayName': "Location",
+					'dataName': "Location",
+				}
+			],
+			'sortColAndOrder': [[3, 'asc'], [4, 'asc']],
+			'dataSource': augmentedSignupsPending
+		});
+		tablesToRender.push({
+			'tableTitle': 'Credit Granted',
+			'tableID': 'credit-granted',
+			'columns': [
+				{
+					'displayName': "Signup ID",
+					'dataName': "IDMarkup",
+				}, {
+					'displayName': "Job Title",
+					'dataName': "JobTitle",
+				}, {
+					'displayName': "Date",
+					'dataName': "Date",
+				}, {
+					'displayName': "Start Time",
+					'dataName': "StartTime",
+				}, {
+					'displayName': "Schedule Length",
+					'dataName': "ShiftLength",
+				}, {
+					'displayName': "Location",
+					'dataName': "Location",
+				}
+			],
+			'sortColAndOrder': [[3, 'asc'], [4, 'asc']],
+			'dataSource': augmentedSignupsGranted
+		});
+		tablesToRender.push({
+			'tableTitle': 'Credit Denied',
+			'tableID': 'credit-denied',
+			'columns': [
+				{
+					'displayName': "Signup ID",
+					'dataName': "IDMarkup",
+				}, {
+					'displayName': "Job Title",
+					'dataName': "JobTitle",
+				}, {
+					'displayName': "Date",
+					'dataName': "Date",
+				}, {
+					'displayName': "Start Time",
+					'dataName': "StartTime",
+				}, {
+					'displayName': "Schedule Length",
+					'dataName': "ShiftLength",
+				}, {
+					'displayName': "Location",
+					'dataName': "Location",
+				}
+			],
+			'sortColAndOrder': [[3, 'asc'], [4, 'asc']],
+			'dataSource': augmentedSignupsDenied
+		});
+		tablesToRender.push({
+			'tableTitle': 'Cancelled',
+			'tableID': 'cancelled',
+			'columns': [
+				{
+					'displayName': "Signup ID",
+					'dataName': "IDMarkup",
+				}, {
+					'displayName': "Job Title",
+					'dataName': "JobTitle",
+				}, {
+					'displayName': "Date",
+					'dataName': "Date",
+				}, {
+					'displayName': "Start Time",
+					'dataName': "StartTime",
+				}, {
+					'displayName': "Schedule Length",
+					'dataName': "ShiftLength",
+				}, {
+					'displayName': "Location",
+					'dataName': "Location",
+				}
+			],
+			'sortColAndOrder': [[3, 'asc'], [4, 'asc']],
+			'dataSource': augmentedSignupsCancelled
+		});
+		tablesToRender.forEach((t) => {
+			var thisTableConfig = $().ReturnDatatableSettingsAndDataForGSESignups(t, relevantRole);
 			if (!t.sortColAndOrder) {
 				t.sortColAndOrder = [0, 'asc'];
 			}
@@ -19850,6 +19730,7 @@
 		$('.collapsible').collapsible();
 
 		console.log('render prep time = ' + (Date.now() - renderPrepStartTime) / 1000 + ' seconds');
+		// }
 		// listen for date and manager filtering
 		$("a#filter_submit-button").click(function () {
 			var selectedStartYear = $("select#filter_year").val();
@@ -19864,7 +19745,138 @@
 
 
 
-	$.fn.ReturnAllAugmentedSchedulesForGSESchedulesOverviews = function(selectedStartYear) {
+	// - intermediary config of table settings and table data
+
+	// schedules list table config
+	$.fn.ReturnDatatableSettingsAndDataForGSESchedules = function (table, relevantRole) {
+
+		var tableConfig = {
+			'datatableFields': [],
+			'theadDetails': '',
+			'datatableData': [],
+		};
+
+		$.each(table.columns, function (i, column) {
+			tableConfig.datatableFields.push({
+				"data": column.dataName
+			});
+			tableConfig.theadDetails += "<th>" + column.displayName + "</th>";
+		});
+
+		table.dataSource.forEach((schedule) => {
+			var row = {};
+			var isoStartDatetime = schedule.formData['Date'].slice(0, 10) + schedule.formData['time-storage_StartTime'].slice(10, 19);
+			row.Date = $().ReturnSortableDate(isoStartDatetime, null, 'MMMM D, YYYY', 1);
+			row.IDMarkup = '<div class="small-in-column">' + schedule.ScheduleID + '</div>';
+			row.JobAdmin = $().RenderPersonLinks(schedule.Job.JobAdmin);
+			row.JobID = schedule.Job.JobID;
+			row.JobTitle = schedule.Job.JobTitle;
+			row.Location = schedule.formData['Location'];
+			row.NumberOfPositions = schedule.NumberOfPositions;
+			if (schedule.Signups) {
+				row.PositionsAvailable = '<div class="small-in-column">' + 
+					(schedule.NumberOfPositions - schedule.Signups.length) + '</div>';
+			} else {
+				row.PositionsAvailable = '<div class="small-in-column">' + 
+					schedule.NumberOfPositions + '</div>';
+			}
+			row.ShiftLength = schedule.formData['shiftlength_35-hours'] ? '3.5 hours' : '7.5 hours'
+			row.Signups = '<ul>';
+			if (schedule.Signups) {
+				schedule.Signups.forEach((signup) => {
+					row.Signups += '<li>' + $().RenderPersonLinks(signup.formData["Requested-For"]);
+					if (signup.formData['Request-Status'] === 'Credit Granted') {
+						row.Signups += ' - Credit Granted';
+					} else if (signup.formData['Request-Status'] === 'Credit Denied') {
+						row.Signups += ' - Credit Denied';
+					}
+					row.Signups += '</li>';
+				});
+			}
+			row.Signups += '</ul>';
+			row.StartTime = $().ReturnSortableDate(isoStartDatetime, null, 'h:mm a', 1);
+			if (schedule.Signups) {
+				schedule.Signups.forEach((signup) => {
+					var signupPersonArray = $().ReturnUserDataFromPersonOrGroupFieldString(signup.SignupPerson);
+					if (signupPersonArray[0].account === uData.account) {
+						row.mySignupID = signup.SignupID;
+					}
+				});
+			}
+			if (row.mySignupID) {
+				row.viewURL = '/sites/hr-service-signups/SitePages/App.aspx?r=' + row.mySignupID;
+			} else {
+				row.viewURL = '/sites/hr-service-signups/SitePages/App.aspx?r=0&gseScheduleID=' + schedule.ScheduleID;
+			}
+			if (relevantRole === 'gseHRAdmin') {
+				row.Options = '<div><a class="link-in-swf-datatable" ' +
+					'href="' + row.viewURL + '" ' +
+					'target="_blank">View</a></div>' +
+					'<div><a class="link-in-swf-datatable" ' +
+					'href="/sites/hr-service-schedules/SitePages/App.aspx?r=' + schedule.ScheduleID + '" ' +
+					'target="_blank">Edit</a></div >';
+			}
+			if (relevantRole === 'gseJobAdmin') {
+				row.Options = '<div><a class="link-in-swf-datatable" ' +
+					'href="' + row.viewURL + '" ' +
+					'target="_blank">View</a></div>';
+				var jobAdminArray = $().ReturnUserDataFromPersonOrGroupFieldString(schedule.Job.JobAdmin);
+				if (jobAdminArray[0].account === uData.account) {
+					row.Options += '<div><a class="link-in-swf-datatable" ' +
+						'href="/sites/hr-service-schedules/SitePages/App.aspx?r=' + schedule.ScheduleID + '" ' +
+						'target="_blank">Edit</a></div >';
+				}
+			}
+			if (relevantRole === 'gseManager' || relevantRole === 'gseUserOnly') {
+				row.ViewByIDLink =
+					'<a href="' + row.viewURL + '" class="link_request-id" target="_blank">' + 
+					schedule.ScheduleID + '</a>';
+			}
+			tableConfig.datatableData.push(row);
+		});
+		return tableConfig;
+	};
+
+
+	// signups list table config
+	$.fn.ReturnDatatableSettingsAndDataForGSESignups = function (table, relevantRole) {
+
+		var tableConfig = {
+			'datatableFields': [],
+			'theadDetails': '',
+			'datatableData': [],
+		};
+
+		$.each(table.columns, function (i, column) {
+			tableConfig.datatableFields.push({
+				"data": column.dataName
+			});
+			tableConfig.theadDetails += "<th>" + column.displayName + "</th>";
+		});
+		table.dataSource.forEach((signup) => {
+			var row = {};
+			var isoStartDatetime = signup.Schedule.Date.slice(0, 10) + signup.Schedule.StartTime.slice(10, 19);
+			row.Date = $().ReturnSortableDate(isoStartDatetime, null, 'MMMM D, YYYY', 1);
+			row.StartTime = $().ReturnSortableDate(isoStartDatetime, null, 'h:mm a', 1);
+			row.IDMarkup = "<a href = \"" + mData.fullSiteBaseURL + "/SitePages/App.aspx?r=" + signup.SignupID +
+				"\" data-button-type=\"existingRequest\" " +
+				"data-request-id=\"" + signup.SignupID + "\"" +
+				"class=\"link_request-id\">" +
+				signup.SignupID + "</a>";
+			row.JobTitle = signup.Job.JobTitle;
+			row.ShiftLength = signup.Schedule.ShiftLength;
+			row.Location = signup.Schedule.Location;
+			tableConfig.datatableData.push(row);
+		});
+		return tableConfig;
+	};
+
+
+
+	// - raw data queries + mashup
+
+	// schedules list data
+	$.fn.ReturnSelectedAugmentedSchedulesForGSESchedulesOverviews = function(selectedStartYear) {
 
 		var beginningOfFiscalYear = selectedStartYear + '-07-01T00:00:00Z';
 		var endOfFiscalYear = (parseInt(selectedStartYear) + 1) + '-06-30T00:00:00Z';
@@ -19926,7 +19938,7 @@
 				}
 			]
 		});
-		// get all signups
+		// get all relevant signups
 		var gseSignupsArray = $().GetFieldsFromSpecifiedRows({
 			"webURL": "https://bmos.sharepoint.com/sites/hr-service-signups",
 			"select": [
@@ -19954,7 +19966,7 @@
 				}
 			}
 		});
-		// mashup the data
+		// augment schedules with job and signup data
 		gseSchedulesArray.forEach((schedule) => {
 			var scheduleCopy = schedule;
 			gseJobsArray.forEach((job) => {
@@ -19978,16 +19990,269 @@
 				augmentedSchedules.cancelled.push(scheduleCopy);
 			}
 		});
-		// return
+		// return the augmented schedules
 		return augmentedSchedules;
 	};
 
 
+	$.fn.ReturnSelectedAugmentedSchedulesForGSESchedulesCalendar = function (selectedStartYear, nowAsISOLocal) {
 
-	$.fn.ReturnAllAugmentedSignupsForGSESignupsOverviews = function(selectedStartYear) {
+		var beginningOfFiscalYear = selectedStartYear + '-07-01T00:00:00Z';
+		var endOfFiscalYear = (parseInt(selectedStartYear) + 1) + '-06-30T00:00:00Z';
+		var augmentedSchedules = [];
+
+		// get specified fiscal year's schedules
+		var gseSchedulesArray = $().GetFieldsFromSpecifiedRows({
+			'webURL': 'https://bmos.sharepoint.com/sites/hr-service-schedules',
+			'select': [
+				{
+					'nameHere': 'ScheduleID',
+					'nameInList': 'ID'
+				}, {
+					'nameHere': 'JobID',
+					'nameInList': 'JobID'
+				}, {
+					'nameHere': 'NumberOfPositions',
+					'nameInList': 'NumberOfPositions'
+				}, {
+					'nameHere': 'formData',
+					'nameInList': 'AllRequestData'
+				}
+			],
+			"where": {
+				"ands": [
+					{
+						"field": "Date",
+						"type": "DateTime",
+						"operator": "Geq",
+						"value": beginningOfFiscalYear,
+					}, {
+						"field": "Date",
+						"type": "DateTime",
+						"operator": "Leq",
+						"value": endOfFiscalYear,
+					}
+				]
+			}
+		});
+		// get all jobs
+		var gseJobsArray = $().GetFieldsFromAllRows({
+			'webURL': 'https://bmos.sharepoint.com/sites/hr-service-jobs',
+			'select': [
+				{
+					'nameHere': 'JobID',
+					'nameInList': 'ID',
+				}, {
+					'nameHere': 'JobTitle',
+					'nameInList': 'JobTitle',
+				}, {
+					'nameHere': 'JobAdmin',
+					'nameInList': 'JobAdmin'
+				}, {
+					'nameHere': 'formData',
+					'nameInList': 'AllRequestData'
+				}
+			]
+		});
+		// get all relevant signups
+		var gseSignupsArray = $().GetFieldsFromSpecifiedRows({
+			"webURL": "https://bmos.sharepoint.com/sites/hr-service-signups",
+			"select": [
+				{
+					"nameHere": "SignupID",
+					"nameInList": "ID"
+				}, {
+					"nameHere": "SignupPerson",
+					"nameInList": "RequestedFor"
+				}, {
+					"nameHere": "ScheduleID",
+					"nameInList": "ScheduleID"
+				}, {
+					'nameHere': 'formData',
+					'nameInList': 'AllRequestData'
+				}
+			],
+			"where": {
+				"field": "ScheduleID",
+				"type": "Text",
+				"operator": "Eq",
+				"values": {
+					"sourceArray": gseSchedulesArray,
+					"property": "ScheduleID"
+				}
+			}
+		});
+		// reconfig schedules and augment with job and signup data
+		gseSchedulesArray.forEach((schedule) => {
+			var jobThisSchedule = {};
+			var signupsThisSchedule = [];
+			gseJobsArray.forEach((job) => {
+				if (job.JobID === schedule.JobID) {
+					jobThisSchedule = job;
+				}
+			});
+			gseSignupsArray.forEach((signup) => {
+				if (signup.ScheduleID === schedule.ScheduleID) {
+					signupsThisSchedule.push(signup);
+				}
+			});
+
+			var isoStartDatetime = schedule.formData['Date'].slice(0, 10) + schedule.formData['time-storage_StartTime'].slice(10, 19);
+			var isoEndDatetime = schedule.formData['shiftlength_35-hours'] ?
+				moment(isoStartDatetime).add(3.5, 'hours') :
+				moment(isoStartDatetime).add(7, 'hours');
+			var length = schedule.formData['shiftlength_35-hours'] ? '3.5 hours' : '7 hours';
+			var formattedStartTime =
+				$().ReturnFormattedDateTime(isoStartDatetime, null, "h:mma", 0);
+			formattedStartTime = formattedStartTime.slice(0, formattedStartTime.length - 1);
+			var formattedEndTime = $().ReturnFormattedDateTime(isoEndDatetime, null, "h:mma", 0);
+			formattedEndTime = formattedEndTime.slice(0, formattedEndTime.length - 1);
+			var formattedDate = $().ReturnFormattedDateTime(isoStartDatetime, null, "ddd, M/D/YYYY", 0);
+			var isInFuture = moment(nowAsISOLocal).isBefore(isoStartDatetime) ?
+				true : false;
+
+
+			var eventItem = {
+				'eventID': schedule.ScheduleID,
+				'start': isoStartDatetime,
+				'end': isoEndDatetime,
+				'title': formattedStartTime + ' | ' + jobThisSchedule.JobTitle,
+
+				'jobID': schedule.JobID,
+				'scheduleID': schedule.ScheduleID,
+				'formattedStartTime': formattedStartTime,
+				'formattedEndTime': formattedEndTime,
+				'formattedDate': formattedDate,
+				'isInFuture': isInFuture,
+				'jobAdmin': jobThisSchedule.JobAdmin,
+				'length': length,
+				'location': schedule.formData['Location'],
+				'jobTitle': jobThisSchedule.JobTitle,
+				'jobDescription': '<p>' + ReplaceAll('%0A', '</p><p>', ReplaceAll('%0A%0A', '%0A', jobThisSchedule.formData['Job-Description'])) + '</p>',
+				'quantitySignups': signupsThisSchedule.length,
+				'quantityPositions': schedule.NumberOfPositions,
+				'jobURL': '/sites/hr-service-jobs/SitePages/App.aspx?r=' + schedule.JobID,
+				'scheduleURL': '/sites/hr-service-schedules/SitePages/App.aspx?r=' + schedule.ScheduleID,
+			};
+
+
+			// console.log('signupsThisSchedule');
+			// console.log(signupsThisSchedule);
+			// console.log('uData');
+			// console.log(uData);
+			// console.log('signupPersons');
+			signupsThisSchedule.forEach((signup) => {
+				var signupPersonArray = $().ReturnUserDataFromPersonOrGroupFieldString(signup.SignupPerson);
+				if (signupPersonArray[0].account === uData.account) {
+					eventItem.mySignupID = signup.SignupID;
+				}
+			});
+
+			if (eventItem.mySignupID) {
+				eventItem.mySignupURL = '/sites/hr-service-signups/SitePages/App.aspx?r=' + eventItem.mySignupID;
+			} else {
+				eventItem.signupURL = '/sites/hr-service-signups/SitePages/App.aspx?r=0&gseScheduleID=' + schedule.ScheduleID;
+			}
+
+			augmentedSchedules.push(eventItem);
+		});
+		// return the augmented schedules
+		return augmentedSchedules;
+	};
+
+
+	// signups data
+	$.fn.ReturnSelectedAugmentedSignupsForGSESignupsOverviews = function(selectedStartYear) {
 		// get, mash up, all GSE data
 		var augmentedSignups = {};
-		// get all signups
+		var beginningOfFiscalYear = selectedStartYear + '-07-01T00:00:00Z';
+		var endOfFiscalYear = (parseInt(selectedStartYear) + 1) + '-06-30T00:00:00Z';
+
+		// get specified fiscal year's schedules
+		var gseSchedulesArray = $().GetFieldsFromSpecifiedRows({
+			'webURL': 'https://bmos.sharepoint.com/sites/hr-service-schedules',
+			'select': [
+				{
+					'nameHere': 'ScheduleID',
+					'nameInList': 'ID'
+				}, {
+					'nameHere': 'Date',
+					'nameInList': 'Date'
+				}, {
+					'nameHere': 'StartTime',
+					'nameInList': 'StartTime'
+				}, {
+					'nameHere': 'Location',
+					'nameInList': 'Location'
+				}, {
+					'nameHere': 'ShiftLength',
+					'nameInList': 'ShiftLength'
+				}
+			],
+			"where": {
+				"ands": [
+					{
+						"field": "Date",
+						"type": "DateTime",
+						"operator": "Geq",
+						"value": beginningOfFiscalYear,
+					}, {
+						"field": "Date",
+						"type": "DateTime",
+						"operator": "Leq",
+						"value": endOfFiscalYear,
+					}
+				]
+			}
+		});
+		// get all jobs
+		var gseJobsArray = $().GetFieldsFromAllRows({
+			'webURL': 'https://bmos.sharepoint.com/sites/hr-service-jobs',
+			'select': [
+				{
+					'nameHere': 'JobID',
+					'nameInList': 'ID',
+				}, {
+					'nameHere': 'JobTitle',
+					'nameInList': 'JobTitle',
+				}, {
+					'nameHere': 'JobAdmin',
+					'nameInList': 'JobAdmin'
+				}
+			]
+		});
+		// get all relevant signups
+		var gseSignupsArray = $().GetFieldsFromSpecifiedRows({
+			"webURL": "https://bmos.sharepoint.com/sites/hr-service-signups",
+			"select": [
+				{
+					"nameHere": "SignupID",
+					"nameInList": "ID"
+				}, {
+					"nameHere": "SignupPerson",
+					"nameInList": "RequestedFor"
+				}, {
+					"nameHere": "ScheduleID",
+					"nameInList": "ScheduleID"
+				}, {
+					"nameHere": "JobID",
+					"nameInList": "JobID"
+				}, {
+					'nameHere': 'formData',
+					'nameInList': 'AllRequestData'
+				}
+			],
+			"where": {
+				"field": "ScheduleID",
+				"type": "Text",
+				"operator": "Eq",
+				"values": {
+					"sourceArray": gseSchedulesArray,
+					"property": "ScheduleID"
+				}
+			}
+		});
+		/* // get specified fiscal year's schedules
 		var gseSignupsArray = $().GetFieldsFromAllRows({
 			"webURL": "https://bmos.sharepoint.com/sites/hr-service-signups",
 			"select": [
@@ -20030,23 +20295,7 @@
 					'nameInList': 'ShiftLength'
 				}
 			]
-		});
-		// get all jobs
-		var gseJobsArray = $().GetFieldsFromAllRows({
-			'webURL': 'https://bmos.sharepoint.com/sites/hr-service-jobs',
-			'select': [
-				{
-					'nameHere': 'JobID',
-					'nameInList': 'ID',
-				}, {
-					'nameHere': 'JobTitle',
-					'nameInList': 'JobTitle',
-				}, {
-					'nameHere': 'JobAdmin',
-					'nameInList': 'JobAdmin'
-				}
-			]
-		});
+		}); */
 		// mashup the data
 		gseSignupsArray.forEach((signup) => {
 			var signupCopy = signup;
@@ -20071,558 +20320,646 @@
 		return augmentedSignups;
 	};
 
+	
 
 
-	$.fn.ReturnFiscalYearSelectOptions = function (startingYearOfFirstFiscalYear, startingYearOfLastFiscalYear, startWithBlank, startingYearOfSelectedFiscalYear) {
-		// four-digit year numbers; i.e., params of 2018 and 2018 signifies one year
-		var optionsMarkup = '';
-		var optionStartingYear;
-		var optionEndingYear;
-		
-		if (startWithBlank) {
-			optionsMarkup += '<option value=""></option>';
-		}
-		for (
-			optionStartingYear = startingYearOfFirstFiscalYear;
-			optionStartingYear <= startingYearOfLastFiscalYear;
-			optionStartingYear++
-		) {
-			var selectedAttribute = '';
-			optionEndingYear = optionStartingYear + 1;
-			if (startingYearOfSelectedFiscalYear && startingYearOfSelectedFiscalYear == optionStartingYear) {
-				selectedAttribute = ' selected ';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	// ---- DATATABLES
+
+
+	$.fn.RenderAllDataTables = function (sections, targetID) {
+
+		$.each(sections.tables, function (i, t) {
+
+			// var setupStartTime = Date.now();
+
+			var columns = [];
+			var query = '';
+			var camlViewFields = "";
+			var lookupFields = [];
+			var datatableFields = [];
+			var theadDetails = "";
+
+			if (typeof (t.customColumns) != "undefined") {
+				columns = t.customColumns;
+			} else {
+				columns = sections.commonColumns;
 			}
-			optionsMarkup += '<option value="' + optionStartingYear + 
-				'"' + selectedAttribute + '>July 1, ' + optionStartingYear + 
-				' - June 30, ' + optionEndingYear + 
-				'</option>';
-		} 
-		return optionsMarkup;
-	};
 
-
-
-	function CompareUsersByLastNameForArraySorting(a, b) {
-		if (a.lastName < b.lastName)
-			return -1;
-		if (a.lastName > b.lastName)
-			return 1;
-		return 0;
-	}
-
-
-	function CompareElementsForArraySorting(a, b) {
-		if (a < b)
-			return -1;
-		if (a > b)
-			return 1;
-		return 0;
-	}
-
-
-
-	$.fn.ReturnManagerSelectOptions = function (managersArray, selectedManagerAccount, startWithBlank) {
-		var managersMarkup = '';
-		managersArray.sort(CompareUsersByLastNameForArraySorting);
-		if (startWithBlank) {
-			managersMarkup += '<option value=""></option>';
-		}
-		managersArray.forEach((manager) => {
-			var selectedAttribute = '';
-			if (manager.account === selectedManagerAccount) {
-				selectedAttribute = ' selected ';
+			if (typeof (t.sortColAndOrder) == 'undefined') {
+				t.sortColAndOrder = [0, 'asc'];
 			}
-			managersMarkup += '<option value="' + manager.account + '"' + 
-				selectedAttribute + '>' + manager.displayName + '</option>';
-		});
-		return managersMarkup;
-	};
 
-
-
-	$.fn.RenderAllSimpleMarkupForGSESignupsForHRAdminOrManager = function (targetID, relevantRole) {
-		var renderPrepStartTime = Date.now();
-
-		// first section is all about getting and setting filters and filter controls
-		// 		(and adjacent controls)
-		var startingYearOfFirstFiscalYear = 2018;
-		var thisYear = $().ReturnFormattedDateTime('nowLocal', null, 'YYYY');
-		var startingYearOfLastFiscalYear = moment().isAfter(thisYear + '-06-30') ?
-			parseInt(thisYear) :
-			parseInt(thisYear) - 1;
-
-		var selectedManager;
-		var selectedStartYear = GetParamFromUrl(location.search, "y");
-		if (!selectedStartYear || selectedStartYear == '') {
-			selectedStartYear = moment().isAfter(thisYear + '-06-30') ?
-				parseInt(thisYear) :
-				parseInt(thisYear) - 1;
-		}
-		if (relevantRole === 'gseHRAdmin') {
-			selectedManager = GetParamFromUrl(location.search, "m");
-			if (!selectedManager || selectedManager == '') {
-				selectedManager = 'imiaoulis';
-			}
-		}
-		if (relevantRole === 'gseManager') {
-			// to do: use real user account below, not bwilson
-			selectedManager = 'bwilson';
-			// selectedManager = uData.account;
-		}
-		var managersWithDownline = $().ReturnManagersWithFullHierarchicalDownline();
-
-		$("#" + targetID).append('<div id="container_command-bar-and-data"> \n' +
-			'   <div id="container_command-bar"></div> \n' +
-			'   <div id="container_data"></div> \n' +
-			'</div>');
-
-		var commandBarContents = '';
-		if (relevantRole === 'gseHRAdmin') {
-			commandBarContents += '<div class="container_link">' +
-				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-jobs/SitePages/App.aspx">Jobs</a> \n' +
-				'</div>' +
-				'<div class="container_link">' +
-				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-schedule/SitePages/App.aspx?f=cal">Schedule Calendar</a> \n' +
-				'</div>' +
-				'<div class="container_link">' +
-				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-schedule/SitePages/App.aspx">Schedule List</a> \n' +
-				'</div>' +
-				'<div id="container_filter-controls-and-header"> \n' +
-				'   <div id="text_filter-controls" class="collapsible">Manager & Year</div> \n' +
-				'   <div id="container_filter-controls"> \n' +
-				'   	<div class="container_filter-control"> \n' +
-				'   		<label for="filter_year">Year</label> \n' +
-				'   		<select id="filter_year" name="filter_year"> \n' +
-				'				' + $().ReturnFiscalYearSelectOptions(startingYearOfFirstFiscalYear, startingYearOfLastFiscalYear, true, selectedStartYear) + ' \n' +
-				'			</select>' +
-				'		</div>' +
-				'   	<div class="container_filter-control"> \n' +
-				'   		<label for="filter_manager">Manager</label> \n' +
-				'   		<select id="filter_manager" name="filter_manager"> \n' +
-				'				' + $().ReturnManagerSelectOptions(managersWithDownline, selectedManager, true) + ' \n' +
-				'			</select>' +
-				'		</div>' +
-				'   	<div class="container_filter-control"> \n' +
-				'			<a id="filter_submit-button">Update</a>' +
-				'		</div>' +
-				'    </div> \n' +
-				'</div> \n';
-		}
-		if (relevantRole === 'gseManager') {
-			commandBarContents += '<div class="container_link">' +
-				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-jobs/SitePages/App.aspx">My and My Staff Members\' Jobs</a> \n' +
-				'</div>' +
-				'<div class="container_link">' +
-				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-schedule/SitePages/App.aspx?f=cal">Schedule Calendar</a> \n' +
-				'</div>' +
-				'<div class="container_link">' +
-				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-schedule/SitePages/App.aspx">Schedule List</a> \n' +
-				'</div>' +
-				'<div id="container_filter-controls-and-header"> \n' +
-				'   <div id="text_filter-controls" class="collapsible">Year</div> \n' +
-				'   <div id="container_filter-controls"> \n' +
-				'   	<div class="container_filter-control"> \n' +
-				'   		<label for="filter_year">Year</label> \n' +
-				'   		<select id="filter_year" name="filter_year"> \n' +
-				'				' + $().ReturnFiscalYearSelectOptions(startingYearOfFirstFiscalYear, startingYearOfLastFiscalYear, true, selectedStartYear) + ' \n' +
-				'			</select>' +
-				'		</div>' +
-				'   	<div class="container_filter-control"> \n' +
-				'			<a id="filter_submit-button">Update</a>' +
-				'		</div>' +
-				'    </div> \n' +
-				'</div> \n';
-		}
-			
-		$("div#container_command-bar").html(commandBarContents);
-		var augmentedSignups = $().ReturnAllAugmentedSignupsForGSESignupsOverviews(selectedStartYear);
-		var selectedManagerWithDownline;
-
-		managersWithDownline.forEach((manager) => {
-			if (manager.account === selectedManager) {
-				selectedManagerWithDownline = manager;
-			}
-		});
-
-		console.log(selectedManagerWithDownline);
-
-		var allMarkup = '';
-		var departmentMarkups = {};
-
-		var downlineDivisionKeys = Object.keys(selectedManagerWithDownline.downline);
-		downlineDivisionKeys.forEach((divisionKey) => {
-			var downlineDepartmentKeys = Object.keys(selectedManagerWithDownline.downline[divisionKey]);
-			downlineDepartmentKeys.forEach((departmentKey) => {
-				var departmentKeySanitized =
-					ReplaceAll(' ', '-', ReplaceAll('&', 'and', ReplaceAll('/', 'and', ReplaceAll('\'', '', departmentKey))));
-				var departmentContainerID =
-					'department-content_' + departmentKeySanitized;
-				var departmentMarkup =
-					'<div class="department-container">' + 
-					'<h3 class="department-name">' + departmentKey + '</h3> \n' +
-					'<div id="' + departmentContainerID + '" class="department-content"> \n' + 
-					'	<table class="gse-signups-user-summary">' + 
-					'		<thead><tr>' +
-					'			<th></th><th class="small-column-header">Total</th>' + 
-					'			<th class="small-column-header">Credit Granted</th>' + 
-					'			<th class="small-column-header">Credit Denied</th>' + 
-					'			<th class="small-column-header">Credit Pending</th>' + 
-					'		</tr></thead>' + 
-					'		<tbody>';
-
-				if (selectedManagerWithDownline.downline[divisionKey]) {
-					if (selectedManagerWithDownline.department === departmentKey) {
-						selectedManagerWithDownline.downline[divisionKey][departmentKey].push(selectedManagerWithDownline);
-						selectedManagerWithDownline.downline[divisionKey][departmentKey].sort(CompareUsersByLastNameForArraySorting);
-					}
-					selectedManagerWithDownline.downline[divisionKey][departmentKey].forEach((user, index) => {
-						var evenOrOdd = ((index % 2) == 0) ? 'odd' : 'even';
-						var totalCount = 0;
-						var creditGrantedCount = 0;
-						var creditDeniedCount = 0;
-						var creditPendingCount = 0;
-						if (augmentedSignups[user.account]) {
-							totalCount = augmentedSignups[user.account].length;
-							augmentedSignups[user.account].forEach((signup) => {
-								switch (signup.formData['Request-Status']) {
-									case 'Signed Up':
-										creditPendingCount += 1;
-										break;
-									case 'Credit Denied':
-										creditDeniedCount += 1;
-										break;
-									case 'Credit Granted':
-										creditGrantedCount += 1;
-										break;
-								}
-							});
+			if (typeof (t.webURL) == 'undefined') {
+				mData = $.extend(
+					$().GetFieldsFromOneRow({
+						"listName": "ComponentLog",
+						"select": [{
+							"nameHere": "uriRoot",
+							"nameInList": "URIRoot",
+							"linkField": 1
+						}],
+						"where": {
+							"field": "ComponentID",
+							"type": "Number",
+							"value": mData.componentID,
 						}
-						departmentMarkup += '<tr class="' + evenOrOdd + '">';
-						departmentMarkup += totalCount > 0 ?
-							'<td><button class="gse-signups-user-detail-control" data-user-account="' + user.account + '" data-user-name="' + user.displayName + '">' + user.displayName + '</button></td>' : 
-							'<td><div class="small-in-column">' + user.displayName + '</div></td>';
-						departmentMarkup += '<td><div class="small-in-column">' + totalCount + '</div></td>' +
-							'<td><div class="small-in-column">' + creditGrantedCount + '</div></td>' +
-							'<td><div class="small-in-column">' + creditDeniedCount + '</div></td>' +
-							'<td><div class="small-in-column">' + creditPendingCount + '</div></td>' +
-							'</tr>';
+					}),
+					mData
+				);
+
+				t.webURL = StrInStr(mData.uriRoot, '/Lists/SWFList', 1);
+			}
+
+			$.each(columns, function (i, column) {
+				if (column.internalName != "") {
+					camlViewFields += "<FieldRef Name='" + column.internalName + "' />";
+					datatableFields.push({
+						"data": column.internalName
 					});
 				}
-				departmentMarkup += '</tbody></table></div></div>';
-				departmentMarkups[departmentKeySanitized] = departmentMarkup;
-			});
-		});
-		var departmentMarkupsKeys = Object.keys(departmentMarkups);
-		departmentMarkupsKeys.sort(CompareElementsForArraySorting);
-		departmentMarkupsKeys.forEach((departmentMarkupKey) => {
-			allMarkup += departmentMarkups[departmentMarkupKey];
-		});
-		$("#container_data").append(allMarkup);
-		$("#app-container").append('<div id="gse-signups-user-detail-dialog"></div>');
-		$("div#gse-signups-user-detail-dialog").dialog({
-			autoOpen: false,
-			draggable: true,
-			show: { effect: "bounce", times: 2, duration: 500 },
-			width: 800,
-			maxHeight: 600,
-		});
-		$("div#gse-signups-user-detail-dialog").append('<div id="gse-signups-user-detail-table-container" class="table-container"></div>');
-		
-		
-		// listen for button clicking
-		$("#" + targetID).on('click', 'button.gse-signups-user-detail-control', function (e) {
-			e.preventDefault();
-			var clickedUserAccount = $(this).attr('data-user-account');
-			var clickedUserName = $(this).attr('data-user-name');
-			$('div[aria-describedby="gse-signups-user-detail-dialog"] div.ui-dialog-titlebar span.ui-dialog-title').empty();
-			$('div[aria-describedby="gse-signups-user-detail-dialog"] div.ui-dialog-titlebar span.ui-dialog-title').append('<span class="gse-signups-user-detail-dialog-header">Signup Details for ' + clickedUserName + '</span>');
-
-			var detailsMarkup = '<div id="user-details_' + clickedUserAccount + '" class="user-content">' + '<table class="gse-signups-user-details"><thead><tr>' +
-				'<th>Signup ID</th>' +
-				'<th>Job Title</th>';
-			if (relevantRole === 'gseHRAdmin') {
-				detailsMarkup += '<th>Job Admin</th>';
-			}
-			if (relevantRole === 'gseManager') {
-				detailsMarkup += '<th>Reporting To</th>';
-			}
-			detailsMarkup += '<th>Date</th>' + 
-				'<th>Start Time</th>' +
-				'<th>Schedule Length</th>' +
-				'<th>Status</th>' +
-				'</tr></thead><tbody>';
-			augmentedSignups[clickedUserAccount].forEach((signup, index) => {
-				var evenOrOdd = ((index % 2) == 0) ? 'odd' : 'even';
-				var isoStartDatetime = signup.Schedule.Date.slice(0, 10) + signup.Schedule.StartTime.slice(10, 19);
-				detailsMarkup += '<tr class="' + evenOrOdd + '">';
-
-				if (relevantRole === 'gseHRAdmin') {
-					detailsMarkup += '<td><a href="https://bmos.sharepoint.com/sites/hr-service-signups/SitePages/App.aspx?r=' + signup.SignupID + '" data-button-type="existingRequest" data-request-id="' + signup.SignupID + '" class="link_request-id">' + signup.SignupID + '</a></td>';
+				if (column.displayName != "") {
+					theadDetails += "<th>" + column.displayName + "</th>";
 				}
-				if (relevantRole === 'gseManager') {
-					detailsMarkup += '<td>' + signup.SignupID + '</td>';
-				}
-				detailsMarkup += '<td>' + signup.Job.JobTitle + '</td>' +
-					'<td>' + $().RenderPersonLinks(signup.Job.JobAdmin) + '</td>' +
-					'<td>' + $().ReturnFormattedDateTime(isoStartDatetime, null, 'MMMM D, YYYY') + '</td>' +
-					'<td>' + $().ReturnFormattedDateTime(isoStartDatetime, null, 'h:mm a') + '</td>' +
-					'<td>' + signup.Schedule.ShiftLength + '</td>' +
-					'<td>' + signup.formData['Request-Status'] + '</td>' +
-					'</tr>';
-			});
-			detailsMarkup += '</tbody></table></div>';								
-
-			$("div#gse-signups-user-detail-table-container").append(detailsMarkup);
-			$("div#gse-signups-user-detail-dialog").dialog("open");
-		});
-
-		// collapse filters
-		$('.collapsible').collapsible();
-
-		console.log('render prep time = ' + (Date.now() - renderPrepStartTime) / 1000 + ' seconds');
-		// listen for date and manager filtering
-		$("a#filter_submit-button").click(function () {
-			var selectedStartYear = $("select#filter_year").val();
-			var selectedManager = $("select#filter_manager").val();
-			if (selectedStartYear == '') {
-				selectedStartYear = moment().isAfter(thisYear + '-06-30') ?
-					parseInt(thisYear) :
-					parseInt(thisYear) - 1;
-			}
-			if (selectedManager == '') {
-				selectedManager = 'imiaoulis';
-			}
-			window.location = "/sites/" + mData.siteToken + "/SitePages/App.aspx?m=" + selectedManager + "&y=" + selectedStartYear;
-		});
-	};
-
-
-
-	$.fn.RenderAllDataTablesForGSESignupsForUsers = function (targetID, relevantRole) {
-
-		var renderPrepStartTime = Date.now();
-
-		var tablesToRender = [];
-		if (relevantRole === 'gseUserOnly') {
-			var augmentedSignupsPending = [];
-			var augmentedSignupsGranted = [];
-			var augmentedSignupsDenied = [];
-			var augmentedSignupsCancelled = [];
-			// get my signups
-			var gseSignupsArray = $().GetFieldsFromSpecifiedRows({
-				"select": [
-					{
-						"nameHere": "SignupID",
-						"nameInList": "ID"
-					}, {
-						"nameHere": "JobID",
-						"nameInList": "JobID"
-					}, {
-						"nameHere": "ScheduleID",
-						"nameInList": "ScheduleID"
-					}, {
-						"nameHere": "RequestStatus",
-						"nameInList": "RequestStatus"
-					}
-				],
-				"webURL": "https://bmos.sharepoint.com/sites/hr-service-signups",
-				"where": {
-					"field": "RequestedFor",
-					"type": "Text",
-					"value": uData.name,
+				if (column.internalName != "" && typeof (column.formLink) !== "undefined") {
+					lookupFields.push({
+						"internalName": column.internalName,
+						"anchorNoHref": 0,
+						"formLink": column.formLink,
+						"userName": 0,
+						"friendlyFormatOnLoad": 0,
+						"groupingFriendlyFormatOnLoad": 0
+					});
+				} else if (column.internalName != "" && typeof (column.anchorNoHref) !== "undefined") {
+					lookupFields.push({
+						"internalName": column.internalName,
+						"anchorNoHref": column.anchorNoHref,
+						"formLink": 0,
+						"userName": 0,
+						"friendlyFormatOnLoad": 0,
+						"groupingFriendlyFormatOnLoad": 0
+					});
+				} else if (column.internalName != "" && typeof (column.userName) !== "undefined") {
+					lookupFields.push({
+						"internalName": column.internalName,
+						"anchorNoHref": 0,
+						"formLink": 0,
+						"userName": column.userName,
+						"friendlyFormatOnLoad": 0,
+						"groupingFriendlyFormatOnLoad": 0
+					});
+				} else if (column.internalName != "" && typeof (column.friendlyFormatOnLoad) !== "undefined") {
+					lookupFields.push({
+						"internalName": column.internalName,
+						"anchorNoHref": 0,
+						"formLink": 0,
+						"userName": 0,
+						"friendlyFormatOnLoad": column.friendlyFormatOnLoad,
+						"groupingFriendlyFormatOnLoad": 0
+					});
+				} else if (column.internalName != "" && typeof (column.groupingFriendlyFormatOnLoad) !== "undefined") {
+					lookupFields.push({
+						"internalName": column.internalName,
+						"anchorNoHref": 0,
+						"formLink": 0,
+						"userName": 0,
+						"friendlyFormatOnLoad": 0,
+						"groupingFriendlyFormatOnLoad": column.groupingFriendlyFormatOnLoad
+					});
+				} else {
+					lookupFields.push({
+						"internalName": column.internalName,
+						"anchorNoHref": 0,
+						"formLink": 0,
+						"userName": 0,
+						"friendlyFormatOnLoad": 0,
+						"groupingFriendlyFormatOnLoad": 0
+					});
 				}
 			});
-			// get all schedules
-			var gseSchedulesArray = $().GetFieldsFromAllRows({
-				'webURL': 'https://bmos.sharepoint.com/sites/hr-service-schedules',
-				'select': [
-					{
-						'nameHere': 'ScheduleID',
-						'nameInList': 'ID'
-					}, {
-						'nameHere': 'Date',
-						'nameInList': 'Date'
-					}, {
-						'nameHere': 'StartTime',
-						'nameInList': 'StartTime'
-					}, {
-						'nameHere': 'Location',
-						'nameInList': 'Location'
-					}, {
-						'nameHere': 'ShiftLength',
-						'nameInList': 'ShiftLength'
-					}
-				]
-			});
-			// get all jobs
-			var gseJobsArray = $().GetFieldsFromAllRows({
-				'webURL': 'https://bmos.sharepoint.com/sites/hr-service-jobs',
-				'select': [
-					{
-						'nameHere': 'JobID',
-						'nameInList': 'ID',
-					}, {
-						'nameHere': 'JobTitle',
-						'nameInList': 'JobTitle',
-					}
-				]
-			});
-			// mashup the data
-			gseSignupsArray.forEach((signup) => {
-				var signupCopy = signup;
-				gseJobsArray.forEach((job) => {
-					if (job.JobID === signup.JobID) {
-						signupCopy.Job = job;
-					}
-				});
-				gseSchedulesArray.forEach((schedule) => {
-					if (schedule.ScheduleID === signup.ScheduleID) {
-						signupCopy.Schedule = schedule;
-					}
-				});
-				switch (signup.RequestStatus) {
-					case 'Signed Up':
-						augmentedSignupsPending.push(signupCopy);
-						break;
-					case 'Credit Granted':
-						augmentedSignupsGranted.push(signupCopy);
-						break;
-					case 'Credit Denied':
-						augmentedSignupsDenied.push(signupCopy);
-						break;
-					case 'Cancelled':
-						augmentedSignupsCancelled.push(signupCopy);
-						break;
-				}
-			});
-			tablesToRender.push({
-				'tableTitle': 'Credit Pending',
-				'tableID': 'credit-pending',
-				'columns': [
-					{
-						'displayName': "Signup ID",
-						'dataName': "IDMarkup",
-					}, {
-						'displayName': "Job Title",
-						'dataName': "JobTitle",
-					}, {
-						'displayName': "Date",
-						'dataName': "Date",
-					}, {
-						'displayName': "Start Time",
-						'dataName': "StartTime",
-					}, {
-						'displayName': "Schedule Length",
-						'dataName': "ShiftLength",
-					}, {
-						'displayName': "Location",
-						'dataName': "Location",
-					}
-				],
-				'sortColAndOrder': [[3, 'asc'], [4, 'asc']],
-				'dataSource': augmentedSignupsPending
-			});
-			tablesToRender.push({
-				'tableTitle': 'Credit Granted',
-				'tableID': 'credit-granted',
-				'columns': [
-					{
-						'displayName': "Signup ID",
-						'dataName': "IDMarkup",
-					}, {
-						'displayName': "Job Title",
-						'dataName': "JobTitle",
-					}, {
-						'displayName': "Date",
-						'dataName': "Date",
-					}, {
-						'displayName': "Start Time",
-						'dataName': "StartTime",
-					}, {
-						'displayName': "Schedule Length",
-						'dataName': "ShiftLength",
-					}, {
-						'displayName': "Location",
-						'dataName': "Location",
-					}
-				],
-				'sortColAndOrder': [[3, 'asc'], [4, 'asc']],
-				'dataSource': augmentedSignupsGranted
-			});
-			tablesToRender.push({
-				'tableTitle': 'Credit Denied',
-				'tableID': 'credit-denied',
-				'columns': [
-					{
-						'displayName': "Signup ID",
-						'dataName': "IDMarkup",
-					}, {
-						'displayName': "Job Title",
-						'dataName': "JobTitle",
-					}, {
-						'displayName': "Date",
-						'dataName': "Date",
-					}, {
-						'displayName': "Start Time",
-						'dataName': "StartTime",
-					}, {
-						'displayName': "Schedule Length",
-						'dataName': "ShiftLength",
-					}, {
-						'displayName': "Location",
-						'dataName': "Location",
-					}
-				],
-				'sortColAndOrder': [[3, 'asc'], [4, 'asc']],
-				'dataSource': augmentedSignupsDenied
-			});
-			tablesToRender.push({
-				'tableTitle': 'Cancelled',
-				'tableID': 'cancelled',
-				'columns': [
-					{
-						'displayName': "Signup ID",
-						'dataName': "IDMarkup",
-					}, {
-						'displayName': "Job Title",
-						'dataName': "JobTitle",
-					}, {
-						'displayName': "Date",
-						'dataName': "Date",
-					}, {
-						'displayName': "Start Time",
-						'dataName': "StartTime",
-					}, {
-						'displayName': "Schedule Length",
-						'dataName': "ShiftLength",
-					}, {
-						'displayName': "Location",
-						'dataName': "Location",
-					}
-				],
-				'sortColAndOrder': [[3, 'asc'], [4, 'asc']],
-				'dataSource': augmentedSignupsCancelled
-			});
-			tablesToRender.forEach((t) => {
-				var thisTableConfig = $().ReturnDataAndConfigForDataTableForGSESignups(t, relevantRole);
-				if (!t.sortColAndOrder) {
-					t.sortColAndOrder = [0, 'asc'];
-				}
-				$().RenderListAsDatatable({
-					'tableTitle': t.tableTitle,
-					'tableID': t.tableID,
-					'theadDetails': thisTableConfig.theadDetails,
-					'listForDatatable': thisTableConfig.datatableData,
-					'datatableFields': thisTableConfig.datatableFields,
-					'sortColAndOrder': t.sortColAndOrder,
-					'targetID': targetID,
-				});
-			});
-			console.log('render prep time = ' + (Date.now() - renderPrepStartTime) / 1000 + ' seconds');
-		}
-	};
 
+			if (typeof (t.basicRSQueryRelevantStatus) != "undefined") {
+				query = "<Where>" +
+					"	<Eq>" +
+					"		 <FieldRef Name='RequestStatus'></FieldRef>" +
+					"		 <Value Type='Text'>" + t.basicRSQueryRelevantStatus + "</Value>" +
+					"	</Eq>" +
+					"</Where>";
+			} else if (typeof (t.basicRSQueryTwoRelevantStatuses) != "undefined") {
+				query = "<Where>" +
+					"	<Or>" +
+					"		<Eq>" +
+					"			<FieldRef Name='RequestStatus'></FieldRef>" +
+					"			<Value Type='Text'>" + t.basicRSQueryTwoRelevantStatuses[0] + "</Value>" +
+					"		</Eq>" +
+					"		<Eq>" +
+					"			<FieldRef Name='RequestStatus'></FieldRef>" +
+					"			<Value Type='Text'>" + t.basicRSQueryTwoRelevantStatuses[1] + "</Value>" +
+					"		</Eq>" +
+					"	</Or>" +
+					"</Where>";
+			} else if (typeof (t.myRSQueryTwoRelevantStatuses) != "undefined") {
+
+				if (typeof (mData.getRequesterFrom) == 'undefined') {
+					var getRequesterFrom = 'Author';
+				} else {
+					var getRequesterFrom = mData.getRequesterFrom;
+				}
+
+				query = "<Where>" +
+					"	<And>" +
+					"	<Or>" +
+					"		<Eq>" +
+					"			<FieldRef Name='RequestStatus'></FieldRef>" +
+					"			<Value Type='Text'>" + t.myRSQueryTwoRelevantStatuses[0] + "</Value>" +
+					"		</Eq>" +
+					"		<Eq>" +
+					"			<FieldRef Name='RequestStatus'></FieldRef>" +
+					"			<Value Type='Text'>" + t.myRSQueryTwoRelevantStatuses[1] + "</Value>" +
+					"		</Eq>" +
+					"	</Or>" +
+					"		 <Contains>" +
+					"			  <FieldRef Name='" + getRequesterFrom + "'></FieldRef>" +
+					"			  <Value Type='Text'>" + uData.name + "</Value>" +
+					"		 </Contains>" +
+					"	</And>" +
+					"</Where>";
+			} else if (typeof (t.myRSQueryRelevantStatus) != "undefined") {
+
+				var getRequesterFrom = 'Author';
+				if (t.getRequesterFrom) {
+					getRequesterFrom = t.getRequesterFrom;
+				}
+				if (mData.getRequesterFrom) {
+					getRequesterFrom = mData.getRequesterFrom;
+				}
+
+				query = "<Where>" +
+					"	<And>" +
+					"		 <Eq>" +
+					"			  <FieldRef Name='RequestStatus'></FieldRef>" +
+					"			  <Value Type='Text'>" + t.myRSQueryRelevantStatus + "</Value>" +
+					"		 </Eq>" +
+					"		 <Contains>" +
+					"			  <FieldRef Name='" + getRequesterFrom + "'></FieldRef>" +
+					"			  <Value Type='Text'>" + uData.name + "</Value>" +
+					"		 </Contains>" +
+					"	</And>" +
+					"</Where>";
+				/* } else if (typeof (t.myRSQueryRelevantStatus) != "undefined") {
 	
+					if (typeof (mData.getRequesterFrom) == 'undefined') {
+						var getRequesterFrom = 'Author';
+					} else {
+						var getRequesterFrom = mData.getRequesterFrom;
+					}
+	
+					query = "<Where>" +
+						"	<And>" +
+						"		 <Eq>" +
+						"			  <FieldRef Name='RequestStatus'></FieldRef>" +
+						"			  <Value Type='Text'>" + t.myRSQueryRelevantStatus + "</Value>" +
+						"		 </Eq>" +
+						"		 <Contains>" +
+						"			  <FieldRef Name='" + getRequesterFrom + "'></FieldRef>" +
+						"			  <Value Type='Text'>" + uData.name + "</Value>" +
+						"		 </Contains>" +
+						"	</And>" +
+						"</Where>"; */
+
+
+
+
+
+
+
+
+
+			} else if (typeof (t.myRSQueryRelevantStatusUnassigned) != "undefined") {
+				if (typeof (mData.getRequesterFrom) == 'undefined') {
+					var getRequesterFrom = 'Author';
+				} else {
+					var getRequesterFrom = mData.getRequesterFrom;
+				}
+
+				query = "<Where>" +
+					"	<And>" +
+					"		<And>" +
+					"			<Eq>" +
+					"				<FieldRef Name='RequestStatus'></FieldRef>" +
+					"				<Value Type='Text'>" + t.myRSQueryRelevantStatus + "</Value>" +
+					"			</Eq>" +
+					"			<IsNull>" +
+					"				<FieldRef Name='AssignedTo'></FieldRef>" +
+					"			</IsNull>" +
+					"		</And>" +
+					"		<Contains>" +
+					"			<FieldRef Name='" + getRequesterFrom + "'></FieldRef>" +
+					"			<Value Type='Text'>" + uData.name + "</Value>" +
+					"		 </Contains>" +
+					"	</And>" +
+					"</Where>";
+
+			} else if (typeof (t.myRSQueryRelevantStatusAssigned) != "undefined") {
+				if (typeof (mData.getRequesterFrom) == 'undefined') {
+					var getRequesterFrom = 'Author';
+				} else {
+					var getRequesterFrom = mData.getRequesterFrom;
+				}
+
+				query = "<Where>" +
+					"	<And>" +
+					"		<And>" +
+					"			<Eq>" +
+					"				<FieldRef Name='RequestStatus'></FieldRef>" +
+					"				<Value Type='Text'>" + t.myRSQueryRelevantStatus + "</Value>" +
+					"			</Eq>" +
+					"			<IsNotNull>" +
+					"				<FieldRef Name='AssignedTo'></FieldRef>" +
+					"			</IsNotNull>" +
+					"		</And>" +
+					"		<Contains>" +
+					"			<FieldRef Name='" + getRequesterFrom + "'></FieldRef>" +
+					"			<Value Type='Text'>" + uData.name + "</Value>" +
+					"		 </Contains>" +
+					"	</And>" +
+					"</Where>";
+
+			} else if (typeof (t.fieldGEQDaysBeforeToday) != "undefined") {
+				query = "<Where>" +
+					"	<Geq>" +
+					"		 <FieldRef Name='" + t.fieldGEQDaysBeforeToday[0] + "'></FieldRef>" +
+					"		 <Value Type='DateTime'>" +
+					"			  <Today OffsetDays='" + (-1 * t.fieldGEQDaysBeforeToday[1]) + "' />" +
+					"		 </Value>" +
+					"	</Geq>" +
+					"</Where>";
+			} else if (typeof (t.rsQueryAndFieldGEQDate) != "undefined") {
+				query = "<Where>" +
+					"	 <And>" +
+					"		  <Eq>" +
+					"				<FieldRef Name='RequestStatus'></FieldRef>" +
+					"				<Value Type='Text'>" + t.rsQueryAndFieldGEQDate[0] + "</Value>" +
+					"		  </Eq>" +
+					"		  <Geq>" +
+					"			  <FieldRef Name='" + t.rsQueryAndFieldGEQDate[1] + "'></FieldRef>" +
+					"			  <Value Type='DateTime'>" + t.rsQueryAndFieldGEQDate[2] + "</Value>" +
+					"		  </Geq>" +
+					"	 </And>" +
+					"</Where>";
+			} else if (typeof (t.rsQueryAndFieldGEQToday) != "undefined") {
+				query = "<Where>" +
+					"	 <And>" +
+					"		  <Eq>" +
+					"				<FieldRef Name='RequestStatus'></FieldRef>" +
+					"				<Value Type='Text'>" + t.rsQueryAndFieldGEQToday.requestStatus + "</Value>" +
+					"		  </Eq>" +
+					"		  <Geq>" +
+					"			  <FieldRef Name='" + t.rsQueryAndFieldGEQToday.field + "'></FieldRef>" +
+					"			  <Value Type='DateTime'>" + moment().format('YYYY-MM-DD') + ' 00:00:00' + "</Value>" +
+					"		  </Geq>" +
+					"	 </And>" +
+					"</Where>";
+			} else if (typeof (t.rsQueryAndFieldLTDate) != "undefined") {
+				query = "<Where>" +
+					"	 <And>" +
+					"		  <Eq>" +
+					"				<FieldRef Name='RequestStatus'></FieldRef>" +
+					"				<Value Type='Text'>" + t.rsQueryAndFieldLTDate[0] + "</Value>" +
+					"		  </Eq>" +
+					"		  <Lt>" +
+					"			  <FieldRef Name='" + t.rsQueryAndFieldLTDate[1] + "'></FieldRef>" +
+					"			  <Value Type='DateTime'>" + t.rsQueryAndFieldLTDate[2] + "</Value>" +
+					"		  </Lt>" +
+					"	 </And>" +
+					"</Where>";
+			} else if (typeof (t.rsQueryAndFieldLTToday) != "undefined") {
+				query = "<Where>" +
+					"	 <And>" +
+					"		  <Eq>" +
+					"				<FieldRef Name='RequestStatus'></FieldRef>" +
+					"				<Value Type='Text'>" + t.rsQueryAndFieldLTToday.asdfasdf + "</Value>" +
+					"		  </Eq>" +
+					"		  <Lt>" +
+					"			  <FieldRef Name='" + t.rsQueryAndFieldLTToday.asdasdgf + "'></FieldRef>" +
+					"			  <Value Type='DateTime'>" + moment().format('YYYY-MM-DD') + ' 00:00:00' + "</Value>" +
+					"		  </Lt>" +
+					"	 </And>" +
+					"</Where>";
+			} else if (typeof (t.rsQueryAndFieldGEQDaysBeforeToday) != "undefined") {
+				query = "<Where>" +
+					"	 <And>" +
+					"		  <Eq>" +
+					"				<FieldRef Name='RequestStatus'></FieldRef>" +
+					"				<Value Type='Text'>" + t.rsQueryAndFieldGEQDaysBeforeToday[0] + "</Value>" +
+					"		  </Eq>" +
+					"		  <Geq>" +
+					"			  <FieldRef Name='" + t.rsQueryAndFieldGEQDaysBeforeToday[1] + "'></FieldRef>" +
+					"			  <Value Type='DateTime'>" +
+					"					<Today OffsetDays='" + (-1 * t.rsQueryAndFieldGEQDaysBeforeToday[2]) + "' />" +
+					"			  </Value>" +
+					"		  </Geq>" +
+					"	 </And>" +
+					"</Where>";
+			} else if (typeof (t.MyRSQueryAndFieldGEQDate) != "undefined") {
+
+				var myName = $().SPServices.SPGetCurrentUser({
+					fieldName: "Title",
+					debug: false
+				});
+
+				if (typeof (mData.getRequesterFrom) == 'undefined') {
+					var getRequesterFrom = 'Author';
+				} else {
+					var getRequesterFrom = mData.getRequesterFrom;
+				}
+
+				query = "<Where>" +
+					"	 <And>" +
+					"		  <Eq>" +
+					"				<FieldRef Name='RequestStatus'></FieldRef>" +
+					"				<Value Type='Text'>" + t.MyRSQueryAndFieldGEQDate[0] + "</Value>" +
+					"		  </Eq>" +
+					"		  <And>" +
+					"			  <Geq>" +
+					"					<FieldRef Name='" + t.MyRSQueryAndFieldGEQDate[1] + "'></FieldRef>" +
+					"					<Value Type='DateTime'>" + t.MyRSQueryAndFieldGEQDate[2] + "</Value>" +
+					"			  </Geq>" +
+					"			  <Contains>" +
+					"					<FieldRef Name='" + getRequesterFrom + "'></FieldRef>" +
+					"					<Value Type='Text'>" + uData.name + "</Value>" +
+					"			  </Contains>" +
+					"		 </And>" +
+					"	</And>" +
+					"</Where>";
+			} else if (typeof (t.MyRSQueryAndFieldGEQToday) != "undefined") {
+
+				var myName = $().SPServices.SPGetCurrentUser({
+					fieldName: "Title",
+					debug: false
+				});
+
+				if (typeof (mData.getRequesterFrom) == 'undefined') {
+					var getRequesterFrom = 'Author';
+				} else {
+					var getRequesterFrom = mData.getRequesterFrom;
+				}
+
+				query = "<Where>" +
+					"	 <And>" +
+					"		  <Eq>" +
+					"				<FieldRef Name='RequestStatus'></FieldRef>" +
+					"				<Value Type='Text'>" + t.MyRSQueryAndFieldGEQToday.requestStatus + "</Value>" +
+					"		  </Eq>" +
+					"		  <And>" +
+					"			  <Geq>" +
+					"					<FieldRef Name='" + t.MyRSQueryAndFieldGEQToday.field + "'></FieldRef>" +
+					"					<Value Type='DateTime'>" + moment().format('YYYY-MM-DD') + " 00:00:00</Value>" +
+					"			  </Geq>" +
+					"			  <Contains>" +
+					"					<FieldRef Name='" + getRequesterFrom + "'></FieldRef>" +
+					"					<Value Type='Text'>" + uData.name + "</Value>" +
+					"			  </Contains>" +
+					"		 </And>" +
+					"	</And>" +
+					"</Where>";
+			} else if (typeof (t.MyRSQueryAndFieldLTDate) != "undefined") {
+
+				var myName = $().SPServices.SPGetCurrentUser({
+					fieldName: "Title",
+					debug: false
+				});
+
+				if (typeof (mData.getRequesterFrom) == 'undefined') {
+					var getRequesterFrom = 'Author';
+				} else {
+					var getRequesterFrom = mData.getRequesterFrom;
+				}
+
+				query = "<Where>" +
+					"	 <And>" +
+					"		  <Eq>" +
+					"				<FieldRef Name='RequestStatus'></FieldRef>" +
+					"				<Value Type='Text'>" + t.MyRSQueryAndFieldLTDate[0] + "</Value>" +
+					"		  </Eq>" +
+					"		  <And>" +
+					"			  <Lt>" +
+					"					<FieldRef Name='" + t.MyRSQueryAndFieldLTDate[1] + "'></FieldRef>" +
+					"					<Value Type='DateTime'>" + t.MyRSQueryAndFieldLTDate[2] + "</Value>" +
+					"			  </Lt>" +
+					"			  <Contains>" +
+					"					<FieldRef Name='" + getRequesterFrom + "'></FieldRef>" +
+					"					<Value Type='Text'>" + uData.name + "</Value>" +
+					"			  </Contains>" +
+					"		  </And>" +
+					"	 </And>" +
+					"</Where>";
+			} else if (typeof (t.MyRSQueryAndFieldLTToday) != "undefined") {
+
+				var myName = $().SPServices.SPGetCurrentUser({
+					fieldName: "Title",
+					debug: false
+				});
+
+				if (typeof (mData.getRequesterFrom) == 'undefined') {
+					var getRequesterFrom = 'Author';
+				} else {
+					var getRequesterFrom = mData.getRequesterFrom;
+				}
+
+				query = "<Where>" +
+					"	 <And>" +
+					"		  <Eq>" +
+					"				<FieldRef Name='RequestStatus'></FieldRef>" +
+					"				<Value Type='Text'>" + t.MyRSQueryAndFieldLTToday.requestStatus + "</Value>" +
+					"		  </Eq>" +
+					"		  <And>" +
+					"			  <Lt>" +
+					"					<FieldRef Name='" + t.MyRSQueryAndFieldLTToday.field + "'></FieldRef>" +
+					"					<Value Type='DateTime'>" + moment().format('YYYY-MM-DD') + " 00:00:00</Value>" +
+					"			  </Lt>" +
+					"			  <Contains>" +
+					"					<FieldRef Name='" + getRequesterFrom + "'></FieldRef>" +
+					"					<Value Type='Text'>" + uData.name + "</Value>" +
+					"			  </Contains>" +
+					"		  </And>" +
+					"	 </And>" +
+					"</Where>";
+			} else if (typeof (t.basicEOLQueryRelevantValue) != "undefined") {
+				if (t.basicEOLQueryRelevantValue == 0) {
+					query = "<Where>" +
+						"	<Or>" +
+						"		 <Eq>" +
+						"			  <FieldRef Name='EndOfLife'></FieldRef>" +
+						"			  <Value Type='Text'>0</Value>" +
+						"		  </Eq>" +
+						"		 <IsNull>" +
+						"			  <FieldRef Name='EndOfLife'></FieldRef>" +
+						"		 </IsNull>" +
+						"	</Or>" +
+						"</Where>";
+				} else if (t.basicEOLQueryRelevantValue == 1) {
+					query = "<Where>" +
+						"	<Eq>" +
+						"		 <FieldRef Name='EndOfLife'></FieldRef>" +
+						"		 <Value Type='Text'>1</Value>" +
+						"	</Eq>" +
+						"</Where>";
+				}
+			} else if (typeof (t.basicMyEOLQueryRelevantValue) != "undefined") {
+
+				var myName = $().SPServices.SPGetCurrentUser({
+					fieldName: "Title",
+					debug: false
+				});
+
+				var getRequesterFrom = 'Author';
+
+
+				if (mData.getRequesterFrom) {
+					getRequesterFrom = mData.getRequesterFrom;
+				}
+				if (t.getRequesterFrom) {
+					getRequesterFrom = t.getRequesterFrom;
+				}
+
+				if (t.basicMyEOLQueryRelevantValue == 0) {
+					query = "<Where>" +
+						"	<And>" +
+						"		<Or>" +
+						"			 <Eq>" +
+						"				  <FieldRef Name='EndOfLife'></FieldRef>" +
+						"				  <Value Type='Text'>0</Value>" +
+						"			  </Eq>" +
+						"			 <IsNull>" +
+						"				  <FieldRef Name='EndOfLife'></FieldRef>" +
+						"			 </IsNull>" +
+						"		</Or>" +
+						"		 <Contains>" +
+						"			  <FieldRef Name='" + getRequesterFrom + "'></FieldRef>" +
+						"			  <Value Type='Text'>" + uData.name + "</Value>" +
+						"		 </Contains>" +
+						"	</And>" +
+						"</Where>";
+				} else if (t.basicMyEOLQueryRelevantValue == 1) {
+					query = "<Where>" +
+						"	<And>" +
+						"		 <Eq>" +
+						"			  <FieldRef Name='EndOfLife'></FieldRef>" +
+						"			  <Value Type='Text'>1</Value>" +
+						"		 </Eq>" +
+						"		 <Contains>" +
+						"			  <FieldRef Name='" + getRequesterFrom + "'></FieldRef>" +
+						"			  <Value Type='Text'>" + uData.name + "</Value>" +
+						"		 </Contains>" +
+						"	</And>" +
+						"</Where>";
+				}
+			} else if (typeof (t.basicMyAllQueryRelevantValue) != "undefined") {
+
+				var myName = $().SPServices.SPGetCurrentUser({
+					fieldName: "Title",
+					debug: false
+				});
+
+				if (typeof (mData.getRequesterFrom) == 'undefined') {
+					var getRequesterFrom = 'Author';
+				} else {
+					var getRequesterFrom = mData.getRequesterFrom;
+				}
+
+				query = "<Where>" +
+					"	<Contains>" +
+					"		<FieldRef Name='" + getRequesterFrom + "'></FieldRef>" +
+					"			<Value Type='Text'>" + uData.name + "</Value>" +
+					"		</Contains>" +
+					"</Where>";
+			} else if (typeof (t.customCAMLQuery) != "undefined") {
+				query = ReplaceAll('myName', uData.name, t.customCAMLQuery);
+			}
+
+			var listForDatatable = $().GetListDataForDatatable({
+				'listName': 'SWFList',
+				'webURL': t.webURL,
+				'query': query,
+				'someColsAreUsers': t.someColsAreUsers,
+				'viewFields': camlViewFields,
+				'lookupFields': lookupFields,
+				'formURI': mData.formURI,
+				'returnURI': mData.returnURI
+			});
+
+			/* console.log('t.tableTitle');
+			console.log(t.tableTitle);
+
+			console.log('t.tableID');
+			console.log(t.tableID);
+
+			console.log('theadDetails');
+			console.log(theadDetails);
+
+			console.log('listForDatatable');
+			console.log(listForDatatable);
+
+			console.log('XXXXXX');
+			console.log(XXXXXX);
+
+			console.log('XXXXXX');
+			console.log(XXXXXX); */
+
+
+			$().RenderListAsDatatable({
+				'tableTitle': t.tableTitle,
+				'tableID': t.tableID,
+				'theadDetails': theadDetails,
+				'listForDatatable': listForDatatable,
+				'datatableFields': datatableFields,
+				'sortColAndOrder': t.sortColAndOrder,
+				'grouping': t.grouping,
+				'targetID': targetID,
+			});
+		});
+	};
+
+
 
 	$.fn.GetListDataForDatatable = function (options) {
 
@@ -20908,6 +21245,49 @@
 
 
 
+
+	$.fn.ReturnButtonLinkForOverflowMenu = function (linkType, anchorText, href, idValue, classValues, target) {
+		var newLink = "<a";
+		if (typeof (idValue) != "undefined" && idValue != null && idValue != "") {
+			newLink += " id=\"" + idValue + "\"";
+		}
+
+		newLink += " class=\"";
+
+		switch (linkType) {
+
+			case "newItem":
+				newLink += "new-item ";
+				break;
+
+			case "goForward":
+				newLink += "go-forward ";
+				break;
+		}
+
+		if (typeof (classValues) != "undefined" && classValues != null && classValues != "") {
+			newLink += " " + classValues;
+		}
+		newLink += "\"";
+		if (typeof (target) != "undefined" && target != null && target != "") {
+			newLink += " target=\"" + target + "\"";
+		}
+
+		if (linkType == "newItem") {
+			newLink += "data-button-type=\"newRequest\" href=\"" + mData.fullSiteBaseURL + "/SitePages/App.aspx?r=0\""
+		}
+
+		if (typeof (href) != "undefined" && href != null && href != "") {
+			newLink += " href=\"" + href + "\"";
+		}
+
+		newLink += ">" + anchorText + "</a>";
+
+		return newLink;
+	};
+
+
+
 	$.fn.RenderSWFNewRequestButton = function () {
 		$("#overview-table-container").before($().ReturnButtonLink("newItem", "New Request", null, "", "button_swf-new-request-with-datatable"));
 	};
@@ -20934,6 +21314,58 @@
 				}
 			}
 		});
+		return buttonsMarkup
+	};
+
+
+
+	$.fn.ReturnButtonsMarkupWithContainerDivs = function (buttons) {
+		var buttonsMarkup = "";
+		$.each(buttons, function (i, button) {
+			// business rule: even if there's a function restricting rendering permission, the button will always render for admins; if this changes, 
+			//		will need to update GPC requests
+			buttonsMarkup += '<div class="container_link">';
+			if (uData.isAdmin === 1 || typeof (button.renderPermissionsFunction) == "undefined") {
+				buttonsMarkup += $().ReturnButtonLink(button.linkType, button.anchorText, button.href, button.idValue, button.classValues, button.target);
+			} else {
+				if (CallFunctionFromString(button.renderPermissionsFunction) === 1) {
+					buttonsMarkup += $().ReturnButtonLink(button.linkType, button.anchorText, button.href, button.idValue, button.classValues, button.target);
+				}
+			}
+			buttonsMarkup += '</div>';
+		});
+		return buttonsMarkup
+	};
+
+
+
+	$.fn.ReturnButtonsMarkupAsOverflowMenu = function (buttons) {
+		var buttonsMarkup = 
+			'<div id="container_navigation-controls-and-header" class="overflow-menu"> \n' +
+			'   <div id="text_navigation-controls" ' + 
+			'		class="collapsible overflow-menu-control"> \n' + 
+			'		<span class="overflow-menu-text">More</span> \n' +
+			'	</div> \n' +
+			'   <div id="container_navigation-controls"> \n' + 
+			'		<ul class="button-list-container"> \n';
+		$.each(buttons, function (i, button) {
+			// business rule: even if there's a function restricting rendering permission, the button will always render for admins; if this changes, 
+			//		will need to update GPC requests
+			buttonsMarkup += '			<li class="button-list-item"> \n';
+			if (uData.isAdmin === 1 || typeof (button.renderPermissionsFunction) == "undefined") {
+				buttonsMarkup += $().ReturnButtonLinkForOverflowMenu(button.linkType, button.anchorText, button.href, button.idValue, button.classValues, button.target);
+			} else {
+				if (CallFunctionFromString(button.renderPermissionsFunction) === 1) {
+					buttonsMarkup += $().ReturnButtonLinkForOverflowMenu(button.linkType, button.anchorText, button.href, button.idValue, button.classValues, button.target);
+				}
+			}
+			buttonsMarkup += ' \n			</li> \n';
+		});
+		buttonsMarkup += 
+			'		</ul> \n' + 
+			'	</div> \n' +
+			'</div> \n';
+
 		return buttonsMarkup
 	};
 
@@ -24003,7 +24435,7 @@
 		// wait for all data retrieval / setting promises to complete (pass or fail) 
 		$.when.apply($, allDataRetrievalAndSettingPromises).always(function () {
 
-			console.log('using dev_mos-main_long.1.04 m4');
+			console.log('using dev_mos-main_long.1.04 m1');
 
 			$().ConfigureAndShowScreenContainerAndAllScreens();
 		});

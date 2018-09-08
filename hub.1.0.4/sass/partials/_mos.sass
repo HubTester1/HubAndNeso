@@ -605,7 +605,8 @@ div.ui-dialog div.ui-dialog-titlebar.ui-widget-header button.ui-button span.ui-i
 div.ui-dialog div.ui-dialog-content.ui-widget-content div.table-container div.dataTables_wrapper table.dataTable a.anchor_no-href,
 div#remaining-capacities ul#tab-navigation.ui-tabs-nav li a,
 div.fc-toolbar button,
-div.fc-toolbar a,
+div.fc-toolbar a.button-link,
+div.fc-toolbar a.collapsible-heading-toggle,
 ul#timeline-options li a,
 a.id-or-link_list-item-chooser,
 a.show-default-station-times,
@@ -685,7 +686,8 @@ a.button-link_new,
 a.button-link_go-forward,
 div#remaining-capacities ul#tab-navigation.ui-tabs-nav li a,
 div.fc-toolbar button,
-div.fc-toolbar a,
+div.fc-toolbar a.button-link,
+div.fc-toolbar a.collapsible-heading-toggle,
 ul#timeline-options li a,
 div#app-container a.button_swf-new-request-with-datatable,
 div#app-container a.button_swf-new-event-with-timeline,
@@ -818,6 +820,15 @@ a.hide-default-station-times
 
 	&:before
 		+fontIconChevronThickUp
+		margin-left: .5rem
+
+	span.overflow-menu-text
+		+blockHidden
+
+.collapsible-heading.overflow-menu-control a.collapsible-heading-toggle
+
+	&:before
+		+fontIconEllipsis
 
 a.id-or-link_list-item-chooser
 
@@ -829,6 +840,12 @@ a.show-default-station-times
 
 	&:before
 		+fontIconChevronThickDown
+
+
+.collapsible-heading.collapsible-heading-collapsed.overflow-menu-control a.collapsible-heading-toggle
+
+	&:before
+		+fontIconEllipsis
 
 div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button,
 div#s4-workspace div#app-container.gse-signup div#container_command-bar div#container_filter-controls-and-header a#filter_submit-button,
@@ -999,31 +1016,38 @@ div.ui-dialog div.ui-dialog-titlebar.ui-widget-header button.ui-button
 			&:hover
 				color: $intActive !important
 
-div.fc-toolbar
+div#museum-event-calendar-container,
+div#buyout-calendar-container
 
-	button,
-	a
-		+verticalAlignMiddle
+	div.fc-toolbar
 
-	div.fc-left button
-		margin-top: 1rem !important
+		button,
+		a.button-link,
+		a.collapsible-heading-toggle
+			+verticalAlignMiddle
 
-	div.fc-right > div > button
-		transform: translateY((-4.25rem + 1rem))
-		// our usual vertical alignment doesn't work here, because it re-positions elements relative to their
-		//		starting position, which is typically the top of the parent; this is positioned at bottom
-		//		for reasons I can't determine and override - probably just how the browser renders it
-		//		with the header descending from the same parent
-		// -4.25rem -> align to top of parent
-		// 1rem drop back down to middle alignment
+		div.fc-left button
+			margin-top: 1rem !important
 
-	button.fc-prevYear-button,
-	button.fc-prev-button,
-	button.fc-next-button,
-	button.fc-nextYear-button
+		div.fc-right > div > button
+			transform: translateY((-4.25rem + 1rem))
+			// our usual vertical alignment doesn't work here, because it re-positions elements relative to their
+			//		starting position, which is typically the top of the parent; this is positioned at bottom
+			//		for reasons I can't determine and override - probably just how the browser renders it
+			//		with the header descending from the same parent
+			// -4.25rem -> align to top of parent
+			// 1rem drop back down to middle alignment
 
-		span.button-text
-			+inlineHidden
+		button.fc-prevYear-button,
+		button.fc-prev-button,
+		button.fc-next-button,
+		button.fc-nextYear-button
+
+			span.button-text
+				+inlineHidden
+
+
+
 
 ul#timeline-options li h2.collapsible a
 	display: block !important
@@ -1040,6 +1064,42 @@ div#s4-workspace div#public-community-page_open-enrollment div.primary-section a
 	display: block
 	max-width: 300px
 	margin: 1rem 0 2rem !important
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+//			OVERFLOW MENU
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+div#s4-workspace div.overflow-menu
+
+	ul.button-list-container
+		list-style: none
+		padding: 1.5rem 1.5rem 0 0
+			
+		li
+			list-style: none
+			text-align: left
+			padding-bottom: .5rem
+
+			a
+				display: block
+				// padding: .5rem 0
+
+				&:before
+					+fontIcon
+					+fontIconBefore
+
+			a.new-item
+
+				&:before
+					+fontIconPlus
+
+			a.go-forward
+
+				&:before
+					+fontIconArrowRight
 
 
 
@@ -3789,6 +3849,7 @@ div#app-container.function div#overlays-screen-container div#mos-form-submission
 
 
 // --- MUSEUM-WIDE EVENT CALENDAR
+// --- GSE SCHEDULE
 
 div#app-container.museum-wide-event-calendar,
 div#app-container.gse-schedule
@@ -3965,46 +4026,70 @@ div#app-container.gse-signup
 
 div#s4-workspace div#app-container.gse-signup,
 div#s4-workspace div#app-container.gse-schedule
-	
-	div#container_command-bar-and-data
 
-		div#container_command-bar
-			+gridElementDarkened1
-			display: inline-block
+	div#container_command-bar
+		+gridElementDarkened1
+		display: table
 
-			div.container_link,
-			div#container_filter-controls-and-header
-				+col
+		div.container_link,
+		div#container_filter-controls-and-header,
+		div#container_navigation-controls-and-header
+			+col
 
-			div#container_filter-controls-and-header div#text_filter-controls
-				a.collapsible-heading-toggle
-					display: block
+		div#container_filter-controls-and-header div#text_filter-controls,
+		div#container_navigation-controls-and-header div#text_navigation-controls
+			a.collapsible-heading-toggle
+				display: block
 
-		div#container_filter-controls
-			padding: 1.5rem 1.5rem 0 0
-			font-weight: 600
+	div#container_filter-controls
+		padding: 1.5rem 1.5rem 0 0
+		font-weight: 600
 
-			div.container_filter-control
-				padding: 0 0 1.5rem 1.5rem
+		div.container_filter-control
+			padding: 0 0 1.5rem 1.5rem
+			text-align: left
 
-				label
-					display: inline-block
-					width: 6rem
-					text-align: right
+			label
+				display: inline-block
+				width: 6rem
+				text-align: right
 
-				select
-					width: 20rem
+			select
+				width: 20rem
 
-				a#filter_submit-button
-					margin: 0 0 0 6.5rem !important
+			a#filter_submit-button
+				margin: 0 0 0 6.5rem !important
+
+div#s4-workspace div#app-container.gse-schedule
+
+	div#container_filter-controls
+
+		div.container_filter-control
+
+			label
+				+inlineHidden
 
 
+
+
+div#s4-workspace div#app-container.gse-schedule-list
+
+	div#container_command-bar
+		display: inline-block
 
 
 
 div#s4-workspace div#app-container.gse-signup
 	
 	div#container_command-bar-and-data
+
+		div#container_command-bar
+
+			div#container_filter-controls-and-header
+
+				label
+					+inlineHidden
+
 
 		div#container_data
 			margin-top: 1rem
@@ -4180,13 +4265,12 @@ body.product-timeline
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
 // button styles are in button section
+// some gse stuff is separate because it's a later generation; there's 
+// 		a lot of repetition, but a few differences
 
+// MWEC
 div#museum-event-calendar-container,
-div#buyout-calendar-container,
-div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests,
-div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests,
-div#overview-screen-container.gseSchedulesCalendarManager-requests,
-div#overview-screen-container.gseSchedulesCalendarStaff-requests
+div#buyout-calendar-container
 
 	div.fc-toolbar
 		height: 4.5rem
@@ -4269,11 +4353,7 @@ div#buyout-calendar-container
 				background-color: $darkGreen
 
 div#buyout-calendar-container,
-div#museum-event-calendar-container,
-div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests,
-div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests,
-div#overview-screen-container.gseSchedulesCalendarManager-requests,
-div#overview-screen-container.gseSchedulesCalendarStaff-requests
+div#museum-event-calendar-container
 
 	div.fc-view-container
 		opacity: 0
@@ -4332,6 +4412,172 @@ div#overview-screen-container.gseSchedulesCalendarStaff-requests
 		color: $textOnDarkGreen !important
 
 
+// GSEs
+div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar
+	
+	div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests,
+	div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests,
+	div#overview-screen-container.gseSchedulesCalendarManager-requests,
+	div#overview-screen-container.gseSchedulesCalendarStaff-requests
+
+		div.fc-toolbar
+
+			div.fc-toolbar
+				height: 4.5rem
+				margin-bottom: 1rem
+				opacity: 0
+
+				div.fc-left
+					float: left
+					height: 4.5rem
+
+				div.fc-right
+					float: none
+					display: inline-block
+					height: 4.5rem
+
+					> div
+						height: 4.5rem
+
+				div.fc-center
+					float: right
+					height: 4.5rem
+
+					> div
+						height: 4.5rem
+
+					button.ui-button
+						text-transform: capitalize
+
+
+		.fc-day.ui-widget-content.fc-past
+			background-color: #e0e0e0
+			border: 1px solid #e0e0e0
+
+
+		div.fc-view-container
+			opacity: 0
+
+		div.fc-bg
+
+			td.fc-day
+				padding: 1rem .2rem .2rem 4.5rem !important
+				
+		div.fc-content-skeleton
+
+			td.fc-day-number
+				padding: .5rem .2rem .2rem 1.5rem !important
+				font-size: 2rem
+				text-align: left
+
+			td.fc-day-number.add-schedule-on-click
+				cursor: pointer
+
+		a.fc-event
+			font-size: 1.3rem
+			line-height: 2rem
+			border-radius: 0
+			border: none
+			padding-left: .5rem
+			cursor: pointer
+			background-color: $intDefault
+			color: $white !important
+
+// medium screen
+@media only screen and (max-width: 1599px)
+	
+	div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar
+		
+		div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests,
+		div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests,
+		div#overview-screen-container.gseSchedulesCalendarManager-requests,
+		div#overview-screen-container.gseSchedulesCalendarStaff-requests
+
+			div.fc-toolbar
+
+				div.fc-left
+					float: left
+
+					div#container_command-bar
+						display: inline-block
+
+						div#container_navigation-controls-expanded
+							display: none
+
+				div.fc-right
+					float: none
+
+					button
+						vertical-align: top
+
+					button.fc-prevYear-button,
+					button.fc-nextYear-button
+						display: none
+
+					h2
+						display: inline-block
+						font-size: 2.75rem !important
+						line-height: 2.75rem !important
+						padding: 0 3rem
+				
+				div.fc-center
+					float: right
+
+					button.fc-basicDay-button,
+					button.fc-basicWeek-button,
+					button.fc-month-button
+						display: none
+
+
+
+				div.fc-right
+					float: none
+					display: inline-block
+					height: 4.5rem
+
+					> div
+						height: 4.5rem
+
+// large screen
+@media only screen and (min-width: 1600px)
+	
+	div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar
+		
+		div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests,
+		div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests,
+		div#overview-screen-container.gseSchedulesCalendarManager-requests,
+		div#overview-screen-container.gseSchedulesCalendarStaff-requests
+
+			div.fc-toolbar
+				margin-bottom: 1rem
+				opacity: 0
+
+				div.fc-left
+					float: left
+
+					div#container_navigation-controls-and-header
+						display: none
+				
+				div.fc-right
+					float: none
+					display: inline-block
+
+					button
+						vertical-align: top
+
+				div.fc-center
+					float: right
+
+					button.ui-button
+						text-transform: capitalize
+
+				h2
+					display: inline-block
+					font-size: 3rem !important
+					line-height: 3rem !important
+					padding: 0 3rem
+
+
 div.ui-dialog#buyout-calendar-item-dialog,
 div.ui-dialog#museum-calendar-item-dialog,
 div[aria-describedby='gse-schedule-card-dialog']
@@ -4366,19 +4612,6 @@ div[aria-describedby='gse-schedule-card-dialog']
 			font-weight: 300
 			margin: 0
 			padding: 1rem 0
-
-
-
-div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests,
-div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests,
-div#overview-screen-container.gseSchedulesCalendarManager-requests,
-div#overview-screen-container.gseSchedulesCalendarStaff-requests
-
-	.fc-day.ui-widget-content.fc-past
-		background-color: #e0e0e0
-		border: 1px solid #e0e0e0
-
-
 
 
 

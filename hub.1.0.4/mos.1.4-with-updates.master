@@ -34,7 +34,7 @@
 	
 	
 	
-	<script type="text/javascript" src="/sites/hubprod/Code4/js/libs/jquery.2.2.0.js"></script>
+	<script type="text/javascript" src="/sites/hubdev/DevCode4/js/updatedLibs/jquery.3.3.1.js"></script>
 	<script>
 			$.holdReady(true);
 	</script>
@@ -44,8 +44,8 @@
 	<script>
 		var s = document.createElement('script');
 		s.type = "text/javascript";
-		s.src = "/sites/hubprod/Code4/js/mos-loader.js?ts=" + Date.now();
-		// s.src = "/sites/hubdev/DevCode4/js/dev_mos-loader.js?ts=" + Date.now();
+		// s.src = "/sites/hubprod/Code4/js/mos-loader.js?ts=" + Date.now();
+		s.src = "/sites/hubdev/DevCode4/js/dev_mos-loader.js?ts=" + Date.now();
 		document.getElementsByTagName('head')[0].appendChild(s);
 	</script>
 	<!--  -->
@@ -58,9 +58,9 @@
 	<script type="text/javascript" src="/sites/iit-swf-update-5/_layouts/15/clientpeoplepicker.js"></script>
 	<script type="text/javascript" src="/sites/iit-swf-update-5/_layouts/15/autofill.js"></script>
 	<script type="text/javascript" src="/sites/hubdev/DevCode4/js/dev_mos-main_long.1.04.js"></script>
-
-	<link rel="stylesheet" type="text/css" href="/sites/hubprod/Code4/css/libs/_libs.concatenated.1.0.css">
-	<link rel="stylesheet" type="text/css" href="/sites/hubdev/DevCode4/css/mos.css">
+	
+	<SharePoint:CssRegistration Name="/sites/hubprod/Code4/css/libs/_libs.concatenated.1.0.css" runat="server" />
+	<SharePoint:CssRegistration Name="/sites/hubdev/DevCode4/css/mos.css" runat="server" />
 	 -->
 	
 	<style>

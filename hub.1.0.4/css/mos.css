@@ -527,7 +527,8 @@ div.ui-dialog div.ui-dialog-titlebar.ui-widget-header button.ui-button span.ui-i
 div.ui-dialog div.ui-dialog-content.ui-widget-content div.table-container div.dataTables_wrapper table.dataTable a.anchor_no-href,
 div#remaining-capacities ul#tab-navigation.ui-tabs-nav li a,
 div.fc-toolbar button,
-div.fc-toolbar a,
+div.fc-toolbar a.button-link,
+div.fc-toolbar a.collapsible-heading-toggle,
 ul#timeline-options li a,
 a.id-or-link_list-item-chooser,
 a.show-default-station-times,
@@ -558,7 +559,7 @@ a#gse-schedule-card-dialog-signup-opportunity-link {
   padding: .3rem 2rem;
   margin: 0 !important;
   font-size: 1.5rem;
-  font-weight: 600;
+  font-weight: normal;
   text-align: center;
   text-decoration: none;
   border: none;
@@ -581,7 +582,8 @@ a#gse-schedule-card-dialog-signup-opportunity-link {
   div.ui-dialog div.ui-dialog-content.ui-widget-content div.table-container div.dataTables_wrapper table.dataTable a.anchor_no-href:hover,
   div#remaining-capacities ul#tab-navigation.ui-tabs-nav li a:hover,
   div.fc-toolbar button:hover,
-  div.fc-toolbar a:hover,
+  div.fc-toolbar a.button-link:hover,
+  div.fc-toolbar a.collapsible-heading-toggle:hover,
   ul#timeline-options li a:hover,
   a.id-or-link_list-item-chooser:hover,
   a.show-default-station-times:hover,
@@ -679,7 +681,8 @@ a.button-link_new,
 a.button-link_go-forward,
 div#remaining-capacities ul#tab-navigation.ui-tabs-nav li a,
 div.fc-toolbar button,
-div.fc-toolbar a,
+div.fc-toolbar a.button-link,
+div.fc-toolbar a.collapsible-heading-toggle,
 ul#timeline-options li a,
 div#app-container a.button_swf-new-request-with-datatable,
 div#app-container a.button_swf-new-event-with-timeline,
@@ -699,7 +702,8 @@ a#standard-printer-button-inside-request {
   a.button-link_go-forward:hover,
   div#remaining-capacities ul#tab-navigation.ui-tabs-nav li a:hover,
   div.fc-toolbar button:hover,
-  div.fc-toolbar a:hover,
+  div.fc-toolbar a.button-link:hover,
+  div.fc-toolbar a.collapsible-heading-toggle:hover,
   ul#timeline-options li a:hover,
   div#app-container a.button_swf-new-request-with-datatable:hover,
   div#app-container a.button_swf-new-event-with-timeline:hover,
@@ -814,7 +818,23 @@ a.anchor_list-item-chooser:before,
 button.gse-signups-user-detail-control:before,
 .collapsible-heading a.collapsible-heading-toggle:before,
 a.hide-default-station-times:before {
-  content: '\E235'; }
+  content: '\E235';
+  margin-left: .5rem; }
+
+a.anchor_list-item-chooser span.overflow-menu-text,
+button.gse-signups-user-detail-control span.overflow-menu-text,
+.collapsible-heading a.collapsible-heading-toggle span.overflow-menu-text,
+a.hide-default-station-times span.overflow-menu-text {
+  display: block !important;
+  width: 0 !important;
+  height: 0;
+  padding: 0 !important;
+  text-indent: 100%;
+  white-space: nowrap;
+  overflow: hidden; }
+
+.collapsible-heading.overflow-menu-control a.collapsible-heading-toggle:before {
+  content: '\E045'; }
 
 a.id-or-link_list-item-chooser:before {
   content: '\E283'; }
@@ -822,6 +842,9 @@ a.id-or-link_list-item-chooser:before {
 .collapsible-heading.collapsible-heading-collapsed a.collapsible-heading-toggle:before,
 a.show-default-station-times:before {
   content: '\E236'; }
+
+.collapsible-heading.collapsible-heading-collapsed.overflow-menu-control a.collapsible-heading-toggle:before {
+  content: '\E045'; }
 
 div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button:before,
 div#s4-workspace div#app-container.gse-signup div#container_command-bar div#container_filter-controls-and-header a#filter_submit-button:before,
@@ -956,22 +979,32 @@ div.ui-dialog div.ui-dialog-titlebar.ui-widget-header button.ui-button {
       div.ui-dialog div.ui-dialog-titlebar.ui-widget-header button.ui-button span.ui-icon.ui-icon-closethick:before:hover {
         color: #004f87 !important; }
 
-div.fc-toolbar button,
-div.fc-toolbar a {
+div#museum-event-calendar-container div.fc-toolbar button,
+div#museum-event-calendar-container div.fc-toolbar a.button-link,
+div#museum-event-calendar-container div.fc-toolbar a.collapsible-heading-toggle,
+div#buyout-calendar-container div.fc-toolbar button,
+div#buyout-calendar-container div.fc-toolbar a.button-link,
+div#buyout-calendar-container div.fc-toolbar a.collapsible-heading-toggle {
   position: relative;
   top: 50%;
   transform: translateY(-50%); }
 
-div.fc-toolbar div.fc-left button {
+div#museum-event-calendar-container div.fc-toolbar div.fc-left button,
+div#buyout-calendar-container div.fc-toolbar div.fc-left button {
   margin-top: 1rem !important; }
 
-div.fc-toolbar div.fc-right > div > button {
+div#museum-event-calendar-container div.fc-toolbar div.fc-right > div > button,
+div#buyout-calendar-container div.fc-toolbar div.fc-right > div > button {
   transform: translateY(-3.25rem); }
 
-div.fc-toolbar button.fc-prevYear-button span.button-text,
-div.fc-toolbar button.fc-prev-button span.button-text,
-div.fc-toolbar button.fc-next-button span.button-text,
-div.fc-toolbar button.fc-nextYear-button span.button-text {
+div#museum-event-calendar-container div.fc-toolbar button.fc-prevYear-button span.button-text,
+div#museum-event-calendar-container div.fc-toolbar button.fc-prev-button span.button-text,
+div#museum-event-calendar-container div.fc-toolbar button.fc-next-button span.button-text,
+div#museum-event-calendar-container div.fc-toolbar button.fc-nextYear-button span.button-text,
+div#buyout-calendar-container div.fc-toolbar button.fc-prevYear-button span.button-text,
+div#buyout-calendar-container div.fc-toolbar button.fc-prev-button span.button-text,
+div#buyout-calendar-container div.fc-toolbar button.fc-next-button span.button-text,
+div#buyout-calendar-container div.fc-toolbar button.fc-nextYear-button span.button-text {
   display: inline-block;
   width: 0;
   height: 0;
@@ -994,6 +1027,30 @@ div#s4-workspace div#public-community-page_open-enrollment div.primary-section a
   display: block;
   max-width: 300px;
   margin: 1rem 0 2rem !important; }
+
+div#s4-workspace div.overflow-menu ul.button-list-container {
+  list-style: none;
+  padding: 1.5rem 1.5rem 0 0; }
+  div#s4-workspace div.overflow-menu ul.button-list-container li {
+    list-style: none;
+    text-align: left;
+    padding-bottom: .5rem; }
+    div#s4-workspace div.overflow-menu ul.button-list-container li a {
+      display: block; }
+      div#s4-workspace div.overflow-menu ul.button-list-container li a:before {
+        display: inline-block;
+        font-family: 'Office365Icons';
+        font-size: inherit;
+        font-weight: inherit;
+        color: inherit;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        margin-right: .5rem; }
+    div#s4-workspace div.overflow-menu ul.button-list-container li a.new-item:before {
+      content: '\E004'; }
+    div#s4-workspace div.overflow-menu ul.button-list-container li a.go-forward:before {
+      content: '\E04A'; }
 
 div#s4-workspace table.in-zone-table {
   width: 100%; }
@@ -1064,7 +1121,7 @@ div#s4-workspace p.public-community-link_parent {
     padding: .3rem 2rem;
     margin: 0 !important;
     font-size: 1.5rem;
-    font-weight: 600;
+    font-weight: normal;
     text-align: center;
     text-decoration: none;
     border: none;
@@ -1158,7 +1215,7 @@ div#s4-workspace div.targeted-links {
     padding: .3rem 2rem;
     margin: 0 !important;
     font-size: 1.5rem;
-    font-weight: 600;
+    font-weight: normal;
     text-align: center;
     text-decoration: none;
     border: none;
@@ -2781,7 +2838,7 @@ div#s4-workspace div.community-contact a[href^="https://bmos-my"], div#s4-worksp
   padding: .3rem 2rem;
   margin: 0 !important;
   font-size: 1.5rem;
-  font-weight: 600;
+  font-weight: normal;
   text-align: center;
   text-decoration: none;
   border: none;
@@ -3415,45 +3472,69 @@ div#app-container.gse-signup div#no-signups-warning {
   font-size: 2rem !important;
   margin-bottom: 2rem; }
 
-div#s4-workspace div#app-container.gse-signup div#container_command-bar-and-data div#container_command-bar,
-div#s4-workspace div#app-container.gse-schedule div#container_command-bar-and-data div#container_command-bar {
+div#s4-workspace div#app-container.gse-signup div#container_command-bar,
+div#s4-workspace div#app-container.gse-schedule div#container_command-bar {
   color: #333;
   background-color: #eee;
-  display: inline-block; }
-  div#s4-workspace div#app-container.gse-signup div#container_command-bar-and-data div#container_command-bar a,
-  div#s4-workspace div#app-container.gse-schedule div#container_command-bar-and-data div#container_command-bar a {
+  display: table; }
+  div#s4-workspace div#app-container.gse-signup div#container_command-bar a,
+  div#s4-workspace div#app-container.gse-schedule div#container_command-bar a {
     color: #004f87 !important; }
-    div#s4-workspace div#app-container.gse-signup div#container_command-bar-and-data div#container_command-bar a:hover,
-    div#s4-workspace div#app-container.gse-schedule div#container_command-bar-and-data div#container_command-bar a:hover {
+    div#s4-workspace div#app-container.gse-signup div#container_command-bar a:hover,
+    div#s4-workspace div#app-container.gse-schedule div#container_command-bar a:hover {
       color: #003a63 !important; }
-  div#s4-workspace div#app-container.gse-signup div#container_command-bar-and-data div#container_command-bar div.container_link,
-  div#s4-workspace div#app-container.gse-signup div#container_command-bar-and-data div#container_command-bar div#container_filter-controls-and-header,
-  div#s4-workspace div#app-container.gse-schedule div#container_command-bar-and-data div#container_command-bar div.container_link,
-  div#s4-workspace div#app-container.gse-schedule div#container_command-bar-and-data div#container_command-bar div#container_filter-controls-and-header {
+  div#s4-workspace div#app-container.gse-signup div#container_command-bar div.container_link,
+  div#s4-workspace div#app-container.gse-signup div#container_command-bar div#container_filter-controls-and-header,
+  div#s4-workspace div#app-container.gse-signup div#container_command-bar div#container_navigation-controls-and-header,
+  div#s4-workspace div#app-container.gse-schedule div#container_command-bar div.container_link,
+  div#s4-workspace div#app-container.gse-schedule div#container_command-bar div#container_filter-controls-and-header,
+  div#s4-workspace div#app-container.gse-schedule div#container_command-bar div#container_navigation-controls-and-header {
     display: table-cell;
     vertical-align: top; }
-  div#s4-workspace div#app-container.gse-signup div#container_command-bar-and-data div#container_command-bar div#container_filter-controls-and-header div#text_filter-controls a.collapsible-heading-toggle,
-  div#s4-workspace div#app-container.gse-schedule div#container_command-bar-and-data div#container_command-bar div#container_filter-controls-and-header div#text_filter-controls a.collapsible-heading-toggle {
+  div#s4-workspace div#app-container.gse-signup div#container_command-bar div#container_filter-controls-and-header div#text_filter-controls a.collapsible-heading-toggle,
+  div#s4-workspace div#app-container.gse-signup div#container_command-bar div#container_navigation-controls-and-header div#text_navigation-controls a.collapsible-heading-toggle,
+  div#s4-workspace div#app-container.gse-schedule div#container_command-bar div#container_filter-controls-and-header div#text_filter-controls a.collapsible-heading-toggle,
+  div#s4-workspace div#app-container.gse-schedule div#container_command-bar div#container_navigation-controls-and-header div#text_navigation-controls a.collapsible-heading-toggle {
     display: block; }
 
-div#s4-workspace div#app-container.gse-signup div#container_command-bar-and-data div#container_filter-controls,
-div#s4-workspace div#app-container.gse-schedule div#container_command-bar-and-data div#container_filter-controls {
+div#s4-workspace div#app-container.gse-signup div#container_filter-controls,
+div#s4-workspace div#app-container.gse-schedule div#container_filter-controls {
   padding: 1.5rem 1.5rem 0 0;
   font-weight: 600; }
-  div#s4-workspace div#app-container.gse-signup div#container_command-bar-and-data div#container_filter-controls div.container_filter-control,
-  div#s4-workspace div#app-container.gse-schedule div#container_command-bar-and-data div#container_filter-controls div.container_filter-control {
-    padding: 0 0 1.5rem 1.5rem; }
-    div#s4-workspace div#app-container.gse-signup div#container_command-bar-and-data div#container_filter-controls div.container_filter-control label,
-    div#s4-workspace div#app-container.gse-schedule div#container_command-bar-and-data div#container_filter-controls div.container_filter-control label {
+  div#s4-workspace div#app-container.gse-signup div#container_filter-controls div.container_filter-control,
+  div#s4-workspace div#app-container.gse-schedule div#container_filter-controls div.container_filter-control {
+    padding: 0 0 1.5rem 1.5rem;
+    text-align: left; }
+    div#s4-workspace div#app-container.gse-signup div#container_filter-controls div.container_filter-control label,
+    div#s4-workspace div#app-container.gse-schedule div#container_filter-controls div.container_filter-control label {
       display: inline-block;
       width: 6rem;
       text-align: right; }
-    div#s4-workspace div#app-container.gse-signup div#container_command-bar-and-data div#container_filter-controls div.container_filter-control select,
-    div#s4-workspace div#app-container.gse-schedule div#container_command-bar-and-data div#container_filter-controls div.container_filter-control select {
+    div#s4-workspace div#app-container.gse-signup div#container_filter-controls div.container_filter-control select,
+    div#s4-workspace div#app-container.gse-schedule div#container_filter-controls div.container_filter-control select {
       width: 20rem; }
-    div#s4-workspace div#app-container.gse-signup div#container_command-bar-and-data div#container_filter-controls div.container_filter-control a#filter_submit-button,
-    div#s4-workspace div#app-container.gse-schedule div#container_command-bar-and-data div#container_filter-controls div.container_filter-control a#filter_submit-button {
+    div#s4-workspace div#app-container.gse-signup div#container_filter-controls div.container_filter-control a#filter_submit-button,
+    div#s4-workspace div#app-container.gse-schedule div#container_filter-controls div.container_filter-control a#filter_submit-button {
       margin: 0 0 0 6.5rem !important; }
+
+div#s4-workspace div#app-container.gse-schedule div#container_filter-controls div.container_filter-control label {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  text-indent: 100%;
+  white-space: nowrap;
+  overflow: hidden; }
+
+div#s4-workspace div#app-container.gse-schedule-list div#container_command-bar {
+  display: inline-block; }
+
+div#s4-workspace div#app-container.gse-signup div#container_command-bar-and-data div#container_command-bar div#container_filter-controls-and-header label {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  text-indent: 100%;
+  white-space: nowrap;
+  overflow: hidden; }
 
 div#s4-workspace div#app-container.gse-signup div#container_command-bar-and-data div#container_data {
   margin-top: 1rem; }
@@ -3604,66 +3685,34 @@ body.product-timeline div.ui-dialog#product-timeline-item-dialog div.ui-dialog-c
   padding: 1rem 0; }
 
 div#museum-event-calendar-container div.fc-toolbar,
-div#buyout-calendar-container div.fc-toolbar,
-div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-toolbar,
-div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests div.fc-toolbar,
-div#overview-screen-container.gseSchedulesCalendarManager-requests div.fc-toolbar,
-div#overview-screen-container.gseSchedulesCalendarStaff-requests div.fc-toolbar {
+div#buyout-calendar-container div.fc-toolbar {
   height: 4.5rem;
   margin-bottom: 1rem;
   opacity: 0; }
   div#museum-event-calendar-container div.fc-toolbar div.fc-left,
-  div#buyout-calendar-container div.fc-toolbar div.fc-left,
-  div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-toolbar div.fc-left,
-  div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests div.fc-toolbar div.fc-left,
-  div#overview-screen-container.gseSchedulesCalendarManager-requests div.fc-toolbar div.fc-left,
-  div#overview-screen-container.gseSchedulesCalendarStaff-requests div.fc-toolbar div.fc-left {
+  div#buyout-calendar-container div.fc-toolbar div.fc-left {
     float: left;
     height: 4.5rem; }
   div#museum-event-calendar-container div.fc-toolbar div.fc-right,
-  div#buyout-calendar-container div.fc-toolbar div.fc-right,
-  div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-toolbar div.fc-right,
-  div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests div.fc-toolbar div.fc-right,
-  div#overview-screen-container.gseSchedulesCalendarManager-requests div.fc-toolbar div.fc-right,
-  div#overview-screen-container.gseSchedulesCalendarStaff-requests div.fc-toolbar div.fc-right {
+  div#buyout-calendar-container div.fc-toolbar div.fc-right {
     float: none;
     display: inline-block;
     height: 4.5rem; }
     div#museum-event-calendar-container div.fc-toolbar div.fc-right > div,
-    div#buyout-calendar-container div.fc-toolbar div.fc-right > div,
-    div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-toolbar div.fc-right > div,
-    div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests div.fc-toolbar div.fc-right > div,
-    div#overview-screen-container.gseSchedulesCalendarManager-requests div.fc-toolbar div.fc-right > div,
-    div#overview-screen-container.gseSchedulesCalendarStaff-requests div.fc-toolbar div.fc-right > div {
+    div#buyout-calendar-container div.fc-toolbar div.fc-right > div {
       height: 4.5rem; }
   div#museum-event-calendar-container div.fc-toolbar div.fc-center,
-  div#buyout-calendar-container div.fc-toolbar div.fc-center,
-  div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-toolbar div.fc-center,
-  div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests div.fc-toolbar div.fc-center,
-  div#overview-screen-container.gseSchedulesCalendarManager-requests div.fc-toolbar div.fc-center,
-  div#overview-screen-container.gseSchedulesCalendarStaff-requests div.fc-toolbar div.fc-center {
+  div#buyout-calendar-container div.fc-toolbar div.fc-center {
     float: right;
     height: 4.5rem; }
     div#museum-event-calendar-container div.fc-toolbar div.fc-center > div,
-    div#buyout-calendar-container div.fc-toolbar div.fc-center > div,
-    div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-toolbar div.fc-center > div,
-    div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests div.fc-toolbar div.fc-center > div,
-    div#overview-screen-container.gseSchedulesCalendarManager-requests div.fc-toolbar div.fc-center > div,
-    div#overview-screen-container.gseSchedulesCalendarStaff-requests div.fc-toolbar div.fc-center > div {
+    div#buyout-calendar-container div.fc-toolbar div.fc-center > div {
       height: 4.5rem; }
     div#museum-event-calendar-container div.fc-toolbar div.fc-center button.ui-button,
-    div#buyout-calendar-container div.fc-toolbar div.fc-center button.ui-button,
-    div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-toolbar div.fc-center button.ui-button,
-    div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests div.fc-toolbar div.fc-center button.ui-button,
-    div#overview-screen-container.gseSchedulesCalendarManager-requests div.fc-toolbar div.fc-center button.ui-button,
-    div#overview-screen-container.gseSchedulesCalendarStaff-requests div.fc-toolbar div.fc-center button.ui-button {
+    div#buyout-calendar-container div.fc-toolbar div.fc-center button.ui-button {
       text-transform: capitalize; }
   div#museum-event-calendar-container div.fc-toolbar h2,
-  div#buyout-calendar-container div.fc-toolbar h2,
-  div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-toolbar h2,
-  div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests div.fc-toolbar h2,
-  div#overview-screen-container.gseSchedulesCalendarManager-requests div.fc-toolbar h2,
-  div#overview-screen-container.gseSchedulesCalendarStaff-requests div.fc-toolbar h2 {
+  div#buyout-calendar-container div.fc-toolbar h2 {
     display: inline-block;
     font-size: 3.75rem !important;
     line-height: 3.75rem !important;
@@ -3710,45 +3759,25 @@ div#buyout-calendar-container div#buyouts-metadata {
       background-color: #107c10; }
 
 div#buyout-calendar-container div.fc-view-container,
-div#museum-event-calendar-container div.fc-view-container,
-div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-view-container,
-div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests div.fc-view-container,
-div#overview-screen-container.gseSchedulesCalendarManager-requests div.fc-view-container,
-div#overview-screen-container.gseSchedulesCalendarStaff-requests div.fc-view-container {
+div#museum-event-calendar-container div.fc-view-container {
   opacity: 0; }
 
 div#buyout-calendar-container div.fc-bg td.fc-day,
-div#museum-event-calendar-container div.fc-bg td.fc-day,
-div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-bg td.fc-day,
-div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests div.fc-bg td.fc-day,
-div#overview-screen-container.gseSchedulesCalendarManager-requests div.fc-bg td.fc-day,
-div#overview-screen-container.gseSchedulesCalendarStaff-requests div.fc-bg td.fc-day {
+div#museum-event-calendar-container div.fc-bg td.fc-day {
   padding: 1rem .2rem .2rem 4.5rem !important; }
 
 div#buyout-calendar-container div.fc-content-skeleton td.fc-day-number,
-div#museum-event-calendar-container div.fc-content-skeleton td.fc-day-number,
-div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-content-skeleton td.fc-day-number,
-div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests div.fc-content-skeleton td.fc-day-number,
-div#overview-screen-container.gseSchedulesCalendarManager-requests div.fc-content-skeleton td.fc-day-number,
-div#overview-screen-container.gseSchedulesCalendarStaff-requests div.fc-content-skeleton td.fc-day-number {
+div#museum-event-calendar-container div.fc-content-skeleton td.fc-day-number {
   padding: .5rem .2rem .2rem 1.5rem !important;
   font-size: 2rem;
   text-align: left; }
 
 div#buyout-calendar-container div.fc-content-skeleton td.fc-day-number.add-schedule-on-click,
-div#museum-event-calendar-container div.fc-content-skeleton td.fc-day-number.add-schedule-on-click,
-div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-content-skeleton td.fc-day-number.add-schedule-on-click,
-div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests div.fc-content-skeleton td.fc-day-number.add-schedule-on-click,
-div#overview-screen-container.gseSchedulesCalendarManager-requests div.fc-content-skeleton td.fc-day-number.add-schedule-on-click,
-div#overview-screen-container.gseSchedulesCalendarStaff-requests div.fc-content-skeleton td.fc-day-number.add-schedule-on-click {
+div#museum-event-calendar-container div.fc-content-skeleton td.fc-day-number.add-schedule-on-click {
   cursor: pointer; }
 
 div#buyout-calendar-container a.fc-event,
-div#museum-event-calendar-container a.fc-event,
-div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests a.fc-event,
-div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests a.fc-event,
-div#overview-screen-container.gseSchedulesCalendarManager-requests a.fc-event,
-div#overview-screen-container.gseSchedulesCalendarStaff-requests a.fc-event {
+div#museum-event-calendar-container a.fc-event {
   font-size: 1.3rem;
   line-height: 2rem;
   border-radius: 0;
@@ -3759,67 +3788,248 @@ div#overview-screen-container.gseSchedulesCalendarStaff-requests a.fc-event {
   color: #fff !important; }
 
 div#buyout-calendar-container a.fc-event.mugar-omni-theater,
-div#museum-event-calendar-container a.fc-event.mugar-omni-theater,
-div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests a.fc-event.mugar-omni-theater,
-div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests a.fc-event.mugar-omni-theater,
-div#overview-screen-container.gseSchedulesCalendarManager-requests a.fc-event.mugar-omni-theater,
-div#overview-screen-container.gseSchedulesCalendarStaff-requests a.fc-event.mugar-omni-theater {
+div#museum-event-calendar-container a.fc-event.mugar-omni-theater {
   background-color: #ff9a1f;
   color: #222 !important; }
 
 div#buyout-calendar-container a.fc-event.three-d-digital-cinema,
-div#museum-event-calendar-container a.fc-event.three-d-digital-cinema,
-div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests a.fc-event.three-d-digital-cinema,
-div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests a.fc-event.three-d-digital-cinema,
-div#overview-screen-container.gseSchedulesCalendarManager-requests a.fc-event.three-d-digital-cinema,
-div#overview-screen-container.gseSchedulesCalendarStaff-requests a.fc-event.three-d-digital-cinema {
+div#museum-event-calendar-container a.fc-event.three-d-digital-cinema {
   background-color: #ff5498;
   color: #111 !important; }
 
 div#buyout-calendar-container a.fc-event.butterfly-garden,
-div#museum-event-calendar-container a.fc-event.butterfly-garden,
-div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests a.fc-event.butterfly-garden,
-div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests a.fc-event.butterfly-garden,
-div#overview-screen-container.gseSchedulesCalendarManager-requests a.fc-event.butterfly-garden,
-div#overview-screen-container.gseSchedulesCalendarStaff-requests a.fc-event.butterfly-garden {
+div#museum-event-calendar-container a.fc-event.butterfly-garden {
   background-color: #cd3ff2;
   color: #111 !important; }
 
 div#buyout-calendar-container a.fc-event.charles-hayden-planetarium,
-div#museum-event-calendar-container a.fc-event.charles-hayden-planetarium,
-div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests a.fc-event.charles-hayden-planetarium,
-div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests a.fc-event.charles-hayden-planetarium,
-div#overview-screen-container.gseSchedulesCalendarManager-requests a.fc-event.charles-hayden-planetarium,
-div#overview-screen-container.gseSchedulesCalendarStaff-requests a.fc-event.charles-hayden-planetarium {
+div#museum-event-calendar-container a.fc-event.charles-hayden-planetarium {
   background-color: #45b1ff;
   color: #000 !important; }
 
 div#buyout-calendar-container a.fc-event.skyline-room,
-div#museum-event-calendar-container a.fc-event.skyline-room,
-div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests a.fc-event.skyline-room,
-div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests a.fc-event.skyline-room,
-div#overview-screen-container.gseSchedulesCalendarManager-requests a.fc-event.skyline-room,
-div#overview-screen-container.gseSchedulesCalendarStaff-requests a.fc-event.skyline-room {
+div#museum-event-calendar-container a.fc-event.skyline-room {
   background-color: #71e667;
   color: #111 !important; }
 
 div#buyout-calendar-container a.fc-event.nichols-gallery,
-div#museum-event-calendar-container a.fc-event.nichols-gallery,
-div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests a.fc-event.nichols-gallery,
-div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests a.fc-event.nichols-gallery,
-div#overview-screen-container.gseSchedulesCalendarManager-requests a.fc-event.nichols-gallery,
-div#overview-screen-container.gseSchedulesCalendarStaff-requests a.fc-event.nichols-gallery {
+div#museum-event-calendar-container a.fc-event.nichols-gallery {
   background-color: #a30c5e;
   color: #fff !important; }
 
 div#buyout-calendar-container a.fc-event.stearns-gallery,
-div#museum-event-calendar-container a.fc-event.stearns-gallery,
-div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests a.fc-event.stearns-gallery,
-div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests a.fc-event.stearns-gallery,
-div#overview-screen-container.gseSchedulesCalendarManager-requests a.fc-event.stearns-gallery,
-div#overview-screen-container.gseSchedulesCalendarStaff-requests a.fc-event.stearns-gallery {
+div#museum-event-calendar-container a.fc-event.stearns-gallery {
   background-color: #107c10;
   color: #fff !important; }
+
+div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-toolbar div.fc-toolbar,
+div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests div.fc-toolbar div.fc-toolbar,
+div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarManager-requests div.fc-toolbar div.fc-toolbar,
+div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarStaff-requests div.fc-toolbar div.fc-toolbar {
+  height: 4.5rem;
+  margin-bottom: 1rem;
+  opacity: 0; }
+  div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-toolbar div.fc-toolbar div.fc-left,
+  div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests div.fc-toolbar div.fc-toolbar div.fc-left,
+  div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarManager-requests div.fc-toolbar div.fc-toolbar div.fc-left,
+  div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarStaff-requests div.fc-toolbar div.fc-toolbar div.fc-left {
+    float: left;
+    height: 4.5rem; }
+  div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-toolbar div.fc-toolbar div.fc-right,
+  div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests div.fc-toolbar div.fc-toolbar div.fc-right,
+  div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarManager-requests div.fc-toolbar div.fc-toolbar div.fc-right,
+  div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarStaff-requests div.fc-toolbar div.fc-toolbar div.fc-right {
+    float: none;
+    display: inline-block;
+    height: 4.5rem; }
+    div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-toolbar div.fc-toolbar div.fc-right > div,
+    div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests div.fc-toolbar div.fc-toolbar div.fc-right > div,
+    div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarManager-requests div.fc-toolbar div.fc-toolbar div.fc-right > div,
+    div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarStaff-requests div.fc-toolbar div.fc-toolbar div.fc-right > div {
+      height: 4.5rem; }
+  div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-toolbar div.fc-toolbar div.fc-center,
+  div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests div.fc-toolbar div.fc-toolbar div.fc-center,
+  div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarManager-requests div.fc-toolbar div.fc-toolbar div.fc-center,
+  div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarStaff-requests div.fc-toolbar div.fc-toolbar div.fc-center {
+    float: right;
+    height: 4.5rem; }
+    div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-toolbar div.fc-toolbar div.fc-center > div,
+    div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests div.fc-toolbar div.fc-toolbar div.fc-center > div,
+    div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarManager-requests div.fc-toolbar div.fc-toolbar div.fc-center > div,
+    div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarStaff-requests div.fc-toolbar div.fc-toolbar div.fc-center > div {
+      height: 4.5rem; }
+    div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-toolbar div.fc-toolbar div.fc-center button.ui-button,
+    div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests div.fc-toolbar div.fc-toolbar div.fc-center button.ui-button,
+    div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarManager-requests div.fc-toolbar div.fc-toolbar div.fc-center button.ui-button,
+    div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarStaff-requests div.fc-toolbar div.fc-toolbar div.fc-center button.ui-button {
+      text-transform: capitalize; }
+
+div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests .fc-day.ui-widget-content.fc-past,
+div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests .fc-day.ui-widget-content.fc-past,
+div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarManager-requests .fc-day.ui-widget-content.fc-past,
+div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarStaff-requests .fc-day.ui-widget-content.fc-past {
+  background-color: #e0e0e0;
+  border: 1px solid #e0e0e0; }
+
+div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-view-container,
+div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests div.fc-view-container,
+div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarManager-requests div.fc-view-container,
+div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarStaff-requests div.fc-view-container {
+  opacity: 0; }
+
+div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-bg td.fc-day,
+div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests div.fc-bg td.fc-day,
+div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarManager-requests div.fc-bg td.fc-day,
+div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarStaff-requests div.fc-bg td.fc-day {
+  padding: 1rem .2rem .2rem 4.5rem !important; }
+
+div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-content-skeleton td.fc-day-number,
+div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests div.fc-content-skeleton td.fc-day-number,
+div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarManager-requests div.fc-content-skeleton td.fc-day-number,
+div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarStaff-requests div.fc-content-skeleton td.fc-day-number {
+  padding: .5rem .2rem .2rem 1.5rem !important;
+  font-size: 2rem;
+  text-align: left; }
+
+div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-content-skeleton td.fc-day-number.add-schedule-on-click,
+div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests div.fc-content-skeleton td.fc-day-number.add-schedule-on-click,
+div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarManager-requests div.fc-content-skeleton td.fc-day-number.add-schedule-on-click,
+div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarStaff-requests div.fc-content-skeleton td.fc-day-number.add-schedule-on-click {
+  cursor: pointer; }
+
+div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests a.fc-event,
+div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests a.fc-event,
+div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarManager-requests a.fc-event,
+div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarStaff-requests a.fc-event {
+  font-size: 1.3rem;
+  line-height: 2rem;
+  border-radius: 0;
+  border: none;
+  padding-left: .5rem;
+  cursor: pointer;
+  background-color: #0072c6;
+  color: #fff !important; }
+
+@media only screen and (max-width: 1599px) {
+  div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-toolbar div.fc-left,
+  div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests div.fc-toolbar div.fc-left,
+  div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarManager-requests div.fc-toolbar div.fc-left,
+  div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarStaff-requests div.fc-toolbar div.fc-left {
+    float: left; }
+    div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-toolbar div.fc-left div#container_command-bar,
+    div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests div.fc-toolbar div.fc-left div#container_command-bar,
+    div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarManager-requests div.fc-toolbar div.fc-left div#container_command-bar,
+    div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarStaff-requests div.fc-toolbar div.fc-left div#container_command-bar {
+      display: inline-block; }
+      div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-toolbar div.fc-left div#container_command-bar div#container_navigation-controls-expanded,
+      div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests div.fc-toolbar div.fc-left div#container_command-bar div#container_navigation-controls-expanded,
+      div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarManager-requests div.fc-toolbar div.fc-left div#container_command-bar div#container_navigation-controls-expanded,
+      div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarStaff-requests div.fc-toolbar div.fc-left div#container_command-bar div#container_navigation-controls-expanded {
+        display: none; }
+  div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-toolbar div.fc-right,
+  div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests div.fc-toolbar div.fc-right,
+  div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarManager-requests div.fc-toolbar div.fc-right,
+  div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarStaff-requests div.fc-toolbar div.fc-right {
+    float: none; }
+    div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-toolbar div.fc-right button,
+    div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests div.fc-toolbar div.fc-right button,
+    div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarManager-requests div.fc-toolbar div.fc-right button,
+    div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarStaff-requests div.fc-toolbar div.fc-right button {
+      vertical-align: top; }
+    div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-toolbar div.fc-right button.fc-prevYear-button,
+    div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-toolbar div.fc-right button.fc-nextYear-button,
+    div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests div.fc-toolbar div.fc-right button.fc-prevYear-button,
+    div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests div.fc-toolbar div.fc-right button.fc-nextYear-button,
+    div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarManager-requests div.fc-toolbar div.fc-right button.fc-prevYear-button,
+    div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarManager-requests div.fc-toolbar div.fc-right button.fc-nextYear-button,
+    div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarStaff-requests div.fc-toolbar div.fc-right button.fc-prevYear-button,
+    div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarStaff-requests div.fc-toolbar div.fc-right button.fc-nextYear-button {
+      display: none; }
+    div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-toolbar div.fc-right h2,
+    div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests div.fc-toolbar div.fc-right h2,
+    div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarManager-requests div.fc-toolbar div.fc-right h2,
+    div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarStaff-requests div.fc-toolbar div.fc-right h2 {
+      display: inline-block;
+      font-size: 2.75rem !important;
+      line-height: 2.75rem !important;
+      padding: 0 3rem; }
+  div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-toolbar div.fc-center,
+  div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests div.fc-toolbar div.fc-center,
+  div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarManager-requests div.fc-toolbar div.fc-center,
+  div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarStaff-requests div.fc-toolbar div.fc-center {
+    float: right; }
+    div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-toolbar div.fc-center button.fc-basicDay-button,
+    div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-toolbar div.fc-center button.fc-basicWeek-button,
+    div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-toolbar div.fc-center button.fc-month-button,
+    div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests div.fc-toolbar div.fc-center button.fc-basicDay-button,
+    div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests div.fc-toolbar div.fc-center button.fc-basicWeek-button,
+    div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests div.fc-toolbar div.fc-center button.fc-month-button,
+    div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarManager-requests div.fc-toolbar div.fc-center button.fc-basicDay-button,
+    div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarManager-requests div.fc-toolbar div.fc-center button.fc-basicWeek-button,
+    div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarManager-requests div.fc-toolbar div.fc-center button.fc-month-button,
+    div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarStaff-requests div.fc-toolbar div.fc-center button.fc-basicDay-button,
+    div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarStaff-requests div.fc-toolbar div.fc-center button.fc-basicWeek-button,
+    div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarStaff-requests div.fc-toolbar div.fc-center button.fc-month-button {
+      display: none; }
+  div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-toolbar div.fc-right,
+  div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests div.fc-toolbar div.fc-right,
+  div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarManager-requests div.fc-toolbar div.fc-right,
+  div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarStaff-requests div.fc-toolbar div.fc-right {
+    float: none;
+    display: inline-block;
+    height: 4.5rem; }
+    div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-toolbar div.fc-right > div,
+    div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests div.fc-toolbar div.fc-right > div,
+    div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarManager-requests div.fc-toolbar div.fc-right > div,
+    div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarStaff-requests div.fc-toolbar div.fc-right > div {
+      height: 4.5rem; } }
+
+@media only screen and (min-width: 1600px) {
+  div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-toolbar,
+  div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests div.fc-toolbar,
+  div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarManager-requests div.fc-toolbar,
+  div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarStaff-requests div.fc-toolbar {
+    margin-bottom: 1rem;
+    opacity: 0; }
+    div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-toolbar div.fc-left,
+    div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests div.fc-toolbar div.fc-left,
+    div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarManager-requests div.fc-toolbar div.fc-left,
+    div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarStaff-requests div.fc-toolbar div.fc-left {
+      float: left; }
+      div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-toolbar div.fc-left div#container_navigation-controls-and-header,
+      div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests div.fc-toolbar div.fc-left div#container_navigation-controls-and-header,
+      div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarManager-requests div.fc-toolbar div.fc-left div#container_navigation-controls-and-header,
+      div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarStaff-requests div.fc-toolbar div.fc-left div#container_navigation-controls-and-header {
+        display: none; }
+    div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-toolbar div.fc-right,
+    div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests div.fc-toolbar div.fc-right,
+    div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarManager-requests div.fc-toolbar div.fc-right,
+    div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarStaff-requests div.fc-toolbar div.fc-right {
+      float: none;
+      display: inline-block; }
+      div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-toolbar div.fc-right button,
+      div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests div.fc-toolbar div.fc-right button,
+      div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarManager-requests div.fc-toolbar div.fc-right button,
+      div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarStaff-requests div.fc-toolbar div.fc-right button {
+        vertical-align: top; }
+    div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-toolbar div.fc-center,
+    div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests div.fc-toolbar div.fc-center,
+    div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarManager-requests div.fc-toolbar div.fc-center,
+    div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarStaff-requests div.fc-toolbar div.fc-center {
+      float: right; }
+      div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-toolbar div.fc-center button.ui-button,
+      div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests div.fc-toolbar div.fc-center button.ui-button,
+      div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarManager-requests div.fc-toolbar div.fc-center button.ui-button,
+      div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarStaff-requests div.fc-toolbar div.fc-center button.ui-button {
+        text-transform: capitalize; }
+    div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests div.fc-toolbar h2,
+    div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests div.fc-toolbar h2,
+    div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarManager-requests div.fc-toolbar h2,
+    div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overview-screen-container.gseSchedulesCalendarStaff-requests div.fc-toolbar h2 {
+      display: inline-block;
+      font-size: 3rem !important;
+      line-height: 3rem !important;
+      padding: 0 3rem; } }
 
 div.ui-dialog#buyout-calendar-item-dialog div.ui-dialog-titlebar span.ui-dialog-title,
 div.ui-dialog#museum-calendar-item-dialog div.ui-dialog-titlebar span.ui-dialog-title,
@@ -3861,13 +4071,6 @@ div[aria-describedby='gse-schedule-card-dialog'] div.ui-dialog-content p.ui-dial
   font-weight: 300;
   margin: 0;
   padding: 1rem 0; }
-
-div#overview-screen-container.gseSchedulesCalendarHRAdmin-requests .fc-day.ui-widget-content.fc-past,
-div#overview-screen-container.gseSchedulesCalendarJobAdmin-requests .fc-day.ui-widget-content.fc-past,
-div#overview-screen-container.gseSchedulesCalendarManager-requests .fc-day.ui-widget-content.fc-past,
-div#overview-screen-container.gseSchedulesCalendarStaff-requests .fc-day.ui-widget-content.fc-past {
-  background-color: #e0e0e0;
-  border: 1px solid #e0e0e0; }
 
 div#remaining-capacity-metadata {
   opacity: 0; }

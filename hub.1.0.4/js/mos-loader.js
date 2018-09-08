@@ -44,7 +44,7 @@ var timestamp = date.getTime();
 
 
 
-if (debugMode) { console.log("using mos-loader m1") }
+if (debugMode) { console.log("using mos-loader m250") }
 
 
 
