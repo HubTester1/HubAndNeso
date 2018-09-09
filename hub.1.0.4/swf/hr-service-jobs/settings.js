@@ -10,7 +10,7 @@
 		// 'mosMainKey': 'devMedium',
 		'mosMainKey': 'devLong',
 		'devAdminNotifications': 1,
-		'notifications': 0
+		'notifications': 1
 	};
 
 	console.log("using settings m5");
@@ -680,6 +680,42 @@
 								'} \n';
 
 	fData.CustomScriptLast +=	'$("div#label-and-control_Requested-For, div#container_about-the-requester").hide("fast").addClass("hidden"); \n';
+
+
+	/* // texts
+	fData.CustomScriptLast += '$("input#Request-Nickname").val("Req Nick");';
+	fData.CustomScriptLast += '$("input#Job-Title").val("Job Title");';
+	fData.CustomScriptLast += '$("input#Physical-Demand-Lifting").val("1");';
+	fData.CustomScriptLast += '$("input#Physical-Demand-Carrying").val("2");';
+	fData.CustomScriptLast += '$("input#Physical-Demand-Pushing").val("3");';
+	fData.CustomScriptLast += '$("input#Physical-Demand-Pulling").val("4");';
+	fData.CustomScriptLast += '$("input#Physical-Demand-Standing").val("10");';
+	fData.CustomScriptLast += '$("input#Physical-Demand-Sitting").val("10");';
+	fData.CustomScriptLast += '$("input#Physical-Demand-Walking").val("80");';
+
+	// selects
+	fData.CustomScriptLast += '$("select#Department option[value=\'Accessibility\']").attr("selected","selected"); \n';
+
+	// textareas
+	fData.CustomScriptLast += '$("textarea#Job-Description").val("This is the job description.");';
+	fData.CustomScriptLast += '$("textarea#Training-Requirements").val("These are the training requirements");';
+	fData.CustomScriptLast += '$("textarea#Dress-Requirements").val("These are the dress requirements");';
+	fData.CustomScriptLast += '$("textarea#Job-Duties").val("These are the job duties");';
+ */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 	$.fn.ReturnThisAppMData = function () {

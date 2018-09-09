@@ -10,7 +10,7 @@
 		// 'mosMainKey': 'devMedium',
 		'mosMainKey': 'devLong',
 		'devAdminNotifications': 1,
-		'notifications': 0,
+		'notifications': 1,
 		'detailTitle': [
 			{
 				'roles': ['gseHRAdmin', 'gseJobAdmin', 'gseManager'],
@@ -2487,22 +2487,23 @@
 
 	// TEMPORARY
 
-	/* // repeats
-	fData.CustomScriptLast += '$().RepeatElement("gse-schedule-date");';
-	fData.CustomScriptLast += '$().RepeatElement("gse-schedule-date");'; */
+	// repeats
+	fData.CustomScriptLast += '$().RepeatElement("simple-date");';
+	fData.CustomScriptLast += '$().RepeatElement("simple-date");';
 	
 	// radios / checks
 	fData.CustomScriptLast += '$("input#shiftlength_35-hours").prop("checked", true).attr("checked", true); \n';
 	fData.CustomScriptLast += '$("input#locationisoffsite_no").prop("checked", true).attr("checked", true); \n';
+	fData.CustomScriptLast += '$("input#individual-or-pattern_individual").prop("checked", true).attr("checked", true); \n';
 	
 	// texts
 	fData.CustomScriptLast += '$("input#Request-Nickname").val("Req Nick");';
 	fData.CustomScriptLast += '$("input#id-or-link_GSE-Job-Request-ID").val("122");';
 	fData.CustomScriptLast += '$("input#Number-of-Positions").val("3");';
 	fData.CustomScriptLast += '$("input#Location").val("Lobby");';
-	// fData.CustomScriptLast += '$("input#Repeating-Date").val("July 29, 2018");';
-	// fData.CustomScriptLast += '$("input#Repeating-Date-repeat-1").val("July 30, 2018");';
-	// fData.CustomScriptLast += '$("input#Repeating-Date-repeat-2").val("July 31, 2018");';
+	fData.CustomScriptLast += '$("input#Repeating-Date").val("September 28, 2018");';
+	fData.CustomScriptLast += '$("input#Repeating-Date-repeat-1").val("September 29, 2018");';
+	fData.CustomScriptLast += '$("input#Repeating-Date-repeat-2").val("September 30, 2018");';
 	
 	// selects
 	fData.CustomScriptLast += '$("select#hours-input_StartTime option[value=\'T09\']").attr("selected","selected"); \n';
@@ -2516,6 +2517,8 @@
 	fData.CustomScriptLast += '$("input#time-storage_StartTime").val("2000-01-01T09:00:00Z"); \n';
 	// fData.CustomScriptLast += '$("input#time-storage_MealTime").val("2000-01-01T11:00:00Z"); \n';
 	// fData.CustomScriptLast += '$("input#time-storage_BreakTime").val("2000-01-01T13:30:00Z"); \n';
+	fData.CustomScriptLast += '$("div#simple-dates").removeClass("hidden"); \n';
+
 
 
 	$.fn.ReturnThisAppMData = function () {
