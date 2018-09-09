@@ -1280,11 +1280,15 @@
 		}
 
 		if (opt.where.field) {
+			if (!opt.where.operator) {
+				opt.where.operator = 'Eq';
+			}
+
 			if (opt.where.value) {
-				query += "<Eq>";
-				query += "<FieldRef Name='" + opt.where.field + "'></FieldRef>";
+				query += "<" + opt.where.operator + ">";
+				query += "<FieldRef Name='" + opt.where.field + "'></FieldRef>" + 
 				"<Value Type='" + opt.where.type + "'>" + opt.where.value + "</Value>";
-				query += "</Eq>";
+				query += "</" + opt.where.operator + ">";
 			} else if (opt.where.values) {
 				query += "<In>";
 				query += "<FieldRef Name='" + opt.where.field + "'></FieldRef>";
@@ -18698,6 +18702,54 @@
 				'    </div> \n' +
 				'</div> \n';
 		}
+		if (relevantRole === 'gseManager') {
+			commandBarContents +=
+				'<div class="container_link">' +
+				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-jobs/SitePages/App.aspx">My and My Staff Members\' Jobs</a> \n' +
+				'</div>' +
+				'<div class="container_link">' +
+				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-schedule/SitePages/App.aspx?f=cal">Schedule Calendar</a> \n' +
+				'</div>' +
+				'<div class="container_link">' +
+				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-signup/SitePages/App.aspx">My and My Staff Members\' Signups</a> \n' +
+				'</div>' +
+				'<div id="container_filter-controls-and-header"> \n' +
+				'   <div id="text_filter-controls" class="collapsible">Year</div> \n' +
+				'   <div id="container_filter-controls"> \n' +
+				'   	<div class="container_filter-control"> \n' +
+				'   		<label for="filter_year">Year</label><select id="filter_year" name="filter_year"> \n' +
+				'				' + $().ReturnFiscalYearSelectOptions(startingYearOfFirstFiscalYear, startingYearOfLastFiscalYear, true, selectedStartYear) + ' \n' +
+				'			</select>' +
+				'		</div>' +
+				'   	<div class="container_filter-control"> \n' +
+				'			<a id="filter_submit-button">Update</a>' +
+				'		</div>' +
+				'    </div> \n' +
+				'</div> \n';
+		}
+		if (relevantRole === 'gseUserOnly') {
+			commandBarContents +=
+				'<div class="container_link">' +
+				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-schedule/SitePages/App.aspx?f=cal">GSE Signup Opportunities Calendar</a> \n' +
+				'</div>' +
+				'<div class="container_link">' +
+				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-signup/SitePages/App.aspx">My Signups</a> \n' +
+				'</div>' +
+				'<div id="container_filter-controls-and-header"> \n' +
+				'   <div id="text_filter-controls" class="collapsible">Year</div> \n' +
+				'   <div id="container_filter-controls"> \n' +
+				'   	<div class="container_filter-control"> \n' +
+				'   		<label for="filter_year">Year</label><select id="filter_year" name="filter_year"> \n' +
+				'				' + $().ReturnFiscalYearSelectOptions(startingYearOfFirstFiscalYear, startingYearOfLastFiscalYear, true, selectedStartYear) + ' \n' +
+				'			</select>' +
+				'		</div>' +
+				'   	<div class="container_filter-control"> \n' +
+				'			<a id="filter_submit-button">Update</a>' +
+				'		</div>' +
+				'    </div> \n' +
+				'</div> \n';
+		}
+
 		$("div#container_command-bar").html(commandBarContents);
 
 		var augmentedSchedules = $().ReturnSelectedAugmentedSchedulesForGSESchedulesOverviews(selectedStartYear);
@@ -19205,8 +19257,8 @@
 		}
 		if (relevantRole === 'gseManager') {
 			// to do: use real user account below, not bwilson
-			selectedManager = 'bwilson';
-			// selectedManager = uData.account;
+			// selectedManager = 'bwilson';
+			selectedManager = uData.account;
 		}
 		var managersWithDownline = $().ReturnManagersWithFullHierarchicalDownline();
 
@@ -19435,13 +19487,13 @@
 	$.fn.RenderCommandBarAndDataTablesForGSESignupsForJobAdminOrUser = function (targetID, relevantRole) {
 		var startingYearOfFirstFiscalYear = 2018;
 		var thisYear = 2022;
-		var startingYearOfLastFiscalYear = moment('2022-09-08').isAfter(thisYear + '-06-30') ?
-			parseInt(thisYear) :
-			parseInt(thisYear) - 1;
-		// var thisYear = $().ReturnFormattedDateTime('nowLocal', null, 'YYYY');
-		// var startingYearOfLastFiscalYear = moment().isAfter(thisYear + '-06-30') ?
+		// var startingYearOfLastFiscalYear = moment('2022-09-08').isAfter(thisYear + '-06-30') ?
 		// 	parseInt(thisYear) :
 		// 	parseInt(thisYear) - 1;
+		var thisYear = $().ReturnFormattedDateTime('nowLocal', null, 'YYYY');
+		var startingYearOfLastFiscalYear = moment().isAfter(thisYear + '-06-30') ?
+			parseInt(thisYear) :
+			parseInt(thisYear) - 1;
 
 		var selectedStartYear = GetParamFromUrl(location.search, "y");
 		if (!selectedStartYear || selectedStartYear == '') {
@@ -19479,6 +19531,7 @@
 				"field": "RequestedFor",
 				"type": "Text",
 				"value": uData.name,
+				"operator": "Contains"
 			}
 		});
 		// get all schedules
@@ -19959,7 +20012,7 @@
 			"where": {
 				"field": "ScheduleID",
 				"type": "Text",
-				"operator": "Eq",
+				// "operator": "Eq",
 				"values": {
 					"sourceArray": gseSchedulesArray,
 					"property": "ScheduleID"
@@ -20075,7 +20128,7 @@
 			"where": {
 				"field": "ScheduleID",
 				"type": "Text",
-				"operator": "Eq",
+				// "operator": "Eq",
 				"values": {
 					"sourceArray": gseSchedulesArray,
 					"property": "ScheduleID"
@@ -20245,7 +20298,7 @@
 			"where": {
 				"field": "ScheduleID",
 				"type": "Text",
-				"operator": "Eq",
+				// "operator": "Eq",
 				"values": {
 					"sourceArray": gseSchedulesArray,
 					"property": "ScheduleID"
@@ -20496,6 +20549,51 @@
 					"		</Eq>" +
 					"	</Or>" +
 					"</Where>";
+			
+			
+			} else if (typeof (t.meOrMyDownlineIsRequesterAndRSQuery) != "undefined") {
+
+				if (typeof (t.meOrMyDownlineIsRequesterAndRSQuery.getRequesterFrom) == 'undefined') {
+					var getRequesterFrom = 'Author';
+				} else {
+					var getRequesterFrom = t.meOrMyDownlineIsRequesterAndRSQuery.getRequesterFrom;
+				}
+				var myDownline = $().ReturnFullFlatDownlineForOneManager('bwilson');
+				// var myDownline = $().ReturnFullFlatDownlineForOneManager(uData.account);
+
+				var userType = 'User';
+				var operator = 'Contains';
+
+				query =
+					"<Where>" +
+					// "	<And>" +
+					// "		 <Eq>" +
+					// "			  <FieldRef Name='RequestStatus'></FieldRef>" +
+					// "			  <Value Type='Text'>" + t.meOrMyDownlineIsRequesterAndRSQuery.requestStatus + "</Value>" +
+					// "		 </Eq>" +
+
+
+
+					"		 <" + operator + ">" +
+					"			  <FieldRef Name='" + getRequesterFrom + "'></FieldRef>" +
+					"			  <Values>";
+				if (myDownline[0]) {
+					myDownline[0].downline.forEach((downlineMember) => {
+						query += "			  	  <Value Type='" + userType + "'>" + downlineMember.displayName + "</Value>";
+					});
+				}
+				query += 
+					// "			  	  <Value Type='" + userType + "'>" + uData.name + "</Value>" +
+					"			  	  <Value Type='" + userType + "'>Ben Wilson</Value>" +
+					"			  <Values>" + 
+					"		 </" + operator + ">" +
+					// "	</And>" +
+					"</Where>";
+
+				console.log('query');
+				console.log(query);
+			
+
 			} else if (typeof (t.myRSQueryTwoRelevantStatuses) != "undefined") {
 
 				if (typeof (mData.getRequesterFrom) == 'undefined') {
@@ -20504,7 +20602,8 @@
 					var getRequesterFrom = mData.getRequesterFrom;
 				}
 
-				query = "<Where>" +
+				query =
+					"<Where>" +
 					"	<And>" +
 					"	<Or>" +
 					"		<Eq>" +
@@ -20532,7 +20631,8 @@
 					getRequesterFrom = mData.getRequesterFrom;
 				}
 
-				query = "<Where>" +
+				query =
+					"<Where>" +
 					"	<And>" +
 					"		 <Eq>" +
 					"			  <FieldRef Name='RequestStatus'></FieldRef>" +
@@ -22513,6 +22613,54 @@
 			method: "GET",
 			dataType: "json",
 			url: "https://neso.mos.org/activeDirectory/managers/downline/hierarchical?ts=" + Date.now(),
+		})
+			.done(function (nesoData) {
+				// console.log("nesoData:");
+				// console.log(nesoData);
+				managers = nesoData.docs;
+			})
+			.fail(function (error) {
+				// console.log("no such luck - NESO");
+				// console.log(error);
+				managers = error;
+			});
+		return managers;
+	};
+
+
+
+	$.fn.ReturnManagersWithFullFlatDownline = function () {
+		var managers = [];
+		// query the api for the data
+		$.ajax({
+			async: false,
+			method: "GET",
+			dataType: "json",
+			url: "https://neso.mos.org/activeDirectory/managers/downline/flat?ts=" + Date.now(),
+		})
+			.done(function (nesoData) {
+				// console.log("nesoData:");
+				// console.log(nesoData);
+				managers = nesoData.docs;
+			})
+			.fail(function (error) {
+				// console.log("no such luck - NESO");
+				// console.log(error);
+				managers = error;
+			});
+		return managers;
+	};
+
+
+
+	$.fn.ReturnFullFlatDownlineForOneManager = function (account) {
+		var managers = [];
+		// query the api for the data
+		$.ajax({
+			async: false,
+			method: "GET",
+			dataType: "json",
+			url: "https://neso.mos.org/activeDirectory/manager/downline/flat/" + account + "?ts=" + Date.now(),
 		})
 			.done(function (nesoData) {
 				// console.log("nesoData:");
