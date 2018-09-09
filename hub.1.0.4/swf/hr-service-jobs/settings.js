@@ -326,11 +326,7 @@
 			'standardButtonElements': 1,
 			'standardComponentGrpAdminOnlyElements': 1
 		},
-		'standardChangeNotifications': {
-			'beginningOfLife': { 'admin': 1, 'requester': 1 },
-			'approved': { 'admin': 0, 'requester': 1 },
-			'endOfLife': { 'admin': 1, 'requester': 1 },
-		},
+		'gseJobRequestNotifications': 1,
 		'versioningMatters': 0,
 
 

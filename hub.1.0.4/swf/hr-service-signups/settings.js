@@ -229,18 +229,7 @@
 			'standardButtonElements': 1,
 			'standardComponentGrpAdminOnlyElements': 1
 		},
-		/* 'standardChangeNotifications': {
-			'beginningOfLife': { 'admin': 1, 'requester': 1 },
-			'newlyApprOrPending': { 'admin': 1, 'requester': 1 },
-			'assignmentHasChanged': { 'workNewlyNeededNotify': 1, 'workNotNeededNotify': 1 },
-			'endOfLife': {
-				'admin': 1,
-				'requester': {
-					'completion': 'specific',
-					'nonCompletion': 1
-				}
-			},
-		}, */
+		'gseSignupNotifications': 1,
 		'versioningMatters': 0,
 
 
