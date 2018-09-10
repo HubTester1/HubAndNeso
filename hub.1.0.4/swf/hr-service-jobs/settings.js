@@ -341,7 +341,7 @@
 					"display": "Yes, I wish to archive this request"
 				}],
 				"helpNotes": [{
-					"text": "You won't be able to schedule this job again, but existing schedules for this job will not be automatically cancelled.",
+					"text": "You won't be able to schedule this job again, and existing schedules for this job will be automatically cancelled.",
 					"htmlID": "requester-archival_help-note"
 				}],
 				"hideForNonAdmin": ["", "Pending Approval", "Archived", "Disapproved", "Cancelled"],

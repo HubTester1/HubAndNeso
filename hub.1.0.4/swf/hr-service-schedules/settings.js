@@ -2487,7 +2487,9 @@
 
 	// TEMPORARY
 
-	// repeats
+	/* // repeats
+	fData.CustomScriptLast += '$().RepeatElement("simple-date");';
+	fData.CustomScriptLast += '$().RepeatElement("simple-date");';
 	fData.CustomScriptLast += '$().RepeatElement("simple-date");';
 	fData.CustomScriptLast += '$().RepeatElement("simple-date");';
 	
@@ -2498,12 +2500,14 @@
 	
 	// texts
 	fData.CustomScriptLast += '$("input#Request-Nickname").val("Req Nick");';
-	fData.CustomScriptLast += '$("input#id-or-link_GSE-Job-Request-ID").val("122");';
+	fData.CustomScriptLast += '$("input#id-or-link_GSE-Job-Request-ID").val("215");';
 	fData.CustomScriptLast += '$("input#Number-of-Positions").val("3");';
 	fData.CustomScriptLast += '$("input#Location").val("Lobby");';
-	fData.CustomScriptLast += '$("input#Repeating-Date").val("September 28, 2018");';
-	fData.CustomScriptLast += '$("input#Repeating-Date-repeat-1").val("September 29, 2018");';
-	fData.CustomScriptLast += '$("input#Repeating-Date-repeat-2").val("September 30, 2018");';
+	fData.CustomScriptLast += '$("input#Repeating-Date").val("October 1, 2018");';
+	fData.CustomScriptLast += '$("input#Repeating-Date-repeat-1").val("October 2, 2018");';
+	fData.CustomScriptLast += '$("input#Repeating-Date-repeat-2").val("October 3, 2018");';
+	fData.CustomScriptLast += '$("input#Repeating-Date-repeat-3").val("October 4, 2018");';
+	fData.CustomScriptLast += '$("input#Repeating-Date-repeat-4").val("October 5, 2018");';
 	
 	// selects
 	fData.CustomScriptLast += '$("select#hours-input_StartTime option[value=\'T09\']").attr("selected","selected"); \n';
@@ -2517,7 +2521,7 @@
 	fData.CustomScriptLast += '$("input#time-storage_StartTime").val("2000-01-01T09:00:00Z"); \n';
 	// fData.CustomScriptLast += '$("input#time-storage_MealTime").val("2000-01-01T11:00:00Z"); \n';
 	// fData.CustomScriptLast += '$("input#time-storage_BreakTime").val("2000-01-01T13:30:00Z"); \n';
-	fData.CustomScriptLast += '$("div#simple-dates").removeClass("hidden"); \n';
+	fData.CustomScriptLast += '$("div#simple-dates").removeClass("hidden"); \n'; */
 
 
 

@@ -4589,7 +4589,6 @@
 		//  console.log('total screen initialization time = ' + (Date.now() - loadingStartTime)/1000 + ' seconds');
 
 		setInterval(function () { $().TryMaintenanceModeThisComponentThisUser(); }, mData.maintenanceModeCheckFrequency);
-	
 	};
 
 
@@ -5131,6 +5130,7 @@
 						newReqStatus = 'Archived';
 						endOfLife = 1;
 						endOfLifeIsNew = 1;
+						$().CancelAllSchedulesForJob(rData.requestID);
 					} else if (rData.requestStatus == 'Pending Approval' && $('select#Change-Request-Status option:selected').val() == 'Approve') {
 						newReqStatus = 'Approved';
 					} else if (rData.requestStatus == 'Pending Approval' && $('select#Change-Request-Status option:selected').val() == 'Disapprove') {
@@ -5195,6 +5195,7 @@
 							beginningOfLife = 0;
 							endOfLife = 1;
 							endOfLifeIsNew = 1;
+							$().CancelAllSignupsForSchedule(rData.requestID);
 						} else {
 							var someCreditNodesAreBlank = 0;
 							$('div#signups div#signup').each(function (i, a) {
@@ -5756,23 +5757,8 @@
 							// console.log(signupMod.signupID);
 							signupMod = $.extend($().GetFieldsFromOneRow({
 								"select": [{
-									// 	"nameHere": "requestStatus",
-									// 	"nameInList": "RequestStatus"
-									// }, {
-									// 	"nameHere": "endOfLife",
-									// 	"nameInList": "EndOfLife"
-									// }, {
-									// 	"nameHere": "lastModifiedAtLoad",
-									// 	"nameInList": "Modified"
-									// }, {
-									// 	"nameHere": "requesterID",
-									// 	"nameInList": "Author"
-									// }, {
 									"nameHere": "formData",
 									"nameInList": "AllRequestData"
-									// }, {
-									// 	"nameHere": "requestVersion",
-									// 	"nameInList": "RequestVersion"
 								}],
 								"webURL": "https://bmos.sharepoint.com/sites/hr-service-signups",
 								"where": {
@@ -5809,7 +5795,7 @@
 								completefunc: function (xData, Status) {
 									// determine success of save; then...
 									// var swfListSaveSuccess = 
-									$().HandleListUpdateReturn(xData, Status, 'Hub SWF List Item Error');
+									$().HandleListUpdateReturn(xData, Status, 'Hub SWF List Item Error - GSE Signup Credit');
 								}
 							};
 							$().SPServices(updateListItemsOptions);
@@ -5847,7 +5833,7 @@
 						ID: 0,
 						valuepairs: calendarValuePairs,
 						completefunc: function (xData, Status) {
-							$().HandleListUpdateReturn(xData, Status, 'Hub Attachment Error');
+							$().HandleListUpdateReturn(xData, Status, 'Hub Attachment Error - Add to Calendar');
 						}
 					});
 				}
@@ -6626,6 +6612,7 @@
 					switch (fData.customDataSavingFunction.useFunction) {
 						case 'ReturnNewGSESchedulesSubmissionValuePairArrayOfArrays':
 							globalSubmissionValuePairsArrayOfArrays = ReturnNewGSESchedulesSubmissionValuePairArrayOfArrays(clonedForm);
+							rData.gseSchedules = globalSubmissionValuePairsArrayOfArrays;
 							break;
 					}
 				}
@@ -8758,6 +8745,12 @@
 
 
 
+
+
+
+
+
+
 	$.fn.ReturnGSEHRAdminsEmailArray = function () {
 		if (typeof (mData.devAdminNotifications) != 'undefined' && mData.devAdminNotifications === 1) {
 			var hrAdminsEmailArray = $().ReturnUserEmailStringAndArray(mData.devAdminNotificationPersons).array;
@@ -8773,14 +8766,14 @@
 
 
 
-	$.fn.ReturnGSEJobRequesterManagerEmailArray = function () {
+	/* $.fn.ReturnGSEJobRequesterManagerEmailArray = function () {
 		if (typeof (mData.devAdminNotifications) != 'undefined' && mData.devAdminNotifications === 1) {
 			var gseJobRequesterManagerEmailArray = $().ReturnUserEmailStringAndArray(mData.devAdminNotificationPersons).array;
 		} else {
 			var gseJobRequesterManagerEmailArray = [];
 			var userAccount = ReplaceAll('i:0#.f\\|membership\\|', '', ReplaceAll('@mos.org', '', uData.account));
-			console.log('userAccount');
-			console.log(userAccount);
+			// console.log('userAccount');
+			// console.log(userAccount);
 			$.ajax({
 				async: false,
 				method: "GET",
@@ -8788,29 +8781,55 @@
 				url: 'https://neso.mos.org/activeDirectory/user/' + userAccount,
 			})
 				.done(function (returnedUserData) {
-					console.log(uData);
-					console.log(returnedUserData);
-
+					// console.log(uData);
+					// console.log(returnedUserData);
 					var userManagerAccount = returnedUserData.docs.manager;
-
-
 					$.ajax({
 						async: false,
 						method: "GET",
 						dataType: "json",
 						url: 'https://neso.mos.org/activeDirectory/user/' + userManagerAccount,
-							// ReplaceAll('i:0#.f|membership|', '', ReplaceAll('@mos.org', '', uData.userManagerAccount)),
 					})
 						.done(function (returnedManagerData) {
 							gseJobRequesterManagerEmailArray
 								.push(returnedManagerData.docs.email);
 						});
-
-
-
 				});
 		}
 		return gseJobRequesterManagerEmailArray;
+	}; */
+
+	$.fn.ReturnGSEJobAdminManagerEmailArray = function (jobAdminAccount) {
+		if (typeof (mData.devAdminNotifications) != 'undefined' && mData.devAdminNotifications === 1) {
+			var gseJobAdminManagerEmailArray = $().ReturnUserEmailStringAndArray(mData.devAdminNotificationPersons).array;
+		} else {
+			var gseJobAdminManagerEmailArray = [];
+			var userAccount = ReplaceAll('i:0#.f\\|membership\\|', '', ReplaceAll('@mos.org', '', jobAdminAccount));
+			// console.log('userAccount');
+			// console.log(userAccount);
+			$.ajax({
+				async: false,
+				method: "GET",
+				dataType: "json",
+				url: 'https://neso.mos.org/activeDirectory/user/' + userAccount,
+			})
+				.done(function (returnedUserData) {
+					// console.log(uData);
+					// console.log(returnedUserData);
+					var userManagerAccount = returnedUserData.docs.manager;
+					$.ajax({
+						async: false,
+						method: "GET",
+						dataType: "json",
+						url: 'https://neso.mos.org/activeDirectory/user/' + userManagerAccount,
+					})
+						.done(function (returnedManagerData) {
+							gseJobAdminManagerEmailArray
+								.push(returnedManagerData.docs.email);
+						});
+				});
+		}
+		return gseJobAdminManagerEmailArray;
 	};
 
 
@@ -8824,7 +8843,7 @@
 
 		var sData = {};
 
-		sData.requesterManagerEmailArray = $().ReturnGSEJobRequesterManagerEmailArray();
+		sData.requesterManagerEmailArray = $().ReturnGSEJobAdminManagerEmailArray(uData.account);
 		sData.hrAdminsEmailArray = $().ReturnGSEHRAdminsEmailArray();
 		
 		jobAdminArray = JSON.parse($('input#Job-Admin_TopSpan_HiddenInput').val());
@@ -8832,12 +8851,6 @@
 		sData.requesterEmail = jobAdminArray[0].Description;
 
 		sData.requestedForLinkedNamesString = $().ReturnNamesWLinkedEmailsFromPP('Job Admin');
-
-
-
-
-
-
 
 		sData.requestNick = $("input#Request-Nickname").val();
 
@@ -8868,7 +8881,7 @@
 			$.each(eData.hrAdminsEmailArray, function (i, toAdmin) {
 				notificationsToSend.push({
 					'emailType': 'Notification',
-					'caller': 'beginningOfLife admin',
+					'caller': 'beginningOfLife hrAdmin',
 					'to': toAdmin,
 					'subject': eData.subjectPreface + 'new request received',
 					'bodyUnique': '<p>' + eData.requesterName + ' has submitted a new request. You can ' +
@@ -8897,7 +8910,7 @@
 			// requester (job admin)
 			notificationsToSend.push({
 				'emailType': 'Notification',
-				'caller': 'beginningOfLife requester',
+				'caller': 'beginningOfLife jobAdmin',
 				'to': eData.requesterEmail,
 				'subject': eData.subjectPreface + 'new request received',
 				'bodyUnique': '<p>This is the request you nicknamed "' + eData.requestNick + '". You can ' +
@@ -8923,7 +8936,7 @@
 			$.each(eData.hrAdminsEmailArray, function (i, toAdmin) {
 				notificationsToSend.push({
 					'emailType': 'Notification',
-					'caller': 'approved admin',
+					'caller': 'approved hrAdmin',
 					'to': toAdmin,
 					'subject': eData.subjectPreface + eData.requestStatus.toLowerCase(),
 					'bodyUnique': '<p>As needed, <a href="' + eData.uriRequest + '">review the request\'s details</a> ' +
@@ -8946,7 +8959,7 @@
 			// requester (job admin)
 			notificationsToSend.push({
 				'emailType': 'Notification',
-				'caller': 'approved requester',
+				'caller': 'approved jobAdmin',
 				'to': eData.requesterEmail,
 				'subject': eData.subjectPreface + eData.requestStatus.toLowerCase(),
 				'bodyUnique': '<p>This is the request you nicknamed "' + eData.requestNick + '". You can ' +
@@ -8961,60 +8974,47 @@
 		// ---- END OF LIFE
 		// ============
 
+		// disapproved
+		// archived
+		// cancelled
+
 		if (typeof (eData.endOfLife) != 'undefined' && eData.endOfLife == 1) {
 
-			// admin
-			var adminSendEOL = 0;
-			var adminComparisonBank = [];
 
-			if (typeof (eData.superSimpleChangeNotifications.endOfLife.admin) != "undefined") {
-				if (eData.superSimpleChangeNotifications.endOfLife.admin == 1) {
-					adminSendEOL = 1;
-				} else if (eData.superSimpleChangeNotifications.endOfLife.admin != 0) {
-					adminComparisonBank = eData.superSimpleChangeNotifications.endOfLife.admin;
-					if (adminComparisonBank.indexOf(eData.requestStatus) > -1) {
-						adminSendEOL = 1;
-					}
-				}
-				if (adminSendEOL == 1) {
-					$.each(eData.adminEmailArray, function (i, toAdmin) {
-						notificationsToSend.push({
-							'emailType': 'Notification',
-							'caller': 'endOfLife admin',
-							'to': toAdmin,
-							'subject': eData.subjectPreface + eData.requestStatus.toLowerCase(),
-							'bodyUnique': '<p>Feel free to <a href="mailto:' + eData.requesterEmail + '">' +
-								'contact the requester</a> if you need to follow up.</p>'
-						});
-					});
-				}
-			}
+			// hr admin
+			$.each(eData.hrAdminsEmailArray, function (i, toAdmin) {
+				notificationsToSend.push({
+					'emailType': 'Notification',
+					'caller': 'endOfLife hrAdmin',
+					'to': toAdmin,
+					'subject': eData.subjectPreface + eData.requestStatus.toLowerCase(),
+					'bodyUnique': '<p>Feel free to <a href="mailto:' + eData.requesterEmail + '">' +
+						'contact the requester</a> if you need to follow up.</p>'
+				});
+			});
 
-			// requester
-			var requesterSendEOL = 0;
-			var requesterComparisonBank = [];
+			// manager of requester (job admin)
+			$.each(eData.requesterManagerEmailArray, function (i, toManager) {
+				notificationsToSend.push({
+					'emailType': 'Notification',
+					'caller': 'endOfLife mgr',
+					'to': toManager,
+					'subject': eData.subjectPreface + eData.requestStatus.toLowerCase(),
+					'bodyUnique': '<p>Feel free to <a href="mailto:' + eData.requesterEmail + '">' +
+						'contact the requester</a> if you need to follow up.</p>'
+				});
+			});
 
-			if (typeof (eData.superSimpleChangeNotifications.endOfLife.requester) != "undefined") {
-				if (eData.superSimpleChangeNotifications.endOfLife.requester == 1) {
-					requesterSendEOL = 1;
-				} else if (eData.superSimpleChangeNotifications.endOfLife.requester != 0) {
-					requesterComparisonBank = eData.superSimpleChangeNotifications.endOfLife.requester;
-					if (requesterComparisonBank.indexOf(eData.requestStatus) > -1) {
-						requesterSendEOL = 1;
-					}
-				}
-				if (requesterSendEOL == 1) {
-					notificationsToSend.push({
-						'emailType': 'Notification',
-						'caller': 'endOfLife requester generic',
-						'to': eData.requesterEmail,
-						'subject': eData.subjectPreface + eData.requestStatus.toLowerCase(),
-						'bodyUnique': '<p>This is the <a href="' + eData.uriRequest + '">request you nicknamed "' + eData.requestNick +
-							'"</a>. Please <a href="mailto:' + eData.adminEmailString + '">contact the admin</a> with any ' +
-							'issues related to this request.'
-					});
-				}
-			}
+			// requester (job admin)
+			notificationsToSend.push({
+				'emailType': 'Notification',
+				'caller': 'endOfLife jobAdmin',
+				'to': eData.requesterEmail,
+				'subject': eData.subjectPreface + eData.requestStatus.toLowerCase(),
+				'bodyUnique': '<p>This is the <a href="' + eData.uriRequest + '">request you nicknamed "' + eData.requestNick +
+					'"</a>. Please <a href="mailto:' + eData.adminEmailString + '">contact the admin</a> with any ' +
+					'issues related to this request.'
+			});
 		}
 
 
@@ -9038,8 +9038,7 @@
 	};
 
 
-
-	$.fn.ProcessGSEScheduleNotifications = function (sData) {
+	$.fn.ProcessGSEScheduleNotifications = function () {
 
 		// ============
 		// ---- SET UP VARS
@@ -9047,15 +9046,58 @@
 
 		var emailProcessingPromise = new $.Deferred();
 
-		sData.requesterName = $("input#Requester-Name").val();
-		sData.requesterEmail = $("input#Requester-Email").val();
+		var sData = {};
 
-		sData.requestedForLinkedNamesString = $().ReturnNamesWLinkedEmailsFromPP('Requested For');
+		console.log(rData);
+
+		if (rData.beginningOfLife && rData.beginningOfLife == 1) {
+			// iterate over the elements of the first schedule
+			rData.gseSchedules[0].forEach((scheduleElement) => {
+				if (scheduleElement[0] === 'JobID') {
+					sData.jobID = scheduleElement[1];
+				}
+			});
+		} else {
+			sData.jobID = rData.formData['id-or-link_GSE-Job-Request-ID'];
+		}
+		// get relevant job as first element of array
+		var gseJobsArray = $().GetFieldsFromSpecifiedRows({
+			"select": [
+				{
+					"nameHere": "JobAdmin",
+					"nameInList": "JobAdmin"
+				}, {
+					"nameHere": "JobTitle",
+					"nameInList": "JobTitle"
+				}
+			],
+			'webURL': 'https://bmos.sharepoint.com/sites/hr-service-jobs',
+			"where": {
+				"field": "ID",
+				"type": "Text",
+				"value": sData.jobID,
+			}
+		});
+
+		sData.jobAdmin = $().ReturnUserDataFromPersonOrGroupFieldString(gseJobsArray[0].JobAdmin);
+
+		sData.jobTitle = gseJobsArray[0].JobTitle;
+		sData.jobAdminName = sData.jobAdmin[0].name;
+		sData.jobAdminEmail = sData.jobAdmin[0].email;
+		sData.jobAdminLinkedNamesString = 
+			'<a href="mailto:' + sData.jobAdminEmail.toLowerCase() + '">' + sData.jobAdminName + '</a>';
+
+		// sData.requesterManagerEmailArray = $().ReturnGSEJobAdminManagerEmailArray(sData.jobAdmin[0].account);
+		sData.hrAdminsEmailArray = $().ReturnGSEHRAdminsEmailArray();
 
 		sData.requestNick = $("input#Request-Nickname").val();
 
-		mData.subjectPreface = mData.requestName + ' Request #' + rData.requestID + ': ';
-
+		if (rData.beginningOfLife && rData.beginningOfLife == 1) {
+			mData.subjectPreface = 'GSE Schedule(s): ';
+		} else {
+			mData.subjectPreface = mData.requestName + ' #' + rData.requestID + ': ';
+		}
+	
 		mData.uriOverview = mData.fullSiteBaseURL + "/SitePages/" + mData.pageToken + ".aspx"
 		mData.uriRequest = mData.uriOverview + "?r=" + rData.requestID;
 
@@ -9076,152 +9118,17 @@
 		// ============
 
 		if (typeof (eData.beginningOfLife) != 'undefined' && eData.beginningOfLife == 1) {
-
-			// admin
-			if (typeof (eData.superSimpleChangeNotifications.beginningOfLife.admin) != "undefined") {
-				if (eData.superSimpleChangeNotifications.beginningOfLife.admin == 1) {
-					$.each(eData.adminEmailArray, function (i, toAdmin) {
-						notificationsToSend.push({
-							'emailType': 'Notification',
-							'caller': 'beginningOfLife admin',
-							'to': toAdmin,
-							'subject': eData.subjectPreface + 'new request received',
-							'bodyUnique': '<p>' + eData.requesterName + ' has submitted a new request. You can ' +
-								'<a href="' + eData.uriRequest + '">review this request\'s details</a>, ' +
-								'<a href="mailto:' + eData.requesterEmail + '">contact the requester</a> ' +
-								'with any questions, or <a href="' + eData.uriOverview + '">' +
-								'review other ' + eData.requestName + ' requests</a>.</p>'
-						});
-					});
-				}
-			}
-
-			// requester
-			if (typeof (eData.superSimpleChangeNotifications.beginningOfLife.requester) != "undefined") {
-				if (eData.superSimpleChangeNotifications.beginningOfLife.requester == 1) {
-					notificationsToSend.push({
-						'emailType': 'Notification',
-						'caller': 'beginningOfLife requester',
-						'to': eData.requesterEmail,
-						'subject': eData.subjectPreface + 'new request received',
-						'bodyUnique': '<p>The request you nicknamed "' + eData.requestNick + '" has been received. You can ' +
-							'<a href="' + eData.uriRequest + '">review this request\'s details</a>, ' +
-							'<a href="mailto:' + eData.adminEmailString + '">contact the admin</a> ' +
-							'with any questions, or <a href="' + eData.uriOverview + '">' +
-							'review other ' + eData.requestName + ' requests</a>.</p>'
-					});
-				}
-			}
-		}
-
-
-
-		// ============
-		// ---- APPROVED
-		// ============
-
-		if (eData.requestStatus == "Approved") {
-
-			console.log('RS = approved');
-
-			if (typeof (eData.superSimpleChangeNotifications.approved) != "undefined") {
-
-				// admin
-				if (typeof (eData.superSimpleChangeNotifications.approved.admin) != "undefined") {
-					if (eData.superSimpleChangeNotifications.approved.admin == 1) {
-
-						console.log('gonna push admin email');
-
-						$.each(eData.adminEmailArray, function (i, toAdmin) {
-							notificationsToSend.push({
-								'emailType': 'Notification',
-								'caller': 'approved admin',
-								'to': toAdmin,
-								'subject': eData.subjectPreface + eData.requestStatus.toLowerCase(),
-								'bodyUnique': '<p>As needed, <a href="' + eData.uriRequest + '">review the request\'s details</a> ' +
-									'and contact ' + eData.requestedForLinkedNamesString + '.'
-							});
-						});
-					}
-				}
-
-				// requester
-				if (typeof (eData.superSimpleChangeNotifications.approved.requester) != "undefined") {
-					if (eData.superSimpleChangeNotifications.approved.requester == 1) {
-
-						console.log('gonna push requester email');
-
-						notificationsToSend.push({
-							'emailType': 'Notification',
-							'caller': 'approved requester',
-							'to': eData.requesterEmail,
-							'subject': eData.subjectPreface + eData.requestStatus.toLowerCase(),
-							'bodyUnique': '<p>This is the request you nicknamed "' + eData.requestNick + '". You can ' +
-								'<a href="mailto:' + eData.adminEmailString + '">contact the admin</a> with any ' +
-								'issues related thereto.'
-						});
-					}
-				}
-
-			}
-		}
-
-
-
-		// ============
-		// ---- ASSIGNMENTS
-		// ============
-
-		if (typeof (eData.autoProcessAssignments) != 'undefined' && eData.autoProcessAssignments == 1) {
-			if (eData.assignmentHasChanged == 1) {
-
-				// work needed
-				if (eData.workNewlyNeededArray != []) {
-					$.each(eData.workNewlyNeededArray, function (i, w) {
-
-						if (typeof (w.EntityData) != 'undefined') {
-							if (typeof (w.EntityData.Email) != 'undefined') {
-								var addressee = w.EntityData.Email;
-							}
-						} else {
-							var addressee = w.Description.toLowerCase();
-						}
-
-						notificationsToSend.push({
-							'emailType': 'Notification',
-							'caller': 'work needed',
-							'to': addressee,
-							'subject': eData.subjectPreface + 'assigned to you',
-							'bodyUnique': '<p>This request has been assigned to you. As needed, ' +
-								'<a href="' + eData.uriRequest + '">review the details of this request</a> ' +
-								'or contact ' + eData.requestedForLinkedNamesString + '.</p>'
-						});
-					});
-				}
-
-				// work not needed
-				if (eData.workNotNeededArray != []) {
-					$.each(eData.workNotNeededArray, function (i, w) {
-
-						if (typeof (w.EntityData) != 'undefined') {
-							if (typeof (w.EntityData.Email) != 'undefined') {
-								var addressee = w.EntityData.Email;
-							}
-						} else {
-							var addressee = w.Description.toLowerCase();
-						}
-
-						notificationsToSend.push({
-							'emailType': 'Notification',
-							'caller': 'work not needed',
-							'to': addressee,
-							'subject': eData.subjectPreface + 'no longer assigned to you',
-							'bodyUnique': '<p>The request is no longer assigned to you.</p>'
-						});
-					});
-				}
-
-			}
+			// requester (job admin)
+			notificationsToSend.push({
+				'emailType': 'Notification',
+				'caller': 'beginningOfLife jobAdmin',
+				'to': sData.jobAdminEmail,
+				'subject': eData.subjectPreface + 'created',
+				'bodyUnique': '<p>This is the schedule, or set of schedules, you nicknamed "' + 
+					eData.requestNick + '". You can <a href="mailto:' + eData.adminEmailString + '">' +
+					'contact the admin</a> with any questions or <a href="' + eData.uriOverview + '">' +
+					'check up on this and any other ' + eData.requestName + ' requests</a>.</p>'
+			});
 		}
 
 
@@ -9230,60 +9137,18 @@
 		// ---- END OF LIFE
 		// ============
 
+		// cancelled
+		// completed
 		if (typeof (eData.endOfLife) != 'undefined' && eData.endOfLife == 1) {
-
-			// admin
-			var adminSendEOL = 0;
-			var adminComparisonBank = [];
-
-			if (typeof (eData.superSimpleChangeNotifications.endOfLife.admin) != "undefined") {
-				if (eData.superSimpleChangeNotifications.endOfLife.admin == 1) {
-					adminSendEOL = 1;
-				} else if (eData.superSimpleChangeNotifications.endOfLife.admin != 0) {
-					adminComparisonBank = eData.superSimpleChangeNotifications.endOfLife.admin;
-					if (adminComparisonBank.indexOf(eData.requestStatus) > -1) {
-						adminSendEOL = 1;
-					}
-				}
-				if (adminSendEOL == 1) {
-					$.each(eData.adminEmailArray, function (i, toAdmin) {
-						notificationsToSend.push({
-							'emailType': 'Notification',
-							'caller': 'endOfLife admin',
-							'to': toAdmin,
-							'subject': eData.subjectPreface + eData.requestStatus.toLowerCase(),
-							'bodyUnique': '<p>Feel free to <a href="mailto:' + eData.requesterEmail + '">' +
-								'contact the requester</a> if you need to follow up.</p>'
-						});
-					});
-				}
-			}
-
-			// requester
-			var requesterSendEOL = 0;
-			var requesterComparisonBank = [];
-
-			if (typeof (eData.superSimpleChangeNotifications.endOfLife.requester) != "undefined") {
-				if (eData.superSimpleChangeNotifications.endOfLife.requester == 1) {
-					requesterSendEOL = 1;
-				} else if (eData.superSimpleChangeNotifications.endOfLife.requester != 0) {
-					requesterComparisonBank = eData.superSimpleChangeNotifications.endOfLife.requester;
-					if (requesterComparisonBank.indexOf(eData.requestStatus) > -1) {
-						requesterSendEOL = 1;
-					}
-				}
-				if (requesterSendEOL == 1) {
-					notificationsToSend.push({
-						'emailType': 'Notification',
-						'caller': 'endOfLife requester generic',
-						'to': eData.requesterEmail,
-						'subject': eData.subjectPreface + eData.requestStatus.toLowerCase(),
-						'bodyUnique': '<p>This is the <a href="' + eData.uriRequest + '">request you nicknamed "' + eData.requestNick +
-							'"</a>. Please <a href="mailto:' + eData.adminEmailString + '">contact the admin</a> with any ' +
-							'issues related to this request.'
-					});
-				}
-			}
+			notificationsToSend.push({
+				'emailType': 'Notification',
+				'caller': 'endOfLife jobAdmin',
+				'to': sData.jobAdminEmail,
+				'subject': eData.subjectPreface + eData.requestStatus.toLowerCase(),
+				'bodyUnique': '<p>This is the <a href="' + eData.uriRequest + '">request you nicknamed "' + eData.requestNick +
+					'"</a>. Please <a href="mailto:' + eData.adminEmailString + '">contact the admin</a> with any ' +
+					'issues related to this request.'
+			});
 		}
 
 
@@ -9307,14 +9172,43 @@
 	};
 
 
-
-	$.fn.ProcessGSESignupNotifications = function (sData) {
+	$.fn.ProcessGSESignupNotifications = function () {
 
 		// ============
 		// ---- SET UP VARS
 		// ============
 
 		var emailProcessingPromise = new $.Deferred();
+
+		var sData = {};
+
+		sData.jobID = $("input#Job-ID").val();
+
+		// get relevant job as first element of array
+		var gseJobsArray = $().GetFieldsFromSpecifiedRows({
+			"select": [
+				{
+					"nameHere": "JobAdmin",
+					"nameInList": "JobAdmin"
+				}, {
+					"nameHere": "JobTitle",
+					"nameInList": "JobTitle"
+				}
+			],
+			'webURL': 'https://bmos.sharepoint.com/sites/hr-service-jobs',
+			"where": {
+				"field": "ID",
+				"type": "Text",
+				"value": sData.jobID,
+			}
+		});
+
+		sData.jobAdmin = $().ReturnUserDataFromPersonOrGroupFieldString(gseJobsArray[0].JobAdmin);
+		sData.jobTitle = gseJobsArray[0].JobTitle;
+		sData.jobAdminName = sData.jobAdmin[0].name;
+		sData.jobAdminEmail = sData.jobAdmin[0].email;
+		sData.jobAdminLinkedNamesString =
+			'<a href="mailto:' + sData.jobAdminEmail.toLowerCase() + '">' + sData.jobAdminName + '</a>';
 
 		sData.requesterName = $("input#Requester-Name").val();
 		sData.requesterEmail = $("input#Requester-Email").val();
@@ -9323,9 +9217,11 @@
 
 		sData.requestNick = $("input#Request-Nickname").val();
 
-		mData.subjectPreface = mData.requestName + ' Request #' + rData.requestID + ': ';
+		sData.scheduleDateTime = $().ReturnFormattedDateTime($("input#Schedule-Start-Datetime").val(), null, 'MMMM D, YYYY, h:mm a');
 
-		mData.uriOverview = mData.fullSiteBaseURL + "/SitePages/" + mData.pageToken + ".aspx"
+		mData.subjectPreface = mData.requestName + ' #' + rData.requestID + ': ';
+
+		mData.uriOverview = mData.fullSiteBaseURL + "/SitePages/" + mData.pageToken + ".aspx";
 		mData.uriRequest = mData.uriOverview + "?r=" + rData.requestID;
 
 		var eData = $.extend(sData, rData, mData, uData, fData);
@@ -9344,153 +9240,44 @@
 		// ---- BEGINNING OF LIFE
 		// ============
 
+		// Signed Up
+
 		if (typeof (eData.beginningOfLife) != 'undefined' && eData.beginningOfLife == 1) {
 
 			// admin
-			if (typeof (eData.superSimpleChangeNotifications.beginningOfLife.admin) != "undefined") {
-				if (eData.superSimpleChangeNotifications.beginningOfLife.admin == 1) {
-					$.each(eData.adminEmailArray, function (i, toAdmin) {
-						notificationsToSend.push({
-							'emailType': 'Notification',
-							'caller': 'beginningOfLife admin',
-							'to': toAdmin,
-							'subject': eData.subjectPreface + 'new request received',
-							'bodyUnique': '<p>' + eData.requesterName + ' has submitted a new request. You can ' +
-								'<a href="' + eData.uriRequest + '">review this request\'s details</a>, ' +
-								'<a href="mailto:' + eData.requesterEmail + '">contact the requester</a> ' +
-								'with any questions, or <a href="' + eData.uriOverview + '">' +
-								'review other ' + eData.requestName + ' requests</a>.</p>'
-						});
-					});
-				}
-			}
+			notificationsToSend.push({
+				'emailType': 'Notification',
+				'caller': 'beginningOfLife jobAdmin',
+				'to': sData.jobAdminEmail,
+				'subject': eData.subjectPreface + 'new signup',
+				'bodyUnique': '<p>' + eData.requesterName + ' has signed up for "' +
+					sData.jobTitle + '", scheduled for ' + sData.scheduleDateTime + '.' + 
+					'Feel free to <a href="mailto:' + eData.requesterEmail + '">' +
+					'contact ' + eData.requesterName + '</a> if you need to follow up.</p>'
+			});
 
-			// requester
-			if (typeof (eData.superSimpleChangeNotifications.beginningOfLife.requester) != "undefined") {
-				if (eData.superSimpleChangeNotifications.beginningOfLife.requester == 1) {
-					notificationsToSend.push({
-						'emailType': 'Notification',
-						'caller': 'beginningOfLife requester',
-						'to': eData.requesterEmail,
-						'subject': eData.subjectPreface + 'new request received',
-						'bodyUnique': '<p>The request you nicknamed "' + eData.requestNick + '" has been received. You can ' +
-							'<a href="' + eData.uriRequest + '">review this request\'s details</a>, ' +
-							'<a href="mailto:' + eData.adminEmailString + '">contact the admin</a> ' +
-							'with any questions, or <a href="' + eData.uriOverview + '">' +
-							'review other ' + eData.requestName + ' requests</a>.</p>'
-					});
-				}
-			}
-		}
 
 
 
-		// ============
-		// ---- APPROVED
-		// ============
-
-		if (eData.requestStatus == "Approved") {
-
-			console.log('RS = approved');
-
-			if (typeof (eData.superSimpleChangeNotifications.approved) != "undefined") {
-
-				// admin
-				if (typeof (eData.superSimpleChangeNotifications.approved.admin) != "undefined") {
-					if (eData.superSimpleChangeNotifications.approved.admin == 1) {
-
-						console.log('gonna push admin email');
-
-						$.each(eData.adminEmailArray, function (i, toAdmin) {
-							notificationsToSend.push({
-								'emailType': 'Notification',
-								'caller': 'approved admin',
-								'to': toAdmin,
-								'subject': eData.subjectPreface + eData.requestStatus.toLowerCase(),
-								'bodyUnique': '<p>As needed, <a href="' + eData.uriRequest + '">review the request\'s details</a> ' +
-									'and contact ' + eData.requestedForLinkedNamesString + '.'
-							});
-						});
-					}
-				}
-
-				// requester
-				if (typeof (eData.superSimpleChangeNotifications.approved.requester) != "undefined") {
-					if (eData.superSimpleChangeNotifications.approved.requester == 1) {
-
-						console.log('gonna push requester email');
-
-						notificationsToSend.push({
-							'emailType': 'Notification',
-							'caller': 'approved requester',
-							'to': eData.requesterEmail,
-							'subject': eData.subjectPreface + eData.requestStatus.toLowerCase(),
-							'bodyUnique': '<p>This is the request you nicknamed "' + eData.requestNick + '". You can ' +
-								'<a href="mailto:' + eData.adminEmailString + '">contact the admin</a> with any ' +
-								'issues related thereto.'
-						});
-					}
-				}
-
-			}
-		}
-
-
-
-		// ============
-		// ---- ASSIGNMENTS
-		// ============
-
-		if (typeof (eData.autoProcessAssignments) != 'undefined' && eData.autoProcessAssignments == 1) {
-			if (eData.assignmentHasChanged == 1) {
-
-				// work needed
-				if (eData.workNewlyNeededArray != []) {
-					$.each(eData.workNewlyNeededArray, function (i, w) {
-
-						if (typeof (w.EntityData) != 'undefined') {
-							if (typeof (w.EntityData.Email) != 'undefined') {
-								var addressee = w.EntityData.Email;
-							}
-						} else {
-							var addressee = w.Description.toLowerCase();
-						}
-
-						notificationsToSend.push({
-							'emailType': 'Notification',
-							'caller': 'work needed',
-							'to': addressee,
-							'subject': eData.subjectPreface + 'assigned to you',
-							'bodyUnique': '<p>This request has been assigned to you. As needed, ' +
-								'<a href="' + eData.uriRequest + '">review the details of this request</a> ' +
-								'or contact ' + eData.requestedForLinkedNamesString + '.</p>'
-						});
-					});
-				}
-
-				// work not needed
-				if (eData.workNotNeededArray != []) {
-					$.each(eData.workNotNeededArray, function (i, w) {
-
-						if (typeof (w.EntityData) != 'undefined') {
-							if (typeof (w.EntityData.Email) != 'undefined') {
-								var addressee = w.EntityData.Email;
-							}
-						} else {
-							var addressee = w.Description.toLowerCase();
-						}
-
-						notificationsToSend.push({
-							'emailType': 'Notification',
-							'caller': 'work not needed',
-							'to': addressee,
-							'subject': eData.subjectPreface + 'no longer assigned to you',
-							'bodyUnique': '<p>The request is no longer assigned to you.</p>'
-						});
-					});
-				}
-
-			}
+			// requester
+			notificationsToSend.push({
+				'emailType': 'Notification',
+				'caller': 'beginningOfLife requester',
+				'to': eData.requesterEmail,
+				'subject': eData.subjectPreface + 'signup',
+				'bodyUnique': 
+					
+				
+				
+				
+				
+				
+					'<p>The request you nicknamed "' + eData.requestNick + '" has been received. You can ' +
+					'<a href="' + eData.uriRequest + '">review this request\'s details</a>, ' +
+					'<a href="mailto:' + eData.adminEmailString + '">contact the admin</a> ' +
+					'with any questions, or <a href="' + eData.uriOverview + '">' +
+					'review other ' + eData.requestName + ' requests</a>.</p>'
+			});
 		}
 
 
@@ -9499,60 +9286,32 @@
 		// ---- END OF LIFE
 		// ============
 
+		// Cancelled
+		// Credit Granted
+		// Credit Denied
+
 		if (typeof (eData.endOfLife) != 'undefined' && eData.endOfLife == 1) {
 
-			// admin
-			var adminSendEOL = 0;
-			var adminComparisonBank = [];
+			$.each(eData.adminEmailArray, function (i, toAdmin) {
+				notificationsToSend.push({
+					'emailType': 'Notification',
+					'caller': 'endOfLife admin',
+					'to': toAdmin,
+					'subject': eData.subjectPreface + eData.requestStatus.toLowerCase(),
+					'bodyUnique': '<p>Feel free to <a href="mailto:' + eData.requesterEmail + '">' +
+						'contact the requester</a> if you need to follow up.</p>'
+				});
+			});
 
-			if (typeof (eData.superSimpleChangeNotifications.endOfLife.admin) != "undefined") {
-				if (eData.superSimpleChangeNotifications.endOfLife.admin == 1) {
-					adminSendEOL = 1;
-				} else if (eData.superSimpleChangeNotifications.endOfLife.admin != 0) {
-					adminComparisonBank = eData.superSimpleChangeNotifications.endOfLife.admin;
-					if (adminComparisonBank.indexOf(eData.requestStatus) > -1) {
-						adminSendEOL = 1;
-					}
-				}
-				if (adminSendEOL == 1) {
-					$.each(eData.adminEmailArray, function (i, toAdmin) {
-						notificationsToSend.push({
-							'emailType': 'Notification',
-							'caller': 'endOfLife admin',
-							'to': toAdmin,
-							'subject': eData.subjectPreface + eData.requestStatus.toLowerCase(),
-							'bodyUnique': '<p>Feel free to <a href="mailto:' + eData.requesterEmail + '">' +
-								'contact the requester</a> if you need to follow up.</p>'
-						});
-					});
-				}
-			}
-
-			// requester
-			var requesterSendEOL = 0;
-			var requesterComparisonBank = [];
-
-			if (typeof (eData.superSimpleChangeNotifications.endOfLife.requester) != "undefined") {
-				if (eData.superSimpleChangeNotifications.endOfLife.requester == 1) {
-					requesterSendEOL = 1;
-				} else if (eData.superSimpleChangeNotifications.endOfLife.requester != 0) {
-					requesterComparisonBank = eData.superSimpleChangeNotifications.endOfLife.requester;
-					if (requesterComparisonBank.indexOf(eData.requestStatus) > -1) {
-						requesterSendEOL = 1;
-					}
-				}
-				if (requesterSendEOL == 1) {
-					notificationsToSend.push({
-						'emailType': 'Notification',
-						'caller': 'endOfLife requester generic',
-						'to': eData.requesterEmail,
-						'subject': eData.subjectPreface + eData.requestStatus.toLowerCase(),
-						'bodyUnique': '<p>This is the <a href="' + eData.uriRequest + '">request you nicknamed "' + eData.requestNick +
-							'"</a>. Please <a href="mailto:' + eData.adminEmailString + '">contact the admin</a> with any ' +
-							'issues related to this request.'
-					});
-				}
-			}
+			notificationsToSend.push({
+				'emailType': 'Notification',
+				'caller': 'endOfLife requester generic',
+				'to': eData.requesterEmail,
+				'subject': eData.subjectPreface + eData.requestStatus.toLowerCase(),
+				'bodyUnique': '<p>This is the <a href="' + eData.uriRequest + '">request you nicknamed "' + eData.requestNick +
+					'"</a>. Please <a href="mailto:' + eData.adminEmailString + '">contact the admin</a> with any ' +
+					'issues related to this request.'
+			});
 		}
 
 
@@ -21265,11 +21024,142 @@
 
 	
 
+	// - handling archivals and cancellations
 
+	$.fn.CancelAllSchedulesForJob = function (jobID) {
+		// get all relevant schedules
+		var gseSchedulesArray = $().GetFieldsFromSpecifiedRows({
+			'webURL': 'https://bmos.sharepoint.com/sites/hr-service-schedules',
+			'select': [
+				{
+					'nameHere': 'ScheduleID',
+					'nameInList': 'ID'
+				}, {
+					'nameHere': 'formData',
+					'nameInList': 'AllRequestData'
+				}
+			],
+			"where": {
+				"ands": [
+					{
+						"field": "RequestStatus",
+						"type": "Text",
+						"value": "Submitted",
+					}, {
+						"field": "JobID",
+						"type": "Text",
+						"value": jobID,
+					}
+				]
+			}
+		});
+		// call cancellation function on each one
+		gseSchedulesArray.forEach((scheduleData) => {
+			$().CancelSchedule(scheduleData);
+		});
+	};
 
+	$.fn.CancelSchedule = function(scheduleData) {
+		// modify formData
+		scheduleData.formData['Request-Status'] = 'Cancelled';
+		// set submission value pairs array
+		var scheduleSubmissionValuePairsArray = [
+			['RequestStatus', 'Cancelled'],
+			['BeginningOfLife', 0],
+			['EndOfLife', 1],
+			['AllRequestData', CDataWrap(JSON.stringify(scheduleData.formData))]
+		];
+		// update SWFList
+		var updateListItemsOptions = {
+			operation: 'UpdateListItems',
+			listName: 'SWFList',
+			webURL: 'https://bmos.sharepoint.com/sites/hr-service-schedules',
+			batchCmd: 'Update',
+			ID: scheduleData.ScheduleID,
+			valuepairs: scheduleSubmissionValuePairsArray,
+			completefunc: function (xData, Status) {
+				// determine success of save; then...
+				var cancellationSuccess = $().HandleListUpdateReturn(xData, Status, 'Hub SWF List Item Error - Automated GSE Schedule Cancellation');
+				if (cancellationSuccess) {
+					$().NotifyOfCancelledSchedule(scheduleData);
+					$().CancelAllSignupsForSchedule(scheduleData.ScheduleID);
+				}
+			}
+		};
+		$().SPServices(updateListItemsOptions);
+	};
 
+	$.fn.NotifyOfCancelledSchedule = function(scheduleData) {
+		// console.log('NotifyOfCancelledSchedule scheduleData');
+		// console.log(scheduleData);
+	};
 
+	$.fn.CancelAllSignupsForSchedule = function(scheduleID) {
+		// get all relevant signups
+		var gseSignupsArray = $().GetFieldsFromSpecifiedRows({
+			"webURL": "https://bmos.sharepoint.com/sites/hr-service-signups",
+			"select": [
+				{
+					"nameHere": "SignupID",
+					"nameInList": "ID"
+				}, {
+					'nameHere': 'formData',
+					'nameInList': 'AllRequestData'
+				}
+			],
+			"where": {
+				"ands": [
+					{
+						"field": "RequestStatus",
+						"type": "Text",
+						"value": "Signed Up",
+					}, {
+						"field": "ScheduleID",
+						"type": "Text",
+						"value": scheduleID,
+					}
+				]
+			}
+		});
+		// call cancellation function on each one
+		gseSignupsArray.forEach((signupData) => {
+			$().CancelSignup(signupData);
+		});
+	}
 
+	$.fn.CancelSignup = function (signupData) {
+		// modify formData
+		signupData.formData['Request-Status'] = 'Cancelled';
+		// set submission value pairs array
+		var signupSubmissionValuePairsArray = [
+			['RequestStatus', 'Cancelled'],
+			['BeginningOfLife', 0],
+			['EndOfLife', 1],
+			['AllRequestData', CDataWrap(JSON.stringify(signupData.formData))]
+		];
+		// update SWFList
+		var updateListItemsOptions = {
+			operation: 'UpdateListItems',
+			listName: 'SWFList',
+			webURL: 'https://bmos.sharepoint.com/sites/hr-service-signups',
+			batchCmd: 'Update',
+			ID: signupData.SignupID,
+			valuepairs: signupSubmissionValuePairsArray,
+			completefunc: function (xData, Status) {
+				// determine success of save; then...
+				var cancellationSuccess = $().HandleListUpdateReturn(xData, Status, 'Hub SWF List Item Error - Automated GSE Schedule Cancellation');
+				if (cancellationSuccess) {
+					$().NotifyOfCancelledSignup(signupData);
+				}
+			}
+		};
+		$().SPServices(updateListItemsOptions);
+	};
+
+	$.fn.NotifyOfCancelledSignup = function (signupData) {
+		// console.log('NotifyOfCancelledSignup signupData');
+		// console.log(signupData);
+	};
 
 
 
@@ -24034,18 +23924,20 @@
 		var thisUserAccountShort = ReplaceAll('i:0#.f\\|membership\\|', '', ReplaceAll('@mos.org', '', uData.account));
 		// get this user's downline as an array of user objects
 		var thisUserWithDownline = $().ReturnOneManagerWithFlatDownline(thisUserAccountShort);
-		var downlineThisUser = thisUserWithDownline.downline;
-		// for each of this request's job admins
-		jobAdminsThisRequest.forEach((jobAdmin) => {
-			// for each of this user's downline members
-			downlineThisUser.forEach((downlineMember) => {
-				// if this job admin matches this downline member
-				if (jobAdmin === downlineMember.account) {
-					// set flag indicating that this user has permission
-					hasViewPermission = 1;
-				}
+		if (thisUserWithDownline && thisUserWithDownline.downline) {
+			var downlineThisUser = thisUserWithDownline.downline;
+			// for each of this request's job admins
+			jobAdminsThisRequest.forEach((jobAdmin) => {
+				// for each of this user's downline members
+				downlineThisUser.forEach((downlineMember) => {
+					// if this job admin matches this downline member
+					if (jobAdmin === downlineMember.account) {
+						// set flag indicating that this user has permission
+						hasViewPermission = 1;
+					}
+				});
 			});
-		});
+		}
 		// return permission flag
 		return hasViewPermission;
 	};

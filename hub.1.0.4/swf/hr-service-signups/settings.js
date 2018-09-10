@@ -831,10 +831,11 @@
 	fData.CustomScriptFirst = '';
 
 
-	fData.CustomScriptLast = 'console.log($("input#Positions-Available").val());' + 
-								'console.log($("input#Schedule-Start-Datetime").val());' + 
-								'console.log($("input#Current-Datetime").val());' + 
-								'console.log($("input#Request-Status").val());' + 
+	fData.CustomScriptLast = 
+								// 'console.log($("input#Positions-Available").val());' + 
+								// 'console.log($("input#Schedule-Start-Datetime").val());' + 
+								// 'console.log($("input#Current-Datetime").val());' + 
+								// 'console.log($("input#Request-Status").val());' + 
 								'if ($("input#Request-Status").val() === "") {' + 
 								'	var positionsAvailable = parseInt($("input#Positions-Available").val());' + 
 								'	var scheduleStartDatetime = $("input#Schedule-Start-Datetime").val();' + 
@@ -844,8 +845,7 @@
 								'		!(moment(scheduleStartDatetime).isAfter(currentDatetime))' + 
 								'	) {' + 
 								'		$().SetFieldToDisabled("#sign-up_signup");' + 
-								'		$("div#non-admin, div#submit-or-exit")' + 
-								'.hide("fast").addClass("hidden");' + 
+								'		$("div#non-admin, div#submit-or-exit").hide("fast").addClass("hidden");' + 
 								'		$("div#no-signups-warning").show("fast").removeClass("hidden");' + 
 								'	}' + 
 								'}';
