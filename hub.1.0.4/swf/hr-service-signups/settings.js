@@ -9,7 +9,7 @@
 		'mosMainKey': 'devLong',
 		// "useRecordedMOSMainMajorVersion": 1,
 		'devAdminNotifications': 1,
-		'notifications': 0,
+		'notifications': 1,
 		'detailTitle': [
 			{
 				'roles': ['gseHRAdmin', 'gseJobAdmin', 'gseManager', 'gseUserOnly'],

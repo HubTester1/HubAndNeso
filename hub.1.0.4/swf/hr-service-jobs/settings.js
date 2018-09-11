@@ -21,6 +21,11 @@
 		'gseJobsHRAdmin': {
 			'buttons': [
 				{
+					"linkType": "goForward",
+					"anchorText": "Configuration",
+					"href": "/sites/hr-service-config/SitePages/App.aspx?r=1",
+					"target": null
+				}, {
 					"linkType": "newItem",
 					"anchorText": "New Job",
 					"href": "/sites/hr-service-jobs/SitePages/App.aspx?r=0",

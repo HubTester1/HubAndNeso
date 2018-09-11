@@ -3947,8 +3947,14 @@
 			rData.gseScheduleData['Friendly-Date'] = $().ReturnFormattedDateTime(rData.gseScheduleData['Date'], null, 'dddd, MMMM D, YYYY', 1);
 			rData.gseScheduleData['Shift-Length'] = rData.gseScheduleData['shiftlength_35-hours'] ? '3.5 hours' : '7 hours';
 			rData.gseScheduleData['Start-Time'] = $().ReturnFormattedDateTime(rData.gseScheduleData['time-storage_StartTime'].substring(0, 19), null, 'h:mm a');
-			rData.gseScheduleData['Break-Time'] = $().ReturnFormattedDateTime(rData.gseScheduleData['time-storage_BreakTime'].substring(0, 19), null, 'h:mm a');
-			rData.gseScheduleData['Meal-Time'] = $().ReturnFormattedDateTime(rData.gseScheduleData['time-storage_MealTime'].substring(0, 19), null, 'h:mm a');
+			if (rData.gseScheduleData['time-storage_BreakTime']) {
+				rData.gseScheduleData['Break-Time'] = $().ReturnFormattedDateTime(rData.gseScheduleData['time-storage_BreakTime'].substring(0, 19), null, 'h:mm a');
+			}
+			if (rData.gseScheduleData['time-storage_MealTime']) {
+				rData.gseScheduleData['Meal-Time'] = $().ReturnFormattedDateTime(rData.gseScheduleData['time-storage_MealTime'].substring(0, 19), null, 'h:mm a');
+			}
+			
+			
 			
 
 			rData.gseJobData['Job-Admin-Name'] = rData.gseJobData['Job-Admin'][0].description;
@@ -5122,10 +5128,11 @@
 					if (rData.requestStatus == '') {
 						newReqStatus = 'Pending Approval';
 						beginningOfLife = 1;
-					} else if (rData.requestStatus == 'Pending Approval' && ($('input#requester-cancellation_cancel:checked').length > 0 || $('select#Change-Request-Status option:selected').val() == 'Cancel')) {
+					} else if ((rData.requestStatus == 'Pending Approval' || rData.requestStatus == 'Approved') && ($('input#requester-cancellation_cancel:checked').length > 0 || $('select#Change-Request-Status option:selected').val() == 'Cancel')) {
 						newReqStatus = 'Cancelled';
 						endOfLife = 1;
 						endOfLifeIsNew = 1;
+						$().CancelAllSchedulesForJob(rData.requestID);
 					} else if (rData.requestStatus == 'Approved' && ($('input#requester-archival_archive:checked').length > 0 || $('select#Change-Request-Status option:selected').val() == 'Archive')) {
 						newReqStatus = 'Archived';
 						endOfLife = 1;
@@ -5139,36 +5146,6 @@
 						endOfLifeIsNew = 1;
 					}
 					rData.beginningOfLife = beginningOfLife;
-					rData.endOfLifeIsNew = endOfLifeIsNew;
-					rData.endOfLife = endOfLife;
-					rData.requestStatus = newReqStatus;
-					globalRData = rData;
-					$('input#Request-Status').val(newReqStatus);
-					$('input#End-of-Life').val(endOfLife);
-				}
-
-				if (fData.autoTrackGSESignupStatuses === 1 && rData.endOfLife != 1) {
-
-					$(workingMessage).text("Handling Request Status");
-
-					var newReqStatus = '';
-					var endOfLife = 0;
-					var endOfLifeIsNew = 0;
-					if (rData.requestStatus == '') {
-						newReqStatus = 'Signed Up';
-					} else if (rData.requestStatus == 'Signed Up' && ($('input#requester-cancellation_cancel:checked').length > 0 || $('select#Change-Request-Status option:selected').val() == 'Cancel')) {
-						newReqStatus = 'Cancelled';
-						endOfLife = 1;
-						endOfLifeIsNew = 1;
-					} else if (rData.requestStatus == 'Signed Up' && $('select#Change-Request-Status option:selected').val() == 'Grant Credit') {
-						newReqStatus = 'Credit Granted';
-						endOfLife = 1;
-						endOfLifeIsNew = 1;
-					} else if (rData.requestStatus == 'Signed Up' && $('select#Change-Request-Status option:selected').val() == 'Deny Credit') {
-						newReqStatus = 'Credit Denied';
-						endOfLife = 1;
-						endOfLifeIsNew = 1;
-					}
 					rData.endOfLifeIsNew = endOfLifeIsNew;
 					rData.endOfLife = endOfLife;
 					rData.requestStatus = newReqStatus;
@@ -5229,6 +5206,39 @@
 					rData = rData;
 					$('input#Request-Status').val(newReqStatus);
 					$('input#Beginning-of-Life').val(endOfLife);
+					$('input#End-of-Life').val(endOfLife);
+				}
+
+				if (fData.autoTrackGSESignupStatuses === 1 && rData.endOfLife != 1) {
+
+					$(workingMessage).text("Handling Request Status");
+
+					var newReqStatus = '';
+					var beginningOfLife = 0;
+					var endOfLife = 0;
+					var endOfLifeIsNew = 0;
+					if (rData.requestStatus == '') {
+						newReqStatus = 'Signed Up';
+						beginningOfLife = 1;
+					} else if (rData.requestStatus == 'Signed Up' && ($('input#requester-cancellation_cancel:checked').length > 0 || $('select#Change-Request-Status option:selected').val() == 'Cancel')) {
+						newReqStatus = 'Cancelled';
+						endOfLife = 1;
+						endOfLifeIsNew = 1;
+					} else if (rData.requestStatus == 'Signed Up' && $('select#Change-Request-Status option:selected').val() == 'Grant Credit') {
+						newReqStatus = 'Credit Granted';
+						endOfLife = 1;
+						endOfLifeIsNew = 1;
+					} else if (rData.requestStatus == 'Signed Up' && $('select#Change-Request-Status option:selected').val() == 'Deny Credit') {
+						newReqStatus = 'Credit Denied';
+						endOfLife = 1;
+						endOfLifeIsNew = 1;
+					}
+					rData.beginningOfLife = beginningOfLife;
+					rData.endOfLifeIsNew = endOfLifeIsNew;
+					rData.endOfLife = endOfLife;
+					rData.requestStatus = newReqStatus;
+					globalRData = rData;
+					$('input#Request-Status').val(newReqStatus);
 					$('input#End-of-Life').val(endOfLife);
 				}
 
@@ -5759,6 +5769,9 @@
 								"select": [{
 									"nameHere": "formData",
 									"nameInList": "AllRequestData"
+								}, {
+									"nameHere": "RequestedFor",
+									"nameInList": "RequestedFor"
 								}],
 								"webURL": "https://bmos.sharepoint.com/sites/hr-service-signups",
 								"where": {
@@ -5794,8 +5807,12 @@
 								valuepairs: signupMod.submissionValuePairsArray,
 								completefunc: function (xData, Status) {
 									// determine success of save; then...
-									// var swfListSaveSuccess = 
-									$().HandleListUpdateReturn(xData, Status, 'Hub SWF List Item Error - GSE Signup Credit');
+									var swfListSaveSuccess = 
+										$().HandleListUpdateReturn(xData, Status, 'Hub SWF List Item Error - GSE Signup Credit');
+									if (swfListSaveSuccess === 1) {
+										scheduleData = rData;
+										$().ProcessGSEScheduleCreditNotifications(signupMod.signupID, signupMod.submissionValuePairsArray, scheduleData, signupMod.creditDenialReason, signupMod.RequestedFor);
+									}
 								}
 							};
 							$().SPServices(updateListItemsOptions);
@@ -9174,6 +9191,8 @@
 
 	$.fn.ProcessGSESignupNotifications = function () {
 
+		console.log('in the func');
+
 		// ============
 		// ---- SET UP VARS
 		// ============
@@ -9207,7 +9226,7 @@
 		sData.jobTitle = gseJobsArray[0].JobTitle;
 		sData.jobAdminName = sData.jobAdmin[0].name;
 		sData.jobAdminEmail = sData.jobAdmin[0].email;
-		sData.jobAdminLinkedNamesString =
+		sData.jobAdminLinkedNamesString = 
 			'<a href="mailto:' + sData.jobAdminEmail.toLowerCase() + '">' + sData.jobAdminName + '</a>';
 
 		sData.requesterName = $("input#Requester-Name").val();
@@ -9215,11 +9234,13 @@
 
 		sData.requestedForLinkedNamesString = $().ReturnNamesWLinkedEmailsFromPP('Requested For');
 
-		sData.requestNick = $("input#Request-Nickname").val();
+		sData.scheduleNickJobAdmin = rData.gseScheduleData['Request-Nickname'];
 
-		sData.scheduleDateTime = $().ReturnFormattedDateTime($("input#Schedule-Start-Datetime").val(), null, 'MMMM D, YYYY, h:mm a');
+		sData.scheduleDateTime = 
+			$().ReturnFormattedDateTime($("input#Schedule-Start-Datetime").val(), null, 'dddd, MMMM D, YYYY, h:mm a');
 
-		mData.subjectPreface = mData.requestName + ' #' + rData.requestID + ': ';
+		mData.subjectPrefaceStaff = 'GSE Signup #' + rData.requestID + ': ';
+		mData.subjectPrefaceJobAdmin = 'GSE Schedule #' + rData.gseScheduleID + ': ';
 
 		mData.uriOverview = mData.fullSiteBaseURL + "/SitePages/" + mData.pageToken + ".aspx";
 		mData.uriRequest = mData.uriOverview + "?r=" + rData.requestID;
@@ -9244,39 +9265,34 @@
 
 		if (typeof (eData.beginningOfLife) != 'undefined' && eData.beginningOfLife == 1) {
 
-			// admin
+			// jobAdmin
 			notificationsToSend.push({
 				'emailType': 'Notification',
 				'caller': 'beginningOfLife jobAdmin',
 				'to': sData.jobAdminEmail,
-				'subject': eData.subjectPreface + 'new signup',
-				'bodyUnique': '<p>' + eData.requesterName + ' has signed up for "' +
-					sData.jobTitle + '", scheduled for ' + sData.scheduleDateTime + '.' + 
-					'Feel free to <a href="mailto:' + eData.requesterEmail + '">' +
+				'subject': eData.subjectPrefaceJobAdmin + 'new signup',
+				'bodyUnique': '<p>' + eData.requesterName + ' has signed up for the ' + 
+					sData.scheduleDateTime + ' occurrence of the schedule nicknamed "' + 
+					sData.scheduleNickJobAdmin + '", which is for the job titled "' + 
+					sData.jobTitle + '". Feel free to <a href="mailto:' + eData.requesterEmail + '">' +
 					'contact ' + eData.requesterName + '</a> if you need to follow up.</p>'
 			});
 
-
-
-
-			// requester
+			// staff
 			notificationsToSend.push({
 				'emailType': 'Notification',
-				'caller': 'beginningOfLife requester',
+				'caller': 'beginningOfLife staff',
 				'to': eData.requesterEmail,
-				'subject': eData.subjectPreface + 'signup',
-				'bodyUnique': 
-					
-				
-				
-				
-				
-				
-					'<p>The request you nicknamed "' + eData.requestNick + '" has been received. You can ' +
-					'<a href="' + eData.uriRequest + '">review this request\'s details</a>, ' +
-					'<a href="mailto:' + eData.adminEmailString + '">contact the admin</a> ' +
-					'with any questions, or <a href="' + eData.uriOverview + '">' +
-					'review other ' + eData.requestName + ' requests</a>.</p>'
+				'subject': eData.subjectPrefaceStaff + 'signup',
+				'bodyUnique': '<p>You\'ve signed up for "' + sData.jobTitle + 
+					'", scheduled for ' + sData.scheduleDateTime + '. <a href="' + 
+					eData.uriRequest + '">Revisit your signup</a> to review the details or to cancel. ' +
+					'Feel free to <a href="mailto:' + sData.jobAdminEmail + '">contact ' + 
+					sData.jobAdminName + '</a> ' +
+					'with any questions, <a href="' + eData.uriOverview + '">' +
+					'review your other signups</a>, or ' + 
+					'<a href="https://bmos.sharepoint.com/sites/hr-service-schedules/SitePages/App.aspx?f=cal">' + 
+					'sign up for another GSE</a>.</p>'
 			});
 		}
 
@@ -9286,31 +9302,43 @@
 		// ---- END OF LIFE
 		// ============
 
-		// Cancelled
-		// Credit Granted
-		// Credit Denied
+		/* 
+			Credit Granted and Credit Denied request statuses are also end of life, but are initiated
+			from GSE Schedules so are not handled here. Cancelling a job or schedule will 
+			result in a cancelled signup, but those situations are handled elsewhere, too. 
+			These emails will only be sent when a staff member cancels her/his own signup.
+ 		*/
 
 		if (typeof (eData.endOfLife) != 'undefined' && eData.endOfLife == 1) {
 
-			$.each(eData.adminEmailArray, function (i, toAdmin) {
-				notificationsToSend.push({
-					'emailType': 'Notification',
-					'caller': 'endOfLife admin',
-					'to': toAdmin,
-					'subject': eData.subjectPreface + eData.requestStatus.toLowerCase(),
-					'bodyUnique': '<p>Feel free to <a href="mailto:' + eData.requesterEmail + '">' +
-						'contact the requester</a> if you need to follow up.</p>'
-				});
-			});
-
+			// jobAdmin
 			notificationsToSend.push({
 				'emailType': 'Notification',
-				'caller': 'endOfLife requester generic',
+				'caller': 'staffCancellation jobAdmin',
+				'to': sData.jobAdminEmail,
+				'subject': eData.subjectPrefaceJobAdmin + 'signup cancelled',
+				'bodyUnique': '<p>' + eData.requesterName + ' is no longer signed up for the ' +
+					sData.scheduleDateTime + ' occurrence of the schedule nicknamed "' +
+					sData.scheduleNickJobAdmin + '", which is for the job titled "' +
+					sData.jobTitle + '". Feel free to <a href="mailto:' + eData.requesterEmail + '">' +
+					'contact ' + eData.requesterName + '</a> if you need to follow up.</p>'
+			});
+
+			// staff
+			notificationsToSend.push({
+				'emailType': 'Notification',
+				'caller': 'staffCancellation staff',
 				'to': eData.requesterEmail,
-				'subject': eData.subjectPreface + eData.requestStatus.toLowerCase(),
-				'bodyUnique': '<p>This is the <a href="' + eData.uriRequest + '">request you nicknamed "' + eData.requestNick +
-					'"</a>. Please <a href="mailto:' + eData.adminEmailString + '">contact the admin</a> with any ' +
-					'issues related to this request.'
+				'subject': eData.subjectPrefaceStaff + 'signup cancelled',
+				'bodyUnique': '<p>You\'re no longer signed up for "' + sData.jobTitle +
+					'", scheduled for ' + sData.scheduleDateTime + '. <a href="' +
+					eData.uriRequest + '">Revisit your signup</a> to review the details or to cancel. ' +
+					'Feel free to <a href="mailto:' + sData.jobAdminEmail + '">contact ' +
+					sData.jobAdminName + '</a> ' +
+					'with any questions, <a href="' + eData.uriOverview + '">' +
+					'review your other signups</a>, or ' +
+					'<a href="https://bmos.sharepoint.com/sites/hr-service-schedules/SitePages/App.aspx?f=cal">' +
+					'sign up for another GSE</a>.</p>'
 			});
 		}
 
@@ -20500,7 +20528,7 @@
 			if (schedule.Signups) {
 				schedule.Signups.forEach((signup) => {
 					var signupPersonArray = $().ReturnUserDataFromPersonOrGroupFieldString(signup.SignupPerson);
-					if (signupPersonArray[0].account === uData.account) {
+					if (signupPersonArray[0] && signupPersonArray[0].account === uData.account) {
 						row.mySignupID = signup.SignupID;
 					}
 				});
@@ -20954,50 +20982,6 @@
 				}
 			}
 		});
-		/* // get specified fiscal year's schedules
-		var gseSignupsArray = $().GetFieldsFromAllRows({
-			"webURL": "https://bmos.sharepoint.com/sites/hr-service-signups",
-			"select": [
-				{
-					"nameHere": "SignupID",
-					"nameInList": "ID"
-				}, {
-					"nameHere": "SignupPerson",
-					"nameInList": "RequestedFor"
-				}, {
-					"nameHere": "ScheduleID",
-					"nameInList": "ScheduleID"
-				}, {
-					"nameHere": "JobID",
-					"nameInList": "JobID"
-				}, {
-					'nameHere': 'formData',
-					'nameInList': 'AllRequestData'
-				}
-			]
-		});
-		// get all schedules
-		var gseSchedulesArray = $().GetFieldsFromAllRows({
-			'webURL': 'https://bmos.sharepoint.com/sites/hr-service-schedules',
-			'select': [
-				{
-					'nameHere': 'ScheduleID',
-					'nameInList': 'ID'
-				}, {
-					'nameHere': 'Date',
-					'nameInList': 'Date'
-				}, {
-					'nameHere': 'StartTime',
-					'nameInList': 'StartTime'
-				}, {
-					'nameHere': 'Location',
-					'nameInList': 'Location'
-				}, {
-					'nameHere': 'ShiftLength',
-					'nameInList': 'ShiftLength'
-				}
-			]
-		}); */
 		// mashup the data
 		gseSignupsArray.forEach((signup) => {
 			var signupCopy = signup;
@@ -21081,7 +21065,7 @@
 				// determine success of save; then...
 				var cancellationSuccess = $().HandleListUpdateReturn(xData, Status, 'Hub SWF List Item Error - Automated GSE Schedule Cancellation');
 				if (cancellationSuccess) {
-					$().NotifyOfCancelledSchedule(scheduleData);
+					$().ProcessGSEScheduleCancellationNotifications(scheduleData);
 					$().CancelAllSignupsForSchedule(scheduleData.ScheduleID);
 				}
 			}
@@ -21089,12 +21073,81 @@
 		$().SPServices(updateListItemsOptions);
 	};
 
-	$.fn.NotifyOfCancelledSchedule = function(scheduleData) {
-		// console.log('NotifyOfCancelledSchedule scheduleData');
+	$.fn.ProcessGSEScheduleCancellationNotifications = function(scheduleData) {
+		// console.log('ProcessGSEScheduleCancellationNotifications scheduleData');
 		// console.log(scheduleData);
+
+		var sData = {};
+		sData.jobID = scheduleData.formData['id-or-link_GSE-Job-Request-ID'];
+
+		// get relevant job as first element of array
+		var gseJobsArray = $().GetFieldsFromSpecifiedRows({
+			"select": [
+				{
+					"nameHere": "JobAdmin",
+					"nameInList": "JobAdmin"
+				}, {
+					"nameHere": "JobTitle",
+					"nameInList": "JobTitle"
+				}
+			],
+			'webURL': 'https://bmos.sharepoint.com/sites/hr-service-jobs',
+			"where": {
+				"field": "ID",
+				"type": "Text",
+				"value": sData.jobID,
+			}
+		});
+
+		sData.jobAdmin = $().ReturnUserDataFromPersonOrGroupFieldString(gseJobsArray[0].JobAdmin);
+
+		sData.jobTitle = gseJobsArray[0].JobTitle;
+		// sData.jobAdminName = sData.jobAdmin[0].name;
+		sData.jobAdminEmail = sData.jobAdmin[0].email;
+		// sData.jobAdminLinkedNamesString =
+		// 	'<a href="mailto:' + sData.jobAdminEmail.toLowerCase() + '">' + sData.jobAdminName + '</a>';
+
+		// sData.requesterManagerEmailArray = $().ReturnGSEJobAdminManagerEmailArray(sData.jobAdmin[0].account);
+		// sData.hrAdminsEmailArray = $().ReturnGSEHRAdminsEmailArray();
+
+		sData.requestNick = scheduleData.formData['Request-Nickname'];
+
+		sData.scheduleDateTime =
+			$().ReturnFormattedDateTime(scheduleData.formData['Date'].slice(0, 10) + scheduleData.formData['time-storage_StartTime'].slice(10, 19), null, 'dddd, MMMM D, YYYY, h:mm a');
+
+		mData.subjectPreface = 'GSE Schedule #' + scheduleData.ScheduleID + ': ';
+
+		// mData.uriOverview = mData.fullSiteBaseURL + "/SitePages/" + mData.pageToken + ".aspx"
+		// mData.uriRequest = mData.uriOverview + "?r=" + scheduleData.ScheduleID;
+
+		var eData = $.extend(sData, scheduleData, mData, uData, fData);
+
+		var notificationsToSend = [];
+
+		// for debugging
+		if (true) {
+			console.log('ProcessGSEScheduleCancellationNotifications eData');
+			console.log(eData);
+		}
+
+		var notificationsToSend = [];
+
+		notificationsToSend.push({
+			'emailType': 'Notification',
+			'caller': 'programmatic schedule cancellation jobAdmin',
+			'to': eData.jobAdminEmail,
+			'subject': eData.subjectPreface + 'cancelled',
+			'bodyUnique': '<p>This schedule was nicknamed "' + sData.requestNick + 
+				'". It was for the job titled "' + sData.jobTitle + 
+				'" and was to occur on ' + sData.scheduleDateTime + '. Please <a href="mailto:' + 
+				eData.adminEmailString + '">contact the admin</a> with any issues.'
+		});
+
+		$().SendEmails(notificationsToSend);
+
 	};
 
-	$.fn.CancelAllSignupsForSchedule = function(scheduleID) {
+	$.fn.CancelAllSignupsForSchedule = function (scheduleID, scheduleData) {
 		// get all relevant signups
 		var gseSignupsArray = $().GetFieldsFromSpecifiedRows({
 			"webURL": "https://bmos.sharepoint.com/sites/hr-service-signups",
@@ -21123,11 +21176,11 @@
 		});
 		// call cancellation function on each one
 		gseSignupsArray.forEach((signupData) => {
-			$().CancelSignup(signupData);
+			$().CancelSignup(signupData, scheduleData);
 		});
 	}
 
-	$.fn.CancelSignup = function (signupData) {
+	$.fn.CancelSignup = function (signupData, scheduleData) {
 		// modify formData
 		signupData.formData['Request-Status'] = 'Cancelled';
 		// set submission value pairs array
@@ -21149,46 +21202,188 @@
 				// determine success of save; then...
 				var cancellationSuccess = $().HandleListUpdateReturn(xData, Status, 'Hub SWF List Item Error - Automated GSE Schedule Cancellation');
 				if (cancellationSuccess) {
-					$().NotifyOfCancelledSignup(signupData);
+					$().ProcessGSESignupCancellationNotifications(signupData, scheduleData);
 				}
 			}
 		};
 		$().SPServices(updateListItemsOptions);
 	};
 
-	$.fn.NotifyOfCancelledSignup = function (signupData) {
-		// console.log('NotifyOfCancelledSignup signupData');
-		// console.log(signupData);
+	$.fn.ProcessGSESignupCancellationNotifications = function (signupData, scheduleData) {
+		console.log('ProcessGSESignupCancellationNotifications signupData scheduleData');
+		console.log(signupData);
+		console.log(scheduleData);
+
+		var sData = {};
+		sData.jobID = signupData.formData['id-or-link_GSE-Job-Request-ID'];
+
+		// get relevant job as first element of array
+		var gseJobsArray = $().GetFieldsFromSpecifiedRows({
+			"select": [
+				{
+					"nameHere": "JobAdmin",
+					"nameInList": "JobAdmin"
+				}, {
+					"nameHere": "JobTitle",
+					"nameInList": "JobTitle"
+				}
+			],
+			'webURL': 'https://bmos.sharepoint.com/sites/hr-service-jobs',
+			"where": {
+				"field": "ID",
+				"type": "Text",
+				"value": sData.jobID,
+			}
+		});
+
+		sData.jobAdmin = $().ReturnUserDataFromPersonOrGroupFieldString(gseJobsArray[0].JobAdmin);
+
+		sData.jobTitle = gseJobsArray[0].JobTitle;
+		sData.jobAdminName = sData.jobAdmin[0].name;
+		sData.jobAdminEmail = sData.jobAdmin[0].email;
+		// sData.jobAdminLinkedNamesString =
+		// 	'<a href="mailto:' + sData.jobAdminEmail.toLowerCase() + '">' + sData.jobAdminName + '</a>';
+
+		// sData.requesterManagerEmailArray = $().ReturnGSEJobAdminManagerEmailArray(sData.jobAdmin[0].account);
+		// sData.hrAdminsEmailArray = $().ReturnGSEHRAdminsEmailArray();
+
+		// sData.requestNick = scheduleData.formData['Request-Nickname'];
+
+		sData.scheduleDateTime =
+			$().ReturnFormattedDateTime(scheduleData.formData['Date'].slice(0, 10) + scheduleData.formData['time-storage_StartTime'].slice(10, 19), null, 'dddd, MMMM D, YYYY, h:mm a');
+		
+
+		mData.subjectPreface = 'GSE Schedule #' + scheduleData.ScheduleID + ': ';
+
+		mData.uriOverview = mData.fullSiteBaseURL + "/SitePages/" + mData.pageToken + ".aspx"
+		// mData.uriRequest = mData.uriOverview + "?r=" + scheduleData.ScheduleID;
+
+		var eData = $.extend(sData, scheduleData, mData, uData, fData);
+
+		var notificationsToSend = [];
+
+		// for debugging
+		if (true) {
+			console.log('ProcessGSEScheduleCancellationNotifications eData');
+			console.log(eData);
+		}
+
+		var notificationsToSend = [];
+
+		notificationsToSend.push({
+			'emailType': 'Notification',
+			'caller': 'programmatic signup cancellation staff',
+			'to': eData.jobAdminEmail,
+			'subject': eData.subjectPreface + 'cancelled',
+			'bodyUnique': '<p>The "' + sData.jobTitle +
+				'" GSE, which was set to occur on ' + sData.scheduleDateTime + ' has been cancelled. ' +
+				'Feel free to <a href="mailto:' + sData.jobAdminEmail + '">contact ' +
+					sData.jobAdminName + '</a> ' +
+				'with any questions, <a href="' + eData.uriOverview + '">' +
+				'review your other signups</a>, or ' +
+				'<a href="https://bmos.sharepoint.com/sites/hr-service-schedules/SitePages/App.aspx?f=cal">' +
+				'sign up for another GSE</a>.</p>'
+
+		});
+
+		$().SendEmails(notificationsToSend);
 	};
 
+	$.fn.ProcessGSEScheduleCreditNotifications = function (signupID, signupModificationValuePairs, scheduleData, creditDenialReason, signupStaff) {
+		console.log('ProcessGSEScheduleCreditNotifications signupModificationValuePairs scheduleData');
+		console.log(signupModificationValuePairs);
+		console.log(scheduleData);
 
+		var sData = {};
+		sData.jobID = scheduleData.formData['id-or-link_GSE-Job-Request-ID'];
 
+		// get relevant job as first element of array
+		var gseJobsArray = $().GetFieldsFromSpecifiedRows({
+			"select": [
+				{
+					"nameHere": "JobAdmin",
+					"nameInList": "JobAdmin"
+				}, {
+					"nameHere": "JobTitle",
+					"nameInList": "JobTitle"
+				}
+			],
+			'webURL': 'https://bmos.sharepoint.com/sites/hr-service-jobs',
+			"where": {
+				"field": "ID",
+				"type": "Text",
+				"value": sData.jobID,
+			}
+		});
 
+		sData.jobAdmin = $().ReturnUserDataFromPersonOrGroupFieldString(gseJobsArray[0].JobAdmin);
+		sData.staff = $().ReturnUserDataFromPersonOrGroupFieldString(signupStaff);
 
+		sData.jobTitle = gseJobsArray[0].JobTitle;
+		sData.jobAdminName = sData.jobAdmin[0].name;
+		sData.jobAdminEmail = sData.jobAdmin[0].email;
+		sData.staffEmail = sData.staff[0].email;
+		
+		sData.scheduleDateTime =
+			$().ReturnFormattedDateTime(scheduleData.formData['Date'].slice(0, 10) + scheduleData.formData['time-storage_StartTime'].slice(10, 19), null, 'dddd, MMMM D, YYYY, h:mm a');
+		
 
+		mData.subjectPreface = 'GSE Signup #' + signupID + ': ';
 
+		mData.uriOverview = mData.fullSiteBaseURL + "/SitePages/" + mData.pageToken + ".aspx"
+		// mData.uriRequest = mData.uriOverview + "?r=" + scheduleData.ScheduleID;
 
+		signupModificationValuePairs.forEach((signupModificationValuePair) => {
+			if (signupModificationValuePair[0] === 'RequestStatus') {
+				sData.RequestStatus = signupModificationValuePair[1]
+			}
+		});
 
+		if (sData.RequestStatus === 'Credit Granted') {
+			sData.bodyUnique =
+				'<p>You\'ve been granted credit for "' + sData.jobTitle + '", which occured ' +
+				sData.scheduleDateTime + '. ' +
+				'Feel free to <a href="mailto:' + sData.jobAdminEmail + '">contact ' +
+				sData.jobAdminName + '</a> with any questions, <a href="' + mData.uriOverview + '">' +
+				'review your other signups</a>, or ' +
+				'<a href="https://bmos.sharepoint.com/sites/hr-service-schedules/SitePages/App.aspx?f=cal">' +
+				'sign up for another GSE</a>.</p>'
+		} else {
+			sData.bodyUnique =
+				'<p>You\'ve been denied credit for "' + sData.jobTitle + '", which occured ' +
+				sData.scheduleDateTime + '. Here\'s why:</p>' +
+				'<p style="padding-left: 30px">' + creditDenialReason + '</p>' + 
+				'<p>Feel free to <a href="mailto:' + sData.jobAdminEmail + '">contact ' +
+				sData.jobAdminName + '</a> with any questions, <a href="' + mData.uriOverview + '">' +
+				'review your other signups</a>, or ' +
+				'<a href="https://bmos.sharepoint.com/sites/hr-service-schedules/SitePages/App.aspx?f=cal">' +
+				'sign up for another GSE</a>.</p>'
+		}
 
+		var eData = $.extend(sData, scheduleData, mData, uData, fData);
 
+		var notificationsToSend = [];
 
+		// for debugging
+		if (true) {
+			console.log('ProcessGSEScheduleCancellationNotifications eData');
+			console.log(eData);
+		}
 
+		var notificationsToSend = [];
 
+		notificationsToSend.push({
+			'emailType': 'Notification',
+			'caller': 'programmatic credit notification staff',
+			'to': eData.staffEmail,
+			'subject': eData.subjectPreface + sData.RequestStatus.toLowerCase(),
+			'bodyUnique': eData.bodyUnique
 
+		});
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+		$().SendEmails(notificationsToSend);
+		console.log(notificationsToSend);
+	};
 
 
 
@@ -25365,7 +25560,7 @@
 		// wait for all data retrieval / setting promises to complete (pass or fail) 
 		$.when.apply($, allDataRetrievalAndSettingPromises).always(function () {
 
-			console.log('using dev_mos-main_long.1.04 m1');
+			console.log('using dev_mos-main_long.1.04 m2');
 
 			$().ConfigureAndShowScreenContainerAndAllScreens();
 		});
