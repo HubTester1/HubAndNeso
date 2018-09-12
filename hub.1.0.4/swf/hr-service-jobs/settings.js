@@ -1,6 +1,6 @@
 (function ($) {
 
-	// GSE Job 2
+	// GSE Job 2	
 
 	var mData = {
 		'componentID': 158,
@@ -9,7 +9,7 @@
 		// 'mosMainKey': 'dev',
 		// 'mosMainKey': 'devMedium',
 		'mosMainKey': 'devLong',
-		'devAdminNotifications': 1,
+		'devAdminNotifications': 0,
 		'notifications': 1
 	};
 
@@ -33,17 +33,17 @@
 				}, {
 					"linkType": "goForward",
 					"anchorText": "Schedule Calendar",
-					"href": "/sites/hr-service-schedule/SitePages/App.aspx?f=cal",
+					"href": "/sites/hr-service-schedules/SitePages/App.aspx?f=cal",
 					"target": null
 				}, {
 					"linkType": "goForward",
 					"anchorText": "Schedule List",
-					"href": "/sites/hr-service-schedule/SitePages/App.aspx",
+					"href": "/sites/hr-service-schedules/SitePages/App.aspx",
 					"target": null
 				}, {
 					"linkType": "goForward",
 					"anchorText": "Signups",
-					"href": "/sites/hr-service-signup/SitePages/App.aspx",
+					"href": "/sites/hr-service-signups/SitePages/App.aspx",
 					"target": null
 				}
 			],
@@ -127,17 +127,17 @@
 				}, {
 					"linkType": "goForward",
 					"anchorText": "Schedule Calendar",
-					"href": "/sites/hr-service-schedule/SitePages/App.aspx?f=cal",
+					"href": "/sites/hr-service-schedules/SitePages/App.aspx?f=cal",
 					"target": null
 				}, {
 					"linkType": "goForward",
 					"anchorText": "Schedule List",
-					"href": "/sites/hr-service-schedule/SitePages/App.aspx",
+					"href": "/sites/hr-service-schedules/SitePages/App.aspx",
 					"target": null
 				}, {
 					"linkType": "goForward",
 					"anchorText": "My Signups",
-					"href": "/sites/hr-service-signup/SitePages/App.aspx",
+					"href": "/sites/hr-service-signups/SitePages/App.aspx",
 					"target": null
 				}
 			],
@@ -217,17 +217,17 @@
 				{
 					"linkType": "goForward",
 					"anchorText": "Schedule Calendar",
-					"href": "/sites/hr-service-schedule/SitePages/App.aspx?f=cal",
+					"href": "/sites/hr-service-schedules/SitePages/App.aspx?f=cal",
 					"target": null
 				}, {
 					"linkType": "goForward",
 					"anchorText": "Schedule List",
-					"href": "/sites/hr-service-schedule/SitePages/App.aspx",
+					"href": "/sites/hr-service-schedules/SitePages/App.aspx",
 					"target": null
 				}, {
 					"linkType": "goForward",
 					"anchorText": "My and My Staff Members' Signups",
-					"href": "/sites/hr-service-signup/SitePages/App.aspx",
+					"href": "/sites/hr-service-signups/SitePages/App.aspx",
 					"target": null
 				}
 			],

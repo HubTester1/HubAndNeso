@@ -9,7 +9,7 @@
 		// 'mosMainKey': 'dev',
 		// 'mosMainKey': 'devMedium',
 		'mosMainKey': 'devLong',
-		'devAdminNotifications': 1,
+		'devAdminNotifications': 0,
 		'notifications': 1,
 		'detailTitle': [
 			{
@@ -30,6 +30,11 @@
 		'gseSchedulesListHRAdmin': {
 			'buttons': [
 				{
+					"linkType": "goForward",
+					"anchorText": "Configuration",
+					"href": "/sites/hr-service-config/SitePages/App.aspx?r=1",
+					"target": null
+				}, {
 					"linkType": "newItem",
 					"anchorText": "New Schedule",
 					"href": "/sites/hr-service-schedules/SitePages/App.aspx?r=0",
@@ -51,7 +56,7 @@
 				}, {
 					"linkType": "goForward",
 					"anchorText": "Signups",
-					"href": "/sites/hr-service-signup/SitePages/App.aspx",
+					"href": "/sites/hr-service-signups/SitePages/App.aspx",
 					"target": null
 				}
 			],
@@ -131,7 +136,7 @@
 				}, {
 					"linkType": "goForward",
 					"anchorText": "My Signups",
-					"href": "/sites/hr-service-signup/SitePages/App.aspx",
+					"href": "/sites/hr-service-signups/SitePages/App.aspx",
 					"target": null
 				}
 			],
@@ -212,7 +217,7 @@
 				}, {
 					"linkType": "goForward",
 					"anchorText": "My and My Staff Members' Signups",
-					"href": "/sites/hr-service-signup/SitePages/App.aspx",
+					"href": "/sites/hr-service-signups/SitePages/App.aspx",
 					"target": null
 				}
 			],
@@ -284,7 +289,7 @@
 				{
 					"linkType": "goForward",
 					"anchorText": "My Signups",
-					"href": "/sites/hr-service-signup/SitePages/App.aspx",
+					"href": "/sites/hr-service-signups/SitePages/App.aspx",
 					"target": null
 				}, {
 					"linkType": "goForward",
@@ -361,6 +366,11 @@
 		'gseSchedulesCalendarHRAdmin': {
 			'buttons': [
 				{
+					"linkType": "goForward",
+					"anchorText": "Configuration",
+					"href": "/sites/hr-service-config/SitePages/App.aspx?r=1",
+					"target": null
+				}, {
 					"linkType": "newItem",
 					"anchorText": "New Schedule",
 					"href": "/sites/hr-service-schedules/SitePages/App.aspx?r=0",
@@ -378,7 +388,7 @@
 				}, {
 					"linkType": "goForward",
 					"anchorText": "Signups",
-					"href": "/sites/hr-service-signup/SitePages/App.aspx",
+					"href": "/sites/hr-service-signups/SitePages/App.aspx",
 					"target": null
 				}
 			],
@@ -552,7 +562,7 @@
 				}, {
 					"linkType": "goForward",
 					"anchorText": "My Signups",
-					"href": "/sites/hr-service-signup/SitePages/App.aspx",
+					"href": "/sites/hr-service-signups/SitePages/App.aspx",
 					"target": null
 				}
 			],
@@ -613,7 +623,7 @@
 				}, {
 					"linkType": "goForward",
 					"anchorText": "My and My Staff Members' Signups",
-					"href": "/sites/hr-service-signup/SitePages/App.aspx",
+					"href": "/sites/hr-service-signups/SitePages/App.aspx",
 					"target": null
 				}
 			],
@@ -669,7 +679,7 @@
 				}, {
 					"linkType": "goForward",
 					"anchorText": "My Signups",
-					"href": "/sites/hr-service-signup/SitePages/App.aspx",
+					"href": "/sites/hr-service-signups/SitePages/App.aspx",
 					"target": null
 				}
 			],

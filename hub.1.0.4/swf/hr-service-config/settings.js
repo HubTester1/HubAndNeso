@@ -281,6 +281,7 @@
 								'").hide("fast").addClass("hidden");';
 
 	fData.CustomScriptLast += '$("div#mos-form-submission-confirmation a.link_exit").remove();';
+	fData.CustomScriptLast += '$("div#request-screen-container a#exit-sans-save-button").remove();';
 
 
 

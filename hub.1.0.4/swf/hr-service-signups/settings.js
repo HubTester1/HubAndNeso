@@ -8,7 +8,7 @@
 		// 'mosMainKey': 'devMedium',
 		'mosMainKey': 'devLong',
 		// "useRecordedMOSMainMajorVersion": 1,
-		'devAdminNotifications': 1,
+		'devAdminNotifications': 0,
 		'notifications': 1,
 		'detailTitle': [
 			{
@@ -34,12 +34,12 @@
 				}, {
 					"linkType": "goForward",
 					"anchorText": "Schedule Calendar",
-					"href": "/sites/hr-service-schedule/SitePages/App.aspx?f=cal",
+					"href": "/sites/hr-service-schedules/SitePages/App.aspx?f=cal",
 					"target": null
 				}, {
 					"linkType": "goForward",
 					"anchorText": "Schedule List",
-					"href": "/sites/hr-service-schedule/SitePages/App.aspx",
+					"href": "/sites/hr-service-schedules/SitePages/App.aspx",
 					"target": null
 				}
 			],
@@ -95,12 +95,12 @@
 				}, {
 					"linkType": "goForward",
 					"anchorText": "Schedule Calendar",
-					"href": "/sites/hr-service-schedule/SitePages/App.aspx?f=cal",
+					"href": "/sites/hr-service-schedules/SitePages/App.aspx?f=cal",
 					"target": null
 				}, {
 					"linkType": "goForward",
 					"anchorText": "Schedule List",
-					"href": "/sites/hr-service-schedule/SitePages/App.aspx",
+					"href": "/sites/hr-service-schedules/SitePages/App.aspx",
 					"target": null
 				}
 			],
@@ -151,13 +151,13 @@
 				{
 					"linkType": "goForward",
 					"anchorText": "GSE Signup Opportunities Calendar",
-					"href": "/sites/hr-service-schedule/SitePages/App.aspx?f=cal",
+					"href": "/sites/hr-service-schedules/SitePages/App.aspx?f=cal",
 					"target": null,
 					"restrictedToRoles": ["gseUserOnly"]
 				}, {
 					"linkType": "goForward",
 					"anchorText": "GSE Signup Opportunities List",
-					"href": "/sites/hr-service-schedule/SitePages/App.aspx",
+					"href": "/sites/hr-service-schedules/SitePages/App.aspx",
 					"target": null,
 					"restrictedToRoles": ["gseUserOnly"]
 				}, {
@@ -169,13 +169,13 @@
 				}, {
 					"linkType": "goForward",
 					"anchorText": "Schedule Calendar",
-					"href": "/sites/hr-service-schedule/SitePages/App.aspx?f=cal",
+					"href": "/sites/hr-service-schedules/SitePages/App.aspx?f=cal",
 					"target": null,
 					"restrictedToRoles": ["gseJobAdmin"]
 				}, {
 					"linkType": "goForward",
 					"anchorText": "Schedule List",
-					"href": "/sites/hr-service-schedule/SitePages/App.aspx",
+					"href": "/sites/hr-service-schedules/SitePages/App.aspx",
 					"target": null,
 					"restrictedToRoles": ["gseJobAdmin"]
 				}
@@ -469,7 +469,7 @@
 				"elementType": "field",
 				"controlType": "text",
 				"fieldName": "Request ID",
-				"labelContent": "Schedule ID",
+				"labelContent": "Signup ID",
 				"hideForNonAdmin": [""],
 				"hideForAdmin": [""],
 				"disabledForNonAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
@@ -848,6 +848,16 @@
 								'		$("div#non-admin, div#submit-or-exit").hide("fast").addClass("hidden");' + 
 								'		$("div#no-signups-warning").show("fast").removeClass("hidden");' + 
 								'	}' + 
+								'}';
+
+	fData.CustomScriptLast = 
+								'if ($("span#Meal-Time").is(":empty")) {' + 
+								'	$("span#Meal-Time").closest("li").hide("fast").addClass("hidden");' +
+								'}';
+	
+	fData.CustomScriptLast = 
+								'if ($("span#Break-Time").is(":empty")) {' + 
+								'	$("span#Break-Time").closest("li").hide("fast").addClass("hidden");' +
 								'}';
 	
 
