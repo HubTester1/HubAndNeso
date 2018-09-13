@@ -22000,22 +22000,34 @@
 			} else if (typeof (t.basicEOLQueryRelevantValue) != "undefined") {
 				if (t.basicEOLQueryRelevantValue == 0) {
 					query = "<Where>" +
-						"	<Or>" +
-						"		 <Eq>" +
-						"			  <FieldRef Name='EndOfLife'></FieldRef>" +
-						"			  <Value Type='Text'>0</Value>" +
-						"		  </Eq>" +
-						"		 <IsNull>" +
-						"			  <FieldRef Name='EndOfLife'></FieldRef>" +
-						"		 </IsNull>" +
-						"	</Or>" +
+						"	<And>" +
+						"		<Or>" +
+						"		 	<Eq>" +
+						"			  	<FieldRef Name='EndOfLife'></FieldRef>" +
+						"			  	<Value Type='Text'>0</Value>" +
+						"		  	</Eq>" +
+						"		 	<IsNull>" +
+						"			  	<FieldRef Name='EndOfLife'></FieldRef>" +
+						"		 	</IsNull>" +
+						"		</Or>" +
+						"		<Neq>" +
+						"			<FieldRef Name='Title'></FieldRef>" +
+						"			<Value Type='Text'>Temporary Title</Value>" +
+						"		</Neq>" +
+						"	</And>" +
 						"</Where>";
 				} else if (t.basicEOLQueryRelevantValue == 1) {
 					query = "<Where>" +
-						"	<Eq>" +
-						"		 <FieldRef Name='EndOfLife'></FieldRef>" +
-						"		 <Value Type='Text'>1</Value>" +
-						"	</Eq>" +
+						"	<And>" +
+						"		<Eq>" +
+						"		 	<FieldRef Name='EndOfLife'></FieldRef>" +
+						"		 	<Value Type='Text'>1</Value>" +
+						"		</Eq>" +
+						"		<Neq>" +
+						"			<FieldRef Name='Title'></FieldRef>" +
+						"			<Value Type='Text'>Temporary Title</Value>" +
+						"		</Neq>" +
+						"	</And>" +
 						"</Where>";
 				}
 			} else if (typeof (t.basicMyEOLQueryRelevantValue) != "undefined") {
