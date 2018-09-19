@@ -1,0 +1,682 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data>
+        
+            <request>
+                <legacyID>638</legacyID>
+                <duty>Receive and Deliver packages as needed</duty>
+                <sortOrder>1</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>638</legacyID>
+                <duty>sort incoming mail</duty>
+                <sortOrder>2</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>668</legacyID>
+                <duty>Assist in cleaning the many real objects in the Discovery Center.</duty>
+                <sortOrder>1</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>668</legacyID>
+                <duty>Assist in installing new exhibit components.</duty>
+                <sortOrder>2</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1110</legacyID>
+                <duty>Loading/Unloading Van with educator</duty>
+                <sortOrder>1</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1110</legacyID>
+                <duty>Setting up/Breaking down equipment with educator</duty>
+                <sortOrder>2</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1246</legacyID>
+                <duty>Put together 2018 Volunteer Fall Festival invitaiont</duty>
+                <sortOrder>1</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1258</legacyID>
+                <duty>Help providing labor, working with facilities technician.</duty>
+                <sortOrder>1</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1258</legacyID>
+                <duty>Carry or transport equipment and materials.</duty>
+                <sortOrder>2</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1326</legacyID>
+                <duty>Help load van in the morning</duty>
+                <sortOrder>1</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1326</legacyID>
+                <duty>Help carry gear into site</duty>
+                <sortOrder>2</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1326</legacyID>
+                <duty>At educator’s discretion, may assist with set-up or break-down</duty>
+                <sortOrder>3</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1326</legacyID>
+                <duty>Watch the program</duty>
+                <sortOrder>4</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1326</legacyID>
+                <duty>Potentially film or photograph presentation</duty>
+                <sortOrder>5</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1326</legacyID>
+                <duty>Help unload van back at Museum</duty>
+                <sortOrder>6</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1512</legacyID>
+                <duty>Patrolling for and cleaning up trash found in the Charles River.</duty>
+                <sortOrder>1</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1522</legacyID>
+                <duty>Walking with the class,</duty>
+                <sortOrder>1</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1522</legacyID>
+                <duty>Assisting in group management</duty>
+                <sortOrder>2</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1522</legacyID>
+                <duty>Some rocket launching (as needed)</duty>
+                <sortOrder>3</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1536</legacyID>
+                <duty>Attach member cards to card carriers with glue dots</duty>
+                <sortOrder>1</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1536</legacyID>
+                <duty>Stuff envelopes with member cards attached to card carriers and bonus pass information</duty>
+                <sortOrder>2</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1546</legacyID>
+                <duty>Help the Membership department mail letters and membership cards to Museum members.</duty>
+                <sortOrder>1</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1553</legacyID>
+                <duty>Assist with Member check-in</duty>
+                <sortOrder>1</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1553</legacyID>
+                <duty>Direct members to different areas of the Museum</duty>
+                <sortOrder>2</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1553</legacyID>
+                <duty>Inform members of special activities for the evening</duty>
+                <sortOrder>3</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1553</legacyID>
+                <duty>Help manage the raffle area</duty>
+                <sortOrder>4</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1553</legacyID>
+                <duty>Assist with drop-in activities as needed</duty>
+                <sortOrder>5</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1554</legacyID>
+                <duty>Learn how to use the Planetarium's ticket scanners.</duty>
+                <sortOrder>1</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1554</legacyID>
+                <duty>Scan tickets for the 7:30, 8:30, and 9:30 PM Planetarium shows.</duty>
+                <sortOrder>2</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1554</legacyID>
+                <duty>Assist the evening Planetarium presenters in any practical ways.</duty>
+                <sortOrder>3</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1554</legacyID>
+                <duty>PLEASE RESPOND BY 1 PM THE WEDNESDAY BEFORE. RESPONSES AFTER THIS TIME CANNOT BE ACCEPTED.</duty>
+                <sortOrder>4</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1591</legacyID>
+                <duty>- Assist with checking college I.D.s</duty>
+                <sortOrder>1</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1591</legacyID>
+                <duty>- Hand out buttons and programs to college students.</duty>
+                <sortOrder>2</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1591</legacyID>
+                <duty>- Oversee email signup.</duty>
+                <sortOrder>3</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1591</legacyID>
+                <duty>- Assist with live presentations</duty>
+                <sortOrder>4</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1591</legacyID>
+                <duty>- Help students (4000+ in attendance) with any questions or concerns.</duty>
+                <sortOrder>5</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1642</legacyID>
+                <duty>Assist at Registration Table in lobby, hand out guest list tickets, answer questions, explain adult programs and brochure sign up, and direct people to Planetarium.</duty>
+                <sortOrder>1</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1642</legacyID>
+                <duty>Help LSP staff pack up and return easels, signs, etc to Gordon East</duty>
+                <sortOrder>2</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1642</legacyID>
+                <duty>Enjoy the 7:30pm show (or 9pm show if the 7:30pm sells out!)</duty>
+                <sortOrder>3</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1643</legacyID>
+                <duty>Assist at Registration Table in lobby, hand out guest list tickets, answer questions, explain adult programs and brochure sign up, and direct people to Planetarium.</duty>
+                <sortOrder>1</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1643</legacyID>
+                <duty>Help LSP staff pack up and return easels, signs, etc to Gordon East</duty>
+                <sortOrder>2</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1643</legacyID>
+                <duty>Enjoy the 7:30pm show (or 9pm show if the 7:30pm sells out!)</duty>
+                <sortOrder>3</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1645</legacyID>
+                <duty>Assist at Registration Table in lobby, hand out guest list tickets, answer questions, explain adult programs and brochure sign up, and direct people to Planetarium.</duty>
+                <sortOrder>1</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1645</legacyID>
+                <duty>Help LSP staff pack up and return easels, signs, etc to Gordon East</duty>
+                <sortOrder>2</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1645</legacyID>
+                <duty>Enjoy the 7:30pm show (or 9pm show if the 7:30pm sells out!)</duty>
+                <sortOrder>3</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1646</legacyID>
+                <duty>Assist at Registration Table in lobby, hand out guest list tickets, answer questions, explain adult programs and brochure sign up, and direct people to Planetarium.</duty>
+                <sortOrder>1</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1646</legacyID>
+                <duty>Help LSP staff pack up and return easels, signs, etc to Gordon East</duty>
+                <sortOrder>2</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1646</legacyID>
+                <duty>Enjoy the 7:30pm show (or 9pm show if the 7:30pm sells out!)</duty>
+                <sortOrder>3</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1648</legacyID>
+                <duty>Assist at Registration Table in lobby, hand out guest list tickets, answer questions, explain adult programs and brochure sign up, and direct people to Planetarium.</duty>
+                <sortOrder>1</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1648</legacyID>
+                <duty>Help LSP staff pack up and return easels, signs, etc to Gordon East</duty>
+                <sortOrder>2</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1648</legacyID>
+                <duty>Enjoy the 7:30pm show (or 9pm show if the 7:30pm sells out!)</duty>
+                <sortOrder>3</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1649</legacyID>
+                <duty>Assist at Registration Table in lobby, hand out guest list tickets, answer questions, explain adult programs and brochure sign up, and direct people to Planetarium.</duty>
+                <sortOrder>1</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1649</legacyID>
+                <duty>Help LSP staff pack up and return easels, signs, etc to Gordon East</duty>
+                <sortOrder>2</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1649</legacyID>
+                <duty>Enjoy the 7:30pm show (or 9pm show if the 7:30pm sells out!)</duty>
+                <sortOrder>3</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1651</legacyID>
+                <duty>Assist at Registration Table in lobby, hand out guest list tickets, answer questions, explain adult programs and brochure sign up, and direct people to Planetarium.</duty>
+                <sortOrder>1</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1651</legacyID>
+                <duty>Help LSP staff pack up and return easels, signs, etc to Gordon East</duty>
+                <sortOrder>2</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1651</legacyID>
+                <duty>Enjoy the 7:30pm screening!</duty>
+                <sortOrder>3</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1652</legacyID>
+                <duty>Assist at Registration Table in lobby, hand out guest list tickets, answer questions, explain adult programs and brochure sign up, and direct people to Planetarium.</duty>
+                <sortOrder>1</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1652</legacyID>
+                <duty>Help LSP staff pack up and return easels, signs, etc to Gordon East</duty>
+                <sortOrder>2</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1652</legacyID>
+                <duty>Enjoy the 7:30pm screening!</duty>
+                <sortOrder>3</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1653</legacyID>
+                <duty>Assist at Registration Table in lobby, hand out guest list tickets, answer questions, explain adult programs and brochure sign up, and direct people to Planetarium.</duty>
+                <sortOrder>1</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1653</legacyID>
+                <duty>Help LSP staff pack up and return easels, signs, etc to Gordon East</duty>
+                <sortOrder>2</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1653</legacyID>
+                <duty>Enjoy the movie marathon!</duty>
+                <sortOrder>3</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1655</legacyID>
+                <duty>Scan black and white photographs and save to a prescribed location - we will provide all technical info.</duty>
+                <sortOrder>1</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1664</legacyID>
+                <duty>asdf</duty>
+                <sortOrder>1</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1665</legacyID>
+                <duty>Greet guests in the lobby at registration, hand out name tags, validate parking, direct to event space (atrium), answer any questions guests may have, handle foot traffic to keep things moving smoothly. NOTE: Assistance will only be needed until 8:45am.</duty>
+                <sortOrder>1</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1667</legacyID>
+                <duty>Loading/Unloading Van</duty>
+                <sortOrder>1</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1667</legacyID>
+                <duty>Setting up/Breaking down activity station</duty>
+                <sortOrder>2</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1667</legacyID>
+                <duty>Assisting adults and children with science activities</duty>
+                <sortOrder>3</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1667</legacyID>
+                <duty>Promoting museums exhibits and programs</duty>
+                <sortOrder>4</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1668</legacyID>
+                <duty>- Arrive to Fenway park on own by 10:30 am</duty>
+                <sortOrder>1</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1668</legacyID>
+                <duty>- Brief training from 10:30-11 am</duty>
+                <sortOrder>2</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1668</legacyID>
+                <duty>- 11 am to 2 pm help facilitate activity with guests</duty>
+                <sortOrder>3</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1668</legacyID>
+                <duty>- 2 to 2:30 pm clean-up activity and depart</duty>
+                <sortOrder>4</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1670</legacyID>
+                <duty>Sand until as smooth interior surfaces, edges of wood interior of cart. Apply multiple coats of polyurethane to seal.</duty>
+                <sortOrder>1</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1671</legacyID>
+                <duty>Welcome members</duty>
+                <sortOrder>1</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1671</legacyID>
+                <duty>Inform members of special activities for the evening</duty>
+                <sortOrder>2</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1671</legacyID>
+                <duty>Direct members to different areas of the Museum</duty>
+                <sortOrder>3</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1671</legacyID>
+                <duty>Assist with standby ticket distribution</duty>
+                <sortOrder>4</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1671</legacyID>
+                <duty>Assist with line managing at the Omni or Duck Boat loading area</duty>
+                <sortOrder>5</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1672</legacyID>
+                <duty>-Minimal miscellaneous set up duties</duty>
+                <sortOrder>1</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1672</legacyID>
+                <duty>-Register volunteers</duty>
+                <sortOrder>2</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1672</legacyID>
+                <duty>-Greet volunteers as they arrive,inform them of evenings activities</duty>
+                <sortOrder>3</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1673</legacyID>
+                <duty>Assist at Registration Table in lobby, hand out guest list tickets, answer questions, explain adult programs and brochure sign up, and direct people to Planetarium.</duty>
+                <sortOrder>1</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1673</legacyID>
+                <duty>Help LSP staff pack up and return easels, signs, etc to Gordon East</duty>
+                <sortOrder>2</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1673</legacyID>
+                <duty>Enjoy the 8:30pm show</duty>
+                <sortOrder>3</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1674</legacyID>
+                <duty>Assist at Registration Table in lobby, hand out guest list tickets, answer questions, explain adult programs and brochure sign up, and direct people to Cahners.</duty>
+                <sortOrder>1</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1674</legacyID>
+                <duty>Help LSP staff pack up and return easels, signs, etc to Gordon East</duty>
+                <sortOrder>2</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1674</legacyID>
+                <duty>Enjoy the 7:00pm program.</duty>
+                <sortOrder>3</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1675</legacyID>
+                <duty>Assist at Registration Table in lobby, hand out guest list tickets, answer questions, explain adult programs and brochure sign up, and direct people to Cahners.</duty>
+                <sortOrder>1</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1675</legacyID>
+                <duty>Help LSP staff pack up and return easels, signs, etc to Gordon East</duty>
+                <sortOrder>2</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1675</legacyID>
+                <duty>Enjoy the 7:00pm program.</duty>
+                <sortOrder>3</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1676</legacyID>
+                <duty>Assist at Registration Table in lobby, hand out guest list tickets, answer questions, explain adult programs and brochure sign up, and direct people to Planetarium.</duty>
+                <sortOrder>1</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1676</legacyID>
+                <duty>Help LSP staff pack up and return easels, signs, etc to Gordon East</duty>
+                <sortOrder>2</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1676</legacyID>
+                <duty>Enjoy the 7:30pm show (or 9pm show if the 7:30pm sells out!)</duty>
+                <sortOrder>3</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1677</legacyID>
+                <duty>Assist at Registration Table in lobby, hand out guest list tickets, answer questions, explain adult programs and brochure sign up, and direct people to Planetarium.</duty>
+                <sortOrder>1</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1677</legacyID>
+                <duty>Help LSP staff pack up and return easels, signs, etc to Gordon East</duty>
+                <sortOrder>2</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1677</legacyID>
+                <duty>Join the staff team during the live trivia at 7:30pm!</duty>
+                <sortOrder>3</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1678</legacyID>
+                <duty>Assist at Registration Table in lobby, hand out guest list tickets, answer questions, explain adult programs and brochure sign up, and direct people to Planetarium.</duty>
+                <sortOrder>1</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1678</legacyID>
+                <duty>Help LSP staff pack up and return easels, signs, etc to Gordon East</duty>
+                <sortOrder>2</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1678</legacyID>
+                <duty>Enjoy the 7:30pm show (or 9pm show if the 7:30pm sells out!)</duty>
+                <sortOrder>3</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1679</legacyID>
+                <duty>Assist at Registration Table in lobby, hand out guest list tickets, answer questions, explain adult programs and brochure sign up, and direct people to Cahners.</duty>
+                <sortOrder>1</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1679</legacyID>
+                <duty>Help LSP staff pack up and return easels, signs, etc to Gordon East</duty>
+                <sortOrder>2</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1679</legacyID>
+                <duty>Enjoy the 7:00pm program.</duty>
+                <sortOrder>3</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1680</legacyID>
+                <duty>Assist at Registration Table in lobby, hand out guest list tickets, answer questions, explain adult programs and brochure sign up, and direct people to Planetarium.</duty>
+                <sortOrder>1</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1680</legacyID>
+                <duty>Help LSP staff pack up and return easels, signs, etc to Gordon East</duty>
+                <sortOrder>2</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1680</legacyID>
+                <duty>Enjoy the 7:30pm show (or 9pm show if the 7:30pm sells out!)</duty>
+                <sortOrder>3</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1681</legacyID>
+                <duty>Assist at Registration Table in lobby, hand out guest list tickets, answer questions, explain adult programs and brochure sign up, and direct people to Cahners.</duty>
+                <sortOrder>1</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1681</legacyID>
+                <duty>Help LSP staff pack up and return easels, signs, etc to Gordon East</duty>
+                <sortOrder>2</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1681</legacyID>
+                <duty>Enjoy the 7:00pm program.</duty>
+                <sortOrder>3</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1682</legacyID>
+                <duty>Assist at Registration Table in lobby, hand out guest list tickets, answer questions, explain adult programs and brochure sign up, and direct people to Planetarium.</duty>
+                <sortOrder>1</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1682</legacyID>
+                <duty>Help LSP staff pack up and return easels, signs, etc to Gordon East</duty>
+                <sortOrder>2</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1682</legacyID>
+                <duty>Enjoy the 7:30pm show</duty>
+                <sortOrder>3</sortOrder>
+            </request>
+        
+    </data>

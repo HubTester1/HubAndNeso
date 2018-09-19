@@ -46,7 +46,7 @@ gulp.task('watch-push-settings', () => {
 // push specified settings file to specified location
 gulp.task('push-importer', () =>
 	// for specified settings file
-	gulp.src(gulpV4DevConfig.ReturnSWFImporterFile(argv.app))
+	gulp.src(gulpBaseConfig.ReturnSWFImporterFile(argv.app))
 		// replace the standard pipe method
 		.pipe(plumber())
 		// pipe them into a caching proxy 
@@ -59,7 +59,7 @@ gulp.task('push-importer', () =>
 // when the specified settings file changes, push it to specified location
 gulp.task('watch-push-importer', () => {
 	// watch the src style file; upon changes, build dist style file and push it to dev
-	gulp.watch([gulpV4DevConfig.ReturnSWFImporterFile(argv.app)], ['push-importer']);
+	gulp.watch([gulpBaseConfig.ReturnSWFImporterFile(argv.app)], ['push-importer']);
 });
 
 

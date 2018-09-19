@@ -18048,6 +18048,8 @@
 		globalSubmissionValuePairsArray.push(["AllRequestData", CDataWrap(formDataString)]);
 
 		// return the array
+		console.log('globalSubmissionValuePairsArray');
+		console.log(globalSubmissionValuePairsArray);
 		return globalSubmissionValuePairsArray;
 	}
 
@@ -20661,6 +20663,9 @@
 			tableConfig.theadDetails += "<th>" + column.displayName + "</th>";
 		});
 		table.dataSource.forEach((signup) => {
+			console.log('signup');
+			console.log(signup);
+
 			var row = {};
 			var isoStartDatetime = signup.Schedule.Date.slice(0, 10) + signup.Schedule.StartTime.slice(10, 19);
 			row.Date = $().ReturnSortableDate(isoStartDatetime, null, 'MMMM D, YYYY', 1);
@@ -25671,7 +25676,7 @@
 		// wait for all data retrieval / setting promises to complete (pass or fail) 
 		$.when.apply($, allDataRetrievalAndSettingPromises).always(function () {
 
-			console.log('using dev_mos-main_long.1.04 m47');
+			console.log('using dev_mos-main_long.1.04 m1');
 
 			$().ConfigureAndShowScreenContainerAndAllScreens();
 		});
