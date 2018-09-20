@@ -5555,19 +5555,6 @@
 					$('input#End-of-Life').val(endOfLife);
 				}
 
-				if (fData.tempApprove) {
-
-					$(workingMessage).text("Handling Request Status");
-
-					var newReqStatus = 'Approved';
-					rData.endOfLifeIsNew = 0;
-					rData.endOfLife = 0;
-					rData.requestStatus = newReqStatus;
-					rData = rData;
-					$('input#Request-Status').val(newReqStatus);
-					$('input#End-of-Life').val(endOfLife);
-				}
-
 				if (fData.autoTrackValidatorIssueAndReceipt == 1 && rData.endOfLife != 1) {
 
 					$(workingMessage).text("Handling Request Status");

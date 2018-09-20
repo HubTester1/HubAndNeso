@@ -4,13 +4,13 @@
 	var mData = {
 		'componentID': 129,
 		'swf': 1,
-		'mosMainKey': 'prod',
+		// 'mosMainKey': 'prod',
 		// 'mosMainKey': 'dev',
 		// 'mosMainKey': 'devMedium',
-		// 'mosMainKey': 'devLong',
+		'mosMainKey': 'devLong',
 		// "useRecordedMOSMainMajorVersion": 1,
-		'devAdminNotifications': 0,
-		'notifications': 0,
+		'devAdminNotifications': 1,
+		'notifications': 1,
 	};
 
 	console.log("using settings m3");
@@ -53,6 +53,11 @@
 						'tableID': 'approved',
 						'someColsAreUsers': 1,
 						'basicRSQueryRelevantStatus': 'Approved'
+					}, {
+						'tableTitle': 'Cancelled and Disapproved',
+						'tableID': 'cancelled-and-disapproved',
+						'someColsAreUsers': 1,
+						'basicRSQueryTwoRelevantStatuses': ['Cancelled', 'Disapproved']
 					}
 				]
 			}
@@ -107,8 +112,7 @@
 
 
 	var fData = {
-		// 'autoTrackPendingAndApprovalAndNoLongerNeeded': 1,
-		'tempApprove': 1,
+		'autoTrackPendingAndApprovalAndNoLongerNeeded': 1,
 		'standardElementGroups': {
 			'standardThisRequestAndRequesterElements': 1,
 			'standardAdminElements': {
@@ -116,6 +120,7 @@
 					{ "value": "Approve", "display": "This request is approved" },
 					{ "value": "Disapprove", "display": "This request is disapproved" },
 					{ "value": "Cancel", "display": "This request has been cancelled" },
+					{ "value": "No Longer Needed", "display": "This request is no longer needed" }
 				]
 			},
 			'standardButtonElements': 1,
@@ -198,14 +203,14 @@
 
 
 
-	fData.CustomScriptLast += '$("input#Request-Nickname").val("Created by Public Safety"); \n';
-	fData.CustomScriptLast += '$("select#Self-or-Other option[value=\'Self\']").attr("selected","selected"); \n';
-	fData.CustomScriptLast += '$("div#label-and-control_Request-Nickname, div#label-and-control_Agreement").hide("fast").addClass("hidden"); \n';
-	fData.CustomScriptLast += '$("div#label-and-control_Self-or-Other").hide("fast").addClass("hidden"); \n';
-	fData.CustomScriptLast += '$("div#label-and-control_Requested-For").show("fast").removeClass("hidden"); \n';
-	fData.CustomScriptLast += '$("label[for=\'Requested-For_TopSpan_EditorInput\']").text("Biker"); \n';
-	fData.CustomScriptLast += '$().SetFieldToRequired("Requested-For"); \n';
-	fData.CustomScriptLast += '$("input#agreement_agreed").prop("checked", true).attr("checked", true); \n';
+	// fData.CustomScriptLast += '$("input#Request-Nickname").val("Created by Public Safety"); \n';
+	// fData.CustomScriptLast += '$("select#Self-or-Other option[value=\'Self\']").attr("selected","selected"); \n';
+	// fData.CustomScriptLast += '$("div#label-and-control_Request-Nickname, div#label-and-control_Agreement").hide("fast").addClass("hidden"); \n';
+	// fData.CustomScriptLast += '$("div#label-and-control_Self-or-Other").hide("fast").addClass("hidden"); \n';
+	// fData.CustomScriptLast += '$("div#label-and-control_Requested-For").show("fast").removeClass("hidden"); \n';
+	// fData.CustomScriptLast += '$("label[for=\'Requested-For_TopSpan_EditorInput\']").text("Biker"); \n';
+	// fData.CustomScriptLast += '$().SetFieldToRequired("Requested-For"); \n';
+	// fData.CustomScriptLast += '$("input#agreement_agreed").prop("checked", true).attr("checked", true); \n';
 
 
 
