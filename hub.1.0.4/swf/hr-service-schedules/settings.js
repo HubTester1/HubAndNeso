@@ -1213,7 +1213,10 @@
 						'thisFieldEquals': ['individual'],
 						'show': [{ 'divID': 'simple-dates' }],
 						'require': [{ 'fieldName': 'Repeating Date', 'type': 'datepicker', 'repeatable': 1 }],
-						'hide': [{ 'divID': 'pattern-and-range' }],
+						'hide': [
+							{ 'divID': 'pattern-and-range' },
+							{ 'noteID': "individual-date-warning" }
+						],
 						'optional': [
 							{ 'fieldName': 'Pattern Basis', 'type': 'select' }, 
 							{ 'fieldName': 'Start Date', 'type': 'datePicker' }, 

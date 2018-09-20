@@ -149,8 +149,9 @@
 					});
 
 					var notes = HtmlEncode($(requestValue).find('notes').text());
-
-
+					if (notes) {
+						notes = notes.replace(/\r?\n/g, '%0A');
+					}
 					
 					// manually set some basic list fields for this item
 					listFields.NewlyApprovedOrPending = HtmlEncode('0');
@@ -219,8 +220,8 @@
 						'"Location":"' + listFields.Location + '",' +
 						'"id-or-link_GSE-Job-Request-ID":"' + listFields.JobID + '",';
 
-					if (notes != '') {
-						allRequestData += '"Notes":"' + HtmlEncode($(requestValue).find('notes').text()) + '",';
+					if (notes) {
+						allRequestData += '"Notes":"' + notes + '",';
 					}
 					if (fullDayBoolean == 1) {
 						var rawBreakTime = $(requestValue).find('breakTime').text();

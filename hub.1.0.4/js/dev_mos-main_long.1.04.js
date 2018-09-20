@@ -3885,13 +3885,12 @@
 
 
 		// if this is a GSE Signup (either new or existing)
-		if (mData.requestName == "GSE Signup" && GetParamFromUrl(location.search, "r") !== '') {
+		if (mData.requestName == "GSE Signup") {
 			// if this is an existing GSE Signup, in which case a GSE Schedule ID was not specified in the URL 
 			if (rData.requestStatus != "") {
 				// extract the schedule ID from the saved request data
 				rData.gseScheduleID = rData.formDataOnLoad['Schedule-ID'];
 			}
-
 			// get the relevant job data
 			rData = $.extend(
 				rData,
@@ -4036,18 +4035,20 @@
 				// if there's more than one, we'll create list items; otherwise, paragraph
 				var opportunityJobDutyElement = opportunityJobDuties[1] ? 'li' : 'p';
 				// if there's more than one, start list
-				if (opportunityTrainingReqs[1]) {
+				if (opportunityJobDuties[1]) {
 					rData.gseJobData['Job-Duties-Formatted'] += '<ul>';
 				}
 				// for each in array, add markup
 				opportunityJobDuties.forEach((opportunityJobDuty) => {
-					rData.gseJobData['Job-Duties-Formatted'] += 
-						'<' + opportunityJobDutyElement + '>' + 
-						opportunityJobDuty + 
-						'</' + opportunityJobDutyElement + '>';
+					if (opportunityJobDuty) {
+						rData.gseJobData['Job-Duties-Formatted'] +=
+							'<' + opportunityJobDutyElement + '>' +
+							opportunityJobDuty +
+							'</' + opportunityJobDutyElement + '>';
+					}
 				});
 				// if there's more than one, start list
-				if (opportunityTrainingReqs[1]) {
+				if (opportunityJobDuties[1]) {
 					rData.gseJobData['Job-Duties-Formatted'] += '<ul>';
 				}
 			}
@@ -4084,6 +4085,7 @@
 		if (rData.requestStatus != "" && mData.requestName == "GSE Signup") {
 			// manually copy some admin data to requester-accessible fields
 			$("input#Request-ID").val(rData.requestID);
+			$("input#Request-Status").val(rData.requestStatus);
 			$("input#Request-Status-for-Requester").val(rData.requestStatus);
 			$("textarea#Credit-Denial-Reason-for-Requester").val(rData.formDataOnLoad['Credit-Denial-Reason']);
 			$("input#Schedule-Start-Datetime").val(rData.formDataOnLoad['Schedule-Start-Datetime']);
@@ -4091,6 +4093,13 @@
 			$("input#Requester-Department").val(rData.formDataOnLoad['Requester-Department']);
 			$("input#Requester-Email").val(rData.formDataOnLoad['Requester-Email']);
 			$("input#Requester-Phone").val(rData.formDataOnLoad['Requester-Phone']);
+			$().PutAddtlPeopleInPicker('Requested For', [{
+				'name': rData.formDataOnLoad['Requested-For'][0]['displayText'],
+				'email': rData.formDataOnLoad['Requested-For'][0]['description'],
+				'account': rData.formDataOnLoad['Requested-For'][0]['account']
+			}]);
+			$(this).SetFieldToDisabled('#Requested-For');
+
 		}
 
 		// if this is an *existing* GSE Schedule
@@ -25663,7 +25672,7 @@
 		// wait for all data retrieval / setting promises to complete (pass or fail) 
 		$.when.apply($, allDataRetrievalAndSettingPromises).always(function () {
 
-			console.log('using dev_mos-main_long.1.04 m1');
+			console.log('using dev_mos-main_long.1.04 m2');
 
 			$().ConfigureAndShowScreenContainerAndAllScreens();
 		});

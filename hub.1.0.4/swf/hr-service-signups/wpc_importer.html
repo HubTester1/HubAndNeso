@@ -60,7 +60,6 @@
 					if (requestStatus != 'Cancelled' && requestedForAccount != 'jleonard') {
 					
 
-
 						var legacyID = $(requestValue).find('legacyID').text();
 						var legacyScheduleID = $(requestValue).find('scheduleID').text();
 						var quarkRequest = 'https://quark.mos.org/getitdone/gse/admin/reports/underlings.cfm';
@@ -71,7 +70,6 @@
 						
 						var requestDate = moment().format('YYYY-MM-DDTHH:mm:00-04:00');
 											
-						console.log(requestedForAccount);
 						var requestedForName = "";
 						if (requestedForAccount != "") {
 							var requestedForData = ReturnUserDataUsingAccountName('i:0#.f|membership|' + requestedForAccount + '@mos.org');
@@ -158,7 +156,9 @@
 							'"Current-User-Name":"' + requestedForAccount + '@mos.org",' +
 							'"Request-Status": "' + listFields.RequestStatus + '",' +
 							'"Beginning-of-Life": "' + listFields.BeginningOfLife + '",' +
-							'"End-of-Life": "' + listFields.EndOfLife + '",';
+							'"End-of-Life": "' + listFields.EndOfLife + '",' + 
+							'"Schedule-ID": "' + listFields.ScheduleID + '",' + 
+							'"Job-ID": "' + listFields.JobID + '",';
 
 							// '"XXX":"' + listFields.XXX + '",' +
 							// '"XXX":"' + listFields.XXX + '",' +
@@ -230,10 +230,10 @@
 									console.log("");
 								} else {
 									var newRequestID = $(xData.responseXML).SPFilterNode("z:row").attr("ows_ID");
-									// console.log('legacyID ' + legacyID + ' is requestID = ' + newRequestID);
-									// console.log('submissionValuePairs');
-									// console.log(submissionValuePairs);
-									// console.log("");
+									console.log('legacyID ' + legacyID + ' is requestID = ' + newRequestID);
+									console.log('submissionValuePairs');
+									console.log(submissionValuePairs);
+									console.log("");
 								}
 							}
 						});

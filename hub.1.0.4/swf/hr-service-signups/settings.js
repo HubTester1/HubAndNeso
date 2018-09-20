@@ -850,12 +850,12 @@
 								'	}' + 
 								'}';
 
-	fData.CustomScriptLast = 
+	fData.CustomScriptLast += 
 								'if ($("span#Meal-Time").is(":empty")) {' + 
 								'	$("span#Meal-Time").closest("li").hide("fast").addClass("hidden");' +
 								'}';
 	
-	fData.CustomScriptLast = 
+	fData.CustomScriptLast += 
 								'if ($("span#Break-Time").is(":empty")) {' + 
 								'	$("span#Break-Time").closest("li").hide("fast").addClass("hidden");' +
 								'}';
