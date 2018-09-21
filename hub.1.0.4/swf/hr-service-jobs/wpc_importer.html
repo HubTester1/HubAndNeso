@@ -23,7 +23,7 @@
 			'legacyFile': '/sites/hr-service-jobs/SiteAssets/jobs.xml', //https://bmos.sharepoint.com
 			'maxToProcess': 10000,
 			'newList': 'SWFList',
-			'deleteAllItemsBeforeImporting': 0,
+			'deleteAllItemsBeforeImporting': 1,
 			'emailErrorsTo': 'jbaker@mos.org'
 		}
 
@@ -36,12 +36,14 @@
 				batchCmd: "Delete",
 				//valuepairs: [],
 				debug: false,
-				completefunc: null
+				completefunc: function (xData, Status) {
+					console.log('deletion completed');
+				}
 			});
 		}
 
 		// get the legacy requests file
-		$.ajax({
+		/* $.ajax({
 			type: "GET",
 			url: mData.legacyFile,
 			dataType: "xml",
@@ -277,7 +279,7 @@
 		}).error(function () {
 			alert("An error occurred while getting the XML file.");
 		});
-
+ */
 
 		// !!! ---- end import-disabling comment here ---- !!!
 	});

@@ -9,7 +9,7 @@
 		// 'mosMainKey': 'dev',
 		// 'mosMainKey': 'devMedium',
 		'mosMainKey': 'devLong',
-		'devAdminNotifications': 0,
+		'devAdminNotifications': 1,
 		'notifications': 1
 	};
 

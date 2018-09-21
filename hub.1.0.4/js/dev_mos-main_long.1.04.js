@@ -3989,28 +3989,30 @@
 			rData.gseJobData['Job-Description-Formatted'] = '<p>' + ReplaceAll('%0A', '</p><p>', rData.gseJobData['Job-Description']) + '</p>';
 
 			// training requirements
-			// get array of requirements
-			var opportunityTrainingReqs = rData.gseJobData['Training-Requirements'].split("%0A");
-			// if there's at least one duty
-			if (opportunityTrainingReqs[0]) {
-				// start with a header
-				rData.gseJobData['Training-Requirements-Formatted'] = '<h3>Training Requirements</h3>';
-				// if there's more than one, we'll create list items; otherwise, paragraph
-				var opportunityTrainingReqElement = opportunityTrainingReqs[1] ? 'li' : 'p';
-				// if there's more than one, start list
-				if (opportunityTrainingReqs[1]) {
-					rData.gseJobData['Training-Requirements-Formatted'] += '<ul>';
-				}
-				// for each in array, add markup
-				opportunityTrainingReqs.forEach((opportunityTrainingReq) => {
-					rData.gseJobData['Training-Requirements-Formatted'] +=
-						'<' + opportunityTrainingReqElement + '>' +
-						opportunityTrainingReq +
-					'</' + opportunityTrainingReqElement + '>';
-				});
-				// if there's more than one, end list
-				if (opportunityTrainingReqs[1]) {
-					rData.gseJobData['Training-Requirements-Formatted'] += '</ul>';
+			if (rData.gseJobData['Training-Requirements']) {
+				// get array of requirements
+				var opportunityTrainingReqs = rData.gseJobData['Training-Requirements'].split("%0A");
+				// if there's at least one duty
+				if (opportunityTrainingReqs[0]) {
+					// start with a header
+					rData.gseJobData['Training-Requirements-Formatted'] = '<h3>Training Requirements</h3>';
+					// if there's more than one, we'll create list items; otherwise, paragraph
+					var opportunityTrainingReqElement = opportunityTrainingReqs[1] ? 'li' : 'p';
+					// if there's more than one, start list
+					if (opportunityTrainingReqs[1]) {
+						rData.gseJobData['Training-Requirements-Formatted'] += '<ul>';
+					}
+					// for each in array, add markup
+					opportunityTrainingReqs.forEach((opportunityTrainingReq) => {
+						rData.gseJobData['Training-Requirements-Formatted'] +=
+							'<' + opportunityTrainingReqElement + '>' +
+							opportunityTrainingReq +
+							'</' + opportunityTrainingReqElement + '>';
+					});
+					// if there's more than one, end list
+					if (opportunityTrainingReqs[1]) {
+						rData.gseJobData['Training-Requirements-Formatted'] += '</ul>';
+					}
 				}
 			}
 

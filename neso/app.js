@@ -29,6 +29,7 @@ const nesoEmail = require('./neso_modules/nesoEmail');
 const nesoHRPositions = require('./neso_modules/nesoHRPositions');
 const nesoActiveDirectory = require('./neso_modules/nesoActiveDirectory');
 const nesoHcOrg = require('./neso_modules/nesoHcOrg');
+const nesoSPSync = require('./neso_modules/nesoSPSync');
 
 // NESO (MOS) ROUTES ---
 
@@ -344,15 +345,15 @@ cron.schedule(process.env.adManagersSimpleProcessingCronSchedule, () => {
 // schedule as specified in environment
 cron.schedule(process.env.adManagersWithFullFlatDownlinesProcessingCronSchedule, () => {
 	nesoActiveDirectory.ProcessADManagersWithFullFlatDownlines()
-	// if the promise is resolved with the docs, then respond with the docs as JSON
+		// if the promise is resolved with the docs, then respond with the docs as JSON
 		.then((result) => {
-		// eslint-disable-next-line no-console
+			// eslint-disable-next-line no-console
 			console.log('Processed Managers with Full Flat Downlines data:');
-		// console.log(result);
+			// console.log(result);
 		})
-	// if the promise is rejected with an error, then respond with the error as JSON
+		// if the promise is rejected with an error, then respond with the error as JSON
 		.catch((error) => {
-		// eslint-disable-next-line no-console
+			// eslint-disable-next-line no-console
 			console.log('ERROR - Processing Managers with Full Flat Downlines data:');
 			// eslint-disable-next-line no-console
 			console.log(error);
@@ -375,6 +376,61 @@ cron.schedule(process.env.adManagersWithFullHierarchicalDownlinesProcessingCronS
 			console.log(error);
 		});
 });
+// schedule as specified in environment
+cron.schedule(process.env.gseJobsSyncProcessingCronSchedule, () => {
+	nesoSPSync.SyncGSEJobsListItems()
+		// if the promise is resolved with the docs, then respond with the docs as JSON
+		.then((result) => {
+			// eslint-disable-next-line no-console
+			console.log('Processed GSE Jobs Data:');
+			// eslint-disable-next-line no-console
+			// console.log(result);
+		})
+		// if the promise is rejected with an error, then respond with the error as JSON
+		.catch((error) => {
+			// eslint-disable-next-line no-console
+			console.log('ERROR - Processing Jobs Data:');
+			// eslint-disable-next-line no-console
+			console.log(error);
+		});
+});
+// schedule as specified in environment
+cron.schedule(process.env.gseSchedulesSyncProcessingCronSchedule, () => {
+	nesoSPSync.SyncGSESchedulesListItems()
+		// if the promise is resolved with the docs, then respond with the docs as JSON
+		.then((result) => {
+			// eslint-disable-next-line no-console
+			console.log('Processed GSE Schedules Data:');
+			// eslint-disable-next-line no-console
+			// console.log(result);
+		})
+		// if the promise is rejected with an error, then respond with the error as JSON
+		.catch((error) => {
+			// eslint-disable-next-line no-console
+			console.log('ERROR - Processing Schedules Data:');
+			// eslint-disable-next-line no-console
+			console.log(error);
+		});
+});
+// schedule as specified in environment
+cron.schedule(process.env.gseSignupsSyncProcessingCronSchedule, () => {
+	nesoSPSync.SyncGSESignupsListItems()
+		// if the promise is resolved with the docs, then respond with the docs as JSON
+		.then((result) => {
+			// eslint-disable-next-line no-console
+			console.log('Processed GSE Signups Data:');
+			// eslint-disable-next-line no-console
+			// console.log(result);
+		})
+		// if the promise is rejected with an error, then respond with the error as JSON
+		.catch((error) => {
+			// eslint-disable-next-line no-console
+			console.log('ERROR - Processing Signups Data:');
+			// eslint-disable-next-line no-console
+			console.log(error);
+		});
+});
+
 // schedule for once per day at 2 am
 cron.schedule('0 2 * * *', () => {
 	// get a promise to empty the tmp directory
