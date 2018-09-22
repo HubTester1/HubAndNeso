@@ -30,6 +30,7 @@ const nesoHRPositions = require('./neso_modules/nesoHRPositions');
 const nesoActiveDirectory = require('./neso_modules/nesoActiveDirectory');
 const nesoHcOrg = require('./neso_modules/nesoHcOrg');
 const nesoSPSync = require('./neso_modules/nesoSPSync');
+const nesoHubEmails = require('./neso_modules/nesoHubEmails');
 
 // NESO (MOS) ROUTES ---
 
@@ -450,6 +451,45 @@ cron.schedule('0 2 * * *', () => {
 			console.log(error);
 		});
 });
+// schedule as specified in environment
+cron.schedule(process.env.gseScheduleCreditReminderNotificationProcessingSchedule, () => {
+// get a promise to process gse schedule credit reminders
+	nesoHubEmails.ProcessGSEScheduleCreditReminderNotifications()
+	// if the promise is resolved with the docs, then respond with the docs as JSON
+		.then((result) => {
+		// eslint-disable-next-line no-console
+			console.log('Processed GSE Schedule Credit Reminders:');
+			// eslint-disable-next-line no-console
+			console.log(result);
+		})
+	// if the promise is rejected with an error, then respond with the error as JSON
+		.catch((error) => {
+		// eslint-disable-next-line no-console
+			console.log('ERROR - Processing GSE Schedule Credit Reminders:');
+			// eslint-disable-next-line no-console
+			console.log(error);
+		});
+});
+// schedule as specified in environment
+cron.schedule(process.env.gseSignupReminderNotificationProcessingSchedule, () => {
+// get a promise to process gse signup reminders
+	nesoHubEmails.ProcessGSESignupReminderNotifications()
+	// if the promise is resolved with the docs, then respond with the docs as JSON
+		.then((result) => {
+		// eslint-disable-next-line no-console
+			console.log('Processed GSE Signup Reminders:');
+			// eslint-disable-next-line no-console
+			console.log(result);
+		})
+	// if the promise is rejected with an error, then respond with the error as JSON
+		.catch((error) => {
+		// eslint-disable-next-line no-console
+			console.log('ERROR - Processing GSE Signup Reminders:');
+			// eslint-disable-next-line no-console
+			console.log(error);
+		});
+});
+
 
 // PROCESS ---
 
