@@ -3865,27 +3865,8 @@
 		}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-		// if this is a GSE Signup (either new or existing)
-		if (mData.requestName == "GSE Signup") {
+		// if this is a GSE Signup (either new or existing) but NOT the overview
+		if (GetParamFromUrl(location.search, "r") != "" && mData.requestName == "GSE Signup") {
 			// if this is an existing GSE Signup, in which case a GSE Schedule ID was not specified in the URL 
 			if (rData.requestStatus != "") {
 				// extract the schedule ID from the saved request data
@@ -4072,8 +4053,8 @@
 			PopulateFormData("div#request-form", rData.gseScheduleData, mData.uriRoot, rData.requestID, mData.checkForAlternateEventDataToPopulate);
 		}
 
-		// if this is a *new* GSE Signup
-		if (rData.requestStatus == "" && mData.requestName == "GSE Signup" && rData.gseScheduleID != "" && rData.gseScheduleID > 0) {
+		// if this is a *new* GSE Signup but NOT the overview
+		if (GetParamFromUrl(location.search, "r") != "" && rData.requestStatus == "" && mData.requestName == "GSE Signup" && rData.gseScheduleID != "" && rData.gseScheduleID > 0) {
 			// manually populate specific signup fields with user, job, and schedule data
 			$("input#Request-Nickname").val(rData.gseJobID + '-' + rData.gseScheduleID + '-' + ReplaceAll('@mos.org', '', uData.userName));
 			$("input#Job-ID").val(rData.gseJobID);
@@ -4083,8 +4064,8 @@
 			$("input#Current-Datetime").val(NowAsISOLocal);
 		}
 
-		// if this is an *existing* GSE Signup
-		if (rData.requestStatus != "" && mData.requestName == "GSE Signup") {
+		// if this is an *existing* GSE Signup and not the overview
+		if (GetParamFromUrl(location.search, "r") != "" && rData.requestStatus != "" && mData.requestName == "GSE Signup") {
 			// manually copy some admin data to requester-accessible fields
 			$("input#Request-ID").val(rData.requestID);
 			$("input#Request-Status").val(rData.requestStatus);
@@ -19433,7 +19414,7 @@
 				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-jobs/SitePages/App.aspx">Jobs</a> \n' +
 				'</div>' +
 				'<div class="container_link">' +
-				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-schedule/SitePages/App.aspx?f=cal">Schedule Calendar</a> \n' +
+				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-schedules/SitePages/App.aspx?f=cal">Schedule Calendar</a> \n' +
 				'</div>' +
 				'<div class="container_link">' +
 				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-signup/SitePages/App.aspx">Signups</a> \n' +
@@ -19458,7 +19439,7 @@
 				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-jobs/SitePages/App.aspx">My and My Staff Members\' Jobs</a> \n' +
 				'</div>' +
 				'<div class="container_link">' +
-				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-schedule/SitePages/App.aspx?f=cal">Schedule Calendar</a> \n' +
+				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-schedules/SitePages/App.aspx?f=cal">Schedule Calendar</a> \n' +
 				'</div>' +
 				'<div class="container_link">' +
 				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-signup/SitePages/App.aspx">My and My Staff Members\' Signups</a> \n' +
@@ -19480,7 +19461,7 @@
 		if (relevantRole === 'gseUserOnly') {
 			commandBarContents +=
 				'<div class="container_link">' +
-				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-schedule/SitePages/App.aspx?f=cal">GSE Signup Opportunities Calendar</a> \n' +
+				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-schedules/SitePages/App.aspx?f=cal">GSE Signup Opportunities Calendar</a> \n' +
 				'</div>' +
 				'<div class="container_link">' +
 				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-signup/SitePages/App.aspx">My Signups</a> \n' +
@@ -20006,9 +19987,10 @@
 			}
 		}
 		if (relevantRole === 'gseManager') {
-			// to do: use real user account below, not bwilson
-			// selectedManager = 'bwilson';
-			selectedManager = uData.account;
+			selectedManager = ReplaceAll('@mos.org', '', ReplaceAll('i:0#.f\\|membership\\|', '', uData.account));
+		}
+		if (selectedManager === 'sp3') {
+			selectedManager = 'bwilson';
 		}
 		var managersWithDownline = $().ReturnManagersWithFullHierarchicalDownline();
 
@@ -20027,10 +20009,10 @@
 				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-jobs/SitePages/App.aspx">Jobs</a> \n' +
 				'</div>' +
 				'<div class="container_link">' +
-				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-schedule/SitePages/App.aspx?f=cal">Schedule Calendar</a> \n' +
+				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-schedules/SitePages/App.aspx?f=cal">Schedule Calendar</a> \n' +
 				'</div>' +
 				'<div class="container_link">' +
-				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-schedule/SitePages/App.aspx">Schedule List</a> \n' +
+				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-schedules/SitePages/App.aspx">Schedule List</a> \n' +
 				'</div>' +
 				'<div id="container_filter-controls-and-header"> \n' +
 				'   <div id="text_filter-controls" class="collapsible">Manager & Year</div> \n' +
@@ -20056,10 +20038,10 @@
 				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-jobs/SitePages/App.aspx">My and My Staff Members\' Jobs</a> \n' +
 				'</div>' +
 				'<div class="container_link">' +
-				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-schedule/SitePages/App.aspx?f=cal">Schedule Calendar</a> \n' +
+				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-schedules/SitePages/App.aspx?f=cal">Schedule Calendar</a> \n' +
 				'</div>' +
 				'<div class="container_link">' +
-				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-schedule/SitePages/App.aspx">Schedule List</a> \n' +
+				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-schedules/SitePages/App.aspx">Schedule List</a> \n' +
 				'</div>' +
 				'<div id="container_filter-controls-and-header"> \n' +
 				'   <div id="text_filter-controls" class="collapsible">Year</div> \n' +
@@ -20080,7 +20062,12 @@
 		var augmentedSignups = $().ReturnSelectedAugmentedSignupsForGSESignupsOverviews(selectedStartYear);
 		var selectedManagerWithDownline;
 
+		console.log('selectedManager');
+		console.log(selectedManager);
+		console.log('manager.account');
+
 		managersWithDownline.forEach((manager) => {
+			console.log(manager.account);
 			if (manager.account === selectedManager) {
 				selectedManagerWithDownline = manager;
 			}
@@ -20366,10 +20353,10 @@
 				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-jobs/SitePages/App.aspx">Jobs</a> \n' +
 				'</div>' +
 				'<div class="container_link">' +
-				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-schedule/SitePages/App.aspx?f=cal">Schedule Calendar</a> \n' +
+				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-schedules/SitePages/App.aspx?f=cal">Schedule Calendar</a> \n' +
 				'</div>' +
 				'<div class="container_link">' +
-				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-schedule/SitePages/App.aspx">Schedule List</a> \n' +
+				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-schedules/SitePages/App.aspx">Schedule List</a> \n' +
 				'</div>' +
 				'<div id="container_filter-controls-and-header"> \n' +
 				'   <div id="text_filter-controls" class="collapsible">Year</div> \n' +
@@ -20388,10 +20375,10 @@
 		if (relevantRole === 'gseUserOnly') {
 			commandBarContents +=
 				'<div class="container_link">' +
-				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-schedule/SitePages/App.aspx?f=cal">GSE Signup Opportunities Calendar</a> \n' +
+				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-schedules/SitePages/App.aspx?f=cal">GSE Signup Opportunities Calendar</a> \n' +
 				'</div>' +
 				'<div class="container_link">' +
-				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-schedule/SitePages/App.aspx">GSE Signup Opportunities List</a> \n' +
+				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-schedules/SitePages/App.aspx">GSE Signup Opportunities List</a> \n' +
 				'</div>' +
 				'<div id="container_filter-controls-and-header"> \n' +
 				'   <div id="text_filter-controls" class="collapsible">Year</div> \n' +
@@ -25613,10 +25600,10 @@
 		if (mData.requestName === "GSE Job" || mData.requestName === "GSE Schedule" || mData.requestName === "GSE Signup" || mData.requestName === "GSE Configuration") {
 			if (uData.isComponentGrpAdmin === 1 || $().ReturnUserIsGSEHRAdmin() === 1) {
 				uData.roles.push("gseHRAdmin");
-			} else if ($().ReturnUserIsGSEJobAdmin() === 1) {
-				uData.roles.push("gseJobAdmin");
 			} else if ($().ReturnUserIsGSEManager() === 1) {
 				uData.roles.push("gseManager");
+			} else if ($().ReturnUserIsGSEJobAdmin() === 1) {
+				uData.roles.push("gseJobAdmin");
 			} else {
 				uData.roles.push("gseUserOnly");
 			}

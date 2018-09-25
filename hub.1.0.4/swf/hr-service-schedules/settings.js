@@ -1012,8 +1012,8 @@
 			// 	'controlType': "text",
 			// 	'fieldName': "Job Title",
 			// 	'labelContent': "Job Title",
-			// 	'requiredForNonAdmin': ['', 'Submitted'],
-			// 	'requiredForAdmin': ['', 'Submitted'],
+			// 	'requiredForNonAdmin': [''],
+			// 	'requiredForAdmin': [''],
 			// 	'disabledForNonAdmin': ['', 'Submitted', 'Completed', 'Cancelled'],
 			// 	'disabledForAdmin': ['', 'Submitted', 'Completed', 'Cancelled']
 			// }, {
@@ -1021,8 +1021,8 @@
 			// 	'controlType': "textarea",
 			// 	'fieldName': "Job Description",
 			// 	'labelContent': "Job Description",
-			// 	'requiredForNonAdmin': ['', 'Submitted'],
-			// 	'requiredForAdmin': ['', 'Submitted'],
+			// 	'requiredForNonAdmin': [''],
+			// 	'requiredForAdmin': [''],
 			// 	'disabledForNonAdmin': ['', 'Submitted', 'Completed', 'Cancelled'],
 			// 	'disabledForAdmin': ['', 'Submitted', 'Completed', 'Cancelled']
 			
@@ -1039,10 +1039,10 @@
 				'fieldName': "StartTime",
 				'listFieldName': "StartTime",
 				'labelContent': "Start Time",
-				'requiredForNonAdmin': ['', 'Submitted'],
-				'requiredForAdmin': ['', 'Submitted'],
-				'disabledForNonAdmin': ['Cancelled'],
-				'disabledForAdmin': ['Cancelled']
+				'requiredForNonAdmin': [''],
+				'requiredForAdmin': [''],
+				'disabledForNonAdmin': ["Submitted", "Completed", "Cancelled"],
+				'disabledForAdmin': ["Submitted", "Completed", "Cancelled"]
 			}, {
 				'elementType': "field",
 				'controlType': "radio",
@@ -1058,10 +1058,10 @@
 						"display": "This is a full-day shift"
 					}
 				],
-				'requiredForNonAdmin': ['', 'Submitted'],
-				'requiredForAdmin': ['', 'Submitted'],
-				'disabledForNonAdmin': ['Cancelled'],
-				'disabledForAdmin': ['Cancelled'],
+				'requiredForNonAdmin': [''],
+				'requiredForAdmin': [''],
+				'disabledForNonAdmin': ["Submitted", "Completed", "Cancelled"],
+				'disabledForAdmin': ["Submitted", "Completed", "Cancelled"],
 				"onChange": [
 					{
 						"thisFieldEquals": ["3.5 hours"],
@@ -1097,20 +1097,20 @@
 				'fieldName': "Number of Positions",
 				'listFieldName': "NumberOfPositions",
 				'labelContent': "Number of Positions",
-				'requiredForNonAdmin': ['', 'Submitted'],
-				'requiredForAdmin': ['', 'Submitted'],
-				'disabledForNonAdmin': ['Cancelled'],
-				'disabledForAdmin': ['Cancelled']
+				'requiredForNonAdmin': [''],
+				'requiredForAdmin': [''],
+				'disabledForNonAdmin': ["Submitted", "Completed", "Cancelled"],
+				'disabledForAdmin': ["Submitted", "Completed", "Cancelled"]
 			}, {
 				'elementType': "field",
 				'controlType': "text",
 				'fieldName': "Location",
 				'listFieldName': "Location",
 				'labelContent': "Location",
-				'requiredForNonAdmin': ['', 'Submitted'],
-				'requiredForAdmin': ['', 'Submitted'],
-				'disabledForNonAdmin': ['Cancelled'],
-				'disabledForAdmin': ['Cancelled']
+				'requiredForNonAdmin': [''],
+				'requiredForAdmin': [''],
+				'disabledForNonAdmin': ["Submitted", "Completed", "Cancelled"],
+				'disabledForAdmin': ["Submitted", "Completed", "Cancelled"]
 			}, {
 				'elementType': "field",
 				'controlType': "radio",
@@ -1126,10 +1126,10 @@
 						"display": "No, this location is not offsite"
 					}
 				],
-				'requiredForNonAdmin': ['', 'Submitted'],
-				'requiredForAdmin': ['', 'Submitted'],
-				'disabledForNonAdmin': ['Cancelled'],
-				'disabledForAdmin': ['Cancelled']
+				'requiredForNonAdmin': [''],
+				'requiredForAdmin': [''],
+				'disabledForNonAdmin': ["Submitted", "Completed", "Cancelled"],
+				'disabledForAdmin': ["Submitted", "Completed", "Cancelled"]
 			}, {
 				'elementType': "field",
 				'controlType': "time",
@@ -1137,8 +1137,8 @@
 				'labelContent': "Meal Time",
 				'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
 				'hideForAdmin': ['', 'Submitted', 'Cancelled'],
-				'disabledForNonAdmin': ['Cancelled'],
-				'disabledForAdmin': ['Cancelled']
+				'disabledForNonAdmin': ["Submitted", "Completed", "Cancelled"],
+				'disabledForAdmin': ["Submitted", "Completed", "Cancelled"]
 			}, {
 				'elementType': "field",
 				'controlType': "time",
@@ -1146,15 +1146,15 @@
 				'labelContent': "Break Time",
 				'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
 				'hideForAdmin': ['', 'Submitted', 'Cancelled'],
-				'disabledForNonAdmin': ['Cancelled'],
-				'disabledForAdmin': ['Cancelled']
+				'disabledForNonAdmin': ["Submitted", "Completed", "Cancelled"],
+				'disabledForAdmin': ["Submitted", "Completed", "Cancelled"]
 			}, {
 				'elementType': "field",
 				'controlType': "textarea",
 				'fieldName': "Notes",
 				'labelContent': "Notes",
-				'disabledForNonAdmin': ['Cancelled'],
-				'disabledForAdmin': ['Cancelled']
+				'disabledForNonAdmin': ["Submitted", "Completed", "Cancelled"],
+				'disabledForAdmin': ["Submitted", "Completed", "Cancelled"]
 			
 			
 			
@@ -2255,12 +2255,12 @@
 				'listFieldName': "Date",
 				'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 },
 				'isoFormatOnSubmit': { 'incomingFormat': null, 'returnFormat': null, 'determineYearDisplayDynamically': null },
-				'requiredForNonAdmin': ['Submitted'],
-				'requiredForAdmin': ['Submitted'],
+				'requiredForNonAdmin': [],
+				'requiredForAdmin': [],
 				'hideForNonAdmin': [''],
 				'hideForAdmin': [''],
-				'disabledForNonAdmin': ['Cancelled'],
-				'disabledForAdmin': ['Cancelled']
+				'disabledForNonAdmin': ["Submitted", "Completed", "Cancelled"],
+				'disabledForAdmin': ["Submitted", "Completed", "Cancelled"]
 			/* }, {
 				'elementType': 'markup',
 				'tag': 'div',
@@ -2285,8 +2285,8 @@
 				'isoFormatOnSubmit': { 'incomingFormat': null, 'returnFormat': null, 'determineYearDisplayDynamically': null },
 				'requiredForNonAdmin': [''],
 				'requiredForAdmin': [''],
-				'disabledForNonAdmin': ['Cancelled'],
-				'disabledForAdmin': ['Cancelled']
+				'disabledForNonAdmin': ["Submitted", "Completed", "Cancelled"],
+				'disabledForAdmin': ["Submitted", "Completed", "Cancelled"]
 			},  {
 				'elementType': "markup",
 				'tag': "a",
