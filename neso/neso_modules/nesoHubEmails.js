@@ -77,7 +77,7 @@ module.exports = {
 									caller: 'signupReminder requestedFor',
 									to: signupPerson.description,
 									subject: `GSE Signup #${signup.ID}: reminder`,
-									bodyUnique: `Please report to ${schedule.Location} on ${scheduleStartDateString} at ${scheduleStartTimeString} for "${job.JobTitle}". Feel free to ${signupLink} or contact ${jobAdminLink} with any questions.`,
+									bodyUnique: `Please report to ${job.Location} on ${scheduleStartDateString} at ${scheduleStartTimeString} for "${job.JobTitle}". Feel free to ${signupLink} or contact ${jobAdminLink} with any questions.`,
 								});
 								// if this is the last signup in signupsArray
 								if ((signupIndex + 1) === signupsArray.length) {

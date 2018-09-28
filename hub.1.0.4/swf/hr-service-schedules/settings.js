@@ -756,7 +756,13 @@
 		'uniqueElements': [
 			{
 
-
+				'elementType': 'field',
+				'controlType': 'url',
+				'fieldName': 'Quark Request',
+				'labelContent': 'On Quark',
+				'editableForNonAdmin': [],
+				'editableForAdmin': [],
+			}, {
 				"elementType": "markup",
 				"tag": "h2",
 				"content": "This Schedule",
@@ -1099,35 +1105,6 @@
 				'fieldName': "Number of Positions",
 				'listFieldName': "NumberOfPositions",
 				'labelContent': "Number of Positions",
-				'requiredForNonAdmin': [''],
-				'requiredForAdmin': [''],
-				'disabledForNonAdmin': ["Submitted", "Completed", "Cancelled"],
-				'disabledForAdmin': ["Submitted", "Completed", "Cancelled"]
-			}, {
-				'elementType': "field",
-				'controlType': "text",
-				'fieldName': "Location",
-				'listFieldName': "Location",
-				'labelContent': "Location",
-				'requiredForNonAdmin': [''],
-				'requiredForAdmin': [''],
-				'disabledForNonAdmin': ["Submitted", "Completed", "Cancelled"],
-				'disabledForAdmin': ["Submitted", "Completed", "Cancelled"]
-			}, {
-				'elementType': "field",
-				'controlType': "radio",
-				'fieldName': "LocationIsOffsite",
-				// 'listFieldName': "LocationIsOffsite",
-				'choiceSetLabel': "Is this location offsite?",
-				"choices": [
-					{
-						"value": "yes",
-						"display": "Yes, this location is offsite"
-					}, {
-						"value": "no",
-						"display": "No, this location is not offsite"
-					}
-				],
 				'requiredForNonAdmin': [''],
 				'requiredForAdmin': [''],
 				'disabledForNonAdmin': ["Submitted", "Completed", "Cancelled"],

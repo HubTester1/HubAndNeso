@@ -312,6 +312,12 @@
 			}, {
 				'elementType': "markup",
 				'tag': "li",
+				'content': 'Location: <span id="Location" class="content-placeholder"></span>',
+				'begin': 1,
+				'end': 1
+			}, {
+				'elementType': "markup",
+				'tag': "li",
 				'content': 'Department: <span id="Department" class="content-placeholder"></span>',
 				'begin': 1,
 				'end': 1

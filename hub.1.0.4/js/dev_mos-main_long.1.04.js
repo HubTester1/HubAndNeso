@@ -1122,11 +1122,11 @@
 			$().ProcessSubmission();
 		});
 
-		// on clicking Signup; no screen transition happening here
+		/* // on clicking Signup; no screen transition happening here
 		$("div#request-screen-container").on("click", "a[data-button-type='gse-schedule-signup']", function () {
 			// Process GSE Signup
 			$().ProcessGSESignup();
-		});
+		}); */
 
 		// on clicking Dismiss; no screen transition happening here
 		$("div#overlays-screen-container").on("click", "a[data-button-type='dismiss']", function () {
@@ -3771,7 +3771,7 @@
 
 		// if request is not new and this is not a GSE Signup
 		if (rData.requestStatus != "" && mData.requestName != "GSE Signup") {
-			// if this is a GSE Schedule (either new or existing)
+			// if this is a GSE Schedule (existing)
 			if (mData.requestName == "GSE Schedule") {
 				// get the relevant signups
 				var gseSignupsArray = $().GetFieldsFromSpecifiedRows({
@@ -8774,32 +8774,34 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	$.fn.ReturnGSEHRAdminsEmailArray = function () {
+	$.fn.ReturnGSEJobCreationAdditionalNotificationRecipients = function () {
+		var recipientsArray = [];
 		if (typeof (mData.devAdminNotifications) != 'undefined' && mData.devAdminNotifications === 1) {
-			var hrAdminsEmailArray = $().ReturnUserEmailStringAndArray(mData.devAdminNotificationPersons).array;
+			recipientsArray = $().ReturnUserEmailStringAndArray(mData.devAdminNotificationPersons).array;
 		} else {
 			var gseGroups = $().ReturnGSEGroups();
-			var hrAdminsEmailArray = [];
+			gseGroups.NotificationRecipientsforNewJobRequests.forEach((recipient) => {
+				recipientsArray.push(recipient.email);
+			});
+		}
+		return recipientsArray;
+	};
+
+
+
+
+	/* $.fn.ReturnGSEHRAdminsEmailArray = function () {
+		var hrAdminsEmailArray = [];
+		if (typeof (mData.devAdminNotifications) != 'undefined' && mData.devAdminNotifications === 1) {
+			hrAdminsEmailArray = $().ReturnUserEmailStringAndArray(mData.devAdminNotificationPersons).array;
+		} else {
+			var gseGroups = $().ReturnGSEGroups();
 			gseGroups.HRAdmins.forEach((hrAdmin) => {
 				hrAdminsEmailArray.push(hrAdmin.email);
 			});
 		}
 		return hrAdminsEmailArray;
-	};
+	}; */
 
 
 
@@ -8887,7 +8889,7 @@
 		var sData = {};
 
 		sData.requesterManagerEmailArray = $().ReturnManagerOfUserEmailArray(uData.account);
-		sData.hrAdminsEmailArray = $().ReturnGSEHRAdminsEmailArray();
+		sData.jobCreationAdditionalNotificationRecipients = $().ReturnGSEJobCreationAdditionalNotificationRecipients();
 		
 		jobAdminArray = JSON.parse($('input#Job-Admin_TopSpan_HiddenInput').val());
 		sData.requesterName = jobAdminArray[0].DisplayText;
@@ -8920,11 +8922,11 @@
 
 		if (typeof (eData.beginningOfLife) != 'undefined' && eData.beginningOfLife == 1) {
 
-			// hr admin
-			$.each(eData.hrAdminsEmailArray, function (i, toAdmin) {
+			// admin
+			$.each(eData.adminEmailArray, function (i, toAdmin) {
 				notificationsToSend.push({
 					'emailType': 'Notification',
-					'caller': 'beginningOfLife hrAdmin',
+					'caller': 'beginningOfLife admin',
 					'to': toAdmin,
 					'subject': eData.subjectPreface + 'new request received',
 					'bodyUnique': '<p>' + eData.requesterName + ' has submitted a new request. Please ' +
@@ -8932,6 +8934,19 @@
 						'Alternatively, <a href="mailto:' + eData.requesterEmail + '">contact the requester</a> ' +
 						'with any questions, or <a href="' + eData.uriOverview + '">' +
 						'review other ' + eData.requestName + ' Requests</a>.</p>'
+				});
+			});
+
+			// additional recipients
+			$.each(eData.jobCreationAdditionalNotificationRecipients, function (i, toAdmin) {
+				notificationsToSend.push({
+					'emailType': 'Notification',
+					'caller': 'beginningOfLife jobCreationAdditionalNotificationRecipient',
+					'to': toAdmin,
+					'subject': eData.subjectPreface + 'new request received',
+					'bodyUnique': '<p>' + eData.requesterName + ' has submitted a new request. Please ' +
+						'<a href="' + eData.uriRequest + '">review this request and <a href="mailto:' + 
+						eData.adminEmailString + '">' + 'contact the admin</a> with any issues.</p>'
 				});
 			});
 
@@ -8975,11 +8990,11 @@
 
 			console.log('RS = approved');
 
-			// hr admin
-			$.each(eData.hrAdminsEmailArray, function (i, toAdmin) {
+			// admin
+			$.each(eData.adminEmailArray, function (i, toAdmin) {
 				notificationsToSend.push({
 					'emailType': 'Notification',
-					'caller': 'approved hrAdmin',
+					'caller': 'approved admin',
 					'to': toAdmin,
 					'subject': eData.subjectPreface + eData.requestStatus.toLowerCase(),
 					'bodyUnique': '<p>As needed, <a href="' + eData.uriRequest + '">review the request\'s details</a> ' +
@@ -9018,18 +9033,13 @@
 		// ---- END OF LIFE
 		// ============
 
-		// disapproved
-		// archived
-		// cancelled
-
 		if (typeof (eData.endOfLife) != 'undefined' && eData.endOfLife == 1) {
 
-
-			// hr admin
-			$.each(eData.hrAdminsEmailArray, function (i, toAdmin) {
+			// admin
+			$.each(eData.adminEmailArray, function (i, toAdmin) {
 				notificationsToSend.push({
 					'emailType': 'Notification',
-					'caller': 'endOfLife hrAdmin',
+					'caller': 'endOfLife admin',
 					'to': toAdmin,
 					'subject': eData.subjectPreface + eData.requestStatus.toLowerCase(),
 					'bodyUnique': '<p>Feel free to <a href="mailto:' + eData.requesterEmail + '">' +
@@ -9082,6 +9092,7 @@
 	};
 
 
+
 	$.fn.ProcessGSEScheduleNotifications = function () {
 
 		// ============
@@ -9132,7 +9143,7 @@
 			'<a href="mailto:' + sData.jobAdminEmail.toLowerCase() + '">' + sData.jobAdminName + '</a>';
 
 		// sData.requesterManagerEmailArray = $().ReturnManagerOfUserEmailArray(sData.jobAdmin[0].account);
-		sData.hrAdminsEmailArray = $().ReturnGSEHRAdminsEmailArray();
+		// sData.hrAdminsEmailArray = $().ReturnGSEHRAdminsEmailArray();
 
 		sData.requestNick = $("input#Request-Nickname").val();
 
@@ -9189,7 +9200,7 @@
 				'caller': 'endOfLife jobAdmin',
 				'to': sData.jobAdminEmail,
 				'subject': eData.subjectPreface + eData.requestStatus.toLowerCase(),
-				'bodyUnique': '<p>This is the <a href="' + eData.uriRequest + '">request you nicknamed "' + eData.requestNick +
+				'bodyUnique': '<p>This is a <a href="' + eData.uriRequest + '">schedule nicknamed "' + eData.requestNick +
 					'"</a>. Please <a href="mailto:' + eData.adminEmailString + '">contact the admin</a> with any ' +
 					'issues related to this request.'
 			});
@@ -9214,6 +9225,7 @@
 
 		return emailProcessingPromise.promise();
 	};
+
 
 
 	$.fn.ProcessGSESignupNotifications = function () {
@@ -9416,24 +9428,6 @@
 
 		return emailProcessingPromise.promise();
 	};
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -19523,9 +19517,6 @@
 						'displayName': "Job Admin",
 						'dataName': "JobAdmin",
 					}, {
-						'displayName': "Location",
-						'dataName': "Location",
-					}, {
 						'displayName': "Positions Available",
 						'dataName': "PositionsAvailable",
 					}, {
@@ -19562,9 +19553,6 @@
 						'displayName': "Job Admin",
 						'dataName': "JobAdmin",
 					}, {
-						'displayName': "Location",
-						'dataName': "Location",
-					}, {
 						'displayName': "Signups",
 						'dataName': "Signups",
 					}
@@ -19597,9 +19585,6 @@
 					}, {
 						'displayName': "Job Admin",
 						'dataName': "JobAdmin",
-					}, {
-						'displayName': "Location",
-						'dataName': "Location",
 					}
 				],
 				'sortColAndOrder': [[3, 'asc'], [4, 'asc']],
@@ -19628,9 +19613,6 @@
 					}, {
 						'displayName': "Job Admin",
 						'dataName': "JobAdmin",
-					}, {
-						'displayName': "Location",
-						'dataName': "Location",
 					}, {
 						'displayName': "Positions Available",
 						'dataName': "PositionsAvailable",
@@ -19662,9 +19644,6 @@
 					}, {
 						'displayName': "Reports To",
 						'dataName': "JobAdmin",
-					}, {
-						'displayName': "Location",
-						'dataName': "Location",
 					}, {
 						'displayName': "Positions Available",
 						'dataName': "PositionsAvailable",
@@ -20298,9 +20277,6 @@
 					'nameHere': 'StartTime',
 					'nameInList': 'StartTime'
 				}, {
-					'nameHere': 'Location',
-					'nameInList': 'Location'
-				}, {
 					'nameHere': 'ShiftLength',
 					'nameInList': 'ShiftLength'
 				}
@@ -20424,9 +20400,6 @@
 				}, {
 					'displayName': "Schedule Length",
 					'dataName': "ShiftLength",
-				}, {
-					'displayName': "Location",
-					'dataName': "Location",
 				}
 			],
 			'sortColAndOrder': [[3, 'asc'], [4, 'asc']],
@@ -20451,9 +20424,6 @@
 				}, {
 					'displayName': "Schedule Length",
 					'dataName': "ShiftLength",
-				}, {
-					'displayName': "Location",
-					'dataName': "Location",
 				}
 			],
 			'sortColAndOrder': [[3, 'asc'], [4, 'asc']],
@@ -20478,9 +20448,6 @@
 				}, {
 					'displayName': "Schedule Length",
 					'dataName': "ShiftLength",
-				}, {
-					'displayName': "Location",
-					'dataName': "Location",
 				}
 			],
 			'sortColAndOrder': [[3, 'asc'], [4, 'asc']],
@@ -20505,9 +20472,6 @@
 				}, {
 					'displayName': "Schedule Length",
 					'dataName': "ShiftLength",
-				}, {
-					'displayName': "Location",
-					'dataName': "Location",
 				}
 			],
 			'sortColAndOrder': [[3, 'asc'], [4, 'asc']],
@@ -20574,7 +20538,6 @@
 			row.JobAdmin = $().RenderPersonLinks(schedule.Job.JobAdmin);
 			row.JobID = schedule.Job.JobID;
 			row.JobTitle = schedule.Job.JobTitle;
-			row.Location = schedule.formData['Location'];
 			row.NumberOfPositions = schedule.NumberOfPositions;
 			if (schedule.Signups) {
 				row.PositionsAvailable = '<div class="small-in-column">' + 
@@ -20671,7 +20634,6 @@
 				signup.SignupID + "</a>";
 			row.JobTitle = signup.Job.JobTitle;
 			row.ShiftLength = signup.Schedule.ShiftLength;
-			row.Location = signup.Schedule.Location;
 			tableConfig.datatableData.push(row);
 		});
 		return tableConfig;
@@ -20855,6 +20817,9 @@
 					'nameHere': 'JobAdmin',
 					'nameInList': 'JobAdmin'
 				}, {
+					'nameHere': 'Location',
+					'nameInList': 'Location'
+				}, {
 					'nameHere': 'formData',
 					'nameInList': 'AllRequestData'
 				}
@@ -20932,7 +20897,7 @@
 				'isInFuture': isInFuture,
 				'jobAdmin': jobThisSchedule.JobAdmin,
 				'length': length,
-				'location': schedule.formData['Location'],
+				'location': jobThisSchedule.Location,
 				'jobTitle': jobThisSchedule.JobTitle,
 				'jobDescription': '<p>' + ReplaceAll('%0A', '</p><p>', ReplaceAll('%0A%0A', '%0A', jobThisSchedule.formData['Job-Description'])) + '</p>',
 				'quantitySignups': signupsThisSchedule.length,
@@ -20988,9 +20953,6 @@
 					'nameHere': 'StartTime',
 					'nameInList': 'StartTime'
 				}, {
-					'nameHere': 'Location',
-					'nameInList': 'Location'
-				}, {
 					'nameHere': 'ShiftLength',
 					'nameInList': 'ShiftLength'
 				}
@@ -21024,6 +20986,9 @@
 				}, {
 					'nameHere': 'JobAdmin',
 					'nameInList': 'JobAdmin'
+				// }, {
+				// 	'nameHere': 'Location',
+				// 	'nameInList': 'Location'
 				}
 			]
 		});
@@ -23927,7 +23892,8 @@
 		// specify the 'form fields' data to extract from allRequestDataObject
 		var gseGroupsKeys = [
 			'HR-Admins',
-			'Job-Admins'
+			'Job-Admins',
+			'Notification-Recipients-for-New-Job-Requests'
 		];
 
 		// set up var

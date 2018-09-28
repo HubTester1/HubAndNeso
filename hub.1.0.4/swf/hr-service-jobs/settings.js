@@ -343,6 +343,16 @@
 
 		'uniqueElements': [
 			{
+				'elementType': 'field',
+				'controlType': 'url',
+				'fieldName': 'Quark Request',
+				'labelContent': 'On Quark',
+				'editableForNonAdmin': [],
+				'editableForAdmin': [],
+			}, {
+
+				
+				
 				"elementType": "field",
 				"controlType": "check",
 				"fieldName": "Requester Archival",
@@ -390,6 +400,35 @@
 				}],
 				'requiredForNonAdmin': [""],
 				'requiredForAdmin': [""],
+				'disabledForNonAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
+				'disabledForAdmin': ["Completed", "Disapproved", "Cancelled"]
+			}, {
+				'elementType': "field",
+				'controlType': "text",
+				'fieldName': "Location",
+				'listFieldName': "Location",
+				'labelContent': "Location",
+				'requiredForNonAdmin': [''],
+				'requiredForAdmin': [''],
+				'disabledForNonAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
+				'disabledForAdmin': ["Completed", "Disapproved", "Cancelled"]
+			}, {
+				'elementType': "field",
+				'controlType': "radio",
+				'fieldName': "LocationIsOffsite",
+				// 'listFieldName': "LocationIsOffsite",
+				'choiceSetLabel': "Is this location offsite?",
+				"choices": [
+					{
+						"value": "yes",
+						"display": "Yes, this location is offsite"
+					}, {
+						"value": "no",
+						"display": "No, this location is not offsite"
+					}
+				],
+				'requiredForNonAdmin': [''],
+				'requiredForAdmin': [''],
 				'disabledForNonAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
 				'disabledForAdmin': ["Completed", "Disapproved", "Cancelled"]
 			}, {
