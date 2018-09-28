@@ -205,6 +205,12 @@
 		'gseSchedulesListManager': {
 			'buttons': [
 				{
+					"linkType": "newItem",
+					"anchorText": "New Schedule",
+					"href": "/sites/hr-service-schedules/SitePages/App.aspx?r=0",
+					"target": null,
+					"restrictedToRoles": ["gseJobAdmin"]
+				}, {
 					"linkType": "goForward",
 					"anchorText": "My and My Staff Members' Jobs",
 					"href": "/sites/hr-service-jobs/SitePages/App.aspx",
@@ -992,12 +998,8 @@
 						{
 							'tableID': 'list-item-view',
 							'webURL': 'https://bmos.sharepoint.com/sites/hr-service-jobs',
-							'customCAMLQuery':  "<Where>" +
-												"		<Eq>" +
-												"			<FieldRef Name='RequestStatus'></FieldRef>" +
-												"			<Value Type='Text'>Approved</Value>" +
-												"		</Eq>" +
-												"</Where>",
+							'myRSQueryRelevantStatus': 'Approved',
+							'getRequesterFrom': 'JobAdmin',
 							'sortColAndOrder': [0, 'desc']
 						}
 					]

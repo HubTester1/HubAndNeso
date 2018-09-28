@@ -261,6 +261,11 @@
 				"controlType": "peoplePicker",
 				"fieldName": "Job Admins",
 				"labelContent": "Job Admins"
+			}, {
+				"elementType": "field",
+				"controlType": "peoplePicker",
+				"fieldName": "Notification Recipients for New Job Requests",
+				"labelContent": "Notification Recipients for New Job Requests"
 			}
 		]
 	};

@@ -1734,7 +1734,7 @@
 			case "GSE Job":
 				if (uData.roles.indexOf("gseHRAdmin") > -1) {
 					userNeeedsAlternateOverviewScreen = "gseJobsHRAdmin";
-				} else if (uData.roles.indexOf("gseJobAdmin") > -1) {
+				} else if (uData.roles.indexOf("gseJobAdmin") > -1 && uData.roles.indexOf("gseManager") == -1) {
 					userNeeedsAlternateOverviewScreen = "gseJobsJobAdmin";
 				} else if (uData.roles.indexOf("gseManager") > -1) {
 					userNeeedsAlternateOverviewScreen = "gseJobsManager";
@@ -1744,7 +1744,7 @@
 				if (GetParamFromUrl(location.search, "f") === "cal") {
 					if (uData.roles.indexOf("gseHRAdmin") > -1) {
 						userNeeedsAlternateOverviewScreen = "gseSchedulesCalendarHRAdmin";
-					} else if (uData.roles.indexOf("gseJobAdmin") > -1) {
+					} else if (uData.roles.indexOf("gseJobAdmin") > -1 && uData.roles.indexOf("gseManager") == -1) {
 						userNeeedsAlternateOverviewScreen = "gseSchedulesCalendarJobAdmin";
 					} else if (uData.roles.indexOf("gseManager") > -1) {
 						userNeeedsAlternateOverviewScreen = "gseSchedulesCalendarManager";
@@ -1754,7 +1754,7 @@
 				} else {
 					if (uData.roles.indexOf("gseHRAdmin") > -1) {
 						userNeeedsAlternateOverviewScreen = "gseSchedulesListHRAdmin";
-					} else if (uData.roles.indexOf("gseJobAdmin") > -1) {
+					} else if (uData.roles.indexOf("gseJobAdmin") > -1 && uData.roles.indexOf("gseManager") == -1) {
 						userNeeedsAlternateOverviewScreen = "gseSchedulesListJobAdmin";
 					} else if (uData.roles.indexOf("gseManager") > -1) {
 						userNeeedsAlternateOverviewScreen = "gseSchedulesListManager";
@@ -1766,7 +1766,7 @@
 			case "GSE Signup":
 				if (uData.roles.indexOf("gseHRAdmin") > -1) {
 					userNeeedsAlternateOverviewScreen = "gseSignupsHRAdmin";
-				} else if (uData.roles.indexOf("gseJobAdmin") > -1) {
+				} else if (uData.roles.indexOf("gseJobAdmin") > -1 && uData.roles.indexOf("gseManager") == -1) {
 					userNeeedsAlternateOverviewScreen = "gseSignupsJobAdmin";
 				} else if (uData.roles.indexOf("gseManager") > -1) {
 					userNeeedsAlternateOverviewScreen = "gseSignupsManager";
@@ -7178,9 +7178,11 @@
 		} else if (type === "gseJobsJobAdmin") {
 			$().RenderOverviewScreenButtons(oData.gseJobsJobAdmin.buttons, 0);
 			$().RenderAllDataTables(oData.gseJobsJobAdmin.sections, "overview-table-container");
+			$().RenderWorkflowContacts();
 		} else if (type === "gseJobsManager") {
 			$().RenderOverviewScreenButtons(oData.gseJobsManager.buttons, 0);
 			$().RenderAllDataTables(oData.gseJobsManager.sections, "overview-table-container");
+			$().RenderWorkflowContacts();
 
 
 		} else if (type === "gseSchedulesCalendarHRAdmin") {
@@ -7199,12 +7201,15 @@
 		} else if (type === "gseSchedulesListJobAdmin") {
 			// $().RenderOverviewScreenButtons(oData.gseSchedulesListJobAdmin.buttons, 0);
 			$().RenderCommandBarAndDataTablesForGSESchedules(oData.gseSchedulesListJobAdmin.buttons, "overview-table-container", 'gseJobAdmin');
+			$().RenderWorkflowContacts();
 		} else if (type === "gseSchedulesListManager") {
 			// $().RenderOverviewScreenButtons(oData.gseSchedulesListManager.buttons, 0);
 			$().RenderCommandBarAndDataTablesForGSESchedules(oData.gseSchedulesListManager.buttons, "overview-table-container", 'gseManager');
+			$().RenderWorkflowContacts();
 		} else if (type === "gseSchedulesListStaff") {
 			// $().RenderOverviewScreenButtons(oData.gseSchedulesListStaff.buttons, 0);
 			$().RenderCommandBarAndDataTablesForGSESchedules(oData.gseSchedulesListStaff.buttons, "overview-table-container", 'gseUserOnly');
+			$().RenderWorkflowContacts();
 		
 		
 		
@@ -7215,10 +7220,13 @@
 			$().RenderCommandBarAndMarkupForGSESignupsForHRAdminOrManager("overview-table-container", 'gseHRAdmin');
 		} else if (type === "gseSignupsManager") {
 			$().RenderCommandBarAndMarkupForGSESignupsForHRAdminOrManager("overview-table-container", 'gseManager');
+			$().RenderWorkflowContacts();
 		} else if (type === "gseSignupsJobAdmin") {
 			$().RenderCommandBarAndDataTablesForGSESignupsForJobAdminOrUser("overview-table-container", 'gseJobAdmin');
+			$().RenderWorkflowContacts();
 		} else if (type === "gseSignupsStaff") {
 			$().RenderCommandBarAndDataTablesForGSESignupsForJobAdminOrUser("overview-table-container", 'gseUserOnly');
+			$().RenderWorkflowContacts();
 		}
 
 		$("div#overview-screen-container").addClass(type + "-requests");
@@ -8998,6 +9006,7 @@
 				'to': eData.requesterEmail,
 				'subject': eData.subjectPreface + eData.requestStatus.toLowerCase(),
 				'bodyUnique': '<p>This is the request you nicknamed "' + eData.requestNick + '". You can ' +
+					'<a href="https://bmos.sharepoint.com/sites/hr-service-schedules/SitePages/App.aspx">schedule this job</a> or ' +
 					'<a href="mailto:' + eData.adminEmailString + '">contact the admin</a> with any ' +
 					'issues related thereto.'
 			});
@@ -19417,7 +19426,7 @@
 				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-schedules/SitePages/App.aspx?f=cal">Schedule Calendar</a> \n' +
 				'</div>' +
 				'<div class="container_link">' +
-				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-signup/SitePages/App.aspx">Signups</a> \n' +
+				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-signups/SitePages/App.aspx">Signups</a> \n' +
 				'</div>' +
 				'<div id="container_filter-controls-and-header"> \n' +
 				'   <div id="text_filter-controls" class="collapsible">Year</div> \n' +
@@ -19442,7 +19451,7 @@
 				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-schedules/SitePages/App.aspx?f=cal">Schedule Calendar</a> \n' +
 				'</div>' +
 				'<div class="container_link">' +
-				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-signup/SitePages/App.aspx">My and My Staff Members\' Signups</a> \n' +
+				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-signups/SitePages/App.aspx">My and My Staff Members\' Signups</a> \n' +
 				'</div>' +
 				'<div id="container_filter-controls-and-header"> \n' +
 				'   <div id="text_filter-controls" class="collapsible">Year</div> \n' +
@@ -19464,7 +19473,7 @@
 				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-schedules/SitePages/App.aspx?f=cal">GSE Signup Opportunities Calendar</a> \n' +
 				'</div>' +
 				'<div class="container_link">' +
-				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-signup/SitePages/App.aspx">My Signups</a> \n' +
+				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-signups/SitePages/App.aspx">My Signups</a> \n' +
 				'</div>' +
 				'<div id="container_filter-controls-and-header"> \n' +
 				'   <div id="text_filter-controls" class="collapsible">Year</div> \n' +
@@ -19842,17 +19851,17 @@
 					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' + 
 						'<a id="gse-schedule-card-dialog-my-signup-link" ' + 
 						'class="gse-schedule-card-dialog-button" href="' + 
-						event.mySignupURL + '" target="_blank">More / My Signup</a></div>';
-				} else if (event.isInFuture) {
+						event.mySignupURL + '" target="_blank">More Info / My Signup</a></div>';
+				} else if (event.isInFuture && ((parseInt(event.quantityPositions) - parseInt(event.quantitySignups)) !== 0)) {
 					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' + 
 						'<a id="gse-schedule-card-dialog-signup-opportunity-link" ' + 
 						'class="gse-schedule-card-dialog-button" href="' + 
-						event.signupURL + '" target="_blank">More / Sign Up</a></div>';
+						event.signupURL + '" target="_blank">More Info / Sign Up</a></div>';
 				} else {
 					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' +
 						'<a id="gse-schedule-card-dialog-signup-opportunity-link" ' +
 						'class="gse-schedule-card-dialog-button" href="' +
-						event.signupURL + '" target="_blank">More</a></div>';
+						event.signupURL + '" target="_blank">More Info</a></div>';
 				}
 
 				if (relevantRole === 'gseHRAdmin' || relevantRole === 'gseJobAdmin') {
@@ -21408,9 +21417,10 @@
 		if (sData.RequestStatus === 'Credit Granted') {
 			sData.bodyUniqueStaff =
 				'<p>You\'ve been granted credit for "' + sData.jobTitle + '", which began ' +
-				sData.scheduleDateTime + '. ' +
-				'Feel free to <a href="mailto:' + sData.jobAdminEmail + '">contact ' +
-				sData.jobAdminName + '</a> with any questions, <a href="https://bmos.sharepoint.com/sites/hr-service-signups/SitePages/App.aspx">' +
+				sData.scheduleDateTime + '.</p> ' +
+				'<p>Please <a href="http://www.surveygizmo.com/s3/3485668/GSE-Survey">provide feedback on your experience</a>. ' +
+				'Feel free to <a href="mailto:' + sData.jobAdminEmail + '">contact ' + sData.jobAdminName + 
+				'</a> with any questions, <a href="https://bmos.sharepoint.com/sites/hr-service-signups/SitePages/App.aspx">' +
 				'review your other signups</a>, or ' +
 				'<a href="https://bmos.sharepoint.com/sites/hr-service-schedules/SitePages/App.aspx?f=cal">' +
 				'sign up for another GSE</a>.</p>';
@@ -21622,19 +21632,19 @@
 				} else {
 					var getRequesterFrom = t.meOrMyDownlineIsRequesterAndRSQuery.getRequesterFrom;
 				}
-				var myDownline = $().ReturnFullFlatDownlineForOneManager('bwilson');
-				// var myDownline = $().ReturnFullFlatDownlineForOneManager(uData.account);
+				// var myDownline = $().ReturnFullFlatDownlineForOneManager('bwilson');
+				var myDownline = $().ReturnFullFlatDownlineForOneManager(uData.account);
 
 				var userType = 'User';
 				var operator = 'Contains';
 
 				query =
 					"<Where>" +
-					// "	<And>" +
-					// "		 <Eq>" +
-					// "			  <FieldRef Name='RequestStatus'></FieldRef>" +
-					// "			  <Value Type='Text'>" + t.meOrMyDownlineIsRequesterAndRSQuery.requestStatus + "</Value>" +
-					// "		 </Eq>" +
+					"	<And>" +
+					"		 <Eq>" +
+					"			  <FieldRef Name='RequestStatus'></FieldRef>" +
+					"			  <Value Type='Text'>" + t.meOrMyDownlineIsRequesterAndRSQuery.requestStatus + "</Value>" +
+					"		 </Eq>" +
 
 
 
@@ -21646,17 +21656,49 @@
 						query += "			  	  <Value Type='" + userType + "'>" + downlineMember.displayName + "</Value>";
 					});
 				}
-				query += 
-					// "			  	  <Value Type='" + userType + "'>" + uData.name + "</Value>" +
-					"			  	  <Value Type='" + userType + "'>Ben Wilson</Value>" +
-					"			  <Values>" + 
+				query +=
+					"			  	  <Value Type='" + userType + "'>" + uData.name + "</Value>" +
+					// "			  	  <Value Type='" + userType + "'>Ben Wilson</Value>" +
+					"			  <Values>" +
 					"		 </" + operator + ">" +
-					// "	</And>" +
+					"	</And>" +
 					"</Where>";
 
-				console.log('query');
-				console.log(query);
-			
+			} else if (typeof (t.meOrMyDownlineIsRequesterAndEOL) != "undefined") {
+
+				if (typeof (t.meOrMyDownlineIsRequesterAndEOL.getRequesterFrom) == 'undefined') {
+					var getRequesterFrom = 'Author';
+				} else {
+					var getRequesterFrom = t.meOrMyDownlineIsRequesterAndEOL.getRequesterFrom;
+				}
+				// var myDownline = $().ReturnFullFlatDownlineForOneManager('bwilson');
+				var myDownline = $().ReturnFullFlatDownlineForOneManager(uData.account);
+
+				var userType = 'User';
+				var operator = 'Contains';
+
+				query =
+					"<Where>" +
+					"	<And>" +
+					"		 <Eq>" +
+					"		      <FieldRef Name='EndOfLife'></FieldRef>" +
+				"		      <Value Type='Text'>" + t.meOrMyDownlineIsRequesterAndEOL.endOfLfe + "</Value>" +
+					"		 </Eq>" +
+					"		 <" + operator + ">" +
+					"			  <FieldRef Name='" + getRequesterFrom + "'></FieldRef>" +
+					"			  <Values>";
+				if (myDownline[0]) {
+					myDownline[0].downline.forEach((downlineMember) => {
+						query += "			  	  <Value Type='" + userType + "'>" + downlineMember.displayName + "</Value>";
+					});
+				}
+				query +=
+					"			  	  <Value Type='" + userType + "'>" + uData.name + "</Value>" +
+					// "			  	  <Value Type='" + userType + "'>Ben Wilson</Value>" +
+					"			  <Values>" +
+					"		 </" + operator + ">" +
+					"	</And>" +
+					"</Where>";
 
 			} else if (typeof (t.myRSQueryTwoRelevantStatuses) != "undefined") {
 
@@ -24905,6 +24947,39 @@
 		}
 	};
 
+	$.fn.DisableGSESignups = function () {
+		if ($("input#Request-Status").val() === "") {
+			var positionsAvailable = parseInt($("input#Positions-Available").val());
+			var scheduleStartDatetime = $("input#Schedule-Start-Datetime").val();
+			var currentDatetime = $("input#Current-Datetime").val();
+			var thisUserAccountBrief = ReplaceAll("i:0#.f\\|membership\\|", "", ReplaceAll("@mos.org", "", uData.account.toLowerCase()));
+			var jobID = $("input#Job-ID").val();
+			var jobData = $().GetFieldsFromOneRow({
+				"select": [{
+					"nameHere": "gseJobData",
+					"nameInList": "AllRequestData"
+				}],
+				"webURL": "https://bmos.sharepoint.com/sites/hr-service-jobs",
+				"where": {
+					"field": "ID",
+					"type": "Number",
+					"value": jobID,
+				}
+			});
+			var jobAdminAccountBrief = ReplaceAll("i:0#.f\\|membership\\|", "", ReplaceAll("@mos.org", "", jobData.gseJobData['Requested-For'][0].account.toLowerCase()));
+
+			if (
+				!(positionsAvailable > 0) ||
+				!(moment(scheduleStartDatetime).isAfter(currentDatetime)) ||
+				jobAdminAccountBrief === thisUserAccountBrief
+			) {
+				$().SetFieldToDisabled("#sign-up_signup");
+				$("div#non-admin, div#submit-or-exit").hide("fast").addClass("hidden");
+				$("div#no-signups-warning").show("fast").removeClass("hidden");
+			}
+		}
+	};
+
 	
 	 
  	$.fn.SetInHouseNeedsSheetRequestAdditionalViewAccess = function () {
@@ -25602,6 +25677,9 @@
 				uData.roles.push("gseHRAdmin");
 			} else if ($().ReturnUserIsGSEManager() === 1) {
 				uData.roles.push("gseManager");
+				if ($().ReturnUserIsGSEJobAdmin() === 1) {
+					uData.roles.push("gseJobAdmin");
+				}
 			} else if ($().ReturnUserIsGSEJobAdmin() === 1) {
 				uData.roles.push("gseJobAdmin");
 			} else {

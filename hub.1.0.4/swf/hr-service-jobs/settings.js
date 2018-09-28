@@ -215,6 +215,12 @@
 		'gseJobsManager': {
 			'buttons': [
 				{
+					"linkType": "newItem",
+					"anchorText": "New Job",
+					"href": "/sites/hr-service-jobs/SitePages/App.aspx?r=0",
+					"target": null,
+					"restrictedToRoles": ["gseJobAdmin"]
+				}, {
 					"linkType": "goForward",
 					"anchorText": "Schedule Calendar",
 					"href": "/sites/hr-service-schedules/SitePages/App.aspx?f=cal",

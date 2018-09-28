@@ -239,7 +239,7 @@
 				"tag": "div",
 				"htmlID": "no-signups-warning",
 				"htmlClass": "banner banner--warning",
-				"content": 'Signups are no longer available.',
+				"content": 'Signups are not available.',
 				"begin": 1,
 				"end": 1,
 				"hideForNonAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
@@ -830,25 +830,7 @@
 	//	  (customScriptLast will be appended to auto-generated script)
 	fData.CustomScriptFirst = '';
 
-
-	fData.CustomScriptLast = 
-								// 'console.log($("input#Positions-Available").val());' + 
-								// 'console.log($("input#Schedule-Start-Datetime").val());' + 
-								// 'console.log($("input#Current-Datetime").val());' + 
-								// 'console.log($("input#Request-Status").val());' + 
-								'if ($("input#Request-Status").val() === "") {' + 
-								'	var positionsAvailable = parseInt($("input#Positions-Available").val());' + 
-								'	var scheduleStartDatetime = $("input#Schedule-Start-Datetime").val();' + 
-								'	var currentDatetime = $("input#Current-Datetime").val();' + 
-								'	if (' + 
-								'		!(positionsAvailable > 0) || ' + 
-								'		!(moment(scheduleStartDatetime).isAfter(currentDatetime))' + 
-								'	) {' + 
-								'		$().SetFieldToDisabled("#sign-up_signup");' + 
-								'		$("div#non-admin, div#submit-or-exit").hide("fast").addClass("hidden");' + 
-								'		$("div#no-signups-warning").show("fast").removeClass("hidden");' + 
-								'	}' + 
-								'}';
+	fData.CustomScriptLast = '$().DisableGSESignups(); \n';
 
 	fData.CustomScriptLast += 
 								'if ($("span#Meal-Time").is(":empty")) {' + 
