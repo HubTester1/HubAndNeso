@@ -8,7 +8,7 @@ import { CommandBar } from 'office-ui-fabric-react/lib/CommandBar';
 // ----- COMPONENT
 
 export default class HcMessagesCommandBar extends React.Component {
-	returnCommanBarItems() {
+	returnCommandBarItems() {
 		let hideShowButton = {
 			key: 'newMessage',
 			name: 'New',
@@ -68,7 +68,7 @@ export default class HcMessagesCommandBar extends React.Component {
 				<Fabric>
 					<CommandBar
 						isSearchBoxVisible={false}
-						items={this.returnCommanBarItems()}
+						items={this.returnCommandBarItems()}
 					/>
 				</Fabric>
 			</div>

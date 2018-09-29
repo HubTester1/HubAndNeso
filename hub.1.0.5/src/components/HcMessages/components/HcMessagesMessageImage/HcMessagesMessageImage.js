@@ -26,7 +26,7 @@ const HcMessagesMessageImage = (props) => {
 					/>
 				}
 				{
-					props.imageContent.migratedFromQuark &&
+					!props.imageContent.migratedFromQuark &&
 
 					<MediaQuery minWidth={ScreenSizes.ReturnMediumMin()}>
 						<img
@@ -37,7 +37,7 @@ const HcMessagesMessageImage = (props) => {
 					</MediaQuery>
 				}
 				{
-					props.imageContent.migratedFromQuark &&
+					!props.imageContent.migratedFromQuark &&
 					
 					<MediaQuery maxWidth={ScreenSizes.ReturnSmallMax()}>
 						<img

@@ -21,6 +21,8 @@ export default class HcMessagesNewMessageForm extends React.Component {
 	}
 	render() {
 		if (this.props.showNewMessageForm) {
+			console.log('props');
+			console.log(this.props);
 			return (
 				<div id="hc-messages-new-message-form" className="mos-react-component-root">
 					{
@@ -138,6 +140,7 @@ export default class HcMessagesNewMessageForm extends React.Component {
 
 						<button id="new-message-save-button" onClick={this.props.handleMessageUpdate}>Save</button>
 					}
+					<button id="new-message-close-button" onClick={this.props.handleClickHideNewMessageButton}>Close</button>
 					{
 						this.props.newMessageSaveSuccess &&
 

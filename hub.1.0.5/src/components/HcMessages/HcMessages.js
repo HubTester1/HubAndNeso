@@ -9,7 +9,6 @@ import {
 	AccordionItemTitle,
 	AccordionItemBody,
 } from 'react-accessible-accordion';
-import { scroller } from 'react-scroll';
 import MediaQuery from 'react-responsive';
 import Pagination from 'react-js-pagination';
 import shortid from 'shortid';
@@ -83,6 +82,12 @@ export default class HcMessages extends React.Component {
 		this.handleChangedSubject = this.handleChangedSubject.bind(this);
 	}
 	componentDidMount() {
+		HcMessagesData.ReturnHcMessagesTags()
+			.then((allMessageTags) => {
+				this.setState(() => ({
+					tagsArray: allMessageTags,
+				}));
+			});
 		if (this.props.allOrTop === 'all') {
 			HcMessagesData.ReturnHcMessagesTags()
 				.then((allMessageTags) => {
@@ -391,6 +396,29 @@ export default class HcMessages extends React.Component {
 			newMessageIITNotificationFailure: undefined,
 		}));
 	}
+	resetNewMessageStateWithNoSaveSuccess() {
+		this.setState(() => ({
+			updatingMessage: false,
+			newMessageID: undefined,
+			newMessageTags: [{ camlName: '' }],
+			newMessageSubject: '',
+			newMessageBody: '',
+			newMessageImages: [],
+			newMessageExpirationDate: '',
+			newMessageImagesAreUploading: false,
+			newMessageIDError: undefined,
+			newMessageTagsError: undefined,
+			newMessageSubjectError: undefined,
+			newMessageBodyError: undefined,
+			newMessageImageSomeOrAllUploadsFailedWarning: undefined,
+			newMessageImagesWrongTypesWarning: undefined,
+			newMessageIsInvalid: undefined,
+			newMessageImageUploadsImpossible: undefined,
+			newMessageSaveFailure: undefined,
+			newMessageSaveSuccess: undefined,
+			newMessageIITNotificationFailure: undefined,
+		}));
+	}
 	handleSaveError() {
 		HcMessagesData.SendSaveErrorEmail(this.state)
 			.then((response) => {
@@ -468,7 +496,7 @@ export default class HcMessages extends React.Component {
 		// prevent submitting using the SP form tag
 		e.preventDefault();
 		// reset state
-		this.resetNewMessageStateAndSetSaveSuccess();
+		this.resetNewMessageStateWithNoSaveSuccess();
 		// set state
 		this.setState(() => ({
 			showNewMessageForm: true,
@@ -477,6 +505,7 @@ export default class HcMessages extends React.Component {
 	handleClickHideNewMessageButton(e) {
 		// prevent submitting using the SP form tag
 		e.preventDefault();
+		console.log('handleClickHideNewMessageButton');
 		// set state
 		this.setState(() => ({
 			showNewMessageForm: false,
@@ -536,7 +565,6 @@ export default class HcMessages extends React.Component {
 					tagsArray={this.state.tagsArray}
 					addMessageToList={this.addMessageToList}
 					uData={this.props.uData}
-					
 					newMessageID={this.state.newMessageID}
 					newMessageTags={this.state.newMessageTags}
 					newMessageSubject={this.state.newMessageSubject}
@@ -565,6 +593,7 @@ export default class HcMessages extends React.Component {
 					handleMessageUpdate={this.handleMessageUpdate}
 					handleChangedExpirationDate={this.handleChangedExpirationDate}
 					handleAddMessage={this.handleAddMessage}
+					handleClickHideNewMessageButton={this.handleClickHideNewMessageButton}
 				/>
 				<MediaQuery maxWidth={ScreenSizes.ReturnSmallMax()}>
 					<HcMessagesList
@@ -612,8 +641,6 @@ export default class HcMessages extends React.Component {
 		this.state.messagesArray.forEach((message) => {
 			const messageCopy = message;
 			if (messageCopy.messageID === incomingMessageID) {
-				console.log('enabling message update; data:');
-				console.log(messageCopy);
 				if (typeof (messageCopy.expiration) === 'string') {
 					messageCopy.expiration = new Date(messageCopy.expiration);
 				}
@@ -627,13 +654,6 @@ export default class HcMessages extends React.Component {
 					newMessageExpirationDate: messageCopy.expiration,
 					newMessageImages: messageCopy.images,
 					newMessageSaveSuccess: undefined,
-				});
-				// scroll to form
-				scroller.scrollTo('hc-messages-all', {
-					duration: 500,
-					offset: -70,
-					delay: 0,
-					smooth: 'easeInOutQuart',
 				});
 			}
 		});
@@ -741,12 +761,57 @@ export default class HcMessages extends React.Component {
 		}
 		return (
 			<div id="hc-messages-top" className="mos-react-component-root">
-				<h2>Latest Messages</h2>
-				<HcMessagesList
-					messagesThisPage={this.state.messagesArray}
-					enableMessageUpdate={this.enableMessageUpdate}
+				<HcMessagesNewMessageForm
+					showNewMessageForm={this.state.showNewMessageForm}
+					updatingMessage={this.state.updatingMessage}
+					tagsArray={this.state.tagsArray}
+					addMessageToList={this.addMessageToList}
 					uData={this.props.uData}
+
+					newMessageID={this.state.newMessageID}
+					newMessageTags={this.state.newMessageTags}
+					newMessageSubject={this.state.newMessageSubject}
+					newMessageBody={this.state.newMessageBody}
+					newMessageImages={this.state.newMessageImages}
+					newMessageExpirationDate={this.state.newMessageExpirationDate}
+					newMessageImagesAreUploading={this.state.newMessageImagesAreUploading}
+					newMessageIDError={this.state.newMessageExpinewMessageIDErrorrationDate}
+					newMessageTagsError={this.state.newMessageTagsError}
+					newMessageSubjectError={this.state.newMessageSubjectError}
+					newMessageBodyError={this.state.newMessageBodyError}
+					newMessageImageSomeOrAllUploadsFailedWarning={this.state.newMessageImageSomeOrAllUploadsFailedWarning}
+					newMessageImagesWrongTypesWarning={this.state.newMessageImagesWrongTypesWarning}
+					newMessageIsInvalid={this.state.newMessageIsInvalid}
+					newMessageImageUploadsImpossible={this.state.newMessageImageUploadsImpossible}
+					newMessageSaveFailure={this.state.newMessageSaveFailure}
+					newMessageSaveSuccess={this.state.newMessageSaveSuccess}
+					newMessageIITNotificationFailure={this.state.newMessageIITNotificationFailure}
+
+					returnFormFieldContainerClassNameString={this.returnFormFieldContainerClassNameString}
+					handleChangedTags={this.handleChangedTags}
+					handleChangedSubject={this.handleChangedSubject}
+					handleChangedBody={this.handleChangedBody}
+					handleDroppedFiles={this.handleDroppedFiles}
+					handleFileDeletion={this.handleFileDeletion}
+					handleMessageUpdate={this.handleMessageUpdate}
+					handleChangedExpirationDate={this.handleChangedExpirationDate}
+					handleAddMessage={this.handleAddMessage}
+					handleClickHideNewMessageButton={this.handleClickHideNewMessageButton}
 				/>
+				{
+					!this.state.showNewMessageForm && 
+					
+					<h2>Latest Messages</h2>
+				}
+				{
+					!this.state.showNewMessageForm &&
+
+					<HcMessagesList
+						messagesThisPage={this.state.messagesArray}
+						enableMessageUpdate={this.enableMessageUpdate}
+						uData={this.props.uData}
+					/>
+				}
 			</div>
 		);
 	}
