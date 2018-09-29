@@ -133,14 +133,20 @@ export default class HcMessagesNewMessageForm extends React.Component {
 					{
 						!this.props.updatingMessage &&
 
-						<button id="new-message-save-button" onClick={this.props.handleAddMessage}>Save</button>
+						<div className="new-message-button-container">
+							<button id="new-message-save-button" onClick={this.props.handleAddMessage}>Save</button>
+						</div>
 					}
 					{
 						this.props.updatingMessage &&
 
-						<button id="new-message-save-button" onClick={this.props.handleMessageUpdate}>Save</button>
+						<div className="new-message-button-container">
+							<button id="new-message-save-button" onClick={this.props.handleMessageUpdate}>Save</button>
+						</div>
 					}
-					<button id="new-message-close-button" onClick={this.props.handleClickHideNewMessageButton}>Close</button>
+					<div className="new-message-button-container">
+						<button id="new-message-close-button" onClick={this.props.handleClickHideNewMessageButton}>Close</button>
+					</div>
 					{
 						this.props.newMessageSaveSuccess &&
 

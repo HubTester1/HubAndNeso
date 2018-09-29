@@ -77,6 +77,9 @@ div#hc-pushed-items
 		list-style: none
 		margin: 0 0 1rem 0
 
+		a
+			+font-weight-regular
+
 	li.hc-pushed-items-item.file
 		+list-item-icon-bullet
 		+icon-document-before
@@ -162,13 +165,23 @@ div#hc-container
 
 	// new message form
 	div#hc-messages-new-message-form
+		margin-top: 1rem !important
 
 		button#new-message-save-button
 			+button
 			+button-colored
 			+button-icon-before
 			+icon-save-before
-			margin-top: 2rem !important
+			margin-top: 1rem !important
+			width: 10rem
+
+		button#new-message-close-button
+			+button
+			+button-colored
+			+button-icon-before
+			+icon-save-before
+			margin-top: 1rem !important
+			width: 10rem
 
 	// the 'no messages' message
 	div#hc-messages-no-messages-message

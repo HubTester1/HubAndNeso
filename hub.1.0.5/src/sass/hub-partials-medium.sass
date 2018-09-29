@@ -12,7 +12,7 @@
 
 	div.hc-header-and-hero-container
 		background-color: $blue-10
-		background-size: 100% auto, 100% auto, 100% auto, 100% auto
+		background-size: 100% auto, 100% auto, 100% auto, cover
 		background-position: top left, top left, top left, top left
 		background-image: linear-gradient(to bottom, $blue-10-80-percent, $blue-10-30-percent 16rem, transparent 20rem, transparent 40rem, $blue-10 60rem), linear-gradient(to right, transparent, $blue-10-10-percent 40%, $blue-10-70-percent 50%, $blue-10-70-percent 90%, $blue-10-20-percent 100%), linear-gradient(to bottom right, $blue-10-40-percent 50%, $green-5-20-percent 100%), url('../../img/bkgrd-medium-screen.jpg')
 		transition: height .5s
@@ -139,46 +139,53 @@
 // --- MEDIUM - BACKGROUND IMAGE INFO
 
 @media screen and (min-width: $medium-screen-minimum-width)
-	
-	div#hc-background-info-container
-		flex-shrink: 0
-		margin-top: 2rem
 
-		button.hc-background-info__button
-			+button
-			+button-colored
+	div#staff-lookup-and-background-info
+
+		div#hc-staff-lookup
+			// margin-bottom: auto
+			flex-grow: 1
+		
+		div#hc-background-info-container
+			// margin-top: auto
+			flex-shrink: 0
 			margin-top: 2rem
-			background-color: $aqua-9 !important
 
-			&:hover
-				background-color: $aqua-10 !important
-
-		div#hc-background-info__information
-			+round-corners
-			+small-shadow-bottom-right-light-color
-			padding: 2rem
-			color: $white
-			background-image: linear-gradient(to right, $blue-10-60-percent, $blue-10-60-percent), linear-gradient(to right, $white-20-percent, $white-20-percent)
-			border-top: 5px solid $pink-10
-			border-bottom: 5px solid $pink-10
-			transition: border-color .5s, background-color .5s
-
-			h3
-				color: $white
-
-			&:hover
-				+small-shadow-bottom-right-medium-color
-				padding: 2rem
-				border-color: $pink-7
-				background-image: linear-gradient(to right, $blue-10-60-percent, $blue-10-60-percent), linear-gradient(to right, $white-30-percent, $white-30-percent)
-
-			a#photo-source-link,
-			a#photographer-link
-				color: $aqua-3 !important
-				transition: color .25s
+			button.hc-background-info__button
+				+button
+				+button-colored
+				margin-top: 2rem
+				background-color: $aqua-9 !important
 
 				&:hover
-					color: $aqua-1 !important
+					background-color: $aqua-10 !important
+
+			div#hc-background-info__information
+				+round-corners
+				+small-shadow-bottom-right-light-color
+				padding: 2rem
+				color: $white
+				background-image: linear-gradient(to right, $blue-10-60-percent, $blue-10-60-percent), linear-gradient(to right, $white-20-percent, $white-20-percent)
+				border-top: 5px solid $pink-10
+				border-bottom: 5px solid $pink-10
+				transition: border-color .5s, background-color .5s
+
+				h3
+					color: $white
+
+				&:hover
+					+small-shadow-bottom-right-medium-color
+					padding: 2rem
+					border-color: $pink-7
+					background-image: linear-gradient(to right, $blue-10-60-percent, $blue-10-60-percent), linear-gradient(to right, $white-30-percent, $white-30-percent)
+
+				a#photo-source-link,
+				a#photographer-link
+					color: $aqua-3 !important
+					transition: color .25s
+
+					&:hover
+						color: $aqua-1 !important
 
 // --- MEDIUM - HERO SECTION
 
