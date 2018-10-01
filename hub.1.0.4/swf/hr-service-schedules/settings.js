@@ -30,20 +30,11 @@
 		'gseSchedulesListHRAdmin': {
 			'buttons': [
 				{
-					"linkType": "goForward",
-					"anchorText": "Configuration",
-					"href": "/sites/hr-service-config/SitePages/App.aspx?r=1",
-					"target": null
-				}, {
 					"linkType": "newItem",
 					"anchorText": "New Schedule",
 					"href": "/sites/hr-service-schedules/SitePages/App.aspx?r=0",
 					"target": null
 				}, {
-
-
-
-					
 					"linkType": "goForward",
 					"anchorText": "Jobs",
 					"href": "/sites/hr-service-jobs/SitePages/App.aspx",
@@ -57,6 +48,16 @@
 					"linkType": "goForward",
 					"anchorText": "Signups",
 					"href": "/sites/hr-service-signups/SitePages/App.aspx",
+					"target": null
+				}, {
+					"linkType": "goForward",
+					"anchorText": "Stats",
+					"href": "/sites/hr-service-config/SitePages/App.aspx",
+					"target": null
+				}, {
+					"linkType": "goForward",
+					"anchorText": "Configuration",
+					"href": "/sites/hr-service-config/SitePages/App.aspx?r=1",
 					"target": null
 				}
 			],
@@ -372,11 +373,6 @@
 		'gseSchedulesCalendarHRAdmin': {
 			'buttons': [
 				{
-					"linkType": "goForward",
-					"anchorText": "Configuration",
-					"href": "/sites/hr-service-config/SitePages/App.aspx?r=1",
-					"target": null
-				}, {
 					"linkType": "newItem",
 					"anchorText": "New Schedule",
 					"href": "/sites/hr-service-schedules/SitePages/App.aspx?r=0",
@@ -395,6 +391,16 @@
 					"linkType": "goForward",
 					"anchorText": "Signups",
 					"href": "/sites/hr-service-signups/SitePages/App.aspx",
+					"target": null
+				}, {
+					"linkType": "goForward",
+					"anchorText": "Stats",
+					"href": "/sites/hr-service-config/SitePages/App.aspx",
+					"target": null
+				}, {
+					"linkType": "goForward",
+					"anchorText": "Configuration",
+					"href": "/sites/hr-service-config/SitePages/App.aspx?r=1",
 					"target": null
 				}
 			],

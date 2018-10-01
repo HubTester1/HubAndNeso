@@ -27,11 +27,6 @@
 			'buttons': [
 				{
 					"linkType": "goForward",
-					"anchorText": "Configuration",
-					"href": "/sites/hr-service-config/SitePages/App.aspx?r=1",
-					"target": null
-				}, {
-					"linkType": "goForward",
 					"anchorText": "Jobs",
 					"href": "/sites/hr-service-jobs/SitePages/App.aspx",
 					"target": null
@@ -49,6 +44,11 @@
 					"linkType": "goForward",
 					"anchorText": "Signups",
 					"href": "/sites/hr-service-signups/SitePages/App.aspx",
+					"target": null
+				}, {
+					"linkType": "goForward",
+					"anchorText": "Configuration",
+					"href": "/sites/hr-service-config/SitePages/App.aspx?r=1",
 					"target": null
 				}
 			],

@@ -20203,9 +20203,9 @@
 		var commandBarContents = '';
 		if (relevantRole === 'gseHRAdmin') {
 			commandBarContents += 
-				'<div class="container_link">' +
-				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-config/SitePages/App.aspx?r=1">Configuration</a> \n' +
-				'</div>' + 
+				// '<div class="container_link">' +
+				// '	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-config/SitePages/App.aspx?r=1">Configuration</a> \n' +
+				// '</div>' + 
 				'<div class="container_link">' +
 				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-jobs/SitePages/App.aspx">Jobs</a> \n' +
 				'</div>' +
@@ -20232,7 +20232,13 @@
 				'			<a id="filter_submit-button">Update</a>' +
 				'		</div>' +
 				'    </div> \n' +
-				'</div> \n';
+				'</div> \n' +
+				'<div class="container_link">' +
+				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-config/SitePages/App.aspx">Stats</a> \n' +
+				'</div> \n' +
+				'<div class="container_link">' +
+				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-config/SitePages/App.aspx?r=1">Configuration</a> \n' +
+				'</div>';
 		}
 		if (relevantRole === 'gseManager') {
 			commandBarContents += '<div class="container_link">' +
