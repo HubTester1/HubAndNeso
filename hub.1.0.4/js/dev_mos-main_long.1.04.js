@@ -408,6 +408,9 @@
 			case "adminEventAV":
 				newTitle = "Admin Event AV Requests";
 				break;
+			case "gseStatsHRAdmin":
+				newTitle = "GSE Stats";
+				break;
 			case "gseJobsHRAdmin":
 				newTitle = "All GSE Jobs";
 				break;
@@ -482,6 +485,8 @@
 			case "adminReferrals":
 			case "myReferrals":
 
+			case "gseStatsHRAdmin":
+
 			case "gseJobsHRAdmin":
 			case "gseJobsJobAdmin":
 			case "gseJobsManager":
@@ -490,7 +495,6 @@
 			case "gseSchedulesListJobAdmin":
 			case "gseSchedulesListManager":
 			case "gseSchedulesListStaff":
-
 			case "gseSignupsHRAdmin":
 			case "gseSignupsJobAdmin":
 			case "gseSignupsManager":
@@ -525,7 +529,6 @@
 
 
 	$.fn.ShowScreen = function (toScreen, requestID, addBrowserHistoryEntry, replaceBrowserHistoryEntry) {
-
 		var newTitle = $().ReturnNewPageTitle(toScreen);
 
 		switch (toScreen) {
@@ -550,6 +553,8 @@
 			case "adminReferrals":
 			case "myReferrals":
 
+			case "gseStatsHRAdmin":
+
 			case "gseJobsHRAdmin":
 			case "gseJobsJobAdmin":
 			case "gseJobsManager":
@@ -563,7 +568,6 @@
 			case "gseSignupsJobAdmin":
 			case "gseSignupsManager":
 			case "gseSignupsStaff":
-
 				$().ReplacePageTitle(newTitle);
 				$("div#overview-screen-container").fadeIn(mData.gracefulScreenTransitionTime).removeClass("hidden");
 				$("div#overview-screen-container table.dataTable").each(function () {
@@ -626,6 +630,8 @@
 
 			case "adminReferrals":
 			case "myReferrals":
+
+			case "gseStatsHRAdmin":
 
 			case "gseJobsHRAdmin":
 			case "gseJobsJobAdmin":
@@ -695,6 +701,9 @@
 				$().ConfigureOverviewScreen("myReferrals");
 				break;
 
+			case "gseStatsHRAdmin":
+				$().ConfigureOverviewScreen("gseStatsHRAdmin");
+				break;
 
 			case "gseJobsHRAdmin":
 				$().ConfigureOverviewScreen("gseJobsHRAdmin");
@@ -781,6 +790,7 @@
 					"adminReferrals",
 					"myReferrals",
 					"adminEventAV",
+					"gseStatsHRAdmin",
 					"gseJobsHRAdmin",
 					"gseJobsJobAdmin",
 					"gseJobsManager",
@@ -909,6 +919,7 @@
 			case "adminReferrals":
 			case "myReferrals":
 			case "adminEventAV":
+			case "gseStatsHRAdmin":
 			case "gseJobsHRAdmin":
 			case "gseJobsJobAdmin":
 			case "gseJobsManager":
@@ -924,7 +935,7 @@
 			case "gseSignupsJobAdmin":
 			case "gseSignupsManager":
 			case "gseSignupsStaff":
-				$("div#overview-screen-container").empty().removeClass('adminRequests-requests myRequests-requests gpcInitialConceptApprovalViewer-requests gpcSubmissionApprovalViewer-requests adminReferrals-requests myReferrals-requests adminEventAV-requests gseJobsHRAdmin-requests gseJobsJobAdmin-requests gseJobsManager-requests gseSchedulesCalendarHRAdmin-requests gseSchedulesCalendarJobAdmin-requests gseSchedulesCalendarManager-requests gseSchedulesCalendarStaff-requests gseSchedulesListHRAdmin-requests gseSchedulesListJobAdmin-requests gseSchedulesListManager-requests gseSchedulesListStaff-requests gseSignupsHRAdmin-requests gseSignupsJobAdmin-requests gseSignupsManager-requests gseSignupsStaff-requests');
+				$("div#overview-screen-container").empty().removeClass('adminRequests-requests myRequests-requests gpcInitialConceptApprovalViewer-requests gpcSubmissionApprovalViewer-requests adminReferrals-requests myReferrals-requests adminEventAV-requests gseStatsHRAdmin-requests gseJobsHRAdmin-requests gseJobsJobAdmin-requests gseJobsManager-requests gseSchedulesCalendarHRAdmin-requests gseSchedulesCalendarJobAdmin-requests gseSchedulesCalendarManager-requests gseSchedulesCalendarStaff-requests gseSchedulesListHRAdmin-requests gseSchedulesListJobAdmin-requests gseSchedulesListManager-requests gseSchedulesListStaff-requests gseSignupsHRAdmin-requests gseSignupsJobAdmin-requests gseSignupsManager-requests gseSignupsStaff-requests');
 				$("div#overview-screen-container").append('<div id="overview-table-container" class="table-container"></div>');
 			case "gseSchedulesListHRAdmin":
 				$("div#gse-schedule-card-dialog").remove();
@@ -974,6 +985,11 @@
 			overviewScreen = "myRequests";
 		}
 
+		// console.log('uData');
+		// console.log(uData);
+		// console.log('rData');
+		// console.log(rData);
+
 		// if user needs an alternate overview screen
 		if (typeof (uData.alternateOverviewScreen) != "undefined" && uData.alternateOverviewScreen !== 0) {
 			overviewScreen = uData.alternateOverviewScreen;
@@ -992,7 +1008,8 @@
 			initialScreen = overviewScreen;
 			secondaryScreen = "newRequest";
 		}
-
+		// console.log('initialScreen');
+		// console.log(initialScreen);
 		// configure and show initial screen
 		$().ConfigureScreen(initialScreen, rData.requestID);
 		$().ShowScreen(initialScreen, rData.requestID, 0, 1);
@@ -1729,6 +1746,11 @@
 			case "Event AV":
 				if (uData.isAdmin === 1) {
 					userNeeedsAlternateOverviewScreen = "adminEventAV";
+				}
+				break;
+			case "GSE Configuration":
+				if (uData.roles.indexOf("gseHRAdmin") > -1) {
+					userNeeedsAlternateOverviewScreen = "gseStatsHRAdmin";
 				}
 				break;
 			case "GSE Job":
@@ -7170,6 +7192,9 @@
 			$().RenderOverviewScreenButtons(oData.myReferrals.buttons, 0);
 			$().RenderAllDataTables(oData.myReferrals.sections, "overview-table-container");
 			$().RenderWorkflowContacts();
+
+		} else if (type === "gseStatsHRAdmin") {
+			$().RenderCommandBarAndGSEStats(oData.admin.buttons, "overview-table-container", 'gseHRAdmin');
 
 
 		} else if (type === "gseJobsHRAdmin") {
@@ -19374,6 +19399,194 @@
 
 
 	// - main markup collection and rendering
+
+	// stats
+	$.fn.RenderCommandBarAndGSEStats = function (buttons, targetID, relevantRole) {
+
+		var startingYear = 2018;
+		// var thisYear = 2022;
+		var thisYear = $().ReturnFormattedDateTime('nowLocal', null, 'YYYY');
+
+		var selectedStartDate = GetParamFromUrl(location.search, "startDate");
+		if (!selectedStartDate || selectedStartDate == '') {
+			selectedStartDate = moment().startOf('month').format('YYYY-MM-DD') + 'T00:00:00Z';
+		} else {
+			selectedStartDate = selectedStartDate + 'T00:00:00Z';
+		}
+
+		var selectedEndDate = GetParamFromUrl(location.search, "endDate");
+		if (!selectedEndDate || selectedEndDate == '') {
+			selectedEndDate = moment().endOf('month').format('YYYY-MM-DD') + 'T23:59:00Z';
+		} else {
+			selectedEndDate = selectedEndDate + 'T23:59:00Z';
+		}
+		// distinct jobs scheduled - qty distinct JobIDs
+		// hours scheduled - for each schedule, add (#positions * schedule length)
+		// hours granted credit - 
+		// 	for each schedule, iterate over signups
+		// 		for each found signup, if credit granted, add schedule length
+
+		var distinctJobIDs = [];
+		var hoursScheduled = 0;
+		var hoursGrantedCredit = 0;
+
+		// get schedules for specified dates
+		var gseSchedulesArray = $().GetFieldsFromSpecifiedRows({
+			'webURL': 'https://bmos.sharepoint.com/sites/hr-service-schedules',
+			'select': [
+				{
+					'nameHere': 'ScheduleID',
+					'nameInList': 'ID'
+				}, {
+					'nameHere': 'JobID',
+					'nameInList': 'JobID'
+				}, {
+					'nameHere': 'NumberOfPositions',
+					'nameInList': 'NumberOfPositions'
+				}, {
+					'nameHere': 'formData',
+					'nameInList': 'AllRequestData'
+				}
+			],
+			"where": {
+				"ands": [
+					{
+						"field": "Date",
+						"type": "DateTime",
+						"operator": "Geq",
+						"value": selectedStartDate,
+					}, {
+						"field": "Date",
+						"type": "DateTime",
+						"operator": "Leq",
+						"value": selectedEndDate,
+					}
+				]
+			}
+		});
+		// get all relevant signups
+		var gseSignupsArray = $().GetFieldsFromSpecifiedRows({
+			"webURL": "https://bmos.sharepoint.com/sites/hr-service-signups",
+			"select": [
+				{
+					"nameHere": "SignupID",
+					"nameInList": "ID"
+				}, {
+					"nameHere": "ScheduleID",
+					"nameInList": "ScheduleID"
+				}, {
+					'nameHere': 'RequestStatus',
+					'nameInList': 'RequestStatus'
+				}
+			],
+			"where": {
+				"field": "ScheduleID",
+				"type": "Text",
+				// "operator": "Eq",
+				"values": {
+					"sourceArray": gseSchedulesArray,
+					"property": "ScheduleID"
+				}
+			}
+		});
+
+		gseSchedulesArray.forEach((schedule) => {
+			if (!distinctJobIDs.includes(schedule.JobID)) {
+				distinctJobIDs.push(schedule.JobID)
+			}
+			var positionsThisSchedule = schedule.formData['Number-of-Positions'];
+			var lengthThisSchedule = schedule.formData['shiftlength_35-hours'] ? 3.5 : 7;
+			hoursScheduled += positionsThisSchedule * lengthThisSchedule;
+			gseSignupsArray.forEach((signup) => {
+				if (signup.ScheduleID === schedule.ScheduleID && signup.RequestStatus === 'Credit Granted') {
+					hoursGrantedCredit += lengthThisSchedule;
+				}
+			});
+			
+		});
+
+		$("#" + targetID).append('<div id="container_command-bar-and-data"> \n' +
+			'   <div id="container_command-bar"></div> \n' +
+			'   <div id="container_data"></div> \n' +
+			'</div>');
+
+		var buttonDivs = $().ReturnButtonsMarkupWithContainerDivs(buttons);
+
+		var commandBarContents =
+			buttonDivs +
+			'<div id="container_filter-controls-and-header"> \n' +
+			'   <div id="text_filter-controls" class="collapsible">Start & End</div> \n' +
+			'   <div id="container_filter-controls"> \n' +
+			'   	<div class="container_filter-control"> \n' +
+			'   		<label for="filter_start">Starting</label> \n' +
+			'            <input class="date-selector" id="filter_start" name="filter_start" type="text"> \n' +
+			'			</select>' +
+			'		</div>' +
+			'   	<div class="container_filter-control"> \n' +
+			'   		<label for="filter_end">Ending</label> \n' +
+			'            <input class="date-selector" id="filter_end" name="filter_end" type="text"> \n' +
+			'			</select>' +
+			'		</div>' +
+			'   	<div class="container_filter-control"> \n' +
+			'			<a id="filter_submit-button">Update</a>' +
+			'		</div>' +
+			'    </div> \n' +
+			'</div> \n';
+
+		$("div#container_command-bar").append(commandBarContents);
+
+
+		// set datepickers on date filter fields
+		$("input#filter_start, input#filter_end").datepicker({
+			changeMonth: "true",
+			changeYear: "true",
+			dateFormat: "MM d, yy"
+		});
+
+		// set currently-used dates into date fields
+		$("input#filter_start").val(moment(selectedStartDate.slice(0, 16)).format('MMMM D, YYYY'));
+		$("input#filter_end").val(moment(selectedEndDate.slice(0, 16)).format('MMMM D, YYYY'));
+
+		// add extra class for styling hook
+		$('div#app-container').addClass('gse-stats');
+
+		// collapse filters
+		$('.collapsible').collapsible();
+
+		// console.log(distinctJobIDs);
+		// console.log(hoursScheduled);
+		// console.log(hoursGrantedCredit);
+
+		var statsMarkup = 
+			'<h2>Jobs Scheduled</h2>' +
+			'<p>' + distinctJobIDs.length.toString() + '</p>' + 
+			'<h2>Hours Scheduled</h2>' +
+			'<p>' + hoursScheduled.toString() + '</p>' + 
+			'<h2>Hours Granted Credit</h2>' +
+			'<p>' + hoursGrantedCredit.toString() + '</p>';
+
+		$("div#container_data").append(statsMarkup);
+
+		// listen for date filtering
+		$("a#filter_submit-button").click(function () {
+			var newStartDate = $("input#filter_start").val();
+			var newEndDate = $("input#filter_end").val();
+
+			if (newStartDate == "") {
+				newStartDate = $().ReturnFormattedDateTime('nowLocal', null, 'MMMM D, YYYY');
+			}
+
+			if (newEndDate == "") {
+				newEndDate = moment(newStartDate, 'MMMM D, YYYY').add(1, "month").format('MMMM D, YYYY');
+			}
+
+			newStartDate = $().ReturnFormattedDateTime(newStartDate, null, 'YYYY-MM-DD');
+			newEndDate = $().ReturnFormattedDateTime(newEndDate, null, 'YYYY-MM-DD');
+
+			window.location = "/sites/" + mData.siteToken + "/SitePages/App.aspx?startDate=" + newStartDate + "&endDate=" + newEndDate;
+		});
+	};
+
 
 	// schedules list
 	$.fn.RenderCommandBarAndDataTablesForGSESchedules = function (buttons, targetID, relevantRole) {

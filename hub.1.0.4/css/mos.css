@@ -543,6 +543,8 @@ div#s4-workspace div#app-container.event-av div#container_command-bar div#contai
 div#s4-workspace div#app-container.event-av div#container_command-bar ul#container_tab-controls li a,
 div#s4-workspace div#app-container.event-av div#container_command-bar div#container_date-filter-controls-and-header a.collapsible-heading-toggle,
 div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button,
+div#s4-workspace div#app-container.gse-stats div#container_filter-controls-and-header div.container_filter-control a#filter_submit-button,
+div#s4-workspace div#app-container.gse-stats div#container_command-bar div#container_filter-controls-and-header a.collapsible-heading-toggle,
 div#s4-workspace div#app-container.gse-signup div#container_command-bar div#container_filter-controls-and-header a.collapsible-heading-toggle,
 div#s4-workspace div#app-container.gse-signup div#container_command-bar div#container_filter-controls-and-header a#filter_submit-button,
 div#s4-workspace div#app-container.gse-schedule div#container_command-bar div#container_filter-controls-and-header a.collapsible-heading-toggle,
@@ -598,6 +600,8 @@ a#gse-schedule-card-dialog-signup-opportunity-link {
   div#s4-workspace div#app-container.event-av div#container_command-bar ul#container_tab-controls li a:hover,
   div#s4-workspace div#app-container.event-av div#container_command-bar div#container_date-filter-controls-and-header a.collapsible-heading-toggle:hover,
   div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button:hover,
+  div#s4-workspace div#app-container.gse-stats div#container_filter-controls-and-header div.container_filter-control a#filter_submit-button:hover,
+  div#s4-workspace div#app-container.gse-stats div#container_command-bar div#container_filter-controls-and-header a.collapsible-heading-toggle:hover,
   div#s4-workspace div#app-container.gse-signup div#container_command-bar div#container_filter-controls-and-header a.collapsible-heading-toggle:hover,
   div#s4-workspace div#app-container.gse-signup div#container_command-bar div#container_filter-controls-and-header a#filter_submit-button:hover,
   div#s4-workspace div#app-container.gse-schedule div#container_command-bar div#container_filter-controls-and-header a.collapsible-heading-toggle:hover,
@@ -617,6 +621,7 @@ div#s4-workspace div.in-page-persona a.profile,
 div#s4-workspace div#public-community-page_moscars div#call-to-action a,
 div#s4-workspace div#public-community-page_hr div#primary-section_open-enrollment a,
 div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button,
+div#s4-workspace div#app-container.gse-stats div#container_filter-controls-and-header div.container_filter-control a#filter_submit-button,
 div#s4-workspace div#app-container.gse-signup div#container_command-bar div#container_filter-controls-and-header a#filter_submit-button,
 div#s4-workspace div#app-container.gse-schedule div#container_command-bar div#container_filter-controls-and-header a#filter_submit-button,
 div#s4-workspace div#public-community-page_open-enrollment div.primary-section a,
@@ -633,6 +638,7 @@ a#gse-schedule-card-dialog-signup-opportunity-link {
   div#s4-workspace div#public-community-page_moscars div#call-to-action a:hover,
   div#s4-workspace div#public-community-page_hr div#primary-section_open-enrollment a:hover,
   div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button:hover,
+  div#s4-workspace div#app-container.gse-stats div#container_filter-controls-and-header div.container_filter-control a#filter_submit-button:hover,
   div#s4-workspace div#app-container.gse-signup div#container_command-bar div#container_filter-controls-and-header a#filter_submit-button:hover,
   div#s4-workspace div#app-container.gse-schedule div#container_command-bar div#container_filter-controls-and-header a#filter_submit-button:hover,
   div#s4-workspace div#public-community-page_open-enrollment div.primary-section a:hover,
@@ -692,6 +698,7 @@ div#app-container a.command-bar-button,
 div#s4-workspace div#app-container.event-av div#container_command-bar div#container_new-request-control a,
 div#s4-workspace div#app-container.event-av div#container_command-bar ul#container_tab-controls li a,
 div#s4-workspace div#app-container.event-av div#container_command-bar div#container_date-filter-controls-and-header a.collapsible-heading-toggle,
+div#s4-workspace div#app-container.gse-stats div#container_command-bar div#container_filter-controls-and-header a.collapsible-heading-toggle,
 div#s4-workspace div#app-container.gse-signup div#container_command-bar div#container_filter-controls-and-header a.collapsible-heading-toggle,
 div#s4-workspace div#app-container.gse-schedule div#container_command-bar div#container_filter-controls-and-header a.collapsible-heading-toggle,
 a#standard-printer-button-inside-request {
@@ -713,6 +720,7 @@ a#standard-printer-button-inside-request {
   div#s4-workspace div#app-container.event-av div#container_command-bar div#container_new-request-control a:hover,
   div#s4-workspace div#app-container.event-av div#container_command-bar ul#container_tab-controls li a:hover,
   div#s4-workspace div#app-container.event-av div#container_command-bar div#container_date-filter-controls-and-header a.collapsible-heading-toggle:hover,
+  div#s4-workspace div#app-container.gse-stats div#container_command-bar div#container_filter-controls-and-header a.collapsible-heading-toggle:hover,
   div#s4-workspace div#app-container.gse-signup div#container_command-bar div#container_filter-controls-and-header a.collapsible-heading-toggle:hover,
   div#s4-workspace div#app-container.gse-schedule div#container_command-bar div#container_filter-controls-and-header a.collapsible-heading-toggle:hover,
   a#standard-printer-button-inside-request:hover {
@@ -790,6 +798,7 @@ a.show-default-station-times:before,
 a.hide-default-station-times:before,
 button.cafe-button:before,
 div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button:before,
+div#s4-workspace div#app-container.gse-stats div#container_filter-controls-and-header div.container_filter-control a#filter_submit-button:before,
 div#s4-workspace div#app-container.gse-signup div#container_command-bar div#container_filter-controls-and-header a#filter_submit-button:before,
 div#s4-workspace div#app-container.gse-schedule div#container_command-bar div#container_filter-controls-and-header a#filter_submit-button:before,
 a#standard-printer-button-inside-request:before {
@@ -847,6 +856,7 @@ a.show-default-station-times:before {
   content: '\E045'; }
 
 div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button:before,
+div#s4-workspace div#app-container.gse-stats div#container_filter-controls-and-header div.container_filter-control a#filter_submit-button:before,
 div#s4-workspace div#app-container.gse-signup div#container_command-bar div#container_filter-controls-and-header a#filter_submit-button:before,
 div#s4-workspace div#app-container.gse-schedule div#container_command-bar div#container_filter-controls-and-header a#filter_submit-button:before {
   content: '\E034'; }
@@ -3474,6 +3484,9 @@ div#app-container.direct-deposit div#request-form table.signature-and-date {
     padding: 0;
     border: none; } }
 
+div#app-container.gse-stats div#container_command-bar div#container_date-filter-controls-and-header div#text_date-filter-controls a.collapsible-heading-toggle {
+  display: block; }
+
 div.gse-schedule-card-dialog-link-container {
   margin-bottom: .5rem; }
   div.gse-schedule-card-dialog-link-container:first-child {
@@ -3496,17 +3509,23 @@ div#app-container.gse-signup div#no-signups-warning {
   font-size: 2rem !important;
   margin-bottom: 2rem; }
 
+div#s4-workspace div#app-container.gse-stats div#container_command-bar,
 div#s4-workspace div#app-container.gse-signup div#container_command-bar,
 div#s4-workspace div#app-container.gse-schedule div#container_command-bar {
   color: #333;
   background-color: #eee;
   display: table; }
+  div#s4-workspace div#app-container.gse-stats div#container_command-bar a,
   div#s4-workspace div#app-container.gse-signup div#container_command-bar a,
   div#s4-workspace div#app-container.gse-schedule div#container_command-bar a {
     color: #004f87 !important; }
+    div#s4-workspace div#app-container.gse-stats div#container_command-bar a:hover,
     div#s4-workspace div#app-container.gse-signup div#container_command-bar a:hover,
     div#s4-workspace div#app-container.gse-schedule div#container_command-bar a:hover {
       color: #003a63 !important; }
+  div#s4-workspace div#app-container.gse-stats div#container_command-bar div.container_link,
+  div#s4-workspace div#app-container.gse-stats div#container_command-bar div#container_filter-controls-and-header,
+  div#s4-workspace div#app-container.gse-stats div#container_command-bar div#container_navigation-controls-and-header,
   div#s4-workspace div#app-container.gse-signup div#container_command-bar div.container_link,
   div#s4-workspace div#app-container.gse-signup div#container_command-bar div#container_filter-controls-and-header,
   div#s4-workspace div#app-container.gse-signup div#container_command-bar div#container_navigation-controls-and-header,
@@ -3515,28 +3534,35 @@ div#s4-workspace div#app-container.gse-schedule div#container_command-bar {
   div#s4-workspace div#app-container.gse-schedule div#container_command-bar div#container_navigation-controls-and-header {
     display: table-cell;
     vertical-align: top; }
+  div#s4-workspace div#app-container.gse-stats div#container_command-bar div#container_filter-controls-and-header div#text_filter-controls a.collapsible-heading-toggle,
+  div#s4-workspace div#app-container.gse-stats div#container_command-bar div#container_navigation-controls-and-header div#text_navigation-controls a.collapsible-heading-toggle,
   div#s4-workspace div#app-container.gse-signup div#container_command-bar div#container_filter-controls-and-header div#text_filter-controls a.collapsible-heading-toggle,
   div#s4-workspace div#app-container.gse-signup div#container_command-bar div#container_navigation-controls-and-header div#text_navigation-controls a.collapsible-heading-toggle,
   div#s4-workspace div#app-container.gse-schedule div#container_command-bar div#container_filter-controls-and-header div#text_filter-controls a.collapsible-heading-toggle,
   div#s4-workspace div#app-container.gse-schedule div#container_command-bar div#container_navigation-controls-and-header div#text_navigation-controls a.collapsible-heading-toggle {
     display: block; }
 
+div#s4-workspace div#app-container.gse-stats div#container_filter-controls,
 div#s4-workspace div#app-container.gse-signup div#container_filter-controls,
 div#s4-workspace div#app-container.gse-schedule div#container_filter-controls {
   padding: 1.5rem 1.5rem 0 0;
   font-weight: 600; }
+  div#s4-workspace div#app-container.gse-stats div#container_filter-controls div.container_filter-control,
   div#s4-workspace div#app-container.gse-signup div#container_filter-controls div.container_filter-control,
   div#s4-workspace div#app-container.gse-schedule div#container_filter-controls div.container_filter-control {
     padding: 0 0 1.5rem 1.5rem;
     text-align: left; }
+    div#s4-workspace div#app-container.gse-stats div#container_filter-controls div.container_filter-control label,
     div#s4-workspace div#app-container.gse-signup div#container_filter-controls div.container_filter-control label,
     div#s4-workspace div#app-container.gse-schedule div#container_filter-controls div.container_filter-control label {
       display: inline-block;
       width: 6rem;
       text-align: right; }
+    div#s4-workspace div#app-container.gse-stats div#container_filter-controls div.container_filter-control select,
     div#s4-workspace div#app-container.gse-signup div#container_filter-controls div.container_filter-control select,
     div#s4-workspace div#app-container.gse-schedule div#container_filter-controls div.container_filter-control select {
       width: 20rem; }
+    div#s4-workspace div#app-container.gse-stats div#container_filter-controls div.container_filter-control a#filter_submit-button,
     div#s4-workspace div#app-container.gse-signup div#container_filter-controls div.container_filter-control a#filter_submit-button,
     div#s4-workspace div#app-container.gse-schedule div#container_filter-controls div.container_filter-control a#filter_submit-button {
       margin: 0 0 0 6.5rem !important; }
