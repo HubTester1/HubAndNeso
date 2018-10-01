@@ -525,6 +525,8 @@ a.button-link,
 div.ui-dialog div.ui-dialog-content.ui-widget-content a.ui-dialog-button,
 div.ui-dialog div.ui-dialog-titlebar.ui-widget-header button.ui-button span.ui-icon.ui-icon-closethick,
 div.ui-dialog div.ui-dialog-content.ui-widget-content div.table-container div.dataTables_wrapper table.dataTable a.anchor_no-href,
+div.ui-datepicker div.ui-datepicker-header a.ui-datepicker-prev,
+div.ui-datepicker div.ui-datepicker-header a.ui-datepicker-next,
 div#remaining-capacities ul#tab-navigation.ui-tabs-nav li a,
 div.fc-toolbar button,
 div.fc-toolbar a.button-link,
@@ -582,6 +584,8 @@ a#gse-schedule-card-dialog-signup-opportunity-link {
   div.ui-dialog div.ui-dialog-content.ui-widget-content a.ui-dialog-button:hover,
   div.ui-dialog div.ui-dialog-titlebar.ui-widget-header button.ui-button span.ui-icon.ui-icon-closethick:hover,
   div.ui-dialog div.ui-dialog-content.ui-widget-content div.table-container div.dataTables_wrapper table.dataTable a.anchor_no-href:hover,
+  div.ui-datepicker div.ui-datepicker-header a.ui-datepicker-prev:hover,
+  div.ui-datepicker div.ui-datepicker-header a.ui-datepicker-next:hover,
   div#remaining-capacities ul#tab-navigation.ui-tabs-nav li a:hover,
   div.fc-toolbar button:hover,
   div.fc-toolbar a.button-link:hover,
@@ -616,6 +620,8 @@ div#s4-workspace a#form-submit-button,
 div#s4-workspace a.overlay-dismiss-button,
 div#s4-workspace a.link_exit,
 div.ui-dialog div.ui-dialog-content.ui-widget-content a.ui-dialog-button,
+div.ui-datepicker div.ui-datepicker-header a.ui-datepicker-prev,
+div.ui-datepicker div.ui-datepicker-header a.ui-datepicker-next,
 div#timeline div.vis-item,
 div#s4-workspace div.in-page-persona a.profile,
 div#s4-workspace div#public-community-page_moscars div#call-to-action a,
@@ -633,6 +639,8 @@ a#gse-schedule-card-dialog-signup-opportunity-link {
   div#s4-workspace a.overlay-dismiss-button:hover,
   div#s4-workspace a.link_exit:hover,
   div.ui-dialog div.ui-dialog-content.ui-widget-content a.ui-dialog-button:hover,
+  div.ui-datepicker div.ui-datepicker-header a.ui-datepicker-prev:hover,
+  div.ui-datepicker div.ui-datepicker-header a.ui-datepicker-next:hover,
   div#timeline div.vis-item:hover,
   div#s4-workspace div.in-page-persona a.profile:hover,
   div#s4-workspace div#public-community-page_moscars div#call-to-action a:hover,
@@ -812,6 +820,16 @@ a#standard-printer-button-inside-request:before {
   -moz-osx-font-smoothing: grayscale;
   margin-right: .5rem; }
 
+div.ui-datepicker div.ui-datepicker-header a.ui-datepicker-prev:before {
+  display: inline-block;
+  font-family: 'Office365Icons';
+  font-size: inherit;
+  font-weight: inherit;
+  color: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale; }
+
 a.link-tester:before {
   content: '\E041'; }
 
@@ -851,6 +869,9 @@ a.id-or-link_list-item-chooser:before {
 .collapsible-heading.collapsible-heading-collapsed a.collapsible-heading-toggle:before,
 a.show-default-station-times:before {
   content: '\E236'; }
+
+div.ui-datepicker div.ui-datepicker-header a.ui-datepicker-prev:before {
+  content: '\E237'; }
 
 .collapsible-heading.collapsible-heading-collapsed.overflow-menu-control a.collapsible-heading-toggle:before {
   content: '\E045'; }
@@ -899,14 +920,43 @@ a.button-link_go-forward:after {
   -moz-osx-font-smoothing: grayscale;
   margin-left: .5rem; }
 
+div.ui-datepicker div.ui-datepicker-header a.ui-datepicker-next:after {
+  display: inline-block;
+  font-family: 'Office365Icons';
+  font-size: inherit;
+  font-weight: inherit;
+  color: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale; }
+
 span.ms-entity-resolved:after {
   content: '\E235'; }
 
 a.button-link_go-forward:after {
   content: '\E04A'; }
 
+div.ui-datepicker div.ui-datepicker-header a.ui-datepicker-next:after {
+  content: '\E238'; }
+
 div#s4-workspace div.cafe-weekly-menu-and-schedule a.button_swf-new-request-with-datatable {
   display: none; }
+
+div.ui-datepicker div.ui-datepicker-header a.ui-datepicker-next,
+div.ui-datepicker div.ui-datepicker-header a.ui-datepicker-prev {
+  padding: .3rem;
+  min-height: 1.2rem;
+  font-size: 1.2rem; }
+  div.ui-datepicker div.ui-datepicker-header a.ui-datepicker-next span.ui-icon,
+  div.ui-datepicker div.ui-datepicker-header a.ui-datepicker-prev span.ui-icon {
+    width: 0;
+    margin: 0; }
+
+div.ui-datepicker div.ui-datepicker-header a.ui-datepicker-next {
+  margin: .5rem .5rem 0 0 !important; }
+
+div.ui-datepicker div.ui-datepicker-header a.ui-datepicker-prev {
+  margin: .5rem 0 0 .5rem !important; }
 
 div#s4-workspace a#form-submit-button[disabled],
 div#s4-workspace a#form-submit-button[disabled]:hover {

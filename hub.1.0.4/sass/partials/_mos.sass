@@ -603,6 +603,8 @@ a.button-link,
 div.ui-dialog div.ui-dialog-content.ui-widget-content a.ui-dialog-button,
 div.ui-dialog div.ui-dialog-titlebar.ui-widget-header button.ui-button span.ui-icon.ui-icon-closethick,
 div.ui-dialog div.ui-dialog-content.ui-widget-content div.table-container div.dataTables_wrapper table.dataTable a.anchor_no-href,
+div.ui-datepicker div.ui-datepicker-header a.ui-datepicker-prev,
+div.ui-datepicker div.ui-datepicker-header a.ui-datepicker-next,
 div#remaining-capacities ul#tab-navigation.ui-tabs-nav li a,
 div.fc-toolbar button,
 div.fc-toolbar a.button-link,
@@ -641,6 +643,8 @@ div#s4-workspace a#form-submit-button,
 div#s4-workspace a.overlay-dismiss-button,
 div#s4-workspace a.link_exit,
 div.ui-dialog div.ui-dialog-content.ui-widget-content a.ui-dialog-button,
+div.ui-datepicker div.ui-datepicker-header a.ui-datepicker-prev,
+div.ui-datepicker div.ui-datepicker-header a.ui-datepicker-next,
 div#timeline div.vis-item,
 div#s4-workspace div.in-page-persona a.profile,
 div#s4-workspace div#public-community-page_moscars div#call-to-action a,
@@ -801,13 +805,17 @@ a#standard-printer-button-inside-request
 		+fontIcon
 		+fontIconBefore
 
+div.ui-datepicker div.ui-datepicker-header a.ui-datepicker-prev
+	&:before
+		+fontIcon
+
 a.link-tester
 
 	&:before
 		+fontIconCheck
 
 a.repeat-section-anchor,
-a.button-link_new-item
+a.button-link_new-item,
 
 	&:before
 		+fontIconPlus
@@ -846,6 +854,10 @@ a.show-default-station-times
 	&:before
 		+fontIconChevronThickDown
 
+div.ui-datepicker div.ui-datepicker-header a.ui-datepicker-prev
+
+	&:before
+		+fontIconChevronThickLeft
 
 .collapsible-heading.collapsible-heading-collapsed.overflow-menu-control a.collapsible-heading-toggle
 
@@ -908,6 +920,11 @@ a.button-link_go-forward
 		+fontIcon
 		+fontIconAfter
 
+div.ui-datepicker div.ui-datepicker-header a.ui-datepicker-next
+
+	&:after
+		+fontIcon
+
 span.ms-entity-resolved
 
 	&:after
@@ -918,12 +935,35 @@ a.button-link_go-forward
 	&:after
 		+fontIconArrowRight
 
+
+div.ui-datepicker div.ui-datepicker-header a.ui-datepicker-next
+
+	&:after
+		+fontIconChevronThickRight
+
+
 // hidden from screen reader buttons
 div#s4-workspace div.cafe-weekly-menu-and-schedule a.button_swf-new-request-with-datatable
 	display: none
 
 // tweaks
 
+div.ui-datepicker div.ui-datepicker-header a.ui-datepicker-next,
+div.ui-datepicker div.ui-datepicker-header a.ui-datepicker-prev
+	padding: .3rem
+	min-height: 1.2rem
+	font-size: 1.2rem
+
+	span.ui-icon
+		width: 0
+		margin: 0
+
+div.ui-datepicker div.ui-datepicker-header a.ui-datepicker-next
+	margin: .5rem .5rem 0 0 !important
+
+div.ui-datepicker div.ui-datepicker-header a.ui-datepicker-prev
+	margin: .5rem 0 0 .5rem !important
+	
 div#s4-workspace a#form-submit-button[disabled],
 div#s4-workspace a#form-submit-button[disabled]:hover
 	pointer-events: none;
