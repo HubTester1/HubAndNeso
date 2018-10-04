@@ -3556,6 +3556,19 @@
 			}
 		}
 
+		// if a custom access permission function is specified
+		if (fData.customAccessPermissionsFunction) {
+			// set this user's permission flag to the result of said function
+			hasViewingPermissionThisRequest = CallFunctionFromString(fData.customAccessPermissionsFunction, { "rData": rData });
+			// if this user's permission flag is still not 1
+			if (hasViewingPermissionThisRequest === 0) {
+				// show permission denial message and stop any further configuration of this request
+				$('div#overlays-screen-container').fadeIn(200);
+				$('div#mos-form-no-view-permission').fadeIn(400);
+				return;
+			}
+		}
+
 
 
 		// ========================================================
@@ -17651,9 +17664,13 @@
 			case "ReturnUserIsGSEHRAdmin":
 				return $().ReturnUserIsGSEHRAdmin();
 				break;
-				
+
 			case "LoadDepartmentSelectOptions":
 				return $().LoadDepartmentSelectOptions(functionArgumentsObject);
+				break;
+
+			case "ReturnCurrentUserIsManagerOrAdmin":
+				return $().ReturnCurrentUserIsManagerOrAdmin();
 				break;
 		}
 	}
@@ -23907,6 +23924,32 @@
 				managers = error;
 			});
 		return managers;
+	};
+
+	// if (uData.isAdmin === 1 || typeof (button.renderPermissionsFunction) == "undefined") {
+
+
+	$.fn.ReturnCurrentUserIsManagerOrAdmin = function () {
+		var currentUserIsManagerOrAdmin = 0;
+		if (uData.isAdmin === 1) {
+			currentUserIsManagerOrAdmin = 1;
+		} else {
+			currentUserIsManagerOrAdmin = $().ReturnCurrentUserIsManager();
+		}
+		return currentUserIsManagerOrAdmin;
+	};
+
+
+	$.fn.ReturnCurrentUserIsManager = function () {
+		var currentUserIsManager = 0;
+		var currentUserAccount = ReplaceAll('@mos.org', '', ReplaceAll('i:0#.f\\|membership\\|', '', uData.account));
+		var managers = $().ReturnManagers();
+		managers.forEach((manager) => {
+			if (manager.account === currentUserAccount) {
+				currentUserIsManager = 1;
+			}
+		});
+		return currentUserIsManager;
 	};
 
 

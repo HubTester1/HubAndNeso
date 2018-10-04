@@ -113,6 +113,7 @@
 		},
 		'alwaysTalkToRequester': 1,
 		'autoTrackSubmissionAndCancellation': 1,
+		'customAccessPermissionsFunction': 'ReturnCurrentUserIsManagerOrAdmin',
 		'versioningMatters': 0,
 
 
@@ -452,9 +453,9 @@
 							}, {
 								"fieldName": "Hire Last Name",
 								"type": "text"
-							}, {
-								"fieldName": "Hire Manager",
-								"type": "peoplePicker"
+							// }, {
+							// 	"fieldName": "Hire Manager",
+							// 	"type": "peoplePicker"
 							}, {
 								"fieldName": "Hire Department",
 								"type": "select"
@@ -524,9 +525,9 @@
 							}, {
 								"fieldName": "Hire Last Name",
 								"type": "text"
-							}, {
-								"fieldName": "Hire Manager",
-								"type": "peoplePicker"
+							// }, {
+							// 	"fieldName": "Hire Manager",
+							// 	"type": "peoplePicker"
 							}, {
 								"fieldName": "Hire Department",
 								"type": "select"
@@ -654,9 +655,9 @@
 							// }, {
 							// 	"fieldName": "Position Change Previous Manager",
 							// 	"type": "peoplePicker"
-							}, {
-								"fieldName": "Position Change Manager",
-								"type": "peoplePicker"
+							// }, {
+							// 	"fieldName": "Position Change Manager",
+							// 	"type": "peoplePicker"
 							// }, {
 							// 	"fieldName": "Position Change Previous Grade",
 							// 	"type": "select"
@@ -713,9 +714,9 @@
 							// }, {
 							// 	"fieldName": "Position Change Previous Manager",
 							// 	"type": "peoplePicker"
-							}, {
-								"fieldName": "Position Change Manager",
-								"type": "peoplePicker"
+							// }, {
+							// 	"fieldName": "Position Change Manager",
+							// 	"type": "peoplePicker"
 							// }, {
 							// 	"fieldName": "Position Change Previous Grade",
 							// 	"type": "select"
@@ -1434,10 +1435,10 @@
 				'elementType': "field",
 				'controlType': "text",
 				'fieldName': "Hire Manager",
-				'labelContent': "Manager / Supervisor",
+				'labelContent': "Manager",
 				'controlType': 'peoplePicker',
-				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
-				'disabledForAdmin': ['Submitted', 'Cancelled']
+				'disabledForNonAdmin': ['', 'Submitted', 'Cancelled'],
+				'disabledForAdmin': ['', 'Submitted', 'Cancelled']
 			}, {
 				"elementType": "field",
 				"controlType": "select",
@@ -1561,12 +1562,12 @@
 					}, {
 						"value": "Grant FT",
 						"display": "Grant, Part-time"
-					}, {
-						"value": "Campaign FT",
-						"display": "Campaign, Full-time"
-					}, {
-						"value": "Campaign PT",
-						"display": "Campaign, Part-time"
+					// }, {
+					// 	"value": "Campaign FT",
+					// 	"display": "Campaign, Full-time"
+					// }, {
+					// 	"value": "Campaign PT",
+					// 	"display": "Campaign, Part-time"
 					}, {
 						"value": "Intern",
 						"display": "Intern"
@@ -1658,9 +1659,9 @@
 				"labelContent": "Funding Source",
 				"setOptions": [
 					{
-						"value": "Campaign Funds",
-						"display": "Campaign Funds"
-					}, {
+					// 	"value": "Campaign Funds",
+					// 	"display": "Campaign Funds"
+					// }, {
 						"value": "Operating Funds",
 						"display": "Operating Funds"
 					}, {
@@ -1862,10 +1863,10 @@
 				'elementType': "field",
 				'controlType': "text",
 				'fieldName': "Position Change Manager",
-				'labelContent': "Manager / Supervisor",
+				'labelContent': "Manager",
 				'controlType': 'peoplePicker',
-				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
-				'disabledForAdmin': ['Submitted', 'Cancelled']
+				'disabledForNonAdmin': ['', 'Submitted', 'Cancelled'],
+				'disabledForAdmin': ['', 'Submitted', 'Cancelled']
 
 
 			// }, {
@@ -2172,12 +2173,12 @@
 					}, {
 						"value": "Grant FT",
 						"display": "Grant, Part-time"
-					}, {
-						"value": "Campaign FT",
-						"display": "Campaign, Full-time"
-					}, {
-						"value": "Campaign PT",
-						"display": "Campaign, Part-time"
+					// }, {
+					// 	"value": "Campaign FT",
+					// 	"display": "Campaign, Full-time"
+					// }, {
+					// 	"value": "Campaign PT",
+					// 	"display": "Campaign, Part-time"
 					}, {
 						"value": "Intern",
 						"display": "Intern"
@@ -2602,12 +2603,12 @@
 					}, {
 						"value": "Grant FT",
 						"display": "Grant, Part-time"
-					}, {
-						"value": "Campaign FT",
-						"display": "Campaign, Full-time"
-					}, {
-						"value": "Campaign PT",
-						"display": "Campaign, Part-time"
+					// }, {
+					// 	"value": "Campaign FT",
+					// 	"display": "Campaign, Full-time"
+					// }, {
+					// 	"value": "Campaign PT",
+					// 	"display": "Campaign, Part-time"
 					}, {
 						"value": "Intern",
 						"display": "Intern"
@@ -2671,9 +2672,9 @@
 				"labelContent": "Funding Source",
 				"setOptions": [
 					{
-						"value": "Campaign Funds",
-						"display": "Campaign Funds"
-					}, {
+					// 	"value": "Campaign Funds",
+					// 	"display": "Campaign Funds"
+					// }, {
 						"value": "Operating Funds",
 						"display": "Operating Funds"
 					}, {
@@ -2939,9 +2940,9 @@
 				"labelContent": "Funding Source",
 				"setOptions": [
 					{
-						"value": "Campaign Funds",
-						"display": "Campaign Funds"
-					}, {
+					// 	"value": "Campaign Funds",
+					// 	"display": "Campaign Funds"
+					// }, {
 						"value": "Operating Funds",
 						"display": "Operating Funds"
 					}, {
@@ -3151,9 +3152,9 @@
 				"labelContent": "Funding Source",
 				"setOptions": [
 					{
-						"value": "Campaign Funds",
-						"display": "Campaign Funds"
-					}, {
+					// 	"value": "Campaign Funds",
+					// 	"display": "Campaign Funds"
+					// }, {
 						"value": "Operating Funds",
 						"display": "Operating Funds"
 					}, {
@@ -3350,9 +3351,9 @@
 				"labelContent": "Funding Source",
 				"setOptions": [
 					{
-						"value": "Campaign Funds",
-						"display": "Campaign Funds"
-					}, {
+					// 	"value": "Campaign Funds",
+					// 	"display": "Campaign Funds"
+					// }, {
 						"value": "Operating Funds",
 						"display": "Operating Funds"
 					}, {
@@ -3782,6 +3783,24 @@
 	fData.CustomScriptLast += '$("input#Wage-Change-Hourly-Wage, input#Wage-Change-Scheduled-Hours-Biweekly").on("change", function() { \n' +
 		'	$().ProcessEARAndPARHourAndWageFields("Wage-Change-Hourly-Wage", "Wage-Change-Annualized-Salary", "Wage-Change-Scheduled-Hours-Biweekly", "Wage-Change-Scheduled-Hours-Annually");\n' +
 		'}); \n';
+
+	fData.CustomScriptLast += '$().PutAddtlPeopleInPicker("Hire Manager", [{ \n' +
+		'	"name": $("input#Requester-Name").val(), \n' +
+		'	"email": $("input#Requester-Email").val(), \n' +
+		'	"account": $("input#Requester-Account").val() \n' +
+		'}]); \n';
+
+	fData.CustomScriptLast += '$().SetFieldToDisabled("#Hire-Manager"); \n';
+
+	fData.CustomScriptLast += '$().PutAddtlPeopleInPicker("Position Change Manager", [{ \n' +
+		'	"name": $("input#Requester-Name").val(), \n' +
+		'	"email": $("input#Requester-Email").val(), \n' +
+		'	"account": $("input#Requester-Account").val() \n' +
+		'}]); \n';
+
+	fData.CustomScriptLast += '$().SetFieldToDisabled("#Position-Change-Manager"); \n';
+
+
 
 
 	// ======================================================================================================================================================
