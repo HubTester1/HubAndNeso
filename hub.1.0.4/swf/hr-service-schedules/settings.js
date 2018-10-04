@@ -1186,7 +1186,7 @@
 						'hideForNonAdmin': ["Completed", "Cancelled"],
 						'hideForAdmin': ["Completed", "Cancelled"]
 					}, {
-						'text': "This will create individual schdules for the dates that fit your pattern. Your pattern won't be saved, but you'll be able to edit or cancel the individual schedules.",
+						'text': "This will create individual schdules for the dates that fit your pattern. Your pattern won't be saved, but you'll be able to cancel the individual schedules.",
 						'htmlID': "individual-date-warning",
 						'emphasis': 1,
 						'hideForNonAdmin': ["", "Submitted", "Completed", "Cancelled"],

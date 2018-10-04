@@ -416,7 +416,7 @@
 				'requiredForNonAdmin': [''],
 				'requiredForAdmin': [''],
 				'disabledForNonAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
-				'disabledForAdmin': ["Completed", "Disapproved", "Cancelled"]
+				'disabledForAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"]
 			}, {
 				'elementType': "field",
 				'controlType': "radio",
@@ -435,7 +435,7 @@
 				'requiredForNonAdmin': [''],
 				'requiredForAdmin': [''],
 				'disabledForNonAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
-				'disabledForAdmin': ["Completed", "Disapproved", "Cancelled"]
+				'disabledForAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"]
 			}, {
 				'elementType': "field",
 				'controlType': "select",
@@ -454,7 +454,7 @@
 				'controlType': "textarea",
 				'fieldName': "Job Description",
 				// 'listFieldName': "JobDescription",
-				'labelContent': "Job Description",
+				'labelContent': "Job Summary",
 				'requiredForNonAdmin': [""],
 				'requiredForAdmin': [""],
 				'disabledForNonAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],

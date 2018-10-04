@@ -9019,7 +9019,7 @@
 			console.log('RS = approved');
 
 			// admin
-			$.each(eData.adminEmailArray, function (i, toAdmin) {
+			/* $.each(eData.adminEmailArray, function (i, toAdmin) {
 				notificationsToSend.push({
 					'emailType': 'Notification',
 					'caller': 'approved admin',
@@ -9028,7 +9028,7 @@
 					'bodyUnique': '<p>As needed, <a href="' + eData.uriRequest + '">review the request\'s details</a> ' +
 						'and contact ' + eData.requestedForLinkedNamesString + '.'
 				});
-			});
+			}); */
 
 			// manager of requester (job admin)
 			$.each(eData.requesterManagerEmailArray, function (i, toManager) {
@@ -9048,8 +9048,9 @@
 				'caller': 'approved jobAdmin',
 				'to': eData.requesterEmail,
 				'subject': eData.subjectPreface + eData.requestStatus.toLowerCase(),
-				'bodyUnique': '<p>This is the request you nicknamed "' + eData.requestNick + '". You can ' +
-					'<a href="https://bmos.sharepoint.com/sites/hr-service-schedules/SitePages/App.aspx">schedule this job</a> or ' +
+				'bodyUnique': '<p>This is the request you nicknamed "' + eData.requestNick + '". You must ' +
+					'<a href="https://bmos.sharepoint.com/sites/hr-service-schedules/SitePages/App.aspx">schedule this job</a> ' +
+					'before anyone can sign up for it. You can ' + 
 					'<a href="mailto:' + eData.adminEmailString + '">contact the admin</a> with any ' +
 					'issues related thereto.'
 			});
