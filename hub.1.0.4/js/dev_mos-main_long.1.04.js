@@ -6789,7 +6789,6 @@
 							if (rData.endOfLife == 0 || (rData.endOfLife == 1 && rData.endOfLifeIsNew == 1)) {
 								// pass sData to ProcessEventSpaceNotifications
 								$().ProcessGPCInitialConceptApprovalRequestNotifications()
-
 									// only when that's done
 									.then(function () {
 										// resolve promise to process any needed notifications
@@ -8015,14 +8014,14 @@
 			thisPersonAlreadyKept = 0;
 
 			$.each(personsToKeepArray, function (i, keptPerson) {
-				if (typeof (incomingPerson.Key) !== "undefined") {
-					var incomingPersonComparisonProperty = "Key";
+				if (typeof (incomingPerson.accountLong) !== "undefined") {
+					var incomingPersonComparisonProperty = "accountLong";
 				} else {
 					var incomingPersonComparisonProperty = "account";
 				}
 
-				if (typeof (keptPerson.Key) !== "undefined") {
-					var keptPersonComparisonProperty = "Key";
+				if (typeof (keptPerson.accountLong) !== "undefined") {
+					var keptPersonComparisonProperty = "accountLong";
 				} else {
 					var keptPersonComparisonProperty = "account";
 				}
@@ -8154,7 +8153,7 @@
 		if (typeof (mData.devAdminNotifications) != 'undefined' && mData.devAdminNotifications === 1) {
 			var initialConceptNotificationEmailArray = $().ReturnUserEmailStringAndArray(mData.devAdminNotificationPersons).array;
 		} else {
-			var initialConceptNotificationRecipients = $().ReturnGPCInitialConceptGPCNotificationPersonsArray();;
+			var initialConceptNotificationRecipients = $().ReturnGPCInitialConceptGPCNotificationPersonsArray();
 			var initialConceptNotificationRecipientsToKeep = $().ReturnUniquePersonsArrayFromPersonsArray(initialConceptNotificationRecipients);
 			var initialConceptNotificationEmailArray = $().ReturnEmailArrayFromPersonsArray(initialConceptNotificationRecipientsToKeep);
 		}
@@ -8179,7 +8178,9 @@
 
 	$.fn.ReturnGPCInitialConceptGPCNotificationPersonsArray = function () {
 		var gpcGroups = $().ReturnGPCGroups();
-		var initialConceptNotificationRecipients = gpcGroups.InitialConceptNotifications.concat(mData.adminNotificationPersons);
+		var gpcChairsPersonsArray = $().ReturnUserDataFromPersonOrGroupFieldString(mData.adminNotificationPersons);
+		// var initialConceptNotificationRecipients = gpcGroups.InitialConceptNotifications.concat(mData.adminNotificationPersons);
+		var initialConceptNotificationRecipients = gpcGroups.InitialConceptNotifications.concat(gpcChairsPersonsArray);
 		return initialConceptNotificationRecipients;
 	};
 
@@ -8187,7 +8188,9 @@
 
 	$.fn.ReturnGPCSubmissionApprovalGPCNotificationPersonsArray = function () {
 		var gpcGroups = $().ReturnGPCGroups();
-		var submissionApprovalNotificationRecipients = gpcGroups.SubmissionApprovalNotifications.concat(mData.adminNotificationPersons);
+		var gpcChairsPersonsArray = $().ReturnUserDataFromPersonOrGroupFieldString(mData.adminNotificationPersons);
+		// var submissionApprovalNotificationRecipients = gpcGroups.SubmissionApprovalNotifications.concat(mData.adminNotificationPersons);
+		var submissionApprovalNotificationRecipients = gpcGroups.SubmissionApprovalNotifications.concat(gpcChairsPersonsArray);
 		return submissionApprovalNotificationRecipients;
 	};
 
@@ -8195,7 +8198,7 @@
 
 	$.fn.ReturnGPCInitialConceptGPCNotificationPersonsPlusRequesterSetPersonsArray = function () {
 
-		var initialConceptNotificationRecipients = $().ReturnGPCInitialConceptGPCNotificationPersonsArray();;
+		var initialConceptNotificationRecipients = $().ReturnGPCInitialConceptGPCNotificationPersonsArray();
 		var requestersInRequest = $().ReturnGPCRequesterSetPersonsArray();
 		var initialConceptGPCNotificationPersonsPlusRequesterSetPersonsArray = requestersInRequest.concat(initialConceptNotificationRecipients);
 
@@ -8206,7 +8209,7 @@
 
 	$.fn.ReturnGPCSubmissionApprovalGPCNotificationPersonsPlusRequesterSetPersonsArray = function () {
 
-		var submissionApprovalNotificationRecipients = $().ReturnGPCSubmissionApprovalGPCNotificationPersonsArray();;
+		var submissionApprovalNotificationRecipients = $().ReturnGPCSubmissionApprovalGPCNotificationPersonsArray();
 		var requestersInRequest = $().ReturnGPCRequesterSetPersonsArray();
 		var submissionApprovalGPCNotificationPersonsPlusRequesterSetPersonsArray = requestersInRequest.concat(submissionApprovalNotificationRecipients);
 
