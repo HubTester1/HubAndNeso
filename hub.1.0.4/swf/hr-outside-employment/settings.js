@@ -4,10 +4,10 @@
 	var mData = {
 		'componentID': 96,
 		'swf': 1,
-		// 'mosMainKey': 'prod',
+		'mosMainKey': 'prod',
 		// 'mosMainKey': 'dev',
 		// 'mosMainKey': 'devMedium',
-		'mosMainKey': 'devLong',
+		// 'mosMainKey': 'devLong',
 		// "useRecordedMOSMainMajorVersion": 1,
 		// 'currentRequestVersion': 1,
 		'devAdminNotifications': 1,
@@ -372,14 +372,15 @@
 	//	  (customScriptLast will be appended to auto-generated script)
 	fData.CustomScriptFirst = '';
 
-	fData.CustomScriptLast = '$("input#Staff-Member-Name").val("My Name"); \n';
+	fData.CustomScriptLast = '';
+	/* fData.CustomScriptLast += '$("input#Staff-Member-Name").val("My Name"); \n';
 	fData.CustomScriptLast += '$("input#Staff-Member-Position").val("My pos"); \n';
 	fData.CustomScriptLast += '$("input#Manager-Name").val("My Mgr"); \n';
 	fData.CustomScriptLast += '$("input#Outside-Employer").val("Outside employer"); \n';
 	fData.CustomScriptLast += '$("input#Start-Date").val("June 15, 2018"); \n';
 	fData.CustomScriptLast += '$("textarea#Primary-Responsibilities").val("These are my responsibilities."); \n';
 	fData.CustomScriptLast += '$("textarea#Relevant-Responsibilities").val("How they\'re relevant."); \n';
-	fData.CustomScriptLast += '$("textarea#Relevant-Materials").val("These are the materials."); \n';
+	fData.CustomScriptLast += '$("textarea#Relevant-Materials").val("These are the materials."); \n'; */
 
 
 

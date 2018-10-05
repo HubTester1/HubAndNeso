@@ -4,10 +4,10 @@
 	var mData = {
 		'componentID': 101,
 		'swf': 1,
-		// 'mosMainKey': 'prod',
+		'mosMainKey': 'prod',
 		// 'mosMainKey': 'dev',
 		// 'mosMainKey': 'devMedium',
-		'mosMainKey': 'devLong',
+		// 'mosMainKey': 'devLong',
 		// "useRecordedMOSMainMajorVersion": 1,
 		// 'currentRequestVersion': 1,
 		'devAdminNotifications': 0,

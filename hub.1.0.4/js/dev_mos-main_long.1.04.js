@@ -15599,7 +15599,7 @@
 			// construct print content
 			var printContent = '<h1>Employment Authorization Request</h1>' +
 				'<p>' + currentDate + '</p>' +
-				'<h2>Human Resources\' Use Only</h2>' +
+				/* '<h2>Human Resources\' Use Only</h2>' +
 				'<table style="width: 100%;">' +
 				'	<tr style="width: 100%;">' +
 				'		<td style="width: 18%; height: 40px; text-align: right">EAR Requisition #</td>' +
@@ -15619,7 +15619,7 @@
 				'		<td style="width: 20%; height: 40px; text-align: right">Date</td>' +
 				'		<td style="width: 45%; height: 40px; border-bottom: 2px solid black"></td>' +
 				'	</tr>' +
-				'<table>' +
+				'<table>' + */
 				'<h2>Job Data</h2>' +
 				'<table style="width: 100%;">' +
 				'	<tr style="width: 100%;">' +
@@ -15641,8 +15641,8 @@
 				'				<li><b>Proposed Hourly Wage:</b> ' + formData["Proposed-Hourly-Wage"] + '</li>' +
 				'				<li><b>Proposed Annualized Salary:</b> ' + formData["Proposed-Annualized-Salary"] + '</li>' +
 				'				<li><b>Proposed Start Date:</b> ' + formData["Proposed-Start-Date"] + '</li>';
-
-			if (formData["Employee-Classification"] != "Regular FT" && formData["Employee-Classification"] != "Regular PT") {
+			console.log(formData["Employee-Classification"]);
+			if (formData["Employee-Classification"] != "Regular, Full-time" && formData["Employee-Classification"] != "Regular, Part-time") {
 				printContent += '				<li><b>Proposed End Date:</b> ' + formData["Proposed-End-Date"] + '</li>';
 			}
 
@@ -15839,7 +15839,7 @@
 					'	<li><b>Proposed Hourly Wage:</b> ' + formData["Hire-Proposed-Hourly-Wage"] + '</li>' +
 					'	<li><b>Proposed Annualized Salary:</b> ' + formData["Hire-Proposed-Annualized-Salary"] + '</li>' +
 					'	<li><b>Anticipated Start Date:</b> ' + formData["Hire-Start-Date"] + '</li>';
-				if (formData["Hire-Employee-Classification"] != "Regular FT" && formData["Hire-Employee-Classification"] != "Regular PT") {
+				if (formData["Hire-Employee-Classification"] != "Regular, Full-time" && formData["Hire-Employee-Classification"] != "Regular, Part-time") {
 					printContent += '	<li><b>Anticipated End Date:</b> ' + formData["Hire-End-Date"] + '</li>';
 				}
 				printContent += '	<li><b>Funding Source:</b> ' + formData["Hire-Funding-Source"] + '</li>';
@@ -15919,7 +15919,7 @@
 							// 				'				<li><b>Employee Classification:</b> ' + formData["Position-Change-Previous-Employee-Classification"] + '</li>' + 
 							// 				'				<li><b>Start Date:</b> ' + formData["Position-Change-Previous-Start-Date"] + '</li>';
 
-							// if (formData["Position-Change-Previous-Employee-Classification"] != "Regular FT" && formData["Position-Change-Previous-Employee-Classification"] != "Regular PT") {
+							// if (formData["Position-Change-Previous-Employee-Classification"] != "Regular, Full-time" && formData["Position-Change-Previous-Employee-Classification"] != "Regular, Part-time") {
 							// 	printContent += '				<li><b>End Date:</b> ' + formData["Position-Change-Previous-End-Date"] + '</li>';
 							// }
 
@@ -15939,7 +15939,7 @@
 								'				<li><b>Employee Classification:</b> ' + formData["Position-Change-Employee-Classification"] + '</li>' +
 								'				<li><b>Anticipated Start Date:</b> ' + formData["Position-Change-Start-Date"] + '</li>';
 
-							if (formData["Position-Change-Employee-Classification"] != "Regular FT" && formData["Position-Change-Employee-Classification"] != "Regular PT") {
+							if (formData["Position-Change-Employee-Classification"] != "Regular, Full-time" && formData["Position-Change-Employee-Classification"] != "Regular, Part-time") {
 								printContent += '				<li><b>Anticipated End Date:</b> ' + formData["Position-Change-End-Date"] + '</li>';
 							}
 
@@ -15984,7 +15984,7 @@
 								'	<li><b>Employee Classification:</b> ' + formData["Additional-Position-Employee-Classification"] + '</li>' +
 								'	<li><b>Start Date:</b> ' + formData["Additional-Position-Start-Date"] + '</li>';
 
-							if (formData["Additional-Position-Employee-Classification"] != "Regular FT" && formData["Additional-Position-Employee-Classification"] != "Regular PT") {
+							if (formData["Additional-Position-Employee-Classification"] != "Regular, Full-time" && formData["Additional-Position-Employee-Classification"] != "Regular, Part-time") {
 								printContent += '	<li><b>End Date:</b> ' + formData["Additional-Position-End-Date"] + '</li>';
 							}
 							printContent += '	<li><b>Funding Source:</b> ' + formData["Additional-Position-Funding-Source"] + '</li>';
@@ -16148,126 +16148,107 @@
 							// 					'	<li><b>Reason Explanation:</b> ' + formData["Other-Termination-Reason-Explanation"] + '</li>';
 							// }
 						}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-						printContent += '<h2>Approvals</h2>' +
-							'<table style="width: 100%;">' +
-							'	<tr style="width: 100%;">' +
-							'		<td style="width: 20%; height: 40px; text-align: right">Manager/Director</td>' +
-							'		<td style="width: 50%; height: 40px; border-bottom: 2px solid black"></td>' +
-							'		<td style="width: 10%; height: 40px; text-align: right">Date</td>' +
-							'		<td style="width: 20%; height: 40px; border-bottom: 2px solid black"></td>' +
-							'	</tr>' +
-							'	<tr style="width: 100%;">' +
-							'		<td style="width: 20%; height: 40px; text-align: right">Vice President</td>' +
-							'		<td style="width: 50%; height: 40px; border-bottom: 2px solid black"></td>' +
-							'		<td style="width: 10%; height: 40px; text-align: right">Date</td>' +
-							'		<td style="width: 20%; height: 40px; border-bottom: 2px solid black"></td>' +
-							'	</tr>' +
-							'	<tr style="width: 100%;">' +
-							'		<td style="width: 20%; height: 40px; text-align: right">Human Resources</td>' +
-							'		<td style="width: 50%; height: 40px; border-bottom: 2px solid black"></td>' +
-							'		<td style="width: 10%; height: 40px; text-align: right">Date</td>' +
-							'		<td style="width: 20%; height: 40px; border-bottom: 2px solid black"></td>' +
-							'	</tr>' +
-							'<table>' +
-							'<h2>Human Resources\' Use Only</h2>' +
-							'<table style="width: 100%;">' +
-							'	<tr style="width: 100%;">' +
-							'		<td style="width: 4%; height: 40px; border-bottom: 2px solid black"></td>' +
-							'		<td style="width: 8%; height: 40px;">' +
-							'			Exempt' +
-							'		</td>' +
-							'		<td style="width: 4%; height: 40px;"></td>' +
-							'		<td style="width: 4%; height: 40px; border-bottom: 2px solid black"></td>' +
-							'		<td style="width: 8%; height: 40px;">' +
-							'			Non-exempt' +
-							'		</td>' +
-							'		<td style="width: 4%; height: 40px;"></td>' +
-							'		<td style="width: 8%; height: 40px; text-align: right;">' +
-							'			EAR #:' +
-							'		</td>' +
-							'		<td style="width: 20%; height: 40px; border-bottom: 2px solid black"></td>' +
-							'		<td style="width: 4%; height: 40px;"></td>' +
-							'		<td style="width: 13%; height: 40px; text-align: right;">' +
-							'			Worker\'s Comp #:' +
-							'		</td>' +
-							'		<td style="width: 16%; height: 40px; border-bottom: 2px solid black"></td>' +
-							'		<td style="width: 4%; height: 40px;"></td>' +
-							'	</tr>' +
-							'</table>' +
-							'<table style="width: 100%;">' +
-							'	<tr style="width: 100%;">' +
-							'		<td style="width: 8%; height: 40px;">' +
-							'			Benefits:' +
-							'		</td>' +
-							'		<td style="width: 4%; height: 40px;"></td>' +
-							'		<td style="width: 4%; height: 40px; border-bottom: 2px solid black"></td>' +
-							'		<td style="width: 6%; height: 40px;">' +
-							'			FT (E)' +
-							'		</td>' +
-							'		<td style="width: 4%; height: 40px;"></td>' +
-							'		<td style="width: 4%; height: 40px; border-bottom: 2px solid black"></td>' +
-							'		<td style="width: 6%; height: 40px;">' +
-							'			PT (P)' +
-							'		</td>' +
-							'		<td style="width: 4%; height: 40px;"></td>' +
-							'		<td style="width: 4%; height: 40px; border-bottom: 2px solid black"></td>' +
-							'		<td style="width: 15%; height: 40px;">' +
-							'			403(b) Only (I)' +
-							'		</td>' +
-							'		<td style="width: 41%; height: 40px;"></td>' +
-							'	</tr>' +
-							'</table>' +
-							'<table style="width: 100%;">' +
-							'	<tr style="width: 100%;">' +
-
-
-							'		<td style="width: 8%; height: 40px; text-align: right;">' +
-							'			SSN:' +
-							'		</td>' +
-							'		<td style="width: 20%; height: 40px; border-bottom: 2px solid black">' +
-							'		</td>' +
-
-
-							'		<td style="width: 4%; height: 40px;"></td>' +
-							'		<td style="width: 8%; height: 40px; text-align: right;">' +
-							'			DOB:' +
-							'		</td>' +
-							'		<td style="width: 20%; height: 40px; border-bottom: 2px solid black">' +
-							'		</td>' +
-
-
-							'		<td style="width: 4%; height: 40px;"></td>' +
-							'		<td style="width: 15%; height: 40px; text-align: right;">' +
-							'			Remaining vacation Hrs:' +
-							'		</td>' +
-							'		<td style="width: 21%; height: 40px; border-bottom: 2px solid black">' +
-							'		</td>' +
-
-
-							'	</tr>' +
-							'<table>';
-
 					});
 			}
+
+			printContent += '<h2>Approvals</h2>' +
+				'<table style="width: 100%;">' +
+				'	<tr style="width: 100%;">' +
+				'		<td style="width: 20%; height: 40px; text-align: right">Manager/Director</td>' +
+				'		<td style="width: 50%; height: 40px; border-bottom: 2px solid black"></td>' +
+				'		<td style="width: 10%; height: 40px; text-align: right">Date</td>' +
+				'		<td style="width: 20%; height: 40px; border-bottom: 2px solid black"></td>' +
+				'	</tr>' +
+				'	<tr style="width: 100%;">' +
+				'		<td style="width: 20%; height: 40px; text-align: right">Vice President</td>' +
+				'		<td style="width: 50%; height: 40px; border-bottom: 2px solid black"></td>' +
+				'		<td style="width: 10%; height: 40px; text-align: right">Date</td>' +
+				'		<td style="width: 20%; height: 40px; border-bottom: 2px solid black"></td>' +
+				'	</tr>' +
+				'	<tr style="width: 100%;">' +
+				'		<td style="width: 20%; height: 40px; text-align: right">Human Resources</td>' +
+				'		<td style="width: 50%; height: 40px; border-bottom: 2px solid black"></td>' +
+				'		<td style="width: 10%; height: 40px; text-align: right">Date</td>' +
+				'		<td style="width: 20%; height: 40px; border-bottom: 2px solid black"></td>' +
+				'	</tr>' +
+				'<table>' +
+				'<h2>Human Resources\' Use Only</h2>' +
+				'<table style="width: 100%;">' +
+				'	<tr style="width: 100%;">' +
+				'		<td style="width: 4%; height: 40px; border-bottom: 2px solid black"></td>' +
+				'		<td style="width: 8%; height: 40px;">' +
+				'			Exempt' +
+				'		</td>' +
+				'		<td style="width: 4%; height: 40px;"></td>' +
+				'		<td style="width: 4%; height: 40px; border-bottom: 2px solid black"></td>' +
+				'		<td style="width: 8%; height: 40px;">' +
+				'			Non-exempt' +
+				'		</td>' +
+				'		<td style="width: 4%; height: 40px;"></td>' +
+				'		<td style="width: 8%; height: 40px; text-align: right;">' +
+				'			EAR #:' +
+				'		</td>' +
+				'		<td style="width: 20%; height: 40px; border-bottom: 2px solid black"></td>' +
+				'		<td style="width: 4%; height: 40px;"></td>' +
+				'		<td style="width: 13%; height: 40px; text-align: right;">' +
+				'			Worker\'s Comp #:' +
+				'		</td>' +
+				'		<td style="width: 16%; height: 40px; border-bottom: 2px solid black"></td>' +
+				'		<td style="width: 4%; height: 40px;"></td>' +
+				'	</tr>' +
+				'</table>' +
+				'<table style="width: 100%;">' +
+				'	<tr style="width: 100%;">' +
+				'		<td style="width: 8%; height: 40px;">' +
+				'			Benefits:' +
+				'		</td>' +
+				'		<td style="width: 4%; height: 40px;"></td>' +
+				'		<td style="width: 4%; height: 40px; border-bottom: 2px solid black"></td>' +
+				'		<td style="width: 6%; height: 40px;">' +
+				'			FT (E)' +
+				'		</td>' +
+				'		<td style="width: 4%; height: 40px;"></td>' +
+				'		<td style="width: 4%; height: 40px; border-bottom: 2px solid black"></td>' +
+				'		<td style="width: 6%; height: 40px;">' +
+				'			PT (P)' +
+				'		</td>' +
+				'		<td style="width: 4%; height: 40px;"></td>' +
+				'		<td style="width: 4%; height: 40px; border-bottom: 2px solid black"></td>' +
+				'		<td style="width: 15%; height: 40px;">' +
+				'			403(b) Only (I)' +
+				'		</td>' +
+				'		<td style="width: 41%; height: 40px;"></td>' +
+				'	</tr>' +
+				'</table>' +
+				'<table style="width: 100%;">' +
+				'	<tr style="width: 100%;">' +
+
+
+				'		<td style="width: 8%; height: 40px; text-align: right;">' +
+				'			SSN:' +
+				'		</td>' +
+				'		<td style="width: 20%; height: 40px; border-bottom: 2px solid black">' +
+				'		</td>' +
+
+
+				'		<td style="width: 4%; height: 40px;"></td>' +
+				'		<td style="width: 8%; height: 40px; text-align: right;">' +
+				'			DOB:' +
+				'		</td>' +
+				'		<td style="width: 20%; height: 40px; border-bottom: 2px solid black">' +
+				'		</td>' +
+
+
+				'		<td style="width: 4%; height: 40px;"></td>' +
+				'		<td style="width: 15%; height: 40px; text-align: right;">' +
+				'			Remaining vacation Hrs:' +
+				'		</td>' +
+				'		<td style="width: 21%; height: 40px; border-bottom: 2px solid black">' +
+				'		</td>' +
+
+
+				'	</tr>' +
+				'<table>';
 
 			printContent = ReturnPrintableContentWithStandardWrapper(printContent, "hr-personnel-action");
 
@@ -23872,14 +23853,17 @@
 					if (lastSalaryFieldID) {
 						var lastSalaryString = $("input#" + lastSalaryFieldID).val().replace("\$", "").replace(/[,]/g, "");
 						if (lastSalaryString != '') {
-							var salaryChangeString = parseFloat(annualWageString) - parseFloat(lastSalaryString);
-							$("input#" + lastSalaryFieldID).val(numeral(parseFloat(lastSalaryString)).format('$0,0.00'));
-							$("input#Salary-Change").val(numeral(parseFloat(salaryChangeString)).format('$0,0.00'));
-							$().SetFieldToRequired('Salary-Change', 'text');
-							$("div#label-and-control_Salary-Change").show("fast").removeClass("hidden");
-							if (salaryChangeString != 0) {
-								$().SetFieldToRequired('Salary-Change-Reason', 'textarea');
-								$("div#label-and-control_Salary-Change-Reason").show("fast").removeClass("hidden");
+							var lastSalaryIsValid = $().ValidateInRealTimeForPositiveNumberInUSDFormat(lastSalaryString, "input#" + lastSalaryFieldID);
+							if (lastSalaryIsValid == 1) {
+								var salaryChangeString = parseFloat(annualWageString) - parseFloat(lastSalaryString);
+								$("input#" + lastSalaryFieldID).val(numeral(parseFloat(lastSalaryString)).format('$0,0.00'));
+								$("input#Salary-Change").val(numeral(parseFloat(salaryChangeString)).format('$0,0.00'));
+								$().SetFieldToRequired('Salary-Change', 'text');
+								$("div#label-and-control_Salary-Change").show("fast").removeClass("hidden");
+								if (salaryChangeString != 0) {
+									$().SetFieldToRequired('Salary-Change-Reason', 'textarea');
+									$("div#label-and-control_Salary-Change-Reason").show("fast").removeClass("hidden");
+								}
 							}
 						}
 					}

@@ -4,10 +4,10 @@
 	var mData = {
 		'componentID': 85,
 		'swf': 1,
-		// 'mosMainKey': 'prod',
+		'mosMainKey': 'prod',
 		// 'mosMainKey': 'dev',
 		// 'mosMainKey': 'devMedium',
-		'mosMainKey': 'devLong',
+		// 'mosMainKey': 'devLong',
 		// "useRecordedMOSMainMajorVersion": 1,
 		"currentRequestVersion": 1,
 		'devAdminNotifications': 1,
@@ -219,12 +219,12 @@
 
 	var fData = {
 		'standardElementGroups': {
-			'standardPrintButton': {
-				'buttonText': 'Print Request',
-				'printFunction': 'PrintEmploymentAuthorizationRequest',
-				'hideForNonAdmin': [],
-				'hideForAdmin': [],
-			},
+			// 'standardPrintButton': {
+			// 	'buttonText': 'Print Request',
+			// 	'printFunction': 'PrintEmploymentAuthorizationRequest',
+			// 	'hideForNonAdmin': [],
+			// 	'hideForAdmin': [],
+			// },
 		},
 		'versioningMatters': 0,
 
@@ -235,7 +235,7 @@
 
 		'uniqueElements': [
 			{
-				'elementType': "markup",
+				/* 'elementType': "markup",
 				'tag': "h2",
 				'content': 'Process',
 				'begin': 1,
@@ -246,7 +246,7 @@
 				'content': 'Print this request, acquire appropriate signatures, and submit it to Human Resources.',
 				'begin': 1,
 				'end': 1
-			}, {
+			}, { */
 				'elementType': 'markup',
 				'tag': 'h2',
 				'content': 'Job Description',
@@ -1062,6 +1062,14 @@
 				'elementType': 'markup',
 				'tag': 'div',
 				'end': 1,
+			}, {
+				'elementType': 'markup',
+				'tag': 'div',
+				'begin': 1,
+				'end': 1,
+				'content': '<h2>Process</h2>' +
+							'<a id="standard-printer-button-inside-request" data-print-function="PrintEmploymentAuthorizationRequest">Print Request</a>' +
+							'<p>Print this request, acquire appropriate signatures, and submit it to Human Resources.</p>'
 			}
 		]
 	};
@@ -1131,6 +1139,21 @@
 	fData.CustomScriptLast += '$("div#request-form").on("change", "input.format-percent", function() { \n' +
 		'	$().ProcessEARPercentFields($(this).attr("id"));\n' +
 		'}); \n';
+
+
+
+
+	/* fData.CustomScriptLast += 
+		'$("input#Replacement-Salary").on("change", function () { ' +
+		'	var replacementSalaryString = $("input#Replacement-Salary").val().replace("\$", "").replace(/[,]/g, "");' +
+		'	if (replacementSalaryString != "") {' +
+		'		$().ValidateInRealTimeForPositiveNumberInUSDFormat(replacementSalaryString, "input#Replacement-Salary");' +
+		'	}' +
+		'});'; */
+
+
+
+
 
 
 	$.fn.ReturnThisAppMData = function () {
