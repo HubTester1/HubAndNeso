@@ -5,12 +5,12 @@
 	var mData = {
 		'componentID': 158,
 		'swf': 1,
-		// 'mosMainKey': 'prod',
+		'mosMainKey': 'prod',
 		// 'mosMainKey': 'dev',
 		// 'mosMainKey': 'devMedium',
-		'mosMainKey': 'devLong',
+		// 'mosMainKey': 'devLong',
 		'devAdminNotifications': 1,
-		'notifications': 1
+		'notifications': 0
 	};
 
 	console.log("using settings m5");

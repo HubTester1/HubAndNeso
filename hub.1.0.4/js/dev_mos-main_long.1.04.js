@@ -20271,12 +20271,7 @@
 		var augmentedSignups = $().ReturnSelectedAugmentedSignupsForGSESignupsOverviews(selectedStartYear);
 		var selectedManagerWithDownline;
 
-		console.log('selectedManager');
-		console.log(selectedManager);
-		console.log('manager.account');
-
 		managersWithDownline.forEach((manager) => {
-			console.log(manager.account);
 			if (manager.account === selectedManager) {
 				selectedManagerWithDownline = manager;
 			}

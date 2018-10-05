@@ -21,7 +21,7 @@
 		  // partial config 
 		var mData = {
 			'legacyFile': '/sites/hr-service-schedules/SiteAssets/schedules.xml',
-			'maxToProcess': 0,
+			'maxToProcess': 10000,
 			'newList': 'SWFList',
 			'deleteAllItemsBeforeImporting': 1,
 			'emailErrorsTo': 'jbaker@mos.org'
@@ -59,7 +59,8 @@
 					// grab some data that will be used multiple times, that needs to be manipulated, or is otherwise convenient
 					var legacyID = $(requestValue).find('legacyID').text();
 					var legacyJobID = $(requestValue).find('legacyJobID').text();
-					var quarkRequest = 'https://quark.mos.org/getitdone/gse/signup/showschedule.cfm?Schedule=' + legacyID;
+					// var quarkRequest = 'https://quark.mos.org/getitdone/gse/signup/showschedule.cfm?Schedule=' + legacyID;
+					var quarkRequest = 'https://quark.mos.org/getitdone/gse/admin/schedule/updateschedule.cfm?Schedule=' + legacyID;
 					var requestDate = $(requestValue).find('requestDate').text();
 					if (requestDate != "" && moment(requestDate).isValid()) {
 						requestDate = moment(requestDate.substr(0, 10)).format("YYYY-MM-DD");
@@ -193,7 +194,7 @@
 					listFields.Title = moment(scheduleDate).format('YYYY-MM-DD') + ' - ' + thisJob.JobTitle;
 					listFields.ShiftLength = shiftLengthValue;
 					listFields.NumberOfPositions = $(requestValue).find('qtyPositions').text();
-					listFields.Location = $(requestValue).find('location').text();
+					// listFields.Location = $(requestValue).find('location').text();
 					listFields.JobID = thisJob.jobID;
 
 
@@ -220,7 +221,10 @@
 						'"' + shiftLengthID + '": "' + shiftLengthValue + '",' +
 						'"Number-of-Positions":"' + listFields.NumberOfPositions + '",' +
 						'"Location":"' + listFields.Location + '",' +
-						'"id-or-link_GSE-Job-Request-ID":"' + listFields.JobID + '",';
+						'"id-or-link_GSE-Job-Request-ID":"' + listFields.JobID + '",' + 
+						'"Quark-Request":"' + HtmlEncode(quarkRequest) + '",' +
+						'"legacy-id":"' + legacyID + '",';
+
 
 					if (notes) {
 						allRequestData += '"Notes":"' + notes + '",';

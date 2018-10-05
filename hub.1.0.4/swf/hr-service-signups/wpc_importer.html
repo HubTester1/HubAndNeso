@@ -21,7 +21,7 @@
 		  // partial config 
 		var mData = {
 			'legacyFile': '/sites/hr-service-signups/SiteAssets/signups.xml',
-			'maxToProcess': 0,
+			'maxToProcess': 10000,
 			'newList': 'SWFList',
 			'deleteAllItemsBeforeImporting': 1,
 			'emailErrorsTo': 'jbaker@mos.org'
@@ -64,7 +64,6 @@
 
 						var legacyID = $(requestValue).find('legacyID').text();
 						var legacyScheduleID = $(requestValue).find('scheduleID').text();
-						var quarkRequest = 'https://quark.mos.org/getitdone/gse/admin/reports/underlings.cfm';
 						
 						
 						
@@ -161,6 +160,7 @@
 							'"End-of-Life": "' + listFields.EndOfLife + '",' + 
 							'"Schedule-ID": "' + listFields.ScheduleID + '",' + 
 							'"Job-ID": "' + listFields.JobID + '",';
+
 
 							// '"XXX":"' + listFields.XXX + '",' +
 							// '"XXX":"' + listFields.XXX + '",' +

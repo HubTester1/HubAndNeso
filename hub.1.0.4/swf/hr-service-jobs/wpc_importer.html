@@ -21,7 +21,7 @@
 		  // partial config 
 		var mData = {
 			'legacyFile': '/sites/hr-service-jobs/SiteAssets/jobs.xml', //https://bmos.sharepoint.com
-			'maxToProcess': 0,
+			'maxToProcess': 10000,
 			'newList': 'SWFList',
 			'deleteAllItemsBeforeImporting': 1,
 			'emailErrorsTo': 'jbaker@mos.org'
@@ -180,9 +180,10 @@
 							'"Job-Description":"' + jobDescription + '",' +
 							'"Training-Requirements":"' + trainingRequirements + '",' +
 							'"Dress-Requirements":"' + dressRequirements + '",' + 
-							'"Job-Duties":"' + jobDuties + '",';
+							'"Job-Duties":"' + jobDuties + '",' + 
 
-
+							'"Quark-Request":"' + HtmlEncode(quarkRequest) + '",' +
+							'"legacy-id":"' + legacyID + '",';
 
 
 
