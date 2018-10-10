@@ -5,6 +5,7 @@ import { Web } from 'sp-pnp-js';
 import shortID from 'shortid';
 import EnvironmentDetector from '../../services/EnvironmentDetector';
 import NesoHTTPClient from '../../services/NesoHTTPClient';
+import MOSUtilities from '../../services/MOSUtilities';
 
 // ----- DATA
 
@@ -51,7 +52,8 @@ export default class HcGetItDoneData {
 								};
 								if (itemValue.ServerRedirectedEmbedUrl) {
 									itemFormatted.url = itemValue.ServerRedirectedEmbedUrl;
-									itemFormatted.anchorText = itemValue.FileLeafRef.toString();
+									itemFormatted.anchorText = 
+										MOSUtilities.ReplaceAll('.pdf', '', MOSUtilities.ReplaceAll('.docx', '', itemValue.FileLeafRef.toString()));
 									itemFormatted.description = itemValue.Title;
 									itemFormatted.groups = ['HR'];
 									itemFormatted.type = 'file';
