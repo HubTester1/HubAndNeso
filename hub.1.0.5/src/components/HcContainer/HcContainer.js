@@ -60,7 +60,6 @@ class HcContainer extends React.Component {
 	render() {
 		if (EnvironmentDetector.ReturnIsHCScreen()) {
 			document.body.classList.add('contains-hub-central');
-
 			return (
 				<div
 					id="hc-container"

@@ -39,7 +39,7 @@ gulp.task('push-settings', () =>
 // when the specified settings file changes, push it to specified location
 gulp.task('watch-push-settings', () => {
 	// watch the src style file; upon changes, build dist style file and push it to dev
-	gulp.watch([gulpBaseConfig.ReturnSWFSettingsFile(argv.app)], ['push-settings']);
+	gulp.watch([gulpBaseConfig.ReturnSWFSettingsFile(argv.app)], gulp.series('push-settings'));
 });
 
 
@@ -59,7 +59,7 @@ gulp.task('push-importer', () =>
 // when the specified settings file changes, push it to specified location
 gulp.task('watch-push-importer', () => {
 	// watch the src style file; upon changes, build dist style file and push it to dev
-	gulp.watch([gulpBaseConfig.ReturnSWFImporterFile(argv.app)], ['push-importer']);
+	gulp.watch([gulpBaseConfig.ReturnSWFImporterFile(argv.app)], gulp.series('push-importer'));
 });
 
 
@@ -108,7 +108,7 @@ gulp.task('4-dev-build-push-styles', () =>
 // when the specified src style file changes, build dist style file and push it to dev
 gulp.task('4-dev-watch-build-push-styles', () => {
 	// watch the src style file; upon changes, build dist style file and push it to dev
-	gulp.watch([gulpV4DevConfig.ReturnV4DevStylesSrcFile()], ['4-dev-build-push-styles']);
+	gulp.watch([gulpV4DevConfig.ReturnV4DevStylesSrcFile()], gulp.series('4-dev-build-push-styles'));
 });
 // push specified swf api file to dev
 gulp.task('4-dev-push-api', () =>
@@ -136,7 +136,7 @@ gulp.task('4-dev-wait-push-api', () => {
 // when the specified swf api file changes, push it to dev
 gulp.task('4-dev-watch-push-api', () => {
 	// watch the src style file; upon changes, build dist style file and push it to dev
-	gulp.watch([gulpV4DevConfig.ReturnV4DevSWFAPIFile(argv.api)], ['4-dev-wait-push-api']);
+	gulp.watch([gulpV4DevConfig.ReturnV4DevSWFAPIFile(argv.api)], gulp.series('4-dev-wait-push-api'));
 });
 
 // PROD
@@ -182,7 +182,7 @@ gulp.task('4-prod-build-push-styles', () =>
 // when the specified src style file changes, build dist style file and push it to dev
 gulp.task('4-prod-watch-build-push-styles', () => {
 	// watch the src style file; upon changes, build dist style file and push it to dev
-	gulp.watch([gulpV4ProdConfig.ReturnV4ProdStylesSrcFile()], ['4-prod-push-styles']);
+	gulp.watch([gulpV4ProdConfig.ReturnV4ProdStylesSrcFile()], gulp.series('4-prod-push-styles'));
 });
 // push specified swf api file to dev
 gulp.task('4-prod-push-api', () =>
@@ -210,7 +210,7 @@ gulp.task('4-prod-wait-push-api', () => {
 // when the specified swf api file changes, push it to dev
 gulp.task('4-prod-watch-push-api', () => {
 	// watch the src style file; upon changes, build dist style file and push it to dev
-	gulp.watch([gulpV4ProdConfig.ReturnV4ProdSWFAPIFile()], ['4-prod-wait-push-api']);
+	gulp.watch([gulpV4ProdConfig.ReturnV4ProdSWFAPIFile()], gulp.series('4-prod-wait-push-api'));
 });
 
 
@@ -259,7 +259,7 @@ gulp.task('5-dev-build-push', () =>
 // when src changes, build dist file and push dist to dev
 gulp.task('5-dev-watch-build-push', () => {
 	// watch the src folder; upon changes, build dist file and push dist to dev
-	gulp.watch([`${gulpV5DevConfig.ReturnV5DevSrcFolder()}/**`], ['5-dev-build-push']);
+	gulp.watch([`${gulpV5DevConfig.ReturnV5DevSrcFolder()}/**`], gulp.series('5-dev-build-push'));
 });
 
 // PROD
