@@ -11,6 +11,7 @@ const { argv } = require('yargs');
 const webpackV4DevConfig = require('./webpack/v4.dev.css.config');
 const webpackV4ProdConfig = require('./webpack/v4.prod.css.config');
 const webpackV5DevConfig = require('./webpack/v5.dev.config');
+
 // const webpackV5ProdConfig = require('./webpack/v5.prod.config');
 const gulpBaseConfig = require('./gulp/base.config');
 const gulpV4DevConfig = require('./gulp/v4.dev.config');
@@ -241,6 +242,19 @@ gulp.task('5-dev-push', () =>
 			gulpV5DevConfig.ReturnV5SPSaveDevOptions(), 
 			gulpBaseConfig.ReturnGulpSPSaveCredentials(),
 		)));
+// push js to dev
+gulp.task('5-dev-push-js', () =>
+	// for all files in the dist folder
+	gulp.src(`${gulpV5DevConfig.ReturnV5DevDistFolder()}/+(*.js|*.js.map)`)
+		// replace the standard pipe method
+		.pipe(plumber())
+		// pipe them into a caching proxy 
+		.pipe(cached('spFiles'))
+		// and then to SP prod location
+		.pipe(spSave(
+			gulpV5DevConfig.ReturnV5SPSaveDevOptions(),
+			gulpBaseConfig.ReturnGulpSPSaveCredentials(),
+		)));
 // build dist file and push dist to dev
 gulp.task('5-dev-build-push', () =>
 	// for all files in the src folder
@@ -256,6 +270,11 @@ gulp.task('5-dev-build-push', () =>
 			gulpV5DevConfig.ReturnV5SPSaveDevOptions(), 
 			gulpBaseConfig.ReturnGulpSPSaveCredentials(),
 		)));
+// when src changes, build dist file and push dist to dev
+gulp.task('5-dev-watch-all-build-push-js', () => {
+	// watch the src folder; upon changes, build dist file and push dist to dev
+	gulp.watch([`${gulpV5DevConfig.ReturnV5DevSrcFolder()}/**`], gulp.series('5-dev-build', '5-dev-push-js'));
+});
 // when src changes, build dist file and push dist to dev
 gulp.task('5-dev-watch-build-push', () => {
 	// watch the src folder; upon changes, build dist file and push dist to dev
