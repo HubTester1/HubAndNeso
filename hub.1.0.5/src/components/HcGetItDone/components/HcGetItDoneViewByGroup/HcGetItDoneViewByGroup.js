@@ -18,6 +18,7 @@ export default class HcGetItDoneViewByGroup extends React.Component {
 							key={groupValue.key}
 							groupId={groupValue.key}
 							groupContent={groupValue}
+							uData={this.props.uData}
 						/>
 					))
 				}

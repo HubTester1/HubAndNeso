@@ -19,13 +19,35 @@ export default class HcGetItDoneViewByGroup extends React.Component {
 
 					<ul>
 						{
-							this.props.groupContent.items.map(itemValue => (
-								<HcGetItDoneLinkListItem
-									key={itemValue.key}
-									listItemId={itemValue.key}
-									listItemContent={itemValue}
-								/>
-							))
+							this.props.groupContent.items.map((itemValue) => {
+								if (itemValue.restrictedToRoles) {
+									let userPermitted = false;
+									itemValue.restrictedToRoles.forEach((permittedRole) => {
+										this.props.uData.roles.forEach((userRole) => {
+											if (permittedRole === userRole) {
+												userPermitted = true;
+											}
+										});
+									});
+									if (userPermitted) {
+										return (
+											<HcGetItDoneLinkListItem
+												key={itemValue.key}
+												listItemId={itemValue.key}
+												listItemContent={itemValue}
+											/>
+										);
+									}
+									return (undefined);
+								}
+								return (
+									<HcGetItDoneLinkListItem
+										key={itemValue.key}
+										listItemId={itemValue.key}
+										listItemContent={itemValue}
+									/>
+								);
+							})
 						}
 					</ul>
 				}
@@ -36,6 +58,7 @@ export default class HcGetItDoneViewByGroup extends React.Component {
 						key={this.props.groupContent.items[0].key}
 						listItemId={this.props.groupContent.items[0].key}
 						listItemContent={this.props.groupContent.items[0]}
+
 					/>
 				}
 			</div>

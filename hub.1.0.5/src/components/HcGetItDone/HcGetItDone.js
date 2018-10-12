@@ -62,27 +62,35 @@ export default class HcGetItDone extends React.Component {
 		}));
 	}
 	returnHcGetItDoneBody() {
+		if (this.props.uData.roles) {
+			return (
+				<div id="hc-get-it-done-body">
+					<HcGetItDoneCommandBar
+						handleClickViewByGroupButton={this.handleClickViewByGroupButton}
+						handleClickViewByAlphaButton={this.handleClickViewByAlphaButton}
+					/>
+					{
+						this.state.showViewByGroup &&
+
+						<HcGetItDoneViewByGroup
+							listItemsGroupedArray={this.state.listItemsGroupedArray}
+							uData={this.props.uData}
+						/>
+
+					}
+					{
+						this.state.showViewByAlpha &&
+
+						<HcGetItDoneViewByAlpha
+							listItemsAlphaArray={this.state.listItemsAlphaArray}
+							uData={this.props.uData}
+						/>
+					}
+				</div>
+			);
+		}
 		return (
-			<div id="hc-get-it-done-body">
-				<HcGetItDoneCommandBar
-					handleClickViewByGroupButton={this.handleClickViewByGroupButton}
-					handleClickViewByAlphaButton={this.handleClickViewByAlphaButton}
-				/>
-				{
-					this.state.showViewByGroup &&
-
-					<HcGetItDoneViewByGroup
-						listItemsGroupedArray={this.state.listItemsGroupedArray}
-					/>
-				}
-				{
-					this.state.showViewByAlpha &&
-
-					<HcGetItDoneViewByAlpha
-						listItemsAlphaArray={this.state.listItemsAlphaArray}
-					/>
-				}
-			</div>
+			<div id="hc-get-it-done-body" />
 		);
 	}
 	render() {
@@ -121,19 +129,5 @@ export default class HcGetItDone extends React.Component {
 		return (
 			<p id="hc-get-it-done-body">I can&apos;t show you this information right now.</p>
 		);
-		/* return (
-			<div id="hc-get-it-done" className="mos-react-component-root" name="hc-get-it-done">
-				<h2>Get it Done</h2>
-				{
-					!this.state.queryError && 
-					this.returnHcGetItDoneBody()
-				}
-				{
-					this.state.queryError &&
-
-					
-				}
-			</div>
-		); */
 	}
 }

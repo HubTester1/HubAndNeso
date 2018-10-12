@@ -37,14 +37,8 @@ class HcContainer extends React.Component {
 	componentDidMount() {
 		HcContainerData.ReturnUData()
 			.then((response) => {
-				const accountBrief =
-					MOSUtilities.ReplaceAll('i:0#.f\\|membership\\|', '', MOSUtilities.ReplaceAll('@mos.org', '', response.LoginName.toLowerCase()));
 				this.setState(() => ({
-					uData: {
-						email: response.Email,
-						account: accountBrief,
-						displayName: response.Title,
-					},
+					uData: response,
 				}));
 			})
 			.catch((error) => {
@@ -65,12 +59,6 @@ class HcContainer extends React.Component {
 					id="hc-container"
 					className={`mos-react-component-root${this.state.showSmallNav ? ' showing-small-nav' : ''}`}
 				>
-					{/* <HcMessages
-						uData={this.state.uData}
-						allOrTop="all"
-						screenType="medium"
-					/> */}
-
 					<div
 						id="hc-header-and-hero-container" 
 						className="hc-header-and-hero-container"
@@ -119,6 +107,7 @@ class HcContainer extends React.Component {
 							/>
 							<HcGetItDone
 								screenType="small"
+								uData={this.state.uData}
 							/>
 							<HcOrganization
 								screenType="small"
@@ -136,6 +125,7 @@ class HcContainer extends React.Component {
 						/>
 						<HcGetItDone
 							screenType="medium"
+							uData={this.state.uData}
 						/>
 						<HcOrganization
 							screenType="medium"
