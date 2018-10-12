@@ -235,7 +235,7 @@ module.exports = {
 					// extract into array from object its "child" / first level keys;
 					// 		these keys correspond to division names
 					divDeptTempHolderDivKeys = Object.keys(divDeptTempHolder);
-					// sort division key alphabetically
+					// sort division keys alphabetically
 					divDeptTempHolderDivKeys.sort();
 					// for each division key
 					divDeptTempHolderDivKeys.forEach((divKeyValue) => {
@@ -260,6 +260,9 @@ module.exports = {
 							// extract into array from object its "child" / first level keys;
 							// 		these keys correspond to department names
 							divDeptTempHolderDeptKeys = Object.keys(divDeptTempHolder[divKeyValue].depts);
+							// sort department keys alphabetically
+							divDeptTempHolderDeptKeys.sort();
+
 							// for each department key
 							divDeptTempHolderDeptKeys.forEach((deptKeyValue) => {
 								// create a department object with name and react key and an empty members array
@@ -309,6 +312,16 @@ module.exports = {
 				});
 		})),
 
+	ReturnTeamNameWeightRelativeToAnother: (a, b) => {
+		if (a.name < b.name) {
+			return -1;
+		}
+		if (a.name > b.name) {
+			return 1;
+		}
+		return 0;
+	},
+
 	ConstructAndReturnNonDivDeptTeams: () =>
 		// return a new promise
 		new Promise((resolve, reject) => {
@@ -327,6 +340,7 @@ module.exports = {
 							});
 						}
 					});
+					relevantTeams.sort(module.exports.ReturnTeamNameWeightRelativeToAnother);
 					resolve(relevantTeams);
 				})
 				// if the promise is rejected with an error

@@ -21,6 +21,7 @@ export default class HcOrganizationTeamsDivision extends React.Component {
 		super(props);
 	}
 	render() {
+		console.log(this.props);
 		return (
 			<AccordionItem
 				className="hc-organization__teams__division mos-react-component-root accordion__item"
@@ -40,15 +41,19 @@ export default class HcOrganizationTeamsDivision extends React.Component {
 					<AccordionItemBody
 						className="hc-organization__teams__division-body accordion__body"
 					>
-						<p>
-							<a
-								href={this.props.divisionContent.orgChart}
-								target="_blank"
-								className="hc-organization-teams-division-org-chart-link org-chart-link"
-							>
-								Organization Chart
-							</a>
-						</p>
+						{
+							this.props.divisionContent.orgChart &&
+
+							<p>
+								<a
+									href={this.props.divisionContent.orgChart}
+									target="_blank"
+									className="hc-organization-teams-division-org-chart-link org-chart-link"
+								>
+									Organization Chart
+								</a>
+							</p>
+						}
 						{
 							this.props.divisionContent.hubScreenToken && 
 
