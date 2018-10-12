@@ -102,16 +102,16 @@ const HcStaffLookupPersonaCard = (props) => {
 					props.personaContent.email &&
 
 					<li className="email">
-						<span className="persona-card-body-list-item-content">
-							<a href={`mailto:${props.personaContent.email}`}>
+						<a href={`mailto:${props.personaContent.email}`}>
+							<span className="persona-card-body-list-item-content">
 								{props.personaContent.email}
-							</a>
-							<Icon iconName="Mail" className="section-icon--email" />
-						</span>
+								<Icon iconName="Mail" className="section-icon--email" />
+							</span>
+						</a>
 					</li>
 				}
 				{
-					props.personaContent.profileToken &&
+					/* props.personaContent.profileToken &&
 					
 					<li className="profile">
 						<span className="persona-card-body-list-item-content">
@@ -123,7 +123,7 @@ const HcStaffLookupPersonaCard = (props) => {
 							</a>
 							<Icon iconName="DelveLogo" className="section-icon--profile" />
 						</span>
-					</li>
+					</li> */
 				}
 			</ul>
 		</li>

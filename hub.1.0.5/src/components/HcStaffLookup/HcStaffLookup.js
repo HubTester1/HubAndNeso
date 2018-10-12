@@ -116,12 +116,12 @@ export default class HcStaffLookup extends React.Component {
 				{
 					this.props.inHcHero &&
 
-					<h2>Staff Lookup</h2>
+					<h2>Person Lookup</h2>
 				}
 				{
 					this.props.inHcOrganization &&
 
-					<h3>Staff Lookup</h3>
+					<h3>Person Lookup</h3>
 				}
 				<div id="hc-staff-lookup__picker-and-personas">
 					<div id="picker">
