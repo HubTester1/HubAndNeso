@@ -12,7 +12,7 @@ const webpackV4DevConfig = require('./webpack/v4.dev.css.config');
 const webpackV4ProdConfig = require('./webpack/v4.prod.css.config');
 const webpackV5DevConfig = require('./webpack/v5.dev.config');
 
-// const webpackV5ProdConfig = require('./webpack/v5.prod.config');
+const webpackV5ProdConfig = require('./webpack/v5.prod.config');
 const gulpBaseConfig = require('./gulp/base.config');
 const gulpV4DevConfig = require('./gulp/v4.dev.config');
 const gulpV4ProdConfig = require('./gulp/v4.prod.config');
@@ -286,7 +286,7 @@ gulp.task('5-dev-watch-build-push', () => {
 // push all to prod
 gulp.task('5-prod-push-all', () =>
 	// for all files in the dist folder
-	gulp.src(`${gulpV5DevConfig.ReturnV5DevDistFolder()}/**`)
+	gulp.src(`${gulpV5ProdConfig.ReturnV5ProdDistFolder()}/**`)
 		// replace the standard pipe method
 		.pipe(plumber())
 		// pipe them into a caching proxy 
@@ -300,7 +300,7 @@ gulp.task('5-prod-push-all', () =>
 // push js to prod
 gulp.task('5-prod-push-js', () =>
 	// for all files in the dist folder
-	gulp.src(`${gulpV5DevConfig.ReturnV5DevDistFolder()}/+(*.js|*.js.map)`)
+	gulp.src(`${gulpV5ProdConfig.ReturnV5ProdDistFolder()}/+(*.js|*.js.map)`)
 		// replace the standard pipe method
 		.pipe(plumber())
 		// pipe them into a caching proxy 
@@ -314,7 +314,7 @@ gulp.task('5-prod-push-js', () =>
 // push styles to prod
 gulp.task('5-prod-push-styles', () =>
 	// for all files in the dist folder
-	gulp.src(`${gulpV5DevConfig.ReturnV5DevDistFolder()}/+(*.css|*.css.map)`)
+	gulp.src(`${gulpV5ProdConfig.ReturnV5ProdDistFolder()}/+(*.css|*.css.map)`)
 		// replace the standard pipe method
 		.pipe(plumber())
 		// pipe them into a caching proxy 
@@ -325,10 +325,10 @@ gulp.task('5-prod-push-styles', () =>
 			gulpBaseConfig.ReturnGulpSPSaveCredentials(),
 		)));
 
-// push app to prod
+// push app js to prod
 gulp.task('5-prod-push-app-js', () =>
 	// for all files in the dist folder
-	gulp.src(`${gulpV5DevConfig.ReturnV5DevDistFolder()}/+(*App.js|*App.js.map)`)
+	gulp.src(`${gulpV5ProdConfig.ReturnV5ProdDistFolder()}/+(*App.js|*App.js.map)`)
 		// replace the standard pipe method
 		.pipe(plumber())
 		// pipe them into a caching proxy 
@@ -343,7 +343,7 @@ gulp.task('5-prod-push-app-js', () =>
 // push app to prod
 gulp.task('5-prod-push-app-all', () =>
 	// for all files in the dist folder
-	gulp.src(`${gulpV5DevConfig.ReturnV5DevDistFolder()}/+(*App.js|*App.js.map|*.css|*.css.map)`)
+	gulp.src(`${gulpV5ProdConfig.ReturnV5ProdDistFolder()}/+(*App.js|*App.js.map|*.css|*.css.map)`)
 		// replace the standard pipe method
 		.pipe(plumber())
 		// pipe them into a caching proxy 
@@ -353,4 +353,25 @@ gulp.task('5-prod-push-app-all', () =>
 			gulpV5ProdConfig.ReturnV5SPSaveProdOptions(),
 			gulpBaseConfig.ReturnGulpSPSaveCredentials(),
 		)));
+// build dist file and push dist to dev
+gulp.task('5-prod-build-push', () =>
+	// for all files in the src folder
+	gulp.src(`${gulpV5ProdConfig.ReturnV5ProdSrcFolder()}/**`)
+		// replace the standard pipe method
+		.pipe(plumber())
+		// pipe them through webpack
+		.pipe(webpackStream(webpackV5ProdConfig), webpack)
+		// to the dist folder
+		.pipe(gulp.dest(`${gulpV5ProdConfig.ReturnV5ProdDistFolder()}`))
+		// and then to SP dev location
+		.pipe(spSave(
+			gulpV5ProdConfig.ReturnV5SPSaveProdOptions(),
+			gulpBaseConfig.ReturnGulpSPSaveCredentials(),
+		)));
+
+// when src changes, build dist files and push dist to prod
+gulp.task('5-prod-watch-build-push', () => {
+	// watch the src folder; upon changes, build dist file and push dist to dev
+	gulp.watch([`${gulpV5ProdConfig.ReturnV5ProdSrcFolder()}/**`], gulp.series('5-prod-build-push'));
+});
 

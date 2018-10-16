@@ -35,6 +35,7 @@ class HcContainer extends React.Component {
 		this.handleHamburgerOrNavItemClick = this.handleHamburgerOrNavItemClick.bind(this);
 	}
 	componentDidMount() {
+		// also check for maintenance mode
 		HcContainerData.ReturnUData()
 			.then((response) => {
 				this.setState(() => ({
@@ -145,9 +146,42 @@ class HcContainer extends React.Component {
 		return null;
 	}
 }
-	
+
+// eslint-disable-next-line no-console
+console.log('hc m2');
 if (EnvironmentDetector.ReturnIsHCScreen()) {
-	// eslint-disable-next-line no-console
-	console.log('hc m1');
 	ReactDOM.render(<HcContainer />, document.getElementById('hub-central-mount-point'));
+} else {
+	/* 
+
+		// set a container for all data retrieval / setting promises
+		var allDataRetrievalAndSettingPromises = [];
+
+		// push to container all data retrieval / setting promises; there's only one now,
+		//		but we're set up to add more without re-writing in the future
+		allDataRetrievalAndSettingPromises.push($().GetAndSetMaintenanceModeData(), $().SetCurrentUserData());
+
+		// wait for all data retrieval / setting promises to complete (pass or fail)
+		$.when.apply($, allDataRetrievalAndSettingPromises).always(function () {
+			// if Hub Central is in maintenance mode
+			// if (uData.userName == 'jbaker@mos.org') {
+			if (mData.hubCentralInMaintenanceMode || mData.allComponentsInMaintenanceMode) {
+				$('body').addClass('is-in-maintenance-mode');
+				$('div#overlays-screen-container').fadeIn(500).removeClass("hidden");
+				$('div#maintenance-mode').fadeIn(500).removeClass("hidden");
+				$("div#loading-screen").fadeOut(500).addClass("hidden");
+			} else {
+				$("img.ms-siteicon-img").attr("src", "/sites/hubprod/Asset%20Library/BrandHorizontalOpt.svg");
+				$("div.ms-breadcrumb-top").remove();
+				if (uData.userName == 'jbaker@mos.org') {
+					$("div#s4-ribbonrow").css("display", "block");
+					$("div#s4-bodyContainer ").css("padding-top", "1rem");
+				}
+				$("div#loading-screen").fadeOut(500).addClass("hidden");
+				$("div#s4-bodyContainer").fadeTo(500, 1);
+			}
+		});
+
+	
+	*/
 }

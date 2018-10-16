@@ -21,7 +21,6 @@ export default class HcOrganizationTeamsDivision extends React.Component {
 		super(props);
 	}
 	render() {
-		console.log(this.props);
 		return (
 			<AccordionItem
 				className="hc-organization__teams__division mos-react-component-root accordion__item"

@@ -55,6 +55,7 @@
 										<script type="text/javascript" src="/sites/hubprod/Code4/js/libs/jquery.2.2.0.js"></script>
 
 
+
 										<style>
 											body {
 												overflow: visible;
@@ -79,13 +80,13 @@
 
 
 
-											/*div#s4-bodyContainer {
+											div#s4-bodyContainer {
 												opacity: 0;
 											}
 										
 											div#s4-ribbonrow {
 												display: none;
-											}*/
+											}
 										
 											div#loading-screen {
 												position: fixed;
@@ -478,6 +479,10 @@
 													</div>
 												</div>
 											</div>
+											<div id="loading-screen">
+												<p id="loading-text">Loading...</p>
+												<div id="loading-spinner"></div>
+											</div>
 		<div id="internet-explorer-upgrade" class="banner banner--critical"    style="display: none;">
 			<p class="banner__text">Internet Explorer was replaced in 2015. Please upgrade from Internet Explorer to Edge, or switch to Chrome or Firefox. If you need assistance doing so, please contact IIT System Support Services at x0130.
 		</div>
@@ -747,11 +752,27 @@
 
 
 										<script>
+											// analytics
+											(function (i, s, o, g, r, a, m) {
+												i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+													(i[r].q = i[r].q || []).push(arguments)
+												}, i[r].l = 1 * new Date(); a = s.createElement(o),
+													m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+											})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+											ga('create', 'UA-51830655-1', 'sharepoint.com');
+											ga('send', 'pageview');
+
+											// hold the ready event
+											$.holdReady(true);
+
+											// load the loader, which will un-hold the ready event when all files have loaded
 											var s = document.createElement('script');
 											s.type = "text/javascript";
 											s.src = "/sites/hubprod/Code5/mos.1.0.5.Loader.js?ts=" + Date.now();
 											document.getElementsByTagName('body')[0].appendChild(s);
-											console.log('using master m3');
+										</script>
+										<script>
+											console.log('using master m1')
 										</script>
 									</body>
 								</SharePoint:SPHtmlTag>

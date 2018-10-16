@@ -1,6 +1,4 @@
 
-/* eslint-disable */
-
 /* 
 	We use this so that we can alter which files load (in some cases globally, in some cases
 	according to a site's settings) without having to modify the SP master page for a site or 
@@ -9,113 +7,148 @@
 
 // ---- GLOBAL VARS
 
-var debugMode = true;
-var date = new Date();
-var timestamp = date.getTime();
+const debugMode = true;
+const date = new Date();
+const timestamp = date.getTime();
 
-if (debugMode) { console.log('using mos-loader m2'); }
-
-
+if (debugMode) { console.log('using mos-loader m3'); }
 
 // get portion of local site collection path that comes after "sites/"
-if (location.pathname.indexOf("sites/") != -1) {
-
-	var localSiteCollectionPathAfterSitesSlash = location.pathname.slice(7);
-
+let localSiteCollectionURL = '';
+if (location.pathname.indexOf('sites/') !== -1) {
+	const localSiteCollectionPathAfterSitesSlash = location.pathname.slice(7);
 	// get portion of that that comes before the first slash
-	var localSiteCollectionToken = localSiteCollectionPathAfterSitesSlash.substr(0, localSiteCollectionPathAfterSitesSlash.indexOf("/"));
-
+	const localSiteCollectionToken = localSiteCollectionPathAfterSitesSlash.substr(0, localSiteCollectionPathAfterSitesSlash.indexOf('/'));
 	// formulate local site collection URL
-	var localSiteCollectionURL = "https://bmos.sharepoint.com/sites/" + localSiteCollectionToken + "/";
-
+	localSiteCollectionURL = `https://bmos.sharepoint.com/sites/${localSiteCollectionToken}/`;
 } else {
-
-	var localSiteCollectionURL = "https://bmos.sharepoint.com/";
+	localSiteCollectionURL = 'https://bmos.sharepoint.com/';
 }
 
 
 // config base paths of file storage locations
-var devCentrallyManagedFileBasePathBasePath = "/sites/hubdev/DevCode5/";
-var prodCentrallyManagedFileBasePathBasePath = "/sites/hubprod/Code5/";
-var centrallyManagedFileBasePathBasePath = prodCentrallyManagedFileBasePathBasePath;
-// note: will determine whether or not the centrally managed dev file base path should be used instead, 
-// 		but can only do so after the site's local settings have been loaded and parsed
+const devCentrallyManagedFileBasePathBasePath = '/sites/hubdev/DevCode5/';
+const prodCentrallyManagedFileBasePathBasePath = '/sites/hubprod/Code5/';
+const centrallyManagedFileBasePathBasePath = prodCentrallyManagedFileBasePathBasePath;
+// note: will determine whether or not the centrally managed dev file base path should 
+// 		be used instead, but can only do so after the site's local settings have been 
+// 		loaded and parsed
 
 // stylesheets
-var stylesheetsToLoad = [
-	{ "centrallyManaged": 1, 						"path": "mos.1.0.5.Styles.css" },
+const stylesheetsToLoad = [
+	{ centrallyManaged: 1, 						path: 'mos.1.0.5.Styles.css' },
 ];
 
 // libraries
-var libraryLoadingPromises = [];
-var librariesToLoad = [
+/* const libraryLoadingPromises = [];
+const librariesToLoad = [
 
 	// SP Services
-	{ "centrallyManaged": 1, 						"path": "jquery.SPServices.2014.02.min.js" },
-];
+	// { "centrallyManaged": 1, 						"path": "jquery.SPServices.2014.02.min.js" },
+]; */
 
 // local settings
-var settingsLoadingPromises = [];
-var settingsToLoad = [
-	{ "localSiteAssets": 1,		"notCached": 1,		"path": "settings.js" },
+const settingsLoadingPromises = [];
+const settingsToLoad = [
+	{ localSiteAssets: 1,		notCached: 1,		path: 'settings.js' },
 ];
 
 // mos.1.0.5
-var mosLoadingPromises = [];
-var mosToLoad = [
-	{ "centrallyManaged": 1,	"notCached": 1,		"path": "mos.1.0.5.App.js" },
-	{ "centrallyManaged": 1,						"path": "mos.1.0.5.TransitionHelper.js" },
+const mosLoadingPromises = [];
+const mosToLoad = [
+	{ centrallyManaged: 1,	notCached: 1,		path: 'mos.1.0.5.App.js' },
+	// { "centrallyManaged": 1,						"path": "mos.1.0.5.TransitionHelper.js" },
 ];
 
-function LoadFiles() {
-	LoadJSFiles(settingsToLoad, settingsLoadingPromises, null, function () {
 
-		var mData = $().ReturnThisAppMData();
-		if (StrInStr(mData.mosKey, "dev") != false) {
-			centrallyManagedFileBasePathBasePath = devCentrallyManagedFileBasePathBasePath;
-		}
+function ReturnURLToLoad(file, mData) {
+	let urlToLoad = '';
 
-		LoadJSFiles(librariesToLoad, libraryLoadingPromises, null, function () {
+	if (typeof (file.centrallyManaged) !== 'undefined' && file.centrallyManaged === 1) {
+		urlToLoad += centrallyManagedFileBasePathBasePath;
+	}
 
-			LoadJSFiles(mosToLoad, mosLoadingPromises, mData, function () {
-				LoadCSSFiles(stylesheetsToLoad, function () {
-					$.holdReady(false);
-				});
-			});
-		});
-	});
+	if (typeof (file.localSiteAssets) !== 'undefined' && file.localSiteAssets === 1) {
+		urlToLoad += `${localSiteCollectionURL}SiteAssets/`;
+	}
+
+	if (typeof (file.path) !== 'undefined') {
+		urlToLoad += file.path;
+	}
+
+	if (typeof (file.notCached) !== 'undefined' && file.notCached === 1) {
+		urlToLoad += `?v=${timestamp}`;
+	} else if (debugMode) {
+		urlToLoad += `?v=${timestamp}`;
+	}
+	// console.log(urlToLoad);
+	return urlToLoad;
 }
 
 
-
 function LoadCSSFiles(filesToLoad, callback) {
-
-	$.each(filesToLoad, function (i, file) {
-		var urlToLoad = ReturnURLToLoad(file);
-		var fileReference = document.createElement("link");
-		$(fileReference).attr("rel", "stylesheet");
-		$(fileReference).attr("href", urlToLoad);
-		$('head').append(fileReference);
+	filesToLoad.forEach((file) => {
+		const urlToLoad = ReturnURLToLoad(file);
+		const fileReference = document.createElement('link');
+		const relAttribute = document.createAttribute('rel');
+		const hrefAttribute = document.createAttribute('href');
+		relAttribute.value = 'stylesheet';
+		hrefAttribute.value = urlToLoad;
+		fileReference.setAttributeNode(relAttribute);
+		fileReference.setAttributeNode(hrefAttribute);
+		document.getElementsByTagName('head')[0].appendChild(fileReference);
 	});
-
-	if (callback && typeof (callback) === "function") {
+	if (callback && typeof (callback) === 'function') {
 		callback();
 	}
 }
 
 
+function LoadJSFile(urlToLoad) {
+	// return a new promise
+	return new Promise((resolve, reject) => {
+		console.log(urlToLoad);
+		
+		const xhr = new XMLHttpRequest();
+		xhr.onreadystatechange = function () {
+			if (this.status >= 200 && this.status < 300) {
+				console.log(xhr.response);
+				eval(xhr.response);
+				resolve(xhr.response);
+			} else {
+				reject({
+					urlToLoad,
+					status: this.status,
+					statusText: xhr.statusText,
+				});
+			}
+		};
+		/* xhr.onerror = function () {
+			reject({
+				urlToLoad,
+				status: this.status,
+				statusText: xhr.statusText,
+			});
+		}; */
+		xhr.open('GET', urlToLoad);
+		xhr.send();
+	});
+}
+
 
 function LoadJSFiles(filesToLoad, promiseTracker, mData, callback) {
+	filesToLoad.forEach((file) => {
+		const urlToLoad = ReturnURLToLoad(file, mData);
 
-	$.each(filesToLoad, function (i, file) {
+		// const script = document.createElement('script');
+		// script.async = false;
+		// script.src = urlToLoad;
+		// document.getElementsByTagName('body')[0].appendChild(script);
+		// document.head.appendChild(script);
 
-		var urlToLoad = ReturnURLToLoad(file, mData);
+		promiseTracker.push(LoadJSFile(urlToLoad));
 
-		// console.log("file");
-		// console.log(file);
-		console.log(urlToLoad);
-
-		promiseTracker.push($.ajax({
+		/* promiseTracker.push($.ajax({
 			type: "GET",
 			url: urlToLoad,
 			dataType: "script",
@@ -128,76 +161,77 @@ function LoadJSFiles(filesToLoad, promiseTracker, mData, callback) {
 				console.log("___failed to load: " + urlToLoad);
 				console.log(textStatus);
 				// console.log(jqXHR);
-			}));
+			})); */
 	});
 
 	// Wait for all promises to complete (pass or fail) 
-	return $.when.apply($, promiseTracker).always(function () {
+	/* return $.when.apply($, promiseTracker).always(function () {
 		if (callback && typeof (callback) === "function") {
 			callback();
 		}
-	});
+	}); */
+	// wait for all promises to be completed (pass or fail)
+	Promise.all(promiseTracker)
+		// if the promise is resolved with the settings
+		.then((results) => {
+			if (callback && typeof (callback) === 'function') {
+				callback();
+			}
+		})
+		.catch((error) => {
+			console.log(`___failed to load: ${error.urlToLoad}`);
+			console.log(error);
+			console.log(error.status);
+			console.log(error.statusText);
+		});
+
+	if (callback && typeof (callback) === 'function') {
+		callback();
+	}
 }
 
 
-
-function ReturnURLToLoad(file, mData) {
-
-	var urlToLoad = "";
-
-	if (typeof (file.centrallyManaged) != "undefined" && file.centrallyManaged == 1) {
-		urlToLoad += centrallyManagedFileBasePathBasePath;
-	}
-
-	if (typeof (file.localSiteAssets) != "undefined" && file.localSiteAssets == 1) {
-		urlToLoad += localSiteCollectionURL + 'SiteAssets/';
-	}
-
-	if (typeof (file.path) != "undefined") {
-		urlToLoad += file.path;
-	}
-
-	if (typeof (file.notCached) != "undefined" && file.notCached == 1) {
-		urlToLoad += "?v=" + timestamp;
-	} else if (debugMode) {
-		urlToLoad += "?v=" + timestamp;
-	}
-
-	return urlToLoad;
-
-}
-
-
-
-function StrInStr(haystack, needle, flag) {
-
-	var position = 0;
-	haystack = haystack + '';
-	needle = needle + '';
+/* function StrInStr(haystack, needle, flag) {
+	let position = 0;
+	haystack += '';
+	needle += '';
 	position = haystack.indexOf(needle);
 
 	if (position == -1) {
 		return false;
-	} else {
-		if (flag == 1) {
-			// return from beginning of string to beginning of needle
-			return haystack.substr(0, position);
-		} else if (flag == 2) {
-			// return ?
-			return haystack.slice(needle.length);
-		} else if (flag == 3) {
-			// return from needle to end of string, needle-exclusive
-			return haystack.slice(position + needle.length);
-		} else {
-			// return from needle to end of string, needle-inclusive
-			return haystack.slice(position);
-		}
-	}
+	} 
+	if (flag == 1) {
+		// return from beginning of string to beginning of needle
+		return haystack.substr(0, position);
+	} else if (flag == 2) {
+		// return ?
+		return haystack.slice(needle.length);
+	} else if (flag == 3) {
+		// return from needle to end of string, needle-exclusive
+		return haystack.slice(position + needle.length);
+	} 
+	// return from needle to end of string, needle-inclusive
+	return haystack.slice(position);
+} */
+
+
+function LoadFiles() {
+	LoadCSSFiles(stylesheetsToLoad, () => {
+		LoadJSFiles(settingsToLoad, settingsLoadingPromises, null, () => {
+			const mData = window;
+			console.log(mData);
+			console.log('mData');
+			// ReturnThisAppMData();
+			/* if (StrInStr(mData.mosKey, "dev") != false) {
+				centrallyManagedFileBasePathBasePath = devCentrallyManagedFileBasePathBasePath;
+			} */
+			LoadJSFiles(mosToLoad, mosLoadingPromises, mData, () => {
+				// indicate readiness
+			});
+		});
+	});
 }
-
-
-
 
 (function () {
 	LoadFiles();
-})()
+}());
