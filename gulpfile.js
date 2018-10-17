@@ -11,6 +11,7 @@ const { argv } = require('yargs');
 const webpackV4DevConfig = require('./webpack/v4.dev.css.config');
 const webpackV4ProdConfig = require('./webpack/v4.prod.css.config');
 const webpackV5DevConfig = require('./webpack/v5.dev.config');
+const webpackV5DevLoaderConfig = require('./webpack/v5.dev.loader.config');
 
 const webpackV5ProdConfig = require('./webpack/v5.prod.config');
 const gulpBaseConfig = require('./gulp/base.config');
@@ -267,13 +268,33 @@ gulp.task('5-dev-build-push', () =>
 		.pipe(gulp.dest(`${gulpV5DevConfig.ReturnV5DevDistFolder()}`))
 		// and then to SP dev location
 		.pipe(spSave(
-			gulpV5DevConfig.ReturnV5SPSaveDevOptions(), 
+			gulpV5DevConfig.ReturnV5SPSaveDevOptions(),
+			gulpBaseConfig.ReturnGulpSPSaveCredentials(),
+		)));
+// build dist file and push dist to dev
+gulp.task('5-dev-build-push-loader', () =>
+	// for all files in the src folder
+	gulp.src(`${gulpV5DevConfig.ReturnV5DevSrcFolder()}/**`)
+		// replace the standard pipe method
+		.pipe(plumber())
+		// pipe them through webpack
+		.pipe(webpackStream(webpackV5DevLoaderConfig), webpack)
+		// to the dist folder
+		.pipe(gulp.dest(`${gulpV5DevConfig.ReturnV5DevDistFolder()}`))
+		// and then to SP dev location
+		.pipe(spSave(
+			gulpV5DevConfig.ReturnV5SPSaveDevOptions(),
 			gulpBaseConfig.ReturnGulpSPSaveCredentials(),
 		)));
 // when src changes, build dist file and push dist to dev
 gulp.task('5-dev-watch-all-build-push-js', () => {
 	// watch the src folder; upon changes, build dist file and push dist to dev
 	gulp.watch([`${gulpV5DevConfig.ReturnV5DevSrcFolder()}/**`], gulp.series('5-dev-build', '5-dev-push-js'));
+});
+// when src changes, build dist file and push dist to dev
+gulp.task('5-dev-watch-all-build-push-loader', () => {
+	// watch the src folder; upon changes, build dist file and push dist to dev
+	gulp.watch([`${gulpV5DevConfig.ReturnV5DevSrcFolder()}/**`], gulp.series('5-dev-build-push-loader'));
 });
 // when src changes, build dist file and push dist to dev
 gulp.task('5-dev-watch-build-push', () => {

@@ -52,9 +52,6 @@
 										</SharePoint:AjaxDelta>
 										<SharePoint:CssRegistration Name="Themable/corev15.css" runat="server" />
 
-										<script type="text/javascript" src="/sites/hubprod/Code4/js/libs/jquery.2.2.0.js"></script>
-
-
 										<style>
 											body {
 												overflow: visible;
@@ -749,7 +746,8 @@
 										<script>
 											var s = document.createElement('script');
 											s.type = "text/javascript";
-											s.src = "/sites/hubprod/Code5/mos.1.0.5.Loader.js?ts=" + Date.now();
+											// s.src = "/sites/hubprod/Code5/mos.1.0.5.Loader.js?ts=" + Date.now();
+											s.src = "/sites/hubdev/DevCode5/mos.1.0.5.Loader.js?ts=" + Date.now();
 											document.getElementsByTagName('body')[0].appendChild(s);
 											console.log('using master m3');
 										</script>
