@@ -11,7 +11,7 @@ const debugMode = true;
 const date = new Date();
 const timestamp = date.getTime();
 
-if (debugMode) { console.log('using mos-loader m4'); }
+if (debugMode) { console.log('using mos-loader m47'); }
 
 // get portion of local site collection path that comes after "sites/"
 let localSiteCollectionURL = '';
@@ -27,8 +27,8 @@ if (location.pathname.indexOf('sites/') !== -1) {
 
 
 // config base paths of file storage locations
-const devCentrallyManagedFileBasePathBasePath = '/sites/hubdev/DevCode5/';
-const prodCentrallyManagedFileBasePathBasePath = '/sites/hubprod/Code5/';
+const devCentrallyManagedFileBasePathBasePath = 'https://bmos.sharepoint.com/sites/hubdev/DevCode5/';
+const prodCentrallyManagedFileBasePathBasePath = 'https://bmos.sharepoint.com/sites/hubprod/Code5/';
 let centrallyManagedFileBasePathBasePath = prodCentrallyManagedFileBasePathBasePath;
 // note: will determine whether or not the centrally managed dev file base path should 
 // 		be used instead, but can only do so after the site's local settings have been 
@@ -96,7 +96,6 @@ function LoadCSSFiles(filesToLoad, callback) {
 function LoadJSFile(urlToLoad) {
 	// return a new promise
 	return new Promise((resolve, reject) => {
-		console.log(urlToLoad);
 		const httpRequest = new XMLHttpRequest();
 		httpRequest.onreadystatechange = function () {
 			if (httpRequest.readyState === XMLHttpRequest.DONE) {
@@ -139,11 +138,14 @@ function LoadFiles() {
 		LoadCSSFiles(stylesheetsToLoad, () => {
 			LoadJSFiles(mosToLoad, mosLoadingPromises, mData, () => {
 				// indicate readiness
+				console.log('gonna set false');
+				window.loading = false;
 			});
 		});
 	});
 }
 
 (function () {
+	window.loading = true;
 	LoadFiles();
 }());

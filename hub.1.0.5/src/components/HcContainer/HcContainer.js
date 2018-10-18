@@ -53,107 +53,103 @@ class HcContainer extends React.Component {
 		}));
 	}
 	render() {
-		if (EnvironmentDetector.ReturnIsHCScreen()) {
-			document.body.classList.add('contains-hub-central');
-			return (
+		document.body.classList.add('contains-hub-central');
+		return (
+			<div
+				id="hc-container"
+				className={`mos-react-component-root${this.state.showSmallNav ? ' showing-small-nav' : ''}`}
+			>
 				<div
-					id="hc-container"
-					className={`mos-react-component-root${this.state.showSmallNav ? ' showing-small-nav' : ''}`}
+					id="hc-header-and-hero-container" 
+					className="hc-header-and-hero-container"
 				>
-					<div
-						id="hc-header-and-hero-container" 
-						className="hc-header-and-hero-container"
-					>
-						<MediaQuery maxWidth={ScreenSizes.ReturnSmallMax()}>
-							<HcHeader
-								screenType="small"
-								handleHamburgerOrNavItemClick={this.handleHamburgerOrNavItemClick}
-							/>
-							<HcHero
-								screenType="small"
-							/>
-						</MediaQuery>
-						<MediaQuery
-							minWidth={ScreenSizes.ReturnMediumMin()}
-							maxWidth={ScreenSizes.ReturnMediumMax()}	
-						>
-							<HcHeader
-								screenType="medium"
-							/>
-							<HcHero
-								screenType="medium"
-								uData={this.state.uData}
-							/>
-						</MediaQuery>
-						<MediaQuery minWidth={ScreenSizes.ReturnLargeMin()}>
-							<HcHeader
-								screenType="large"
-							/>
-							<HcHero
-								screenType="large"
-								uData={this.state.uData}
-							/>
-						</MediaQuery>
-					</div>
-
-
 					<MediaQuery maxWidth={ScreenSizes.ReturnSmallMax()}>
-						<Accordion
-							className="hc-sections-container accordion"
-							accordion={false}
-							role="tablist"
-						>
-							<HcPushedItems
-								screenType="small"
-							/>
-							<HcGetItDone
-								screenType="small"
-								uData={this.state.uData}
-							/>
-							<HcOrganization
-								screenType="small"
-							/>
-							<HcMessages
-								uData={this.state.uData}
-								allOrTop="all"
-								screenType="small"
-							/>
-						</Accordion>
+						<HcHeader
+							screenType="small"
+							handleHamburgerOrNavItemClick={this.handleHamburgerOrNavItemClick}
+						/>
+						<HcHero
+							screenType="small"
+						/>
 					</MediaQuery>
-					<MediaQuery minWidth={ScreenSizes.ReturnMediumMin()}>
-						<HcPushedItems
+					<MediaQuery
+						minWidth={ScreenSizes.ReturnMediumMin()}
+						maxWidth={ScreenSizes.ReturnMediumMax()}	
+					>
+						<HcHeader
 							screenType="medium"
 						/>
-						<HcGetItDone
+						<HcHero
 							screenType="medium"
 							uData={this.state.uData}
 						/>
+					</MediaQuery>
+					<MediaQuery minWidth={ScreenSizes.ReturnLargeMin()}>
+						<HcHeader
+							screenType="large"
+						/>
+						<HcHero
+							screenType="large"
+							uData={this.state.uData}
+						/>
+					</MediaQuery>
+				</div>
+
+
+				<MediaQuery maxWidth={ScreenSizes.ReturnSmallMax()}>
+					<Accordion
+						className="hc-sections-container accordion"
+						accordion={false}
+						role="tablist"
+					>
+						<HcPushedItems
+							screenType="small"
+						/>
+						<HcGetItDone
+							screenType="small"
+							uData={this.state.uData}
+						/>
 						<HcOrganization
-							screenType="medium"
+							screenType="small"
 						/>
 						<HcMessages
 							uData={this.state.uData}
 							allOrTop="all"
-							screenType="medium"
+							screenType="small"
 						/>
-					</MediaQuery>
-					<footer>
-							&copy; {MOSUtilities.ReturnFormattedDateTime({ incomingDateTimeString: 'nowLocal', incomingReturnFormat: 'YYYY' })} Museum of Science
-					</footer>
-				</div>
-			);
-		}
-		return null;
+					</Accordion>
+				</MediaQuery>
+				<MediaQuery minWidth={ScreenSizes.ReturnMediumMin()}>
+					<HcPushedItems
+						screenType="medium"
+					/>
+					<HcGetItDone
+						screenType="medium"
+						uData={this.state.uData}
+					/>
+					<HcOrganization
+						screenType="medium"
+					/>
+					<HcMessages
+						uData={this.state.uData}
+						allOrTop="all"
+						screenType="medium"
+					/>
+				</MediaQuery>
+				<footer>
+					&copy; {MOSUtilities.ReturnFormattedDateTime({ incomingDateTimeString: 'nowLocal', incomingReturnFormat: 'YYYY' })} Museum of Science
+				</footer>
+			</div>
+		);
 	}
 }
 
 // eslint-disable-next-line no-console
-console.log('hc m2');
+console.log('hc m47');
 if (EnvironmentDetector.ReturnIsHCScreen()) {
 	ReactDOM.render(<HcContainer />, document.getElementById('hub-central-mount-point'));
 } else {
 	/* 
-
 		// set a container for all data retrieval / setting promises
 		var allDataRetrievalAndSettingPromises = [];
 
@@ -181,7 +177,17 @@ if (EnvironmentDetector.ReturnIsHCScreen()) {
 				$("div#s4-bodyContainer").fadeTo(500, 1);
 			}
 		});
-
-	
 	*/
+}
+
+const screenShower = setInterval(ShowScreen, 500);
+
+function ShowScreen() {
+	if (!window.loading) {
+		document.getElementById('s4-bodyContainer').style.opacity = '1';
+		document.getElementById('loading-screen').style.display = 'none';
+		document.getElementById('loading-screen').style.opacity = '0';
+		document.getElementById('loading-screen').classList.add('hidden');
+		clearInterval(screenShower);
+	}
 }
