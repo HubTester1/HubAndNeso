@@ -152,6 +152,10 @@
 													-webkit-transform: scale(1.0);
 												}
 											}
+
+											div#loading-screen {
+												display: none
+											}
 										
 										</style>
 

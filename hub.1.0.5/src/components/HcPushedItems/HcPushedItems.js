@@ -2,6 +2,7 @@
 // ----- IMPORTS
 
 import * as React from 'react';
+import { Shimmer, ShimmerElementsGroup, ShimmerElementType as ElemType } from 'office-ui-fabric-react/lib/Shimmer';
 import {
 	AccordionItem,
 	AccordionItemTitle,
@@ -19,6 +20,7 @@ import './HcPushedItemsSmall.sass';
 export default class HcPushedItems extends React.Component {
 	state = {
 		listItemsArray: [],
+		isDataLoaded: false,
 	};
 
 	componentDidMount() {
@@ -26,10 +28,65 @@ export default class HcPushedItems extends React.Component {
 			.then((allPushedItemsData) => {
 				this.setState(() => ({
 					listItemsArray: allPushedItemsData,
+					isDataLoaded: true,
 				}));
 			});
 	}
-
+	returnShimmerElements() {
+		return (
+			<div className="shimmer-elements-container">
+				<ShimmerElementsGroup
+					shimmerElements={[
+						{ type: ElemType.line },
+						{ type: ElemType.gap, width: '5%' },
+						{ type: ElemType.line },
+						{ type: ElemType.gap, width: '5%' },
+						{ type: ElemType.line },
+						{ type: ElemType.gap, width: '5%' },
+						{ type: ElemType.line },
+						{ type: ElemType.gap, width: '5%' },
+						{ type: ElemType.line },
+					]}
+				/>
+				<ShimmerElementsGroup
+					shimmerElements={[
+						{ type: ElemType.gap, width: '100%' },
+					]}
+				/>
+				<ShimmerElementsGroup
+					shimmerElements={[
+						{ type: ElemType.line },
+						{ type: ElemType.gap, width: '5%' },
+						{ type: ElemType.line },
+						{ type: ElemType.gap, width: '5%' },
+						{ type: ElemType.line },
+						{ type: ElemType.gap, width: '5%' },
+						{ type: ElemType.line },
+						{ type: ElemType.gap, width: '5%' },
+						{ type: ElemType.line },
+					]}
+				/>
+				<ShimmerElementsGroup
+					shimmerElements={[
+						{ type: ElemType.gap, width: '100%' },
+					]}
+				/>
+				<ShimmerElementsGroup
+					shimmerElements={[
+						{ type: ElemType.line },
+						{ type: ElemType.gap, width: '5%' },
+						{ type: ElemType.line },
+						{ type: ElemType.gap, width: '5%' },
+						{ type: ElemType.line },
+						{ type: ElemType.gap, width: '5%' },
+						{ type: ElemType.line },
+						{ type: ElemType.gap, width: '5%' },
+						{ type: ElemType.line },
+					]}
+				/>
+			</div>
+		);
+	}
 	render() {
 		if (this.props.screenType === 'small') {
 			return (
@@ -64,21 +121,28 @@ export default class HcPushedItems extends React.Component {
 					</AccordionItemBody>
 				</AccordionItem>
 			);
-		}
+		} 
 		return (
 			<div id="hc-pushed-items" className="mos-react-component-root" name="hc-pushed-items">
 				<h2>Quick Hits</h2>
-				<ul id="hc-pushed-items-list">
-					{
-						this.state.listItemsArray.map((listItemValue, listItemIndex) => (
-							<HcPushedItemsLink
-								key={listItemValue.key}
-								listItemId={listItemValue.key}
-								listItemContent={listItemValue}
-							/>
-						))
-					}
-				</ul>
+				<Shimmer 
+					className="shimmer"
+					isDataLoaded={this.state.isDataLoaded}
+					ariaLabel="Loading content"
+					customElementsGroup={this.returnShimmerElements()}
+				>
+					<ul id="hc-pushed-items-list">
+						{
+							this.state.listItemsArray.map((listItemValue, listItemIndex) => (
+								<HcPushedItemsLink
+									key={listItemValue.key}
+									listItemId={listItemValue.key}
+									listItemContent={listItemValue}
+								/>
+							))
+						}
+					</ul>
+				</Shimmer>
 			</div>
 		);
 	}	

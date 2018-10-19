@@ -36,7 +36,7 @@
     "add": "^2.0.6",
     "axios": "^0.18.0",
     "moment": "^2.22.1",
-    "office-ui-fabric-react": "^5.107.0",
+    "office-ui-fabric-react": "^5.129.0",
     "react": "^16.3.2",
     "react-accessible-accordion": "^2.4.0",
     "react-dom": "^16.3.2",

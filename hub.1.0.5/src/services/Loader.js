@@ -138,7 +138,6 @@ function LoadFiles() {
 		LoadCSSFiles(stylesheetsToLoad, () => {
 			LoadJSFiles(mosToLoad, mosLoadingPromises, mData, () => {
 				// indicate readiness
-				console.log('gonna set false');
 				window.loading = false;
 			});
 		});
