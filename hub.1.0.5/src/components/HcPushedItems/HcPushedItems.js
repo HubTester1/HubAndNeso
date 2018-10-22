@@ -2,7 +2,8 @@
 // ----- IMPORTS
 
 import * as React from 'react';
-import { Shimmer, ShimmerElementsGroup, ShimmerElementType as ElemType } from 'office-ui-fabric-react/lib/Shimmer';
+import ReactPlaceholder from 'react-placeholder';
+import { RectShape } from 'react-placeholder/lib/placeholders';
 import {
 	AccordionItem,
 	AccordionItemTitle,
@@ -20,7 +21,7 @@ import './HcPushedItemsSmall.sass';
 export default class HcPushedItems extends React.Component {
 	state = {
 		listItemsArray: [],
-		isDataLoaded: false,
+		ready: false,
 	};
 
 	componentDidMount() {
@@ -28,62 +29,20 @@ export default class HcPushedItems extends React.Component {
 			.then((allPushedItemsData) => {
 				this.setState(() => ({
 					listItemsArray: allPushedItemsData,
-					isDataLoaded: true,
+					ready: true,
 				}));
 			});
 	}
-	returnShimmerElements() {
+	returnPlaceholder() {
 		return (
-			<div className="shimmer-elements-container">
-				<ShimmerElementsGroup
-					shimmerElements={[
-						{ type: ElemType.line },
-						{ type: ElemType.gap, width: '5%' },
-						{ type: ElemType.line },
-						{ type: ElemType.gap, width: '5%' },
-						{ type: ElemType.line },
-						{ type: ElemType.gap, width: '5%' },
-						{ type: ElemType.line },
-						{ type: ElemType.gap, width: '5%' },
-						{ type: ElemType.line },
-					]}
-				/>
-				<ShimmerElementsGroup
-					shimmerElements={[
-						{ type: ElemType.gap, width: '100%' },
-					]}
-				/>
-				<ShimmerElementsGroup
-					shimmerElements={[
-						{ type: ElemType.line },
-						{ type: ElemType.gap, width: '5%' },
-						{ type: ElemType.line },
-						{ type: ElemType.gap, width: '5%' },
-						{ type: ElemType.line },
-						{ type: ElemType.gap, width: '5%' },
-						{ type: ElemType.line },
-						{ type: ElemType.gap, width: '5%' },
-						{ type: ElemType.line },
-					]}
-				/>
-				<ShimmerElementsGroup
-					shimmerElements={[
-						{ type: ElemType.gap, width: '100%' },
-					]}
-				/>
-				<ShimmerElementsGroup
-					shimmerElements={[
-						{ type: ElemType.line },
-						{ type: ElemType.gap, width: '5%' },
-						{ type: ElemType.line },
-						{ type: ElemType.gap, width: '5%' },
-						{ type: ElemType.line },
-						{ type: ElemType.gap, width: '5%' },
-						{ type: ElemType.line },
-						{ type: ElemType.gap, width: '5%' },
-						{ type: ElemType.line },
-					]}
-				/>
+			<div
+				className="mos-placeholder-column-container hc-pushed-items-placeholder"
+			>
+				<RectShape className="mos-placeholder-column hc-pushed-items-placeholder-column" />
+				<RectShape className="mos-placeholder-column hc-pushed-items-placeholder-column" />
+				<RectShape className="mos-placeholder-column hc-pushed-items-placeholder-column" />
+				<RectShape className="mos-placeholder-column hc-pushed-items-placeholder-column" />
+				<RectShape className="mos-placeholder-column hc-pushed-items-placeholder-column" />
 			</div>
 		);
 	}
@@ -125,11 +84,10 @@ export default class HcPushedItems extends React.Component {
 		return (
 			<div id="hc-pushed-items" className="mos-react-component-root" name="hc-pushed-items">
 				<h2>Quick Hits</h2>
-				<Shimmer 
-					className="shimmer"
-					isDataLoaded={this.state.isDataLoaded}
-					ariaLabel="Loading content"
-					customElementsGroup={this.returnShimmerElements()}
+				<ReactPlaceholder
+					customPlaceholder={this.returnPlaceholder()}
+					ready={this.state.ready}
+					showLoadingAnimation
 				>
 					<ul id="hc-pushed-items-list">
 						{
@@ -142,7 +100,7 @@ export default class HcPushedItems extends React.Component {
 							))
 						}
 					</ul>
-				</Shimmer>
+				</ReactPlaceholder>
 			</div>
 		);
 	}	

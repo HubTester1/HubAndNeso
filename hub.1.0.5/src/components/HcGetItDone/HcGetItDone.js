@@ -2,6 +2,8 @@
 // ----- IMPORTS
 
 import * as React from 'react';
+import ReactPlaceholder from 'react-placeholder';
+import { RectShape } from 'react-placeholder/lib/placeholders';
 import {
 	AccordionItem,
 	AccordionItemTitle,
@@ -28,6 +30,8 @@ export default class HcGetItDone extends React.Component {
 			listItemsAlphaArray: [],
 			listItemsGroupedArray: [],
 			queryError: false,
+			ready: false,
+			fakeReady: false,
 		};
 		this.handleClickViewByAlphaButton = this.handleClickViewByAlphaButton.bind(this);
 		this.handleClickViewByGroupButton = this.handleClickViewByGroupButton.bind(this);
@@ -39,6 +43,7 @@ export default class HcGetItDone extends React.Component {
 				this.setState(() => ({
 					listItemsAlphaArray: allGetItDoneItemsData.allListItemsAlpha,
 					listItemsGroupedArray: allGetItDoneItemsData.allListItemsGrouped,
+					ready: true,
 				}));
 			})
 			.catch((error) => {
@@ -93,6 +98,18 @@ export default class HcGetItDone extends React.Component {
 			<div id="hc-get-it-done-body" />
 		);
 	}
+	returnPlaceholder() {
+		return (
+			<div
+				className="mos-placeholder-column-container hc-get-it-done-placeholder"
+			>
+				<RectShape className="mos-placeholder-column hc-get-it-done-placeholder-column" />
+				<RectShape className="mos-placeholder-column hc-get-it-done-placeholder-column" />
+				<RectShape className="mos-placeholder-column hc-get-it-done-placeholder-column" />
+				<RectShape className="mos-placeholder-column hc-get-it-done-placeholder-column" />
+			</div>
+		);
+	}
 	render() {
 		if (!this.state.queryError && this.props.screenType === 'small') {
 			return (
@@ -122,7 +139,13 @@ export default class HcGetItDone extends React.Component {
 			return (
 				<div id="hc-get-it-done" className="mos-react-component-root" name="hc-get-it-done">
 					<h2>Get it Done</h2>
-					{this.returnHcGetItDoneBody()}
+					<ReactPlaceholder
+						customPlaceholder={this.returnPlaceholder()}
+						ready={this.state.ready}
+						showLoadingAnimation
+					>
+						{this.returnHcGetItDoneBody()}
+					</ReactPlaceholder>
 				</div>
 			);
 		}
