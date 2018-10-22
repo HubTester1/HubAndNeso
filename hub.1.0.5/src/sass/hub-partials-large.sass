@@ -139,7 +139,18 @@
 		// top messages
 			
 		div#hc-messages-top
-			width: 50%
+			width: 50% !important
+
+			div.hc-messages-placeholder
+				column-count: 2
+
+				div.hc-messages-placeholder-column
+					height: 22rem !important
+					background-color: $white-5-percent
+
+				div.hc-messages-placeholder-column:nth-child(3),
+				div.hc-messages-placeholder-column:nth-child(4)
+					display: block !important
 
 			ul#hc-messages-list
 				column-count: 2

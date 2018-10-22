@@ -406,17 +406,22 @@
 	div#staff-lookup-and-background-info-and-top-messages
 			
 		div#hc-messages-top
+			width: 40%
 			padding: 0 4rem 5rem 0
 
 			h2
 				color: $white
 
 			div.hc-messages-placeholder
-				column-count: 2
 
 				div.hc-messages-placeholder-column
-					height: 19rem !important
+					height: 22rem !important
 					background-color: $white-5-percent
+
+
+				div.hc-messages-placeholder-column:nth-child(3),
+				div.hc-messages-placeholder-column:nth-child(4)
+					display: none
 
 			ul#hc-messages-list
 				color: $white
