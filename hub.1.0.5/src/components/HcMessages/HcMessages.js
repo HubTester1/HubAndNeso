@@ -4,6 +4,8 @@
 // ----- IMPORTS
 
 import * as React from 'react';
+import ReactPlaceholder from 'react-placeholder';
+import { RectShape } from 'react-placeholder/lib/placeholders';
 import {
 	AccordionItem,
 	AccordionItemTitle,
@@ -60,6 +62,8 @@ export default class HcMessages extends React.Component {
 			newMessageSaveFailure: undefined,
 			newMessageSaveSuccess: undefined,
 			newMessageIITNotificationFailure: undefined,
+			ready: false,
+			fakeReady: false,
 		};
 		this.addMessageToList = this.addMessageToList.bind(this);
 		this.handleClickNewMessageButton = this.handleClickNewMessageButton.bind(this);
@@ -103,6 +107,7 @@ export default class HcMessages extends React.Component {
 						messagesArray: allMessageMessages,
 						messagesThisPageSmallScreen: messagesThisPage.messagesThisPageSmallScreen,
 						messagesThisPageLargeScreen: messagesThisPage.messagesThisPageLargeScreen,
+						ready: true,
 					}));
 				});
 		}
@@ -111,6 +116,7 @@ export default class HcMessages extends React.Component {
 				.then((allMessageMessages) => {
 					this.setState(() => ({
 						messagesArray: allMessageMessages,
+						ready: true,
 					}));
 				});
 		}
@@ -726,12 +732,30 @@ export default class HcMessages extends React.Component {
 			};
 		});
 	}
+	returnPlaceholder() {
+		return (
+			<div
+				className="mos-placeholder-column-container hc-messages-placeholder"
+			>
+				<RectShape className="mos-placeholder-column hc-messages-placeholder-column" />
+				<RectShape className="mos-placeholder-column hc-messages-placeholder-column" />
+				<RectShape className="mos-placeholder-column hc-messages-placeholder-column" />
+				<RectShape className="mos-placeholder-column hc-messages-placeholder-column" />
+			</div>
+		);
+	}
 	render() {
 		if (this.props.allOrTop === 'all' && this.props.screenType === 'medium') {
 			return (
 				<div id="hc-messages-all" className="mos-react-component-root" name="hc-messages-all">
 					<h2>Messages</h2>
-					{this.returnHcMessagesAllBody()}
+					<ReactPlaceholder
+						customPlaceholder={this.returnPlaceholder()}
+						ready={this.state.ready}
+						showLoadingAnimation
+					>
+						{this.returnHcMessagesAllBody()}
+					</ReactPlaceholder>
 				</div>
 			);
 		}
@@ -806,11 +830,17 @@ export default class HcMessages extends React.Component {
 				{
 					!this.state.showNewMessageForm &&
 
-					<HcMessagesList
-						messagesThisPage={this.state.messagesArray}
-						enableMessageUpdate={this.enableMessageUpdate}
-						uData={this.props.uData}
-					/>
+					<ReactPlaceholder
+						customPlaceholder={this.returnPlaceholder()}
+						ready={this.state.ready}
+						showLoadingAnimation
+					>
+						<HcMessagesList
+							messagesThisPage={this.state.messagesArray}
+							enableMessageUpdate={this.enableMessageUpdate}
+							uData={this.props.uData}
+						/>
+					</ReactPlaceholder>
 				}
 			</div>
 		);

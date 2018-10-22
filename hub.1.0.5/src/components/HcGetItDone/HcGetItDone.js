@@ -49,6 +49,7 @@ export default class HcGetItDone extends React.Component {
 			.catch((error) => {
 				this.setState(() => ({
 					queryError: true,
+					ready: true,
 				}));
 			});
 	}

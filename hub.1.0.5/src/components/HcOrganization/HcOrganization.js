@@ -2,6 +2,7 @@
 // ----- IMPORTS
 
 import * as React from 'react';
+import ReactPlaceholder from 'react-placeholder';
 import {
 	AccordionItem,
 	AccordionItemTitle,
@@ -33,6 +34,7 @@ export default class HcOrganization extends React.Component {
 			nonDivDeptTeamsArray: [],
 			otherContactsArray: [],
 			queryError: false,
+			ready: false,
 		};
 		this.handleClickShowTeams = this.handleClickShowTeams.bind(this);
 		this.handleClickShowStaffLookup = this.handleClickShowStaffLookup.bind(this);
@@ -47,11 +49,13 @@ export default class HcOrganization extends React.Component {
 					divDeptWTeamsArray: allOrganizationData.divDeptWTeams,
 					nonDivDeptTeamsArray: allOrganizationData.nonDivDeptTeams,
 					otherContactsArray: allOrganizationData.otherContacts,
+					ready: true,
 				}));
 			})
 			.catch((error) => {
 				this.setState(() => ({
 					queryError: true,
+					ready: true,
 				}));
 			});
 	}
@@ -131,6 +135,28 @@ export default class HcOrganization extends React.Component {
 			</div>
 		);
 	}
+	returnPlaceholder() {
+		return (
+			<div
+				className="mos-placeholder-rectangle-container hc-organization-placeholder"
+			>
+				<div
+					className="mos-placeholder-rectangle hc-organization-placeholder-rectangle__teams--divs-depts"
+				>
+					<div
+						className="mos-placeholder-rectangle hc-organization-placeholder-rectangle__filler"
+					/>
+				</div>
+				<div 
+					className="mos-placeholder-rectangle hc-organization-placeholder-rectangle__teams--other-teams"
+				>
+					<div
+						className="mos-placeholder-rectangle hc-organization-placeholder-rectangle__filler"
+					/>
+				</div>
+			</div>
+		);
+	}
 	render() {
 		if (this.props.screenType === 'small') {
 			return (
@@ -159,15 +185,22 @@ export default class HcOrganization extends React.Component {
 		return (
 			<div id="hc-organization" className="mos-react-component-root" name="hc-organization">
 				<h2>Organization, Teams, & Staff</h2>
-				{
-					!this.state.queryError &&
-					this.returnHcOrganizationBody()
-				}
-				{
-					this.state.queryError &&
+				<ReactPlaceholder
+					customPlaceholder={this.returnPlaceholder()}
+					ready={this.state.ready}
+					showLoadingAnimation
+				>
+					{
+						!this.state.queryError &&
 
-					<p id="hc-get-it-done-body">I can&apos;t show you this information right now.</p>
-				}
+						this.returnHcOrganizationBody()
+					}
+					{
+						this.state.queryError &&
+
+						<p id="hc-organization-body">I can&apos;t show you this information right now.</p>
+					}
+				</ReactPlaceholder>
 			</div>
 		);
 	}

@@ -273,14 +273,12 @@
 		h2
 			color: $white
 
-		
 		div.hc-get-it-done-placeholder
 			column-count: 4
 
 			div.hc-get-it-done-placeholder-column
 				height: 300rem !important
 				background-color: $white-10-percent
-
 
 		div#hc-get-it-done-view-by-group,
 		div#hc-get-it-done-view-by-alpha > ul
@@ -413,6 +411,13 @@
 			h2
 				color: $white
 
+			div.hc-messages-placeholder
+				column-count: 2
+
+				div.hc-messages-placeholder-column
+					height: 19rem !important
+					background-color: $white-5-percent
+
 			ul#hc-messages-list
 				color: $white
 				padding: 0
@@ -496,6 +501,13 @@
 
 		h2
 			color: $white
+
+		div.hc-messages-placeholder
+			column-count: 4
+
+			div.hc-messages-placeholder-column
+				height: 82rem !important
+				background-color: $white-10-percent
 
 		ul#hc-messages-list
 			padding-top: 2rem
@@ -613,6 +625,31 @@
 	
 	div#hc-organization
 		padding: 5rem
+
+
+		div.hc-organization-placeholder
+			+row
+
+			div.hc-organization-placeholder-rectangle__teams--divs-depts,
+			div.hc-organization-placeholder-rectangle__teams--other-teams
+				+column
+			
+			div.hc-organization-placeholder-rectangle__teams--divs-depts
+				width: 77rem
+				padding-right: 5rem
+
+				div.hc-organization-placeholder-rectangle__filler
+					width: 72rem
+					height: 68rem !important
+					background-color: $black-5-percent
+
+			div.hc-organization-placeholder-rectangle__teams--other-teams
+				width: 31rem
+
+				div.hc-organization-placeholder-rectangle__filler
+					width: 31rem
+					height: 20rem !important
+					background-color: $black-5-percent
 
 		// TEAMS
 		
