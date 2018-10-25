@@ -107,54 +107,22 @@
 												overflow: hidden;
 											}
 										
-											div#loading-spinner:before,
-											div#loading-spinner:after {
+											div#loading-logo {
 												content: '';
 												box-sizing: border-box;
 												position: absolute;
 												top: 50%;
 												left: 50%;
-												width: 50px;
-												height: 50px;
-												margin-top: -25px;
-												margin-left: -25px;
-												border-radius: 50%;
-												background-color: #da1884;
-												-webkit-animation: sk-bounce 1s infinite ease-in-out;
-												animation: sk-bounce 1s infinite ease-in-out;
+												width: 300px;
+												height: 300px;
+												margin-top: -150px;
+												margin-left: -150px;
+												background-color: #fff;
+												background-image: url('https://bmos.sharepoint.com/sites/hubprod/Asset Library/BrandLogoOnlyWithMarginOpt.svg');
+												background-position: right top;
+												background-repeat: no-repeat;
+												background-size: cover;
 												z-index: 9001;
-											}
-										
-											div#loading-spinner:before {
-												background-color: #49c5b1;
-												-webkit-animation-delay: -.5s;
-												animation-delay: -.5s;
-											}
-										
-											@-webkit-keyframes sk-bounce {
-												0%,
-												100% {
-													-webkit-transform: scale(0.0)
-												}
-												50% {
-													-webkit-transform: scale(1.0)
-												}
-											}
-										
-											@keyframes sk-bounce {
-												0%,
-												100% {
-													transform: scale(0.0);
-													-webkit-transform: scale(0.0);
-												}
-												50% {
-													transform: scale(1.0);
-													-webkit-transform: scale(1.0);
-												}
-											}
-
-											div#loading-screen {
-												display: none
 											}
 										
 										</style>
@@ -457,7 +425,7 @@
 											</div>
 											<div id="loading-screen">
 												<p id="loading-text">Loading...</p>
-												<div id="loading-spinner"></div>
+												<div id="loading-logo"></div>
 											</div>
 											<div id="internet-explorer-upgrade" class="banner banner--critical"    style="display: none;">
 												<p class="banner__text">Internet Explorer was replaced in 2015. Please upgrade from Internet Explorer to Edge, or switch to Chrome or Firefox. If you need assistance doing so, please contact IIT System Support Services at x0130.

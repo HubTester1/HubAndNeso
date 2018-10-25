@@ -38,6 +38,8 @@ class HcContainer extends React.Component {
 		// also check for maintenance mode
 		HcContainerData.ReturnUData()
 			.then((response) => {
+				console.log('response');
+				console.log(response);
 				this.setState(() => ({
 					uData: response,
 				}));
@@ -145,7 +147,7 @@ class HcContainer extends React.Component {
 }
 
 // eslint-disable-next-line no-console
-console.log('hc m47');
+console.log('hc m2');
 if (EnvironmentDetector.ReturnIsHCScreen()) {
 	ReactDOM.render(<HcContainer />, document.getElementById('hub-central-mount-point'));
 } else {
