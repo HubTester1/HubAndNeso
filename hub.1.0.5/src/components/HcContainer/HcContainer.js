@@ -9,8 +9,8 @@ import { Accordion } from 'react-accessible-accordion';
 import EnvironmentDetector from '../../services/EnvironmentDetector';
 import MOSUtilities from '../../services/MOSUtilities';
 import ScreenSizes from '../../services/ScreenSizes';
+import User from '../../services/User';
 
-import HcContainerData from './HcContainerData';
 import HcHeader from '../../components/HcHeader/HcHeader';
 import HcHero from '../../components/HcHero/HcHero';
 import HcGetItDone from '../../components/HcGetItDone/HcGetItDone';
@@ -36,7 +36,7 @@ class HcContainer extends React.Component {
 	}
 	componentDidMount() {
 		// also check for maintenance mode
-		HcContainerData.ReturnUData()
+		User.ReturnUData()
 			.then((response) => {
 				console.log('response');
 				console.log(response);
