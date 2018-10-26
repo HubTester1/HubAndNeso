@@ -11,7 +11,6 @@ import shortid from 'shortid';
 
 import NesoHTTPClient from '../../services/NesoHTTPClient';
 import MOSUtilities from '../../services/MOSUtilities';
-import EnvironmentDetector from '../../services/EnvironmentDetector';
 
 // ----- DATA
 
@@ -82,50 +81,48 @@ export default class HcStaffLookupData {
 	}
 	
 	static ReturnPeoplePickerOptions(terms, results) {
-		// if environment is SharePoint
-		if (EnvironmentDetector.ReturnIsSPO()) {
-			return new Promise((resolve, reject) => {
-				const client = new HttpClient();
-				const searchString = terms;
-				const endpointUrl = 'https://bmos.sharepoint.com/_api/SP.UI.ApplicationPages.ClientPeoplePickerWebServiceInterface.clientPeoplePickerSearchUser';
-				client.post(endpointUrl, {
-					headers: {
-						Accept: 'application/json; odata=verbose',
-					},
-					body: JSON.stringify({
-						queryParams: {
-							__metadata: {
-								type: 'SP.UI.ApplicationPages.ClientPeoplePickerQueryParameters',
-							},
-							AllowEmailAddresses: true,
-							AllowMultipleEntities: false,
-							AllUrlZones: false,
-							MaximumEntitySuggestions: 50,
-							PrincipalSource: 15,
-							// PrincipalType controls the type of entities that are returned in the results.
-							// Choices are All - 15, Distribution List - 2 , Security Groups - 4, SharePoint Groups - 8, User - 1.
-							// These values can be combined (example: 13 is security + SP groups + users)
-							PrincipalType: 1,
-							QueryString: searchString,
+		return new Promise((resolve, reject) => {
+			const client = new HttpClient();
+			const searchString = terms;
+			const endpointUrl = 'https://bmos.sharepoint.com/_api/SP.UI.ApplicationPages.ClientPeoplePickerWebServiceInterface.clientPeoplePickerSearchUser';
+			client.post(endpointUrl, {
+				headers: {
+					Accept: 'application/json; odata=verbose',
+				},
+				body: JSON.stringify({
+					queryParams: {
+						__metadata: {
+							type: 'SP.UI.ApplicationPages.ClientPeoplePickerQueryParameters',
 						},
-					}),
-				})
-					.then(response => response.json())
-					.then((data) => {
-						const userQueryResults = JSON.parse(data.d.ClientPeoplePickerSearchUser);
-						const persons = userQueryResults.map(personData => ({
-							_user: personData,
-							primaryText: personData.DisplayText,
-							secondaryText: personData.EntityData.Title,
-							// tertiaryText: personData.EntityData.Department,
-							imageShouldFadeIn: true,
-							imageUrl: `/_layouts/15/userphoto.aspx?size=S&accountname=${personData.Key.substr(personData.Key.lastIndexOf('|') + 1)}`,
-						}));
-						resolve(persons);
-					});
+						AllowEmailAddresses: true,
+						AllowMultipleEntities: false,
+						AllUrlZones: false,
+						MaximumEntitySuggestions: 50,
+						PrincipalSource: 15,
+						// PrincipalType controls the type of entities that are returned in the results.
+						// Choices are All - 15, Distribution List - 2 , Security Groups - 4, SharePoint Groups - 8, User - 1.
+						// These values can be combined (example: 13 is security + SP groups + users)
+						PrincipalType: 1,
+						QueryString: searchString,
+					},
+				}),
+			})
+				.then(response => response.json())
+				.then((data) => {
+					const userQueryResults = JSON.parse(data.d.ClientPeoplePickerSearchUser);
+					const persons = userQueryResults.map(personData => ({
+						_user: personData,
+						primaryText: personData.DisplayText,
+						secondaryText: personData.EntityData.Title,
+						// tertiaryText: personData.EntityData.Department,
+						imageShouldFadeIn: true,
+						imageUrl: `/_layouts/15/userphoto.aspx?size=S&accountname=${personData.Key.substr(personData.Key.lastIndexOf('|') + 1)}`,
+					}));
+					resolve(persons);
+				});
 
 
-				/* .then((persons) => {
+			/* .then((persons) => {
 						const batch = this.props.spHttpClient.beginBatch();
 						const ensureUserUrl = `${this.props.siteUrl}/_api/web/ensureUser`;
 						const batchPromises: Promise<IEnsureUser>[] = persons.map(p => {
@@ -152,47 +149,7 @@ export default class HcStaffLookupData {
 					}, (error: any): void => {
 						reject(this._peopleList = []);
 					})); */
-			});
-		}
-		// if environment is NOT SharePoint
-		return this.searchPeopleFromMock();
-	}
-	static searchPeopleFromMock() {
-		this.peopleList = [
-			{
-				imageUrl: './images/persona-female.png',
-				imageInitials: 'PV',
-				primaryText: 'Annie Lindqvist',
-				secondaryText: 'Designer',
-				tertiaryText: 'In a meeting',
-				optionalText: 'Available at 4:00pm',
-			},
-			{
-				imageUrl: './images/persona-male.png',
-				imageInitials: 'AR',
-				primaryText: 'Aaron Reid',
-				secondaryText: 'Designer',
-				tertiaryText: 'In a meeting',
-				optionalText: 'Available at 4:00pm',
-			},
-			{
-				imageUrl: './images/persona-male.png',
-				imageInitials: 'AL',
-				primaryText: 'Alex Lundberg',
-				secondaryText: 'Software Developer',
-				tertiaryText: 'In a meeting',
-				optionalText: 'Available at 4:00pm',
-			},
-			{
-				imageUrl: './images/persona-male.png',
-				imageInitials: 'RK',
-				primaryText: 'Roko Kolar',
-				secondaryText: 'Financial Analyst',
-				tertiaryText: 'In a meeting',
-				optionalText: 'Available at 4:00pm',
-			},
-		];
-		return this.peopleList;
+		});
 	}
 
 

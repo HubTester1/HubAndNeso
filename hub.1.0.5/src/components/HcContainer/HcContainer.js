@@ -38,8 +38,6 @@ class HcContainer extends React.Component {
 		// also check for maintenance mode
 		User.ReturnUData()
 			.then((response) => {
-				console.log('response');
-				console.log(response);
 				this.setState(() => ({
 					uData: response,
 				}));

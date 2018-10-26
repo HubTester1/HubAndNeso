@@ -3,9 +3,7 @@
 
 import { Web } from 'sp-pnp-js';
 import shortID from 'shortid';
-import EnvironmentDetector from '../../services/EnvironmentDetector';
 import NesoHTTPClient from '../../services/NesoHTTPClient';
-import ReturnHcOrganizationMockData from './HcOrganizationMockData';
 
 // ----- DATA
 
@@ -42,88 +40,81 @@ export default class HcGetItDoneData {
 	static ReturnAllOrganizationData() {
 		// return a new promise
 		return new Promise(((resolve, reject) => {
-			// if environment is sharepoint
-			if (EnvironmentDetector.ReturnIsSPO()) {
-				// console.log('is spo');
-				// collect data async from multiple sources
-				const listItemQueryPromises = [
-					this.ReturnHRDocsForHcOrg(),
-					this.ReturnHubDocsForHcOrg(),
-					this.ReturnNesoDataForHcOrg(),
-				];
-				// wait for the promises for all queries
-				Promise.all(listItemQueryPromises)
-					// if the promises are resolved with the data
-					.then((resultsReturnArray) => {
-						// console.log('alll qs resolved');
-						// console.log(resultsReturnArray);
-						// set up vars
-						let orgChartsReturn;
-						let divDeptWTeamsReturn;
-						let otherContactsReturn;
-						const finalResolution = {
-							divDeptWTeams: [],
-							nonDivDeptTeams: [],
-							otherContacts: [],
-						};
-						// extract data from the queries
-						resultsReturnArray.forEach((resultValue) => {
-							if (resultValue[0] && resultValue[0]['odata.type']) {
-								if (resultValue[0]['odata.type'] === 'SP.Data.HRDocsItem') {
-									orgChartsReturn = resultValue;
-								}
-								if (resultValue[0]['odata.type'] === 'SP.Data.HubDocsItem') {
-									otherContactsReturn = resultValue;
-								}
+			// collect data async from multiple sources
+			const listItemQueryPromises = [
+				this.ReturnHRDocsForHcOrg(),
+				this.ReturnHubDocsForHcOrg(),
+				this.ReturnNesoDataForHcOrg(),
+			];
+			// wait for the promises for all queries
+			Promise.all(listItemQueryPromises)
+				// if the promises are resolved with the data
+				.then((resultsReturnArray) => {
+					// console.log('alll qs resolved');
+					// console.log(resultsReturnArray);
+					// set up vars
+					let orgChartsReturn;
+					let divDeptWTeamsReturn;
+					let otherContactsReturn;
+					const finalResolution = {
+						divDeptWTeams: [],
+						nonDivDeptTeams: [],
+						otherContacts: [],
+					};
+					// extract data from the queries
+					resultsReturnArray.forEach((resultValue) => {
+						if (resultValue[0] && resultValue[0]['odata.type']) {
+							if (resultValue[0]['odata.type'] === 'SP.Data.HRDocsItem') {
+								orgChartsReturn = resultValue;
 							}
-							if (resultValue.divDeptWTeams) {
-								divDeptWTeamsReturn = resultValue.divDeptWTeams;
-								finalResolution.nonDivDeptTeams = resultValue.nonDivDeptTeams;
+							if (resultValue[0]['odata.type'] === 'SP.Data.HubDocsItem') {
+								otherContactsReturn = resultValue;
 							}
-						});
-						// note: we're going to mash up the org charts and the divDeptWTeams
-						// note: in divDeptWReturn, divs and depts already have keys for react
-						// for each division
-						divDeptWTeamsReturn.forEach((division) => {
-							// preserve parameter
-							const divisionCopy = division;
-							// for each org chart
-							orgChartsReturn.forEach((orgChart) => {
-								// if this org chart is for this division
-								if (orgChart.HRISKey === divisionCopy.name) {
-									divisionCopy.orgChart = orgChart.ServerRedirectedEmbedUrl;
-								}
-							});
-							// push this copy of the division (with or without org chart) 
-							// 		to the final array
-							finalResolution.divDeptWTeams.push(divisionCopy);
-						});
-						// add a react key to each item
-						otherContactsReturn.forEach((otherContact) => {
-							// preserve parameter
-							const otherContactCopy = otherContact;
-							// generate a key for this item
-							otherContactCopy.reactKey = shortID.generate();
-							// push this copy of the item to finalResolution
-							finalResolution.otherContacts.push(otherContactCopy);
-						});
-						// resolve this promise with finalResolution
-						resolve(finalResolution);
-					})
-					// if any single promise is rejected with an error
-					.catch((queryError) => {
-						// console.log('was rejected');
-						// console.log(queryError);
-						// reject this promise with the first error (because that's all we get)
-						reject({
-							error: true,
-							queryError,
-						});
+						}
+						if (resultValue.divDeptWTeams) {
+							divDeptWTeamsReturn = resultValue.divDeptWTeams;
+							finalResolution.nonDivDeptTeams = resultValue.nonDivDeptTeams;
+						}
 					});
-			} else {
-				// resolve the promise with mock data
-				resolve(ReturnHcOrganizationMockData());
-			}
+					// note: we're going to mash up the org charts and the divDeptWTeams
+					// note: in divDeptWReturn, divs and depts already have keys for react
+					// for each division
+					divDeptWTeamsReturn.forEach((division) => {
+						// preserve parameter
+						const divisionCopy = division;
+						// for each org chart
+						orgChartsReturn.forEach((orgChart) => {
+							// if this org chart is for this division
+							if (orgChart.HRISKey === divisionCopy.name) {
+								divisionCopy.orgChart = orgChart.ServerRedirectedEmbedUrl;
+							}
+						});
+						// push this copy of the division (with or without org chart) 
+						// 		to the final array
+						finalResolution.divDeptWTeams.push(divisionCopy);
+					});
+					// add a react key to each item
+					otherContactsReturn.forEach((otherContact) => {
+						// preserve parameter
+						const otherContactCopy = otherContact;
+						// generate a key for this item
+						otherContactCopy.reactKey = shortID.generate();
+						// push this copy of the item to finalResolution
+						finalResolution.otherContacts.push(otherContactCopy);
+					});
+					// resolve this promise with finalResolution
+					resolve(finalResolution);
+				})
+				// if any single promise is rejected with an error
+				.catch((queryError) => {
+					// console.log('was rejected');
+					// console.log(queryError);
+					// reject this promise with the first error (because that's all we get)
+					reject({
+						error: true,
+						queryError,
+					});
+				});
 		}));
 	}
 }

@@ -15,7 +15,6 @@ const CSSExtract = new ExtractTextPlugin('mos.1.0.5.Styles.css');
 module.exports = merge(baseConfig, {
 	entry: {
 		App: './hub.1.0.5/src/components/HcContainer/HcContainer.js',
-		// TransitionHelper: './hub.1.0.5/src/services/TransitionHelper.js',
 		// Loader: './hub.1.0.5/src/services/Loader.js',		
 	},
 	output: {
