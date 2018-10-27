@@ -15,7 +15,27 @@ export default class HcContainerData {
 			.select('AllRequestData')
 			.get();
 	}
-	static ReturnUData() {
+
+	static GetFileContent(urlToLoad) {
+		// return a new promise
+		return new Promise((resolve, reject) => {
+			const httpRequest = new XMLHttpRequest();
+			httpRequest.onreadystatechange = function () {
+				if (httpRequest.readyState === XMLHttpRequest.DONE) {
+					if (httpRequest.status === 200) {
+						resolve({ content: httpRequest.responseText });
+					} else {
+						console.log(`__failed to load: ${urlToLoad}`);
+						reject({ error: true, status: httpRequest.status });
+					}
+				}
+			};
+			httpRequest.open('GET', urlToLoad, true);
+			httpRequest.send();
+		});
+	}
+
+	static ReturnServiceAvailability() {
 		// return a new promise
 		return new Promise(((resolve, reject) => {
 			// collect data async from multiple sources
@@ -25,9 +45,9 @@ export default class HcContainerData {
 					.ReturnNesoData('https://neso.mos.org/activeDirectory/managers'),
 				this.ReturnGSEConfig(),
 			];
-				// wait for all queries to be completed
+			// wait for all queries to be completed
 			Promise.all(userDataQueryPromises)
-			// if the queries returned the data
+				// if the queries returned the data
 				.then((resultsArray) => {
 					// extract data from responses
 					const uData = {
@@ -36,7 +56,7 @@ export default class HcContainerData {
 						result3: resultsArray[2],
 					};
 					uData.account =
-							MOSUtilities.ReplaceAll('i:0#.f\\|membership\\|', '', MOSUtilities.ReplaceAll('@mos.org', '', resultsArray[0].LoginName.toLowerCase()));
+						MOSUtilities.ReplaceAll('i:0#.f\\|membership\\|', '', MOSUtilities.ReplaceAll('@mos.org', '', resultsArray[0].LoginName.toLowerCase()));
 					/* uData.accountLong = resultsArray[0].LoginName.toLowerCase(); */
 
 					uData.roles = [];
@@ -90,7 +110,7 @@ export default class HcContainerData {
 					// resolve this promise with the user data
 					resolve(uData);
 				})
-			// if 1+ queries returned an error, reject this promise with the error
+				// if 1+ queries returned an error, reject this promise with the error
 				.catch((error) => { reject(error); });
 		}));
 	}
