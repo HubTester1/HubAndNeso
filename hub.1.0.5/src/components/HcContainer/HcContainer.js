@@ -9,7 +9,7 @@ import { Accordion } from 'react-accessible-accordion';
 import EnvironmentDetector from '../../services/EnvironmentDetector';
 import MOSUtilities from '../../services/MOSUtilities';
 import ScreenSizes from '../../services/ScreenSizes';
-import User from '../../services/User';
+import HCContext from '../../services/HcContext';
 
 import HcHeader from '../../components/HcHeader/HcHeader';
 import HcHero from '../../components/HcHero/HcHero';
@@ -30,20 +30,32 @@ class HcContainer extends React.Component {
 		super(props);
 		this.state = {
 			showSmallNav: false,
+			nesoIsAvailable: undefined,
+			maintenanceModeThisUser: undefined,
 			uData: {},
 		};
 		this.handleHamburgerOrNavItemClick = this.handleHamburgerOrNavItemClick.bind(this);
 	}
 	componentDidMount() {
-		// also check for maintenance mode
-		User.ReturnUData()
+		HCContext.ReturnHCContext()
 			.then((response) => {
-				this.setState(() => ({
-					uData: response,
-				}));
+				if (
+					response &&
+					response.nesoIsAvailable &&
+					response.uData
+				) {
+					this.setState(() => ({
+						uData: response.uData,
+						nesoIsAvailable: response.nesoIsAvailable,
+						maintenanceModeThisUser: response.maintenanceModeThisUser,
+					}));
+					console.log('this.state');
+					console.log(this.state);
+				}
 			})
 			.catch((error) => {
-				// 
+				console.log('hcContext error');
+				console.log(error);
 			});
 	}
 	handleHamburgerOrNavItemClick() {
@@ -145,7 +157,7 @@ class HcContainer extends React.Component {
 }
 
 // eslint-disable-next-line no-console
-console.log('hc m2');
+console.log('hc m4');
 if (EnvironmentDetector.ReturnIsHCScreen()) {
 	ReactDOM.render(<HcContainer />, document.getElementById('hub-central-mount-point'));
 } else {

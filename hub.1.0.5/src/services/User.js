@@ -15,6 +15,54 @@ export default class HcContainerData {
 			.select('AllRequestData')
 			.get();
 	}
+	static SetComponentGroupID() {
+		// set component group ID
+		if (window.mData && window.mData.axle && window.mData.axle === 1) {
+			window.mData.componentGroupID = 1;
+		}
+		if (window.mData && window.mData.community && window.mData.community === 1) {
+			window.mData.componentGroupID = 2;
+		}
+		if (window.mData && window.mData.swf && window.mData.swf === 1) {
+			window.mData.componentGroupID = 3;
+		}
+		if (window.mData && window.mData.visualization && window.mData.visualization === 1) {
+			window.mData.componentGroupID = 4;
+		}
+	}
+	static ReturnComponentGroupAdminData() {
+		// set component group ID
+		this.SetComponentGroupID();
+		// get and retrieve the data
+		const gseComponentGroupLogWeb = new Web('https://bmos.sharepoint.com/sites/hubprod/');
+		return gseComponentGroupLogWeb.lists.getByTitle('Component Group Log').items
+			// .select('GroupAdminAccess')
+			.select('GroupAdminAccess/Name')
+			.expand('GroupAdminAccess')
+			.filter(`ComponentGroupID eq '${window.mData.componentGroupID}'`)
+			.get();
+	}
+	static ReturnThisUserIsComponentGroupAdmin() {
+		// return a new promise
+		return new Promise((resolve, reject) => {
+			// get a promise to retrieve the component group admin data
+			this.ReturnComponentGroupAdminData()
+				// if the promise was resolved with the data
+				.then((result) => {
+					const groupAdminAccess = []; 
+					result[0].GroupAdminAccess.forEach((user) => {
+						groupAdminAccess.push(user.Name);
+					});
+					resolve(groupAdminAccess);
+				})
+				// if the promise was rejected with an error
+				.catch((error) => {
+					reject(error);
+				});
+		});
+	}
+
+
 	static ReturnUData() {
 		// return a new promise
 		return new Promise(((resolve, reject) => {
@@ -23,7 +71,8 @@ export default class HcContainerData {
 				pnp.sp.web.currentUser.get(),
 				NesoHTTPClient
 					.ReturnNesoData('https://neso.mos.org/activeDirectory/managers'),
-				this.ReturnGSEConfig(),
+				this.ReturnThisUserIsComponentGroupAdmin(),
+				// this.ReturnGSEConfig(),
 			];
 				// wait for all queries to be completed
 			Promise.all(userDataQueryPromises)
@@ -33,11 +82,10 @@ export default class HcContainerData {
 					const uData = {
 						email: resultsArray[0].Email,
 						displayName: resultsArray[0].Title,
-						result3: resultsArray[2],
 					};
 					uData.account =
 							MOSUtilities.ReplaceAll('i:0#.f\\|membership\\|', '', MOSUtilities.ReplaceAll('@mos.org', '', resultsArray[0].LoginName.toLowerCase()));
-					/* uData.accountLong = resultsArray[0].LoginName.toLowerCase(); */
+					uData.accountLong = resultsArray[0].LoginName.toLowerCase();
 
 					uData.roles = [];
 					/* if (uData.account === 'sp1') {
@@ -58,6 +106,13 @@ export default class HcContainerData {
 								// push manager and gseManager roles to uData
 								uData.roles.push('manager');
 								// uData.roles.push('gseManager');
+							}
+						});
+						resultsArray[2].forEach((componentAdmin) => {
+							if (componentAdmin === uData.accountLong) {
+								// push admin and componentGrpAdmin roles to uData
+								uData.roles.push('admin');
+								uData.roles.push('componentGrpAdmin');
 							}
 						});
 
