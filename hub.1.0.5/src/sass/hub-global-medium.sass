@@ -37,7 +37,8 @@
 
 @media screen and (min-width: $medium-screen-minimum-width)
 
-	body.is-in-maintenance-mode
+	body.is-in-maintenance-mode,
+	body.neso-is-unavailable
 
 		div#hub-central-mount-point
 			display: none
@@ -53,16 +54,13 @@
 
 		div#overlays-screen-container
 			
-			div.overlay-screen#maintenance-mode
-				background-image: url('/sites/hubprod/Asset%20Library/sweet-kitty-action_1920.jpg')
+			div.overlay-screen#maintenance-mode,
+			div.overlay-screen#neso-is-unavailable
 				background-position: right top
 				background-repeat: no-repeat
 				background-attachment: fixed
 				background-size: cover
 				text-align: left
-
-				&::before
-					margin-left: 20%
 
 				div.screen-content
 					min-width: 20rem
@@ -78,8 +76,17 @@
 					p.small-screen
 						display: none
 
+			div.overlay-screen#maintenance-mode
+				background-image: url('/sites/hubprod/Asset%20Library/sweet-kitty-action_1920.jpg')
 
+				&::before
+					margin-left: 20%
 
+			div.overlay-screen#neso-is-unavailable
+				background-image: url('/sites/hubprod/Asset%20Library/chow_1920.jpg')
+
+				&::before
+					margin-left: 40%
 
 
 

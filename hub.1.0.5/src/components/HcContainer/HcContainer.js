@@ -33,6 +33,7 @@ class HcContainer extends React.Component {
 			nesoIsAvailable: undefined,
 			maintenanceModeThisUser: undefined,
 			uData: {},
+			contextReady: false,
 		};
 		this.handleHamburgerOrNavItemClick = this.handleHamburgerOrNavItemClick.bind(this);
 	}
@@ -48,9 +49,12 @@ class HcContainer extends React.Component {
 						uData: response.uData,
 						nesoIsAvailable: response.nesoIsAvailable,
 						maintenanceModeThisUser: response.maintenanceModeThisUser,
+						contextReady: true,
 					}));
-					console.log('this.state');
-					console.log(this.state);
+					window.uData = response.uData;
+					window.nesoIsAvailable = response.nesoIsAvailable;
+					window.maintenanceModeThisUser = response.maintenanceModeThisUser;
+					window.contextReady = true;
 				}
 			})
 			.catch((error) => {
@@ -65,94 +69,103 @@ class HcContainer extends React.Component {
 		}));
 	}
 	render() {
-		document.body.classList.add('contains-hub-central');
-		return (
-			<div
-				id="hc-container"
-				className={`mos-react-component-root${this.state.showSmallNav ? ' showing-small-nav' : ''}`}
-			>
+		console.log('render triggered');
+		console.log(this.state);
+		if (
+			this.state.contextReady && 
+			this.state.nesoIsAvailable && 
+			!this.state.maintenanceModeThisUser
+		) {
+			document.body.classList.add('contains-hub-central');
+			return (
 				<div
-					id="hc-header-and-hero-container" 
-					className="hc-header-and-hero-container"
+					id="hc-container"
+					className={`mos-react-component-root${this.state.showSmallNav ? ' showing-small-nav' : ''}`}
 				>
+					<div
+						id="hc-header-and-hero-container" 
+						className="hc-header-and-hero-container"
+					>
+						<MediaQuery maxWidth={ScreenSizes.ReturnSmallMax()}>
+							<HcHeader
+								screenType="small"
+								handleHamburgerOrNavItemClick={this.handleHamburgerOrNavItemClick}
+							/>
+							<HcHero
+								screenType="small"
+							/>
+						</MediaQuery>
+						<MediaQuery
+							minWidth={ScreenSizes.ReturnMediumMin()}
+							maxWidth={ScreenSizes.ReturnMediumMax()}	
+						>
+							<HcHeader
+								screenType="medium"
+							/>
+							<HcHero
+								screenType="medium"
+								uData={this.state.uData}
+							/>
+						</MediaQuery>
+						<MediaQuery minWidth={ScreenSizes.ReturnLargeMin()}>
+							<HcHeader
+								screenType="large"
+							/>
+							<HcHero
+								screenType="large"
+								uData={this.state.uData}
+							/>
+						</MediaQuery>
+					</div>
+
+
 					<MediaQuery maxWidth={ScreenSizes.ReturnSmallMax()}>
-						<HcHeader
-							screenType="small"
-							handleHamburgerOrNavItemClick={this.handleHamburgerOrNavItemClick}
-						/>
-						<HcHero
-							screenType="small"
-						/>
+						<Accordion
+							className="hc-sections-container accordion"
+							accordion={false}
+							role="tablist"
+						>
+							<HcPushedItems
+								screenType="small"
+							/>
+							<HcGetItDone
+								screenType="small"
+								uData={this.state.uData}
+							/>
+							<HcOrganization
+								screenType="small"
+							/>
+							<HcMessages
+								uData={this.state.uData}
+								allOrTop="all"
+								screenType="small"
+							/>
+						</Accordion>
 					</MediaQuery>
-					<MediaQuery
-						minWidth={ScreenSizes.ReturnMediumMin()}
-						maxWidth={ScreenSizes.ReturnMediumMax()}	
-					>
-						<HcHeader
-							screenType="medium"
-						/>
-						<HcHero
-							screenType="medium"
-							uData={this.state.uData}
-						/>
-					</MediaQuery>
-					<MediaQuery minWidth={ScreenSizes.ReturnLargeMin()}>
-						<HcHeader
-							screenType="large"
-						/>
-						<HcHero
-							screenType="large"
-							uData={this.state.uData}
-						/>
-					</MediaQuery>
-				</div>
-
-
-				<MediaQuery maxWidth={ScreenSizes.ReturnSmallMax()}>
-					<Accordion
-						className="hc-sections-container accordion"
-						accordion={false}
-						role="tablist"
-					>
+					<MediaQuery minWidth={ScreenSizes.ReturnMediumMin()}>
 						<HcPushedItems
-							screenType="small"
+							screenType="medium"
 						/>
 						<HcGetItDone
-							screenType="small"
+							screenType="medium"
 							uData={this.state.uData}
 						/>
 						<HcOrganization
-							screenType="small"
+							screenType="medium"
 						/>
 						<HcMessages
 							uData={this.state.uData}
 							allOrTop="all"
-							screenType="small"
+							screenType="medium"
 						/>
-					</Accordion>
-				</MediaQuery>
-				<MediaQuery minWidth={ScreenSizes.ReturnMediumMin()}>
-					<HcPushedItems
-						screenType="medium"
-					/>
-					<HcGetItDone
-						screenType="medium"
-						uData={this.state.uData}
-					/>
-					<HcOrganization
-						screenType="medium"
-					/>
-					<HcMessages
-						uData={this.state.uData}
-						allOrTop="all"
-						screenType="medium"
-					/>
-				</MediaQuery>
-				<footer>
+					</MediaQuery>
+					<footer>
 					&copy; {MOSUtilities.ReturnFormattedDateTime({ incomingDateTimeString: 'nowLocal', incomingReturnFormat: 'YYYY' })} Museum of Science
-				</footer>
-			</div>
-		);
+					</footer>
+				</div>
+			);
+		}
+		return (<div />);
 	}
 }
 
@@ -191,15 +204,33 @@ if (EnvironmentDetector.ReturnIsHCScreen()) {
 		});
 	*/
 }
-
-const screenShower = setInterval(ShowScreen, 500);
+function ConfigAndShowNesoUnavailableScreen() {
+	document.getElementById('overlays-screen-container').style.display = 'block';
+	document.getElementById('neso-is-unavailable').style.display = 'block';
+	document.getElementsByTagName('body')[0].classList.add('neso-is-unavailable');
+}
+function ShowMaintenanceModeScreen() {
+	document.getElementById('overlays-screen-container').style.display = 'block';
+	document.getElementById('maintenance-mode').style.display = 'block';
+	document.getElementsByTagName('body')[0].classList.add('is-in-maintenance-mode');
+}
 
 function ShowScreen() {
-	if (!window.loading) {
+	// if the context data has loaded
+	if (window.contextReady) {
+		// if neso is not available
+		if (!window.nesoIsAvailable) {
+			ConfigAndShowNesoUnavailableScreen();
+		}
+		if (window.maintenanceModeThisUser) {
+			ShowMaintenanceModeScreen();
+		}
 		document.getElementById('s4-bodyContainer').style.opacity = '1';
-		document.getElementById('loading-screen').style.display = 'none';
 		document.getElementById('loading-screen').style.opacity = '0';
+		document.getElementById('loading-screen').style.display = 'none';
 		document.getElementById('loading-screen').classList.add('hidden');
 		clearInterval(screenShower);
 	}
 }
+
+const screenShower = setInterval(ShowScreen, 500);

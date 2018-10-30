@@ -12,7 +12,7 @@ export default class NesoAvailability {
 		return new Promise(((resolve, reject) => {
 			// get a promise to retrieve the health data from Neso
 			NesoHTTPClient
-				.ReturnNesoData('https://neso.mos.org/health/check')
+				.ReturnNesoData('https://neso.mos.org:3001/health/check')
 				// if the promise is resolved with the data
 				.then((result) => {
 					// interpret the data and resolve the promise with the interpretation

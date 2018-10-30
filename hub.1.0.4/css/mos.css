@@ -1349,12 +1349,20 @@ div#s4-workspace div#public-community-page_hr div.tertiary-section table.ms-list
 
 div#s4-workspace div#public-community-page_open-enrollment div.primary-section {
   font-size: 1.75rem; }
+  div#s4-workspace div#public-community-page_open-enrollment div.primary-section table.ms-listviewtable thead {
+    display: none; }
 
-div#s4-workspace div#public-community-page_open-enrollment h2#header_need-to-know {
+div#s4-workspace div#public-community-page_open-enrollment div#need-to-know h2#header_need-to-know {
   color: #a30c5e; }
 
-div#s4-workspace div#public-community-page_open-enrollment h2#header_important-dates {
+div#s4-workspace div#public-community-page_open-enrollment div#need-to-know table.ms-listviewtable thead {
+  display: none; }
+
+div#s4-workspace div#public-community-page_open-enrollment div#important-dates h2#header_important-dates {
   color: #107c10; }
+
+div#s4-workspace div#public-community-page_open-enrollment div#important-dates table.ms-listviewtable thead {
+  display: none; }
 
 div#s4-workspace div#public-community-page_benefits div.primary-section {
   font-size: 1.75rem; }

@@ -42,7 +42,7 @@ div#internet-explorer-upgrade
 // OFFICE 365 SUITE BAR
 
 // this is set to all black in the master page, so that it renders in a neutral color
-// 		as soon as the page loads; these colors override those in the mast page; the strategy
+// 		as soon as the page loads; these colors override those in the master page; the strategy
 // 		is to keep the "real" colors all managed here, rather than having to update the master
 // 		page in the future
 
@@ -154,10 +154,47 @@ div#internet-explorer-upgrade
 // ICON FONT
 
 @font-face
-  font-family: FabricMDL2Icons
-  src: url('../../fonts/fabricmdl2icons-2.68.woff2') format('woff2'), url('../../fonts/fabricmdl2icons-2.68.woff') format('woff'), url('../../fonts/fabricmdl2icons-2.68.ttf') format('truetype')
-  font-weight: 400
-  font-style: normal
+	font-family: FabricMDL2Icons
+	src: url('../../fonts/fabricmdl2icons-2.68.woff2') format('woff2'), url('../../fonts/fabricmdl2icons-2.68.woff') format('woff'), url('../../fonts/fabricmdl2icons-2.68.ttf') format('truetype')
+	font-weight: 400
+	font-style: normal
+
+
+// REACT PLACEHOLDER
+
+// TO DO: remove this section and 
+// import 'react-placeholder/lib/reactPlaceholder.css';
+
+.show-loading-animation.rect-shape,
+.show-loading-animation.round-shape,
+.show-loading-animation.text-row,
+.show-loading-animation .rect-shape,
+.show-loading-animation .round-shape,
+.show-loading-animation .text-row
+	animation: react-placeholder-pulse 1.5s infinite
+
+@keyframes react-placeholder-pulse
+
+	0%
+		opacity: .4
+  
+	50%
+		opacity: 1
+
+	100%
+		opacity: .4
+
+.mos-placeholder-column-container
+	column-gap: 1rem
+
+.mos-placeholder-column
+	margin: 0 1rem 1rem 0;
+	border-radius: .2rem;
+
+.mos-placeholder-rectangle
+	border-radius: .2rem;
+
+
 
 // STANDARD FORM ELEMENTS
 
@@ -251,41 +288,6 @@ div.ms-ContextualMenu-Callout
 
 	div.ms-Callout-main
 		+round-corners
-
-// REACT PLACEHOLDER
-
-// TO DO: remove this section and 
-// import 'react-placeholder/lib/reactPlaceholder.css';
-
-.show-loading-animation.rect-shape,
-.show-loading-animation.round-shape,
-.show-loading-animation.text-row,
-.show-loading-animation .rect-shape,
-.show-loading-animation .round-shape,
-.show-loading-animation .text-row
-	animation: react-placeholder-pulse 1.5s infinite
-
-@keyframes react-placeholder-pulse
-
-	0%
-		opacity: .4
-  
-	50%
-		opacity: 1
-
-	100%
-		opacity: .4
-
-.mos-placeholder-column-container
-	column-gap: 1rem
-
-.mos-placeholder-column
-	margin: 0 1rem 1rem 0;
-	border-radius: .2rem;
-
-.mos-placeholder-rectangle
-	border-radius: .2rem;
-
 
 // DATE PICKER
 
@@ -863,7 +865,8 @@ div#hc-container
 
 // MAINTENANCE MODE
 
-body.is-in-maintenance-mode
+body.is-in-maintenance-mode,
+body.neso-is-unavailable
 
 	div#hub-central-mount-point
 		display: none
@@ -906,7 +909,8 @@ body.is-in-maintenance-mode
 
 	div#overlays-screen-container
 		
-		div.overlay-screen#maintenance-mode
+		div.overlay-screen#maintenance-mode,
+		div.overlay-screen#neso-is-unavailable
 
 			div.screen-content
 				padding: 5rem

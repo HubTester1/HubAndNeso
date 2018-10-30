@@ -138,13 +138,13 @@ function LoadFiles() {
 		LoadCSSFiles(stylesheetsToLoad, () => {
 			LoadJSFiles(mosToLoad, mosLoadingPromises, mData, () => {
 				// indicate readiness
-				window.loading = false;
+				// window.loading = false;
 			});
 		});
 	});
 }
 
 (function () {
-	window.loading = true;
+	window.contextReady = true;
 	LoadFiles();
 }());
