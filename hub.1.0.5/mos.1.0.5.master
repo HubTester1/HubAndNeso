@@ -75,9 +75,25 @@
 
 
 
+											/* div#s4-workspace {
+												visibility: hidden;
+												transition: all ease 0.5s;
+											}
+
 											div#s4-bodyContainer {
 												opacity: 0;
 												transition: all ease 0.5s;
+											} */
+
+											.visible {
+												visibility: visible;
+												opacity: 1;
+												transition: opacity 1s linear;
+											}
+											.hidden {
+												visibility: hidden;
+												opacity: 0;
+												transition: visibility 0s 1s, opacity 1s linear;
 											}
 										
 											div#s4-ribbonrow {
@@ -378,8 +394,8 @@
 													<SharePoint:DelegateControl id="ID_SuiteBarDelegate" ControlId="SuiteBarDelegate" runat="server" /></SharePoint:FlightedContent>
 											</SharePoint:AjaxDelta>
 											<div id="ms-hcTest"></div>
-											<div id="overlays-screen-container" class="screen-container" style="display: none;">
-												<div id="maintenance-mode" class="overlay-screen" style="display: none;">
+											<div id="overlays-screen-container" class="screen-container hidden">
+												<div id="maintenance-mode" class="overlay-screen hidden">
 													<div class="screen-content">
 														<div class="message">
 															<a href="/">
@@ -422,7 +438,7 @@
 														</div>
 													</div>
 												</div>
-												<div id="neso-is-unavailable" class="overlay-screen" style="display: none;">
+												<div id="neso-is-unavailable" class="overlay-screen hidden">
 													<div class="screen-content">
 														<div class="message">
 															<a href="/">
@@ -463,14 +479,14 @@
 													</div>
 												</div>
 											</div>
-											<div id="loading-screen">
+											<div id="loading-screen" class="visible">
 												<p id="loading-text">Loading...</p>
 												<div id="loading-logo"></div>
 											</div>
 											<div id="internet-explorer-upgrade" class="banner banner--critical"    style="display: none;">
 												<p class="banner__text">Internet Explorer was replaced in 2015. Please upgrade from Internet Explorer to Edge, or switch to Chrome or Firefox. If you need assistance doing so, please contact IIT System Support Services at x0130.
 											</div>
-											<div id="hub-central-mount-point"></div>
+											<div id="hub-central-mount-point" class="hidden"></div>
 											<div id="s4-ribbonrow">
 												<div id="globalNavBox" class="noindex">
 													<div id="ribbonBox">
@@ -540,7 +556,7 @@
 												</div>
 											</div>
 											<div id="s4-workspace" class="ms-core-overlay">
-												<div id="s4-bodyContainer">
+												<div id="s4-bodyContainer" class="hidden">
 													<div id="s4-titlerow" class="ms-dialogHidden s4-titlerowhidetitle">
 														<div id="titleAreaBox" class="ms-noList ms-table ms-core-tableNoSpace">
 															<div id="titleAreaRow" class="ms-tableRow">

@@ -71,6 +71,7 @@ class HcContainer extends React.Component {
 		}));
 	}
 	render() {
+		console.log(this.state);
 		if (
 			this.state.contextReady && 
 			this.state.nesoIsAvailable && 
@@ -171,38 +172,10 @@ class HcContainer extends React.Component {
 
 // eslint-disable-next-line no-console
 console.log('hc m4');
+const screenShower = setInterval(ShowScreen, 500);
 if (EnvironmentDetector.ReturnIsHCScreen()) {
 	ReactDOM.render(<HcContainer />, document.getElementById('hub-central-mount-point'));
 } else {
-	/* 
-		// set a container for all data retrieval / setting promises
-		var allDataRetrievalAndSettingPromises = [];
-
-		// push to container all data retrieval / setting promises; there's only one now,
-		//		but we're set up to add more without re-writing in the future
-		allDataRetrievalAndSettingPromises.push($().GetAndSetMaintenanceModeData(), $().SetCurrentUserData());
-
-		// wait for all data retrieval / setting promises to complete (pass or fail)
-		$.when.apply($, allDataRetrievalAndSettingPromises).always(function () {
-			// if Hub Central is in maintenance mode
-			// if (uData.userName == 'jbaker@mos.org') {
-			if (mData.hubCentralInMaintenanceMode || mData.allComponentsInMaintenanceMode) {
-				$('body').addClass('is-in-maintenance-mode');
-				$('div#overlays-screen-container').fadeIn(500).removeClass("hidden");
-				$('div#maintenance-mode').fadeIn(500).removeClass("hidden");
-				$("div#loading-screen").fadeOut(500).addClass("hidden");
-			} else {
-				$("img.ms-siteicon-img").attr("src", "/sites/hubprod/Asset%20Library/BrandHorizontalOpt.svg");
-				$("div.ms-breadcrumb-top").remove();
-				if (uData.userName == 'jbaker@mos.org') {
-					$("div#s4-ribbonrow").css("display", "block");
-					$("div#s4-bodyContainer ").css("padding-top", "1rem");
-				}
-				$("div#loading-screen").fadeOut(500).addClass("hidden");
-				$("div#s4-bodyContainer").fadeTo(500, 1);
-			}
-		});
-	*/
 	/* 
 		$.fn.RenderInPagePersonaSet = function(personaData) {
 
@@ -267,6 +240,11 @@ if (EnvironmentDetector.ReturnIsHCScreen()) {
 	};
 
 	*/
+	window.uData = {};
+	window.nesoIsAvailable = undefined;
+	window.maintenanceModeThisUser = undefined;
+	window.contextReady = false;
+
 	HCContext.ReturnHCContext()
 		.then((response) => {
 			window.uData = response.uData;
@@ -282,13 +260,17 @@ if (EnvironmentDetector.ReturnIsHCScreen()) {
 		});
 }
 function ConfigAndShowNesoUnavailableScreen() {
-	document.getElementById('overlays-screen-container').style.display = 'block';
-	document.getElementById('neso-is-unavailable').style.display = 'block';
+	// document.getElementById('overlays-screen-container').style.display = 'block';
+	// document.getElementById('neso-is-unavailable').style.display = 'block';
+	document.getElementById('overlays-screen-container').className = 'visible';
+	document.getElementById('neso-is-unavailable').className = 'visible';
 	document.getElementsByTagName('body')[0].classList.add('neso-is-unavailable');
 }
 function ShowMaintenanceModeScreen() {
-	document.getElementById('overlays-screen-container').style.display = 'block';
-	document.getElementById('maintenance-mode').style.display = 'block';
+	// document.getElementById('overlays-screen-container').style.display = 'block';
+	// document.getElementById('maintenance-mode').style.display = 'block';
+	document.getElementById('overlays-screen-container').className = 'visible';
+	document.getElementById('maintenance-mode').className = 'visible';
 	document.getElementsByTagName('body')[0].classList.add('is-in-maintenance-mode');
 }
 
@@ -298,16 +280,34 @@ function ShowScreen() {
 		// if neso is not available
 		if (!window.nesoIsAvailable) {
 			ConfigAndShowNesoUnavailableScreen();
-		}
-		if (window.maintenanceModeThisUser) {
+		// if component is in maintenance mode
+		} else if (window.maintenanceModeThisUser) {
 			ShowMaintenanceModeScreen();
+		} else {
+			// config screen
+			document.getElementsByClassName('ms-siteicon-img')[0]
+				.setAttribute('src', '/sites/hubprod/Asset%20Library/BrandHorizontalOpt.svg');
+			document.getElementsByClassName('ms-breadcrumb-top')[0].remove();
+			if (window.uData.account && window.uData.account === 'jbaker') {
+				document.getElementById('s4-ribbonrow').style.display = 'block';
+				document.getElementById('s4-bodyContainer').style.paddingTop = '1rem';
+			}
+			// hide loading and show other
+			// document.getElementById('s4-bodyContainer').style.opacity = '1';
+			// document.getElementById('loading-screen').style.opacity = '0';
+			// document.getElementById('loading-screen').style.display = 'none';
+			// document.getElementById('loading-screen').classList.add('hidden');
+			document.getElementById('overlays-screen-container').style.display = 'none';
+			document.getElementById('s4-bodyContainer').className = 'visible';
+			document.getElementById('hub-central-mount-point').className = 'visible';
+			document.getElementById('loading-screen').className = 'hidden';
+			
+			
+			// setTimeout(() => {
+			// 	document.getElementById('s4-workspace').style.display = 'block';
+			// }, 500);
 		}
-		document.getElementById('s4-bodyContainer').style.opacity = '1';
-		document.getElementById('loading-screen').style.opacity = '0';
-		document.getElementById('loading-screen').style.display = 'none';
-		document.getElementById('loading-screen').classList.add('hidden');
 		clearInterval(screenShower);
 	}
 }
 
-const screenShower = setInterval(ShowScreen, 500);
