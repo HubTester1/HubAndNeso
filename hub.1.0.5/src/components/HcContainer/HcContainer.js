@@ -40,26 +40,28 @@ class HcContainer extends React.Component {
 	componentDidMount() {
 		HCContext.ReturnHCContext()
 			.then((response) => {
-				if (
-					response &&
-					response.nesoIsAvailable &&
-					response.uData
-				) {
-					this.setState(() => ({
-						uData: response.uData,
-						nesoIsAvailable: response.nesoIsAvailable,
-						maintenanceModeThisUser: response.maintenanceModeThisUser,
-						contextReady: true,
-					}));
-					window.uData = response.uData;
-					window.nesoIsAvailable = response.nesoIsAvailable;
-					window.maintenanceModeThisUser = response.maintenanceModeThisUser;
-					window.contextReady = true;
-				}
+				this.setState(() => ({
+					uData: response.uData,
+					nesoIsAvailable: response.nesoIsAvailable,
+					maintenanceModeThisUser: response.maintenanceModeThisUser,
+					contextReady: true,
+				}));
+				window.uData = response.uData;
+				window.nesoIsAvailable = response.nesoIsAvailable;
+				window.maintenanceModeThisUser = response.maintenanceModeThisUser;
+				window.contextReady = true;
 			})
 			.catch((error) => {
-				console.log('hcContext error');
-				console.log(error);
+				this.setState(() => ({
+					uData: error.uData,
+					nesoIsAvailable: error.nesoIsAvailable,
+					maintenanceModeThisUser: error.maintenanceModeThisUser,
+					contextReady: true,
+				}));
+				window.uData = error.uData;
+				window.nesoIsAvailable = error.nesoIsAvailable;
+				window.maintenanceModeThisUser = error.maintenanceModeThisUser;
+				window.contextReady = true;
 			});
 	}
 	handleHamburgerOrNavItemClick() {
@@ -69,8 +71,6 @@ class HcContainer extends React.Component {
 		}));
 	}
 	render() {
-		console.log('render triggered');
-		console.log(this.state);
 		if (
 			this.state.contextReady && 
 			this.state.nesoIsAvailable && 
@@ -203,6 +203,83 @@ if (EnvironmentDetector.ReturnIsHCScreen()) {
 			}
 		});
 	*/
+	/* 
+		$.fn.RenderInPagePersonaSet = function(personaData) {
+
+		var personaSet = '<div class="in-page-personas';
+
+		if (typeof(personaData.classValues) != "undefined" && personaData.classValues != null) {
+			personaSet += ' ' + personaData.classValues;
+		}
+
+		personaSet +=  '">\n';
+
+		if (typeof(personaData.title) != "undefined" && personaData.title != null) {
+			personaSet += '<' + personaData.title.tag + '>' + personaData.title.content + '</' + personaData.title.tag + '>\n';
+		}
+
+		$.each(personaData.people, function(i, accountPart) {
+			personaSet += '<div class="in-page-persona">\n';
+
+			var userProfileValues = {};
+
+			$().SPServices({
+				operation: "GetUserProfileByName",
+				async: false,
+				AccountName: "i:0#.f|membership|" + accountPart + "@mos.org",
+				completefunc: function(xData, Status) {
+					$(xData.responseXML).SPFilterNode("PropertyData").each(function() {
+						userProfileValues[$(this).find("Name").text()] = $(this).find("Value").text();
+					});
+				}
+			});
+
+			personaSet += '	<span class="avatar-container"><span class="avatar"';
+			if (userProfileValues.PictureURL != "") {
+				personaSet += ' style="background: #fff url(\'' + userProfileValues.PictureURL + '\') no-repeat center center;background-size: cover"> \n';
+			} else {
+				userProfileValues.firstInitial = userProfileValues.FirstName.slice(0, 1).toUpperCase();
+				userProfileValues.lastInitial = userProfileValues.LastName.slice(0, 1).toUpperCase();
+				personaSet += '><span class="avatar-initials">' + userProfileValues.firstInitial + userProfileValues.lastInitial + '</span>';
+			}
+
+			personaSet +=  '</span></span> \n' +
+						'	<span class="name_title"> \n';
+			if (typeof(userProfileValues.PreferredName) != 'undefined' && userProfileValues.PreferredName != '') {
+				if (typeof(userProfileValues["SPS-PersonalSiteCapabilities"]) != 'undefined' && userProfileValues["SPS-PersonalSiteCapabilities"] != '') {
+					personaSet += '		<a class="profile" href="https://bmos-my.sharepoint.com/_layouts/15/me.aspx?u=' + userProfileValues["msOnline-ObjectId"] + '" target="_blank">' + userProfileValues.PreferredName + '</a> \n';
+				} else {
+					personaSet += '		<span class="name">' + userProfileValues.PreferredName + '</span> \n';
+				}
+			}
+
+			if (typeof(userProfileValues.Title) != 'undefined' && userProfileValues.Title != '') {
+				personaSet += '		<span class="title">' + userProfileValues.Title + '</span> \n';
+			}
+
+			personaSet +=	'	</span> \n' +
+							'</div>\n';
+		});
+
+		personaSet += '</div>';
+
+		$("div#" + personaData.destinationID).append(personaSet);
+	};
+
+	*/
+	HCContext.ReturnHCContext()
+		.then((response) => {
+			window.uData = response.uData;
+			window.nesoIsAvailable = response.nesoIsAvailable;
+			window.maintenanceModeThisUser = response.maintenanceModeThisUser;
+			window.contextReady = true;
+		})
+		.catch((error) => {
+			window.uData = error.uData;
+			window.nesoIsAvailable = error.nesoIsAvailable;
+			window.maintenanceModeThisUser = error.maintenanceModeThisUser;
+			window.contextReady = true;
+		});
 }
 function ConfigAndShowNesoUnavailableScreen() {
 	document.getElementById('overlays-screen-container').style.display = 'block';

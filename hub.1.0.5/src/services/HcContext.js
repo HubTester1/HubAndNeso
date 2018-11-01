@@ -15,7 +15,11 @@ export default class HCContext {
 		// return a new promise
 		return new Promise(((resolve, reject) => {
 			// set up context container
-			const hcContext = {};
+			const hcContext = {
+				nesoIsAvailable: undefined,
+				uData: {},
+				maintenanceModeThisUser: undefined,
+			};
 			// get a promise to retrieve Neso's availability
 			NesoAvailability.ReturnNesoAvailability()
 				// if the promise is resolved with the data
@@ -41,6 +45,8 @@ export default class HCContext {
 									})
 									// if the promise is rejected with an error
 									.catch((error) => {
+										// update context
+										hcContext.maintenanceModeThisUser = undefined;
 										// reject this promise with the context
 										reject(hcContext);
 									});
@@ -51,16 +57,12 @@ export default class HCContext {
 								reject(hcContext);
 							});
 					} else {
-						// update context
-						hcContext.nesoIsAvailable = false;
 						// reject this promise with the context
 						reject(hcContext);
 					}
 				})
 				// if the promise is rejected with an error
 				.catch((error) => {
-					// update context
-					hcContext.nesoIsAvailable = false;
 					// reject this promise with the context
 					reject(hcContext);
 				});

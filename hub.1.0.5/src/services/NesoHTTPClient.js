@@ -5,15 +5,40 @@ export default class NesoHttpClient {
 		// return a new promise
 		return new Promise(((resolve, reject) => {
 			// get a promise to retrieve the data
-			axios.get(endpoint)
+			axios({
+				method: 'get',
+				url: endpoint,
+				timeout: 5000,
+			})
 				// if the promise is resolved with the docs, then resolve this promise with the docs
 				.then((result) => { resolve(result.data.docs); })
 				// if the promise is rejected with an error
-				.catch((returnedError) => {
+				.catch((error) => {
+					// set up error container
+					const errorToReport = {
+						config: error.config,
+					};
+					if (error.response) {
+						// set reporting error's properties
+						errorToReport.summary = 'Response status code is no 2xx';
+						errorToReport.details.data = error.response.data;
+						errorToReport.details.status = error.response.status;
+						errorToReport.details.headers = error.response.headers;
+					} else if (error.request) {
+						// set reporting error's properties; note: error.request is
+						//  	an instance of XMLHttpRequest in the browser and 
+						// 		an instance of http.ClientRequest in node.js
+						errorToReport.summary = 'No response';
+						errorToReport.details = error.request;
+					} else {
+						// set reporting error's properties
+						errorToReport.summary = 'Request could not be made';
+						errorToReport.details = error.message;
+					}
 					// reject this promise with an error
 					reject({
 						error: true,
-						nesoAxiosError: returnedError,
+						nesoAxiosError: errorToReport,
 					});
 				});
 		}));
