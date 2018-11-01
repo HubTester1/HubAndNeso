@@ -260,17 +260,13 @@ if (EnvironmentDetector.ReturnIsHCScreen()) {
 		});
 }
 function ConfigAndShowNesoUnavailableScreen() {
-	// document.getElementById('overlays-screen-container').style.display = 'block';
-	// document.getElementById('neso-is-unavailable').style.display = 'block';
-	document.getElementById('overlays-screen-container').className = 'visible';
-	document.getElementById('neso-is-unavailable').className = 'visible';
+	document.getElementById('overlays-screen-container').className = 'screen-container visible';
+	document.getElementById('neso-is-unavailable').className = 'overlay-screen visible';
 	document.getElementsByTagName('body')[0].classList.add('neso-is-unavailable');
 }
 function ShowMaintenanceModeScreen() {
-	// document.getElementById('overlays-screen-container').style.display = 'block';
-	// document.getElementById('maintenance-mode').style.display = 'block';
-	document.getElementById('overlays-screen-container').className = 'visible';
-	document.getElementById('maintenance-mode').className = 'visible';
+	document.getElementById('overlays-screen-container').className = 'screen-container visible';
+	document.getElementById('maintenance-mode').className = 'overlay-screen visible';
 	document.getElementsByTagName('body')[0].classList.add('is-in-maintenance-mode');
 }
 
@@ -293,20 +289,13 @@ function ShowScreen() {
 				document.getElementById('s4-bodyContainer').style.paddingTop = '1rem';
 			}
 			// hide loading and show other
-			// document.getElementById('s4-bodyContainer').style.opacity = '1';
-			// document.getElementById('loading-screen').style.opacity = '0';
-			// document.getElementById('loading-screen').style.display = 'none';
-			// document.getElementById('loading-screen').classList.add('hidden');
 			document.getElementById('overlays-screen-container').style.display = 'none';
 			document.getElementById('s4-bodyContainer').className = 'visible';
 			document.getElementById('hub-central-mount-point').className = 'visible';
-			document.getElementById('loading-screen').className = 'hidden';
-			
-			
-			// setTimeout(() => {
-			// 	document.getElementById('s4-workspace').style.display = 'block';
-			// }, 500);
 		}
+		// hide the loading screen
+		document.getElementById('loading-screen').className = 'hidden';
+		// don't keep executing this function
 		clearInterval(screenShower);
 	}
 }
