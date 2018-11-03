@@ -43,6 +43,9 @@ div#s4-workspace
 	h2, h3, .ms-h2, .ms-h3, .ms-headerFont
 		font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI Regular WestEuropean', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif
 
+	.ms-rte-wpbox
+		font-weight: 300 !important
+
 
 // ------------------
 // PAGE HEADER
@@ -259,8 +262,6 @@ div#s4-workspace
 	div.community-description,
 	div.archive-description
 		+font-size-5
-		// font-size: 1.75rem
-		padding-bottom: 3rem
 
 		h3
 			+font-size-3
@@ -403,7 +404,6 @@ div#s4-workspace
 	div.targeted-community-link,
 	div.targeted-links
 		+round-corners
-		color: $grey-14
 		// background-color: $subtle-green
 		background-image: linear-gradient(to bottom, $subtle-yellow, $primary-green)
 
@@ -426,13 +426,12 @@ div#s4-workspace
 
 	div.community-contact
 		+round-corners
-		color: $grey-14
 		// background-color: $subtle-yellow
 		background-image: linear-gradient(to bottom, $primary-green, $subtle-pink)
 
 		h2 nobr span,
 		.ms-vb
-			color: $grey-14 !important
+			color: $grey-16 !important
 
 		table table > tbody > tr
 			height: auto
@@ -613,16 +612,6 @@ div#s4-workspace
 div#business-card-request-instructions
 	max-width: 60rem
 
-// --- ECS
-
-div#ecs-body.for-everyone div#container_ecs-documents
-
-	thead
-		display: none
-
-	tbody td
-		padding: 0
-
 
 
 
@@ -662,8 +651,8 @@ div#wellness-community-contacts h3
 	div#wellness-pics-and-gym
 		padding: 0 1rem 0 0
 
-	div#wellness-community-contacts
-		max-width: 45rem
+	// div#wellness-community-contacts
+	// 	max-width: 45rem
 
 	div#wellness-community-contacts div.grouping div.contact
 		display: table-cell

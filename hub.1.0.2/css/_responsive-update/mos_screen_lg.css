@@ -1,0 +1,465 @@
+div#s4-workspace {
+  width: 100% !important; }
+
+div#large-screen-header_large-screen-aside_main {
+  display: table;
+  table-layout: fixed;
+  border-collapse: collapse; }
+
+div#large-screen-header_large-screen-aside,
+div#container_workspace {
+  display: table-cell;
+  vertical-align: top; }
+
+header#small-screen-header {
+  display: none; }
+
+div#large-screen-header_large-screen-aside,
+div#large-screen-header_large-screen-aside header,
+div#large-screen-header_large-screen-aside aside {
+  width: 325px; }
+
+h2#header_global-navigation,
+h2#header_local-navigation {
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0 0 0 1);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0; }
+
+hr.ms-core-listMenu-separatorLine {
+  display: none; }
+
+div#s4-ribbonrow {
+  height: 35px !important; }
+
+div#globalNavBox {
+  background-color: #222;
+  padding-left: 325px;
+  width: calc(100% - 325px); }
+
+.ms-cui-tt-a > .ms-cui-tt-span {
+  color: #45b1ff !important; }
+
+.ms-browseTab.ms-cui-tt-s > .ms-cui-tt-a > .ms-cui-tt-span {
+  color: #45b1ff !important; }
+
+span.s4-clust.ms-promotedActionButton-icon {
+  display: none !important; }
+
+span.ms-promotedActionButton-text {
+  color: #45b1ff; }
+
+a.ms-promotedActionButton:hover span.ms-promotedActionButton-text {
+  color: #0094ff; }
+
+ul.ms-cui-tabBody {
+  border-bottom: 1px solid #e1e1e1; }
+
+a[id*="site_share_button"],
+span#fullscreenmodebox {
+  display: none !important; }
+
+div.ms-cui-topBar2,
+div.ms-cui-topBar2.ms-browseTabContainer {
+  border-color: #111; }
+
+div.ms-cui-TabRowLeft {
+  padding: 13px 50px 0px 0px; }
+
+header {
+  background: #333 url("/sites/hubdev/DevImages/bkgrd_site-menu-underlay.png") repeat 0 0; }
+
+div#container_brand_primary-navigation {
+  display: table;
+  table-layout: fixed;
+  border-collapse: collapse; }
+  div#container_brand_primary-navigation div#container_global-navigation {
+    display: table-cell;
+    vertical-align: top;
+    width: 50px; }
+  div#container_brand_primary-navigation div#container_brand_local-navigation_search {
+    display: table-cell;
+    vertical-align: top;
+    width: 275px; }
+
+div#container_global-navigation {
+  padding: 50px 0 0 0;
+  background-color: #191919; }
+  div#container_global-navigation ul#global-navigation {
+    width: 50px;
+    padding: 0; }
+    div#container_global-navigation ul#global-navigation li {
+      list-style-type: none;
+      height: 50px;
+      margin: 0; }
+      div#container_global-navigation ul#global-navigation li a {
+        display: block;
+        height: 38px;
+        text-indent: 100%;
+        white-space: nowrap;
+        overflow: hidden; }
+    div#container_global-navigation ul#global-navigation li#hub-home a {
+      background: url("/sites/hubdev/DevImages/icon_home.svg") no-repeat 10px 0; }
+    div#container_global-navigation ul#global-navigation li#organization-and-staff a {
+      background: url("/sites/hubdev/DevImages/icon_organization_staff.svg") no-repeat 10px 0; }
+    div#container_global-navigation ul#global-navigation li#communities a {
+      background: url("/sites/hubdev/DevImages/icon_community.svg") no-repeat 10px 0; }
+    div#container_global-navigation ul#global-navigation li#get-it-done a {
+      background: url("/sites/hubdev/DevImages/icon_form.svg") no-repeat 10px 0; }
+    div#container_global-navigation ul#global-navigation li#get-help a {
+      background: url("/sites/hubdev/DevImages/icon_help.svg") no-repeat 10px 0; }
+    div#container_global-navigation ul#global-navigation li#sites-im-following a {
+      background: url("/sites/hubdev/DevImages/icon_sites.svg") no-repeat 10px 0; }
+
+div#large-screen-brand {
+  width: 100%;
+  padding: 50px 25px 16.25px;
+  background-color: rgba(0, 58, 99, 0.5); }
+  div#large-screen-brand a {
+    display: table;
+    table-layout: fixed;
+    border-collapse: collapse;
+    width: 100%;
+    font-family: "WeblySleek UI Light"; }
+    div#large-screen-brand a:hover {
+      text-decoration: none; }
+    div#large-screen-brand a span#logo_large-screen-brand {
+      display: table-cell;
+      vertical-align: top;
+      width: 37.5px;
+      height: 37.5px;
+      padding: 0; }
+      div#large-screen-brand a span#logo_large-screen-brand img {
+        width: 37.5px;
+        height: 37.5px; }
+    div#large-screen-brand a span#text_large-screen-brand {
+      display: table-cell;
+      vertical-align: top;
+      display: inline-block;
+      height: 37.5px;
+      padding-left: 10px;
+      font-size: 2.2rem;
+      padding: 0 0 0 10px;
+      color: #fff; }
+
+div.ms-core-sideNavBox-removeLeftMargin {
+  margin: 0; }
+
+div#container_local-navigation {
+  width: 100%;
+  background-color: rgba(0, 58, 99, 0.65); }
+  div#container_local-navigation div#sideNavBox {
+    float: none;
+    width: 100%;
+    margin: 0; }
+    div#container_local-navigation div#sideNavBox div#DatePickerDiv {
+      padding: 0 25px; }
+      div#container_local-navigation div#sideNavBox div#DatePickerDiv div.ms-datepickerouter {
+        background-color: #222; }
+        div#container_local-navigation div#sideNavBox div#DatePickerDiv div.ms-datepickerouter div.ms-quickLaunch {
+          border: none; }
+      div#container_local-navigation div#sideNavBox div#DatePickerDiv div.ms-picker-header {
+        background-color: transparent; }
+        div#container_local-navigation div#sideNavBox div#DatePickerDiv div.ms-picker-header table.ms-picker-table {
+          border: none; }
+        div#container_local-navigation div#sideNavBox div#DatePickerDiv div.ms-picker-header td:not(.ms-picker-month) {
+          width: 50px;
+          background-color: #0072c6; }
+          div#container_local-navigation div#sideNavBox div#DatePickerDiv div.ms-picker-header td:not(.ms-picker-month) a.ms-pagearrow-left,
+          div#container_local-navigation div#sideNavBox div#DatePickerDiv div.ms-picker-header td:not(.ms-picker-month) a.ms-pagearrow-right {
+            width: 50px;
+            height: 25px;
+            background-repeat: no-repeat;
+            background-size: auto 15px; }
+            div#container_local-navigation div#sideNavBox div#DatePickerDiv div.ms-picker-header td:not(.ms-picker-month) a.ms-pagearrow-left img,
+            div#container_local-navigation div#sideNavBox div#DatePickerDiv div.ms-picker-header td:not(.ms-picker-month) a.ms-pagearrow-right img {
+              display: none; }
+          div#container_local-navigation div#sideNavBox div#DatePickerDiv div.ms-picker-header td:not(.ms-picker-month) a.ms-pagearrow-left {
+            background-image: url("/sites/hubdev/DevImages/icon_arrow_left_white.svg");
+            background-position: 17px bottom; }
+          div#container_local-navigation div#sideNavBox div#DatePickerDiv div.ms-picker-header td:not(.ms-picker-month) a.ms-pagearrow-right {
+            background-image: url("/sites/hubdev/DevImages/icon_arrow_right_white.svg");
+            background-position: 22px bottom; }
+        div#container_local-navigation div#sideNavBox div#DatePickerDiv div.ms-picker-header td.ms-picker-month {
+          padding: 0;
+          color: #fff;
+          background-color: #333; }
+          div#container_local-navigation div#sideNavBox div#DatePickerDiv div.ms-picker-header td.ms-picker-month a {
+            color: #45b1ff; }
+      div#container_local-navigation div#sideNavBox div#DatePickerDiv div.ms-picker-body {
+        color: #fff; }
+        div#container_local-navigation div#sideNavBox div#DatePickerDiv div.ms-picker-body td.ms-picker-monthcenter,
+        div#container_local-navigation div#sideNavBox div#DatePickerDiv div.ms-picker-body td.ms-picker-monthcenterOn,
+        div#container_local-navigation div#sideNavBox div#DatePickerDiv div.ms-picker-body td.ms-picker-daycenter,
+        div#container_local-navigation div#sideNavBox div#DatePickerDiv div.ms-picker-body td.ms-picker-daycenterOn {
+          background-color: transparent;
+          border-color: transparent; }
+          div#container_local-navigation div#sideNavBox div#DatePickerDiv div.ms-picker-body td.ms-picker-monthcenter a,
+          div#container_local-navigation div#sideNavBox div#DatePickerDiv div.ms-picker-body td.ms-picker-monthcenter a:active,
+          div#container_local-navigation div#sideNavBox div#DatePickerDiv div.ms-picker-body td.ms-picker-monthcenter a:link,
+          div#container_local-navigation div#sideNavBox div#DatePickerDiv div.ms-picker-body td.ms-picker-monthcenter a:visited,
+          div#container_local-navigation div#sideNavBox div#DatePickerDiv div.ms-picker-body td.ms-picker-monthcenterOn a,
+          div#container_local-navigation div#sideNavBox div#DatePickerDiv div.ms-picker-body td.ms-picker-monthcenterOn a:active,
+          div#container_local-navigation div#sideNavBox div#DatePickerDiv div.ms-picker-body td.ms-picker-monthcenterOn a:link,
+          div#container_local-navigation div#sideNavBox div#DatePickerDiv div.ms-picker-body td.ms-picker-monthcenterOn a:visited,
+          div#container_local-navigation div#sideNavBox div#DatePickerDiv div.ms-picker-body td.ms-picker-daycenter a,
+          div#container_local-navigation div#sideNavBox div#DatePickerDiv div.ms-picker-body td.ms-picker-daycenter a:active,
+          div#container_local-navigation div#sideNavBox div#DatePickerDiv div.ms-picker-body td.ms-picker-daycenter a:link,
+          div#container_local-navigation div#sideNavBox div#DatePickerDiv div.ms-picker-body td.ms-picker-daycenter a:visited,
+          div#container_local-navigation div#sideNavBox div#DatePickerDiv div.ms-picker-body td.ms-picker-daycenterOn a,
+          div#container_local-navigation div#sideNavBox div#DatePickerDiv div.ms-picker-body td.ms-picker-daycenterOn a:active,
+          div#container_local-navigation div#sideNavBox div#DatePickerDiv div.ms-picker-body td.ms-picker-daycenterOn a:link,
+          div#container_local-navigation div#sideNavBox div#DatePickerDiv div.ms-picker-body td.ms-picker-daycenterOn a:visited {
+            color: #45b1ff; }
+        div#container_local-navigation div#sideNavBox div#DatePickerDiv div.ms-picker-body td.ms-picker-dayother a,
+        div#container_local-navigation div#sideNavBox div#DatePickerDiv div.ms-picker-body td.ms-picker-dayother a:active,
+        div#container_local-navigation div#sideNavBox div#DatePickerDiv div.ms-picker-body td.ms-picker-dayother a:link,
+        div#container_local-navigation div#sideNavBox div#DatePickerDiv div.ms-picker-body td.ms-picker-dayother a:visited,
+        div#container_local-navigation div#sideNavBox div#DatePickerDiv div.ms-picker-body td.ms-picker-dayotherOn a,
+        div#container_local-navigation div#sideNavBox div#DatePickerDiv div.ms-picker-body td.ms-picker-dayotherOn a:active,
+        div#container_local-navigation div#sideNavBox div#DatePickerDiv div.ms-picker-body td.ms-picker-dayotherOn a:link,
+        div#container_local-navigation div#sideNavBox div#DatePickerDiv div.ms-picker-body td.ms-picker-dayotherOn a:visited {
+          color: #0094ff; }
+        div#container_local-navigation div#sideNavBox div#DatePickerDiv div.ms-picker-body td.ms-picker-monthselected,
+        div#container_local-navigation div#sideNavBox div#DatePickerDiv div.ms-picker-body td.ms-picker-dayselected {
+          color: #333;
+          background-color: #ffd800;
+          border: none; }
+        div#container_local-navigation div#sideNavBox div#DatePickerDiv div.ms-picker-body td.ms-picker-today {
+          color: #222;
+          background-color: orange;
+          border: none; }
+        div#container_local-navigation div#sideNavBox div#DatePickerDiv div.ms-picker-body td.ms-picker-footer {
+          background-color: #333; }
+          div#container_local-navigation div#sideNavBox div#DatePickerDiv div.ms-picker-body td.ms-picker-footer a {
+            color: #45b1ff; }
+        div#container_local-navigation div#sideNavBox div#DatePickerDiv div.ms-picker-body th.ms-picker-dayheader {
+          color: #fff;
+          background-color: #444; }
+          div#container_local-navigation div#sideNavBox div#DatePickerDiv div.ms-picker-body th.ms-picker-dayheader abbr[title] {
+            text-decoration: none; }
+    div#container_local-navigation div#sideNavBox div.ms-acal-apanel-outer {
+      margin: 0;
+      padding: 0 25px 25px;
+      color: #fff; }
+      div#container_local-navigation div#sideNavBox div.ms-acal-apanel-outer div.ms-acal-apanel {
+        padding: 0;
+        text-align: right;
+        background-color: #222; }
+        div#container_local-navigation div#sideNavBox div.ms-acal-apanel-outer div.ms-acal-apanel a.ms-acal-apanel-title {
+          display: block;
+          margin: 0;
+          padding: 16.66667px 12.5px 8.33333px; }
+          div#container_local-navigation div#sideNavBox div.ms-acal-apanel-outer div.ms-acal-apanel a.ms-acal-apanel-title:hover span {
+            color: #45b1ff; }
+          div#container_local-navigation div#sideNavBox div.ms-acal-apanel-outer div.ms-acal-apanel a.ms-acal-apanel-title span {
+            color: #45b1ff; }
+        div#container_local-navigation div#sideNavBox div.ms-acal-apanel-outer div.ms-acal-apanel ul ul {
+          padding-bottom: 12.5px; }
+          div#container_local-navigation div#sideNavBox div.ms-acal-apanel-outer div.ms-acal-apanel ul ul li {
+            padding-right: 12.5px;
+            margin: 0 0 5px 0;
+            color: #fff;
+            background-color: #333; }
+            div#container_local-navigation div#sideNavBox div.ms-acal-apanel-outer div.ms-acal-apanel ul ul li span.ms-acal-apanel-item {
+              padding: 0;
+              margin: 0;
+              background-color: transparent;
+              border: none; }
+    div#container_local-navigation div#sideNavBox div.ms-quicklaunchouter div.ms-core-listMenu-verticalBox ul.ms-core-listMenu-root {
+      background-color: #222;
+      margin: 0 25px; }
+    div#container_local-navigation div#sideNavBox div.ms-quicklaunchouter div.ms-core-listMenu-verticalBox ul.ms-core-listMenu-root,
+    div#container_local-navigation div#sideNavBox div.ms-quicklaunchouter div.ms-core-listMenu-verticalBox ul.ms-core-listMenu-root ul {
+      text-align: right; }
+      div#container_local-navigation div#sideNavBox div.ms-quicklaunchouter div.ms-core-listMenu-verticalBox ul.ms-core-listMenu-root li,
+      div#container_local-navigation div#sideNavBox div.ms-quicklaunchouter div.ms-core-listMenu-verticalBox ul.ms-core-listMenu-root ul li {
+        list-style: none;
+        margin: 0; }
+        div#container_local-navigation div#sideNavBox div.ms-quicklaunchouter div.ms-core-listMenu-verticalBox ul.ms-core-listMenu-root li a.ms-core-listMenu-item,
+        div#container_local-navigation div#sideNavBox div.ms-quicklaunchouter div.ms-core-listMenu-verticalBox ul.ms-core-listMenu-root li a.ms-core-listMenu-item:link,
+        div#container_local-navigation div#sideNavBox div.ms-quicklaunchouter div.ms-core-listMenu-verticalBox ul.ms-core-listMenu-root li a.ms-core-listMenu-item:visited,
+        div#container_local-navigation div#sideNavBox div.ms-quicklaunchouter div.ms-core-listMenu-verticalBox ul.ms-core-listMenu-root ul li a.ms-core-listMenu-item,
+        div#container_local-navigation div#sideNavBox div.ms-quicklaunchouter div.ms-core-listMenu-verticalBox ul.ms-core-listMenu-root ul li a.ms-core-listMenu-item:link,
+        div#container_local-navigation div#sideNavBox div.ms-quicklaunchouter div.ms-core-listMenu-verticalBox ul.ms-core-listMenu-root ul li a.ms-core-listMenu-item:visited {
+          line-height: 25px;
+          padding: 0 25px 0 0;
+          color: #45b1ff; }
+        div#container_local-navigation div#sideNavBox div.ms-quicklaunchouter div.ms-core-listMenu-verticalBox ul.ms-core-listMenu-root li a.ms-core-listMenu-item:hover,
+        div#container_local-navigation div#sideNavBox div.ms-quicklaunchouter div.ms-core-listMenu-verticalBox ul.ms-core-listMenu-root ul li a.ms-core-listMenu-item:hover {
+          background-color: #111; }
+    div#container_local-navigation div#sideNavBox div.ms-quicklaunchouter div.ms-core-listMenu-verticalBox ul.ms-core-listMenu-root > li > a span,
+    div#container_local-navigation div#sideNavBox div.ms-quicklaunchouter div.ms-core-listMenu-verticalBox ul.ms-core-listMenu-root > li > a span span {
+      font-size: 2.1rem;
+      line-height: 50px; }
+    div#container_local-navigation div#sideNavBox div.ms-quicklaunchouter div.ms-core-listMenu-verticalBox ul.ms-core-listMenu-root ul li {
+      margin: 0 0 5px 0;
+      background-color: #333; }
+      div#container_local-navigation div#sideNavBox div.ms-quicklaunchouter div.ms-core-listMenu-verticalBox ul.ms-core-listMenu-root ul li a span,
+      div#container_local-navigation div#sideNavBox div.ms-quicklaunchouter div.ms-core-listMenu-verticalBox ul.ms-core-listMenu-root ul li a span span {
+        line-height: 20px; }
+  div#container_local-navigation div.ms-core-navigation {
+    font-family: "WeblySleek UI Semilight", "Segoe UI", "Segoe", Tahoma, Helvetica, Arial, sans-serif; }
+  div#container_local-navigation ul#local-navigation li.selected {
+    background-color: #003a63; }
+  div#container_local-navigation ul#local-navigation li,
+  div#container_local-navigation ul#local-navigation li.selected {
+    list-style: none;
+    margin: 0; }
+    div#container_local-navigation ul#local-navigation li:hover,
+    div#container_local-navigation ul#local-navigation li.selected:hover {
+      background-color: #001c30; }
+    div#container_local-navigation ul#local-navigation li a,
+    div#container_local-navigation ul#local-navigation li.selected a {
+      display: block;
+      padding-right: 25px;
+      text-align: right;
+      font-size: 2.1rem;
+      line-height: 50px;
+      color: #fff; }
+      div#container_local-navigation ul#local-navigation li a:hover,
+      div#container_local-navigation ul#local-navigation li.selected a:hover {
+        text-decoration: none; }
+  div#container_local-navigation a#ctl00_PlaceHolderLeftNavBar_PlaceHolderQuickLaunchBottom_idNavLinkViewAll {
+    display: none; }
+
+div.container_search {
+  padding: 25px;
+  background-color: rgba(51, 51, 51, 0.8); }
+  div.container_search div#searchInputBox {
+    float: none;
+    margin: 0; }
+    div.container_search div#searchInputBox div.ms-srch-sb {
+      border: none; }
+      div.container_search div#searchInputBox div.ms-srch-sb input {
+        width: calc(100% - 81.25px);
+        height: 37.5px;
+        color: #555;
+        margin: 0 6.25px 0 0;
+        padding: 0 6.25px; }
+      div.container_search div#searchInputBox div.ms-srch-sb > a.ms-srch-sb-navLink,
+      div.container_search div#searchInputBox div.ms-srch-sb > a.ms-srch-sb-searchLink {
+        width: 37.5px;
+        height: 37.5px;
+        border: none;
+        background-repeat: no-repeat;
+        background-position: 0 0; }
+        div.container_search div#searchInputBox div.ms-srch-sb > a.ms-srch-sb-navLink:hover, div.container_search div#searchInputBox div.ms-srch-sb > a.ms-srch-sb-navLink:active,
+        div.container_search div#searchInputBox div.ms-srch-sb > a.ms-srch-sb-searchLink:hover,
+        div.container_search div#searchInputBox div.ms-srch-sb > a.ms-srch-sb-searchLink:active {
+          background-color: #bcdff7; }
+        div.container_search div#searchInputBox div.ms-srch-sb > a.ms-srch-sb-navLink img,
+        div.container_search div#searchInputBox div.ms-srch-sb > a.ms-srch-sb-searchLink img {
+          display: none; }
+      div.container_search div#searchInputBox div.ms-srch-sb > a.ms-srch-sb-navLink-menuOpen {
+        background-color: #bcdff7; }
+      div.container_search div#searchInputBox div.ms-srch-sb > a.ms-srch-sb-navLink {
+        background-image: url("/sites/hubdev/DevImages/icon_arrow_down_blue6.svg"); }
+      div.container_search div#searchInputBox div.ms-srch-sb > a.ms-srch-sb-searchLink {
+        float: right;
+        background-image: url("/sites/hubdev/DevImages/icon_spy-glass_blue6.svg"); }
+      div.container_search div#searchInputBox div.ms-srch-sb div#NavDropdownListContainer.ms-qSuggest-container {
+        width: 187.5px;
+        padding: 6.25px 0;
+        margin: 0;
+        background-color: #bcdff7;
+        box-shadow: none; }
+        div.container_search div#searchInputBox div.ms-srch-sb div#NavDropdownListContainer.ms-qSuggest-container div.ms-qSuggest-list,
+        div.container_search div#searchInputBox div.ms-srch-sb div#NavDropdownListContainer.ms-qSuggest-container div.ms-qSuggest-listItem,
+        div.container_search div#searchInputBox div.ms-srch-sb div#NavDropdownListContainer.ms-qSuggest-container div.ms-qSuggest-hListItem {
+          width: 181.25px; }
+        div.container_search div#searchInputBox div.ms-srch-sb div#NavDropdownListContainer.ms-qSuggest-container div.ms-qSuggest-hListItem {
+          background-color: #0072c6;
+          color: #fff; }
+    div.container_search div#searchInputBox div.ms-srch-sb-border {
+      background-color: #aaa; }
+    div.container_search div#searchInputBox div.ms-srch-sb-borderFocused {
+      background-color: #fff; }
+      div.container_search div#searchInputBox div.ms-srch-sb-borderFocused > a.ms-srch-sb-searchLink {
+        background-color: #0072c6;
+        background-image: url("/sites/hubdev/DevImages/icon_spy-glass_white.svg"); }
+        div.container_search div#searchInputBox div.ms-srch-sb-borderFocused > a.ms-srch-sb-searchLink:hover {
+          background-image: url("/sites/hubdev/DevImages/icon_spy-glass_blue6.svg"); }
+
+div#large-screen-header_large-screen-aside {
+  background-color: #222; }
+
+aside div#container_brand_museum {
+  height: 62.5px;
+  background: #111 url("/sites/hubdev/DevImages/brand_mos_reverse_180w.svg") no-repeat center; }
+aside div.adoption-ad {
+  padding: 50px 25px 50px 50px; }
+  aside div.adoption-ad h2 {
+    padding-bottom: 37.5px; }
+    aside div.adoption-ad h2 span {
+      display: block;
+      font-size: 3.5rem !important;
+      line-height: 5rem !important;
+      color: #ec1089; }
+  aside div.adoption-ad p {
+    padding-bottom: 37.5px; }
+    aside div.adoption-ad p span {
+      display: block;
+      font-family: "WeblySleek UI Light", "Segoe UI", "Segoe", Tahoma, Helvetica, Arial, sans-serif;
+      font-size: 2.3rem !important;
+      line-height: 2.5rem !important;
+      color: #7fba00; }
+  aside div.adoption-ad ul#calls-to-action li {
+    list-style: none;
+    margin: 0;
+    padding-bottom: 25px; }
+    aside div.adoption-ad ul#calls-to-action li a {
+      font-family: "WeblySleek UI Semibold", "Segoe UI", "Segoe", Tahoma, Helvetica, Arial, sans-serif;
+      font-size: 1.8rem !important;
+      line-height: 2.5rem !important;
+      color: #45b1ff; }
+aside div#onedrive-ad {
+  height: 700px;
+  background-image: url("/sites/hubdev/DevImages/bkgrd_adoption_clouds.svg");
+  background-position: 0 450px;
+  background-repeat: no-repeat;
+  background-size: contain; }
+
+div#container_workspace {
+  width: 100% !important;
+  padding: 25px 25px 50px 50px;
+  background-color: white; }
+  div#container_workspace h1#pageTitle.ms-core-pageTitle {
+    padding: 16.75px 0px 33.25px; }
+  div#container_workspace div.ms-wikicontent.ms-rtestate-field {
+    padding: 0 !important; }
+  div#container_workspace div.ms-rte-layoutszone-inner {
+    display: table;
+    table-layout: fixed;
+    border-collapse: collapse; }
+  div#container_workspace div#embedded-yammer-feed {
+    height: 600px; }
+
+ul.ms-core-menu-list li {
+  list-style-type: none; }
+
+body.model-community div#type-samples {
+  display: table-cell;
+  vertical-align: top;
+  width: 33.33%;
+  padding-right: 12.5px; }
+body.model-community div#wp_files {
+  display: table-cell;
+  vertical-align: top;
+  width: 33.33%;
+  padding-left: 12.5px;
+  padding-right: 12.5px; }
+body.model-community div#wp_yammer {
+  display: table-cell;
+  vertical-align: top;
+  width: 33.33%;
+  padding-left: 12.5px; }
+
+div.ms-dlgContent {
+  font-size: 1.5rem; }
+
+/*# sourceMappingURL=mos_screen_lg.css.map */
