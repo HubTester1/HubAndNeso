@@ -217,9 +217,17 @@ function ShowScreen() {
 			ShowMaintenanceModeScreen();
 		} else {
 			// config screen
-			document.getElementsByClassName('ms-siteicon-img')[0]
-				.setAttribute('src', '/sites/hubprod/Asset%20Library/BrandHorizontalOpt.svg');
-			document.getElementsByClassName('ms-breadcrumb-top')[0].remove();
+			// RELEASE - uncomment below
+			// document.getElementsByClassName('ms-siteicon-img')[0]
+			// 	.setAttribute('src', '/sites/hubprod/Asset%20Library/BrandHorizontalOpt.svg');
+			// document.getElementsByClassName('ms-breadcrumb-top')[0].remove();
+			// RELEASE - delete below
+			document.getElementsByClassName('ms-breadcrumb-top')[0].innerHTML = '<ul role="navigation" id="mos_global-navigation">' +
+				'    <li><a href="https://bmos.sharepoint.com/">The Hub</a></li>' +
+				'    <li><a href="https://bmos.sharepoint.com/SitePages/Communities.aspx">Communities</a></li>' +
+				'</ul>';
+			
+			
 			if (window.uData.account && window.uData.account === 'jbaker') {
 				document.getElementById('s4-ribbonrow').style.display = 'block';
 				document.getElementById('s4-bodyContainer').style.paddingTop = '1rem';
