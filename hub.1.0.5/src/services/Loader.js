@@ -42,7 +42,10 @@ const stylesheetsToLoad = [
 // local settings
 const settingsLoadingPromises = [];
 const settingsToLoad = [
+	// settings
 	{ localSiteAssets: 1,		notCached: 1,		path: 'settings.js' },
+	// { centrallyManaged: 1, js: 1, path: 'jquery.2.2.0.js' },
+	// { centrallyManaged: 1, js: 1, path: 'jquery.SPServices.2014.02.min.js' },
 ];
 
 // mos.1.0.5
@@ -97,7 +100,7 @@ function LoadJSFile(urlToLoad) {
 	// return a new promise
 	return new Promise((resolve, reject) => {
 		const httpRequest = new XMLHttpRequest();
-		httpRequest.onreadystatechange = function () {
+		httpRequest.onreadystatechange = function EvalCode() {
 			if (httpRequest.readyState === XMLHttpRequest.DONE) {
 				if (httpRequest.status === 200) {
 					eval(httpRequest.responseText);
@@ -137,14 +140,14 @@ function LoadFiles() {
 		}
 		LoadCSSFiles(stylesheetsToLoad, () => {
 			LoadJSFiles(mosToLoad, mosLoadingPromises, mData, () => {
-				// indicate readiness
-				// window.loading = false;
+				// TO DO - remove
+				$.holdReady(false);
 			});
 		});
 	});
 }
 
-(function () {
-	window.contextReady = true;
+(function SignifyContextNotReadyAndLoadFiles() {
+	window.contextReady = false;
 	LoadFiles();
 }());

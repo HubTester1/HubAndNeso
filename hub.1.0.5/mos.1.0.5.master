@@ -52,6 +52,11 @@
 										</SharePoint:AjaxDelta>
 										<SharePoint:CssRegistration Name="Themable/corev15.css" runat="server" />
 
+										<%-- TEMP --%>
+										<script type="text/javascript" src="/sites/hubprod/Code4/js/libs/jquery.2.2.0.js"></script>
+										<script type="text/javascript" src="/sites/hubprod/Code4/js/libs/jquery.SPServices.2014.02.min.js"></script>
+
+
 										<style>
 											body {
 												overflow: visible;
@@ -748,8 +753,8 @@
 											ga('create', 'UA-51830655-1', 'sharepoint.com');
 											ga('send', 'pageview');
 
-											// set indication that loading has not completed
-											window.loading = true;
+											// TO DO - remove
+											$.holdReady(true);
 
 											// load the loader, which will un-hold the ready event when all files have loaded
 											var s = document.createElement('script');

@@ -176,70 +176,6 @@ const screenShower = setInterval(ShowScreen, 500);
 if (EnvironmentDetector.ReturnIsHCScreen()) {
 	ReactDOM.render(<HcContainer />, document.getElementById('hub-central-mount-point'));
 } else {
-	/* 
-		$.fn.RenderInPagePersonaSet = function(personaData) {
-
-		var personaSet = '<div class="in-page-personas';
-
-		if (typeof(personaData.classValues) != "undefined" && personaData.classValues != null) {
-			personaSet += ' ' + personaData.classValues;
-		}
-
-		personaSet +=  '">\n';
-
-		if (typeof(personaData.title) != "undefined" && personaData.title != null) {
-			personaSet += '<' + personaData.title.tag + '>' + personaData.title.content + '</' + personaData.title.tag + '>\n';
-		}
-
-		$.each(personaData.people, function(i, accountPart) {
-			personaSet += '<div class="in-page-persona">\n';
-
-			var userProfileValues = {};
-
-			$().SPServices({
-				operation: "GetUserProfileByName",
-				async: false,
-				AccountName: "i:0#.f|membership|" + accountPart + "@mos.org",
-				completefunc: function(xData, Status) {
-					$(xData.responseXML).SPFilterNode("PropertyData").each(function() {
-						userProfileValues[$(this).find("Name").text()] = $(this).find("Value").text();
-					});
-				}
-			});
-
-			personaSet += '	<span class="avatar-container"><span class="avatar"';
-			if (userProfileValues.PictureURL != "") {
-				personaSet += ' style="background: #fff url(\'' + userProfileValues.PictureURL + '\') no-repeat center center;background-size: cover"> \n';
-			} else {
-				userProfileValues.firstInitial = userProfileValues.FirstName.slice(0, 1).toUpperCase();
-				userProfileValues.lastInitial = userProfileValues.LastName.slice(0, 1).toUpperCase();
-				personaSet += '><span class="avatar-initials">' + userProfileValues.firstInitial + userProfileValues.lastInitial + '</span>';
-			}
-
-			personaSet +=  '</span></span> \n' +
-						'	<span class="name_title"> \n';
-			if (typeof(userProfileValues.PreferredName) != 'undefined' && userProfileValues.PreferredName != '') {
-				if (typeof(userProfileValues["SPS-PersonalSiteCapabilities"]) != 'undefined' && userProfileValues["SPS-PersonalSiteCapabilities"] != '') {
-					personaSet += '		<a class="profile" href="https://bmos-my.sharepoint.com/_layouts/15/me.aspx?u=' + userProfileValues["msOnline-ObjectId"] + '" target="_blank">' + userProfileValues.PreferredName + '</a> \n';
-				} else {
-					personaSet += '		<span class="name">' + userProfileValues.PreferredName + '</span> \n';
-				}
-			}
-
-			if (typeof(userProfileValues.Title) != 'undefined' && userProfileValues.Title != '') {
-				personaSet += '		<span class="title">' + userProfileValues.Title + '</span> \n';
-			}
-
-			personaSet +=	'	</span> \n' +
-							'</div>\n';
-		});
-
-		personaSet += '</div>';
-
-		$("div#" + personaData.destinationID).append(personaSet);
-	};
-
-	*/
 	window.uData = {};
 	window.nesoIsAvailable = undefined;
 	window.maintenanceModeThisUser = undefined;
@@ -300,3 +236,67 @@ function ShowScreen() {
 	}
 }
 
+
+// TO DO - remove
+(function RegisterJQueryPlugin($) {
+	$.fn.RenderInPagePersonaSet = function (personaData) {
+		let personaSet = '<div class="in-page-personas';
+
+		if (typeof (personaData.classValues) !== 'undefined' && personaData.classValues != null) {
+			personaSet += ` ${personaData.classValues}`;
+		}
+
+		personaSet += '">\n';
+
+		if (typeof (personaData.title) !== 'undefined' && personaData.title != null) {
+			personaSet += `<${personaData.title.tag}>${personaData.title.content}</${personaData.title.tag}>\n`;
+		}
+
+		$.each(personaData.people, (i, accountPart) => {
+			personaSet += '<div class="in-page-persona">\n';
+
+			const userProfileValues = {};
+
+			$().SPServices({
+				operation: 'GetUserProfileByName',
+				async: false,
+				AccountName: `i:0#.f|membership|${accountPart}@mos.org`,
+				completefunc(xData, Status) {
+					$(xData.responseXML).SPFilterNode('PropertyData').each(function () {
+						userProfileValues[$(this).find('Name').text()] = $(this).find('Value').text();
+					});
+				},
+			});
+
+			personaSet += '	<span class="avatar-container"><span class="avatar"';
+			if (userProfileValues.PictureURL !== '') {
+				personaSet += ` style="background: #fff url('${userProfileValues.PictureURL}') no-repeat center center;background-size: cover"> \n`;
+			} else {
+				userProfileValues.firstInitial = userProfileValues.FirstName.slice(0, 1).toUpperCase();
+				userProfileValues.lastInitial = userProfileValues.LastName.slice(0, 1).toUpperCase();
+				personaSet += `><span class="avatar-initials">${userProfileValues.firstInitial}${userProfileValues.lastInitial}</span>`;
+			}
+
+			personaSet += '</span></span> \n' +
+			'	<span class="name_title"> \n';
+			if (typeof (userProfileValues.PreferredName) !== 'undefined' && userProfileValues.PreferredName !== '') {
+				if (typeof (userProfileValues['SPS-PersonalSiteCapabilities']) !== 'undefined' && userProfileValues['SPS-PersonalSiteCapabilities'] !== '') {
+					personaSet += `		<a class="profile" href="https://bmos-my.sharepoint.com/_layouts/15/me.aspx?u=${userProfileValues['msOnline-ObjectId']}" target="_blank">${userProfileValues.PreferredName}</a> \n`;
+				} else {
+					personaSet += `		<span class="name">${userProfileValues.PreferredName}</span> \n`;
+				}
+			}
+
+			if (typeof (userProfileValues.Title) !== 'undefined' && userProfileValues.Title !== '') {
+				personaSet += `		<span class="title">${userProfileValues.Title}</span> \n`;
+			}
+
+			personaSet += '	</span> \n' +
+			'</div>\n';
+		});
+
+		personaSet += '</div>';
+
+		$(`div#${personaData.destinationID}`).append(personaSet);
+	};
+}(jQuery));
