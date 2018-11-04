@@ -1,0 +1,161 @@
+﻿
+<script type="text/javascript">
+
+    
+    $(document).ready(function () {
+        
+        var deletionEnabledMsg = '<p><strong>Note</strong>: Loading this page causes data to be deleted. The console should show deletion results. Many deletions may take several minutes and this simple deleter only provides feedback in the browser console, so just be careful not to close the browser tab early. Disable the deletion code in SiteAssets > wpc_mwec_deleter.html.</p>';
+        var deletionDisabledMsg = '<p><strong>Note</strong>: Deletion code has been disabled. You can re-enable in SiteAssets > wpc_mwec_deleter.html.</p>';
+
+
+
+        
+        /*$('div#all-content-container').append(deletionDisabledMsg);*/
+        
+        
+
+        // to enable deletion, remove /**/ and comment out disable section
+
+          
+        console.log('m1');
+        $('div#all-content-container').append(deletionEnabledMsg);
+
+
+        // partial config 
+        var mData = {
+            'list': 'SWFList',
+            'lowestIDToDelete': 13400,
+            'highestIDToDelete': 13599
+        }
+
+        for (i = mData.lowestIDToDelete; i < mData.highestIDToDelete; i++) {
+
+            // send value pairs to SPServices UpdateListItems to create a new item in the new list
+            $().SPServices({
+                operation: 'UpdateListItems',
+                listName: mData.list,
+                batchCmd: 'Delete',
+                ID: i,
+                //valuepairs: submissionValuePairs,
+                completefunc: function (xData, Status) {
+                    var errorCode = $(xData.responseXML).find('ErrorCode').text();
+                    if (errorCode != '0x00000000') {
+                        if (errorCode == '') { errorCode = '""'; }
+                        console.log('errorCode = ' + errorCode);
+                    } else if (Status == 'Error') {
+                        console.log('Status = Error');
+                    } else {
+                        console.log('Deleted item');
+                    }
+                }
+            });
+
+
+        }
+      // !!! ---- end deletion-disabling comment here ---- !!!
+
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+      function HtmlEncode(str) {
+          return String(str).replace(/&/g, '&amp;').replace(/"/g, '&quot;');
+          // .replace(/'/g, '&#39;')
+          // .replace(/</g, '&lt;')
+          // .replace(/>/g, '&gt;');
+      }
+  
+      function CDataWrap(value) {
+          return "<![CDATA[" + value + "]]>";
+      }
+  
+  
+      function StrInStr(haystack, needle, bool) {
+  
+          var pos = 0;
+          haystack += '';
+          pos = haystack.toLowerCase()
+          .indexOf((needle + '')
+          .toLowerCase());
+  
+          if (pos == -1) {
+              return false;
+          } else {
+              if (bool == 1) {
+                  return haystack.substr(0, pos);
+              } else {
+                  return haystack.slice(pos);
+              }
+          }
+      }
+  
+      function SendErrorEmail(from, to, body, subject) {
+  
+          var siteurl = _spPageContextInfo.webServerRelativeUrl;
+  
+          var urlTemplate = siteurl + "/_api/SP.Utilities.Utility.SendEmail";
+          $.ajax({
+              contentType: 'application/json',
+              url: urlTemplate,
+              type: "POST",
+              data: JSON.stringify({
+                  'properties': {
+                      '__metadata': { 'type': 'SP.Utilities.EmailProperties' },
+                      'From': from,
+                      'To': { 'results': [to] },
+                      'Body': body,
+                      'Subject': subject
+                  }
+              }
+            ),
+              headers: {
+                  "Accept": "application/json;odata=verbose",
+                  "content-type": "application/json;odata=verbose",
+                  "X-RequestDigest": $("#__REQUESTDIGEST").val()
+              },
+              success: function (data) {
+              },
+              error: function (err) {
+                  console.log('SendErrorEmail also had an error: ' + JSON.stringify(err));
+              }
+          });
+      
+
+      }
+      
+</script>
+
+
+
+<!-- all content -->
+<div id="all-content-container"></div>

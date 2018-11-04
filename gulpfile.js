@@ -138,7 +138,7 @@ gulp.task('4-dev-wait-push-api', () => {
 // when the specified swf api file changes, push it to dev
 gulp.task('4-dev-watch-push-api', () => {
 	// watch the src style file; upon changes, build dist style file and push it to dev
-	gulp.watch([gulpV4DevConfig.ReturnV4DevSWFAPIFile(argv.api)], gulp.series('4-dev-wait-push-api'));
+	gulp.watch([gulpV4DevConfig.ReturnV4DevSWFAPIFile(argv.api)], gulp.series('4-dev-push-api'));
 });
 
 // PROD

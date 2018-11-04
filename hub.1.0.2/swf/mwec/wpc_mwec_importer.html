@@ -1,0 +1,298 @@
+﻿
+<script type="text/javascript">
+
+    
+    $(document).ready(function () {
+        
+        var importEnabledMsg = '<p><strong>Note</strong>: Loading this page causes legacy data to be imported. The console should show import results. A large import may take several minutes and this simple importer doesn\'t provide any user feedback, so just be careful not to close the browser tab early. Disable the import code in SiteAssets > wpc_mwec_importer.html.</p>';
+        var importDisabledMsg = '<p><strong>Note</strong>: Import code has been disabled. You can re-enable in SiteAssets > wpc_mwec_importer.html.</p>';
+
+
+
+        
+        /*$('div#all-content-container').append(importDisabledMsg);*/
+        
+        
+
+        // to enable import, remove /**/ and comment out disable section
+
+          
+        console.log('m1');
+        $('div#all-content-container').append(importEnabledMsg);
+
+
+        // partial config 
+        var mData = {
+            'legacyFile': '/sites/mwec/SiteAssets/mwecStore.xml', //https://bmos.sharepoint.com
+            'maxToProcess': 5000,
+            'newList': 'SWFList',
+            'deleteAllItemsBeforeImporting': 0,
+            'emailErrorsTo': 'jbaker@mos.org'
+        }
+  
+
+        if (typeof (mData.deleteAllItemsBeforeImporting) != 'undefined' && mData.deleteAllItemsBeforeImporting == 1) {
+            $().SPServices.SPUpdateMultipleListItems({
+                //webURL: "",
+                listName: mData.newList,
+                //CAMLQuery: "",
+                batchCmd: "Delete",
+                //valuepairs: [],
+                debug: false,
+                completefunc: null
+            });
+        }
+
+
+
+        $.ajax({
+            type: "GET",
+            url: mData.legacyFile,
+            dataType: "xml",
+        }).done(function (receivedXML) {
+
+            $(receivedXML).find('event').each(function (eventIndex, eventValue) {
+
+                if (eventIndex < mData.maxToProcess) {
+
+                    var listFields = {};
+                    var jsonOnlyData = {};
+                    var submissionValuePairs = [];
+
+                    // set all basic list fields
+                    listFields.Title = HtmlEncode($(eventValue).find('title').text());
+                    listFields.RequestDate = HtmlEncode($(eventValue).find('startDateTime').text().slice(0, 10) + 'T00:00:00-05:00');
+                    listFields.EventLocation = HtmlEncode($(eventValue).find('location').text());
+                    listFields.EventCount = HtmlEncode($(eventValue).find('count').text());
+                    listFields.EventDepartment = HtmlEncode($(eventValue).find('dept').text());
+                    listFields.RequestStatus = HtmlEncode('Submitted');
+                    listFields.EventLegacyID = HtmlEncode($(eventValue).find('legacyID').text());
+
+                    // set all basic JS object properties
+                    var allRequestData = '{"RepeatedElements": [{"ID": "simple-date","OriginalToRepeat": "undefined","Event-Date":"' + $(eventValue).find('startDateTime').text().slice(0, 10) + 'T00:00:00-05:00",},],' +
+                                        '"Event-Title":"' + listFields.Title + '",' +
+                                        '"Legacy-Event-Creation-Date":"' + listFields.RequestDate + '",' +
+                                        '"Event-Location":"' + listFields.EventLocation + '",' +
+                                        '"Event-Department":"' + listFields.EventDepartment + '",' +
+                                        '"Event-Count":"' + listFields.EventCount + '",' +
+                                        '"Request-Status":"' + listFields.RequestStatus + '",' +
+                                        '"Requester-Name":"' + $(eventValue).find('firstName').text() + " " + $(eventValue).find('lastName').text() + '",' +
+                                        '"Requester-Department":"' + $(eventValue).find('dept').text() + '",' +
+                                        '"Requester-Email":"' + $(eventValue).find('username').text() + '@mos.org",' +
+                                        '"Requester-Phone":"",' +
+                                        '"Requester-Account":"i:0#.f|membership|' + $(eventValue).find('username').text() + '@mos.org",' +
+                                        '"Beginning-of-Life":"0",' +
+                                        '"End-of-Life":"0",' +
+                                        '"SWF-Version":"1.0",' +
+                                        '"Self-or-Other":"Talk to me",' +
+                                        '"time-storage_Start-Time":"2000-01-01T' + $(eventValue).find('startDateTime').text().slice(11) + '",' +
+                                        '"time-storage_End-Time":"2000-01-01T' + $(eventValue).find('endDateTime').text().slice(11) + '",' +
+                                        '"individual-or-pattern_individual":"individual",' +
+                                        '"hours-input_Start-Time":"' + $().ReturnFormattedDateTime($(eventValue).find('startDateTime').text(), null, 'h A') + '",' + // 10 AM
+                                        '"minutes-input_Start-Time":"' + $().ReturnFormattedDateTime($(eventValue).find('startDateTime').text(), null, 'mm') + '",' + // 15
+                                        '"hours-input_End-Time":"' + $().ReturnFormattedDateTime($(eventValue).find('endDateTime').text(), null, 'h A') + '",' + // 11 AM
+                                        '"minutes-input_End-Time":"' + $().ReturnFormattedDateTime($(eventValue).find('endDateTime').text(), null, 'mm') + '",'; // 45
+
+
+
+
+
+
+                    // set contact person-related listField and JSON elements, 
+                    //      trying to use the list's field of type Person or Group, if possible, 
+                    //      falling back to text fields, if necessary
+                    $().SPServices({
+                        operation: "GetUserProfileByName",
+                        async: false,
+                        AccountName: "i:0#.f|membership|" + $(eventValue).find('username').text() + "@mos.org",
+                        completefunc: function (xData, Status) {
+
+                            // if this person is in the user profile service
+                            if (Status == 'success') {
+
+                                // get the values returned by the user profile service
+                                var userProfileValues = {};
+                                $(xData.responseXML).SPFilterNode("PropertyData").each(function () {
+                                    userProfileValues[$(this).find("Name").text()] = $(this).find("Value").text();
+                                });
+
+                                // set listFields, using returned values
+                                listFields.RequestedFor = '-1;#' + userProfileValues.UserName.toLowerCase();
+
+                                // set JS object properties, using returned values
+                                allRequestData += JSON.parse('"Requested-For":"[{' +
+                                    '"account": "' + userProfileValues.AccountName + '",' +
+                                    '"displayText": "' + userProfileValues.PreferredName + '",' +
+                                    '"description": "' + userProfileValues.UserName.toLowerCase() + '"' +
+                                '}]');
+
+                            // if this person is not in the user profile service
+                            } else {
+
+                                // set listFields using legacy values
+                                listFields.EventLegacyContactUsername = HtmlEncode($(eventValue).find('username').text());
+                                listFields.EventLegacyContactFirstName = HtmlEncode($(eventValue).find('firstName').text());
+                                listFields.EventLegacyContactLastName = HtmlEncode($(eventValue).find('lastName').text());
+                                listFields.EventLegacyContactFullName = HtmlEncode($(eventValue).find('firstName').text()) + " " + HtmlEncode($(eventValue).find('lastName').text());
+
+                                // set JS object properties, using legacy values
+                                allRequestData += '"Legacy-Contact":"' + listFields.EventLegacyContactFullName + '",';
+                            }
+                        }
+                    });
+
+
+
+
+                    // finish off JS object
+                    allRequestData += '}';
+
+                    // construct value pairs from listFields and allRequestData
+                    //  (this could be skipped by just pushing above instead of setting obj props,
+                    //      but James is dyslexic and this helps)
+                    for (var key in listFields) {
+                        submissionValuePairs.push([key, listFields[key]]);
+                    }
+                    submissionValuePairs.push(["AllRequestData", CDataWrap(allRequestData)]);
+
+                    // send value pairs to SPServices UpdateListItems to create a new item in the new list
+                    $().SPServices({
+                        operation: 'UpdateListItems',
+                        listName: mData.newList,
+                        batchCmd: 'New',
+                        ID: 0,
+                        valuepairs: submissionValuePairs,
+                        completefunc: function (xData, Status) {
+                            var errorCode = $(xData.responseXML).find('ErrorCode').text();
+                            if (errorCode != '0x00000000') {
+                                if (errorCode == '') { errorCode = '""'; }
+                                console.log('errorCode = ' + errorCode);
+                                console.log('legacyID = ' + $(eventValue).find('legacyID').text());
+                                console.log('submissionValuePairs');
+                                console.log(submissionValuePairs);
+                                //var emailBody = 'error = ' + errorCode + '; legacy ID = ' + $(eventValue).find('legacyID').text() + '; name = ' + lastName + ', ' + firstName;
+                                //SendErrorEmail('noreply@mos.org', emailErrorsTo, emailBody, 'Hub migration error: ' + errorCode)
+                            } else if (Status == 'Error') {
+                                console.log('Status = Error');
+                            } else {
+                                console.log('Created item with ID = ' + $(xData.responseXML).SPFilterNode("z:row").attr("ows_ID"));
+                            }
+                        }
+                    });
+
+                }
+            });
+        }).error(function() {
+            alert("An error occurred while getting the XML file.");
+        });
+        
+      
+      // !!! ---- end import-disabling comment here ---- !!!
+
+
+
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+      function HtmlEncode(str) {
+          return String(str).replace(/&/g, '&amp;').replace(/"/g, '&quot;');
+          // .replace(/'/g, '&#39;')
+          // .replace(/</g, '&lt;')
+          // .replace(/>/g, '&gt;');
+      }
+  
+      function CDataWrap(value) {
+          return "<![CDATA[" + value + "]]>";
+      }
+  
+  
+      function StrInStr(haystack, needle, bool) {
+  
+          var pos = 0;
+          haystack += '';
+          pos = haystack.toLowerCase()
+          .indexOf((needle + '')
+          .toLowerCase());
+  
+          if (pos == -1) {
+              return false;
+          } else {
+              if (bool == 1) {
+                  return haystack.substr(0, pos);
+              } else {
+                  return haystack.slice(pos);
+              }
+          }
+      }
+  
+      function SendErrorEmail(from, to, body, subject) {
+  
+          var siteurl = _spPageContextInfo.webServerRelativeUrl;
+  
+          var urlTemplate = siteurl + "/_api/SP.Utilities.Utility.SendEmail";
+          $.ajax({
+              contentType: 'application/json',
+              url: urlTemplate,
+              type: "POST",
+              data: JSON.stringify({
+                  'properties': {
+                      '__metadata': { 'type': 'SP.Utilities.EmailProperties' },
+                      'From': from,
+                      'To': { 'results': [to] },
+                      'Body': body,
+                      'Subject': subject
+                  }
+              }
+            ),
+              headers: {
+                  "Accept": "application/json;odata=verbose",
+                  "content-type": "application/json;odata=verbose",
+                  "X-RequestDigest": $("#__REQUESTDIGEST").val()
+              },
+              success: function (data) {
+              },
+              error: function (err) {
+                  console.log('SendErrorEmail also had an error: ' + JSON.stringify(err));
+              }
+          });
+      
+
+      }
+      
+</script>
+
+
+
+<!-- all content -->
+<div id="all-content-container"></div>

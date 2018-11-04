@@ -1,0 +1,616 @@
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        // maintenance mode
+        var allSWFsInMaintenance = $().ReturnMaintenanceModeAllSWFs();
+        var thisSWFInMainenanceMode = $().ReturnMaintenanceModeThisSWF(location);
+        if (allSWFsInMaintenance == false && thisSWFInMainenanceMode == false) {
+
+            mData = $().ReturnThisSiteSettings();
+            var requestID = $().GetParamFromUrl(location.search, 'requestID');
+
+            mData = $.extend(
+                $().GetFieldsFromOneRow({
+                    "listName": "ComponentLog",
+                    "select": [
+                        {
+                            "nameHere": "uriRequest",
+                            "nameInList": "URIRequest",
+                            "linkField": 1
+                        }, {
+                            "nameHere": "uriRequestAlternate",
+                            "nameInList": "URIRequestAlternate",
+                            "linkField": 1
+                        }
+                    ],
+                    "where": {
+                        "field": "ComponentID",
+                        "type": "Number",
+                        "value": mData.componentID,
+                    }
+                }),
+                mData
+            );
+
+            $("#dialog").dialog({
+                autoOpen: false,
+                draggable: true,
+                show: { effect: "bounce", times: 2, duration: 500 },
+                width: 375,
+            });
+
+            var viewToUse = $().GetParamFromUrl(location.search, "view");
+            var dateToUse = $().GetParamFromUrl(location.search, "date");
+            var buyOutToUse = $().GetParamFromUrl(location.search, "buyoutID");
+            if (viewToUse == "") { viewToUse = "month"; }
+            if (dateToUse == "") { dateToUse = $().ReturnFormattedDateTime("nowUTC", "YYYY-MM-DDTHH:mm:ssZ", "YYYY-MM-DD", 0); }
+
+
+
+
+            
+            var getListItemsOptions = {
+                "viewFields":   "<ViewFields>" + 
+                                "   <FieldRef Name='ID' />" +
+                                "   <FieldRef Name='AllRequestData' />" +
+                                "</ViewFields>",
+                "rowLimit":     "500", 
+                "query":       "<Query>" +
+                               "   <Where>" +
+                               "       <Eq>" +
+                               "           <FieldRef Name='RequestStatus'></FieldRef>" +
+                               "           <Value Type='Text'>Submitted</Value>" +
+                               "       </Eq>" +
+                               "   </Where>" +
+                               "</Query>",
+                "queryOptions": "<QueryOptions>" +
+                                "   <IncludeMandatoryColumns>FALSE</IncludeMandatoryColumns>" +
+                                "</QueryOptions>"
+            };
+
+
+
+
+
+
+            $().SPServices({
+                operation: "GetListItems",
+                async: false,
+                listName: "SWFList",
+                CAMLViewFields: getListItemsOptions.viewFields,
+                CAMLQuery: getListItemsOptions.query,
+                CAMLRowLimit: getListItemsOptions.rowLimit,
+                CAMLQueryOptions: getListItemsOptions.queryOptions,
+                completefunc: function (xData, Status) {
+
+
+                    var regexOne = new RegExp("\r", "g");
+                    var regexTwo = new RegExp("\n", "g");
+
+                    var allEvents = [];
+
+
+
+                    $(xData.responseXML).SPFilterNode("z:row").each(function () {
+
+
+
+                        var eventItemString = $(this).attr("ows_AllRequestData");
+                        eventItemString = eventItemString.replace(regexOne, "'");
+                        eventItemString = eventItemString.replace(regexTwo, "'");
+                        eval("var eventItem=" + eventItemString);
+                        eventItem.ID = $(this).attr("ows_ID");
+                        if (typeof (eventItem["Requested-For"]) == "object") {
+                            eventItem.contactLinkedName = "<a target=\"_blank\" href=\"https://bmos-my.sharepoint.com/_layouts/15/me.aspx?p=" + StrInStr(eventItem["Requested-For"][0]["description"], "@", 1) + "%40mos.org&v=profile\">" + eventItem["Requested-For"][0]["displayText"] + "</a>";
+                        } else {
+                            eventItem.contactLinkedName = "";
+                        }
+
+
+
+                        // one or more individual dates
+
+                        if (typeof (eventItem["individual-or-pattern_individual"]) != 'undefined') {
+                            $(eventItem["RepeatedElements"]).each(function (i, d) {
+                                var repeatID = StrInStr(d["ID"], "-repeat", 0);
+                                if (repeatID == false) { repeatID = ""; }
+                                var isoStartDatetime = d["Event-Date" + repeatID].slice(0, 10) + eventItem["time-storage_Start-Time"].slice(10, 19);
+                                var isoEndDatetime = d["Event-Date" + repeatID].slice(0, 10) + eventItem["time-storage_End-Time"].slice(10, 19)
+                                var formattedStartTime = $().ReturnFormattedDateTime(isoStartDatetime, "YYYY-MM-DDTHH:mm:ss", "h:mma", 0);
+                                formattedStartTime = formattedStartTime.slice(0, formattedStartTime.length - 1);
+                                var formattedEndTime = $().ReturnFormattedDateTime(isoEndDatetime, "YYYY-MM-DDTHH:mm:ss", "h:mma", 0);
+                                formattedEndTime = formattedEndTime.slice(0, formattedEndTime.length - 1);
+                                var formattedDate = $().ReturnFormattedDateTime(isoStartDatetime, "YYYY-MM-DDTHH:mm:ss", "ddd, M/D/YY", 0);
+
+                                var thisEvent = {
+                                    "eventID": eventItem["ID"],
+                                    "title": formattedStartTime + " | " + eventItem["Event-Title"],
+                                    "contactLinkedName": eventItem.contactLinkedName,
+                                    "formattedStartTime": formattedStartTime,
+                                    "formattedEndTime": formattedEndTime,
+                                    "formattedDate": formattedDate,
+                                    "start": isoStartDatetime,
+                                    "end": isoEndDatetime,
+                                    "editURL": mData.uriRequest + "?requestID=" + eventItem["ID"] + "&returnURI=" + window.location.href,
+                                };
+
+                                $(["Event-Location", "Event-Count", "Event-Notes"]).each(function (i, o) {
+                                    if (typeof (eventItem[o]) != "undefined") {
+                                        var label = o.slice(6).toLowerCase();
+                                        thisEvent[label] = eventItem[o];
+                                    }
+                                });
+
+                                allEvents.push(thisEvent);
+
+                            });
+                        } else if (typeof (eventItem["individual-or-pattern_pattern"]) != 'undefined') {
+
+
+                            switch (eventItem["Pattern-Basis"]) {
+
+                                case "Every given number of days":
+
+                                    switch (eventItem["Ending-Basis"]) {
+
+                                        case "Never":
+                                            var patternDates = $().GenerateDatesForEveryXDaysEndNever(eventItem["X-Days"], eventItem["Start-Date"]);
+                                            break;
+
+                                        case "After a given number of occurrences":
+                                            var patternDates = $().GenerateDatesForEveryXDaysEndAfterYOccurrences(eventItem["X-Days"], eventItem["Start-Date"], eventItem["Qty-Occurrences"]);
+                                            break;
+
+                                        case "By a date":
+                                            var patternDates = $().GenerateDatesForEveryXDaysEndByDateY(eventItem["X-Days"], eventItem["Start-Date"], eventItem["Ending-Date"]);
+                                            break;
+                                    }
+                                    break;
+
+
+                                    
+
+                                case "Every weekday":
+
+                                    switch (eventItem["Ending-Basis"]) {
+
+                                        case "Never":
+                                            var patternDates = $().GenerateDatesForEveryWeekdayEndNever(eventItem["Start-Date"]);
+                                            break;
+
+                                        case "After a given number of occurrences":
+                                            var patternDates = $().GenerateDatesForEveryWeekdayEndAfterXOccurrences(eventItem["Start-Date"], eventItem["Qty-Occurrences"]);
+                                            break;
+
+                                        case "By a date":
+                                            var patternDates = $().GenerateDatesForEveryWeekdayEndByDateX(eventItem["Start-Date"], eventItem["Ending-Date"]);
+                                            break;
+                                    }
+                                    break;
+
+
+
+
+                                case "Every given number of weeks":
+
+                                    var daysOfWeek = [];
+
+                                    if (typeof (eventItem["days-of-week-for-x-weeks_1"]) != "undefined") {
+                                        daysOfWeek.push("Sunday");
+                                    }
+
+                                    if (typeof (eventItem["days-of-week-for-x-weeks_2"]) != "undefined") {
+                                        daysOfWeek.push("Monday");
+                                    }
+
+                                    if (typeof (eventItem["days-of-week-for-x-weeks_3"]) != "undefined") {
+                                        daysOfWeek.push("Tuesday");
+                                    }
+
+                                    if (typeof (eventItem["days-of-week-for-x-weeks_4"]) != "undefined") {
+                                        daysOfWeek.push("Wednesday");
+                                    }
+
+                                    if (typeof (eventItem["days-of-week-for-x-weeks_5"]) != "undefined") {
+                                        daysOfWeek.push("Thursday");
+                                    }
+
+                                    if (typeof (eventItem["days-of-week-for-x-weeks_6"]) != "undefined") {
+                                        daysOfWeek.push("Friday");
+                                    }
+
+                                    if (typeof (eventItem["days-of-week-for-x-weeks_7"]) != "undefined") {
+                                        daysOfWeek.push("Saturday");
+                                    }
+
+
+                                    switch (eventItem["Ending-Basis"]) {
+
+                                        case "Never":
+                                            var patternDates = $().GenerateDatesForEveryXWeeksOnYDaysEndNever(eventItem["X-Weeks"], daysOfWeek, eventItem["Start-Date"]);
+                                            break;
+
+                                        case "After a given number of occurrences":
+                                            var patternDates = $().GenerateDatesForEveryXWeeksOnYDaysEndAfterZOccurrences(eventItem["X-Weeks"], daysOfWeek, eventItem["Start-Date"], eventItem["Qty-Occurrences"]);
+                                            break;
+
+                                        case "By a date":
+                                            var patternDates = $().GenerateDatesForEveryXWeeksOnYDaysEndByDateZ(eventItem["X-Weeks"], daysOfWeek, eventItem["Start-Date"], eventItem["Ending-Date"]);
+                                            break;
+                                    }
+                                    break;
+
+
+
+
+                                case "The same day every given number of months":
+
+                                    switch (eventItem["Ending-Basis"]) {
+
+                                        case "Never":
+                                            var patternDates = $().GenerateDatesForEveryXDaysOfEveryYMonthsEndNever(eventItem["Day-of-Month-for-X-Months"], eventItem["X-Months-For-Same-Day"], eventItem["Start-Date"]);
+                                            break;
+
+                                        case "After a given number of occurrences":
+                                            var patternDates = $().GenerateDatesForEveryXDaysOfEveryYMonthsEndAfterYOccurrences(eventItem["Day-of-Month-for-X-Months"], eventItem["X-Months-For-Same-Day"], eventItem["Start-Date"], eventItem["Qty-Occurrences"]);
+                                            break;
+
+                                        case "By a date":
+                                            var patternDates = $().GenerateDatesForEveryXDaysOfEveryYMonthsEndByDateY(eventItem["Day-of-Month-for-X-Months"], eventItem["X-Months-For-Same-Day"], eventItem["Start-Date"], eventItem["Ending-Date"]);
+                                            break;
+                                    }
+                                    break;
+
+
+
+
+                                case "The same week every given number of months":
+
+                                    switch (eventItem["Ordinal-For-Day-of-Week-For-X-Months-For-Same-Week"]) {
+
+                                        case "First":
+                                            var xVar = 1;
+                                            break;
+
+                                        case "Second":
+                                            var xVar = 2;
+                                            break;
+
+                                        case "Third":
+                                            var xVar = 3;
+                                            break;
+
+                                        case "Fourth":
+                                            var xVar = 4;
+                                            break;
+
+                                    }
+
+                                    switch (eventItem["Ending-Basis"]) {
+
+                                        case "Never":
+                                            var patternDates = $().GenerateDatesForEveryXYDayOfEveryZMonthsEndNever(xVar, eventItem["Days-of-Week-For-X-Months-For-Same-Week"], eventItem["X-Months-For-Same-Week"], eventItem["Start-Date"]);
+                                            break;
+
+                                        case "After a given number of occurrences":
+                                            var patternDates = $().GenerateDatesForEveryXYDayOfEveryZMonthsEndAfterYOccurrences(xVar, eventItem["Days-of-Week-For-X-Months-For-Same-Week"], eventItem["X-Months-For-Same-Week"], eventItem["Start-Date"], eventItem["Qty-Occurrences"]);
+                                            break;
+
+                                        case "By a date":
+                                            var patternDates = $().GenerateDatesForEveryXYDayOfEveryZMonthsEndByDateY(xVar, eventItem["Days-of-Week-For-X-Months-For-Same-Week"], eventItem["X-Months-For-Same-Week"], eventItem["Start-Date"], eventItem["Ending-Date"]);
+                                            break;
+                                    }
+                                    break;
+
+
+
+
+                                case "The same day each year":
+
+                                    switch (eventItem["Ending-Basis"]) {
+
+                                        case "Never":
+                                            var patternDates = $().GenerateDatesForEveryXDayYMonthEveryYearEndNever(eventItem["Months-for-Same-Date-Each-Year"], eventItem["Date-for-Same-Date-Each-Year"], eventItem["Start-Date"]);
+                                            break;
+
+                                        case "After a given number of occurrences":
+                                            var patternDates = $().GenerateDatesForEveryXDayYMonthEveryYearEndAfterYOccurrences(eventItem["Months-for-Same-Date-Each-Year"], eventItem["Date-for-Same-Date-Each-Year"], eventItem["Start-Date"], eventItem["Qty-Occurrences"]);
+                                            break;
+
+                                        case "By a date":
+                                            var patternDates = $().GenerateDatesForEveryXDayYMonthEveryYearEndByDateY(eventItem["Months-for-Same-Date-Each-Year"], eventItem["Date-for-Same-Date-Each-Year"], eventItem["Start-Date"], eventItem["Ending-Date"]);
+                                            break;
+                                    }
+                                    break;
+
+
+
+
+                                case "The same week each year":
+
+                                    switch (eventItem["Ordinal-For-Same-Week-Each-Year"]) {
+
+                                        case "First":
+                                            var xVar = 1;
+                                            break;
+
+                                        case "Second":
+                                            var xVar = 2;
+                                            break;
+
+                                        case "Third":
+                                            var xVar = 3;
+                                            break;
+
+                                        case "Fourth":
+                                            var xVar = 4;
+                                            break;
+
+                                    }
+
+                                    switch (eventItem["Months-for-Same-Week-Each-Year"]) {
+
+                                        case "January":
+                                            var zVar = 1;
+                                            break;
+
+                                        case "February":
+                                            var zVar = 2;
+                                            break;
+
+                                        case "March":
+                                            var zVar = 3;
+                                            break;
+
+                                        case "April":
+                                            var zVar = 4;
+                                            break;
+
+                                        case "May":
+                                            var zVar = 5;
+                                            break;
+
+                                        case "June":
+                                            var zVar = 6;
+                                            break;
+
+                                        case "July":
+                                            var zVar = 7;
+                                            break;
+
+                                        case "August":
+                                            var zVar = 8;
+                                            break;
+
+                                        case "September":
+                                            var zVar = 9;
+                                            break;
+
+                                        case "October":
+                                            var zVar = 10;
+                                            break;
+
+                                        case "November":
+                                            var zVar = 11;
+                                            break;
+
+                                        case "December":
+                                            var zVar = 12;
+                                            break;
+
+                                    }
+
+                                    switch (eventItem["Ending-Basis"]) {
+
+                                        case "Never":
+                                            var patternDates = $().GenerateDatesForEveryXYDayZMonthEveryYearEndNever(xVar, eventItem["Days-of-Week-For-Same-Week-Each-Year"], zVar, eventItem["Start-Date"]);
+                                            break;
+
+                                        case "After a given number of occurrences":
+                                            var patternDates = $().GenerateDatesForEveryXYDayZMonthEveryYearEndAfterYOccurrences(xVar, eventItem["Days-of-Week-For-Same-Week-Each-Year"], zVar, eventItem["Start-Date"], eventItem["Qty-Occurrences"]);
+                                            break;
+
+                                        case "By a date":
+                                            var patternDates = $().GenerateDatesForEveryXYDayZMonthEveryYearEndByDateY(xVar, eventItem["Days-of-Week-For-Same-Week-Each-Year"], zVar, eventItem["Start-Date"], eventItem["Ending-Date"]);
+                                            break;
+                                    }
+                                    break;
+
+                            } // end generation of patternDates
+
+
+
+                            // get the list of the dates to be skipped
+                            var comparisonBank = [];
+
+                            $(eventItem["datesToSkip"]).each(function (i, date) {
+                                comparisonBank.push(date.slice(0, 10));
+                            });
+
+                            $(patternDates).each(function (i, date) {
+
+                                var isoDate = $().ReturnFormattedDateTime(date, "MM/DD/YYYY", "YYYY-MM-DD", 0);
+
+                                if (comparisonBank.length == 0 || comparisonBank.indexOf(isoDate) == -1) {
+
+                                    var isoStartDatetime = isoDate + eventItem["time-storage_Start-Time"].slice(10, 19);
+                                    var isoEndDatetime = isoDate + eventItem["time-storage_End-Time"].slice(10, 19)
+                                    var formattedStartTime = $().ReturnFormattedDateTime(isoStartDatetime, "YYYY-MM-DDTHH:mm:ss", "h:mma", 0);
+                                    formattedStartTime = formattedStartTime.slice(0, formattedStartTime.length - 1);
+                                    var formattedEndTime = $().ReturnFormattedDateTime(isoEndDatetime, "YYYY-MM-DDTHH:mm:ss", "h:mma", 0);
+                                    formattedEndTime = formattedEndTime.slice(0, formattedEndTime.length - 1);
+                                    var formattedDate = $().ReturnFormattedDateTime(date, "MM/DD/YYYY", "ddd, M/D/YY", 0);
+
+                                    var thisEvent = {
+                                        "eventID": eventItem["ID"],
+                                        "title": formattedStartTime + " | " + eventItem["Event-Title"],
+                                        "contactLinkedName": eventItem.contactLinkedName,
+                                        "formattedStartTime": formattedStartTime,
+                                        "formattedEndTime": formattedEndTime,
+                                        "formattedDate": formattedDate,
+                                        "start": isoStartDatetime,
+                                        "end": isoEndDatetime,
+                                        "editURL": mData.uriRequestAlternate + "?requestID=" + eventItem["ID"] + "&date=" + isoDate + "&returnURI=" + window.location.href,
+                                    };
+
+
+                                    $(["Event-Location", "Event-Count", "Event-Notes"]).each(function (i, o) {
+                                        if (typeof (eventItem[o]) != "undefined" && eventItem[o].trim() != "") {
+                                            var label = o.slice(6).toLowerCase();
+                                            thisEvent[label] = eventItem[o];
+                                        }
+                                    });
+
+                                    allEvents.push(thisEvent);
+                                }
+                            });
+
+
+                            $(eventItem["datesToAdd"]).each(function (i, additionalDate) {
+
+                                var isoDate = additionalDate["Event-Date"].slice(0, 10);
+
+                                var isoStartDatetime = isoDate + additionalDate["time-storage_Start-Time"].slice(10, 19);
+                                var isoEndDatetime = isoDate + additionalDate["time-storage_End-Time"].slice(10, 19)
+                                var formattedStartTime = $().ReturnFormattedDateTime(isoStartDatetime, "YYYY-MM-DDTHH:mm:ss", "h:mma", 0);
+                                formattedStartTime = formattedStartTime.slice(0, formattedStartTime.length - 1);
+                                var formattedEndTime = $().ReturnFormattedDateTime(isoEndDatetime, "YYYY-MM-DDTHH:mm:ss", "h:mma", 0);
+                                formattedEndTime = formattedEndTime.slice(0, formattedEndTime.length - 1);
+                                var formattedDate = $().ReturnFormattedDateTime(isoDate, null, "ddd, M/D/YY", 0);
+
+                                var thisEvent = {
+                                    "eventID": eventItem["ID"],
+                                    "title": formattedStartTime + " | " + eventItem["Event-Title"],
+                                    "contactLinkedName": eventItem.contactLinkedName,
+                                    "formattedStartTime": formattedStartTime,
+                                    "formattedEndTime": formattedEndTime,
+                                    "formattedDate": formattedDate,
+                                    "start": isoStartDatetime,
+                                    "end": isoEndDatetime,
+                                    "editURL": mData.uriRequestAlternate + "?requestID=" + eventItem["ID"] + "&date=" + isoDate + "&exceptionID=" + this["exceptionID"] + "&returnURI=" + window.location.href,
+                                };
+
+                                $(["Event-Location", "Event-Count", "Event-Notes"]).each(function (i, o) {
+                                    if (typeof (additionalDate[o]) != "undefined" && additionalDate[o].trim() != "") {
+                                        var label = o.slice(6).toLowerCase();
+                                        thisEvent[label] = additionalDate[o];
+                                    }
+                                });
+
+                                allEvents.push(thisEvent);
+                            });
+
+                        }
+
+                    });
+
+                    console.log('m10');
+                    console.log('allEvents');
+                    console.log(allEvents);
+
+
+                    console.log('viewToUse');
+                    console.log(viewToUse);
+
+                    console.log('dateToUse');
+                    console.log(dateToUse);
+
+
+                    $("div#museum-event-calendar-container").fullCalendar({
+                        allDayDefault: true,
+                        lazyFetching: false,
+                        eventOrder: "start",
+                        header: {
+                            // right and center are reversed, because our CSS implements obedience to the accessibility imperative that DOM elements exist 
+                            //      (and are thus encountered by assistive technologies) in the same order in which they're presented to sighted users
+                            left: "",
+                            right: "prevYear,prev,title,next,nextYear",
+                            center: "today,basicDay,basicWeek,month"
+                        },
+                        defaultView: viewToUse,
+                        defaultDate: dateToUse,
+                        dayClick: function (date, jsEvent, view) {
+                            location.href = location.protocol + "//" + location.hostname + location.pathname + "?view=basicDay&date=" + $(this).attr("data-date");
+                        },
+                        theme: true,
+                        eventClick: function (event, jsEvent, view) {
+                            
+                            // close the dialog box
+                            $("div#dialog").dialog("close");
+
+                            // populate the dialog box
+                            var dialogTitleBarContent = "<h2 class=\"ui-dialog-buyout-title-date-and-time-range\"> \n" +
+                                                        "   <span class=\"ui-dialog-buyout-title-date\">" + event.formattedDate + "</span> \n" +
+                                                        "   <span class=\"ui-dialog-title-buyout-start-time\">" + event.formattedStartTime + "</span> \n" +
+                                                        "   <span class=\"ui-dialog-title-buyout-times-separator\"> &ndash; </span> \n" +
+                                                        "   <span class=\"ui-dialog-title-buyout-end-time\">" + event.formattedEndTime + "</span> \n" +
+                                                        "</h2> \n";
+
+                            if (typeof (event.location) != "undefined") {
+                                dialogTitleBarContent += "<p class=\"ui-dialog-title-buyout-location\">" + event.location + "</p> \n";
+                            }
+
+
+
+                            $("div.ui-dialog-titlebar span.ui-dialog-title").html(dialogTitleBarContent);
+
+                            var slicedTitle = StrInStr(event.title, " ").slice(3);
+                            var dialogBodyContent = "<p class=\"ui-dialog-buyout-title\">" + slicedTitle + "</p> \n" +
+                                                    "<ul> \n";
+                                                    
+                            $(["count", "notes"]).each(function (i, o) {
+                                if (typeof (event[o]) != "undefined") {
+                                    dialogBodyContent += "	<li class=\"event-" + o + "\">" + $().ReturnStringWithInitialCap(o) + ": " + event[o] + "</li>";
+                                }
+                            });
+                            dialogBodyContent +=    "	<li class=\"event-contact\">Contact: " + event.contactLinkedName + "</li> \n" +
+                                                    "	<li class=\"event-id\">Event ID: " + event.eventID + "</li>" +
+                                                    "</ul> \n" +
+                                                    "<a class=\"ui-dialog-button\" href=\"" + event.editURL + "\">Edit / Delete</a>";
+
+                            $("div#dialog").html(dialogBodyContent);
+
+                            // position the dialog box
+                            $("div#dialog").dialog("option", "position", { my: "left bottom", at: "right top", of: jsEvent });
+
+                            // open the dialog box
+                            $("div#dialog").dialog("open");
+                        },
+                        events: allEvents
+
+                    });
+                                                        // "newItem", "new request", mData.formURI + '?returnURI=' + mData.returnURI, "", "button_swf-new-request-with-datatable"
+                    var spButtons = $().ReturnButtonLink("newItem", "new event", "/sites/mwec/SitePages/Event.aspx", "", "button_swf-new-event-with-timeline") +
+                                    $().ReturnButtonLink("goForward", "list view", "/sites/mwec/SitePages/List%20View.aspx", "", "button_alternate-view-with-timeline");
+
+                    $("div.fc-toolbar div.fc-left").append(spButtons);
+
+                    $("div.ui-dialog").attr("id", "museum-calendar-item-dialog");
+
+                    $("button.ui-button, a.ui-button, a.ui-dialog-button").on("click", function () {
+                        $("div#dialog").dialog("close");
+                    });
+
+                    $("div.fc-toolbar, div.fc-view-container").fadeTo(1000, 1);
+
+                }
+            });
+
+        } else {
+            $().RenderMaintenanceMessage();
+        }
+    });
+
+</script>
+
+
+
+<!-- all content -->
+<div id="all-content-container">
+    <div id="museum-event-calendar-container">
+    </div>
+</div>
+<div id="dialog">
+</div>

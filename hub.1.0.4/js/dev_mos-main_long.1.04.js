@@ -1804,9 +1804,9 @@
 
 
 
-	$.fn.UserNeeedsAlternateOverviewScreen = function () {
+	$.fn.UserNeedsAlternateOverviewScreen = function () {
 
-		var userNeeedsAlternateOverviewScreen = 0;
+		var userNeedsAlternateOverviewScreen = 0;
 
 		switch (mData.requestName) {
 			case "GPC Initial Concept Approval":
@@ -1814,7 +1814,7 @@
 					var gpcGroups = $().ReturnGPCGroups();
 					$.each(gpcGroups.InitialConceptViewAccess, function (i, person) {
 						if (person.accountLong === uData.account) {
-							userNeeedsAlternateOverviewScreen = "gpcInitialConceptApprovalViewer";
+							userNeedsAlternateOverviewScreen = "gpcInitialConceptApprovalViewer";
 						}
 					});
 				}
@@ -1824,97 +1824,97 @@
 					var gpcGroups = $().ReturnGPCGroups();
 					$.each(gpcGroups.SubmissionApprovalViewAccess, function (i, person) {
 						if (person.accountLong === uData.account) {
-							userNeeedsAlternateOverviewScreen = "gpcSubmissionApprovalViewer";
+							userNeedsAlternateOverviewScreen = "gpcSubmissionApprovalViewer";
 						}
 					});
 				}
 				break;
 			case "Refer a Friend":
 				if (uData.isAdmin === 0) {
-					userNeeedsAlternateOverviewScreen = "myReferrals";
+					userNeedsAlternateOverviewScreen = "myReferrals";
 				} else {
-					userNeeedsAlternateOverviewScreen = "adminReferrals";
+					userNeedsAlternateOverviewScreen = "adminReferrals";
 				}
 				break;
 
 			case "Event AV":
 				if (uData.isAdmin === 1) {
-					userNeeedsAlternateOverviewScreen = "adminEventAV";
+					userNeedsAlternateOverviewScreen = "adminEventAV";
 				}
 				break;
 			case "GSE Configuration":
 				if (uData.roles.indexOf("gseHRAdmin") > -1) {
-					userNeeedsAlternateOverviewScreen = "gseStatsHRAdmin";
+					userNeedsAlternateOverviewScreen = "gseStatsHRAdmin";
 				}
 				break;
 			case "GSE Job":
 				if (uData.roles.indexOf("gseHRAdmin") > -1) {
-					userNeeedsAlternateOverviewScreen = "gseJobsHRAdmin";
+					userNeedsAlternateOverviewScreen = "gseJobsHRAdmin";
 				} else if (uData.roles.indexOf("gseJobAdmin") > -1 && uData.roles.indexOf("gseManager") == -1) {
-					userNeeedsAlternateOverviewScreen = "gseJobsJobAdmin";
+					userNeedsAlternateOverviewScreen = "gseJobsJobAdmin";
 				} else if (uData.roles.indexOf("gseManager") > -1) {
-					userNeeedsAlternateOverviewScreen = "gseJobsManager";
+					userNeedsAlternateOverviewScreen = "gseJobsManager";
 				}
 				break;
 			case "GSE Schedule":
 				if (GetParamFromUrl(location.search, "f") === "cal") {
 					if (uData.roles.indexOf("gseHRAdmin") > -1) {
-						userNeeedsAlternateOverviewScreen = "gseSchedulesCalendarHRAdmin";
+						userNeedsAlternateOverviewScreen = "gseSchedulesCalendarHRAdmin";
 					} else if (uData.roles.indexOf("gseJobAdmin") > -1 && uData.roles.indexOf("gseManager") == -1) {
-						userNeeedsAlternateOverviewScreen = "gseSchedulesCalendarJobAdmin";
+						userNeedsAlternateOverviewScreen = "gseSchedulesCalendarJobAdmin";
 					} else if (uData.roles.indexOf("gseManager") > -1) {
-						userNeeedsAlternateOverviewScreen = "gseSchedulesCalendarManager";
+						userNeedsAlternateOverviewScreen = "gseSchedulesCalendarManager";
 					} else {
-						userNeeedsAlternateOverviewScreen = "gseSchedulesCalendarStaff";
+						userNeedsAlternateOverviewScreen = "gseSchedulesCalendarStaff";
 					}
 				} else {
 					if (uData.roles.indexOf("gseHRAdmin") > -1) {
-						userNeeedsAlternateOverviewScreen = "gseSchedulesListHRAdmin";
+						userNeedsAlternateOverviewScreen = "gseSchedulesListHRAdmin";
 					} else if (uData.roles.indexOf("gseJobAdmin") > -1 && uData.roles.indexOf("gseManager") == -1) {
-						userNeeedsAlternateOverviewScreen = "gseSchedulesListJobAdmin";
+						userNeedsAlternateOverviewScreen = "gseSchedulesListJobAdmin";
 					} else if (uData.roles.indexOf("gseManager") > -1) {
-						userNeeedsAlternateOverviewScreen = "gseSchedulesListManager";
+						userNeedsAlternateOverviewScreen = "gseSchedulesListManager";
 					} else {
-						userNeeedsAlternateOverviewScreen = "gseSchedulesListStaff";
+						userNeedsAlternateOverviewScreen = "gseSchedulesListStaff";
 					}
 				}
 				break;
 			case "GSE Signup":
 				if (uData.roles.indexOf("gseHRAdmin") > -1) {
-					userNeeedsAlternateOverviewScreen = "gseSignupsHRAdmin";
+					userNeedsAlternateOverviewScreen = "gseSignupsHRAdmin";
 				} else if (uData.roles.indexOf("gseJobAdmin") > -1 && uData.roles.indexOf("gseManager") == -1) {
-					userNeeedsAlternateOverviewScreen = "gseSignupsJobAdmin";
+					userNeedsAlternateOverviewScreen = "gseSignupsJobAdmin";
 				} else if (uData.roles.indexOf("gseManager") > -1) {
-					userNeeedsAlternateOverviewScreen = "gseSignupsManager";
+					userNeedsAlternateOverviewScreen = "gseSignupsManager";
 				} else {
-					userNeeedsAlternateOverviewScreen = "gseSignupsStaff";
+					userNeedsAlternateOverviewScreen = "gseSignupsStaff";
 				}
 				break;
 
 
 			case "Buyout Calendar":
 				if (GetParamFromUrl(location.search, "f") === "cal") {
-					userNeeedsAlternateOverviewScreen = "mwBuyoutCalendar";
+					userNeedsAlternateOverviewScreen = "mwBuyoutCalendar";
 				} else {
-					userNeeedsAlternateOverviewScreen = "mwBuyoutList";
+					userNeedsAlternateOverviewScreen = "mwBuyoutList";
 				}
 				break;
 			case "Museum-wide Event Calendar":
 				if (GetParamFromUrl(location.search, "f") === "cal") {
-					userNeeedsAlternateOverviewScreen = "mwEventCalendar";
+					userNeedsAlternateOverviewScreen = "mwEventCalendar";
 				} else {
-					userNeeedsAlternateOverviewScreen = "mwEventList";
+					userNeedsAlternateOverviewScreen = "mwEventList";
 				}
 				break;
 			case "Product Timeline":
 				if (GetParamFromUrl(location.search, "f") === "tl") {
-					userNeeedsAlternateOverviewScreen = "mwProductsTimeline";
+					userNeedsAlternateOverviewScreen = "mwProductsTimeline";
 				} else {
-					userNeeedsAlternateOverviewScreen = "mwProductsList";
+					userNeedsAlternateOverviewScreen = "mwProductsList";
 				}
 				break;
 		}
-		return userNeeedsAlternateOverviewScreen;
+		return userNeedsAlternateOverviewScreen;
 	};
 
 
@@ -7404,14 +7404,6 @@
 		} else if (type === "mwProductsTimeline") {
 			$().RenderOverviewScreenButtons(oData.mwProductsTimeline.buttons);
 			$().RenderProductTimeline();
-
-
-
-
-
-
-
-
 
 		}
 
@@ -26819,7 +26811,7 @@
 
 		console.log(uData.roles);
 
-		uData.alternateOverviewScreen = $().UserNeeedsAlternateOverviewScreen();
+		uData.alternateOverviewScreen = $().UserNeedsAlternateOverviewScreen();
 
 		// lifespan of maintenance mode flag, in ms; 
 		// 		i.e., we'll check for maintenance mode again after this many milliseconds
@@ -26862,7 +26854,7 @@
 		// wait for all data retrieval / setting promises to complete (pass or fail) 
 		$.when.apply($, allDataRetrievalAndSettingPromises).always(function () {
 
-			console.log('using dev_mos-main_long.1.04 m1');
+			console.log('using dev_mos-main_long.1.04 m3');
 
 			$().ConfigureAndShowScreenContainerAndAllScreens();
 		});

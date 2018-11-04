@@ -133,55 +133,21 @@
 
 	var fData = {
 		'autoTrackSubmissionAndCancellation': 1,
-		// 'bypassNormalDataSaving': 1,
-		// 'customDataSavingFunction': 'ReturnGSESchedulesSubmissionValuePairArrayTest',
-		/*'autoProcessApprovals': 1,
-		'autoProcessAssignments': 1,
-		'autoDateCompletion': 1,
-		'approvalStmt': 'Approval indicates that the above access should be granted',
-		'newRequestConditionalConfirmationAdditions': [
-			{
-				'condition': function () {
-					return !($('input#has-computer_has-computer').is(':checked')) ||
-						$('input#needs-reg-vpn_needsregvpn').is(':checked') ||
-						$('input#needs-fundraising_needsfundraising').is(':checked');
-				},
-				'addition': '<h2>Please Note</h2>'
-			}, {
-				'condition': function () { return !($('input#has-computer_has-computer').is(':checked')); },
-				'addition': '<div class="single-message"><p>If a computer needs to be purchased, a signing manager needs to ' +
-							'email the Help Desk with an account code for the purchase of a new ' +
-							'machine. Please also indicate any specialty software other than Office ' +
-							'or other equipment that needs to be purchased.</p>' +
-							'<p><a href="' +
-							'mailto:ithelp@mos.org?subject=computer purchase needed&body=Please charge to the following account:' +
-							'">Start the email now</a></p></div>'
-			}, {
-				'condition': function () { return $('input#needs-reg-vpn_needsregvpn').is(':checked'); },
-				'addition': '<div class="single-message"><p>Regular VPN Access also requires <a target="_blank" '+
-							'href="https://bmos.sharepoint.com/sites/iit-vpn-access/SitePages/My%20VPN%20Access%20Requests.aspx">' +
-							'this additional request</a>.</p>'
-			}, {
-				'condition': function () { return $('input#needs-fundraising_needsfundraising').is(':checked'); },
-				'addition': '<div class="single-message"><p>Fundraising Database Access also requires <a target="_blank" ' +
-							'href="https://bmos.sharepoint.com/AdvDMSFiles/Fundraising-Database-Access-Request.doc">' +
-							'this additional request</a>.</p>'
-			}
-		],*/
+		'autoPopulateEventDeparment': 1,
+		// 'autoAddLocationToList': {
+		// 	'relevantBooleanID': 'add-location-boolean_add',
+		// 	'relevantSelectID': "Event-Location",
+		// 	'relevantAdditionID': 'Location-to-Add',
+		// 	'listName': 'MuseumLocations',
+		// 	'listWebURL': 'https://bmos.sharepoint.com/sites/hubprod'
+		// },
+		'autoTrackKeepingRemovingExceptionalEventOccurrences': { 
+			'relevantBooleanID': 'change-pattern-of-repeating-dates_yes' 
+		},
 		'standardElementGroups': {
-			'standardThisRequestAndRequesterElements': 1,
-			'standardAdminElements': 1,
-			/*'standardApprovalElements': 1,
-			'standardAdminAssignmentCompletionElements': {
-				'changeRequestStatus': [
-					{ "value": "Complete", "display": "All work for this request has been completed" },
-					{ "value": "Cancel", "display": "This request has been cancelled" }
-				]
-			},*/
 			'standardButtonElements': 1,
 			'standardComponentGrpAdminOnlyElements': 1
 		},
-		'testNotifications': 1,
 		'versioningMatters': 0,
 
 
@@ -191,11 +157,391 @@
 
 		'uniqueElements': [
 			{
-				'elementType': "markup",
-				'tag': "h2",
-				'content': "Files",
-				'begin': 1,
-				'end': 1
+				"elementType": "markup",
+				"tag": "div",
+				"htmlID": "print-to-screen",
+				"begin": 1,
+				"end": 1
+			}, {
+				"elementType": "markup",
+				"tag": "div",
+				"htmlClass": "label-and-control",
+				"content": '   <div class="label"></div>' +
+					'   <div class="field-type-indication"><span class="field-type-indicator field-required"><span class="message message-required"></span></span></div>' +
+					'   <div class="control">= required field</div>',
+				"begin": 1,
+				"end": 1
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "Request ID",
+				"labelContent": "Event ID",
+				"hideForNonAdmin": [""],
+				"hideForAdmin": [""],
+				"disabledForNonAdmin": ["", "Submitted", "Cancelled"],
+				"disabledForAdmin": ["", "Submitted", "Cancelled"]
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "Request Date",
+				"labelContent": "Event Created",
+				"listFieldName": "RequestDate",
+				"friendlyFormatOnLoad": { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 },
+				"isoFormatOnSubmit": { 'incomingFormat': null, 'returnFormat': null, 'determineYearDisplayDynamically': null },
+				"hideForNonAdmin": [""],
+				"hideForAdmin": [""],
+				"disabledForNonAdmin": ["", "Submitted", "Cancelled"],
+				"disabledForAdmin": ["", "Submitted", "Cancelled"]
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "Legacy Event Creation Date",
+				"labelContent": "Event Created",
+				"friendlyFormatOnLoad": { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 },
+				"isoFormatOnSubmit": { 'incomingFormat': null, 'returnFormat': null, 'determineYearDisplayDynamically': null },
+				"hideForNonAdmin": ["", "Submitted", "Cancelled"],
+				"hideForAdmin": ["", "Submitted", "Cancelled"],
+				"disabledForNonAdmin": ["", "Submitted", "Cancelled"],
+				"disabledForAdmin": ["", "Submitted", "Cancelled"],
+				"helpNotes": [
+					{
+						"text": "This event was migrated from Quark, and this date is approximate.",
+						"htmlID": "legacy-event-creation-date_help-note",
+						"urgent": 0,
+					}
+				],
+
+
+
+
+
+
+
+
+
+
+			}, {
+				"elementType": "field",
+				"controlType": "select",
+				"fieldName": "Self or Other",
+				"labelContent": "If someone has questions, talk to you or someone else?",
+				"setOptions": [
+					{ "value": "Self", "display": "Talk to me" },
+					{ "value": "Other", "display": "Talk to someone else" }
+				],
+				"requiredForNonAdmin": [""],
+				"requiredForAdmin": [""],
+				"hideForNonAdmin": ["Submitted", "Cancelled"],
+				"hideForAdmin": ["Submitted", "Cancelled"],
+				"disabledForNonAdmin": ["Submitted", "Cancelled"],
+				"disabledForAdmin": ["Submitted", "Cancelled"],
+				"onChange": [
+					{ "thisFieldEquals": ["Self"], "hide": [{ "fieldName": "Requested For" }], "optional": [{ "fieldName": "Requested For", "type": "peoplepicker" }], "set": [{ "fieldName": "Requested For", "type": "peoplePicker", "value": "currentUser" }] },
+					{ "thisFieldEquals": ["Other"], "show": [{ "fieldName": "Requested For" }], "require": [{ "fieldName": "Requested For", "type": "peoplepicker" }], "set": [{ "fieldName": "Requested For", "type": "peoplePicker", "value": "" }] }
+				]
+			}, {
+				"elementType": "field",
+				"controlType": "peoplePicker",
+				"fieldName": "Requested For",
+				"labelContent": "Contact",
+				"listFieldName": "RequestedFor",
+				"yieldsViewPermissions": 1,
+				"hideForNonAdmin": [""],
+				"hideForAdmin": [""],
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "Legacy Contact",
+				"labelContent": "Contact",
+				"hideForNonAdmin": ["", "Submitted", "Cancelled"],
+				"hideForAdmin": ["", "Submitted", "Cancelled"],
+				"disabledForNonAdmin": ["", "Submitted", "Cancelled"],
+				"disabledForAdmin": ["", "Submitted", "Cancelled"],
+				"helpNotes": [
+					{
+						"text": "This event was migrated from Quark, and the contact person is no longer with the Museum. To change the contact, remove this event and create a new one.",
+						"htmlID": "legacy-contact_help-note",
+						"urgent": 0,
+					}
+				],
+			}, {
+				"elementType": "field",
+				"controlType": "check",
+				"fieldName": "Requester Cancellation",
+				"choiceSetLabel": "Remove",
+				"choices": [
+					{
+						"value": "cancel",
+						"display": "Yes, I wish to remove this event from the calendar"
+					}
+				],
+				"hideForNonAdmin": ["", "Validator Picked Up", "Loaned", "Completed", "Disapproved", "Cancelled"],
+				"hideForAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "Pending Approval", "Approved", "Loaned", "Completed", "Disapproved", "Cancelled"],
+				"disabledForNonAdmin": ["Completed", "Disapproved", "Cancelled"],
+				"disabledForAdmin": ["Completed", "Disapproved", "Cancelled"]
+
+
+
+				// about the requester
+			}, {
+				"elementType": "markup",
+				"tag": "div",
+				"begin": 1,
+				"hideForNonAdmin": ["", "Submitted", "Cancelled"],
+				"hideForAdmin": ["", "Submitted", "Cancelled"],
+			}, {
+				"elementType": "markup",
+				"tag": "h2",
+				"content": "About the Event Creator",
+				"begin": 1,
+				"end": 1
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "Requester Name",
+				"labelContent": "Name",
+				"disabledForNonAdmin": ["", "Submitted", "Cancelled"],
+				"disabledForAdmin": ["", "Submitted", "Cancelled"]
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "Requester Department",
+				"labelContent": "Department",
+				"disabledForNonAdmin": ["", "Submitted", "Cancelled"],
+				"disabledForAdmin": ["", "Submitted", "Cancelled"]
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "Requester Email",
+				"labelContent": "Email",
+				"disabledForNonAdmin": ["", "Submitted", "Cancelled"],
+				"disabledForAdmin": ["", "Submitted", "Cancelled"]
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "Requester Phone",
+				"labelContent": "Phone",
+				"disabledForNonAdmin": ["", "Submitted", "Cancelled"],
+				"disabledForAdmin": ["", "Submitted", "Cancelled"]
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "Requester Account",
+				"labelContent": "Account",
+				"yieldsViewPermissions": 1,
+				"hideForNonAdmin": ["", "Submitted", "Cancelled"],
+				"hideForAdmin": ["", "Submitted", "Cancelled"],
+				"disabledForNonAdmin": ["", "Submitted", "Cancelled"],
+				"disabledForAdmin": ["", "Submitted", "Cancelled"]
+			}, {
+				"elementType": "markup",
+				"tag": "div",
+				"end": 1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			}, {
+				'elementType': 'field',
+				'controlType': 'text',
+				'fieldName': 'Event Title',
+				'labelContent': 'Title',
+				"listFieldName": "Title",
+				"requiredForNonAdmin": [""],
+				"requiredForAdmin": [""],
+			}, {
+				'elementType': 'field',
+				'controlType': 'text',
+				'fieldName': 'Event Location',
+				"listFieldName": "EventLocation",
+				'labelContent': 'Location',
+			/* }, {
+				'elementType': 'field',
+				'controlType': 'select',
+				'fieldName': 'Event Location',
+				"listFieldName": "EventLocation",
+				'labelContent': 'Location',
+				'loadOptions': {
+					'listName': 'MuseumLocations',
+					'displayField': 'Title',
+					'valueField': 'Title',
+					'orderField': 'Title'
+				}
+			}, {
+				"elementType": "field",
+				"controlType": "check",
+				"fieldName": "Add Location Boolean",
+				"choiceSetLabel": "Add a Location",
+				"choices": [
+					{
+						"value": "add",
+						"display": "Yes, I need to add a location to the list"
+					}
+				],
+				"onChange": [
+					{ "thisFieldEquals": ["add"], "show": [{ "divID": "label-and-control_Location-to-Add" }], "require": [{ "fieldName": "Location to Add", "type": "text" }], "set": [{ "fieldName": "Event Location", "type": "select", "optionIndex": 0 }] }
+				] */
+			}, {
+				'elementType': 'field',
+				'controlType': 'text',
+				'fieldName': 'Location to Add',
+				'labelContent': 'Location to Add',
+				"hideForNonAdmin": ["", "Submitted", "Cancelled"],
+				"hideForAdmin": ["", "Submitted", "Cancelled"],
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			}, {
+				"elementType": "field",
+				"controlType": "select",
+				"fieldName": "Event Department",
+				"listFieldName": "EventDepartment",
+				"labelContent": "Department",
+				'loadOptions': {
+					'function': 'LoadDepartmentSelectOptions',
+					// 'params': {
+					// 	'otherOptionPosition': 'top'
+					// }
+				},
+
+
+
+			}, {
+				'elementType': 'field',
+				'controlType': 'text',
+				'fieldName': 'Event Count',
+				"listFieldName": "EventCount",
+				'labelContent': 'Count',
+			}, {
+				'elementType': 'field',
+				'controlType': 'textarea',
+				'fieldName': 'Event Notes',
+				'labelContent': 'Notes',
+			}, {
+				'elementType': 'field',
+				'controlType': 'time',
+				'fieldName': 'Start Time',
+				'labelContent': 'Start Time',
+				"requiredForNonAdmin": [""],
+				"requiredForAdmin": [""],
+			}, {
+				'elementType': 'field',
+				'controlType': 'time',
+				'fieldName': 'End Time',
+				'labelContent': 'End Time',
+				"requiredForNonAdmin": [""],
+				"requiredForAdmin": [""],
+			}, {
+				'elementType': 'field',
+				'controlType': 'radio',
+				'fieldName': 'Individual or Pattern',
+				'choiceSetLabel': 'Use Individual Dates or a Pattern of Repeating Dates?',
+				'choices': [
+					{
+						'value': 'individual',
+						'display': 'Individual Dates'
+					}, {
+						'value': 'pattern',
+						'display': 'Pattern of Repeating Dates'
+					}
+				],
+				"requiredForNonAdmin": [""],
+				"requiredForAdmin": [""],
+				'onChange': [
+					{ 'thisFieldEquals': ['individual'], 'show': [{ 'divID': 'simple-dates' }], 'require': [{ 'fieldName': 'Event Date', 'type': 'datepicker', 'repeatable': 1 }], 'hide': [{ 'divID': 'pattern-and-range' }], 'optional': [{ 'fieldName': 'Pattern Basis', 'type': 'select' }, { 'fieldName': 'Start Date', 'type': 'datePicker' }, { 'fieldName': 'Ending Basis', 'type': 'select' }] },
+					{ 'thisFieldEquals': ['pattern'], 'show': [{ 'divID': 'pattern-and-range' }], 'require': [{ 'fieldName': 'Pattern Basis', 'type': 'select' }, { 'fieldName': 'Start Date', 'type': 'datePicker' }, { 'fieldName': 'Ending Basis', 'type': 'select' }], 'hide': [{ 'divID': 'simple-dates' }], 'optional': [{ 'fieldName': 'Event Date', 'type': 'datepicker', 'repeatable': 1 }] },
+				],
+
+
+
+
+
+			}, {
+				'elementType': 'field',
+				'controlType': 'check',
+				'fieldName': 'Change Pattern of Repeating Dates',
+				'choiceSetLabel': 'Change Pattern of Repeating Dates',
+				'choices': [
+					{
+						'value': 'yes',
+						'display': 'Yes, I want to change the pattern'
+					}
+				],
+				'hideForNonAdmin': ["", "Cancelled"],
+				'hideForAdmin': ["", "Cancelled"],
+				'helpNotes': [
+					{
+						'text': "This will cause any changes to specific occurrences in the series to be cancelled.",
+						'htmlID': "pattern-change-warning",
+					}, {
+						'text': "If there were changes to specific occurrences in the series, the changes will be cancelled and those occurrences will match the series again.",
+						'htmlID': "pattern-change-urgent-warning",
+						'emphasis': 1,
+						'hideForNonAdmin': ["", "Submitted", "Cancelled"],
+						'hideForAdmin': ["", "Submitted", "Cancelled"]
+					}
+				],
+				'onChange': [
+					{
+						'thisFieldIsChecked': 1,
+						'disable': [{ 'fieldName': 'Change Pattern of Repeating Dates', 'inputIDs': ['change-pattern-of-repeating-dates_yes'] }],
+						'enable': [
+							{ 'fieldName': 'Pattern Basis' },
+							{ 'fieldName': 'X Days' },
+							{ 'fieldName': 'X Weeks' },
+							{
+								'fieldName': 'Days of Week for X Weeks', 'inputIDs': [
+									'days-of-week-for-x-weeks_1',
+									'days-of-week-for-x-weeks_2',
+									'days-of-week-for-x-weeks_3',
+									'days-of-week-for-x-weeks_4',
+									'days-of-week-for-x-weeks_5',
+									'days-of-week-for-x-weeks_6',
+									'days-of-week-for-x-weeks_7',
+								]
+							},
+							{ 'fieldName': 'X Months For Same Day' },
+							{ 'fieldName': 'Day of Month for X Months' },
+							{ 'fieldName': 'X Months For Same Week' },
+							{ 'fieldName': 'Ordinal and Day of Week For X Months For Same Week', 'selectIDs': ['Ordinal-For-Day-of-Week-For-X-Months-For-Same-Week', 'Days-of-Week-For-X-Months-For-Same-Week'] },
+							{ 'fieldName': 'Month and Date for Same Date Each Year', 'selectIDs': ['Months-for-Same-Date-Each-Year'], 'inputIDs': ['Date-for-Same-Date-Each-Year'] },
+							{ 'fieldName': 'Ordinal and Day of Week For Same Week Each Year', 'selectIDs': ['Ordinal-For-Same-Week-Each-Year', 'Days-of-Week-For-Same-Week-Each-Year'] },
+							{ 'fieldName': 'Months for Same Week Each Year' },
+							{ 'fieldName': 'Start Date' },
+							{ 'fieldName': 'Ending Basis' },
+							{ 'fieldName': 'Qty Occurrences' },
+							{ 'fieldName': 'Ending Date' },
+						],
+						'show': [{ 'noteID': "pattern-change-urgent-warning" }],
+						'hide': [{ 'noteID': "pattern-change-warning" }]
+					},
+				],
+
+
 
 
 
@@ -205,65 +551,32 @@
 				'elementType': 'markup',
 				'tag': 'div',
 				'begin': 1,
-				'htmlID': 'attachments',
+				'htmlID': 'simple-dates',
 				'htmlClass': 'repeating-content-container',
-				// 'hideForNonAdmin': ['Submitted','Completed', 'Cancelled'],
-				// 'hideForAdmin': ['Submitted','Completed', 'Cancelled'],
+				'hideForNonAdmin': ["", "Submitted", "Cancelled"],
+				'hideForAdmin': ["", "Submitted", "Cancelled"]
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
 				'begin': 1,
-				'htmlID': 'attachment',
+				'htmlID': 'simple-date',
 				'htmlClass': 'repeat-container',
 				'repeatable': 1
 			}, {
 				'elementType': 'field',
-				'controlType': 'file',
-				'requestVersion': 1,
-				'fieldName': 'Attachment',
-				'labelContent': 'Attachment',
-				'editableForNonAdmin': [''],
-				'editableForAdmin': [''],
-
-
+				'controlType': 'datePicker',
+				'fieldName': 'Event Date',
+				'labelContent': 'Date',
+				'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 0 },
+				'isoFormatOnSubmit': { 'incomingFormat': 'MMMM D, YYYY', 'returnFormat': null, 'determineYearDisplayDynamically': null },
 			}, {
-				'elementType': 'field',
-				'controlType': 'mosFile',
-				'requestVersion': 2,
-				'fieldName': 'Attachment Two',
-				'labelContent': 'Attachment',
-				'populatableForNonAdmin': [""],
-				'populatableForAdmin': [""],
-				'replaceableForNonAdmin': [""],
-				'replaceableForAdmin': [""],
-				'helpNotes': [
-					{
-						'text': "Files larger than 20 MB may take a long time to upload",
-						'htmlID': "file-attachment-size-recommendation",
-						'hideForNonAdmin': ['Pending Approval', 'Submitted', 'Completed', 'Cancelled'],
-						'hideForAdmin': ['Pending Approval', 'Submitted', 'Completed', 'Cancelled']
-					}
-				],
-				'requiredForNonAdmin': [""],
-				'requiredForAdmin': [""],
-				// 'hideForNonAdmin': ["", "Completed", "Disapproved", "Cancelled", "Disapproved", "Cancelled"],
-				// 'hideForAdmin': ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-
-
-
-
-
-
-			}, {
-				'elementType': "markup",
-				'tag': "a",
+				'elementType': 'markup',
+				'tag': 'a',
 				'begin': 1,
 				'end': 1,
-				'htmlClass': "remove-section-anchor",
-				'content': "Remove",
+				'htmlClass': 'remove-section-anchor',
+				'content': 'Remove this Date',
 				'removeThisRepeat': 1,
-				'hideForNonAdmin': ['Pending Approval', 'Submitted', 'Completed', 'Cancelled'],
-				'hideForAdmin': ['Pending Approval', 'Submitted', 'Completed', 'Cancelled'],
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
@@ -273,62 +586,31 @@
 				'tag': 'a',
 				'begin': 1,
 				'end': 1,
-				'htmlID': 'repeat-attachment',
+				'htmlID': 'repeat-simple-date',
 				'htmlClass': 'repeat-section-anchor',
-				'content': 'Insert an attachment',
-				'repeatSectionID': 'attachment',
-				'disabledForNonAdmin': ['Pending Approval', 'Submitted', 'Completed', 'Cancelled'],
-				'disabledForAdmin': ['Pending Approval', 'Submitted', 'Completed', 'Cancelled'],
-				'hideForNonAdmin': ['Pending Approval', 'Submitted', 'Completed', 'Cancelled'],
-				'hideForAdmin': ['Pending Approval', 'Submitted', 'Completed', 'Cancelled'],
+				'content': 'Insert a Date',
+				'repeatSectionID': 'simple-date',
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
 				'end': 1
 
+
+
+
+
+
+
+
+
+
 			}, {
-				'elementType': "field",
-				'controlType': "textarea",
-				'fieldName': "Additional Info",
-				'labelContent': "Additional Information",
-				'disabledForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-				'disabledForAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
-
-
-
-
-
-
-
-				/*			}, {
-								'elementType': 'field',
-								'controlType': 'mosFile',
-								'fieldName': 'MOS Custom File',
-								'labelContent': 'MOS Custom File',
-								'populatableForNonAdmin': ["", "Pending Approval"],
-								'populatableForAdmin': ["", "Pending Approval"],
-								'replaceableForNonAdmin': ['Pending Approval', 'Approved'],
-								'replaceableForAdmin': ['Pending Approval', 'Approved'],
-								'helpNotes': [
-									{
-										'text': "Files larger than 20 MB may take a long time to upload",
-										'htmlID': "file-attachment-size-recommendation",
-									}
-								],
-								// 'requiredForNonAdmin': [""],
-								// 'requiredForAdmin': [""],
-								// 'hideForNonAdmin': ["", "Completed", "Disapproved", "Cancelled", "Disapproved", "Cancelled"],
-								// 'hideForAdmin': ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-							}, {
-								'elementType': "field",
-								'controlType': "text",
-								'fieldName': "Text Field",
-								'labelContent': "Text Field",
-								// 'requiredForNonAdmin': [""],
-								// 'requiredForAdmin': [""],
-								'disabledForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'disabledForAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
-				*/
+				'elementType': 'markup',
+				'tag': 'div',
+				'begin': 1,
+				'htmlID': 'pattern-and-range',
+				'hideForNonAdmin': ["", "Submitted", "Cancelled"],
+				'hideForAdmin': ["", "Submitted", "Cancelled"]
 
 
 
@@ -338,867 +620,745 @@
 
 
 
-				/*			}, {
-								'elementType': 'markup',
-								'tag': 'div',
-								'begin': 1,
-								'htmlID': 'offering-datetime-sets',
-								'htmlClass': 'repeating-content-container', 
-								// 'hideForNonAdmin': ['', 'Pending Approval', 'Approved', 'Text Edited', 'Web Live', 'Completed', 'Disapproved', 'Cancelled'],
-								// 'hideForAdmin': ['', 'Pending Approval', 'Approved', 'Text Edited', 'Web Live', 'Completed', 'Disapproved', 'Cancelled']
-							}, {
-								'elementType': 'markup',
-								'tag': 'div',
-								'begin': 1,
-								'htmlID': 'offering-datetime-set',
-								'htmlClass': 'repeat-container', 
-								'repeatable': 1
-							}, {
-								'elementType': 'field',
-								'controlType': 'datePicker',
-								'fieldName': 'Offering Beginning Datetime',
-								'labelContent': 'Beginning Date and Time',
-								// 'listFieldName': 'BeginningEventDate',
-								'requiredForNonAdmin': ['Pending Approval', 'Approved', 'Text Edited', 'Web Live', 'Completed', 'Disapproved', 'Cancelled'],
-								'requiredForAdmin': ['Completed', 'Disapproved', 'Cancelled'],
-								'disabledForNonAdmin': ['Pending Approval', 'Approved', 'Text Edited', 'Web Live', 'Completed', 'Disapproved', 'Cancelled'],
-								'disabledForAdmin': ['Completed', 'Disapproved', 'Cancelled'],
-							}, {
-								'elementType': "markup",
-								'tag': "a",
-								'begin': 1,
-								'end': 1,
-								'htmlClass': "remove-section-anchor",
-								'content': "Remove",
-								'removeThisRepeat': 1,
-								'hideForNonAdmin': ['Pending Approval', 'Approved', 'Text Edited', 'Web Live', 'Completed', 'Disapproved', 'Cancelled'],
-								'hideForAdmin': ['Pending Approval', 'Approved', 'Text Edited', 'Web Live', 'Completed', 'Disapproved', 'Cancelled'],
-							}, {
-								'elementType': 'markup',
-								'tag': 'div',
-								'end': 1,
-							}, {
-								'elementType': 'markup',
-								'tag': 'a',
-								'begin': 1,
-								'end': 1,
-								'htmlID': 'repeat-offering-datetime-set',
-								'htmlClass': 'repeat-section-anchor',
-								'content': 'Insert a Date / Time Set',
-								'repeatSectionID': 'offering-datetime-set',
-								'disabledForNonAdmin': ['Pending Approval', 'Approved', 'Text Edited', 'Web Live', 'Completed', 'Disapproved', 'Cancelled'],
-								'disabledForAdmin': ['Completed', 'Disapproved', 'Cancelled'],
-								'hideForNonAdmin': ['Pending Approval', 'Approved', 'Text Edited', 'Web Live', 'Completed', 'Disapproved', 'Cancelled'],
-								'hideForAdmin': ['Pending Approval', 'Approved', 'Text Edited', 'Web Live', 'Completed', 'Disapproved', 'Cancelled'],
-							}, {
-								'elementType': 'markup',
-								'tag': 'div',
-								'end': 1
-				*/
 
 
 
-				/*			}, {
-								'elementType': "markup",
-								'tag': "h2",
-								'content': "Access Type",
-								'begin': 1,
-								'end': 1
-							}, {
-								'elementType': "field",
-								'controlType': "radio",
-								'fieldName': "Staff or Volunteer",
-								'choiceSetLabel': "Staff or Volunteer",
-								'choices': [
-										{
-											'value': "staff",
-											'display': "Staff"
-										}, {
-											'value': "volunteer",
-											'display': "Volunteer"
-										}, {
-											'value': "contractor",
-											'display': "Contractor"
-										}
-								],
-								'onChange': [
-									{ 'thisFieldEquals': ['staff', 'contractor'], 'addlAndConditions': ['$("input#new-or-change_new").is(":checked")'], 'show': [{ 'fieldName': 'Unpaid Intern' }], 'require': [{ 'fieldName': 'Unpaid Intern', 'type': 'radio' }] },
-									{ 'thisFieldEquals': ['volunteer'], 'hide': [{ 'fieldName': 'Unpaid Intern' }], 'optional': [{ 'fieldName': 'Unpaid Intern', 'type': 'radio' }] },
-									{ 'thisFieldEquals': ['staff', 'contractor'], 'hide': [{ 'fieldName': 'Personal Email Address' }] },
-									{ 'thisFieldEquals': ['volunteer'], 'show': [{ 'fieldName': 'Personal Email Address' }] },
-									{ 'thisFieldEquals': ['staff', 'contractor'], 'show': [{ 'divClass': 'staff-or-contractor-only-container' }] },
-									{ 'thisFieldEquals': ['volunteer'], 'hide': [{ 'divClass': 'staff-or-contractor-only-container' }] },
-								],
-								// 'requiredForNonAdmin': [''],
-								// 'requiredForAdmin': [''],
-								'disabledForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'disabledForAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
-							}, {
-								'elementType': "field",
-								'controlType': "radio",
-								'fieldName': "Single or Multiple",
-								'choiceSetLabel': "Single Person or Multiple People",
-								'choices': [
-										{
-											'value': "single",
-											'display': "Single Person"
-										}, {
-											'value': "multiple",
-											'display': "Multiple People"
-										}
-								],
-								// 'requiredForNonAdmin': [""],
-								// 'requiredForAdmin': [""],
-								'disabledForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'disabledForAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
-							}, {
-								'elementType': "field",
-								'controlType': "radio",
-								'fieldName': "New or Change",
-								'choiceSetLabel': "New Account or Account Change",
-								'choices': [
-										{
-											'value': "new",
-											'display': "New Account(s)"
-										}, {
-											'value': "change",
-											'display': "Account Change"
-										}
-								],
-								'onChange': [
-									{ 'thisFieldEquals': ["new"], 'addlAndConditions': ['$("input#staff-or-volunteer_staff").is(":checked")'], 'show': [{ 'fieldName': 'Unpaid Intern' }], 'require': [{ 'fieldName': "Unpaid Intern", 'type': "radio" }] },
-									{ 'thisFieldEquals': ["new"], 'require': [{ 'fieldName': "Start Date", 'type': "text" }] },
-									{ 'thisFieldEquals': ["change"], 'hide': [{ 'fieldName': "Unpaid Intern" }], 'optional': [{ 'fieldName': "Unpaid Intern", 'type': "radio" }, { 'fieldName': "Start Date", 'type': "text" }] }
-								],
-								// 'requiredForNonAdmin': [""],
-								// 'requiredForAdmin': [""],
-								'disabledForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'disabledForAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
-							}, {
-								'elementType': "field",
-								'controlType': "radio",
-								'fieldName': "Unpaid Intern",
-								'choiceSetLabel': "Unpaid Intern",
-								'choices': [
-										{
-											'value': "intern",
-											'display': "Yes, this is for an unpaid intern"
-										}, {
-											'value': "notIntern",
-											'display': "No, this is not for an unpaid intern"
-										}
-								],
-								'hideForNonAdmin': ["", "Completed", "Disapproved", "Cancelled", "Disapproved", "Cancelled"],
-								'hideForAdmin': ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'disabledForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'disabledForAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
-							}, {
-								'elementType': "markup",
-								'tag': "h2",
-								'content': "Staff, Volunteer, or Contractor Details",
-								'begin': 1,
-								'end': 1
-							}, {
-								'elementType': "field",
-								'controlType': "text",
-								'fieldName': "Name",
-								'labelContent': "Name",
-								'listFieldName': "StaffVolNames",
-								// 'requiredForNonAdmin': [""],
-								// 'requiredForAdmin': [""],
-								'disabledForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'disabledForAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
-							}, {
-								'elementType': "field",
-								'controlType': "text",
-								'fieldName': "Department",
-								'labelContent': "Department",
-								// 'requiredForNonAdmin': [""],
-								// 'requiredForAdmin': [""],
-								'disabledForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'disabledForAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
-							}, {
-								'elementType': "field",
-								'controlType': "text",
-								'fieldName': "Title",
-								'labelContent': "Title",
-								// 'requiredForNonAdmin': [""],
-								// 'requiredForAdmin': [""],
-								'disabledForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'disabledForAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
-							}, {
-								'elementType': "field",
-								'controlType': "text",
-								'fieldName': "Supervisor",
-								'labelContent': "Supervisor",
-								// 'requiredForNonAdmin': [""],
-								// 'requiredForAdmin': [""],
-								'disabledForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'disabledForAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
-							}, {
-								'elementType': "field",
-								'controlType': "text",
-								'fieldName': "Office Location",
-								'labelContent': "Office Location",
-								// 'requiredForNonAdmin': [""],
-								// 'requiredForAdmin': [""],
-								'disabledForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'disabledForAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
-							}, {
-								'elementType': "field",
-								'controlType': "datePicker",
-								'fieldName': "Start Date",
-								'labelContent': "Start Date",
-								'listFieldName': "StartDate",
-								"friendlyFormatOnLoad": { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 },
-								"isoFormatOnSubmit": { 'incomingFormat': null, 'returnFormat': null, 'determineYearDisplayDynamically': null },
-								'disabledForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'disabledForAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'helpNotes': [
-									{
-										'text': "Due to the short notice, changes may not be complete by this Start Date.",
-										'htmlID': "start-date-too-soon",
-										'emphasis': 1,
-										'hideForNonAdmin': ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-										'hideForAdmin': ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
-									}
-								],
-								'onChange': [
-									{ 'thisDateFieldLessThanDaysFromNow': "7", 'show': [{ 'noteID': "start-date-too-soon" }] },
-									{ 'thisDateFieldGreaterThanDaysFromNowEqualTo': "7", 'hide': [{ 'noteID': "start-date-too-soon" }] }
-								],
-							}, {
-								'elementType': "field",
-								'controlType': "datePicker",
-								'fieldName': "End Date",
-								'labelContent': "End Date",
-								'disabledForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'disabledForAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-							}, {
-								'elementType': "field",
-								'controlType': "check",
-								'fieldName': "Has Computer",
-								'choiceSetLabel': "Do You Have a Computer For this Person?",
-								'choices': [
-										{
-											'value': "has-computer",
-											'display': "Yes, I have a computer"
-										}
-								],
-								'onChange': [
-									{ 'thisFieldIsChecked': 1, 'show': [{ 'fieldName': "Computer Tag" }], 'require': [{ 'fieldName': "Computer Tag", 'type': "text" }] },
-									{ 'thisFieldIsChecked': 0, 'hide': [{ 'fieldName': "Computer Tag" }], 'optional': [{ 'fieldName': "Computer Tag", 'type': "text" }] }
-								],
-								'disabledForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'disabledForAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
-							}, {
-								'elementType': "field",
-								'controlType': "text",
-								'fieldName': "Computer Tag",
-								'labelContent': "Computer Asset Tag Number",
-								'disabledForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'disabledForAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'hideForNonAdmin': ["", "Completed", "Disapproved", "Cancelled", "Disapproved", "Cancelled"],
-								'hideForAdmin': ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-				
-				
-							}, {
-								'elementType': "markup",
-								'tag': "h2",
-								'content': "Access Details",
-								'begin': 1,
-								'end': 1
-							}, {
-								'elementType': "field",
-								'controlType': "check",
-								'fieldName': "Needs Account",
-								'choiceSetLabel': "Needs a Network Account (to access computers)?",
-								'choices': [
-									{
-										'value': "needsAccount",
-										'display': "Yes, needs network account"
-									}
-								],
-								'disabledForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'disabledForAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
-							}, {
-								'elementType': "field",
-								'controlType': "check",
-								'fieldName': "Needs Intranet",
-								'choiceSetLabel': "Needs Access to a Part of Quark or the Hub?",
-								'choices': [
-									{
-										'value': "needsIntranet",
-										'display': "Yes, needs Intranet access"
-									}
-								],
-								'disabledForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'disabledForAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'onChange': [
-									{ 'thisFieldIsChecked': 1, 'show': [{ 'divID': "intranet-parts-and-access-types" }], 'require': [{ 'fieldName': "Intranet URL", 'type': "text" }, { 'fieldName': "Intranet Access Type", 'type': "text" }] },
-									{ 'thisFieldIsChecked': 0, 'hide': [{ 'divID': "intranet-parts-and-access-types" }], 'optional': [{ 'fieldName': "Intranet URL", 'type': "text" }, { 'fieldName': "Intranet Access Type", 'type': "text" }] }
-								],
-							}, {
-								'elementType': "markup",
-								'tag': "div",
-								'begin': 1,
-								'htmlID': "intranet-parts-and-access-types",
-								'htmlClass': "subsection-container repeating-content-container",
-								'hideForNonAdmin': ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'hideForAdmin': ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
-							}, {
-								'elementType': "markup",
-								'tag': "div",
-								'begin': 1,
-								'htmlID': "intranet-part-and-access-type",
-								'htmlClass': "subsection repeat-container",
-								'repeatable': 1
-							}, {
-								'elementType': "field",
-								'controlType': "text",
-								'fieldName': "Intranet URL",
-								'labelContent': "Which Part?",
-								'disabledForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'disabledForAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'helpNotes': [
-									{
-										'text': "E.g., https'://matrix.mos.org/depts/iit",
-										'htmlID': "intranet-url_help-note",
-										'hideForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-										'hideForAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
-									}
-								]
-							}, {
-								'elementType': "field",
-								'controlType': "text",
-								'fieldName': "Intranet Access Type",
-								'labelContent': "What Kind of Access?",
-								'disabledForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'disabledForAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'helpNotes': [
-									{
-										'text': "E.g., view, edit, receive notifications, etc.",
-										'htmlID': "intranet-access-type_help-note",
-										'hideForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-										'hideForAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
-									}
-								]
-							}, {
-								'elementType': "markup",
-								'tag': "a",
-								'begin': 1,
-								'end': 1,
-								'htmlClass': "remove-section-anchor",
-								'content': "Remove",
-								'removeThisRepeat': 1,
-								'hideForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'hideForAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-							}, {
-								'elementType': "markup",
-								'tag': "div",
-								'end': 1,
-							}, {
-								'elementType': "markup",
-								'tag': "a",
-								'begin': 1,
-								'end': 1,
-								'htmlID': "repeat-intranet-part-and-access-type",
-								'htmlClass': "repeat-section-anchor",
-								'content': "Insert a Part",
-								'repeatSectionID': "intranet-part-and-access-type",
-								'hideForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'hideForAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-							}, {
-								'elementType': "markup",
-								'tag': "div",
-								'end': 1
-							}, {
-								'elementType': "field",
-								'controlType': "text",
-								'fieldName': "Personal Email Address",
-								'labelContent': "Personal Email Address",
-								'hideForNonAdmin': ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'hideForAdmin': ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'disabledForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'disabledForAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'helpNotes': [
-									{
-										'text': "If used for Museum correspondence; e.g., myname@outlook.com",
-										'htmlID': "intranet-access-type_help-note",
-										'hideForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-										'hideForAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
-									}
-								]
-							}, {
-								'elementType': "field",
-								'controlType': "check",
-								'fieldName': "Needs Email and Calendar",
-								'choiceSetLabel': "Needs mos.org Email and Calendar?",
-								'choices': [
-									{
-										'value': "needsEmailCalendar",
-										'display': "Yes, needs email and calendar"
-									}
-								],
-								'disabledForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'disabledForAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-							}, {
-								'elementType': "field",
-								'controlType': "textarea",
-								'fieldName': "Needs Email List",
-								'labelContent': "Email Lists to Which this Person or Group Should be Added",
-								'disabledForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'disabledForAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
-							}, {
-								'elementType': "markup",
-								'tag': "div",
-								'begin': 1,
-								'htmlClass': "staff-or-contractor-only-container",
-								'hideForNonAdmin': ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'hideForAdmin': ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-							}, {
-								'elementType': "field",
-								'controlType': "check",
-								'requestVersion': 2,
-								'fieldName': "Needs Shared Email",
-								'choiceSetLabel': "Needs Access to Shared Email Accounts?",
-								'choices': [
-									{
-										'value': "needsSharedEmail",
-										'display': "Yes, needs access to shared email accounts"
-									}
-								],
-								'disabledForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'disabledForAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'onChange': [
-									{ 'thisFieldIsChecked': 1, 'show': [{ 'divID': "shared-email-options-subsection-container"}]},
-									{ 'thisFieldIsChecked': 0, 'hide': [{ 'divID': "shared-email-options-subsection-container"}]}
-								],
-							}, {
-								'elementType': "markup",
-								'tag': "div",
-								'begin': 1,
-								'htmlID': "shared-email-options-subsection-container",
-								'htmlClass': "subsection-container",
-								'hideForNonAdmin': ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'hideForAdmin': ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
-							}, {
-								'elementType': "markup",
-								'tag': "div",
-								'begin': 1,
-								'htmlID': "shared-email-options-subsection",
-								'htmlClass': "subsection",
-							}, {
-								'elementType': "field",
-								'controlType': "textarea",
-								'requestVersion': 2,
-								'fieldName': "Which Shared Email",
-								'labelContent': "Which Shared Email Accounts?",
-								'disabledForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'disabledForAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-							}, {
-								'elementType': "field",
-								'controlType': "check",
-								'requestVersion': 2,
-								'fieldName': "New Shared Email Account",
-								'choiceSetLabel': "New Shared Email Account?",
-								'choices': [
-									{
-										'value': "newSharedEmail",
-										'display': "Yes, this is a new shared email account"
-									}
-								],
-								'disabledForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'disabledForAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-							}, {
-								'elementType': "field",
-								'controlType': "check",
-								'requestVersion': 2,
-								'fieldName': 'Send As Access',
-								'choiceSetLabel': 'Should be able to "send as" this account?',
-								'choices': [
-									{
-										'value': 'sendAs',
-										'display': 'Yes, allow "send as"'
-									}
-								],
-								'disabledForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'disabledForAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-							}, {
-								'elementType': "markup",
-								'tag': "div",
-								'end': 1,
-							}, {
-								'elementType': "markup",
-								'tag': "div",
-								'end': 1
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-							}, {
-								'elementType': "field",
-								'controlType': "textarea",
-								'fieldName': "Needs Shared Calendar",
-								'labelContent': "Shared Calendars to Which this Person or Group Should Have Access",
-								'disabledForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'disabledForAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
-							}, {
-								'elementType': "field",
-								'controlType': "check",
-								'fieldName': "Needs Zeus Home Folder",
-								'choiceSetLabel': "Needs Zeus Home Folder?",
-								'choices': [
-									{
-										'value': "needsZeusHomeFolder",
-										'display': "Yes, needs Zeus home folder"
-									}
-								],
-								'disabledForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'disabledForAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-							}, {
-								'elementType': "markup",
-								'tag': "div",
-								'end': 1
-							}, {
-								'elementType': "field",
-								'controlType': "textarea",
-								'fieldName': "Needs Existing Zeus Share",
-								'labelContent': "Existing Zeus Shared Folders to Which this Person or Group Should Have Access",
-								'disabledForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'disabledForAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'helpNotes': [
-									{
-										'text': "No need to specify Zeus\\Shared\\Public",
-										'htmlID': "needs-existing-zeus-share_help-note",
-										'hideForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-										'hideForAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
-									}
-								]
-							}, {
-								'elementType': "field",
-								'controlType': "textarea",
-								'fieldName': "Needs New Zeus Share",
-								'labelContent': "New Zeus Shared Folders to Which this Person or Group Should Have Access",
-								'disabledForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'disabledForAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
-							}, {
-								'elementType': "markup",
-								'tag': "div",
-								'begin': 1,
-								'htmlClass': "staff-or-contractor-only-container",
-								'hideForNonAdmin': ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'hideForAdmin': ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
-							}, {
-								'elementType': "field",
-								'controlType': "check",
-								'fieldName': "Needs Phone",
-								'choiceSetLabel': "Needs Phone?",
-								'choices': [
-									{
-										'value': "needsPhone",
-										'display': "Yes, needs phone"
-									}
-								],
-								'disabledForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'disabledForAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'onChange': [
-									{ 'thisFieldIsChecked': 1, 'show': [{ 'divID': "phone-extensions-and-options-subsection-container" }] },
-									{ 'thisFieldIsChecked': 0, 'hide': [{ 'divID': "phone-extensions-and-options-subsection-container" }] },
-								],
-							}, {
-								'elementType': "markup",
-								'tag': "div",
-								'begin': 1,
-								'htmlID': "phone-extensions-and-options-subsection-container",
-								'htmlClass': "subsection-container",
-								'hideForNonAdmin': ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'hideForAdmin': ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
-							}, {
-								'elementType': "markup",
-								'tag': "div",
-								'begin': 1,
-								'htmlID': "phone-extensions-and-options-subsection",
-								'htmlClass': "subsection",
-							}, {
-								'elementType': "field",
-								'controlType': "textarea",
-								'fieldName': "Which Phone",
-								'labelContent': "Extensions to Which this Person or Group Should Have Access",
-								'disabledForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'disabledForAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-							}, {
-								'elementType': "field",
-								'controlType': "textarea",
-								'fieldName': "Which Phone Options",
-								'labelContent': "Phone Options Needed",
-								'disabledForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'disabledForAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-							}, {
-								'elementType': "markup",
-								'tag': "div",
-								'end': 1,
-							}, {
-								'elementType': "markup",
-								'tag': "div",
-								'end': 1
-							}, {
-								'elementType': "field",
-								'controlType': "textarea",
-								'requestVersion': 1,
-								'fieldName': "Which Non-Financial Reports",
-								'labelContent': "Non-Financial Reports to Which this Person or Group Should Have Access",
-								'disabledForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'disabledForAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
-							}, {
-								'elementType': "field",
-								'controlType': "textarea",
-								'requestVersion': 2,
-								'fieldName': "Which Non-Financial Crystal Reports",
-								'labelContent': "Non-Financial Crystal Reports to Which this Person or Group Should Have Access",
-								'disabledForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'disabledForAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'helpNotes': [
-									{
-										'text': "Most reports are on Tessitura",
-										'htmlID': "most-reports-are-on-tessitura",
-										'hideForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-										'hideForAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
-									}
-								],
-							}, {
-								'elementType': "field",
-								'controlType': "textarea",
-								'fieldName': "Which Financial Reports",
-								'labelContent': "Financial Reports to Which this Person or Group Should Have Access",
-								'disabledForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'disabledForAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
-							}, {
-								'elementType': "field",
-								'controlType': "check",
-								'requestVersion': 1,
-								'fieldName': "Needs Ticketing or POS",
-								'choiceSetLabel': "Needs Admits / POS Access?",
-								'choices': [
-									{
-										'value': "needsTicketingOrPOS",
-										'display': "Yes, needs Admits / POS access"
-									}
-								],
-								'disabledForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'disabledForAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-							}, {
-								'elementType': "markup",
-								'tag': "div",
-								'end': 1
-							}, {
-								'elementType': "field",
-								'controlType': "check",
-								'requestVersion': 1,
-								'fieldName': "Needs Sale Wizard",
-								'choiceSetLabel': "Needs Sale Wizard Access?",
-								'choices': [
-									{
-										'value': "needsSaleWizard",
-										'display': "Yes, needs Sale Wizard access"
-									}
-								],
-								'disabledForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'disabledForAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-							}, {
-								'elementType': "field",
-								'controlType': "check",
-								'requestVersion': 2,
-								'fieldName': "Needs Tessitura",
-								'choiceSetLabel': "Needs Tessitura Access?",
-								'choices': [
-									{
-										'value': "needsTessitura",
-										'display': "Yes, needs Tessitura access"
-									}
-								],
-								'disabledForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'disabledForAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'onChange': [
-									{ 'thisFieldIsChecked': 1, 'show': [{ 'fieldName': "Specify Tessitura Access" }, { 'fieldName': "Tessitura Access Agreement Signed" }], 'require': [{ 'fieldName': "Specify Tessitura Access", 'type': "textarea" }, { 'fieldName': "Tessitura Access Agreement Signed", 'type': "radio" }] },
-									{ 'thisFieldIsChecked': 0, 'hide': [{ 'fieldName': "Specify Tessitura Access" }, { 'fieldName': "Tessitura Access Agreement Signed" }], 'optional': [{ 'fieldName': "Specify Tessitura Access", 'type': "text" }, { 'fieldName': "Tessitura Access Agreement Signed", 'type': "radio" }] }
-								],
-							}, {
-								'elementType': "field",
-								'controlType': "radio",
-								'requestVersion': 2,
-								'fieldName': "Tessitura Access Agreement Signed",
-								'choiceSetLabel': "Tessitura Access Agreement Signed",
-								'choices': [
-									{
-										'value': "hasSigned",
-										'display': "Tessitura Access Agreement has been forwarded to Human Resources"
-									}, {
-										'value': "willHaveSigned",
-										'display': "Signer has not yet started, but I will be responsible for this being forwarded to Human Resources"
-									}
-								],
-								'disabledForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'disabledForAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'hideForNonAdmin': ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'hideForAdmin': ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-							}, {
-								'elementType': "field",
-								'controlType': "textarea",
-								'requestVersion': 2,
-								'fieldName': "Specify Tessitura Access",
-								'labelContent': "Specify the Tessitura Access this Person or Group Should Have Access",
-								'disabledForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'disabledForAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'hideForNonAdmin': ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'hideForAdmin': ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'helpNotes': [
-									{
-										'text': "I.e., department, reporting, etc.",
-										'htmlID': "tessitura-access-specification",
-										'hideForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-										'hideForAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
-									}
-								],
-							}, {
-								'elementType': "markup",
-								'tag': "div",
-								'begin': 1,
-								'htmlClass': "staff-or-contractor-only-container",
-								'hideForNonAdmin': ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'hideForAdmin': ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
-							}, {
-								'elementType': "field",
-								'controlType': "check",
-								'requestVersion': 1,
-								'fieldName': "Needs Fundraising",
-								'choiceSetLabel': "Needs Millennium Access?",
-								'choices': [
-									{
-										'value': "needsFundraising",
-										'display': "Yes, needs Millennium access"
-									}
-								],
-								'disabledForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'disabledForAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-							}, {
-								'elementType': "field",
-								'controlType': "check",
-								'fieldName': "Needs Track-It Technician",
-								'choiceSetLabel': "Needs to be Added to Track-It as a Technician?",
-								'choices': [
-									{
-										'value': "needsTrackItTechnician",
-										'display': "Yes, needs to be a Track-It technician"
-									}
-								],
-								'disabledForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'disabledForAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-							}, {
-								'elementType': "markup",
-								'tag': "div",
-								'end': 1
-							}, {
-								'elementType': "field",
-								'controlType': "textarea",
-								'fieldName': "Needs Other",
-								'labelContent': "Other Databases or Systems to Which this Person or Group Should Have Access",
-								'disabledForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'disabledForAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
-							}, {
-								'elementType': "markup",
-								'tag': "div",
-								'begin': 1,
-								'htmlClass': "staff-or-contractor-only-container",
-								'hideForNonAdmin': ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'hideForAdmin': ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
-							}, {
-								'elementType': "field",
-								'controlType': "check",
-								'fieldName': "Needs Web VPN",
-								'choiceSetLabel': "Needs Web VPN Access?",
-								'choices': [
-									{
-										'value': "needsWebVPN",
-										'display': "Yes, needs web VPN access"
-									}
-								],
-								'disabledForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'disabledForAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-							}, {
-								'elementType': "field",
-								'controlType': "check",
-								'fieldName': "Needs Reg VPN",
-								'choiceSetLabel': "Needs Regular VPN Access?",
-								'choices': [
-									{
-										'value': "needsRegVPN",
-										'display': "Yes, needs regular VPN access"
-									}
-								],
-								'disabledForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'disabledForAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-							}, {
-								'elementType': "markup",
-								'tag': "div",
-								'end': 1
-							}, {
-								'elementType': "field",
-								'controlType': "textarea",
-								'fieldName': "Additional Info",
-								'labelContent': "Additional Information",
-								'disabledForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-								'disabledForAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
-				*/
+			}, {
+				'elementType': 'markup',
+				'tag': 'div',
+				'begin': 1,
+				'htmlID': 'pattern-basis',
+			}, {
+				'elementType': 'field',
+				'controlType': 'select',
+				'fieldName': 'Pattern Basis',
+				'labelContent': 'Occurs',
+				"setOptions": [
+					{ "value": "xDays", "display": "Every given number of days" },
+					{ "value": "weekdays", "display": "Every weekday" },
+					{ "value": "xWeeks", "display": "Every given number of weeks" },
+					{ "value": "monthlySameDay", "display": "The same day every given number of months" },
+					{ "value": "monthlySameWeek", "display": "The same week every given number of months" },
+					{ "value": "yearlySameDay", "display": "The same day each year" },
+					{ "value": "yearlySameWeek", "display": "The same week each year" }
+				],
+				'disabledForNonAdmin': ["Submitted", "Cancelled"],
+				'disabledForAdmin': ["Submitted", "Cancelled"],
+				"onChange": [
+					{
+						"thisFieldEquals": ["xDays"],
+
+						"show": [{ "divID": "pattern_x-days" }],
+						"require": [{ "fieldName": "X Days", "type": "text" }],
+						"hide": [
+							{ "divID": "pattern_x-weeks" },
+							{ "divID": "pattern_monthly-same-day" },
+							{ "divID": "pattern_monthly-same-week" },
+							{ "divID": "pattern_yearly-same-day" },
+							{ "divID": "pattern_yearly-same-week" }
+						],
+						"optional": [
+							{ "fieldName": "X Weeks", "type": "text" },
+							{ "fieldName": "Days of Week for X Weeks", "type": "check" },
+							{ "fieldName": "X Months For Same Day", "type": "text" },
+							{ "fieldName": "Day of Month for X Months", "type": "text" },
+							{ "fieldName": "X Months For Same Week", "type": "text" },
+							{ "fieldName": "Ordinal For Day of Week For X Months For Same Week", "type": "select" },
+							{ "fieldName": "Days of Week For X Months For Same Week", "type": "select" },
+							{ "fieldName": "Months for Same Date Each Year", "type": "select" },
+							{ "fieldName": "Date for Same Date Each Year", "type": "text" },
+							{ "fieldName": "Ordinal For Same Week Each Year", "type": "select" },
+							{ "fieldName": "Days of Week For Same Week Each Year", "type": "select" },
+							{ "fieldName": "Months for Same Week Each Year", "type": "select" },
+						],
+					}, {
+						"thisFieldEquals": ["weekdays"],
+
+						"hide": [
+							{ "divID": "pattern_x-days" },
+							{ "divID": "pattern_x-weeks" },
+							{ "divID": "pattern_monthly-same-day" },
+							{ "divID": "pattern_monthly-same-week" },
+							{ "divID": "pattern_yearly-same-day" },
+							{ "divID": "pattern_yearly-same-week" }
+						],
+						"optional": [
+							{ "fieldName": "X Days", "type": "text" },
+							{ "fieldName": "X Weeks", "type": "text" },
+							{ "fieldName": "Days of Week for X Weeks", "type": "check" },
+							{ "fieldName": "X Months For Same Day", "type": "text" },
+							{ "fieldName": "Day of Month for X Months", "type": "text" },
+							{ "fieldName": "X Months For Same Week", "type": "text" },
+							{ "fieldName": "Ordinal For Day of Week For X Months For Same Week", "type": "select" },
+							{ "fieldName": "Days of Week For X Months For Same Week", "type": "select" },
+							{ "fieldName": "Months for Same Date Each Year", "type": "select" },
+							{ "fieldName": "Date for Same Date Each Year", "type": "text" },
+							{ "fieldName": "Ordinal For Same Week Each Year", "type": "select" },
+							{ "fieldName": "Days of Week For Same Week Each Year", "type": "select" },
+							{ "fieldName": "Months for Same Week Each Year", "type": "select" },
+						],
+					}, {
+						"thisFieldEquals": ["xWeeks"],
+
+						"show": [{ "divID": "pattern_x-weeks" },],
+						"require": [
+							{ "fieldName": "X Weeks", "type": "text" },
+							{ "fieldName": "Days of Week for X Weeks", "type": "check" },
+						],
+						"hide": [
+							{ "divID": "pattern_x-days" },
+							{ "divID": "pattern_monthly-same-day" },
+							{ "divID": "pattern_monthly-same-week" },
+							{ "divID": "pattern_yearly-same-day" },
+							{ "divID": "pattern_yearly-same-week" }
+						],
+						"optional": [
+							{ "fieldName": "X Days", "type": "text" },
+							{ "fieldName": "X Months For Same Day", "type": "text" },
+							{ "fieldName": "Day of Month for X Months", "type": "text" },
+							{ "fieldName": "X Months For Same Week", "type": "text" },
+							{ "fieldName": "Ordinal For Day of Week For X Months For Same Week", "type": "select" },
+							{ "fieldName": "Days of Week For X Months For Same Week", "type": "select" },
+							{ "fieldName": "Months for Same Date Each Year", "type": "select" },
+							{ "fieldName": "Date for Same Date Each Year", "type": "text" },
+							{ "fieldName": "Ordinal For Same Week Each Year", "type": "select" },
+							{ "fieldName": "Days of Week For Same Week Each Year", "type": "select" },
+							{ "fieldName": "Months for Same Week Each Year", "type": "select" },
+						],
+					}, {
+						"thisFieldEquals": ["monthlySameDay"],
+
+						"show": [{ "divID": "pattern_monthly-same-day" },],
+						"require": [
+							{ "fieldName": "X Months For Same Day", "type": "text" },
+							{ "fieldName": "Day of Month for X Months", "type": "text" },
+						],
+						"hide": [
+							{ "divID": "pattern_x-days" },
+							{ "divID": "pattern_x-weeks" },
+							{ "divID": "pattern_monthly-same-week" },
+							{ "divID": "pattern_yearly-same-day" },
+							{ "divID": "pattern_yearly-same-week" }
+						],
+						"optional": [
+							{ "fieldName": "X Days", "type": "text" },
+							{ "fieldName": "X Weeks", "type": "text" },
+							{ "fieldName": "Days of Week for X Weeks", "type": "check" },
+							{ "fieldName": "X Months For Same Week", "type": "text" },
+							{ "fieldName": "Ordinal For Day of Week For X Months For Same Week", "type": "select" },
+							{ "fieldName": "Days of Week For X Months For Same Week", "type": "select" },
+							{ "fieldName": "Months for Same Date Each Year", "type": "select" },
+							{ "fieldName": "Date for Same Date Each Year", "type": "text" },
+							{ "fieldName": "Ordinal For Same Week Each Year", "type": "select" },
+							{ "fieldName": "Days of Week For Same Week Each Year", "type": "select" },
+							{ "fieldName": "Months for Same Week Each Year", "type": "select" },
+						],
+					}, {
+						"thisFieldEquals": ["monthlySameWeek"],
+
+						"show": [{ "divID": "pattern_monthly-same-week" },],
+						"require": [
+							{ "fieldName": "X Months For Same Week", "type": "text" },
+							{ "fieldName": "Ordinal For Day of Week For X Months For Same Week", "type": "select" },
+							{ "fieldName": "Days of Week For X Months For Same Week", "type": "select" },
+						],
+						"hide": [
+							{ "divID": "pattern_x-days" },
+							{ "divID": "pattern_x-weeks" },
+							{ "divID": "pattern_monthly-same-day" },
+							{ "divID": "pattern_yearly-same-day" },
+							{ "divID": "pattern_yearly-same-week" }
+						],
+						"optional": [
+							{ "fieldName": "X Days", "type": "text" },
+							{ "fieldName": "X Weeks", "type": "text" },
+							{ "fieldName": "Days of Week for X Weeks", "type": "check" },
+							{ "fieldName": "X Months For Same Day", "type": "text" },
+							{ "fieldName": "Day of Month for X Months", "type": "text" },
+							{ "fieldName": "Months for Same Date Each Year", "type": "select" },
+							{ "fieldName": "Date for Same Date Each Year", "type": "text" },
+							{ "fieldName": "Ordinal For Same Week Each Year", "type": "select" },
+							{ "fieldName": "Days of Week For Same Week Each Year", "type": "select" },
+							{ "fieldName": "Months for Same Week Each Year", "type": "select" },
+						],
+					}, {
+						"thisFieldEquals": ["yearlySameDay"],
+
+						"show": [{ "divID": "pattern_yearly-same-day" },],
+						"require": [
+							{ "fieldName": "Months for Same Date Each Year", "type": "select" },
+							{ "fieldName": "Date for Same Date Each Year", "type": "text" },
+						],
+						"hide": [
+							{ "divID": "pattern_x-days" },
+							{ "divID": "pattern_x-weeks" },
+							{ "divID": "pattern_monthly-same-day" },
+							{ "divID": "pattern_monthly-same-week" },
+							{ "divID": "pattern_yearly-same-week" }
+						],
+						"optional": [
+							{ "fieldName": "X Days", "type": "text" },
+							{ "fieldName": "X Weeks", "type": "text" },
+							{ "fieldName": "Days of Week for X Weeks", "type": "check" },
+							{ "fieldName": "X Months For Same Day", "type": "text" },
+							{ "fieldName": "Day of Month for X Months", "type": "text" },
+							{ "fieldName": "X Months For Same Week", "type": "text" },
+							{ "fieldName": "Ordinal For Day of Week For X Months For Same Week", "type": "select" },
+							{ "fieldName": "Days of Week For X Months For Same Week", "type": "select" },
+							{ "fieldName": "Ordinal For Same Week Each Year", "type": "select" },
+							{ "fieldName": "Days of Week For Same Week Each Year", "type": "select" },
+							{ "fieldName": "Months for Same Week Each Year", "type": "select" },
+						],
+						"set": [
+							{ 
+								"fieldName": "Date for Same Date Each Year", 
+								"type": "text",
+								"method": "dynamic",
+								"value": "$().ReturnFormattedDateTime('nowLocal', null, 'D', null)" }
+							]
+					}, {
+						"thisFieldEquals": ["yearlySameWeek"],
+
+						"show": [{ "divID": "pattern_yearly-same-week" }],
+						"require": [
+							{ "fieldName": "Ordinal For Same Week Each Year", "type": "select" },
+							{ "fieldName": "Days of Week For Same Week Each Year", "type": "select" },
+							{ "fieldName": "Months for Same Week Each Year", "type": "select" },
+						],
+						"hide": [
+							{ "divID": "pattern_x-days" },
+							{ "divID": "pattern_x-weeks" },
+							{ "divID": "pattern_monthly-same-day" },
+							{ "divID": "pattern_monthly-same-week" },
+							{ "divID": "pattern_yearly-same-day" },
+						],
+						"optional": [
+							{ "fieldName": "X Days", "type": "text" },
+							{ "fieldName": "X Weeks", "type": "text" },
+							{ "fieldName": "Days of Week for X Weeks", "type": "check" },
+							{ "fieldName": "X Months For Same Day", "type": "text" },
+							{ "fieldName": "Day of Month for X Months", "type": "text" },
+							{ "fieldName": "X Months For Same Week", "type": "text" },
+							{ "fieldName": "Ordinal For Day of Week For X Months For Same Week", "type": "select" },
+							{ "fieldName": "Days of Week For X Months For Same Week", "type": "select" },
+							{ "fieldName": "Months for Same Date Each Year", "type": "select" },
+							{ "fieldName": "Date for Same Date Each Year", "type": "text" },
+						],
+					}
+
+				]
+			}, {
+				'elementType': 'markup',
+				'tag': 'div',
+				'end': 1
+
+
+
+
+
+			}, {
+				'elementType': 'markup',
+				'tag': 'div',
+				'begin': 1,
+				'htmlID': 'pattern_x-days',
+				'hideForNonAdmin': ["", "Submitted", "Cancelled"],
+				'hideForAdmin': ["", "Submitted", "Cancelled"]
+
+				// X days
+
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "X Days",
+				"labelContent": "Every",
+				'disabledForNonAdmin': ["Submitted", "Cancelled"],
+				'disabledForAdmin': ["Submitted", "Cancelled"],
+				"helpNotes": [
+					{
+						"text": "day(s)",
+						"htmlID": "x-days_help-note",
+						"urgent": 0,
+					}
+				],
+
+
+			}, {
+				'elementType': 'markup',
+				'tag': 'div',
+				'end': 1
+
+
+
+
+			}, {
+				'elementType': 'markup',
+				'tag': 'div',
+				'begin': 1,
+				'htmlID': 'pattern_x-weeks',
+				'hideForNonAdmin': ["", "Submitted", "Cancelled"],
+				'hideForAdmin': ["", "Submitted", "Cancelled"]
+
+				// Weekly
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "X Weeks",
+				"labelContent": "Every",
+				'disabledForNonAdmin': ["Submitted", "Cancelled"],
+				'disabledForAdmin': ["Submitted", "Cancelled"],
+				"helpNotes": [
+					{
+						"text": "week(s)",
+						"htmlID": "x-weeks_help-note",
+						"urgent": 0,
+					}
+				],
+			}, {
+				"elementType": "field",
+				"controlType": "check",
+				"fieldName": "Days of Week for X Weeks",
+				"choiceSetLabel": "On",
+				"choices": [
+					{
+						"value": "1",
+						"display": "Sunday"
+					}, {
+						"value": "2",
+						"display": "Monday"
+					}, {
+						"value": "3",
+						"display": "Tuesday"
+					}, {
+						"value": "4",
+						"display": "Wednesday"
+					}, {
+						"value": "5",
+						"display": "Thursday"
+					}, {
+						"value": "6",
+						"display": "Friday"
+					}, {
+						"value": "7",
+						"display": "Saturday"
+					}
+				],
+				'disabledForNonAdmin': ["Submitted", "Cancelled"],
+				'disabledForAdmin': ["Submitted", "Cancelled"],
+			}, {
+				'elementType': 'markup',
+				'tag': 'div',
+				'end': 1
+
+
+
+
+			}, {
+				'elementType': 'markup',
+				'tag': 'div',
+				'begin': 1,
+				'htmlID': 'pattern_monthly-same-day',
+				'hideForNonAdmin': ["", "Submitted", "Cancelled"],
+				'hideForAdmin': ["", "Submitted", "Cancelled"]
+
+				// Monthly same day
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "X Months For Same Day",
+				"labelContent": "Every",
+				'disabledForNonAdmin': ["Submitted", "Cancelled"],
+				'disabledForAdmin': ["Submitted", "Cancelled"],
+				"helpNotes": [
+					{
+						"text": "month(s)",
+						"htmlID": "x-months-for-same-day_help-note",
+						"urgent": 0,
+					}
+				],
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "Day of Month for X Months",
+				"labelContent": "On",
+				'disabledForNonAdmin': ["Submitted", "Cancelled"],
+				'disabledForAdmin': ["Submitted", "Cancelled"],
+				"helpNotes": [
+					{
+						"text": "day of month",
+						"htmlID": "day-of-month-for-x-months_help-note",
+						"urgent": 0,
+					}
+				],
+			}, {
+				'elementType': 'markup',
+				'tag': 'div',
+				'end': 1
+
+
+
+
+			}, {
+				'elementType': 'markup',
+				'tag': 'div',
+				'begin': 1,
+				'htmlID': 'pattern_monthly-same-week',
+				'hideForNonAdmin': ["", "Submitted", "Cancelled"],
+				'hideForAdmin': ["", "Submitted", "Cancelled"]
+
+				// Monthly same week
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "X Months For Same Week",
+				"labelContent": "Every",
+				'disabledForNonAdmin': ["Submitted", "Cancelled"],
+				'disabledForAdmin': ["Submitted", "Cancelled"],
+				"helpNotes": [
+					{
+						"text": "month(s)",
+						"htmlID": "x-months-for-same-week_help-note",
+						"urgent": 0,
+					}
+				],
+			}, {
+				'elementType': 'multifield',
+				'multifieldName': 'Ordinal and Day of Week For X Months For Same Week',
+				'labelContent': 'On <span class="hidden">Which Day of the Month?</span>',
+				'subfields': [
+					{
+						'controlType': 'select',
+						'subfieldName': 'Ordinal For Day of Week For X Months For Same Week',
+						"setOptions": [
+							{ "value": "1", "display": "First" },
+							{ "value": "2", "display": "Second" },
+							{ "value": "3", "display": "Third" },
+							{ "value": "4", "display": "Fourth" }
+						],
+						'disabledForNonAdmin': ["Submitted", "Cancelled"],
+						'disabledForAdmin': ["Submitted", "Cancelled"],
+					}, {
+						'controlType': 'select',
+						'subfieldName': 'Days of Week For X Months For Same Week',
+						"setOptions": [
+							{ "value": "Sunday", "display": "Sunday" },
+							{ "value": "Monday", "display": "Monday" },
+							{ "value": "Tuesday", "display": "Tuesday" },
+							{ "value": "Wednesday", "display": "Wednesday" },
+							{ "value": "Thursday", "display": "Thursday" },
+							{ "value": "Friday", "display": "Friday" },
+							{ "value": "Saturday", "display": "Saturday" }
+						],
+						'disabledForNonAdmin': ["Submitted", "Cancelled"],
+						'disabledForAdmin': ["Submitted", "Cancelled"],
+					}
+				]
+			}, {
+				'elementType': 'markup',
+				'tag': 'div',
+				'end': 1
+
+
+
+
+			}, {
+				'elementType': 'markup',
+				'tag': 'div',
+				'begin': 1,
+				'htmlID': 'pattern_yearly-same-day',
+				'hideForNonAdmin': ["", "Submitted", "Cancelled"],
+				'hideForAdmin': ["", "Submitted", "Cancelled"]
+
+				// Yearly same day
+
+			}, {
+				'elementType': 'multifield',
+				'multifieldName': 'Month and Date for Same Date Each Year',
+				'labelContent': 'On <span class="hidden">Which Day of the Month?</span>',
+				'subfields': [
+					{
+						'controlType': 'select',
+						'subfieldName': 'Months for Same Date Each Year',
+						"setOptions": [
+							{ "value": "1", "display": "January" },
+							{ "value": "2", "display": "February" },
+							{ "value": "3", "display": "March" },
+							{ "value": "4", "display": "April" },
+							{ "value": "5", "display": "May" },
+							{ "value": "6", "display": "June" },
+							{ "value": "7", "display": "July" },
+							{ "value": "8", "display": "August" },
+							{ "value": "9", "display": "September" },
+							{ "value": "10", "display": "October" },
+							{ "value": "11", "display": "November" },
+							{ "value": "12", "display": "December" }
+						],
+						'disabledForNonAdmin': ["Submitted", "Cancelled"],
+						'disabledForAdmin': ["Submitted", "Cancelled"],
+					}, {
+						'controlType': 'text',
+						'subfieldName': 'Date for Same Date Each Year',
+						'disabledForNonAdmin': ["Submitted", "Cancelled"],
+						'disabledForAdmin': ["Submitted", "Cancelled"],
+					}
+				]
+				//}, {
+				//    'elementType': 'field',
+				//    'controlType': 'select',
+				//    'fieldName': 'Months for Same Date Each Year',
+				//    'labelContent': 'On <span class="hidden">Which Month</span>',
+				//    "setOptions": [
+				//        { "value": "1", "display": "January" },
+				//        { "value": "2", "display": "February" },
+				//        { "value": "3", "display": "March" },
+				//        { "value": "4", "display": "April" },
+				//        { "value": "5", "display": "May" },
+				//        { "value": "6", "display": "June" },
+				//        { "value": "7", "display": "July" },
+				//        { "value": "8", "display": "August" },
+				//        { "value": "9", "display": "September" },
+				//        { "value": "10", "display": "October" },
+				//        { "value": "11", "display": "November" },
+				//        { "value": "12", "display": "December" }
+				//    ],
+				//}, {
+				//    "elementType": "field",
+				//    "controlType": "text",
+				//    "fieldName": "Date for Same Date Each Year",
+				//    "labelContent": '<span class="hidden">On Which Day of the Month</span>',
+			}, {
+				'elementType': 'markup',
+				'tag': 'div',
+				'end': 1
+
+
+
+
+			}, {
+				'elementType': 'markup',
+				'tag': 'div',
+				'begin': 1,
+				'htmlID': 'pattern_yearly-same-week',
+				'hideForNonAdmin': ["", "Submitted", "Cancelled"],
+				'hideForAdmin': ["", "Submitted", "Cancelled"]
+
+				// Yearly same week
+
+
+
+
+
+
+			}, {
+				'elementType': 'multifield',
+				'multifieldName': 'Ordinal and Day of Week For Same Week Each Year',
+				'labelContent': 'On <span class="hidden">Which Week?</span>',
+				'subfields': [
+					{
+						'controlType': 'select',
+						'subfieldName': 'Ordinal For Same Week Each Year',
+						"setOptions": [
+							{ "value": "1", "display": "First" },
+							{ "value": "2", "display": "Second" },
+							{ "value": "3", "display": "Third" },
+							{ "value": "4", "display": "Fourth" }
+						],
+						'disabledForNonAdmin': ["Submitted", "Cancelled"],
+						'disabledForAdmin': ["Submitted", "Cancelled"],
+					}, {
+						'controlType': 'select',
+						'subfieldName': 'Days of Week For Same Week Each Year',
+						"setOptions": [
+							{ "value": "Sunday", "display": "Sunday" },
+							{ "value": "Monday", "display": "Monday" },
+							{ "value": "Tuesday", "display": "Tuesday" },
+							{ "value": "Wednesday", "display": "Wednesday" },
+							{ "value": "Thursday", "display": "Thursday" },
+							{ "value": "Friday", "display": "Friday" },
+							{ "value": "Saturday", "display": "Saturday" }
+						],
+						'disabledForNonAdmin': ["Submitted", "Cancelled"],
+						'disabledForAdmin': ["Submitted", "Cancelled"],
+					}
+				]
+
+
+				//}, {
+				//    'elementType': 'field',
+				//    'controlType': 'select',
+				//    'fieldName': 'Ordinal For Same Week Each Year',
+				//    'labelContent': 'On <span class="hidden">Which Week</span>',
+				//    "setOptions": [
+				//        { "value": "1", "display": "First" },
+				//        { "value": "2", "display": "Second" },
+				//        { "value": "3", "display": "Third" },
+				//        { "value": "4", "display": "Fourth" }
+				//    ],
+				//}, {
+				//    'elementType': 'field',
+				//    'controlType': 'select',
+				//    'fieldName': 'Days of Week For Same Week Each Year',
+				//    'labelContent': '<span class="hidden">On Which Day of the Week</span>',
+				//    "setOptions": [
+				//        { "value": "Sunday", "display": "Sunday" },
+				//        { "value": "Monday", "display": "Monday" },
+				//        { "value": "Tuesday", "display": "Tuesday" },
+				//        { "value": "Wednesday", "display": "Wednesday" },
+				//        { "value": "Thursday", "display": "Thursday" },
+				//        { "value": "Friday", "display": "Friday" },
+				//        { "value": "Saturday", "display": "Saturday" }
+				//    ],
+
+
+
+
+			}, {
+				'elementType': 'field',
+				'controlType': 'select',
+				'fieldName': 'Months for Same Week Each Year',
+				'labelContent': 'In',
+				"setOptions": [
+					{ "value": "1", "display": "January" },
+					{ "value": "2", "display": "February" },
+					{ "value": "3", "display": "March" },
+					{ "value": "4", "display": "April" },
+					{ "value": "5", "display": "May" },
+					{ "value": "6", "display": "June" },
+					{ "value": "7", "display": "July" },
+					{ "value": "8", "display": "August" },
+					{ "value": "9", "display": "September" },
+					{ "value": "10", "display": "October" },
+					{ "value": "11", "display": "November" },
+					{ "value": "12", "display": "December" }
+				],
+				'disabledForNonAdmin': ["Submitted", "Cancelled"],
+				'disabledForAdmin': ["Submitted", "Cancelled"],
+			}, {
+				'elementType': 'markup',
+				'tag': 'div',
+				'end': 1
+
+
+
+
+
+
+
+
+
+
+
+
+			}, {
+				'elementType': 'field',
+				'controlType': 'datePicker',
+				'fieldName': 'Start Date',
+				'labelContent': 'Start Date',
+				'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 0 },
+				'isoFormatOnSubmit': { 'incomingFormat': 'MMMM D, YYYY', 'returnFormat': null, 'determineYearDisplayDynamically': null },
+				'disabledForNonAdmin': ["Submitted", "Cancelled"],
+				'disabledForAdmin': ["Submitted", "Cancelled"],
+			}, {
+				'elementType': 'field',
+				'controlType': 'select',
+				'fieldName': 'Ending Basis',
+				'labelContent': 'Ends',
+				"setOptions": [
+					{ "value": "never", "display": "Never" },
+					{ "value": "xOccurrences", "display": "After a given number of occurrences" },
+					{ "value": "date", "display": "By a date" }
+				],
+				'disabledForNonAdmin': ["Submitted", "Cancelled"],
+				'disabledForAdmin': ["Submitted", "Cancelled"],
+				"onChange": [
+					{
+						"thisFieldEquals": ["never"],
+						"show": [],
+						"require": [],
+						"hide": [
+							{ "divID": "range_x-occurrences" },
+							{ "divID": "range_ending-date" },
+						],
+						"optional": [
+							{ "fieldName": "Qty Occurrences", "type": "text" },
+							{ "fieldName": "Ending Date", "type": "text" },
+						]
+					}, {
+						"thisFieldEquals": ["xOccurrences"],
+						"show": [{ "divID": "range_x-occurrences" }],
+						"require": [{ "fieldName": "Qty Occurrences", "type": "text" }],
+						"hide": [{ "divID": "range_ending-date" }],
+						"optional": [{ "fieldName": "Ending Date", "type": "datepicker" }]
+					}, {
+						"thisFieldEquals": ["date"],
+						"show": [{ "divID": "range_ending-date" }],
+						"require": [{ "fieldName": "Ending Date", "type": "datepicker" }],
+						"hide": [{ "divID": "range_x-occurrences" }],
+						"optional": [{ "fieldName": "Qty Occurrences", "type": "text" }]
+					}
+				]
+
+			}, {
+				'elementType': 'markup',
+				'tag': 'div',
+				'begin': 1,
+				'htmlID': 'range_x-occurrences',
+				"hideForNonAdmin": ["", "Submitted", "Cancelled"],
+				"hideForAdmin": ["", "Submitted", "Cancelled"],
+
+				// X occurrences
+
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "Qty Occurrences",
+				"labelContent": "Number of Occurrences",
+				'disabledForNonAdmin': ["Submitted", "Cancelled"],
+				'disabledForAdmin': ["Submitted", "Cancelled"],
+			}, {
+				'elementType': 'markup',
+				'tag': 'div',
+				'end': 1
+
+
+			}, {
+				'elementType': 'markup',
+				'tag': 'div',
+				'begin': 1,
+				'htmlID': 'range_ending-date',
+				"hideForNonAdmin": ["", "Submitted", "Cancelled"],
+				"hideForAdmin": ["", "Submitted", "Cancelled"],
+
+				// By date
+
+			}, {
+				"elementType": "field",
+				"controlType": "datePicker",
+				"fieldName": "Ending Date",
+				"labelContent": "Ending Date",
+				'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 0 },
+				'isoFormatOnSubmit': { 'incomingFormat': 'MMMM D, YYYY', 'returnFormat': null, 'determineYearDisplayDynamically': null },
+				'disabledForNonAdmin': ["Submitted", "Cancelled"],
+				'disabledForAdmin': ["Submitted", "Cancelled"],
+			}, {
+				'elementType': 'markup',
+				'tag': 'div',
+				'end': 1
+
+
+			}, {
+				'elementType': 'markup',
+				'tag': 'div',
+				'end': 1
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "Request Status",
+				"listFieldName": "RequestStatus",
+				"labelContent": "Request Status",
+				"disabledForNonAdmin": ["", "Submitted", "Cancelled"],
+				"disabledForAdmin": ["", "Submitted", "Cancelled"],
+				"hideForNonAdmin": ["", "Submitted", "Cancelled"],
+				"hideForAdmin": ["", "Submitted", "Cancelled"],
 			}
 		]
 	};
@@ -1206,11 +1366,60 @@
 
 	// configure customScript for this SWF here
 	//	  (customScriptFirst will be prepended to auto-generated script)
-	//	  (customScriptLast will be appended to auto-generated script)
+	//	  (fData.CustomScriptLast will be appended to auto-generated script)
 	fData.CustomScriptFirst = '';
 
 
-	fData.CustomScriptLast = '';
+	fData.CustomScriptLast = 'if ($("input#individual-or-pattern_individual").is(":checked")) { \n' +
+								'   $("div#simple-dates").show("fast").removeClass("hidden"); \n' +
+								'} \n';
+
+
+	fData.CustomScriptLast += 'if ($("input#individual-or-pattern_pattern").is(":checked")) { \n' +
+							'   $("div#pattern-and-range").show("fast").removeClass("hidden"); \n' +
+							'} \n';
+
+	fData.CustomScriptLast += 'if ($("input#Legacy-Contact").val() != "") { \n' +
+							'   $("div#label-and-control_Requested-For").hide("fast").addClass("hidden"); \n' +
+							'   $("div#label-and-control_Legacy-Contact").show("fast").removeClass("hidden"); \n' +
+							'} \n';
+
+	fData.CustomScriptLast += 'if ($("input#Legacy-Event-Creation-Date").val() != "") { \n' +
+							'   $("div#label-and-control_Request-Date").hide("fast").addClass("hidden"); \n' +
+							'   $("div#label-and-control_Legacy-Event-Creation-Date").show("fast").removeClass("hidden"); \n' +
+							'} \n';
+
+	fData.CustomScriptLast += 'if ($("select#Pattern-Basis").val() == "xDays") { \n' +
+						'   $("div#pattern_x-days").show("fast").removeClass("hidden"); \n' +
+						'} \n';
+
+	fData.CustomScriptLast += 'if ($("select#Pattern-Basis").val() == "xWeeks") { \n' +
+						'   $("div#pattern_x-weeks").show("fast").removeClass("hidden"); \n' +
+						'} \n';
+
+	fData.CustomScriptLast += 'if ($("select#Pattern-Basis").val() == "monthlySameDay") { \n' +
+						'   $("div#pattern_monthly-same-day").show("fast").removeClass("hidden"); \n' +
+						'} \n';
+
+	fData.CustomScriptLast += 'if ($("select#Pattern-Basis").val() == "monthlySameWeek") { \n' +
+						'   $("div#pattern_monthly-same-week").show("fast").removeClass("hidden"); \n' +
+						'} \n';
+
+	fData.CustomScriptLast += 'if ($("select#Pattern-Basis").val() == "yearlySameDay") { \n' +
+						'   $("div#pattern_yearly-same-day").show("fast").removeClass("hidden"); \n' +
+						'} \n';
+
+	fData.CustomScriptLast += 'if ($("select#Pattern-Basis").val() == "yearlySameWeek") { \n' +
+						'   $("div#pattern_yearly-same-week").show("fast").removeClass("hidden"); \n' +
+						'} \n';
+
+	fData.CustomScriptLast += 'if ($("select#Ending-Basis").val() == "xOccurrences") { \n' +
+						'   $("div#range_x-occurrences").show("fast").removeClass("hidden"); \n' +
+						'} \n';
+
+	fData.CustomScriptLast += 'if ($("select#Ending-Basis").val() == "date") { \n' +
+						'   $("div#range_ending-date").show("fast").removeClass("hidden"); \n' +
+						'} \n';
 
 
 	$.fn.ReturnThisAppMData = function () {

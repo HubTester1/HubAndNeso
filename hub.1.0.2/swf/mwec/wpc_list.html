@@ -1,0 +1,72 @@
+﻿
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        // maintenance mode
+        var allSWFsInMaintenance = $().ReturnMaintenanceModeAllSWFs();
+        var thisSWFInMainenanceMode = $().ReturnMaintenanceModeThisSWF(location);
+        if (allSWFsInMaintenance == false && thisSWFInMainenanceMode == false) {
+
+
+
+            // configure tables here
+            var tData = {
+                'commonColumns': [
+                    {
+                        'displayName': 'Event ID',
+                        'internalName': 'ID',
+                        'formLink': 1
+                    }, {
+                        'displayName': 'Contact',
+                        'internalName': 'RequestedFor',
+                        'userName': 1
+                    }, {
+                        'displayName': 'Location',
+                        'internalName': 'EventLocation',
+                    }, {
+                        'displayName': 'Count',
+                        'internalName': 'EventCount',
+                    }, {
+                        'displayName': 'Created By',
+                        'internalName': 'Author',
+                        'userName': 1
+                    }, {
+                        'displayName': 'Created',
+                        'internalName': 'RequestDate',
+                        'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+                    }
+                ],
+                'tables': [
+                    {
+                        'tableTitle': 'List View',
+                        'tableID': 'list-view',
+                        'someColsAreUsers': 1,
+                        'basicRSQueryRelevantStatus': 'Submitted',
+                        'sortColAndOrder': [0, 'desc'],
+                    }
+                ]
+            };
+
+
+
+            // ----- nothing below should need to be configured for a new SWF
+
+            mData = $().ReturnThisSiteSettings();
+            var requestID = $().GetParamFromUrl(location.search, 'requestID');
+            $().InitializeListViewPage(mData, tData);
+
+        } else {
+            $().RenderMaintenanceMessage();
+        }
+    });
+
+</script>
+
+
+
+<!-- all content -->
+<div id="all-content-container">
+    <div id="table-container"></div>
+    <div id="overlays-container"></div>
+</div>
