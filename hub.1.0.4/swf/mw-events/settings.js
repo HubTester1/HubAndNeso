@@ -1,6 +1,8 @@
 
 (function ($) {
 
+	// EVENTS
+
 	var mData = {
 		'componentID': 171,
 		'swf': 1,
@@ -18,7 +20,7 @@
 
 
 	var oData = {
-		'admin': {
+		'mwEventList': {
 			'buttons': [
 				// {
 				//     "linkType": "goForward",
@@ -82,7 +84,7 @@
 				]
 			}
 		},
-		'my': {
+		'mwEventCalendar': {
 			'buttons': [
 			],
 			'sections': {

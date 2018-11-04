@@ -18,7 +18,7 @@
 
 
 	var oData = {
-		'admin': {
+		'mwBuyoutList': {
 			'buttons': [
 				// {
 				//     "linkType": "goForward",
@@ -82,7 +82,7 @@
 				]
 			}
 		},
-		'my': {
+		'mwBuyoutCalendar': {
 			'buttons': [
 			],
 			'sections': {

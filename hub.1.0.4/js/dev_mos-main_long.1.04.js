@@ -462,6 +462,25 @@
 			case "gseSignupsStaff":
 				newTitle = "My GSE Signups";
 				break;
+
+			case "mwBuyoutCalendar":
+				newTitle = "Buyouts Calendar";
+				break;
+			case "mwBuyoutList":
+				newTitle = "Buyouts List";
+				break;
+			case "mwEventCalendar":
+				newTitle = "Museum-wide Events Calendar";
+				break;
+			case "mwEventList":
+				newTitle = "Museum-wide Events List";
+				break;
+			case "mwProductsTimeline":
+				newTitle = "Products Calendar";
+				break;
+			case "mwProductsList":
+				newTitle = "Products List";
+				break;
 		}
 
 		return newTitle
@@ -499,6 +518,9 @@
 			case "gseSignupsJobAdmin":
 			case "gseSignupsManager":
 			case "gseSignupsStaff":
+			case "mwBuyoutList":
+			case "mwEventList":
+			case "mwProductsList":
 				if (addBrowserHistoryEntry === 1) { $().AddBrowserHistoryEntry(toScreen, newTitle, "App.aspx"); }
 				if (replaceBrowserHistoryEntry === 1) { $().ReplaceBrowserHistoryEntry(toScreen, newTitle, "App.aspx"); }
 				break;
@@ -507,8 +529,15 @@
 			case "gseSchedulesCalendarJobAdmin":
 			case "gseSchedulesCalendarManager":
 			case "gseSchedulesCalendarStaff":
+			case "mwBuyoutCalendar":
+			case "mwEventCalendar":
 				if (addBrowserHistoryEntry === 1) { $().AddBrowserHistoryEntry(toScreen, newTitle, "App.aspx?f=cal"); }
 				if (replaceBrowserHistoryEntry === 1) { $().ReplaceBrowserHistoryEntry(toScreen, newTitle, "App.aspx?f=cal"); }
+				break;
+
+			case "mwProductsTimeline":
+				if (addBrowserHistoryEntry === 1) { $().AddBrowserHistoryEntry(toScreen, newTitle, "App.aspx?f=tl"); }
+				if (replaceBrowserHistoryEntry === 1) { $().ReplaceBrowserHistoryEntry(toScreen, newTitle, "App.aspx?f=tl"); }
 				break;
 
 			case "newRequest":
@@ -568,6 +597,10 @@
 			case "gseSignupsJobAdmin":
 			case "gseSignupsManager":
 			case "gseSignupsStaff":
+
+			case "mwBuyoutList":
+			case "mwEventList":
+			case "mwProductsList":
 				$().ReplacePageTitle(newTitle);
 				$("div#overview-screen-container").fadeIn(mData.gracefulScreenTransitionTime).removeClass("hidden");
 				$("div#overview-screen-container table.dataTable").each(function () {
@@ -581,9 +614,20 @@
 			case "gseSchedulesCalendarJobAdmin":
 			case "gseSchedulesCalendarManager":
 			case "gseSchedulesCalendarStaff":
+
+			case "mwBuyoutCalendar":
+			case "mwEventCalendar":
 				$().ReplacePageTitle(newTitle);
 				$("div#overview-screen-container").fadeIn(mData.gracefulScreenTransitionTime).removeClass("hidden");
 				$('div#overview-screen-container').fullCalendar('render');
+				$('#s4-workspace').scrollTop(0);
+				break;
+
+			case "mwProductsTimeline":
+				$().ReplacePageTitle(newTitle);
+				$("div#overview-screen-container").fadeIn(mData.gracefulScreenTransitionTime).removeClass("hidden");
+				// initialize timeline
+				// $('div#overview-screen-container').fullCalendar('render');
 				$('#s4-workspace').scrollTop(0);
 				break;
 
@@ -651,6 +695,13 @@
 			case "gseSignupsJobAdmin":
 			case "gseSignupsManager":
 			case "gseSignupsStaff":
+
+			case "mwBuyoutCalendar":
+			case "mwBuyoutList":
+			case "mwEventCalendar":
+			case "mwEventList":
+			case "mwProductsTimeline":
+			case "mwProductsList":
 				$("div#overview-screen-container").fadeOut(mData.gracefulScreenTransitionTime).addClass("hidden");
 				break;
 			case "request":
@@ -757,6 +808,26 @@
 				$().ConfigureOverviewScreen("gseSignupsStaff");
 				break;
 
+			case "mwBuyoutCalendar":
+				$().ConfigureOverviewScreen("mwBuyoutCalendar");
+				break;
+			case "mwBuyoutList":
+				$().ConfigureOverviewScreen("mwBuyoutList");
+				break;
+
+			case "mwEventCalendar":
+				$().ConfigureOverviewScreen("mwEventCalendar");
+				break;
+			case "mwEventList":
+				$().ConfigureOverviewScreen("mwEventList");
+				break;
+
+			case "mwProductsTimeline":
+				$().ConfigureOverviewScreen("mwProductsTimeline");
+				break;
+			case "mwProductsList":
+				$().ConfigureOverviewScreen("mwProductsList");
+				break;
 
 		}
 	};
@@ -806,6 +877,12 @@
 					"gseSignupsJobAdmin",
 					"gseSignupsManager",
 					"gseSignupsStaff",
+					"mwBuyoutCalendar",
+					"mwBuyoutList",
+					"mwEventCalendar",
+					"mwEventList",
+					"mwProductsTimeline",
+					"mwProductsList",
 				];
 				if (overviewScreens.indexOf(options.toScreen) > -1) {
 
@@ -935,10 +1012,27 @@
 			case "gseSignupsJobAdmin":
 			case "gseSignupsManager":
 			case "gseSignupsStaff":
-				$("div#overview-screen-container").empty().removeClass('adminRequests-requests myRequests-requests gpcInitialConceptApprovalViewer-requests gpcSubmissionApprovalViewer-requests adminReferrals-requests myReferrals-requests adminEventAV-requests gseStatsHRAdmin-requests gseJobsHRAdmin-requests gseJobsJobAdmin-requests gseJobsManager-requests gseSchedulesCalendarHRAdmin-requests gseSchedulesCalendarJobAdmin-requests gseSchedulesCalendarManager-requests gseSchedulesCalendarStaff-requests gseSchedulesListHRAdmin-requests gseSchedulesListJobAdmin-requests gseSchedulesListManager-requests gseSchedulesListStaff-requests gseSignupsHRAdmin-requests gseSignupsJobAdmin-requests gseSignupsManager-requests gseSignupsStaff-requests');
+
+			case "mwBuyoutCalendar":
+			case "mwBuyoutList":
+			case "mwEventCalendar":
+			case "mwEventList":
+			case "mwProductsTimeline":
+			case "mwProductsList":
+				$("div#overview-screen-container").empty().removeClass('adminRequests-requests myRequests-requests gpcInitialConceptApprovalViewer-requests gpcSubmissionApprovalViewer-requests adminReferrals-requests myReferrals-requests adminEventAV-requests gseStatsHRAdmin-requests gseJobsHRAdmin-requests gseJobsJobAdmin-requests gseJobsManager-requests gseSchedulesCalendarHRAdmin-requests gseSchedulesCalendarJobAdmin-requests gseSchedulesCalendarManager-requests gseSchedulesCalendarStaff-requests gseSchedulesListHRAdmin-requests gseSchedulesListJobAdmin-requests gseSchedulesListManager-requests gseSchedulesListStaff-requests gseSignupsHRAdmin-requests gseSignupsJobAdmin-requests gseSignupsManager-requests gseSignupsStaff-requests mwBuyoutCalendar-requests mwBuyoutList-requests mwEventCalendar-requests mwEventList-requests mwProductsTimeline-requests mwProductsList-requests');
 				$("div#overview-screen-container").append('<div id="overview-table-container" class="table-container"></div>');
 			case "gseSchedulesListHRAdmin":
 				$("div#gse-schedule-card-dialog").remove();
+				break;
+
+			case "mwBuyoutCalendar":
+				$("div#mw-buyout-card-dialog").remove();
+				break;
+			case "mwEventCalendar":
+				$("div#mw-event-card-dialog").remove();
+				break;
+			case "mwProductsTimeline":
+				$("div#mw-product-card-dialog").remove();
 				break;
 		}
 	};
@@ -1794,6 +1888,29 @@
 					userNeeedsAlternateOverviewScreen = "gseSignupsManager";
 				} else {
 					userNeeedsAlternateOverviewScreen = "gseSignupsStaff";
+				}
+				break;
+
+
+			case "Buyout Calendar":
+				if (GetParamFromUrl(location.search, "f") === "cal") {
+					userNeeedsAlternateOverviewScreen = "mwBuyoutCalendar";
+				} else {
+					userNeeedsAlternateOverviewScreen = "mwBuyoutList";
+				}
+				break;
+			case "Museum-wide Event Calendar":
+				if (GetParamFromUrl(location.search, "f") === "cal") {
+					userNeeedsAlternateOverviewScreen = "mwEventCalendar";
+				} else {
+					userNeeedsAlternateOverviewScreen = "mwEventList";
+				}
+				break;
+			case "Product Timeline":
+				if (GetParamFromUrl(location.search, "f") === "tl") {
+					userNeeedsAlternateOverviewScreen = "mwProductsTimeline";
+				} else {
+					userNeeedsAlternateOverviewScreen = "mwProductsList";
 				}
 				break;
 		}
@@ -7194,6 +7311,19 @@
 			$().RenderAllDataTables(oData.gpcSubmissionApprovalViewer.sections, "overview-table-container");
 			$().RenderWorkflowContacts();
 
+		} else if (type === "mwBuyoutList") {
+			$().RenderOverviewScreenButtons(oData.mwBuyoutList.buttons);
+			$().RenderAllDataTables(oData.mwBuyoutList.sections, "overview-table-container");
+			$().RenderWorkflowContacts();
+		} else if (type === "mwEventList") {
+			$().RenderOverviewScreenButtons(oData.mwEventList.buttons);
+			$().RenderAllDataTables(oData.mwEventList.sections, "overview-table-container");
+			$().RenderWorkflowContacts();
+		} else if (type === "mwProductsList") {
+			$().RenderOverviewScreenButtons(oData.mwProductsList.buttons);
+			$().RenderAllDataTables(oData.mwProductsList.sections, "overview-table-container");
+			$().RenderWorkflowContacts();
+
 
 		} else if (type === "adminEventAV") {
 			$().RenderCommandBarAndDatatablesForEventAVForAdmin();
@@ -7264,6 +7394,25 @@
 		} else if (type === "gseSignupsStaff") {
 			$().RenderCommandBarAndDataTablesForGSESignupsForJobAdminOrUser("overview-table-container", 'gseUserOnly');
 			$().RenderWorkflowContacts();
+
+		} else if (type === "mwBuyoutCalendar") {
+			$().RenderOverviewScreenButtons(oData.mwBuyoutCalendar.buttons);
+			$().RenderBuyoutCalendar();
+		} else if (type === "mwEventCalendar") {
+			$().RenderOverviewScreenButtons(oData.mwEventCalendar.buttons);
+			$().RenderMWEventCalendar();
+		} else if (type === "mwProductsTimeline") {
+			$().RenderOverviewScreenButtons(oData.mwProductsTimeline.buttons);
+			$().RenderProductTimeline();
+
+
+
+
+
+
+
+
+
 		}
 
 		$("div#overview-screen-container").addClass(type + "-requests");
@@ -18914,6 +19063,776 @@
 	};
 
 
+
+	$.fn.RenderBuyoutCalendar = function (buttons, relevantRole) {
+
+		var startingYearOfFirstFiscalYear = 2018;
+		// var thisYear = 2022;
+		// var startingYearOfLastFiscalYear = moment('2022-09-08').isAfter(thisYear + '-06-30') ?
+		// 	parseInt(thisYear) :
+		// 	parseInt(thisYear) - 1;
+		var thisYear = $().ReturnFormattedDateTime('nowLocal', null, 'YYYY');
+		var startingYearOfLastFiscalYear = moment().isAfter(thisYear + '-06-30') ?
+			parseInt(thisYear) :
+			parseInt(thisYear) - 1;
+
+
+		var selectedStartYear = GetParamFromUrl(location.search, "y");
+		if (!selectedStartYear || selectedStartYear == '') {
+			selectedStartYear = moment().isAfter(thisYear + '-06-30') ?
+				parseInt(thisYear) :
+				parseInt(thisYear) - 1;
+		}
+
+
+
+		var nowAsISOLocal = $().ReturnFormattedDateTime('nowLocal', null, null);
+		var viewToUse = GetParamFromUrl(location.search, 'view');
+		var dateToUse = GetParamFromUrl(location.search, 'date');
+		if (!viewToUse || viewToUse == "") { viewToUse = 'month'; }
+		if (!dateToUse || dateToUse == "") {
+			dateToUse =
+				$().ReturnFormattedDateTime('nowUTC', 'YYYY-MM-DDTHH:mm:ssZ', 'YYYY-MM-DD', 0);
+		}
+
+		var renderPrepStartTime = Date.now();
+
+		var augmentedSchedules = $().ReturnSelectedAugmentedSchedulesForGSESchedulesCalendar(selectedStartYear, nowAsISOLocal);
+
+		console.log('render prep time = ' + (Date.now() - renderPrepStartTime) / 1000 + ' seconds');
+
+		$("div#overview-screen-container").fullCalendar({
+			allDayDefault: true,
+			lazyFetching: false,
+			eventOrder: "start",
+			header: {
+				// right and center are reversed, because our CSS implements obedience to the accessibility imperative that DOM elements exist 
+				//      (and are thus encountered by assistive technologies) in the same order in which they're presented to sighted users
+				left: "",
+				right: "prevYear,prev,title,next,nextYear",
+				center: "today,basicDay,basicWeek,month"
+			},
+			validRange: {
+				start: selectedStartYear + '06-30',
+				end: (parseInt(selectedStartYear) + 1) + '2017-06-01'
+			},
+			/* views: {
+				month: {
+					titleFormat: 'YYYY, MM, DD'
+				},
+				week: {
+					titleFormat: 'YYYY, MM, DD'
+				},
+				day: {
+					titleFormat: 'YYYY, MM, DD'
+				},
+			}, */
+			defaultView: viewToUse,
+			defaultDate: dateToUse,
+			/* dayClick: function (date, jsEvent, view) {
+				// to do: consider moving this to a generic event listener if we're not sending a date in the URL
+
+				if (relevantRole === 'gseHRAdmin' || relevantRole === 'gseJobAdmin') {
+					if (moment(date._d).isAfter(nowAsISOLocal) && relevantRole === 'gseHRAdmin') {
+						var addScheduleURL = '/sites/hr-service-schedules/SitePages/App.aspx?r=0&d=' + date._i;
+						window.open(addScheduleURL, '_blank');
+					}
+				}
+			},
+			dayRender: function (date, cell) {
+				if (relevantRole === 'gseHRAdmin' || relevantRole === 'gseJobAdmin') {
+					if (cell[0].classList.contains('fc-future')) {
+						var addLinkMarkup = '<a class="add-schedule" ' + 
+							'href="/sites/hr-service-schedules/SitePages/App.aspx?r=0&d=' + date._i + 
+							'" target="_blank">Add</a>';
+						cell.append(addLinkMarkup);
+						var headClassSelector = '';
+						if (cell.hasClass('fc-sun')) {
+							headClassSelector = 'fc-sun';
+						} else if (cell.hasClass('fc-mon')) {
+							headClassSelector = 'fc-mon';
+						} else if (cell.hasClass('fc-tue')) {
+							headClassSelector = 'fc-tue';
+						} else if (cell.hasClass('fc-wed')) {
+							headClassSelector = 'fc-wed';
+						} else if (cell.hasClass('fc-thu')) {
+							headClassSelector = 'fc-thu';
+						} else if (cell.hasClass('fc-fri')) {
+							headClassSelector = 'fc-fri';
+						} else if (cell.hasClass('fc-sat')) {
+							headClassSelector = 'fc-sat';
+						}
+						cell.closest('div.fc-row')
+							.find('div.fc-content-skeleton')
+							.find('td.' + headClassSelector)
+							.addClass('add-schedule-on-click');
+					}
+				}
+				
+			}, */
+			theme: true,
+			eventClick: function (event, jsEvent, view) {
+
+				// close the dialog box
+				$("div#dialog").dialog("close");
+
+				// populate the dialog box
+
+				var dialogTitleBarContent = '<h2 class="gse-schedules-dialog-date-and-time-range">' +
+					'<span class="gse-schedules-dialog-date">' + event.formattedDate + '</span> ' +
+					'<span class="gse-schedules-dialog-start-time">' + event.formattedStartTime + '</span>' +
+					'<span class="gse-schedules-dialog-times-separator"> &ndash; </span>' +
+					'<span class="gse-schedules-dialog-end-time">' + event.formattedEndTime + '</span>' +
+					'</h2>';
+
+				$("div[aria-describedby='gse-schedule-card-dialog'] div.ui-dialog-titlebar span.ui-dialog-title").html(dialogTitleBarContent);
+
+				var dialogBodyContent =
+					'<h3 class="gse-schedule-card-dialog-job-title">' + event.jobTitle + '</h3>' +
+					event.jobDescription;
+
+				if (event.isInFuture) {
+					dialogBodyContent += '<p>Signups Available: ' +
+						(event.quantityPositions - event.quantitySignups) +
+						' / ' + event.quantityPositions;
+				}
+
+				dialogBodyContent += '<div class="gse-schedule-card-dialog-links-container">';
+
+				if (event.mySignupURL) {
+					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' +
+						'<a id="gse-schedule-card-dialog-my-signup-link" ' +
+						'class="gse-schedule-card-dialog-button" href="' +
+						event.mySignupURL + '" target="_blank">More Info / My Signup</a></div>';
+				} else if (event.isInFuture && ((parseInt(event.quantityPositions) - parseInt(event.quantitySignups)) !== 0)) {
+					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' +
+						'<a id="gse-schedule-card-dialog-signup-opportunity-link" ' +
+						'class="gse-schedule-card-dialog-button" href="' +
+						event.signupURL + '" target="_blank">More Info / Sign Up</a></div>';
+				} else {
+					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' +
+						'<a id="gse-schedule-card-dialog-signup-opportunity-link" ' +
+						'class="gse-schedule-card-dialog-button" href="' +
+						event.signupURL + '" target="_blank">More Info</a></div>';
+				}
+
+				if (relevantRole === 'gseHRAdmin' || relevantRole === 'gseJobAdmin') {
+					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' +
+						'<a id="gse-schedule-card-dialog-job-link" ' +
+						'class="gse-schedule-card-dialog-button" href="' +
+						event.jobURL + '" target="_blank">Job Details</a></div>';
+					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' +
+						'<a id="gse-schedule-card-dialog-schedule-link" ' +
+						'class="gse-schedule-card-dialog-button" href="' +
+						event.scheduleURL + '" target="_blank">Schedule Details</a></div>';
+				}
+
+				$("div#gse-schedule-card-dialog").html(dialogBodyContent);
+
+				// position the dialog box
+				$("div#gse-schedule-card-dialog").dialog("option", "position", { my: "left bottom", at: "right top", of: jsEvent });
+
+				// open the dialog box
+				$("div#gse-schedule-card-dialog").dialog("open");
+			},
+			events: augmentedSchedules
+
+		});
+
+		$("div.fc-toolbar div.fc-left").append('<div id="container_command-bar"></div>');
+
+		var buttonDivs = $().ReturnButtonsMarkupWithContainerDivs(buttons);
+		var buttonOverflowMenu = $().ReturnButtonsMarkupAsOverflowMenu(buttons);
+
+		var commandBarContents = '';
+
+		commandBarContents +=
+			'<div id="container_navigation-controls-expanded"> \n' +
+			buttonDivs +
+			'</div> \n';
+
+
+
+		commandBarContents +=
+			'<div id="container_filter-controls-and-header"> \n' +
+			'   <div id="text_filter-controls" class="collapsible">Year</div> \n' +
+			'   <div id="container_filter-controls"> \n' +
+			'   	<div class="container_filter-control"> \n' +
+			'   		<label for="filter_year">Year</label><select id="filter_year" name="filter_year"> \n' +
+			'				' + $().ReturnFiscalYearSelectOptions(startingYearOfFirstFiscalYear, startingYearOfLastFiscalYear, true, selectedStartYear) + ' \n' +
+			'			</select>' +
+			'		</div>' +
+			'   	<div class="container_filter-control"> \n' +
+			'			<a id="filter_submit-button">Update</a>' +
+			'		</div>' +
+			'    </div> \n' +
+			'</div> \n';
+
+		commandBarContents += buttonOverflowMenu;
+
+		$("div#container_command-bar").append(commandBarContents);
+
+		// add extra class for styling hook
+		$('div#app-container').addClass('gse-schedule-calendar');
+
+		// collapse filters
+		$('.collapsible').collapsible();
+
+
+
+
+
+
+
+
+
+
+
+		$("div#app-container").append("<div id=\"gse-schedule-card-dialog\"></div>");
+
+		$("div#gse-schedule-card-dialog").dialog({
+			autoOpen: false,
+			draggable: true,
+			modal: true,
+			show: {
+				effect: "bounce",
+				times: 2,
+				duration: 500
+			},
+			width: 400,
+		});
+
+
+		$("div.fc-toolbar, div.fc-view-container").fadeTo(1000, 1);
+
+		// listen for date filtering
+		$("a#filter_submit-button").click(function () {
+			var selectedStartYear = $("select#filter_year").val();
+			if (selectedStartYear == '') {
+				selectedStartYear = moment().isAfter(thisYear + '-06-30') ?
+					parseInt(thisYear) :
+					parseInt(thisYear) - 1;
+			}
+			window.location = "/sites/" + mData.siteToken + "/SitePages/App.aspx?f=cal&y=" + selectedStartYear;
+		});
+	};
+
+
+
+	$.fn.RenderMWEventCalendar = function (buttons, relevantRole) {
+
+		var startingYearOfFirstFiscalYear = 2018;
+		// var thisYear = 2022;
+		// var startingYearOfLastFiscalYear = moment('2022-09-08').isAfter(thisYear + '-06-30') ?
+		// 	parseInt(thisYear) :
+		// 	parseInt(thisYear) - 1;
+		var thisYear = $().ReturnFormattedDateTime('nowLocal', null, 'YYYY');
+		var startingYearOfLastFiscalYear = moment().isAfter(thisYear + '-06-30') ?
+			parseInt(thisYear) :
+			parseInt(thisYear) - 1;
+
+
+		var selectedStartYear = GetParamFromUrl(location.search, "y");
+		if (!selectedStartYear || selectedStartYear == '') {
+			selectedStartYear = moment().isAfter(thisYear + '-06-30') ?
+				parseInt(thisYear) :
+				parseInt(thisYear) - 1;
+		}
+
+
+
+		var nowAsISOLocal = $().ReturnFormattedDateTime('nowLocal', null, null);
+		var viewToUse = GetParamFromUrl(location.search, 'view');
+		var dateToUse = GetParamFromUrl(location.search, 'date');
+		if (!viewToUse || viewToUse == "") { viewToUse = 'month'; }
+		if (!dateToUse || dateToUse == "") {
+			dateToUse =
+				$().ReturnFormattedDateTime('nowUTC', 'YYYY-MM-DDTHH:mm:ssZ', 'YYYY-MM-DD', 0);
+		}
+
+		var renderPrepStartTime = Date.now();
+
+		var augmentedSchedules = $().ReturnSelectedAugmentedSchedulesForGSESchedulesCalendar(selectedStartYear, nowAsISOLocal);
+
+		console.log('render prep time = ' + (Date.now() - renderPrepStartTime) / 1000 + ' seconds');
+
+		$("div#overview-screen-container").fullCalendar({
+			allDayDefault: true,
+			lazyFetching: false,
+			eventOrder: "start",
+			header: {
+				// right and center are reversed, because our CSS implements obedience to the accessibility imperative that DOM elements exist 
+				//      (and are thus encountered by assistive technologies) in the same order in which they're presented to sighted users
+				left: "",
+				right: "prevYear,prev,title,next,nextYear",
+				center: "today,basicDay,basicWeek,month"
+			},
+			validRange: {
+				start: selectedStartYear + '06-30',
+				end: (parseInt(selectedStartYear) + 1) + '2017-06-01'
+			},
+			/* views: {
+				month: {
+					titleFormat: 'YYYY, MM, DD'
+				},
+				week: {
+					titleFormat: 'YYYY, MM, DD'
+				},
+				day: {
+					titleFormat: 'YYYY, MM, DD'
+				},
+			}, */
+			defaultView: viewToUse,
+			defaultDate: dateToUse,
+			/* dayClick: function (date, jsEvent, view) {
+				// to do: consider moving this to a generic event listener if we're not sending a date in the URL
+
+				if (relevantRole === 'gseHRAdmin' || relevantRole === 'gseJobAdmin') {
+					if (moment(date._d).isAfter(nowAsISOLocal) && relevantRole === 'gseHRAdmin') {
+						var addScheduleURL = '/sites/hr-service-schedules/SitePages/App.aspx?r=0&d=' + date._i;
+						window.open(addScheduleURL, '_blank');
+					}
+				}
+			},
+			dayRender: function (date, cell) {
+				if (relevantRole === 'gseHRAdmin' || relevantRole === 'gseJobAdmin') {
+					if (cell[0].classList.contains('fc-future')) {
+						var addLinkMarkup = '<a class="add-schedule" ' + 
+							'href="/sites/hr-service-schedules/SitePages/App.aspx?r=0&d=' + date._i + 
+							'" target="_blank">Add</a>';
+						cell.append(addLinkMarkup);
+						var headClassSelector = '';
+						if (cell.hasClass('fc-sun')) {
+							headClassSelector = 'fc-sun';
+						} else if (cell.hasClass('fc-mon')) {
+							headClassSelector = 'fc-mon';
+						} else if (cell.hasClass('fc-tue')) {
+							headClassSelector = 'fc-tue';
+						} else if (cell.hasClass('fc-wed')) {
+							headClassSelector = 'fc-wed';
+						} else if (cell.hasClass('fc-thu')) {
+							headClassSelector = 'fc-thu';
+						} else if (cell.hasClass('fc-fri')) {
+							headClassSelector = 'fc-fri';
+						} else if (cell.hasClass('fc-sat')) {
+							headClassSelector = 'fc-sat';
+						}
+						cell.closest('div.fc-row')
+							.find('div.fc-content-skeleton')
+							.find('td.' + headClassSelector)
+							.addClass('add-schedule-on-click');
+					}
+				}
+				
+			}, */
+			theme: true,
+			eventClick: function (event, jsEvent, view) {
+
+				// close the dialog box
+				$("div#dialog").dialog("close");
+
+				// populate the dialog box
+
+				var dialogTitleBarContent = '<h2 class="gse-schedules-dialog-date-and-time-range">' +
+					'<span class="gse-schedules-dialog-date">' + event.formattedDate + '</span> ' +
+					'<span class="gse-schedules-dialog-start-time">' + event.formattedStartTime + '</span>' +
+					'<span class="gse-schedules-dialog-times-separator"> &ndash; </span>' +
+					'<span class="gse-schedules-dialog-end-time">' + event.formattedEndTime + '</span>' +
+					'</h2>';
+
+				$("div[aria-describedby='gse-schedule-card-dialog'] div.ui-dialog-titlebar span.ui-dialog-title").html(dialogTitleBarContent);
+
+				var dialogBodyContent =
+					'<h3 class="gse-schedule-card-dialog-job-title">' + event.jobTitle + '</h3>' +
+					event.jobDescription;
+
+				if (event.isInFuture) {
+					dialogBodyContent += '<p>Signups Available: ' +
+						(event.quantityPositions - event.quantitySignups) +
+						' / ' + event.quantityPositions;
+				}
+
+				dialogBodyContent += '<div class="gse-schedule-card-dialog-links-container">';
+
+				if (event.mySignupURL) {
+					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' +
+						'<a id="gse-schedule-card-dialog-my-signup-link" ' +
+						'class="gse-schedule-card-dialog-button" href="' +
+						event.mySignupURL + '" target="_blank">More Info / My Signup</a></div>';
+				} else if (event.isInFuture && ((parseInt(event.quantityPositions) - parseInt(event.quantitySignups)) !== 0)) {
+					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' +
+						'<a id="gse-schedule-card-dialog-signup-opportunity-link" ' +
+						'class="gse-schedule-card-dialog-button" href="' +
+						event.signupURL + '" target="_blank">More Info / Sign Up</a></div>';
+				} else {
+					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' +
+						'<a id="gse-schedule-card-dialog-signup-opportunity-link" ' +
+						'class="gse-schedule-card-dialog-button" href="' +
+						event.signupURL + '" target="_blank">More Info</a></div>';
+				}
+
+				if (relevantRole === 'gseHRAdmin' || relevantRole === 'gseJobAdmin') {
+					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' +
+						'<a id="gse-schedule-card-dialog-job-link" ' +
+						'class="gse-schedule-card-dialog-button" href="' +
+						event.jobURL + '" target="_blank">Job Details</a></div>';
+					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' +
+						'<a id="gse-schedule-card-dialog-schedule-link" ' +
+						'class="gse-schedule-card-dialog-button" href="' +
+						event.scheduleURL + '" target="_blank">Schedule Details</a></div>';
+				}
+
+				$("div#gse-schedule-card-dialog").html(dialogBodyContent);
+
+				// position the dialog box
+				$("div#gse-schedule-card-dialog").dialog("option", "position", { my: "left bottom", at: "right top", of: jsEvent });
+
+				// open the dialog box
+				$("div#gse-schedule-card-dialog").dialog("open");
+			},
+			events: augmentedSchedules
+
+		});
+
+		$("div.fc-toolbar div.fc-left").append('<div id="container_command-bar"></div>');
+
+		var buttonDivs = $().ReturnButtonsMarkupWithContainerDivs(buttons);
+		var buttonOverflowMenu = $().ReturnButtonsMarkupAsOverflowMenu(buttons);
+
+		var commandBarContents = '';
+
+		commandBarContents +=
+			'<div id="container_navigation-controls-expanded"> \n' +
+			buttonDivs +
+			'</div> \n';
+
+
+
+		commandBarContents +=
+			'<div id="container_filter-controls-and-header"> \n' +
+			'   <div id="text_filter-controls" class="collapsible">Year</div> \n' +
+			'   <div id="container_filter-controls"> \n' +
+			'   	<div class="container_filter-control"> \n' +
+			'   		<label for="filter_year">Year</label><select id="filter_year" name="filter_year"> \n' +
+			'				' + $().ReturnFiscalYearSelectOptions(startingYearOfFirstFiscalYear, startingYearOfLastFiscalYear, true, selectedStartYear) + ' \n' +
+			'			</select>' +
+			'		</div>' +
+			'   	<div class="container_filter-control"> \n' +
+			'			<a id="filter_submit-button">Update</a>' +
+			'		</div>' +
+			'    </div> \n' +
+			'</div> \n';
+
+		commandBarContents += buttonOverflowMenu;
+
+		$("div#container_command-bar").append(commandBarContents);
+
+		// add extra class for styling hook
+		$('div#app-container').addClass('gse-schedule-calendar');
+
+		// collapse filters
+		$('.collapsible').collapsible();
+
+
+
+
+
+
+
+
+
+
+
+		$("div#app-container").append("<div id=\"gse-schedule-card-dialog\"></div>");
+
+		$("div#gse-schedule-card-dialog").dialog({
+			autoOpen: false,
+			draggable: true,
+			modal: true,
+			show: {
+				effect: "bounce",
+				times: 2,
+				duration: 500
+			},
+			width: 400,
+		});
+
+
+		$("div.fc-toolbar, div.fc-view-container").fadeTo(1000, 1);
+
+		// listen for date filtering
+		$("a#filter_submit-button").click(function () {
+			var selectedStartYear = $("select#filter_year").val();
+			if (selectedStartYear == '') {
+				selectedStartYear = moment().isAfter(thisYear + '-06-30') ?
+					parseInt(thisYear) :
+					parseInt(thisYear) - 1;
+			}
+			window.location = "/sites/" + mData.siteToken + "/SitePages/App.aspx?f=cal&y=" + selectedStartYear;
+		});
+	};
+
+
+	$.fn.RenderProductTimeline = function (buttons, relevantRole) {
+
+		var startingYearOfFirstFiscalYear = 2018;
+		// var thisYear = 2022;
+		// var startingYearOfLastFiscalYear = moment('2022-09-08').isAfter(thisYear + '-06-30') ?
+		// 	parseInt(thisYear) :
+		// 	parseInt(thisYear) - 1;
+		var thisYear = $().ReturnFormattedDateTime('nowLocal', null, 'YYYY');
+		var startingYearOfLastFiscalYear = moment().isAfter(thisYear + '-06-30') ?
+			parseInt(thisYear) :
+			parseInt(thisYear) - 1;
+
+
+		var selectedStartYear = GetParamFromUrl(location.search, "y");
+		if (!selectedStartYear || selectedStartYear == '') {
+			selectedStartYear = moment().isAfter(thisYear + '-06-30') ?
+				parseInt(thisYear) :
+				parseInt(thisYear) - 1;
+		}
+
+
+
+		var nowAsISOLocal = $().ReturnFormattedDateTime('nowLocal', null, null);
+		var viewToUse = GetParamFromUrl(location.search, 'view');
+		var dateToUse = GetParamFromUrl(location.search, 'date');
+		if (!viewToUse || viewToUse == "") { viewToUse = 'month'; }
+		if (!dateToUse || dateToUse == "") {
+			dateToUse =
+				$().ReturnFormattedDateTime('nowUTC', 'YYYY-MM-DDTHH:mm:ssZ', 'YYYY-MM-DD', 0);
+		}
+
+		var renderPrepStartTime = Date.now();
+
+		var augmentedSchedules = $().ReturnSelectedAugmentedSchedulesForGSESchedulesCalendar(selectedStartYear, nowAsISOLocal);
+
+		console.log('render prep time = ' + (Date.now() - renderPrepStartTime) / 1000 + ' seconds');
+
+		$("div#overview-screen-container").fullCalendar({
+			allDayDefault: true,
+			lazyFetching: false,
+			eventOrder: "start",
+			header: {
+				// right and center are reversed, because our CSS implements obedience to the accessibility imperative that DOM elements exist 
+				//      (and are thus encountered by assistive technologies) in the same order in which they're presented to sighted users
+				left: "",
+				right: "prevYear,prev,title,next,nextYear",
+				center: "today,basicDay,basicWeek,month"
+			},
+			validRange: {
+				start: selectedStartYear + '06-30',
+				end: (parseInt(selectedStartYear) + 1) + '2017-06-01'
+			},
+			/* views: {
+				month: {
+					titleFormat: 'YYYY, MM, DD'
+				},
+				week: {
+					titleFormat: 'YYYY, MM, DD'
+				},
+				day: {
+					titleFormat: 'YYYY, MM, DD'
+				},
+			}, */
+			defaultView: viewToUse,
+			defaultDate: dateToUse,
+			/* dayClick: function (date, jsEvent, view) {
+				// to do: consider moving this to a generic event listener if we're not sending a date in the URL
+
+				if (relevantRole === 'gseHRAdmin' || relevantRole === 'gseJobAdmin') {
+					if (moment(date._d).isAfter(nowAsISOLocal) && relevantRole === 'gseHRAdmin') {
+						var addScheduleURL = '/sites/hr-service-schedules/SitePages/App.aspx?r=0&d=' + date._i;
+						window.open(addScheduleURL, '_blank');
+					}
+				}
+			},
+			dayRender: function (date, cell) {
+				if (relevantRole === 'gseHRAdmin' || relevantRole === 'gseJobAdmin') {
+					if (cell[0].classList.contains('fc-future')) {
+						var addLinkMarkup = '<a class="add-schedule" ' + 
+							'href="/sites/hr-service-schedules/SitePages/App.aspx?r=0&d=' + date._i + 
+							'" target="_blank">Add</a>';
+						cell.append(addLinkMarkup);
+						var headClassSelector = '';
+						if (cell.hasClass('fc-sun')) {
+							headClassSelector = 'fc-sun';
+						} else if (cell.hasClass('fc-mon')) {
+							headClassSelector = 'fc-mon';
+						} else if (cell.hasClass('fc-tue')) {
+							headClassSelector = 'fc-tue';
+						} else if (cell.hasClass('fc-wed')) {
+							headClassSelector = 'fc-wed';
+						} else if (cell.hasClass('fc-thu')) {
+							headClassSelector = 'fc-thu';
+						} else if (cell.hasClass('fc-fri')) {
+							headClassSelector = 'fc-fri';
+						} else if (cell.hasClass('fc-sat')) {
+							headClassSelector = 'fc-sat';
+						}
+						cell.closest('div.fc-row')
+							.find('div.fc-content-skeleton')
+							.find('td.' + headClassSelector)
+							.addClass('add-schedule-on-click');
+					}
+				}
+				
+			}, */
+			theme: true,
+			eventClick: function (event, jsEvent, view) {
+
+				// close the dialog box
+				$("div#dialog").dialog("close");
+
+				// populate the dialog box
+
+				var dialogTitleBarContent = '<h2 class="gse-schedules-dialog-date-and-time-range">' +
+					'<span class="gse-schedules-dialog-date">' + event.formattedDate + '</span> ' +
+					'<span class="gse-schedules-dialog-start-time">' + event.formattedStartTime + '</span>' +
+					'<span class="gse-schedules-dialog-times-separator"> &ndash; </span>' +
+					'<span class="gse-schedules-dialog-end-time">' + event.formattedEndTime + '</span>' +
+					'</h2>';
+
+				$("div[aria-describedby='gse-schedule-card-dialog'] div.ui-dialog-titlebar span.ui-dialog-title").html(dialogTitleBarContent);
+
+				var dialogBodyContent =
+					'<h3 class="gse-schedule-card-dialog-job-title">' + event.jobTitle + '</h3>' +
+					event.jobDescription;
+
+				if (event.isInFuture) {
+					dialogBodyContent += '<p>Signups Available: ' +
+						(event.quantityPositions - event.quantitySignups) +
+						' / ' + event.quantityPositions;
+				}
+
+				dialogBodyContent += '<div class="gse-schedule-card-dialog-links-container">';
+
+				if (event.mySignupURL) {
+					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' +
+						'<a id="gse-schedule-card-dialog-my-signup-link" ' +
+						'class="gse-schedule-card-dialog-button" href="' +
+						event.mySignupURL + '" target="_blank">More Info / My Signup</a></div>';
+				} else if (event.isInFuture && ((parseInt(event.quantityPositions) - parseInt(event.quantitySignups)) !== 0)) {
+					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' +
+						'<a id="gse-schedule-card-dialog-signup-opportunity-link" ' +
+						'class="gse-schedule-card-dialog-button" href="' +
+						event.signupURL + '" target="_blank">More Info / Sign Up</a></div>';
+				} else {
+					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' +
+						'<a id="gse-schedule-card-dialog-signup-opportunity-link" ' +
+						'class="gse-schedule-card-dialog-button" href="' +
+						event.signupURL + '" target="_blank">More Info</a></div>';
+				}
+
+				if (relevantRole === 'gseHRAdmin' || relevantRole === 'gseJobAdmin') {
+					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' +
+						'<a id="gse-schedule-card-dialog-job-link" ' +
+						'class="gse-schedule-card-dialog-button" href="' +
+						event.jobURL + '" target="_blank">Job Details</a></div>';
+					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' +
+						'<a id="gse-schedule-card-dialog-schedule-link" ' +
+						'class="gse-schedule-card-dialog-button" href="' +
+						event.scheduleURL + '" target="_blank">Schedule Details</a></div>';
+				}
+
+				$("div#gse-schedule-card-dialog").html(dialogBodyContent);
+
+				// position the dialog box
+				$("div#gse-schedule-card-dialog").dialog("option", "position", { my: "left bottom", at: "right top", of: jsEvent });
+
+				// open the dialog box
+				$("div#gse-schedule-card-dialog").dialog("open");
+			},
+			events: augmentedSchedules
+
+		});
+
+		$("div.fc-toolbar div.fc-left").append('<div id="container_command-bar"></div>');
+
+		var buttonDivs = $().ReturnButtonsMarkupWithContainerDivs(buttons);
+		var buttonOverflowMenu = $().ReturnButtonsMarkupAsOverflowMenu(buttons);
+
+		var commandBarContents = '';
+
+		commandBarContents +=
+			'<div id="container_navigation-controls-expanded"> \n' +
+			buttonDivs +
+			'</div> \n';
+
+
+
+		commandBarContents +=
+			'<div id="container_filter-controls-and-header"> \n' +
+			'   <div id="text_filter-controls" class="collapsible">Year</div> \n' +
+			'   <div id="container_filter-controls"> \n' +
+			'   	<div class="container_filter-control"> \n' +
+			'   		<label for="filter_year">Year</label><select id="filter_year" name="filter_year"> \n' +
+			'				' + $().ReturnFiscalYearSelectOptions(startingYearOfFirstFiscalYear, startingYearOfLastFiscalYear, true, selectedStartYear) + ' \n' +
+			'			</select>' +
+			'		</div>' +
+			'   	<div class="container_filter-control"> \n' +
+			'			<a id="filter_submit-button">Update</a>' +
+			'		</div>' +
+			'    </div> \n' +
+			'</div> \n';
+
+		commandBarContents += buttonOverflowMenu;
+
+		$("div#container_command-bar").append(commandBarContents);
+
+		// add extra class for styling hook
+		$('div#app-container').addClass('gse-schedule-calendar');
+
+		// collapse filters
+		$('.collapsible').collapsible();
+
+
+
+
+
+
+
+
+
+
+
+		$("div#app-container").append("<div id=\"gse-schedule-card-dialog\"></div>");
+
+		$("div#gse-schedule-card-dialog").dialog({
+			autoOpen: false,
+			draggable: true,
+			modal: true,
+			show: {
+				effect: "bounce",
+				times: 2,
+				duration: 500
+			},
+			width: 400,
+		});
+
+
+		$("div.fc-toolbar, div.fc-view-container").fadeTo(1000, 1);
+
+		// listen for date filtering
+		$("a#filter_submit-button").click(function () {
+			var selectedStartYear = $("select#filter_year").val();
+			if (selectedStartYear == '') {
+				selectedStartYear = moment().isAfter(thisYear + '-06-30') ?
+					parseInt(thisYear) :
+					parseInt(thisYear) - 1;
+			}
+			window.location = "/sites/" + mData.siteToken + "/SitePages/App.aspx?f=cal&y=" + selectedStartYear;
+		});
+	};
+
+
+
+	// -- GSEs
+
+
+
+
 	$.fn.CreateFakeGSEStuff = function (jobs, schedules, signups) {
 		var newJobsQuantity = 100;
 		var newSchedulesQuantity = 400;
@@ -19393,13 +20312,6 @@
 			});
 		}); */
 	};
-
-
-
-	// -- GSEs
-
-
-
 	// - main markup collection and rendering
 
 	// stats
@@ -25950,7 +26862,7 @@
 		// wait for all data retrieval / setting promises to complete (pass or fail) 
 		$.when.apply($, allDataRetrievalAndSettingPromises).always(function () {
 
-			console.log('using dev_mos-main_long.1.04 m2');
+			console.log('using dev_mos-main_long.1.04 m1');
 
 			$().ConfigureAndShowScreenContainerAndAllScreens();
 		});

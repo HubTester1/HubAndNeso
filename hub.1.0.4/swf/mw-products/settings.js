@@ -18,7 +18,7 @@
 
 
 	var oData = {
-		'admin': {
+		'mwProductsList': {
 			'buttons': [
 				// {
 				//     "linkType": "goForward",
@@ -82,7 +82,7 @@
 				]
 			}
 		},
-		'my': {
+		'mwProductsTimeline': {
 			'buttons': [
 			],
 			'sections': {
