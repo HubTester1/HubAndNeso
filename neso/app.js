@@ -205,7 +205,7 @@ cron.schedule('* * * * *', () => {
 			console.log(error);
 		});
 });
-// schedule as specified in environment
+/* // schedule as specified in environment
 cron.schedule(process.env.hrPositionsProcessingCronSchedule1, () => {
 	// get a promise to process HR Position Directory data
 	nesoHRPositions.ProcessHRPositionsData()
@@ -431,7 +431,7 @@ cron.schedule(process.env.gseSignupsSyncProcessingCronSchedule, () => {
 			console.log(error);
 		});
 });
-
+ */
 // schedule for once per day at 2 am
 cron.schedule('0 2 * * *', () => {
 	// get a promise to empty the tmp directory
@@ -451,7 +451,28 @@ cron.schedule('0 2 * * *', () => {
 			console.log(error);
 		});
 });
-// schedule as specified in environment
+
+
+// DO NOT UNCOMMENT PRIOR TO FINAL RELEASE
+// DO NOT UNCOMMENT PRIOR TO FINAL RELEASE
+// DO NOT UNCOMMENT PRIOR TO FINAL RELEASE
+// DO NOT UNCOMMENT PRIOR TO FINAL RELEASE
+// DO NOT UNCOMMENT PRIOR TO FINAL RELEASE
+// DO NOT UNCOMMENT PRIOR TO FINAL RELEASE
+// DO NOT UNCOMMENT PRIOR TO FINAL RELEASE
+// DO NOT UNCOMMENT PRIOR TO FINAL RELEASE
+// DO NOT UNCOMMENT PRIOR TO FINAL RELEASE
+// DO NOT UNCOMMENT PRIOR TO FINAL RELEASE
+// DO NOT UNCOMMENT PRIOR TO FINAL RELEASE
+// DO NOT UNCOMMENT PRIOR TO FINAL RELEASE
+// DO NOT UNCOMMENT PRIOR TO FINAL RELEASE
+// DO NOT UNCOMMENT PRIOR TO FINAL RELEASE
+// DO NOT UNCOMMENT PRIOR TO FINAL RELEASE
+// DO NOT UNCOMMENT PRIOR TO FINAL RELEASE
+// DO NOT UNCOMMENT PRIOR TO FINAL RELEASE
+
+
+/* // schedule as specified in environment
 cron.schedule(process.env.gseScheduleCreditReminderNotificationProcessingSchedule, () => {
 // get a promise to process gse schedule credit reminders
 	nesoHubEmails.ProcessGSEScheduleCreditReminderNotifications()
@@ -488,7 +509,26 @@ cron.schedule(process.env.gseSignupReminderNotificationProcessingSchedule, () =>
 			// eslint-disable-next-line no-console
 			console.log(error);
 		});
-});
+}); */
+
+
+// DO NOT UNCOMMENT PRIOR TO FINAL RELEASE
+// DO NOT UNCOMMENT PRIOR TO FINAL RELEASE
+// DO NOT UNCOMMENT PRIOR TO FINAL RELEASE
+// DO NOT UNCOMMENT PRIOR TO FINAL RELEASE
+// DO NOT UNCOMMENT PRIOR TO FINAL RELEASE
+// DO NOT UNCOMMENT PRIOR TO FINAL RELEASE
+// DO NOT UNCOMMENT PRIOR TO FINAL RELEASE
+// DO NOT UNCOMMENT PRIOR TO FINAL RELEASE
+// DO NOT UNCOMMENT PRIOR TO FINAL RELEASE
+// DO NOT UNCOMMENT PRIOR TO FINAL RELEASE
+// DO NOT UNCOMMENT PRIOR TO FINAL RELEASE
+// DO NOT UNCOMMENT PRIOR TO FINAL RELEASE
+// DO NOT UNCOMMENT PRIOR TO FINAL RELEASE
+// DO NOT UNCOMMENT PRIOR TO FINAL RELEASE
+// DO NOT UNCOMMENT PRIOR TO FINAL RELEASE
+// DO NOT UNCOMMENT PRIOR TO FINAL RELEASE
+// DO NOT UNCOMMENT PRIOR TO FINAL RELEASE
 
 
 // PROCESS ---
