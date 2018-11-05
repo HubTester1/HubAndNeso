@@ -205,7 +205,7 @@ cron.schedule('* * * * *', () => {
 			console.log(error);
 		});
 });
-/* // schedule as specified in environment
+// schedule as specified in environment
 cron.schedule(process.env.hrPositionsProcessingCronSchedule1, () => {
 	// get a promise to process HR Position Directory data
 	nesoHRPositions.ProcessHRPositionsData()
@@ -431,7 +431,6 @@ cron.schedule(process.env.gseSignupsSyncProcessingCronSchedule, () => {
 			console.log(error);
 		});
 });
- */
 // schedule for once per day at 2 am
 cron.schedule('0 2 * * *', () => {
 	// get a promise to empty the tmp directory
