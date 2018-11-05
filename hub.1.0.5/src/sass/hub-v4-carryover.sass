@@ -468,11 +468,10 @@ div#public-community-page_ppeha
 // --- HUMAN RESOURCES, VOLUNTEER SERVICES
 
 
-   // <div class="primary-section" id="primary-section_open-enrollment">
-   //    <h2>2017 Open Enrollment</h2>​​​
-   //    <p id="container_open-enrollment-link">
-   //       <a href="/SitePages/Open%20Enrollment.aspx">Learn about benefit options and make changes</a>​<br/></p>
-   // </div>
+//    <h3>Open Enrollment​</h3>
+//    <div id="open-enrollment-link-container">​​​ 
+//          <a href="/SitePages/Open%20Enrollment.aspx">Learn about benefit options and make changes</a>​
+//    </div>
 
 
 
@@ -484,36 +483,20 @@ div#s4-workspace
 			position: relative
 			top: -1.5rem
 
-	div#public-community-page_hr
+	div.public-community-page.human-resources
 
-		div.community-description
-			padding: 0
+		div#open-enrollment-link-container
+			+font-size-4
+			+round-corners
+			margin: 0 0 2rem 0 !important
+			padding: 1.5rem 3rem
+			background-color: $orange-1
+			
+			a
+				color: $interactive-default-darkened-2
 
-			ul
-				margin: 0
-
-		div#primary-section_open-enrollment
-			margin: 2rem 0 !important
-
-			// a,
-			// p
-			// 	font-size: 1.75rem
-
-			// p
-			// 	padding: 2rem
-			// 	background-color: $bold-purple
-			// 	color: $textOnDarkPurple
-
-		div.ms-rtestate-read.ms-rte-wpbox,
-		p#container_open-enrollment-link,
-		p#container_benefits-link,
-		p#container_org-charts-and-profiles-link,
-		p#container_moscars-link,
-		p#container_jobs-link,
-		p#e-learning-intro,
-		ol#e-learning-steps
-			position: relative
-			top: -1.5rem
+				&:hover
+					color: $interactive-active-darkened-2
 
 		div.tertiary-section table.ms-listviewtable thead[role="presentation"]
 			display: none
