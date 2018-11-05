@@ -13,6 +13,7 @@
 		// "useRecordedMOSMainMajorVersion": 1,
 		'devAdminNotifications': 1,
 		'notifications': 0,
+		'detailTitle': 'Museum-wide Event'
 	};
 
 	console.log("using settings m1");
@@ -22,70 +23,68 @@
 	var oData = {
 		'mwEventList': {
 			'buttons': [
-				// {
-				//     "linkType": "goForward",
-				//     "anchorText": "Admin GPC Initial Concept Approval Requests",
-				//     "href": "/sites/gpc-concept/SitePages/Admin GPC Initial Concept Approval Requests.aspx",
-				//     // "idValue": "",
-				//     // "classValues": "button_swf-new-event-with-timeline",
-				//     "target": null
-				// }, {
-				//     "linkType": "goForward",
-				//     "anchorText": "Configure GPC People",
-				//     "href": "/sites/gpc-config/SitePages/GPC Configuration.aspx?requestID=1",
-				//     // "idValue": "",
-				//     // "classValues": "button_swf-new-event-with-timeline",
-				//     "target": "_blank"
-				// }
+				{
+					"linkType": "newItem",
+					"anchorText": "New Event",
+					"href": "/sites/mw-events/SitePages/App.aspx?r=0",
+					"target": null
+				}, {
+					"linkType": "goForward",
+					"anchorText": "Event Calendar",
+					"href": "/sites/mw-events/SitePages/App.aspx?f=cal",
+					"target": null
+				}
 			],
 			'sections': {
 				'commonColumns': [
 					{
-						'displayName': 'Request ID',
+						'displayName': 'Event ID',
 						'internalName': 'ID',
 						'formLink': 1
 					}, {
-						'displayName': 'Request Status',
-						'internalName': 'RequestStatus'
-					}, {
-						'displayName': 'Requested By',
-						'internalName': 'Author',
-						'userName': 1
-					}, {
-						'displayName': 'Talk To',
+						'displayName': 'Contact',
 						'internalName': 'RequestedFor',
 						'userName': 1
 					}, {
-						'displayName': "Staff, Volunteer, Contractor Name(s)",
-						'internalName': "StaffVolNames",
+						'displayName': 'Location',
+						'internalName': 'EventLocation',
 					}, {
-						'displayName': "Start Date",
-						'internalName': "StartDate",
-						'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+						'displayName': 'Count',
+						'internalName': 'EventCount',
 					}, {
-						'displayName': 'Request Date',
+						'displayName': 'Created By',
+						'internalName': 'Author',
+						'userName': 1
+					}, {
+						'displayName': 'Created',
 						'internalName': 'RequestDate',
 						'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
 					}
 				],
 				'tables': [
 					{
-						'tableTitle': 'Submitted',
-						'tableID': 'submitted',
+						'tableTitle': '',
+						'tableID': 'list-view',
 						'someColsAreUsers': 1,
-						'basicRSQueryRelevantStatus': 'Submitted'
-					}, {
-						'tableTitle': 'Closed',
-						'tableID': 'closed',
-						'someColsAreUsers': 1,
+						'basicRSQueryRelevantStatus': 'Submitted',
 						'sortColAndOrder': [0, 'desc'],
-						'basicEOLQueryRelevantValue': 1,
 					}
 				]
 			}
 		},
 		'mwEventCalendar': {
 			'buttons': [
+				{
+					"linkType": "newItem",
+					"anchorText": "New Event",
+					"href": "/sites/mw-events/SitePages/App.aspx?r=0",
+					"target": null
+				}, {
+					"linkType": "goForward",
+					"anchorText": "Event List",
+					"href": "/sites/mw-events/SitePages/App.aspx",
+					"target": null
+				}
 			],
 			'sections': {
 				'commonColumns': [
@@ -133,7 +132,7 @@
 
 	var fData = {
 		'autoTrackSubmissionAndCancellation': 1,
-		'autoPopulateEventDeparment': 1,
+		'autoPopulateEventDepartment': 1,
 		// 'autoAddLocationToList': {
 		// 	'relevantBooleanID': 'add-location-boolean_add',
 		// 	'relevantSelectID': "Event-Location",
@@ -141,7 +140,8 @@
 		// 	'listName': 'MuseumLocations',
 		// 	'listWebURL': 'https://bmos.sharepoint.com/sites/hubprod'
 		// },
-		'autoTrackKeepingRemovingExceptionalEventOccurrences': { 
+		'bypassNormalDataSaving': 1,
+		'autoTrackKeepingRemovingExceptionalEventOccurrences': {
 			'relevantBooleanID': 'change-pattern-of-repeating-dates_yes' 
 		},
 		'standardElementGroups': {
@@ -1420,6 +1420,44 @@
 	fData.CustomScriptLast += 'if ($("select#Ending-Basis").val() == "date") { \n' +
 						'   $("div#range_ending-date").show("fast").removeClass("hidden"); \n' +
 						'} \n';
+
+	// =============================
+
+	// TEMP
+
+	fData.CustomScriptLast += '$("div#label-and-control_Individual-or-Pattern").addClass("hidden"); \n';
+	fData.CustomScriptLast += '$().SetFieldToRequired("Event-Date", "datepicker"); \n';
+	
+
+	// =============================
+
+	// selects
+	fData.CustomScriptLast += '$("select#Self-or-Other option[value=\'Self\']").attr("selected","selected"); \n';	
+	fData.CustomScriptLast += '$("select#hours-input_Start-Time option[value=\'T09\']").attr("selected","selected"); \n';
+	fData.CustomScriptLast += '$("select#minutes-input_Start-Time option[value=\':00:00\']").attr("selected","selected"); \n';
+	fData.CustomScriptLast += '$("select#hours-input_End-Time option[value=\'T17\']").attr("selected","selected"); \n';
+	fData.CustomScriptLast += '$("select#minutes-input_End-Time option[value=\':00:00\']").attr("selected","selected"); \n';
+	fData.CustomScriptLast += '$("select#Event-Department option[value=\'Accessibility\']").attr("selected","selected"); \n';
+
+	// hidden
+	fData.CustomScriptLast += '$("input#time-storage_Start-Time").val("2000-01-01T09:00:00Z"); \n';
+	fData.CustomScriptLast += '$("input#time-storage_End-Time").val("2000-01-01T17:00:00Z"); \n';
+	fData.CustomScriptLast += '$("div#simple-dates").removeClass("hidden"); \n';
+	
+	// texts
+	fData.CustomScriptLast += '$("input#Event-Title").val("Event Title");';
+	fData.CustomScriptLast += '$("input#Event-Location").val("Location");';
+	fData.CustomScriptLast += '$("input#Event-Count").val("50");';
+	fData.CustomScriptLast += '$("textarea#Event-Notes").val("These are my notes.");';
+	fData.CustomScriptLast += '$("input#Event-Date").val("November 8, 2018");';
+	
+	// checks / radios
+	fData.CustomScriptLast += '$("input#individual-or-pattern_individual").prop("checked", true).attr("checked", true); \n';
+
+
+
+
+
 
 
 	$.fn.ReturnThisAppMData = function () {

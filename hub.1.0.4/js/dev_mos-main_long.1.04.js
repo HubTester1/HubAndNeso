@@ -377,7 +377,7 @@
 				break;
 			case "newRequest":
 			case "existingRequest":
-				if (mData.detailTitle) {
+				if (mData.detailTitle && typeof (mData.detailTitle) === 'object') {
 					mData.detailTitle.forEach(function (detailTitleObject) {
 						detailTitleObject.roles.forEach(function (titleRole) {
 							uData.roles.forEach(function (userRole) {
@@ -387,6 +387,8 @@
 							});
 						});
 					});
+				} else if (mData.detailTitle && typeof (mData.detailTitle) === 'string') {
+					newTitle = mData.detailTitle;
 				} else {
 					newTitle = mData.requestName + " Request";
 				}
@@ -4253,7 +4255,7 @@
 			$('input#Requester-Account').val(uData.account);
 
 			// if designated, set current user's dept as event dept
-			if (typeof (mData.autoPopulateEventDeparment) != 'undefined' && mData.autoPopulateEventDeparment === 1) {
+			if (typeof (mData.autoPopulateEventDepartment) != 'undefined' && mData.autoPopulateEventDepartment === 1) {
 				$('input#Event-Department').val(uData.dept);
 			}
 
@@ -6780,10 +6782,23 @@
 					globalSubmissionValuePairsArrayOfArrays.push(ReturnAllRequestDataObjectAugmentedWithExceptionalEventOccurrence(clonedForm, rData.formData));
 				}
 
+
+
+
+
+
 				// if keeping exceptional occurrence data; i.e., so that non-date data can be edited for an event series without losing the exceptions
 				if (keepExceptionalEventOccurrences == 1) {
-					globalSubmissionValuePairsArrayOfArrays.push(ReturnAllRequestDataObjectWithExceptionalEventOccurrences(formDataString, rData.formData));
+					console.log('gonna 2');
+					console.log('user not changing recurrence pattern');
+					globalSubmissionValuePairsArrayOfArrays.push(ReturnAllRequestDataObjectWithExceptionalEventOccurrences(clonedForm, rData.formData));
 				}
+
+				console.log('FINAL');
+				console.log(globalSubmissionValuePairsArrayOfArrays);
+
+
+
 
 
 				// if saving data using a custom function
@@ -7312,15 +7327,15 @@
 			$().RenderWorkflowContacts();
 
 		} else if (type === "mwBuyoutList") {
-			$().RenderOverviewScreenButtons(oData.mwBuyoutList.buttons);
+			$().RenderOverviewScreenButtons(oData.mwBuyoutList.buttons, 0);
 			$().RenderAllDataTables(oData.mwBuyoutList.sections, "overview-table-container");
 			$().RenderWorkflowContacts();
 		} else if (type === "mwEventList") {
-			$().RenderOverviewScreenButtons(oData.mwEventList.buttons);
+			$().RenderOverviewScreenButtons(oData.mwEventList.buttons, 0);
 			$().RenderAllDataTables(oData.mwEventList.sections, "overview-table-container");
 			$().RenderWorkflowContacts();
 		} else if (type === "mwProductsList") {
-			$().RenderOverviewScreenButtons(oData.mwProductsList.buttons);
+			$().RenderOverviewScreenButtons(oData.mwProductsList.buttons, 0);
 			$().RenderAllDataTables(oData.mwProductsList.sections, "overview-table-container");
 			$().RenderWorkflowContacts();
 
@@ -7396,15 +7411,11 @@
 			$().RenderWorkflowContacts();
 
 		} else if (type === "mwBuyoutCalendar") {
-			$().RenderOverviewScreenButtons(oData.mwBuyoutCalendar.buttons);
-			$().RenderBuyoutCalendar();
+			$().RenderCommandBarAndCalendarForBuyouts(oData.mwBuyoutCalendar.buttons);
 		} else if (type === "mwEventCalendar") {
-			$().RenderOverviewScreenButtons(oData.mwEventCalendar.buttons);
-			$().RenderMWEventCalendar();
+			$().RenderCommandBarAndCalendarForMWEvents(oData.mwEventCalendar.buttons);
 		} else if (type === "mwProductsTimeline") {
-			$().RenderOverviewScreenButtons(oData.mwProductsTimeline.buttons);
-			$().RenderProductTimeline();
-
+			$().RenderCommandBarAndTimelineForProducts(oData.mwProductsTimeline.buttons);
 		}
 
 		$("div#overview-screen-container").addClass(type + "-requests");
@@ -18117,9 +18128,8 @@
 			valuepairs: submissionValuePairsArray,
 			completefunc: function (xData, Status) {
 
-
 				// determine success of save; then...
-				var swfListSaveSuccess = $().HandleListUpdateReturn(xData, Status, 'Hub SWF List Item Error');
+				var swfListSaveSuccess = $().HandleListUpdateReturn(xData, Status, 'Hub SWF List Item Error', 'main swfListSaveSuccess');
 
 				// if swfList save was NOT successful
 				if (swfListSaveSuccess == 0) {
@@ -18477,15 +18487,19 @@
 
 
 
-	function ReturnAllRequestDataObjectWithExceptionalEventOccurrences(formDataString, originalFormData) {
+	function ReturnAllRequestDataObjectWithExceptionalEventOccurrences(form, originalFormData) {
 
 		// re/set globalSubmissionValuePairsArray to new, empty array
 		globalSubmissionValuePairsArray = [];
 
+		var standardSubmissionValuePairArray = ReturnStandardSubmissionValuePairArray(form);
+		var formDataString = JSON.stringify(standardSubmissionValuePairArray);
+
 		// if there is exceptional event data to keep
 		if (typeof (originalFormData) != 'undefined') {
+			console.log('found original form data');
 			if (typeof (originalFormData.datesToSkip) != 'undefined') {
-
+				console.log('found dates to skip');
 				// stringify the objects inside the datesToSkip array
 				var datesToSkipArrayLength = originalFormData.datesToSkip.length;
 				var datesToSkipString = '';
@@ -18516,9 +18530,9 @@
 				// attach exceptional event data to formDataString
 				formDataString = formDataStringPreppedToReceive + '"datesToSkip":"[' + datesToSkipString + ']","datesToAdd":"[' + datesToAddString + ']"}';
 			}
+		} else {
+			console.log('no original form data');
 		}
-		// push the string to valuePairs
-		globalSubmissionValuePairsArray.push(["AllRequestData", CDataWrap(formDataString)]);
 		// return the array
 		return globalSubmissionValuePairsArray;
 	}
@@ -19056,7 +19070,7 @@
 
 
 
-	$.fn.RenderBuyoutCalendar = function (buttons, relevantRole) {
+	$.fn.RenderCommandBarAndCalendarForBuyouts = function (buttons) {
 
 		var startingYearOfFirstFiscalYear = 2018;
 		// var thisYear = 2022;
@@ -19311,233 +19325,540 @@
 
 
 
-	$.fn.RenderMWEventCalendar = function (buttons, relevantRole) {
+	$.fn.RenderCommandBarAndCalendarForMWEvents = function (buttons) {
 
-		var startingYearOfFirstFiscalYear = 2018;
-		// var thisYear = 2022;
-		// var startingYearOfLastFiscalYear = moment('2022-09-08').isAfter(thisYear + '-06-30') ?
-		// 	parseInt(thisYear) :
-		// 	parseInt(thisYear) - 1;
-		var thisYear = $().ReturnFormattedDateTime('nowLocal', null, 'YYYY');
-		var startingYearOfLastFiscalYear = moment().isAfter(thisYear + '-06-30') ?
-			parseInt(thisYear) :
-			parseInt(thisYear) - 1;
+		var viewToUse = GetParamFromUrl(location.search, "view");
+		var dateToUse = GetParamFromUrl(location.search, "date");
+		if (viewToUse == "") { viewToUse = "month"; }
+		if (dateToUse == "") { dateToUse = $().ReturnFormattedDateTime("nowUTC", "YYYY-MM-DDTHH:mm:ssZ", "YYYY-MM-DD", 0); }
 
+		var getListItemsOptions = {
+			"viewFields": "<ViewFields>" +
+				"   <FieldRef Name='ID' />" +
+				"   <FieldRef Name='AllRequestData' />" +
+				"</ViewFields>",
+			"rowLimit": "500",
+			"query": "<Query>" +
+				"   <Where>" +
+				"       <Eq>" +
+				"           <FieldRef Name='RequestStatus'></FieldRef>" +
+				"           <Value Type='Text'>Submitted</Value>" +
+				"       </Eq>" +
+				"   </Where>" +
+				"</Query>",
+			"queryOptions": "<QueryOptions>" +
+				"   <IncludeMandatoryColumns>FALSE</IncludeMandatoryColumns>" +
+				"</QueryOptions>"
+		};
 
-		var selectedStartYear = GetParamFromUrl(location.search, "y");
-		if (!selectedStartYear || selectedStartYear == '') {
-			selectedStartYear = moment().isAfter(thisYear + '-06-30') ?
-				parseInt(thisYear) :
-				parseInt(thisYear) - 1;
-		}
+		$().SPServices({
+			operation: "GetListItems",
+			async: false,
+			listName: "SWFList",
+			CAMLViewFields: getListItemsOptions.viewFields,
+			CAMLQuery: getListItemsOptions.query,
+			CAMLRowLimit: getListItemsOptions.rowLimit,
+			CAMLQueryOptions: getListItemsOptions.queryOptions,
+			completefunc: function (xData, Status) {
 
+				var regexOne = new RegExp("\r", "g");
+				var regexTwo = new RegExp("\n", "g");
+				var allEvents = [];
 
+				$(xData.responseXML).SPFilterNode("z:row").each(function () {
 
-		var nowAsISOLocal = $().ReturnFormattedDateTime('nowLocal', null, null);
-		var viewToUse = GetParamFromUrl(location.search, 'view');
-		var dateToUse = GetParamFromUrl(location.search, 'date');
-		if (!viewToUse || viewToUse == "") { viewToUse = 'month'; }
-		if (!dateToUse || dateToUse == "") {
-			dateToUse =
-				$().ReturnFormattedDateTime('nowUTC', 'YYYY-MM-DDTHH:mm:ssZ', 'YYYY-MM-DD', 0);
-		}
-
-		var renderPrepStartTime = Date.now();
-
-		var augmentedSchedules = $().ReturnSelectedAugmentedSchedulesForGSESchedulesCalendar(selectedStartYear, nowAsISOLocal);
-
-		console.log('render prep time = ' + (Date.now() - renderPrepStartTime) / 1000 + ' seconds');
-
-		$("div#overview-screen-container").fullCalendar({
-			allDayDefault: true,
-			lazyFetching: false,
-			eventOrder: "start",
-			header: {
-				// right and center are reversed, because our CSS implements obedience to the accessibility imperative that DOM elements exist 
-				//      (and are thus encountered by assistive technologies) in the same order in which they're presented to sighted users
-				left: "",
-				right: "prevYear,prev,title,next,nextYear",
-				center: "today,basicDay,basicWeek,month"
-			},
-			validRange: {
-				start: selectedStartYear + '06-30',
-				end: (parseInt(selectedStartYear) + 1) + '2017-06-01'
-			},
-			/* views: {
-				month: {
-					titleFormat: 'YYYY, MM, DD'
-				},
-				week: {
-					titleFormat: 'YYYY, MM, DD'
-				},
-				day: {
-					titleFormat: 'YYYY, MM, DD'
-				},
-			}, */
-			defaultView: viewToUse,
-			defaultDate: dateToUse,
-			/* dayClick: function (date, jsEvent, view) {
-				// to do: consider moving this to a generic event listener if we're not sending a date in the URL
-
-				if (relevantRole === 'gseHRAdmin' || relevantRole === 'gseJobAdmin') {
-					if (moment(date._d).isAfter(nowAsISOLocal) && relevantRole === 'gseHRAdmin') {
-						var addScheduleURL = '/sites/hr-service-schedules/SitePages/App.aspx?r=0&d=' + date._i;
-						window.open(addScheduleURL, '_blank');
+					var eventItemString = $(this).attr("ows_AllRequestData");
+					eventItemString = eventItemString.replace(regexOne, "'");
+					eventItemString = eventItemString.replace(regexTwo, "'");
+					eval("var eventItem=" + eventItemString);
+					eventItem.ID = $(this).attr("ows_ID");
+					if (typeof (eventItem["Requested-For"]) == "object") {
+						eventItem.contactLinkedName = "<a target=\"_blank\" href=\"https://bmos-my.sharepoint.com/_layouts/15/me.aspx?p=" + StrInStr(eventItem["Requested-For"][0]["description"], "@", 1) + "%40mos.org&v=profile\">" + eventItem["Requested-For"][0]["displayText"] + "</a>";
+					} else {
+						eventItem.contactLinkedName = "";
 					}
-				}
-			},
-			dayRender: function (date, cell) {
-				if (relevantRole === 'gseHRAdmin' || relevantRole === 'gseJobAdmin') {
-					if (cell[0].classList.contains('fc-future')) {
-						var addLinkMarkup = '<a class="add-schedule" ' + 
-							'href="/sites/hr-service-schedules/SitePages/App.aspx?r=0&d=' + date._i + 
-							'" target="_blank">Add</a>';
-						cell.append(addLinkMarkup);
-						var headClassSelector = '';
-						if (cell.hasClass('fc-sun')) {
-							headClassSelector = 'fc-sun';
-						} else if (cell.hasClass('fc-mon')) {
-							headClassSelector = 'fc-mon';
-						} else if (cell.hasClass('fc-tue')) {
-							headClassSelector = 'fc-tue';
-						} else if (cell.hasClass('fc-wed')) {
-							headClassSelector = 'fc-wed';
-						} else if (cell.hasClass('fc-thu')) {
-							headClassSelector = 'fc-thu';
-						} else if (cell.hasClass('fc-fri')) {
-							headClassSelector = 'fc-fri';
-						} else if (cell.hasClass('fc-sat')) {
-							headClassSelector = 'fc-sat';
+
+					// one or more individual dates
+					if (typeof (eventItem["individual-or-pattern_individual"]) != 'undefined') {
+						$(eventItem["RepeatedElements"]).each(function (i, d) {
+							var repeatID = StrInStr(d["ID"], "-repeat", 0);
+							if (repeatID == false) { repeatID = ""; }
+							var isoStartDatetime = d["Event-Date" + repeatID].slice(0, 10) + eventItem["time-storage_Start-Time"].slice(10, 19);
+							var isoEndDatetime = d["Event-Date" + repeatID].slice(0, 10) + eventItem["time-storage_End-Time"].slice(10, 19)
+							var formattedStartTime = $().ReturnFormattedDateTime(isoStartDatetime, "YYYY-MM-DDTHH:mm:ss", "h:mma", 0);
+							formattedStartTime = formattedStartTime.slice(0, formattedStartTime.length - 1);
+							var formattedEndTime = $().ReturnFormattedDateTime(isoEndDatetime, "YYYY-MM-DDTHH:mm:ss", "h:mma", 0);
+							formattedEndTime = formattedEndTime.slice(0, formattedEndTime.length - 1);
+							var formattedDate = $().ReturnFormattedDateTime(isoStartDatetime, "YYYY-MM-DDTHH:mm:ss", "ddd, M/D/YY", 0);
+
+							var thisEvent = {
+								"eventID": eventItem["ID"],
+								"title": formattedStartTime + " | " + eventItem["Event-Title"],
+								"contactLinkedName": eventItem.contactLinkedName,
+								"formattedStartTime": formattedStartTime,
+								"formattedEndTime": formattedEndTime,
+								"formattedDate": formattedDate,
+								"start": isoStartDatetime,
+								"end": isoEndDatetime,
+								"editURL": "/sites/mw-events/SitePages/App.aspx?r=" + eventItem["ID"],
+							};
+
+							$(["Event-Location", "Event-Count", "Event-Notes"]).each(function (i, o) {
+								if (typeof (eventItem[o]) != "undefined") {
+									var label = o.slice(6).toLowerCase();
+									thisEvent[label] = eventItem[o];
+								}
+							});
+
+							allEvents.push(thisEvent);
+
+						});
+					} else if (typeof (eventItem["individual-or-pattern_pattern"]) != 'undefined') {
+
+
+						switch (eventItem["Pattern-Basis"]) {
+
+							case "Every given number of days":
+
+								switch (eventItem["Ending-Basis"]) {
+
+									case "Never":
+										var patternDates = $().GenerateDatesForEveryXDaysEndNever(eventItem["X-Days"], eventItem["Start-Date"]);
+										break;
+
+									case "After a given number of occurrences":
+										var patternDates = $().GenerateDatesForEveryXDaysEndAfterYOccurrences(eventItem["X-Days"], eventItem["Start-Date"], eventItem["Qty-Occurrences"]);
+										break;
+
+									case "By a date":
+										var patternDates = $().GenerateDatesForEveryXDaysEndByDateY(eventItem["X-Days"], eventItem["Start-Date"], eventItem["Ending-Date"]);
+										break;
+								}
+								break;
+
+
+
+
+							case "Every weekday":
+
+								switch (eventItem["Ending-Basis"]) {
+
+									case "Never":
+										var patternDates = $().GenerateDatesForEveryWeekdayEndNever(eventItem["Start-Date"]);
+										break;
+
+									case "After a given number of occurrences":
+										var patternDates = $().GenerateDatesForEveryWeekdayEndAfterXOccurrences(eventItem["Start-Date"], eventItem["Qty-Occurrences"]);
+										break;
+
+									case "By a date":
+										var patternDates = $().GenerateDatesForEveryWeekdayEndByDateX(eventItem["Start-Date"], eventItem["Ending-Date"]);
+										break;
+								}
+								break;
+
+
+
+
+							case "Every given number of weeks":
+
+								var daysOfWeek = [];
+
+								if (typeof (eventItem["days-of-week-for-x-weeks_1"]) != "undefined") {
+									daysOfWeek.push("Sunday");
+								}
+
+								if (typeof (eventItem["days-of-week-for-x-weeks_2"]) != "undefined") {
+									daysOfWeek.push("Monday");
+								}
+
+								if (typeof (eventItem["days-of-week-for-x-weeks_3"]) != "undefined") {
+									daysOfWeek.push("Tuesday");
+								}
+
+								if (typeof (eventItem["days-of-week-for-x-weeks_4"]) != "undefined") {
+									daysOfWeek.push("Wednesday");
+								}
+
+								if (typeof (eventItem["days-of-week-for-x-weeks_5"]) != "undefined") {
+									daysOfWeek.push("Thursday");
+								}
+
+								if (typeof (eventItem["days-of-week-for-x-weeks_6"]) != "undefined") {
+									daysOfWeek.push("Friday");
+								}
+
+								if (typeof (eventItem["days-of-week-for-x-weeks_7"]) != "undefined") {
+									daysOfWeek.push("Saturday");
+								}
+
+
+								switch (eventItem["Ending-Basis"]) {
+
+									case "Never":
+										var patternDates = $().GenerateDatesForEveryXWeeksOnYDaysEndNever(eventItem["X-Weeks"], daysOfWeek, eventItem["Start-Date"]);
+										break;
+
+									case "After a given number of occurrences":
+										var patternDates = $().GenerateDatesForEveryXWeeksOnYDaysEndAfterZOccurrences(eventItem["X-Weeks"], daysOfWeek, eventItem["Start-Date"], eventItem["Qty-Occurrences"]);
+										break;
+
+									case "By a date":
+										var patternDates = $().GenerateDatesForEveryXWeeksOnYDaysEndByDateZ(eventItem["X-Weeks"], daysOfWeek, eventItem["Start-Date"], eventItem["Ending-Date"]);
+										break;
+								}
+								break;
+
+
+
+
+							case "The same day every given number of months":
+
+								switch (eventItem["Ending-Basis"]) {
+
+									case "Never":
+										var patternDates = $().GenerateDatesForEveryXDaysOfEveryYMonthsEndNever(eventItem["Day-of-Month-for-X-Months"], eventItem["X-Months-For-Same-Day"], eventItem["Start-Date"]);
+										break;
+
+									case "After a given number of occurrences":
+										var patternDates = $().GenerateDatesForEveryXDaysOfEveryYMonthsEndAfterYOccurrences(eventItem["Day-of-Month-for-X-Months"], eventItem["X-Months-For-Same-Day"], eventItem["Start-Date"], eventItem["Qty-Occurrences"]);
+										break;
+
+									case "By a date":
+										var patternDates = $().GenerateDatesForEveryXDaysOfEveryYMonthsEndByDateY(eventItem["Day-of-Month-for-X-Months"], eventItem["X-Months-For-Same-Day"], eventItem["Start-Date"], eventItem["Ending-Date"]);
+										break;
+								}
+								break;
+
+
+
+
+							case "The same week every given number of months":
+
+								switch (eventItem["Ordinal-For-Day-of-Week-For-X-Months-For-Same-Week"]) {
+
+									case "First":
+										var xVar = 1;
+										break;
+
+									case "Second":
+										var xVar = 2;
+										break;
+
+									case "Third":
+										var xVar = 3;
+										break;
+
+									case "Fourth":
+										var xVar = 4;
+										break;
+
+								}
+
+								switch (eventItem["Ending-Basis"]) {
+
+									case "Never":
+										var patternDates = $().GenerateDatesForEveryXYDayOfEveryZMonthsEndNever(xVar, eventItem["Days-of-Week-For-X-Months-For-Same-Week"], eventItem["X-Months-For-Same-Week"], eventItem["Start-Date"]);
+										break;
+
+									case "After a given number of occurrences":
+										var patternDates = $().GenerateDatesForEveryXYDayOfEveryZMonthsEndAfterYOccurrences(xVar, eventItem["Days-of-Week-For-X-Months-For-Same-Week"], eventItem["X-Months-For-Same-Week"], eventItem["Start-Date"], eventItem["Qty-Occurrences"]);
+										break;
+
+									case "By a date":
+										var patternDates = $().GenerateDatesForEveryXYDayOfEveryZMonthsEndByDateY(xVar, eventItem["Days-of-Week-For-X-Months-For-Same-Week"], eventItem["X-Months-For-Same-Week"], eventItem["Start-Date"], eventItem["Ending-Date"]);
+										break;
+								}
+								break;
+
+
+
+
+							case "The same day each year":
+
+								switch (eventItem["Ending-Basis"]) {
+
+									case "Never":
+										var patternDates = $().GenerateDatesForEveryXDayYMonthEveryYearEndNever(eventItem["Months-for-Same-Date-Each-Year"], eventItem["Date-for-Same-Date-Each-Year"], eventItem["Start-Date"]);
+										break;
+
+									case "After a given number of occurrences":
+										var patternDates = $().GenerateDatesForEveryXDayYMonthEveryYearEndAfterYOccurrences(eventItem["Months-for-Same-Date-Each-Year"], eventItem["Date-for-Same-Date-Each-Year"], eventItem["Start-Date"], eventItem["Qty-Occurrences"]);
+										break;
+
+									case "By a date":
+										var patternDates = $().GenerateDatesForEveryXDayYMonthEveryYearEndByDateY(eventItem["Months-for-Same-Date-Each-Year"], eventItem["Date-for-Same-Date-Each-Year"], eventItem["Start-Date"], eventItem["Ending-Date"]);
+										break;
+								}
+								break;
+
+
+
+
+							case "The same week each year":
+
+								switch (eventItem["Ordinal-For-Same-Week-Each-Year"]) {
+
+									case "First":
+										var xVar = 1;
+										break;
+
+									case "Second":
+										var xVar = 2;
+										break;
+
+									case "Third":
+										var xVar = 3;
+										break;
+
+									case "Fourth":
+										var xVar = 4;
+										break;
+
+								}
+
+								switch (eventItem["Months-for-Same-Week-Each-Year"]) {
+
+									case "January":
+										var zVar = 1;
+										break;
+
+									case "February":
+										var zVar = 2;
+										break;
+
+									case "March":
+										var zVar = 3;
+										break;
+
+									case "April":
+										var zVar = 4;
+										break;
+
+									case "May":
+										var zVar = 5;
+										break;
+
+									case "June":
+										var zVar = 6;
+										break;
+
+									case "July":
+										var zVar = 7;
+										break;
+
+									case "August":
+										var zVar = 8;
+										break;
+
+									case "September":
+										var zVar = 9;
+										break;
+
+									case "October":
+										var zVar = 10;
+										break;
+
+									case "November":
+										var zVar = 11;
+										break;
+
+									case "December":
+										var zVar = 12;
+										break;
+
+								}
+
+								switch (eventItem["Ending-Basis"]) {
+
+									case "Never":
+										var patternDates = $().GenerateDatesForEveryXYDayZMonthEveryYearEndNever(xVar, eventItem["Days-of-Week-For-Same-Week-Each-Year"], zVar, eventItem["Start-Date"]);
+										break;
+
+									case "After a given number of occurrences":
+										var patternDates = $().GenerateDatesForEveryXYDayZMonthEveryYearEndAfterYOccurrences(xVar, eventItem["Days-of-Week-For-Same-Week-Each-Year"], zVar, eventItem["Start-Date"], eventItem["Qty-Occurrences"]);
+										break;
+
+									case "By a date":
+										var patternDates = $().GenerateDatesForEveryXYDayZMonthEveryYearEndByDateY(xVar, eventItem["Days-of-Week-For-Same-Week-Each-Year"], zVar, eventItem["Start-Date"], eventItem["Ending-Date"]);
+										break;
+								}
+								break;
+
+						} // end generation of patternDates
+
+
+
+						// get the list of the dates to be skipped
+						var comparisonBank = [];
+
+						$(eventItem["datesToSkip"]).each(function (i, date) {
+							comparisonBank.push(date.slice(0, 10));
+						});
+
+						$(patternDates).each(function (i, date) {
+
+							var isoDate = $().ReturnFormattedDateTime(date, "MM/DD/YYYY", "YYYY-MM-DD", 0);
+
+							if (comparisonBank.length == 0 || comparisonBank.indexOf(isoDate) == -1) {
+
+								var isoStartDatetime = isoDate + eventItem["time-storage_Start-Time"].slice(10, 19);
+								var isoEndDatetime = isoDate + eventItem["time-storage_End-Time"].slice(10, 19)
+								var formattedStartTime = $().ReturnFormattedDateTime(isoStartDatetime, "YYYY-MM-DDTHH:mm:ss", "h:mma", 0);
+								formattedStartTime = formattedStartTime.slice(0, formattedStartTime.length - 1);
+								var formattedEndTime = $().ReturnFormattedDateTime(isoEndDatetime, "YYYY-MM-DDTHH:mm:ss", "h:mma", 0);
+								formattedEndTime = formattedEndTime.slice(0, formattedEndTime.length - 1);
+								var formattedDate = $().ReturnFormattedDateTime(date, "MM/DD/YYYY", "ddd, M/D/YY", 0);
+
+								var thisEvent = {
+									"eventID": eventItem["ID"],
+									"title": formattedStartTime + " | " + eventItem["Event-Title"],
+									"contactLinkedName": eventItem.contactLinkedName,
+									"formattedStartTime": formattedStartTime,
+									"formattedEndTime": formattedEndTime,
+									"formattedDate": formattedDate,
+									"start": isoStartDatetime,
+									"end": isoEndDatetime,
+									"editURL": mData.uriRequestAlternate + "?requestID=" + eventItem["ID"] + "&date=" + isoDate + "&returnURI=" + window.location.href,
+								};
+
+
+								$(["Event-Location", "Event-Count", "Event-Notes"]).each(function (i, o) {
+									if (typeof (eventItem[o]) != "undefined" && eventItem[o].trim() != "") {
+										var label = o.slice(6).toLowerCase();
+										thisEvent[label] = eventItem[o];
+									}
+								});
+
+								allEvents.push(thisEvent);
+							}
+						});
+
+
+						$(eventItem["datesToAdd"]).each(function (i, additionalDate) {
+
+							var isoDate = additionalDate["Event-Date"].slice(0, 10);
+
+							var isoStartDatetime = isoDate + additionalDate["time-storage_Start-Time"].slice(10, 19);
+							var isoEndDatetime = isoDate + additionalDate["time-storage_End-Time"].slice(10, 19)
+							var formattedStartTime = $().ReturnFormattedDateTime(isoStartDatetime, "YYYY-MM-DDTHH:mm:ss", "h:mma", 0);
+							formattedStartTime = formattedStartTime.slice(0, formattedStartTime.length - 1);
+							var formattedEndTime = $().ReturnFormattedDateTime(isoEndDatetime, "YYYY-MM-DDTHH:mm:ss", "h:mma", 0);
+							formattedEndTime = formattedEndTime.slice(0, formattedEndTime.length - 1);
+							var formattedDate = $().ReturnFormattedDateTime(isoDate, null, "ddd, M/D/YY", 0);
+
+							var thisEvent = {
+								"eventID": eventItem["ID"],
+								"title": formattedStartTime + " | " + eventItem["Event-Title"],
+								"contactLinkedName": eventItem.contactLinkedName,
+								"formattedStartTime": formattedStartTime,
+								"formattedEndTime": formattedEndTime,
+								"formattedDate": formattedDate,
+								"start": isoStartDatetime,
+								"end": isoEndDatetime,
+								"editURL": mData.uriRequestAlternate + "?requestID=" + eventItem["ID"] + "&date=" + isoDate + "&exceptionID=" + this["exceptionID"] + "&returnURI=" + window.location.href,
+							};
+
+							$(["Event-Location", "Event-Count", "Event-Notes"]).each(function (i, o) {
+								if (typeof (additionalDate[o]) != "undefined" && additionalDate[o].trim() != "") {
+									var label = o.slice(6).toLowerCase();
+									thisEvent[label] = additionalDate[o];
+								}
+							});
+
+							allEvents.push(thisEvent);
+						});
+
+					}
+				});
+
+				console.log('m1');
+				console.log('allEvents');
+				console.log(allEvents);
+				// console.log('viewToUse');
+				// console.log(viewToUse);
+				// console.log('dateToUse');
+				// console.log(dateToUse);
+
+				$("div#overview-screen-container").fullCalendar({
+					allDayDefault: true,
+					lazyFetching: false,
+					eventOrder: "start",
+					header: {
+						// right and center are reversed, because our CSS implements obedience to the accessibility imperative that DOM elements exist 
+						//      (and are thus encountered by assistive technologies) in the same order in which they're presented to sighted users
+						left: "",
+						right: "prevYear,prev,title,next,nextYear",
+						center: "today,basicDay,basicWeek,month"
+					},
+					defaultView: viewToUse,
+					defaultDate: dateToUse,
+					dayClick: function (date, jsEvent, view) {
+						location.href = "/sites/mw-events/SitePages/App.aspx?f=cal&view=basicDay&date=" + $(this).attr("data-date");
+					},
+					theme: true,
+					eventClick: function (event, jsEvent, view) {
+
+						// close the dialog box
+						$("div#museum-wide-event-dialog").dialog("close");
+
+						// populate the dialog box
+						var dialogTitleBarContent = "<h2 class=\"ui-dialog-buyout-title-date-and-time-range\"> \n" +
+							"   <span class=\"ui-dialog-buyout-title-date\">" + event.formattedDate + "</span> \n" +
+							"   <span class=\"ui-dialog-title-buyout-start-time\">" + event.formattedStartTime + "</span> \n" +
+							"   <span class=\"ui-dialog-title-buyout-times-separator\"> &ndash; </span> \n" +
+							"   <span class=\"ui-dialog-title-buyout-end-time\">" + event.formattedEndTime + "</span> \n" +
+							"</h2> \n";
+
+						if (typeof (event.location) != "undefined") {
+							dialogTitleBarContent += "<p class=\"ui-dialog-title-buyout-location\">" + event.location + "</p> \n";
 						}
-						cell.closest('div.fc-row')
-							.find('div.fc-content-skeleton')
-							.find('td.' + headClassSelector)
-							.addClass('add-schedule-on-click');
-					}
-				}
-				
-			}, */
-			theme: true,
-			eventClick: function (event, jsEvent, view) {
 
-				// close the dialog box
-				$("div#dialog").dialog("close");
+						$('div.ui-dialog[aria-describedby="museum-wide-event-dialog"] div.ui-dialog-titlebar span.ui-dialog-title').html(dialogTitleBarContent);
 
-				// populate the dialog box
+						var slicedTitle = StrInStr(event.title, " ").slice(3);
+						var dialogBodyContent = "<p class=\"ui-dialog-buyout-title\">" + slicedTitle + "</p> \n" +
+							"<ul> \n";
 
-				var dialogTitleBarContent = '<h2 class="gse-schedules-dialog-date-and-time-range">' +
-					'<span class="gse-schedules-dialog-date">' + event.formattedDate + '</span> ' +
-					'<span class="gse-schedules-dialog-start-time">' + event.formattedStartTime + '</span>' +
-					'<span class="gse-schedules-dialog-times-separator"> &ndash; </span>' +
-					'<span class="gse-schedules-dialog-end-time">' + event.formattedEndTime + '</span>' +
-					'</h2>';
+						$(["count", "notes"]).each(function (i, o) {
+							if (typeof (event[o]) != "undefined") {
+								dialogBodyContent += "	<li class=\"event-" + o + "\">" + $().ReturnStringWithInitialCap(o) + ": " + event[o] + "</li>";
+							}
+						});
+						dialogBodyContent += "	<li class=\"event-contact\">Contact: " + event.contactLinkedName + "</li> \n" +
+							"	<li class=\"event-id\">Event ID: " + event.eventID + "</li>" +
+							"</ul> \n" +
+							"<a class=\"ui-dialog-button\" href=\"" + event.editURL + "\">Edit / Delete</a>";
 
-				$("div[aria-describedby='gse-schedule-card-dialog'] div.ui-dialog-titlebar span.ui-dialog-title").html(dialogTitleBarContent);
+						$("div#museum-wide-event-dialog").html(dialogBodyContent);
 
-				var dialogBodyContent =
-					'<h3 class="gse-schedule-card-dialog-job-title">' + event.jobTitle + '</h3>' +
-					event.jobDescription;
+						// position the dialog box
+						$("div#museum-wide-event-dialog").dialog("option", "position", { my: "left bottom", at: "right top", of: jsEvent });
 
-				if (event.isInFuture) {
-					dialogBodyContent += '<p>Signups Available: ' +
-						(event.quantityPositions - event.quantitySignups) +
-						' / ' + event.quantityPositions;
-				}
+						// open the dialog box
+						$("div#museum-wide-event-dialog").dialog("open");
+					},
+					events: allEvents
+				});
 
-				dialogBodyContent += '<div class="gse-schedule-card-dialog-links-container">';
+				var commandBarContents = $().ReturnButtonsMarkup(buttons);
 
-				if (event.mySignupURL) {
-					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' +
-						'<a id="gse-schedule-card-dialog-my-signup-link" ' +
-						'class="gse-schedule-card-dialog-button" href="' +
-						event.mySignupURL + '" target="_blank">More Info / My Signup</a></div>';
-				} else if (event.isInFuture && ((parseInt(event.quantityPositions) - parseInt(event.quantitySignups)) !== 0)) {
-					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' +
-						'<a id="gse-schedule-card-dialog-signup-opportunity-link" ' +
-						'class="gse-schedule-card-dialog-button" href="' +
-						event.signupURL + '" target="_blank">More Info / Sign Up</a></div>';
-				} else {
-					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' +
-						'<a id="gse-schedule-card-dialog-signup-opportunity-link" ' +
-						'class="gse-schedule-card-dialog-button" href="' +
-						event.signupURL + '" target="_blank">More Info</a></div>';
-				}
+				$("div.fc-toolbar div.fc-left").append(commandBarContents);
 
-				if (relevantRole === 'gseHRAdmin' || relevantRole === 'gseJobAdmin') {
-					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' +
-						'<a id="gse-schedule-card-dialog-job-link" ' +
-						'class="gse-schedule-card-dialog-button" href="' +
-						event.jobURL + '" target="_blank">Job Details</a></div>';
-					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' +
-						'<a id="gse-schedule-card-dialog-schedule-link" ' +
-						'class="gse-schedule-card-dialog-button" href="' +
-						event.scheduleURL + '" target="_blank">Schedule Details</a></div>';
-				}
+				$("button.ui-button, a.ui-button, a.ui-dialog-button").on("click", function () {
+					$("div#museum-wide-event-dialog").dialog("close");
+				});
 
-				$("div#gse-schedule-card-dialog").html(dialogBodyContent);
-
-				// position the dialog box
-				$("div#gse-schedule-card-dialog").dialog("option", "position", { my: "left bottom", at: "right top", of: jsEvent });
-
-				// open the dialog box
-				$("div#gse-schedule-card-dialog").dialog("open");
-			},
-			events: augmentedSchedules
-
+				$("div.fc-toolbar, div.fc-view-container").fadeTo(1000, 1);
+			}
 		});
 
-		$("div.fc-toolbar div.fc-left").append('<div id="container_command-bar"></div>');
-
-		var buttonDivs = $().ReturnButtonsMarkupWithContainerDivs(buttons);
-		var buttonOverflowMenu = $().ReturnButtonsMarkupAsOverflowMenu(buttons);
-
-		var commandBarContents = '';
-
-		commandBarContents +=
-			'<div id="container_navigation-controls-expanded"> \n' +
-			buttonDivs +
-			'</div> \n';
-
-
-
-		commandBarContents +=
-			'<div id="container_filter-controls-and-header"> \n' +
-			'   <div id="text_filter-controls" class="collapsible">Year</div> \n' +
-			'   <div id="container_filter-controls"> \n' +
-			'   	<div class="container_filter-control"> \n' +
-			'   		<label for="filter_year">Year</label><select id="filter_year" name="filter_year"> \n' +
-			'				' + $().ReturnFiscalYearSelectOptions(startingYearOfFirstFiscalYear, startingYearOfLastFiscalYear, true, selectedStartYear) + ' \n' +
-			'			</select>' +
-			'		</div>' +
-			'   	<div class="container_filter-control"> \n' +
-			'			<a id="filter_submit-button">Update</a>' +
-			'		</div>' +
-			'    </div> \n' +
-			'</div> \n';
-
-		commandBarContents += buttonOverflowMenu;
-
-		$("div#container_command-bar").append(commandBarContents);
-
 		// add extra class for styling hook
-		$('div#app-container').addClass('gse-schedule-calendar');
+		$('div#app-container').addClass('museum-wide-events-calendar');
 
-		// collapse filters
-		$('.collapsible').collapsible();
+		$("div#app-container").append("<div id=\"museum-wide-event-dialog\"></div>");
 
-
-
-
-
-
-
-
-
-
-
-		$("div#app-container").append("<div id=\"gse-schedule-card-dialog\"></div>");
-
-		$("div#gse-schedule-card-dialog").dialog({
+		$("div#museum-wide-event-dialog").dialog({
 			autoOpen: false,
 			draggable: true,
 			modal: true,
@@ -19549,23 +19870,12 @@
 			width: 400,
 		});
 
-
 		$("div.fc-toolbar, div.fc-view-container").fadeTo(1000, 1);
-
-		// listen for date filtering
-		$("a#filter_submit-button").click(function () {
-			var selectedStartYear = $("select#filter_year").val();
-			if (selectedStartYear == '') {
-				selectedStartYear = moment().isAfter(thisYear + '-06-30') ?
-					parseInt(thisYear) :
-					parseInt(thisYear) - 1;
-			}
-			window.location = "/sites/" + mData.siteToken + "/SitePages/App.aspx?f=cal&y=" + selectedStartYear;
-		});
 	};
 
 
-	$.fn.RenderProductTimeline = function (buttons, relevantRole) {
+
+	$.fn.RenderCommandBarAndTimelineForProducts = function (buttons, relevantRole) {
 
 		var startingYearOfFirstFiscalYear = 2018;
 		// var thisYear = 2022;
@@ -26854,7 +27164,7 @@
 		// wait for all data retrieval / setting promises to complete (pass or fail) 
 		$.when.apply($, allDataRetrievalAndSettingPromises).always(function () {
 
-			console.log('using dev_mos-main_long.1.04 m3');
+			console.log('using dev_mos-main_long.1.04 m1');
 
 			$().ConfigureAndShowScreenContainerAndAllScreens();
 		});
