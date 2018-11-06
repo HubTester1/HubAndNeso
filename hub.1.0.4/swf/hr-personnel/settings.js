@@ -3741,7 +3741,11 @@
 				'end': 1,
 				'content': '<h2>Process</h2>' +
 					'<a id="standard-printer-button-inside-request" data-print-function="PrintPersonnelActionRequest">Print Request</a>' +
-					'<p>First, print this request, then save it. Acquire appropriate signatures, and submit to Human Resources.</p>'
+					'<ul>' +
+					'	<li>Print this request.</li>' +
+					'	<li>Save this request.</li>' + 
+					'	<li>Acquire appropriate signatures, and submit to Human Resources.</li>' + 
+					'</ul>'
 
 			}
 		]

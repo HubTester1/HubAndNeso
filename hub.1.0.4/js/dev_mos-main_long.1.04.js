@@ -19072,231 +19072,172 @@
 
 	$.fn.RenderCommandBarAndCalendarForBuyouts = function (buttons) {
 
-		var startingYearOfFirstFiscalYear = 2018;
-		// var thisYear = 2022;
-		// var startingYearOfLastFiscalYear = moment('2022-09-08').isAfter(thisYear + '-06-30') ?
-		// 	parseInt(thisYear) :
-		// 	parseInt(thisYear) - 1;
-		var thisYear = $().ReturnFormattedDateTime('nowLocal', null, 'YYYY');
-		var startingYearOfLastFiscalYear = moment().isAfter(thisYear + '-06-30') ?
-			parseInt(thisYear) :
-			parseInt(thisYear) - 1;
+		var viewToUse = GetParamFromUrl(location.search, "view");
+		var dateToUse = GetParamFromUrl(location.search, "date");
+		if (viewToUse == "") { viewToUse = "month"; }
+		if (dateToUse == "") { dateToUse = $().ReturnFormattedDateTime("nowUTC", "YYYY-MM-DDTHH:mm:ssZ", "YYYY-MM-DD", 0); }
 
+		var getListItemsOptions = {
+			"viewFields": "<ViewFields>" +
+				"   <FieldRef Name='ID' />" +
+				"   <FieldRef Name='AllRequestData' />" +
+				"</ViewFields>",
+			"rowLimit": "500",
+			"query": "<Query>" +
+				"   <Where>" +
+				"       <Eq>" +
+				"           <FieldRef Name='RequestStatus'></FieldRef>" +
+				"           <Value Type='Text'>Submitted</Value>" +
+				"       </Eq>" +
+				"   </Where>" +
+				"</Query>",
+			"queryOptions": "<QueryOptions>" +
+				"   <IncludeMandatoryColumns>FALSE</IncludeMandatoryColumns>" +
+				"</QueryOptions>"
+		};
 
-		var selectedStartYear = GetParamFromUrl(location.search, "y");
-		if (!selectedStartYear || selectedStartYear == '') {
-			selectedStartYear = moment().isAfter(thisYear + '-06-30') ?
-				parseInt(thisYear) :
-				parseInt(thisYear) - 1;
-		}
+		$().SPServices({
+			operation: "GetListItems",
+			async: false,
+			listName: "SWFList",
+			CAMLViewFields: getListItemsOptions.viewFields,
+			CAMLQuery: getListItemsOptions.query,
+			CAMLRowLimit: getListItemsOptions.rowLimit,
+			CAMLQueryOptions: getListItemsOptions.queryOptions,
+			completefunc: function (xData, Status) {
 
+				var regexOne = new RegExp("\r", "g");
+				var regexTwo = new RegExp("\n", "g");
+				var allEvents = [];
 
+				$(xData.responseXML).SPFilterNode("z:row").each(function () {
 
-		var nowAsISOLocal = $().ReturnFormattedDateTime('nowLocal', null, null);
-		var viewToUse = GetParamFromUrl(location.search, 'view');
-		var dateToUse = GetParamFromUrl(location.search, 'date');
-		if (!viewToUse || viewToUse == "") { viewToUse = 'month'; }
-		if (!dateToUse || dateToUse == "") {
-			dateToUse =
-				$().ReturnFormattedDateTime('nowUTC', 'YYYY-MM-DDTHH:mm:ssZ', 'YYYY-MM-DD', 0);
-		}
-
-		var renderPrepStartTime = Date.now();
-
-		var augmentedSchedules = $().ReturnSelectedAugmentedSchedulesForGSESchedulesCalendar(selectedStartYear, nowAsISOLocal);
-
-		console.log('render prep time = ' + (Date.now() - renderPrepStartTime) / 1000 + ' seconds');
-
-		$("div#overview-screen-container").fullCalendar({
-			allDayDefault: true,
-			lazyFetching: false,
-			eventOrder: "start",
-			header: {
-				// right and center are reversed, because our CSS implements obedience to the accessibility imperative that DOM elements exist 
-				//      (and are thus encountered by assistive technologies) in the same order in which they're presented to sighted users
-				left: "",
-				right: "prevYear,prev,title,next,nextYear",
-				center: "today,basicDay,basicWeek,month"
-			},
-			validRange: {
-				start: selectedStartYear + '06-30',
-				end: (parseInt(selectedStartYear) + 1) + '2017-06-01'
-			},
-			/* views: {
-				month: {
-					titleFormat: 'YYYY, MM, DD'
-				},
-				week: {
-					titleFormat: 'YYYY, MM, DD'
-				},
-				day: {
-					titleFormat: 'YYYY, MM, DD'
-				},
-			}, */
-			defaultView: viewToUse,
-			defaultDate: dateToUse,
-			/* dayClick: function (date, jsEvent, view) {
-				// to do: consider moving this to a generic event listener if we're not sending a date in the URL
-
-				if (relevantRole === 'gseHRAdmin' || relevantRole === 'gseJobAdmin') {
-					if (moment(date._d).isAfter(nowAsISOLocal) && relevantRole === 'gseHRAdmin') {
-						var addScheduleURL = '/sites/hr-service-schedules/SitePages/App.aspx?r=0&d=' + date._i;
-						window.open(addScheduleURL, '_blank');
+					var eventItemString = $(this).attr("ows_AllRequestData");
+					eventItemString = eventItemString.replace(regexOne, "'");
+					eventItemString = eventItemString.replace(regexTwo, "'");
+					eval("var eventItem=" + eventItemString);
+					eventItem.ID = $(this).attr("ows_ID");
+					if (typeof (eventItem["Requested-For"]) == "object") {
+						eventItem.contactLinkedName = "<a target=\"_blank\" href=\"https://bmos-my.sharepoint.com/_layouts/15/me.aspx?p=" + StrInStr(eventItem["Requested-For"][0]["description"], "@", 1) + "%40mos.org&v=profile\">" + eventItem["Requested-For"][0]["displayText"] + "</a>";
+					} else {
+						eventItem.contactLinkedName = "";
 					}
-				}
-			},
-			dayRender: function (date, cell) {
-				if (relevantRole === 'gseHRAdmin' || relevantRole === 'gseJobAdmin') {
-					if (cell[0].classList.contains('fc-future')) {
-						var addLinkMarkup = '<a class="add-schedule" ' + 
-							'href="/sites/hr-service-schedules/SitePages/App.aspx?r=0&d=' + date._i + 
-							'" target="_blank">Add</a>';
-						cell.append(addLinkMarkup);
-						var headClassSelector = '';
-						if (cell.hasClass('fc-sun')) {
-							headClassSelector = 'fc-sun';
-						} else if (cell.hasClass('fc-mon')) {
-							headClassSelector = 'fc-mon';
-						} else if (cell.hasClass('fc-tue')) {
-							headClassSelector = 'fc-tue';
-						} else if (cell.hasClass('fc-wed')) {
-							headClassSelector = 'fc-wed';
-						} else if (cell.hasClass('fc-thu')) {
-							headClassSelector = 'fc-thu';
-						} else if (cell.hasClass('fc-fri')) {
-							headClassSelector = 'fc-fri';
-						} else if (cell.hasClass('fc-sat')) {
-							headClassSelector = 'fc-sat';
+
+					var isoStartDatetime = 
+						eventItem["Buyout-Date"].slice(0, 10) + 
+						eventItem["time-storage_Start-Time"].slice(10, 19);
+					var isoEndDatetime = 
+						eventItem["Buyout-Date"].slice(0, 10) + 
+						eventItem["time-storage_End-Time"].slice(10, 19);
+					var formattedStartTime = $().ReturnFormattedDateTime(isoStartDatetime, "YYYY-MM-DDTHH:mm:ss", "h:mma", 0);
+					formattedStartTime = formattedStartTime.slice(0, formattedStartTime.length - 1);
+					var formattedEndTime = $().ReturnFormattedDateTime(isoEndDatetime, "YYYY-MM-DDTHH:mm:ss", "h:mma", 0);
+					formattedEndTime = formattedEndTime.slice(0, formattedEndTime.length - 1);
+					var formattedDate = $().ReturnFormattedDateTime(isoStartDatetime, "YYYY-MM-DDTHH:mm:ss", "ddd, M/D/YY", 0);
+
+					var thisEvent = {
+						"eventID": eventItem["ID"],
+						"title": formattedStartTime + " | " + eventItem["Buyout-Title"],
+						"contactLinkedName": eventItem.contactLinkedName,
+						"formattedStartTime": formattedStartTime,
+						"formattedEndTime": formattedEndTime,
+						"formattedDate": formattedDate,
+						"start": isoStartDatetime,
+						"end": isoEndDatetime,
+						"editURL": "/sites/mw-buyouts/SitePages/App.aspx?r=" + eventItem["ID"],
+						"location": eventItem["Buyout-Location"],
+						"orderNumber": eventItem["Buyout-Order-Number"],
+						"buyoutTitle": eventItem["Buyout-Title"],
+						"department": eventItem["Buyout-Department"],
+					};
+
+					allEvents.push(thisEvent);
+
+				});
+				console.log('m1');
+				console.log('allEvents');
+				console.log(allEvents);
+				// console.log('viewToUse');
+				// console.log(viewToUse);
+				// console.log('dateToUse');
+				// console.log(dateToUse);
+
+				$("div#overview-screen-container").fullCalendar({
+					allDayDefault: true,
+					lazyFetching: false,
+					eventOrder: "start",
+					header: {
+						// right and center are reversed, because our CSS implements obedience to the accessibility imperative that DOM elements exist 
+						//      (and are thus encountered by assistive technologies) in the same order in which they're presented to sighted users
+						left: "",
+						right: "prevYear,prev,title,next,nextYear",
+						center: "today,basicDay,basicWeek,month"
+					},
+					defaultView: viewToUse,
+					defaultDate: dateToUse,
+					dayClick: function (date, jsEvent, view) {
+						location.href = "/sites/mw-buyouts/SitePages/App.aspx?f=cal&view=basicDay&date=" + $(this).attr("data-date");
+					},
+					theme: true,
+					eventClick: function (event, jsEvent, view) {
+
+						// close the dialog box
+						$("div#buyout-dialog").dialog("close");
+
+						// populate the dialog box
+						var dialogTitleBarContent = "<h2 class=\"ui-dialog-buyout-title-date-and-time-range\"> \n" +
+							"   <span class=\"ui-dialog-buyout-title-date\">" + event.formattedDate + "</span> \n" +
+							"   <span class=\"ui-dialog-title-buyout-start-time\">" + event.formattedStartTime + "</span> \n" +
+							"   <span class=\"ui-dialog-title-buyout-times-separator\"> &ndash; </span> \n" +
+							"   <span class=\"ui-dialog-title-buyout-end-time\">" + event.formattedEndTime + "</span> \n" +
+							"</h2> \n";
+
+						if (typeof (event.location) != "undefined") {
+							dialogTitleBarContent += "<p class=\"ui-dialog-title-buyout-location\">" + event.location + "</p> \n";
 						}
-						cell.closest('div.fc-row')
-							.find('div.fc-content-skeleton')
-							.find('td.' + headClassSelector)
-							.addClass('add-schedule-on-click');
-					}
-				}
-				
-			}, */
-			theme: true,
-			eventClick: function (event, jsEvent, view) {
 
-				// close the dialog box
-				$("div#dialog").dialog("close");
+						$('div.ui-dialog[aria-describedby="buyout-dialog"] div.ui-dialog-titlebar span.ui-dialog-title').html(dialogTitleBarContent);
 
-				// populate the dialog box
+						var dialogBodyContent = "<p class=\"ui-dialog-buyout-title\">" + event.buyoutTitle + "</p> \n" +
+							"<ul> \n";
 
-				var dialogTitleBarContent = '<h2 class="gse-schedules-dialog-date-and-time-range">' +
-					'<span class="gse-schedules-dialog-date">' + event.formattedDate + '</span> ' +
-					'<span class="gse-schedules-dialog-start-time">' + event.formattedStartTime + '</span>' +
-					'<span class="gse-schedules-dialog-times-separator"> &ndash; </span>' +
-					'<span class="gse-schedules-dialog-end-time">' + event.formattedEndTime + '</span>' +
-					'</h2>';
+						dialogBodyContent += 
+							"	<li class=\"event-contact\">Contact: " + event.contactLinkedName + "</li> \n" +
+							"	<li class=\"event-department\">Department: " + event.department + "</li> \n" +
+							"	<li class=\"event-id\">Buyout Order Number: " + event.orderNumber + "</li>" +
+							"	<li class=\"event-id\">Hub Buyout ID: " + event.eventID + "</li>" +
+							"</ul> \n" +
+							"<a class=\"ui-dialog-button\" href=\"" + event.editURL + "\">Edit / Delete</a>";
 
-				$("div[aria-describedby='gse-schedule-card-dialog'] div.ui-dialog-titlebar span.ui-dialog-title").html(dialogTitleBarContent);
+						$("div#buyout-dialog").html(dialogBodyContent);
 
-				var dialogBodyContent =
-					'<h3 class="gse-schedule-card-dialog-job-title">' + event.jobTitle + '</h3>' +
-					event.jobDescription;
+						// position the dialog box
+						$("div#buyout-dialog").dialog("option", "position", { my: "left bottom", at: "right top", of: jsEvent });
 
-				if (event.isInFuture) {
-					dialogBodyContent += '<p>Signups Available: ' +
-						(event.quantityPositions - event.quantitySignups) +
-						' / ' + event.quantityPositions;
-				}
+						// open the dialog box
+						$("div#buyout-dialog").dialog("open");
+					},
+					events: allEvents
+				});
 
-				dialogBodyContent += '<div class="gse-schedule-card-dialog-links-container">';
+				var commandBarContents = $().ReturnButtonsMarkup(buttons);
 
-				if (event.mySignupURL) {
-					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' +
-						'<a id="gse-schedule-card-dialog-my-signup-link" ' +
-						'class="gse-schedule-card-dialog-button" href="' +
-						event.mySignupURL + '" target="_blank">More Info / My Signup</a></div>';
-				} else if (event.isInFuture && ((parseInt(event.quantityPositions) - parseInt(event.quantitySignups)) !== 0)) {
-					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' +
-						'<a id="gse-schedule-card-dialog-signup-opportunity-link" ' +
-						'class="gse-schedule-card-dialog-button" href="' +
-						event.signupURL + '" target="_blank">More Info / Sign Up</a></div>';
-				} else {
-					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' +
-						'<a id="gse-schedule-card-dialog-signup-opportunity-link" ' +
-						'class="gse-schedule-card-dialog-button" href="' +
-						event.signupURL + '" target="_blank">More Info</a></div>';
-				}
+				$("div.fc-toolbar div.fc-left").append(commandBarContents);
 
-				if (relevantRole === 'gseHRAdmin' || relevantRole === 'gseJobAdmin') {
-					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' +
-						'<a id="gse-schedule-card-dialog-job-link" ' +
-						'class="gse-schedule-card-dialog-button" href="' +
-						event.jobURL + '" target="_blank">Job Details</a></div>';
-					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' +
-						'<a id="gse-schedule-card-dialog-schedule-link" ' +
-						'class="gse-schedule-card-dialog-button" href="' +
-						event.scheduleURL + '" target="_blank">Schedule Details</a></div>';
-				}
+				$("button.ui-button, a.ui-button, a.ui-dialog-button").on("click", function () {
+					$("div#buyout-dialog").dialog("close");
+				});
 
-				$("div#gse-schedule-card-dialog").html(dialogBodyContent);
-
-				// position the dialog box
-				$("div#gse-schedule-card-dialog").dialog("option", "position", { my: "left bottom", at: "right top", of: jsEvent });
-
-				// open the dialog box
-				$("div#gse-schedule-card-dialog").dialog("open");
-			},
-			events: augmentedSchedules
-
+				$("div.fc-toolbar, div.fc-view-container").fadeTo(1000, 1);
+			}
 		});
 
-		$("div.fc-toolbar div.fc-left").append('<div id="container_command-bar"></div>');
-
-		var buttonDivs = $().ReturnButtonsMarkupWithContainerDivs(buttons);
-		var buttonOverflowMenu = $().ReturnButtonsMarkupAsOverflowMenu(buttons);
-
-		var commandBarContents = '';
-
-		commandBarContents +=
-			'<div id="container_navigation-controls-expanded"> \n' +
-			buttonDivs +
-			'</div> \n';
-
-
-
-		commandBarContents +=
-			'<div id="container_filter-controls-and-header"> \n' +
-			'   <div id="text_filter-controls" class="collapsible">Year</div> \n' +
-			'   <div id="container_filter-controls"> \n' +
-			'   	<div class="container_filter-control"> \n' +
-			'   		<label for="filter_year">Year</label><select id="filter_year" name="filter_year"> \n' +
-			'				' + $().ReturnFiscalYearSelectOptions(startingYearOfFirstFiscalYear, startingYearOfLastFiscalYear, true, selectedStartYear) + ' \n' +
-			'			</select>' +
-			'		</div>' +
-			'   	<div class="container_filter-control"> \n' +
-			'			<a id="filter_submit-button">Update</a>' +
-			'		</div>' +
-			'    </div> \n' +
-			'</div> \n';
-
-		commandBarContents += buttonOverflowMenu;
-
-		$("div#container_command-bar").append(commandBarContents);
-
 		// add extra class for styling hook
-		$('div#app-container').addClass('gse-schedule-calendar');
+		$('div#app-container').addClass('buyout-calendar');
 
-		// collapse filters
-		$('.collapsible').collapsible();
+		$("div#app-container").append("<div id=\"buyout-dialog\"></div>");
 
-
-
-
-
-
-
-
-
-
-
-		$("div#app-container").append("<div id=\"gse-schedule-card-dialog\"></div>");
-
-		$("div#gse-schedule-card-dialog").dialog({
+		$("div#buyout-dialog").dialog({
 			autoOpen: false,
 			draggable: true,
 			modal: true,
@@ -19308,19 +19249,8 @@
 			width: 400,
 		});
 
-
 		$("div.fc-toolbar, div.fc-view-container").fadeTo(1000, 1);
 
-		// listen for date filtering
-		$("a#filter_submit-button").click(function () {
-			var selectedStartYear = $("select#filter_year").val();
-			if (selectedStartYear == '') {
-				selectedStartYear = moment().isAfter(thisYear + '-06-30') ?
-					parseInt(thisYear) :
-					parseInt(thisYear) - 1;
-			}
-			window.location = "/sites/" + mData.siteToken + "/SitePages/App.aspx?f=cal&y=" + selectedStartYear;
-		});
 	};
 
 
@@ -19384,7 +19314,7 @@
 							var repeatID = StrInStr(d["ID"], "-repeat", 0);
 							if (repeatID == false) { repeatID = ""; }
 							var isoStartDatetime = d["Event-Date" + repeatID].slice(0, 10) + eventItem["time-storage_Start-Time"].slice(10, 19);
-							var isoEndDatetime = d["Event-Date" + repeatID].slice(0, 10) + eventItem["time-storage_End-Time"].slice(10, 19)
+							var isoEndDatetime = d["Event-Date" + repeatID].slice(0, 10) + eventItem["time-storage_End-Time"].slice(10, 19);
 							var formattedStartTime = $().ReturnFormattedDateTime(isoStartDatetime, "YYYY-MM-DDTHH:mm:ss", "h:mma", 0);
 							formattedStartTime = formattedStartTime.slice(0, formattedStartTime.length - 1);
 							var formattedEndTime = $().ReturnFormattedDateTime(isoEndDatetime, "YYYY-MM-DDTHH:mm:ss", "h:mma", 0);
@@ -19854,7 +19784,7 @@
 		});
 
 		// add extra class for styling hook
-		$('div#app-container').addClass('museum-wide-events-calendar');
+		$('div#app-container').addClass('museum-wide-event-calendar');
 
 		$("div#app-container").append("<div id=\"museum-wide-event-dialog\"></div>");
 
@@ -25136,12 +25066,16 @@
 	$.fn.ReturnCurrentUserIsManager = function () {
 		var currentUserIsManager = 0;
 		var currentUserAccount = ReplaceAll('@mos.org', '', ReplaceAll('i:0#.f\\|membership\\|', '', uData.account));
-		var managers = $().ReturnManagers();
-		managers.forEach((manager) => {
-			if (manager.account === currentUserAccount) {
-				currentUserIsManager = 1;
-			}
-		});
+		if (currentUserAccount === 'sp3') {
+			currentUserIsManager = 1;
+		} else {
+			var managers = $().ReturnManagers();
+			managers.forEach((manager) => {
+				if (manager.account === currentUserAccount) {
+					currentUserIsManager = 1;
+				}
+			});
+		}
 		return currentUserIsManager;
 	};
 

@@ -132,14 +132,6 @@
 
 	var fData = {
 		'autoTrackSubmissionAndCancellation': 1,
-		'autoPopulateEventDepartment': 1,
-		// 'autoAddLocationToList': {
-		// 	'relevantBooleanID': 'add-location-boolean_add',
-		// 	'relevantSelectID': "Event-Location",
-		// 	'relevantAdditionID': 'Location-to-Add',
-		// 	'listName': 'MuseumLocations',
-		// 	'listWebURL': 'https://bmos.sharepoint.com/sites/hubprod'
-		// },
 		'bypassNormalDataSaving': 1,
 		'autoTrackKeepingRemovingExceptionalEventOccurrences': {
 			'relevantBooleanID': 'change-pattern-of-repeating-dates_yes' 
@@ -419,7 +411,7 @@
 				"elementType": "field",
 				"controlType": "select",
 				"fieldName": "Event Department",
-				"listFieldName": "EventDepartment",
+				// "listFieldName": "EventDepartment",
 				"labelContent": "Department",
 				'loadOptions': {
 					'function': 'LoadDepartmentSelectOptions',
@@ -1454,6 +1446,13 @@
 	// checks / radios
 	fData.CustomScriptLast += '$("input#individual-or-pattern_individual").prop("checked", true).attr("checked", true); \n';
 
+	// people picker
+	fData.CustomScriptLast +=
+		"	$().PutAddtlPeopleInPicker('Requested For', [{ \n" +
+		"	'name': 'James Baker'," +
+		"	'email': 'jbaker@mos.org'," +
+		"	'account': 'i:0#.f|membership|jbaker@mos.org'" +
+		"}]);";
 
 
 
