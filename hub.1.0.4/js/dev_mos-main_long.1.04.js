@@ -19233,7 +19233,7 @@
 		});
 
 		// add extra class for styling hook
-		$('div#app-container').addClass('buyout-calendar');
+		$('div#app-container').addClass('mw-buyouts-calendar');
 
 		$("div#app-container").append("<div id=\"buyout-dialog\"></div>");
 
@@ -19784,7 +19784,7 @@
 		});
 
 		// add extra class for styling hook
-		$('div#app-container').addClass('museum-wide-event-calendar');
+		$('div#app-container').addClass('mw-events-calendar');
 
 		$("div#app-container").append("<div id=\"museum-wide-event-dialog\"></div>");
 

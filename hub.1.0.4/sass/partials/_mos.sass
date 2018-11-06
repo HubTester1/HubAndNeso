@@ -1062,8 +1062,8 @@ div.ui-dialog div.ui-dialog-titlebar.ui-widget-header button.ui-button
 			&:hover
 				color: $intActive !important
 
-div#museum-event-calendar-container,
-div#buyout-calendar-container
+div#app-container.mw-events-calendar,
+div#app-container.mw-buyouts-calendar
 
 	div.fc-toolbar
 
@@ -4350,9 +4350,8 @@ body.product-timeline
 // some gse stuff is separate because it's a later generation; there's 
 // 		a lot of repetition, but a few differences
 
-// MWEC
-div#museum-event-calendar-container,
-div#buyout-calendar-container
+div#app-container.mw-events-calendar,
+div#app-container.mw-buyouts-calendar
 
 	div.fc-toolbar
 		height: 4.5rem
@@ -4387,7 +4386,7 @@ div#buyout-calendar-container
 			line-height: 3.75rem !important
 			padding: .25rem 3rem .5rem
 
-div#buyout-calendar-container
+div#app-container.mw-buyouts-calendar
 
 	div#buyouts-metadata
 		opacity: 0
@@ -4434,8 +4433,8 @@ div#buyout-calendar-container
 			span.stearns-gallery
 				background-color: $darkGreen
 
-div#buyout-calendar-container,
-div#museum-event-calendar-container
+div#app-container.mw-buyouts-calendar,
+div#app-container.mw-events-calendar
 
 	div.fc-view-container
 		opacity: 0
@@ -4660,8 +4659,8 @@ div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar
 					padding: 0 3rem
 
 
-div.ui-dialog#buyout-calendar-item-dialog,
-div.ui-dialog#museum-calendar-item-dialog,
+div[aria-describedby='museum-wide-event-dialog'],
+div[aria-describedby='buyout-dialog'],
 div[aria-describedby='gse-schedule-card-dialog']
 
 	div.ui-dialog-titlebar
