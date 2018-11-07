@@ -1435,6 +1435,7 @@
 	fData.CustomScriptLast += '$("input#time-storage_Start-Time").val("2000-01-01T09:00:00Z"); \n';
 	fData.CustomScriptLast += '$("input#time-storage_End-Time").val("2000-01-01T17:00:00Z"); \n';
 	fData.CustomScriptLast += '$("div#simple-dates").removeClass("hidden"); \n';
+	fData.CustomScriptLast += '$("div#label-and-control_Change-Pattern-of-Repeating-Dates").addClass("hidden"); \n';
 	
 	// texts
 	fData.CustomScriptLast += '$("input#Event-Title").val("Event Title");';

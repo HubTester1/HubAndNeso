@@ -1,0 +1,5354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data>
+        
+            <request>
+                <legacyID>5966</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 09:00:00.0</startTime>
+                <productTitle>Coral Reef Adventure</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight </buyoutTitle>
+                <endTime>1900-01-01 09:50:00.0</endTime>
+                <date>2017-11-04 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>5989</legacyID>
+                <orderNo>894700</orderNo>
+                <startTime>1900-01-01 16:00:00.0</startTime>
+                <productTitle>No public shows</productTitle>
+                <contact>B Wroblewski</contact>
+                <buyoutTitle>No public Omnis 4 PM and later today</buyoutTitle>
+                <endTime>1900-01-01 17:00:00.0</endTime>
+                <date>2017-11-08 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>5990</legacyID>
+                <orderNo>894700</orderNo>
+                <startTime>1900-01-01 16:15:00.0</startTime>
+                <productTitle>Last public show3:30</productTitle>
+                <contact>Barbara Wroblewski</contact>
+                <buyoutTitle>Last public Planetarium show at 3:30</buyoutTitle>
+                <endTime>1900-01-01 17:00:00.0</endTime>
+                <date>2017-11-08 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Planetarium</location>
+            </request>
+        
+            <request>
+                <legacyID>5991</legacyID>
+                <orderNo>894700</orderNo>
+                <startTime>1900-01-01 16:00:00.0</startTime>
+                <productTitle/>
+                <contact>Barbara Wroblewski</contact>
+                <buyoutTitle>No public 4Ds 4PM on today</buyoutTitle>
+                <endTime>1900-01-01 17:00:00.0</endTime>
+                <date>2017-11-08 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>4-D Cinema</location>
+            </request>
+        
+            <request>
+                <legacyID>5992</legacyID>
+                <orderNo>894700</orderNo>
+                <startTime>1900-01-01 16:00:00.0</startTime>
+                <productTitle/>
+                <contact>Barbara Wroblewski</contact>
+                <buyoutTitle>No BG entries 4 PM on</buyoutTitle>
+                <endTime>1900-01-01 17:00:00.0</endTime>
+                <date>2017-11-08 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Butterfly Garden</location>
+            </request>
+        
+            <request>
+                <legacyID>5994</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 19:30:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Barbara Wroblewski</contact>
+                <buyoutTitle>Omni 1 of 3-Greenbuild event</buyoutTitle>
+                <endTime>1900-01-01 20:30:00.0</endTime>
+                <date>2017-11-08 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>5995</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 20:30:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Barbara Wroblewski</contact>
+                <buyoutTitle>Omni 2 of 3-Greenbuild event</buyoutTitle>
+                <endTime>1900-01-01 21:30:00.0</endTime>
+                <date>2017-11-08 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>5996</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 21:30:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Barbara Wroblewski</contact>
+                <buyoutTitle>Omni 3 of 3-Greenbuild event</buyoutTitle>
+                <endTime>1900-01-01 22:30:00.0</endTime>
+                <date>2017-11-08 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>5997</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 19:30:00.0</startTime>
+                <productTitle>24 min./Undis Worlds</productTitle>
+                <contact>Barbara Wroblewski</contact>
+                <buyoutTitle>Planetarium 1 of 4-Greenbuild event</buyoutTitle>
+                <endTime>1900-01-01 19:54:00.0</endTime>
+                <date>2017-11-08 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Planetarium</location>
+            </request>
+        
+            <request>
+                <legacyID>5998</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 20:15:00.0</startTime>
+                <productTitle>24 min./Undis Worlds</productTitle>
+                <contact>Barbara Wroblewski</contact>
+                <buyoutTitle>Planetarium 2 of 4 - Greenbuild eve</buyoutTitle>
+                <endTime>1900-01-01 20:39:00.0</endTime>
+                <date>2017-11-08 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Planetarium</location>
+            </request>
+        
+            <request>
+                <legacyID>5999</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 21:00:00.0</startTime>
+                <productTitle>24 min./Undis Worlds</productTitle>
+                <contact>Barbara Wroblewski</contact>
+                <buyoutTitle>Planetarium 3 of 4-Greenbuild event</buyoutTitle>
+                <endTime>1900-01-01 21:24:00.0</endTime>
+                <date>2017-11-08 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Planetarium</location>
+            </request>
+        
+            <request>
+                <legacyID>6000</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 21:45:00.0</startTime>
+                <productTitle>24 min./Undis Worlds</productTitle>
+                <contact>Barbara Wroblewski</contact>
+                <buyoutTitle>Planetarium 4 of 4-Greenbuild event</buyoutTitle>
+                <endTime>1900-01-01 22:09:00.0</endTime>
+                <date>2017-11-08 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Planetarium</location>
+            </request>
+        
+            <request>
+                <legacyID>5946</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 18:00:00.0</startTime>
+                <productTitle/>
+                <contact>Dani LeBlanc</contact>
+                <buyoutTitle>Stories Under the Stars</buyoutTitle>
+                <endTime>1900-01-01 23:00:00.0</endTime>
+                <date>2017-11-16 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>Planetarium</department>
+                
+                
+                
+                    
+                
+                <location>Planetarium</location>
+            </request>
+        
+            <request>
+                <legacyID>5968</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 09:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 09:50:00.0</endTime>
+                <date>2017-11-17 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>5969</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 10:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 10:50:00.0</endTime>
+                <date>2017-11-17 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6002</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 22:15:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight Program</buyoutTitle>
+                <endTime>1900-01-01 23:00:00.0</endTime>
+                <date>2017-11-17 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>5970</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 09:00:00.0</startTime>
+                <productTitle>Coral Reef Adventure</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 09:50:00.0</endTime>
+                <date>2017-11-18 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>5972</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 09:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 09:50:00.0</endTime>
+                <date>2017-11-19 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6003</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 17:15:00.0</startTime>
+                <productTitle>30 min. Undis Worlds</productTitle>
+                <contact>Barbara Wroblewski</contact>
+                <buyoutTitle>VCA Planetarium buyout</buyoutTitle>
+                <endTime>1900-01-01 17:45:00.0</endTime>
+                <date>2017-11-28 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Planetarium</location>
+            </request>
+        
+            <request>
+                <legacyID>5947</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 18:00:00.0</startTime>
+                <productTitle/>
+                <contact>Dani LeBlanc</contact>
+                <buyoutTitle>Synesthesia Suite</buyoutTitle>
+                <endTime>1900-01-01 23:00:00.0</endTime>
+                <date>2017-11-30 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>Planetarium</department>
+                
+                
+                
+                    
+                
+                <location>Planetarium</location>
+            </request>
+        
+            <request>
+                <legacyID>5964</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 18:00:00.0</startTime>
+                <productTitle>MediaMerge Servicing</productTitle>
+                <contact>Robin Doty</contact>
+                <buyoutTitle>Omni Servicing</buyoutTitle>
+                <endTime>1900-01-01 23:59:00.0</endTime>
+                <date>2017-12-04 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>Omni Operations</department>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>5965</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 18:00:00.0</startTime>
+                <productTitle>MediaMerge Servicing</productTitle>
+                <contact>Robin Doty</contact>
+                <buyoutTitle>Omni Servicing</buyoutTitle>
+                <endTime>1900-01-01 23:59:00.0</endTime>
+                <date>2017-12-05 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>Omni Operations</department>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6004</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 19:30:00.0</startTime>
+                <productTitle>For Google event</productTitle>
+                <contact>Barbara Wroblewski</contact>
+                <buyoutTitle>Private viewing of Gridiron Glory</buyoutTitle>
+                <endTime>1900-01-01 23:30:00.0</endTime>
+                <date>2017-12-07 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Nichols Gallery</location>
+            </request>
+        
+            <request>
+                <legacyID>6005</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 17:00:00.0</startTime>
+                <productTitle>No 5 PM public show</productTitle>
+                <contact>Barbara Wroblewski</contact>
+                <buyoutTitle>No public show at 5 PM-Google setup</buyoutTitle>
+                <endTime>1900-01-01 18:00:00.0</endTime>
+                <date>2017-12-07 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6006</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 20:00:00.0</startTime>
+                <productTitle>Und. Wrlds.-30 min</productTitle>
+                <contact>Barbara Wroblewski</contact>
+                <buyoutTitle>Google 1 of 4</buyoutTitle>
+                <endTime>1900-01-01 20:30:00.0</endTime>
+                <date>2017-12-07 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Planetarium</location>
+            </request>
+        
+            <request>
+                <legacyID>6007</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 20:50:00.0</startTime>
+                <productTitle>Undis. Wrlds.-30 min</productTitle>
+                <contact>Barbara Wroblewski</contact>
+                <buyoutTitle>Google 2 of 4</buyoutTitle>
+                <endTime>1900-01-01 21:30:00.0</endTime>
+                <date>2017-12-07 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Planetarium</location>
+            </request>
+        
+            <request>
+                <legacyID>6008</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 21:40:00.0</startTime>
+                <productTitle>Inside NASA-30 min</productTitle>
+                <contact>Barbara Wroblewski</contact>
+                <buyoutTitle>Google 3 of 4</buyoutTitle>
+                <endTime>1900-01-01 22:10:00.0</endTime>
+                <date>2017-12-07 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Planetarium</location>
+            </request>
+        
+            <request>
+                <legacyID>6009</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 22:30:00.0</startTime>
+                <productTitle>Moons-35 min.</productTitle>
+                <contact>Barbara Wroblewski</contact>
+                <buyoutTitle>Google 4 of 4</buyoutTitle>
+                <endTime>1900-01-01 23:05:00.0</endTime>
+                <date>2017-12-07 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Planetarium</location>
+            </request>
+        
+            <request>
+                <legacyID>6010</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 09:00:00.0</startTime>
+                <productTitle>Planetarium Shutdown</productTitle>
+                <contact>Talia Sepersky</contact>
+                <buyoutTitle>Planetarium Shutdown</buyoutTitle>
+                <endTime>1900-01-01 22:00:00.0</endTime>
+                <date>2017-12-12 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Planetarium</location>
+            </request>
+        
+            <request>
+                <legacyID>6017</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 19:30:00.0</startTime>
+                <productTitle>Private Viewing</productTitle>
+                <contact>Barbara Wroblewski</contact>
+                <buyoutTitle>Gridiron Glory/Intex Solutions</buyoutTitle>
+                <endTime>1900-01-01 21:30:00.0</endTime>
+                <date>2017-12-16 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Nichols Gallery</location>
+            </request>
+        
+            <request>
+                <legacyID>6018</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 18:45:00.0</startTime>
+                <productTitle>Private buyout</productTitle>
+                <contact>Barbara Wroblewski</contact>
+                <buyoutTitle>Polar Express - 1 of 2 for Intex</buyoutTitle>
+                <endTime>1900-01-01 19:05:00.0</endTime>
+                <date>2017-12-16 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>4-D Cinema</location>
+            </request>
+        
+            <request>
+                <legacyID>6019</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 20:00:00.0</startTime>
+                <productTitle>private viewing</productTitle>
+                <contact>Barbara Wroblewski</contact>
+                <buyoutTitle>Polar Express - 2 of 2 for Intex</buyoutTitle>
+                <endTime>1900-01-01 20:20:00.0</endTime>
+                <date>2017-12-16 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>4-D Cinema</location>
+            </request>
+        
+            <request>
+                <legacyID>5984</legacyID>
+                <orderNo>900891</orderNo>
+                <startTime>1900-01-01 12:30:00.0</startTime>
+                <productTitle>Explore the Galaxy</productTitle>
+                <contact>Amy Germaine</contact>
+                <buyoutTitle>School Buyout Planetarium</buyoutTitle>
+                <endTime>1900-01-01 13:15:00.0</endTime>
+                <date>2018-01-08 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>Science Central</department>
+                
+                
+                
+                    
+                
+                <location>Planetarium</location>
+            </request>
+        
+            <request>
+                <legacyID>5976</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 09:00:00.0</startTime>
+                <productTitle>Coral Reef Adventure</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 09:50:00.0</endTime>
+                <date>2018-01-15 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>5977</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 10:00:00.0</startTime>
+                <productTitle>Coral Reef Adventure</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 10:50:00.0</endTime>
+                <date>2018-01-15 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6020</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 18:00:00.0</startTime>
+                <productTitle>MediaMerge Servicing</productTitle>
+                <contact>Robin Doty</contact>
+                <buyoutTitle>Omni Servicing</buyoutTitle>
+                <endTime>1900-01-01 23:59:00.0</endTime>
+                <date>2018-01-16 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>Omni Operations</department>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6021</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 18:00:00.0</startTime>
+                <productTitle>MediaMerge Servicing</productTitle>
+                <contact>Robin Doty</contact>
+                <buyoutTitle>Omni Servicing</buyoutTitle>
+                <endTime>1900-01-01 23:59:00.0</endTime>
+                <date>2018-01-17 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>Omni Operations</department>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6022</legacyID>
+                <orderNo>1031410</orderNo>
+                <startTime>1900-01-01 17:00:00.0</startTime>
+                <productTitle>No shows as of 5 PM</productTitle>
+                <contact>Barbara Wroblewski</contact>
+                <buyoutTitle>No public shows as of 5 PM, later</buyoutTitle>
+                <endTime>1900-01-01 21:00:00.0</endTime>
+                <date>2018-01-19 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>4-D Cinema</location>
+            </request>
+        
+            <request>
+                <legacyID>6023</legacyID>
+                <orderNo>1031410</orderNo>
+                <startTime>1900-01-01 16:45:00.0</startTime>
+                <productTitle>BG to close at 5 PM</productTitle>
+                <contact>Barbara Wroblewski</contact>
+                <buyoutTitle>No public entries as of 4:45 PM, la</buyoutTitle>
+                <endTime>1900-01-01 21:00:00.0</endTime>
+                <date>2018-01-19 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Butterfly Garden</location>
+            </request>
+        
+            <request>
+                <legacyID>5978</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 09:00:00.0</startTime>
+                <productTitle>Coral Reef Adventure</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 09:50:00.0</endTime>
+                <date>2018-01-21 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>5979</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 10:00:00.0</startTime>
+                <productTitle>Coral Reef Adventure</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 10:50:00.0</endTime>
+                <date>2018-01-21 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>5980</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 09:00:00.0</startTime>
+                <productTitle>Coral Reef Adventure</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 09:50:00.0</endTime>
+                <date>2018-01-27 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>5981</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 10:00:00.0</startTime>
+                <productTitle>Coral Reef Adventure</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 10:50:00.0</endTime>
+                <date>2018-01-27 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>5982</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 09:00:00.0</startTime>
+                <productTitle>Coral Reef Adventure</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 09:50:00.0</endTime>
+                <date>2018-01-28 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>5983</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 10:00:00.0</startTime>
+                <productTitle>Coral Reef Adventure</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 10:50:00.0</endTime>
+                <date>2018-01-28 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6013</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 09:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight Program</buyoutTitle>
+                <endTime>1900-01-01 09:50:00.0</endTime>
+                <date>2018-02-03 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6014</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 10:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight Program</buyoutTitle>
+                <endTime>1900-01-01 10:50:00.0</endTime>
+                <date>2018-02-03 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6016</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 10:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 10:50:00.0</endTime>
+                <date>2018-02-04 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6015</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 09:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 09:50:00.0</endTime>
+                <date>2018-02-04 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6025</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 18:00:00.0</startTime>
+                <productTitle>BU Planetarium Show</productTitle>
+                <contact>Talia Sepersky</contact>
+                <buyoutTitle>BU Planetarium show</buyoutTitle>
+                <endTime>1900-01-01 20:00:00.0</endTime>
+                <date>2018-02-05 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>Planetarium</department>
+                
+                
+                
+                    
+                
+                <location>Planetarium</location>
+            </request>
+        
+            <request>
+                <legacyID>6026</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 18:00:00.0</startTime>
+                <productTitle>BU Planetarium Show</productTitle>
+                <contact>Talia Sepersky</contact>
+                <buyoutTitle>BU Planetarium show</buyoutTitle>
+                <endTime>1900-01-01 20:00:00.0</endTime>
+                <date>2018-02-06 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>Planetarium</department>
+                
+                
+                
+                    
+                
+                <location>Planetarium</location>
+            </request>
+        
+            <request>
+                <legacyID>6032</legacyID>
+                <orderNo>1056868</orderNo>
+                <startTime>1900-01-01 16:30:00.0</startTime>
+                <productTitle>Wonders of Night Sky</productTitle>
+                <contact>Barbara Wroblewski</contact>
+                <buyoutTitle>Beth Israel-Barouch Lab</buyoutTitle>
+                <endTime>1900-01-01 17:15:00.0</endTime>
+                <date>2018-02-09 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Planetarium</location>
+            </request>
+        
+            <request>
+                <legacyID>6039</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 09:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight Program</buyoutTitle>
+                <endTime>1900-01-01 09:50:00.0</endTime>
+                <date>2018-02-10 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6040</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 10:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight Program</buyoutTitle>
+                <endTime>1900-01-01 10:50:00.0</endTime>
+                <date>2018-02-10 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6041</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 09:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 09:50:00.0</endTime>
+                <date>2018-02-25 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6042</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 10:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 10:50:00.0</endTime>
+                <date>2018-02-25 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6045</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 09:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight </buyoutTitle>
+                <endTime>1900-01-01 09:50:00.0</endTime>
+                <date>2018-03-03 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6051</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 09:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 09:50:00.0</endTime>
+                <date>2018-03-04 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6052</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 10:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 10:50:00.0</endTime>
+                <date>2018-03-04 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6043</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 19:15:00.0</startTime>
+                <productTitle>Shark</productTitle>
+                <contact>Barbara Wroblewski</contact>
+                <buyoutTitle>4D 1 of 2 Buyouts-Boston Baptist</buyoutTitle>
+                <endTime>1900-01-01 19:30:00.0</endTime>
+                <date>2018-03-05 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>Event and Conference Services</department>
+                
+                
+                
+                    
+                
+                <location>4-D Cinema</location>
+            </request>
+        
+            <request>
+                <legacyID>6044</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 19:45:00.0</startTime>
+                <productTitle>Shark</productTitle>
+                <contact>Barbara Wroblewski</contact>
+                <buyoutTitle>4D 2 of 2 Buyouts-Boston Baptist</buyoutTitle>
+                <endTime>1900-01-01 20:00:00.0</endTime>
+                <date>2018-03-05 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>4-D Cinema</location>
+            </request>
+        
+            <request>
+                <legacyID>6029</legacyID>
+                <orderNo>964278</orderNo>
+                <startTime>1900-01-01 09:20:00.0</startTime>
+                <productTitle>Sharks</productTitle>
+                <contact>Amy Germaine</contact>
+                <buyoutTitle>Masconomet Middle 4-D 9:20am Buyout</buyoutTitle>
+                <endTime>1900-01-01 09:35:00.0</endTime>
+                <date>2018-03-09 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>Science Central</department>
+                
+                
+                
+                    
+                
+                <location>4-D Cinema</location>
+            </request>
+        
+            <request>
+                <legacyID>6053</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 09:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 09:50:00.0</endTime>
+                <date>2018-03-09 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6054</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 10:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 10:50:00.0</endTime>
+                <date>2018-03-09 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6047</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 09:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nacy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 09:50:00.0</endTime>
+                <date>2018-03-10 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6048</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 10:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nacy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 10:50:00.0</endTime>
+                <date>2018-03-10 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6024</legacyID>
+                <orderNo>928929</orderNo>
+                <startTime>1900-01-01 09:20:00.0</startTime>
+                <productTitle>Sharks</productTitle>
+                <contact>Amy Germaine</contact>
+                <buyoutTitle>Masconomet Regional 4-D 9:20am</buyoutTitle>
+                <endTime>1900-01-01 09:35:00.0</endTime>
+                <date>2018-03-16 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>4-D Cinema</location>
+            </request>
+        
+            <request>
+                <legacyID>6055</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 09:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 09:50:00.0</endTime>
+                <date>2018-03-17 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6056</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 10:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 10:50:00.0</endTime>
+                <date>2018-03-17 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6049</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 09:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 09:50:00.0</endTime>
+                <date>2018-03-18 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6050</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 10:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 10:50:00.0</endTime>
+                <date>2018-03-18 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6030</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 18:00:00.0</startTime>
+                <productTitle>MediaMerge servicing</productTitle>
+                <contact>Robin Doty</contact>
+                <buyoutTitle>MediaMerge Servicing</buyoutTitle>
+                <endTime>1900-01-01 23:59:00.0</endTime>
+                <date>2018-03-19 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>Omni Operations</department>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6031</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 18:00:00.0</startTime>
+                <productTitle>MediaMerge servicing</productTitle>
+                <contact>Robin Doty</contact>
+                <buyoutTitle>MediaMerge Servicing</buyoutTitle>
+                <endTime>1900-01-01 23:59:00.0</endTime>
+                <date>2018-03-20 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>Omni Operations</department>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6057</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 09:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 09:50:00.0</endTime>
+                <date>2018-03-23 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6058</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 10:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 10:50:00.0</endTime>
+                <date>2018-03-23 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6059</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 09:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 09:50:00.0</endTime>
+                <date>2018-03-24 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6060</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 10:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 10:50:00.0</endTime>
+                <date>2018-03-24 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6103</legacyID>
+                <orderNo>1140365</orderNo>
+                <startTime>1900-01-01 09:20:00.0</startTime>
+                <productTitle>Sharks</productTitle>
+                <contact>Amy Germaine</contact>
+                <buyoutTitle>Mascononmet Regional 4-D</buyoutTitle>
+                <endTime>1900-01-01 09:40:00.0</endTime>
+                <date>2018-04-03 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>Science Central</department>
+                
+                
+                
+                    
+                
+                <location>4-D Cinema</location>
+            </request>
+        
+            <request>
+                <legacyID>6061</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 09:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 09:50:00.0</endTime>
+                <date>2018-04-06 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6062</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 10:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 10:50:00.0</endTime>
+                <date>2018-04-06 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6063</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 09:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 09:50:00.0</endTime>
+                <date>2018-04-07 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6064</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 10:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 10:50:00.0</endTime>
+                <date>2018-04-07 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6065</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 09:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 09:50:00.0</endTime>
+                <date>2018-04-08 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6066</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 10:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 10:50:00.0</endTime>
+                <date>2018-04-08 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6067</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 09:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 09:50:00.0</endTime>
+                <date>2018-04-15 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6068</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 10:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 10:50:00.0</endTime>
+                <date>2018-04-15 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6107</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 19:15:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Barbara Wroblewski</contact>
+                <buyoutTitle>Tyler Technologies-Show 1 of 3</buyoutTitle>
+                <endTime>1900-01-01 20:05:00.0</endTime>
+                <date>2018-04-23 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6109</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 21:05:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Barbara Wroblewski</contact>
+                <buyoutTitle>Tyler Technologies - Show 3 of 3</buyoutTitle>
+                <endTime>1900-01-01 22:00:00.0</endTime>
+                <date>2018-04-23 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6111</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 20:15:00.0</startTime>
+                <productTitle>30 min/Inside NASA</productTitle>
+                <contact>Barbara Wroblewski</contact>
+                <buyoutTitle>Tyler Technologies/Show 2 of 3</buyoutTitle>
+                <endTime>1900-01-01 20:55:00.0</endTime>
+                <date>2018-04-23 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Planetarium</location>
+            </request>
+        
+            <request>
+                <legacyID>6112</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 21:00:00.0</startTime>
+                <productTitle>30 min/Inside NASA</productTitle>
+                <contact>Barbara Wroblewski</contact>
+                <buyoutTitle>Tyler Technologies/Show 3 of 3</buyoutTitle>
+                <endTime>1900-01-01 21:45:00.0</endTime>
+                <date>2018-04-23 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Planetarium</location>
+            </request>
+        
+            <request>
+                <legacyID>6106</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 19:00:00.0</startTime>
+                <productTitle/>
+                <contact>Barbara Wroblewski</contact>
+                <buyoutTitle>Mirror Maze-for Tyler Technologies </buyoutTitle>
+                <endTime>1900-01-01 22:00:00.0</endTime>
+                <date>2018-04-23 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Nichols Gallery</location>
+            </request>
+        
+            <request>
+                <legacyID>6108</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 20:10:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Barbara Wroblewski</contact>
+                <buyoutTitle>Tyler Technologies - Show 2 of 3</buyoutTitle>
+                <endTime>1900-01-01 20:55:00.0</endTime>
+                <date>2018-04-23 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6110</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 19:30:00.0</startTime>
+                <productTitle>30 min/Inside NASA</productTitle>
+                <contact>Barbara Wroblewski</contact>
+                <buyoutTitle>Tyler Technologies - Show 1 of 3</buyoutTitle>
+                <endTime>1900-01-01 20:05:00.0</endTime>
+                <date>2018-04-23 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Planetarium</location>
+            </request>
+        
+            <request>
+                <legacyID>6069</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 09:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 09:50:00.0</endTime>
+                <date>2018-04-28 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6070</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 10:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 10:50:00.0</endTime>
+                <date>2018-04-28 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6071</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 09:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 09:50:00.0</endTime>
+                <date>2018-04-29 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6072</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 10:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 10:50:00.0</endTime>
+                <date>2018-04-29 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6073</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 09:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 09:50:00.0</endTime>
+                <date>2018-05-04 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6074</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 10:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 10:50:00.0</endTime>
+                <date>2018-05-04 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6075</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 09:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 09:50:00.0</endTime>
+                <date>2018-05-06 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6076</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 10:00:00.0</startTime>
+                <productTitle>Dream Big </productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 10:50:00.0</endTime>
+                <date>2018-05-06 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6124</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 18:15:00.0</startTime>
+                <productTitle>Journey South Pacifi</productTitle>
+                <contact>Scot Keay</contact>
+                <buyoutTitle>Member Appreciation Night</buyoutTitle>
+                <endTime>1900-01-01 21:15:00.0</endTime>
+                <date>2018-05-06 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>Membership</department>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6027</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 18:00:00.0</startTime>
+                <productTitle>Planetarium event</productTitle>
+                <contact>Talia Sepersky</contact>
+                <buyoutTitle>New Horizons Planetarium Event</buyoutTitle>
+                <endTime>1900-01-01 21:30:00.0</endTime>
+                <date>2018-05-08 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>Planetarium</department>
+                
+                
+                
+                    
+                
+                <location>Planetarium</location>
+            </request>
+        
+            <request>
+                <legacyID>6126</legacyID>
+                <orderNo>TBD</orderNo>
+                <startTime>1900-01-01 20:00:00.0</startTime>
+                <productTitle>Humpback Whales</productTitle>
+                <contact>Barbara Wroblewski</contact>
+                <buyoutTitle>8 PM Buyout for MGH Nurses</buyoutTitle>
+                <endTime>1900-01-01 21:00:00.0</endTime>
+                <date>2018-05-11 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6101</legacyID>
+                <orderNo>1089077</orderNo>
+                <startTime>1900-01-01 15:30:00.0</startTime>
+                <productTitle>Night Sky</productTitle>
+                <contact>Amy Germaine</contact>
+                <buyoutTitle>BU Students Act. Night Sky</buyoutTitle>
+                <endTime>1900-01-01 16:15:00.0</endTime>
+                <date>2018-05-13 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>Science Central</department>
+                
+                
+                
+                    
+                
+                <location>Planetarium</location>
+            </request>
+        
+            <request>
+                <legacyID>6077</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 09:00:00.0</startTime>
+                <productTitle>Dream Big </productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 09:50:00.0</endTime>
+                <date>2018-05-18 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6078</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 10:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 10:50:00.0</endTime>
+                <date>2018-05-18 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6079</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 09:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 09:50:00.0</endTime>
+                <date>2018-05-19 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6080</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 10:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 10:50:00.0</endTime>
+                <date>2018-05-19 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6081</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 09:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 09:50:00.0</endTime>
+                <date>2018-05-20 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6082</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 10:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 10:50:00.0</endTime>
+                <date>2018-05-20 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6028</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 19:00:00.0</startTime>
+                <productTitle>Beyond the Telescope</productTitle>
+                <contact>Talia Sepersky</contact>
+                <buyoutTitle>Beyond the Telescope</buyoutTitle>
+                <endTime>1900-01-01 20:30:00.0</endTime>
+                <date>2018-05-22 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>Planetarium</department>
+                
+                
+                
+                    
+                
+                <location>Planetarium</location>
+            </request>
+        
+            <request>
+                <legacyID>5993</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 19:00:00.0</startTime>
+                <productTitle>Beyond the Telescope</productTitle>
+                <contact>Talia Sepersky</contact>
+                <buyoutTitle>Beyond the Telescope</buyoutTitle>
+                <endTime>1900-01-01 21:00:00.0</endTime>
+                <date>2018-05-22 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>Planetarium</department>
+                
+                
+                
+                    
+                
+                <location>Planetarium</location>
+            </request>
+        
+            <request>
+                <legacyID>6102</legacyID>
+                <orderNo>1073416</orderNo>
+                <startTime>1900-01-01 10:30:00.0</startTime>
+                <productTitle>Explore the Galaxy</productTitle>
+                <contact>Amy Germaine</contact>
+                <buyoutTitle>Coakley Middle 10:30 buyout</buyoutTitle>
+                <endTime>1900-01-01 11:15:00.0</endTime>
+                <date>2018-05-22 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>Science Central</department>
+                
+                
+                
+                    
+                
+                <location>Planetarium</location>
+            </request>
+        
+            <request>
+                <legacyID>6083</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 09:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 09:50:00.0</endTime>
+                <date>2018-05-25 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6084</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 10:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 10:50:00.0</endTime>
+                <date>2018-05-25 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6085</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 09:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 09:50:00.0</endTime>
+                <date>2018-06-01 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6086</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 10:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 10:50:00.0</endTime>
+                <date>2018-06-01 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6087</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 09:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 09:50:00.0</endTime>
+                <date>2018-06-02 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6088</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 10:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 10:50:00.0</endTime>
+                <date>2018-06-02 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6089</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 09:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 09:50:00.0</endTime>
+                <date>2018-06-03 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6090</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 10:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 10:50:00.0</endTime>
+                <date>2018-06-03 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6104</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 18:00:00.0</startTime>
+                <productTitle>MediaMerge Servicing</productTitle>
+                <contact>Robin Doty</contact>
+                <buyoutTitle>Omni Servicing</buyoutTitle>
+                <endTime>1900-01-01 23:59:00.0</endTime>
+                <date>2018-06-04 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>Omni Operations</department>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6105</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 18:00:00.0</startTime>
+                <productTitle>MediaMerge Servicing</productTitle>
+                <contact>Robin Doty</contact>
+                <buyoutTitle>Omni Servicing</buyoutTitle>
+                <endTime>1900-01-01 23:59:00.0</endTime>
+                <date>2018-06-05 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>Omni Operations</department>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6091</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 09:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 09:50:00.0</endTime>
+                <date>2018-06-08 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6092</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 10:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 10:50:00.0</endTime>
+                <date>2018-06-08 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6093</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 09:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 09:50:00.0</endTime>
+                <date>2018-06-09 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6094</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 10:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 10:50:00.0</endTime>
+                <date>2018-06-09 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6125</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 16:00:00.0</startTime>
+                <productTitle>NASA show</productTitle>
+                <contact>Dani LeBlanc</contact>
+                <buyoutTitle>NASA Eval</buyoutTitle>
+                <endTime>1900-01-01 20:00:00.0</endTime>
+                <date>2018-06-13 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>Planetarium</department>
+                
+                
+                
+                    
+                
+                <location>Planetarium</location>
+            </request>
+        
+            <request>
+                <legacyID>6095</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 09:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 09:50:00.0</endTime>
+                <date>2018-06-15 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6096</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 10:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 10:50:00.0</endTime>
+                <date>2018-06-15 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6097</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 09:00:00.0</startTime>
+                <productTitle>Dream Big </productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 09:50:00.0</endTime>
+                <date>2018-06-16 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6098</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 10:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 10:50:00.0</endTime>
+                <date>2018-06-16 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6127</legacyID>
+                <orderNo>1251801</orderNo>
+                <startTime>1900-01-01 19:45:00.0</startTime>
+                <productTitle>SHARK</productTitle>
+                <contact>Barbara Wroblewski</contact>
+                <buyoutTitle>7:45 PM  - 1 4D for NU event</buyoutTitle>
+                <endTime>1900-01-01 20:05:00.0</endTime>
+                <date>2018-06-16 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>4-D Cinema</location>
+            </request>
+        
+            <request>
+                <legacyID>6130</legacyID>
+                <orderNo>1253431</orderNo>
+                <startTime>1900-01-01 14:30:00.0</startTime>
+                <productTitle>From Dream to Discov</productTitle>
+                <contact>Jackie Dillman</contact>
+                <buyoutTitle>Dream to Discovery</buyoutTitle>
+                <endTime>1900-01-01 15:15:00.0</endTime>
+                <date>2018-06-24 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>Advancement Administration</department>
+                
+                
+                
+                    
+                
+                <location>Planetarium</location>
+            </request>
+        
+            <request>
+                <legacyID>6099</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 09:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 09:50:00.0</endTime>
+                <date>2018-06-24 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6100</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 10:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 10:50:00.0</endTime>
+                <date>2018-06-24 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6128</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 18:30:00.0</startTime>
+                <productTitle>Private viewing</productTitle>
+                <contact>Barbara Wroblewski</contact>
+                <buyoutTitle>SPACE open for ECS client event</buyoutTitle>
+                <endTime>1900-01-01 22:30:00.0</endTime>
+                <date>2018-06-26 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>ECS Corporate</department>
+                
+                
+                
+                    
+                
+                <location>Nichols Gallery</location>
+            </request>
+        
+            <request>
+                <legacyID>6129</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 18:30:00.0</startTime>
+                <productTitle>Private viewing</productTitle>
+                <contact>Barbara Wroblewski</contact>
+                <buyoutTitle>CROCS open for ECS client event</buyoutTitle>
+                <endTime>1900-01-01 21:00:00.0</endTime>
+                <date>2018-06-26 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>ECS Corporate</department>
+                
+                
+                
+                    
+                
+                <location>Stearns Gallery</location>
+            </request>
+        
+            <request>
+                <legacyID>6131</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 19:30:00.0</startTime>
+                <productTitle>IEEE client event</productTitle>
+                <contact>Barbara Wroblewski</contact>
+                <buyoutTitle>SPACE open/client event 7:30-9:30PM</buyoutTitle>
+                <endTime>1900-01-01 21:30:00.0</endTime>
+                <date>2018-07-09 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Nichols Gallery</location>
+            </request>
+        
+            <request>
+                <legacyID>6132</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 19:30:00.0</startTime>
+                <productTitle>For IEEE event</productTitle>
+                <contact>Barbara Wroblewski</contact>
+                <buyoutTitle>CROCS open/client event 7:30-9</buyoutTitle>
+                <endTime>1900-01-01 21:00:00.0</endTime>
+                <date>2018-07-09 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Stearns Gallery</location>
+            </request>
+        
+            <request>
+                <legacyID>6134</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 20:00:00.0</startTime>
+                <productTitle>Title TBD</productTitle>
+                <contact>Barbara Wroblewski</contact>
+                <buyoutTitle>IEEE 4D Show #1 of 4 at 8 PM</buyoutTitle>
+                <endTime>1900-01-01 20:15:00.0</endTime>
+                <date>2018-07-09 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>4-D Cinema</location>
+            </request>
+        
+            <request>
+                <legacyID>6135</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 20:20:00.0</startTime>
+                <productTitle>TBD</productTitle>
+                <contact>Barbara Wroblewski</contact>
+                <buyoutTitle>IEEE 4D Show #2 of 4 at 8:20 PM</buyoutTitle>
+                <endTime>1900-01-01 20:35:00.0</endTime>
+                <date>2018-07-09 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>4-D Cinema</location>
+            </request>
+        
+            <request>
+                <legacyID>6136</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 20:40:00.0</startTime>
+                <productTitle>TBD</productTitle>
+                <contact>Barbara Wroblewski</contact>
+                <buyoutTitle>IEEE 4D Show #3 of 4 at 8:40 PM</buyoutTitle>
+                <endTime>1900-01-01 20:55:00.0</endTime>
+                <date>2018-07-09 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>4-D Cinema</location>
+            </request>
+        
+            <request>
+                <legacyID>6137</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 21:00:00.0</startTime>
+                <productTitle>TBD</productTitle>
+                <contact>Barbara Wroblewski</contact>
+                <buyoutTitle>IEEE 4D Show #4 of 4 at 9 PM</buyoutTitle>
+                <endTime>1900-01-01 21:15:00.0</endTime>
+                <date>2018-07-09 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>4-D Cinema</location>
+            </request>
+        
+            <request>
+                <legacyID>6033</legacyID>
+                <orderNo>987459</orderNo>
+                <startTime>1900-01-01 18:00:00.0</startTime>
+                <productTitle>Blue Wing closeat6PM</productTitle>
+                <contact>Barbara Wroblewski</contact>
+                <buyoutTitle>No public 4Ds 6-7 PM</buyoutTitle>
+                <endTime>1900-01-01 19:00:00.0</endTime>
+                <date>2018-07-09 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>4-D Cinema</location>
+            </request>
+        
+            <request>
+                <legacyID>6034</legacyID>
+                <orderNo>987459</orderNo>
+                <startTime>1900-01-01 17:45:00.0</startTime>
+                <productTitle>BG closes at 6PM</productTitle>
+                <contact>Barbara bWroblewski</contact>
+                <buyoutTitle>No public entries 5:45 on</buyoutTitle>
+                <endTime>1900-01-01 19:00:00.0</endTime>
+                <date>2018-07-09 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Butterfly Garden</location>
+            </request>
+        
+            <request>
+                <legacyID>6139</legacyID>
+                <orderNo>1306150</orderNo>
+                <startTime>1900-01-01 09:00:00.0</startTime>
+                <productTitle>Great Barrier Reef</productTitle>
+                <contact>Carrie Nash</contact>
+                <buyoutTitle>GBR Media Screening</buyoutTitle>
+                <endTime>1900-01-01 10:00:00.0</endTime>
+                <date>2018-07-10 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>Marketing</department>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6133</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 18:30:00.0</startTime>
+                <productTitle>AOFAS client event</productTitle>
+                <contact>Barbara Wroblewski</contact>
+                <buyoutTitle>Crocs OPEN for event 6:30-9PM</buyoutTitle>
+                <endTime>1900-01-01 21:00:00.0</endTime>
+                <date>2018-07-13 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Stearns Gallery</location>
+            </request>
+        
+            <request>
+                <legacyID>6035</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 17:00:00.0</startTime>
+                <productTitle>Public close at 5PM </productTitle>
+                <contact>Barbara Wroblewski</contact>
+                <buyoutTitle>No public shows 5 PM on</buyoutTitle>
+                <endTime>1900-01-01 21:00:00.0</endTime>
+                <date>2018-07-13 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>4-D Cinema</location>
+            </request>
+        
+            <request>
+                <legacyID>6036</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 16:45:00.0</startTime>
+                <productTitle>Closes at5PM w/ BW</productTitle>
+                <contact>Barbara Wroblewski</contact>
+                <buyoutTitle>No public entries 4:45PM on</buyoutTitle>
+                <endTime>1900-01-01 21:00:00.0</endTime>
+                <date>2018-07-13 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Butterfly Garden</location>
+            </request>
+        
+            <request>
+                <legacyID>6138</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 19:00:00.0</startTime>
+                <productTitle>Private viewing/ECS</productTitle>
+                <contact>Barbara Wroblewski</contact>
+                <buyoutTitle>Crocs 7-8PM Arrowstreet Capita</buyoutTitle>
+                <endTime>1900-01-01 20:00:00.0</endTime>
+                <date>2018-07-18 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Stearns Gallery</location>
+            </request>
+        
+            <request>
+                <legacyID>6147</legacyID>
+                <orderNo>1371597</orderNo>
+                <startTime>1900-01-01 16:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Barbara Wroblewski</contact>
+                <buyoutTitle>Homesite - 4 PM Omni Private Buyout</buyoutTitle>
+                <endTime>1900-01-01 17:00:00.0</endTime>
+                <date>2018-08-29 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6140</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 20:00:00.0</startTime>
+                <productTitle>Private viewing</productTitle>
+                <contact>Barbara Wroblewski</contact>
+                <buyoutTitle>Brandeis/Crocs viewing</buyoutTitle>
+                <endTime>1900-01-01 21:00:00.0</endTime>
+                <date>2018-09-02 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>ECS Non-Profit</department>
+                
+                
+                
+                    
+                
+                <location>Stearns Gallery</location>
+            </request>
+        
+            <request>
+                <legacyID>6141</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 20:00:00.0</startTime>
+                <productTitle>Private viewing</productTitle>
+                <contact>Barbara Wroblewski</contact>
+                <buyoutTitle>Brandeis/Space viewing</buyoutTitle>
+                <endTime>1900-01-01 23:30:00.0</endTime>
+                <date>2018-09-02 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>ECS Non-Profit</department>
+                
+                
+                
+                    
+                
+                <location>Nichols Gallery</location>
+            </request>
+        
+            <request>
+                <legacyID>6142</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 09:00:00.0</startTime>
+                <productTitle>Planetarium Shutdown</productTitle>
+                <contact>Talia Sepersky</contact>
+                <buyoutTitle>Planetarium Shutdown</buyoutTitle>
+                <endTime>1900-01-01 17:00:00.0</endTime>
+                <date>2018-09-10 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>Planetarium</department>
+                
+                
+                
+                    
+                
+                <location>Planetarium</location>
+            </request>
+        
+            <request>
+                <legacyID>6162</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 18:00:00.0</startTime>
+                <productTitle>Servicing</productTitle>
+                <contact>Robin Doty</contact>
+                <buyoutTitle>Media Merge Servicing</buyoutTitle>
+                <endTime>1900-01-01 23:59:00.0</endTime>
+                <date>2018-09-10 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>Omni Operations</department>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6163</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 18:00:00.0</startTime>
+                <productTitle>Servicing</productTitle>
+                <contact>Robin Doty</contact>
+                <buyoutTitle>Media Merge Servicing</buyoutTitle>
+                <endTime>1900-01-01 23:59:00.0</endTime>
+                <date>2018-09-11 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>Omni Operations</department>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6143</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 09:00:00.0</startTime>
+                <productTitle>Planetarium Shutdown</productTitle>
+                <contact>Talia Sepersky</contact>
+                <buyoutTitle>Planetarium Shutdown</buyoutTitle>
+                <endTime>1900-01-01 17:00:00.0</endTime>
+                <date>2018-09-11 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>Planetarium</department>
+                
+                
+                
+                    
+                
+                <location>Planetarium</location>
+            </request>
+        
+            <request>
+                <legacyID>6144</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 09:00:00.0</startTime>
+                <productTitle>Planetarium Shutdown</productTitle>
+                <contact>Talia Sepersky</contact>
+                <buyoutTitle>Planetarium Shutdown</buyoutTitle>
+                <endTime>1900-01-01 17:00:00.0</endTime>
+                <date>2018-09-12 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>Planetarium</department>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6145</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 09:00:00.0</startTime>
+                <productTitle>Planetarium Shutdown</productTitle>
+                <contact>Talia Sepersky</contact>
+                <buyoutTitle>Planetarium Shutdown</buyoutTitle>
+                <endTime>1900-01-01 17:00:00.0</endTime>
+                <date>2018-09-13 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>Planetarium</department>
+                
+                
+                
+                    
+                
+                <location>Planetarium</location>
+            </request>
+        
+            <request>
+                <legacyID>6146</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 09:00:00.0</startTime>
+                <productTitle>Planetarium Shutdown</productTitle>
+                <contact>Talia Sepersky</contact>
+                <buyoutTitle>Planetarium Shutdown</buyoutTitle>
+                <endTime>1900-01-01 17:00:00.0</endTime>
+                <date>2018-09-14 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>Planetarium</department>
+                
+                
+                
+                    
+                
+                <location>Planetarium</location>
+            </request>
+        
+            <request>
+                <legacyID>6159</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 17:00:00.0</startTime>
+                <productTitle>TBD</productTitle>
+                <contact>Scot Keay</contact>
+                <buyoutTitle>Member Appreciation Night</buyoutTitle>
+                <endTime>1900-01-01 21:00:00.0</endTime>
+                <date>2018-09-23 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6148</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 18:00:00.0</startTime>
+                <productTitle>BU Planetarium Show</productTitle>
+                <contact>Talia Sepersky</contact>
+                <buyoutTitle>BU Planetarium show</buyoutTitle>
+                <endTime>1900-01-01 21:00:00.0</endTime>
+                <date>2018-09-26 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>Planetarium</department>
+                
+                
+                
+                    
+                
+                <location>Planetarium</location>
+            </request>
+        
+            <request>
+                <legacyID>6149</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 18:00:00.0</startTime>
+                <productTitle>BU Planetarium Show</productTitle>
+                <contact>Talia Sepersky</contact>
+                <buyoutTitle>BU Planetarium show</buyoutTitle>
+                <endTime>1900-01-01 21:00:00.0</endTime>
+                <date>2018-09-27 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>Planetarium</department>
+                
+                
+                
+                    
+                
+                <location>Planetarium</location>
+            </request>
+        
+            <request>
+                <legacyID>6037</legacyID>
+                <orderNo>987441</orderNo>
+                <startTime>1900-01-01 17:00:00.0</startTime>
+                <productTitle>Closes w/ BW at 5 PM </productTitle>
+                <contact>Barbara Wroblewski</contact>
+                <buyoutTitle>No public 4D shows as of 5 PM on</buyoutTitle>
+                <endTime>1900-01-01 21:00:00.0</endTime>
+                <date>2018-09-28 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>4-D Cinema</location>
+            </request>
+        
+            <request>
+                <legacyID>6038</legacyID>
+                <orderNo>987441</orderNo>
+                <startTime>1900-01-01 16:45:00.0</startTime>
+                <productTitle>Closes w/ BW at 5 PM</productTitle>
+                <contact>Barbara Wroblewski</contact>
+                <buyoutTitle>No public entries as of 4:45 PM on</buyoutTitle>
+                <endTime>1900-01-01 21:00:00.0</endTime>
+                <date>2018-09-28 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Butterfly Garden</location>
+            </request>
+        
+            <request>
+                <legacyID>6150</legacyID>
+                <orderNo>1360140</orderNo>
+                <startTime>1900-01-01 17:30:00.0</startTime>
+                <productTitle>No show-event setup</productTitle>
+                <contact>Barbara Wroblewski</contact>
+                <buyoutTitle>No show at 5:30 PM today</buyoutTitle>
+                <endTime>1900-01-01 20:30:00.0</endTime>
+                <date>2018-09-29 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Planetarium</location>
+            </request>
+        
+            <request>
+                <legacyID>6151</legacyID>
+                <orderNo>1360140</orderNo>
+                <startTime>1900-01-01 17:00:00.0</startTime>
+                <productTitle>No shows-event prep</productTitle>
+                <contact>Barbara Wroblewski</contact>
+                <buyoutTitle>No shows at 5 PM, 6 PM, 7 PM</buyoutTitle>
+                <endTime>1900-01-01 20:00:00.0</endTime>
+                <date>2018-09-29 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6113</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 19:00:00.0</startTime>
+                <productTitle>Planetarium Event</productTitle>
+                <contact>Talia Sepersky</contact>
+                <buyoutTitle>Planetarium Anniversary Event</buyoutTitle>
+                <endTime>1900-01-01 22:00:00.0</endTime>
+                <date>2018-10-02 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>Planetarium</department>
+                
+                
+                
+                    
+                
+                <location>Planetarium</location>
+            </request>
+        
+            <request>
+                <legacyID>6161</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 16:00:00.0</startTime>
+                <productTitle>Venue block</productTitle>
+                <contact>Katie Wheaton</contact>
+                <buyoutTitle>early close</buyoutTitle>
+                <endTime>1900-01-01 17:00:00.0</endTime>
+                <date>2018-10-03 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>ECS Corporate</department>
+                
+                
+                
+                    
+                
+                <location>Butterfly Garden</location>
+            </request>
+        
+            <request>
+                <legacyID>6160</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 16:00:00.0</startTime>
+                <productTitle>Venue block</productTitle>
+                <contact>Katie Wheaton</contact>
+                <buyoutTitle>Early close</buyoutTitle>
+                <endTime>1900-01-01 17:00:00.0</endTime>
+                <date>2018-10-03 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>ECS Corporate</department>
+                
+                
+                
+                    
+                
+                <location>4-D Cinema</location>
+            </request>
+        
+            <request>
+                <legacyID>6168</legacyID>
+                <orderNo>UNSCHEDULED</orderNo>
+                <startTime>1900-01-01 19:30:00.0</startTime>
+                <productTitle>24 min/Undis Wrlds</productTitle>
+                <contact>Barbara Wroblewski</contact>
+                <buyoutTitle>Alnylam/ONPATTRO Lauch Celebration</buyoutTitle>
+                <endTime>1900-01-01 19:54:00.0</endTime>
+                <date>2018-10-03 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Planetarium</location>
+            </request>
+        
+            <request>
+                <legacyID>6169</legacyID>
+                <orderNo>UNSCHEDULED</orderNo>
+                <startTime>1900-01-01 20:15:00.0</startTime>
+                <productTitle>Martian</productTitle>
+                <contact>Barbara Wroblewski</contact>
+                <buyoutTitle>Alynlam/ONPATTRO Launch Celebration</buyoutTitle>
+                <endTime>1900-01-01 20:30:00.0</endTime>
+                <date>2018-10-03 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>4-D Cinema</location>
+            </request>
+        
+            <request>
+                <legacyID>6152</legacyID>
+                <orderNo>1405075</orderNo>
+                <startTime>1900-01-01 10:30:00.0</startTime>
+                <productTitle>Explore the Galaxy</productTitle>
+                <contact>Amy Germaine</contact>
+                <buyoutTitle>Hudson Memorial</buyoutTitle>
+                <endTime>1900-01-01 11:30:00.0</endTime>
+                <date>2018-10-04 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>Science Central</department>
+                
+                
+                
+                    
+                
+                <location>Planetarium</location>
+            </request>
+        
+            <request>
+                <legacyID>6114</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 19:00:00.0</startTime>
+                <productTitle>Planetarium Event</productTitle>
+                <contact>Talia Sepersky</contact>
+                <buyoutTitle>Planetarium Anniversary Event</buyoutTitle>
+                <endTime>1900-01-01 22:00:00.0</endTime>
+                <date>2018-10-04 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>Planetarium</department>
+                
+                
+                
+                    
+                
+                <location>Planetarium</location>
+            </request>
+        
+            <request>
+                <legacyID>6115</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 19:00:00.0</startTime>
+                <productTitle>Planetarium Event</productTitle>
+                <contact>Talia Sepersky</contact>
+                <buyoutTitle>Planetarium Anniversary Event</buyoutTitle>
+                <endTime>1900-01-01 22:00:00.0</endTime>
+                <date>2018-10-09 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>Planetarium</department>
+                
+                
+                
+                    
+                
+                <location>Planetarium</location>
+            </request>
+        
+            <request>
+                <legacyID>6170</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 18:00:00.0</startTime>
+                <productTitle>Private viewing</productTitle>
+                <contact>Alyssa Albert</contact>
+                <buyoutTitle>SPACE/Microsoft</buyoutTitle>
+                <endTime>1900-01-01 19:30:00.0</endTime>
+                <date>2018-10-10 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>ECS Corporate</department>
+                
+                
+                
+                    
+                
+                <location>Nichols Gallery</location>
+            </request>
+        
+            <request>
+                <legacyID>6116</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 19:00:00.0</startTime>
+                <productTitle>Planetarium Event</productTitle>
+                <contact>Talia Sepersky</contact>
+                <buyoutTitle>Planetarium Anniversary Event</buyoutTitle>
+                <endTime>1900-01-01 22:00:00.0</endTime>
+                <date>2018-10-11 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>Planetarium</department>
+                
+                
+                
+                    
+                
+                <location>Planetarium</location>
+            </request>
+        
+            <request>
+                <legacyID>6117</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 19:00:00.0</startTime>
+                <productTitle>Planetarium Event</productTitle>
+                <contact>Talia Sepersky</contact>
+                <buyoutTitle>Planetarium Anniversary Event</buyoutTitle>
+                <endTime>1900-01-01 22:00:00.0</endTime>
+                <date>2018-10-16 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>Planetarium</department>
+                
+                
+                
+                    
+                
+                <location>Planetarium</location>
+            </request>
+        
+            <request>
+                <legacyID>6118</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 19:00:00.0</startTime>
+                <productTitle>Planetarium Event</productTitle>
+                <contact>Talia Sepersky</contact>
+                <buyoutTitle>Planetarium Anniversary Event</buyoutTitle>
+                <endTime>1900-01-01 22:00:00.0</endTime>
+                <date>2018-10-18 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>Planetarium</department>
+                
+                
+                
+                    
+                
+                <location>Planetarium</location>
+            </request>
+        
+            <request>
+                <legacyID>6119</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 19:00:00.0</startTime>
+                <productTitle>Planetarium Event</productTitle>
+                <contact>Talia Sepersky</contact>
+                <buyoutTitle>Planetarium Anniversary Event</buyoutTitle>
+                <endTime>1900-01-01 22:00:00.0</endTime>
+                <date>2018-10-19 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>Planetarium</department>
+                
+                
+                
+                    
+                
+                <location>Planetarium</location>
+            </request>
+        
+            <request>
+                <legacyID>6184</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 09:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight Program</buyoutTitle>
+                <endTime>1900-01-01 09:50:00.0</endTime>
+                <date>2018-10-19 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6185</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 10:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight Program</buyoutTitle>
+                <endTime>1900-01-01 10:50:00.0</endTime>
+                <date>2018-10-19 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6120</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 19:00:00.0</startTime>
+                <productTitle>Planetarium Event</productTitle>
+                <contact>Talia Sepersky</contact>
+                <buyoutTitle>Planetarium Anniversary Event</buyoutTitle>
+                <endTime>1900-01-01 22:00:00.0</endTime>
+                <date>2018-10-20 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>Planetarium</department>
+                
+                
+                
+                    
+                
+                <location>Planetarium</location>
+            </request>
+        
+            <request>
+                <legacyID>6121</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 19:00:00.0</startTime>
+                <productTitle>Planetarium Event</productTitle>
+                <contact>Talia Sepersky</contact>
+                <buyoutTitle>Planetarium Anniversary Event</buyoutTitle>
+                <endTime>1900-01-01 22:00:00.0</endTime>
+                <date>2018-10-23 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>Planetarium</department>
+                
+                
+                
+                    
+                
+                <location>Planetarium</location>
+            </request>
+        
+            <request>
+                <legacyID>6165</legacyID>
+                <orderNo>1438935</orderNo>
+                <startTime>1900-01-01 16:00:00.0</startTime>
+                <productTitle>Early Close</productTitle>
+                <contact>Gina Crotty</contact>
+                <buyoutTitle>Early Close</buyoutTitle>
+                <endTime>1900-01-01 17:00:00.0</endTime>
+                <date>2018-10-24 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>Advancement Administration</department>
+                
+                
+                
+                    
+                
+                <location>4-D Cinema</location>
+            </request>
+        
+            <request>
+                <legacyID>6166</legacyID>
+                <orderNo>1438935</orderNo>
+                <startTime>1900-01-01 15:45:00.0</startTime>
+                <productTitle>Early Close</productTitle>
+                <contact>Gina Crotty</contact>
+                <buyoutTitle>Early Close</buyoutTitle>
+                <endTime>1900-01-01 16:30:00.0</endTime>
+                <date>2018-10-24 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>Advancement Administration</department>
+                
+                
+                
+                    
+                
+                <location>Butterfly Garden</location>
+            </request>
+        
+            <request>
+                <legacyID>6122</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 19:00:00.0</startTime>
+                <productTitle>Planetarium Event</productTitle>
+                <contact>Talia Sepersky</contact>
+                <buyoutTitle>Planetarium Anniversary Event</buyoutTitle>
+                <endTime>1900-01-01 22:00:00.0</endTime>
+                <date>2018-10-25 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>Planetarium</department>
+                
+                
+                
+                    
+                
+                <location>Planetarium</location>
+            </request>
+        
+            <request>
+                <legacyID>6186</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 09:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 09:50:00.0</endTime>
+                <date>2018-10-27 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6123</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 19:00:00.0</startTime>
+                <productTitle>Planetarium Event</productTitle>
+                <contact>Talia Sepersky</contact>
+                <buyoutTitle>Planetarium Anniversary Event</buyoutTitle>
+                <endTime>1900-01-01 22:00:00.0</endTime>
+                <date>2018-10-30 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>Planetarium</department>
+                
+                
+                
+                    
+                
+                <location>Planetarium</location>
+            </request>
+        
+            <request>
+                <legacyID>6187</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 09:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 09:50:00.0</endTime>
+                <date>2018-11-02 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6188</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 10:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 10:50:00.0</endTime>
+                <date>2018-11-02 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6189</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 09:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 09:50:00.0</endTime>
+                <date>2018-11-03 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6190</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 17:15:00.0</startTime>
+                <productTitle>Due to ECS event</productTitle>
+                <contact>Barbara Wroblewski</contact>
+                <buyoutTitle>LAST PUBLIC SHOW at 4:30 PM</buyoutTitle>
+                <endTime>1900-01-01 22:00:00.0</endTime>
+                <date>2018-11-03 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Planetarium</location>
+            </request>
+        
+            <request>
+                <legacyID>6191</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 17:00:00.0</startTime>
+                <productTitle>Due to ECS event</productTitle>
+                <contact>Barbara Wroblewski</contact>
+                <buyoutTitle>LAST PUBLIC OMNI at 4 PM</buyoutTitle>
+                <endTime>1900-01-01 22:00:00.0</endTime>
+                <date>2018-11-03 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6192</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 19:15:00.0</startTime>
+                <productTitle>Amazing Journeys</productTitle>
+                <contact>Barbara Wroblewski</contact>
+                <buyoutTitle>CSI DMC for RPAC - Show 1 of 3</buyoutTitle>
+                <endTime>1900-01-01 20:15:00.0</endTime>
+                <date>2018-11-03 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6193</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 20:15:00.0</startTime>
+                <productTitle>Lewis and Clark</productTitle>
+                <contact>Barbara Wroblewski</contact>
+                <buyoutTitle>CSI DMC for RPAC - Show 2 of 3</buyoutTitle>
+                <endTime>1900-01-01 21:15:00.0</endTime>
+                <date>2018-11-03 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6194</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 21:15:00.0</startTime>
+                <productTitle>National Parks Adven</productTitle>
+                <contact>Barbara Wroblewski</contact>
+                <buyoutTitle>CSI DMC for RPAC - Show 3 of 3</buyoutTitle>
+                <endTime>1900-01-01 22:15:00.0</endTime>
+                <date>2018-11-03 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6195</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 19:30:00.0</startTime>
+                <productTitle>Prince (40 min.)</productTitle>
+                <contact>Barbara Wroblewski</contact>
+                <buyoutTitle>CSI DMC for RPAC - Show 1 of 3</buyoutTitle>
+                <endTime>1900-01-01 20:10:00.0</endTime>
+                <date>2018-11-03 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Planetarium</location>
+            </request>
+        
+            <request>
+                <legacyID>6196</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 20:30:00.0</startTime>
+                <productTitle>Undis. Worlds/24 min</productTitle>
+                <contact>Barbara Wroblewski</contact>
+                <buyoutTitle>CSI DMC for RPAC - Show 2 of 3</buyoutTitle>
+                <endTime>1900-01-01 20:54:00.0</endTime>
+                <date>2018-11-03 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Planetarium</location>
+            </request>
+        
+            <request>
+                <legacyID>6197</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 21:30:00.0</startTime>
+                <productTitle>Dream to Disco/24min</productTitle>
+                <contact>Barbara Wroblewski</contact>
+                <buyoutTitle>CSI DMC for RPAC - Show 3 of 3</buyoutTitle>
+                <endTime>1900-01-01 21:54:00.0</endTime>
+                <date>2018-11-03 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Planetarium</location>
+            </request>
+        
+            <request>
+                <legacyID>6198</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 18:30:00.0</startTime>
+                <productTitle>For ECS client event</productTitle>
+                <contact>Barbara Wroblewski</contact>
+                <buyoutTitle>SPACE open for CSI DMC for RPAC</buyoutTitle>
+                <endTime>1900-01-01 22:30:00.0</endTime>
+                <date>2018-11-03 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Nichols Gallery</location>
+            </request>
+        
+            <request>
+                <legacyID>6179</legacyID>
+                <orderNo>1475398</orderNo>
+                <startTime>1900-01-01 17:00:00.0</startTime>
+                <productTitle>Venue block</productTitle>
+                <contact>Katie Wheaton</contact>
+                <buyoutTitle>ECS buyout</buyoutTitle>
+                <endTime>1900-01-01 18:00:00.0</endTime>
+                <date>2018-11-08 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>Event and Conference Services</department>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6180</legacyID>
+                <orderNo>1475398</orderNo>
+                <startTime>1900-01-01 16:20:00.0</startTime>
+                <productTitle/>
+                <contact>Katie Wheaton</contact>
+                <buyoutTitle>Early close</buyoutTitle>
+                <endTime>1900-01-01 17:00:00.0</endTime>
+                <date>2018-11-08 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>Event and Conference Services</department>
+                
+                
+                
+                    
+                
+                <location>4-D Cinema</location>
+            </request>
+        
+            <request>
+                <legacyID>6181</legacyID>
+                <orderNo>1475398</orderNo>
+                <startTime>1900-01-01 16:20:00.0</startTime>
+                <productTitle>Venue block</productTitle>
+                <contact>Katie Wheaton</contact>
+                <buyoutTitle>ECS buyout</buyoutTitle>
+                <endTime>1900-01-01 17:00:00.0</endTime>
+                <date>2018-11-08 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>ECS Corporate</department>
+                
+                
+                
+                    
+                
+                <location>Butterfly Garden</location>
+            </request>
+        
+            <request>
+                <legacyID>6205</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 09:00:00.0</startTime>
+                <productTitle>Pandas</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Member Overnight</buyoutTitle>
+                <endTime>1900-01-01 09:50:00.0</endTime>
+                <date>2018-11-10 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6206</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 10:00:00.0</startTime>
+                <productTitle>Pandas</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Member Overnight</buyoutTitle>
+                <endTime>1900-01-01 10:50:00.0</endTime>
+                <date>2018-11-10 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6153</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 16:00:00.0</startTime>
+                <productTitle/>
+                <contact>Jacqueline Dillman</contact>
+                <buyoutTitle>ADV BG Buyout 4-5PM</buyoutTitle>
+                <endTime>1900-01-01 17:00:00.0</endTime>
+                <date>2018-11-13 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Butterfly Garden</location>
+            </request>
+        
+            <request>
+                <legacyID>6154</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 16:00:00.0</startTime>
+                <productTitle/>
+                <contact>Jacqueline Dillman</contact>
+                <buyoutTitle>ADV 4D Buyout 4-5PM</buyoutTitle>
+                <endTime>1900-01-01 17:00:00.0</endTime>
+                <date>2018-11-13 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>Advancement Administration</department>
+                
+                
+                
+                    
+                
+                <location>4-D Cinema</location>
+            </request>
+        
+            <request>
+                <legacyID>6207</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 09:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 09:50:00.0</endTime>
+                <date>2018-11-17 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6208</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 10:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 10:50:00.0</endTime>
+                <date>2018-11-17 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6209</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 09:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 09:50:00.0</endTime>
+                <date>2018-11-18 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6210</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 10:00:00.0</startTime>
+                <productTitle>Dream Big</productTitle>
+                <contact>Nancy Ries</contact>
+                <buyoutTitle>Overnight</buyoutTitle>
+                <endTime>1900-01-01 10:50:00.0</endTime>
+                <date>2018-11-18 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6155</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 16:00:00.0</startTime>
+                <productTitle/>
+                <contact>Jacqueline Dillman</contact>
+                <buyoutTitle>ADV Omni Buyout 4-5PM</buyoutTitle>
+                <endTime>1900-01-01 17:00:00.0</endTime>
+                <date>2018-11-19 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>Advancement Administration</department>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6156</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 16:00:00.0</startTime>
+                <productTitle/>
+                <contact>Jacqueline Dillman</contact>
+                <buyoutTitle>ADV Planetarium Buyout 4-5PM</buyoutTitle>
+                <endTime>1900-01-01 17:00:00.0</endTime>
+                <date>2018-11-19 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>Advancement Administration</department>
+                
+                
+                
+                    
+                
+                <location>Planetarium</location>
+            </request>
+        
+            <request>
+                <legacyID>6157</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 16:00:00.0</startTime>
+                <productTitle/>
+                <contact>Jacqueline Dillman</contact>
+                <buyoutTitle>ADV BG Buyout 4-5PM </buyoutTitle>
+                <endTime>1900-01-01 17:00:00.0</endTime>
+                <date>2018-11-19 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>Advancement Administration</department>
+                
+                
+                
+                    
+                
+                <location>Butterfly Garden</location>
+            </request>
+        
+            <request>
+                <legacyID>6158</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 16:00:00.0</startTime>
+                <productTitle/>
+                <contact>Jacqueline Dillman</contact>
+                <buyoutTitle>ADV 4D Buyout 4-5PM </buyoutTitle>
+                <endTime>1900-01-01 17:00:00.0</endTime>
+                <date>2018-11-19 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>Advancement Administration</department>
+                
+                
+                
+                    
+                
+                <location>4-D Cinema</location>
+            </request>
+        
+            <request>
+                <legacyID>6182</legacyID>
+                <orderNo>1456749</orderNo>
+                <startTime>1900-01-01 16:15:00.0</startTime>
+                <productTitle>Venue block</productTitle>
+                <contact>Katie Wheaton</contact>
+                <buyoutTitle>ECS buyout</buyoutTitle>
+                <endTime>1900-01-01 17:00:00.0</endTime>
+                <date>2018-11-29 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>Event and Conference Services</department>
+                
+                
+                
+                    
+                
+                <location>4-D Cinema</location>
+            </request>
+        
+            <request>
+                <legacyID>6183</legacyID>
+                <orderNo>1456749</orderNo>
+                <startTime>1900-01-01 16:15:00.0</startTime>
+                <productTitle>Venue block</productTitle>
+                <contact>Katie Wheaton</contact>
+                <buyoutTitle>ECS buyout</buyoutTitle>
+                <endTime>1900-01-01 17:00:00.0</endTime>
+                <date>2018-11-29 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>ECS Non-Profit</department>
+                
+                
+                
+                    
+                
+                <location>Butterfly Garden</location>
+            </request>
+        
+            <request>
+                <legacyID>6212</legacyID>
+                <orderNo>1473011</orderNo>
+                <startTime>1900-01-01 16:45:00.0</startTime>
+                <productTitle>Closes at 5 PM</productTitle>
+                <contact>Barbara Wroblewski</contact>
+                <buyoutTitle>Last public BG entry at 4:30 PM</buyoutTitle>
+                <endTime>1900-01-01 21:00:00.0</endTime>
+                <date>2018-12-07 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>Butterfly Garden</location>
+            </request>
+        
+            <request>
+                <legacyID>6213</legacyID>
+                <orderNo>1473011</orderNo>
+                <startTime>1900-01-01 17:00:00.0</startTime>
+                <productTitle>Closes at 5 PM</productTitle>
+                <contact>Barbara Wroblewski</contact>
+                <buyoutTitle>Last public 4D entry at 4:40 PM</buyoutTitle>
+                <endTime>1900-01-01 21:00:00.0</endTime>
+                <date>2018-12-07 00:00:00.0</date>
+                
+                
+                
+                
+                <department/>
+                
+                
+                
+                    
+                
+                <location>4-D Cinema</location>
+            </request>
+        
+            <request>
+                <legacyID>6167</legacyID>
+                <orderNo>1438918</orderNo>
+                <startTime>1900-01-01 10:30:00.0</startTime>
+                <productTitle>Explore the Galaxy</productTitle>
+                <contact>Science Central</contact>
+                <buyoutTitle>Wellesley Middle Buyout</buyoutTitle>
+                <endTime>1900-01-01 11:15:00.0</endTime>
+                <date>2019-01-08 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>Science Central</department>
+                
+                
+                
+                    
+                
+                <location>Planetarium</location>
+            </request>
+        
+            <request>
+                <legacyID>6211</legacyID>
+                <orderNo/>
+                <startTime>1900-01-01 18:00:00.0</startTime>
+                <productTitle>custom</productTitle>
+                <contact>Dani LeBlanc</contact>
+                <buyoutTitle>Boston Sci/Fi</buyoutTitle>
+                <endTime>1900-01-01 22:00:00.0</endTime>
+                <date>2019-02-12 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>Planetarium</department>
+                
+                
+                
+                    
+                
+                <location>Planetarium</location>
+            </request>
+        
+            <request>
+                <legacyID>6203</legacyID>
+                <orderNo>1479918</orderNo>
+                <startTime>1900-01-01 16:30:00.0</startTime>
+                <productTitle>Venue block</productTitle>
+                <contact>Katie Wheaton</contact>
+                <buyoutTitle>ECS buyout</buyoutTitle>
+                <endTime>1900-01-01 17:00:00.0</endTime>
+                <date>2019-03-27 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>ECS Non-Profit</department>
+                
+                
+                
+                    
+                
+                <location>4-D Cinema</location>
+            </request>
+        
+            <request>
+                <legacyID>6204</legacyID>
+                <orderNo>1479918</orderNo>
+                <startTime>1900-01-01 16:30:00.0</startTime>
+                <productTitle>Venue block</productTitle>
+                <contact>Katie Wheaton</contact>
+                <buyoutTitle>ECS buyout</buyoutTitle>
+                <endTime>1900-01-01 17:00:00.0</endTime>
+                <date>2019-03-27 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>ECS Non-Profit</department>
+                
+                
+                
+                    
+                
+                <location>Butterfly Garden</location>
+            </request>
+        
+            <request>
+                <legacyID>6201</legacyID>
+                <orderNo>1479966</orderNo>
+                <startTime>1900-01-01 18:00:00.0</startTime>
+                <productTitle>Venue block</productTitle>
+                <contact>Katie Wheaton</contact>
+                <buyoutTitle>ECS buyout</buyoutTitle>
+                <endTime>1900-01-01 21:00:00.0</endTime>
+                <date>2019-03-29 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>ECS Non-Profit</department>
+                
+                
+                
+                    
+                
+                <location>4-D Cinema</location>
+            </request>
+        
+            <request>
+                <legacyID>6202</legacyID>
+                <orderNo>1479966</orderNo>
+                <startTime>1900-01-01 18:00:00.0</startTime>
+                <productTitle>Venue block</productTitle>
+                <contact>Katie Wheaton</contact>
+                <buyoutTitle>ECS buyout</buyoutTitle>
+                <endTime>1900-01-01 21:00:00.0</endTime>
+                <date>2019-03-29 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>ECS Non-Profit</department>
+                
+                
+                
+                    
+                
+                <location>Butterfly Garden</location>
+            </request>
+        
+            <request>
+                <legacyID>6199</legacyID>
+                <orderNo>1480029.</orderNo>
+                <startTime>1900-01-01 16:00:00.0</startTime>
+                <productTitle>Venue block</productTitle>
+                <contact>Katie Wheaton</contact>
+                <buyoutTitle>ECS buyout</buyoutTitle>
+                <endTime>1900-01-01 17:00:00.0</endTime>
+                <date>2019-04-01 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>ECS Corporate</department>
+                
+                
+                
+                    
+                
+                <location>Butterfly Garden</location>
+            </request>
+        
+            <request>
+                <legacyID>6200</legacyID>
+                <orderNo>1480029.</orderNo>
+                <startTime>1900-01-01 16:00:00.0</startTime>
+                <productTitle>Venue block</productTitle>
+                <contact>Katie Wheaton</contact>
+                <buyoutTitle>ECS buyout</buyoutTitle>
+                <endTime>1900-01-01 17:00:00.0</endTime>
+                <date>2019-04-01 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>ECS Corporate</department>
+                
+                
+                
+                    
+                
+                <location>4-D Cinema</location>
+            </request>
+        
+            <request>
+                <legacyID>6172</legacyID>
+                <orderNo>1436449</orderNo>
+                <startTime>1900-01-01 15:45:00.0</startTime>
+                <productTitle/>
+                <contact>Gina Crotty</contact>
+                <buyoutTitle>Stars of STEM early close</buyoutTitle>
+                <endTime>1900-01-01 17:00:00.0</endTime>
+                <date>2019-04-11 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>Advancement Administration</department>
+                
+                
+                
+                    
+                
+                <location>Omni Theater</location>
+            </request>
+        
+            <request>
+                <legacyID>6175</legacyID>
+                <orderNo>1436449</orderNo>
+                <startTime>1900-01-01 15:00:00.0</startTime>
+                <productTitle/>
+                <contact>Gina Crotty</contact>
+                <buyoutTitle>Stars of STEM early close</buyoutTitle>
+                <endTime>1900-01-01 17:00:00.0</endTime>
+                <date>2019-04-11 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>Advancement Administration</department>
+                
+                
+                
+                    
+                
+                <location>4-D Cinema</location>
+            </request>
+        
+            <request>
+                <legacyID>6174</legacyID>
+                <orderNo>1436449</orderNo>
+                <startTime>1900-01-01 15:45:00.0</startTime>
+                <productTitle/>
+                <contact>Gina Crotty</contact>
+                <buyoutTitle>Stars of STEM early close</buyoutTitle>
+                <endTime>1900-01-01 17:00:00.0</endTime>
+                <date>2019-04-11 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>Advancement Administration</department>
+                
+                
+                
+                    
+                
+                <location>Planetarium</location>
+            </request>
+        
+            <request>
+                <legacyID>6176</legacyID>
+                <orderNo>1436449</orderNo>
+                <startTime>1900-01-01 15:00:00.0</startTime>
+                <productTitle/>
+                <contact>Gina Crotty</contact>
+                <buyoutTitle>Stars of STEM early close</buyoutTitle>
+                <endTime>1900-01-01 17:00:00.0</endTime>
+                <date>2019-04-11 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>Advancement Administration</department>
+                
+                
+                
+                    
+                
+                <location>Nichols Gallery</location>
+            </request>
+        
+            <request>
+                <legacyID>6177</legacyID>
+                <orderNo>1436449</orderNo>
+                <startTime>1900-01-01 14:45:00.0</startTime>
+                <productTitle/>
+                <contact>Gina Crotty</contact>
+                <buyoutTitle>Stars of STEM early close</buyoutTitle>
+                <endTime>1900-01-01 17:00:00.0</endTime>
+                <date>2019-04-11 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>Advancement Administration</department>
+                
+                
+                
+                    
+                
+                <location>Butterfly Garden</location>
+            </request>
+        
+            <request>
+                <legacyID>6178</legacyID>
+                <orderNo>1436449</orderNo>
+                <startTime>1900-01-01 15:00:00.0</startTime>
+                <productTitle/>
+                <contact>Gina Crotty</contact>
+                <buyoutTitle>Stars of STEM early close</buyoutTitle>
+                <endTime>1900-01-01 17:00:00.0</endTime>
+                <date>2019-04-11 00:00:00.0</date>
+                
+                
+                
+                
+                    
+                
+                <department>Advancement Administration</department>
+                
+                
+                
+                    
+                
+                <location>Stearns Gallery</location>
+            </request>
+        
+    </data>

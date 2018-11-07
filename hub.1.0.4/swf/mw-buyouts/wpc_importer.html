@@ -1,0 +1,750 @@
+<script type="text/javascript">
+
+
+	$(document).ready(function () {
+
+		var importEnabledMsg = '<p><strong>Note</strong>: Loading this page causes legacy data to be imported. The console should show import results. A large import may take several minutes and this simple importer doesn\'t provide any user feedback, so just be careful not to close the browser tab early. Disable the import code in SiteAssets > wpc_importer.html.</p>';
+		var importDisabledMsg = '<p><strong>Note</strong>: Import code has been disabled. You can re-enable in SiteAssets > wpc_import.html.</p>';
+
+		/* $('div#all-content-container').append(importDisabledMsg); */
+
+
+
+		// to enable import, remove /**/ and comment out disable section
+
+
+		console.log('m1');
+
+		$('div#all-content-container').append(importEnabledMsg);
+
+
+		  // partial config 
+		var mData = {
+			'legacyFile': '/sites/hr-service-jobs/SiteAssets/jobs.xml', //https://bmos.sharepoint.com
+			'maxToProcess': 10000,
+			'newList': 'SWFList',
+			'deleteAllItemsBeforeImporting': 1,
+			'emailErrorsTo': 'jbaker@mos.org'
+		}
+
+		// delete all list items, if configured to do so
+		if (typeof (mData.deleteAllItemsBeforeImporting) != 'undefined' && mData.deleteAllItemsBeforeImporting == 1) {
+			$().SPServices.SPUpdateMultipleListItems({
+				//webURL: "",
+				listName: mData.newList,
+				//CAMLQuery: "",
+				batchCmd: "Delete",
+				//valuepairs: [],
+				debug: false,
+				completefunc: function (xData, Status) {
+					console.log('deletion completed');
+				}
+			});
+		}
+
+		// get the legacy requests file
+		$.ajax({
+			type: "GET",
+			url: mData.legacyFile,
+			dataType: "xml",
+		}).done(function (receivedXML) {
+
+			$.ajax({
+				type: "GET",
+				url: '/sites/hr-service-jobs/SiteAssets/jobsDuties.xml',
+				dataType: "xml",
+			}).done(function (receivedDutiesXML) {
+				console.log(receivedDutiesXML);
+				// iterate over each legacy request
+				$(receivedXML).find('request').each(function (requestIndex, requestValue) {
+					// if we haven't surpassed the max to process
+					if (requestIndex < mData.maxToProcess) {
+
+						// set up empty vars
+						var listFields = {};
+						var submissionValuePairs = [];
+						// grab some data that will be used multiple times, that needs to be manipulated, or is otherwise convenient
+						var legacyID = $(requestValue).find('legacyID').text();
+						var quarkRequest = 'https://quark.mos.org/getitdone/gse/admin/jobs/showjob.cfm?Job=' + legacyID;
+						var requestDate = $(requestValue).find('requestDate').text();
+						if (requestDate != "" && moment(requestDate).isValid()) {
+							requestDate = moment(requestDate.substr(0, 10)).format("YYYY-MM-DD");
+							requestDate = requestDate + 'T12:00:00-04:00';
+						} else {
+							requestDate = "";
+						}
+						var requestedForAccount = $(requestValue).find('jobAdminAccount').text();
+						var requestedForName = "";
+						if (requestedForAccount != "") {
+							var requestedForData = ReturnUserDataUsingAccountName('i:0#.f|membership|' + requestedForAccount + '@mos.org');
+						}
+						var requestedForObjectString = ReturnPeopleAllRequestDataValue(requestedForName, requestedForAccount + "@mos.org");
+						if (typeof(requestedForData) != "undefined" && typeof(requestedForData.name) != "undefined" && requestedForData.name != "") {
+							requestedForName = requestedForData.name;
+						}
+						var requestedForObjectString = ReturnPeopleAllRequestDataValue(requestedForName, requestedForAccount + "@mos.org");
+
+						var jobDescription = HtmlEncode($(requestValue).find('description').text());
+						jobDescription = jobDescription.replace(/\r?\n/g, '%0A');
+						var trainingRequirements = HtmlEncode($(requestValue).find('training').text());
+						trainingRequirements = trainingRequirements.replace(/\r?\n/g, '%0A');
+						var dressRequirements = HtmlEncode($(requestValue).find('dress').text());
+						dressRequirements = dressRequirements.replace(/\r?\n/g, '%0A');
+
+						var jobDuties = '';
+						// iterate over each legacy request
+						$(receivedDutiesXML).find('request').each(function (dutyIndex, dutyValue) {
+							var jobIDThisDuty = HtmlEncode($(dutyValue).find('legacyID').text());
+							if (jobIDThisDuty == legacyID) {
+								jobDuties += HtmlEncode($(dutyValue).find('duty').text());
+								jobDuties += '%0A'
+							}
+						});
+
+
+						
+						// manually set some basic list fields for this item
+						listFields.BeginningOfLife = HtmlEncode('0');
+						listFields.EndOfLife = HtmlEncode('0');
+						listFields.NewlyApprovedOrPending = HtmlEncode('0');
+						listFields.ApprovalNewlyNeededNotify = HtmlEncode('none');
+						listFields.ApprovalNotNeededNotify = HtmlEncode('none');
+						listFields.ApprovalStillNeededNotify = HtmlEncode('none');
+						listFields.SWFVersion = HtmlEncode('1.0');
+						listFields.RequestVersion = HtmlEncode('1');
+						listFields.RequestName = HtmlEncode('GSE Job');
+						listFields.RequestStatus = HtmlEncode('Approved');
+					
+						// manually set some allRequestData properties
+						var allRequestData = '{"RepeatedElements": [],' +
+							'"migrated-from-quark": "1",' +
+							'"Beginning-of-Life": "0",' +
+							'"End-of-Life": "0",' +
+							'"Approval-Newly-Needed-Notify": "none",' +
+							'"Approval-Not-Needed-Notify": "none",' +
+							'"Approval-Still-Needed-Notify": "none",' +
+							'"Newly-Approved-or-Pending": "0",' +
+							'"Last-Modified-Timestamp-Mismatch": "0",' +
+							'"Admin-Email": "sp1@mos.org",' + 
+							'"Request-Status": "Approved",' +
+							'"Component-Group-Admin": "872;#Hub Tester10,#i:0#.f|membership|sp10@mos.org,#sp10@mos.org,#sp10@MOS.ORG,#Hub Tester10,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/sp10_mos_org_MThumb.jpg,#Interactive Media,#;#873;#Hub Tester11,#i:0#.f|membership|sp11@mos.org,#sp11@mos.org,#sp11@MOS.ORG,#Hub Tester11,#,#Interactive Media,#;#6;#James Baker,#i:0#.f|membership|jbaker@mos.org,#jbaker@mos.org,#jbaker@mos.org,#James Baker,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/jbaker_mos_org_MThumb.jpg?t=63616027741,#Interactive Media,#Intranet Solutions Project Manager;#20;#Ben Wilson,#i:0#.f|membership|bwilson@mos.org,#bwilson@mos.org,#bwilson@mos.org,#Ben Wilson,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/bwilson_mos_org_MThumb.jpg,#Interactive Media,#Director of Digital &amp; Interactive Media;#467;#Samuel Corey,#i:0#.f|membership|scorey@mos.org,#scorey@mos.org,#scorey@MOS.ORG,#Samuel Corey,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/scorey_mos_org_MThumb.jpg,#Interactive Media,#Web Developer",' +
+							'"Request-Name": "GSE Job",' +
+							'"SWF-Version": "1.0",' +
+							'"Component-Admin": "30;#Christine Flebbe,#i:0#.f|membership|cflebbe@mos.org,#cflebbe@mos.org,#cflebbe@mos.org,#Christine Flebbe,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/cflebbe_mos_org_MThumb.jpg,#Human Resources,#Manager,, Compensation &amp; Benefits;#427;#Lorah Broderick,#i:0#.f|membership|lbroderick@mos.org,#lbroderick@mos.org,#lbroderick@mos.org,#Lorah Broderick,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/lsnow_mos_org_MThumb.jpg,#Human Resources,#Benefits &amp; Employee Programs Administrator;#29;#Margo Smith,#i:0#.f|membership|msmith@mos.org,#msmith@mos.org,#msmith@mos.org,#Margo Smith,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/msmith_mos_org_MThumb.jpg,#Human Resources,#Manager,, Talent Acquisition &amp; Development",' +
+							'"Component-ID": "158",' +
+							'"Request-Version": "1",' +
+							'"Self-or-Other": "Talk to me",';
+
+
+						// dynamically set 
+						listFields.LegacyID = HtmlEncode(legacyID);
+						listFields.Title = HtmlEncode(moment(requestDate).format("YYYY-MM-DD") + ' - ' + $(requestValue).find('jobTitle').text());
+						listFields.RequestDate = requestDate;
+						listFields.RequestedFor = "-1;#" + requestedForAccount + "@mos.org";
+						listFields.JobAdmin = listFields.RequestedFor;
+						listFields.JobTitle = HtmlEncode($(requestValue).find('jobTitle').text());
+						listFields.Department = HtmlEncode($(requestValue).find('department').text());
+
+
+
+						
+
+
+
+
+						// dynamically set all remaining allRequestData properties
+						allRequestData += 
+							'"Request-Nickname":"' + listFields.Title + '",' +
+							'"Request-Date":"' + listFields.RequestDate + '",' +
+							'"Requested-For": ' + requestedForObjectString + ',' + 
+							'"Job-Admin": ' + requestedForObjectString + ',' + 
+							'"Requester-Name":"' + requestedForName + '",' +
+							'"Requester-Email":"i:0#.f|membership|' + requestedForAccount + '@mos.org",' +
+							'"Requester-Account":"' + requestedForAccount + '",' +
+							'"Current-User-Display-Name":"' + requestedForName + '",' +
+							'"Current-User-Name":"' + requestedForAccount + '@mos.org",' +
+							'"Job-Title":"' + listFields.JobTitle + '",' +
+							'"Department":"' + listFields.Department + '",' +
+
+
+
+							'"Physical-Demand-Lifting":"' + HtmlEncode($(requestValue).find('lifting').text()) + '",' +
+							'"Physical-Demand-Carrying":"' + HtmlEncode($(requestValue).find('carrying').text()) + '",' +
+							'"Physical-Demand-Pushing":"' + HtmlEncode($(requestValue).find('pushing').text()) + '",' +
+							'"Physical-Demand-Pulling":"' + HtmlEncode($(requestValue).find('pulling').text()) + '",' +
+							'"Physical-Demand-Standing":"' + HtmlEncode($(requestValue).find('standing').text()) + '",' +
+							'"Physical-Demand-Sitting":"' + HtmlEncode($(requestValue).find('sitting').text()) + '",' +
+							'"Physical-Demand-Walking":"' + HtmlEncode($(requestValue).find('walking').text()) + '",' +
+
+
+							'"Job-Description":"' + jobDescription + '",' +
+							'"Training-Requirements":"' + trainingRequirements + '",' +
+							'"Dress-Requirements":"' + dressRequirements + '",' + 
+							'"Job-Duties":"' + jobDuties + '",' + 
+
+							'"Quark-Request":"' + HtmlEncode(quarkRequest) + '",' +
+							'"legacy-id":"' + legacyID + '",';
+
+
+
+
+
+
+							// '"XXX":"' + listFields.XXX + '",' +
+							// '"XXX":"' + listFields.XXX + '",' +
+							// '"XXX":"' + listFields.XXX + '",' +
+							// '"XXX":"' + listFields.XXX + '",' +
+							// '"XXX":"' + listFields.XXX + '",' +
+							// '"XXX":"' + listFields.XXX + '",' +
+							// '"XXX":"' + listFields.XXX + '",' +
+							// '"XXX":"' + listFields.XXX + '",' +
+
+
+
+
+							// '"XXX":"' + HtmlEncode($(requestValue).find('XXX').text()) + '",' +
+							// '"XXX":"' + HtmlEncode($(requestValue).find('XXX').text()) + '",' +
+							// '"XXX":"' + HtmlEncode($(requestValue).find('XXX').text()) + '",' +
+							// '"XXX":"' + HtmlEncode($(requestValue).find('XXX').text()) + '",' +
+							// '"XXX":"' + HtmlEncode($(requestValue).find('XXX').text()) + '",' +
+							// '"XXX":"' + HtmlEncode($(requestValue).find('XXX').text()) + '",' +
+							// '"XXX":"' + HtmlEncode($(requestValue).find('XXX').text()) + '",' +
+							// '"XXX":"' + HtmlEncode($(requestValue).find('XXX').text()) + '",' +
+							// '"XXX":"' + HtmlEncode($(requestValue).find('XXX').text()) + '",' +
+							// '"XXX":"' + HtmlEncode($(requestValue).find('XXX').text()) + '",' +
+							// '"XXX":"' + HtmlEncode($(requestValue).find('XXX').text()) + '",' +
+							// '"XXX":"' + HtmlEncode($(requestValue).find('XXX').text()) + '",' +
+							
+							
+
+
+						// finish off allRequestData
+						allRequestData += '}';
+
+						// construct value pairs from listFields and allRequestData
+						//  (this could be skipped by just pushing above instead of setting obj props,
+						//      but James is dyslexic and this helps)
+						for (var key in listFields) {
+							submissionValuePairs.push([key, listFields[key]]);
+						}
+						submissionValuePairs.push(["AllRequestData", CDataWrap(allRequestData)]);
+
+						
+
+						// console.log(submissionValuePairs);
+
+
+						// send value pairs to SPServices UpdateListItems to create a new item in the new list
+						$().SPServices({
+							operation: 'UpdateListItems',
+							listName: mData.newList,
+							batchCmd: 'New',
+							ID: 0,
+							valuepairs: submissionValuePairs,
+							completefunc: function (xData, Status) {
+								var errorCode = $(xData.responseXML).find('ErrorCode').text();
+								if (errorCode != '0x00000000') {
+									if (errorCode == '') { errorCode = '""'; }
+									console.log('errorCode = ' + errorCode);
+									console.log('legacyID = ' + $(requestValue).find('legacyID').text());
+									// console.log('submissionValuePairs');
+									console.log(submissionValuePairs);
+									console.log("");
+									//var emailBody = 'error = ' + errorCode + '; legacy ID = ' + $(requestValue).find('legacyID').text() + '; name = ' + lastName + ', ' + firstName;
+									//SendErrorEmail('noreply@mos.org', emailErrorsTo, emailBody, 'Hub migration error: ' + errorCode)
+								} else if (Status == 'Error') {
+									console.log('Status = Error');
+									console.log('legacyID = ' + $(requestValue).find('legacyID').text());
+									// console.log('submissionValuePairs');
+									console.log(submissionValuePairs);
+									console.log("");
+								} else {
+									var newRequestID = $(xData.responseXML).SPFilterNode("z:row").attr("ows_ID");
+									console.log('legacyID ' + legacyID + ' is requestID = ' + newRequestID);
+									console.log('submissionValuePairs');
+									console.log(submissionValuePairs);
+									console.log("");
+								}
+							}
+						});
+					}
+				});
+			
+
+
+
+			}).error(function () {
+				alert("An error occurred while getting the Duties XML file.");
+			});
+			
+		}).error(function () {
+			alert("An error occurred while getting the XML file.");
+		});
+
+		// !!! ---- end import-disabling comment here ---- !!!
+	});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	function GetFieldsFromOneRow (options) {
+
+		var returnValue = {};
+
+		// assume we're going to query this site's SWFList if a specific list wasn't supplied
+		var opt = $.extend({}, {
+			listName: "SWFList",
+			completefunc: null
+		}, options);
+
+		// if listname is component log or component group log and no webURL was supplied
+		if ((opt.listName === 'ComponentLog' || opt.listName === 'Component Group Log') && typeof (options.webURL) === 'undefined') {
+			// assume HubProd
+			opt.webURL = 'https://bmos.sharepoint.com/sites/hubprod';
+		}
+
+		var query = "<Query>" +
+						"<Where>" +
+							"<Eq>" +
+								"<FieldRef Name='" + opt.where.field + "'></FieldRef>" +
+								"<Value Type='" + opt.where.type + "'>" + opt.where.value + "</Value>" +
+							"</Eq>" +
+						"</Where>" +
+					"</Query>";
+
+		var fields = "<ViewFields>";
+		$.each(opt.select, function (i, oneField) {
+			fields += "<FieldRef Name='" + oneField.nameInList + "' />";
+		});
+		fields += "</ViewFields>";
+
+
+		$().SPServices({
+			operation: "GetListItems",
+			async: false,
+			webURL: opt.webURL,
+			listName: opt.listName,
+			CAMLViewFields: fields,
+			CAMLQuery: query,
+			CAMLQueryOptions: "<QueryOptions />",
+			completefunc: function (xData, Status) {
+				$(xData.responseXML).SPFilterNode("z:row").each(function () {
+					var zRow = $(this);
+
+					$.each(opt.select, function (i, oneField) {
+
+						if (oneField.nameHere === "formData" || oneField.nameHere === "defaultDataForNewRequests") {
+
+							var value = $(zRow).attr("ows_" + oneField.nameInList);
+
+							var regexOne = new RegExp("\r", "g");
+							var regexTwo = new RegExp("\n", "g");
+							value = value.replace(regexOne, "'");
+							value = value.replace(regexTwo, "'");
+
+							eval("var formDataObj=" + value);
+
+							returnValue[oneField.nameHere] = formDataObj;
+
+						} else {
+
+							value = $(zRow).attr("ows_" + oneField.nameInList);
+
+							if (typeof (oneField.linkField) != "undefined") {
+								if (oneField.linkField === 1) {
+									
+									value = ReplaceAll(",,", "DOUBLECOMMAREPLACEMENT", value);
+									value = value.split(",")[0];
+									value = ReplaceAll("DOUBLECOMMAREPLACEMENT", ",", value);
+								}
+							}
+							returnValue[oneField.nameHere] = value;
+						}
+					});
+				});
+			}
+		});
+
+		return returnValue;
+	}
+
+
+
+
+
+
+
+
+
+ 
+	/*function GetAndAttachFile (fileName, filePathAndName, newRequestID) {
+		fetch(filePathAndName)
+		.then(function(res) {
+				
+			res.arrayBuffer()
+			.then(function (buffer) {
+
+				var binary = "";
+				var bytes = new Uint8Array(buffer);
+				var i = bytes.byteLength;
+
+				// convert it to binary
+				while (i--) {
+					binary = String.fromCharCode(bytes[i]) + binary;
+				}
+
+				// attempt to attach to the request (the SP list item)
+				$().SPServices({
+					operation: "AddAttachment",
+					listName: "SWFList",
+					listItemID: newRequestID,
+					fileName: fileName,
+					attachment: btoa(binary),
+					completefunc: function (xData, Status) {
+
+						// determine the success of the attempt
+						var attachmentSaveSuccess = $().HandleListUpdateReturn(xData, Status, 'Hub Attachment Error');
+
+						// if unsuccessful
+						if (attachmentSaveSuccess != 1) {
+							console.log("attachment problem");
+							console.log(xData);
+							console.log(Status);
+						// if successful
+						} else {
+							console.log("attachment success");
+						}
+					}
+				});
+
+			});
+
+
+
+
+
+
+		});
+	}
+
+	function GetFileBuffer (file) {
+
+		var deferred = $.Deferred();
+		var reader = new FileReader();
+
+		reader.onload = function(e) {
+			deferred.resolve(e.target.result);
+		}
+
+		reader.onerror = function(e) {
+			deferred.reject(e.target.error);
+		}
+
+		reader.readAsArrayBuffer(file);
+
+		return deferred.promise();
+	}; */
+    
+    function ReturnUserDataUsingAccountName (accountName) {
+        var userData = {};
+
+        $().SPServices({
+            operation: "GetUserProfileByName",
+            async: false,
+            AccountName: accountName,
+            completefunc: function(xData, Status) {
+                $(xData.responseXML).SPFilterNode("PropertyData").each(function() {
+                    userData[$(this).find("Name").text()] = $(this).find("Value").text();
+                });
+            }
+        });
+
+        // return user's data with better property names
+        return {
+            "account": userData.AccountName,
+            "name": userData.PreferredName,
+            "email": userData.WorkEmail.toLowerCase(),
+            "dept": userData.Department,
+            "firstName": userData.FirstName,
+            "lastName": userData.LastName,
+            "phone": userData.WorkPhone,
+            "userName": userData.UserName.toLowerCase(),
+            "pictureURL": userData.PictureURL
+        };
+    };
+
+	function ReturnThisEmployeeIsNOTEx (exEmployees, thisEmployee) {
+		if (exEmployees.indexOf(thisEmployee) > -1) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	function ReturnNameOrReplacement(nameReplacements, thisName) {
+		$.each(nameReplacements, function (i, nameReplacementObject) {
+			if (nameReplacementObject.input == thisName) {
+				thisName = nameReplacementObject.output;
+			}
+		});
+		return thisName
+	}
+
+	function ReturnEmailOrReplacement(emailReplacements, thisName) {
+		$.each(emailReplacements, function (i, emailReplacementObject) {
+			if (emailReplacementObject.input == thisName) {
+				thisName = emailReplacementObject.output;
+			}
+		});
+		return thisName
+	}
+
+	function ReturnPeopleListFieldValue (email) {
+		var fieldValue = "";
+		if (typeof (email) == "string") {
+			fieldValue = '-1;#' + email;
+		}
+		if (typeof (email) == "object") {
+			var emailString = "";
+			$.each(email, function (i, emailElement) {
+				if (i != 0) {
+					emailString += ";#";
+				}
+				emailString += '-1;#' + emailElement;
+			});
+			fieldValue = emailString;
+		}
+		return fieldValue;
+	}
+
+	function ReturnPeopleAllRequestDataValue (names, emails) {
+		var ardValue = "";
+		if (typeof (emails) == "string") {
+			ardValue = '[{ "account": "i:0#.f|membership|' + emails + '", "displayText": "' + names + '", "description": "' + emails + '" }]';
+		}
+		if (typeof (emails) == "object") {
+			var emailString = "[";
+			$.each(emails, function (i, emailsElement) {
+				if (i != 0) {
+					emailString += ",";
+				}
+				emailString += '{ "account": "i:0#.f|membership|' + emails[i] + '", "displayText": "' + names[i] + '", "description": "' + emails[i] + '" }';
+			});
+			emailString += "]";
+			ardValue = emailString;
+		}
+		return ardValue;
+	}
+
+	function ReplaceAll(needle, replacementNeedle, haystack) {
+		return haystack.replace(new RegExp(needle, 'g'), replacementNeedle);
+	}
+
+
+	function ReturnFileSizeToReport (fileSizeInBytes) {
+
+		// set up var
+		var fileSizeToReport = "";
+
+
+		// perform some file size conversions
+		var fileSizeInKB = fileSizeInBytes / 1000;
+		var fileSizeInMB = fileSizeInKB / 1000;
+		var fileSizeInGB = fileSizeInMB / 1000;
+
+		// set fileSizeToReport to the first file size conversion to be less than 4 digits
+		if (Math.round(fileSizeInKB) > 0 && Math.round(fileSizeInKB) < 1000) {
+			fileSizeToReport = fileSizeInKB;
+			fileSizeToReport = $().ReturnFileSizeFormattedToOneSignificantDigit(fileSizeToReport);
+			fileSizeToReport = fileSizeToReport + " KB";
+		} else if (Math.round(fileSizeInMB) > 0 && Math.round(fileSizeInMB) < 1000) {
+			fileSizeToReport = fileSizeInMB;
+			fileSizeToReport = $().ReturnFileSizeFormattedToOneSignificantDigit(fileSizeToReport);
+			fileSizeToReport = fileSizeToReport + " MB";
+		} else if (Math.round(fileSizeInGB) > 0 && Math.round(fileSizeInGB) < 1000) {
+			fileSizeToReport = fileSizeInGB;
+			fileSizeToReport = $().ReturnFileSizeFormattedToOneSignificantDigit(fileSizeToReport);
+			fileSizeToReport = fileSizeToReport + " GB";
+		} else {
+			fileSizeToReport = fileSizeInBytes + " bytes";
+		}
+
+		return fileSizeToReport;
+	}
+
+	function ReturnCurrencyStringFormatted (inputString) {
+		var strippedString = inputString.replace("\$", "").replace(/[,]/g, "");
+		if (strippedString == "") { 
+			return "";
+		} else {
+			return numeral(parseFloat(strippedString)).format('$0,0.00');
+		}
+	}
+
+	function ReturnFileTypeClass (fileName) {
+
+		var fileTypeClass = "";
+
+		// get file extension
+		var fileExtension = fileName.substring(fileName.lastIndexOf('.') + 1, fileName.length)
+
+		if (fileExtension == "jpeg" || fileExtension == "jpg" || fileExtension == "png" || fileExtension == "gif") {
+			fileTypeClass = "specific-image";
+		} else if (fileExtension == "doc" || fileExtension == "docx" || fileExtension == "dot" || fileExtension == "dotx") {
+			fileTypeClass = "word-file";
+		} else if (fileExtension == "xls" || fileExtension == "xlsx" || fileExtension == "xlsm" || fileExtension == "xlm") {
+			fileTypeClass = "excel-file";
+		} else if (fileExtension == "ppt" || fileExtension == "pptx") {
+			fileTypeClass = "powerpoint-file";
+		} else if (fileExtension == "pdf") {
+			fileTypeClass = "pdf-file";
+		} else if (fileExtension == "psd") {
+			fileTypeClass = "psd-file";
+		} else if (fileExtension == "tiff") {
+			fileTypeClass = "tiff-file";
+		} else if (fileExtension == "ai") {
+			fileTypeClass = "ai-file";
+		} else if (fileExtension == "eps") {
+			fileTypeClass = "eps-file";
+		} else if (fileExtension == "svg") {
+			fileTypeClass = "svg-file";
+		} else if (fileExtension == "txt") {
+			fileTypeClass = "text-file";
+		} else {
+			// console.log("indeterminate file type");
+			// console.log(fileName);
+			fileTypeClass = "generic-file";
+		}
+
+		return fileTypeClass;
+	}
+
+	function HtmlEncode(str) {
+		return String(str).replace(/&/g, '&amp;').replace(/"/g, '&quot;');
+		// .replace(/'/g, '&#39;')
+		// .replace(/</g, '&lt;')
+		// .replace(/>/g, '&gt;');
+	}
+
+	function CDataWrap(value) {
+		return "<![CDATA[" + value + "]]>";
+	}
+
+
+	function StrInStr(haystack, needle, bool) {
+
+		var pos = 0;
+		haystack += '';
+		pos = haystack.toLowerCase()
+			.indexOf((needle + '')
+				.toLowerCase());
+
+		if (pos == -1) {
+			return false;
+		} else {
+			if (bool == 1) {
+				return haystack.substr(0, pos);
+			} else {
+				return haystack.slice(pos);
+			}
+		}
+	}
+
+	function SendErrorEmail(from, to, body, subject) {
+
+		var siteurl = _spPageContextInfo.webServerRelativeUrl;
+
+		var urlTemplate = siteurl + "/_api/SP.Utilities.Utility.SendEmail";
+		$.ajax({
+			contentType: 'application/json',
+			url: urlTemplate,
+			type: "POST",
+			data: JSON.stringify({
+				'properties': {
+					'__metadata': { 'type': 'SP.Utilities.EmailProperties' },
+					'From': from,
+					'To': { 'results': [to] },
+					'Body': body,
+					'Subject': subject
+				}
+			}
+			),
+			headers: {
+				"Accept": "application/json;odata=verbose",
+				"content-type": "application/json;odata=verbose",
+				"X-RequestDigest": $("#__REQUESTDIGEST").val()
+			},
+			success: function (data) {
+			},
+			error: function (err) {
+				console.log('SendErrorEmail also had an error: ' + JSON.stringify(err));
+			}
+		});
+
+
+	}
+
+</script>
+
+
+
+<!-- all content -->
+<div id="all-content-container"></div>

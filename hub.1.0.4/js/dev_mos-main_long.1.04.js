@@ -19296,16 +19296,19 @@
 				var allEvents = [];
 
 				$(xData.responseXML).SPFilterNode("z:row").each(function () {
-
 					var eventItemString = $(this).attr("ows_AllRequestData");
 					eventItemString = eventItemString.replace(regexOne, "'");
 					eventItemString = eventItemString.replace(regexTwo, "'");
+					// console.log(eventItemString);
 					eval("var eventItem=" + eventItemString);
+					console.log(eventItem);
+					// console.log('');
 					eventItem.ID = $(this).attr("ows_ID");
 					if (typeof (eventItem["Requested-For"]) == "object") {
-						eventItem.contactLinkedName = "<a target=\"_blank\" href=\"https://bmos-my.sharepoint.com/_layouts/15/me.aspx?p=" + StrInStr(eventItem["Requested-For"][0]["description"], "@", 1) + "%40mos.org&v=profile\">" + eventItem["Requested-For"][0]["displayText"] + "</a>";
-					} else {
-						eventItem.contactLinkedName = "";
+						eventItem.contactName = "<a target=\"_blank\" href=\"https://bmos-my.sharepoint.com/_layouts/15/me.aspx?p=" + StrInStr(eventItem["Requested-For"][0]["description"], "@", 1) + "%40mos.org&v=profile\">" + eventItem["Requested-For"][0]["displayText"] + "</a>";
+					}
+					if (typeof (eventItem["Legacy-Contact"]) == "string") {
+						eventItem.contactName = eventItem["Legacy-Contact"];
 					}
 
 					// one or more individual dates
@@ -19324,7 +19327,7 @@
 							var thisEvent = {
 								"eventID": eventItem["ID"],
 								"title": formattedStartTime + " | " + eventItem["Event-Title"],
-								"contactLinkedName": eventItem.contactLinkedName,
+								"contactName": eventItem.contactName,
 								"formattedStartTime": formattedStartTime,
 								"formattedEndTime": formattedEndTime,
 								"formattedDate": formattedDate,
@@ -19334,7 +19337,7 @@
 							};
 
 							$(["Event-Location", "Event-Count", "Event-Notes"]).each(function (i, o) {
-								if (typeof (eventItem[o]) != "undefined") {
+								if (typeof (eventItem[o]) != "undefined" && eventItem[o] != '') {
 									var label = o.slice(6).toLowerCase();
 									thisEvent[label] = eventItem[o];
 								}
@@ -19751,11 +19754,11 @@
 							"<ul> \n";
 
 						$(["count", "notes"]).each(function (i, o) {
-							if (typeof (event[o]) != "undefined") {
+							if (typeof (event[o]) != "undefined" && event[o] != "") {
 								dialogBodyContent += "	<li class=\"event-" + o + "\">" + $().ReturnStringWithInitialCap(o) + ": " + event[o] + "</li>";
 							}
 						});
-						dialogBodyContent += "	<li class=\"event-contact\">Contact: " + event.contactLinkedName + "</li> \n" +
+						dialogBodyContent += "	<li class=\"event-contact\">Contact: " + event.contactName + "</li> \n" +
 							"	<li class=\"event-id\">Event ID: " + event.eventID + "</li>" +
 							"</ul> \n" +
 							"<a class=\"ui-dialog-button\" href=\"" + event.editURL + "\">Edit / Delete</a>";
