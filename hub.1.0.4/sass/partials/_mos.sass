@@ -4413,25 +4413,32 @@ div#app-container.mw-buyouts-calendar
 				transform: translateY(-50%)
 
 			span.omni-theater
-				background-color: $orange
+				// background-color: $bold-blue
+				background-color: $subtle-yellow
 
 			span.three-four-d-digital-cinema
-				background-color: $pink
+				// background-color: $bold-purple
+				background-color: $subtle-orange
 
 			span.butterfly-garden
-				background-color: $purple
+				// background-color: $bold-green
+				background-color: $subtle-coral
 
 			span.planetarium
-				background-color: $blue2
+				// background-color: $teal-9
+				background-color: $subtle-pink
 
 			span.skyline-room
-				background-color: $green
+				// background-color: $bold-maroon
+				background-color: $subtle-green
 
 			span.nichols-gallery
-				background-color: $darkPink
+				// background-color: $bold-pink
+				background-color: $subtle-blue
 
 			span.stearns-gallery
-				background-color: $darkGreen
+				// background-color: $bold-orange
+				background-color: $purple-3
 
 div#app-container.mw-buyouts-calendar,
 div#app-container.mw-events-calendar
@@ -4443,6 +4450,10 @@ div#app-container.mw-events-calendar
 
 		td.fc-day
 			padding: 1rem .2rem .2rem 4.5rem !important
+
+		td.ui-state-highlight
+			background-color: $grey13
+			border-color: $grey13
 			
 	div.fc-content-skeleton
 
@@ -4464,38 +4475,45 @@ div#app-container.mw-events-calendar
 		background-color: $intDefault
 		color: $white !important
 
-		div.fc-content
+		// div.fc-content
 
-			span.fc-title
-				white-space: normal
+		// 	span.fc-title
+		// 		white-space: normal
 
 	a.fc-event.omni-theater
-		background-color: $orange
-		color: $textOnOrange !important
-
-	a.fc-event.planetarium
-		background-color: $blue2
-		color: $black !important
-
-	a.fc-event.skyline-room
-		background-color: $green
-		color: $textOnGreen !important
-
-	a.fc-event.nichols-gallery
-		background-color: $darkPink
-		color: $textOnDarkPink !important
+		// background-color: $bold-blue
+		background-color: $subtle-yellow
+		color: $grey3 !important
 
 	a.fc-event.three-four-d-digital-cinema
-		background-color: $pink
-		color: $textOnPink !important
+		// background-color: $bold-purple
+		background-color: $subtle-orange
+		color: $grey3 !important
 
 	a.fc-event.butterfly-garden
-		background-color: $purple
-		color: $textOnPurple !important
+		// background-color: $bold-green
+		background-color: $subtle-coral
+		color: $grey3 !important
+
+	a.fc-event.planetarium
+		// background-color: $teal-9
+		background-color: $subtle-pink
+		color: $grey3 !important
+
+	a.fc-event.skyline-room
+		// background-color: $bold-maroon
+		background-color: $subtle-green
+		color: $grey3 !important
+
+	a.fc-event.nichols-gallery
+		// background-color: $bold-pink
+		background-color: $subtle-blue
+		color: $grey3 !important
 
 	a.fc-event.stearns-gallery
-		background-color: $darkGreen
-		color: $textOnDarkGreen !important
+		// background-color: $bold-orange
+		background-color: $purple-3
+		color: $grey3 !important
 
 
 // GSEs
@@ -4568,6 +4586,12 @@ div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar
 			cursor: pointer
 			background-color: $intDefault
 			color: $white !important
+
+			// div.fc-content
+
+			// 	span.fc-title
+			// 		white-space: normal
+
 
 // medium screen
 @media only screen and (max-width: 1599px)
