@@ -22,8 +22,8 @@
 
 		// partial config 
 		var mData = {
-			'legacyFile': '/sites/mw-events/SiteAssets/mwEvents.xml', //https://bmos.sharepoint.com
-			'maxToProcess': 20,
+			'legacyFile': '/sites/mw-events/SiteAssets/mwEvents.xml',
+			'maxToProcess': 10000,
 			'newList': 'SWFList',
 			'deleteAllItemsBeforeImporting': 1,
 			'emailErrorsTo': 'jbaker@mos.org'
@@ -71,7 +71,7 @@
 
 					// set all basic list fields
 					listFields.Title = HtmlEncode($(eventValue).find('title').text());
-					listFields.RequestDate = HtmlEncode($(eventValue).find('startDateTime').text().slice(0, 10) + 'T00:00:00-05:00');
+					listFields.RequestDate = HtmlEncode($(eventValue).find('requestDate').text().slice(0, 10) + 'T00:00:00-05:00');
 					listFields.EventLocation = HtmlEncode($(eventValue).find('location').text());
 					listFields.EventCount = HtmlEncode($(eventValue).find('count').text());
 					listFields.EventDepartment = HtmlEncode($(eventValue).find('dept').text());
