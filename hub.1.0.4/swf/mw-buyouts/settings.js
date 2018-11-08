@@ -130,6 +130,13 @@
 				"begin": 1,
 				"end": 1
 			}, {
+				'elementType': 'field',
+				'controlType': 'url',
+				'fieldName': 'Quark Request',
+				'labelContent': 'Quark Request',
+				'editableForNonAdmin': [],
+				'editableForAdmin': [],
+			}, {
 				"elementType": "field",
 				"controlType": "text",
 				"fieldName": "Request ID",

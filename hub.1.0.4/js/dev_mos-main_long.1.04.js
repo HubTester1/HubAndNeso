@@ -19136,6 +19136,9 @@
 					var formattedEndTime = $().ReturnFormattedDateTime(isoEndDatetime, "YYYY-MM-DDTHH:mm:ss", "h:mma", 0);
 					formattedEndTime = formattedEndTime.slice(0, formattedEndTime.length - 1);
 					var formattedDate = $().ReturnFormattedDateTime(isoStartDatetime, "YYYY-MM-DDTHH:mm:ss", "ddd, M/D/YY", 0);
+					var formattedClassName = ReplaceAll(" ", "-", eventItem["Buyout-Location"].toLowerCase());
+					if (formattedClassName == "3-d-cinema") { formattedClassName = "three-four-d-digital-cinema"; }
+					if (formattedClassName == "4-d-cinema") { formattedClassName = "three-four-d-digital-cinema"; }
 
 					var thisEvent = {
 						"eventID": eventItem["ID"],
@@ -19151,6 +19154,7 @@
 						"orderNumber": eventItem["Buyout-Order-Number"],
 						"buyoutTitle": eventItem["Request-Nickname"],
 						"department": eventItem["Buyout-Department"],
+						"className": formattedClassName,
 					};
 
 					allEvents.push(thisEvent);
@@ -19256,8 +19260,23 @@
 			width: 400,
 		});
 
-		$("div.fc-toolbar, div.fc-view-container").fadeTo(1000, 1);
+		var legend =
+			'<div id="buyouts-metadata" style="opacity: 1;"> \n' +
+			'	<h2 id="header_legend">Legend</h2> \n' +
+			'	<ul id="legend-items" aria-hidden="true"> \n' +
+			'		<li class="legend-item"><span class="color-indicator omni-theater"></span>Omni</li> \n' +
+			'		<li class="legend-item"><span class="color-indicator three-four-d-digital-cinema"></span>4-D / 3-D</li> \n' +
+			'		<li class="legend-item"><span class="color-indicator planetarium"></span>Planetarium</li> \n' +
+			'		<li class="legend-item"><span class="color-indicator butterfly-garden"></span>Butterfly Garden</li> \n' +
+			'		<li class="legend-item"><span class="color-indicator skyline-room"></span>Skyline</li> \n' +
+			'		<li class="legend-item"><span class="color-indicator nichols-gallery"></span>Nichols</li> \n' +
+			'		<li class="legend-item"><span class="color-indicator stearns-gallery"></span>Stearns</li> \n' +
+			'	</ul> \n' +
+			'</div> \n';
 
+		$(legend).insertBefore($("div.fc-toolbar"));
+
+		$("div.fc-toolbar, div.fc-view-container").fadeTo(1000, 1);
 	};
 
 

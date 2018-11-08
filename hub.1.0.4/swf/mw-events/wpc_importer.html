@@ -69,8 +69,25 @@
 					var jsonOnlyData = {};
 					var submissionValuePairs = [];
 
+
+
+					// manually set some basic list fields for this item
+					listFields.BeginningOfLife = HtmlEncode('0');
+					listFields.EndOfLife = HtmlEncode('0');
+					listFields.NewlyApprovedOrPending = HtmlEncode('0');
+					listFields.ApprovalNewlyNeededNotify = HtmlEncode('none');
+					listFields.ApprovalNotNeededNotify = HtmlEncode('none');
+					listFields.ApprovalStillNeededNotify = HtmlEncode('none');
+					listFields.SWFVersion = HtmlEncode('1.0');
+					listFields.RequestVersion = HtmlEncode('1');
+					listFields.RequestName = HtmlEncode('Museum Events');
+
+
+
+
+
+
 					// set all basic list fields
-					listFields.Title = HtmlEncode($(eventValue).find('title').text());
 					listFields.Title = HtmlEncode($(eventValue).find('title').text());
 					listFields.RequestDate = HtmlEncode($(eventValue).find('requestDate').text().slice(0, 10) + 'T00:00:00-05:00');
 					listFields.EventLocation = HtmlEncode($(eventValue).find('location').text());
@@ -92,8 +109,24 @@
 						'"Requester-Email":"' + $(eventValue).find('username').text() + '@mos.org",' +
 						'"Requester-Phone":"",' +
 						'"Requester-Account":"i:0#.f|membership|' + $(eventValue).find('username').text() + '@mos.org",' +
-						'"Beginning-of-Life":"0",' +
+						'"migrated-from-quark": "1",' +
+						'"Beginning-of-Life": "0",' +
 						'"End-of-Life":"0",' +
+						'"Approval-Newly-Needed-Notify": "none",' +
+						'"Approval-Not-Needed-Notify": "none",' +
+						'"Approval-Still-Needed-Notify": "none",' +
+						'"Newly-Approved-or-Pending": "0",' +
+						'"Last-Modified-Timestamp-Mismatch": "0",' +
+						'"Admin-Email": "jbaker@mos.org",' + 
+						'"Request-Name": "Museum Events",' +
+						'"SWF-Version": "1.0",' +
+						'"Request-Version": "1",' + 
+						'"Component-Group-Admin": "6;#James Baker,#i:0#.f|membership|jbaker@mos.org,#jbaker@mos.org,#jbaker@mos.org,#James Baker,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/jbaker_mos_org_MThumb.jpg,#Interactive Media,#Intranet Solutions Project Manager;#20;#Ben Wilson,#i:0#.f|membership|bwilson@mos.org,#bwilson@mos.org,#bwilson@mos.org,#Ben Wilson,#https://bmos-my.sharepoint.com:443/User%20Photos/Profile%20Pictures/bwilson_mos_org_MThumb.jpg,#Interactive Media,#Interactive Media Manager",' +
+						'"Current-User-Name": "jbaker@mos.org",' +
+						'"Current-User-is-Admin": "0",' +
+						'"Current-User-is-Component-Group-Admin": "0",' +
+						'"Current-User-Display-Name": "James Baker",' + 
+						'"Component-ID": "171",' +
 						'"SWF-Version":"1.0",' +
 						'"Self-or-Other":"Talk to me",' +
 						'"time-storage_Start-Time":"2000-01-01T' + $(eventValue).find('startDateTime').text().slice(11) + '",' +

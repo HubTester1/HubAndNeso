@@ -3860,13 +3860,13 @@ div#app-container.mw-buyouts-calendar div#buyouts-metadata {
       position: relative;
       top: 50%;
       transform: translateY(-50%); }
-    div#app-container.mw-buyouts-calendar div#buyouts-metadata ul#legend-items span.mugar-omni-theater {
+    div#app-container.mw-buyouts-calendar div#buyouts-metadata ul#legend-items span.omni-theater {
       background-color: #ff9a1f; }
-    div#app-container.mw-buyouts-calendar div#buyouts-metadata ul#legend-items span.three-d-digital-cinema {
+    div#app-container.mw-buyouts-calendar div#buyouts-metadata ul#legend-items span.three-four-d-digital-cinema {
       background-color: #ff5498; }
     div#app-container.mw-buyouts-calendar div#buyouts-metadata ul#legend-items span.butterfly-garden {
       background-color: #cd3ff2; }
-    div#app-container.mw-buyouts-calendar div#buyouts-metadata ul#legend-items span.charles-hayden-planetarium {
+    div#app-container.mw-buyouts-calendar div#buyouts-metadata ul#legend-items span.planetarium {
       background-color: #45b1ff; }
     div#app-container.mw-buyouts-calendar div#buyouts-metadata ul#legend-items span.skyline-room {
       background-color: #71e667; }
@@ -3903,24 +3903,17 @@ div#app-container.mw-events-calendar a.fc-event {
   cursor: pointer;
   background-color: #0072c6;
   color: #fff !important; }
+  div#app-container.mw-buyouts-calendar a.fc-event div.fc-content span.fc-title,
+  div#app-container.mw-events-calendar a.fc-event div.fc-content span.fc-title {
+    white-space: normal; }
 
-div#app-container.mw-buyouts-calendar a.fc-event.mugar-omni-theater,
-div#app-container.mw-events-calendar a.fc-event.mugar-omni-theater {
+div#app-container.mw-buyouts-calendar a.fc-event.omni-theater,
+div#app-container.mw-events-calendar a.fc-event.omni-theater {
   background-color: #ff9a1f;
   color: #222 !important; }
 
-div#app-container.mw-buyouts-calendar a.fc-event.three-d-digital-cinema,
-div#app-container.mw-events-calendar a.fc-event.three-d-digital-cinema {
-  background-color: #ff5498;
-  color: #111 !important; }
-
-div#app-container.mw-buyouts-calendar a.fc-event.butterfly-garden,
-div#app-container.mw-events-calendar a.fc-event.butterfly-garden {
-  background-color: #cd3ff2;
-  color: #111 !important; }
-
-div#app-container.mw-buyouts-calendar a.fc-event.charles-hayden-planetarium,
-div#app-container.mw-events-calendar a.fc-event.charles-hayden-planetarium {
+div#app-container.mw-buyouts-calendar a.fc-event.planetarium,
+div#app-container.mw-events-calendar a.fc-event.planetarium {
   background-color: #45b1ff;
   color: #000 !important; }
 
@@ -3933,6 +3926,16 @@ div#app-container.mw-buyouts-calendar a.fc-event.nichols-gallery,
 div#app-container.mw-events-calendar a.fc-event.nichols-gallery {
   background-color: #a30c5e;
   color: #fff !important; }
+
+div#app-container.mw-buyouts-calendar a.fc-event.three-four-d-digital-cinema,
+div#app-container.mw-events-calendar a.fc-event.three-four-d-digital-cinema {
+  background-color: #ff5498;
+  color: #111 !important; }
+
+div#app-container.mw-buyouts-calendar a.fc-event.butterfly-garden,
+div#app-container.mw-events-calendar a.fc-event.butterfly-garden {
+  background-color: #cd3ff2;
+  color: #111 !important; }
 
 div#app-container.mw-buyouts-calendar a.fc-event.stearns-gallery,
 div#app-container.mw-events-calendar a.fc-event.stearns-gallery {

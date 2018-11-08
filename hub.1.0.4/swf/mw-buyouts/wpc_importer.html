@@ -21,7 +21,7 @@
 		  // partial config 
 		var mData = {
 			'legacyFile': '/sites/mw-buyouts/SiteAssets/mwBuyouts.xml', //https://bmos.sharepoint.com
-			'maxToProcess': 3,
+			'maxToProcess': 10000,
 			'newList': 'SWFList',
 			'deleteAllItemsBeforeImporting': 1,
 			'emailErrorsTo': 'jbaker@mos.org'
@@ -102,7 +102,6 @@
 
 
 					// manually set some basic list fields for this item
-					// listFields.LegacyID = HtmlEncode(legacyID);
 					listFields.BeginningOfLife = HtmlEncode('0');
 					listFields.EndOfLife = HtmlEncode('0');
 					listFields.NewlyApprovedOrPending = HtmlEncode('0');
@@ -121,13 +120,13 @@
 					var allRequestData = '{"RepeatedElements": [],' +
 						'"migrated-from-quark": "1",' +
 						'"Beginning-of-Life": "0",' +
-						'"End-of-Life":"' + listFields.EndOfLife + '",' +
+						'"End-of-Life": "0",' +
 						'"Approval-Newly-Needed-Notify": "none",' +
 						'"Approval-Not-Needed-Notify": "none",' +
 						'"Approval-Still-Needed-Notify": "none",' +
 						'"Newly-Approved-or-Pending": "0",' +
 						'"Last-Modified-Timestamp-Mismatch": "0",' +
-						'"Admin-Email": "jbaker@mos.org",'
+						'"Admin-Email": "jbaker@mos.org",' + 
 						'"Request-Name": "Museum Buyouts",' +
 						'"SWF-Version": "1.0",' +
 						'"Request-Version": "1",' +
@@ -136,7 +135,7 @@
 						'"Current-User-is-Admin": "0",' +
 						'"Current-User-is-Component-Group-Admin": "0",' +
 						'"Current-User-Display-Name": "James Baker",' + 
-						'"Component-ID": "171",' +
+						'"Component-ID": "170",' +
 						'"Self-or-Other": "Talk to me",';
 
 
