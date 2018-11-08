@@ -1894,21 +1894,21 @@
 				break;
 
 
-			case "Buyout Calendar":
+			case "Museum Buyouts":
 				if (GetParamFromUrl(location.search, "f") === "cal") {
 					userNeedsAlternateOverviewScreen = "mwBuyoutCalendar";
 				} else {
 					userNeedsAlternateOverviewScreen = "mwBuyoutList";
 				}
 				break;
-			case "Museum-wide Event Calendar":
+			case "Museum Events":
 				if (GetParamFromUrl(location.search, "f") === "cal") {
 					userNeedsAlternateOverviewScreen = "mwEventCalendar";
 				} else {
 					userNeedsAlternateOverviewScreen = "mwEventList";
 				}
 				break;
-			case "Product Timeline":
+			case "Museum Products":
 				if (GetParamFromUrl(location.search, "f") === "tl") {
 					userNeedsAlternateOverviewScreen = "mwProductsTimeline";
 				} else {
@@ -19117,10 +19117,12 @@
 					eventItemString = eventItemString.replace(regexTwo, "'");
 					eval("var eventItem=" + eventItemString);
 					eventItem.ID = $(this).attr("ows_ID");
+					eventItem.contactName = '';
 					if (typeof (eventItem["Requested-For"]) == "object") {
-						eventItem.contactLinkedName = "<a target=\"_blank\" href=\"https://bmos-my.sharepoint.com/_layouts/15/me.aspx?p=" + StrInStr(eventItem["Requested-For"][0]["description"], "@", 1) + "%40mos.org&v=profile\">" + eventItem["Requested-For"][0]["displayText"] + "</a>";
-					} else {
-						eventItem.contactLinkedName = "";
+						eventItem.contactName = "<a target=\"_blank\" href=\"https://bmos-my.sharepoint.com/_layouts/15/me.aspx?p=" + StrInStr(eventItem["Requested-For"][0]["description"], "@", 1) + "%40mos.org&v=profile\">" + eventItem["Requested-For"][0]["displayText"] + "</a>";
+					}
+					if (typeof (eventItem["Legacy-Contact"]) == "string") {
+						eventItem.contactName = eventItem["Legacy-Contact"];
 					}
 
 					var isoStartDatetime = 
@@ -19137,8 +19139,8 @@
 
 					var thisEvent = {
 						"eventID": eventItem["ID"],
-						"title": formattedStartTime + " | " + eventItem["Buyout-Title"],
-						"contactLinkedName": eventItem.contactLinkedName,
+						"title": formattedStartTime + " | " + eventItem["Request-Nickname"],
+						"contactName": eventItem.contactName,
 						"formattedStartTime": formattedStartTime,
 						"formattedEndTime": formattedEndTime,
 						"formattedDate": formattedDate,
@@ -19147,7 +19149,7 @@
 						"editURL": "/sites/mw-buyouts/SitePages/App.aspx?r=" + eventItem["ID"],
 						"location": eventItem["Buyout-Location"],
 						"orderNumber": eventItem["Buyout-Order-Number"],
-						"buyoutTitle": eventItem["Buyout-Title"],
+						"buyoutTitle": eventItem["Request-Nickname"],
 						"department": eventItem["Buyout-Department"],
 					};
 
@@ -19200,11 +19202,16 @@
 
 						var dialogBodyContent = "<p class=\"ui-dialog-buyout-title\">" + event.buyoutTitle + "</p> \n" +
 							"<ul> \n";
-
+						if (event.contactName) {
+							dialogBodyContent += "	<li class=\"event-contact\">Contact: " + event.contactName + "</li> \n";
+						}
+						if (event.department) {
+							dialogBodyContent += "	<li class=\"event-department\">Department: " + event.department + "</li> \n";
+						}
+						if (event.orderNumber) {
+							dialogBodyContent += "	<li class=\"event-id\">Buyout Order Number: " + event.orderNumber + "</li> \n";
+						}
 						dialogBodyContent += 
-							"	<li class=\"event-contact\">Contact: " + event.contactLinkedName + "</li> \n" +
-							"	<li class=\"event-department\">Department: " + event.department + "</li> \n" +
-							"	<li class=\"event-id\">Buyout Order Number: " + event.orderNumber + "</li>" +
 							"	<li class=\"event-id\">Hub Buyout ID: " + event.eventID + "</li>" +
 							"</ul> \n" +
 							"<a class=\"ui-dialog-button\" href=\"" + event.editURL + "\">Edit / Delete</a>";
@@ -19304,13 +19311,13 @@
 					console.log(eventItem);
 					// console.log('');
 					eventItem.ID = $(this).attr("ows_ID");
+					eventItem.contactName = '';
 					if (typeof (eventItem["Requested-For"]) == "object") {
 						eventItem.contactName = "<a target=\"_blank\" href=\"https://bmos-my.sharepoint.com/_layouts/15/me.aspx?p=" + StrInStr(eventItem["Requested-For"][0]["description"], "@", 1) + "%40mos.org&v=profile\">" + eventItem["Requested-For"][0]["displayText"] + "</a>";
 					}
 					if (typeof (eventItem["Legacy-Contact"]) == "string") {
 						eventItem.contactName = eventItem["Legacy-Contact"];
 					}
-
 					// one or more individual dates
 					if (typeof (eventItem["individual-or-pattern_individual"]) != 'undefined') {
 						$(eventItem["RepeatedElements"]).each(function (i, d) {
@@ -19758,7 +19765,10 @@
 								dialogBodyContent += "	<li class=\"event-" + o + "\">" + $().ReturnStringWithInitialCap(o) + ": " + event[o] + "</li>";
 							}
 						});
-						dialogBodyContent += "	<li class=\"event-contact\">Contact: " + event.contactName + "</li> \n" +
+						if (event.contactName) {
+							dialogBodyContent += "	<li class=\"event-contact\">Contact: " + event.contactName + "</li> \n";
+						}
+						dialogBodyContent += 
 							"	<li class=\"event-id\">Event ID: " + event.eventID + "</li>" +
 							"</ul> \n" +
 							"<a class=\"ui-dialog-button\" href=\"" + event.editURL + "\">Edit / Delete</a>";

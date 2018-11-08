@@ -100,6 +100,14 @@
 
 		'uniqueElements': [
 			{
+				"elementType": "field",
+				"controlType": "hidden",
+				"fieldName": "Migrated From Quark",
+			}, {
+				"elementType": "field",
+				"controlType": "hidden",
+				"fieldName": "Legacy ID",
+			}, {
 				"elementType": "markup",
 				"tag": "div",
 				"htmlID": "print-to-screen",
@@ -115,10 +123,17 @@
 				"begin": 1,
 				"end": 1
 			}, {
+				"elementType": "markup",
+				"tag": "h2",
+				"content": "This Buyout on The Hub",
+				"htmlID": "header_this-request",
+				"begin": 1,
+				"end": 1
+			}, {
 				"elementType": "field",
 				"controlType": "text",
 				"fieldName": "Request ID",
-				"labelContent": "Event ID",
+				"labelContent": "Hub Buyout ID",
 				"hideForNonAdmin": [""],
 				"hideForAdmin": [""],
 				"disabledForNonAdmin": ["", "Submitted", "Cancelled"],
@@ -127,42 +142,29 @@
 				"elementType": "field",
 				"controlType": "text",
 				"fieldName": "Request Date",
-				"labelContent": "Event Created",
+				"labelContent": "Buyout Created on The Hub",
 				"listFieldName": "RequestDate",
 				"friendlyFormatOnLoad": { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 },
 				"isoFormatOnSubmit": { 'incomingFormat': null, 'returnFormat': null, 'determineYearDisplayDynamically': null },
 				"hideForNonAdmin": [""],
 				"hideForAdmin": [""],
 				"disabledForNonAdmin": ["", "Submitted", "Cancelled"],
-				"disabledForAdmin": ["", "Submitted", "Cancelled"]
-			}, {
-				"elementType": "field",
-				"controlType": "text",
-				"fieldName": "Legacy Buyout Creation Date",
-				"labelContent": "Buyout Created",
-				"friendlyFormatOnLoad": { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 },
-				"isoFormatOnSubmit": { 'incomingFormat': null, 'returnFormat': null, 'determineYearDisplayDynamically': null },
-				"hideForNonAdmin": ["", "Submitted", "Cancelled"],
-				"hideForAdmin": ["", "Submitted", "Cancelled"],
-				"disabledForNonAdmin": ["", "Submitted", "Cancelled"],
 				"disabledForAdmin": ["", "Submitted", "Cancelled"],
 				"helpNotes": [
 					{
-						"text": "This buyout was migrated from Quark, and this date is approximate.",
-						"htmlID": "legacy-buyout-creation-date_help-note",
+						"text": "This buyout was migrated from Quark, where creation dates were not recorded.",
+						"htmlID": "request-date_help-note",
 						"urgent": 0,
 					}
 				],
-
-
-
-
-
-
-
-
-
-
+			}, {
+				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "Request Nickname",
+				"labelContent": "Buyout Title",
+				"listFieldName": "Title",
+				"requiredForNonAdmin": ["", "Submitted"],
+				"requiredForAdmin": ["", "Submitted"],
 			}, {
 				"elementType": "field",
 				"controlType": "select",
@@ -202,7 +204,7 @@
 				"disabledForAdmin": ["", "Submitted", "Cancelled"],
 				"helpNotes": [
 					{
-						"text": "This buyout was migrated from Quark, and the contact person is no longer with the Museum. To change the contact, remove this buyout and create a new one.",
+						"text": "This buyout was migrated from Quark, and the contact person is not editable. To change the contact, delete this buyout from The Hub and create a new one.",
 						"htmlID": "legacy-contact_help-note",
 						"urgent": 0,
 					}
@@ -211,18 +213,24 @@
 				"elementType": "field",
 				"controlType": "check",
 				"fieldName": "Requester Cancellation",
-				"choiceSetLabel": "Remove",
+				"choiceSetLabel": "Delete?",
 				"choices": [
 					{
 						"value": "cancel",
-						"display": "Yes, I wish to remove this event from the calendar"
+						"display": "Yes, I wish to delete this buyout from The Hub"
 					}
 				],
 				"hideForNonAdmin": ["", "Validator Picked Up", "Loaned", "Completed", "Disapproved", "Cancelled"],
 				"hideForAdmin": ["", "Pending Submission to Commission", "Submitted to Commission", "Interpreter Assigned", "Invoice Received", "Text Edited", "Web Live", "Pending Validator Pickup", "Validator Picked Up", "Pending Approval", "Approved", "Loaned", "Completed", "Disapproved", "Cancelled"],
 				"disabledForNonAdmin": ["Completed", "Disapproved", "Cancelled"],
-				"disabledForAdmin": ["Completed", "Disapproved", "Cancelled"]
-
+				"disabledForAdmin": ["Completed", "Disapproved", "Cancelled"],
+				"helpNotes": [
+					{
+						"text": "Affects only The Hub",
+						"htmlID": "requester-cancellation_help-note",
+						"urgent": 0,
+					}
+				],
 
 
 				// about the requester
@@ -293,15 +301,21 @@
 
 
 
-
+			}, {
+				"elementType": "markup",
+				"tag": "h2",
+				"content": "Buyout Details",
+				"htmlID": "header_buyout-details",
+				"begin": 1,
+				"end": 1
 			}, {
 				'elementType': 'field',
 				'controlType': 'text',
 				'fieldName': 'Buyout Order Number',
-				'labelContent': 'Order Number',
+				'labelContent': 'Tessitura Order Number',
 				"listFieldName": "BuyoutOrderNumber",
-				"requiredForNonAdmin": [""],
-				"requiredForAdmin": [""],
+				// "requiredForNonAdmin": ["", "Submitted"],
+				// "requiredForAdmin": ["", "Submitted"],
 				'helpNotes': [
 					{
 						'text': "Formerly, LSI TRX#",
@@ -313,11 +327,11 @@
 			}, {
 				'elementType': 'field',
 				'controlType': 'text',
-				'fieldName': 'Buyout Title',
-				'labelContent': 'Title',
-				"listFieldName": "Title",
-				"requiredForNonAdmin": [""],
-				"requiredForAdmin": [""],
+				'fieldName': 'Buyout Product Title',
+				'labelContent': 'Product Title',
+				"listFieldName": "BuyoutProductTitle",
+				"requiredForNonAdmin": ["", "Submitted"],
+				"requiredForAdmin": ["", "Submitted"],
 			}, {
 				'elementType': 'field',
 				'controlType': 'select',
@@ -326,8 +340,8 @@
 				'labelContent': 'Location',
 				"setOptions": [
 					{
-						"value": "Omni",
-						"display": "Omni"
+						"value": "Omni Theater",
+						"display": "Omni Theater"
 					}, {
 						"value": "Planetarium",
 						"display": "Planetarium"
@@ -338,18 +352,18 @@
 						"value": "Nichols Gallery",
 						"display": "Nichols Gallery"
 					}, {
-						"value": "4-D Theater",
-						"display": "4-D Theater"
+						"value": "4-D Cinema",
+						"display": "4-D Cinema"
 					}, {
 						"value": "Butterfly Garden",
 						"display": "Butterfly Garden"
 					}, {
-						"value": "Stearns",
-						"display": "Stearns"
+						"value": "Stearns Gallery",
+						"display": "Stearns Gallery"
 					}
 				],
-				"requiredForNonAdmin": [""],
-				"requiredForAdmin": [""],
+				"requiredForNonAdmin": ["", "Submitted"],
+				"requiredForAdmin": ["", "Submitted"],
 
 
 
@@ -385,21 +399,23 @@
 				'labelContent': 'Date',
 				'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 0 },
 				'isoFormatOnSubmit': { 'incomingFormat': 'MMMM D, YYYY', 'returnFormat': null, 'determineYearDisplayDynamically': null },
+				"requiredForNonAdmin": ["", "Submitted"],
+				"requiredForAdmin": ["", "Submitted"],
 			}, {
 				'elementType': 'field',
 				'controlType': 'time',
 				'fieldName': 'Start Time',
 				'labelContent': 'Start Time',
 				"listFieldName": "BuyoutStartTime",
-				"requiredForNonAdmin": [""],
-				"requiredForAdmin": [""],
+				"requiredForNonAdmin": ["", "Submitted"],
+				"requiredForAdmin": ["", "Submitted"],
 			}, {
 				'elementType': 'field',
 				'controlType': 'time',
 				'fieldName': 'End Time',
 				'labelContent': 'End Time',
-				"requiredForNonAdmin": [""],
-				"requiredForAdmin": [""],
+				"requiredForNonAdmin": ["", "Submitted"],
+				"requiredForAdmin": ["", "Submitted"],
 			}, {
 				"elementType": "field",
 				"controlType": "text",
@@ -425,13 +441,13 @@
 		'   $("div#label-and-control_Legacy-Contact").show("fast").removeClass("hidden"); \n' +
 		'} \n';
 
-	fData.CustomScriptLast += 'if ($("input#Legacy-Event-Creation-Date").val() != "") { \n' +
+	/* fData.CustomScriptLast += 'if ($("input#Legacy-Event-Creation-Date").val() != "") { \n' +
 		'   $("div#label-and-control_Request-Date").hide("fast").addClass("hidden"); \n' +
 		'   $("div#label-and-control_Legacy-Event-Creation-Date").show("fast").removeClass("hidden"); \n' +
-		'} \n';
+		'} \n'; */
 
 
-	// =============================
+	/* // =============================
 
 	// selects
 	fData.CustomScriptLast += '$("select#Self-or-Other option[value=\'Self\']").attr("selected","selected"); \n';
@@ -457,7 +473,7 @@
 		"	'name': 'James Baker'," +
 		"	'email': 'jbaker@mos.org'," +
 		"	'account': 'i:0#.f|membership|jbaker@mos.org'" +
-		"}]);";
+		"}]);"; */
 
 
 
