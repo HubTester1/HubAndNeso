@@ -174,6 +174,7 @@ class HcContainer extends React.Component {
 console.log('hc m4');
 const screenShower = setInterval(ShowScreen, 500);
 if (EnvironmentDetector.ReturnIsHCScreen()) {
+	document.querySelector('head title').textContent = 'The Hub - Home';
 	ReactDOM.render(<HcContainer />, document.getElementById('hub-central-mount-point'));
 } else {
 	window.uData = {};
