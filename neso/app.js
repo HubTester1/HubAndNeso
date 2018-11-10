@@ -205,7 +205,7 @@ cron.schedule('* * * * *', () => {
 			console.log(error);
 		});
 });
-// schedule as specified in environment
+/* // schedule as specified in environment
 cron.schedule(process.env.hrPositionsProcessingCronSchedule1, () => {
 	// get a promise to process HR Position Directory data
 	nesoHRPositions.ProcessHRPositionsData()
@@ -240,14 +240,14 @@ cron.schedule(process.env.hrPositionsProcessingCronSchedule2, () => {
 			// eslint-disable-next-line no-console
 			console.log(error);
 		});
-});
+}); */
 // schedule as specified in environment
 cron.schedule(process.env.adUserProcessingCronSchedule, () => {
 	nesoActiveDirectory.ProcessADUsersData()
 		// if the promise is resolved with the docs, then respond with the docs as JSON
 		.then((result) => {
 			// eslint-disable-next-line no-console
-			// console.log('Processed Active Directory Users data:');
+			console.log('Processed Active Directory Users data:');
 			// console.log(result);
 		})
 		// if the promise is rejected with an error, then respond with the error as JSON
@@ -264,7 +264,7 @@ cron.schedule(process.env.adUserByDivisionDepartmentProcessingCronSchedule, () =
 		// if the promise is resolved with the docs, then respond with the docs as JSON
 		.then((result) => {
 			// eslint-disable-next-line no-console
-			// console.log('Processed Active Directory Users By Division Department data:');
+			console.log('Processed Active Directory Users By Division Department data:');
 			// console.log(result);
 		})
 		// if the promise is rejected with an error, then respond with the error as JSON
@@ -281,7 +281,7 @@ cron.schedule(process.env.adUserByDivisionDepartmentTeamsProcessingCronSchedule,
 		// if the promise is resolved with the docs, then respond with the docs as JSON
 		.then((result) => {
 			// eslint-disable-next-line no-console
-			// console.log('Processed HcOrg DivDept data:');
+			console.log('Processed HcOrg DivDept data:');
 			// console.log(result);
 		})
 		// if the promise is rejected with an error, then respond with the error as JSON
@@ -298,7 +298,7 @@ cron.schedule(process.env.nonDivisionDepartmentTeamsProcessingCronSchedule, () =
 		// if the promise is resolved with the docs, then respond with the docs as JSON
 		.then((result) => {
 			// eslint-disable-next-line no-console
-			// console.log('Processed HcOrg NONDivDept data:');
+			console.log('Processed HcOrg NONDivDept data:');
 			// console.log(result);
 		})
 		// if the promise is rejected with an error, then respond with the error as JSON
@@ -315,7 +315,7 @@ cron.schedule(process.env.adDepartmentsProcessingCronSchedule, () => {
 		// if the promise is resolved with the docs, then respond with the docs as JSON
 		.then((result) => {
 			// eslint-disable-next-line no-console
-			// console.log('Processed Active Directory Departments data:');
+			console.log('Processed Active Directory Departments data:');
 			// console.log(result);
 		})
 		// if the promise is rejected with an error, then respond with the error as JSON
@@ -332,7 +332,7 @@ cron.schedule(process.env.adManagersSimpleProcessingCronSchedule, () => {
 		// if the promise is resolved with the docs, then respond with the docs as JSON
 		.then((result) => {
 			// eslint-disable-next-line no-console
-			// console.log('Processed Active Directory Managers Simple data:');
+			console.log('Processed Active Directory Managers Simple data:');
 			// console.log(result);
 		})
 		// if the promise is rejected with an error, then respond with the error as JSON

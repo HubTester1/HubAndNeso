@@ -8,7 +8,7 @@ export default class NesoHttpClient {
 			axios({
 				method: 'get',
 				url: endpoint,
-				timeout: 5000,
+				timeout: 3000,
 			})
 				// if the promise is resolved with the docs, then resolve this promise with the docs
 				.then((result) => { resolve(result.data.docs); })
