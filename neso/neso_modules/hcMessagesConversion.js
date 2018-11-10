@@ -21,7 +21,7 @@ module.exports = {
 		const messagesRawArrayOfArrays = messagesRaw.DATA;
 		messagesRawArrayOfArrays.forEach((quarkArray, i) => {
 			// get a promise to retrieve user data
-			nesoActiveDirectory.ReturnOneSpecifiedUser(quarkArray[9])
+			nesoActiveDirectory.ReturnOneUser(quarkArray[9])
 				// if the promise is resolved with the docs
 				.then((result) => {
 					const hcMessage = {};
@@ -154,6 +154,7 @@ module.exports = {
 					body = nesoUtilities.ReplaceAll('</h2>', '</h5>', body);
 					body = nesoUtilities.ReplaceAll('<h1>', '<h4>', body);
 					body = nesoUtilities.ReplaceAll('</h1>', '</h4>', body);
+					body = nesoUtilities.ReplaceAll('\r\n', '<br />', body);
 					
 					hcMessage.messageBody = body;
 					hcMessage.messageSubject = quarkArray[3];

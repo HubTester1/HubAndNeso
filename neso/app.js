@@ -31,6 +31,7 @@ const nesoActiveDirectory = require('./neso_modules/nesoActiveDirectory');
 const nesoHcOrg = require('./neso_modules/nesoHcOrg');
 const nesoSPSync = require('./neso_modules/nesoSPSync');
 const nesoHubEmails = require('./neso_modules/nesoHubEmails');
+const hcMessagesConversion = require('./neso_modules/hcMessagesConversion');
 
 // NESO (MOS) ROUTES ---
 
