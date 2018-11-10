@@ -5,11 +5,11 @@
                 <legacyID>638</legacyID>
                 <jobAdminAccount>hyoung</jobAdminAccount>
                 <jobTitle>Shipping/Receiving</jobTitle>
-                <requestDate>2012-05-14 10:38:04.82</requestDate>
+                <requestDate>2012-05-14 10&#58;38&#58;04.82</requestDate>
                 <department>Business Services</department>
                 <description>Receive, log and deliver packages throughout the building.  Sort and process incoming and outgoing daily mail. 
 
-If you unable to fulfill your time slot you signed up for, we ask that you email both smonico@mos.org and hyoung@mos.org as well as cancel it on quark.</description>
+If you unable to fulfill your time slot you signed up for, we ask that you email both smonicoatmos.org and hyoungatmos.org as well as cancel it on quark.</description>
                 <dress>Rubber sole shoe is best, sneakers ok.  Expect to get a little dirty.</dress>
                 <training>Knowledge of museum buildings and staff locations.</training>
                 <lifting>50</lifting>
@@ -25,9 +25,9 @@ If you unable to fulfill your time slot you signed up for, we ask that you email
                 <legacyID>668</legacyID>
                 <jobAdminAccount>rkipling</jobAdminAccount>
                 <jobTitle>Discovery Center ShutDown Assistant</jobTitle>
-                <requestDate>2017-08-22 13:36:05.077</requestDate>
+                <requestDate>2017-08-22 13&#58;36&#58;05.077</requestDate>
                 <department>Early Childhood Development and Education</department>
-                <description>Join the Discovery Center team for a day in this once-a-year opportunity to see what happens behind the scenes to keep an exhibit looking its very best. Projects may include: washing rocks, painting, organizing consumable materials, repairing a faux beaver's lodge, or laminating children�s literature. </description>
+                <description>Join the Discovery Center team for a day in this once-a-year opportunity to see what happens behind the scenes to keep an exhibit looking its very best. Projects may include&#58; washing rocks, painting, organizing consumable materials, repairing a faux beaver&apos;s lodge, or laminating children&apos;s literature. </description>
                 <dress>Wear your dirty clothes (no joke) and sneakers.</dress>
                 <training>No particular skills required.  
 Feast on donuts (AM) or cookies (PM).</training>
@@ -41,10 +41,28 @@ Feast on donuts (AM) or cookies (PM).</training>
             </request>
         
             <request>
+                <legacyID>984</legacyID>
+                <jobAdminAccount>mcabrera</jobAdminAccount>
+                <jobTitle>Community Conversation Reg table assistant</jobTitle>
+                <requestDate>2018-03-07 10&#58;12&#58;34.013</requestDate>
+                <department>Education and Enrichment Programs</department>
+                <description>We are hosting a breakfast with the City of Boston Recovery Services Team to learn together about the issues of substance use and recovery. You will be able to attend this event as well.</description>
+                <dress>Business casual with museum ID visible.</dress>
+                <training>N/A</training>
+                <lifting>1</lifting>
+                <carrying>0</carrying>
+                <pushing>0</pushing>
+                <pulling>0</pulling>
+                <standing>20</standing>
+                <sitting>80</sitting>
+                <walking>0</walking>
+            </request>
+        
+            <request>
                 <legacyID>1110</legacyID>
                 <jobAdminAccount>madams</jobAdminAccount>
                 <jobTitle>Traveling Programs Ride-Along</jobTitle>
-                <requestDate>2014-04-30 14:11:59.277</requestDate>
+                <requestDate>2014-04-30 14&#58;11&#58;59.277</requestDate>
                 <department>Traveling Programs</department>
                 <description>Join one of our outreach educators on a program away from the Museum at a school, library, or camp.</description>
                 <dress>Business casual</dress>
@@ -59,14 +77,32 @@ Feast on donuts (AM) or cookies (PM).</training>
             </request>
         
             <request>
+                <legacyID>1226</legacyID>
+                <jobAdminAccount>rmelius</jobAdminAccount>
+                <jobTitle>Collections Assistant</jobTitle>
+                <requestDate>2012-08-02 10&#58;44&#58;27.43</requestDate>
+                <department>Collections</department>
+                <description>Assist Collections Department with various duties such as moving artifacts in storage or on exhibit, data entry, research, preventive conservation, or storage area organization.</description>
+                <dress>Wear comfortable clothes in which you can climb, bend, and kneel.  Closed toe shoes are recommended.  PPE will be provided as necessary.</dress>
+                <training>Must be willing and able to follow specific verbal and written directions, climb ladders, use basic hand tools, and lift 30 lbs.</training>
+                <lifting>30</lifting>
+                <carrying>30</carrying>
+                <pushing>30</pushing>
+                <pulling>30</pulling>
+                <standing>45</standing>
+                <sitting>10</sitting>
+                <walking>45</walking>
+            </request>
+        
+            <request>
                 <legacyID>1246</legacyID>
                 <jobAdminAccount>jsantomassimo</jobAdminAccount>
                 <jobTitle>Put together 2018 Volunteer Fall Festival Invitations</jobTitle>
-                <requestDate>2018-08-24 13:16:46.363</requestDate>
+                <requestDate>2018-08-24 13&#58;16&#58;46.363</requestDate>
                 <department>Volunteer Services</department>
                 <description>We need help with the Volunteer Fall Festival invitation mailing. 
 Thursday, September 27
-9:00 am
+9&#58;00 am
 6th floor
 Volunteer Services area
 100% seated GSE
@@ -87,7 +123,7 @@ Volunteer Services area
                 <legacyID>1258</legacyID>
                 <jobAdminAccount>ylopez</jobAdminAccount>
                 <jobTitle>Facilities Department Help</jobTitle>
-                <requestDate>2018-08-15 14:21:58.457</requestDate>
+                <requestDate>2018-08-15 14&#58;21&#58;58.457</requestDate>
                 <department>Facilities</department>
                 <description>TO assist facilities personnel in the execution of daily tasks and project works. </description>
                 <dress>Presentable work clothes. Jeans, workshirt or T-Shirt (no torn or ripped clothing) and workboots or sneakers. Do not wear dress clothing. </dress>
@@ -102,12 +138,49 @@ Volunteer Services area
             </request>
         
             <request>
+                <legacyID>1259</legacyID>
+                <jobAdminAccount>mcabrera</jobAdminAccount>
+                <jobTitle>Community Conversation Greeter</jobTitle>
+                <requestDate>2018-03-07 10&#58;22&#58;09.853</requestDate>
+                <department>Education and Enrichment Programs</department>
+                <description> We are hosting a breakfast at the Museum together with the City of Boston Office of Recovery Services to learn together about the issues of substance use and recovery.
+</description>
+                <dress>Business casual with Museum ID visible.</dress>
+                <training>N/A </training>
+                <lifting>0</lifting>
+                <carrying>0</carrying>
+                <pushing>0</pushing>
+                <pulling>0</pulling>
+                <standing>20</standing>
+                <sitting>0</sitting>
+                <walking>80</walking>
+            </request>
+        
+            <request>
+                <legacyID>1301</legacyID>
+                <jobAdminAccount>lbeall</jobAdminAccount>
+                <jobTitle>Computer Science Education Weekend Assistant</jobTitle>
+                <requestDate>2013-12-05 16&#58;09&#58;09.657</requestDate>
+                <department>Cahners ComputerPlace</department>
+                <description>Assist with Computer Science Weekend activities throughout the exhibit halls. </description>
+                <dress>Business casual. Red coat or apron required. </dress>
+                <training>Experience working with visitors. </training>
+                <lifting>30</lifting>
+                <carrying>30</carrying>
+                <pushing>30</pushing>
+                <pulling>30</pulling>
+                <standing>40</standing>
+                <sitting>30</sitting>
+                <walking>30</walking>
+            </request>
+        
+            <request>
                 <legacyID>1326</legacyID>
                 <jobAdminAccount>mpacewicz</jobAdminAccount>
                 <jobTitle>Traveling Programs Ride-Along</jobTitle>
-                <requestDate>2014-04-18 13:40:41.043</requestDate>
+                <requestDate>2014-04-18 13&#58;40&#58;41.043</requestDate>
                 <department>Traveling Programs</department>
-                <description>Learn about the exciting world of Traveling Programs by participating in an on-site visit to a local school, library, or camp. GSEs will begin their day by meeting a TP educator at the crack of dawn in the Museum garage, helping load the van in the morning, riding along in a very colorful Museum van through Boston traffic, and checking-in at a local educational institution. Once the educator has finished setting up the program, GSEs can expect to serve as a spectator during the assembly or workshop program, as they witness the ins-and-outs of outreach education first-hand. (Note: Half-day shifts can sometimes run up to 4.25 hours. Full-day shifts are usually around 6 hours.)</description>
+                <description>Learn about the exciting world of Traveling Programs by participating in an on-site visit to a local school, library, or camp. GSEs will begin their day by meeting a TP educator at the crack of dawn in the Museum garage, helping load the van in the morning, riding along in a very colorful Museum van through Boston traffic, and checking-in at a local educational institution. Once the educator has finished setting up the program, GSEs can expect to serve as a spectator during the assembly or workshop program, as they witness the ins-and-outs of outreach education first-hand. (Note&#58; Half-day shifts can sometimes run up to 4.25 hours. Full-day shifts are usually around 6 hours.)</description>
                 <dress>Comfortable casual clothing and Museum badge.</dress>
                 <training>None--driving and teaching will be done by our staff.</training>
                 <lifting>50</lifting>
@@ -120,10 +193,46 @@ Volunteer Services area
             </request>
         
             <request>
+                <legacyID>1368</legacyID>
+                <jobAdminAccount>lmonrose</jobAdminAccount>
+                <jobTitle>Nat Geo Live/Lynsey Addario production asst</jobTitle>
+                <requestDate>2018-10-15 16&#58;59&#58;51.16</requestDate>
+                <department>Lectures and Special Programs</department>
+                <description>Assist with production of &quot;National Geographic Live &#58; A Photographer's Life of Love and War&quot; with Lynsey Addario on Sunday, Oct 28 at3&#58;00pm in Cahners Theater. Hear hair-raising stories and see amazing photos by this Pulitzer Prize-winning photojournalist who has covered war zones around the globe and survived being kidnapped in Iraq and in Libya. </description>
+                <dress>Casual business attire </dress>
+                <training>Specific training provided the week before the program.</training>
+                <lifting>5</lifting>
+                <carrying>5</carrying>
+                <pushing>5</pushing>
+                <pulling>5</pulling>
+                <standing>50</standing>
+                <sitting>30</sitting>
+                <walking>20</walking>
+            </request>
+        
+            <request>
+                <legacyID>1430</legacyID>
+                <jobAdminAccount>jdoherty</jobAdminAccount>
+                <jobTitle>Discovery Center Interpreter</jobTitle>
+                <requestDate>2017-04-06 10&#58;59&#58;29.25</requestDate>
+                <department>Early Childhood Development and Education</department>
+                <description>Help families try out our experiments of the day in fun, hands-on ways!</description>
+                <dress>Casual dress encouraged - jeans, flat/closed-toed shoes, shirts with a sleeve, no logos. &#58;)</dress>
+                <training>Training provided during the volunteer briefing where you will learn our experiment activities.</training>
+                <lifting>0</lifting>
+                <carrying>0</carrying>
+                <pushing>0</pushing>
+                <pulling>0</pulling>
+                <standing>70</standing>
+                <sitting>15</sitting>
+                <walking>15</walking>
+            </request>
+        
+            <request>
                 <legacyID>1512</legacyID>
                 <jobAdminAccount>agermaine</jobAdminAccount>
                 <jobTitle>Charles River Clean-Up Boat Volunteer - FULL Day</jobTitle>
-                <requestDate>2018-04-15 11:27:03.35</requestDate>
+                <requestDate>2018-04-15 11&#58;27&#58;03.35</requestDate>
                 <department>Visitor Experience and Operations</department>
                 <description>You will spend a full day on the Charles River Clean-Up Boat, patrolling the river for floating trash and debris and plucking it from the water. The boat will have one captain and up to 2 (Two) volunteers. The Charles River Clean Up Boat is a privately funded, 501 (c)(3), non-profit organization whose objective is to remove the floating trash from the Charles River. The Clean Up Boat has removed several hundred bags of trash since 2007, greatly improving the water quality and appearance of the Charles River for everyone, including our MoS visitors. For more information and to sign up for a shift on the Clean Up Boat please visit www.cleanupboat.org. You must sign up on the clean Up Boat website *before* signing up for the GSE. Please note that not all GSE dates will be available due to other Volunteer signups.</description>
                 <dress>Life Jacket, you can bring your own or one will be provided to you. Dress for being outdoors. It is suggested that you bring a hat, sunglasses, sun block, and rain gear (if any risk of showers).
@@ -142,7 +251,7 @@ Volunteer Services area
                 <legacyID>1522</legacyID>
                 <jobAdminAccount>jdonnelly</jobAdminAccount>
                 <jobTitle>Summer Courses Rocket Launch Assistant</jobTitle>
-                <requestDate>2016-08-17 10:12:11.56</requestDate>
+                <requestDate>2016-08-17 10&#58;12&#58;11.56</requestDate>
                 <department>Courses</department>
                 <description>Walk across the street with our Blast of with Rockets class (grades 3-5) to launch the rockets they have been building during the week!</description>
                 <dress>N/A</dress>
@@ -160,7 +269,7 @@ Volunteer Services area
                 <legacyID>1536</legacyID>
                 <jobAdminAccount>bzaiatz</jobAdminAccount>
                 <jobTitle>Membership Card Fulfillment</jobTitle>
-                <requestDate>2018-08-08 10:34:27.627</requestDate>
+                <requestDate>2018-08-08 10&#58;34&#58;27.627</requestDate>
                 <department>Membership</department>
                 <description>Help the Membership Department by fulfilling new and renewing members' cards for mailing. </description>
                 <dress>No specific dress requirements.</dress>
@@ -178,7 +287,7 @@ Volunteer Services area
                 <legacyID>1546</legacyID>
                 <jobAdminAccount>skeay</jobAdminAccount>
                 <jobTitle>Membership Mailing Assistant</jobTitle>
-                <requestDate>2018-07-29 14:10:00.29</requestDate>
+                <requestDate>2018-07-29 14&#58;10&#58;00.29</requestDate>
                 <department>Membership</department>
                 <description>Affix membership cards and stuff envelopes in the Membership office. Feel free to bring your headphones. Schedule can be flexible. </description>
                 <dress>Casual</dress>
@@ -196,7 +305,7 @@ Volunteer Services area
                 <legacyID>1553</legacyID>
                 <jobAdminAccount>skeay</jobAdminAccount>
                 <jobTitle>Member Appreciation Night Assistant</jobTitle>
-                <requestDate>2018-09-10 09:35:49.79</requestDate>
+                <requestDate>2018-09-10 09&#58;35&#58;49.79</requestDate>
                 <department>Membership</department>
                 <description>Help our members enjoy this special night just for them. You will have the opportunity to assist with check-in, raffle, or drop-in activities throughout the Exhibit Halls. We will provide pizza beforehand in the Membership/Science Central offices!</description>
                 <dress>Business casual with Museum badge.</dress>
@@ -214,9 +323,9 @@ Volunteer Services area
                 <legacyID>1554</legacyID>
                 <jobAdminAccount>tsepersky</jobAdminAccount>
                 <jobTitle>Evening Planetarium Assistant</jobTitle>
-                <requestDate>2018-05-11 13:41:29.12</requestDate>
+                <requestDate>2018-05-11 13&#58;41&#58;29.12</requestDate>
                 <department>Planetarium</department>
-                <description>Assist our evening Planetarium presenters with taking tickets and seating for the 7:30, 8:30, and 9:30 PM Planetarium shows, then stay and watch the shows themselves. PLEASE RESPOND BY 1 PM THE WEDNESDAY BEFORE. RESPONSES AFTER THIS TIME CANNOT BE ACCEPTED.</description>
+                <description>Assist our evening Planetarium presenters with taking tickets and seating for the 7&#58;30, 8&#58;30, and 9&#58;30 PM Planetarium shows, then stay and watch the shows themselves. PLEASE RESPOND BY 1 PM THE WEDNESDAY BEFORE. RESPONSES AFTER THIS TIME CANNOT BE ACCEPTED.</description>
                 <dress>None.</dress>
                 <training>None.</training>
                 <lifting>0</lifting>
@@ -232,7 +341,7 @@ Volunteer Services area
                 <legacyID>1591</legacyID>
                 <jobAdminAccount>rthomas</jobAdminAccount>
                 <jobTitle>College Night Helper</jobTitle>
-                <requestDate>2017-08-29 10:47:34.607</requestDate>
+                <requestDate>2017-08-29 10&#58;47&#58;34.607</requestDate>
                 <department>Marketing</department>
                 <description>Assist the Marketing department with the annual College Night event, where 4000+ students in the Boston area can attend Exhibit Halls without charge. Duties will include checking student I.D.s and providing them buttons for admission, overseeing an laptop email signup station, assisting with live presentations and more.</description>
                 <dress>Comfortable clothing and shoes (lots of standing). Ability to interact with large crowds.</dress>
@@ -247,14 +356,32 @@ Volunteer Services area
             </request>
         
             <request>
+                <legacyID>1615</legacyID>
+                <jobAdminAccount>dsittenfeld</jobAdminAccount>
+                <jobTitle>Discoverers Forum Facilitator</jobTitle>
+                <requestDate>2018-10-05 15&#58;38&#58;41.737</requestDate>
+                <department>Forum</department>
+                <description>Hi all, we're recruiting conversation facilitators for our Journey To Mars forum, which takes place on the evening of October 8.  Facilitators will participate in a training, attend the forum, and guide the discussion using materials and methods we created through a collaborative project with NASA.  We have already recruited these facilitators, so please do not sign up for this GSE unless we have talked with you already!</description>
+                <dress>Business casual is totally fine.</dress>
+                <training>We will provide a brief training at the beginning of the GSE experience.</training>
+                <lifting>0</lifting>
+                <carrying>0</carrying>
+                <pushing>0</pushing>
+                <pulling>0</pulling>
+                <standing>5</standing>
+                <sitting>95</sitting>
+                <walking>0</walking>
+            </request>
+        
+            <request>
                 <legacyID>1642</legacyID>
                 <jobAdminAccount>jwetzel</jobAdminAccount>
-                <jobTitle>Summer Thursdays: Theater with Liars and Believers production assistant</jobTitle>
-                <requestDate>2018-05-10 10:54:13.853</requestDate>
+                <jobTitle>Summer Thursdays&#58; Theater with Liars and Believers production assistant</jobTitle>
+                <requestDate>2018-05-10 10&#58;54&#58;13.853</requestDate>
                 <department>Lectures and Special Programs</department>
-                <description>Assist on production and logistics for Summer Thursdays: Theater with Liars and Believers show on Thursday, July 5 at 7:30 p.m., in the Planetarium. The Summer Thursdays series offers nightlife experiences for adult audiences in the Planetarium! </description>
+                <description>Assist on production and logistics for Summer Thursdays&#58; Theater with Liars and Believers show on Thursday, July 5 at 7&#58;30 p.m., in the Planetarium. The Summer Thursdays series offers nightlife experiences for adult audiences in the Planetarium! </description>
                 <dress>Business casual</dress>
-                <training>Training provided at Reg Table in Lobby at 5:30pm on day of program.</training>
+                <training>Training provided at Reg Table in Lobby at 5&#58;30pm on day of program.</training>
                 <lifting>5</lifting>
                 <carrying>5</carrying>
                 <pushing>5</pushing>
@@ -267,12 +394,12 @@ Volunteer Services area
             <request>
                 <legacyID>1643</legacyID>
                 <jobAdminAccount>jwetzel</jobAdminAccount>
-                <jobTitle>Summer Thursdays: Theater with Liars and Believers production assistant</jobTitle>
-                <requestDate>2018-05-10 10:54:29.04</requestDate>
+                <jobTitle>Summer Thursdays&#58; Theater with Liars and Believers production assistant</jobTitle>
+                <requestDate>2018-05-10 10&#58;54&#58;29.04</requestDate>
                 <department>Lectures and Special Programs</department>
-                <description>Assist on production and logistics for Summer Thursdays: Theater with Liars and Believers show on Thursday, August 2 at 7:30 p.m., in the Planetarium. The Summer Thursdays series offers nightlife experiences for adult audiences in the Planetarium! </description>
+                <description>Assist on production and logistics for Summer Thursdays&#58; Theater with Liars and Believers show on Thursday, August 2 at 7&#58;30 p.m., in the Planetarium. The Summer Thursdays series offers nightlife experiences for adult audiences in the Planetarium! </description>
                 <dress>Business casual</dress>
-                <training>Training provided at Reg Table in Lobby at 5:30pm on day of program.</training>
+                <training>Training provided at Reg Table in Lobby at 5&#58;30pm on day of program.</training>
                 <lifting>5</lifting>
                 <carrying>5</carrying>
                 <pushing>5</pushing>
@@ -285,12 +412,12 @@ Volunteer Services area
             <request>
                 <legacyID>1645</legacyID>
                 <jobAdminAccount>jwetzel</jobAdminAccount>
-                <jobTitle>Summer Thursdays: Boston's Best Drag Queens production assistant</jobTitle>
-                <requestDate>2018-05-10 10:55:52.557</requestDate>
+                <jobTitle>Summer Thursdays&#58; Boston's Best Drag Queens production assistant</jobTitle>
+                <requestDate>2018-05-10 10&#58;55&#58;52.557</requestDate>
                 <department>Lectures and Special Programs</department>
-                <description>Assist on production and logistics for Summer Thursdays: Boston's Best Drag Queens show on Thursday, August 9 at 7:30 p.m., in the Planetarium. The Summer Thursdays series offers nightlife experiences for adult audiences in the Planetarium! </description>
+                <description>Assist on production and logistics for Summer Thursdays&#58; Boston's Best Drag Queens show on Thursday, August 9 at 7&#58;30 p.m., in the Planetarium. The Summer Thursdays series offers nightlife experiences for adult audiences in the Planetarium! </description>
                 <dress>Business casual</dress>
-                <training>Training provided at Reg Table in Lobby at 5:30pm on day of program.</training>
+                <training>Training provided at Reg Table in Lobby at 5&#58;30pm on day of program.</training>
                 <lifting>5</lifting>
                 <carrying>5</carrying>
                 <pushing>5</pushing>
@@ -303,12 +430,12 @@ Volunteer Services area
             <request>
                 <legacyID>1646</legacyID>
                 <jobAdminAccount>jwetzel</jobAdminAccount>
-                <jobTitle>Summer Thursdays: Drag Kings of The Slaughterhouse Society production assistant</jobTitle>
-                <requestDate>2018-05-10 10:56:35.603</requestDate>
+                <jobTitle>Summer Thursdays&#58; Drag Kings of The Slaughterhouse Society production assistant</jobTitle>
+                <requestDate>2018-05-10 10&#58;56&#58;35.603</requestDate>
                 <department>Lectures and Special Programs</department>
-                <description>Assist on production and logistics for Summer Thursdays: Drag Kings of The Slaughterhouse Society show on Thursday, July 12 at 7:30 p.m., in the Planetarium. The Summer Thursdays series offers nightlife experiences for adult audiences in the Planetarium! </description>
+                <description>Assist on production and logistics for Summer Thursdays&#58; Drag Kings of The Slaughterhouse Society show on Thursday, July 12 at 7&#58;30 p.m., in the Planetarium. The Summer Thursdays series offers nightlife experiences for adult audiences in the Planetarium! </description>
                 <dress>Business casual</dress>
-                <training>Training provided at Reg Table in Lobby at 5:30pm on day of program.</training>
+                <training>Training provided at Reg Table in Lobby at 5&#58;30pm on day of program.</training>
                 <lifting>5</lifting>
                 <carrying>5</carrying>
                 <pushing>5</pushing>
@@ -321,12 +448,12 @@ Volunteer Services area
             <request>
                 <legacyID>1648</legacyID>
                 <jobAdminAccount>jwetzel</jobAdminAccount>
-                <jobTitle>Summer Thursdays: STL GLD production assistant</jobTitle>
-                <requestDate>2018-05-10 11:04:54.653</requestDate>
+                <jobTitle>Summer Thursdays&#58; STL GLD production assistant</jobTitle>
+                <requestDate>2018-05-10 11&#58;04&#58;54.653</requestDate>
                 <department>Lectures and Special Programs</department>
-                <description>Assist on production and logistics for Summer Thursdays: STL GLD live music show on Thursday, July 19 at 7:30 p.m., in the Planetarium. The Summer Thursdays series offers nightlife experiences for adult audiences in the Planetarium! </description>
+                <description>Assist on production and logistics for Summer Thursdays&#58; STL GLD live music show on Thursday, July 19 at 7&#58;30 p.m., in the Planetarium. The Summer Thursdays series offers nightlife experiences for adult audiences in the Planetarium! </description>
                 <dress>Business casual</dress>
-                <training>Training provided at Reg Table in Lobby at 5:30pm on day of program.</training>
+                <training>Training provided at Reg Table in Lobby at 5&#58;30pm on day of program.</training>
                 <lifting>5</lifting>
                 <carrying>5</carrying>
                 <pushing>5</pushing>
@@ -339,12 +466,12 @@ Volunteer Services area
             <request>
                 <legacyID>1649</legacyID>
                 <jobAdminAccount>jwetzel</jobAdminAccount>
-                <jobTitle>Summer Thursdays: Ruby Rose Fox production assistant</jobTitle>
-                <requestDate>2018-05-10 11:05:20.937</requestDate>
+                <jobTitle>Summer Thursdays&#58; Ruby Rose Fox production assistant</jobTitle>
+                <requestDate>2018-05-10 11&#58;05&#58;20.937</requestDate>
                 <department>Lectures and Special Programs</department>
-                <description>Assist on production and logistics for Summer Thursdays: Ruby Rose Fox live music show on Thursday, August 16 at 7:30 p.m., in the Planetarium. The Summer Thursdays series offers nightlife experiences for adult audiences in the Planetarium! </description>
+                <description>Assist on production and logistics for Summer Thursdays&#58; Ruby Rose Fox live music show on Thursday, August 16 at 7&#58;30 p.m., in the Planetarium. The Summer Thursdays series offers nightlife experiences for adult audiences in the Planetarium! </description>
                 <dress>Business casual</dress>
-                <training>Training provided at Reg Table in Lobby at 5:30pm on day of program.</training>
+                <training>Training provided at Reg Table in Lobby at 5&#58;30pm on day of program.</training>
                 <lifting>5</lifting>
                 <carrying>5</carrying>
                 <pushing>5</pushing>
@@ -357,12 +484,12 @@ Volunteer Services area
             <request>
                 <legacyID>1651</legacyID>
                 <jobAdminAccount>jwetzel</jobAdminAccount>
-                <jobTitle>Summer Thursdays: The Fifth Element screening production assistant</jobTitle>
-                <requestDate>2018-05-10 11:08:20.907</requestDate>
+                <jobTitle>Summer Thursdays&#58; The Fifth Element screening production assistant</jobTitle>
+                <requestDate>2018-05-10 11&#58;08&#58;20.907</requestDate>
                 <department>Lectures and Special Programs</department>
-                <description>Assist on production and logistics for Summer Thursdays: The Fifth Element screening on Thursday, July 26 at 7:30 p.m., in the Planetarium. The Summer Thursdays series offers nightlife experiences for adult audiences in the Planetarium! </description>
+                <description>Assist on production and logistics for Summer Thursdays&#58; The Fifth Element screening on Thursday, July 26 at 7&#58;30 p.m., in the Planetarium. The Summer Thursdays series offers nightlife experiences for adult audiences in the Planetarium! </description>
                 <dress>Business casual</dress>
-                <training>Training provided at Reg Table in Lobby at 5:30pm on day of program.</training>
+                <training>Training provided at Reg Table in Lobby at 5&#58;30pm on day of program.</training>
                 <lifting>5</lifting>
                 <carrying>5</carrying>
                 <pushing>5</pushing>
@@ -375,12 +502,12 @@ Volunteer Services area
             <request>
                 <legacyID>1652</legacyID>
                 <jobAdminAccount>jwetzel</jobAdminAccount>
-                <jobTitle>Summer Thursdays: Event Horizon screening production assistant</jobTitle>
-                <requestDate>2018-05-10 11:08:49.86</requestDate>
+                <jobTitle>Summer Thursdays&#58; Event Horizon screening production assistant</jobTitle>
+                <requestDate>2018-05-10 11&#58;08&#58;49.86</requestDate>
                 <department>Lectures and Special Programs</department>
-                <description>Assist on production and logistics for Summer Thursdays: Event Horizon screening on Thursday, August 23 at 7:30 p.m., in the Planetarium. The Summer Thursdays series offers nightlife experiences for adult audiences in the Planetarium! </description>
+                <description>Assist on production and logistics for Summer Thursdays&#58; Event Horizon screening on Thursday, August 23 at 7&#58;30 p.m., in the Planetarium. The Summer Thursdays series offers nightlife experiences for adult audiences in the Planetarium! </description>
                 <dress>Business casual</dress>
-                <training>Training provided at Reg Table in Lobby at 5:30pm on day of program.</training>
+                <training>Training provided at Reg Table in Lobby at 5&#58;30pm on day of program.</training>
                 <lifting>5</lifting>
                 <carrying>5</carrying>
                 <pushing>5</pushing>
@@ -393,12 +520,12 @@ Volunteer Services area
             <request>
                 <legacyID>1653</legacyID>
                 <jobAdminAccount>jwetzel</jobAdminAccount>
-                <jobTitle>Summer Thursdays: Star Trek marathon production assistant</jobTitle>
-                <requestDate>2018-05-10 11:10:11.017</requestDate>
+                <jobTitle>Summer Thursdays&#58; Star Trek marathon production assistant</jobTitle>
+                <requestDate>2018-05-10 11&#58;10&#58;11.017</requestDate>
                 <department>Lectures and Special Programs</department>
-                <description>Assist on production and logistics for Summer Thursdays: Star Trek movie marathon  on Thursday, August 30 at 6:00 p.m., in the Planetarium. This new summer series offers nightlife experiences for adult audiences in the Planetarium! </description>
+                <description>Assist on production and logistics for Summer Thursdays&#58; Star Trek movie marathon  on Thursday, August 30 at 6&#58;00 p.m., in the Planetarium. This new summer series offers nightlife experiences for adult audiences in the Planetarium! </description>
                 <dress>Business casual</dress>
-                <training>Training provided at Reg Table in Lobby at 4:30pm on day of program.</training>
+                <training>Training provided at Reg Table in Lobby at 4&#58;30pm on day of program.</training>
                 <lifting>5</lifting>
                 <carrying>5</carrying>
                 <pushing>5</pushing>
@@ -412,7 +539,7 @@ Volunteer Services area
                 <legacyID>1655</legacyID>
                 <jobAdminAccount>egrizzard</jobAdminAccount>
                 <jobTitle>Scanning for Archives Dept</jobTitle>
-                <requestDate>2018-05-21 08:33:08.47</requestDate>
+                <requestDate>2018-05-21 08&#58;33&#58;08.47</requestDate>
                 <department>Archives</department>
                 <description>Scanning black and white photographs from the Museum's history. We'll set you up in the Archives Office in Lower Morse, feel free to bring headphones.</description>
                 <dress>n/a</dress>
@@ -430,7 +557,7 @@ Volunteer Services area
                 <legacyID>1664</legacyID>
                 <jobAdminAccount>jbaker</jobAdminAccount>
                 <jobTitle>TEST - James Baker</jobTitle>
-                <requestDate>2018-07-02 17:09:55.05</requestDate>
+                <requestDate>2018-11-09 20&#58;57&#58;36.99</requestDate>
                 <department>IIT - Interactive Media</department>
                 <description>asdf</description>
                 <dress>asdf</dress>
@@ -448,9 +575,9 @@ Volunteer Services area
                 <legacyID>1665</legacyID>
                 <jobAdminAccount>jdillman</jobAdminAccount>
                 <jobTitle>Advancement Event Help - Space Breakfast</jobTitle>
-                <requestDate>2018-07-16 09:27:42.393</requestDate>
+                <requestDate>2018-07-16 09&#58;27&#58;42.393</requestDate>
                 <department>Donor Relations</department>
-                <description>Assist and interact with guests throughout a before-hours event. NOTE: Assistance will only be needed until 8:45am.</description>
+                <description>Assist and interact with guests throughout a before-hours event. NOTE&#58; Assistance will only be needed until 8&#58;45am.</description>
                 <dress>Business casual or red coat will be fine.</dress>
                 <training>Professional and courteous, as you would interact with guests during museum hours.</training>
                 <lifting>0</lifting>
@@ -466,7 +593,7 @@ Volunteer Services area
                 <legacyID>1667</legacyID>
                 <jobAdminAccount>madams</jobAdminAccount>
                 <jobTitle>Traveling Programs Festival Assistant</jobTitle>
-                <requestDate>2018-08-06 12:56:57.39</requestDate>
+                <requestDate>2018-08-06 12&#58;56&#58;57.39</requestDate>
                 <department>Traveling Programs</department>
                 <description>Join a team of Outreach Instructors to help visitors at a community event with hand-on science activities. We also need help promoting museum programs and exhibits </description>
                 <dress>Casual--we'll loan a MOS polo shirt for the day. </dress>
@@ -484,11 +611,11 @@ Volunteer Services area
                 <legacyID>1668</legacyID>
                 <jobAdminAccount>cmoscat</jobAdminAccount>
                 <jobTitle>Fenway Park Education Volunteer</jobTitle>
-                <requestDate>2018-08-17 14:35:05.223</requestDate>
+                <requestDate>2018-08-17 14&#58;35&#58;05.223</requestDate>
                 <department>School Visits</department>
-                <description>Join educators from the Museum of Science at Fenway Park to facilitate interactive space activities for visitors to the "El Mundo Family Festival" on Sunday, August 26th from 10:30 am to 2:30 pm. Volunteers will meet at Fenway Park for the event, and detailed activity and arrival information will be provided before the event. </description>
+                <description>Join educators from the Museum of Science at Fenway Park to facilitate interactive space activities for visitors to the &quot;El Mundo Family Festival&quot; on Sunday, August 26th from 10&#58;30 am to 2&#58;30 pm. Volunteers will meet at Fenway Park for the event, and detailed activity and arrival information will be provided before the event. </description>
                 <dress>Comfortable clothes and museum badge.</dress>
-                <training>Lead educator will train how to run the "soaring satellites" activity on the day of the event.</training>
+                <training>Lead educator will train how to run the &quot;soaring satellites&quot; activity on the day of the event.</training>
                 <lifting>5</lifting>
                 <carrying>5</carrying>
                 <pushing>0</pushing>
@@ -502,7 +629,7 @@ Volunteer Services area
                 <legacyID>1670</legacyID>
                 <jobAdminAccount>kpetrie</jobAdminAccount>
                 <jobTitle>Live Presentations Prop Refurbishment</jobTitle>
-                <requestDate>2018-08-29 15:13:28.217</requestDate>
+                <requestDate>2018-08-29 15&#58;13&#58;28.217</requestDate>
                 <department>Live Presentations</department>
                 <description>Sand and polyurethane the wood interior of Live Presentations Super Cold Science Cart. Full day GSE. Report to Sue outside Exhibit Shop Doors at 9AM Friday September 7, 2018.</description>
                 <dress>TBD by Jerry Sullivan, Exhibits Shop. </dress>
@@ -520,7 +647,7 @@ Volunteer Services area
                 <legacyID>1671</legacyID>
                 <jobAdminAccount>skeay</jobAdminAccount>
                 <jobTitle>Member Appreciation Night Welcome Assistant</jobTitle>
-                <requestDate>2018-09-10 09:35:13.147</requestDate>
+                <requestDate>2018-09-10 09&#58;35&#58;13.147</requestDate>
                 <department>Membership</department>
                 <description>Help our members enjoy this special night just for them. You will provide information to members as they arrive for the event and direct them to the Duck Boat loading area, Omni Theater, and Box Office as needed. You may be asked to assist with distribution of standby tickets and line managing at either the Omni Theater or Duck Boat loading area.</description>
                 <dress>Business casual with Museum badge.</dress>
@@ -538,11 +665,11 @@ Volunteer Services area
                 <legacyID>1672</legacyID>
                 <jobAdminAccount>jsantomassimo</jobAdminAccount>
                 <jobTitle>Monday Oct. 22, 2018 Volunteer Fall Festival Assistant</jobTitle>
-                <requestDate>2018-09-10 16:36:53.79</requestDate>
+                <requestDate>2018-09-10 16&#58;36&#58;53.79</requestDate>
                 <department>Volunteer Services</department>
                 <description>On Monday, October 22 the Volunteer Service League hosts their Annual Fall Festival. 
 The Fall Festival includes a buffet dinner and displays from the 2017 VSL Grant recipients.  We need people for the registration table and to welcome the volunteers.
-Meet at 5:00 pm in the 6th Floor Volunteer Services office.</description>
+Meet at 5&#58;00 pm in the 6th Floor Volunteer Services office.</description>
                 <dress>Business attire</dress>
                 <training>No special training</training>
                 <lifting>0</lifting>
@@ -558,11 +685,11 @@ Meet at 5:00 pm in the 6th Floor Volunteer Services office.</description>
                 <legacyID>1673</legacyID>
                 <jobAdminAccount>jwetzel</jobAdminAccount>
                 <jobTitle>STL GLD production assistant</jobTitle>
-                <requestDate>2018-09-12 10:56:48.05</requestDate>
+                <requestDate>2018-09-12 10&#58;56&#58;48.05</requestDate>
                 <department>Lectures and Special Programs</department>
-                <description>Assist on production and logistics for the STL GLD live music show on Thursday, September 20 at 8:30 p.m., in the Planetarium. This is the return of STL GLD to the dome and the opening night of the Fierce Urgency of Now community festival.</description>
+                <description>Assist on production and logistics for the STL GLD live music show on Thursday, September 20 at 8&#58;30 p.m., in the Planetarium. This is the return of STL GLD to the dome and the opening night of the Fierce Urgency of Now community festival.</description>
                 <dress>Business casual</dress>
-                <training>Training provided at Reg Table in Lobby at 6:00pm on day of program.</training>
+                <training>Training provided at Reg Table in Lobby at 6&#58;00pm on day of program.</training>
                 <lifting>5</lifting>
                 <carrying>5</carrying>
                 <pushing>5</pushing>
@@ -576,13 +703,13 @@ Meet at 5:00 pm in the 6th Floor Volunteer Services office.</description>
                 <legacyID>1674</legacyID>
                 <jobAdminAccount>jwetzel</jobAdminAccount>
                 <jobTitle>The Poison Squad production assistant</jobTitle>
-                <requestDate>2018-09-12 11:00:11.567</requestDate>
+                <requestDate>2018-09-12 11&#58;00&#58;11.567</requestDate>
                 <department>Lectures and Special Programs</department>
-                <description>Assist on production and logistics for The Poison Squad on Wednesday, September 26 at 7:00 p.m., in Cahners Theater. 
+                <description>Assist on production and logistics for The Poison Squad on Wednesday, September 26 at 7&#58;00 p.m., in Cahners Theater. 
 
 Pulitzer Prize winner and New York Times-bestselling author Deborah Blum tells the true David and Goliath tale of how food was made safe in the United States and the heroes, led by the inimitable Dr. Harvey Washington Wiley, who fought for change. Book signing to follow.</description>
                 <dress>Business casual</dress>
-                <training>Training provided at Reg Table in Lobby at 5:00pm on day of program.</training>
+                <training>Training provided at Reg Table in Lobby at 5&#58;00pm on day of program.</training>
                 <lifting>5</lifting>
                 <carrying>5</carrying>
                 <pushing>5</pushing>
@@ -596,15 +723,15 @@ Pulitzer Prize winner and New York Times-bestselling author Deborah Blum tells t
                 <legacyID>1675</legacyID>
                 <jobAdminAccount>jwetzel</jobAdminAccount>
                 <jobTitle>Killing Cancer with Cannabis production assistant</jobTitle>
-                <requestDate>2018-09-12 11:03:03.82</requestDate>
+                <requestDate>2018-09-12 11&#58;03&#58;03.82</requestDate>
                 <department>Lectures and Special Programs</department>
-                <description>Assist on production and logistics for Killing Cancer with Cannabis on Monday, October 1 at 7:00 p.m., in Cahners Theater. 
+                <description>Assist on production and logistics for Killing Cancer with Cannabis on Monday, October 1 at 7&#58;00 p.m., in Cahners Theater. 
 
 Success stories of cannabis curing cancer are not new, but they�ve often been anecdotal. The precise cannabinoids that kill specific cancer cells have not been identified � until now. David (Dedi) Meiri, PhD, is discovering which combinations of the cannabis compounds are able to destroy which specific cancer types. Find out about Meiri�s game-changing research and the promise that medical marijuana may hold in the battle against cancer. Reception to follow.
 
 In conversation with Kara Miller, host and executive editor of WGBH�s Innovation Hub</description>
                 <dress>Business casual</dress>
-                <training>Training provided at Reg Table in Lobby at 5:30pm on day of program.</training>
+                <training>Training provided at Reg Table in Lobby at 5&#58;30pm on day of program.</training>
                 <lifting>5</lifting>
                 <carrying>5</carrying>
                 <pushing>5</pushing>
@@ -618,15 +745,15 @@ In conversation with Kara Miller, host and executive editor of WGBH�s Innovati
                 <legacyID>1676</legacyID>
                 <jobAdminAccount>jwetzel</jobAdminAccount>
                 <jobTitle>Fake Science with ImprovBoston production assistant</jobTitle>
-                <requestDate>2018-09-12 11:06:35.51</requestDate>
+                <requestDate>2018-09-12 11&#58;06&#58;35.51</requestDate>
                 <department>Lectures and Special Programs</department>
-                <description>Assist on production and logistics for Fake Science with ImprovBoston comedy show on Thursday, October 4 at 7:30 p.m., in the Planetarium. 
+                <description>Assist on production and logistics for Fake Science with ImprovBoston comedy show on Thursday, October 4 at 7&#58;30 p.m., in the Planetarium. 
 
 This fall for one night only, ImprovBoston returns to the Museum of Science for a completely improvised adult comedy show that's out of this world! New England's oldest and biggest comedy theater brings its signature off-the-cuff laughs to the far reaches of the galaxy with the expert technological wizardry of the Planetarium. Immersive science meets immersive comedy as ImprovBoston's professional improvisers create games, scenes, and songs out of thin air using the Planetarium's state-of-the-art projections, surround sound, and 360-degree videos.
 
 Art and science collide in a supernova of gut laughs� and you have a front row seat. For ImprovBoston and the Museum of Science, all the universe is a stage!</description>
                 <dress>Business casual</dress>
-                <training>Training provided at Reg Table in Lobby at 5:30pm on day of program.</training>
+                <training>Training provided at Reg Table in Lobby at 5&#58;30pm on day of program.</training>
                 <lifting>5</lifting>
                 <carrying>5</carrying>
                 <pushing>5</pushing>
@@ -640,15 +767,15 @@ Art and science collide in a supernova of gut laughs� and you have a front row
                 <legacyID>1677</legacyID>
                 <jobAdminAccount>jwetzel</jobAdminAccount>
                 <jobTitle>The Big Quiz Thing production assistant</jobTitle>
-                <requestDate>2018-09-12 11:08:37.2</requestDate>
+                <requestDate>2018-09-12 11&#58;08&#58;37.2</requestDate>
                 <department>Lectures and Special Programs</department>
-                <description>Assist on production and logistics for The Big Quiz Thing on Tuesday, October 9 at 7:30 p.m., in the Planetarium. 
+                <description>Assist on production and logistics for The Big Quiz Thing on Tuesday, October 9 at 7&#58;30 p.m., in the Planetarium. 
 
-The Big Quiz Thing returns, bringing its multimedia quiz-show spectacular to the Charles Hayden Planetarium! Hosted by Quizmaster Wes Hazard, the Big Quiz Thing is more than a bar trivia event: it�s a full team-based game show, with video and audio puzzles, the Lightning Round, the Buzzertastic Finale, and the best, most �figureoutable� trivia questions anywhere. And it's all played via the BQT�s unique digital answer system (play on your smartphone or another digital device).
+The Big Quiz Thing returns, bringing its multimedia quiz-show spectacular to the Charles Hayden Planetarium! Hosted by Quizmaster Wes Hazard, the Big Quiz Thing is more than a bar trivia event&#58; it�s a full team-based game show, with video and audio puzzles, the Lightning Round, the Buzzertastic Finale, and the best, most �figureoutable� trivia questions anywhere. And it's all played via the BQT�s unique digital answer system (play on your smartphone or another digital device).
 
-Plus, there�s hope for the non-geeky: Smart-Ass Points for wrong but funny answers. All for honor, glory, and prizes. Learn more about the Big Quiz Thing at BigQuizThing.com.</description>
+Plus, there�s hope for the non-geeky&#58; Smart-Ass Points for wrong but funny answers. All for honor, glory, and prizes. Learn more about the Big Quiz Thing at BigQuizThing.com.</description>
                 <dress>Business casual</dress>
-                <training>Training provided at Reg Table in Lobby at 5:30pm on day of program.</training>
+                <training>Training provided at Reg Table in Lobby at 5&#58;30pm on day of program.</training>
                 <lifting>5</lifting>
                 <carrying>5</carrying>
                 <pushing>5</pushing>
@@ -662,13 +789,13 @@ Plus, there�s hope for the non-geeky: Smart-Ass Points for wrong but funny ans
                 <legacyID>1678</legacyID>
                 <jobAdminAccount>jwetzel</jobAdminAccount>
                 <jobTitle>Boston's Best Drag Queens production assistant</jobTitle>
-                <requestDate>2018-09-12 11:11:05.013</requestDate>
+                <requestDate>2018-09-12 11&#58;11&#58;05.013</requestDate>
                 <department>Lectures and Special Programs</department>
-                <description>Assist on production and logistics for Boston's Best Drag Queens show on Thursday, October 11 at 7:30 p.m., in the Planetarium. 
+                <description>Assist on production and logistics for Boston's Best Drag Queens show on Thursday, October 11 at 7&#58;30 p.m., in the Planetarium. 
 
 After taking Boston nightlife to exciting new levels as part of Summer Thursdays, Boston�s Best Drag Queens return to the Charles Hayden Planetarium with an all-new groundbreaking lineup of drag performances. Join us for an incredible fusion of drag and fulldome visuals!</description>
                 <dress>Business casual</dress>
-                <training>Training provided at Reg Table in Lobby at 5:30pm on day of program.</training>
+                <training>Training provided at Reg Table in Lobby at 5&#58;30pm on day of program.</training>
                 <lifting>5</lifting>
                 <carrying>5</carrying>
                 <pushing>5</pushing>
@@ -682,15 +809,15 @@ After taking Boston nightlife to exciting new levels as part of Summer Thursdays
                 <legacyID>1679</legacyID>
                 <jobAdminAccount>jwetzel</jobAdminAccount>
                 <jobTitle>Nancy production assistant</jobTitle>
-                <requestDate>2018-09-12 11:12:44.64</requestDate>
+                <requestDate>2018-09-12 11&#58;12&#58;44.64</requestDate>
                 <department>Lectures and Special Programs</department>
-                <description>Assist on production and logistics for Nancy on Wednesday, October 17 at 7:00 p.m., in Cahners Theater. 
+                <description>Assist on production and logistics for Nancy on Wednesday, October 17 at 7&#58;00 p.m., in Cahners Theater. 
 
 A show about how we define ourselves and the journey it takes to get there. Nancy is a critically-acclaimed podcast featuring LGBTQ stories and conversations hosted by two best friends, neither of whom is named Nancy. It�s a podcast about how we define ourselves, and the journey it takes to get there. Join us for a live taping of the popular podcast! Reception to follow.
 
 Nancy is from WNYC Studios.</description>
                 <dress>Business casual</dress>
-                <training>Training provided at Reg Table in Lobby at 5:30pm on day of program.</training>
+                <training>Training provided at Reg Table in Lobby at 5&#58;30pm on day of program.</training>
                 <lifting>5</lifting>
                 <carrying>5</carrying>
                 <pushing>5</pushing>
@@ -704,11 +831,11 @@ Nancy is from WNYC Studios.</description>
                 <legacyID>1680</legacyID>
                 <jobAdminAccount>jwetzel</jobAdminAccount>
                 <jobTitle>Walter Sickert and the Army of Broken Toys Halloween Happening production assistant</jobTitle>
-                <requestDate>2018-09-12 11:14:25.28</requestDate>
+                <requestDate>2018-09-12 11&#58;14&#58;25.28</requestDate>
                 <department>Lectures and Special Programs</department>
-                <description>Assist on production and logistics for Walter Sickert and the Army of Broken Toys Halloween Happening on Thursday, October 25 at 7:30 p.m., in the Planetarium. Walter Sickert and the Army of Broken Toys return to the Museum of Science for one night only! Kick off your Halloween as the Toys take over the Charles Hayden Planetarium for an unforgettable evening of masquerade, music, and mayhem under the dome. Beware, they're not alone � other tricks and treats lurk around every corner of the Toys' macabre Museum!</description>
+                <description>Assist on production and logistics for Walter Sickert and the Army of Broken Toys Halloween Happening on Thursday, October 25 at 7&#58;30 p.m., in the Planetarium. Walter Sickert and the Army of Broken Toys return to the Museum of Science for one night only! Kick off your Halloween as the Toys take over the Charles Hayden Planetarium for an unforgettable evening of masquerade, music, and mayhem under the dome. Beware, they're not alone - other tricks and treats lurk around every corner of the Toys' macabre Museum!</description>
                 <dress>Business casual</dress>
-                <training>Training provided at Reg Table in Lobby at 5:30pm on day of program.</training>
+                <training>Training provided at Reg Table in Lobby at 5&#58;30pm on day of program.</training>
                 <lifting>5</lifting>
                 <carrying>5</carrying>
                 <pushing>5</pushing>
@@ -722,13 +849,13 @@ Nancy is from WNYC Studios.</description>
                 <legacyID>1681</legacyID>
                 <jobAdminAccount>jwetzel</jobAdminAccount>
                 <jobTitle>Our (Super)human Brains production assistant</jobTitle>
-                <requestDate>2018-09-12 11:16:36.66</requestDate>
+                <requestDate>2018-09-12 11&#58;16&#58;36.66</requestDate>
                 <department>Lectures and Special Programs</department>
-                <description>Assist on production and logistics for Our (Super)Human Brains on Wednesday, November 14 at 7:00 p.m., in Cahners Theater. 
+                <description>Assist on production and logistics for Our (Super)Human Brains on Wednesday, November 14 at 7&#58;00 p.m., in Cahners Theater. 
 
 If you could experience someone else�s feelings, imagine what you could do with that superpower. If you could get your body to metabolize dessert as if it were a diet food, think of how you could exercise that superpower. Treat yourself to an unusual excursion into the world of a doctor who uses his (super)synesthetic brain to treat patients, and learn about the secrets of your own (super)human brain. Book signing to follow.</description>
                 <dress>Business casual</dress>
-                <training>Training provided at Reg Table in Lobby at 5:00pm on day of program.</training>
+                <training>Training provided at Reg Table in Lobby at 5&#58;00pm on day of program.</training>
                 <lifting>5</lifting>
                 <carrying>5</carrying>
                 <pushing>5</pushing>
@@ -742,13 +869,13 @@ If you could experience someone else�s feelings, imagine what you could do wit
                 <legacyID>1682</legacyID>
                 <jobAdminAccount>jwetzel</jobAdminAccount>
                 <jobTitle>How To Dress Well production assistant</jobTitle>
-                <requestDate>2018-09-12 11:18:10.83</requestDate>
+                <requestDate>2018-09-12 11&#58;18&#58;10.83</requestDate>
                 <department>Lectures and Special Programs</department>
-                <description>Assist on production and logistics for the How To Dress Well live music show on Thursday, November 15 at 7:30 p.m., in the Planetarium. 
+                <description>Assist on production and logistics for the How To Dress Well live music show on Thursday, November 15 at 7&#58;30 p.m., in the Planetarium. 
 
 For one-night only, How to Dress Well comes to the Museum of Science for an incredible, visionary live performance in the Charles Hayden Planetarium. Experience the music of the acclaimed singer/songwriter live like never before � in the intimate, immersive setting of the full dome, while innovative visuals inspired by How to Dress Well unfold above and around you.</description>
                 <dress>Business casual</dress>
-                <training>Training provided at Reg Table in Lobby at 5:30pm on day of program.</training>
+                <training>Training provided at Reg Table in Lobby at 5&#58;30pm on day of program.</training>
                 <lifting>5</lifting>
                 <carrying>5</carrying>
                 <pushing>5</pushing>
@@ -756,6 +883,262 @@ For one-night only, How to Dress Well comes to the Museum of Science for an incr
                 <standing>50</standing>
                 <sitting>25</sitting>
                 <walking>25</walking>
+            </request>
+        
+            <request>
+                <legacyID>1683</legacyID>
+                <jobAdminAccount>jdillman</jobAdminAccount>
+                <jobTitle>September Salem Days Volunteer</jobTitle>
+                <requestDate>2018-09-17 09&#58;49&#58;05.97</requestDate>
+                <department>Donor Relations</department>
+                <description>Every September, all Salem residents can attend the museum for FREE thanks to a generous gift from the Read Family Trust. This includes a free, round-trip ride on the commuter rail this Saturday, 9/22. Join the advancement team as we travel out to Salem to assist residents in getting their free passes, maps, trip planners, and find their way to the museum from North Station.</description>
+                <dress>Casual dress, please wear comfortable shoes and your museum badge</dress>
+                <training>Walking, standing</training>
+                <lifting>5</lifting>
+                <carrying>0</carrying>
+                <pushing>0</pushing>
+                <pulling>0</pulling>
+                <standing>50</standing>
+                <sitting>25</sitting>
+                <walking>25</walking>
+            </request>
+        
+            <request>
+                <legacyID>1684</legacyID>
+                <jobAdminAccount>lkennedy</jobAdminAccount>
+                <jobTitle>Space Science Teacher Evening Registration Table</jobTitle>
+                <requestDate>2018-09-19 09&#58;45&#58;27.76</requestDate>
+                <department>Education and Enrichment Programs</department>
+                <description>Assist Marketing and Education Programs staff in welcoming Teacher Partners and their Guests to this evening event. </description>
+                <dress>Business Casual</dress>
+                <training>15 minute training at the beginning of the shift</training>
+                <lifting>0</lifting>
+                <carrying>0</carrying>
+                <pushing>0</pushing>
+                <pulling>0</pulling>
+                <standing>40</standing>
+                <sitting>60</sitting>
+                <walking>0</walking>
+            </request>
+        
+            <request>
+                <legacyID>1685</legacyID>
+                <jobAdminAccount>dsittenfeld</jobAdminAccount>
+                <jobTitle>Forum Table Observer </jobTitle>
+                <requestDate>2018-09-20 12&#58;42&#58;09.58</requestDate>
+                <department>Forum</department>
+                <description>Hi,These people will act as table observers for an all-day forum we are hosting on Saturday in collaboration with Arizona State University. Your job will be to take notes on the facilitated conversations during the day using a short template we will provide.  You do not need to know anything about the topic to be a table observer.  We can give you a laptop to use or you can use your own device. We will provide you with breakfast and lunch.</description>
+                <dress>Business casual is totally fine.</dress>
+                <training>You will need to complete an online human subjects training course in advance. There will be a short 10-minute conversation right before the program begins to go over any last logistics.</training>
+                <lifting>0</lifting>
+                <carrying>0</carrying>
+                <pushing>0</pushing>
+                <pulling>0</pulling>
+                <standing>10</standing>
+                <sitting>85</sitting>
+                <walking>5</walking>
+            </request>
+        
+            <request>
+                <legacyID>1686</legacyID>
+                <jobAdminAccount>tsepersky</jobAdminAccount>
+                <jobTitle>_Throwback to 1958_ assistant</jobTitle>
+                <requestDate>2018-09-25 14&#58;11&#58;09.68</requestDate>
+                <department>Planetarium</department>
+                <description>Assist on logistics for the _Throwback to 1958_ live show on Tuesday, October 16 at 7 p.m., in the Planetarium as part of the Planetarium's 60th Anniversary celebration. Travel back in time to 1958, when the Charles Hayden Planetarium first opened! Join us for a traditional Planetarium show with a twist, showcasing the progress that has been made in astronomy and technology over the past 60 years.</description>
+                <dress>None</dress>
+                <training>Training provided at Reg Table in Lobby at 5&#58;30pm on day of program.</training>
+                <lifting>5</lifting>
+                <carrying>5</carrying>
+                <pushing>5</pushing>
+                <pulling>5</pulling>
+                <standing>25</standing>
+                <sitting>50</sitting>
+                <walking>25</walking>
+            </request>
+        
+            <request>
+                <legacyID>1687</legacyID>
+                <jobAdminAccount>tsepersky</jobAdminAccount>
+                <jobTitle>_Women in Astronomy_ assistant</jobTitle>
+                <requestDate>2018-09-25 14&#58;10&#58;44.537</requestDate>
+                <department>Planetarium</department>
+                <description>Assist on logistics for the _Women in Astronomy_ live show on Tuesday, October 23 at 7 p.m., in the Planetarium as part of the Planetarium's 60th Anniversary celebration. Throughout history, countless women have held integral roles in the development of astronomy and space exploration, but few have been properly recognized for their work. Join our Planetarium educators as they explore the universe through the discoveries and contributions of women in astronomy and NASA.</description>
+                <dress>None</dress>
+                <training> Training provided at Reg Table in Lobby at 5&#58;30pm on day of program.</training>
+                <lifting>5</lifting>
+                <carrying>5</carrying>
+                <pushing>5</pushing>
+                <pulling>5</pulling>
+                <standing>25</standing>
+                <sitting>50</sitting>
+                <walking>25</walking>
+            </request>
+        
+            <request>
+                <legacyID>1688</legacyID>
+                <jobAdminAccount>tsepersky</jobAdminAccount>
+                <jobTitle>_Alien_ assistant</jobTitle>
+                <requestDate>2018-09-25 14&#58;09&#58;56.177</requestDate>
+                <department>Planetarium</department>
+                <description>Assist on logistics for the showing of the classic sci-fi horror film _Alien_ on Tuesday, October 30 at 7&#58;30 p.m., in the Planetarium as part of the Planetarium's 60th Anniversary celebration.</description>
+                <dress>None</dress>
+                <training>Training provided at Reg Table in Lobby at 5&#58;30pm on day of program.</training>
+                <lifting>5</lifting>
+                <carrying>5</carrying>
+                <pushing>5</pushing>
+                <pulling>5</pulling>
+                <standing>25</standing>
+                <sitting>50</sitting>
+                <walking>25</walking>
+            </request>
+        
+            <request>
+                <legacyID>1689</legacyID>
+                <jobAdminAccount>lhavansek</jobAdminAccount>
+                <jobTitle>2018 Washburn Award Volunteer</jobTitle>
+                <requestDate>2018-09-26 13&#58;56&#58;22.367</requestDate>
+                <department>Fundraising Events</department>
+                <description>The 2018 Washburn Award will honor Margot Lee Shetterly, the author of Hidden Figures&#58; The American Dream and the Untold Story of the Black Women Who Helped Win the Space Race. We will be welcoming 200 guests and the evening will feature a VIP reception, general reception, dinner, and awards presentation, featuring remarks by Ms. Shetterly and a brief Q&amp;A.
+
+You will have the opportunity to assist with wayfinding, registration, and other duties as needed. Those staying past 7&#58;00pm will be provided with dinner. </description>
+                <dress>Business casual with Museum badge</dress>
+                <training>All necessary information will be provided the week prior to the event.</training>
+                <lifting>10</lifting>
+                <carrying>10</carrying>
+                <pushing>0</pushing>
+                <pulling>0</pulling>
+                <standing>50</standing>
+                <sitting>25</sitting>
+                <walking>25</walking>
+            </request>
+        
+            <request>
+                <legacyID>1690</legacyID>
+                <jobAdminAccount>jrivers</jobAdminAccount>
+                <jobTitle>Van driver</jobTitle>
+                <requestDate>2018-09-27 14&#58;06&#58;37.32</requestDate>
+                <department>IIT - Interactive Media</department>
+                <description>Will need to drive one of the Traveling Programs vans to the State House and back to MoS.</description>
+                <dress>regular clothing</dress>
+                <training>Drivers license and certified to drive MoS vehicles.</training>
+                <lifting>0</lifting>
+                <carrying>0</carrying>
+                <pushing>0</pushing>
+                <pulling>0</pulling>
+                <standing>0</standing>
+                <sitting>100</sitting>
+                <walking>0</walking>
+            </request>
+        
+            <request>
+                <legacyID>1691</legacyID>
+                <jobAdminAccount>mkaiser</jobAdminAccount>
+                <jobTitle> Thank You Mailing Help</jobTitle>
+                <requestDate>2018-10-02 10&#58;20&#58;01.723</requestDate>
+                <department>Annual Giving</department>
+                <description>Gifts to the Annual Fund support every aspect of the Museum's daily operations. And we appreciate every contribution, both big and small!
+
+Help us give thanks to our lower level supporters by helping us in folding and assembling our &quot;Thank You Mailers&quot; </description>
+                <dress>Museum-appropriate attire required.</dress>
+                <training>None. Quick tutorial to start. Work can be performed either sitting or standing.</training>
+                <lifting>5</lifting>
+                <carrying>5</carrying>
+                <pushing>5</pushing>
+                <pulling>5</pulling>
+                <standing>0</standing>
+                <sitting>100</sitting>
+                <walking>0</walking>
+            </request>
+        
+            <request>
+                <legacyID>1692</legacyID>
+                <jobAdminAccount>cmoscat</jobAdminAccount>
+                <jobTitle>HSSS Guest Educator</jobTitle>
+                <requestDate>2018-10-03 15&#58;37&#58;27.487</requestDate>
+                <department>School Visits</department>
+                <description>Serve as a guest educator on October 19th for the High School Science Series&#58; Chemistry is Out of This World! You will facilitate 1 of 6 hands-on activities at a table in the Blue Wing Well with visitors from 9 am-12&#58;30 pm. All activities relate to chemistry in application to Space.</description>
+                <dress>Red Coat or apron. Museum badge. Comfortable shoes.</dress>
+                <training>All activities come with an educator guide and video training resource. Guest educators are expected to read and watch these resources so they are prepared to facilitate the activity on the day of the event. Event organizers will set-up and break-down activities, so guest educators can focus on showing up at their designated activity table to run the activity.</training>
+                <lifting>5</lifting>
+                <carrying>5</carrying>
+                <pushing>20</pushing>
+                <pulling>20</pulling>
+                <standing>80</standing>
+                <sitting>20</sitting>
+                <walking>0</walking>
+            </request>
+        
+            <request>
+                <legacyID>1693</legacyID>
+                <jobAdminAccount>rthomas</jobAdminAccount>
+                <jobTitle>Brand Photoshoot HHL Staff</jobTitle>
+                <requestDate>2018-10-30 09&#58;37&#58;07.847</requestDate>
+                <department>Marketing</department>
+                <description>We will be photographing the HHL Hub as part of our brand refresh. We need employees to be present to guide interactive demonstrations to be photographed and fill in space as extras in the background as well.</description>
+                <dress>Anything you'd typically wear to work plus your red lab coat. I will send a document of colors to avoid.</dress>
+                <training>None. Just need to be comfortable being photographed doing your normal job.</training>
+                <lifting>0</lifting>
+                <carrying>0</carrying>
+                <pushing>0</pushing>
+                <pulling>0</pulling>
+                <standing>50</standing>
+                <sitting>50</sitting>
+                <walking>0</walking>
+            </request>
+        
+            <request>
+                <legacyID>1694</legacyID>
+                <jobAdminAccount>jdillman</jobAdminAccount>
+                <jobTitle>Women and Girls in STEM Volunteer</jobTitle>
+                <requestDate>2018-11-02 16&#58;26&#58;10.797</requestDate>
+                <department>Donor Relations</department>
+                <description>Help the advancement and education teams bring our women and girls in STEM initiative to life by explaining various activities we offer to museum guests, and answering questions as they arise.</description>
+                <dress>Red coat if you have it, otherwise casual</dress>
+                <training>Just a smile! We will review all details you will need to know before the GSE begins.</training>
+                <lifting>0</lifting>
+                <carrying>0</carrying>
+                <pushing>0</pushing>
+                <pulling>0</pulling>
+                <standing>20</standing>
+                <sitting>70</sitting>
+                <walking>10</walking>
+            </request>
+        
+            <request>
+                <legacyID>1695</legacyID>
+                <jobAdminAccount>rthomas</jobAdminAccount>
+                <jobTitle>Brand Photo Shoot TOE</jobTitle>
+                <requestDate>2018-11-06 10&#58;40&#58;42.61</requestDate>
+                <department>Marketing</department>
+                <description>Help turn on TOE equipment.</description>
+                <dress>Red lab coat.</dress>
+                <training>Using the Vandegraff and being comfortable with kids.</training>
+                <lifting>20</lifting>
+                <carrying>0</carrying>
+                <pushing>20</pushing>
+                <pulling>20</pulling>
+                <standing>100</standing>
+                <sitting>0</sitting>
+                <walking>0</walking>
+            </request>
+        
+            <request>
+                <legacyID>1696</legacyID>
+                <jobAdminAccount>kpowers</jobAdminAccount>
+                <jobTitle>Women and Girls in STEM support</jobTitle>
+                <requestDate>2018-11-09 14&#58;50&#58;59.007</requestDate>
+                <department>Live Presentations</department>
+                <description>General support for our third annual Women and Girls in STEM event.</description>
+                <dress>Exhibit Hall appropriate attire</dress>
+                <training>N/A</training>
+                <lifting>5</lifting>
+                <carrying>5</carrying>
+                <pushing>25</pushing>
+                <pulling>25</pulling>
+                <standing>75</standing>
+                <sitting>20</sitting>
+                <walking>5</walking>
             </request>
         
     </data>

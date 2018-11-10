@@ -3249,23 +3249,6 @@
             </request>
         
             <request>
-                <legacyID>21326</legacyID>
-                <title>MassMutual-Women in Data Science Reception</title>
-                
-				<requestDate>2018-01-05T14:55:39</requestDate>
-                
-                <startDateTime>2018-01-19T17:00:00</startDateTime>
-                
-                <endDateTime>2018-01-19T19:30:00</endDateTime>
-                <location>Yawkey Gallery</location>
-                <username>bwroblewski</username>
-                <firstName>Barbara</firstName>
-                <lastName>Wroblewski</lastName>
-                <dept>Event &amp; Conference Services</dept>
-                <count>120</count>
-            </request>
-        
-            <request>
                 <legacyID>21318</legacyID>
                 <title>Bracket Global Reception</title>
                 
@@ -3280,6 +3263,23 @@
                 <lastName>Wroblewski</lastName>
                 <dept>Event &amp; Conference Services</dept>
                 <count>60</count>
+            </request>
+        
+            <request>
+                <legacyID>21326</legacyID>
+                <title>MassMutual-Women in Data Science Reception</title>
+                
+				<requestDate>2018-01-05T14:55:39</requestDate>
+                
+                <startDateTime>2018-01-19T17:00:00</startDateTime>
+                
+                <endDateTime>2018-01-19T19:30:00</endDateTime>
+                <location>Yawkey Gallery</location>
+                <username>bwroblewski</username>
+                <firstName>Barbara</firstName>
+                <lastName>Wroblewski</lastName>
+                <dept>Event &amp; Conference Services</dept>
+                <count>120</count>
             </request>
         
             <request>
@@ -3504,23 +3504,6 @@
             </request>
         
             <request>
-                <legacyID>20954</legacyID>
-                <title>Overnight</title>
-                
-				<requestDate>2017-08-28T08:50:35</requestDate>
-                
-                <startDateTime>2018-01-26T17:00:00</startDateTime>
-                
-                <endDateTime>2018-01-26T11:00:00</endDateTime>
-                <location>Blue Wing/Green WIng/Cahners/Cafe/Hornblower</location>
-                <username>nries</username>
-                <firstName>Nancy </firstName>
-                <lastName>Ries</lastName>
-                <dept>Overnight Programs</dept>
-                <count>600</count>
-            </request>
-        
-            <request>
                 <legacyID>21075</legacyID>
                 <title>Harvard Outings &amp;amp; Innings Company Night</title>
                 
@@ -3535,6 +3518,23 @@
                 <lastName>Davis</lastName>
                 <dept>Annual Giving</dept>
                 <count>350</count>
+            </request>
+        
+            <request>
+                <legacyID>20954</legacyID>
+                <title>Overnight</title>
+                
+				<requestDate>2017-08-28T08:50:35</requestDate>
+                
+                <startDateTime>2018-01-26T17:00:00</startDateTime>
+                
+                <endDateTime>2018-01-26T11:00:00</endDateTime>
+                <location>Blue Wing/Green WIng/Cahners/Cafe/Hornblower</location>
+                <username>nries</username>
+                <firstName>Nancy </firstName>
+                <lastName>Ries</lastName>
+                <dept>Overnight Programs</dept>
+                <count>600</count>
             </request>
         
             <request>
@@ -5867,6 +5867,23 @@
             </request>
         
             <request>
+                <legacyID>21231</legacyID>
+                <title>Teacher Educator Institute</title>
+                
+				<requestDate>2017-11-20T16:01:32</requestDate>
+                
+                <startDateTime>2018-03-23T09:00:00</startDateTime>
+                
+                <endDateTime>2018-03-23T17:00:00</endDateTime>
+                <location>Engineers Enclave</location>
+                <username>kbartholomew</username>
+                <firstName>Kathryn</firstName>
+                <lastName>Bartholomew</lastName>
+                <dept>EiE Professional Development</dept>
+                <count>18</count>
+            </request>
+        
+            <request>
                 <legacyID>21063</legacyID>
                 <title>Free Film Fridays</title>
                 
@@ -5898,23 +5915,6 @@
                 <lastName>Kong</lastName>
                 <dept>Hall of Human Life</dept>
                 <count/>
-            </request>
-        
-            <request>
-                <legacyID>21231</legacyID>
-                <title>Teacher Educator Institute</title>
-                
-				<requestDate>2017-11-20T16:01:32</requestDate>
-                
-                <startDateTime>2018-03-23T09:00:00</startDateTime>
-                
-                <endDateTime>2018-03-23T17:00:00</endDateTime>
-                <location>Engineers Enclave</location>
-                <username>kbartholomew</username>
-                <firstName>Kathryn</firstName>
-                <lastName>Bartholomew</lastName>
-                <dept>EiE Professional Development</dept>
-                <count>18</count>
             </request>
         
             <request>
@@ -7465,23 +7465,6 @@
             </request>
         
             <request>
-                <legacyID>21683</legacyID>
-                <title>Best of Boston/Access Boston - Tyler Technologies - Eden reception</title>
-                
-				<requestDate>2018-04-17T09:27:00</requestDate>
-                
-                <startDateTime>2018-04-23T17:00:00</startDateTime>
-                
-                <endDateTime>2018-04-23T23:00:00</endDateTime>
-                <location>d'arbeloff</location>
-                <username>bwroblewski</username>
-                <firstName>Barbara</firstName>
-                <lastName>Wroblewski</lastName>
-                <dept>Event &amp; Conference Services</dept>
-                <count>120</count>
-            </request>
-        
-            <request>
                 <legacyID>21307</legacyID>
                 <title>Best of Boston/Access Boston - Tyler Technologies</title>
                 
@@ -7496,6 +7479,23 @@
                 <lastName>Wroblewski</lastName>
                 <dept>Event &amp; Conference Services</dept>
                 <count>2800</count>
+            </request>
+        
+            <request>
+                <legacyID>21683</legacyID>
+                <title>Best of Boston/Access Boston - Tyler Technologies - Eden reception</title>
+                
+				<requestDate>2018-04-17T09:27:00</requestDate>
+                
+                <startDateTime>2018-04-23T17:00:00</startDateTime>
+                
+                <endDateTime>2018-04-23T23:00:00</endDateTime>
+                <location>d'arbeloff</location>
+                <username>bwroblewski</username>
+                <firstName>Barbara</firstName>
+                <lastName>Wroblewski</lastName>
+                <dept>Event &amp; Conference Services</dept>
+                <count>120</count>
             </request>
         
             <request>
@@ -7567,23 +7567,6 @@
             </request>
         
             <request>
-                <legacyID>21570</legacyID>
-                <title>MMT Meeting</title>
-                
-				<requestDate>2018-03-02T09:21:08</requestDate>
-                
-                <startDateTime>2018-04-24T09:30:00</startDateTime>
-                
-                <endDateTime>2018-04-24T11:00:00</endDateTime>
-                <location>Skyline</location>
-                <username>mmccann</username>
-                <firstName>Mary</firstName>
-                <lastName>McCann</lastName>
-                <dept>Director's Office</dept>
-                <count>60</count>
-            </request>
-        
-            <request>
                 <legacyID>21450</legacyID>
                 <title>Eye Opener</title>
                 
@@ -7598,6 +7581,23 @@
                 <lastName>Slivensky</lastName>
                 <dept>School Visits</dept>
                 <count/>
+            </request>
+        
+            <request>
+                <legacyID>21570</legacyID>
+                <title>MMT Meeting</title>
+                
+				<requestDate>2018-03-02T09:21:08</requestDate>
+                
+                <startDateTime>2018-04-24T09:30:00</startDateTime>
+                
+                <endDateTime>2018-04-24T11:00:00</endDateTime>
+                <location>Skyline</location>
+                <username>mmccann</username>
+                <firstName>Mary</firstName>
+                <lastName>McCann</lastName>
+                <dept>Director's Office</dept>
+                <count>60</count>
             </request>
         
             <request>
@@ -7669,6 +7669,23 @@
             </request>
         
             <request>
+                <legacyID>21655</legacyID>
+                <title>BEST Program</title>
+                
+				<requestDate>2018-04-02T11:00:28</requestDate>
+                
+                <startDateTime>2018-04-25T09:00:00</startDateTime>
+                
+                <endDateTime>2018-04-25T14:00:00</endDateTime>
+                <location>Hornblower Room</location>
+                <username>epanacopoulos</username>
+                <firstName>Erica</firstName>
+                <lastName>Panacopoulos</lastName>
+                <dept>School Visits</dept>
+                <count>30</count>
+            </request>
+        
+            <request>
                 <legacyID>20915</legacyID>
                 <title>A Mirror Maze Public Close</title>
                 
@@ -7700,23 +7717,6 @@
                 <lastName>Fo</lastName>
                 <dept>Traveling Exhibitions</dept>
                 <count/>
-            </request>
-        
-            <request>
-                <legacyID>21655</legacyID>
-                <title>BEST Program</title>
-                
-				<requestDate>2018-04-02T11:00:28</requestDate>
-                
-                <startDateTime>2018-04-25T09:00:00</startDateTime>
-                
-                <endDateTime>2018-04-25T14:00:00</endDateTime>
-                <location>Hornblower Room</location>
-                <username>epanacopoulos</username>
-                <firstName>Erica</firstName>
-                <lastName>Panacopoulos</lastName>
-                <dept>School Visits</dept>
-                <count>30</count>
             </request>
         
             <request>
@@ -8179,23 +8179,6 @@
             </request>
         
             <request>
-                <legacyID>21472</legacyID>
-                <title>Washburn Society Luncheon</title>
-                
-				<requestDate>2018-02-07T12:24:29</requestDate>
-                
-                <startDateTime>2018-05-02T10:00:00</startDateTime>
-                
-                <endDateTime>2018-05-02T14:00:00</endDateTime>
-                <location>d'Arbeloff / Planetarium</location>
-                <username>mandrews</username>
-                <firstName>Maggie</firstName>
-                <lastName>Andrews</lastName>
-                <dept>Donor Relations</dept>
-                <count>50</count>
-            </request>
-        
-            <request>
                 <legacyID>21659</legacyID>
                 <title>Planned Giving Committee Meeting</title>
                 
@@ -8210,6 +8193,23 @@
                 <lastName>Alexander</lastName>
                 <dept>Leadership &amp; Planned Giving</dept>
                 <count>10</count>
+            </request>
+        
+            <request>
+                <legacyID>21472</legacyID>
+                <title>Washburn Society Luncheon</title>
+                
+				<requestDate>2018-02-07T12:24:29</requestDate>
+                
+                <startDateTime>2018-05-02T10:00:00</startDateTime>
+                
+                <endDateTime>2018-05-02T14:00:00</endDateTime>
+                <location>d'Arbeloff / Planetarium</location>
+                <username>mandrews</username>
+                <firstName>Maggie</firstName>
+                <lastName>Andrews</lastName>
+                <dept>Donor Relations</dept>
+                <count>50</count>
             </request>
         
             <request>
@@ -8723,23 +8723,6 @@
             </request>
         
             <request>
-                <legacyID>19667</legacyID>
-                <title>Network Maintenance</title>
-                
-				<requestDate>2016-07-21T12:25:55</requestDate>
-                
-                <startDateTime>2018-05-08T18:00:00</startDateTime>
-                
-                <endDateTime>2018-05-08T23:55:00</endDateTime>
-                <location>Entire Museum</location>
-                <username>acollins</username>
-                <firstName>Angela</firstName>
-                <lastName>Collins</lastName>
-                <dept>IIT - Infrastructure</dept>
-                <count/>
-            </request>
-        
-            <request>
                 <legacyID>21358</legacyID>
                 <title>New Horizons Planetarium event</title>
                 
@@ -8754,6 +8737,23 @@
                 <lastName>Sepersky</lastName>
                 <dept>Planetarium</dept>
                 <count>209</count>
+            </request>
+        
+            <request>
+                <legacyID>19667</legacyID>
+                <title>Network Maintenance</title>
+                
+				<requestDate>2016-07-21T12:25:55</requestDate>
+                
+                <startDateTime>2018-05-08T18:00:00</startDateTime>
+                
+                <endDateTime>2018-05-08T23:55:00</endDateTime>
+                <location>Entire Museum</location>
+                <username>acollins</username>
+                <firstName>Angela</firstName>
+                <lastName>Collins</lastName>
+                <dept>IIT - Infrastructure</dept>
+                <count/>
             </request>
         
             <request>
@@ -9131,23 +9131,6 @@
             </request>
         
             <request>
-                <legacyID>21727</legacyID>
-                <title>Massachusetts Family and Probate Annual Banquet</title>
-                
-				<requestDate>2018-04-27T11:44:25</requestDate>
-                
-                <startDateTime>2018-05-17T16:00:00</startDateTime>
-                
-                <endDateTime>2018-05-17T21:30:00</endDateTime>
-                <location>d'arbeloff</location>
-                <username>aalbert</username>
-                <firstName>Alyssa</firstName>
-                <lastName>Albert</lastName>
-                <dept>Event &amp; Conference Services</dept>
-                <count>120</count>
-            </request>
-        
-            <request>
                 <legacyID>21749</legacyID>
                 <title>Massachusetts Family and Probate Board Meeting </title>
                 
@@ -9162,6 +9145,23 @@
                 <lastName>Albert</lastName>
                 <dept>Event &amp; Conference Services</dept>
                 <count>23</count>
+            </request>
+        
+            <request>
+                <legacyID>21727</legacyID>
+                <title>Massachusetts Family and Probate Annual Banquet</title>
+                
+				<requestDate>2018-04-27T11:44:25</requestDate>
+                
+                <startDateTime>2018-05-17T16:00:00</startDateTime>
+                
+                <endDateTime>2018-05-17T21:30:00</endDateTime>
+                <location>d'arbeloff</location>
+                <username>aalbert</username>
+                <firstName>Alyssa</firstName>
+                <lastName>Albert</lastName>
+                <dept>Event &amp; Conference Services</dept>
+                <count>120</count>
             </request>
         
             <request>
@@ -12242,23 +12242,6 @@
             </request>
         
             <request>
-                <legacyID>21891</legacyID>
-                <title>Summer Youth Intern Workshop</title>
-                
-				<requestDate>2018-07-10T15:42:17</requestDate>
-                
-                <startDateTime>2018-07-18T09:00:00</startDateTime>
-                
-                <endDateTime>2018-07-18T13:00:00</endDateTime>
-                <location>d'arbeloff</location>
-                <username>cmoscat</username>
-                <firstName>Christina</firstName>
-                <lastName>Moscat</lastName>
-                <dept>School Visits</dept>
-                <count>18</count>
-            </request>
-        
-            <request>
                 <legacyID>21857</legacyID>
                 <title>Minus SSW&amp;amp;P</title>
                 
@@ -12273,6 +12256,23 @@
                 <lastName>Thate</lastName>
                 <dept>Strategic Projects</dept>
                 <count>7</count>
+            </request>
+        
+            <request>
+                <legacyID>21891</legacyID>
+                <title>Summer Youth Intern Workshop</title>
+                
+				<requestDate>2018-07-10T15:42:17</requestDate>
+                
+                <startDateTime>2018-07-18T09:00:00</startDateTime>
+                
+                <endDateTime>2018-07-18T13:00:00</endDateTime>
+                <location>d'arbeloff</location>
+                <username>cmoscat</username>
+                <firstName>Christina</firstName>
+                <lastName>Moscat</lastName>
+                <dept>School Visits</dept>
+                <count>18</count>
             </request>
         
             <request>
@@ -13398,23 +13398,6 @@
             </request>
         
             <request>
-                <legacyID>21238</legacyID>
-                <title>Shiao-Juliana Wedding</title>
-                
-				<requestDate>2017-11-21T09:48:37</requestDate>
-                
-                <startDateTime>2018-08-26T17:00:00</startDateTime>
-                
-                <endDateTime>2018-08-27T00:00:00</endDateTime>
-                <location>Pavilion</location>
-                <username>cbutler</username>
-                <firstName>Cory</firstName>
-                <lastName>Butler</lastName>
-                <dept>Event &amp; Conference Services</dept>
-                <count>50</count>
-            </request>
-        
-            <request>
                 <legacyID>21900</legacyID>
                 <title>Wedding Holding Room</title>
                 
@@ -13429,6 +13412,23 @@
                 <lastName>Butler</lastName>
                 <dept>Event &amp; Conference Services</dept>
                 <count/>
+            </request>
+        
+            <request>
+                <legacyID>21238</legacyID>
+                <title>Shiao-Juliana Wedding</title>
+                
+				<requestDate>2017-11-21T09:48:37</requestDate>
+                
+                <startDateTime>2018-08-26T17:00:00</startDateTime>
+                
+                <endDateTime>2018-08-27T00:00:00</endDateTime>
+                <location>Pavilion</location>
+                <username>cbutler</username>
+                <firstName>Cory</firstName>
+                <lastName>Butler</lastName>
+                <dept>Event &amp; Conference Services</dept>
+                <count>50</count>
             </request>
         
             <request>
@@ -13721,23 +13721,6 @@
             </request>
         
             <request>
-                <legacyID>21914</legacyID>
-                <title>Wedding Holding Room</title>
-                
-				<requestDate>2018-07-17T13:17:33</requestDate>
-                
-                <startDateTime>2018-09-02T14:00:00</startDateTime>
-                
-                <endDateTime>2018-09-02T21:00:00</endDateTime>
-                <location>Hornblower Room</location>
-                <username>cbutler</username>
-                <firstName>Cory</firstName>
-                <lastName>Butler</lastName>
-                <dept>Event &amp; Conference Services</dept>
-                <count>0</count>
-            </request>
-        
-            <request>
                 <legacyID>21127</legacyID>
                 <title>Katz-Way Wedding</title>
                 
@@ -13752,6 +13735,23 @@
                 <lastName>Butler</lastName>
                 <dept>Event &amp; Conference Services</dept>
                 <count>125</count>
+            </request>
+        
+            <request>
+                <legacyID>21914</legacyID>
+                <title>Wedding Holding Room</title>
+                
+				<requestDate>2018-07-17T13:17:33</requestDate>
+                
+                <startDateTime>2018-09-02T14:00:00</startDateTime>
+                
+                <endDateTime>2018-09-02T21:00:00</endDateTime>
+                <location>Hornblower Room</location>
+                <username>cbutler</username>
+                <firstName>Cory</firstName>
+                <lastName>Butler</lastName>
+                <dept>Event &amp; Conference Services</dept>
+                <count>0</count>
             </request>
         
             <request>
@@ -16050,23 +16050,6 @@
             </request>
         
             <request>
-                <legacyID>22237</legacyID>
-                <title>Holding ROom</title>
-                
-				<requestDate>2018-10-01T14:37:57</requestDate>
-                
-                <startDateTime>2018-10-06T16:00:00</startDateTime>
-                
-                <endDateTime>2018-10-06T18:30:00</endDateTime>
-                <location>Lower Morse</location>
-                <username>cbutler</username>
-                <firstName>Cory</firstName>
-                <lastName>Butler</lastName>
-                <dept>Event &amp; Conference Services</dept>
-                <count/>
-            </request>
-        
-            <request>
                 <legacyID>22227</legacyID>
                 <title>Wedding Holding Room</title>
                 
@@ -16076,6 +16059,23 @@
                 
                 <endDateTime>2018-10-06T19:00:00</endDateTime>
                 <location>Gordon Breakroom</location>
+                <username>cbutler</username>
+                <firstName>Cory</firstName>
+                <lastName>Butler</lastName>
+                <dept>Event &amp; Conference Services</dept>
+                <count/>
+            </request>
+        
+            <request>
+                <legacyID>22237</legacyID>
+                <title>Holding ROom</title>
+                
+				<requestDate>2018-10-01T14:37:57</requestDate>
+                
+                <startDateTime>2018-10-06T16:00:00</startDateTime>
+                
+                <endDateTime>2018-10-06T18:30:00</endDateTime>
+                <location>Lower Morse</location>
                 <username>cbutler</username>
                 <firstName>Cory</firstName>
                 <lastName>Butler</lastName>
@@ -16458,23 +16458,6 @@
             </request>
         
             <request>
-                <legacyID>22261</legacyID>
-                <title>Holding Room Band Ting</title>
-                
-				<requestDate>2018-10-05T16:44:40</requestDate>
-                
-                <startDateTime>2018-10-13T15:00:00</startDateTime>
-                
-                <endDateTime>2018-10-13T21:00:00</endDateTime>
-                <location>Lower Morse</location>
-                <username>cbutler</username>
-                <firstName>Cory</firstName>
-                <lastName>Butler</lastName>
-                <dept>Event &amp; Conference Services</dept>
-                <count/>
-            </request>
-        
-            <request>
                 <legacyID>21070</legacyID>
                 <title>Ting-Behrend Wedding</title>
                 
@@ -16489,6 +16472,23 @@
                 <lastName>Butler</lastName>
                 <dept>Event &amp; Conference Services</dept>
                 <count>120</count>
+            </request>
+        
+            <request>
+                <legacyID>22261</legacyID>
+                <title>Holding Room Band Ting</title>
+                
+				<requestDate>2018-10-05T16:44:40</requestDate>
+                
+                <startDateTime>2018-10-13T15:00:00</startDateTime>
+                
+                <endDateTime>2018-10-13T21:00:00</endDateTime>
+                <location>Lower Morse</location>
+                <username>cbutler</username>
+                <firstName>Cory</firstName>
+                <lastName>Butler</lastName>
+                <dept>Event &amp; Conference Services</dept>
+                <count/>
             </request>
         
             <request>
@@ -16509,23 +16509,6 @@
             </request>
         
             <request>
-                <legacyID>21600</legacyID>
-                <title>Mayo-Smith-Kao Wedding</title>
-                
-				<requestDate>2018-03-16T15:44:36</requestDate>
-                
-                <startDateTime>2018-10-13T17:00:00</startDateTime>
-                
-                <endDateTime>2018-10-13T22:00:00</endDateTime>
-                <location>Skyline</location>
-                <username>cbutler</username>
-                <firstName>Cory</firstName>
-                <lastName>Butler</lastName>
-                <dept>Event &amp; Conference Services</dept>
-                <count>110</count>
-            </request>
-        
-            <request>
                 <legacyID>21269</legacyID>
                 <title>Brehm-Wagner Wedding</title>
                 
@@ -16540,6 +16523,23 @@
                 <lastName>Butler</lastName>
                 <dept>Event &amp; Conference Services</dept>
                 <count>150</count>
+            </request>
+        
+            <request>
+                <legacyID>21600</legacyID>
+                <title>Mayo-Smith-Kao Wedding</title>
+                
+				<requestDate>2018-03-16T15:44:36</requestDate>
+                
+                <startDateTime>2018-10-13T17:00:00</startDateTime>
+                
+                <endDateTime>2018-10-13T22:00:00</endDateTime>
+                <location>Skyline</location>
+                <username>cbutler</username>
+                <firstName>Cory</firstName>
+                <lastName>Butler</lastName>
+                <dept>Event &amp; Conference Services</dept>
+                <count>110</count>
             </request>
         
             <request>
@@ -17785,7 +17785,7 @@
         
             <request>
                 <legacyID>22293</legacyID>
-                <title>Brand Photo Shoot – Day 1</title>
+                <title>Brand Photo Shoot - Day 1</title>
                 
 				<requestDate>2018-10-12T14:06:15</requestDate>
                 
@@ -17802,7 +17802,7 @@
         
             <request>
                 <legacyID>22294</legacyID>
-                <title>Brand Photo Shoot – Day 2</title>
+                <title>Brand Photo Shoot - Day 2</title>
                 
 				<requestDate>2018-10-12T14:06:56</requestDate>
                 
@@ -18716,6 +18716,23 @@
                 <lastName>Slivensky</lastName>
                 <dept>School Visits</dept>
                 <count>100</count>
+            </request>
+        
+            <request>
+                <legacyID>22358</legacyID>
+                <title>Biogen</title>
+                
+				<requestDate>2018-11-08T12:17:47</requestDate>
+                
+                <startDateTime>2018-11-27T17:00:00</startDateTime>
+                
+                <endDateTime>2018-11-27T23:00:00</endDateTime>
+                <location>SKyline/HHL Tour</location>
+                <username>aalbert</username>
+                <firstName>Alyssa</firstName>
+                <lastName>Albert</lastName>
+                <dept>Event &amp; Conference Services</dept>
+                <count>45</count>
             </request>
         
             <request>
@@ -21065,6 +21082,23 @@
             </request>
         
             <request>
+                <legacyID>22355</legacyID>
+                <title>Mass Biotech Council</title>
+                
+				<requestDate>2018-11-08T10:02:17</requestDate>
+                
+                <startDateTime>2019-03-27T16:00:00</startDateTime>
+                
+                <endDateTime>2019-03-27T23:00:00</endDateTime>
+                <location>Blue Wing/HHL</location>
+                <username>bwroblewski</username>
+                <firstName>Barbara</firstName>
+                <lastName>Wroblewski</lastName>
+                <dept>Event &amp; Conference Services</dept>
+                <count>400</count>
+            </request>
+        
+            <request>
                 <legacyID>22183</legacyID>
                 <title>EARLY CLOSE Blue Wing 4:30 PM</title>
                 
@@ -22289,6 +22323,23 @@
             </request>
         
             <request>
+                <legacyID>22356</legacyID>
+                <title>Entegris</title>
+                
+				<requestDate>2018-11-08T10:18:35</requestDate>
+                
+                <startDateTime>2019-05-21T17:00:00</startDateTime>
+                
+                <endDateTime>2019-05-21T23:00:00</endDateTime>
+                <location>Blue Wing</location>
+                <username>bwroblewski</username>
+                <firstName>Barbara</firstName>
+                <lastName>Wroblewski</lastName>
+                <dept>Event &amp; Conference Services</dept>
+                <count>200</count>
+            </request>
+        
+            <request>
                 <legacyID>22004</legacyID>
                 <title>Eye Opener</title>
                 
@@ -22578,20 +22629,20 @@
             </request>
         
             <request>
-                <legacyID>21537</legacyID>
-                <title>Overnight</title>
+                <legacyID>22357</legacyID>
+                <title>PFM</title>
                 
-				<requestDate>2018-02-15T15:11:41</requestDate>
+				<requestDate>2018-11-08T10:19:49</requestDate>
                 
-                <startDateTime>2019-06-06T17:00:00</startDateTime>
+                <startDateTime>2019-06-04T16:00:00</startDateTime>
                 
-                <endDateTime>2019-06-07T11:00:00</endDateTime>
-                <location>Blue Wing/Green WIng/Cahners/Cafe/Hornblower</location>
-                <username>nries</username>
-                <firstName>Nancy </firstName>
-                <lastName>Ries</lastName>
-                <dept>Overnight Programs</dept>
-                <count>600</count>
+                <endDateTime>2019-06-04T23:00:00</endDateTime>
+                <location>Pavilion</location>
+                <username>bwroblewski</username>
+                <firstName>Barbara</firstName>
+                <lastName>Wroblewski</lastName>
+                <dept>Event &amp; Conference Services</dept>
+                <count>100</count>
             </request>
         
             <request>
@@ -22609,6 +22660,23 @@
                 <lastName>Wroblewski</lastName>
                 <dept>Event &amp; Conference Services</dept>
                 <count>120</count>
+            </request>
+        
+            <request>
+                <legacyID>21537</legacyID>
+                <title>Overnight</title>
+                
+				<requestDate>2018-02-15T15:11:41</requestDate>
+                
+                <startDateTime>2019-06-06T17:00:00</startDateTime>
+                
+                <endDateTime>2019-06-07T11:00:00</endDateTime>
+                <location>Blue Wing/Green WIng/Cahners/Cafe/Hornblower</location>
+                <username>nries</username>
+                <firstName>Nancy </firstName>
+                <lastName>Ries</lastName>
+                <dept>Overnight Programs</dept>
+                <count>600</count>
             </request>
         
             <request>

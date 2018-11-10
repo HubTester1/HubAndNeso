@@ -5,12 +5,12 @@
 	var mData = {
 		'componentID': 158,
 		'swf': 1,
-		'mosMainKey': 'prod',
+		// 'mosMainKey': 'prod',
 		// 'mosMainKey': 'dev',
 		// 'mosMainKey': 'devMedium',
-		// 'mosMainKey': 'devLong',
+		'mosMainKey': 'devLong',
 		'devAdminNotifications': 1,
-		'notifications': 0
+		'notifications': 1
 	};
 
 	console.log("using settings m5");
@@ -348,13 +348,13 @@
 
 		'uniqueElements': [
 			{
-				'elementType': 'field',
-				'controlType': 'url',
-				'fieldName': 'Quark Request',
-				'labelContent': 'On Quark',
-				'editableForNonAdmin': [],
-				'editableForAdmin': [],
-			}, {
+			// 	'elementType': 'field',
+			// 	'controlType': 'url',
+			// 	'fieldName': 'Quark Request',
+			// 	'labelContent': 'On Quark',
+			// 	'editableForNonAdmin': [],
+			// 	'editableForAdmin': [],
+			// }, {
 
 				
 				

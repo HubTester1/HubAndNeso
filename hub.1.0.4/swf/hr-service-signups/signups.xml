@@ -39,10 +39,10 @@
                 
             
             <request>
-                <legacyID>16280</legacyID>
+                <legacyID>16276</legacyID>
                 <scheduleID>32796</scheduleID>
                 <signupAccount>glnolan</signupAccount>
-                <requestStatus>Credit Granted</requestStatus>
+                <requestStatus>Cancelled</requestStatus>
             </request>
         
             
@@ -50,10 +50,10 @@
                 
             
             <request>
-                <legacyID>16276</legacyID>
+                <legacyID>16280</legacyID>
                 <scheduleID>32796</scheduleID>
                 <signupAccount>glnolan</signupAccount>
-                <requestStatus>Cancelled</requestStatus>
+                <requestStatus>Credit Granted</requestStatus>
             </request>
         
             
@@ -119,7 +119,7 @@
                 <legacyID>16332</legacyID>
                 <scheduleID>32813</scheduleID>
                 <signupAccount>mliggett</signupAccount>
-                <requestStatus>Signed Up</requestStatus>
+                <requestStatus>Credit Granted</requestStatus>
             </request>
         
             
@@ -130,7 +130,7 @@
                 <legacyID>16278</legacyID>
                 <scheduleID>32814</scheduleID>
                 <signupAccount>glnolan</signupAccount>
-                <requestStatus>Signed Up</requestStatus>
+                <requestStatus>Credit Granted</requestStatus>
             </request>
         
             
@@ -141,7 +141,18 @@
                 <legacyID>16298</legacyID>
                 <scheduleID>32815</scheduleID>
                 <signupAccount>ahennessy</signupAccount>
-                <requestStatus>Signed Up</requestStatus>
+                <requestStatus>Credit Granted</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16334</legacyID>
+                <scheduleID>32817</scheduleID>
+                <signupAccount>jconverse</signupAccount>
+                <requestStatus>Credit Granted</requestStatus>
             </request>
         
             
@@ -152,7 +163,7 @@
                 <legacyID>16268</legacyID>
                 <scheduleID>32820</scheduleID>
                 <signupAccount>jlozeau</signupAccount>
-                <requestStatus>Signed Up</requestStatus>
+                <requestStatus>Credit Granted</requestStatus>
             </request>
         
             
@@ -163,7 +174,7 @@
                 <legacyID>16269</legacyID>
                 <scheduleID>32824</scheduleID>
                 <signupAccount>jlozeau</signupAccount>
-                <requestStatus>Signed Up</requestStatus>
+                <requestStatus>Credit Granted</requestStatus>
             </request>
         
             
@@ -174,6 +185,28 @@
                 <legacyID>16316</legacyID>
                 <scheduleID>32826</scheduleID>
                 <signupAccount>mstone</signupAccount>
+                <requestStatus>Credit Granted</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16365</legacyID>
+                <scheduleID>32837</scheduleID>
+                <signupAccount>mmcdonnell</signupAccount>
+                <requestStatus>Signed Up</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16366</legacyID>
+                <scheduleID>32843</scheduleID>
+                <signupAccount>mmcdonnell</signupAccount>
                 <requestStatus>Signed Up</requestStatus>
             </request>
         
@@ -259,9 +292,9 @@
                 
             
             <request>
-                <legacyID>16224</legacyID>
+                <legacyID>16034</legacyID>
                 <scheduleID>32994</scheduleID>
-                <signupAccount>rmarchant</signupAccount>
+                <signupAccount>edisciascio</signupAccount>
                 <requestStatus>Cancelled</requestStatus>
             </request>
         
@@ -270,9 +303,9 @@
                 
             
             <request>
-                <legacyID>16034</legacyID>
+                <legacyID>16224</legacyID>
                 <scheduleID>32994</scheduleID>
-                <signupAccount>edisciascio</signupAccount>
+                <signupAccount>rmarchant</signupAccount>
                 <requestStatus>Cancelled</requestStatus>
             </request>
         
@@ -405,7 +438,7 @@
                 <legacyID>16185</legacyID>
                 <scheduleID>33017</scheduleID>
                 <signupAccount>rsutton</signupAccount>
-                <requestStatus>Signed Up</requestStatus>
+                <requestStatus>Credit Granted</requestStatus>
             </request>
         
             
@@ -416,7 +449,7 @@
                 <legacyID>16079</legacyID>
                 <scheduleID>33021</scheduleID>
                 <signupAccount>Wtatarouns</signupAccount>
-                <requestStatus>Signed Up</requestStatus>
+                <requestStatus>Credit Granted</requestStatus>
             </request>
         
             
@@ -427,7 +460,7 @@
                 <legacyID>16081</legacyID>
                 <scheduleID>33021</scheduleID>
                 <signupAccount>agermaine</signupAccount>
-                <requestStatus>Signed Up</requestStatus>
+                <requestStatus>Credit Granted</requestStatus>
             </request>
         
             
@@ -449,7 +482,7 @@
                 <legacyID>16090</legacyID>
                 <scheduleID>33022</scheduleID>
                 <signupAccount>djacob</signupAccount>
-                <requestStatus>Signed Up</requestStatus>
+                <requestStatus>Cancelled</requestStatus>
             </request>
         
             
@@ -460,18 +493,7 @@
                 <legacyID>16094</legacyID>
                 <scheduleID>33022</scheduleID>
                 <signupAccount>msmith</signupAccount>
-                <requestStatus>Signed Up</requestStatus>
-            </request>
-        
-            
-            
-                
-            
-            <request>
-                <legacyID>16182</legacyID>
-                <scheduleID>33081</scheduleID>
-                <signupAccount>klaguzza</signupAccount>
-                <requestStatus>Credit Granted</requestStatus>
+                <requestStatus>Credit Denied</requestStatus>
             </request>
         
             
@@ -482,6 +504,17 @@
                 <legacyID>16190</legacyID>
                 <scheduleID>33081</scheduleID>
                 <signupAccount>nmeyer</signupAccount>
+                <requestStatus>Credit Granted</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16182</legacyID>
+                <scheduleID>33081</scheduleID>
+                <signupAccount>klaguzza</signupAccount>
                 <requestStatus>Credit Granted</requestStatus>
             </request>
         
@@ -578,10 +611,10 @@
                 
             
             <request>
-                <legacyID>16210</legacyID>
+                <legacyID>16270</legacyID>
                 <scheduleID>33093</scheduleID>
-                <signupAccount>soneill</signupAccount>
-                <requestStatus>Credit Granted</requestStatus>
+                <signupAccount>ckelly</signupAccount>
+                <requestStatus>Cancelled</requestStatus>
             </request>
         
             
@@ -589,10 +622,10 @@
                 
             
             <request>
-                <legacyID>16270</legacyID>
+                <legacyID>16210</legacyID>
                 <scheduleID>33093</scheduleID>
-                <signupAccount>ckelly</signupAccount>
-                <requestStatus>Cancelled</requestStatus>
+                <signupAccount>soneill</signupAccount>
+                <requestStatus>Credit Granted</requestStatus>
             </request>
         
             
@@ -699,53 +732,9 @@
                 
             
             <request>
-                <legacyID>16274</legacyID>
-                <scheduleID>33143</scheduleID>
-                <signupAccount>jbaker</signupAccount>
-                <requestStatus>Signed Up</requestStatus>
-            </request>
-        
-            
-            
-                
-            
-            <request>
-                <legacyID>16275</legacyID>
-                <scheduleID>33144</scheduleID>
-                <signupAccount>jbaker</signupAccount>
-                <requestStatus>Signed Up</requestStatus>
-            </request>
-        
-            
-            
-                
-            
-            <request>
                 <legacyID>16279</legacyID>
                 <scheduleID>33147</scheduleID>
                 <signupAccount>jfriedman</signupAccount>
-                <requestStatus>Credit Granted</requestStatus>
-            </request>
-        
-            
-            
-                
-            
-            <request>
-                <legacyID>16282</legacyID>
-                <scheduleID>33149</scheduleID>
-                <signupAccount>eworkman</signupAccount>
-                <requestStatus>Credit Granted</requestStatus>
-            </request>
-        
-            
-            
-                
-            
-            <request>
-                <legacyID>16283</legacyID>
-                <scheduleID>33149</scheduleID>
-                <signupAccount>cdillard</signupAccount>
                 <requestStatus>Credit Granted</requestStatus>
             </request>
         
@@ -768,6 +757,28 @@
                 <legacyID>16286</legacyID>
                 <scheduleID>33149</scheduleID>
                 <signupAccount>kbaur</signupAccount>
+                <requestStatus>Credit Granted</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16282</legacyID>
+                <scheduleID>33149</scheduleID>
+                <signupAccount>eworkman</signupAccount>
+                <requestStatus>Credit Granted</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16283</legacyID>
+                <scheduleID>33149</scheduleID>
+                <signupAccount>cdillard</signupAccount>
                 <requestStatus>Credit Granted</requestStatus>
             </request>
         
@@ -845,7 +856,18 @@
                 <legacyID>16327</legacyID>
                 <scheduleID>33155</scheduleID>
                 <signupAccount>pscherl</signupAccount>
-                <requestStatus>Signed Up</requestStatus>
+                <requestStatus>Credit Granted</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16350</legacyID>
+                <scheduleID>33155</scheduleID>
+                <signupAccount>bwatson</signupAccount>
+                <requestStatus>Credit Granted</requestStatus>
             </request>
         
             
@@ -897,21 +919,10 @@
                 
             
             <request>
-                <legacyID>16310</legacyID>
-                <scheduleID>33162</scheduleID>
-                <signupAccount>sso</signupAccount>
-                <requestStatus>Signed Up</requestStatus>
-            </request>
-        
-            
-            
-                
-            
-            <request>
                 <legacyID>16304</legacyID>
                 <scheduleID>33162</scheduleID>
                 <signupAccount>apetroff</signupAccount>
-                <requestStatus>Signed Up</requestStatus>
+                <requestStatus>Credit Granted</requestStatus>
             </request>
         
             
@@ -922,7 +933,7 @@
                 <legacyID>16301</legacyID>
                 <scheduleID>33162</scheduleID>
                 <signupAccount>rkipling</signupAccount>
-                <requestStatus>Signed Up</requestStatus>
+                <requestStatus>Credit Granted</requestStatus>
             </request>
         
             
@@ -933,7 +944,29 @@
                 <legacyID>16300</legacyID>
                 <scheduleID>33162</scheduleID>
                 <signupAccount>aanderson</signupAccount>
-                <requestStatus>Signed Up</requestStatus>
+                <requestStatus>Credit Granted</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16310</legacyID>
+                <scheduleID>33162</scheduleID>
+                <signupAccount>sso</signupAccount>
+                <requestStatus>Credit Granted</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16343</legacyID>
+                <scheduleID>33163</scheduleID>
+                <signupAccount>mcarter</signupAccount>
+                <requestStatus>Credit Granted</requestStatus>
             </request>
         
             
@@ -944,7 +977,7 @@
                 <legacyID>16305</legacyID>
                 <scheduleID>33163</scheduleID>
                 <signupAccount>elogan</signupAccount>
-                <requestStatus>Signed Up</requestStatus>
+                <requestStatus>Credit Granted</requestStatus>
             </request>
         
             
@@ -952,10 +985,10 @@
                 
             
             <request>
-                <legacyID>16309</legacyID>
+                <legacyID>16336</legacyID>
                 <scheduleID>33163</scheduleID>
-                <signupAccount>cwilliams</signupAccount>
-                <requestStatus>Signed Up</requestStatus>
+                <signupAccount>gfo</signupAccount>
+                <requestStatus>Credit Granted</requestStatus>
             </request>
         
             
@@ -966,7 +999,18 @@
                 <legacyID>16315</legacyID>
                 <scheduleID>33163</scheduleID>
                 <signupAccount>mbeyer</signupAccount>
-                <requestStatus>Signed Up</requestStatus>
+                <requestStatus>Credit Granted</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16309</legacyID>
+                <scheduleID>33163</scheduleID>
+                <signupAccount>cwilliams</signupAccount>
+                <requestStatus>Cancelled</requestStatus>
             </request>
         
             
@@ -977,7 +1021,7 @@
                 <legacyID>16308</legacyID>
                 <scheduleID>33164</scheduleID>
                 <signupAccount>mrabidou</signupAccount>
-                <requestStatus>Signed Up</requestStatus>
+                <requestStatus>Cancelled</requestStatus>
             </request>
         
             
@@ -988,7 +1032,7 @@
                 <legacyID>16306</legacyID>
                 <scheduleID>33165</scheduleID>
                 <signupAccount>sstoessel</signupAccount>
-                <requestStatus>Signed Up</requestStatus>
+                <requestStatus>Credit Granted</requestStatus>
             </request>
         
             
@@ -999,7 +1043,7 @@
                 <legacyID>16311</legacyID>
                 <scheduleID>33165</scheduleID>
                 <signupAccount>mfranks</signupAccount>
-                <requestStatus>Signed Up</requestStatus>
+                <requestStatus>Credit Granted</requestStatus>
             </request>
         
             
@@ -1021,7 +1065,7 @@
                 <legacyID>16333</legacyID>
                 <scheduleID>33166</scheduleID>
                 <signupAccount>mliggett</signupAccount>
-                <requestStatus>Signed Up</requestStatus>
+                <requestStatus>Credit Granted</requestStatus>
             </request>
         
             
@@ -1032,7 +1076,7 @@
                 <legacyID>16302</legacyID>
                 <scheduleID>33167</scheduleID>
                 <signupAccount>aanderson</signupAccount>
-                <requestStatus>Signed Up</requestStatus>
+                <requestStatus>Credit Granted</requestStatus>
             </request>
         
             
@@ -1043,18 +1087,7 @@
                 <legacyID>16303</legacyID>
                 <scheduleID>33167</scheduleID>
                 <signupAccount>SPaneto</signupAccount>
-                <requestStatus>Signed Up</requestStatus>
-            </request>
-        
-            
-            
-                
-            
-            <request>
-                <legacyID>16329</legacyID>
-                <scheduleID>33171</scheduleID>
-                <signupAccount>ebell</signupAccount>
-                <requestStatus>Signed Up</requestStatus>
+                <requestStatus>Credit Granted</requestStatus>
             </request>
         
             
@@ -1065,7 +1098,7 @@
                 <legacyID>16312</legacyID>
                 <scheduleID>33171</scheduleID>
                 <signupAccount>bmalandain</signupAccount>
-                <requestStatus>Signed Up</requestStatus>
+                <requestStatus>Credit Granted</requestStatus>
             </request>
         
             
@@ -1084,10 +1117,87 @@
                 
             
             <request>
+                <legacyID>16329</legacyID>
+                <scheduleID>33171</scheduleID>
+                <signupAccount>ebell</signupAccount>
+                <requestStatus>Credit Granted</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16348</legacyID>
+                <scheduleID>33172</scheduleID>
+                <signupAccount>carolmartin</signupAccount>
+                <requestStatus>Credit Granted</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16349</legacyID>
+                <scheduleID>33172</scheduleID>
+                <signupAccount>mtomusiak</signupAccount>
+                <requestStatus>Credit Granted</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16345</legacyID>
+                <scheduleID>33173</scheduleID>
+                <signupAccount>mcabrera</signupAccount>
+                <requestStatus>Credit Granted</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
                 <legacyID>16331</legacyID>
                 <scheduleID>33173</scheduleID>
                 <signupAccount>cwilliams</signupAccount>
-                <requestStatus>Signed Up</requestStatus>
+                <requestStatus>Credit Granted</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16385</legacyID>
+                <scheduleID>33173</scheduleID>
+                <signupAccount>bwilkinson</signupAccount>
+                <requestStatus>Credit Granted</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16337</legacyID>
+                <scheduleID>33173</scheduleID>
+                <signupAccount>gkam</signupAccount>
+                <requestStatus>Credit Granted</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16387</legacyID>
+                <scheduleID>33173</scheduleID>
+                <signupAccount>aweisman</signupAccount>
+                <requestStatus>Credit Granted</requestStatus>
             </request>
         
             
@@ -1098,7 +1208,29 @@
                 <legacyID>16314</legacyID>
                 <scheduleID>33173</scheduleID>
                 <signupAccount>sso</signupAccount>
-                <requestStatus>Signed Up</requestStatus>
+                <requestStatus>Credit Granted</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16390</legacyID>
+                <scheduleID>33179</scheduleID>
+                <signupAccount>ddonahue</signupAccount>
+                <requestStatus>Credit Granted</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16335</legacyID>
+                <scheduleID>33182</scheduleID>
+                <signupAccount>nmeyer</signupAccount>
+                <requestStatus>Credit Granted</requestStatus>
             </request>
         
             
@@ -1109,7 +1241,7 @@
                 <legacyID>16317</legacyID>
                 <scheduleID>33183</scheduleID>
                 <signupAccount>csmith</signupAccount>
-                <requestStatus>Signed Up</requestStatus>
+                <requestStatus>Credit Granted</requestStatus>
             </request>
         
             
@@ -1120,7 +1252,29 @@
                 <legacyID>16318</legacyID>
                 <scheduleID>33183</scheduleID>
                 <signupAccount>edisciascio</signupAccount>
-                <requestStatus>Signed Up</requestStatus>
+                <requestStatus>Credit Granted</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16338</legacyID>
+                <scheduleID>33184</scheduleID>
+                <signupAccount>ejordan</signupAccount>
+                <requestStatus>Credit Granted</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16339</legacyID>
+                <scheduleID>33185</scheduleID>
+                <signupAccount>mrojas</signupAccount>
+                <requestStatus>Credit Granted</requestStatus>
             </request>
         
             
@@ -1131,18 +1285,7 @@
                 <legacyID>16328</legacyID>
                 <scheduleID>33185</scheduleID>
                 <signupAccount>bwilkinson</signupAccount>
-                <requestStatus>Signed Up</requestStatus>
-            </request>
-        
-            
-            
-                
-            
-            <request>
-                <legacyID>16323</legacyID>
-                <scheduleID>33186</scheduleID>
-                <signupAccount>herb</signupAccount>
-                <requestStatus>Signed Up</requestStatus>
+                <requestStatus>Credit Granted</requestStatus>
             </request>
         
             
@@ -1153,7 +1296,29 @@
                 <legacyID>16320</legacyID>
                 <scheduleID>33186</scheduleID>
                 <signupAccount>edisciascio</signupAccount>
-                <requestStatus>Signed Up</requestStatus>
+                <requestStatus>Credit Granted</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16323</legacyID>
+                <scheduleID>33186</scheduleID>
+                <signupAccount>herb</signupAccount>
+                <requestStatus>Credit Granted</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16346</legacyID>
+                <scheduleID>33187</scheduleID>
+                <signupAccount>jharris</signupAccount>
+                <requestStatus>Credit Granted</requestStatus>
             </request>
         
             
@@ -1164,7 +1329,7 @@
                 <legacyID>16325</legacyID>
                 <scheduleID>33187</scheduleID>
                 <signupAccount>mgarcia</signupAccount>
-                <requestStatus>Signed Up</requestStatus>
+                <requestStatus>Credit Granted</requestStatus>
             </request>
         
             
@@ -1175,7 +1340,18 @@
                 <legacyID>16326</legacyID>
                 <scheduleID>33187</scheduleID>
                 <signupAccount>kkatzer</signupAccount>
-                <requestStatus>Signed Up</requestStatus>
+                <requestStatus>Credit Denied</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16384</legacyID>
+                <scheduleID>33188</scheduleID>
+                <signupAccount>nmeyer</signupAccount>
+                <requestStatus>Credit Granted</requestStatus>
             </request>
         
             
@@ -1186,7 +1362,7 @@
                 <legacyID>16321</legacyID>
                 <scheduleID>33189</scheduleID>
                 <signupAccount>herb</signupAccount>
-                <requestStatus>Signed Up</requestStatus>
+                <requestStatus>Credit Granted</requestStatus>
             </request>
         
             
@@ -1208,7 +1384,7 @@
                 <legacyID>16330</legacyID>
                 <scheduleID>33189</scheduleID>
                 <signupAccount>bmillar</signupAccount>
-                <requestStatus>Signed Up</requestStatus>
+                <requestStatus>Credit Granted</requestStatus>
             </request>
         
             
@@ -1227,9 +1403,559 @@
                 
             
             <request>
+                <legacyID>16340</legacyID>
+                <scheduleID>33190</scheduleID>
+                <signupAccount>jfanning</signupAccount>
+                <requestStatus>Signed Up</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16380</legacyID>
+                <scheduleID>33191</scheduleID>
+                <signupAccount>kkatzer</signupAccount>
+                <requestStatus>Signed Up</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
                 <legacyID>16324</legacyID>
                 <scheduleID>33191</scheduleID>
                 <signupAccount>egrizzard</signupAccount>
+                <requestStatus>Signed Up</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16347</legacyID>
+                <scheduleID>33192</scheduleID>
+                <signupAccount>carolmartin</signupAccount>
+                <requestStatus>Credit Granted</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16344</legacyID>
+                <scheduleID>33193</scheduleID>
+                <signupAccount>cwilliams</signupAccount>
+                <requestStatus>Credit Granted</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16353</legacyID>
+                <scheduleID>33193</scheduleID>
+                <signupAccount>mtomusiak</signupAccount>
+                <requestStatus>Credit Granted</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16342</legacyID>
+                <scheduleID>33194</scheduleID>
+                <signupAccount>kmcinerney</signupAccount>
+                <requestStatus>Credit Granted</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16341</legacyID>
+                <scheduleID>33195</scheduleID>
+                <signupAccount>djaikes</signupAccount>
+                <requestStatus>Credit Granted</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16362</legacyID>
+                <scheduleID>33197</scheduleID>
+                <signupAccount>jburke</signupAccount>
+                <requestStatus>Credit Granted</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16361</legacyID>
+                <scheduleID>33197</scheduleID>
+                <signupAccount>lcigna</signupAccount>
+                <requestStatus>Credit Granted</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16357</legacyID>
+                <scheduleID>33198</scheduleID>
+                <signupAccount>kaltomere</signupAccount>
+                <requestStatus>Credit Granted</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16358</legacyID>
+                <scheduleID>33198</scheduleID>
+                <signupAccount>avalledor</signupAccount>
+                <requestStatus>Credit Granted</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16368</legacyID>
+                <scheduleID>33199</scheduleID>
+                <signupAccount>gkam</signupAccount>
+                <requestStatus>Credit Granted</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16351</legacyID>
+                <scheduleID>33200</scheduleID>
+                <signupAccount>lbroderick</signupAccount>
+                <requestStatus>Credit Granted</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16352</legacyID>
+                <scheduleID>33200</scheduleID>
+                <signupAccount>agallant</signupAccount>
+                <requestStatus>Credit Denied</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16354</legacyID>
+                <scheduleID>33201</scheduleID>
+                <signupAccount>cwilliams</signupAccount>
+                <requestStatus>Credit Granted</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16355</legacyID>
+                <scheduleID>33201</scheduleID>
+                <signupAccount>igonzalez</signupAccount>
+                <requestStatus>Credit Granted</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16364</legacyID>
+                <scheduleID>33202</scheduleID>
+                <signupAccount>mmcdonnell</signupAccount>
+                <requestStatus>Credit Granted</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16359</legacyID>
+                <scheduleID>33202</scheduleID>
+                <signupAccount>gkam</signupAccount>
+                <requestStatus>Credit Granted</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16356</legacyID>
+                <scheduleID>33202</scheduleID>
+                <signupAccount>smaclaren</signupAccount>
+                <requestStatus>Credit Granted</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16360</legacyID>
+                <scheduleID>33203</scheduleID>
+                <signupAccount>madams</signupAccount>
+                <requestStatus>Signed Up</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16382</legacyID>
+                <scheduleID>33204</scheduleID>
+                <signupAccount>ckelly</signupAccount>
+                <requestStatus>Credit Granted</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16383</legacyID>
+                <scheduleID>33204</scheduleID>
+                <signupAccount>kbaur</signupAccount>
+                <requestStatus>Credit Granted</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16363</legacyID>
+                <scheduleID>33205</scheduleID>
+                <signupAccount>sheilman</signupAccount>
+                <requestStatus>Credit Denied</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16367</legacyID>
+                <scheduleID>33205</scheduleID>
+                <signupAccount>cbalesdent</signupAccount>
+                <requestStatus>Credit Granted</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16370</legacyID>
+                <scheduleID>33205</scheduleID>
+                <signupAccount>mtomusiak</signupAccount>
+                <requestStatus>Credit Granted</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16386</legacyID>
+                <scheduleID>33205</scheduleID>
+                <signupAccount>eodea</signupAccount>
+                <requestStatus>Credit Granted</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16369</legacyID>
+                <scheduleID>33206</scheduleID>
+                <signupAccount>agreene</signupAccount>
+                <requestStatus>Credit Granted</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16375</legacyID>
+                <scheduleID>33209</scheduleID>
+                <signupAccount>kpetrie</signupAccount>
+                <requestStatus>Credit Granted</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16376</legacyID>
+                <scheduleID>33209</scheduleID>
+                <signupAccount>jfanning</signupAccount>
+                <requestStatus>Credit Granted</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16381</legacyID>
+                <scheduleID>33209</scheduleID>
+                <signupAccount>mguay</signupAccount>
+                <requestStatus>Credit Granted</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16373</legacyID>
+                <scheduleID>33209</scheduleID>
+                <signupAccount>ksokol</signupAccount>
+                <requestStatus>Credit Granted</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16374</legacyID>
+                <scheduleID>33209</scheduleID>
+                <signupAccount>ltsuei</signupAccount>
+                <requestStatus>Credit Granted</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16377</legacyID>
+                <scheduleID>33209</scheduleID>
+                <signupAccount>dcurley</signupAccount>
+                <requestStatus>Credit Granted</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16378</legacyID>
+                <scheduleID>33209</scheduleID>
+                <signupAccount>kbeem</signupAccount>
+                <requestStatus>Credit Granted</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16379</legacyID>
+                <scheduleID>33209</scheduleID>
+                <signupAccount>mlitwhiler</signupAccount>
+                <requestStatus>Credit Granted</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16392</legacyID>
+                <scheduleID>33210</scheduleID>
+                <signupAccount>rlashley</signupAccount>
+                <requestStatus>Credit Granted</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16391</legacyID>
+                <scheduleID>33211</scheduleID>
+                <signupAccount>mmcdonnell</signupAccount>
+                <requestStatus>Signed Up</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16394</legacyID>
+                <scheduleID>33215</scheduleID>
+                <signupAccount>bmillar</signupAccount>
+                <requestStatus>Signed Up</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16389</legacyID>
+                <scheduleID>33217</scheduleID>
+                <signupAccount>cames</signupAccount>
+                <requestStatus>Credit Granted</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16388</legacyID>
+                <scheduleID>33218</scheduleID>
+                <signupAccount>meganharris</signupAccount>
+                <requestStatus>Credit Granted</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16393</legacyID>
+                <scheduleID>33219</scheduleID>
+                <signupAccount>mrojas</signupAccount>
+                <requestStatus>Credit Granted</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16395</legacyID>
+                <scheduleID>33222</scheduleID>
+                <signupAccount>djacob</signupAccount>
+                <requestStatus>Credit Granted</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16396</legacyID>
+                <scheduleID>33222</scheduleID>
+                <signupAccount>madams</signupAccount>
+                <requestStatus>Credit Granted</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16397</legacyID>
+                <scheduleID>33225</scheduleID>
+                <signupAccount>kpetrie</signupAccount>
+                <requestStatus>Signed Up</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16401</legacyID>
+                <scheduleID>33227</scheduleID>
+                <signupAccount>jneblett</signupAccount>
+                <requestStatus>Signed Up</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16399</legacyID>
+                <scheduleID>33229</scheduleID>
+                <signupAccount>ebell</signupAccount>
+                <requestStatus>Credit Granted</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16403</legacyID>
+                <scheduleID>33232</scheduleID>
+                <signupAccount>skeay</signupAccount>
+                <requestStatus>Signed Up</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16400</legacyID>
+                <scheduleID>33233</scheduleID>
+                <signupAccount>ebell</signupAccount>
+                <requestStatus>Signed Up</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16398</legacyID>
+                <scheduleID>33238</scheduleID>
+                <signupAccount>gmurray</signupAccount>
+                <requestStatus>Signed Up</requestStatus>
+            </request>
+        
+            
+            
+                
+            
+            <request>
+                <legacyID>16402</legacyID>
+                <scheduleID>33239</scheduleID>
+                <signupAccount>kthate</signupAccount>
                 <requestStatus>Signed Up</requestStatus>
             </request>
         

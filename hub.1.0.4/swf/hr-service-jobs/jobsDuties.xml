@@ -26,6 +26,18 @@
             </request>
         
             <request>
+                <legacyID>984</legacyID>
+                <duty>Set up registration materials.</duty>
+                <sortOrder>1</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>984</legacyID>
+                <duty>Welcome and check in guests.</duty>
+                <sortOrder>2</sortOrder>
+            </request>
+        
+            <request>
                 <legacyID>1110</legacyID>
                 <duty>Loading/Unloading Van with educator</duty>
                 <sortOrder>1</sortOrder>
@@ -35,6 +47,30 @@
                 <legacyID>1110</legacyID>
                 <duty>Setting up/Breaking down equipment with educator</duty>
                 <sortOrder>2</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1226</legacyID>
+                <duty>Moving artifacts.</duty>
+                <sortOrder>1</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1226</legacyID>
+                <duty>Conducting artifact or exhibit history research.</duty>
+                <sortOrder>2</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1226</legacyID>
+                <duty>Entering data in database or spreadsheet.</duty>
+                <sortOrder>3</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1226</legacyID>
+                <duty>Assisting with artifact cleaning.</duty>
+                <sortOrder>4</sortOrder>
             </request>
         
             <request>
@@ -53,6 +89,24 @@
                 <legacyID>1258</legacyID>
                 <duty>Carry or transport equipment and materials.</duty>
                 <sortOrder>2</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1259</legacyID>
+                <duty>Greeting participants and escorting them to</duty>
+                <sortOrder>1</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1259</legacyID>
+                <duty>Skyline</duty>
+                <sortOrder>2</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1301</legacyID>
+                <duty>Help facilitate computer science interpretations and activities to guests.</duty>
+                <sortOrder>1</sortOrder>
             </request>
         
             <request>
@@ -89,6 +143,54 @@
                 <legacyID>1326</legacyID>
                 <duty>Help unload van back at Museum</duty>
                 <sortOrder>6</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1368</legacyID>
+                <duty>Attend training in Gordon Wing.</duty>
+                <sortOrder>1</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1368</legacyID>
+                <duty>Help answer questions in MOS lobby..</duty>
+                <sortOrder>2</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1368</legacyID>
+                <duty>Help direct visitors to Cahners Theater.</duty>
+                <sortOrder>3</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1368</legacyID>
+                <duty>Hand out program notes and welcome people as they enter the theater.</duty>
+                <sortOrder>4</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1368</legacyID>
+                <duty>Assist LSP team with Book Signing in Cahners after program.</duty>
+                <sortOrder>5</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1368</legacyID>
+                <duty>Help LSP team wrap up and bring supplies to our pod in Gordon East.</duty>
+                <sortOrder>6</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1430</legacyID>
+                <duty>9&amp;#58;30 - 10&amp;#58;00 Attend morning volunteer briefing</duty>
+                <sortOrder>1</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1430</legacyID>
+                <duty>10&amp;#58;00 - 1&amp;#58;00 Rotating Experiment Activities</duty>
+                <sortOrder>2</sortOrder>
             </request>
         
             <request>
@@ -171,7 +273,7 @@
         
             <request>
                 <legacyID>1554</legacyID>
-                <duty>Scan tickets for the 7:30, 8:30, and 9:30 PM Planetarium shows.</duty>
+                <duty>Scan tickets for the 7&amp;#58;30, 8&amp;#58;30, and 9&amp;#58;30 PM Planetarium shows.</duty>
                 <sortOrder>2</sortOrder>
             </request>
         
@@ -218,6 +320,24 @@
             </request>
         
             <request>
+                <legacyID>1615</legacyID>
+                <duty>Attend facilitator training and Forum program (in Skyline)</duty>
+                <sortOrder>1</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1615</legacyID>
+                <duty>Facilitate conversations following a script and brief training that we will provide</duty>
+                <sortOrder>2</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1615</legacyID>
+                <duty>Help with other basic duties such as greeting guests as needed.</duty>
+                <sortOrder>3</sortOrder>
+            </request>
+        
+            <request>
                 <legacyID>1642</legacyID>
                 <duty>Assist at Registration Table in lobby, hand out guest list tickets, answer questions, explain adult programs and brochure sign up, and direct people to Planetarium.</duty>
                 <sortOrder>1</sortOrder>
@@ -231,7 +351,7 @@
         
             <request>
                 <legacyID>1642</legacyID>
-                <duty>Enjoy the 7:30pm show (or 9pm show if the 7:30pm sells out!)</duty>
+                <duty>Enjoy the 7&amp;#58;30pm show (or 9pm show if the 7&amp;#58;30pm sells out!)</duty>
                 <sortOrder>3</sortOrder>
             </request>
         
@@ -249,7 +369,7 @@
         
             <request>
                 <legacyID>1643</legacyID>
-                <duty>Enjoy the 7:30pm show (or 9pm show if the 7:30pm sells out!)</duty>
+                <duty>Enjoy the 7&amp;#58;30pm show (or 9pm show if the 7&amp;#58;30pm sells out!)</duty>
                 <sortOrder>3</sortOrder>
             </request>
         
@@ -267,7 +387,7 @@
         
             <request>
                 <legacyID>1645</legacyID>
-                <duty>Enjoy the 7:30pm show (or 9pm show if the 7:30pm sells out!)</duty>
+                <duty>Enjoy the 7&amp;#58;30pm show (or 9pm show if the 7&amp;#58;30pm sells out!)</duty>
                 <sortOrder>3</sortOrder>
             </request>
         
@@ -285,7 +405,7 @@
         
             <request>
                 <legacyID>1646</legacyID>
-                <duty>Enjoy the 7:30pm show (or 9pm show if the 7:30pm sells out!)</duty>
+                <duty>Enjoy the 7&amp;#58;30pm show (or 9pm show if the 7&amp;#58;30pm sells out!)</duty>
                 <sortOrder>3</sortOrder>
             </request>
         
@@ -303,7 +423,7 @@
         
             <request>
                 <legacyID>1648</legacyID>
-                <duty>Enjoy the 7:30pm show (or 9pm show if the 7:30pm sells out!)</duty>
+                <duty>Enjoy the 7&amp;#58;30pm show (or 9pm show if the 7&amp;#58;30pm sells out!)</duty>
                 <sortOrder>3</sortOrder>
             </request>
         
@@ -321,7 +441,7 @@
         
             <request>
                 <legacyID>1649</legacyID>
-                <duty>Enjoy the 7:30pm show (or 9pm show if the 7:30pm sells out!)</duty>
+                <duty>Enjoy the 7&amp;#58;30pm show (or 9pm show if the 7&amp;#58;30pm sells out!)</duty>
                 <sortOrder>3</sortOrder>
             </request>
         
@@ -339,7 +459,7 @@
         
             <request>
                 <legacyID>1651</legacyID>
-                <duty>Enjoy the 7:30pm screening!</duty>
+                <duty>Enjoy the 7&amp;#58;30pm screening!</duty>
                 <sortOrder>3</sortOrder>
             </request>
         
@@ -357,7 +477,7 @@
         
             <request>
                 <legacyID>1652</legacyID>
-                <duty>Enjoy the 7:30pm screening!</duty>
+                <duty>Enjoy the 7&amp;#58;30pm screening!</duty>
                 <sortOrder>3</sortOrder>
             </request>
         
@@ -386,14 +506,8 @@
             </request>
         
             <request>
-                <legacyID>1664</legacyID>
-                <duty>asdf</duty>
-                <sortOrder>1</sortOrder>
-            </request>
-        
-            <request>
                 <legacyID>1665</legacyID>
-                <duty>Greet guests in the lobby at registration, hand out name tags, validate parking, direct to event space (atrium), answer any questions guests may have, handle foot traffic to keep things moving smoothly. NOTE: Assistance will only be needed until 8:45am.</duty>
+                <duty>Greet guests in the lobby at registration, hand out name tags, validate parking, direct to event space (atrium), answer any questions guests may have, handle foot traffic to keep things moving smoothly. NOTE&amp;#58; Assistance will only be needed until 8&amp;#58;45am.</duty>
                 <sortOrder>1</sortOrder>
             </request>
         
@@ -423,13 +537,13 @@
         
             <request>
                 <legacyID>1668</legacyID>
-                <duty>- Arrive to Fenway park on own by 10:30 am</duty>
+                <duty>- Arrive to Fenway park on own by 10&amp;#58;30 am</duty>
                 <sortOrder>1</sortOrder>
             </request>
         
             <request>
                 <legacyID>1668</legacyID>
-                <duty>- Brief training from 10:30-11 am</duty>
+                <duty>- Brief training from 10&amp;#58;30-11 am</duty>
                 <sortOrder>2</sortOrder>
             </request>
         
@@ -441,7 +555,7 @@
         
             <request>
                 <legacyID>1668</legacyID>
-                <duty>- 2 to 2:30 pm clean-up activity and depart</duty>
+                <duty>- 2 to 2&amp;#58;30 pm clean-up activity and depart</duty>
                 <sortOrder>4</sortOrder>
             </request>
         
@@ -513,7 +627,7 @@
         
             <request>
                 <legacyID>1673</legacyID>
-                <duty>Enjoy the 8:30pm show</duty>
+                <duty>Enjoy the 8&amp;#58;30pm show</duty>
                 <sortOrder>3</sortOrder>
             </request>
         
@@ -531,7 +645,7 @@
         
             <request>
                 <legacyID>1674</legacyID>
-                <duty>Enjoy the 7:00pm program.</duty>
+                <duty>Enjoy the 7&amp;#58;00pm program.</duty>
                 <sortOrder>3</sortOrder>
             </request>
         
@@ -549,7 +663,7 @@
         
             <request>
                 <legacyID>1675</legacyID>
-                <duty>Enjoy the 7:00pm program.</duty>
+                <duty>Enjoy the 7&amp;#58;00pm program.</duty>
                 <sortOrder>3</sortOrder>
             </request>
         
@@ -567,7 +681,7 @@
         
             <request>
                 <legacyID>1676</legacyID>
-                <duty>Enjoy the 7:30pm show (or 9pm show if the 7:30pm sells out!)</duty>
+                <duty>Enjoy the 7&amp;#58;30pm show (or 9pm show if the 7&amp;#58;30pm sells out!)</duty>
                 <sortOrder>3</sortOrder>
             </request>
         
@@ -585,7 +699,7 @@
         
             <request>
                 <legacyID>1677</legacyID>
-                <duty>Join the staff team during the live trivia at 7:30pm!</duty>
+                <duty>Join the staff team during the live trivia at 7&amp;#58;30pm!</duty>
                 <sortOrder>3</sortOrder>
             </request>
         
@@ -603,7 +717,7 @@
         
             <request>
                 <legacyID>1678</legacyID>
-                <duty>Enjoy the 7:30pm show (or 9pm show if the 7:30pm sells out!)</duty>
+                <duty>Enjoy the 7&amp;#58;30pm show (or 9pm show if the 7&amp;#58;30pm sells out!)</duty>
                 <sortOrder>3</sortOrder>
             </request>
         
@@ -621,7 +735,7 @@
         
             <request>
                 <legacyID>1679</legacyID>
-                <duty>Enjoy the 7:00pm program.</duty>
+                <duty>Enjoy the 7&amp;#58;00pm program.</duty>
                 <sortOrder>3</sortOrder>
             </request>
         
@@ -639,7 +753,7 @@
         
             <request>
                 <legacyID>1680</legacyID>
-                <duty>Enjoy the 7:30pm show (or 9pm show if the 7:30pm sells out!)</duty>
+                <duty>Enjoy the 7&amp;#58;30pm show (or 9pm show if the 7&amp;#58;30pm sells out!)</duty>
                 <sortOrder>3</sortOrder>
             </request>
         
@@ -657,7 +771,7 @@
         
             <request>
                 <legacyID>1681</legacyID>
-                <duty>Enjoy the 7:00pm program.</duty>
+                <duty>Enjoy the 7&amp;#58;00pm program.</duty>
                 <sortOrder>3</sortOrder>
             </request>
         
@@ -675,8 +789,194 @@
         
             <request>
                 <legacyID>1682</legacyID>
-                <duty>Enjoy the 7:30pm show</duty>
+                <duty>Enjoy the 7&amp;#58;30pm show</duty>
                 <sortOrder>3</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1683</legacyID>
+                <duty>Help hand out train vouchers, maps, trip planners, and postcards to residents. Explain to them the process and how to redeem tickets, answer any general museum questions.</duty>
+                <sortOrder>1</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1684</legacyID>
+                <duty>Welcome folks</duty>
+                <sortOrder>1</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1684</legacyID>
+                <duty>Scan Event Ticket</duty>
+                <sortOrder>2</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1684</legacyID>
+                <duty>Hand out Event Flyer</duty>
+                <sortOrder>3</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1684</legacyID>
+                <duty>Validate Parking</duty>
+                <sortOrder>4</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1684</legacyID>
+                <duty>Answer Event-Related Questions</duty>
+                <sortOrder>5</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1685</legacyID>
+                <duty>Listen and record conversations at round tables.</duty>
+                <sortOrder>1</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1685</legacyID>
+                <duty>We will provide you with questions to help you take notes.</duty>
+                <sortOrder>2</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1685</legacyID>
+                <duty>Take notes on a laptop computer (we can provide one).</duty>
+                <sortOrder>3</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1686</legacyID>
+                <duty>Assist at Registration Table in lobby, hand out guest list tickets, answer questions, explain adult programs and brochure sign up, and direct people to Planetarium.</duty>
+                <sortOrder>1</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1686</legacyID>
+                <duty>Enjoy the 7pm show.</duty>
+                <sortOrder>2</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1687</legacyID>
+                <duty>Assist at Registration Table in lobby, hand out guest list tickets, answer questions, explain adult programs and brochure sign up, and direct people to Planetarium.</duty>
+                <sortOrder>1</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1687</legacyID>
+                <duty>Enjoy the 7pm show.</duty>
+                <sortOrder>2</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1688</legacyID>
+                <duty>Assist at Registration Table in lobby and direct people to Planetarium.</duty>
+                <sortOrder>1</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1688</legacyID>
+                <duty>Enjoy the movie.</duty>
+                <sortOrder>2</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1689</legacyID>
+                <duty>Assist with guest check in</duty>
+                <sortOrder>1</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1689</legacyID>
+                <duty>Direct guests to different areas of the Museum</duty>
+                <sortOrder>2</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1689</legacyID>
+                <duty>Help manage a Q&amp;A</duty>
+                <sortOrder>3</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1689</legacyID>
+                <duty>Other responsibilities as needed</duty>
+                <sortOrder>4</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1690</legacyID>
+                <duty>Drive van</duty>
+                <sortOrder>1</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1691</legacyID>
+                <duty>Folding cards</duty>
+                <sortOrder>1</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1691</legacyID>
+                <duty>Attaching Annual Fund Supporter magnet with glue dots</duty>
+                <sortOrder>2</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1691</legacyID>
+                <duty>sealing mailers with wafer seals</duty>
+                <sortOrder>3</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1691</legacyID>
+                <duty>attaching address labels</duty>
+                <sortOrder>4</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1692</legacyID>
+                <duty>9-9&amp;#58;30 am&amp;#58; Activity set-up in Well</duty>
+                <sortOrder>1</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1692</legacyID>
+                <duty>9&amp;#58;30 am-Noon&amp;#58; Facilitate chemistry activity</duty>
+                <sortOrder>2</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1692</legacyID>
+                <duty>Noon-12&amp;#58;30 pm&amp;#58; Clean-up and breakdown.</duty>
+                <sortOrder>3</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1693</legacyID>
+                <duty>Be cheery</duty>
+                <sortOrder>1</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1694</legacyID>
+                <duty>Welcome museum guests, inform them about programming for the day, hand out</duty>
+                <sortOrder>1</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1695</legacyID>
+                <duty>Turn on machines</duty>
+                <sortOrder>1</sortOrder>
+            </request>
+        
+            <request>
+                <legacyID>1696</legacyID>
+                <duty>Event Support</duty>
+                <sortOrder>1</sortOrder>
             </request>
         
     </data>

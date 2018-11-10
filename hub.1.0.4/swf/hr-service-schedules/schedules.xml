@@ -3,50 +3,20 @@
         
             <request>
                 <legacyID>33174</legacyID>
+                <legacyJobID>638</legacyJobID>
                 <requestDate>2018-09-11 11:25:22.9</requestDate>
                 <requestedForAccount>hyoung</requestedForAccount>
-                <date>2018-09-25 08:00:00.0</date>
-                <legacyJobID>638</legacyJobID>
-                <cancelled>0</cancelled>
-                <startTime>2018-09-25 08:00:00.0</startTime>
-                <fullDay>1</fullDay>
-                <qtyPositions>1</qtyPositions>
                 <location>dock</location>
-                <notes/>
-
-
-
+                <date>2018-09-25 08:00:00.0</date>
+                <startTime>2018-09-25 08:00:00.0</startTime>
                 <breakTime>1</breakTime>
                 <mealTime>12</mealTime>
+                <notes/>
+                <qtyPositions>1</qtyPositions>
+                <fullDay>1</fullDay>
+                <cancelled>0</cancelled>
             </request>
         
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             <request>
                 <legacyID>33175</legacyID>
                 <legacyJobID>638</legacyJobID>
@@ -114,7 +84,7 @@
             <request>
                 <legacyID>33179</legacyID>
                 <legacyJobID>638</legacyJobID>
-                <requestDate>2018-09-11 11:27:01.727</requestDate>
+                <requestDate>2018-10-24 11:43:19.577</requestDate>
                 <requestedForAccount>hyoung</requestedForAccount>
                 <location>dock</location>
                 <date>2018-10-31 08:00:00.0</date>
@@ -642,7 +612,7 @@
             <request>
                 <legacyID>32817</legacyID>
                 <legacyJobID>638</legacyJobID>
-                <requestDate>2018-02-05 08:15:05.76</requestDate>
+                <requestDate>2018-09-14 14:12:38.39</requestDate>
                 <requestedForAccount>hyoung</requestedForAccount>
                 <location>dock</location>
                 <date>2018-09-26 08:00:00.0</date>
@@ -962,7 +932,7 @@
             <request>
                 <legacyID>32837</legacyID>
                 <legacyJobID>638</legacyJobID>
-                <requestDate>2018-02-05 08:15:05.79</requestDate>
+                <requestDate>2018-10-04 08:02:44.897</requestDate>
                 <requestedForAccount>hyoung</requestedForAccount>
                 <location>dock</location>
                 <date>2018-11-30 08:00:00.0</date>
@@ -1058,7 +1028,7 @@
             <request>
                 <legacyID>32843</legacyID>
                 <legacyJobID>638</legacyJobID>
-                <requestDate>2018-02-05 08:15:05.79</requestDate>
+                <requestDate>2018-10-04 08:03:32.367</requestDate>
                 <requestedForAccount>hyoung</requestedForAccount>
                 <location>dock</location>
                 <date>2018-12-20 08:00:00.0</date>
@@ -1088,9 +1058,41 @@
             </request>
         
             <request>
+                <legacyID>33171</legacyID>
+                <legacyJobID>668</legacyJobID>
+                <requestDate>2018-09-13 17:07:10.377</requestDate>
+                <requestedForAccount>rkipling</requestedForAccount>
+                <location>DC</location>
+                <date>2018-09-18 12:30:00.0</date>
+                <startTime>2018-09-18 12:30:00.0</startTime>
+                <breakTime>as needed</breakTime>
+                <mealTime>n/a</mealTime>
+                <notes/>
+                <qtyPositions>2</qtyPositions>
+                <fullDay>0</fullDay>
+                <cancelled>0</cancelled>
+            </request>
+        
+            <request>
+                <legacyID>33167</legacyID>
+                <legacyJobID>668</legacyJobID>
+                <requestDate>2018-08-29 09:30:56.497</requestDate>
+                <requestedForAccount>rkipling</requestedForAccount>
+                <location>DC</location>
+                <date>2018-09-20 09:30:00.0</date>
+                <startTime>2018-09-20 09:30:00.0</startTime>
+                <breakTime>as needed</breakTime>
+                <mealTime>n/a</mealTime>
+                <notes/>
+                <qtyPositions>2</qtyPositions>
+                <fullDay>0</fullDay>
+                <cancelled>0</cancelled>
+            </request>
+        
+            <request>
                 <legacyID>33164</legacyID>
                 <legacyJobID>668</legacyJobID>
-                <requestDate>2018-08-31 16:09:13.57</requestDate>
+                <requestDate>2018-09-17 09:09:19.643</requestDate>
                 <requestedForAccount>rkipling</requestedForAccount>
                 <location>DC</location>
                 <date>2018-09-17 09:30:00.0</date>
@@ -1136,31 +1138,15 @@
             </request>
         
             <request>
-                <legacyID>33167</legacyID>
-                <legacyJobID>668</legacyJobID>
-                <requestDate>2018-08-29 09:30:56.497</requestDate>
-                <requestedForAccount>rkipling</requestedForAccount>
-                <location>DC</location>
-                <date>2018-09-20 09:30:00.0</date>
-                <startTime>2018-09-20 09:30:00.0</startTime>
-                <breakTime>as needed</breakTime>
-                <mealTime>n/a</mealTime>
-                <notes/>
-                <qtyPositions>2</qtyPositions>
-                <fullDay>0</fullDay>
-                <cancelled>0</cancelled>
-            </request>
-        
-            <request>
-                <legacyID>33171</legacyID>
-                <legacyJobID>668</legacyJobID>
-                <requestDate>2018-09-13 17:07:10.377</requestDate>
-                <requestedForAccount>rkipling</requestedForAccount>
-                <location>DC</location>
-                <date>2018-09-18 12:30:00.0</date>
-                <startTime>2018-09-18 12:30:00.0</startTime>
-                <breakTime>as needed</breakTime>
-                <mealTime>n/a</mealTime>
+                <legacyID>33198</legacyID>
+                <legacyJobID>984</legacyJobID>
+                <requestDate>2018-09-27 13:10:21.04</requestDate>
+                <requestedForAccount>mcabrera</requestedForAccount>
+                <location>lobby</location>
+                <date>2018-10-16 07:30:00.0</date>
+                <startTime>2018-10-16 07:30:00.0</startTime>
+                <breakTime>10:00</breakTime>
+                <mealTime>11:00</mealTime>
                 <notes/>
                 <qtyPositions>2</qtyPositions>
                 <fullDay>0</fullDay>
@@ -1180,6 +1166,22 @@
                 <notes/>
                 <qtyPositions>1</qtyPositions>
                 <fullDay>0</fullDay>
+                <cancelled>0</cancelled>
+            </request>
+        
+            <request>
+                <legacyID>33206</legacyID>
+                <legacyJobID>1226</legacyJobID>
+                <requestDate>2018-10-04 13:58:19.297</requestDate>
+                <requestedForAccount>rmelius</requestedForAccount>
+                <location>Collections</location>
+                <date>2018-10-05 09:00:00.0</date>
+                <startTime>2018-10-05 09:00:00.0</startTime>
+                <breakTime>10</breakTime>
+                <mealTime>12</mealTime>
+                <notes/>
+                <qtyPositions>1</qtyPositions>
+                <fullDay>1</fullDay>
                 <cancelled>0</cancelled>
             </request>
         
@@ -1216,6 +1218,134 @@
             </request>
         
             <request>
+                <legacyID>33197</legacyID>
+                <legacyJobID>1259</legacyJobID>
+                <requestDate>2018-09-28 07:17:06.17</requestDate>
+                <requestedForAccount>mcabrera</requestedForAccount>
+                <location>lobby</location>
+                <date>2018-10-16 07:45:00.0</date>
+                <startTime>2018-10-16 07:45:00.0</startTime>
+                <breakTime>10:30</breakTime>
+                <mealTime>11:15</mealTime>
+                <notes>You will be able to attend the conversation </notes>
+                <qtyPositions>2</qtyPositions>
+                <fullDay>0</fullDay>
+                <cancelled>0</cancelled>
+            </request>
+        
+            <request>
+                <legacyID>33214</legacyID>
+                <legacyJobID>1301</legacyJobID>
+                <requestDate>2018-10-16 11:34:06.46</requestDate>
+                <requestedForAccount>lbeall</requestedForAccount>
+                <location>Blue WIng</location>
+                <date>2018-12-09 09:00:00.0</date>
+                <startTime>2018-12-09 09:00:00.0</startTime>
+                <breakTime>4:00pm</breakTime>
+                <mealTime>1:00pm</mealTime>
+                <notes/>
+                <qtyPositions>4</qtyPositions>
+                <fullDay>0</fullDay>
+                <cancelled>0</cancelled>
+            </request>
+        
+            <request>
+                <legacyID>33215</legacyID>
+                <legacyJobID>1301</legacyJobID>
+                <requestDate>2018-11-02 09:23:44.02</requestDate>
+                <requestedForAccount>lbeall</requestedForAccount>
+                <location>Blue Wing</location>
+                <date>2018-12-08 13:00:00.0</date>
+                <startTime>2018-12-08 13:00:00.0</startTime>
+                <breakTime>4:30pm</breakTime>
+                <mealTime>12:00pm</mealTime>
+                <notes/>
+                <qtyPositions>4</qtyPositions>
+                <fullDay>0</fullDay>
+                <cancelled>0</cancelled>
+            </request>
+        
+            <request>
+                <legacyID>33216</legacyID>
+                <legacyJobID>1301</legacyJobID>
+                <requestDate>2018-10-16 11:34:33.35</requestDate>
+                <requestedForAccount>lbeall</requestedForAccount>
+                <location>Blue Wing</location>
+                <date>2018-12-09 13:00:00.0</date>
+                <startTime>2018-12-09 13:00:00.0</startTime>
+                <breakTime>4:30pm</breakTime>
+                <mealTime>12:00pm</mealTime>
+                <notes/>
+                <qtyPositions>4</qtyPositions>
+                <fullDay>0</fullDay>
+                <cancelled>0</cancelled>
+            </request>
+        
+            <request>
+                <legacyID>33211</legacyID>
+                <legacyJobID>1301</legacyJobID>
+                <requestDate>2018-10-26 17:22:58.093</requestDate>
+                <requestedForAccount>lbeall</requestedForAccount>
+                <location>Blue Wing</location>
+                <date>2018-12-08 09:00:00.0</date>
+                <startTime>2018-12-08 09:00:00.0</startTime>
+                <breakTime>4:00pm</breakTime>
+                <mealTime>1:00pm</mealTime>
+                <notes/>
+                <qtyPositions>4</qtyPositions>
+                <fullDay>1</fullDay>
+                <cancelled>0</cancelled>
+            </request>
+        
+            <request>
+                <legacyID>33212</legacyID>
+                <legacyJobID>1301</legacyJobID>
+                <requestDate>2018-10-16 11:33:41.803</requestDate>
+                <requestedForAccount>lbeall</requestedForAccount>
+                <location>Blue Wing</location>
+                <date>2018-12-09 09:00:00.0</date>
+                <startTime>2018-12-09 09:00:00.0</startTime>
+                <breakTime>4:00pm</breakTime>
+                <mealTime>1:00pm</mealTime>
+                <notes/>
+                <qtyPositions>4</qtyPositions>
+                <fullDay>1</fullDay>
+                <cancelled>0</cancelled>
+            </request>
+        
+            <request>
+                <legacyID>33213</legacyID>
+                <legacyJobID>1301</legacyJobID>
+                <requestDate>2018-10-16 11:34:06.46</requestDate>
+                <requestedForAccount>lbeall</requestedForAccount>
+                <location>Blue WIng</location>
+                <date>2018-12-08 09:00:00.0</date>
+                <startTime>2018-12-08 09:00:00.0</startTime>
+                <breakTime>4:00pm</breakTime>
+                <mealTime>1:00pm</mealTime>
+                <notes/>
+                <qtyPositions>4</qtyPositions>
+                <fullDay>0</fullDay>
+                <cancelled>0</cancelled>
+            </request>
+        
+            <request>
+                <legacyID>33154</legacyID>
+                <legacyJobID>1326</legacyJobID>
+                <requestDate>2018-08-13 09:33:42.157</requestDate>
+                <requestedForAccount>mpacewicz</requestedForAccount>
+                <location>MOS/MIlton</location>
+                <date>2018-08-21 08:15:00.0</date>
+                <startTime>2018-08-21 08:15:00.0</startTime>
+                <breakTime>tbd</breakTime>
+                <mealTime>tbd</mealTime>
+                <notes>Animal Engineers</notes>
+                <qtyPositions>1</qtyPositions>
+                <fullDay>0</fullDay>
+                <cancelled>0</cancelled>
+            </request>
+        
+            <request>
                 <legacyID>33117</legacyID>
                 <legacyJobID>1326</legacyJobID>
                 <requestDate>2018-05-31 12:56:29.467</requestDate>
@@ -1232,17 +1362,273 @@
             </request>
         
             <request>
-                <legacyID>33154</legacyID>
-                <legacyJobID>1326</legacyJobID>
-                <requestDate>2018-08-13 09:33:42.157</requestDate>
-                <requestedForAccount>mpacewicz</requestedForAccount>
-                <location>MOS/MIlton</location>
-                <date>2018-08-21 08:15:00.0</date>
-                <startTime>2018-08-21 08:15:00.0</startTime>
-                <breakTime>tbd</breakTime>
-                <mealTime>tbd</mealTime>
-                <notes>Animal Engineers</notes>
-                <qtyPositions>1</qtyPositions>
+                <legacyID>33210</legacyID>
+                <legacyJobID>1368</legacyJobID>
+                <requestDate>2018-10-27 15:59:04.707</requestDate>
+                <requestedForAccount>lmonrose</requestedForAccount>
+                <location>Lobby, Blue Wing, Cahners</location>
+                <date>2018-10-28 13:30:00.0</date>
+                <startTime>2018-10-28 13:30:00.0</startTime>
+                <breakTime>3:30pm</breakTime>
+                <mealTime>1pm</mealTime>
+                <notes/>
+                <qtyPositions>4</qtyPositions>
+                <fullDay>0</fullDay>
+                <cancelled>0</cancelled>
+            </request>
+        
+            <request>
+                <legacyID>33220</legacyID>
+                <legacyJobID>1430</legacyJobID>
+                <requestDate>2018-10-30 16:46:10.847</requestDate>
+                <requestedForAccount>jdoherty</requestedForAccount>
+                <location>Discovery Center</location>
+                <date>2018-11-06 09:30:00.0</date>
+                <startTime>2018-11-06 09:30:00.0</startTime>
+                <breakTime>N/A</breakTime>
+                <mealTime>N/A</mealTime>
+                <notes/>
+                <qtyPositions>2</qtyPositions>
+                <fullDay>0</fullDay>
+                <cancelled>0</cancelled>
+            </request>
+        
+            <request>
+                <legacyID>33221</legacyID>
+                <legacyJobID>1430</legacyJobID>
+                <requestDate>2018-10-30 16:46:10.86</requestDate>
+                <requestedForAccount>jdoherty</requestedForAccount>
+                <location>Discovery Center</location>
+                <date>2018-11-07 09:30:00.0</date>
+                <startTime>2018-11-07 09:30:00.0</startTime>
+                <breakTime>N/A</breakTime>
+                <mealTime>N/A</mealTime>
+                <notes/>
+                <qtyPositions>2</qtyPositions>
+                <fullDay>0</fullDay>
+                <cancelled>0</cancelled>
+            </request>
+        
+            <request>
+                <legacyID>33222</legacyID>
+                <legacyJobID>1430</legacyJobID>
+                <requestDate>2018-11-02 14:24:48.063</requestDate>
+                <requestedForAccount>jdoherty</requestedForAccount>
+                <location>Discovery Center</location>
+                <date>2018-11-08 09:30:00.0</date>
+                <startTime>2018-11-08 09:30:00.0</startTime>
+                <breakTime>N/A</breakTime>
+                <mealTime>N/A</mealTime>
+                <notes/>
+                <qtyPositions>2</qtyPositions>
+                <fullDay>0</fullDay>
+                <cancelled>0</cancelled>
+            </request>
+        
+            <request>
+                <legacyID>33223</legacyID>
+                <legacyJobID>1430</legacyJobID>
+                <requestDate>2018-10-30 16:46:10.86</requestDate>
+                <requestedForAccount>jdoherty</requestedForAccount>
+                <location>Discovery Center</location>
+                <date>2018-11-09 09:30:00.0</date>
+                <startTime>2018-11-09 09:30:00.0</startTime>
+                <breakTime>N/A</breakTime>
+                <mealTime>N/A</mealTime>
+                <notes/>
+                <qtyPositions>2</qtyPositions>
+                <fullDay>0</fullDay>
+                <cancelled>0</cancelled>
+            </request>
+        
+            <request>
+                <legacyID>33224</legacyID>
+                <legacyJobID>1430</legacyJobID>
+                <requestDate>2018-10-30 16:46:10.86</requestDate>
+                <requestedForAccount>jdoherty</requestedForAccount>
+                <location>Discovery Center</location>
+                <date>2018-11-12 09:30:00.0</date>
+                <startTime>2018-11-12 09:30:00.0</startTime>
+                <breakTime>N/A</breakTime>
+                <mealTime>N/A</mealTime>
+                <notes/>
+                <qtyPositions>2</qtyPositions>
+                <fullDay>0</fullDay>
+                <cancelled>0</cancelled>
+            </request>
+        
+            <request>
+                <legacyID>33225</legacyID>
+                <legacyJobID>1430</legacyJobID>
+                <requestDate>2018-11-05 09:50:55.56</requestDate>
+                <requestedForAccount>jdoherty</requestedForAccount>
+                <location>Discovery Center</location>
+                <date>2018-11-13 09:30:00.0</date>
+                <startTime>2018-11-13 09:30:00.0</startTime>
+                <breakTime>N/A</breakTime>
+                <mealTime>N/A</mealTime>
+                <notes/>
+                <qtyPositions>2</qtyPositions>
+                <fullDay>0</fullDay>
+                <cancelled>0</cancelled>
+            </request>
+        
+            <request>
+                <legacyID>33226</legacyID>
+                <legacyJobID>1430</legacyJobID>
+                <requestDate>2018-10-30 16:46:10.86</requestDate>
+                <requestedForAccount>jdoherty</requestedForAccount>
+                <location>Discovery Center</location>
+                <date>2018-11-14 09:30:00.0</date>
+                <startTime>2018-11-14 09:30:00.0</startTime>
+                <breakTime>N/A</breakTime>
+                <mealTime>N/A</mealTime>
+                <notes/>
+                <qtyPositions>2</qtyPositions>
+                <fullDay>0</fullDay>
+                <cancelled>0</cancelled>
+            </request>
+        
+            <request>
+                <legacyID>33227</legacyID>
+                <legacyJobID>1430</legacyJobID>
+                <requestDate>2018-11-07 13:12:57.107</requestDate>
+                <requestedForAccount>jdoherty</requestedForAccount>
+                <location>Discovery Center</location>
+                <date>2018-11-15 09:30:00.0</date>
+                <startTime>2018-11-15 09:30:00.0</startTime>
+                <breakTime>N/A</breakTime>
+                <mealTime>N/A</mealTime>
+                <notes/>
+                <qtyPositions>2</qtyPositions>
+                <fullDay>0</fullDay>
+                <cancelled>0</cancelled>
+            </request>
+        
+            <request>
+                <legacyID>33228</legacyID>
+                <legacyJobID>1430</legacyJobID>
+                <requestDate>2018-10-30 16:47:01.9</requestDate>
+                <requestedForAccount>jdoherty</requestedForAccount>
+                <location>Discovery Center</location>
+                <date>2018-11-06 12:30:00.0</date>
+                <startTime>2018-11-06 12:30:00.0</startTime>
+                <breakTime>N/A</breakTime>
+                <mealTime>N/A</mealTime>
+                <notes/>
+                <qtyPositions>2</qtyPositions>
+                <fullDay>0</fullDay>
+                <cancelled>0</cancelled>
+            </request>
+        
+            <request>
+                <legacyID>33229</legacyID>
+                <legacyJobID>1430</legacyJobID>
+                <requestDate>2018-11-06 14:21:45.17</requestDate>
+                <requestedForAccount>jdoherty</requestedForAccount>
+                <location>Discovery Center</location>
+                <date>2018-11-07 12:30:00.0</date>
+                <startTime>2018-11-07 12:30:00.0</startTime>
+                <breakTime>N/A</breakTime>
+                <mealTime>N/A</mealTime>
+                <notes/>
+                <qtyPositions>2</qtyPositions>
+                <fullDay>0</fullDay>
+                <cancelled>0</cancelled>
+            </request>
+        
+            <request>
+                <legacyID>33230</legacyID>
+                <legacyJobID>1430</legacyJobID>
+                <requestDate>2018-10-30 16:47:01.9</requestDate>
+                <requestedForAccount>jdoherty</requestedForAccount>
+                <location>Discovery Center</location>
+                <date>2018-11-08 12:30:00.0</date>
+                <startTime>2018-11-08 12:30:00.0</startTime>
+                <breakTime>N/A</breakTime>
+                <mealTime>N/A</mealTime>
+                <notes/>
+                <qtyPositions>2</qtyPositions>
+                <fullDay>0</fullDay>
+                <cancelled>0</cancelled>
+            </request>
+        
+            <request>
+                <legacyID>33231</legacyID>
+                <legacyJobID>1430</legacyJobID>
+                <requestDate>2018-10-30 16:47:01.9</requestDate>
+                <requestedForAccount>jdoherty</requestedForAccount>
+                <location>Discovery Center</location>
+                <date>2018-11-09 12:30:00.0</date>
+                <startTime>2018-11-09 12:30:00.0</startTime>
+                <breakTime>N/A</breakTime>
+                <mealTime>N/A</mealTime>
+                <notes/>
+                <qtyPositions>2</qtyPositions>
+                <fullDay>0</fullDay>
+                <cancelled>0</cancelled>
+            </request>
+        
+            <request>
+                <legacyID>33232</legacyID>
+                <legacyJobID>1430</legacyJobID>
+                <requestDate>2018-11-09 16:18:07.057</requestDate>
+                <requestedForAccount>jdoherty</requestedForAccount>
+                <location>Discovery Center</location>
+                <date>2018-11-12 12:30:00.0</date>
+                <startTime>2018-11-12 12:30:00.0</startTime>
+                <breakTime>N/A</breakTime>
+                <mealTime>N/A</mealTime>
+                <notes/>
+                <qtyPositions>2</qtyPositions>
+                <fullDay>0</fullDay>
+                <cancelled>0</cancelled>
+            </request>
+        
+            <request>
+                <legacyID>33233</legacyID>
+                <legacyJobID>1430</legacyJobID>
+                <requestDate>2018-11-06 14:22:00.373</requestDate>
+                <requestedForAccount>jdoherty</requestedForAccount>
+                <location>Discovery Center</location>
+                <date>2018-11-13 12:30:00.0</date>
+                <startTime>2018-11-13 12:30:00.0</startTime>
+                <breakTime>N/A</breakTime>
+                <mealTime>N/A</mealTime>
+                <notes/>
+                <qtyPositions>2</qtyPositions>
+                <fullDay>0</fullDay>
+                <cancelled>0</cancelled>
+            </request>
+        
+            <request>
+                <legacyID>33234</legacyID>
+                <legacyJobID>1430</legacyJobID>
+                <requestDate>2018-10-30 16:47:01.917</requestDate>
+                <requestedForAccount>jdoherty</requestedForAccount>
+                <location>Discovery Center</location>
+                <date>2018-11-14 12:30:00.0</date>
+                <startTime>2018-11-14 12:30:00.0</startTime>
+                <breakTime>N/A</breakTime>
+                <mealTime>N/A</mealTime>
+                <notes/>
+                <qtyPositions>2</qtyPositions>
+                <fullDay>0</fullDay>
+                <cancelled>0</cancelled>
+            </request>
+        
+            <request>
+                <legacyID>33235</legacyID>
+                <legacyJobID>1430</legacyJobID>
+                <requestDate>2018-10-30 16:47:01.917</requestDate>
+                <requestedForAccount>jdoherty</requestedForAccount>
+                <location>Discovery Center</location>
+                <date>2018-11-15 12:30:00.0</date>
+                <startTime>2018-11-15 12:30:00.0</startTime>
+                <breakTime>N/A</breakTime>
+                <mealTime>N/A</mealTime>
+                <notes/>
+                <qtyPositions>2</qtyPositions>
                 <fullDay>0</fullDay>
                 <cancelled>0</cancelled>
             </request>
@@ -1810,7 +2196,7 @@
             <request>
                 <legacyID>33022</legacyID>
                 <legacyJobID>1512</legacyJobID>
-                <requestDate>2018-04-24 13:59:27.777</requestDate>
+                <requestDate>2018-09-27 07:47:32.963</requestDate>
                 <requestedForAccount>agermaine</requestedForAccount>
                 <location>Brighton</location>
                 <date>2018-09-28 09:30:00.0</date>
@@ -1920,6 +2306,38 @@
             </request>
         
             <request>
+                <legacyID>33194</legacyID>
+                <legacyJobID>1536</legacyJobID>
+                <requestDate>2018-09-19 16:41:31.16</requestDate>
+                <requestedForAccount>bzaiatz</requestedForAccount>
+                <location>Membership</location>
+                <date>2018-09-20 09:00:00.0</date>
+                <startTime>2018-09-20 09:00:00.0</startTime>
+                <breakTime>1:00PM</breakTime>
+                <mealTime>11:00AM</mealTime>
+                <notes/>
+                <qtyPositions>1</qtyPositions>
+                <fullDay>0</fullDay>
+                <cancelled>0</cancelled>
+            </request>
+        
+            <request>
+                <legacyID>33195</legacyID>
+                <legacyJobID>1536</legacyJobID>
+                <requestDate>2018-09-19 16:40:01.033</requestDate>
+                <requestedForAccount>bzaiatz</requestedForAccount>
+                <location>Membership</location>
+                <date>2018-09-20 13:00:00.0</date>
+                <startTime>2018-09-20 13:00:00.0</startTime>
+                <breakTime>5:00 PM</breakTime>
+                <mealTime>3:00 PM</mealTime>
+                <notes/>
+                <qtyPositions>1</qtyPositions>
+                <fullDay>0</fullDay>
+                <cancelled>0</cancelled>
+            </request>
+        
+            <request>
                 <legacyID>33153</legacyID>
                 <legacyJobID>1536</legacyJobID>
                 <requestDate>2018-08-08 12:29:40.147</requestDate>
@@ -1927,6 +2345,38 @@
                 <location>Membership</location>
                 <date>2018-08-09 13:00:00.0</date>
                 <startTime>2018-08-09 13:00:00.0</startTime>
+                <breakTime>5:00 PM</breakTime>
+                <mealTime>3:00 PM</mealTime>
+                <notes/>
+                <qtyPositions>1</qtyPositions>
+                <fullDay>0</fullDay>
+                <cancelled>0</cancelled>
+            </request>
+        
+            <request>
+                <legacyID>33217</legacyID>
+                <legacyJobID>1536</legacyJobID>
+                <requestDate>2018-10-17 09:43:27.733</requestDate>
+                <requestedForAccount>bzaiatz</requestedForAccount>
+                <location>Membership</location>
+                <date>2018-10-18 09:00:00.0</date>
+                <startTime>2018-10-18 09:00:00.0</startTime>
+                <breakTime>1:00PM</breakTime>
+                <mealTime>11:00AM</mealTime>
+                <notes/>
+                <qtyPositions>1</qtyPositions>
+                <fullDay>0</fullDay>
+                <cancelled>0</cancelled>
+            </request>
+        
+            <request>
+                <legacyID>33218</legacyID>
+                <legacyJobID>1536</legacyJobID>
+                <requestDate>2018-10-16 16:13:20.073</requestDate>
+                <requestedForAccount>bzaiatz</requestedForAccount>
+                <location>Membership</location>
+                <date>2018-10-18 13:00:00.0</date>
+                <startTime>2018-10-18 13:00:00.0</startTime>
                 <breakTime>5:00 PM</breakTime>
                 <mealTime>3:00 PM</mealTime>
                 <notes/>
@@ -2018,7 +2468,7 @@
             <request>
                 <legacyID>33155</legacyID>
                 <legacyJobID>1553</legacyJobID>
-                <requestDate>2018-09-13 12:35:22.193</requestDate>
+                <requestDate>2018-09-23 17:05:53.12</requestDate>
                 <requestedForAccount>skeay</requestedForAccount>
                 <location>Membership Office</location>
                 <date>2018-09-23 17:15:00.0</date>
@@ -2050,7 +2500,7 @@
             <request>
                 <legacyID>33163</legacyID>
                 <legacyJobID>1591</legacyJobID>
-                <requestDate>2018-09-12 18:06:23.6</requestDate>
+                <requestDate>2018-09-21 09:30:30.11</requestDate>
                 <requestedForAccount>rthomas</requestedForAccount>
                 <location>Entire Museum</location>
                 <date>2018-09-21 16:45:00.0</date>
@@ -2063,12 +2513,66 @@ College Night is September 21st from 5PM-9PM and we are looking for help in chec
 
 Additionally, you will assist anyone in finding their way around the museum and to different venues for shows and likely answer any general museum questions they may have.
 
-Any and all help is appreciated. 
+Any and all help is appreciated. We are offering Red Sox tickets to all GSE's for this event!
 
 Thank you,
 Ryan Thomas</notes>
                 <qtyPositions>8</qtyPositions>
                 <fullDay>1</fullDay>
+                <cancelled>0</cancelled>
+            </request>
+        
+            <request>
+                <legacyID>33207</legacyID>
+                <legacyJobID>1615</legacyJobID>
+                <requestDate>2018-10-05 16:25:01.397</requestDate>
+                <requestedForAccount>dsittenfeld</requestedForAccount>
+                <location>Skyline</location>
+                <date>2018-10-08 16:00:00.0</date>
+                <startTime>2018-10-08 16:00:00.0</startTime>
+                <breakTime>6:00 PM</breakTime>
+                <mealTime>8:00 PM</mealTime>
+                <notes>We have already recruited facilitators for this and will be administering a training at 4:00 PM - details in the outlook message I have sent already.</notes>
+                <qtyPositions>8</qtyPositions>
+                <fullDay>0</fullDay>
+                <cancelled>1</cancelled>
+            </request>
+        
+            <request>
+                <legacyID>33208</legacyID>
+                <legacyJobID>1615</legacyJobID>
+                <requestDate>2018-10-05 16:28:07.54</requestDate>
+                <requestedForAccount>dsittenfeld</requestedForAccount>
+                <location>Skyline</location>
+                <date>2018-10-08 16:00:00.0</date>
+                <startTime>2018-10-08 16:00:00.0</startTime>
+                <breakTime>5:00 PM</breakTime>
+                <mealTime>8:00 PM</mealTime>
+                <notes>We have already recruited facilitators for this event, please do not sign up for this GSE unless I have contacted you already.  Details for the training are in the outlook message I sent you.  
+
+Thanks!
+
+David</notes>
+                <qtyPositions>8</qtyPositions>
+                <fullDay>0</fullDay>
+                <cancelled>1</cancelled>
+            </request>
+        
+            <request>
+                <legacyID>33209</legacyID>
+                <legacyJobID>1615</legacyJobID>
+                <requestDate>2018-10-09 15:19:29.987</requestDate>
+                <requestedForAccount>dsittenfeld</requestedForAccount>
+                <location>Skyline</location>
+                <date>2018-10-09 16:00:00.0</date>
+                <startTime>2018-10-09 16:00:00.0</startTime>
+                <breakTime>5:00 PM</breakTime>
+                <mealTime>8:00 PM</mealTime>
+                <notes>We have already recruited facilitators for this event, please do not sign up for this GSE unless I have talked with you already.  Details about the training are in the outlook message I have sent out to facilitators.  Thanks!
+
+David</notes>
+                <qtyPositions>8</qtyPositions>
+                <fullDay>0</fullDay>
                 <cancelled>0</cancelled>
             </request>
         
@@ -2268,7 +2772,7 @@ Boston based artist Ruby Rose Fox is a cultural messenger of our turbulent moder
             <request>
                 <legacyID>33143</legacyID>
                 <legacyJobID>1664</legacyJobID>
-                <requestDate>2018-07-02 17:43:39.83</requestDate>
+                <requestDate>2018-11-09 20:55:25.037</requestDate>
                 <requestedForAccount>jbaker</requestedForAccount>
                 <location>Lobby</location>
                 <date>2019-06-27 09:00:00.0</date>
@@ -2278,13 +2782,13 @@ Boston based artist Ruby Rose Fox is a cultural messenger of our turbulent moder
                 <notes/>
                 <qtyPositions>3</qtyPositions>
                 <fullDay>1</fullDay>
-                <cancelled>0</cancelled>
+                <cancelled>1</cancelled>
             </request>
         
             <request>
                 <legacyID>33144</legacyID>
                 <legacyJobID>1664</legacyJobID>
-                <requestDate>2018-07-02 17:43:55.533</requestDate>
+                <requestDate>2018-11-09 20:56:23.13</requestDate>
                 <requestedForAccount>jbaker</requestedForAccount>
                 <location>Lobby</location>
                 <date>2019-06-28 09:00:00.0</date>
@@ -2294,13 +2798,13 @@ Boston based artist Ruby Rose Fox is a cultural messenger of our turbulent moder
                 <notes/>
                 <qtyPositions>3</qtyPositions>
                 <fullDay>1</fullDay>
-                <cancelled>0</cancelled>
+                <cancelled>1</cancelled>
             </request>
         
             <request>
                 <legacyID>33145</legacyID>
                 <legacyJobID>1664</legacyJobID>
-                <requestDate>2018-07-02 17:43:16.983</requestDate>
+                <requestDate>2018-11-09 20:56:27.537</requestDate>
                 <requestedForAccount>jbaker</requestedForAccount>
                 <location>Lobby</location>
                 <date>2019-06-29 09:00:00.0</date>
@@ -2310,13 +2814,13 @@ Boston based artist Ruby Rose Fox is a cultural messenger of our turbulent moder
                 <notes/>
                 <qtyPositions>3</qtyPositions>
                 <fullDay>1</fullDay>
-                <cancelled>0</cancelled>
+                <cancelled>1</cancelled>
             </request>
         
             <request>
                 <legacyID>33146</legacyID>
                 <legacyJobID>1664</legacyJobID>
-                <requestDate>2018-07-02 17:43:16.983</requestDate>
+                <requestDate>2018-11-09 20:56:32.507</requestDate>
                 <requestedForAccount>jbaker</requestedForAccount>
                 <location>Lobby</location>
                 <date>2019-06-30 09:00:00.0</date>
@@ -2326,7 +2830,7 @@ Boston based artist Ruby Rose Fox is a cultural messenger of our turbulent moder
                 <notes/>
                 <qtyPositions>3</qtyPositions>
                 <fullDay>1</fullDay>
-                <cancelled>0</cancelled>
+                <cancelled>1</cancelled>
             </request>
         
             <request>
@@ -2396,7 +2900,7 @@ Boston based artist Ruby Rose Fox is a cultural messenger of our turbulent moder
             <request>
                 <legacyID>33172</legacyID>
                 <legacyJobID>1671</legacyJobID>
-                <requestDate>2018-09-09 14:33:23.543</requestDate>
+                <requestDate>2018-09-23 10:38:18.223</requestDate>
                 <requestedForAccount>skeay</requestedForAccount>
                 <location>Lobby</location>
                 <date>2018-09-23 15:30:00.0</date>
@@ -2412,7 +2916,7 @@ Boston based artist Ruby Rose Fox is a cultural messenger of our turbulent moder
             <request>
                 <legacyID>33173</legacyID>
                 <legacyJobID>1672</legacyJobID>
-                <requestDate>2018-09-14 11:12:30.017</requestDate>
+                <requestDate>2018-10-16 16:03:49.75</requestDate>
                 <requestedForAccount>jsantomassimo</requestedForAccount>
                 <location>Lobby</location>
                 <date>2018-10-22 17:00:00.0</date>
@@ -2428,7 +2932,7 @@ Boston based artist Ruby Rose Fox is a cultural messenger of our turbulent moder
             <request>
                 <legacyID>33182</legacyID>
                 <legacyJobID>1673</legacyJobID>
-                <requestDate>2018-09-12 10:57:37.033</requestDate>
+                <requestDate>2018-09-18 09:56:32.78</requestDate>
                 <requestedForAccount>jwetzel</requestedForAccount>
                 <location>Planetarium</location>
                 <date>2018-09-20 18:00:00.0</date>
@@ -2460,7 +2964,7 @@ Boston based artist Ruby Rose Fox is a cultural messenger of our turbulent moder
             <request>
                 <legacyID>33184</legacyID>
                 <legacyJobID>1675</legacyJobID>
-                <requestDate>2018-09-12 11:04:04.727</requestDate>
+                <requestDate>2018-09-19 12:40:54.55</requestDate>
                 <requestedForAccount>jwetzel</requestedForAccount>
                 <location>Cahners Theater</location>
                 <date>2018-10-01 17:30:00.0</date>
@@ -2476,7 +2980,7 @@ Boston based artist Ruby Rose Fox is a cultural messenger of our turbulent moder
             <request>
                 <legacyID>33185</legacyID>
                 <legacyJobID>1676</legacyJobID>
-                <requestDate>2018-09-13 12:48:14.483</requestDate>
+                <requestDate>2018-09-19 13:00:02.507</requestDate>
                 <requestedForAccount>jwetzel</requestedForAccount>
                 <location>Planetarium</location>
                 <date>2018-10-04 17:30:00.0</date>
@@ -2508,7 +3012,7 @@ Boston based artist Ruby Rose Fox is a cultural messenger of our turbulent moder
             <request>
                 <legacyID>33187</legacyID>
                 <legacyJobID>1678</legacyJobID>
-                <requestDate>2018-09-13 10:38:25.32</requestDate>
+                <requestDate>2018-09-21 12:32:31.98</requestDate>
                 <requestedForAccount>jwetzel</requestedForAccount>
                 <location>Planetarium</location>
                 <date>2018-10-11 17:30:00.0</date>
@@ -2516,7 +3020,7 @@ Boston based artist Ruby Rose Fox is a cultural messenger of our turbulent moder
                 <breakTime>5:30pm</breakTime>
                 <mealTime>5:30pm</mealTime>
                 <notes/>
-                <qtyPositions>2</qtyPositions>
+                <qtyPositions>3</qtyPositions>
                 <fullDay>0</fullDay>
                 <cancelled>0</cancelled>
             </request>
@@ -2524,7 +3028,7 @@ Boston based artist Ruby Rose Fox is a cultural messenger of our turbulent moder
             <request>
                 <legacyID>33188</legacyID>
                 <legacyJobID>1679</legacyJobID>
-                <requestDate>2018-09-12 11:13:13.107</requestDate>
+                <requestDate>2018-10-11 11:32:35.81</requestDate>
                 <requestedForAccount>jwetzel</requestedForAccount>
                 <location>Cahners Theater</location>
                 <date>2018-10-17 17:30:00.0</date>
@@ -2556,7 +3060,7 @@ Boston based artist Ruby Rose Fox is a cultural messenger of our turbulent moder
             <request>
                 <legacyID>33190</legacyID>
                 <legacyJobID>1681</legacyJobID>
-                <requestDate>2018-09-12 13:01:36.983</requestDate>
+                <requestDate>2018-09-19 14:30:59.137</requestDate>
                 <requestedForAccount>jwetzel</requestedForAccount>
                 <location>Cahners Theater</location>
                 <date>2018-11-14 17:00:00.0</date>
@@ -2572,7 +3076,7 @@ Boston based artist Ruby Rose Fox is a cultural messenger of our turbulent moder
             <request>
                 <legacyID>33191</legacyID>
                 <legacyJobID>1682</legacyJobID>
-                <requestDate>2018-09-13 09:39:37.883</requestDate>
+                <requestDate>2018-10-09 11:17:39.387</requestDate>
                 <requestedForAccount>jwetzel</requestedForAccount>
                 <location>Planetarium</location>
                 <date>2018-11-15 17:30:00.0</date>
@@ -2581,6 +3085,246 @@ Boston based artist Ruby Rose Fox is a cultural messenger of our turbulent moder
                 <mealTime>5:30pm</mealTime>
                 <notes/>
                 <qtyPositions>2</qtyPositions>
+                <fullDay>0</fullDay>
+                <cancelled>0</cancelled>
+            </request>
+        
+            <request>
+                <legacyID>33192</legacyID>
+                <legacyJobID>1683</legacyJobID>
+                <requestDate>2018-09-21 13:22:56.36</requestDate>
+                <requestedForAccount>jdillman</requestedForAccount>
+                <location>Museum Lobby</location>
+                <date>2018-09-22 08:00:00.0</date>
+                <startTime>2018-09-22 08:00:00.0</startTime>
+                <breakTime>11:00</breakTime>
+                <mealTime>9:00</mealTime>
+                <notes/>
+                <qtyPositions>2</qtyPositions>
+                <fullDay>0</fullDay>
+                <cancelled>0</cancelled>
+            </request>
+        
+            <request>
+                <legacyID>33193</legacyID>
+                <legacyJobID>1684</legacyJobID>
+                <requestDate>2018-09-25 15:46:57.49</requestDate>
+                <requestedForAccount>lkennedy</requestedForAccount>
+                <location>Main Lobby</location>
+                <date>2018-10-12 15:30:00.0</date>
+                <startTime>2018-10-12 15:30:00.0</startTime>
+                <breakTime>tbd</breakTime>
+                <mealTime>na</mealTime>
+                <notes>Assist welcoming Teacher Partners to this evening event.</notes>
+                <qtyPositions>2</qtyPositions>
+                <fullDay>0</fullDay>
+                <cancelled>0</cancelled>
+            </request>
+        
+            <request>
+                <legacyID>33196</legacyID>
+                <legacyJobID>1685</legacyJobID>
+                <requestDate>2018-09-20 12:36:07.75</requestDate>
+                <requestedForAccount>dsittenfeld</requestedForAccount>
+                <location>Darbeloff</location>
+                <date>2018-09-22 09:30:00.0</date>
+                <startTime>2018-09-22 09:30:00.0</startTime>
+                <breakTime>3:00 PM</breakTime>
+                <mealTime>12:30 PM</mealTime>
+                <notes/>
+                <qtyPositions>3</qtyPositions>
+                <fullDay>1</fullDay>
+                <cancelled>0</cancelled>
+            </request>
+        
+            <request>
+                <legacyID>33199</legacyID>
+                <legacyJobID>1686</legacyJobID>
+                <requestDate>2018-10-04 10:33:50.547</requestDate>
+                <requestedForAccount>tsepersky</requestedForAccount>
+                <location>Planetarium/Lobby</location>
+                <date>2018-10-16 17:30:00.0</date>
+                <startTime>2018-10-16 17:30:00.0</startTime>
+                <breakTime>5:30</breakTime>
+                <mealTime>5:30</mealTime>
+                <notes/>
+                <qtyPositions>2</qtyPositions>
+                <fullDay>0</fullDay>
+                <cancelled>0</cancelled>
+            </request>
+        
+            <request>
+                <legacyID>33200</legacyID>
+                <legacyJobID>1687</legacyJobID>
+                <requestDate>2018-09-25 14:20:46.953</requestDate>
+                <requestedForAccount>tsepersky</requestedForAccount>
+                <location>Planetarium/Lobby</location>
+                <date>2018-10-23 17:30:00.0</date>
+                <startTime>2018-10-23 17:30:00.0</startTime>
+                <breakTime>5:30</breakTime>
+                <mealTime>5:30</mealTime>
+                <notes/>
+                <qtyPositions>2</qtyPositions>
+                <fullDay>0</fullDay>
+                <cancelled>0</cancelled>
+            </request>
+        
+            <request>
+                <legacyID>33201</legacyID>
+                <legacyJobID>1688</legacyJobID>
+                <requestDate>2018-09-26 09:14:53.463</requestDate>
+                <requestedForAccount>tsepersky</requestedForAccount>
+                <location>Planetarium/Lobby</location>
+                <date>2018-10-30 17:30:00.0</date>
+                <startTime>2018-10-30 17:30:00.0</startTime>
+                <breakTime>5:30</breakTime>
+                <mealTime>5:30</mealTime>
+                <notes/>
+                <qtyPositions>2</qtyPositions>
+                <fullDay>0</fullDay>
+                <cancelled>0</cancelled>
+            </request>
+        
+            <request>
+                <legacyID>33202</legacyID>
+                <legacyJobID>1689</legacyJobID>
+                <requestDate>2018-10-04 11:59:07.283</requestDate>
+                <requestedForAccount>lhavansek</requestedForAccount>
+                <location>MOS, Blue Wing</location>
+                <date>2018-10-24 17:00:00.0</date>
+                <startTime>2018-10-24 17:00:00.0</startTime>
+                <breakTime>5 minute break at manager discretion </breakTime>
+                <mealTime>7:00pm</mealTime>
+                <notes/>
+                <qtyPositions>3</qtyPositions>
+                <fullDay>0</fullDay>
+                <cancelled>0</cancelled>
+            </request>
+        
+            <request>
+                <legacyID>33203</legacyID>
+                <legacyJobID>1690</legacyJobID>
+                <requestDate>2018-09-27 14:11:49.543</requestDate>
+                <requestedForAccount>jrivers</requestedForAccount>
+                <location>Boston</location>
+                <date>2018-10-04 10:00:00.0</date>
+                <startTime>2018-10-04 10:00:00.0</startTime>
+                <breakTime>11AM</breakTime>
+                <mealTime>12PM</mealTime>
+                <notes/>
+                <qtyPositions>1</qtyPositions>
+                <fullDay>0</fullDay>
+                <cancelled>0</cancelled>
+            </request>
+        
+            <request>
+                <legacyID>33204</legacyID>
+                <legacyJobID>1691</legacyJobID>
+                <requestDate>2018-10-10 13:56:49.37</requestDate>
+                <requestedForAccount>mkaiser</requestedForAccount>
+                <location>Fourth Floor Conference Room</location>
+                <date>2018-11-02 13:00:00.0</date>
+                <startTime>2018-11-02 13:00:00.0</startTime>
+                <breakTime>3:00</breakTime>
+                <mealTime>NA</mealTime>
+                <notes/>
+                <qtyPositions>2</qtyPositions>
+                <fullDay>0</fullDay>
+                <cancelled>0</cancelled>
+            </request>
+        
+            <request>
+                <legacyID>33205</legacyID>
+                <legacyJobID>1692</legacyJobID>
+                <requestDate>2018-10-16 13:42:11.37</requestDate>
+                <requestedForAccount>cmoscat</requestedForAccount>
+                <location>Blue Wing Well</location>
+                <date>2018-10-19 09:00:00.0</date>
+                <startTime>2018-10-19 09:00:00.0</startTime>
+                <breakTime>12:30</breakTime>
+                <mealTime>12:30</mealTime>
+                <notes/>
+                <qtyPositions>6</qtyPositions>
+                <fullDay>0</fullDay>
+                <cancelled>0</cancelled>
+            </request>
+        
+            <request>
+                <legacyID>33219</legacyID>
+                <legacyJobID>1693</legacyJobID>
+                <requestDate>2018-10-31 16:24:39.783</requestDate>
+                <requestedForAccount>rthomas</requestedForAccount>
+                <location>HHL</location>
+                <date>2018-11-04 13:15:00.0</date>
+                <startTime>2018-11-04 13:15:00.0</startTime>
+                <breakTime>4:30 PM</breakTime>
+                <mealTime>Noon</mealTime>
+                <notes/>
+                <qtyPositions>1</qtyPositions>
+                <fullDay>1</fullDay>
+                <cancelled>0</cancelled>
+            </request>
+        
+            <request>
+                <legacyID>33237</legacyID>
+                <legacyJobID>1694</legacyJobID>
+                <requestDate>2018-11-02 16:28:58.127</requestDate>
+                <requestedForAccount>jdillman</requestedForAccount>
+                <location>Rear Lobby</location>
+                <date>2018-11-14 10:00:00.0</date>
+                <startTime>2018-11-14 10:00:00.0</startTime>
+                <breakTime>12</breakTime>
+                <mealTime>11</mealTime>
+                <notes/>
+                <qtyPositions>1</qtyPositions>
+                <fullDay>0</fullDay>
+                <cancelled>0</cancelled>
+            </request>
+        
+            <request>
+                <legacyID>33236</legacyID>
+                <legacyJobID>1694</legacyJobID>
+                <requestDate>2018-11-02 16:27:47.36</requestDate>
+                <requestedForAccount>jdillman</requestedForAccount>
+                <location>Rear Lobby</location>
+                <date>2018-11-10 13:00:00.0</date>
+                <startTime>2018-11-10 13:00:00.0</startTime>
+                <breakTime>3</breakTime>
+                <mealTime>2</mealTime>
+                <notes/>
+                <qtyPositions>1</qtyPositions>
+                <fullDay>0</fullDay>
+                <cancelled>0</cancelled>
+            </request>
+        
+            <request>
+                <legacyID>33238</legacyID>
+                <legacyJobID>1695</legacyJobID>
+                <requestDate>2018-11-06 11:40:39.913</requestDate>
+                <requestedForAccount>rthomas</requestedForAccount>
+                <location>TOE</location>
+                <date>2018-11-07 08:00:00.0</date>
+                <startTime>2018-11-07 08:00:00.0</startTime>
+                <breakTime>noon</breakTime>
+                <mealTime>noon</mealTime>
+                <notes>This was actually for 11/4/18 but I couldn't backtrack on schedule.</notes>
+                <qtyPositions>1</qtyPositions>
+                <fullDay>1</fullDay>
+                <cancelled>0</cancelled>
+            </request>
+        
+            <request>
+                <legacyID>33239</legacyID>
+                <legacyJobID>1696</legacyJobID>
+                <requestDate>2018-11-09 14:53:25.977</requestDate>
+                <requestedForAccount>kpowers</requestedForAccount>
+                <location>MOS Halls</location>
+                <date>2018-11-10 12:00:00.0</date>
+                <startTime>2018-11-10 12:00:00.0</startTime>
+                <breakTime>4pm</breakTime>
+                <mealTime>12pm</mealTime>
+                <notes/>
+                <qtyPositions>1</qtyPositions>
                 <fullDay>0</fullDay>
                 <cancelled>0</cancelled>
             </request>

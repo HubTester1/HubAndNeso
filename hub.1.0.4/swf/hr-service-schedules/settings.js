@@ -5,12 +5,12 @@
 	var mData = {
 		'componentID': 159,
 		'swf': 1,
-		'mosMainKey': 'prod',
+		// 'mosMainKey': 'prod',
 		// 'mosMainKey': 'dev',
 		// 'mosMainKey': 'devMedium',
-		// 'mosMainKey': 'devLong',
+		'mosMainKey': 'devLong',
 		'devAdminNotifications': 1,
-		'notifications': 0,
+		'notifications': 1,
 		'detailTitle': [
 			{
 				'roles': ['gseHRAdmin', 'gseJobAdmin', 'gseManager'],

@@ -3,13 +3,13 @@
 	var mData = {
 		'componentID': 160,
 		'swf': 1,
-		'mosMainKey': 'prod',
+		// 'mosMainKey': 'prod',
 		// 'mosMainKey': 'dev',
 		// 'mosMainKey': 'devMedium',
-		// 'mosMainKey': 'devLong',
+		'mosMainKey': 'devLong',
 		// "useRecordedMOSMainMajorVersion": 1,
 		'devAdminNotifications': 1,
-		'notifications': 0,
+		'notifications': 1,
 		'detailTitle': [
 			{
 				'roles': ['gseHRAdmin', 'gseJobAdmin', 'gseManager', 'gseUserOnly'],

@@ -22079,6 +22079,8 @@
 				]
 			}
 		});
+		console.log('gseSchedulesArray');
+		console.log(gseSchedulesArray);
 		// get all jobs
 		var gseJobsArray = $().GetFieldsFromAllRows({
 			'webURL': 'https://bmos.sharepoint.com/sites/hr-service-jobs',
