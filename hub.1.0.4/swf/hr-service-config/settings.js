@@ -5,13 +5,13 @@
 	var mData = {
 		'componentID': 161,
 		'swf': 1,
-		// 'mosMainKey': 'prod',
+		'mosMainKey': 'prod',
 		// 'mosMainKey': 'dev',
 		// 'mosMainKey': 'devMedium',
-		'mosMainKey': 'devLong',
+		// 'mosMainKey': 'devLong',
 		// "useRecordedMOSMainMajorVersion": 1,
 		'currentRequestVersion': 1,
-		'devAdminNotifications': 1,
+		'devAdminNotifications': 0,
 		'notifications': 0,
 		'detailTitle': [
 			{

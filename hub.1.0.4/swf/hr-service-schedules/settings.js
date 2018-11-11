@@ -5,11 +5,11 @@
 	var mData = {
 		'componentID': 159,
 		'swf': 1,
-		// 'mosMainKey': 'prod',
+		'mosMainKey': 'prod',
 		// 'mosMainKey': 'dev',
 		// 'mosMainKey': 'devMedium',
-		'mosMainKey': 'devLong',
-		'devAdminNotifications': 1,
+		// 'mosMainKey': 'devLong',
+		'devAdminNotifications': 0,
 		'notifications': 1,
 		'detailTitle': [
 			{
@@ -762,13 +762,13 @@
 		'uniqueElements': [
 			{
 
-				'elementType': 'field',
-				'controlType': 'url',
-				'fieldName': 'Quark Request',
-				'labelContent': 'On Quark',
-				'editableForNonAdmin': [],
-				'editableForAdmin': [],
-			}, {
+			// 	'elementType': 'field',
+			// 	'controlType': 'url',
+			// 	'fieldName': 'Quark Request',
+			// 	'labelContent': 'On Quark',
+			// 	'editableForNonAdmin': [],
+			// 	'editableForAdmin': [],
+			// }, {
 				"elementType": "markup",
 				"tag": "h2",
 				"content": "This Schedule",

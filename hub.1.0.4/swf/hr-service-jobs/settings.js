@@ -5,11 +5,11 @@
 	var mData = {
 		'componentID': 158,
 		'swf': 1,
-		// 'mosMainKey': 'prod',
+		'mosMainKey': 'prod',
 		// 'mosMainKey': 'dev',
 		// 'mosMainKey': 'devMedium',
-		'mosMainKey': 'devLong',
-		'devAdminNotifications': 1,
+		// 'mosMainKey': 'devLong',
+		'devAdminNotifications': 0,
 		'notifications': 1
 	};
 
