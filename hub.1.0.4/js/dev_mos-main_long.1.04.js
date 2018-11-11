@@ -23655,7 +23655,8 @@
 						var userName = StrInStr(userDataSplit[5], ",", 1);
 					}
 
-					returnValue += '<div><a href="https://bmos-my.sharepoint.com/person.aspx?user=' + userID + '" target="_blank">' + userName + '</a></div>';
+					// returnValue += '<div><a href="https://bmos-my.sharepoint.com/person.aspx?user=' + userID + '" target="_blank">' + userName + '</a></div>';
+					returnValue += '<div>' + userName + '</div>';
 				}
 			});
 		} else if (typeof (usersRaw) === 'object') {
@@ -23667,6 +23668,7 @@
 				} else {
 					var userID = userData.description;
 				}
+				// returnValue += '<div>' + userData.displayText + '</div>';
 				returnValue += '<div><a href="https://bmos-my.sharepoint.com/person.aspx?user=' + userID + '" target="_blank">' + userData.displayText + '</a></div>';
 			});
 		}
