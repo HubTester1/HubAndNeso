@@ -17,7 +17,6 @@
 	console.log("using settings m1");
 
 
-
 	var oData = {
 		'adminReferrals': {
 			'buttons': [

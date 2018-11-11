@@ -19082,7 +19082,6 @@
 				"   <FieldRef Name='ID' />" +
 				"   <FieldRef Name='AllRequestData' />" +
 				"</ViewFields>",
-			"rowLimit": "500",
 			"query": "<Query>" +
 				"   <Where>" +
 				"       <Eq>" +
@@ -19153,6 +19152,7 @@
 						"location": eventItem["Buyout-Location"],
 						"orderNumber": eventItem["Buyout-Order-Number"],
 						"buyoutTitle": eventItem["Request-Nickname"],
+						"productTitle": eventItem["Buyout-Product-Title"],
 						"department": eventItem["Buyout-Department"],
 						"className": formattedClassName,
 					};
@@ -19206,6 +19206,9 @@
 
 						var dialogBodyContent = "<p class=\"ui-dialog-buyout-title\">" + event.buyoutTitle + "</p> \n" +
 							"<ul> \n";
+						if (event.productTitle) {
+							dialogBodyContent += "	<li class=\"event-contact\">Product: " + event.productTitle + "</li> \n";
+						}
 						if (event.contactName) {
 							dialogBodyContent += "	<li class=\"event-contact\">Contact: " + event.contactName + "</li> \n";
 						}
@@ -19293,7 +19296,6 @@
 				"   <FieldRef Name='ID' />" +
 				"   <FieldRef Name='AllRequestData' />" +
 				"</ViewFields>",
-			"rowLimit": "500",
 			"query": "<Query>" +
 				"   <Where>" +
 				"       <Eq>" +
