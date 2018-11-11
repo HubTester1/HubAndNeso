@@ -177,6 +177,31 @@ form#aspnetForm
 // PAGE HEADER
 // ------------------
 
+
+// OFFICE 365 SUITE BAR
+
+// this is set to all black in the master page, so that it renders in a neutral color
+// 		as soon as the page loads; these colors override those in the master page; the strategy
+// 		is to keep the 'real' colors all managed here, rather than having to update the master
+// 		page in the future
+
+div#suiteBarDelta
+
+	div#suiteBarTop
+
+		div#O365_NavHeader
+			background-color: $grey3
+
+			button.ms-bgc-tp
+				background-color: $intDefault
+
+			button.ms-bgc-tdr-h:hover,
+			button.ms-bgc-tp:hover
+				background-color: $intActive
+
+			div.ms-fcl-tp.o365cs-nfd-normal-lineheight:first-child
+				display: none
+
 div#s4-workspace
 
 	div#s4-titlerow

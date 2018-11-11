@@ -214,6 +214,16 @@ form#aspnetForm div.banner--success {
   color: #033328;
   background-color: #c6f2ef; }
 
+div#suiteBarDelta div#suiteBarTop div#O365_NavHeader {
+  background-color: #333; }
+  div#suiteBarDelta div#suiteBarTop div#O365_NavHeader button.ms-bgc-tp {
+    background-color: #007298; }
+  div#suiteBarDelta div#suiteBarTop div#O365_NavHeader button.ms-bgc-tdr-h:hover,
+  div#suiteBarDelta div#suiteBarTop div#O365_NavHeader button.ms-bgc-tp:hover {
+    background-color: #004d66; }
+  div#suiteBarDelta div#suiteBarTop div#O365_NavHeader div.ms-fcl-tp.o365cs-nfd-normal-lineheight:first-child {
+    display: none; }
+
 div#s4-workspace div#s4-titlerow div#siteIcon {
   margin-left: 2rem;
   margin-right: 4.75rem; }
