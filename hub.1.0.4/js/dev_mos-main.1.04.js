@@ -377,7 +377,7 @@
 				break;
 			case "newRequest":
 			case "existingRequest":
-				if (mData.detailTitle) {
+				if (mData.detailTitle && typeof (mData.detailTitle) === 'object') {
 					mData.detailTitle.forEach(function (detailTitleObject) {
 						detailTitleObject.roles.forEach(function (titleRole) {
 							uData.roles.forEach(function (userRole) {
@@ -387,6 +387,8 @@
 							});
 						});
 					});
+				} else if (mData.detailTitle && typeof (mData.detailTitle) === 'string') {
+					newTitle = mData.detailTitle;
 				} else {
 					newTitle = mData.requestName + " Request";
 				}
@@ -462,6 +464,25 @@
 			case "gseSignupsStaff":
 				newTitle = "My GSE Signups";
 				break;
+
+			case "mwBuyoutCalendar":
+				newTitle = "Buyouts Calendar";
+				break;
+			case "mwBuyoutList":
+				newTitle = "Buyouts List";
+				break;
+			case "mwEventCalendar":
+				newTitle = "Museum-wide Events Calendar";
+				break;
+			case "mwEventList":
+				newTitle = "Museum-wide Events List";
+				break;
+			case "mwProductsTimeline":
+				newTitle = "Products Calendar";
+				break;
+			case "mwProductsList":
+				newTitle = "Products List";
+				break;
 		}
 
 		return newTitle
@@ -499,6 +520,9 @@
 			case "gseSignupsJobAdmin":
 			case "gseSignupsManager":
 			case "gseSignupsStaff":
+			case "mwBuyoutList":
+			case "mwEventList":
+			case "mwProductsList":
 				if (addBrowserHistoryEntry === 1) { $().AddBrowserHistoryEntry(toScreen, newTitle, "App.aspx"); }
 				if (replaceBrowserHistoryEntry === 1) { $().ReplaceBrowserHistoryEntry(toScreen, newTitle, "App.aspx"); }
 				break;
@@ -507,8 +531,15 @@
 			case "gseSchedulesCalendarJobAdmin":
 			case "gseSchedulesCalendarManager":
 			case "gseSchedulesCalendarStaff":
+			case "mwBuyoutCalendar":
+			case "mwEventCalendar":
 				if (addBrowserHistoryEntry === 1) { $().AddBrowserHistoryEntry(toScreen, newTitle, "App.aspx?f=cal"); }
 				if (replaceBrowserHistoryEntry === 1) { $().ReplaceBrowserHistoryEntry(toScreen, newTitle, "App.aspx?f=cal"); }
+				break;
+
+			case "mwProductsTimeline":
+				if (addBrowserHistoryEntry === 1) { $().AddBrowserHistoryEntry(toScreen, newTitle, "App.aspx?f=tl"); }
+				if (replaceBrowserHistoryEntry === 1) { $().ReplaceBrowserHistoryEntry(toScreen, newTitle, "App.aspx?f=tl"); }
 				break;
 
 			case "newRequest":
@@ -568,6 +599,10 @@
 			case "gseSignupsJobAdmin":
 			case "gseSignupsManager":
 			case "gseSignupsStaff":
+
+			case "mwBuyoutList":
+			case "mwEventList":
+			case "mwProductsList":
 				$().ReplacePageTitle(newTitle);
 				$("div#overview-screen-container").fadeIn(mData.gracefulScreenTransitionTime).removeClass("hidden");
 				$("div#overview-screen-container table.dataTable").each(function () {
@@ -581,9 +616,20 @@
 			case "gseSchedulesCalendarJobAdmin":
 			case "gseSchedulesCalendarManager":
 			case "gseSchedulesCalendarStaff":
+
+			case "mwBuyoutCalendar":
+			case "mwEventCalendar":
 				$().ReplacePageTitle(newTitle);
 				$("div#overview-screen-container").fadeIn(mData.gracefulScreenTransitionTime).removeClass("hidden");
 				$('div#overview-screen-container').fullCalendar('render');
+				$('#s4-workspace').scrollTop(0);
+				break;
+
+			case "mwProductsTimeline":
+				$().ReplacePageTitle(newTitle);
+				$("div#overview-screen-container").fadeIn(mData.gracefulScreenTransitionTime).removeClass("hidden");
+				// initialize timeline
+				// $('div#overview-screen-container').fullCalendar('render');
 				$('#s4-workspace').scrollTop(0);
 				break;
 
@@ -651,6 +697,13 @@
 			case "gseSignupsJobAdmin":
 			case "gseSignupsManager":
 			case "gseSignupsStaff":
+
+			case "mwBuyoutCalendar":
+			case "mwBuyoutList":
+			case "mwEventCalendar":
+			case "mwEventList":
+			case "mwProductsTimeline":
+			case "mwProductsList":
 				$("div#overview-screen-container").fadeOut(mData.gracefulScreenTransitionTime).addClass("hidden");
 				break;
 			case "request":
@@ -757,6 +810,26 @@
 				$().ConfigureOverviewScreen("gseSignupsStaff");
 				break;
 
+			case "mwBuyoutCalendar":
+				$().ConfigureOverviewScreen("mwBuyoutCalendar");
+				break;
+			case "mwBuyoutList":
+				$().ConfigureOverviewScreen("mwBuyoutList");
+				break;
+
+			case "mwEventCalendar":
+				$().ConfigureOverviewScreen("mwEventCalendar");
+				break;
+			case "mwEventList":
+				$().ConfigureOverviewScreen("mwEventList");
+				break;
+
+			case "mwProductsTimeline":
+				$().ConfigureOverviewScreen("mwProductsTimeline");
+				break;
+			case "mwProductsList":
+				$().ConfigureOverviewScreen("mwProductsList");
+				break;
 
 		}
 	};
@@ -806,6 +879,12 @@
 					"gseSignupsJobAdmin",
 					"gseSignupsManager",
 					"gseSignupsStaff",
+					"mwBuyoutCalendar",
+					"mwBuyoutList",
+					"mwEventCalendar",
+					"mwEventList",
+					"mwProductsTimeline",
+					"mwProductsList",
 				];
 				if (overviewScreens.indexOf(options.toScreen) > -1) {
 
@@ -935,10 +1014,27 @@
 			case "gseSignupsJobAdmin":
 			case "gseSignupsManager":
 			case "gseSignupsStaff":
-				$("div#overview-screen-container").empty().removeClass('adminRequests-requests myRequests-requests gpcInitialConceptApprovalViewer-requests gpcSubmissionApprovalViewer-requests adminReferrals-requests myReferrals-requests adminEventAV-requests gseStatsHRAdmin-requests gseJobsHRAdmin-requests gseJobsJobAdmin-requests gseJobsManager-requests gseSchedulesCalendarHRAdmin-requests gseSchedulesCalendarJobAdmin-requests gseSchedulesCalendarManager-requests gseSchedulesCalendarStaff-requests gseSchedulesListHRAdmin-requests gseSchedulesListJobAdmin-requests gseSchedulesListManager-requests gseSchedulesListStaff-requests gseSignupsHRAdmin-requests gseSignupsJobAdmin-requests gseSignupsManager-requests gseSignupsStaff-requests');
+
+			case "mwBuyoutCalendar":
+			case "mwBuyoutList":
+			case "mwEventCalendar":
+			case "mwEventList":
+			case "mwProductsTimeline":
+			case "mwProductsList":
+				$("div#overview-screen-container").empty().removeClass('adminRequests-requests myRequests-requests gpcInitialConceptApprovalViewer-requests gpcSubmissionApprovalViewer-requests adminReferrals-requests myReferrals-requests adminEventAV-requests gseStatsHRAdmin-requests gseJobsHRAdmin-requests gseJobsJobAdmin-requests gseJobsManager-requests gseSchedulesCalendarHRAdmin-requests gseSchedulesCalendarJobAdmin-requests gseSchedulesCalendarManager-requests gseSchedulesCalendarStaff-requests gseSchedulesListHRAdmin-requests gseSchedulesListJobAdmin-requests gseSchedulesListManager-requests gseSchedulesListStaff-requests gseSignupsHRAdmin-requests gseSignupsJobAdmin-requests gseSignupsManager-requests gseSignupsStaff-requests mwBuyoutCalendar-requests mwBuyoutList-requests mwEventCalendar-requests mwEventList-requests mwProductsTimeline-requests mwProductsList-requests');
 				$("div#overview-screen-container").append('<div id="overview-table-container" class="table-container"></div>');
 			case "gseSchedulesListHRAdmin":
 				$("div#gse-schedule-card-dialog").remove();
+				break;
+
+			case "mwBuyoutCalendar":
+				$("div#mw-buyout-card-dialog").remove();
+				break;
+			case "mwEventCalendar":
+				$("div#mw-event-card-dialog").remove();
+				break;
+			case "mwProductsTimeline":
+				$("div#mw-product-card-dialog").remove();
 				break;
 		}
 	};
@@ -999,11 +1095,11 @@
 		if (rData.requestID != "" && rData.requestID == 0 && rData.gseScheduleID == "") {
 			initialScreen = "newRequest";
 			secondaryScreen = overviewScreen;
-		// if the URL contains a request ID (r) greater than 0 -OR- the URL contains a GSE Schedule ID (gseScheduleID) greater than 0
+			// if the URL contains a request ID (r) greater than 0 -OR- the URL contains a GSE Schedule ID (gseScheduleID) greater than 0
 		} else if ((rData.requestID != "" && rData.requestID > 0) || (rData.gseScheduleID != "" && rData.gseScheduleID > 0)) {
 			initialScreen = "existingRequest";
 			secondaryScreen = overviewScreen;
-		// if the URL does not contain a request ID (r)
+			// if the URL does not contain a request ID (r)
 		} else if (rData.requestID === "") {
 			initialScreen = overviewScreen;
 			secondaryScreen = "newRequest";
@@ -1279,11 +1375,11 @@
 
 
 		var query = "<Query>" +
-					"<Where>";
-		if (opt.where.ands) { 
+			"<Where>";
+		if (opt.where.ands) {
 			query += "<And>";
 			// curently assumes there are no more than two ands
-			$.each(opt.where.ands, function(i, andObject) {
+			$.each(opt.where.ands, function (i, andObject) {
 				if (!andObject.operator) {
 					andObject.operator = 'Eq';
 				}
@@ -1303,8 +1399,8 @@
 
 			if (opt.where.value) {
 				query += "<" + opt.where.operator + ">";
-				query += "<FieldRef Name='" + opt.where.field + "'></FieldRef>" + 
-				"<Value Type='" + opt.where.type + "'>" + opt.where.value + "</Value>";
+				query += "<FieldRef Name='" + opt.where.field + "'></FieldRef>" +
+					"<Value Type='" + opt.where.type + "'>" + opt.where.value + "</Value>";
 				query += "</" + opt.where.operator + ">";
 			} else if (opt.where.values) {
 				query += "<In>";
@@ -1318,8 +1414,8 @@
 			}
 		}
 
-		query +=	"</Where>" +
-					"</Query>";
+		query += "</Where>" +
+			"</Query>";
 
 		var fields = "<ViewFields>";
 		$.each(opt.select, function (i, oneField) {
@@ -1380,7 +1476,7 @@
 	};
 
 
-	
+
 	$.fn.GetFieldsFromAllRows = function (options) {
 
 		var returnValue = [];
@@ -1505,9 +1601,9 @@
 					$.each(opt.select, function (i, oneField) {
 
 						if (
-							oneField.nameHere === "formData" || 
-							oneField.nameHere === "defaultDataForNewRequests" || 
-							oneField.nameHere === "gseJobData" || 
+							oneField.nameHere === "formData" ||
+							oneField.nameHere === "defaultDataForNewRequests" ||
+							oneField.nameHere === "gseJobData" ||
 							oneField.nameHere === "gseScheduleData"
 						) {
 							console.log('found field to interpret');
@@ -1710,9 +1806,9 @@
 
 
 
-	$.fn.UserNeeedsAlternateOverviewScreen = function () {
+	$.fn.UserNeedsAlternateOverviewScreen = function () {
 
-		var userNeeedsAlternateOverviewScreen = 0;
+		var userNeedsAlternateOverviewScreen = 0;
 
 		switch (mData.requestName) {
 			case "GPC Initial Concept Approval":
@@ -1720,7 +1816,7 @@
 					var gpcGroups = $().ReturnGPCGroups();
 					$.each(gpcGroups.InitialConceptViewAccess, function (i, person) {
 						if (person.accountLong === uData.account) {
-							userNeeedsAlternateOverviewScreen = "gpcInitialConceptApprovalViewer";
+							userNeedsAlternateOverviewScreen = "gpcInitialConceptApprovalViewer";
 						}
 					});
 				}
@@ -1730,74 +1826,97 @@
 					var gpcGroups = $().ReturnGPCGroups();
 					$.each(gpcGroups.SubmissionApprovalViewAccess, function (i, person) {
 						if (person.accountLong === uData.account) {
-							userNeeedsAlternateOverviewScreen = "gpcSubmissionApprovalViewer";
+							userNeedsAlternateOverviewScreen = "gpcSubmissionApprovalViewer";
 						}
 					});
 				}
 				break;
 			case "Refer a Friend":
 				if (uData.isAdmin === 0) {
-					userNeeedsAlternateOverviewScreen = "myReferrals";
+					userNeedsAlternateOverviewScreen = "myReferrals";
 				} else {
-					userNeeedsAlternateOverviewScreen = "adminReferrals";
+					userNeedsAlternateOverviewScreen = "adminReferrals";
 				}
 				break;
 
 			case "Event AV":
 				if (uData.isAdmin === 1) {
-					userNeeedsAlternateOverviewScreen = "adminEventAV";
+					userNeedsAlternateOverviewScreen = "adminEventAV";
 				}
 				break;
 			case "GSE Configuration":
 				if (uData.roles.indexOf("gseHRAdmin") > -1) {
-					userNeeedsAlternateOverviewScreen = "gseStatsHRAdmin";
+					userNeedsAlternateOverviewScreen = "gseStatsHRAdmin";
 				}
 				break;
 			case "GSE Job":
 				if (uData.roles.indexOf("gseHRAdmin") > -1) {
-					userNeeedsAlternateOverviewScreen = "gseJobsHRAdmin";
+					userNeedsAlternateOverviewScreen = "gseJobsHRAdmin";
 				} else if (uData.roles.indexOf("gseJobAdmin") > -1 && uData.roles.indexOf("gseManager") == -1) {
-					userNeeedsAlternateOverviewScreen = "gseJobsJobAdmin";
+					userNeedsAlternateOverviewScreen = "gseJobsJobAdmin";
 				} else if (uData.roles.indexOf("gseManager") > -1) {
-					userNeeedsAlternateOverviewScreen = "gseJobsManager";
+					userNeedsAlternateOverviewScreen = "gseJobsManager";
 				}
 				break;
 			case "GSE Schedule":
 				if (GetParamFromUrl(location.search, "f") === "cal") {
 					if (uData.roles.indexOf("gseHRAdmin") > -1) {
-						userNeeedsAlternateOverviewScreen = "gseSchedulesCalendarHRAdmin";
+						userNeedsAlternateOverviewScreen = "gseSchedulesCalendarHRAdmin";
 					} else if (uData.roles.indexOf("gseJobAdmin") > -1 && uData.roles.indexOf("gseManager") == -1) {
-						userNeeedsAlternateOverviewScreen = "gseSchedulesCalendarJobAdmin";
+						userNeedsAlternateOverviewScreen = "gseSchedulesCalendarJobAdmin";
 					} else if (uData.roles.indexOf("gseManager") > -1) {
-						userNeeedsAlternateOverviewScreen = "gseSchedulesCalendarManager";
+						userNeedsAlternateOverviewScreen = "gseSchedulesCalendarManager";
 					} else {
-						userNeeedsAlternateOverviewScreen = "gseSchedulesCalendarStaff";
+						userNeedsAlternateOverviewScreen = "gseSchedulesCalendarStaff";
 					}
 				} else {
 					if (uData.roles.indexOf("gseHRAdmin") > -1) {
-						userNeeedsAlternateOverviewScreen = "gseSchedulesListHRAdmin";
+						userNeedsAlternateOverviewScreen = "gseSchedulesListHRAdmin";
 					} else if (uData.roles.indexOf("gseJobAdmin") > -1 && uData.roles.indexOf("gseManager") == -1) {
-						userNeeedsAlternateOverviewScreen = "gseSchedulesListJobAdmin";
+						userNeedsAlternateOverviewScreen = "gseSchedulesListJobAdmin";
 					} else if (uData.roles.indexOf("gseManager") > -1) {
-						userNeeedsAlternateOverviewScreen = "gseSchedulesListManager";
+						userNeedsAlternateOverviewScreen = "gseSchedulesListManager";
 					} else {
-						userNeeedsAlternateOverviewScreen = "gseSchedulesListStaff";
+						userNeedsAlternateOverviewScreen = "gseSchedulesListStaff";
 					}
 				}
 				break;
 			case "GSE Signup":
 				if (uData.roles.indexOf("gseHRAdmin") > -1) {
-					userNeeedsAlternateOverviewScreen = "gseSignupsHRAdmin";
+					userNeedsAlternateOverviewScreen = "gseSignupsHRAdmin";
 				} else if (uData.roles.indexOf("gseJobAdmin") > -1 && uData.roles.indexOf("gseManager") == -1) {
-					userNeeedsAlternateOverviewScreen = "gseSignupsJobAdmin";
+					userNeedsAlternateOverviewScreen = "gseSignupsJobAdmin";
 				} else if (uData.roles.indexOf("gseManager") > -1) {
-					userNeeedsAlternateOverviewScreen = "gseSignupsManager";
+					userNeedsAlternateOverviewScreen = "gseSignupsManager";
 				} else {
-					userNeeedsAlternateOverviewScreen = "gseSignupsStaff";
+					userNeedsAlternateOverviewScreen = "gseSignupsStaff";
+				}
+				break;
+
+
+			case "Museum Buyouts":
+				if (GetParamFromUrl(location.search, "f") === "cal") {
+					userNeedsAlternateOverviewScreen = "mwBuyoutCalendar";
+				} else {
+					userNeedsAlternateOverviewScreen = "mwBuyoutList";
+				}
+				break;
+			case "Museum Events":
+				if (GetParamFromUrl(location.search, "f") === "cal") {
+					userNeedsAlternateOverviewScreen = "mwEventCalendar";
+				} else {
+					userNeedsAlternateOverviewScreen = "mwEventList";
+				}
+				break;
+			case "Museum Products":
+				if (GetParamFromUrl(location.search, "f") === "tl") {
+					userNeedsAlternateOverviewScreen = "mwProductsTimeline";
+				} else {
+					userNeedsAlternateOverviewScreen = "mwProductsList";
 				}
 				break;
 		}
-		return userNeeedsAlternateOverviewScreen;
+		return userNeedsAlternateOverviewScreen;
 	};
 
 
@@ -3556,6 +3675,19 @@
 			}
 		}
 
+		// if a custom access permission function is specified
+		if (fData.customAccessPermissionsFunction) {
+			// set this user's permission flag to the result of said function
+			hasViewingPermissionThisRequest = CallFunctionFromString(fData.customAccessPermissionsFunction, { "rData": rData });
+			// if this user's permission flag is still not 1
+			if (hasViewingPermissionThisRequest === 0) {
+				// show permission denial message and stop any further configuration of this request
+				$('div#overlays-screen-container').fadeIn(200);
+				$('div#mos-form-no-view-permission').fadeIn(400);
+				return;
+			}
+		}
+
 
 
 		// ========================================================
@@ -3945,9 +4077,9 @@
 			delete rData.gseScheduleData['Requester-Email'];
 			delete rData.gseJobData['Requester-Phone'];
 			delete rData.gseScheduleData['Requester-Phone'];
-			
+
 			// calculate positions remaining
-			
+
 			// prep some of the data before populating fields and placeholders with it
 			var otherSignupsForThisSchedule = $().GetFieldsFromSpecifiedRows({
 				"select": [{
@@ -3973,7 +4105,7 @@
 				rData.gseScheduleData['time-storage_StartTime'].substring(11, 16);
 			scheduleStartDateTime = moment.tz(scheduleStartDateTime, "America/New_York").format();
 			var NowAsISOLocal = $().ReturnFormattedDateTime('nowLocal', null, null);
-			rData.gseScheduleData['Positions-Available'] = 
+			rData.gseScheduleData['Positions-Available'] =
 				parseInt(rData.gseScheduleData['Number-of-Positions']) - otherSignupsForThisSchedule.length;
 			rData.gseScheduleData['Friendly-Date'] = $().ReturnFormattedDateTime(rData.gseScheduleData['Date'], null, 'dddd, MMMM D, YYYY', 1);
 			rData.gseScheduleData['Shift-Length'] = rData.gseScheduleData['shiftlength_35-hours'] ? '3.5 hours' : '7 hours';
@@ -3984,9 +4116,9 @@
 			if (rData.gseScheduleData['time-storage_MealTime']) {
 				rData.gseScheduleData['Meal-Time'] = $().ReturnFormattedDateTime(rData.gseScheduleData['time-storage_MealTime'].substring(0, 19), null, 'h:mm a');
 			}
-			
-			
-			
+
+
+
 
 			rData.gseJobData['Job-Admin-Name'] = rData.gseJobData['Job-Admin'][0].displayText;
 			rData.gseJobData['Job-Description-Formatted'] = '<p>' + ReplaceAll('%0A', '</p><p>', rData.gseJobData['Job-Description']) + '</p>';
@@ -4021,12 +4153,12 @@
 
 			// dress requirements
 			// start with the two persistent requirements
-			rData.gseJobData['Dress-Requirements-List-Items'] = 
-				'<li>Clothing and shoes must be in good condition.</li>' + 
+			rData.gseJobData['Dress-Requirements-List-Items'] =
+				'<li>Clothing and shoes must be in good condition.</li>' +
 				'<li>MOS badge must be worn above the waist at all times.</li>';
 			// add any other requirements
 			if (rData.gseJobData['Dress-Requirements']) {
-				rData.gseJobData['Dress-Requirements-List-Items'] += 
+				rData.gseJobData['Dress-Requirements-List-Items'] +=
 					'<li>' + ReplaceAll('%0A', '</li><li>', rData.gseJobData['Dress-Requirements']) + '</li>';
 			}
 
@@ -4060,16 +4192,16 @@
 
 			if (rData.gseScheduleData['Notes']) {
 				rData.gseScheduleData['Notes-Formatted'] = '<h3>Notes</h3>' +
-					'<p>' + ReplaceAll('%0A', '</p><p>', rData.gseScheduleData['Notes']) + '</p>';					
+					'<p>' + ReplaceAll('%0A', '</p><p>', rData.gseScheduleData['Notes']) + '</p>';
 			}
 
-			// console.log('rData.gseScheduleData');
-			// console.log(rData.gseScheduleData);
-			// console.log('rData.gseJobData');
-			// console.log(rData.gseJobData);
-			// console.log('rData.formDataOnLoad');
-			// console.log(rData.formDataOnLoad);
-			
+			console.log('rData.gseScheduleData');
+			console.log(rData.gseScheduleData);
+			console.log('rData.gseJobData');
+			console.log(rData.gseJobData);
+			console.log('rData.formDataOnLoad');
+			console.log(rData.formDataOnLoad);
+
 			// populate the placeholder <span>s with job and schedule data
 			PopulateFormData("div#request-form", rData.gseJobData, mData.uriRoot, rData.requestID, mData.checkForAlternateEventDataToPopulate);
 			PopulateFormData("div#request-form", rData.gseScheduleData, mData.uriRoot, rData.requestID, mData.checkForAlternateEventDataToPopulate);
@@ -4123,7 +4255,7 @@
 			$('input#Requester-Account').val(uData.account);
 
 			// if designated, set current user's dept as event dept
-			if (typeof (mData.autoPopulateEventDeparment) != 'undefined' && mData.autoPopulateEventDeparment === 1) {
+			if (typeof (mData.autoPopulateEventDepartment) != 'undefined' && mData.autoPopulateEventDepartment === 1) {
 				$('input#Event-Department').val(uData.dept);
 			}
 
@@ -5758,7 +5890,7 @@
 				if (typeof (fData.autoProcessGSESignupCreditFromSchedule) != 'undefined' && fData.autoProcessGSESignupCreditFromSchedule == 1) {
 
 					$(workingMessage).text("Handling GSE Modifications");
-					
+
 					// if this schedule is newly completed or cancelled
 					if (
 						(rData.requestStatus === 'Completed' || rData.requestStatus === 'Cancelled') &&
@@ -5841,7 +5973,7 @@
 								valuepairs: signupMod.submissionValuePairsArray,
 								completefunc: function (xData, Status) {
 									// determine success of save; then...
-									var swfListSaveSuccess = 
+									var swfListSaveSuccess =
 										$().HandleListUpdateReturn(xData, Status, 'Hub SWF List Item Error - GSE Signup Credit');
 									if (swfListSaveSuccess === 1) {
 										scheduleData = rData;
@@ -6650,10 +6782,23 @@
 					globalSubmissionValuePairsArrayOfArrays.push(ReturnAllRequestDataObjectAugmentedWithExceptionalEventOccurrence(clonedForm, rData.formData));
 				}
 
+
+
+
+
+
 				// if keeping exceptional occurrence data; i.e., so that non-date data can be edited for an event series without losing the exceptions
 				if (keepExceptionalEventOccurrences == 1) {
-					globalSubmissionValuePairsArrayOfArrays.push(ReturnAllRequestDataObjectWithExceptionalEventOccurrences(formDataString, rData.formData));
+					console.log('gonna 2');
+					console.log('user not changing recurrence pattern');
+					globalSubmissionValuePairsArrayOfArrays.push(ReturnAllRequestDataObjectWithExceptionalEventOccurrences(clonedForm, rData.formData));
 				}
+
+				console.log('FINAL');
+				console.log(globalSubmissionValuePairsArrayOfArrays);
+
+
+
 
 
 				// if saving data using a custom function
@@ -7181,6 +7326,19 @@
 			$().RenderAllDataTables(oData.gpcSubmissionApprovalViewer.sections, "overview-table-container");
 			$().RenderWorkflowContacts();
 
+		} else if (type === "mwBuyoutList") {
+			$().RenderOverviewScreenButtons(oData.mwBuyoutList.buttons, 0);
+			$().RenderAllDataTables(oData.mwBuyoutList.sections, "overview-table-container");
+			$().RenderWorkflowContacts();
+		} else if (type === "mwEventList") {
+			$().RenderOverviewScreenButtons(oData.mwEventList.buttons, 0);
+			$().RenderAllDataTables(oData.mwEventList.sections, "overview-table-container");
+			$().RenderWorkflowContacts();
+		} else if (type === "mwProductsList") {
+			$().RenderOverviewScreenButtons(oData.mwProductsList.buttons, 0);
+			$().RenderAllDataTables(oData.mwProductsList.sections, "overview-table-container");
+			$().RenderWorkflowContacts();
+
 
 		} else if (type === "adminEventAV") {
 			$().RenderCommandBarAndDatatablesForEventAVForAdmin();
@@ -7234,12 +7392,12 @@
 			// $().RenderOverviewScreenButtons(oData.gseSchedulesListStaff.buttons, 0);
 			$().RenderCommandBarAndDataTablesForGSESchedules(oData.gseSchedulesListStaff.buttons, "overview-table-container", 'gseUserOnly');
 			$().RenderWorkflowContacts();
-		
-		
-		
-		
-		
-		
+
+
+
+
+
+
 		} else if (type === "gseSignupsHRAdmin") {
 			$().RenderCommandBarAndMarkupForGSESignupsForHRAdminOrManager("overview-table-container", 'gseHRAdmin');
 		} else if (type === "gseSignupsManager") {
@@ -7251,6 +7409,13 @@
 		} else if (type === "gseSignupsStaff") {
 			$().RenderCommandBarAndDataTablesForGSESignupsForJobAdminOrUser("overview-table-container", 'gseUserOnly');
 			$().RenderWorkflowContacts();
+
+		} else if (type === "mwBuyoutCalendar") {
+			$().RenderCommandBarAndCalendarForBuyouts(oData.mwBuyoutCalendar.buttons);
+		} else if (type === "mwEventCalendar") {
+			$().RenderCommandBarAndCalendarForMWEvents(oData.mwEventCalendar.buttons);
+		} else if (type === "mwProductsTimeline") {
+			$().RenderCommandBarAndTimelineForProducts(oData.mwProductsTimeline.buttons);
 		}
 
 		$("div#overview-screen-container").addClass(type + "-requests");
@@ -8897,7 +9062,7 @@
 						})
 							.done(function (returnedManagerData) {
 								gseJobAdminManagerEmailArray
-										.push(returnedManagerData.docs.email);
+									.push(returnedManagerData.docs.email);
 							});
 					});
 			}
@@ -8918,7 +9083,7 @@
 
 		sData.requesterManagerEmailArray = $().ReturnManagerOfUserEmailArray(uData.account);
 		sData.jobCreationAdditionalNotificationRecipients = $().ReturnGSEJobCreationAdditionalNotificationRecipients();
-		
+
 		jobAdminArray = JSON.parse($('input#Job-Admin_TopSpan_HiddenInput').val());
 		sData.requesterName = jobAdminArray[0].DisplayText;
 		sData.requesterEmail = jobAdminArray[0].Description;
@@ -8973,7 +9138,7 @@
 					'to': toAdmin,
 					'subject': eData.subjectPreface + 'new request received',
 					'bodyUnique': '<p>' + eData.requesterName + ' has submitted a new request. Please ' +
-						'<a href="' + eData.uriRequest + '">review this request and <a href="mailto:' + 
+						'<a href="' + eData.uriRequest + '">review this request and <a href="mailto:' +
 						eData.adminEmailString + '">' + 'contact the admin</a> with any issues.</p>'
 				});
 			});
@@ -9000,7 +9165,7 @@
 				'to': eData.requesterEmail,
 				'subject': eData.subjectPreface + 'new request received',
 				'bodyUnique': '<p>This is the request you nicknamed "' + eData.requestNick + '". You can ' +
-					'<a href="' + eData.uriRequest + '">review the details at any time</a> and you\'ll be ' + 
+					'<a href="' + eData.uriRequest + '">review the details at any time</a> and you\'ll be ' +
 					'notified again when the relevant people have approved it.</p>' +
 					'<p>In the meantime, you can <a href="mailto:' + eData.adminEmailString + '">' +
 					'contact the admin</a> with any questions or <a href="' + eData.uriOverview + '">' +
@@ -9019,7 +9184,7 @@
 			console.log('RS = approved');
 
 			// admin
-			$.each(eData.adminEmailArray, function (i, toAdmin) {
+			/* $.each(eData.adminEmailArray, function (i, toAdmin) {
 				notificationsToSend.push({
 					'emailType': 'Notification',
 					'caller': 'approved admin',
@@ -9028,7 +9193,7 @@
 					'bodyUnique': '<p>As needed, <a href="' + eData.uriRequest + '">review the request\'s details</a> ' +
 						'and contact ' + eData.requestedForLinkedNamesString + '.'
 				});
-			});
+			}); */
 
 			// manager of requester (job admin)
 			$.each(eData.requesterManagerEmailArray, function (i, toManager) {
@@ -9048,8 +9213,9 @@
 				'caller': 'approved jobAdmin',
 				'to': eData.requesterEmail,
 				'subject': eData.subjectPreface + eData.requestStatus.toLowerCase(),
-				'bodyUnique': '<p>This is the request you nicknamed "' + eData.requestNick + '". You can ' +
-					'<a href="https://bmos.sharepoint.com/sites/hr-service-schedules/SitePages/App.aspx">schedule this job</a> or ' +
+				'bodyUnique': '<p>This is the request you nicknamed "' + eData.requestNick + '". You must ' +
+					'<a href="https://bmos.sharepoint.com/sites/hr-service-schedules/SitePages/App.aspx">schedule this job</a> ' +
+					'before anyone can sign up for it. You can ' +
 					'<a href="mailto:' + eData.adminEmailString + '">contact the admin</a> with any ' +
 					'issues related thereto.'
 			});
@@ -9167,7 +9333,7 @@
 		sData.jobTitle = gseJobsArray[0].JobTitle;
 		sData.jobAdminName = sData.jobAdmin[0].name;
 		sData.jobAdminEmail = sData.jobAdmin[0].email;
-		sData.jobAdminLinkedNamesString = 
+		sData.jobAdminLinkedNamesString =
 			'<a href="mailto:' + sData.jobAdminEmail.toLowerCase() + '">' + sData.jobAdminName + '</a>';
 
 		// sData.requesterManagerEmailArray = $().ReturnManagerOfUserEmailArray(sData.jobAdmin[0].account);
@@ -9180,7 +9346,7 @@
 		} else {
 			mData.subjectPreface = mData.requestName + ' #' + rData.requestID + ': ';
 		}
-	
+
 		mData.uriOverview = mData.fullSiteBaseURL + "/SitePages/" + mData.pageToken + ".aspx"
 		mData.uriRequest = mData.uriOverview + "?r=" + rData.requestID;
 
@@ -9207,7 +9373,7 @@
 				'caller': 'beginningOfLife jobAdmin',
 				'to': sData.jobAdminEmail,
 				'subject': eData.subjectPreface + 'created',
-				'bodyUnique': '<p>This is the schedule, or set of schedules, you nicknamed "' + 
+				'bodyUnique': '<p>This is the schedule, or set of schedules, you nicknamed "' +
 					eData.requestNick + '". You can <a href="mailto:' + eData.adminEmailString + '">' +
 					'contact the admin</a> with any questions or <a href="' + eData.uriOverview + '">' +
 					'check up on this and any other ' + eData.requestName + ' requests</a>.</p>'
@@ -9292,7 +9458,7 @@
 		sData.jobTitle = gseJobsArray[0].JobTitle;
 		sData.jobAdminName = sData.jobAdmin[0].name;
 		sData.jobAdminEmail = sData.jobAdmin[0].email;
-		sData.jobAdminLinkedNamesString = 
+		sData.jobAdminLinkedNamesString =
 			'<a href="mailto:' + sData.jobAdminEmail.toLowerCase() + '">' + sData.jobAdminName + '</a>';
 
 		sData.requesterName = $("input#Requester-Name").val();
@@ -9303,7 +9469,7 @@
 
 		sData.scheduleNickJobAdmin = rData.gseScheduleData['Request-Nickname'];
 
-		sData.scheduleDateTime = 
+		sData.scheduleDateTime =
 			$().ReturnFormattedDateTime($("input#Schedule-Start-Datetime").val(), null, 'dddd, MMMM D, YYYY, h:mm a');
 
 		mData.subjectPrefaceStaff = 'GSE Signup #' + rData.requestID + ': ';
@@ -9338,9 +9504,9 @@
 				'caller': 'beginningOfLife jobAdmin',
 				'to': sData.jobAdminEmail,
 				'subject': eData.subjectPrefaceJobAdmin + 'new signup',
-				'bodyUnique': '<p>' + eData.requesterName + ' has signed up for the ' + 
-					sData.scheduleDateTime + ' schedule nicknamed "' + 
-					sData.scheduleNickJobAdmin + '", which is for the job titled "' + 
+				'bodyUnique': '<p>' + eData.requesterName + ' has signed up for the ' +
+					sData.scheduleDateTime + ' schedule nicknamed "' +
+					sData.scheduleNickJobAdmin + '", which is for the job titled "' +
 					sData.jobTitle + '". Feel free to <a href="mailto:' + eData.requesterEmail + '">' +
 					'contact ' + eData.requesterName + '</a> if you need to follow up.</p>'
 			});
@@ -9353,7 +9519,7 @@
 					'to': toManager,
 					'subject': eData.subjectPrefaceJobAdmin + 'new signup',
 					'bodyUnique': '<p>' + eData.requesterName + ' has signed up for "' + sData.jobTitle +
-						'", scheduled for ' + sData.scheduleDateTime + 
+						'", scheduled for ' + sData.scheduleDateTime +
 						'. Feel free to <a href="mailto:' + eData.requesterEmail + '">' +
 						'contact ' + eData.requesterName + '</a> if you need to follow up.</p>'
 				});
@@ -9365,14 +9531,14 @@
 				'caller': 'beginningOfLife staff',
 				'to': eData.requesterEmail,
 				'subject': eData.subjectPrefaceStaff + 'signup',
-				'bodyUnique': '<p>You\'ve signed up for "' + sData.jobTitle + 
-					'", scheduled for ' + sData.scheduleDateTime + '. <a href="' + 
+				'bodyUnique': '<p>You\'ve signed up for "' + sData.jobTitle +
+					'", scheduled for ' + sData.scheduleDateTime + '. <a href="' +
 					eData.uriRequest + '">Revisit your signup</a> to review the details or to cancel. ' +
-					'Feel free to <a href="mailto:' + sData.jobAdminEmail + '">contact ' + 
+					'Feel free to <a href="mailto:' + sData.jobAdminEmail + '">contact ' +
 					sData.jobAdminName + '</a> ' +
 					'with any questions, <a href="' + eData.uriOverview + '">' +
-					'review your other signups</a>, or ' + 
-					'<a href="https://bmos.sharepoint.com/sites/hr-service-schedules/SitePages/App.aspx?f=cal">' + 
+					'review your other signups</a>, or ' +
+					'<a href="https://bmos.sharepoint.com/sites/hr-service-schedules/SitePages/App.aspx?f=cal">' +
 					'sign up for another GSE</a>.</p>'
 			});
 		}
@@ -9412,8 +9578,8 @@
 					'caller': 'staffCancellation mgr',
 					'to': toManager,
 					'subject': eData.subjectPrefaceJobAdmin + 'signup cancelled',
-					'bodyUnique': '<p>' + eData.requesterName + ' is no longer signed up for "' + 
-						sData.jobTitle + '", scheduled for ' + sData.scheduleDateTime + 
+					'bodyUnique': '<p>' + eData.requesterName + ' is no longer signed up for "' +
+						sData.jobTitle + '", scheduled for ' + sData.scheduleDateTime +
 						'. Feel free to <a href="mailto:' + eData.requesterEmail + '">' +
 						'contact ' + eData.requesterName + '</a> if you need to follow up.</p>'
 				});
@@ -14286,7 +14452,7 @@
 			if (type == "radio" || type == "check" || type == "checkorradio") {
 				// repeat function needs to alter input names before this can begin to be made to work
 				$('input[name^="' + id + '-repeat"]').each(function () {
-					 repeatIDs.push($(this).attr('name'));
+					repeatIDs.push($(this).attr('name'));
 				});
 			} else if (type == "peoplepicker") {
 				// repeat function needs to alter people picker IDs before this can begin to be made to work
@@ -14671,7 +14837,7 @@
 		} else {
 			// construct a new one
 			var newRepeatID = originalToRepeat + "-repeat-" + (lastRepeatIDNumber + 1);
-		}		
+		}
 
 		// --- create and insert the new repeat; give it the appropriate ID and data-original-to-repeat values
 		$("#" + insertAfterID).after($("#" + originalToRepeat).clone().attr("id", newRepeatID).attr("data-original-to-repeat", originalToRepeat));
@@ -15585,7 +15751,7 @@
 			// construct print content
 			var printContent = '<h1>Employment Authorization Request</h1>' +
 				'<p>' + currentDate + '</p>' +
-				'<h2>Human Resources\' Use Only</h2>' +
+				/* '<h2>Human Resources\' Use Only</h2>' +
 				'<table style="width: 100%;">' +
 				'	<tr style="width: 100%;">' +
 				'		<td style="width: 18%; height: 40px; text-align: right">EAR Requisition #</td>' +
@@ -15605,7 +15771,7 @@
 				'		<td style="width: 20%; height: 40px; text-align: right">Date</td>' +
 				'		<td style="width: 45%; height: 40px; border-bottom: 2px solid black"></td>' +
 				'	</tr>' +
-				'<table>' +
+				'<table>' + */
 				'<h2>Job Data</h2>' +
 				'<table style="width: 100%;">' +
 				'	<tr style="width: 100%;">' +
@@ -15627,8 +15793,8 @@
 				'				<li><b>Proposed Hourly Wage:</b> ' + formData["Proposed-Hourly-Wage"] + '</li>' +
 				'				<li><b>Proposed Annualized Salary:</b> ' + formData["Proposed-Annualized-Salary"] + '</li>' +
 				'				<li><b>Proposed Start Date:</b> ' + formData["Proposed-Start-Date"] + '</li>';
-
-			if (formData["Employee-Classification"] != "Regular FT" && formData["Employee-Classification"] != "Regular PT") {
+			console.log(formData["Employee-Classification"]);
+			if (formData["Employee-Classification"] != "Regular, Full-time" && formData["Employee-Classification"] != "Regular, Part-time") {
 				printContent += '				<li><b>Proposed End Date:</b> ' + formData["Proposed-End-Date"] + '</li>';
 			}
 
@@ -15825,7 +15991,7 @@
 					'	<li><b>Proposed Hourly Wage:</b> ' + formData["Hire-Proposed-Hourly-Wage"] + '</li>' +
 					'	<li><b>Proposed Annualized Salary:</b> ' + formData["Hire-Proposed-Annualized-Salary"] + '</li>' +
 					'	<li><b>Anticipated Start Date:</b> ' + formData["Hire-Start-Date"] + '</li>';
-				if (formData["Hire-Employee-Classification"] != "Regular FT" && formData["Hire-Employee-Classification"] != "Regular PT") {
+				if (formData["Hire-Employee-Classification"] != "Regular, Full-time" && formData["Hire-Employee-Classification"] != "Regular, Part-time") {
 					printContent += '	<li><b>Anticipated End Date:</b> ' + formData["Hire-End-Date"] + '</li>';
 				}
 				printContent += '	<li><b>Funding Source:</b> ' + formData["Hire-Funding-Source"] + '</li>';
@@ -15905,7 +16071,7 @@
 							// 				'				<li><b>Employee Classification:</b> ' + formData["Position-Change-Previous-Employee-Classification"] + '</li>' + 
 							// 				'				<li><b>Start Date:</b> ' + formData["Position-Change-Previous-Start-Date"] + '</li>';
 
-							// if (formData["Position-Change-Previous-Employee-Classification"] != "Regular FT" && formData["Position-Change-Previous-Employee-Classification"] != "Regular PT") {
+							// if (formData["Position-Change-Previous-Employee-Classification"] != "Regular, Full-time" && formData["Position-Change-Previous-Employee-Classification"] != "Regular, Part-time") {
 							// 	printContent += '				<li><b>End Date:</b> ' + formData["Position-Change-Previous-End-Date"] + '</li>';
 							// }
 
@@ -15925,7 +16091,7 @@
 								'				<li><b>Employee Classification:</b> ' + formData["Position-Change-Employee-Classification"] + '</li>' +
 								'				<li><b>Anticipated Start Date:</b> ' + formData["Position-Change-Start-Date"] + '</li>';
 
-							if (formData["Position-Change-Employee-Classification"] != "Regular FT" && formData["Position-Change-Employee-Classification"] != "Regular PT") {
+							if (formData["Position-Change-Employee-Classification"] != "Regular, Full-time" && formData["Position-Change-Employee-Classification"] != "Regular, Part-time") {
 								printContent += '				<li><b>Anticipated End Date:</b> ' + formData["Position-Change-End-Date"] + '</li>';
 							}
 
@@ -15970,7 +16136,7 @@
 								'	<li><b>Employee Classification:</b> ' + formData["Additional-Position-Employee-Classification"] + '</li>' +
 								'	<li><b>Start Date:</b> ' + formData["Additional-Position-Start-Date"] + '</li>';
 
-							if (formData["Additional-Position-Employee-Classification"] != "Regular FT" && formData["Additional-Position-Employee-Classification"] != "Regular PT") {
+							if (formData["Additional-Position-Employee-Classification"] != "Regular, Full-time" && formData["Additional-Position-Employee-Classification"] != "Regular, Part-time") {
 								printContent += '	<li><b>End Date:</b> ' + formData["Additional-Position-End-Date"] + '</li>';
 							}
 							printContent += '	<li><b>Funding Source:</b> ' + formData["Additional-Position-Funding-Source"] + '</li>';
@@ -16134,126 +16300,107 @@
 							// 					'	<li><b>Reason Explanation:</b> ' + formData["Other-Termination-Reason-Explanation"] + '</li>';
 							// }
 						}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-						printContent += '<h2>Approvals</h2>' +
-							'<table style="width: 100%;">' +
-							'	<tr style="width: 100%;">' +
-							'		<td style="width: 20%; height: 40px; text-align: right">Manager/Director</td>' +
-							'		<td style="width: 50%; height: 40px; border-bottom: 2px solid black"></td>' +
-							'		<td style="width: 10%; height: 40px; text-align: right">Date</td>' +
-							'		<td style="width: 20%; height: 40px; border-bottom: 2px solid black"></td>' +
-							'	</tr>' +
-							'	<tr style="width: 100%;">' +
-							'		<td style="width: 20%; height: 40px; text-align: right">Vice President</td>' +
-							'		<td style="width: 50%; height: 40px; border-bottom: 2px solid black"></td>' +
-							'		<td style="width: 10%; height: 40px; text-align: right">Date</td>' +
-							'		<td style="width: 20%; height: 40px; border-bottom: 2px solid black"></td>' +
-							'	</tr>' +
-							'	<tr style="width: 100%;">' +
-							'		<td style="width: 20%; height: 40px; text-align: right">Human Resources</td>' +
-							'		<td style="width: 50%; height: 40px; border-bottom: 2px solid black"></td>' +
-							'		<td style="width: 10%; height: 40px; text-align: right">Date</td>' +
-							'		<td style="width: 20%; height: 40px; border-bottom: 2px solid black"></td>' +
-							'	</tr>' +
-							'<table>' +
-							'<h2>Human Resources\' Use Only</h2>' +
-							'<table style="width: 100%;">' +
-							'	<tr style="width: 100%;">' +
-							'		<td style="width: 4%; height: 40px; border-bottom: 2px solid black"></td>' +
-							'		<td style="width: 8%; height: 40px;">' +
-							'			Exempt' +
-							'		</td>' +
-							'		<td style="width: 4%; height: 40px;"></td>' +
-							'		<td style="width: 4%; height: 40px; border-bottom: 2px solid black"></td>' +
-							'		<td style="width: 8%; height: 40px;">' +
-							'			Non-exempt' +
-							'		</td>' +
-							'		<td style="width: 4%; height: 40px;"></td>' +
-							'		<td style="width: 8%; height: 40px; text-align: right;">' +
-							'			EAR #:' +
-							'		</td>' +
-							'		<td style="width: 20%; height: 40px; border-bottom: 2px solid black"></td>' +
-							'		<td style="width: 4%; height: 40px;"></td>' +
-							'		<td style="width: 13%; height: 40px; text-align: right;">' +
-							'			Worker\'s Comp #:' +
-							'		</td>' +
-							'		<td style="width: 16%; height: 40px; border-bottom: 2px solid black"></td>' +
-							'		<td style="width: 4%; height: 40px;"></td>' +
-							'	</tr>' +
-							'</table>' +
-							'<table style="width: 100%;">' +
-							'	<tr style="width: 100%;">' +
-							'		<td style="width: 8%; height: 40px;">' +
-							'			Benefits:' +
-							'		</td>' +
-							'		<td style="width: 4%; height: 40px;"></td>' +
-							'		<td style="width: 4%; height: 40px; border-bottom: 2px solid black"></td>' +
-							'		<td style="width: 6%; height: 40px;">' +
-							'			FT (E)' +
-							'		</td>' +
-							'		<td style="width: 4%; height: 40px;"></td>' +
-							'		<td style="width: 4%; height: 40px; border-bottom: 2px solid black"></td>' +
-							'		<td style="width: 6%; height: 40px;">' +
-							'			PT (P)' +
-							'		</td>' +
-							'		<td style="width: 4%; height: 40px;"></td>' +
-							'		<td style="width: 4%; height: 40px; border-bottom: 2px solid black"></td>' +
-							'		<td style="width: 15%; height: 40px;">' +
-							'			403(b) Only (I)' +
-							'		</td>' +
-							'		<td style="width: 41%; height: 40px;"></td>' +
-							'	</tr>' +
-							'</table>' +
-							'<table style="width: 100%;">' +
-							'	<tr style="width: 100%;">' +
-
-
-							'		<td style="width: 8%; height: 40px; text-align: right;">' +
-							'			SSN:' +
-							'		</td>' +
-							'		<td style="width: 20%; height: 40px; border-bottom: 2px solid black">' +
-							'		</td>' +
-
-
-							'		<td style="width: 4%; height: 40px;"></td>' +
-							'		<td style="width: 8%; height: 40px; text-align: right;">' +
-							'			DOB:' +
-							'		</td>' +
-							'		<td style="width: 20%; height: 40px; border-bottom: 2px solid black">' +
-							'		</td>' +
-
-
-							'		<td style="width: 4%; height: 40px;"></td>' +
-							'		<td style="width: 15%; height: 40px; text-align: right;">' +
-							'			Remaining vacation Hrs:' +
-							'		</td>' +
-							'		<td style="width: 21%; height: 40px; border-bottom: 2px solid black">' +
-							'		</td>' +
-
-
-							'	</tr>' +
-							'<table>';
-
 					});
 			}
+
+			printContent += '<h2>Approvals</h2>' +
+				'<table style="width: 100%;">' +
+				'	<tr style="width: 100%;">' +
+				'		<td style="width: 20%; height: 40px; text-align: right">Manager/Director</td>' +
+				'		<td style="width: 50%; height: 40px; border-bottom: 2px solid black"></td>' +
+				'		<td style="width: 10%; height: 40px; text-align: right">Date</td>' +
+				'		<td style="width: 20%; height: 40px; border-bottom: 2px solid black"></td>' +
+				'	</tr>' +
+				'	<tr style="width: 100%;">' +
+				'		<td style="width: 20%; height: 40px; text-align: right">Vice President</td>' +
+				'		<td style="width: 50%; height: 40px; border-bottom: 2px solid black"></td>' +
+				'		<td style="width: 10%; height: 40px; text-align: right">Date</td>' +
+				'		<td style="width: 20%; height: 40px; border-bottom: 2px solid black"></td>' +
+				'	</tr>' +
+				'	<tr style="width: 100%;">' +
+				'		<td style="width: 20%; height: 40px; text-align: right">Human Resources</td>' +
+				'		<td style="width: 50%; height: 40px; border-bottom: 2px solid black"></td>' +
+				'		<td style="width: 10%; height: 40px; text-align: right">Date</td>' +
+				'		<td style="width: 20%; height: 40px; border-bottom: 2px solid black"></td>' +
+				'	</tr>' +
+				'<table>' +
+				'<h2>Human Resources\' Use Only</h2>' +
+				'<table style="width: 100%;">' +
+				'	<tr style="width: 100%;">' +
+				'		<td style="width: 4%; height: 40px; border-bottom: 2px solid black"></td>' +
+				'		<td style="width: 8%; height: 40px;">' +
+				'			Exempt' +
+				'		</td>' +
+				'		<td style="width: 4%; height: 40px;"></td>' +
+				'		<td style="width: 4%; height: 40px; border-bottom: 2px solid black"></td>' +
+				'		<td style="width: 8%; height: 40px;">' +
+				'			Non-exempt' +
+				'		</td>' +
+				'		<td style="width: 4%; height: 40px;"></td>' +
+				'		<td style="width: 8%; height: 40px; text-align: right;">' +
+				'			EAR #:' +
+				'		</td>' +
+				'		<td style="width: 20%; height: 40px; border-bottom: 2px solid black"></td>' +
+				'		<td style="width: 4%; height: 40px;"></td>' +
+				'		<td style="width: 13%; height: 40px; text-align: right;">' +
+				'			Worker\'s Comp #:' +
+				'		</td>' +
+				'		<td style="width: 16%; height: 40px; border-bottom: 2px solid black"></td>' +
+				'		<td style="width: 4%; height: 40px;"></td>' +
+				'	</tr>' +
+				'</table>' +
+				'<table style="width: 100%;">' +
+				'	<tr style="width: 100%;">' +
+				'		<td style="width: 8%; height: 40px;">' +
+				'			Benefits:' +
+				'		</td>' +
+				'		<td style="width: 4%; height: 40px;"></td>' +
+				'		<td style="width: 4%; height: 40px; border-bottom: 2px solid black"></td>' +
+				'		<td style="width: 6%; height: 40px;">' +
+				'			FT (E)' +
+				'		</td>' +
+				'		<td style="width: 4%; height: 40px;"></td>' +
+				'		<td style="width: 4%; height: 40px; border-bottom: 2px solid black"></td>' +
+				'		<td style="width: 6%; height: 40px;">' +
+				'			PT (P)' +
+				'		</td>' +
+				'		<td style="width: 4%; height: 40px;"></td>' +
+				'		<td style="width: 4%; height: 40px; border-bottom: 2px solid black"></td>' +
+				'		<td style="width: 15%; height: 40px;">' +
+				'			403(b) Only (I)' +
+				'		</td>' +
+				'		<td style="width: 41%; height: 40px;"></td>' +
+				'	</tr>' +
+				'</table>' +
+				'<table style="width: 100%;">' +
+				'	<tr style="width: 100%;">' +
+
+
+				'		<td style="width: 8%; height: 40px; text-align: right;">' +
+				'			SSN:' +
+				'		</td>' +
+				'		<td style="width: 20%; height: 40px; border-bottom: 2px solid black">' +
+				'		</td>' +
+
+
+				'		<td style="width: 4%; height: 40px;"></td>' +
+				'		<td style="width: 8%; height: 40px; text-align: right;">' +
+				'			DOB:' +
+				'		</td>' +
+				'		<td style="width: 20%; height: 40px; border-bottom: 2px solid black">' +
+				'		</td>' +
+
+
+				'		<td style="width: 4%; height: 40px;"></td>' +
+				'		<td style="width: 15%; height: 40px; text-align: right;">' +
+				'			Remaining vacation Hrs:' +
+				'		</td>' +
+				'		<td style="width: 21%; height: 40px; border-bottom: 2px solid black">' +
+				'		</td>' +
+
+
+				'	</tr>' +
+				'<table>';
 
 			printContent = ReturnPrintableContentWithStandardWrapper(printContent, "hr-personnel-action");
 
@@ -17650,9 +17797,13 @@
 			case "ReturnUserIsGSEHRAdmin":
 				return $().ReturnUserIsGSEHRAdmin();
 				break;
-				
+
 			case "LoadDepartmentSelectOptions":
 				return $().LoadDepartmentSelectOptions(functionArgumentsObject);
+				break;
+
+			case "ReturnCurrentUserIsManagerOrAdmin":
+				return $().ReturnCurrentUserIsManagerOrAdmin();
 				break;
 		}
 	}
@@ -17977,9 +18128,8 @@
 			valuepairs: submissionValuePairsArray,
 			completefunc: function (xData, Status) {
 
-
 				// determine success of save; then...
-				var swfListSaveSuccess = $().HandleListUpdateReturn(xData, Status, 'Hub SWF List Item Error');
+				var swfListSaveSuccess = $().HandleListUpdateReturn(xData, Status, 'Hub SWF List Item Error', 'main swfListSaveSuccess');
 
 				// if swfList save was NOT successful
 				if (swfListSaveSuccess == 0) {
@@ -18083,7 +18233,7 @@
 		var submissionValuePairsArrayOfArraysToReturn = [];
 
 		// get the dates; we'll create one row in SWFList for each date
-		
+
 		if ($("input#individual-or-pattern_individual").is(":checked")) {
 			$(form).find('input[id^="Repeating-Date"]').each(function () {
 				scheduleDates.push($(this).val());
@@ -18337,15 +18487,19 @@
 
 
 
-	function ReturnAllRequestDataObjectWithExceptionalEventOccurrences(formDataString, originalFormData) {
+	function ReturnAllRequestDataObjectWithExceptionalEventOccurrences(form, originalFormData) {
 
 		// re/set globalSubmissionValuePairsArray to new, empty array
 		globalSubmissionValuePairsArray = [];
 
+		var standardSubmissionValuePairArray = ReturnStandardSubmissionValuePairArray(form);
+		var formDataString = JSON.stringify(standardSubmissionValuePairArray);
+
 		// if there is exceptional event data to keep
 		if (typeof (originalFormData) != 'undefined') {
+			console.log('found original form data');
 			if (typeof (originalFormData.datesToSkip) != 'undefined') {
-
+				console.log('found dates to skip');
 				// stringify the objects inside the datesToSkip array
 				var datesToSkipArrayLength = originalFormData.datesToSkip.length;
 				var datesToSkipString = '';
@@ -18376,9 +18530,9 @@
 				// attach exceptional event data to formDataString
 				formDataString = formDataStringPreppedToReceive + '"datesToSkip":"[' + datesToSkipString + ']","datesToAdd":"[' + datesToAddString + ']"}';
 			}
+		} else {
+			console.log('no original form data');
 		}
-		// push the string to valuePairs
-		globalSubmissionValuePairsArray.push(["AllRequestData", CDataWrap(formDataString)]);
 		// return the array
 		return globalSubmissionValuePairsArray;
 	}
@@ -18915,6 +19069,1034 @@
 	};
 
 
+
+	$.fn.RenderCommandBarAndCalendarForBuyouts = function (buttons) {
+
+		var viewToUse = GetParamFromUrl(location.search, "view");
+		var dateToUse = GetParamFromUrl(location.search, "date");
+		if (viewToUse == "") { viewToUse = "month"; }
+		if (dateToUse == "") { dateToUse = $().ReturnFormattedDateTime("nowUTC", "YYYY-MM-DDTHH:mm:ssZ", "YYYY-MM-DD", 0); }
+
+		var getListItemsOptions = {
+			"viewFields": "<ViewFields>" +
+				"   <FieldRef Name='ID' />" +
+				"   <FieldRef Name='AllRequestData' />" +
+				"</ViewFields>",
+			"rowLimit": "500",
+			"query": "<Query>" +
+				"   <Where>" +
+				"       <Eq>" +
+				"           <FieldRef Name='RequestStatus'></FieldRef>" +
+				"           <Value Type='Text'>Submitted</Value>" +
+				"       </Eq>" +
+				"   </Where>" +
+				"</Query>",
+			"queryOptions": "<QueryOptions>" +
+				"   <IncludeMandatoryColumns>FALSE</IncludeMandatoryColumns>" +
+				"</QueryOptions>"
+		};
+
+		$().SPServices({
+			operation: "GetListItems",
+			async: false,
+			listName: "SWFList",
+			CAMLViewFields: getListItemsOptions.viewFields,
+			CAMLQuery: getListItemsOptions.query,
+			CAMLRowLimit: getListItemsOptions.rowLimit,
+			CAMLQueryOptions: getListItemsOptions.queryOptions,
+			completefunc: function (xData, Status) {
+
+				var regexOne = new RegExp("\r", "g");
+				var regexTwo = new RegExp("\n", "g");
+				var allEvents = [];
+
+				$(xData.responseXML).SPFilterNode("z:row").each(function () {
+
+					var eventItemString = $(this).attr("ows_AllRequestData");
+					eventItemString = eventItemString.replace(regexOne, "'");
+					eventItemString = eventItemString.replace(regexTwo, "'");
+					eval("var eventItem=" + eventItemString);
+					eventItem.ID = $(this).attr("ows_ID");
+					eventItem.contactName = '';
+					if (typeof (eventItem["Requested-For"]) == "object") {
+						eventItem.contactName = "<a target=\"_blank\" href=\"https://bmos-my.sharepoint.com/_layouts/15/me.aspx?p=" + StrInStr(eventItem["Requested-For"][0]["description"], "@", 1) + "%40mos.org&v=profile\">" + eventItem["Requested-For"][0]["displayText"] + "</a>";
+					}
+					if (typeof (eventItem["Legacy-Contact"]) == "string") {
+						eventItem.contactName = eventItem["Legacy-Contact"];
+					}
+
+					var isoStartDatetime =
+						eventItem["Buyout-Date"].slice(0, 10) +
+						eventItem["time-storage_Start-Time"].slice(10, 19);
+					var isoEndDatetime =
+						eventItem["Buyout-Date"].slice(0, 10) +
+						eventItem["time-storage_End-Time"].slice(10, 19);
+					var formattedStartTime = $().ReturnFormattedDateTime(isoStartDatetime, "YYYY-MM-DDTHH:mm:ss", "h:mma", 0);
+					formattedStartTime = formattedStartTime.slice(0, formattedStartTime.length - 1);
+					var formattedEndTime = $().ReturnFormattedDateTime(isoEndDatetime, "YYYY-MM-DDTHH:mm:ss", "h:mma", 0);
+					formattedEndTime = formattedEndTime.slice(0, formattedEndTime.length - 1);
+					var formattedDate = $().ReturnFormattedDateTime(isoStartDatetime, "YYYY-MM-DDTHH:mm:ss", "ddd, M/D/YY", 0);
+					var formattedClassName = ReplaceAll(" ", "-", eventItem["Buyout-Location"].toLowerCase());
+					if (formattedClassName == "3-d-cinema") { formattedClassName = "three-four-d-digital-cinema"; }
+					if (formattedClassName == "4-d-cinema") { formattedClassName = "three-four-d-digital-cinema"; }
+
+					var thisEvent = {
+						"eventID": eventItem["ID"],
+						"title": formattedStartTime + " | " + eventItem["Request-Nickname"],
+						"contactName": eventItem.contactName,
+						"formattedStartTime": formattedStartTime,
+						"formattedEndTime": formattedEndTime,
+						"formattedDate": formattedDate,
+						"start": isoStartDatetime,
+						"end": isoEndDatetime,
+						"editURL": "/sites/mw-buyouts/SitePages/App.aspx?r=" + eventItem["ID"],
+						"location": eventItem["Buyout-Location"],
+						"orderNumber": eventItem["Buyout-Order-Number"],
+						"buyoutTitle": eventItem["Request-Nickname"],
+						"department": eventItem["Buyout-Department"],
+						"className": formattedClassName,
+					};
+
+					allEvents.push(thisEvent);
+
+				});
+				console.log('m1');
+				console.log('allEvents');
+				console.log(allEvents);
+				// console.log('viewToUse');
+				// console.log(viewToUse);
+				// console.log('dateToUse');
+				// console.log(dateToUse);
+
+				$("div#overview-screen-container").fullCalendar({
+					allDayDefault: true,
+					lazyFetching: false,
+					eventOrder: "start",
+					header: {
+						// right and center are reversed, because our CSS implements obedience to the accessibility imperative that DOM elements exist 
+						//      (and are thus encountered by assistive technologies) in the same order in which they're presented to sighted users
+						left: "",
+						right: "prevYear,prev,title,next,nextYear",
+						center: "today,basicDay,basicWeek,month"
+					},
+					defaultView: viewToUse,
+					defaultDate: dateToUse,
+					dayClick: function (date, jsEvent, view) {
+						location.href = "/sites/mw-buyouts/SitePages/App.aspx?f=cal&view=basicDay&date=" + $(this).attr("data-date");
+					},
+					theme: true,
+					eventClick: function (event, jsEvent, view) {
+
+						// close the dialog box
+						$("div#buyout-dialog").dialog("close");
+
+						// populate the dialog box
+						var dialogTitleBarContent = "<h2 class=\"ui-dialog-buyout-title-date-and-time-range\"> \n" +
+							"   <span class=\"ui-dialog-buyout-title-date\">" + event.formattedDate + "</span> \n" +
+							"   <span class=\"ui-dialog-title-buyout-start-time\">" + event.formattedStartTime + "</span> \n" +
+							"   <span class=\"ui-dialog-title-buyout-times-separator\"> &ndash; </span> \n" +
+							"   <span class=\"ui-dialog-title-buyout-end-time\">" + event.formattedEndTime + "</span> \n" +
+							"</h2> \n";
+
+						if (typeof (event.location) != "undefined") {
+							dialogTitleBarContent += "<p class=\"ui-dialog-title-buyout-location\">" + event.location + "</p> \n";
+						}
+
+						$('div.ui-dialog[aria-describedby="buyout-dialog"] div.ui-dialog-titlebar span.ui-dialog-title').html(dialogTitleBarContent);
+
+						var dialogBodyContent = "<p class=\"ui-dialog-buyout-title\">" + event.buyoutTitle + "</p> \n" +
+							"<ul> \n";
+						if (event.contactName) {
+							dialogBodyContent += "	<li class=\"event-contact\">Contact: " + event.contactName + "</li> \n";
+						}
+						if (event.department) {
+							dialogBodyContent += "	<li class=\"event-department\">Department: " + event.department + "</li> \n";
+						}
+						if (event.orderNumber) {
+							dialogBodyContent += "	<li class=\"event-id\">Buyout Order Number: " + event.orderNumber + "</li> \n";
+						}
+						dialogBodyContent +=
+							"	<li class=\"event-id\">Hub Buyout ID: " + event.eventID + "</li>" +
+							"</ul> \n" +
+							"<a class=\"ui-dialog-button\" href=\"" + event.editURL + "\">Edit / Delete</a>";
+
+						$("div#buyout-dialog").html(dialogBodyContent);
+
+						// position the dialog box
+						$("div#buyout-dialog").dialog("option", "position", { my: "left bottom", at: "right top", of: jsEvent });
+
+						// open the dialog box
+						$("div#buyout-dialog").dialog("open");
+					},
+					events: allEvents
+				});
+
+				var commandBarContents = $().ReturnButtonsMarkup(buttons);
+
+				$("div.fc-toolbar div.fc-left").append(commandBarContents);
+
+				$("button.ui-button, a.ui-button, a.ui-dialog-button").on("click", function () {
+					$("div#buyout-dialog").dialog("close");
+				});
+
+				$("div.fc-toolbar, div.fc-view-container").fadeTo(1000, 1);
+			}
+		});
+
+		// add extra class for styling hook
+		$('div#app-container').addClass('mw-buyouts-calendar');
+
+		$("div#app-container").append("<div id=\"buyout-dialog\"></div>");
+
+		$("div#buyout-dialog").dialog({
+			autoOpen: false,
+			draggable: true,
+			modal: true,
+			show: {
+				effect: "bounce",
+				times: 2,
+				duration: 500
+			},
+			width: 400,
+		});
+
+		var legend =
+			'<div id="buyouts-metadata" style="opacity: 1;"> \n' +
+			'	<h2 id="header_legend">Legend</h2> \n' +
+			'	<ul id="legend-items" aria-hidden="true"> \n' +
+			'		<li class="legend-item"><span class="color-indicator omni-theater"></span>Omni</li> \n' +
+			'		<li class="legend-item"><span class="color-indicator three-four-d-digital-cinema"></span>4-D / 3-D</li> \n' +
+			'		<li class="legend-item"><span class="color-indicator planetarium"></span>Planetarium</li> \n' +
+			'		<li class="legend-item"><span class="color-indicator butterfly-garden"></span>Butterfly Garden</li> \n' +
+			'		<li class="legend-item"><span class="color-indicator skyline-room"></span>Skyline</li> \n' +
+			'		<li class="legend-item"><span class="color-indicator nichols-gallery"></span>Nichols</li> \n' +
+			'		<li class="legend-item"><span class="color-indicator stearns-gallery"></span>Stearns</li> \n' +
+			'	</ul> \n' +
+			'</div> \n';
+
+		$(legend).insertBefore($("div.fc-toolbar"));
+
+		$("div.fc-toolbar, div.fc-view-container").fadeTo(1000, 1);
+	};
+
+
+
+	$.fn.RenderCommandBarAndCalendarForMWEvents = function (buttons) {
+
+		var viewToUse = GetParamFromUrl(location.search, "view");
+		var dateToUse = GetParamFromUrl(location.search, "date");
+		if (viewToUse == "") { viewToUse = "month"; }
+		if (dateToUse == "") { dateToUse = $().ReturnFormattedDateTime("nowUTC", "YYYY-MM-DDTHH:mm:ssZ", "YYYY-MM-DD", 0); }
+
+		var getListItemsOptions = {
+			"viewFields": "<ViewFields>" +
+				"   <FieldRef Name='ID' />" +
+				"   <FieldRef Name='AllRequestData' />" +
+				"</ViewFields>",
+			"rowLimit": "500",
+			"query": "<Query>" +
+				"   <Where>" +
+				"       <Eq>" +
+				"           <FieldRef Name='RequestStatus'></FieldRef>" +
+				"           <Value Type='Text'>Submitted</Value>" +
+				"       </Eq>" +
+				"   </Where>" +
+				"</Query>",
+			"queryOptions": "<QueryOptions>" +
+				"   <IncludeMandatoryColumns>FALSE</IncludeMandatoryColumns>" +
+				"</QueryOptions>"
+		};
+
+		$().SPServices({
+			operation: "GetListItems",
+			async: false,
+			listName: "SWFList",
+			CAMLViewFields: getListItemsOptions.viewFields,
+			CAMLQuery: getListItemsOptions.query,
+			CAMLRowLimit: getListItemsOptions.rowLimit,
+			CAMLQueryOptions: getListItemsOptions.queryOptions,
+			completefunc: function (xData, Status) {
+
+				var regexOne = new RegExp("\r", "g");
+				var regexTwo = new RegExp("\n", "g");
+				var allEvents = [];
+
+				$(xData.responseXML).SPFilterNode("z:row").each(function () {
+					var eventItemString = $(this).attr("ows_AllRequestData");
+					eventItemString = eventItemString.replace(regexOne, "'");
+					eventItemString = eventItemString.replace(regexTwo, "'");
+					// console.log(eventItemString);
+					eval("var eventItem=" + eventItemString);
+					console.log(eventItem);
+					// console.log('');
+					eventItem.ID = $(this).attr("ows_ID");
+					eventItem.contactName = '';
+					if (typeof (eventItem["Requested-For"]) == "object") {
+						eventItem.contactName = "<a target=\"_blank\" href=\"https://bmos-my.sharepoint.com/_layouts/15/me.aspx?p=" + StrInStr(eventItem["Requested-For"][0]["description"], "@", 1) + "%40mos.org&v=profile\">" + eventItem["Requested-For"][0]["displayText"] + "</a>";
+					}
+					if (typeof (eventItem["Legacy-Contact"]) == "string") {
+						eventItem.contactName = eventItem["Legacy-Contact"];
+					}
+					// one or more individual dates
+					if (typeof (eventItem["individual-or-pattern_individual"]) != 'undefined') {
+						$(eventItem["RepeatedElements"]).each(function (i, d) {
+							var repeatID = StrInStr(d["ID"], "-repeat", 0);
+							if (repeatID == false) { repeatID = ""; }
+							var isoStartDatetime = d["Event-Date" + repeatID].slice(0, 10) + eventItem["time-storage_Start-Time"].slice(10, 19);
+							var isoEndDatetime = d["Event-Date" + repeatID].slice(0, 10) + eventItem["time-storage_End-Time"].slice(10, 19);
+							var formattedStartTime = $().ReturnFormattedDateTime(isoStartDatetime, "YYYY-MM-DDTHH:mm:ss", "h:mma", 0);
+							formattedStartTime = formattedStartTime.slice(0, formattedStartTime.length - 1);
+							var formattedEndTime = $().ReturnFormattedDateTime(isoEndDatetime, "YYYY-MM-DDTHH:mm:ss", "h:mma", 0);
+							formattedEndTime = formattedEndTime.slice(0, formattedEndTime.length - 1);
+							var formattedDate = $().ReturnFormattedDateTime(isoStartDatetime, "YYYY-MM-DDTHH:mm:ss", "ddd, M/D/YY", 0);
+
+							var thisEvent = {
+								"eventID": eventItem["ID"],
+								"title": formattedStartTime + " | " + eventItem["Event-Title"],
+								"contactName": eventItem.contactName,
+								"formattedStartTime": formattedStartTime,
+								"formattedEndTime": formattedEndTime,
+								"formattedDate": formattedDate,
+								"start": isoStartDatetime,
+								"end": isoEndDatetime,
+								"editURL": "/sites/mw-events/SitePages/App.aspx?r=" + eventItem["ID"],
+							};
+
+							$(["Event-Location", "Event-Count", "Event-Notes"]).each(function (i, o) {
+								if (typeof (eventItem[o]) != "undefined" && eventItem[o] != '') {
+									var label = o.slice(6).toLowerCase();
+									thisEvent[label] = eventItem[o];
+								}
+							});
+
+							allEvents.push(thisEvent);
+
+						});
+					} else if (typeof (eventItem["individual-or-pattern_pattern"]) != 'undefined') {
+
+
+						switch (eventItem["Pattern-Basis"]) {
+
+							case "Every given number of days":
+
+								switch (eventItem["Ending-Basis"]) {
+
+									case "Never":
+										var patternDates = $().GenerateDatesForEveryXDaysEndNever(eventItem["X-Days"], eventItem["Start-Date"]);
+										break;
+
+									case "After a given number of occurrences":
+										var patternDates = $().GenerateDatesForEveryXDaysEndAfterYOccurrences(eventItem["X-Days"], eventItem["Start-Date"], eventItem["Qty-Occurrences"]);
+										break;
+
+									case "By a date":
+										var patternDates = $().GenerateDatesForEveryXDaysEndByDateY(eventItem["X-Days"], eventItem["Start-Date"], eventItem["Ending-Date"]);
+										break;
+								}
+								break;
+
+
+
+
+							case "Every weekday":
+
+								switch (eventItem["Ending-Basis"]) {
+
+									case "Never":
+										var patternDates = $().GenerateDatesForEveryWeekdayEndNever(eventItem["Start-Date"]);
+										break;
+
+									case "After a given number of occurrences":
+										var patternDates = $().GenerateDatesForEveryWeekdayEndAfterXOccurrences(eventItem["Start-Date"], eventItem["Qty-Occurrences"]);
+										break;
+
+									case "By a date":
+										var patternDates = $().GenerateDatesForEveryWeekdayEndByDateX(eventItem["Start-Date"], eventItem["Ending-Date"]);
+										break;
+								}
+								break;
+
+
+
+
+							case "Every given number of weeks":
+
+								var daysOfWeek = [];
+
+								if (typeof (eventItem["days-of-week-for-x-weeks_1"]) != "undefined") {
+									daysOfWeek.push("Sunday");
+								}
+
+								if (typeof (eventItem["days-of-week-for-x-weeks_2"]) != "undefined") {
+									daysOfWeek.push("Monday");
+								}
+
+								if (typeof (eventItem["days-of-week-for-x-weeks_3"]) != "undefined") {
+									daysOfWeek.push("Tuesday");
+								}
+
+								if (typeof (eventItem["days-of-week-for-x-weeks_4"]) != "undefined") {
+									daysOfWeek.push("Wednesday");
+								}
+
+								if (typeof (eventItem["days-of-week-for-x-weeks_5"]) != "undefined") {
+									daysOfWeek.push("Thursday");
+								}
+
+								if (typeof (eventItem["days-of-week-for-x-weeks_6"]) != "undefined") {
+									daysOfWeek.push("Friday");
+								}
+
+								if (typeof (eventItem["days-of-week-for-x-weeks_7"]) != "undefined") {
+									daysOfWeek.push("Saturday");
+								}
+
+
+								switch (eventItem["Ending-Basis"]) {
+
+									case "Never":
+										var patternDates = $().GenerateDatesForEveryXWeeksOnYDaysEndNever(eventItem["X-Weeks"], daysOfWeek, eventItem["Start-Date"]);
+										break;
+
+									case "After a given number of occurrences":
+										var patternDates = $().GenerateDatesForEveryXWeeksOnYDaysEndAfterZOccurrences(eventItem["X-Weeks"], daysOfWeek, eventItem["Start-Date"], eventItem["Qty-Occurrences"]);
+										break;
+
+									case "By a date":
+										var patternDates = $().GenerateDatesForEveryXWeeksOnYDaysEndByDateZ(eventItem["X-Weeks"], daysOfWeek, eventItem["Start-Date"], eventItem["Ending-Date"]);
+										break;
+								}
+								break;
+
+
+
+
+							case "The same day every given number of months":
+
+								switch (eventItem["Ending-Basis"]) {
+
+									case "Never":
+										var patternDates = $().GenerateDatesForEveryXDaysOfEveryYMonthsEndNever(eventItem["Day-of-Month-for-X-Months"], eventItem["X-Months-For-Same-Day"], eventItem["Start-Date"]);
+										break;
+
+									case "After a given number of occurrences":
+										var patternDates = $().GenerateDatesForEveryXDaysOfEveryYMonthsEndAfterYOccurrences(eventItem["Day-of-Month-for-X-Months"], eventItem["X-Months-For-Same-Day"], eventItem["Start-Date"], eventItem["Qty-Occurrences"]);
+										break;
+
+									case "By a date":
+										var patternDates = $().GenerateDatesForEveryXDaysOfEveryYMonthsEndByDateY(eventItem["Day-of-Month-for-X-Months"], eventItem["X-Months-For-Same-Day"], eventItem["Start-Date"], eventItem["Ending-Date"]);
+										break;
+								}
+								break;
+
+
+
+
+							case "The same week every given number of months":
+
+								switch (eventItem["Ordinal-For-Day-of-Week-For-X-Months-For-Same-Week"]) {
+
+									case "First":
+										var xVar = 1;
+										break;
+
+									case "Second":
+										var xVar = 2;
+										break;
+
+									case "Third":
+										var xVar = 3;
+										break;
+
+									case "Fourth":
+										var xVar = 4;
+										break;
+
+								}
+
+								switch (eventItem["Ending-Basis"]) {
+
+									case "Never":
+										var patternDates = $().GenerateDatesForEveryXYDayOfEveryZMonthsEndNever(xVar, eventItem["Days-of-Week-For-X-Months-For-Same-Week"], eventItem["X-Months-For-Same-Week"], eventItem["Start-Date"]);
+										break;
+
+									case "After a given number of occurrences":
+										var patternDates = $().GenerateDatesForEveryXYDayOfEveryZMonthsEndAfterYOccurrences(xVar, eventItem["Days-of-Week-For-X-Months-For-Same-Week"], eventItem["X-Months-For-Same-Week"], eventItem["Start-Date"], eventItem["Qty-Occurrences"]);
+										break;
+
+									case "By a date":
+										var patternDates = $().GenerateDatesForEveryXYDayOfEveryZMonthsEndByDateY(xVar, eventItem["Days-of-Week-For-X-Months-For-Same-Week"], eventItem["X-Months-For-Same-Week"], eventItem["Start-Date"], eventItem["Ending-Date"]);
+										break;
+								}
+								break;
+
+
+
+
+							case "The same day each year":
+
+								switch (eventItem["Ending-Basis"]) {
+
+									case "Never":
+										var patternDates = $().GenerateDatesForEveryXDayYMonthEveryYearEndNever(eventItem["Months-for-Same-Date-Each-Year"], eventItem["Date-for-Same-Date-Each-Year"], eventItem["Start-Date"]);
+										break;
+
+									case "After a given number of occurrences":
+										var patternDates = $().GenerateDatesForEveryXDayYMonthEveryYearEndAfterYOccurrences(eventItem["Months-for-Same-Date-Each-Year"], eventItem["Date-for-Same-Date-Each-Year"], eventItem["Start-Date"], eventItem["Qty-Occurrences"]);
+										break;
+
+									case "By a date":
+										var patternDates = $().GenerateDatesForEveryXDayYMonthEveryYearEndByDateY(eventItem["Months-for-Same-Date-Each-Year"], eventItem["Date-for-Same-Date-Each-Year"], eventItem["Start-Date"], eventItem["Ending-Date"]);
+										break;
+								}
+								break;
+
+
+
+
+							case "The same week each year":
+
+								switch (eventItem["Ordinal-For-Same-Week-Each-Year"]) {
+
+									case "First":
+										var xVar = 1;
+										break;
+
+									case "Second":
+										var xVar = 2;
+										break;
+
+									case "Third":
+										var xVar = 3;
+										break;
+
+									case "Fourth":
+										var xVar = 4;
+										break;
+
+								}
+
+								switch (eventItem["Months-for-Same-Week-Each-Year"]) {
+
+									case "January":
+										var zVar = 1;
+										break;
+
+									case "February":
+										var zVar = 2;
+										break;
+
+									case "March":
+										var zVar = 3;
+										break;
+
+									case "April":
+										var zVar = 4;
+										break;
+
+									case "May":
+										var zVar = 5;
+										break;
+
+									case "June":
+										var zVar = 6;
+										break;
+
+									case "July":
+										var zVar = 7;
+										break;
+
+									case "August":
+										var zVar = 8;
+										break;
+
+									case "September":
+										var zVar = 9;
+										break;
+
+									case "October":
+										var zVar = 10;
+										break;
+
+									case "November":
+										var zVar = 11;
+										break;
+
+									case "December":
+										var zVar = 12;
+										break;
+
+								}
+
+								switch (eventItem["Ending-Basis"]) {
+
+									case "Never":
+										var patternDates = $().GenerateDatesForEveryXYDayZMonthEveryYearEndNever(xVar, eventItem["Days-of-Week-For-Same-Week-Each-Year"], zVar, eventItem["Start-Date"]);
+										break;
+
+									case "After a given number of occurrences":
+										var patternDates = $().GenerateDatesForEveryXYDayZMonthEveryYearEndAfterYOccurrences(xVar, eventItem["Days-of-Week-For-Same-Week-Each-Year"], zVar, eventItem["Start-Date"], eventItem["Qty-Occurrences"]);
+										break;
+
+									case "By a date":
+										var patternDates = $().GenerateDatesForEveryXYDayZMonthEveryYearEndByDateY(xVar, eventItem["Days-of-Week-For-Same-Week-Each-Year"], zVar, eventItem["Start-Date"], eventItem["Ending-Date"]);
+										break;
+								}
+								break;
+
+						} // end generation of patternDates
+
+
+
+						// get the list of the dates to be skipped
+						var comparisonBank = [];
+
+						$(eventItem["datesToSkip"]).each(function (i, date) {
+							comparisonBank.push(date.slice(0, 10));
+						});
+
+						$(patternDates).each(function (i, date) {
+
+							var isoDate = $().ReturnFormattedDateTime(date, "MM/DD/YYYY", "YYYY-MM-DD", 0);
+
+							if (comparisonBank.length == 0 || comparisonBank.indexOf(isoDate) == -1) {
+
+								var isoStartDatetime = isoDate + eventItem["time-storage_Start-Time"].slice(10, 19);
+								var isoEndDatetime = isoDate + eventItem["time-storage_End-Time"].slice(10, 19)
+								var formattedStartTime = $().ReturnFormattedDateTime(isoStartDatetime, "YYYY-MM-DDTHH:mm:ss", "h:mma", 0);
+								formattedStartTime = formattedStartTime.slice(0, formattedStartTime.length - 1);
+								var formattedEndTime = $().ReturnFormattedDateTime(isoEndDatetime, "YYYY-MM-DDTHH:mm:ss", "h:mma", 0);
+								formattedEndTime = formattedEndTime.slice(0, formattedEndTime.length - 1);
+								var formattedDate = $().ReturnFormattedDateTime(date, "MM/DD/YYYY", "ddd, M/D/YY", 0);
+
+								var thisEvent = {
+									"eventID": eventItem["ID"],
+									"title": formattedStartTime + " | " + eventItem["Event-Title"],
+									"contactLinkedName": eventItem.contactLinkedName,
+									"formattedStartTime": formattedStartTime,
+									"formattedEndTime": formattedEndTime,
+									"formattedDate": formattedDate,
+									"start": isoStartDatetime,
+									"end": isoEndDatetime,
+									"editURL": mData.uriRequestAlternate + "?requestID=" + eventItem["ID"] + "&date=" + isoDate + "&returnURI=" + window.location.href,
+								};
+
+
+								$(["Event-Location", "Event-Count", "Event-Notes"]).each(function (i, o) {
+									if (typeof (eventItem[o]) != "undefined" && eventItem[o].trim() != "") {
+										var label = o.slice(6).toLowerCase();
+										thisEvent[label] = eventItem[o];
+									}
+								});
+
+								allEvents.push(thisEvent);
+							}
+						});
+
+
+						$(eventItem["datesToAdd"]).each(function (i, additionalDate) {
+
+							var isoDate = additionalDate["Event-Date"].slice(0, 10);
+
+							var isoStartDatetime = isoDate + additionalDate["time-storage_Start-Time"].slice(10, 19);
+							var isoEndDatetime = isoDate + additionalDate["time-storage_End-Time"].slice(10, 19)
+							var formattedStartTime = $().ReturnFormattedDateTime(isoStartDatetime, "YYYY-MM-DDTHH:mm:ss", "h:mma", 0);
+							formattedStartTime = formattedStartTime.slice(0, formattedStartTime.length - 1);
+							var formattedEndTime = $().ReturnFormattedDateTime(isoEndDatetime, "YYYY-MM-DDTHH:mm:ss", "h:mma", 0);
+							formattedEndTime = formattedEndTime.slice(0, formattedEndTime.length - 1);
+							var formattedDate = $().ReturnFormattedDateTime(isoDate, null, "ddd, M/D/YY", 0);
+
+							var thisEvent = {
+								"eventID": eventItem["ID"],
+								"title": formattedStartTime + " | " + eventItem["Event-Title"],
+								"contactLinkedName": eventItem.contactLinkedName,
+								"formattedStartTime": formattedStartTime,
+								"formattedEndTime": formattedEndTime,
+								"formattedDate": formattedDate,
+								"start": isoStartDatetime,
+								"end": isoEndDatetime,
+								"editURL": mData.uriRequestAlternate + "?requestID=" + eventItem["ID"] + "&date=" + isoDate + "&exceptionID=" + this["exceptionID"] + "&returnURI=" + window.location.href,
+							};
+
+							$(["Event-Location", "Event-Count", "Event-Notes"]).each(function (i, o) {
+								if (typeof (additionalDate[o]) != "undefined" && additionalDate[o].trim() != "") {
+									var label = o.slice(6).toLowerCase();
+									thisEvent[label] = additionalDate[o];
+								}
+							});
+
+							allEvents.push(thisEvent);
+						});
+
+					}
+				});
+
+				console.log('m1');
+				console.log('allEvents');
+				console.log(allEvents);
+				// console.log('viewToUse');
+				// console.log(viewToUse);
+				// console.log('dateToUse');
+				// console.log(dateToUse);
+
+				$("div#overview-screen-container").fullCalendar({
+					allDayDefault: true,
+					lazyFetching: false,
+					eventOrder: "start",
+					header: {
+						// right and center are reversed, because our CSS implements obedience to the accessibility imperative that DOM elements exist 
+						//      (and are thus encountered by assistive technologies) in the same order in which they're presented to sighted users
+						left: "",
+						right: "prevYear,prev,title,next,nextYear",
+						center: "today,basicDay,basicWeek,month"
+					},
+					defaultView: viewToUse,
+					defaultDate: dateToUse,
+					dayClick: function (date, jsEvent, view) {
+						location.href = "/sites/mw-events/SitePages/App.aspx?f=cal&view=basicDay&date=" + $(this).attr("data-date");
+					},
+					theme: true,
+					eventClick: function (event, jsEvent, view) {
+
+						// close the dialog box
+						$("div#museum-wide-event-dialog").dialog("close");
+
+						// populate the dialog box
+						var dialogTitleBarContent = "<h2 class=\"ui-dialog-buyout-title-date-and-time-range\"> \n" +
+							"   <span class=\"ui-dialog-buyout-title-date\">" + event.formattedDate + "</span> \n" +
+							"   <span class=\"ui-dialog-title-buyout-start-time\">" + event.formattedStartTime + "</span> \n" +
+							"   <span class=\"ui-dialog-title-buyout-times-separator\"> &ndash; </span> \n" +
+							"   <span class=\"ui-dialog-title-buyout-end-time\">" + event.formattedEndTime + "</span> \n" +
+							"</h2> \n";
+
+						if (typeof (event.location) != "undefined") {
+							dialogTitleBarContent += "<p class=\"ui-dialog-title-buyout-location\">" + event.location + "</p> \n";
+						}
+
+						$('div.ui-dialog[aria-describedby="museum-wide-event-dialog"] div.ui-dialog-titlebar span.ui-dialog-title').html(dialogTitleBarContent);
+
+						var slicedTitle = StrInStr(event.title, " ").slice(3);
+						var dialogBodyContent = "<p class=\"ui-dialog-buyout-title\">" + slicedTitle + "</p> \n" +
+							"<ul> \n";
+
+						$(["count", "notes"]).each(function (i, o) {
+							if (typeof (event[o]) != "undefined" && event[o] != "") {
+								dialogBodyContent += "	<li class=\"event-" + o + "\">" + $().ReturnStringWithInitialCap(o) + ": " + event[o] + "</li>";
+							}
+						});
+						if (event.contactName) {
+							dialogBodyContent += "	<li class=\"event-contact\">Contact: " + event.contactName + "</li> \n";
+						}
+						dialogBodyContent +=
+							"	<li class=\"event-id\">Event ID: " + event.eventID + "</li>" +
+							"</ul> \n" +
+							"<a class=\"ui-dialog-button\" href=\"" + event.editURL + "\">Edit / Delete</a>";
+
+						$("div#museum-wide-event-dialog").html(dialogBodyContent);
+
+						// position the dialog box
+						$("div#museum-wide-event-dialog").dialog("option", "position", { my: "left bottom", at: "right top", of: jsEvent });
+
+						// open the dialog box
+						$("div#museum-wide-event-dialog").dialog("open");
+					},
+					events: allEvents
+				});
+
+				var commandBarContents = $().ReturnButtonsMarkup(buttons);
+
+				$("div.fc-toolbar div.fc-left").append(commandBarContents);
+
+				$("button.ui-button, a.ui-button, a.ui-dialog-button").on("click", function () {
+					$("div#museum-wide-event-dialog").dialog("close");
+				});
+
+				$("div.fc-toolbar, div.fc-view-container").fadeTo(1000, 1);
+			}
+		});
+
+		// add extra class for styling hook
+		$('div#app-container').addClass('mw-events-calendar');
+
+		$("div#app-container").append("<div id=\"museum-wide-event-dialog\"></div>");
+
+		$("div#museum-wide-event-dialog").dialog({
+			autoOpen: false,
+			draggable: true,
+			modal: true,
+			show: {
+				effect: "bounce",
+				times: 2,
+				duration: 500
+			},
+			width: 400,
+		});
+
+		$("div.fc-toolbar, div.fc-view-container").fadeTo(1000, 1);
+	};
+
+
+
+	$.fn.RenderCommandBarAndTimelineForProducts = function (buttons, relevantRole) {
+
+		var startingYearOfFirstFiscalYear = 2018;
+		// var thisYear = 2022;
+		// var startingYearOfLastFiscalYear = moment('2022-09-08').isAfter(thisYear + '-06-30') ?
+		// 	parseInt(thisYear) :
+		// 	parseInt(thisYear) - 1;
+		var thisYear = $().ReturnFormattedDateTime('nowLocal', null, 'YYYY');
+		var startingYearOfLastFiscalYear = moment().isAfter(thisYear + '-06-30') ?
+			parseInt(thisYear) :
+			parseInt(thisYear) - 1;
+
+
+		var selectedStartYear = GetParamFromUrl(location.search, "y");
+		if (!selectedStartYear || selectedStartYear == '') {
+			selectedStartYear = moment().isAfter(thisYear + '-06-30') ?
+				parseInt(thisYear) :
+				parseInt(thisYear) - 1;
+		}
+
+
+
+		var nowAsISOLocal = $().ReturnFormattedDateTime('nowLocal', null, null);
+		var viewToUse = GetParamFromUrl(location.search, 'view');
+		var dateToUse = GetParamFromUrl(location.search, 'date');
+		if (!viewToUse || viewToUse == "") { viewToUse = 'month'; }
+		if (!dateToUse || dateToUse == "") {
+			dateToUse =
+				$().ReturnFormattedDateTime('nowUTC', 'YYYY-MM-DDTHH:mm:ssZ', 'YYYY-MM-DD', 0);
+		}
+
+		var renderPrepStartTime = Date.now();
+
+		var augmentedSchedules = $().ReturnSelectedAugmentedSchedulesForGSESchedulesCalendar(selectedStartYear, nowAsISOLocal);
+
+		console.log('render prep time = ' + (Date.now() - renderPrepStartTime) / 1000 + ' seconds');
+
+		$("div#overview-screen-container").fullCalendar({
+			allDayDefault: true,
+			lazyFetching: false,
+			eventOrder: "start",
+			header: {
+				// right and center are reversed, because our CSS implements obedience to the accessibility imperative that DOM elements exist 
+				//      (and are thus encountered by assistive technologies) in the same order in which they're presented to sighted users
+				left: "",
+				right: "prevYear,prev,title,next,nextYear",
+				center: "today,basicDay,basicWeek,month"
+			},
+			validRange: {
+				start: selectedStartYear + '06-30',
+				end: (parseInt(selectedStartYear) + 1) + '2017-06-01'
+			},
+			/* views: {
+				month: {
+					titleFormat: 'YYYY, MM, DD'
+				},
+				week: {
+					titleFormat: 'YYYY, MM, DD'
+				},
+				day: {
+					titleFormat: 'YYYY, MM, DD'
+				},
+			}, */
+			defaultView: viewToUse,
+			defaultDate: dateToUse,
+			/* dayClick: function (date, jsEvent, view) {
+				// to do: consider moving this to a generic event listener if we're not sending a date in the URL
+
+				if (relevantRole === 'gseHRAdmin' || relevantRole === 'gseJobAdmin') {
+					if (moment(date._d).isAfter(nowAsISOLocal) && relevantRole === 'gseHRAdmin') {
+						var addScheduleURL = '/sites/hr-service-schedules/SitePages/App.aspx?r=0&d=' + date._i;
+						window.open(addScheduleURL, '_blank');
+					}
+				}
+			},
+			dayRender: function (date, cell) {
+				if (relevantRole === 'gseHRAdmin' || relevantRole === 'gseJobAdmin') {
+					if (cell[0].classList.contains('fc-future')) {
+						var addLinkMarkup = '<a class="add-schedule" ' + 
+							'href="/sites/hr-service-schedules/SitePages/App.aspx?r=0&d=' + date._i + 
+							'" target="_blank">Add</a>';
+						cell.append(addLinkMarkup);
+						var headClassSelector = '';
+						if (cell.hasClass('fc-sun')) {
+							headClassSelector = 'fc-sun';
+						} else if (cell.hasClass('fc-mon')) {
+							headClassSelector = 'fc-mon';
+						} else if (cell.hasClass('fc-tue')) {
+							headClassSelector = 'fc-tue';
+						} else if (cell.hasClass('fc-wed')) {
+							headClassSelector = 'fc-wed';
+						} else if (cell.hasClass('fc-thu')) {
+							headClassSelector = 'fc-thu';
+						} else if (cell.hasClass('fc-fri')) {
+							headClassSelector = 'fc-fri';
+						} else if (cell.hasClass('fc-sat')) {
+							headClassSelector = 'fc-sat';
+						}
+						cell.closest('div.fc-row')
+							.find('div.fc-content-skeleton')
+							.find('td.' + headClassSelector)
+							.addClass('add-schedule-on-click');
+					}
+				}
+				
+			}, */
+			theme: true,
+			eventClick: function (event, jsEvent, view) {
+
+				// close the dialog box
+				$("div#dialog").dialog("close");
+
+				// populate the dialog box
+
+				var dialogTitleBarContent = '<h2 class="gse-schedules-dialog-date-and-time-range">' +
+					'<span class="gse-schedules-dialog-date">' + event.formattedDate + '</span> ' +
+					'<span class="gse-schedules-dialog-start-time">' + event.formattedStartTime + '</span>' +
+					'<span class="gse-schedules-dialog-times-separator"> &ndash; </span>' +
+					'<span class="gse-schedules-dialog-end-time">' + event.formattedEndTime + '</span>' +
+					'</h2>';
+
+				$("div[aria-describedby='gse-schedule-card-dialog'] div.ui-dialog-titlebar span.ui-dialog-title").html(dialogTitleBarContent);
+
+				var dialogBodyContent =
+					'<h3 class="gse-schedule-card-dialog-job-title">' + event.jobTitle + '</h3>' +
+					event.jobDescription;
+
+				if (event.isInFuture) {
+					dialogBodyContent += '<p>Signups Available: ' +
+						(event.quantityPositions - event.quantitySignups) +
+						' / ' + event.quantityPositions;
+				}
+
+				dialogBodyContent += '<div class="gse-schedule-card-dialog-links-container">';
+
+				if (event.mySignupURL) {
+					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' +
+						'<a id="gse-schedule-card-dialog-my-signup-link" ' +
+						'class="gse-schedule-card-dialog-button" href="' +
+						event.mySignupURL + '" target="_blank">More Info / My Signup</a></div>';
+				} else if (event.isInFuture && ((parseInt(event.quantityPositions) - parseInt(event.quantitySignups)) !== 0)) {
+					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' +
+						'<a id="gse-schedule-card-dialog-signup-opportunity-link" ' +
+						'class="gse-schedule-card-dialog-button" href="' +
+						event.signupURL + '" target="_blank">More Info / Sign Up</a></div>';
+				} else {
+					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' +
+						'<a id="gse-schedule-card-dialog-signup-opportunity-link" ' +
+						'class="gse-schedule-card-dialog-button" href="' +
+						event.signupURL + '" target="_blank">More Info</a></div>';
+				}
+
+				if (relevantRole === 'gseHRAdmin' || relevantRole === 'gseJobAdmin') {
+					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' +
+						'<a id="gse-schedule-card-dialog-job-link" ' +
+						'class="gse-schedule-card-dialog-button" href="' +
+						event.jobURL + '" target="_blank">Job Details</a></div>';
+					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' +
+						'<a id="gse-schedule-card-dialog-schedule-link" ' +
+						'class="gse-schedule-card-dialog-button" href="' +
+						event.scheduleURL + '" target="_blank">Schedule Details</a></div>';
+				}
+
+				$("div#gse-schedule-card-dialog").html(dialogBodyContent);
+
+				// position the dialog box
+				$("div#gse-schedule-card-dialog").dialog("option", "position", { my: "left bottom", at: "right top", of: jsEvent });
+
+				// open the dialog box
+				$("div#gse-schedule-card-dialog").dialog("open");
+			},
+			events: augmentedSchedules
+
+		});
+
+		$("div.fc-toolbar div.fc-left").append('<div id="container_command-bar"></div>');
+
+		var buttonDivs = $().ReturnButtonsMarkupWithContainerDivs(buttons);
+		var buttonOverflowMenu = $().ReturnButtonsMarkupAsOverflowMenu(buttons);
+
+		var commandBarContents = '';
+
+		commandBarContents +=
+			'<div id="container_navigation-controls-expanded"> \n' +
+			buttonDivs +
+			'</div> \n';
+
+
+
+		commandBarContents +=
+			'<div id="container_filter-controls-and-header"> \n' +
+			'   <div id="text_filter-controls" class="collapsible">Year</div> \n' +
+			'   <div id="container_filter-controls"> \n' +
+			'   	<div class="container_filter-control"> \n' +
+			'   		<label for="filter_year">Year</label><select id="filter_year" name="filter_year"> \n' +
+			'				' + $().ReturnFiscalYearSelectOptions(startingYearOfFirstFiscalYear, startingYearOfLastFiscalYear, true, selectedStartYear) + ' \n' +
+			'			</select>' +
+			'		</div>' +
+			'   	<div class="container_filter-control"> \n' +
+			'			<a id="filter_submit-button">Update</a>' +
+			'		</div>' +
+			'    </div> \n' +
+			'</div> \n';
+
+		commandBarContents += buttonOverflowMenu;
+
+		$("div#container_command-bar").append(commandBarContents);
+
+		// add extra class for styling hook
+		$('div#app-container').addClass('gse-schedule-calendar');
+
+		// collapse filters
+		$('.collapsible').collapsible();
+
+
+
+
+
+
+
+
+
+
+
+		$("div#app-container").append("<div id=\"gse-schedule-card-dialog\"></div>");
+
+		$("div#gse-schedule-card-dialog").dialog({
+			autoOpen: false,
+			draggable: true,
+			modal: true,
+			show: {
+				effect: "bounce",
+				times: 2,
+				duration: 500
+			},
+			width: 400,
+		});
+
+
+		$("div.fc-toolbar, div.fc-view-container").fadeTo(1000, 1);
+
+		// listen for date filtering
+		$("a#filter_submit-button").click(function () {
+			var selectedStartYear = $("select#filter_year").val();
+			if (selectedStartYear == '') {
+				selectedStartYear = moment().isAfter(thisYear + '-06-30') ?
+					parseInt(thisYear) :
+					parseInt(thisYear) - 1;
+			}
+			window.location = "/sites/" + mData.siteToken + "/SitePages/App.aspx?f=cal&y=" + selectedStartYear;
+		});
+	};
+
+
+
+	// -- GSEs
+
+
+
+
 	$.fn.CreateFakeGSEStuff = function (jobs, schedules, signups) {
 		var newJobsQuantity = 100;
 		var newSchedulesQuantity = 400;
@@ -18930,7 +20112,7 @@
 		var newSchedules = [];
 		var newSignups = [];
 
-		
+
 
 		// delete all jobs but the original
 		/* $().SPServices.SPUpdateMultipleListItems({
@@ -19394,13 +20576,6 @@
 			});
 		}); */
 	};
-
-
-
-	// -- GSEs
-
-
-
 	// - main markup collection and rendering
 
 	// stats
@@ -19505,7 +20680,7 @@
 					hoursGrantedCredit += lengthThisSchedule;
 				}
 			});
-			
+
 		});
 
 		$("#" + targetID).append('<div id="container_command-bar-and-data"> \n' +
@@ -19560,11 +20735,11 @@
 		// console.log(hoursScheduled);
 		// console.log(hoursGrantedCredit);
 
-		var statsMarkup = 
+		var statsMarkup =
 			'<h2>Jobs Scheduled</h2>' +
-			'<p>' + distinctJobIDs.length.toString() + '</p>' + 
+			'<p>' + distinctJobIDs.length.toString() + '</p>' +
 			'<h2>Hours Scheduled</h2>' +
-			'<p>' + hoursScheduled.toString() + '</p>' + 
+			'<p>' + hoursScheduled.toString() + '</p>' +
 			'<h2>Hours Granted Credit</h2>' +
 			'<p>' + hoursGrantedCredit.toString() + '</p>';
 
@@ -19620,7 +20795,7 @@
 		var commandBarContents = '';
 		if (relevantRole === 'gseHRAdmin' || relevantRole === 'gseJobAdmin') {
 			if (relevantRole === 'gseHRAdmin') {
-				commandBarContents += 
+				commandBarContents +=
 					'<div class="container_link">' +
 					'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-config/SitePages/App.aspx?r=1">Configuration</a> \n' +
 					'</div>';
@@ -19908,7 +21083,7 @@
 
 	// schedules calendar
 	$.fn.RenderCommandBarAndCalendarForGSESchedules = function (buttons, relevantRole) {
-		
+
 		var startingYearOfFirstFiscalYear = 2018;
 		// var thisYear = 2022;
 		// var startingYearOfLastFiscalYear = moment('2022-09-08').isAfter(thisYear + '-06-30') ?
@@ -19928,7 +21103,7 @@
 		}
 
 
-		
+
 		var nowAsISOLocal = $().ReturnFormattedDateTime('nowLocal', null, null);
 		var viewToUse = GetParamFromUrl(location.search, 'view');
 		var dateToUse = GetParamFromUrl(location.search, 'date');
@@ -20030,27 +21205,27 @@
 
 				$("div[aria-describedby='gse-schedule-card-dialog'] div.ui-dialog-titlebar span.ui-dialog-title").html(dialogTitleBarContent);
 
-				var dialogBodyContent = 
-					'<h3 class="gse-schedule-card-dialog-job-title">' + event.jobTitle + '</h3>' + 
+				var dialogBodyContent =
+					'<h3 class="gse-schedule-card-dialog-job-title">' + event.jobTitle + '</h3>' +
 					event.jobDescription;
 
 				if (event.isInFuture) {
-					dialogBodyContent += '<p>Signups Available: ' + 
-					(event.quantityPositions - event.quantitySignups) + 
-					' / ' + event.quantityPositions;
+					dialogBodyContent += '<p>Signups Available: ' +
+						(event.quantityPositions - event.quantitySignups) +
+						' / ' + event.quantityPositions;
 				}
 
 				dialogBodyContent += '<div class="gse-schedule-card-dialog-links-container">';
 
 				if (event.mySignupURL) {
-					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' + 
-						'<a id="gse-schedule-card-dialog-my-signup-link" ' + 
-						'class="gse-schedule-card-dialog-button" href="' + 
+					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' +
+						'<a id="gse-schedule-card-dialog-my-signup-link" ' +
+						'class="gse-schedule-card-dialog-button" href="' +
 						event.mySignupURL + '" target="_blank">More Info / My Signup</a></div>';
 				} else if (event.isInFuture && ((parseInt(event.quantityPositions) - parseInt(event.quantitySignups)) !== 0)) {
-					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' + 
-						'<a id="gse-schedule-card-dialog-signup-opportunity-link" ' + 
-						'class="gse-schedule-card-dialog-button" href="' + 
+					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' +
+						'<a id="gse-schedule-card-dialog-signup-opportunity-link" ' +
+						'class="gse-schedule-card-dialog-button" href="' +
 						event.signupURL + '" target="_blank">More Info / Sign Up</a></div>';
 				} else {
 					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' +
@@ -20069,7 +21244,7 @@
 						'class="gse-schedule-card-dialog-button" href="' +
 						event.scheduleURL + '" target="_blank">Schedule Details</a></div>';
 				}
-				
+
 				$("div#gse-schedule-card-dialog").html(dialogBodyContent);
 
 				// position the dialog box
@@ -20091,12 +21266,12 @@
 
 		commandBarContents +=
 			'<div id="container_navigation-controls-expanded"> \n' +
-				buttonDivs + 
+			buttonDivs +
 			'</div> \n';
 
 
-		
-		commandBarContents += 
+
+		commandBarContents +=
 			'<div id="container_filter-controls-and-header"> \n' +
 			'   <div id="text_filter-controls" class="collapsible">Year</div> \n' +
 			'   <div id="container_filter-controls"> \n' +
@@ -20110,7 +21285,7 @@
 			'		</div>' +
 			'    </div> \n' +
 			'</div> \n';
-		
+
 		commandBarContents += buttonOverflowMenu;
 
 		$("div#container_command-bar").append(commandBarContents);
@@ -20205,7 +21380,7 @@
 
 		var commandBarContents = '';
 		if (relevantRole === 'gseHRAdmin') {
-			commandBarContents += 
+			commandBarContents +=
 				// '<div class="container_link">' +
 				// '	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-config/SitePages/App.aspx?r=1">Configuration</a> \n' +
 				// '</div>' + 
@@ -20272,12 +21447,7 @@
 		var augmentedSignups = $().ReturnSelectedAugmentedSignupsForGSESignupsOverviews(selectedStartYear);
 		var selectedManagerWithDownline;
 
-		console.log('selectedManager');
-		console.log(selectedManager);
-		console.log('manager.account');
-
 		managersWithDownline.forEach((manager) => {
-			console.log(manager.account);
 			if (manager.account === selectedManager) {
 				selectedManagerWithDownline = manager;
 			}
@@ -20372,6 +21542,7 @@
 			var clickedUserAccount = $(this).attr('data-user-account');
 			var clickedUserName = $(this).attr('data-user-name');
 			$('div[aria-describedby="gse-signups-user-detail-dialog"] div.ui-dialog-titlebar span.ui-dialog-title').empty();
+			$("div#gse-signups-user-detail-table-container").empty();
 			$('div[aria-describedby="gse-signups-user-detail-dialog"] div.ui-dialog-titlebar span.ui-dialog-title').append('<span class="gse-signups-user-detail-dialog-header">Signup Details for ' + clickedUserName + '</span>');
 
 			var detailsMarkup = '<div id="user-details_' + clickedUserAccount + '" class="user-content">' + '<table class="gse-signups-user-details"><thead><tr>' +
@@ -20762,10 +21933,10 @@
 			row.JobTitle = schedule.Job.JobTitle;
 			row.NumberOfPositions = schedule.NumberOfPositions;
 			if (schedule.Signups) {
-				row.PositionsAvailable = '<div class="small-in-column">' + 
+				row.PositionsAvailable = '<div class="small-in-column">' +
 					(schedule.NumberOfPositions - schedule.Signups.length) + '</div>';
 			} else {
-				row.PositionsAvailable = '<div class="small-in-column">' + 
+				row.PositionsAvailable = '<div class="small-in-column">' +
 					schedule.NumberOfPositions + '</div>';
 			}
 			row.ShiftLength = schedule.formData['shiftlength_35-hours'] ? '3.5 hours' : '7.5 hours'
@@ -20817,7 +21988,7 @@
 			}
 			if (relevantRole === 'gseManager' || relevantRole === 'gseUserOnly') {
 				row.ViewByIDLink =
-					'<a href="' + row.viewURL + '" class="link_request-id" target="_blank">' + 
+					'<a href="' + row.viewURL + '" class="link_request-id" target="_blank">' +
 					schedule.ScheduleID + '</a>';
 			}
 			tableConfig.datatableData.push(row);
@@ -20866,7 +22037,7 @@
 	// - raw data queries + mashup
 
 	// schedules list data
-	$.fn.ReturnSelectedAugmentedSchedulesForGSESchedulesOverviews = function(selectedStartYear) {
+	$.fn.ReturnSelectedAugmentedSchedulesForGSESchedulesOverviews = function (selectedStartYear) {
 
 		var beginningOfFiscalYear = selectedStartYear + '-07-01T00:00:00Z';
 		var endOfFiscalYear = (parseInt(selectedStartYear) + 1) + '-06-30T00:00:00Z';
@@ -20909,6 +22080,8 @@
 				]
 			}
 		});
+		console.log('gseSchedulesArray');
+		console.log(gseSchedulesArray);
 		// get all jobs
 		var gseJobsArray = $().GetFieldsFromAllRows({
 			'webURL': 'https://bmos.sharepoint.com/sites/hr-service-jobs',
@@ -21155,7 +22328,7 @@
 
 
 	// signups data
-	$.fn.ReturnSelectedAugmentedSignupsForGSESignupsOverviews = function(selectedStartYear) {
+	$.fn.ReturnSelectedAugmentedSignupsForGSESignupsOverviews = function (selectedStartYear) {
 		// get, mash up, all GSE data
 		var augmentedSignups = {};
 		var beginningOfFiscalYear = selectedStartYear + '-07-01T00:00:00Z';
@@ -21208,9 +22381,9 @@
 				}, {
 					'nameHere': 'JobAdmin',
 					'nameInList': 'JobAdmin'
-				// }, {
-				// 	'nameHere': 'Location',
-				// 	'nameInList': 'Location'
+					// }, {
+					// 	'nameHere': 'Location',
+					// 	'nameInList': 'Location'
 				}
 			]
 		});
@@ -21269,7 +22442,7 @@
 		return augmentedSignups;
 	};
 
-	
+
 
 	// - handling archivals and cancellations
 
@@ -21306,7 +22479,7 @@
 		});
 	};
 
-	$.fn.CancelSchedule = function(scheduleData) {
+	$.fn.CancelSchedule = function (scheduleData) {
 		// modify formData
 		scheduleData.formData['Request-Status'] = 'Cancelled';
 		// set submission value pairs array
@@ -21336,7 +22509,7 @@
 		$().SPServices(updateListItemsOptions);
 	};
 
-	$.fn.ProcessGSEScheduleCancellationNotifications = function(scheduleData) {
+	$.fn.ProcessGSEScheduleCancellationNotifications = function (scheduleData) {
 		// console.log('ProcessGSEScheduleCancellationNotifications scheduleData');
 		// console.log(scheduleData);
 
@@ -21400,9 +22573,9 @@
 			'caller': 'programmatic schedule cancellation jobAdmin',
 			'to': eData.jobAdminEmail,
 			'subject': eData.subjectPreface + 'cancelled',
-			'bodyUnique': '<p>This schedule was nicknamed "' + sData.requestNick + 
-				'". It was for the job titled "' + sData.jobTitle + 
-				'" and was scheduled for ' + sData.scheduleDateTime + '. Please <a href="mailto:' + 
+			'bodyUnique': '<p>This schedule was nicknamed "' + sData.requestNick +
+				'". It was for the job titled "' + sData.jobTitle +
+				'" and was scheduled for ' + sData.scheduleDateTime + '. Please <a href="mailto:' +
 				eData.adminEmailString + '">contact the admin</a> with any issues.'
 		});
 
@@ -21514,7 +22687,7 @@
 
 		sData.scheduleDateTime =
 			$().ReturnFormattedDateTime(scheduleData.formData['Date'].slice(0, 10) + scheduleData.formData['time-storage_StartTime'].slice(10, 19), null, 'dddd, MMMM D, YYYY, h:mm a');
-		
+
 
 		mData.subjectPreface = 'GSE Schedule #' + scheduleData.ScheduleID + ': ';
 
@@ -21541,7 +22714,7 @@
 			'bodyUnique': '<p>The "' + sData.jobTitle +
 				'" GSE, scheduled for ' + sData.scheduleDateTime + ' has been cancelled. ' +
 				'Feel free to <a href="mailto:' + sData.jobAdminEmail + '">contact ' +
-					sData.jobAdminName + '</a> ' +
+				sData.jobAdminName + '</a> ' +
 				'with any questions, <a href="' + eData.uriOverview + '">' +
 				'review your other signups</a>, or ' +
 				'<a href="https://bmos.sharepoint.com/sites/hr-service-schedules/SitePages/App.aspx?f=cal">' +
@@ -21606,7 +22779,7 @@
 				'<p>You\'ve been granted credit for "' + sData.jobTitle + '", which began ' +
 				sData.scheduleDateTime + '.</p> ' +
 				'<p>Please <a href="http://www.surveygizmo.com/s3/3485668/GSE-Survey">provide feedback on your experience</a>. ' +
-				'Feel free to <a href="mailto:' + sData.jobAdminEmail + '">contact ' + sData.jobAdminName + 
+				'Feel free to <a href="mailto:' + sData.jobAdminEmail + '">contact ' + sData.jobAdminName +
 				'</a> with any questions, <a href="https://bmos.sharepoint.com/sites/hr-service-signups/SitePages/App.aspx">' +
 				'review your other signups</a>, or ' +
 				'<a href="https://bmos.sharepoint.com/sites/hr-service-schedules/SitePages/App.aspx?f=cal">' +
@@ -21810,8 +22983,8 @@
 					"		</Eq>" +
 					"	</Or>" +
 					"</Where>";
-			
-			
+
+
 			} else if (typeof (t.meOrMyDownlineIsRequesterAndRSQuery) != "undefined") {
 
 				if (typeof (t.meOrMyDownlineIsRequesterAndRSQuery.getRequesterFrom) == 'undefined') {
@@ -21869,7 +23042,7 @@
 					"	<And>" +
 					"		 <Eq>" +
 					"		      <FieldRef Name='EndOfLife'></FieldRef>" +
-				"		      <Value Type='Text'>" + t.meOrMyDownlineIsRequesterAndEOL.endOfLfe + "</Value>" +
+					"		      <Value Type='Text'>" + t.meOrMyDownlineIsRequesterAndEOL.endOfLfe + "</Value>" +
 					"		 </Eq>" +
 					"		 <" + operator + ">" +
 					"			  <FieldRef Name='" + getRequesterFrom + "'></FieldRef>" +
@@ -22453,7 +23626,7 @@
 	$.fn.RenderPersonLinks = function (usersRaw) {
 
 		var returnValue = "";
-		if (typeof(usersRaw) === 'string') {
+		if (typeof (usersRaw) === 'string') {
 			var userArray = usersRaw.split(";#");
 
 			$.each(userArray, function (i, userData) {
@@ -22580,7 +23753,7 @@
 				retVal += moment(dateTimeString, incomingFormat).format(returnFormat);
 			}
 
-		// if incoming format is not null, use it to parse dateTimeString
+			// if incoming format is not null, use it to parse dateTimeString
 		} else {
 
 			// if incomingFormat contains ', YYYY' and dateTimeString doesn't end with that value and determineYearDisplayDynamically == 1
@@ -22745,13 +23918,13 @@
 
 
 	$.fn.ReturnButtonsMarkupAsOverflowMenu = function (buttons) {
-		var buttonsMarkup = 
+		var buttonsMarkup =
 			'<div id="container_navigation-controls-and-header" class="overflow-menu"> \n' +
-			'   <div id="text_navigation-controls" ' + 
-			'		class="collapsible overflow-menu-control"> \n' + 
+			'   <div id="text_navigation-controls" ' +
+			'		class="collapsible overflow-menu-control"> \n' +
 			'		<span class="overflow-menu-text">More</span> \n' +
 			'	</div> \n' +
-			'   <div id="container_navigation-controls"> \n' + 
+			'   <div id="container_navigation-controls"> \n' +
 			'		<ul class="button-list-container"> \n';
 		$.each(buttons, function (i, button) {
 			// business rule: even if there's a function restricting rendering permission, the button will always render for admins; if this changes, 
@@ -22766,8 +23939,8 @@
 			}
 			buttonsMarkup += ' \n			</li> \n';
 		});
-		buttonsMarkup += 
-			'		</ul> \n' + 
+		buttonsMarkup +=
+			'		</ul> \n' +
 			'	</div> \n' +
 			'</div> \n';
 
@@ -23781,7 +24954,7 @@
 				$().SetErrorMessage("input#Physical-Demand-Walking", 'Time percentages must add up to 100%');
 			}
 		}
-		
+
 
 	};
 
@@ -23854,14 +25027,17 @@
 					if (lastSalaryFieldID) {
 						var lastSalaryString = $("input#" + lastSalaryFieldID).val().replace("\$", "").replace(/[,]/g, "");
 						if (lastSalaryString != '') {
-							var salaryChangeString = parseFloat(annualWageString) - parseFloat(lastSalaryString);
-							$("input#" + lastSalaryFieldID).val(numeral(parseFloat(lastSalaryString)).format('$0,0.00'));
-							$("input#Salary-Change").val(numeral(parseFloat(salaryChangeString)).format('$0,0.00'));
-							$().SetFieldToRequired('Salary-Change', 'text');
-							$("div#label-and-control_Salary-Change").show("fast").removeClass("hidden");
-							if (salaryChangeString != 0) {
-								$().SetFieldToRequired('Salary-Change-Reason', 'textarea');
-								$("div#label-and-control_Salary-Change-Reason").show("fast").removeClass("hidden");
+							var lastSalaryIsValid = $().ValidateInRealTimeForPositiveNumberInUSDFormat(lastSalaryString, "input#" + lastSalaryFieldID);
+							if (lastSalaryIsValid == 1) {
+								var salaryChangeString = parseFloat(annualWageString) - parseFloat(lastSalaryString);
+								$("input#" + lastSalaryFieldID).val(numeral(parseFloat(lastSalaryString)).format('$0,0.00'));
+								$("input#Salary-Change").val(numeral(parseFloat(salaryChangeString)).format('$0,0.00'));
+								$().SetFieldToRequired('Salary-Change', 'text');
+								$("div#label-and-control_Salary-Change").show("fast").removeClass("hidden");
+								if (salaryChangeString != 0) {
+									$().SetFieldToRequired('Salary-Change-Reason', 'textarea');
+									$("div#label-and-control_Salary-Change-Reason").show("fast").removeClass("hidden");
+								}
 							}
 						}
 					}
@@ -23906,6 +25082,36 @@
 				managers = error;
 			});
 		return managers;
+	};
+
+	// if (uData.isAdmin === 1 || typeof (button.renderPermissionsFunction) == "undefined") {
+
+
+	$.fn.ReturnCurrentUserIsManagerOrAdmin = function () {
+		var currentUserIsManagerOrAdmin = 0;
+		if (uData.isAdmin === 1) {
+			currentUserIsManagerOrAdmin = 1;
+		} else {
+			currentUserIsManagerOrAdmin = $().ReturnCurrentUserIsManager();
+		}
+		return currentUserIsManagerOrAdmin;
+	};
+
+
+	$.fn.ReturnCurrentUserIsManager = function () {
+		var currentUserIsManager = 0;
+		var currentUserAccount = ReplaceAll('@mos.org', '', ReplaceAll('i:0#.f\\|membership\\|', '', uData.account));
+		if (currentUserAccount === 'sp3') {
+			currentUserIsManager = 1;
+		} else {
+			var managers = $().ReturnManagers();
+			managers.forEach((manager) => {
+				if (manager.account === currentUserAccount) {
+					currentUserIsManager = 1;
+				}
+			});
+		}
+		return currentUserIsManager;
 	};
 
 
@@ -24553,19 +25759,19 @@
 
 
 
-    $.fn.ReturnGPCPeopleEditingAccess = function() {
+	$.fn.ReturnGPCPeopleEditingAccess = function () {
 
-        var gpcGroups = $().ReturnGPCGroups();
-        var hasViewPermission = 0;
+		var gpcGroups = $().ReturnGPCGroups();
+		var hasViewPermission = 0;
 
-        $.each(gpcGroups.EditGPCPeople, function(i, person) {
-            if (person.accountLong === uData.account) {
-                hasViewPermission = 1;
-            }
-        });
+		$.each(gpcGroups.EditGPCPeople, function (i, person) {
+			if (person.accountLong === uData.account) {
+				hasViewPermission = 1;
+			}
+		});
 
-        return hasViewPermission;
-    };
+		return hasViewPermission;
+	};
 
 
 
@@ -25065,7 +26271,7 @@
 			scheduleStartDatetime = moment.tz(scheduleStartDatetime, "America/New_York").format();
 			var nowAsISOLocal = $().ReturnFormattedDateTime('nowLocal', null, null);
 			if (
-				moment(scheduleStartDatetime).isAfter(nowAsISOLocal) || 
+				moment(scheduleStartDatetime).isAfter(nowAsISOLocal) ||
 				$('input#Signup-ID').val() == ''
 			) {
 				$("div#signup-people").show("fast").removeClass("hidden");
@@ -25074,8 +26280,8 @@
 				// hide cancellation checkbox
 				$("div#label-and-control_Requester-Cancellation").hide("fast").addClass("hidden");
 				// enable and require radio buttons
-				$("div#signups").find("div.repeat-container").each(function() {
-					$(this).find("input[type='radio']").each(function(index, value) {
+				$("div#signups").find("div.repeat-container").each(function () {
+					$(this).find("input[type='radio']").each(function (index, value) {
 						var radioButtonID = $(this).attr("id");
 						$().SetFieldToEnabled('#' + radioButtonID);
 						radioButtonIDs.push(radioButtonID);
@@ -25090,10 +26296,10 @@
 								.children("span.field-type-indicator")
 								.removeClass("field-optional")
 								.addClass("field-required")
-									.children("span.message")
-									.removeClass("message-optional")
-									.addClass("message-required")
-									.text("Required Field");
+								.children("span.message")
+								.removeClass("message-optional")
+								.addClass("message-required")
+								.text("Required Field");
 						}
 					});
 				});
@@ -25126,7 +26332,7 @@
 					.each(function (index, value) {
 						// console.log('found textarea');
 						// console.log($(this).attr("id"));
-						if($(this).val() !== '') {
+						if ($(this).val() !== '') {
 							var containerSelector = '#label-and-control_' + $(this).attr("id");
 							$(containerSelector).show("fast").removeClass("hidden");
 						}
@@ -25168,9 +26374,9 @@
 		}
 	};
 
-	
-	 
- 	$.fn.SetInHouseNeedsSheetRequestAdditionalViewAccess = function () {
+
+
+	$.fn.SetInHouseNeedsSheetRequestAdditionalViewAccess = function () {
 		$("input#View-Access").val(mData.viewAccess);
 	};
 
@@ -25884,7 +27090,7 @@
 
 		console.log(uData.roles);
 
-		uData.alternateOverviewScreen = $().UserNeeedsAlternateOverviewScreen();
+		uData.alternateOverviewScreen = $().UserNeedsAlternateOverviewScreen();
 
 		// lifespan of maintenance mode flag, in ms; 
 		// 		i.e., we'll check for maintenance mode again after this many milliseconds

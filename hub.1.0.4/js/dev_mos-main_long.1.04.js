@@ -4195,12 +4195,12 @@
 					'<p>' + ReplaceAll('%0A', '</p><p>', rData.gseScheduleData['Notes']) + '</p>';					
 			}
 
-			// console.log('rData.gseScheduleData');
-			// console.log(rData.gseScheduleData);
-			// console.log('rData.gseJobData');
-			// console.log(rData.gseJobData);
-			// console.log('rData.formDataOnLoad');
-			// console.log(rData.formDataOnLoad);
+			console.log('rData.gseScheduleData');
+			console.log(rData.gseScheduleData);
+			console.log('rData.gseJobData');
+			console.log(rData.gseJobData);
+			console.log('rData.formDataOnLoad');
+			console.log(rData.formDataOnLoad);
 			
 			// populate the placeholder <span>s with job and schedule data
 			PopulateFormData("div#request-form", rData.gseJobData, mData.uriRoot, rData.requestID, mData.checkForAlternateEventDataToPopulate);
@@ -21542,6 +21542,7 @@
 			var clickedUserAccount = $(this).attr('data-user-account');
 			var clickedUserName = $(this).attr('data-user-name');
 			$('div[aria-describedby="gse-signups-user-detail-dialog"] div.ui-dialog-titlebar span.ui-dialog-title').empty();
+			$("div#gse-signups-user-detail-table-container").empty();
 			$('div[aria-describedby="gse-signups-user-detail-dialog"] div.ui-dialog-titlebar span.ui-dialog-title').append('<span class="gse-signups-user-detail-dialog-header">Signup Details for ' + clickedUserName + '</span>');
 
 			var detailsMarkup = '<div id="user-details_' + clickedUserAccount + '" class="user-content">' + '<table class="gse-signups-user-details"><thead><tr>' +
