@@ -20,6 +20,8 @@ div#suiteBarDelta div#suiteBarTop div#O365_NavHeader
 div#s4-bodyContainer
 	background-color: $white
 
+	div#contentRow
+		padding-top: 0
 
 
 // keep out of the ribbon, suitebar, etc.
@@ -32,27 +34,34 @@ div#printer-content
 
 	h1
 		font-size: 4.5rem
+		color: $grey6
 
 	h2
 		font-size: 3rem !important
+		color: $grey6
 
 	h3
 		font-size: 2.6rem !important
+		color: $grey6
 
 	h4
 		font-size: 2rem !important
+		color: $grey6
 
 	h5
 		font-size: 1.75rem !important
+		color: $grey6
 
 	h6
 		font-size: 1.5rem !important
+		color: $grey6
 
 	.ms-rtestate-field h1,
 	h1.ms-rteElement-H1,
 	.ms-rtestate-field h2,
 	h2.ms-rteElement-H2
-		color: $textOnWhite
+		color: $grey6
+
 
 	ul, ol
 		list-style-position: inside
@@ -172,6 +181,15 @@ div#s4-workspace
 
 	div#s4-titlerow
 
+		div#siteIcon
+			margin-left: 2rem
+			margin-right: 4.75rem
+
+			img.ms-siteicon-img
+				width: 13rem
+				max-width: 13rem
+				margin-top: .47rem
+
 		a,
 		a:link,
 		a:visited,
@@ -201,6 +219,8 @@ div#s4-workspace
 			font-size: 4.5rem
 			font-family: "Segoe UI","Segoe", Tahoma, Helvetica Neue, Helvetica, Arial, sans-serif
 			font-weight: 300
+			padding-top: .5rem
+			color: $grey6
 
 			a
 				@extend h1#pageTitle.ms-core-pageTitle
@@ -221,8 +241,6 @@ div#s4-workspace
 		min-width: 19rem
 		margin-left: 0
 		padding-top: 1rem
-		border-top: .1rem solid $grey11
-		border-right: .1rem solid $grey11
 
 		li
 			list-style-type: none
@@ -2913,7 +2931,7 @@ div#s4-workspace
 
 		div.screen-content
 			padding: 5rem
-			background-color: rgba(255,216,0,.9)
+			background-color: rgba(64, 26, 49, 0.9);
 
 			a
 				display: block
@@ -2924,7 +2942,7 @@ div#s4-workspace
 
 			p
 				line-height: 4.5rem
-				color: $grey3
+				color: $white
 
 
 
@@ -2946,38 +2964,41 @@ div.ui-dialog
 		thead tr
 			text-align: left
 
-	div.table-container div.dataTables_wrapper
-		max-width: 100rem
-		margin-bottom: 4rem
+	div.table-container
+		margin-top: 1rem
+		
+		div.dataTables_wrapper
+			max-width: 100rem
+			margin: 2rem 0
 
-		div.dataTables_filter
-			display: block
-			float: none
-			margin: 1rem 0
-			padding: .2rem 0
-			width: 25rem
-			border: .1rem solid $grey11
-			font-weight: 500
-			text-align: left
+			div.dataTables_filter
+				display: block
+				float: none
+				margin: 1rem 0
+				padding: .2rem 0
+				width: 25rem
+				border: .1rem solid $grey11
+				font-weight: 500
+				text-align: left
 
-			&:after
-				+fontIcon
-				+fontIconAfter
-				+fontIconSearch
-				position: relative
-				left: 18.5rem
+				&:after
+					+fontIcon
+					+fontIconAfter
+					+fontIconSearch
+					position: relative
+					left: 18.5rem
 
-			label
-				position: relative
-				color: $white
+				label
+					position: relative
+					color: $white
 
-				input
-					position: absolute
-					left: .4rem
-					top: -.2rem
-					width: 22.2rem
-					color: $grey4
-					border: none
+					input
+						position: absolute
+						left: .4rem
+						top: -.2rem
+						width: 22.2rem
+						color: $grey4
+						border: none
 
 	table.dataTable,
 	table.gse-signups-user-summary,

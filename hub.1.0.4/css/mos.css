@@ -11,6 +11,8 @@ div#suiteBarDelta div#suiteBarTop div#O365_NavHeader {
 
 div#s4-bodyContainer {
   background-color: #fff; }
+  div#s4-bodyContainer div#contentRow {
+    padding-top: 0; }
 
 div#s4-workspace,
 div.ui-dialog,
@@ -21,27 +23,33 @@ div#printer-content {
   div#s4-workspace h1,
   div.ui-dialog h1,
   div#printer-content h1 {
-    font-size: 4.5rem; }
+    font-size: 4.5rem;
+    color: #666; }
   div#s4-workspace h2,
   div.ui-dialog h2,
   div#printer-content h2 {
-    font-size: 3rem !important; }
+    font-size: 3rem !important;
+    color: #666; }
   div#s4-workspace h3,
   div.ui-dialog h3,
   div#printer-content h3 {
-    font-size: 2.6rem !important; }
+    font-size: 2.6rem !important;
+    color: #666; }
   div#s4-workspace h4,
   div.ui-dialog h4,
   div#printer-content h4 {
-    font-size: 2rem !important; }
+    font-size: 2rem !important;
+    color: #666; }
   div#s4-workspace h5,
   div.ui-dialog h5,
   div#printer-content h5 {
-    font-size: 1.75rem !important; }
+    font-size: 1.75rem !important;
+    color: #666; }
   div#s4-workspace h6,
   div.ui-dialog h6,
   div#printer-content h6 {
-    font-size: 1.5rem !important; }
+    font-size: 1.5rem !important;
+    color: #666; }
   div#s4-workspace .ms-rtestate-field h1,
   div#s4-workspace h1.ms-rteElement-H1,
   div#s4-workspace .ms-rtestate-field h2,
@@ -54,7 +62,7 @@ div#printer-content {
   div#printer-content h1.ms-rteElement-H1,
   div#printer-content .ms-rtestate-field h2,
   div#printer-content h2.ms-rteElement-H2 {
-    color: #444; }
+    color: #666; }
   div#s4-workspace ul, div#s4-workspace ol,
   div.ui-dialog ul,
   div.ui-dialog ol,
@@ -195,7 +203,7 @@ form#aspnetForm div.banner {
     margin: 0 auto; }
 
 form#aspnetForm div.banner--critical {
-  color: #401a31;
+  color: #a60063;
   background-color: #e5c5d3; }
 
 form#aspnetForm div.banner--warning {
@@ -205,6 +213,14 @@ form#aspnetForm div.banner--warning {
 form#aspnetForm div.banner--success {
   color: #033328;
   background-color: #c6f2ef; }
+
+div#s4-workspace div#s4-titlerow div#siteIcon {
+  margin-left: 2rem;
+  margin-right: 4.75rem; }
+  div#s4-workspace div#s4-titlerow div#siteIcon img.ms-siteicon-img {
+    width: 13rem;
+    max-width: 13rem;
+    margin-top: .47rem; }
 
 div#s4-workspace div#s4-titlerow a,
 div#s4-workspace div#s4-titlerow a:link,
@@ -241,7 +257,9 @@ div#s4-workspace div#s4-titlerow h1#pageTitle {
 div#s4-workspace div#s4-titlerow h1#pageTitle.ms-core-pageTitle, div#s4-workspace div#s4-titlerow h1#pageTitle.ms-core-pageTitle a {
   font-size: 4.5rem;
   font-family: "Segoe UI","Segoe", Tahoma, Helvetica Neue, Helvetica, Arial, sans-serif;
-  font-weight: 300; }
+  font-weight: 300;
+  padding-top: .5rem;
+  color: #666; }
   div#s4-workspace div#s4-titlerow h1#pageTitle.ms-core-pageTitle a {
     color: #007298; }
     div#s4-workspace div#s4-titlerow h1#pageTitle.ms-core-pageTitle a:hover {
@@ -250,9 +268,7 @@ div#s4-workspace div#s4-titlerow h1#pageTitle.ms-core-pageTitle, div#s4-workspac
 div#s4-workspace div#sideNavBox {
   min-width: 19rem;
   margin-left: 0;
-  padding-top: 1rem;
-  border-top: 0.1rem solid #bbb;
-  border-right: 0.1rem solid #bbb; }
+  padding-top: 1rem; }
   div#s4-workspace div#sideNavBox li {
     list-style-type: none;
     list-style-image: none; }
@@ -1353,7 +1369,7 @@ div#s4-workspace div#public-community-page_open-enrollment div.primary-section {
     display: none; }
 
 div#s4-workspace div#public-community-page_open-enrollment div#need-to-know h2#header_need-to-know {
-  color: #401a31; }
+  color: #a60063; }
 
 div#s4-workspace div#public-community-page_open-enrollment div#need-to-know table.ms-listviewtable thead {
   display: none; }
@@ -1382,7 +1398,7 @@ div#s4-workspace div#public-community-page_benefits div.secondary-sections {
 
 div#s4-workspace div#public-community-page_moscars div#hero-spot {
   font-size: 2.75rem;
-  color: #401a31; }
+  color: #a60063; }
 
 div#s4-workspace div#public-community-page_moscars div#call-to-action p {
   display: inline-block; }
@@ -1513,7 +1529,7 @@ table.link-report th, table.link-report td {
   border: solid 1px #666; }
 
 div#s4-workspace div#adoption-1 {
-  background: #401a31 url("https://bmos.sharepoint.com/SiteAssets/bkgrd_adoption-1.png") center bottom/cover no-repeat;
+  background: #a60063 url("https://bmos.sharepoint.com/SiteAssets/bkgrd_adoption-1.png") center bottom/cover no-repeat;
   font-size: 3rem;
   font-weight: 300;
   padding: 2rem;
@@ -1723,7 +1739,7 @@ div#s4-workspace div.overlay-screen {
         margin-bottom: 0 !important; }
       div#s4-workspace div#request-form div#submit-or-exit div#submission-notice p.alert,
       div#s4-workspace div.overlay-screen div#submit-or-exit div#submission-notice p.alert {
-        color: #401a31; }
+        color: #a60063; }
   div#s4-workspace div#request-form div.repeat-container:nth-child(even),
   div#s4-workspace div.overlay-screen div.repeat-container:nth-child(even) {
     color: #333;
@@ -2194,7 +2210,7 @@ div#s4-workspace div.overlay-screen {
       height: 1.8rem;
       padding: 1.5rem;
       background-color: white;
-      border: 0.1rem dashed #401a31; }
+      border: 0.1rem dashed #a60063; }
     div#s4-workspace div#request-form div.label-and-control.mosFile.contains-errors div.control div.error-message,
     div#s4-workspace div.overlay-screen div.label-and-control.mosFile.contains-errors div.control div.error-message {
       position: absolute;
@@ -2202,7 +2218,7 @@ div#s4-workspace div.overlay-screen {
     div#s4-workspace div#request-form div.label-and-control.mosFile.contains-errors div.control div.mos-drag-and-drop-file-attachment.attachment-error a.mos-drag-and-drop-file-container,
     div#s4-workspace div.overlay-screen div.label-and-control.mosFile.contains-errors div.control div.mos-drag-and-drop-file-attachment.attachment-error a.mos-drag-and-drop-file-container {
       background-color: #fff;
-      border: 0.1rem solid #401a31;
+      border: 0.1rem solid #a60063;
       display: block;
       opacity: 1; }
       div#s4-workspace div#request-form div.label-and-control.mosFile.contains-errors div.control div.mos-drag-and-drop-file-attachment.attachment-error a.mos-drag-and-drop-file-container div.mos-drag-and-drop-file-progress,
@@ -2277,10 +2293,10 @@ div#s4-workspace div.overlay-screen {
     border: 0 !important; }
   div#s4-workspace div#request-form .urgent,
   div#s4-workspace div.overlay-screen .urgent {
-    color: #401a31 !important; }
+    color: #a60063 !important; }
     div#s4-workspace div#request-form .urgent h2,
     div#s4-workspace div.overlay-screen .urgent h2 {
-      color: #401a31 !important; }
+      color: #a60063 !important; }
   div#s4-workspace div#request-form span.field-type-indicator span.message,
   div#s4-workspace div.overlay-screen span.field-type-indicator span.message {
     display: inline-block;
@@ -2294,7 +2310,7 @@ div#s4-workspace div.overlay-screen {
     content: "*"; }
   div#s4-workspace div#request-form span.field-type-indicator.field-required,
   div#s4-workspace div.overlay-screen span.field-type-indicator.field-required {
-    color: #401a31;
+    color: #a60063;
     font-size: 1.5rem;
     font-weight: bold; }
   div#s4-workspace div#request-form div.help-text,
@@ -2322,7 +2338,7 @@ div#s4-workspace div.overlay-screen {
   div#s4-workspace div#request-form div.error-message,
   div#s4-workspace div.overlay-screen div.error-message {
     text-align: left;
-    color: #401a31; }
+    color: #a60063; }
   div#s4-workspace div#request-form div.label-and-control.contains-errors,
   div#s4-workspace div.overlay-screen div.label-and-control.contains-errors {
     background-color: #e5c5d3; }
@@ -2346,7 +2362,7 @@ div#s4-workspace div.overlay-screen {
     div#s4-workspace div.overlay-screen div.label-and-control.contains-errors .sp-peoplepicker-topLevel,
     div#s4-workspace div.overlay-screen div.label-and-control.contains-errors .sp-peoplepicker-autoFillContainer,
     div#s4-workspace div.overlay-screen div.label-and-control.contains-errors .ms-inputBox {
-      border-color: #401a31; }
+      border-color: #a60063; }
     div#s4-workspace div#request-form div.label-and-control.contains-errors div.help-text,
     div#s4-workspace div.overlay-screen div.label-and-control.contains-errors div.help-text {
       color: #555; }
@@ -2525,7 +2541,7 @@ div#s4-workspace div.overlay-screen#wait-while-working div.screen-content {
     position: absolute;
     left: -1rem;
     top: 5rem;
-    background-color: #a60063;
+    background-color: #da1884;
     border-radius: 50%;
     animation: move 2.5s infinite cubic-bezier(0.2, 0.64, 0.81, 0.23); }
   div#s4-workspace div.overlay-screen#wait-while-working div.screen-content div#waiting-animation div:nth-child(2) {
@@ -2579,7 +2595,7 @@ div#s4-workspace div.overlay-screen#maintenance-mode {
     margin-left: 20%; }
   div#s4-workspace div.overlay-screen#maintenance-mode div.screen-content {
     padding: 5rem;
-    background-color: rgba(255, 216, 0, 0.9); }
+    background-color: rgba(64, 26, 49, 0.9); }
     div#s4-workspace div.overlay-screen#maintenance-mode div.screen-content a {
       display: block;
       margin-bottom: 2rem; }
@@ -2587,7 +2603,7 @@ div#s4-workspace div.overlay-screen#maintenance-mode {
         width: 30rem; }
     div#s4-workspace div.overlay-screen#maintenance-mode div.screen-content p {
       line-height: 4.5rem;
-      color: #333; }
+      color: #fff; }
 
 div#s4-workspace p.message_no-requests-found,
 div.ui-dialog p.message_no-requests-found {
@@ -2604,46 +2620,49 @@ div#s4-workspace div.ui-dialog-titlebar.ui-widget-header thead tr,
 div.ui-dialog div.ui-dialog-titlebar.ui-widget-header thead tr {
   text-align: left; }
 
-div#s4-workspace div.table-container div.dataTables_wrapper,
-div.ui-dialog div.table-container div.dataTables_wrapper {
-  max-width: 100rem;
-  margin-bottom: 4rem; }
-  div#s4-workspace div.table-container div.dataTables_wrapper div.dataTables_filter,
-  div.ui-dialog div.table-container div.dataTables_wrapper div.dataTables_filter {
-    display: block;
-    float: none;
-    margin: 1rem 0;
-    padding: .2rem 0;
-    width: 25rem;
-    border: 0.1rem solid #bbb;
-    font-weight: 500;
-    text-align: left; }
-    div#s4-workspace div.table-container div.dataTables_wrapper div.dataTables_filter:after,
-    div.ui-dialog div.table-container div.dataTables_wrapper div.dataTables_filter:after {
-      display: inline-block;
-      font-family: 'Office365Icons';
-      font-size: inherit;
-      font-weight: inherit;
-      color: inherit;
-      text-rendering: auto;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      margin-left: .5rem;
-      content: '\E039';
-      position: relative;
-      left: 18.5rem; }
-    div#s4-workspace div.table-container div.dataTables_wrapper div.dataTables_filter label,
-    div.ui-dialog div.table-container div.dataTables_wrapper div.dataTables_filter label {
-      position: relative;
-      color: #fff; }
-      div#s4-workspace div.table-container div.dataTables_wrapper div.dataTables_filter label input,
-      div.ui-dialog div.table-container div.dataTables_wrapper div.dataTables_filter label input {
-        position: absolute;
-        left: .4rem;
-        top: -.2rem;
-        width: 22.2rem;
-        color: #444;
-        border: none; }
+div#s4-workspace div.table-container,
+div.ui-dialog div.table-container {
+  margin-top: 1rem; }
+  div#s4-workspace div.table-container div.dataTables_wrapper,
+  div.ui-dialog div.table-container div.dataTables_wrapper {
+    max-width: 100rem;
+    margin: 2rem 0; }
+    div#s4-workspace div.table-container div.dataTables_wrapper div.dataTables_filter,
+    div.ui-dialog div.table-container div.dataTables_wrapper div.dataTables_filter {
+      display: block;
+      float: none;
+      margin: 1rem 0;
+      padding: .2rem 0;
+      width: 25rem;
+      border: 0.1rem solid #bbb;
+      font-weight: 500;
+      text-align: left; }
+      div#s4-workspace div.table-container div.dataTables_wrapper div.dataTables_filter:after,
+      div.ui-dialog div.table-container div.dataTables_wrapper div.dataTables_filter:after {
+        display: inline-block;
+        font-family: 'Office365Icons';
+        font-size: inherit;
+        font-weight: inherit;
+        color: inherit;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        margin-left: .5rem;
+        content: '\E039';
+        position: relative;
+        left: 18.5rem; }
+      div#s4-workspace div.table-container div.dataTables_wrapper div.dataTables_filter label,
+      div.ui-dialog div.table-container div.dataTables_wrapper div.dataTables_filter label {
+        position: relative;
+        color: #fff; }
+        div#s4-workspace div.table-container div.dataTables_wrapper div.dataTables_filter label input,
+        div.ui-dialog div.table-container div.dataTables_wrapper div.dataTables_filter label input {
+          position: absolute;
+          left: .4rem;
+          top: -.2rem;
+          width: 22.2rem;
+          color: #444;
+          border: none; }
 
 div#s4-workspace table.dataTable,
 div#s4-workspace table.gse-signups-user-summary,
@@ -3763,7 +3782,7 @@ body.product-timeline div#timeline div.vis-timeline {
       background-color: rgba(150, 150, 150, 0.2); }
 
 body.product-timeline div#timeline div.vis-current-time {
-  background-color: #a60063; }
+  background-color: #da1884; }
 
 body.product-timeline div#timeline div.vis-time-axis div.vis-grid.vis-minor,
 body.product-timeline div#timeline div.vis-time-axis div.vis-grid.vis-major,
@@ -4222,7 +4241,7 @@ div#remaining-capacity-metadata {
     div#remaining-capacity-metadata ul#legend-items span.audience_general {
       background-color: #490c66; }
     div#remaining-capacity-metadata ul#legend-items span.audience_school {
-      background-color: #a60063; }
+      background-color: #da1884; }
 
 div#remaining-capacities {
   opacity: 0;
@@ -4289,7 +4308,7 @@ ul.show-remaining-capacities {
   ul.show-remaining-capacities span.audience_general {
     background-color: #490c66; }
   ul.show-remaining-capacities span.audience_school {
-    background-color: #a60063; }
+    background-color: #da1884; }
   ul.show-remaining-capacities span.capacity-bar.seats-remaining_1 {
     width: calc(((1 / 350) * 100%) - 14rem);
     min-width: calc(((1 / 350) * 15rem)); }

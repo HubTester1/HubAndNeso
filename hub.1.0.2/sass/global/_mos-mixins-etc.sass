@@ -1,6 +1,12 @@
 
 
 
+=killTopSpace
+	position: relative
+	top: -1.5rem
+
+
+
 // ------------------
 // ROWS & COLUMNS
 // ------------------
@@ -20,7 +26,12 @@
 // GRID ELEMENT COLORING
 // ------------------
 
-=gridElementDarkekend1
+
+// ------------------
+// GRID ELEMENT COLORING
+// ------------------
+
+=gridElementDarkened1
 	color: $grey3
 	background-color: $grey14
 
@@ -28,10 +39,9 @@
 		color: $blue5 !important
 
 		&:hover
-
 			color: $blue6 !important
 
-=gridElementDarkekend2
+=gridElementDarkened2
 	color: $grey2
 	background-color: $grey13
 
@@ -39,10 +49,9 @@
 		color: $blue6 !important
 
 		&:hover
-
 			color: $blue7 !important
 
-=gridElementDarkekend3
+=gridElementDarkened3
 	color: $grey1
 	background-color: $grey12
 
@@ -50,7 +59,6 @@
 		color: $blue7 !important
 
 		&:hover
-
 			color: $blue8 !important
 
 
@@ -133,6 +141,9 @@
 	height: 2.5rem
 	min-height: 2.5rem
 
+=buttonOverOtherElement
+	margin-bottom: 1rem !important
+
 // =buttonLight
 //	background-color: $grey14
 //	color: $intDefault
@@ -170,6 +181,14 @@
 	top: 50%
 	transform: translateY(-50%)
 
+
+// ------------------
+// INDIVIDUALS
+// ------------------
+
+=remainingCapacityBar($calcBase)
+	width: calc(((#{$calcBase} / #{$higestCapacityAllVenues}) * 100%) - #{$accompanimentsWidth})
+	min-width: calc(((#{$calcBase} / #{$higestCapacityAllVenues}) * #{$smallestCapacityBarMaxWidth}))
 
 
 // ------------------

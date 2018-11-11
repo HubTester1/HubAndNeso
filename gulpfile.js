@@ -8,13 +8,16 @@ const plumber = require('gulp-plumber');
 const webpack = require('webpack');
 const webpackStream = require('webpack-stream');
 const { argv } = require('yargs');
+const webpackV1ProdConfig = require('./webpack/v1.prod.css.config');
+const webpackV2ProdConfig = require('./webpack/v2.prod.css.config');
 const webpackV4DevConfig = require('./webpack/v4.dev.css.config');
 const webpackV4ProdConfig = require('./webpack/v4.prod.css.config');
 const webpackV5DevConfig = require('./webpack/v5.dev.config');
 const webpackV5DevLoaderConfig = require('./webpack/v5.dev.loader.config');
-
 const webpackV5ProdConfig = require('./webpack/v5.prod.config');
 const gulpBaseConfig = require('./gulp/base.config');
+const gulpV1ProdConfig = require('./gulp/v1.prod.config');
+const gulpV2ProdConfig = require('./gulp/v2.prod.config');
 const gulpV4DevConfig = require('./gulp/v4.dev.config');
 const gulpV4ProdConfig = require('./gulp/v4.prod.config');
 const gulpV5DevConfig = require('./gulp/v5.dev.config');
@@ -63,6 +66,90 @@ gulp.task('watch-push-importer', () => {
 	// watch the src style file; upon changes, build dist style file and push it to dev
 	gulp.watch([gulpBaseConfig.ReturnSWFImporterFile(argv.app)], gulp.series('push-importer'));
 });
+
+
+// V1 STYLES ---
+
+// build style file
+gulp.task('1-prod-build-styles', () =>
+	// for specified src style file
+	gulp.src(gulpV1ProdConfig.ReturnV1ProdStylesSrcFile())
+		// replace the standard pipe method
+		.pipe(plumber())
+		// pipe it through webpack
+		.pipe(webpackStream(webpackV1ProdConfig), webpack)
+		// to the specified style folder
+		.pipe(gulp.dest(gulpV1ProdConfig.ReturnV1ProdStylesDistFolder())));
+// push style file to dev
+gulp.task('1-prod-push-styles', () =>
+	// for specified dist style file
+	gulp.src(gulpV1ProdConfig.ReturnV1ProdStylesDistFile())
+		// replace the standard pipe method
+		.pipe(plumber())
+		// pipe them into a caching proxy 
+		.pipe(cached('spFiles'))
+		// and then to SP dev location
+		.pipe(spSave(
+			gulpV1ProdConfig.ReturnV1ProdSPSaveCSSOptions(),
+			gulpBaseConfig.ReturnGulpSPSaveCredentials(),
+		)));
+// build style file and push style file to dev
+gulp.task('1-prod-build-push-styles', () =>
+	// for specified style file
+	gulp.src(gulpV1ProdConfig.ReturnV1ProdStylesSrcFile())
+		// replace the standard pipe method
+		.pipe(plumber())
+		// pipe it through webpack
+		.pipe(webpackStream(webpackV1ProdConfig), webpack)
+		// to the specified style folder
+		.pipe(gulp.dest(gulpV1ProdConfig.ReturnV1ProdStylesDistFolder()))
+		// and then to SP dev location
+		.pipe(spSave(
+			gulpV1ProdConfig.ReturnV1ProdSPSaveCSSOptions(),
+			gulpBaseConfig.ReturnGulpSPSaveCredentials(),
+		)));
+
+
+// V2 STYLES ---
+
+// build style file
+gulp.task('2-prod-build-styles', () =>
+	// for specified src style file
+	gulp.src(gulpV2ProdConfig.ReturnV2ProdStylesSrcFile())
+		// replace the standard pipe method
+		.pipe(plumber())
+		// pipe it through webpack
+		.pipe(webpackStream(webpackV2ProdConfig), webpack)
+		// to the specified style folder
+		.pipe(gulp.dest(gulpV2ProdConfig.ReturnV2ProdStylesDistFolder())));
+// push style file to dev
+gulp.task('2-prod-push-styles', () =>
+	// for specified dist style file
+	gulp.src(gulpV2ProdConfig.ReturnV2ProdStylesDistFile())
+		// replace the standard pipe method
+		.pipe(plumber())
+		// pipe them into a caching proxy 
+		.pipe(cached('spFiles'))
+		// and then to SP dev location
+		.pipe(spSave(
+			gulpV2ProdConfig.ReturnV2ProdSPSaveCSSOptions(),
+			gulpBaseConfig.ReturnGulpSPSaveCredentials(),
+		)));
+// build style file and push style file to dev
+gulp.task('2-prod-build-push-styles', () =>
+	// for specified style file
+	gulp.src(gulpV2ProdConfig.ReturnV2ProdStylesSrcFile())
+		// replace the standard pipe method
+		.pipe(plumber())
+		// pipe it through webpack
+		.pipe(webpackStream(webpackV2ProdConfig), webpack)
+		// to the specified style folder
+		.pipe(gulp.dest(gulpV2ProdConfig.ReturnV2ProdStylesDistFolder()))
+		// and then to SP dev location
+		.pipe(spSave(
+			gulpV2ProdConfig.ReturnV2ProdSPSaveCSSOptions(),
+			gulpBaseConfig.ReturnGulpSPSaveCredentials(),
+		)));
 
 
 // V4 API & STYLES ---

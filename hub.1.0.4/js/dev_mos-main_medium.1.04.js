@@ -54,6 +54,10 @@
 			'</div>'
 		);
 
+		// set logo
+		document.getElementsByClassName('ms-siteicon-img')[0]
+			.setAttribute('src', '/sites/hubprod/Asset%20Library/BrandHorizontal.svg');
+
 		// set a container for all screen / container configuration promises
 		var allScreenAndContainerConfigurationPromises = [];
 
@@ -232,7 +236,7 @@
 			'	<div class="screen-content hidden"> \n' +
 			'		<div class="message"> \n' +
 			'			<a href="/"> \n' +
-			'				<img src="https://bmos.sharepoint.com/sites/hubprod/Asset%20Library/logo_the-hub.png" /> \n' +
+			'				<img src="https://bmos.sharepoint.com/sites/hubprod/Asset%20Library/BrandHorizontalWhite.png" /> \n' +
 			'			</a> \n' +
 			'			<p> \n' +
 			'				This area is down for maintenance, \n' +
@@ -305,7 +309,7 @@
 		// --- navigation
 
 		// set global nav
-		$('div.ms-breadcrumb-top').html(mData.globalNavigationList);
+		$('div.ms-breadcrumb-top').remove();
 
 		// for swfs, modify site icon link
 		if (mData.swf === 1) {
@@ -26932,12 +26936,6 @@
 		// set screen transition times in ms
 		mData.quickScreenTransitionTime = 1;
 		mData.gracefulgracefulScreenTransitionTime = 750;
-
-		// set global nav
-		mData.globalNavigationList = '<ul role="navigation" id="mos_global-navigation">' +
-			'	<li><a href="https://bmos.sharepoint.com/">The Hub</a></li>' +
-			'	<li><a href="https://bmos.sharepoint.com/SitePages/Communities.aspx">Communities</a></li>' +
-			'</ul>';
 
 		// swf screens will only be rendered on swf site pages if the page token matches one of the strings in this array
 		mData.swfAppPageTokens = ["App", "app"];
