@@ -70,7 +70,13 @@
                         listFields.ProductCategory = HtmlEncode($(productValue).find('category').text());
                     }
                     listFields.RequestDate = HtmlEncode($(productValue).find('startDate').text().slice(0, 10) + 'T00:00:00-05:00');
-                    listFields.RequestStatus = HtmlEncode('Submitted');
+					listFields.RequestStatus = HtmlEncode('Submitted');
+					
+
+					var rawDescription = HtmlEncode($(productValue).find('description').text())
+					// var numberOfLineBreaks = (rawTextAreaText.match(/\n/g) || []).length;
+					var formattedDescription = rawDescription.replace(/\r?\n/g, '<br />');
+
 
                     // set all basic JS object properties
                     var allRequestData = '{"RepeatedElements": [],' +
@@ -82,7 +88,7 @@
                                         '"End-of-Life":"0",' +
                                         '"SWF-Version":"1.0",' +
                                         '"Product-Category":"' + listFields.ProductCategory + '",' +
-                                        '"Product-Description":"' + HtmlEncode($(productValue).find('description').text()) + '",' +
+                                        '"Product-Description":"' + formattedDescription + '",' +
                                         '"Legacy-Product-Creation-Date":"' + listFields.RequestDate + '",' +
                                         '"Request-Status":"' + listFields.RequestStatus + '",';
 
@@ -142,7 +148,10 @@
 
   
       function HtmlEncode(str) {
-          return String(str).replace(/&/g, '&amp;').replace(/"/g, '&quot;');
+		  return String(str)
+			  .replace(/&/g, '&amp;')
+			  .replace(/"/g, '&quot;')
+			  .replace(/&#xd;/g, '<br />');
           // .replace(/'/g, '&#39;')
           // .replace(/</g, '&lt;')
           // .replace(/>/g, '&gt;');

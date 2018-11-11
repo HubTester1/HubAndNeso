@@ -6,12 +6,12 @@
 	var mData = {
 		'componentID': 171,
 		'swf': 1,
-		// 'mosMainKey': 'prod',
+		'mosMainKey': 'prod',
 		// 'mosMainKey': 'dev',
 		// 'mosMainKey': 'devMedium',
-		'mosMainKey': 'devLong',
+		// 'mosMainKey': 'devLong',
 		// "useRecordedMOSMainMajorVersion": 1,
-		'devAdminNotifications': 1,
+		'devAdminNotifications': 0,
 		'notifications': 0,
 		'detailTitle': 'Museum-wide Event'
 	};

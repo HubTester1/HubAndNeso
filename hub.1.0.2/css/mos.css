@@ -2867,8 +2867,14 @@ body.product-timeline ul#timeline-options {
       color: #002a47 !important; }
 
 body.product-timeline li#new-product-option,
+body.product-timeline li#list-view-option,
 body.product-timeline li#category-filter-option,
 body.product-timeline li#date-filter-option {
+  display: table-cell;
+  vertical-align: top; }
+
+body.product-list-view li#new-product-option,
+body.product-list-view li#list-view-option {
   display: table-cell;
   vertical-align: top; }
 

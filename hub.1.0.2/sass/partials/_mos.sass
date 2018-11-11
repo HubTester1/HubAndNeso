@@ -3396,13 +3396,25 @@ div#printer-content
 //			PRODUCT TIMELINE
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-body.product-timeline
+body.product-list-view
 
 	ul#timeline-options
 		+gridElementDarkened2
 		display: inline-block
 
 	li#new-product-option,
+	li#list-view-option
+		+col
+
+
+body.product-timeline,
+
+	ul#timeline-options
+		+gridElementDarkened2
+		display: inline-block
+
+	li#new-product-option,
+	li#list-view-option,
 	li#category-filter-option,
 	li#date-filter-option
 		+col

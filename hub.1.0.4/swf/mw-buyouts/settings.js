@@ -4,10 +4,10 @@
 	var mData = {
 		'componentID': 170,
 		'swf': 1,
-		// 'mosMainKey': 'prod',
+		'mosMainKey': 'prod',
 		// 'mosMainKey': 'dev',
 		// 'mosMainKey': 'devMedium',
-		'mosMainKey': 'devLong',
+		// 'mosMainKey': 'devLong',
 		// "useRecordedMOSMainMajorVersion": 1,
 		'devAdminNotifications': 1,
 		'notifications': 0,
@@ -72,12 +72,12 @@
 				{
 					"linkType": "newItem",
 					"anchorText": "New Buyout",
-					"href": "/sites/mw-buyout/SitePages/App.aspx?r=0",
+					"href": "/sites/mw-buyouts/SitePages/App.aspx?r=0",
 					"target": null
 				}, {
 					"linkType": "goForward",
 					"anchorText": "Buyout List",
-					"href": "/sites/mw-buyout/SitePages/App.aspx",
+					"href": "/sites/mw-buyouts/SitePages/App.aspx",
 					"target": null
 				}
 			],
@@ -129,13 +129,13 @@
 				"htmlID": "header_this-request",
 				"begin": 1,
 				"end": 1
-			}, {
-				'elementType': 'field',
-				'controlType': 'url',
-				'fieldName': 'Quark Request',
-				'labelContent': 'Quark Request',
-				'editableForNonAdmin': [],
-				'editableForAdmin': [],
+			// }, {
+			// 	'elementType': 'field',
+			// 	'controlType': 'url',
+			// 	'fieldName': 'Quark Request',
+			// 	'labelContent': 'Quark Request',
+			// 	'editableForNonAdmin': [],
+			// 	'editableForAdmin': [],
 			}, {
 				"elementType": "field",
 				"controlType": "text",

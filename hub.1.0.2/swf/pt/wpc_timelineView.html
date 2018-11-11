@@ -1,0 +1,466 @@
+﻿<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        // maintenance mode
+        var allSWFsInMaintenance = $().ReturnMaintenanceModeAllSWFs();
+        var thisSWFInMainenanceMode = $().ReturnMaintenanceModeThisSWF(location);
+        if (allSWFsInMaintenance == false && thisSWFInMainenanceMode == false) {
+
+            mData = $().ReturnThisSiteSettings();
+            var requestID = $().GetParamFromUrl(location.search, 'requestID');
+
+            console.log('m2');
+
+            moment.locale('en');
+            moment.suppressDeprecationWarnings = true;
+
+            mData = $.extend(
+                $().GetFieldsFromOneRow({
+                    "listName": "ComponentLog",
+                    "select": [
+                        {
+                            "nameHere": "uriRequest",
+                            "nameInList": "URIRequest",
+                            "linkField": 1
+                        }, {
+                            "nameHere": "uriRequester",
+                            "nameInList": "URIRequester",
+                            "linkField": 1
+                        }, {
+                            "nameHere": "requestName",
+                            "nameInList": "RequestName",
+                            "linkField": 1
+                        }
+                    ],
+                    "where": {
+                        "field": "ComponentID",
+                        "type": "Number",
+                        "value": mData.componentID,
+                    }
+                }),
+                mData
+            );
+
+            $("body").addClass(ReplaceAll(" ", "-", mData.requestName).toLowerCase());
+            $("#dialog").dialog({
+                autoOpen: false,
+                draggable: true,
+                show: { effect: "bounce", times: 2, duration: 500 },
+                width: 450,
+            });
+
+
+            // ids need not be numbers; in case one day they do not match order for some reason,
+            //      id and order are separate properties; fyi, order is a custom property (not part
+            //      of the visjs timeline library)
+            var groups = [
+                {
+                    "id": 1,
+                    "order": 1,
+                    "content": "Permanent Exhibits",
+                    "className": "category_permanent-exhibits",
+                }, {
+                    "id": 2,
+                    "order": 2,
+                    "content": "Temporary Exhibits",
+                    "className": "category_temporary-exhibits",
+                }, {
+                    "id": 3,
+                    "order": 3,
+                    "content": "Omni",
+                    "className": "category_omni",
+                }, {
+                    "id": 4,
+                    "order": 4,
+                    "content": "Planetarium",
+                    "className": "category_planetarium",
+                }, {
+                    "id": 5,
+                    "order": 5,
+                    "content": "Promotions",
+                    "className": "category_promotions",
+                }, {
+                    "id": 6,
+                    "order": 6,
+                    "content": "Current Science &amp; Technology",
+                    "className": "category_cst",
+                }, {
+                    "id": 7,
+                    "order": 7,
+                    "content": "Lectures &amp; Events",
+                    "className": "category_lectures-and-events",
+                }, {
+                    "id": 8,
+                    "order": 8,
+                    "content": "3-D / 4-D Cinema",
+                    "className": "category_3d4d",
+                }
+            ];
+
+            //var now = $().ReturnFormattedDateTime("nowLocal", null, "YYYY-MM-DD");
+            var timelineInitialStartDate = moment().subtract(1, 'months').format('YYYY-MM-DD');
+            var timelineInitialEndDate = moment().add(11, 'months').format('YYYY-MM-DD');
+
+            // fyi, functions here are custom (not supplied / recommended by the visjs timeline; 
+            //      visjs recommends using a custom function)
+            var options = {
+                "start": timelineInitialStartDate,
+                "end": timelineInitialEndDate,
+                "stack": true,
+                "orientation": {
+                    "axis": "both",
+                    "item": "top"
+                },
+                "type": "range",
+                "selectable": false,
+                "editable": true,
+                "groupEditable": {
+                    "add": false,
+                    "remove": false,
+                    "order": true
+                },
+                "groupOrder": function (a, b) {
+                    return a.order - b.order;
+                },
+                "groupOrderSwap": function (a, b, groups) {
+                    var o = a.order;
+                    a.order = b.order;
+                    b.order = o;
+                },
+            };
+
+            var getListItemsOptions = {
+                "viewFields": "<ViewFields>" +
+                                "   <FieldRef Name='ID' />" +
+                                "   <FieldRef Name='AllRequestData' />" +
+                                "</ViewFields>",
+                //"query":        "<Query>" +
+                //                "   <Where>" +
+                //                "       <And>" +
+                //                "           <Eq>" +
+                //                "               <FieldRef Name='RequestStatus'></FieldRef>" +
+                //                "               <Value Type='Text'>Submitted</Value>" +
+                //                "           </Eq>" +
+                //                "           <Geq>" +
+                //                "               <FieldRef Name='ID'></FieldRef>" +
+                //                "               <Value Type='Number'>214</Value>" +
+                //                "           </Geq>" +
+                //                "       </And>" +
+                //                "   </Where>" +
+                //                "</Query>",
+                "query":    "<Query>" +
+                            "   <Where>" +
+                            "       <Eq>" +
+                            "           <FieldRef Name='RequestStatus'></FieldRef>" +
+                            "           <Value Type='Text'>Submitted</Value>" +
+                            "       </Eq>" +
+                            "   </Where>" +
+                            "</Query>",
+                "queryOptions": "<QueryOptions>" +
+                                "   <IncludeMandatoryColumns>FALSE</IncludeMandatoryColumns>" +
+                                "</QueryOptions>"
+            };
+
+
+
+
+            $().SPServices({
+                operation: "GetListItems",
+                async: false,
+                listName: "SWFList",
+                CAMLViewFields: getListItemsOptions.viewFields,
+                CAMLQuery: getListItemsOptions.query,
+                CAMLQueryOptions: getListItemsOptions.queryOptions,
+                completefunc: function (xData, Status) {
+
+                    var regexOne = new RegExp("\r", "g");
+                    var regexTwo = new RegExp("\n", "g");
+
+                    var itemsInitial = [];
+
+                    $(xData.responseXML).SPFilterNode("z:row").each(function () {
+
+                        var productItemString = $(this).attr("ows_AllRequestData");
+                        productItemString = productItemString.replace(regexOne, "'");
+                        productItemString = productItemString.replace(regexTwo, "'");
+                        eval("var productItem=" + productItemString);
+                        productItem.ID = $(this).attr("ows_ID");
+
+                        productItem.friendlyStartDate = $().ReturnFormattedDateTime(productItem["Product-Start-Date"], "YYYY-MM-DDTHH:mm:ss-05:00", "MMMM DD, YYYY", 0);
+
+                        productItem.timelineContent = productItem["Product-Title"];
+
+                        $(groups).each(function (i, g) {
+                            if (g.content == productItem["Product-Category"]) {
+                                productItem.groupID = g.id;
+                            }
+                        });
+
+                        var thisProduct = {
+                            "id": productItem.ID,
+                            "group": productItem.groupID,
+                            "content": productItem.timelineContent,
+                            "start": productItem["Product-Start-Date"].slice(0, 10),
+                            "dialogContent": {
+                                "title": productItem["Product-Title"],
+                                "category": productItem["Product-Category"],
+                                "start": productItem.friendlyStartDate,
+                                "editURL": mData.uriRequest + "?requestID=" + productItem["ID"] + "&returnURI=" + window.location.href
+                            }
+                        }
+
+                        if (typeof (productItem["Product-End-Date"]) != 'undefined' && productItem["Product-End-Date"] != "") {
+                            thisProduct.end = productItem["Product-End-Date"].slice(0, 10);
+                            productItem.friendlyEndDate = $().ReturnFormattedDateTime(productItem["Product-End-Date"], "YYYY-MM-DDTHH:mm:ss-05:00", "MMMM DD, YYYY", 0);
+                            thisProduct.dialogContent.end = productItem.friendlyEndDate;
+                        } else {
+                            thisProduct.end = '9000-01-01';
+                        }
+
+                        if (typeof (productItem["Requested-For"]) != 'undefined' && productItem["Requested-For"] != "") {
+                            thisProduct.dialogContent.contact = productItem["Requested-For"]
+                        }
+
+                        if (typeof (productItem["Product-Description"]) != 'undefined' && productItem["Product-Description"] != "") {
+                            thisProduct.dialogContent.description = productItem["Product-Description"]
+                        }
+
+                        itemsInitial.push(thisProduct);
+                    });
+
+
+                    var items = new vis.DataSet(itemsInitial);
+
+                    var timelineOptionsAndContainer = "<ul id=\"timeline-options\"> \n" +
+                                                        "    <li id=\"new-product-option\"> \n" +
+                                                                $().ReturnButtonLink("newItem", "New Product", mData.uriRequest + "?returnURI=" + mData.uriRequester) +
+                                                        "    </li> \n" +
+                                                        "    <li id=\"list-view-option\"> \n" +
+                                                                $().ReturnButtonLink("goForward", "Product List", "/sites/pt/SitePages/List View.aspx") +
+                                                        "    </li> \n" +
+                                                        "    <li id=\"category-filter-option\"> \n" +
+                                                        "        <h2 id=\"categories-parent\" class=\"collapsible\">Categories</h2> \n" +
+                                                        "        <div id=\"categories-children\"> \n" +
+                                                        "            <p id=\"control-group-label\">Categories included:</p> \n" +
+                                                        "            <div class=\"category-selectors-container\"> \n" +
+                                                        "                <div class=\"category-selector-container\"> \n" +
+                                                        "                    <input class=\"category-selector\" id=\"category_permanent-exhibits\" name=\"category_permanent-exhibits\" value=\"yes\" type=\"checkbox\" checked> \n" +
+                                                        "                    <label class=\"category-selector-label\" for=\"category_permanent-exhibits\">Permanent Exhibits</label> \n" +
+                                                        "                </div> \n" +
+                                                        "                <div class=\"category-selector-container\"> \n" +
+                                                        "                    <input class=\"category-selector\" id=\"category_temporary-exhibits\" name=\"category_temporary-exhibits\" value=\"yes\" type=\"checkbox\" checked> \n" +
+                                                        "                    <label class=\"category-selector-label\" for=\"category_temporary-exhibits\">Temporary Exhibits</label> \n" +
+                                                        "                </div> \n" +
+                                                        "                <div class=\"category-selector-container\"> \n" +
+                                                        "                    <input class=\"category-selector\" id=\"category_omni\" name=\"category_omni\" value=\"yes\" type=\"checkbox\" checked> \n" +
+                                                        "                    <label class=\"category-selector-label\" for=\"category_omni\">Omni</label> \n" +
+                                                        "                </div> \n" +
+                                                        "                <div class=\"category-selector-container\"> \n" +
+                                                        "                    <input class=\"category-selector\" id=\"category_planetarium\" name=\"category_planetarium\" value=\"yes\" type=\"checkbox\" checked> \n" +
+                                                        "                    <label class=\"category-selector-label\" for=\"category_planetarium\">Planetarium</label> \n" +
+                                                        "                </div> \n" +
+                                                        "            </div> \n" +
+                                                        "            <div class=\"category-selectors-container\"> \n" +
+                                                        "                <div class=\"category-selector-container\"> \n" +
+                                                        "                    <input class=\"category-selector\" id=\"category_promotions\" name=\"category_promotions\" value=\"yes\" type=\"checkbox\" checked> \n" +
+                                                        "                    <label class=\"category-selector-label\" for=\"category_promotions\">Promotions</label> \n" +
+                                                        "                </div> \n" +
+                                                        "                <div class=\"category-selector-container\"> \n" +
+                                                        "                    <input class=\"category-selector\" id=\"category_cst\" name=\"category_cst\" value=\"yes\" type=\"checkbox\" checked> \n" +
+                                                        "                    <label class=\"category-selector-label\" for=\"category_cst\">Current Science &amp; Technology</label> \n" +
+                                                        "                </div> \n" +
+                                                        "                <div class=\"category-selector-container\"> \n" +
+                                                        "                    <input class=\"category-selector\" id=\"category_lectures-and-events\" name=\"category_lectures-and-events\" value=\"yes\" type=\"checkbox\" checked> \n" +
+                                                        "                    <label class=\"category-selector-label\" for=\"category_lectures-and-events\">Lectures &amp; Events</label> \n" +
+                                                        "                </div> \n" +
+                                                        "                <div class=\"category-selector-container\"> \n" +
+                                                        "                    <input class=\"category-selector\" id=\"category_3d4d\" name=\"category_3d4d\" value=\"yes\" type=\"checkbox\" checked> \n" +
+                                                        "                    <label class=\"category-selector-label\" for=\"category_3d4d\">3-D / 4-D Cinema</label> \n" +
+                                                        "                </div> \n" +
+                                                        "            </div> \n" +
+                                                        "        </div> \n" +
+                                                        "    </li> \n" +
+                                                        "    <li id=\"date-filter-option\"> \n" +
+                                                        "        <h2 id=\"dates-parent\" class=\"collapsible\">Dates</h2> \n" +
+                                                        "        <div id=\"dates-children\"> \n" +
+                                                        "            <div class=\"date-selector-container\"> \n" +
+                                                        "                <label class=\"date-selector-label\" for=\"date_start\">Starting On or After</label> \n" +
+                                                        "                <input class=\"date-selector\" id=\"date_start\" name=\"date_start\" type=\"text\"> \n" +
+                                                        "            </div> \n" +
+                                                        "            <div class=\"date-selector-container\"> \n" +
+                                                        "                <label class=\"date-selector-label\" for=\"date_end\">Ending On or Before</label> \n" +
+                                                        "                <input class=\"date-selector\" id=\"date_end\" name=\"date_end\" type=\"text\"> \n" +
+                                                        "            </div> \n" +
+                                                        "        </div> \n" +
+                                                        "    </li> \n" +
+                                                        "</ul> \n" +
+                                                        "<div id=\"timeline\"></div> \n";
+
+                    $("div#all-content-container").append(timelineOptionsAndContainer);
+
+                    // construct the timeline
+                    var container = document.getElementById("timeline");
+                    var timeline = new vis.Timeline(container, items, groups, options);
+
+                    // set datepickers on date filter fields
+                    $("input.date-selector").datepicker({
+                        changeMonth: "true",
+                        changeYear: "true",
+                        dateFormat: "MM d, yy"
+                    });
+
+                    $("div.ui-dialog").attr("id", "product-timeline-item-dialog");
+
+                    // listen for category filter; re-set groups
+                    $("input.category-selector").on("change", function () {
+
+                        var categoriesToSet = [];
+
+                        $("input.category-selector:checked").each(function () {
+                            categoriesToSet.push($(this).attr("id"));
+                        });
+
+                        function HasClassName(group) {
+                            return (categoriesToSet.indexOf(group.className) > -1);
+                        }
+
+                        var groupsToSet = groups.filter(HasClassName);
+
+                        timeline.setGroups(groupsToSet);
+                    });
+
+                    //  listen for date filter; re-set items
+                    $("input.date-selector").on("change", function () {
+
+                        var startDateFieldValue = $("input#date_start").val();
+                        if (startDateFieldValue == "") {
+                            var startDateItems = "1900-01-01";
+                            var startDateWindow = null;
+                        } else {
+                            var startDateItems = $().ReturnFormattedDateTime(startDateFieldValue, 'MMMM D, YYYY', 'YYYY-MM-DD', 0);
+                            var startDateWindow = startDateItems;
+                        }
+                        var endDateFieldValue = $("input#date_end").val();
+                        if (endDateFieldValue == "") {
+                            var endDateItems = "9000-01-01";
+                            var endDateWindow = null;
+                        } else {
+                            var endDateItems = $().ReturnFormattedDateTime(endDateFieldValue, 'MMMM D, YYYY', 'YYYY-MM-DD', 0);
+                            var endDateWindow = endDateItems;
+                        }
+
+                        function IsOnOrBetweenDates(item) {
+                            return (moment(item.start).isSameOrAfter(startDateItems) && moment(item.end).isSameOrBefore(endDateItems))
+                        }
+
+                        var itemsToSet = itemsInitial.filter(IsOnOrBetweenDates);
+
+                        timeline.setItems(itemsToSet);
+                        console.log('trying to set window');
+                        console.log(startDateWindow);
+                        console.log(endDateWindow);
+
+                        timeline.setWindow(startDateWindow, endDateWindow, {"duration": 2000, "easingFunction": "easeInOutCubic"});
+
+                    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    // listen for clicks / taps
+
+                    $("div#timeline").on("click", function (event) {
+
+                        // close the dialog box
+                        $("div#dialog").dialog("close");
+
+                        var props = timeline.getEventProperties(event);
+
+                        if (props.what == "item") {
+
+                            var initialItemDialogData = {};
+                            $(itemsInitial).each(function (itemKey, itemValue) {
+                                if (itemValue.id == props.item) {
+                                    initialItemDialogData = itemValue.dialogContent;
+                                }
+                            });
+
+                            // populate the dialog box
+                            var dialogTitleBarContent = "";
+
+                            if (typeof (initialItemDialogData.end) != "undefined") {
+                                dialogTitleBarContent += "<h2 class=\"ui-dialog-title-product-date-range\">" + initialItemDialogData.start + " &ndash; " + initialItemDialogData.end + "</h2> \n";
+                            } else {
+                                dialogTitleBarContent += "<h2 class=\"ui-dialog-title-product-date-range\">Permanent, beginning " + initialItemDialogData.start + "</h2> \n";
+                            }
+
+                            dialogTitleBarContent += "<p class=\"ui-dialog-title-product-category\">" + initialItemDialogData.category + "</p> \n";
+
+                            $("div.ui-dialog-titlebar span.ui-dialog-title").html(dialogTitleBarContent);
+
+                            var dialogBodyContent = "<p class=\"ui-dialog-product-title\">" + initialItemDialogData.title + "</p> \n";
+
+                            // if both contact and description are there, print in <ul>
+                            if (typeof (initialItemDialogData.contact) != "undefined" && typeof (initialItemDialogData.description) != "undefined") {
+                                initialItemDialogData.contact = "<a target=\"_blank\" href=\"https://bmos-my.sharepoint.com/_layouts/15/me.aspx?p=" + StrInStr(initialItemDialogData.contact[0]["description"], "@", 1) + "%40mos.org&v=profile\">" + initialItemDialogData.contact[0]["displayText"] + "</a>";
+                                dialogBodyContent += "<ul> \n" +
+                                                        "   <li>Description: " + initialItemDialogData.description + "</li> \n" +
+                                                        "   <li>Contact: " + initialItemDialogData.contact + "</li> \n" +
+                                                        "</ul> \n";
+
+                            // otherwise, if either is present, print it in <p>
+                            } else {
+                                if (typeof (initialItemDialogData.contact) != "undefined") {
+                                    initialItemDialogData.contact = "<a target=\"_blank\" href=\"https://bmos-my.sharepoint.com/_layouts/15/me.aspx?p=" + StrInStr(initialItemDialogData.contact[0]["description"], "@", 1) + "%40mos.org&v=profile\">" + initialItemDialogData.contact[0]["displayText"] + "</a>";
+                                    dialogBodyContent += "<p>Contact: " + initialItemDialogData.contact + "</p> \n";
+                                }
+                                if (typeof (initialItemDialogData.description) != "undefined") {
+                                    dialogBodyContent += "<p>Description: " + initialItemDialogData.description + "</p> \n";
+                                }
+                            }
+
+                            dialogBodyContent += "<a class=\"ui-dialog-button\" href=\"" + initialItemDialogData.editURL + "\">Edit / Delete</a>";
+
+                            $("div#dialog").html(dialogBodyContent);
+
+                            // position the dialog box
+                            $("div#dialog").dialog("option", "position", { my: "left bottom", at: "right top", of: event });
+
+                            // open the dialog box
+                            $("div#dialog").dialog("open");
+
+
+                        }
+
+                    });
+
+                }
+            });
+
+
+        } else {
+            $().RenderMaintenanceMessage();
+        }
+
+    });
+
+</script>
+
+
+
+<!-- all content -->
+<div id="all-content-container">
+</div>
+<div id="dialog">
+</div>

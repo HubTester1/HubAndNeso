@@ -1,0 +1,74 @@
+﻿
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        // maintenance mode
+        var allSWFsInMaintenance = $().ReturnMaintenanceModeAllSWFs();
+        var thisSWFInMainenanceMode = $().ReturnMaintenanceModeThisSWF(location);
+        if (allSWFsInMaintenance == false && thisSWFInMainenanceMode == false) {
+
+
+
+            // configure tables here
+            var tData = {
+                'commonColumns': [
+                    {
+                        'displayName': 'Request ID',
+                        'internalName': 'ID',
+                        'formLink': 1
+					}, {
+						'displayName': 'Product Title',
+						'internalName': 'Title',
+					}, {
+						'displayName': 'Category',
+						'internalName': 'ProductCategory',
+					}, {
+						'displayName': 'Start',
+						'internalName': 'ProductStartDate',
+						'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+                    }, {
+                        'displayName': 'End',
+						'internalName': 'ProductEndDate',
+						'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+                    }
+                ],
+                'tables': [
+                    {
+                        // 'tableTitle': 'List View',
+                        'tableID': 'list-view',
+                        'someColsAreUsers': 1,
+                        'basicRSQueryRelevantStatus': 'Submitted',
+                        'sortColAndOrder': [0, 'desc'],
+                    }
+                ]
+            };
+
+            mData = $().ReturnThisSiteSettings();
+			var requestID = $().GetParamFromUrl(location.search, 'requestID');
+			$("body").addClass("product-list-view");
+			var buttons = "<ul id=\"timeline-options\"> \n" +
+				"    <li id=\"new-product-option\"> \n" +
+				$().ReturnButtonLink("newItem", "New Product", "https://bmos.sharepoint.com/sites/pt/SitePages/Product.aspx?returnURI=https://bmos.sharepoint.com/sites/pt/SitePages/List View.aspx") +
+				"    </li> \n" +
+				"    <li id=\"list-view-option\"> \n" +
+				$().ReturnButtonLink("goForward", "Product Timeline", "/sites/pt/SitePages/Product Timeline.aspx") +
+				"    </li> \n" +
+				"</ul> \n";
+			$("div#all-content-container").prepend(buttons);
+            $().InitializeListViewPage(mData, tData);
+
+        } else {
+            $().RenderMaintenanceMessage();
+        }
+    });
+
+</script>
+
+
+
+<!-- all content -->
+<div id="all-content-container">
+    <div id="table-container"></div>
+    <div id="overlays-container"></div>
+</div>
