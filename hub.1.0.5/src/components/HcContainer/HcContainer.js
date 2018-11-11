@@ -219,7 +219,7 @@ function ShowScreen() {
 		} else {
 			// config screen
 			document.getElementsByClassName('ms-siteicon-img')[0]
-				.setAttribute('src', '/sites/hubprod/Asset%20Library/BrandHorizontalOpt.svg');
+				.setAttribute('src', '/sites/hubprod/Asset%20Library/BrandHorizontal.svg');
 			document.getElementsByClassName('ms-breadcrumb-top')[0].remove();
 			if (window.uData.account && window.uData.account === 'jbaker') {
 				document.getElementById('s4-ribbonrow').style.display = 'block';
