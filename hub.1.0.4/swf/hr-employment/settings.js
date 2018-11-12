@@ -654,7 +654,7 @@
 						}],
 						"optional": [
 							{
-								"fieldName": "Grant Object Code",
+								"fieldName": "Grant Project Code",
 								"type": "text",
 								'repeatable': 1
 							}, {
@@ -674,7 +674,7 @@
 						}],
 						"require": [
 							{
-								"fieldName": "Grant Object Code",
+								"fieldName": "Grant Project Code",
 								"type": "text",
 								'repeatable': 1
 							}, {
@@ -707,8 +707,8 @@
 			}, {
 				'elementType': "field",
 				'controlType': "text",
-				'fieldName': "Grant Object Code",
-				'labelContent': "Grant Object Code",
+				'fieldName': "Grant Project Code",
+				'labelContent': "Grant Project Code",
 				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
 				'disabledForAdmin': ['Submitted', 'Cancelled'],
 				// 'helpNotes': [
@@ -1106,7 +1106,7 @@
 	// fData.CustomScriptLast +=	'$("input#Proposed-Annualized-Salary").val("72000"); \n';
 	fData.CustomScriptLast +=	'$("input#Proposed-Start-Date").val("June 26, 2018"); \n';
 	fData.CustomScriptLast +=	'$("input#Proposed-End-Date").val("June 27, 2018"); \n';
-	fData.CustomScriptLast +=	'$("input#Grant-Object-Code").val("123"); \n';
+	fData.CustomScriptLast +=	'$("input#Grant-Project-Code").val("123"); \n';
 	fData.CustomScriptLast +=	'$("input#Grant-Source-Code").val("4567"); \n';
 	fData.CustomScriptLast +=	'$("input#Percent-Salary-from-this-Account").val("49"); \n';
 	fData.CustomScriptLast +=	'$("input#Grant-Funding-Source").val("This grant funding source"); \n';

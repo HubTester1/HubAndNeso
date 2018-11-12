@@ -554,7 +554,7 @@
 								"fieldName": "Hire End Date",
 								"type": "datePicker"
 							}, {
-								"fieldName": "Hire Grant Object Code",
+								"fieldName": "Hire Grant Project Code",
 								"type": "text",
 								'repeatable': 1
 							}, {
@@ -1676,7 +1676,7 @@
 						}],
 						"optional": [
 							{
-								"fieldName": "Hire Grant Object Code",
+								"fieldName": "Hire Grant Project Code",
 								"type": "text",
 								'repeatable': 1
 							}, {
@@ -1696,7 +1696,7 @@
 						}],
 						"require": [
 							{
-								"fieldName": "Hire Grant Object Code",
+								"fieldName": "Hire Grant Project Code",
 								"type": "text",
 								'repeatable': 1
 							}, {
@@ -1729,8 +1729,8 @@
 			}, {
 				'elementType': "field",
 				'controlType': "text",
-				'fieldName': "Hire Grant Object Code",
-				'labelContent': "Grant Object Code",
+				'fieldName': "Hire Grant Project Code",
+				'labelContent': "Grant Project Code",
 				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
 				'disabledForAdmin': ['Submitted', 'Cancelled'],
 			}, {
@@ -2689,7 +2689,7 @@
 						}],
 						"optional": [
 							{
-								"fieldName": "Additional Position Grant Object Code",
+								"fieldName": "Additional Position Grant Project Code",
 								"type": "text",
 								'repeatable': 1
 							}, {
@@ -2709,7 +2709,7 @@
 						}],
 						"require": [
 							{
-								"fieldName": "Additional Position Grant Object Code",
+								"fieldName": "Additional Position Grant Project Code",
 								"type": "text",
 								'repeatable': 1
 							}, {
@@ -2742,8 +2742,8 @@
 			}, {
 				'elementType': "field",
 				'controlType': "text",
-				'fieldName': "Additional Position Grant Object Code",
-				'labelContent': "Grant Object Code",
+				'fieldName': "Additional Position Grant Project Code",
+				'labelContent': "Grant Project Code",
 				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
 				'disabledForAdmin': ['Submitted', 'Cancelled'],
 			}, {
@@ -2957,7 +2957,7 @@
 						}],
 						"optional": [
 							{
-								"fieldName": "Wage Change Grant Object Code",
+								"fieldName": "Wage Change Grant Project Code",
 								"type": "text",
 								'repeatable': 1
 							}, {
@@ -2977,7 +2977,7 @@
 						}],
 						"require": [
 							{
-								"fieldName": "Wage Change Grant Object Code",
+								"fieldName": "Wage Change Grant Project Code",
 								"type": "text",
 								'repeatable': 1
 							}, {
@@ -3010,8 +3010,8 @@
 			}, {
 				'elementType': "field",
 				'controlType': "text",
-				'fieldName': "Wage Change Grant Object Code",
-				'labelContent': "Grant Object Code",
+				'fieldName': "Wage Change Grant Project Code",
+				'labelContent': "Grant Project Code",
 				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
 				'disabledForAdmin': ['Submitted', 'Cancelled'],
 			}, {
@@ -3169,7 +3169,7 @@
 						}],
 						"optional": [
 							{
-								"fieldName": "Schedule Change Grant Object Code",
+								"fieldName": "Schedule Change Grant Project Code",
 								"type": "text",
 								'repeatable': 1
 							}, {
@@ -3189,7 +3189,7 @@
 						}],
 						"require": [
 							{
-								"fieldName": "Schedule Change Grant Object Code",
+								"fieldName": "Schedule Change Grant Project Code",
 								"type": "text",
 								'repeatable': 1
 							}, {
@@ -3222,8 +3222,8 @@
 			}, {
 				'elementType': "field",
 				'controlType': "text",
-				'fieldName': "Schedule Change Grant Object Code",
-				'labelContent': "Grant Object Code",
+				'fieldName': "Schedule Change Grant Project Code",
+				'labelContent': "Grant Project Code",
 				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
 				'disabledForAdmin': ['Submitted', 'Cancelled'],
 			}, {
@@ -3368,7 +3368,7 @@
 						}],
 						"optional": [
 							{
-								"fieldName": "Temporary Extension Grant Object Code",
+								"fieldName": "Temporary Extension Grant Project Code",
 								"type": "text",
 								'repeatable': 1
 							}, {
@@ -3388,7 +3388,7 @@
 						}],
 						"require": [
 							{
-								"fieldName": "Temporary Extension Grant Object Code",
+								"fieldName": "Temporary Extension Grant Project Code",
 								"type": "text",
 								'repeatable': 1
 							}, {
@@ -3421,8 +3421,8 @@
 			}, {
 				'elementType': "field",
 				'controlType': "text",
-				'fieldName': "Temporary Extension Grant Object Code",
-				'labelContent': "Grant Object Code",
+				'fieldName': "Temporary Extension Grant Project Code",
+				'labelContent': "Grant Project Code",
 				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
 				'disabledForAdmin': ['Submitted', 'Cancelled'],
 			}, {
@@ -3860,7 +3860,7 @@
 	fData.CustomScriptLast +=	'$("input#Hire-Proposed-Hourly-Wage").val("35"); \n';
 	fData.CustomScriptLast +=	'$("input#Hire-Start-Date").val("June 30, 2018"); \n';
 	fData.CustomScriptLast +=	'$("input#Hire-End-Date").val("August 30, 2018"); \n';
-	fData.CustomScriptLast +=	'$("input#Hire-Grant-Object-Code").val("789"); \n';
+	fData.CustomScriptLast +=	'$("input#Hire-Grant-Project-Code").val("789"); \n';
 	fData.CustomScriptLast +=	'$("input#Hire-Grant-Source-Code").val("4561"); \n';
 	fData.CustomScriptLast +=	'$("input#Hire-Percent-Salary-from-this-Account").val("20"); \n';
 	// fData.CustomScriptLast +=	'$("input#Position-Change-Previous-Position-Title").val("P Title 1"); \n';

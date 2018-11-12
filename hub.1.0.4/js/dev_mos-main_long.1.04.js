@@ -15857,7 +15857,7 @@
 					if (i != 0) { accountSetPropertyNameSuffix = '-repeat-' + i; }
 					printContent += '						<li>Account ' + (i + 1) +
 						'							<ol>' +
-						'								<li><b>Grant Object Code:</b> ' + accountSet["Grant-Object-Code" + accountSetPropertyNameSuffix] + '</li>' +
+						'								<li><b>Grant Project Code:</b> ' + accountSet["Grant-Project-Code" + accountSetPropertyNameSuffix] + '</li>' +
 						'								<li><b>Grant Source Code:</b> ' + accountSet["Grant-Source-Code" + accountSetPropertyNameSuffix] + '</li>' +
 						'								<li><b>Percent Salary from this Account:</b> ' + accountSet["Percent-Salary-from-this-Account" + accountSetPropertyNameSuffix] + '</li>' +
 						'							</ol>' +
@@ -16032,7 +16032,7 @@
 						if (StrInStr(accountSet.ID, accountSetIdentifier)) {
 							accountSetPropertyNameSuffix = StrInStr(accountSet.ID, accountSetIdentifier, 3);
 							printContent += '						<li>Account<ol>' +
-								'							<li><b>Grant Object Code:</b> ' + accountSet["Hire-Grant-Object-Code" + accountSetPropertyNameSuffix] + '</li>' +
+								'							<li><b>Grant Project Code:</b> ' + accountSet["Hire-Grant-Project-Code" + accountSetPropertyNameSuffix] + '</li>' +
 								'							<li><b>Grant Source Code:</b> ' + accountSet["Hire-Grant-Source-Code" + accountSetPropertyNameSuffix] + '</li>' +
 								'							<li><b>Percent Salary from this Account:</b> ' + accountSet["Hire-Percent-Salary-from-this-Account" + accountSetPropertyNameSuffix] + '</li>' +
 								'						</ol></li>';
@@ -16177,7 +16177,7 @@
 									if (StrInStr(accountSet.ID, accountSetIdentifier)) {
 										accountSetPropertyNameSuffix = StrInStr(accountSet.ID, accountSetIdentifier, 3);
 										printContent += '						<li>Account<ol>' +
-											'							<li><b>Grant Object Code:</b> ' + accountSet["Additional-Position-Grant-Object-Code" + accountSetPropertyNameSuffix] + '</li>' +
+											'							<li><b>Grant Project Code:</b> ' + accountSet["Additional-Position-Grant-Project-Code" + accountSetPropertyNameSuffix] + '</li>' +
 											'							<li><b>Grant Source Code:</b> ' + accountSet["Additional-Position-Grant-Source-Code" + accountSetPropertyNameSuffix] + '</li>' +
 											'							<li><b>Percent Salary from this Account:</b> ' + accountSet["Additional-Position-Percent-Salary-from-this-Account" + accountSetPropertyNameSuffix] + '</li>' +
 											'						</ol></li>';
@@ -16218,7 +16218,7 @@
 									if (StrInStr(accountSet.ID, accountSetIdentifier)) {
 										accountSetPropertyNameSuffix = StrInStr(accountSet.ID, accountSetIdentifier, 3);
 										printContent += '						<li>Account<ol>' +
-											'							<li><b>Grant Object Code:</b> ' + accountSet["Wage-Change-Grant-Object-Code" + accountSetPropertyNameSuffix] + '</li>' +
+											'							<li><b>Grant Project Code:</b> ' + accountSet["Wage-Change-Grant-Project-Code" + accountSetPropertyNameSuffix] + '</li>' +
 											'							<li><b>Grant Source Code:</b> ' + accountSet["Wage-Change-Grant-Source-Code" + accountSetPropertyNameSuffix] + '</li>' +
 											'							<li><b>Percent Salary from this Account:</b> ' + accountSet["Wage-Change-Percent-Salary-from-this-Account" + accountSetPropertyNameSuffix] + '</li>' +
 											'						</ol></li>';
@@ -16257,7 +16257,7 @@
 									if (StrInStr(accountSet.ID, accountSetIdentifier)) {
 										accountSetPropertyNameSuffix = StrInStr(accountSet.ID, accountSetIdentifier, 3);
 										printContent += '						<li>Account<ol>' +
-											'							<li><b>Grant Object Code:</b> ' + accountSet["Schedule-Change-Grant-Object-Code" + accountSetPropertyNameSuffix] + '</li>' +
+											'							<li><b>Grant Project Code:</b> ' + accountSet["Schedule-Change-Grant-Project-Code" + accountSetPropertyNameSuffix] + '</li>' +
 											'							<li><b>Grant Source Code:</b> ' + accountSet["Schedule-Change-Grant-Source-Code" + accountSetPropertyNameSuffix] + '</li>' +
 											'							<li><b>Percent Salary from this Account:</b> ' + accountSet["Schedule-Change-Percent-Salary-from-this-Account" + accountSetPropertyNameSuffix] + '</li>' +
 											'						</ol></li>';
@@ -16290,7 +16290,7 @@
 									if (StrInStr(accountSet.ID, accountSetIdentifier)) {
 										accountSetPropertyNameSuffix = StrInStr(accountSet.ID, accountSetIdentifier, 3);
 										printContent += '						<li>Account<ol>' +
-											'							<li><b>Grant Object Code:</b> ' + accountSet["Temporary-Extension-Grant-Object-Code" + accountSetPropertyNameSuffix] + '</li>' +
+											'							<li><b>Grant Project Code:</b> ' + accountSet["Temporary-Extension-Grant-Project-Code" + accountSetPropertyNameSuffix] + '</li>' +
 											'							<li><b>Grant Source Code:</b> ' + accountSet["Temporary-Extension-Grant-Source-Code" + accountSetPropertyNameSuffix] + '</li>' +
 											'							<li><b>Percent Salary from this Account:</b> ' + accountSet["Temporary-Extension-Percent-Salary-from-this-Account" + accountSetPropertyNameSuffix] + '</li>' +
 											'						</ol></li>';
