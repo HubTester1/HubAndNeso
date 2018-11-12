@@ -61,7 +61,7 @@ const HcStaffLookupPersonaCard = (props) => {
 					<p className="ui-message">{props.personaContent.uiMessage}</p>
 				}
 				{
-					props.personaContent.officePhone &&
+					/* props.personaContent.officePhone &&
 					props.personaContent.mobilePhone &&
 
 					<li className="phone-numbers office-and-mobile-phone-number">
@@ -72,10 +72,10 @@ const HcStaffLookupPersonaCard = (props) => {
 							</ul>
 							<Icon iconName="Phone" className="section-icon--phone" />
 						</span>
-					</li>
+					</li> */
 				}
 				{
-					props.personaContent.officePhone &&
+					/* props.personaContent.officePhone &&
 					!props.personaContent.mobilePhone &&
 
 					<li className="phone-numbers office-phone-number">
@@ -84,16 +84,27 @@ const HcStaffLookupPersonaCard = (props) => {
 							<span className="phone-number-separator">: </span>{props.personaContent.officePhone}
 							<Icon iconName="Phone" className="section-icon--phone" />
 						</span>
-					</li>
+					</li> */
 				}
 				{
-					!props.personaContent.officePhone &&
+					/* !props.personaContent.officePhone &&
 					props.personaContent.mobilePhone &&
 
 					<li className="phone-numbers mobile-phone-number">
 						<span className="persona-card-body-list-item-content">
 							<span className="phone-number-label">Mobile</span>
 							<span className="phone-number-separator">: </span>{props.personaContent.mobilePhone}
+							<Icon iconName="Phone" className="section-icon--phone" />
+						</span>
+					</li> */
+				}
+				{
+					props.personaContent.officePhone &&
+
+					<li className="phone-numbers office-phone-number">
+						<span className="persona-card-body-list-item-content">
+							<span className="phone-number-label">Office</span>
+							<span className="phone-number-separator">: </span>{props.personaContent.officePhone}
 							<Icon iconName="Phone" className="section-icon--phone" />
 						</span>
 					</li>
