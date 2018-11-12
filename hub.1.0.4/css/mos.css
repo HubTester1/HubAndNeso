@@ -4270,7 +4270,8 @@ div#remaining-capacities {
       margin: 0;
       padding: 0; }
   div#remaining-capacities div.venue-container.ui-tabs-panel {
-    background-color: #eee; }
+    background-color: #eee;
+    margin-bottom: 2rem; }
     div#remaining-capacities div.venue-container.ui-tabs-panel h2.header_venue {
       display: block !important;
       width: 0 !important;

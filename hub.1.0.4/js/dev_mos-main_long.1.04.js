@@ -482,7 +482,10 @@
 				newTitle = "Museum-wide Events List";
 				break;
 			case "mwProductsTimeline":
-				newTitle = "Products Calendar";
+				newTitle = "Products Timeline";
+				break;
+			case "mwProductsTodaysCapacity":
+				newTitle = "Today's Remaining Capacity";
 				break;
 			case "mwProductsList":
 				newTitle = "Products List";
@@ -544,6 +547,11 @@
 			case "mwProductsTimeline":
 				if (addBrowserHistoryEntry === 1) { $().AddBrowserHistoryEntry(toScreen, newTitle, "App.aspx?f=tl"); }
 				if (replaceBrowserHistoryEntry === 1) { $().ReplaceBrowserHistoryEntry(toScreen, newTitle, "App.aspx?f=tl"); }
+				break;
+
+			case "mwProductsTodaysCapacity":
+				if (addBrowserHistoryEntry === 1) { $().AddBrowserHistoryEntry(toScreen, newTitle, "App.aspx?f=cap"); }
+				if (replaceBrowserHistoryEntry === 1) { $().ReplaceBrowserHistoryEntry(toScreen, newTitle, "App.aspx?f=cap"); }
 				break;
 
 			case "newRequest":
@@ -623,6 +631,7 @@
 
 			case "mwBuyoutCalendar":
 			case "mwEventCalendar":
+			
 				$().ReplacePageTitle(newTitle);
 				$("div#overview-screen-container").fadeIn(mData.gracefulScreenTransitionTime).removeClass("hidden");
 				$('div#overview-screen-container').fullCalendar('render');
@@ -634,6 +643,12 @@
 				$("div#overview-screen-container").fadeIn(mData.gracefulScreenTransitionTime).removeClass("hidden");
 				// initialize timeline
 				// $('div#overview-screen-container').fullCalendar('render');
+				$('#s4-workspace').scrollTop(0);
+				break;
+
+			case "mwProductsTodaysCapacity":
+				$().ReplacePageTitle(newTitle);
+				$("div#overview-screen-container").fadeIn(mData.gracefulScreenTransitionTime).removeClass("hidden");
 				$('#s4-workspace').scrollTop(0);
 				break;
 
@@ -708,6 +723,7 @@
 			case "mwEventList":
 			case "mwProductsTimeline":
 			case "mwProductsList":
+			case "mwProductsTodaysCapacity":
 				$("div#overview-screen-container").fadeOut(mData.gracefulScreenTransitionTime).addClass("hidden");
 				break;
 			case "request":
@@ -831,6 +847,9 @@
 			case "mwProductsTimeline":
 				$().ConfigureOverviewScreen("mwProductsTimeline");
 				break;
+			case "mwProductsTodaysCapacity":
+				$().ConfigureOverviewScreen("mwProductsTodaysCapacity");
+				break;
 			case "mwProductsList":
 				$().ConfigureOverviewScreen("mwProductsList");
 				break;
@@ -888,6 +907,7 @@
 					"mwEventCalendar",
 					"mwEventList",
 					"mwProductsTimeline",
+					"mwProductsTodaysCapacity",
 					"mwProductsList",
 				];
 				if (overviewScreens.indexOf(options.toScreen) > -1) {
@@ -1024,8 +1044,9 @@
 			case "mwEventCalendar":
 			case "mwEventList":
 			case "mwProductsTimeline":
+			case "mwProductsTodaysCapacity":
 			case "mwProductsList":
-				$("div#overview-screen-container").empty().removeClass('adminRequests-requests myRequests-requests gpcInitialConceptApprovalViewer-requests gpcSubmissionApprovalViewer-requests adminReferrals-requests myReferrals-requests adminEventAV-requests gseStatsHRAdmin-requests gseJobsHRAdmin-requests gseJobsJobAdmin-requests gseJobsManager-requests gseSchedulesCalendarHRAdmin-requests gseSchedulesCalendarJobAdmin-requests gseSchedulesCalendarManager-requests gseSchedulesCalendarStaff-requests gseSchedulesListHRAdmin-requests gseSchedulesListJobAdmin-requests gseSchedulesListManager-requests gseSchedulesListStaff-requests gseSignupsHRAdmin-requests gseSignupsJobAdmin-requests gseSignupsManager-requests gseSignupsStaff-requests mwBuyoutCalendar-requests mwBuyoutList-requests mwEventCalendar-requests mwEventList-requests mwProductsTimeline-requests mwProductsList-requests');
+				$("div#overview-screen-container").empty().removeClass('adminRequests-requests myRequests-requests gpcInitialConceptApprovalViewer-requests gpcSubmissionApprovalViewer-requests adminReferrals-requests myReferrals-requests adminEventAV-requests gseStatsHRAdmin-requests gseJobsHRAdmin-requests gseJobsJobAdmin-requests gseJobsManager-requests gseSchedulesCalendarHRAdmin-requests gseSchedulesCalendarJobAdmin-requests gseSchedulesCalendarManager-requests gseSchedulesCalendarStaff-requests gseSchedulesListHRAdmin-requests gseSchedulesListJobAdmin-requests gseSchedulesListManager-requests gseSchedulesListStaff-requests gseSignupsHRAdmin-requests gseSignupsJobAdmin-requests gseSignupsManager-requests gseSignupsStaff-requests mwBuyoutCalendar-requests mwBuyoutList-requests mwEventCalendar-requests mwEventList-requests mwProductsTimeline-requests mwProductsTodaysCapacity-requests mwProductsList-requests');
 				$("div#overview-screen-container").append('<div id="overview-table-container" class="table-container"></div>');
 			case "gseSchedulesListHRAdmin":
 				$("div#gse-schedule-card-dialog").remove();
@@ -1915,6 +1936,8 @@
 			case "Museum Products":
 				if (GetParamFromUrl(location.search, "f") === "tl") {
 					userNeedsAlternateOverviewScreen = "mwProductsTimeline";
+				} else if (GetParamFromUrl(location.search, "f") === "cap") {
+					userNeedsAlternateOverviewScreen = "mwProductsTodaysCapacity";
 				} else {
 					userNeedsAlternateOverviewScreen = "mwProductsList";
 				}
@@ -7420,6 +7443,8 @@
 			$().RenderCommandBarAndCalendarForMWEvents(oData.mwEventCalendar.buttons);
 		} else if (type === "mwProductsTimeline") {
 			$().RenderCommandBarAndTimelineForProducts(oData.mwProductsTimeline.buttons);
+		} else if (type === "mwProductsTodaysCapacity") {
+			$().RenderCommandBarAndCapacityForProducts();
 		}
 
 		$("div#overview-screen-container").addClass(type + "-requests");
@@ -20095,6 +20120,142 @@
 			window.location = "/sites/" + mData.siteToken + "/SitePages/App.aspx?f=cal&y=" + selectedStartYear;
 		});
 	};
+
+	$.fn.RenderCommandBarAndCapacityForProducts = function () {
+		
+		$.ajax({
+			type: "GET",
+			url: 'https://triton.mos.org/products/productsTodayByVenueShow.xml',
+			dataType: "xml",
+		}).done(function (receivedXML) {
+
+			console.log('got the feed');
+			console.log(receivedXML);
+
+			var feedReadDateAndTimeFriendlyFormat = $().ReturnFormattedDateTime(receivedXML.lastModified.trim(), "MM/DD/YYYY HH:mm:ss", "MMMM D, h:mm a", 0);
+			var feedReadDateFriendlyFormat = $().ReturnFormattedDateTime(receivedXML.lastModified.trim(), "MM/DD/YYYY HH:mm:ss", "YYYY-MM-DD", 0);
+			var feedReadDateAndTimeComparisonFormat = $().ReturnFormattedDateTime(receivedXML.lastModified.trim(), "MM/DD/YYYY HH:mm:ss", "YYYY-MM-DD HH:mm:ss", 0);
+
+			var venuesToExclude = [
+				"Drop-In Activities",
+				"Live Presentations",
+				"School Lunch",
+			];
+
+			var venuesProcessed = [];
+
+			var htmlToWrite = "<div id=\"remaining-capacity-metadata\"> \n" +
+				"   <p id=\"data-read-date\">As of " + feedReadDateAndTimeFriendlyFormat + "</p> \n" +
+				"	<h2 id=\"header_legend\" aria-hidden=\"true\">Legend</h2> \n" +
+				"	<ul id=\"legend-items\" aria-hidden=\"true\"> \n" +
+				"		<li class=\"legend-item\"><span class=\"color-indicator audience_general\"></span>General</li> \n" +
+				"		<li class=\"legend-item\"><span class=\"color-indicator audience_school\"></span>School</li> \n" +
+				"	</ul> \n" +
+				"</div> \n" +
+				"<div id=\"remaining-capacities\"> \n" +
+				"   <ul id=\"tab-navigation\"> \n" +
+				"   </ul> \n";
+			var tabsToInsert = "";
+
+			$(receivedXML).find("venue").each(function (venueIndex, venueValue) {
+
+				var venueTitle = $(venueValue).children("title").text();
+
+				if (venuesToExclude.indexOf(venueTitle) < 0 && venuesProcessed.indexOf(venueTitle) < 0) {
+
+					venuesProcessed.push(venueTitle);
+
+					var venueID = ReplaceAll(" ", "-", venueTitle.toLowerCase());
+					if (venueID == "4-d-theater") { venueID = "four-d-theater"; }
+
+					var vanueTabText = venueTitle;
+					switch (venueTitle) {
+						case "4-D Theater":
+							vanueTabText = "4-D";
+							break;
+						case "Charles Hayden Planetarium":
+							vanueTabText = "Planetarium";
+							break;
+						case "Mugar Omni Theater":
+							vanueTabText = "Omni";
+							break;
+						case "Thrill Ride 360":
+							vanueTabText = "Thrill Ride";
+							break;
+					}
+
+					tabsToInsert += "       <li><a href=\"#" + venueID + "\">" + vanueTabText + "</a></li> \n";
+
+					htmlToWrite += "<div class=\"venue-container\" id=\"" + venueID + "\"> \n";
+					htmlToWrite += "<h2 class=\"header_venue\">" + venueTitle + "</h2> \n";
+
+					$(venueValue).find("show").each(function (showIndex, showValue) {
+
+						htmlToWrite += "<h3 class=\"header_show\">" + $(showValue).children("title").text() + "</h3> \n" +
+							"<ul class=\"show-remaining-capacities\"> \n";
+						var openedPastTimesDiv = 0;
+
+						$(showValue).find("time").each(function (timeIndex, timeValue) {
+
+							var startTimeDefaultFormat = $(timeValue).children("starttime").text().trim();
+							var startTimeFriendlyFormat = $().ReturnFormattedDateTime(feedReadDateFriendlyFormat + " " + startTimeDefaultFormat, "YYYY-MM-DD HH:mm", "h:mm a", 0);
+							var seatsRemaining = $(timeValue).children("instock").text();
+
+							if (moment(feedReadDateFriendlyFormat + " " + startTimeDefaultFormat).isBefore(feedReadDateAndTimeComparisonFormat)) {
+								if (openedPastTimesDiv == 0) {
+									htmlToWrite += "    <div class=\"past-show-times\"> \n";
+									openedPastTimesDiv = 1;
+								}
+							} else {
+								if (openedPastTimesDiv == 1) {
+									htmlToWrite += "    </div> \n";
+									openedPastTimesDiv = 0;
+								}
+							}
+
+							if ($(timeValue).children("starttime").attr("schoolonly") == 1) {
+								var audienceClass = "audience_school";
+								var audienceText = "For school audiences";
+							} else {
+								var audienceClass = "audience_general";
+								var audienceText = "For general audiences";
+							}
+
+							htmlToWrite += "    <li> \n" +
+								"       <span class=\"audience-indicator\">" + audienceText + "</span> \n" +
+								"       <span class=\"audience-and-time-separator\">: </span> \n" +
+								"       <span class=\"start-time\">" + startTimeFriendlyFormat + "</span> \n" +
+								"       <span class=\"time-and-capacity-separator\">: </span> \n" +
+								"       <span class=\"capacity-bar seats-remaining_" + seatsRemaining + " " + audienceClass + "\"> \n" +
+								"       </span> \n" +
+								"       <span class=\"capacity-text\">" + seatsRemaining + " seats</span> \n" +
+								"   </li> \n";
+						});
+
+						htmlToWrite += "</ul> \n";
+					});
+					htmlToWrite += "</div> \n";
+				}
+			});
+			console.log(htmlToWrite);
+
+			$("div#overview-screen-container").html(htmlToWrite);
+			$("ul#tab-navigation").html(tabsToInsert);
+
+			$("#remaining-capacities").tabs();
+			// $("#tab-navigation li");
+
+			$("div#remaining-capacity-metadata, div#remaining-capacities").fadeTo(1000, 1);
+
+		});
+	};
+
+
+
+
+
+
+	
 
 
 
