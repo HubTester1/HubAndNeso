@@ -1,5 +1,98 @@
 <div id="gse-content"></div>
 <script type="text/javascript">
+
+	function ReplaceAll(needle, replacementNeedle, haystack) {
+		return haystack.replace(new RegExp(needle, 'g'), replacementNeedle);
+	}
+
+
+	function GetFieldsFromOneRow(options) {
+
+		var returnValue = {};
+
+		// assume we're going to query this site's SWFList if a specific list wasn't supplied
+		var opt = $.extend({}, {
+			listName: "SWFList",
+			webURL: mData.fullSiteBaseURL,
+			completefunc: null
+		}, options);
+
+		// if listname is component log or component group log and no webURL was supplied
+		if ((opt.listName === 'ComponentLog' || opt.listName === 'Component Group Log') && typeof (options.webURL) === 'undefined') {
+			// assume HubProd
+			opt.webURL = 'https://bmos.sharepoint.com/sites/hubprod';
+		}
+
+		var query = "<Query>" +
+			"<Where>" +
+			"<Eq>" +
+			"<FieldRef Name='" + opt.where.field + "'></FieldRef>" +
+			"<Value Type='" + opt.where.type + "'>" + opt.where.value + "</Value>" +
+			"</Eq>" +
+			"</Where>" +
+			"</Query>";
+
+		var fields = "<ViewFields>";
+		$.each(opt.select, function (i, oneField) {
+			fields += "<FieldRef Name='" + oneField.nameInList + "' />";
+		});
+		fields += "</ViewFields>";
+
+		$().SPServices({
+			operation: "GetListItems",
+			async: false,
+			webURL: opt.webURL,
+			listName: opt.listName,
+			CAMLViewFields: fields,
+			CAMLQuery: query,
+			CAMLQueryOptions: "<QueryOptions><ExpandUserField>TRUE</ExpandUserField></QueryOptions>",
+			completefunc: function (xData, Status) {
+				$(xData.responseXML).SPFilterNode("z:row").each(function () {
+					var zRow = $(this);
+
+					$.each(opt.select, function (i, oneField) {
+
+						if (
+							oneField.nameHere === "formData" ||
+							oneField.nameHere === "defaultDataForNewRequests" ||
+							oneField.nameHere === "gseJobData" ||
+							oneField.nameHere === "gseScheduleData"
+						) {
+							// console.log('found field to interpret');
+
+							var value = $(zRow).attr("ows_" + oneField.nameInList);
+
+							var regexOne = new RegExp("\r", "g");
+							var regexTwo = new RegExp("\n", "g");
+							value = value.replace(regexOne, "'");
+							value = value.replace(regexTwo, "'");
+
+							eval("var formDataObj=" + value);
+
+							returnValue[oneField.nameHere] = formDataObj;
+
+						} else {
+
+							value = $(zRow).attr("ows_" + oneField.nameInList);
+
+							if (typeof (oneField.linkField) != "undefined") {
+								if (oneField.linkField === 1) {
+
+									value = ReplaceAll(",,", "DOUBLECOMMAREPLACEMENT", value);
+									value = value.split(",")[0];
+									value = ReplaceAll("DOUBLECOMMAREPLACEMENT", ",", value);
+								}
+							}
+							returnValue[oneField.nameHere] = value;
+						}
+					});
+				});
+			}
+		});
+
+		return returnValue;
+	}
+
  	$(document).ready(function () {
 		var uData;
 		var userData = {};
@@ -26,10 +119,11 @@
 				});
 			}
 		});
-
+		console.log('uData');
+		console.log(uData);
 
 		// get the config data stored as AllRequestData in /sites/hr-service-config/Lists/SWFList
-		var allRequestDataObject = $().GetFieldsFromOneRow({
+		var allRequestDataObject = GetFieldsFromOneRow({
 			"listName": "SWFList",
 			"webURL": "https://bmos.sharepoint.com/sites/hr-service-config",
 			"select": [{
@@ -42,7 +136,9 @@
 				"value": 1,
 			}
 		});
-
+		console.log('allRequestDataObject');
+		console.log(allRequestDataObject);
+		
 		// specify the 'form fields' data to extract from allRequestDataObject
 		var gseGroupsFromSPKeys = [
 			'HR-Admins',
@@ -52,13 +148,13 @@
 		// set up vars
 		var gseGroups = {};
 		var managers;
-
 		// iterate over the form data keys and values
 		$.each(allRequestDataObject.formData, function (formDatumKey, formDatumValue) {
 			// if this form datum value is a person
 			if (formDatumValue != "") {
 				// if this form datum key matches an element of gseGroupsFromSPKeys
 				if (gseGroupsFromSPKeys.indexOf(formDatumKey) > -1) {
+					console.log('found ' + formDatumKey);
 					// get a new key (for future ease; prefer dot notation)
 					var newKey = ReplaceAll("-", "", formDatumKey);
 					// create an empty array using the new key
@@ -76,7 +172,8 @@
 				}
 			}
 		});
-	
+		console.log('gseGroups');
+		console.log(gseGroups);
 		// query the api for the data
 		$.ajax({
 			async: false,
@@ -150,26 +247,26 @@
 				'	<li><a href="https://bmos.sharepoint.com/sites/hr-service-schedules/SitePages/App.aspx" target="_blank">Schedule List</a></li>' + 
 				'	<li><a href="https://bmos.sharepoint.com/sites/hr-service-signups/SitePages/App.aspx" target="_blank">Signups</a></li>' + 
 				'	<li><a href="https://bmos.sharepoint.com/sites/hr-service-config/SitePages/App.aspx?r=1" target="_blank">Configuration</a></li>' + 
-				'	<li><a href="" target="_blank">Stats</a></li>' + 
+				'	<li><a href="https://bmos.sharepoint.com/sites/hr-service-config/SitePages/App.aspx" target="_blank">Stats</a></li>' + 
 				'</ul>';
 		} else if (thisUsersRole === 'gseJobAdmin') {
 			thisUsersContent =
-				'<h2>Review GSE Jobs, Schedules, and Signups</h2>' +
-				'<ol>' +
+				'<h2>GSE Jobs, Schedules, and Signups</h2>' +
+				'<ul>' +
 				'	<li><a href="https://bmos.sharepoint.com/sites/hr-service-jobs/SitePages/App.aspx" target="_blank">My Jobs</a></li>' +
 				'	<li><a href="https://bmos.sharepoint.com/sites/hr-service-schedules/SitePages/App.aspx?f=cal" target="_blank">Schedule Calendar</a></li>' +
 				'	<li><a href="https://bmos.sharepoint.com/sites/hr-service-schedules/SitePages/App.aspx" target="_blank">Schedule List</a></li>' +
 				'	<li><a href="https://bmos.sharepoint.com/sites/hr-service-signups/SitePages/App.aspx" target="_blank">My Signups</a></li>' +
-				'</ol>';
+				'</ul>';
 		} else if (thisUsersRole === 'gseManager') {
 			thisUsersContent =
-				'<h2>Review GSE Jobs, Schedules, and Signups</h2>' +
-				'<ol>' +
+				'<h2>GSE Jobs, Schedules, and Signups</h2>' +
+				'<ul>' +
 				'	<li><a href="https://bmos.sharepoint.com/sites/hr-service-jobs/SitePages/App.aspx" target="_blank">My and My Staff Members\' Jobs</a></li>' +
 				'	<li><a href="https://bmos.sharepoint.com/sites/hr-service-schedules/SitePages/App.aspx?f=cal" target="_blank">Schedule Calendar</a></li>' +
 				'	<li><a href="https://bmos.sharepoint.com/sites/hr-service-schedules/SitePages/App.aspx" target="_blank">Schedule List</a></li>' +
 				'	<li><a href="https://bmos.sharepoint.com/sites/hr-service-signups/SitePages/App.aspx" target="_blank">My and My Staff Members\' Signups</a></li>' +
-				'</ol>';
+				'</ul>';
 		} else {
 			thisUsersContent =
 				'<h2>Process</h2>' +

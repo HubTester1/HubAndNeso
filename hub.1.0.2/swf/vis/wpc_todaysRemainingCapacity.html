@@ -1,0 +1,131 @@
+<script type="text/javascript">
+
+	$(document).ready(function () {
+
+		console.log('m2');
+
+		/* mData = $().ReturnThisSiteSettings();
+
+		$.ajax({
+			type: "GET",
+			url: mData.todaysRemainingCapacity.feedURI,
+			dataType: "xml",
+		}).done(function (receivedXML) {
+
+			console.log('got the feed');
+			console.log(receivedXML);
+
+			var feedReadDateAndTimeFriendlyFormat = $().ReturnFormattedDateTime(receivedXML.lastModified.trim(), "MM/DD/YYYY HH:mm:ss", "MMMM D, h:mm a", 0);
+			var feedReadDateFriendlyFormat = $().ReturnFormattedDateTime(receivedXML.lastModified.trim(), "MM/DD/YYYY HH:mm:ss", "YYYY-MM-DD", 0);
+			var feedReadDateAndTimeComparisonFormat = $().ReturnFormattedDateTime(receivedXML.lastModified.trim(), "MM/DD/YYYY HH:mm:ss", "YYYY-MM-DD HH:mm:ss", 0);
+
+			var htmlToWrite = "<div id=\"remaining-capacity-metadata\"> \n" +
+				"   <p id=\"data-read-date\">As of " + feedReadDateAndTimeFriendlyFormat + "</p> \n" +
+				"	<h2 id=\"header_legend\" aria-hidden=\"true\">Legend</h2> \n" +
+				"	<ul id=\"legend-items\" aria-hidden=\"true\"> \n" +
+				"		<li class=\"legend-item\"><span class=\"color-indicator audience_general\"></span>General</li> \n" +
+				"		<li class=\"legend-item\"><span class=\"color-indicator audience_school\"></span>School</li> \n" +
+				"	</ul> \n" +
+				"</div> \n" +
+				"<div id=\"remaining-capacities\"> \n" +
+				"   <ul id=\"tab-navigation\"> \n" +
+				"   </ul> \n";
+			var tabsToInsert = "";
+
+			$(receivedXML).find("venue").each(function (venueIndex, venueValue) {
+
+				var venueTitle = $(venueValue).children("title").text();
+
+				if (mData.todaysRemainingCapacity.venuesToExclude.indexOf(venueTitle) < 0) {
+
+					var venueID = ReplaceAll(" ", "-", venueTitle.toLowerCase());
+					if (venueID == "4-d-theater") { venueID = "four-d-theater"; }
+
+					var vanueTabText = venueTitle;
+					switch (venueTitle) {
+						case "4-D Theater":
+							vanueTabText = "4-D";
+							break;
+						case "Charles Hayden Planetarium":
+							vanueTabText = "Planetarium";
+							break;
+						case "Mugar Omni Theater":
+							vanueTabText = "Omni";
+							break;
+						case "Thrill Ride 360":
+							vanueTabText = "Thrill Ride";
+							break;
+					}
+
+					tabsToInsert += "       <li><a href=\"#" + venueID + "\">" + vanueTabText + "</a></li> \n";
+
+					htmlToWrite += "<div class=\"venue-container\" id=\"" + venueID + "\"> \n";
+					htmlToWrite += "<h2 class=\"header_venue\">" + venueTitle + "</h2> \n";
+
+					$(venueValue).find("show").each(function (showIndex, showValue) {
+
+						htmlToWrite += "<h3 class=\"header_show\">" + $(showValue).children("title").text() + "</h3> \n" +
+							"<ul class=\"show-remaining-capacities\"> \n";
+						var openedPastTimesDiv = 0;
+
+						$(showValue).find("time").each(function (timeIndex, timeValue) {
+
+							var startTimeDefaultFormat = $(timeValue).children("starttime").text().trim();
+							var startTimeFriendlyFormat = $().ReturnFormattedDateTime(feedReadDateFriendlyFormat + " " + startTimeDefaultFormat, "YYYY-MM-DD HH:mm", "h:mm a", 0);
+							var seatsRemaining = $(timeValue).children("instock").text();
+
+							if (moment(feedReadDateFriendlyFormat + " " + startTimeDefaultFormat).isBefore(feedReadDateAndTimeComparisonFormat)) {
+								if (openedPastTimesDiv == 0) {
+									htmlToWrite += "    <div class=\"past-show-times\"> \n";
+									openedPastTimesDiv = 1;
+								}
+							} else {
+								if (openedPastTimesDiv == 1) {
+									htmlToWrite += "    </div> \n";
+									openedPastTimesDiv = 0;
+								}
+							}
+
+							if ($(timeValue).children("starttime").attr("schoolonly") == 1) {
+								var audienceClass = "audience_school";
+								var audienceText = "For school audiences";
+							} else {
+								var audienceClass = "audience_general";
+								var audienceText = "For general audiences";
+							}
+
+							htmlToWrite += "    <li> \n" +
+								"       <span class=\"audience-indicator\">" + audienceText + "</span> \n" +
+								"       <span class=\"audience-and-time-separator\">: </span> \n" +
+								"       <span class=\"start-time\">" + startTimeFriendlyFormat + "</span> \n" +
+								"       <span class=\"time-and-capacity-separator\">: </span> \n" +
+								"       <span class=\"capacity-bar seats-remaining_" + seatsRemaining + " " + audienceClass + "\"> \n" +
+								"       </span> \n" +
+								"       <span class=\"capacity-text\">" + seatsRemaining + " seats</span> \n" +
+								"   </li> \n";
+						});
+
+						htmlToWrite += "</ul> \n";
+					});
+					htmlToWrite += "</div> \n";
+				}
+			});
+
+			$("div#all-content-container").html(htmlToWrite);
+			$("ul#tab-navigation").html(tabsToInsert);
+
+			$("#remaining-capacities").tabs();
+			// $("#tab-navigation li");
+
+			$("div#remaining-capacity-metadata, div#remaining-capacities").fadeTo(1000, 1); 
+
+		});*/
+	});
+
+</script>
+
+
+
+<!-- all content -->
+<div id="all-content-container">
+</div>
