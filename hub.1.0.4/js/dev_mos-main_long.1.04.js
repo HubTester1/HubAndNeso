@@ -476,10 +476,10 @@
 				newTitle = "Buyouts List";
 				break;
 			case "mwEventCalendar":
-				newTitle = "Museum-wide Events Calendar";
+				newTitle = "Museum Events Calendar";
 				break;
 			case "mwEventList":
-				newTitle = "Museum-wide Events List";
+				newTitle = "Museum Events List";
 				break;
 			case "mwProductsTimeline":
 				newTitle = "Products Timeline";
@@ -6809,25 +6809,10 @@
 					globalSubmissionValuePairsArrayOfArrays.push(ReturnAllRequestDataObjectAugmentedWithExceptionalEventOccurrence(clonedForm, rData.formData));
 				}
 
-
-
-
-
-
 				// if keeping exceptional occurrence data; i.e., so that non-date data can be edited for an event series without losing the exceptions
 				if (keepExceptionalEventOccurrences == 1) {
-					console.log('gonna 2');
-					console.log('user not changing recurrence pattern');
 					globalSubmissionValuePairsArrayOfArrays.push(ReturnAllRequestDataObjectWithExceptionalEventOccurrences(clonedForm, rData.formData));
 				}
-
-				console.log('FINAL');
-				console.log(globalSubmissionValuePairsArrayOfArrays);
-
-
-
-
-
 				// if saving data using a custom function
 				// i.e., if customDataSavingFunction is NOT undefined and its requestStatuses array contains the request status on load
 				if (typeof (fData.customDataSavingFunction) !== 'undefined' && fData.customDataSavingFunction.requestStatuses.indexOf(rData.previousRequestStatus) != -1) {
@@ -6836,6 +6821,9 @@
 						case 'ReturnNewGSESchedulesSubmissionValuePairArrayOfArrays':
 							globalSubmissionValuePairsArrayOfArrays = ReturnNewGSESchedulesSubmissionValuePairArrayOfArrays(clonedForm);
 							rData.gseSchedules = globalSubmissionValuePairsArrayOfArrays;
+							break;
+						case 'ReturnNewMuseumEventsSubmissionValuePairArrayOfArrays':
+							globalSubmissionValuePairsArrayOfArrays = ReturnNewMuseumEventsSubmissionValuePairArrayOfArrays(clonedForm);
 							break;
 					}
 				}
@@ -18243,7 +18231,6 @@
 	}
 
 
-
 	function ReturnNewGSESchedulesSubmissionValuePairArrayOfArrays(form) {
 		/*
 			overview / context notes
@@ -18513,6 +18500,208 @@
 		// return the array
 		return globalSubmissionValuePairsArray;
 	}
+
+
+
+
+
+
+	function ReturnNewMuseumEventsSubmissionValuePairArrayOfArrays(form) {
+		console.log('in the func');
+		/*
+			overview / context notes
+			1. for each date that was added, one row will be created in SWFList
+			2. for each row to be created in SWFList, one array must be added to globalSubmissionValuePairsArrayOfArrays
+			3. each array consists of an element for every SWFList column that will be populated
+			4. one of those elements corresponds to the AllRequestData column
+
+			for each date in the form, add to globalSubmissionValuePairsArrayOfArrays an array of elements for every SWFList column that will be populated
+
+		*/
+
+		// set up vars
+		// the dates for which we'll create rows in SWFList
+		var scheduleDates = [];
+		var submissionValuePairsArrayOfArraysToReturn = [];
+
+		// get the dates; we'll create one row in SWFList for each date
+
+		if ($("input#individual-or-pattern_individual").is(":checked")) {
+			$(form).find('input[id^="Repeating-Date"]').each(function () {
+				scheduleDates.push($(this).val());
+			});
+		} else {
+			var patternDates;
+
+			switch ($('select#Pattern-Basis').val()) {
+
+				case "xDays":
+					switch ($('select#Ending-Basis').val()) {
+						case "xOccurrences":
+							patternDates = $().GenerateDatesForEveryXDaysEndAfterYOccurrences($('input#X-Days').val(), $('input#Start-Date').val(), $('input#Qty-Occurrences').val());
+							break;
+						case "date":
+							patternDates = $().GenerateDatesForEveryXDaysEndByDateY($('input#X-Days').val(), $('input#Start-Date').val(), $('input#Ending-Date').val());
+							break;
+					}
+					break;
+
+				case "weekdays":
+					switch ($('select#Ending-Basis').val()) {
+						case "xOccurrences":
+							patternDates = $().GenerateDatesForEveryWeekdayEndAfterXOccurrences($('input#Start-Date').val(), $('input#Qty-Occurrences').val());
+							break;
+						case "date":
+							patternDates = $().GenerateDatesForEveryWeekdayEndByDateX($('input#Start-Date').val(), $('input#Ending-Date').val());
+							break;
+					}
+					break;
+
+				case "xWeeks":
+					var daysOfWeek = [];
+					if ($('input#days-of-week-for-x-weeks_1').is(":checked")) {
+						daysOfWeek.push("Sunday");
+					}
+					if ($('input#days-of-week-for-x-weeks_2').is(":checked")) {
+						daysOfWeek.push("Monday");
+					}
+					if ($('input#days-of-week-for-x-weeks_3').is(":checked")) {
+						daysOfWeek.push("Tuesday");
+					}
+					if ($('input#days-of-week-for-x-weeks_4').is(":checked")) {
+						daysOfWeek.push("Wednesday");
+					}
+					if ($('input#days-of-week-for-x-weeks_5').is(":checked")) {
+						daysOfWeek.push("Thursday");
+					}
+					if ($('input#days-of-week-for-x-weeks_6').is(":checked")) {
+						daysOfWeek.push("Friday");
+					}
+					if ($('input#days-of-week-for-x-weeks_7').is(":checked")) {
+						daysOfWeek.push("Saturday");
+					}
+
+					switch ($('select#Ending-Basis').val()) {
+						case "xOccurrences":
+							patternDates = $().GenerateDatesForEveryXWeeksOnYDaysEndAfterZOccurrences($('input#X-Weeks').val(), daysOfWeek, $('input#Start-Date').val(), $('input#Qty-Occurrences').val());
+							break;
+						case "date":
+							patternDates = $().GenerateDatesForEveryXWeeksOnYDaysEndByDateZ($('input#X-Weeks').val(), daysOfWeek, $('input#Start-Date').val(), $('input#Ending-Date').val());
+							break;
+					}
+					break;
+
+				case "monthlySameDay":
+					switch ($('select#Ending-Basis').val()) {
+						case "xOccurrences":
+							patternDates = $().GenerateDatesForEveryXDaysOfEveryYMonthsEndAfterYOccurrences($('input#Day-of-Month-for-X-Months').val(), $('input#X-Months-For-Same-Day').val(), $('input#Start-Date').val(), $('input#Qty-Occurrences').val());
+							break;
+						case "date":
+							patternDates = $().GenerateDatesForEveryXDaysOfEveryYMonthsEndByDateY($('input#Day-of-Month-for-X-Months').val(), $('input#X-Months-For-Same-Day').val(), $('input#Start-Date').val(), $('input#Ending-Date').val());
+							break;
+					}
+					break;
+
+				case "monthlySameWeek":
+					var xVar = $('select#Ordinal-For-Day-of-Week-For-X-Months-For-Same-Week').val();
+					switch ($('select#Ending-Basis').val()) {
+						case "xOccurrences":
+							patternDates = $().GenerateDatesForEveryXYDayOfEveryZMonthsEndAfterYOccurrences(xVar, $('select#Days-of-Week-For-X-Months-For-Same-Week').val(), $('input#X-Months-For-Same-Week').val(), $('input#Start-Date').val(), $('input#Qty-Occurrences').val());
+							break;
+						case "date":
+							patternDates = $().GenerateDatesForEveryXYDayOfEveryZMonthsEndByDateY(xVar, $('select#Days-of-Week-For-X-Months-For-Same-Week').val(), $('input#X-Months-For-Same-Week').val(), $('input#Start-Date').val(), $('input#Ending-Date').val());
+							break;
+					}
+					break;
+
+				case "yearlySameDay":
+					switch ($('select#Ending-Basis').val()) {
+						case "xOccurrences":
+							patternDates = $().GenerateDatesForEveryXDayYMonthEveryYearEndAfterYOccurrences($('select#Months-for-Same-Date-Each-Year').val(), $('input#Monthly-Date-for-Same-Date-Each-Year').val(), $('input#Start-Date').val(), $('input#Qty-Occurrences').val());
+							break;
+						case "date":
+							patternDates = $().GenerateDatesForEveryXDayYMonthEveryYearEndByDateY($('select#Months-for-Same-Date-Each-Year').val(), $('input#Monthly-Date-for-Same-Date-Each-Year').val(), $('input#Start-Date').val(), $('input#Ending-Date').val());
+							break;
+					}
+					break;
+
+				case "yearlySameWeek":
+					var xVar = $('select#Ordinal-For-Same-Week-Each-Year').val();
+					var zVar = $('select#Months-for-Same-Week-Each-Year').val();
+					switch ($('select#Ending-Basis').val()) {
+						case "xOccurrences":
+							patternDates = $().GenerateDatesForEveryXYDayZMonthEveryYearEndAfterYOccurrences(xVar, $('select#Days-of-Week-For-Same-Week-Each-Year').val(), zVar, $('input#Start-Date').val(), $('input#Qty-Occurrences').val());
+							break;
+						case "date":
+							patternDates = $().GenerateDatesForEveryXYDayZMonthEveryYearEndByDateY(xVar, $('select#Days-of-Week-For-Same-Week-Each-Year').val(), zVar, $('input#Start-Date').val(), $('input#Ending-Date').val());
+							break;
+					}
+					break;
+
+			} // end generation of patterned dates
+			patternDates.forEach((patternDate) => {
+				scheduleDates.push($().ReturnFormattedDateTime(patternDate, null, null, null));
+			});
+		}
+		console.log('scheduleDates');
+		console.log(scheduleDates);
+
+		// for each date that was found
+		$.each(scheduleDates, function (i, scheduleDate) {
+
+			// re/set globalSubmissionValuePairsArray to new, empty array
+			// this corresponds to one row to be created in SWFList
+			globalSubmissionValuePairsArray = [];
+
+			// skip any empty dates
+			if (scheduleDate !== '') {
+				// get date in ISO format
+				var scheduleDateISO = $().ReturnFormattedDateTime(scheduleDate, null, null, null);
+
+				// start building the JSON string that will be stored
+				var formDataString = '{';
+
+				// simulate handled repeatables
+				formDataString += '"RepeatedElements": [],';
+
+				// handle the non-repeatables
+				formDataString += ReturnRequestStorageObjectPropertiesAndPushRequestColumns(form);
+
+				// append this schedule date to formDataString
+				// note: change "Name-of-Date-Field", below, to [some ID you make up]; this pertains to
+				// 		how the schedule date will be stored; it doesn't correspond to the form you've already created;
+				// 		be aware that in future project stages it may be discovered that a different name makes sense, so
+				// 		this may need to be changed
+				formDataString += '"Event-Date": "' + scheduleDateISO + '",';
+
+				// end building the JSON string that will be stored
+				formDataString += '}';
+
+				// replace special characters
+				formDataString = formDataString.replace(/,(?=[^,]*$)/, '');
+
+				// push the string to globalSubmissionValuePairsArray
+				globalSubmissionValuePairsArray.push(["AllRequestData", CDataWrap(formDataString)]);
+
+				// push scheduleDate to submissionValuePairsArray
+				// note: this means that scheduleDate will also get a separate column in SWFList; this is done
+				// 		because we will need to query against this column
+				// note: because this data / column is handled manually here, don't define a listFieldName for 
+				// 		the corresponding form field in settings.js
+				globalSubmissionValuePairsArray.push(["EventDate", scheduleDateISO]);
+
+				// console.log('ReturnNewGSESchedulesSubmissionValuePairArrayOfArrays - globalSubmissionValuePairsArray');
+				// console.log(globalSubmissionValuePairsArray);
+
+				// push globalSubmissionValuePairsArray to the array to return
+				submissionValuePairsArrayOfArraysToReturn.push(globalSubmissionValuePairsArray);
+			}
+		});
+
+		// return the array
+		return submissionValuePairsArrayOfArraysToReturn;
+	}
+
 
 
 
@@ -19358,7 +19547,6 @@
 					eventItemString = eventItemString.replace(regexTwo, "'");
 					// console.log(eventItemString);
 					eval("var eventItem=" + eventItemString);
-					console.log(eventItem);
 					// console.log('');
 					eventItem.ID = $(this).attr("ows_ID");
 					eventItem.contactName = '';
@@ -19368,7 +19556,39 @@
 					if (typeof (eventItem["Legacy-Contact"]) == "string") {
 						eventItem.contactName = eventItem["Legacy-Contact"];
 					}
-					// one or more individual dates
+					var isoStartDatetime = eventItem["Event-Date"].slice(0, 10) + eventItem["time-storage_Start-Time"].slice(10, 19);
+					var isoEndDatetime = eventItem["Event-Date"].slice(0, 10) + eventItem["time-storage_End-Time"].slice(10, 19);
+					var formattedStartTime = $().ReturnFormattedDateTime(isoStartDatetime, "YYYY-MM-DDTHH:mm:ss", "h:mma", 0);
+					formattedStartTime = formattedStartTime.slice(0, formattedStartTime.length - 1);
+					var formattedEndTime = $().ReturnFormattedDateTime(isoEndDatetime, "YYYY-MM-DDTHH:mm:ss", "h:mma", 0);
+					formattedEndTime = formattedEndTime.slice(0, formattedEndTime.length - 1);
+					var formattedDate = $().ReturnFormattedDateTime(isoStartDatetime, "YYYY-MM-DDTHH:mm:ss", "ddd, M/D/YY", 0);
+					var thisEvent = {
+						"eventID": eventItem["ID"],
+						"title": HtmlDecode(formattedStartTime + " | " + eventItem["Event-Title"]),
+						"contactName": eventItem.contactName,
+						"formattedStartTime": formattedStartTime,
+						"formattedEndTime": formattedEndTime,
+						"formattedDate": formattedDate,
+						"start": isoStartDatetime,
+						"end": isoEndDatetime,
+						"editURL": "/sites/mw-events/SitePages/App.aspx?r=" + eventItem["ID"],
+					};
+
+					$(["Event-Location", "Event-Count", "Event-Notes"]).each(function (i, o) {
+						if (typeof (eventItem[o]) != "undefined" && eventItem[o] != '') {
+							var label = o.slice(6).toLowerCase();
+							thisEvent[label] = eventItem[o];
+						}
+					});
+
+					allEvents.push(thisEvent);
+
+
+
+
+
+					/* // one or more individual dates
 					if (typeof (eventItem["individual-or-pattern_individual"]) != 'undefined') {
 						$(eventItem["RepeatedElements"]).each(function (i, d) {
 							var repeatID = StrInStr(d["ID"], "-repeat", 0);
@@ -19759,7 +19979,7 @@
 							allEvents.push(thisEvent);
 						});
 
-					}
+					} */
 				});
 
 				console.log('m1');

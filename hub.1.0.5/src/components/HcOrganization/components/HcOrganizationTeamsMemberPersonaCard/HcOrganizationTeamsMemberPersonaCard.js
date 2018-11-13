@@ -6,6 +6,7 @@
 // ----- IMPORTS
 
 import * as React from 'react';
+import { Icon } from 'office-ui-fabric-react/lib/Icon';
 import {
 	Accordion,
 	AccordionItem,
@@ -54,7 +55,7 @@ const HcOrgTeamsMemberPersonaCard = (props) => {
 					<p className="ui-message">{props.memberContent.uiMessage}</p>
 				}
 				{
-					props.memberContent.officePhone &&
+					/* props.memberContent.officePhone &&
 					props.memberContent.mobilePhone &&
 
 					<li className="phone-numbers">
@@ -62,31 +63,45 @@ const HcOrgTeamsMemberPersonaCard = (props) => {
 							<li className="office-phone-number">Business: {props.memberContent.officePhone}</li>
 							<li className="mobile-phone-number">Mobile: {props.memberContent.mobilePhone}</li>
 						</ul>
-					</li>
+					</li> */
+				}
+				{
+					/* props.memberContent.officePhone &&
+					!props.memberContent.mobilePhone &&
+
+					<li className="phone-numbers">Business: {props.memberContent.officePhone}</li> */
+				}
+				{
+					/* !props.memberContent.officePhone &&
+					props.memberContent.mobilePhone &&
+
+					<li className="phone-numbers">Business: {props.memberContent.mobilePhone}</li> */
 				}
 				{
 					props.memberContent.officePhone &&
-					!props.memberContent.mobilePhone &&
 
-					<li className="phone-numbers">Business: {props.memberContent.officePhone}</li>
-				}
-				{
-					!props.memberContent.officePhone &&
-					props.memberContent.mobilePhone &&
-
-					<li className="phone-numbers">Business: {props.memberContent.mobilePhone}</li>
+					<li className="phone-numbers office-phone-number">
+						<span className="persona-card-body-list-item-content">
+							<span className="phone-number-label">Office</span>
+							<span className="phone-number-separator">: </span>{props.memberContent.officePhone}
+							<Icon iconName="Phone" className="section-icon--phone" />
+						</span>
+					</li>
 				}
 				{
 					props.memberContent.email &&
 
 					<li className="email">
 						<a href={`mailto:${props.memberContent.email}`}>
-							{props.memberContent.email}
+							<span className="persona-card-body-list-item-content">
+								{props.memberContent.email}
+								<Icon iconName="Mail" className="section-icon--email" />
+							</span>
 						</a>
 					</li>
 				}
 				{
-					props.memberContent.profileToken &&
+					/* props.memberContent.profileToken &&
 
 					<li className="profile">
 						<a
@@ -95,7 +110,7 @@ const HcOrgTeamsMemberPersonaCard = (props) => {
 						>
 							Profile
 						</a>
-					</li>
+					</li> */
 				}
 			</ul>
 		</div>

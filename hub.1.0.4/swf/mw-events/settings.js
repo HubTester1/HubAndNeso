@@ -13,10 +13,10 @@
 		// "useRecordedMOSMainMajorVersion": 1,
 		'devAdminNotifications': 0,
 		'notifications': 0,
-		'detailTitle': 'Museum-wide Event'
+		'detailTitle': 'Museum Event'
 	};
 
-	console.log("using settings m1");
+	console.log("using settings m2");
 
 
 
@@ -41,6 +41,21 @@
 						'displayName': 'Event ID',
 						'internalName': 'ID',
 						'formLink': 1
+					}, {
+						'displayName': 'Title',
+						'internalName': 'Title',
+					}, {
+						'displayName': 'Date',
+						'internalName': 'EventDate',
+						'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+					}, {
+						'displayName': 'Start',
+						'internalName': 'EventStartTime',
+						'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'h:mm a' }
+					}, {
+						'displayName': 'End',
+						'internalName': 'EventEndTime',
+						'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'h:mm a' }
 					}, {
 						'displayName': 'Contact',
 						'internalName': 'RequestedFor',
@@ -67,7 +82,7 @@
 						'tableID': 'list-view',
 						'someColsAreUsers': 1,
 						'basicRSQueryRelevantStatus': 'Submitted',
-						'sortColAndOrder': [0, 'desc'],
+						'sortColAndOrder': [[2, 'desc'], [3, 'asc']],
 					}
 				]
 			}
@@ -132,9 +147,10 @@
 
 	var fData = {
 		'autoTrackSubmissionAndCancellation': 1,
-		'bypassNormalDataSaving': 1,
-		'autoTrackKeepingRemovingExceptionalEventOccurrences': {
-			'relevantBooleanID': 'change-pattern-of-repeating-dates_yes' 
+		'bypassNormalDataSaving': [''],
+		'customDataSavingFunction': {
+			'useFunction': 'ReturnNewMuseumEventsSubmissionValuePairArrayOfArrays',
+			'requestStatuses': ['']
 		},
 		'standardElementGroups': {
 			'standardButtonElements': 1,
@@ -440,6 +456,7 @@
 				'controlType': 'time',
 				'fieldName': 'Start Time',
 				'labelContent': 'Start Time',
+				"listFieldName": "EventStartTime",
 				"requiredForNonAdmin": ["", "Submitted"],
 				"requiredForAdmin": ["", "Submitted"],
 			}, {
@@ -447,6 +464,7 @@
 				'controlType': 'time',
 				'fieldName': 'End Time',
 				'labelContent': 'End Time',
+				"listFieldName": "EventEndTime",
 				"requiredForNonAdmin": ["", "Submitted"],
 				"requiredForAdmin": ["", "Submitted"],
 			}, {
@@ -466,8 +484,8 @@
 				"requiredForNonAdmin": ["", "Submitted"],
 				"requiredForAdmin": ["", "Submitted"],
 				'onChange': [
-					{ 'thisFieldEquals': ['individual'], 'show': [{ 'divID': 'simple-dates' }], 'require': [{ 'fieldName': 'Event Date', 'type': 'datepicker', 'repeatable': 1 }], 'hide': [{ 'divID': 'pattern-and-range' }], 'optional': [{ 'fieldName': 'Pattern Basis', 'type': 'select' }, { 'fieldName': 'Start Date', 'type': 'datePicker' }, { 'fieldName': 'Ending Basis', 'type': 'select' }] },
-					{ 'thisFieldEquals': ['pattern'], 'show': [{ 'divID': 'pattern-and-range' }], 'require': [{ 'fieldName': 'Pattern Basis', 'type': 'select' }, { 'fieldName': 'Start Date', 'type': 'datePicker' }, { 'fieldName': 'Ending Basis', 'type': 'select' }], 'hide': [{ 'divID': 'simple-dates' }], 'optional': [{ 'fieldName': 'Event Date', 'type': 'datepicker', 'repeatable': 1 }] },
+					{ 'thisFieldEquals': ['individual'], 'show': [{ 'divID': 'simple-dates' }], 'require': [{ 'fieldName': 'Repeating Date', 'type': 'datepicker', 'repeatable': 1 }], 'hide': [{ 'divID': 'pattern-and-range' }], 'optional': [{ 'fieldName': 'Pattern Basis', 'type': 'select' }, { 'fieldName': 'Start Date', 'type': 'datePicker' }, { 'fieldName': 'Ending Basis', 'type': 'select' }] },
+					{ 'thisFieldEquals': ['pattern'], 'show': [{ 'divID': 'pattern-and-range' }], 'require': [{ 'fieldName': 'Pattern Basis', 'type': 'select' }, { 'fieldName': 'Start Date', 'type': 'datePicker' }, { 'fieldName': 'Ending Basis', 'type': 'select' }], 'hide': [{ 'divID': 'simple-dates' }], 'optional': [{ 'fieldName': 'Repeating Date', 'type': 'datepicker', 'repeatable': 1 }] },
 				],
 
 
@@ -559,7 +577,7 @@
 			}, {
 				'elementType': 'field',
 				'controlType': 'datePicker',
-				'fieldName': 'Event Date',
+				'fieldName': 'Repeating Date',
 				'labelContent': 'Date',
 				'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 0 },
 				'isoFormatOnSubmit': { 'incomingFormat': 'MMMM D, YYYY', 'returnFormat': null, 'determineYearDisplayDynamically': null },
@@ -1353,6 +1371,20 @@
 				"disabledForAdmin": ["", "Submitted", "Cancelled"],
 				"hideForNonAdmin": ["", "Submitted", "Cancelled"],
 				"hideForAdmin": ["", "Submitted", "Cancelled"],
+			}, {
+				'elementType': "field",
+				'controlType': "datePicker",
+				'fieldName': "Event Date",
+				'labelContent': "Date",
+				'listFieldName': "EventDate",
+				'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 },
+				'isoFormatOnSubmit': { 'incomingFormat': null, 'returnFormat': null, 'determineYearDisplayDynamically': null },
+				'requiredForNonAdmin': [],
+				'requiredForAdmin': [],
+				'hideForNonAdmin': [''],
+				'hideForAdmin': [''],
+				'disabledForNonAdmin': ["Submitted", "Completed", "Cancelled"],
+				'disabledForAdmin': ["Submitted", "Completed", "Cancelled"]
 			}
 		]
 	};
@@ -1420,16 +1452,16 @@
 	// TEMP
 
 	fData.CustomScriptLast += '$("div#label-and-control_Individual-or-Pattern").addClass("hidden"); \n';
-	fData.CustomScriptLast += '$().SetFieldToRequired("Event-Date", "datepicker"); \n';
+	fData.CustomScriptLast += '$().SetFieldToRequired("Repeating-Date", "datepicker"); \n';
 	fData.CustomScriptLast += '$("div#simple-dates").removeClass("hidden"); \n';
 	fData.CustomScriptLast += '$("div#label-and-control_Change-Pattern-of-Repeating-Dates").addClass("hidden"); \n';
 	fData.CustomScriptLast += '$("input#individual-or-pattern_individual").prop("checked", true).attr("checked", true); \n';
 
 
 
-	/* // =============================
+	// =============================
 
-	// selects
+	/* // selects
 	fData.CustomScriptLast += '$("select#Self-or-Other option[value=\'Self\']").attr("selected","selected"); \n';	
 	fData.CustomScriptLast += '$("select#hours-input_Start-Time option[value=\'T09\']").attr("selected","selected"); \n';
 	fData.CustomScriptLast += '$("select#minutes-input_Start-Time option[value=\':00:00\']").attr("selected","selected"); \n';
@@ -1446,7 +1478,7 @@
 	fData.CustomScriptLast += '$("input#Event-Location").val("Location");';
 	fData.CustomScriptLast += '$("input#Event-Count").val("50");';
 	fData.CustomScriptLast += '$("textarea#Event-Notes").val("These are my notes.");';
-	fData.CustomScriptLast += '$("input#Event-Date").val("November 8, 2018");';
+	fData.CustomScriptLast += '$("input#Repeating-Date").val("November 8, 2018");';
 
 	// people picker
 	fData.CustomScriptLast +=
@@ -1454,8 +1486,8 @@
 		"	'name': 'James Baker'," +
 		"	'email': 'jbaker@mos.org'," +
 		"	'account': 'i:0#.f|membership|jbaker@mos.org'" +
-		"}]);"; */
-
+		"}]);";
+ */
 
 
 

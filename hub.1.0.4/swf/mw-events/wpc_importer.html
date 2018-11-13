@@ -95,9 +95,14 @@
 					listFields.EventDepartment = HtmlEncode($(eventValue).find('dept').text());
 					listFields.RequestStatus = HtmlEncode('Submitted');
 					listFields.EventLegacyID = HtmlEncode($(eventValue).find('legacyID').text());
+					listFields.EventDate = HtmlEncode($(eventValue).find('startDateTime').text().slice(0, 10) + 'T00:00:00-05:00');
+					listFields.EventStartTime = HtmlEncode('2000-01-01T' + $(eventValue).find('startDateTime').text().slice(11) + 'Z');
+					listFields.EventEndTime = HtmlEncode('2000-01-01T' + $(eventValue).find('endDateTime').text().slice(11) + 'Z');
+
+
 
 					// set all basic JS object properties
-					var allRequestData = '{"RepeatedElements": [{"ID": "simple-date","OriginalToRepeat": "undefined","Event-Date":"' + $(eventValue).find('startDateTime').text().slice(0, 10) + 'T00:00:00-05:00",},],' +
+					var allRequestData = '{"RepeatedElements": [],' +
 						'"Event-Title":"' + listFields.Title + '",' +
 						'"Legacy-Event-Creation-Date":"' + listFields.RequestDate + '",' +
 						'"Event-Location":"' + listFields.EventLocation + '",' +
@@ -129,6 +134,7 @@
 						'"Component-ID": "171",' +
 						'"SWF-Version":"1.0",' +
 						'"Self-or-Other":"Talk to me",' +
+						'"Event-Date":"' + $(eventValue).find('startDateTime').text().slice(0, 10) + 'T00: 00: 00 - 05: 00",' +
 						'"time-storage_Start-Time":"2000-01-01T' + $(eventValue).find('startDateTime').text().slice(11) + '",' +
 						'"time-storage_End-Time":"2000-01-01T' + $(eventValue).find('endDateTime').text().slice(11) + '",' +
 						'"individual-or-pattern_individual":"individual",' +

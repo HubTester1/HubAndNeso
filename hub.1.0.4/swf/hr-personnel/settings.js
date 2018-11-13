@@ -1250,7 +1250,7 @@
 				],
 				'helpNotes': [
 					{
-						'text': "You must create or update an <a href=\"https://bmos.sharepoint.com/sites/hrp-employment/SitePages/App.aspx\">Employment Authorization Request</a> prior to submitting this request",
+						'text': "You must create or update an <a href=\"https://bmos.sharepoint.com/sites/hr-employment/SitePages/App.aspx?r=0\">Employment Authorization Request</a> prior to submitting this request",
 						'htmlID': "help-note_no-employment-authorization-request",
 						'emphasis': 1,
 						'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
