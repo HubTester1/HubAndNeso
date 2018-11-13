@@ -87,6 +87,14 @@ export default class HcContainerData {
 							MOSUtilities.ReplaceAll('i:0#.f\\|membership\\|', '', MOSUtilities.ReplaceAll('@mos.org', '', resultsArray[0].LoginName.toLowerCase()));
 					uData.accountLong = resultsArray[0].LoginName.toLowerCase();
 
+					/* const uData = {
+						email: 'tfarrand@mos.org',
+						account: 'tfarrand',
+						accountLong: 'i:0#.f|membership|tfarrand@mos.org',
+						displayName: 'Tony Farrand',
+					}; */
+
+
 					uData.roles = [];
 					/* if (uData.account === 'sp1') {
 							uData.roles.push('gseHRAdmin');
@@ -99,6 +107,10 @@ export default class HcContainerData {
 					if (uData.account === 'sp3') {
 						uData.roles.push('manager');
 					} else {
+						console.log('user service managers');
+						console.log(resultsArray[1]);
+						console.log('user service comp admins');
+						console.log(resultsArray[2]);
 						// for each manager returned
 						resultsArray[1].forEach((manager) => {
 							// if the manager's account is the current user's account
@@ -143,6 +155,8 @@ export default class HcContainerData {
 							}); */
 					}
 					// resolve this promise with the user data
+					console.log('user service uData');
+					console.log(uData);
 					resolve(uData);
 				})
 			// if 1+ queries returned an error, reject this promise with the error

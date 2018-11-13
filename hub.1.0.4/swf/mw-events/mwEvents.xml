@@ -24515,21 +24515,4 @@
                 <count/>
             </request>
         
-            <request>
-                <legacyID>19128</legacyID>
-                <title>Test</title>
-                
-				<requestDate>2016-02-02T12:09:03</requestDate>
-                
-                <startDateTime>2025-02-02T09:00:00</startDateTime>
-                
-                <endDateTime>2025-02-02T17:00:00</endDateTime>
-                <location>1st Floor Conference Room</location>
-                <username>jbaker</username>
-                <firstName>James</firstName>
-                <lastName>Baker</lastName>
-                <dept>IIT - Interactive Media</dept>
-                <count/>
-            </request>
-        
     </data>

@@ -71,7 +71,6 @@ class HcContainer extends React.Component {
 		}));
 	}
 	render() {
-		console.log(this.state);
 		if (
 			this.state.contextReady && 
 			this.state.nesoIsAvailable && 
