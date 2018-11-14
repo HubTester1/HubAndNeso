@@ -9049,9 +9049,9 @@
 	}; */
 
 	$.fn.ReturnManagerOfUserEmailArray = function (incomingUserAccount) {
-		if (typeof (mData.devAdminNotifications) != 'undefined' && mData.devAdminNotifications === 1) {
-			var gseJobAdminManagerEmailArray = $().ReturnUserEmailStringAndArray(mData.devAdminNotificationPersons).array;
-		} else {
+		// if (typeof (mData.devAdminNotifications) != 'undefined' && mData.devAdminNotifications === 1) {
+		// 	var gseJobAdminManagerEmailArray = $().ReturnUserEmailStringAndArray(mData.devAdminNotificationPersons).array;
+		// } else {
 			var gseJobAdminManagerEmailArray = [];
 			var userAccount = ReplaceAll('i:0#.f\\|membership\\|', '', ReplaceAll('@mos.org', '', incomingUserAccount));
 			// console.log('userAccount');
@@ -9083,7 +9083,7 @@
 							});
 					});
 			}
-		}
+		// }
 		return gseJobAdminManagerEmailArray;
 	};
 
