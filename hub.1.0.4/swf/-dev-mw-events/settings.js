@@ -6,10 +6,10 @@
 	var mData = {
 		'componentID': 171,
 		'swf': 1,
-		'mosMainKey': 'prod',
+		// 'mosMainKey': 'prod',
 		// 'mosMainKey': 'dev',
 		// 'mosMainKey': 'devMedium',
-		// 'mosMainKey': 'devLong',
+		'mosMainKey': 'devLong',
 		// "useRecordedMOSMainMajorVersion": 1,
 		'devAdminNotifications': 0,
 		'notifications': 0,
@@ -81,7 +81,6 @@
 						'tableTitle': '',
 						'tableID': 'list-view',
 						'someColsAreUsers': 1,
-						'basicRSQueryRelevantStatus': 'Submitted',
 						'sortColAndOrder': [[2, 'desc'], [3, 'asc']],
 					}
 				]

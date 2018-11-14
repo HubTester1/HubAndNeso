@@ -7345,10 +7345,6 @@
 			$().RenderOverviewScreenButtons(oData.mwBuyoutList.buttons, 0);
 			$().RenderAllDataTables(oData.mwBuyoutList.sections, "overview-table-container");
 			$().RenderWorkflowContacts();
-		} else if (type === "mwEventList") {
-			$().RenderOverviewScreenButtons(oData.mwEventList.buttons, 0);
-			$().RenderAllDataTables(oData.mwEventList.sections, "overview-table-container");
-			$().RenderWorkflowContacts();
 		} else if (type === "mwProductsList") {
 			$().RenderOverviewScreenButtons(oData.mwProductsList.buttons, 0);
 			$().RenderAllDataTables(oData.mwProductsList.sections, "overview-table-container");
@@ -7409,7 +7405,9 @@
 			$().RenderWorkflowContacts();
 		
 		
-		
+		} else if (type === "mwEventList") {
+			$().RenderCommandBarAndDataTablesForMWEvents(oData.mwEventList.sections);
+			$().RenderWorkflowContacts();
 		
 		
 		
@@ -19290,6 +19288,468 @@
 
 
 
+	$.fn.RenderCommandBarAndDataTablesForMWEvents = function (sections) {
+
+		// get date params
+		var startDateFrom = GetParamFromUrl(location.search, 'startDateFrom');
+		var startDateTo = GetParamFromUrl(location.search, 'startDateTo');
+
+		if (startDateFrom == "") {
+			startDateFrom = $().ReturnFormattedDateTime('nowLocal', null, 'YYYY-MM') + '-01';
+		}
+
+		if (startDateTo == "") {
+			startDateTo = moment(startDateFrom, 'YYYY-MM-DD').add(1, "month").subtract(1, "day").format('YYYY-MM-DD');
+		}
+
+		var tData = {
+			'tables': [
+				{
+					'tableID': 'list-view',
+					'someColsAreUsers': 1,
+					'customCAMLQuery': '<Where>' +
+						'   <And>' +
+						'       <Eq>' +
+						'           <FieldRef Name="RequestStatus"></FieldRef>' +
+						'           <Value Type="Text">Submitted</Value>' +
+						'       </Eq>' +
+						'       <And>' +
+						'           <Geq>' +
+						'               <FieldRef Name="EventDate"></FieldRef>' +
+						'               <Value Type="DateTime" IncludeTimeValue="FALSE">' + startDateFrom + 'T00:00:00Z</Value>' +
+						'           </Geq>' +
+						'           <Leq>' +
+						'               <FieldRef Name="EventDate"></FieldRef>' +
+						'               <Value Type="DateTime" IncludeTimeValue="FALSE">' + startDateTo + 'T00:00:00Z</Value>' +
+						'           </Leq>' +
+						'       </And>' +
+						'   </And>' +
+						'</Where>',
+					'customColumns': [
+						{
+							'displayName': 'Event ID',
+							'internalName': 'ID',
+							'formLink': 1
+						}, {
+							'displayName': 'Title',
+							'internalName': 'Title',
+						}, {
+							'displayName': 'Date',
+							'internalName': 'EventDate',
+							'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+						}, {
+							'displayName': 'Start',
+							'internalName': 'EventStartTime',
+							'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'h:mm a' }
+						}, {
+							'displayName': 'End',
+							'internalName': 'EventEndTime',
+							'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'h:mm a' }
+						}, {
+							'displayName': 'Contact',
+							'internalName': 'RequestedFor',
+							'userName': 1
+						}, {
+							'displayName': 'Location',
+							'internalName': 'EventLocation',
+						}, {
+							'displayName': 'Count',
+							'internalName': 'EventCount',
+						}
+					],
+					'sortColAndOrder': [[2, 'desc'], [3, 'asc']],
+					'pageLength': 500
+				}
+			]
+		};
+
+		// insert container and sub-containers
+		$("div#overview-table-container").prepend('<div id="container_command-bar-and-tables"> \n' +
+			'   <div id="container_command-bar"></div> \n' +
+			'   <div id="table-container"></div> \n' +
+			'</div>');
+
+		var commandBarContents = '<h2 id="header_command-bar">Commands</h2> \n' +
+			'<div id="container_new-request-control"> \n' +
+			'   <a class="button-link button-link_new-item button_swf-new-request-with-datatable" data-button-type="newRequest" href="/sites/' + mData.siteToken + '/SitePages/App.aspx?r=0">New Request</a> \n' +
+			'</div> \n' +
+			'<div id="container_date-filter-controls-and-header"> \n' +
+			'   <div id="text_date-filter-controls" class="collapsible">Dates</div> \n' +
+			'   <div id="container_date-filter-controls"> \n' +
+			// '        <div id="date-filter-controls-notice">Date filters are effective for Approved and Closed requests.</div> \n' +
+			'        <div class="container_date-filter-control"> \n' +
+			'            <label class="date-selector-label" for="filter--start-date_from">Start Date From</label> \n' +
+			'            <input class="date-selector" id="filter--start-date_from" name="filter--start-date_from" type="text"> \n' +
+			'        </div> \n' +
+			'        <div class="container_date-filter-control"> \n' +
+			'            <label class="date-selector-label" for="filter--start-date_to">Start Date To</label> \n' +
+			'            <input class="date-selector" id="filter--start-date_to" name="filter--start-date_to" type="text"> \n' +
+			'        </div> \n' +
+			'        <div class="container_date-filter-control"> \n' +
+			'            <a id="filter--submit-button">Update</a> \n' +
+			'        </div> \n' +
+			'    </div> \n' +
+			'</div> \n';
+		$().RenderAllDataTables(tData, "table-container");
+
+		// insert contents into containers
+		$("div#container_command-bar").html(commandBarContents);
+
+		// set datepickers on date filter fields
+		$("input#filter--start-date_to, input#filter--start-date_from").datepicker({
+			changeMonth: "true",
+			changeYear: "true",
+			dateFormat: "MM d, yy"
+		});
+
+		// set currently-used dates into date fields
+		$("input#filter--start-date_from").val(moment(startDateFrom, 'YYYY-MM-DD').format('MMMM D, YYYY'));
+		$("input#filter--start-date_to").val(moment(startDateTo, 'YYYY-MM-DD').format('MMMM D, YYYY'));
+
+		// collapse collapsible
+		$('.collapsible').collapsible();
+
+		// listen for date filtering
+		$("a#filter--submit-button").click(function () {
+
+			var startDateFromFieldValue = $("input#filter--start-date_from").val();
+			var startDateToFieldValue = $("input#filter--start-date_to").val();
+
+			if (startDateFromFieldValue == "") {
+				startDateFromFieldValue = $().ReturnFormattedDateTime('nowLocal', null, 'MMMM D, YYYY');
+			}
+
+			if (startDateToFieldValue == "") {
+				startDateToFieldValue = moment(startDateFromFieldValue, 'MMMM D, YYYY').add(1, "month").subtract(1, "day").format('MMMM D, YYYY');
+			}
+
+			var newStartDateFrom = $().ReturnFormattedDateTime(startDateFromFieldValue, null, 'YYYY-MM-DD');
+			var newStartDateTo = $().ReturnFormattedDateTime(startDateToFieldValue, null, 'YYYY-MM-DD');
+
+			window.location = "/sites/" + mData.siteToken + "/SitePages/App.aspx?startDateFrom=" + newStartDateFrom + "&startDateTo=" + newStartDateTo;
+		});
+	};
+
+
+
+	// schedules list
+	/* $.fn.RenderCommandBarAndDataTablesForGSESchedules = function (buttons, targetID, relevantRole) {
+		var renderPrepStartTime = Date.now();
+
+		var startingYearOfFirstFiscalYear = 2018;
+		// var thisYear = 2022;
+		// var startingYearOfLastFiscalYear = moment('2022-09-08').isAfter(thisYear + '-06-30') ?
+		// 	parseInt(thisYear) :
+		// 	parseInt(thisYear) - 1;
+		var thisYear = $().ReturnFormattedDateTime('nowLocal', null, 'YYYY');
+		var startingYearOfLastFiscalYear = moment().isAfter(thisYear + '-06-30') ?
+			parseInt(thisYear) :
+			parseInt(thisYear) - 1;
+
+		var selectedStartYear = GetParamFromUrl(location.search, "y");
+		if (!selectedStartYear || selectedStartYear == '') {
+			selectedStartYear = moment().isAfter(thisYear + '-06-30') ?
+				parseInt(thisYear) :
+				parseInt(thisYear) - 1;
+		}
+
+		$("#" + targetID).append('<div id="container_command-bar-and-data"> \n' +
+			'   <div id="container_command-bar"></div> \n' +
+			'   <div id="container_data"></div> \n' +
+			'</div>');
+
+		var commandBarContents = '';
+		if (relevantRole === 'gseHRAdmin' || relevantRole === 'gseJobAdmin') {
+			if (relevantRole === 'gseHRAdmin') {
+				commandBarContents +=
+					'<div class="container_link">' +
+					'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-config/SitePages/App.aspx?r=1">Configuration</a> \n' +
+					'</div>';
+			}
+			commandBarContents +=
+				'<div class="container_link">' +
+				'	<a class="button-link button-link_new-item undefined command-bar-button" data-button-type="newRequest" href="https://bmos.sharepoint.com/sites/hr-service-schedules/SitePages/App.aspx?r=0">New Schedule</a>' +
+				'</div>' +
+				'<div class="container_link">' +
+				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-jobs/SitePages/App.aspx">Jobs</a> \n' +
+				'</div>' +
+				'<div class="container_link">' +
+				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-schedules/SitePages/App.aspx?f=cal">Schedule Calendar</a> \n' +
+				'</div>' +
+				'<div class="container_link">' +
+				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-signups/SitePages/App.aspx">Signups</a> \n' +
+				'</div>' +
+				'<div id="container_filter-controls-and-header"> \n' +
+				'   <div id="text_filter-controls" class="collapsible">Year</div> \n' +
+				'   <div id="container_filter-controls"> \n' +
+				'   	<div class="container_filter-control"> \n' +
+				'   		<label for="filter_year">Year</label><select id="filter_year" name="filter_year"> \n' +
+				'				' + $().ReturnFiscalYearSelectOptions(startingYearOfFirstFiscalYear, startingYearOfLastFiscalYear, true, selectedStartYear) + ' \n' +
+				'			</select>' +
+				'		</div>' +
+				'   	<div class="container_filter-control"> \n' +
+				'			<a id="filter_submit-button">Update</a>' +
+				'		</div>' +
+				'    </div> \n' +
+				'</div> \n';
+		}
+		if (relevantRole === 'gseManager') {
+			commandBarContents +=
+				'<div class="container_link">' +
+				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-jobs/SitePages/App.aspx">My and My Staff Members\' Jobs</a> \n' +
+				'</div>' +
+				'<div class="container_link">' +
+				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-schedules/SitePages/App.aspx?f=cal">Schedule Calendar</a> \n' +
+				'</div>' +
+				'<div class="container_link">' +
+				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-signups/SitePages/App.aspx">My and My Staff Members\' Signups</a> \n' +
+				'</div>' +
+				'<div id="container_filter-controls-and-header"> \n' +
+				'   <div id="text_filter-controls" class="collapsible">Year</div> \n' +
+				'   <div id="container_filter-controls"> \n' +
+				'   	<div class="container_filter-control"> \n' +
+				'   		<label for="filter_year">Year</label><select id="filter_year" name="filter_year"> \n' +
+				'				' + $().ReturnFiscalYearSelectOptions(startingYearOfFirstFiscalYear, startingYearOfLastFiscalYear, true, selectedStartYear) + ' \n' +
+				'			</select>' +
+				'		</div>' +
+				'   	<div class="container_filter-control"> \n' +
+				'			<a id="filter_submit-button">Update</a>' +
+				'		</div>' +
+				'    </div> \n' +
+				'</div> \n';
+		}
+		if (relevantRole === 'gseUserOnly') {
+			commandBarContents +=
+				'<div class="container_link">' +
+				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-schedules/SitePages/App.aspx?f=cal">GSE Signup Opportunities Calendar</a> \n' +
+				'</div>' +
+				'<div class="container_link">' +
+				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-signups/SitePages/App.aspx">My Signups</a> \n' +
+				'</div>' +
+				'<div id="container_filter-controls-and-header"> \n' +
+				'   <div id="text_filter-controls" class="collapsible">Year</div> \n' +
+				'   <div id="container_filter-controls"> \n' +
+				'   	<div class="container_filter-control"> \n' +
+				'   		<label for="filter_year">Year</label><select id="filter_year" name="filter_year"> \n' +
+				'				' + $().ReturnFiscalYearSelectOptions(startingYearOfFirstFiscalYear, startingYearOfLastFiscalYear, true, selectedStartYear) + ' \n' +
+				'			</select>' +
+				'		</div>' +
+				'   	<div class="container_filter-control"> \n' +
+				'			<a id="filter_submit-button">Update</a>' +
+				'		</div>' +
+				'    </div> \n' +
+				'</div> \n';
+		}
+
+		$("div#container_command-bar").html(commandBarContents);
+
+		var augmentedSchedules = $().ReturnSelectedAugmentedSchedulesForGSESchedulesOverviews(selectedStartYear);
+
+		// determine which tables to render
+		var tablesToRender = [];
+		if (relevantRole === 'gseHRAdmin' || relevantRole === 'gseJobAdmin') {
+			tablesToRender.push({
+				'tableTitle': 'Submitted',
+				'tableID': 'submitted',
+				'columns': [
+					{
+						'displayName': "Schedule ID",
+						'dataName': "IDMarkup",
+					}, {
+						'displayName': "Options",
+						'dataName': "Options",
+					}, {
+						'displayName': "Job Title",
+						'dataName': "JobTitle",
+					}, {
+						'displayName': "Date",
+						'dataName': "Date",
+					}, {
+						'displayName': "Start Time",
+						'dataName': "StartTime",
+					}, {
+						'displayName': "Schedule Length",
+						'dataName': "ShiftLength",
+					}, {
+						'displayName': "Job Admin",
+						'dataName': "JobAdmin",
+					}, {
+						'displayName': "Positions Available",
+						'dataName': "PositionsAvailable",
+					}, {
+						'displayName': "Signups",
+						'dataName': "Signups",
+					}
+				],
+				'sortColAndOrder': [[3, 'asc'], [4, 'asc']],
+				'dataSource': augmentedSchedules.submitted
+			});
+			tablesToRender.push({
+				'tableTitle': 'Completed',
+				'tableID': 'completed',
+				'columns': [
+					{
+						'displayName': "Schedule ID",
+						'dataName': "IDMarkup",
+					}, {
+						'displayName': "Options",
+						'dataName': "Options",
+					}, {
+						'displayName': "Job Title",
+						'dataName': "JobTitle",
+					}, {
+						'displayName': "Date",
+						'dataName': "Date",
+					}, {
+						'displayName': "Start Time",
+						'dataName': "StartTime",
+					}, {
+						'displayName': "Schedule Length",
+						'dataName': "ShiftLength",
+					}, {
+						'displayName': "Job Admin",
+						'dataName': "JobAdmin",
+					}, {
+						'displayName': "Signups",
+						'dataName': "Signups",
+					}
+				],
+				'sortColAndOrder': [[3, 'asc'], [4, 'asc']],
+				'dataSource': augmentedSchedules.completed
+			});
+			tablesToRender.push({
+				'tableTitle': 'Cancelled',
+				'tableID': 'cancelled',
+				'columns': [
+					{
+						'displayName': "Schedule ID",
+						'dataName': "IDMarkup",
+					}, {
+						'displayName': "Options",
+						'dataName': "Options",
+					}, {
+						'displayName': "Job Title",
+						'dataName': "JobTitle",
+					}, {
+						'displayName': "Date",
+						'dataName': "Date",
+					}, {
+						'displayName': "Start Time",
+						'dataName': "StartTime",
+					}, {
+						'displayName': "Schedule Length",
+						'dataName': "ShiftLength",
+					}, {
+						'displayName': "Job Admin",
+						'dataName': "JobAdmin",
+					}
+				],
+				'sortColAndOrder': [[3, 'asc'], [4, 'asc']],
+				'dataSource': augmentedSchedules.cancelled
+			});
+		}
+		if (relevantRole === 'gseManager') {
+			tablesToRender.push({
+				'tableID': 'submitted',
+				'columns': [
+					{
+						'displayName': "Schedule ID",
+						'dataName': "ViewByIDLink",
+					}, {
+						'displayName': "Job Title",
+						'dataName': "JobTitle",
+					}, {
+						'displayName': "Date",
+						'dataName': "Date",
+					}, {
+						'displayName': "Start Time",
+						'dataName': "StartTime",
+					}, {
+						'displayName': "Schedule Length",
+						'dataName': "ShiftLength",
+					}, {
+						'displayName': "Job Admin",
+						'dataName': "JobAdmin",
+					}, {
+						'displayName': "Positions Available",
+						'dataName': "PositionsAvailable",
+					}
+				],
+				'sortColAndOrder': [[2, 'asc'], [3, 'asc']],
+				'dataSource': augmentedSchedules.submitted
+			});
+		}
+		if (relevantRole === 'gseUserOnly') {
+			tablesToRender.push({
+				'tableID': 'submitted',
+				'columns': [
+					{
+						'displayName': "Opportunity",
+						'dataName': "ViewByIDLink",
+					}, {
+						'displayName': "Job Title",
+						'dataName': "JobTitle",
+					}, {
+						'displayName': "Date",
+						'dataName': "Date",
+					}, {
+						'displayName': "Start Time",
+						'dataName': "StartTime",
+					}, {
+						'displayName': "Length",
+						'dataName': "ShiftLength",
+					}, {
+						'displayName': "Reports To",
+						'dataName': "JobAdmin",
+					}, {
+						'displayName': "Positions Available",
+						'dataName': "PositionsAvailable",
+					}
+				],
+				'sortColAndOrder': [[2, 'asc'], [3, 'asc']],
+				'dataSource': augmentedSchedules.submitted
+			});
+		}
+
+		tablesToRender.forEach((t) => {
+			var thisTableConfig = $().ReturnDatatableSettingsAndDataForGSESchedules(t, relevantRole);
+			if (!t.sortColAndOrder) {
+				t.sortColAndOrder = [0, 'asc'];
+			}
+			$().RenderListAsDatatable({
+				'tableTitle': t.tableTitle,
+				'tableID': t.tableID,
+				'theadDetails': thisTableConfig.theadDetails,
+				'listForDatatable': thisTableConfig.datatableData,
+				'datatableFields': thisTableConfig.datatableFields,
+				'sortColAndOrder': t.sortColAndOrder,
+				'targetID': targetID,
+			});
+		});
+
+		// add extra class for styling hook
+		$('div#app-container').addClass('gse-schedule-list');
+
+		// collapse filters
+		$('.collapsible').collapsible();
+
+		console.log('render prep time = ' + (Date.now() - renderPrepStartTime) / 1000 + ' seconds');
+		// listen for date filtering
+		$("a#filter_submit-button").click(function () {
+			var selectedStartYear = $("select#filter_year").val();
+			if (selectedStartYear == '') {
+				selectedStartYear = moment().isAfter(thisYear + '-06-30') ?
+					parseInt(thisYear) :
+					parseInt(thisYear) - 1;
+			}
+			window.location = "/sites/" + mData.siteToken + "/SitePages/App.aspx?y=" + selectedStartYear;
+		});
+	}; */
+
+
+
+
+
 	$.fn.RenderCommandBarAndCalendarForBuyouts = function (buttons) {
 
 		var viewToUse = GetParamFromUrl(location.search, "view");
@@ -23264,6 +23724,11 @@
 				t.sortColAndOrder = [0, 'asc'];
 			}
 
+			if (typeof (t.pageLength) == "undefined") {
+				t.pageLength = 30;
+			}
+
+
 			if (typeof (t.webURL) == 'undefined') {
 				mData = $.extend(
 					$().GetFieldsFromOneRow({
@@ -23894,24 +24359,6 @@
 				'returnURI': mData.returnURI
 			});
 
-			/* console.log('t.tableTitle');
-			console.log(t.tableTitle);
-
-			console.log('t.tableID');
-			console.log(t.tableID);
-
-			console.log('theadDetails');
-			console.log(theadDetails);
-
-			console.log('listForDatatable');
-			console.log(listForDatatable);
-
-			console.log('XXXXXX');
-			console.log(XXXXXX);
-
-			console.log('XXXXXX');
-			console.log(XXXXXX); */
-
 
 			$().RenderListAsDatatable({
 				'tableTitle': t.tableTitle,
@@ -23920,6 +24367,7 @@
 				'listForDatatable': listForDatatable,
 				'datatableFields': datatableFields,
 				'sortColAndOrder': t.sortColAndOrder,
+				'pageLength': t.pageLength,
 				'grouping': t.grouping,
 				'targetID': targetID,
 			});
@@ -24395,11 +24843,14 @@
 				};
 			}
 
+			console.log('final opt.pageLength');
+			console.log(opt.pageLength);
+
 			$("#" + opt.tableID).DataTable({
 				"data": opt.listForDatatable,
 				"columns": opt.datatableFields,
 				"dom": "ftp",
-				"pageLength": 30,
+				"pageLength": opt.pageLength,
 				"pagingType": "simple",
 				"order": opt.sortColAndOrder,
 				"drawCallback": opt.groupingFunction,

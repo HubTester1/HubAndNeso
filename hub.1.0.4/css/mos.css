@@ -567,6 +567,9 @@ button.cafe-button,
 div#s4-workspace div.in-page-persona a.profile,
 div#s4-workspace div#public-community-page_moscars div#call-to-action a,
 div#s4-workspace div#public-community-page_hr div#primary-section_open-enrollment a,
+div#s4-workspace div#app-container.museum-events div#container_command-bar div#container_new-request-control a,
+div#s4-workspace div#app-container.museum-events div#container_command-bar div#container_date-filter-controls-and-header a.collapsible-heading-toggle,
+div#s4-workspace div#app-container.museum-events div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button,
 div#s4-workspace div#app-container.event-av div#container_command-bar div#container_new-request-control a,
 div#s4-workspace div#app-container.event-av div#container_command-bar ul#container_tab-controls li a,
 div#s4-workspace div#app-container.event-av div#container_command-bar div#container_date-filter-controls-and-header a.collapsible-heading-toggle,
@@ -626,6 +629,9 @@ a#gse-schedule-card-dialog-signup-opportunity-link {
   div#s4-workspace div.in-page-persona a.profile:hover,
   div#s4-workspace div#public-community-page_moscars div#call-to-action a:hover,
   div#s4-workspace div#public-community-page_hr div#primary-section_open-enrollment a:hover,
+  div#s4-workspace div#app-container.museum-events div#container_command-bar div#container_new-request-control a:hover,
+  div#s4-workspace div#app-container.museum-events div#container_command-bar div#container_date-filter-controls-and-header a.collapsible-heading-toggle:hover,
+  div#s4-workspace div#app-container.museum-events div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button:hover,
   div#s4-workspace div#app-container.event-av div#container_command-bar div#container_new-request-control a:hover,
   div#s4-workspace div#app-container.event-av div#container_command-bar ul#container_tab-controls li a:hover,
   div#s4-workspace div#app-container.event-av div#container_command-bar div#container_date-filter-controls-and-header a.collapsible-heading-toggle:hover,
@@ -652,6 +658,7 @@ div#timeline div.vis-item,
 div#s4-workspace div.in-page-persona a.profile,
 div#s4-workspace div#public-community-page_moscars div#call-to-action a,
 div#s4-workspace div#public-community-page_hr div#primary-section_open-enrollment a,
+div#s4-workspace div#app-container.museum-events div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button,
 div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button,
 div#s4-workspace div#app-container.gse-stats div#container_filter-controls-and-header div.container_filter-control a#filter_submit-button,
 div#s4-workspace div#app-container.gse-signup div#container_command-bar div#container_filter-controls-and-header a#filter_submit-button,
@@ -671,6 +678,7 @@ a#gse-schedule-card-dialog-signup-opportunity-link {
   div#s4-workspace div.in-page-persona a.profile:hover,
   div#s4-workspace div#public-community-page_moscars div#call-to-action a:hover,
   div#s4-workspace div#public-community-page_hr div#primary-section_open-enrollment a:hover,
+  div#s4-workspace div#app-container.museum-events div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button:hover,
   div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button:hover,
   div#s4-workspace div#app-container.gse-stats div#container_filter-controls-and-header div.container_filter-control a#filter_submit-button:hover,
   div#s4-workspace div#app-container.gse-signup div#container_command-bar div#container_filter-controls-and-header a#filter_submit-button:hover,
@@ -729,6 +737,8 @@ div#app-container a.button_swf-new-event-with-timeline,
 div#app-container a.button_alternate-view-with-timeline,
 button.cafe-button,
 div#app-container a.command-bar-button,
+div#s4-workspace div#app-container.museum-events div#container_command-bar div#container_new-request-control a,
+div#s4-workspace div#app-container.museum-events div#container_command-bar div#container_date-filter-controls-and-header a.collapsible-heading-toggle,
 div#s4-workspace div#app-container.event-av div#container_command-bar div#container_new-request-control a,
 div#s4-workspace div#app-container.event-av div#container_command-bar ul#container_tab-controls li a,
 div#s4-workspace div#app-container.event-av div#container_command-bar div#container_date-filter-controls-and-header a.collapsible-heading-toggle,
@@ -751,6 +761,8 @@ a#standard-printer-button-inside-request {
   div#app-container a.button_alternate-view-with-timeline:hover,
   button.cafe-button:hover,
   div#app-container a.command-bar-button:hover,
+  div#s4-workspace div#app-container.museum-events div#container_command-bar div#container_new-request-control a:hover,
+  div#s4-workspace div#app-container.museum-events div#container_command-bar div#container_date-filter-controls-and-header a.collapsible-heading-toggle:hover,
   div#s4-workspace div#app-container.event-av div#container_command-bar div#container_new-request-control a:hover,
   div#s4-workspace div#app-container.event-av div#container_command-bar ul#container_tab-controls li a:hover,
   div#s4-workspace div#app-container.event-av div#container_command-bar div#container_date-filter-controls-and-header a.collapsible-heading-toggle:hover,
@@ -831,6 +843,7 @@ button.gse-signups-user-detail-control:before,
 a.show-default-station-times:before,
 a.hide-default-station-times:before,
 button.cafe-button:before,
+div#s4-workspace div#app-container.museum-events div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button:before,
 div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button:before,
 div#s4-workspace div#app-container.gse-stats div#container_filter-controls-and-header div.container_filter-control a#filter_submit-button:before,
 div#s4-workspace div#app-container.gse-signup div#container_command-bar div#container_filter-controls-and-header a#filter_submit-button:before,
@@ -902,6 +915,7 @@ div.ui-datepicker div.ui-datepicker-header a.ui-datepicker-prev:before {
 .collapsible-heading.collapsible-heading-collapsed.overflow-menu-control a.collapsible-heading-toggle:before {
   content: '\E045'; }
 
+div#s4-workspace div#app-container.museum-events div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button:before,
 div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button:before,
 div#s4-workspace div#app-container.gse-stats div#container_filter-controls-and-header div.container_filter-control a#filter_submit-button:before,
 div#s4-workspace div#app-container.gse-signup div#container_command-bar div#container_filter-controls-and-header a#filter_submit-button:before,
@@ -3156,6 +3170,52 @@ div#s4-workspace div#app-container.event-av div#container_date-filter-controls {
       margin-left: 11rem !important; }
 
 div#s4-workspace div#app-container.event-av div.table-container {
+  margin-top: 2rem; }
+
+div#s4-workspace div#app-container.museum-events div#container_command-bar {
+  color: #333;
+  background-color: #eee;
+  display: inline-block; }
+  div#s4-workspace div#app-container.museum-events div#container_command-bar a {
+    color: #298aab !important; }
+    div#s4-workspace div#app-container.museum-events div#container_command-bar a:hover {
+      color: #007298 !important; }
+  div#s4-workspace div#app-container.museum-events div#container_command-bar h2#header_command-bar {
+    display: block !important;
+    width: 0 !important;
+    height: 0;
+    padding: 0 !important;
+    text-indent: 100%;
+    white-space: nowrap;
+    overflow: hidden; }
+  div#s4-workspace div#app-container.museum-events div#container_command-bar div#container_new-request-control,
+  div#s4-workspace div#app-container.museum-events div#container_command-bar ul#container_tab-controls,
+  div#s4-workspace div#app-container.museum-events div#container_command-bar div#container_date-filter-controls-and-header {
+    display: table-cell;
+    vertical-align: top; }
+  div#s4-workspace div#app-container.museum-events div#container_command-bar div#container_date-filter-controls-and-header div#text_date-filter-controls a.collapsible-heading-toggle {
+    display: block; }
+
+div#s4-workspace div#app-container.museum-events div#container_date-filter-controls {
+  padding: 1.5rem 1.5rem 0 0;
+  font-weight: 600; }
+  div#s4-workspace div#app-container.museum-events div#container_date-filter-controls div#date-filter-controls-notice {
+    max-width: 75%;
+    font-size: 1.3rem;
+    font-style: italic;
+    font-weight: normal;
+    margin-bottom: 1rem; }
+  div#s4-workspace div#app-container.museum-events div#container_date-filter-controls div.container_date-filter-control {
+    padding: 0 0 1.5rem 1.5rem; }
+    div#s4-workspace div#app-container.museum-events div#container_date-filter-controls div.container_date-filter-control label.date-selector-label {
+      display: inline-block;
+      width: 10.5rem; }
+    div#s4-workspace div#app-container.museum-events div#container_date-filter-controls div.container_date-filter-control input.date-selector {
+      width: 13rem; }
+    div#s4-workspace div#app-container.museum-events div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button {
+      margin-left: 11rem !important; }
+
+div#s4-workspace div#app-container.museum-events div.table-container {
   margin-top: 2rem; }
 
 div#s4-workspace div#app-container.puck-quick-pick div#request-form thead th.th_item {

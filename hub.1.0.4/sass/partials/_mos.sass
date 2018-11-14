@@ -662,6 +662,9 @@ button.cafe-button,
 div#s4-workspace div.in-page-persona a.profile,
 div#s4-workspace div#public-community-page_moscars div#call-to-action a,
 div#s4-workspace div#public-community-page_hr div#primary-section_open-enrollment a,
+div#s4-workspace div#app-container.museum-events div#container_command-bar div#container_new-request-control a,
+div#s4-workspace div#app-container.museum-events div#container_command-bar div#container_date-filter-controls-and-header a.collapsible-heading-toggle,
+div#s4-workspace div#app-container.museum-events div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button,
 div#s4-workspace div#app-container.event-av div#container_command-bar div#container_new-request-control a,
 div#s4-workspace div#app-container.event-av div#container_command-bar ul#container_tab-controls li a,
 div#s4-workspace div#app-container.event-av div#container_command-bar div#container_date-filter-controls-and-header a.collapsible-heading-toggle,
@@ -692,6 +695,7 @@ div#timeline div.vis-item,
 div#s4-workspace div.in-page-persona a.profile,
 div#s4-workspace div#public-community-page_moscars div#call-to-action a,
 div#s4-workspace div#public-community-page_hr div#primary-section_open-enrollment a,
+div#s4-workspace div#app-container.museum-events div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button,
 div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button,
 div#s4-workspace div#app-container.gse-stats div#container_filter-controls-and-header div.container_filter-control a#filter_submit-button,
 div#s4-workspace div#app-container.gse-signup div#container_command-bar div#container_filter-controls-and-header a#filter_submit-button,
@@ -744,6 +748,8 @@ div#app-container a.button_swf-new-event-with-timeline,
 div#app-container a.button_alternate-view-with-timeline,
 button.cafe-button,
 div#app-container a.command-bar-button,
+div#s4-workspace div#app-container.museum-events div#container_command-bar div#container_new-request-control a,
+div#s4-workspace div#app-container.museum-events div#container_command-bar div#container_date-filter-controls-and-header a.collapsible-heading-toggle,
 div#s4-workspace div#app-container.event-av div#container_command-bar div#container_new-request-control a,
 div#s4-workspace div#app-container.event-av div#container_command-bar ul#container_tab-controls li a,
 div#s4-workspace div#app-container.event-av div#container_command-bar div#container_date-filter-controls-and-header a.collapsible-heading-toggle,
@@ -839,6 +845,7 @@ button.gse-signups-user-detail-control,
 a.show-default-station-times,
 a.hide-default-station-times,
 button.cafe-button,
+div#s4-workspace div#app-container.museum-events div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button,
 div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button,
 div#s4-workspace div#app-container.gse-stats div#container_filter-controls-and-header div.container_filter-control a#filter_submit-button,
 div#s4-workspace div#app-container.gse-signup div#container_command-bar div#container_filter-controls-and-header a#filter_submit-button,
@@ -907,6 +914,7 @@ div.ui-datepicker div.ui-datepicker-header a.ui-datepicker-prev
 	&:before
 		+fontIconEllipsis
 
+div#s4-workspace div#app-container.museum-events div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button,
 div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button,
 div#s4-workspace div#app-container.gse-stats div#container_filter-controls-and-header div.container_filter-control a#filter_submit-button,
 div#s4-workspace div#app-container.gse-signup div#container_command-bar div#container_filter-controls-and-header a#filter_submit-button,
@@ -3616,6 +3624,56 @@ div#s4-workspace div#app-container.event-av
 
 	div.table-container
 		margin-top: 2rem
+
+
+
+// --- MW EVENTS LIST
+
+div#s4-workspace div#app-container.museum-events
+
+	div#container_command-bar
+		+gridElementDarkened1
+		display: inline-block
+
+		h2#header_command-bar
+			+blockHidden
+
+		div#container_new-request-control,
+		ul#container_tab-controls,
+		div#container_date-filter-controls-and-header
+			+col
+
+		div#container_date-filter-controls-and-header div#text_date-filter-controls a.collapsible-heading-toggle
+			display: block
+
+	div#container_date-filter-controls
+		padding: 1.5rem 1.5rem 0 0
+		font-weight: 600
+
+		div#date-filter-controls-notice
+			max-width: 75%
+			font-size: 1.3rem
+			font-style: italic
+			font-weight: normal
+			margin-bottom: 1rem
+
+		div.container_date-filter-control
+			padding: 0 0 1.5rem 1.5rem
+
+			label.date-selector-label
+				display: inline-block
+				width: 10.5rem
+
+			input.date-selector
+				width: 13rem
+
+			a#filter--submit-button
+				margin-left: 11rem !important
+
+	div.table-container
+		margin-top: 2rem
+
+
 
 
 // --- PUCK QUICK PICK
