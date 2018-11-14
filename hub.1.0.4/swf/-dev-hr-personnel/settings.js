@@ -13,10 +13,10 @@
 	var mData = {
 		'componentID': 98,
 		'swf': 1,
-		'mosMainKey': 'prod',
+		// 'mosMainKey': 'prod',
 		// 'mosMainKey': 'dev',
 		// 'mosMainKey': 'devMedium',
-		// 'mosMainKey': 'devLong',
+		'mosMainKey': 'devLong',
 		// "useRecordedMOSMainMajorVersion": 1,
 		"currentRequestVersion": 1,
 		'devAdminNotifications': 1,
@@ -2897,31 +2897,71 @@
 				],
 				"disabledForNonAdmin": ['Submitted', 'Cancelled'],
 				"disabledForAdmin": ['Submitted', 'Cancelled'],
-				"onChange": [{
-					"thisFieldEquals": ["Adjustment"],
-					"show": [{
-						"fieldName": "Wage Change Reason Explanation"
-					}],
-					"require": [{
-						"fieldName": "Wage Change Reason Explanation",
-						"type": "textarea"
-					}]
-				}, {
-					"thisFieldNotEquals": ["Adjustment"],
-					"hide": [{
-						"fieldName": "Wage Change Reason Explanation"
-					}],
-					"optional": [{
-						"fieldName": "Wage Change Reason Explanation",
-						"type": "textarea"
-					}]
-				}]
+				"onChange": [
+					{
+						"thisFieldEquals": ["Adjustment"],
+						"show": [{
+							"fieldName": "Wage Change Reason Explanation"
+						}],
+						"require": [{
+							"fieldName": "Wage Change Reason Explanation",
+							"type": "textarea"
+						}],
+						"hide": [{
+							"fieldName": "Wage Change Bonus Amount"
+						}],
+						"optional": [{
+							"fieldName": "Wage Change Bonus Amount",
+							"type": "text"
+						}]
+					}, {
+						"thisFieldEquals": ["Bonus"],
+						"show": [{
+							"fieldName": "Wage Change Bonus Amount"
+						}],
+						"require": [{
+							"fieldName": "Wage Change Bonus Amount",
+							"type": "text"
+						}],
+						"hide": [{
+							"fieldName": "Wage Change Reason Explanation"
+						}],
+						"optional": [{
+							"fieldName": "Wage Change Reason Explanation",
+							"type": "textarea"
+						}],
+					}, {
+						"thisFieldNotEquals": ["Adjustment", "Bonus"],
+						"hide": [
+							{ "fieldName": "Wage Change Reason Explanation" },
+							{ "fieldName": "Wage Change Bonus Amount" }
+						],
+						"optional": [
+							{
+								"fieldName": "Wage Change Reason Explanation",
+								"type": "textarea"
+							}, {
+								"fieldName": "Wage Change Bonus Amount",
+								"type": "text"
+							}
+						]
+					}
+				]
 
 			}, {
 				'elementType': "field",
 				'controlType': "textarea",
 				'fieldName': "Wage Change Reason Explanation",
 				'labelContent': "Please Explain",
+				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
+				'disabledForAdmin': ['Submitted', 'Cancelled'],
+				'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
+				'hideForAdmin': ['', 'Submitted', 'Cancelled']
+			}, {
+				'elementType': "field",
+				'controlType': "text",
+				'fieldName': "Wage Change Bonus Amount",
+				'labelContent': "Bonus Amount",
 				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
 				'disabledForAdmin': ['Submitted', 'Cancelled'],
 				'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
@@ -3765,6 +3805,10 @@
 
 	fData.CustomScriptLast += '$("input#Hire-Proposed-Hourly-Wage, input#Hire-Scheduled-Hours-Biweekly").on("change", function() { \n' +
 		'	$().ProcessEARAndPARHourAndWageFields("Hire-Proposed-Hourly-Wage", "Hire-Proposed-Annualized-Salary", "Hire-Scheduled-Hours-Biweekly", "Hire-Scheduled-Hours-Annually");\n' +
+		'}); \n';
+
+	fData.CustomScriptLast += '$("input#Wage-Change-Bonus-Amount").on("change", function() { \n' +
+		'	$().ProcessPAFBonusAmountField(); \n' +
 		'}); \n';
 
 	fData.CustomScriptLast += '$("input#Position-Change-Scheduled-Hours-Biweekly").on("change", function() { \n' +

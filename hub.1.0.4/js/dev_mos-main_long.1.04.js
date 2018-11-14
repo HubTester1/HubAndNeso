@@ -16040,10 +16040,10 @@
 
 			if (formData["Action"] == "Status Change") {
 
-				var staffUserID = StrInStr(formData["Status-Change-Staff-Member"][0]["description"], '@mos.org', 1);
+				var staffUserID = StrInStr(formData["Status-Change-Staff-Member"][0]["description"].toLowerCase(), '@mos.org', 1);
 
-				console.log('staffUserID');
-				console.log(staffUserID);
+				// console.log('staffUserID');
+				// console.log(staffUserID);
 
 				$.ajax({
 					async: false,
@@ -16193,7 +16193,9 @@
 								'	<li><b>Annualized Salary:</b> ' + formData["Wage-Change-Annualized-Salary"] + '</li>';
 
 							if (formData["Wage-Change-Reason"] == "Adjustment") {
-								printContent += '	<li><b>Reason:</b> ' + formData["Wage-Change-Reason-Explanation"] + '</li>';
+								printContent += '	<li><b>Reason:</b> Adjustment: ' + formData["Wage-Change-Reason-Explanation"] + '</li>';
+							} else if (formData["Wage-Change-Reason"] == "Bonus") {
+								printContent += '	<li><b>Reason:</b> Bonus: ' + formData["Wage-Change-Bonus-Amount"] + '</li>';
 							} else {
 								printContent += '	<li><b>Reason:</b> ' + formData["Wage-Change-Reason"] + '</li>';
 							}
@@ -25447,6 +25449,18 @@
 	$.fn.ProcessEARPercentFields = function (fieldID) {
 		var numeralString = $('input#' + fieldID).val().replace("\%", "").replace(/[,]/g, "");
 		$('input#' + fieldID).val(numeral(parseFloat(numeralString) * .01).format('0.00%'));
+	};
+
+
+
+	$.fn.ProcessPAFBonusAmountField = function () {
+		var bonusString = $("input#Wage-Change-Bonus-Amount").val().replace("\$", "").replace(/[,]/g, "");
+		if (bonusString != "") {
+			var bonusIsValid = $().ValidateInRealTimeForPositiveNumberInUSDFormat(bonusString, "input#Wage-Change-Bonus-Amount");
+			if (bonusIsValid == 1) {
+				$("input#Wage-Change-Bonus-Amount").val(numeral(bonusString).format('$0,0.00'));
+			}
+		}
 	};
 
 
