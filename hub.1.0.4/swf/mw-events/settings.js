@@ -556,7 +556,9 @@
 
 
 
-
+/* 				"requiredForNonAdmin": ["", "Submitted"],
+				"requiredForAdmin": ["", "Submitted"],
+ */
 
 			}, {
 				'elementType': 'markup',
@@ -1383,8 +1385,8 @@
 				'requiredForAdmin': [],
 				'hideForNonAdmin': [''],
 				'hideForAdmin': [''],
-				'disabledForNonAdmin': ["Submitted", "Completed", "Cancelled"],
-				'disabledForAdmin': ["Submitted", "Completed", "Cancelled"]
+				'disabledForNonAdmin': ["Cancelled"],
+				'disabledForAdmin': ["Cancelled"]
 			}
 		]
 	};
@@ -1395,13 +1397,7 @@
 	//	  (fData.CustomScriptLast will be appended to auto-generated script)
 	fData.CustomScriptFirst = '';
 
-
-	fData.CustomScriptLast = 'if ($("input#individual-or-pattern_individual").is(":checked")) { \n' +
-		'   $("div#simple-dates").show("fast").removeClass("hidden"); \n' +
-		'} \n';
-
-
-	fData.CustomScriptLast += 'if ($("input#individual-or-pattern_pattern").is(":checked")) { \n' +
+	fData.CustomScriptLast = 'if ($("input#individual-or-pattern_pattern").is(":checked")) { \n' +
 		'   $("div#pattern-and-range").show("fast").removeClass("hidden"); \n' +
 		'} \n';
 
@@ -1452,11 +1448,17 @@
 	// TEMP
 
 	fData.CustomScriptLast += '$("div#label-and-control_Individual-or-Pattern").addClass("hidden"); \n';
-	fData.CustomScriptLast += '$().SetFieldToRequired("Repeating-Date", "datepicker"); \n';
-	fData.CustomScriptLast += '$("div#simple-dates").removeClass("hidden"); \n';
+	fData.CustomScriptLast += 'if ($("input#Request-Status").val() == "") {\n'+ 
+								'	$().SetFieldToRequired("Repeating-Date", "datepicker"); \n' +
+								'	$("div#simple-dates").removeClass("hidden");\n' +
+								'} \n';
 	fData.CustomScriptLast += '$("div#label-and-control_Change-Pattern-of-Repeating-Dates").addClass("hidden"); \n';
 	fData.CustomScriptLast += '$("input#individual-or-pattern_individual").prop("checked", true).attr("checked", true); \n';
 
+	// reinstate the following
+	// fData.CustomScriptLast = 'if ($("input#individual-or-pattern_individual").is(":checked")) { \n' +
+	// 	'   $("div#simple-dates").show("fast").removeClass("hidden"); \n' +
+	// 	'} \n';
 
 
 	// =============================

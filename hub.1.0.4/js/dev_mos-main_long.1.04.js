@@ -24843,9 +24843,6 @@
 				};
 			}
 
-			console.log('final opt.pageLength');
-			console.log(opt.pageLength);
-
 			$("#" + opt.tableID).DataTable({
 				"data": opt.listForDatatable,
 				"columns": opt.datatableFields,

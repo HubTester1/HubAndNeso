@@ -4,7 +4,7 @@
 	// EVENTS
 
 	var mData = {
-		'componentID': 171,
+		'componentID': 10171,
 		'swf': 1,
 		// 'mosMainKey': 'prod',
 		// 'mosMainKey': 'dev',
@@ -66,14 +66,14 @@
 					}, {
 						'displayName': 'Count',
 						'internalName': 'EventCount',
-					// }, {
-					// 	'displayName': 'Created By',
-					// 	'internalName': 'Author',
-					// 	'userName': 1
-					// }, {
-					// 	'displayName': 'Created',
-					// 	'internalName': 'RequestDate',
-					// 	'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+						// }, {
+						// 	'displayName': 'Created By',
+						// 	'internalName': 'Author',
+						// 	'userName': 1
+						// }, {
+						// 	'displayName': 'Created',
+						// 	'internalName': 'RequestDate',
+						// 	'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
 					}
 				],
 				'tables': [
@@ -374,32 +374,32 @@
 				'labelContent': 'Location',
 				"requiredForNonAdmin": ["", "Submitted"],
 				"requiredForAdmin": ["", "Submitted"],
-			/* }, {
-				'elementType': 'field',
-				'controlType': 'select',
-				'fieldName': 'Event Location',
-				"listFieldName": "EventLocation",
-				'labelContent': 'Location',
-				'loadOptions': {
-					'listName': 'MuseumLocations',
-					'displayField': 'Title',
-					'valueField': 'Title',
-					'orderField': 'Title'
-				}
-			}, {
-				"elementType": "field",
-				"controlType": "check",
-				"fieldName": "Add Location Boolean",
-				"choiceSetLabel": "Add a Location",
-				"choices": [
-					{
-						"value": "add",
-						"display": "Yes, I need to add a location to the list"
+				/* }, {
+					'elementType': 'field',
+					'controlType': 'select',
+					'fieldName': 'Event Location',
+					"listFieldName": "EventLocation",
+					'labelContent': 'Location',
+					'loadOptions': {
+						'listName': 'MuseumLocations',
+						'displayField': 'Title',
+						'valueField': 'Title',
+						'orderField': 'Title'
 					}
-				],
-				"onChange": [
-					{ "thisFieldEquals": ["add"], "show": [{ "divID": "label-and-control_Location-to-Add" }], "require": [{ "fieldName": "Location to Add", "type": "text" }], "set": [{ "fieldName": "Event Location", "type": "select", "optionIndex": 0 }] }
-				] */
+				}, {
+					"elementType": "field",
+					"controlType": "check",
+					"fieldName": "Add Location Boolean",
+					"choiceSetLabel": "Add a Location",
+					"choices": [
+						{
+							"value": "add",
+							"display": "Yes, I need to add a location to the list"
+						}
+					],
+					"onChange": [
+						{ "thisFieldEquals": ["add"], "show": [{ "divID": "label-and-control_Location-to-Add" }], "require": [{ "fieldName": "Location to Add", "type": "text" }], "set": [{ "fieldName": "Event Location", "type": "select", "optionIndex": 0 }] }
+					] */
 			}, {
 				'elementType': 'field',
 				'controlType': 'text',
@@ -556,7 +556,9 @@
 
 
 
-
+				/* 				"requiredForNonAdmin": ["", "Submitted"],
+								"requiredForAdmin": ["", "Submitted"],
+				 */
 
 			}, {
 				'elementType': 'markup',
@@ -821,12 +823,13 @@
 							{ "fieldName": "Months for Same Week Each Year", "type": "select" },
 						],
 						"set": [
-							{ 
-								"fieldName": "Date for Same Date Each Year", 
+							{
+								"fieldName": "Date for Same Date Each Year",
 								"type": "text",
 								"method": "dynamic",
-								"value": "$().ReturnFormattedDateTime('nowLocal', null, 'D', null)" }
-							]
+								"value": "$().ReturnFormattedDateTime('nowLocal', null, 'D', null)"
+							}
+						]
 					}, {
 						"thisFieldEquals": ["yearlySameWeek"],
 
@@ -1382,8 +1385,8 @@
 				'requiredForAdmin': [],
 				'hideForNonAdmin': [''],
 				'hideForAdmin': [''],
-				'disabledForNonAdmin': ["Submitted", "Completed", "Cancelled"],
-				'disabledForAdmin': ["Submitted", "Completed", "Cancelled"]
+				'disabledForNonAdmin': ["Cancelled"],
+				'disabledForAdmin': ["Cancelled"]
 			}
 		]
 	};
@@ -1394,68 +1397,68 @@
 	//	  (fData.CustomScriptLast will be appended to auto-generated script)
 	fData.CustomScriptFirst = '';
 
-
-	fData.CustomScriptLast = 'if ($("input#individual-or-pattern_individual").is(":checked")) { \n' +
-								'   $("div#simple-dates").show("fast").removeClass("hidden"); \n' +
-								'} \n';
-
-
-	fData.CustomScriptLast += 'if ($("input#individual-or-pattern_pattern").is(":checked")) { \n' +
-							'   $("div#pattern-and-range").show("fast").removeClass("hidden"); \n' +
-							'} \n';
+	fData.CustomScriptLast = 'if ($("input#individual-or-pattern_pattern").is(":checked")) { \n' +
+		'   $("div#pattern-and-range").show("fast").removeClass("hidden"); \n' +
+		'} \n';
 
 	fData.CustomScriptLast += 'if ($("input#Legacy-Contact").val() != "") { \n' +
-							'   $("div#label-and-control_Requested-For").hide("fast").addClass("hidden"); \n' +
-							'   $("div#label-and-control_Legacy-Contact").show("fast").removeClass("hidden"); \n' +
-							'} \n';
+		'   $("div#label-and-control_Requested-For").hide("fast").addClass("hidden"); \n' +
+		'   $("div#label-and-control_Legacy-Contact").show("fast").removeClass("hidden"); \n' +
+		'} \n';
 
 	fData.CustomScriptLast += 'if ($("input#Legacy-Event-Creation-Date").val() != "") { \n' +
-							'   $("div#label-and-control_Request-Date").hide("fast").addClass("hidden"); \n' +
-							'   $("div#label-and-control_Legacy-Event-Creation-Date").show("fast").removeClass("hidden"); \n' +
-							'} \n';
+		'   $("div#label-and-control_Request-Date").hide("fast").addClass("hidden"); \n' +
+		'   $("div#label-and-control_Legacy-Event-Creation-Date").show("fast").removeClass("hidden"); \n' +
+		'} \n';
 
 	fData.CustomScriptLast += 'if ($("select#Pattern-Basis").val() == "xDays") { \n' +
-						'   $("div#pattern_x-days").show("fast").removeClass("hidden"); \n' +
-						'} \n';
+		'   $("div#pattern_x-days").show("fast").removeClass("hidden"); \n' +
+		'} \n';
 
 	fData.CustomScriptLast += 'if ($("select#Pattern-Basis").val() == "xWeeks") { \n' +
-						'   $("div#pattern_x-weeks").show("fast").removeClass("hidden"); \n' +
-						'} \n';
+		'   $("div#pattern_x-weeks").show("fast").removeClass("hidden"); \n' +
+		'} \n';
 
 	fData.CustomScriptLast += 'if ($("select#Pattern-Basis").val() == "monthlySameDay") { \n' +
-						'   $("div#pattern_monthly-same-day").show("fast").removeClass("hidden"); \n' +
-						'} \n';
+		'   $("div#pattern_monthly-same-day").show("fast").removeClass("hidden"); \n' +
+		'} \n';
 
 	fData.CustomScriptLast += 'if ($("select#Pattern-Basis").val() == "monthlySameWeek") { \n' +
-						'   $("div#pattern_monthly-same-week").show("fast").removeClass("hidden"); \n' +
-						'} \n';
+		'   $("div#pattern_monthly-same-week").show("fast").removeClass("hidden"); \n' +
+		'} \n';
 
 	fData.CustomScriptLast += 'if ($("select#Pattern-Basis").val() == "yearlySameDay") { \n' +
-						'   $("div#pattern_yearly-same-day").show("fast").removeClass("hidden"); \n' +
-						'} \n';
+		'   $("div#pattern_yearly-same-day").show("fast").removeClass("hidden"); \n' +
+		'} \n';
 
 	fData.CustomScriptLast += 'if ($("select#Pattern-Basis").val() == "yearlySameWeek") { \n' +
-						'   $("div#pattern_yearly-same-week").show("fast").removeClass("hidden"); \n' +
-						'} \n';
+		'   $("div#pattern_yearly-same-week").show("fast").removeClass("hidden"); \n' +
+		'} \n';
 
 	fData.CustomScriptLast += 'if ($("select#Ending-Basis").val() == "xOccurrences") { \n' +
-						'   $("div#range_x-occurrences").show("fast").removeClass("hidden"); \n' +
-						'} \n';
+		'   $("div#range_x-occurrences").show("fast").removeClass("hidden"); \n' +
+		'} \n';
 
 	fData.CustomScriptLast += 'if ($("select#Ending-Basis").val() == "date") { \n' +
-						'   $("div#range_ending-date").show("fast").removeClass("hidden"); \n' +
-						'} \n';
+		'   $("div#range_ending-date").show("fast").removeClass("hidden"); \n' +
+		'} \n';
 
 	// =============================
 
 	// TEMP
 
 	fData.CustomScriptLast += '$("div#label-and-control_Individual-or-Pattern").addClass("hidden"); \n';
-	fData.CustomScriptLast += '$().SetFieldToRequired("Repeating-Date", "datepicker"); \n';
-	fData.CustomScriptLast += '$("div#simple-dates").removeClass("hidden"); \n';
+	fData.CustomScriptLast += 'if ($("input#Request-Status").val() == "") {\n' +
+		'	$().SetFieldToRequired("Repeating-Date", "datepicker"); \n' +
+		'	$("div#simple-dates").removeClass("hidden");\n' +
+		'} \n';
 	fData.CustomScriptLast += '$("div#label-and-control_Change-Pattern-of-Repeating-Dates").addClass("hidden"); \n';
 	fData.CustomScriptLast += '$("input#individual-or-pattern_individual").prop("checked", true).attr("checked", true); \n';
 
+	// reinstate the following
+	// fData.CustomScriptLast = 'if ($("input#individual-or-pattern_individual").is(":checked")) { \n' +
+	// 	'   $("div#simple-dates").show("fast").removeClass("hidden"); \n' +
+	// 	'} \n';
 
 
 	// =============================

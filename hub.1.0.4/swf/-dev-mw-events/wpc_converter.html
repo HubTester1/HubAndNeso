@@ -1,0 +1,90 @@
+<script type="text/javascript">
+	
+	$(document).ready(function () {
+
+		var allListItemsIncoming = $().GetFieldsFromAllRows({
+			'webURL': 'https://bmos.sharepoint.com/sites/mw-events',
+			'select': [
+				{
+					'nameHere': 'ID',
+					'nameInList': 'ID'
+				}, {
+					'nameHere': 'EventLegacyID',
+					'nameInList': 'EventLegacyID'
+				}, {
+					'nameHere': 'EventStartTime',
+					'nameInList': 'EventStartTime'
+				}, {
+					'nameHere': 'EventEndTime',
+					'nameInList': 'EventEndTime'
+				}, {
+					'nameHere': 'AllRequestDataIncoming',
+					'nameInList': 'AllRequestData'
+				}
+			]
+		});
+
+		console.log('allListItemsIncoming');
+		console.log(allListItemsIncoming);
+
+		var allListItemsToUpdate = [];
+
+		allListItemsIncoming.forEach((item) => {
+			if (item.EventLegacyID) {
+				var regexOne = new RegExp("\r", "g");
+				var regexTwo = new RegExp("\n", "g");
+				var value = item.AllRequestDataIncoming;
+				value = value.replace(regexOne, "'");
+				value = value.replace(regexTwo, "'");
+				eval("var formDataObj=" + value);
+				// item.EventStartTime = item.EventStartTime + 'Z';
+				// item.EventEndTime = item.EventEndTime + 'Z';
+				item.AllRequestDataObject = formDataObj;
+				item.AllRequestDataObject['time-storage_Start-Time'] =
+					item.AllRequestDataObject['time-storage_Start-Time'] + 'Z';
+				item.AllRequestDataObject['time-storage_End-Time'] =
+					item.AllRequestDataObject['time-storage_End-Time'] + 'Z';
+				item.AllRequestData = CDataWrap(JSON.stringify(item.AllRequestDataObject));
+				var updateObject = {
+					ID: item.ID
+				}
+				updateObject.submissionValuePairsArray = [
+					// ['EventStartTime', item.EventStartTime],
+					// ['EventEndTime', item.EventEndTime],
+					['AllRequestData', item.AllRequestData]
+				];
+				allListItemsToUpdate.push(updateObject);
+			}
+		});
+
+		allListItemsToUpdate.forEach((item) => {
+			// update SWFList
+			var updateListItemsOptions = {
+				operation: 'UpdateListItems',
+				listName: 'SWFList',
+				webURL: 'https://bmos.sharepoint.com/sites/mw-events',
+				batchCmd: 'Update',
+				ID: item.ID,
+				valuepairs: item.submissionValuePairsArray,
+				completefunc: function (xData, Status) {
+					// determine success of save; then...
+					var swfListSaveSuccess =
+						$().HandleListUpdateReturn(xData, Status, 'Hub SWF List Item Error - GSE Signup Credit');
+					if (swfListSaveSuccess === 1) {
+						console.log('success');
+					} else {
+						console.log('error');
+					}
+				}
+			};
+			$().SPServices(updateListItemsOptions);
+		});
+	});
+	
+
+	function CDataWrap(value) {
+		return "<![CDATA[" + value + "]]>";
+	}
+
+
+</script>

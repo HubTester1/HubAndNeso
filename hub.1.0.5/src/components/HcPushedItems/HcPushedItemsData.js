@@ -54,6 +54,7 @@ export default class HcPushedItemsData {
 					const alllistItems = [];
 					// iterate over the results and push them to allListItems
 					resultsReturnArray.forEach((listValue) => {
+						console.log(listValue);
 						listValue.forEach((itemValue) => {
 							const itemFormatted = {
 								url: '',
