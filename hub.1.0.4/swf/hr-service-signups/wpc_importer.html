@@ -6,8 +6,7 @@
 		var importEnabledMsg = '<p><strong>Note</strong>: Loading this page causes legacy data to be imported. The console should show import results. A large import may take several minutes and this simple importer doesn\'t provide any user feedback, so just be careful not to close the browser tab early. Disable the import code in SiteAssets > wpc_importer.html.</p>';
 		var importDisabledMsg = '<p><strong>Note</strong>: Import code has been disabled. You can re-enable in SiteAssets > wpc_import.html.</p>';
 
-		/* $('div#all-content-container').append(importDisabledMsg); */
-
+		$('div#all-content-container').append(importDisabledMsg);
 
 
 		// to enable import, remove /**/ and comment out disable section
@@ -15,13 +14,13 @@
 
 		console.log('m1');
 
-		$('div#all-content-container').append(importEnabledMsg);
+		/* $('div#all-content-container').append(importEnabledMsg);
 
 
 		  // partial config 
 		var mData = {
-			'legacyFile': '/sites/hr-service-signups/SiteAssets/signups.xml',
-			'maxToProcess': 10000,
+			'legacyFile': '/sites/hr-service-signups/SiteAssets/signupKbaur.xml',
+			'maxToProcess': 1,
 			'newList': 'SWFList',
 			'deleteAllItemsBeforeImporting': 1,
 			'emailErrorsTo': 'jbaker@mos.org'
@@ -247,7 +246,7 @@
 		});
 
 
-		// !!! ---- end import-disabling comment here ---- !!!
+		 */ // !!! ---- end import-disabling comment here ---- !!!
 	});
 
 
