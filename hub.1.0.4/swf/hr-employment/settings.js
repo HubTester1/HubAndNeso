@@ -385,6 +385,9 @@
 				'labelContent': "Grade",
 				"setOptions": [
 					{
+						"value": "Intern",
+						"display": "Intern"
+					}, {
 						"value": "25",
 						"display": "25"
 					}, {

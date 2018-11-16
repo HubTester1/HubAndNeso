@@ -50,7 +50,8 @@
     "react-stickynode": "^1.4.1",
     "react-truncate": "^2.3.0",
     "shortid": "^2.2.8",
-    "sp-pnp-js": "^3.0.8"
+    "sp-pnp-js": "^3.0.8",
+    "xml2js": "^0.4.19"
   },
   "devDependencies": {
     "autoprefixer": "^8.5.0",

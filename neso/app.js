@@ -32,6 +32,8 @@ const nesoHcOrg = require('./neso_modules/nesoHcOrg');
 const nesoSPSync = require('./neso_modules/nesoSPSync');
 const nesoHubEmails = require('./neso_modules/nesoHubEmails');
 const hcMessagesConversion = require('./neso_modules/hcMessagesConversion');
+const nesoFeeds = require('./neso_modules/nesoFeeds');
+
 
 // NESO (MOS) ROUTES ---
 
@@ -187,6 +189,24 @@ app.use((err, req, res, next) => {
 });
 
 // CRON ---
+
+// CreateProducts365DaysByVenueShowXMLFeed
+
+// get a promise to process the email queue
+nesoFeeds.CreateProducts365DaysByVenueShowXMLFeed()
+	// if the promise is resolved with the docs, then respond with the docs as JSON
+	.then((result) => {
+		// eslint-disable-next-line no-console
+		// console.log('Processed Email Queue:');
+		// console.log(result);
+	})
+	// if the promise is rejected with an error, then respond with the error as JSON
+	.catch((error) => {
+		// eslint-disable-next-line no-console
+		// console.log('ERROR - Processing Email Queue:');
+		// eslint-disable-next-line no-console
+		console.log(error);
+	});
 
 // schedule for once per minute
 cron.schedule('* * * * *', () => {
@@ -451,7 +471,7 @@ cron.schedule('0 2 * * *', () => {
 			console.log(error);
 		});
 });
-// schedule as specified in environment
+/* // schedule as specified in environment
 cron.schedule(process.env.gseScheduleCreditReminderNotificationProcessingSchedule, () => {
 // get a promise to process gse schedule credit reminders
 	nesoHubEmails.ProcessGSEScheduleCreditReminderNotifications()
@@ -488,7 +508,7 @@ cron.schedule(process.env.gseSignupReminderNotificationProcessingSchedule, () =>
 			// eslint-disable-next-line no-console
 			console.log(error);
 		});
-});
+}); */
 
 
 // PROCESS ---
