@@ -20850,26 +20850,30 @@
 					var venueID = ReplaceAll(" ", "-", venueTitle.toLowerCase());
 					if (venueID == "4-d-theater") { venueID = "four-d-theater"; }
 
-					var vanueTabText = venueTitle;
+					var venueTabText = venueTitle;
 					switch (venueTitle) {
 						case "4-D Theater":
-							vanueTabText = "4-D";
+							venueTabText = "4-D";
 							break;
 						case "Charles Hayden Planetarium":
-							vanueTabText = "Planetarium";
+							venueTabText = "Planetarium";
 							break;
 						case "Mugar Omni Theater":
-							vanueTabText = "Omni";
+							venueTabText = "Omni";
 							break;
 						case "Thrill Ride 360":
-							vanueTabText = "Thrill Ride";
+							venueTabText = "Thrill Ride";
 							break;
 					}
 
-					tabsToInsert += "       <li><a href=\"#" + venueID + "\">" + vanueTabText + "</a></li> \n";
+					tabsToInsert += "       <li><a href=\"#" + venueID + "\">" + venueTabText + "</a></li> \n";
 
 					htmlToWrite += "<div class=\"venue-container\" id=\"" + venueID + "\"> \n";
 					htmlToWrite += "<h2 class=\"header_venue\">" + venueTitle + "</h2> \n";
+
+					if (venueTabText === 'Omni') {
+						htmlToWrite += '<p style="padding: 2rem; background-color: #f2ea9a">Until a Tessitura issue is resolved, some Omni shows may not appear here.</p> \n';
+					}
 
 					$(venueValue).find("show").each(function (showIndex, showValue) {
 
@@ -24842,9 +24846,6 @@
 					});
 				};
 			}
-
-			console.log('final opt.pageLength');
-			console.log(opt.pageLength);
 
 			$("#" + opt.tableID).DataTable({
 				"data": opt.listForDatatable,
