@@ -131,6 +131,30 @@
 												background-size: cover;
 												z-index: 9001;
 											}
+
+											@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+												form#aspnetForm div#internet-explorer-upgrade {
+													display: block !important;
+												}
+
+	
+												div.banner {
+													border-radius: .2rem;
+													padding: 2rem 5rem;
+													background-color: #fff;
+												}
+												p.banner__text {
+													position: relative;
+													padding: 0 0 0 2.25rem;
+													max-width: 60rem;
+													margin: 0 auto;
+												}
+												div.banner--critical {
+													color: #840852;
+													background-color: #e5c5d3;
+												}
+											}
+
 										
 										</style>
 
@@ -471,11 +495,11 @@
 												</div>
 											</div>
 											<div id="loading-screen" class="visible">
+												<div id="internet-explorer-upgrade" class="banner banner--critical"    style="display: none;">
+													<p class="banner__text">Internet Explorer was replaced in 2015. Please upgrade from Internet Explorer to Edge, or switch to Chrome or Firefox. If you need assistance doing so, please contact IIT System Support Services at x0130.
+												</div>
 												<p id="loading-text">Loading...</p>
 												<div id="loading-logo"></div>
-											</div>
-											<div id="internet-explorer-upgrade" class="banner banner--critical"    style="display: none;">
-												<p class="banner__text">Internet Explorer was replaced in 2015. Please upgrade from Internet Explorer to Edge, or switch to Chrome or Firefox. If you need assistance doing so, please contact IIT System Support Services at x0130.
 											</div>
 											<div id="hub-central-mount-point" class="hidden"></div>
 											<div id="s4-ribbonrow">
