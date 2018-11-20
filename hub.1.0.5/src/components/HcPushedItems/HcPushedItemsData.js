@@ -20,7 +20,7 @@ export default class HcPushedItemsData {
 		const hrDocsWeb = new Web('https://bmos.sharepoint.com');
 		return hrDocsWeb.lists.getByTitle('HR Docs').items
 			.select('FileLeafRef', 'ServerRedirectedEmbedUrl', 'PushToHCName')
-			.filter("PushToHC eq '1'")
+			.filter('PushToHCName ne null')
 			.get();
 	}
 
