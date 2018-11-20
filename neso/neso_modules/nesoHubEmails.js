@@ -98,7 +98,6 @@ module.exports = {
 		// return a new promise
 		new Promise((resolve, reject) => {
 			if (process.env.use === 'prod') {
-				console.log('environment IS prod');
 				// set up vars
 				const tomorrowTruncated = moment().add(1, 'day').format('YYYY-MM-DD');
 				const oneWeekOutTruncated = moment().add(1, 'week').format('YYYY-MM-DD');
@@ -154,7 +153,6 @@ module.exports = {
 						reject(error);
 					});
 			} else {
-				console.log('environment is not prod');
 				resolve('environment is not prod');
 			}
 		}),
@@ -163,7 +161,6 @@ module.exports = {
 		// return a new promise
 		new Promise((resolve, reject) => {
 			if (process.env.use === 'prod') {
-				console.log('environment IS prod');
 				// set up vars
 				const notificationsToSend = [];
 				const now = moment();
@@ -250,7 +247,6 @@ module.exports = {
 						reject(error);
 					});
 			} else {
-				console.log('environment is not prod');
 				resolve('environment is not prod');
 			}
 		}),

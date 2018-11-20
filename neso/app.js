@@ -191,7 +191,7 @@ app.use((err, req, res, next) => {
 // CRON ---
 
 // get a promise to create the 
-nesoFeeds.CreateProductsTodayByVenueShowXMLFeed('productsTodayByVenueShow')
+/* nesoFeeds.CreateProductsXMLFeed('productsTodayByVenueShow')
 	// if the promise is resolved with the docs, then respond with the docs as JSON
 	.then((result) => {
 		// eslint-disable-next-line no-console
@@ -204,7 +204,7 @@ nesoFeeds.CreateProductsTodayByVenueShowXMLFeed('productsTodayByVenueShow')
 		// console.log('ERROR - Processing Email Queue:');
 		// eslint-disable-next-line no-console
 		console.log(error);
-	});
+	}); */
 
 // schedule for once per minute
 cron.schedule('* * * * *', () => {
@@ -433,7 +433,7 @@ cron.schedule('0 2 * * *', () => {
 			console.log(error);
 		});
 });
-/* // schedule as specified in environment
+// schedule as specified in environment
 cron.schedule(process.env.gseScheduleCreditReminderNotificationProcessingSchedule, () => {
 // get a promise to process gse schedule credit reminders
 	nesoHubEmails.ProcessGSEScheduleCreditReminderNotifications()
@@ -470,7 +470,7 @@ cron.schedule(process.env.gseSignupReminderNotificationProcessingSchedule, () =>
 			// eslint-disable-next-line no-console
 			console.log(error);
 		});
-}); */
+});
 
 // PROCESS ---
 
