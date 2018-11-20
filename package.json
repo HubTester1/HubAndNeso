@@ -35,6 +35,7 @@
   "dependencies": {
     "add": "^2.0.6",
     "axios": "^0.18.0",
+    "he": "^1.2.0",
     "moment": "^2.22.1",
     "office-ui-fabric-react": "^5.129.0",
     "react": "^16.3.2",

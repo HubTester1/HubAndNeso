@@ -391,7 +391,7 @@ module.exports = {
 							// if the promise to set dataProcessingNow to true was resolved
 							.then((replaceOneActiveDirectorySettingResult) => {
 								// get a promise to get all ad users from csv
-								module.exports.ReturnAllADUsersFromCSV()
+								module.exports.ReturnAllADUsersFromCSVWithLegacyPhoneNumbers()
 									// if the promise to get all ad users from csv was resolved with the ad users
 									.then((returnAllActiveDirectoryUsersFromCSVResult) => {
 										// extract the data from the result
@@ -1434,6 +1434,7 @@ module.exports = {
 														incomingNeedle: '@mos.org',
 														flag: 1,
 													});
+													// TEMP
 													const allGroupsAllDataArray = adUserRaw.memberOf.split(', ');
 													const securityGroups = [];
 													allGroupsAllDataArray
@@ -1543,11 +1544,194 @@ module.exports = {
 				});
 		}),
 
+	ReturnAllADUsersFromCSVWithLegacyPhoneNumbers: () =>
+		// return a new promise
+		new Promise((resolve, reject) => {
+			// get a promise to retrieve excel settings
+			module.exports.ReturnADCSVSettings()
+				// if the promise to retrieve excel settings is resolved with the settings
+				.then((settings) => {
+					// try to resolve this promise with the ad users data
+					try {
+						// make a copy of the file to read
+						const newUsersFilePathAndName =
+							module.exports.ReturnNewADUsersFilePathAndName(settings.csv.usersFilePathAndName);
+						fse
+							.copy(settings.csv.usersFilePathAndName, newUsersFilePathAndName, { overwrite: true })
+							.then(() => {
+								// get data from the csv file
+								csv().fromFile(newUsersFilePathAndName)
+									// when the data has been parsed
+									.on('end_parsed', (adUsersRaw) => {
+										// console.log(adUsersRaw);
+										// get a promise to retrieve all documents from the adUsers document collection
+										nesoDBQueries.ReturnAllDocsFromCollection('legacyPhoneNumbers')
+											// if the promise is resolved with the docs, 
+											// 		then resolve this promise with the docs
+											.then((result) => {
+												const legacyPhoneNumbersArray = result.docs;
+												// console.log(legacyPhoneNumbersArray);
+												// set up an empty array to receive a transformed version of the data
+												const adUsersTransformed = [];
+												// iterate over raw users array
+												adUsersRaw.forEach((adUserRaw, adUserRawIndex) => {
+													// ignore any empty results; we test against the value 
+													// 		that will be the unique ID because we can't 
+													//		use any results without a unique ID anyway
+													if (typeof (adUserRaw.userPrincipalName) !== 'undefined') {
+														// if this user is in the TrackIt Users or Contractors OU
+														const adSPathArray = adUserRaw.ADsPath.split(',');
+														if (
+															// adSPathArray has multiple elements
+															adSPathArray.length > 1 &&
+															// adSPathArray[1] is either TrackIt Users or Contractors
+															(adSPathArray[1] === 'OU=TrackIt Users' || adSPathArray[1] === 'OU=Contractors')
+														) {
+															// extract and transform some of the data
+															const userAccount = nesoUtilities.StrInStr({
+																incomingHaystack: adUserRaw.userPrincipalName.toLowerCase(),
+																incomingNeedle: '@mos.org',
+																flag: 1,
+															});
+															// TEMP
+															let userOfficePhone = adUserRaw.telephoneNumber;
+															const allGroupsAllDataArray = adUserRaw.memberOf.split(', ');
+															const securityGroups = [];
+															allGroupsAllDataArray
+																.forEach((oneGroupWithAllDataString, oneGroupWithAllDataStringIndex) => {
+																	const oneGroupWithAllDataArray = oneGroupWithAllDataString.split(',');
+																	if (
+																		// oneGroupWithAllDataArray has multiple elements
+																		oneGroupWithAllDataArray.length > 1 &&
+																		// oneGroupWithAllDataArray[1] contains 'Groups'
+																		nesoUtilities.StrInStr({
+																			incomingHaystack: oneGroupWithAllDataArray[1],
+																			incomingNeedle: 'Groups',
+																		}) &&
+																		// oneGroupWithAllDataArray[1] does not contain 'Exchange'
+																		nesoUtilities.StrInStr({
+																			incomingHaystack: oneGroupWithAllDataArray[1],
+																			incomingNeedle: 'Exchange',
+																		}) === false &&
+																		// oneGroupWithAllDataArray[1] does not contain 'FileMaker'
+																		nesoUtilities.StrInStr({
+																			incomingHaystack: oneGroupWithAllDataArray[1],
+																			incomingNeedle: 'FileMaker',
+																		}) === false
+																	) {
+																		securityGroups.push(nesoUtilities.StrInStr({
+																			incomingHaystack: oneGroupWithAllDataArray[0],
+																			incomingNeedle: 'CN=',
+																			flag: 3,
+																		}));
+																	}
+																});
+															// if the user doesn't have a proper office phone
+															if (userOfficePhone.length < 5) {
+																legacyPhoneNumbersArray.forEach((personObject, personIndex) => {
+																	if (personObject.account === userAccount) {
+																		userOfficePhone = personObject.officePhone;
+																	}
+																});
+															}
+
+															// push a transformed user to adUsersTransformed
+															adUsersTransformed.push({
+																account: userAccount,
+																employeeID: adUserRaw.employeeID,
+																firstName: adUserRaw.givenName,
+																lastName: adUserRaw.sn,
+																firstInitial: adUserRaw.givenName.slice(0, 1).toUpperCase(),
+																lastInitial: adUserRaw.sn.slice(0, 1).toUpperCase(),
+																displayName: adUserRaw.displayName,
+																title: adUserRaw.title,
+																email: adUserRaw.mail,
+																officePhone: userOfficePhone,
+																mobilePhone: adUserRaw.mobile,
+																manager: adUserRaw.manager,
+																department: adUserRaw.department,
+																division: adUserRaw.division,
+																securityGroups,
+															});
+														}
+													}
+												});
+
+												// resolve this promise with a message
+												resolve({
+													error: false,
+													csvError: false,
+													activeDirectoryUsers: adUsersTransformed,
+												});
+												fse
+													.remove(newUsersFilePathAndName)
+													.then(() => {
+														// console.log('FILE REMOVED');
+													})
+													.catch((err) => {
+														// construct a custom error
+														const errorToReport = {
+															error: true,
+															fileRemovalError: true,
+														};
+														// process error
+														nesoErrors.ProcessError(errorToReport);
+														// reject this promise with an error
+														reject(errorToReport);
+													});
+											})
+											// if the promise is rejected with an error, 
+											// 		then reject this promise with an error
+											.catch((error) => {
+												// construct a custom error
+												const errorToReport = {
+													error: true,
+													legacyPhoneNumberError: true,
+												};
+												// process error
+												nesoErrors.ProcessError(errorToReport);
+												// reject this promise with an error
+												reject(errorToReport);
+											});
+									});
+							})
+							.catch((err) => {
+								// construct a custom error
+								const errorToReport = {
+									error: true,
+									fileCopyError: true,
+								};
+								// process error
+								nesoErrors.ProcessError(errorToReport);
+								// reject this promise with an error
+								reject(errorToReport);
+							});
+						// if there was an error
+					} catch (exception) {
+						// console.log(exception);
+						// construct a custom error
+						const errorToReport = {
+							error: true,
+							csvError: true,
+						};
+						// process error
+						nesoErrors.ProcessError(errorToReport);
+						// reject this promise with an error
+						reject(errorToReport);
+					}
+				})
+				// if the promise is rejected with an error, then reject this promise with an error
+				.catch((error) => {
+					reject(error);
+				});
+		}),
+
+
 	ReturnAllADUsersByDivisionDepartmentFromCSV: () =>
 		// return a new promise
 		new Promise((resolve, reject) => {
 			// get a promise to get all ad users from csv
-			module.exports.ReturnAllADUsersFromCSV()
+			module.exports.ReturnAllADUsersFromCSVWithLegacyPhoneNumbers()
 				// if the promise to get all ad users from csv was resolved with the ad users
 				.then((returnAllActiveDirectoryUsersFromCSVResult) => {
 					// extract the data from the result
@@ -1557,7 +1741,8 @@ module.exports = {
 					// iterate over adUsers
 					adUsers.forEach((adUser, adUserIndex) => {
 						// if this user has a division and department and manager
-						// 		(ReturnAllADUsersFromCSV() will not return anyone without an account)
+						// 		(ReturnAllADUsersFromCSVWithLegacyPhoneNumbers() 
+						// 		will not return anyone without an account)
 						if (adUser.division && adUser.division !== '' &&
 							adUser.department && adUser.department !== '' &&
 							adUser.manager && adUser.manager !== '') {

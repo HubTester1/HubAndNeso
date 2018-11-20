@@ -190,10 +190,8 @@ app.use((err, req, res, next) => {
 
 // CRON ---
 
-// CreateProducts365DaysByVenueShowXMLFeed
-
-// get a promise to process the email queue
-nesoFeeds.CreateProducts365DaysByVenueShowXMLFeed()
+// get a promise to create the 
+nesoFeeds.CreateProductsTodayByVenueShowXMLFeed('productsTodayByVenueShow')
 	// if the promise is resolved with the docs, then respond with the docs as JSON
 	.then((result) => {
 		// eslint-disable-next-line no-console
@@ -226,42 +224,6 @@ cron.schedule('* * * * *', () => {
 			console.log(error);
 		});
 });
-/* // schedule as specified in environment
-cron.schedule(process.env.hrPositionsProcessingCronSchedule1, () => {
-	// get a promise to process HR Position Directory data
-	nesoHRPositions.ProcessHRPositionsData()
-		// if the promise is resolved with the docs, then respond with the docs as JSON
-		.then((result) => {
-			// eslint-disable-next-line no-console
-			// console.log('Processed HR Position Directory data:');
-			// console.log(result);
-		})
-		// if the promise is rejected with an error, then respond with the error as JSON
-		.catch((error) => {
-			// eslint-disable-next-line no-console
-			console.log('ERROR - Processing HR Position Directory data:');
-			// eslint-disable-next-line no-console
-			console.log(error);
-		});
-});
-// schedule as specified in environment
-cron.schedule(process.env.hrPositionsProcessingCronSchedule2, () => {
-	// get a promise to process HR Position Directory data
-	nesoHRPositions.ProcessHRPositionsData()
-		// if the promise is resolved with the docs, then respond with the docs as JSON
-		.then((result) => {
-			// eslint-disable-next-line no-console
-			// console.log('Processed HR Position Directory data:');
-			// console.log(result);
-		})
-		// if the promise is rejected with an error, then respond with the error as JSON
-		.catch((error) => {
-			// eslint-disable-next-line no-console
-			console.log('ERROR - Processing HR Position Directory data:');
-			// eslint-disable-next-line no-console
-			console.log(error);
-		});
-}); */
 // schedule as specified in environment
 cron.schedule(process.env.adUserProcessingCronSchedule, () => {
 	nesoActiveDirectory.ProcessADUsersData()
@@ -509,7 +471,6 @@ cron.schedule(process.env.gseSignupReminderNotificationProcessingSchedule, () =>
 			console.log(error);
 		});
 }); */
-
 
 // PROCESS ---
 
