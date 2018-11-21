@@ -8,7 +8,7 @@ export default class NesoHttpClient {
 			axios({
 				method: 'get',
 				url: endpoint,
-				timeout: 3000,
+				timeout: 15000,
 			})
 				// if the promise is resolved with the docs, then resolve this promise with the docs
 				.then((result) => { resolve(result.data.docs); })
@@ -20,7 +20,7 @@ export default class NesoHttpClient {
 					};
 					if (error.response) {
 						// set reporting error's properties
-						errorToReport.summary = 'Response status code is no 2xx';
+						errorToReport.summary = 'Response status code is not 2xx';
 						errorToReport.details.data = error.response.data;
 						errorToReport.details.status = error.response.status;
 						errorToReport.details.headers = error.response.headers;
