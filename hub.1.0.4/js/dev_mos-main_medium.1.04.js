@@ -631,7 +631,7 @@
 
 			case "mwBuyoutCalendar":
 			case "mwEventCalendar":
-			
+
 				$().ReplacePageTitle(newTitle);
 				$("div#overview-screen-container").fadeIn(mData.gracefulScreenTransitionTime).removeClass("hidden");
 				$('div#overview-screen-container').fullCalendar('render');
@@ -1120,11 +1120,11 @@
 		if (rData.requestID != "" && rData.requestID == 0 && rData.gseScheduleID == "") {
 			initialScreen = "newRequest";
 			secondaryScreen = overviewScreen;
-		// if the URL contains a request ID (r) greater than 0 -OR- the URL contains a GSE Schedule ID (gseScheduleID) greater than 0
+			// if the URL contains a request ID (r) greater than 0 -OR- the URL contains a GSE Schedule ID (gseScheduleID) greater than 0
 		} else if ((rData.requestID != "" && rData.requestID > 0) || (rData.gseScheduleID != "" && rData.gseScheduleID > 0)) {
 			initialScreen = "existingRequest";
 			secondaryScreen = overviewScreen;
-		// if the URL does not contain a request ID (r)
+			// if the URL does not contain a request ID (r)
 		} else if (rData.requestID === "") {
 			initialScreen = overviewScreen;
 			secondaryScreen = "newRequest";
@@ -1400,11 +1400,11 @@
 
 
 		var query = "<Query>" +
-					"<Where>";
-		if (opt.where.ands) { 
+			"<Where>";
+		if (opt.where.ands) {
 			query += "<And>";
 			// curently assumes there are no more than two ands
-			$.each(opt.where.ands, function(i, andObject) {
+			$.each(opt.where.ands, function (i, andObject) {
 				if (!andObject.operator) {
 					andObject.operator = 'Eq';
 				}
@@ -1424,8 +1424,8 @@
 
 			if (opt.where.value) {
 				query += "<" + opt.where.operator + ">";
-				query += "<FieldRef Name='" + opt.where.field + "'></FieldRef>" + 
-				"<Value Type='" + opt.where.type + "'>" + opt.where.value + "</Value>";
+				query += "<FieldRef Name='" + opt.where.field + "'></FieldRef>" +
+					"<Value Type='" + opt.where.type + "'>" + opt.where.value + "</Value>";
 				query += "</" + opt.where.operator + ">";
 			} else if (opt.where.values) {
 				query += "<In>";
@@ -1439,8 +1439,8 @@
 			}
 		}
 
-		query +=	"</Where>" +
-					"</Query>";
+		query += "</Where>" +
+			"</Query>";
 
 		var fields = "<ViewFields>";
 		$.each(opt.select, function (i, oneField) {
@@ -1501,7 +1501,7 @@
 	};
 
 
-	
+
 	$.fn.GetFieldsFromAllRows = function (options) {
 
 		var returnValue = [];
@@ -1626,9 +1626,9 @@
 					$.each(opt.select, function (i, oneField) {
 
 						if (
-							oneField.nameHere === "formData" || 
-							oneField.nameHere === "defaultDataForNewRequests" || 
-							oneField.nameHere === "gseJobData" || 
+							oneField.nameHere === "formData" ||
+							oneField.nameHere === "defaultDataForNewRequests" ||
+							oneField.nameHere === "gseJobData" ||
 							oneField.nameHere === "gseScheduleData"
 						) {
 							console.log('found field to interpret');
@@ -4104,9 +4104,9 @@
 			delete rData.gseScheduleData['Requester-Email'];
 			delete rData.gseJobData['Requester-Phone'];
 			delete rData.gseScheduleData['Requester-Phone'];
-			
+
 			// calculate positions remaining
-			
+
 			// prep some of the data before populating fields and placeholders with it
 			var otherSignupsForThisSchedule = $().GetFieldsFromSpecifiedRows({
 				"select": [{
@@ -4132,7 +4132,7 @@
 				rData.gseScheduleData['time-storage_StartTime'].substring(11, 16);
 			scheduleStartDateTime = moment.tz(scheduleStartDateTime, "America/New_York").format();
 			var NowAsISOLocal = $().ReturnFormattedDateTime('nowLocal', null, null);
-			rData.gseScheduleData['Positions-Available'] = 
+			rData.gseScheduleData['Positions-Available'] =
 				parseInt(rData.gseScheduleData['Number-of-Positions']) - otherSignupsForThisSchedule.length;
 			rData.gseScheduleData['Friendly-Date'] = $().ReturnFormattedDateTime(rData.gseScheduleData['Date'], null, 'dddd, MMMM D, YYYY', 1);
 			rData.gseScheduleData['Shift-Length'] = rData.gseScheduleData['shiftlength_35-hours'] ? '3.5 hours' : '7 hours';
@@ -4143,9 +4143,9 @@
 			if (rData.gseScheduleData['time-storage_MealTime']) {
 				rData.gseScheduleData['Meal-Time'] = $().ReturnFormattedDateTime(rData.gseScheduleData['time-storage_MealTime'].substring(0, 19), null, 'h:mm a');
 			}
-			
-			
-			
+
+
+
 
 			rData.gseJobData['Job-Admin-Name'] = rData.gseJobData['Job-Admin'][0].displayText;
 			rData.gseJobData['Job-Description-Formatted'] = '<p>' + ReplaceAll('%0A', '</p><p>', rData.gseJobData['Job-Description']) + '</p>';
@@ -4180,12 +4180,12 @@
 
 			// dress requirements
 			// start with the two persistent requirements
-			rData.gseJobData['Dress-Requirements-List-Items'] = 
-				'<li>Clothing and shoes must be in good condition.</li>' + 
+			rData.gseJobData['Dress-Requirements-List-Items'] =
+				'<li>Clothing and shoes must be in good condition.</li>' +
 				'<li>MOS badge must be worn above the waist at all times.</li>';
 			// add any other requirements
 			if (rData.gseJobData['Dress-Requirements']) {
-				rData.gseJobData['Dress-Requirements-List-Items'] += 
+				rData.gseJobData['Dress-Requirements-List-Items'] +=
 					'<li>' + ReplaceAll('%0A', '</li><li>', rData.gseJobData['Dress-Requirements']) + '</li>';
 			}
 
@@ -4219,7 +4219,7 @@
 
 			if (rData.gseScheduleData['Notes']) {
 				rData.gseScheduleData['Notes-Formatted'] = '<h3>Notes</h3>' +
-					'<p>' + ReplaceAll('%0A', '</p><p>', rData.gseScheduleData['Notes']) + '</p>';					
+					'<p>' + ReplaceAll('%0A', '</p><p>', rData.gseScheduleData['Notes']) + '</p>';
 			}
 
 			console.log('rData.gseScheduleData');
@@ -4228,7 +4228,7 @@
 			console.log(rData.gseJobData);
 			console.log('rData.formDataOnLoad');
 			console.log(rData.formDataOnLoad);
-			
+
 			// populate the placeholder <span>s with job and schedule data
 			PopulateFormData("div#request-form", rData.gseJobData, mData.uriRoot, rData.requestID, mData.checkForAlternateEventDataToPopulate);
 			PopulateFormData("div#request-form", rData.gseScheduleData, mData.uriRoot, rData.requestID, mData.checkForAlternateEventDataToPopulate);
@@ -5917,7 +5917,7 @@
 				if (typeof (fData.autoProcessGSESignupCreditFromSchedule) != 'undefined' && fData.autoProcessGSESignupCreditFromSchedule == 1) {
 
 					$(workingMessage).text("Handling GSE Modifications");
-					
+
 					// if this schedule is newly completed or cancelled
 					if (
 						(rData.requestStatus === 'Completed' || rData.requestStatus === 'Cancelled') &&
@@ -6000,7 +6000,7 @@
 								valuepairs: signupMod.submissionValuePairsArray,
 								completefunc: function (xData, Status) {
 									// determine success of save; then...
-									var swfListSaveSuccess = 
+									var swfListSaveSuccess =
 										$().HandleListUpdateReturn(xData, Status, 'Hub SWF List Item Error - GSE Signup Credit');
 									if (swfListSaveSuccess === 1) {
 										scheduleData = rData;
@@ -7403,14 +7403,14 @@
 			// $().RenderOverviewScreenButtons(oData.gseSchedulesListStaff.buttons, 0);
 			$().RenderCommandBarAndDataTablesForGSESchedules(oData.gseSchedulesListStaff.buttons, "overview-table-container", 'gseUserOnly');
 			$().RenderWorkflowContacts();
-		
-		
+
+
 		} else if (type === "mwEventList") {
 			$().RenderCommandBarAndDataTablesForMWEvents(oData.mwEventList.sections);
 			$().RenderWorkflowContacts();
-		
-		
-		
+
+
+
 		} else if (type === "gseSignupsHRAdmin") {
 			$().RenderCommandBarAndMarkupForGSESignupsForHRAdminOrManager("overview-table-container", 'gseHRAdmin');
 		} else if (type === "gseSignupsManager") {
@@ -9050,37 +9050,37 @@
 		// if (typeof (mData.devAdminNotifications) != 'undefined' && mData.devAdminNotifications === 1) {
 		// 	var gseJobAdminManagerEmailArray = $().ReturnUserEmailStringAndArray(mData.devAdminNotificationPersons).array;
 		// } else {
-			var gseJobAdminManagerEmailArray = [];
-			var userAccount = ReplaceAll('i:0#.f\\|membership\\|', '', ReplaceAll('@mos.org', '', incomingUserAccount));
-			// console.log('userAccount');
-			// console.log(userAccount);
-			// undo
-			if (userAccount === 'sp1' || userAccount === 'sp2' || userAccount === 'sp3' || userAccount === 'sp4' || userAccount === 'sp5' || userAccount === 'sp6') {
-				gseJobAdminManagerEmailArray
-					.push('sp3@mos.org');
-			} else {
-				$.ajax({
-					async: false,
-					method: "GET",
-					dataType: "json",
-					url: 'https://neso.mos.org/activeDirectory/user/' + userAccount,
-				})
-					.done(function (returnedUserData) {
-						// console.log(uData);
-						// console.log(returnedUserData);
-						var userManagerAccount = returnedUserData.docs.manager;
-						$.ajax({
-							async: false,
-							method: "GET",
-							dataType: "json",
-							url: 'https://neso.mos.org/activeDirectory/user/' + userManagerAccount,
-						})
-							.done(function (returnedManagerData) {
-								gseJobAdminManagerEmailArray
-										.push(returnedManagerData.docs.email);
-							});
-					});
-			}
+		var gseJobAdminManagerEmailArray = [];
+		var userAccount = ReplaceAll('i:0#.f\\|membership\\|', '', ReplaceAll('@mos.org', '', incomingUserAccount));
+		// console.log('userAccount');
+		// console.log(userAccount);
+		// undo
+		if (userAccount === 'sp1' || userAccount === 'sp2' || userAccount === 'sp3' || userAccount === 'sp4' || userAccount === 'sp5' || userAccount === 'sp6') {
+			gseJobAdminManagerEmailArray
+				.push('sp3@mos.org');
+		} else {
+			$.ajax({
+				async: false,
+				method: "GET",
+				dataType: "json",
+				url: 'https://neso.mos.org/activeDirectory/user/' + userAccount,
+			})
+				.done(function (returnedUserData) {
+					// console.log(uData);
+					// console.log(returnedUserData);
+					var userManagerAccount = returnedUserData.docs.manager;
+					$.ajax({
+						async: false,
+						method: "GET",
+						dataType: "json",
+						url: 'https://neso.mos.org/activeDirectory/user/' + userManagerAccount,
+					})
+						.done(function (returnedManagerData) {
+							gseJobAdminManagerEmailArray
+								.push(returnedManagerData.docs.email);
+						});
+				});
+		}
 		// }
 		return gseJobAdminManagerEmailArray;
 	};
@@ -9098,7 +9098,7 @@
 
 		sData.requesterManagerEmailArray = $().ReturnManagerOfUserEmailArray(uData.account);
 		sData.jobCreationAdditionalNotificationRecipients = $().ReturnGSEJobCreationAdditionalNotificationRecipients();
-		
+
 		jobAdminArray = JSON.parse($('input#Job-Admin_TopSpan_HiddenInput').val());
 		sData.requesterName = jobAdminArray[0].DisplayText;
 		sData.requesterEmail = jobAdminArray[0].Description;
@@ -9153,7 +9153,7 @@
 					'to': toAdmin,
 					'subject': eData.subjectPreface + 'new request received',
 					'bodyUnique': '<p>' + eData.requesterName + ' has submitted a new request. Please ' +
-						'<a href="' + eData.uriRequest + '">review this request and <a href="mailto:' + 
+						'<a href="' + eData.uriRequest + '">review this request and <a href="mailto:' +
 						eData.adminEmailString + '">' + 'contact the admin</a> with any issues.</p>'
 				});
 			});
@@ -9180,7 +9180,7 @@
 				'to': eData.requesterEmail,
 				'subject': eData.subjectPreface + 'new request received',
 				'bodyUnique': '<p>This is the request you nicknamed "' + eData.requestNick + '". You can ' +
-					'<a href="' + eData.uriRequest + '">review the details at any time</a> and you\'ll be ' + 
+					'<a href="' + eData.uriRequest + '">review the details at any time</a> and you\'ll be ' +
 					'notified again when the relevant people have approved it.</p>' +
 					'<p>In the meantime, you can <a href="mailto:' + eData.adminEmailString + '">' +
 					'contact the admin</a> with any questions or <a href="' + eData.uriOverview + '">' +
@@ -9230,7 +9230,7 @@
 				'subject': eData.subjectPreface + eData.requestStatus.toLowerCase(),
 				'bodyUnique': '<p>This is the request you nicknamed "' + eData.requestNick + '". You must ' +
 					'<a href="https://bmos.sharepoint.com/sites/hr-service-schedules/SitePages/App.aspx">schedule this job</a> ' +
-					'before anyone can sign up for it. You can ' + 
+					'before anyone can sign up for it. You can ' +
 					'<a href="mailto:' + eData.adminEmailString + '">contact the admin</a> with any ' +
 					'issues related thereto.'
 			});
@@ -9348,7 +9348,7 @@
 		sData.jobTitle = gseJobsArray[0].JobTitle;
 		sData.jobAdminName = sData.jobAdmin[0].name;
 		sData.jobAdminEmail = sData.jobAdmin[0].email;
-		sData.jobAdminLinkedNamesString = 
+		sData.jobAdminLinkedNamesString =
 			'<a href="mailto:' + sData.jobAdminEmail.toLowerCase() + '">' + sData.jobAdminName + '</a>';
 
 		// sData.requesterManagerEmailArray = $().ReturnManagerOfUserEmailArray(sData.jobAdmin[0].account);
@@ -9361,7 +9361,7 @@
 		} else {
 			mData.subjectPreface = mData.requestName + ' #' + rData.requestID + ': ';
 		}
-	
+
 		mData.uriOverview = mData.fullSiteBaseURL + "/SitePages/" + mData.pageToken + ".aspx"
 		mData.uriRequest = mData.uriOverview + "?r=" + rData.requestID;
 
@@ -9388,7 +9388,7 @@
 				'caller': 'beginningOfLife jobAdmin',
 				'to': sData.jobAdminEmail,
 				'subject': eData.subjectPreface + 'created',
-				'bodyUnique': '<p>This is the schedule, or set of schedules, you nicknamed "' + 
+				'bodyUnique': '<p>This is the schedule, or set of schedules, you nicknamed "' +
 					eData.requestNick + '". You can <a href="mailto:' + eData.adminEmailString + '">' +
 					'contact the admin</a> with any questions or <a href="' + eData.uriOverview + '">' +
 					'check up on this and any other ' + eData.requestName + ' requests</a>.</p>'
@@ -9473,7 +9473,7 @@
 		sData.jobTitle = gseJobsArray[0].JobTitle;
 		sData.jobAdminName = sData.jobAdmin[0].name;
 		sData.jobAdminEmail = sData.jobAdmin[0].email;
-		sData.jobAdminLinkedNamesString = 
+		sData.jobAdminLinkedNamesString =
 			'<a href="mailto:' + sData.jobAdminEmail.toLowerCase() + '">' + sData.jobAdminName + '</a>';
 
 		sData.requesterName = $("input#Requester-Name").val();
@@ -9484,7 +9484,7 @@
 
 		sData.scheduleNickJobAdmin = rData.gseScheduleData['Request-Nickname'];
 
-		sData.scheduleDateTime = 
+		sData.scheduleDateTime =
 			$().ReturnFormattedDateTime($("input#Schedule-Start-Datetime").val(), null, 'dddd, MMMM D, YYYY, h:mm a');
 
 		mData.subjectPrefaceStaff = 'GSE Signup #' + rData.requestID + ': ';
@@ -9519,9 +9519,9 @@
 				'caller': 'beginningOfLife jobAdmin',
 				'to': sData.jobAdminEmail,
 				'subject': eData.subjectPrefaceJobAdmin + 'new signup',
-				'bodyUnique': '<p>' + eData.requesterName + ' has signed up for the ' + 
-					sData.scheduleDateTime + ' schedule nicknamed "' + 
-					sData.scheduleNickJobAdmin + '", which is for the job titled "' + 
+				'bodyUnique': '<p>' + eData.requesterName + ' has signed up for the ' +
+					sData.scheduleDateTime + ' schedule nicknamed "' +
+					sData.scheduleNickJobAdmin + '", which is for the job titled "' +
 					sData.jobTitle + '". Feel free to <a href="mailto:' + eData.requesterEmail + '">' +
 					'contact ' + eData.requesterName + '</a> if you need to follow up.</p>'
 			});
@@ -9534,7 +9534,7 @@
 					'to': toManager,
 					'subject': eData.subjectPrefaceJobAdmin + 'new signup',
 					'bodyUnique': '<p>' + eData.requesterName + ' has signed up for "' + sData.jobTitle +
-						'", scheduled for ' + sData.scheduleDateTime + 
+						'", scheduled for ' + sData.scheduleDateTime +
 						'. Feel free to <a href="mailto:' + eData.requesterEmail + '">' +
 						'contact ' + eData.requesterName + '</a> if you need to follow up.</p>'
 				});
@@ -9546,14 +9546,14 @@
 				'caller': 'beginningOfLife staff',
 				'to': eData.requesterEmail,
 				'subject': eData.subjectPrefaceStaff + 'signup',
-				'bodyUnique': '<p>You\'ve signed up for "' + sData.jobTitle + 
-					'", scheduled for ' + sData.scheduleDateTime + '. <a href="' + 
+				'bodyUnique': '<p>You\'ve signed up for "' + sData.jobTitle +
+					'", scheduled for ' + sData.scheduleDateTime + '. <a href="' +
 					eData.uriRequest + '">Revisit your signup</a> to review the details or to cancel. ' +
-					'Feel free to <a href="mailto:' + sData.jobAdminEmail + '">contact ' + 
+					'Feel free to <a href="mailto:' + sData.jobAdminEmail + '">contact ' +
 					sData.jobAdminName + '</a> ' +
 					'with any questions, <a href="' + eData.uriOverview + '">' +
-					'review your other signups</a>, or ' + 
-					'<a href="https://bmos.sharepoint.com/sites/hr-service-schedules/SitePages/App.aspx?f=cal">' + 
+					'review your other signups</a>, or ' +
+					'<a href="https://bmos.sharepoint.com/sites/hr-service-schedules/SitePages/App.aspx?f=cal">' +
 					'sign up for another GSE</a>.</p>'
 			});
 		}
@@ -9593,8 +9593,8 @@
 					'caller': 'staffCancellation mgr',
 					'to': toManager,
 					'subject': eData.subjectPrefaceJobAdmin + 'signup cancelled',
-					'bodyUnique': '<p>' + eData.requesterName + ' is no longer signed up for "' + 
-						sData.jobTitle + '", scheduled for ' + sData.scheduleDateTime + 
+					'bodyUnique': '<p>' + eData.requesterName + ' is no longer signed up for "' +
+						sData.jobTitle + '", scheduled for ' + sData.scheduleDateTime +
 						'. Feel free to <a href="mailto:' + eData.requesterEmail + '">' +
 						'contact ' + eData.requesterName + '</a> if you need to follow up.</p>'
 				});
@@ -10622,14 +10622,6 @@
 				'	<li><b>Phone</b>: ' + eData.candidatePhone + '</li>' +
 				'	<li><b>Email</b>: ' + eData.candidateEmail + '</li>' +
 				'	<li><b>Reference</b>: ' + eData.candidateReference + '</li>' +
-				'</ul>' +
-				'<h2>Office Use Only</h2>' +
-				'<ul>' +
-				'	<li><b>Candidate Hired As</b>: </li>' +
-				'	<li><b>Candidate Hired On</b>: </li>' +
-				'	<li><b>Passes Awarded</b>: </li>' +
-				'	<li><b>Card sent</b>: </li>' +
-				'	<li><b>Payroll Check Request</b> (if applicable): </li>' +
 				'</ul>';
 
 			// all
@@ -14467,7 +14459,7 @@
 			if (type == "radio" || type == "check" || type == "checkorradio") {
 				// repeat function needs to alter input names before this can begin to be made to work
 				$('input[name^="' + id + '-repeat"]').each(function () {
-					 repeatIDs.push($(this).attr('name'));
+					repeatIDs.push($(this).attr('name'));
 				});
 			} else if (type == "peoplepicker") {
 				// repeat function needs to alter people picker IDs before this can begin to be made to work
@@ -14852,7 +14844,7 @@
 		} else {
 			// construct a new one
 			var newRepeatID = originalToRepeat + "-repeat-" + (lastRepeatIDNumber + 1);
-		}		
+		}
 
 		// --- create and insert the new repeat; give it the appropriate ID and data-original-to-repeat values
 		$("#" + insertAfterID).after($("#" + originalToRepeat).clone().attr("id", newRepeatID).attr("data-original-to-repeat", originalToRepeat));
@@ -16052,14 +16044,26 @@
 					.done(function (returnedUserData) {
 						statusChangeEmployeeData = returnedUserData.docs;
 
-						printContent += '<h2>Staff Member</h2>' +
-							'<ul style="margin: 0;">' +
-							'				<li><b>Name:</b> ' + statusChangeEmployeeData.displayName + '</li>' +
-							'				<li><b>ID:</b> ' + statusChangeEmployeeData.employeeID + '</li>' +
-							'				<li><b>Department:</b> ' + statusChangeEmployeeData.department + '</li>' +
-							'				<li><b>Division:</b> ' + statusChangeEmployeeData.division + '</li>' +
-							'				<li><b>Title:</b> ' + statusChangeEmployeeData.title + '</li>' +
-							'			</ul>';
+						if (statusChangeEmployeeData) {
+							printContent += '<h2>Staff Member</h2>' +
+								'<ul style="margin: 0;">' +
+								'				<li><b>Name:</b> ' + statusChangeEmployeeData.displayName + '</li>' +
+								'				<li><b>ID:</b> ' + statusChangeEmployeeData.employeeID + '</li>' +
+								'				<li><b>Department:</b> ' + statusChangeEmployeeData.department + '</li>' +
+								'				<li><b>Division:</b> ' + statusChangeEmployeeData.division + '</li>' +
+								'				<li><b>Title:</b> ' + statusChangeEmployeeData.title + '</li>' +
+								'			</ul>';
+						} else {
+							printContent += '<h2>Staff Member</h2>' +
+								'<ul style="margin: 0;">' +
+								'				<li><b>Name:</b> ' + formData["Status-Change-Staff-Member"][0]["displayText"] + '</li>' +
+								'				<li><b>ID:</b></li>' +
+								'				<li><b>Department:</b></li>' +
+								'				<li><b>Division:</b></li>' +
+								'				<li><b>Title:</b></li>' +
+								'			</ul>';
+						}
+
 
 
 
@@ -18249,7 +18253,7 @@
 		var submissionValuePairsArrayOfArraysToReturn = [];
 
 		// get the dates; we'll create one row in SWFList for each date
-		
+
 		if ($("input#individual-or-pattern_individual").is(":checked")) {
 			$(form).find('input[id^="Repeating-Date"]').each(function () {
 				scheduleDates.push($(this).val());
@@ -19804,11 +19808,11 @@
 						eventItem.contactName = eventItem["Legacy-Contact"];
 					}
 
-					var isoStartDatetime = 
-						eventItem["Buyout-Date"].slice(0, 10) + 
+					var isoStartDatetime =
+						eventItem["Buyout-Date"].slice(0, 10) +
 						eventItem["time-storage_Start-Time"].slice(10, 19);
-					var isoEndDatetime = 
-						eventItem["Buyout-Date"].slice(0, 10) + 
+					var isoEndDatetime =
+						eventItem["Buyout-Date"].slice(0, 10) +
 						eventItem["time-storage_End-Time"].slice(10, 19);
 					var formattedStartTime = $().ReturnFormattedDateTime(isoStartDatetime, "YYYY-MM-DDTHH:mm:ss", "h:mma", 0);
 					formattedStartTime = formattedStartTime.slice(0, formattedStartTime.length - 1);
@@ -19898,7 +19902,7 @@
 						if (event.orderNumber) {
 							dialogBodyContent += "	<li class=\"event-id\">Buyout Order Number: " + event.orderNumber + "</li> \n";
 						}
-						dialogBodyContent += 
+						dialogBodyContent +=
 							"	<li class=\"event-id\">Hub Buyout ID: " + event.eventID + "</li>" +
 							"</ul> \n" +
 							"<a class=\"ui-dialog-button\" href=\"" + event.editURL + "\">Edit / Delete</a>";
@@ -20500,7 +20504,7 @@
 						if (event.contactName) {
 							dialogBodyContent += "	<li class=\"event-contact\">Contact: " + event.contactName + "</li> \n";
 						}
-						dialogBodyContent += 
+						dialogBodyContent +=
 							"	<li class=\"event-id\">Event ID: " + event.eventID + "</li>" +
 							"</ul> \n" +
 							"<a class=\"ui-dialog-button\" href=\"" + event.editURL + "\">Edit / Delete</a>";
@@ -20804,7 +20808,7 @@
 	};
 
 	$.fn.RenderCommandBarAndCapacityForProducts = function () {
-		
+
 		$.ajax({
 			type: "GET",
 			url: 'https://triton.mos.org/products/productsTodayByVenueShow.xml',
@@ -20941,7 +20945,7 @@
 
 
 
-	
+
 
 
 
@@ -20965,7 +20969,7 @@
 		var newSchedules = [];
 		var newSignups = [];
 
-		
+
 
 		// delete all jobs but the original
 		/* $().SPServices.SPUpdateMultipleListItems({
@@ -21533,7 +21537,7 @@
 					hoursGrantedCredit += lengthThisSchedule;
 				}
 			});
-			
+
 		});
 
 		$("#" + targetID).append('<div id="container_command-bar-and-data"> \n' +
@@ -21588,11 +21592,11 @@
 		// console.log(hoursScheduled);
 		// console.log(hoursGrantedCredit);
 
-		var statsMarkup = 
+		var statsMarkup =
 			'<h2>Jobs Scheduled</h2>' +
-			'<p>' + distinctJobIDs.length.toString() + '</p>' + 
+			'<p>' + distinctJobIDs.length.toString() + '</p>' +
 			'<h2>Hours Scheduled</h2>' +
-			'<p>' + hoursScheduled.toString() + '</p>' + 
+			'<p>' + hoursScheduled.toString() + '</p>' +
 			'<h2>Hours Granted Credit</h2>' +
 			'<p>' + hoursGrantedCredit.toString() + '</p>';
 
@@ -21648,7 +21652,7 @@
 		var commandBarContents = '';
 		if (relevantRole === 'gseHRAdmin' || relevantRole === 'gseJobAdmin') {
 			if (relevantRole === 'gseHRAdmin') {
-				commandBarContents += 
+				commandBarContents +=
 					'<div class="container_link">' +
 					'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-config/SitePages/App.aspx?r=1">Configuration</a> \n' +
 					'</div>';
@@ -21936,7 +21940,7 @@
 
 	// schedules calendar
 	$.fn.RenderCommandBarAndCalendarForGSESchedules = function (buttons, relevantRole) {
-		
+
 		var startingYearOfFirstFiscalYear = 2018;
 		// var thisYear = 2022;
 		// var startingYearOfLastFiscalYear = moment('2022-09-08').isAfter(thisYear + '-06-30') ?
@@ -21956,7 +21960,7 @@
 		}
 
 
-		
+
 		var nowAsISOLocal = $().ReturnFormattedDateTime('nowLocal', null, null);
 		var viewToUse = GetParamFromUrl(location.search, 'view');
 		var dateToUse = GetParamFromUrl(location.search, 'date');
@@ -22058,27 +22062,27 @@
 
 				$("div[aria-describedby='gse-schedule-card-dialog'] div.ui-dialog-titlebar span.ui-dialog-title").html(dialogTitleBarContent);
 
-				var dialogBodyContent = 
-					'<h3 class="gse-schedule-card-dialog-job-title">' + event.jobTitle + '</h3>' + 
+				var dialogBodyContent =
+					'<h3 class="gse-schedule-card-dialog-job-title">' + event.jobTitle + '</h3>' +
 					event.jobDescription;
 
 				if (event.isInFuture) {
-					dialogBodyContent += '<p>Signups Available: ' + 
-					(event.quantityPositions - event.quantitySignups) + 
-					' / ' + event.quantityPositions;
+					dialogBodyContent += '<p>Signups Available: ' +
+						(event.quantityPositions - event.quantitySignups) +
+						' / ' + event.quantityPositions;
 				}
 
 				dialogBodyContent += '<div class="gse-schedule-card-dialog-links-container">';
 
 				if (event.mySignupURL) {
-					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' + 
-						'<a id="gse-schedule-card-dialog-my-signup-link" ' + 
-						'class="gse-schedule-card-dialog-button" href="' + 
+					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' +
+						'<a id="gse-schedule-card-dialog-my-signup-link" ' +
+						'class="gse-schedule-card-dialog-button" href="' +
 						event.mySignupURL + '" target="_blank">More Info / My Signup</a></div>';
 				} else if (event.isInFuture && ((parseInt(event.quantityPositions) - parseInt(event.quantitySignups)) !== 0)) {
-					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' + 
-						'<a id="gse-schedule-card-dialog-signup-opportunity-link" ' + 
-						'class="gse-schedule-card-dialog-button" href="' + 
+					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' +
+						'<a id="gse-schedule-card-dialog-signup-opportunity-link" ' +
+						'class="gse-schedule-card-dialog-button" href="' +
 						event.signupURL + '" target="_blank">More Info / Sign Up</a></div>';
 				} else {
 					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' +
@@ -22097,7 +22101,7 @@
 						'class="gse-schedule-card-dialog-button" href="' +
 						event.scheduleURL + '" target="_blank">Schedule Details</a></div>';
 				}
-				
+
 				$("div#gse-schedule-card-dialog").html(dialogBodyContent);
 
 				// position the dialog box
@@ -22119,12 +22123,12 @@
 
 		commandBarContents +=
 			'<div id="container_navigation-controls-expanded"> \n' +
-				buttonDivs + 
+			buttonDivs +
 			'</div> \n';
 
 
-		
-		commandBarContents += 
+
+		commandBarContents +=
 			'<div id="container_filter-controls-and-header"> \n' +
 			'   <div id="text_filter-controls" class="collapsible">Year</div> \n' +
 			'   <div id="container_filter-controls"> \n' +
@@ -22138,7 +22142,7 @@
 			'		</div>' +
 			'    </div> \n' +
 			'</div> \n';
-		
+
 		commandBarContents += buttonOverflowMenu;
 
 		$("div#container_command-bar").append(commandBarContents);
@@ -22233,7 +22237,7 @@
 
 		var commandBarContents = '';
 		if (relevantRole === 'gseHRAdmin') {
-			commandBarContents += 
+			commandBarContents +=
 				// '<div class="container_link">' +
 				// '	<a class="button-link button-link_go-forward command-bar-button" href="/sites/hr-service-config/SitePages/App.aspx?r=1">Configuration</a> \n' +
 				// '</div>' + 
@@ -22786,10 +22790,10 @@
 			row.JobTitle = schedule.Job.JobTitle;
 			row.NumberOfPositions = schedule.NumberOfPositions;
 			if (schedule.Signups) {
-				row.PositionsAvailable = '<div class="small-in-column">' + 
+				row.PositionsAvailable = '<div class="small-in-column">' +
 					(schedule.NumberOfPositions - schedule.Signups.length) + '</div>';
 			} else {
-				row.PositionsAvailable = '<div class="small-in-column">' + 
+				row.PositionsAvailable = '<div class="small-in-column">' +
 					schedule.NumberOfPositions + '</div>';
 			}
 			row.ShiftLength = schedule.formData['shiftlength_35-hours'] ? '3.5 hours' : '7.5 hours'
@@ -22841,7 +22845,7 @@
 			}
 			if (relevantRole === 'gseManager' || relevantRole === 'gseUserOnly') {
 				row.ViewByIDLink =
-					'<a href="' + row.viewURL + '" class="link_request-id" target="_blank">' + 
+					'<a href="' + row.viewURL + '" class="link_request-id" target="_blank">' +
 					schedule.ScheduleID + '</a>';
 			}
 			tableConfig.datatableData.push(row);
@@ -22890,7 +22894,7 @@
 	// - raw data queries + mashup
 
 	// schedules list data
-	$.fn.ReturnSelectedAugmentedSchedulesForGSESchedulesOverviews = function(selectedStartYear) {
+	$.fn.ReturnSelectedAugmentedSchedulesForGSESchedulesOverviews = function (selectedStartYear) {
 
 		var beginningOfFiscalYear = selectedStartYear + '-07-01T00:00:00Z';
 		var endOfFiscalYear = (parseInt(selectedStartYear) + 1) + '-06-30T00:00:00Z';
@@ -23181,7 +23185,7 @@
 
 
 	// signups data
-	$.fn.ReturnSelectedAugmentedSignupsForGSESignupsOverviews = function(selectedStartYear) {
+	$.fn.ReturnSelectedAugmentedSignupsForGSESignupsOverviews = function (selectedStartYear) {
 		// get, mash up, all GSE data
 		var augmentedSignups = {};
 		var beginningOfFiscalYear = selectedStartYear + '-07-01T00:00:00Z';
@@ -23234,9 +23238,9 @@
 				}, {
 					'nameHere': 'JobAdmin',
 					'nameInList': 'JobAdmin'
-				// }, {
-				// 	'nameHere': 'Location',
-				// 	'nameInList': 'Location'
+					// }, {
+					// 	'nameHere': 'Location',
+					// 	'nameInList': 'Location'
 				}
 			]
 		});
@@ -23295,7 +23299,7 @@
 		return augmentedSignups;
 	};
 
-	
+
 
 	// - handling archivals and cancellations
 
@@ -23332,7 +23336,7 @@
 		});
 	};
 
-	$.fn.CancelSchedule = function(scheduleData) {
+	$.fn.CancelSchedule = function (scheduleData) {
 		// modify formData
 		scheduleData.formData['Request-Status'] = 'Cancelled';
 		// set submission value pairs array
@@ -23362,7 +23366,7 @@
 		$().SPServices(updateListItemsOptions);
 	};
 
-	$.fn.ProcessGSEScheduleCancellationNotifications = function(scheduleData) {
+	$.fn.ProcessGSEScheduleCancellationNotifications = function (scheduleData) {
 		// console.log('ProcessGSEScheduleCancellationNotifications scheduleData');
 		// console.log(scheduleData);
 
@@ -23426,9 +23430,9 @@
 			'caller': 'programmatic schedule cancellation jobAdmin',
 			'to': eData.jobAdminEmail,
 			'subject': eData.subjectPreface + 'cancelled',
-			'bodyUnique': '<p>This schedule was nicknamed "' + sData.requestNick + 
-				'". It was for the job titled "' + sData.jobTitle + 
-				'" and was scheduled for ' + sData.scheduleDateTime + '. Please <a href="mailto:' + 
+			'bodyUnique': '<p>This schedule was nicknamed "' + sData.requestNick +
+				'". It was for the job titled "' + sData.jobTitle +
+				'" and was scheduled for ' + sData.scheduleDateTime + '. Please <a href="mailto:' +
 				eData.adminEmailString + '">contact the admin</a> with any issues.'
 		});
 
@@ -23540,7 +23544,7 @@
 
 		sData.scheduleDateTime =
 			$().ReturnFormattedDateTime(scheduleData.formData['Date'].slice(0, 10) + scheduleData.formData['time-storage_StartTime'].slice(10, 19), null, 'dddd, MMMM D, YYYY, h:mm a');
-		
+
 
 		mData.subjectPreface = 'GSE Schedule #' + scheduleData.ScheduleID + ': ';
 
@@ -23567,7 +23571,7 @@
 			'bodyUnique': '<p>The "' + sData.jobTitle +
 				'" GSE, scheduled for ' + sData.scheduleDateTime + ' has been cancelled. ' +
 				'Feel free to <a href="mailto:' + sData.jobAdminEmail + '">contact ' +
-					sData.jobAdminName + '</a> ' +
+				sData.jobAdminName + '</a> ' +
 				'with any questions, <a href="' + eData.uriOverview + '">' +
 				'review your other signups</a>, or ' +
 				'<a href="https://bmos.sharepoint.com/sites/hr-service-schedules/SitePages/App.aspx?f=cal">' +
@@ -23632,7 +23636,7 @@
 				'<p>You\'ve been granted credit for "' + sData.jobTitle + '", which began ' +
 				sData.scheduleDateTime + '.</p> ' +
 				'<p>Please <a href="http://www.surveygizmo.com/s3/3485668/GSE-Survey">provide feedback on your experience</a>. ' +
-				'Feel free to <a href="mailto:' + sData.jobAdminEmail + '">contact ' + sData.jobAdminName + 
+				'Feel free to <a href="mailto:' + sData.jobAdminEmail + '">contact ' + sData.jobAdminName +
 				'</a> with any questions, <a href="https://bmos.sharepoint.com/sites/hr-service-signups/SitePages/App.aspx">' +
 				'review your other signups</a>, or ' +
 				'<a href="https://bmos.sharepoint.com/sites/hr-service-schedules/SitePages/App.aspx?f=cal">' +
@@ -23841,8 +23845,8 @@
 					"		</Eq>" +
 					"	</Or>" +
 					"</Where>";
-			
-			
+
+
 			} else if (typeof (t.meOrMyDownlineIsRequesterAndRSQuery) != "undefined") {
 
 				if (typeof (t.meOrMyDownlineIsRequesterAndRSQuery.getRequesterFrom) == 'undefined') {
@@ -23900,7 +23904,7 @@
 					"	<And>" +
 					"		 <Eq>" +
 					"		      <FieldRef Name='EndOfLife'></FieldRef>" +
-				"		      <Value Type='Text'>" + t.meOrMyDownlineIsRequesterAndEOL.endOfLfe + "</Value>" +
+					"		      <Value Type='Text'>" + t.meOrMyDownlineIsRequesterAndEOL.endOfLfe + "</Value>" +
 					"		 </Eq>" +
 					"		 <" + operator + ">" +
 					"			  <FieldRef Name='" + getRequesterFrom + "'></FieldRef>" +
@@ -24467,7 +24471,7 @@
 	$.fn.RenderPersonLinks = function (usersRaw) {
 
 		var returnValue = "";
-		if (typeof(usersRaw) === 'string') {
+		if (typeof (usersRaw) === 'string') {
 			var userArray = usersRaw.split(";#");
 
 			$.each(userArray, function (i, userData) {
@@ -24596,7 +24600,7 @@
 				retVal += moment(dateTimeString, incomingFormat).format(returnFormat);
 			}
 
-		// if incoming format is not null, use it to parse dateTimeString
+			// if incoming format is not null, use it to parse dateTimeString
 		} else {
 
 			// if incomingFormat contains ', YYYY' and dateTimeString doesn't end with that value and determineYearDisplayDynamically == 1
@@ -24761,13 +24765,13 @@
 
 
 	$.fn.ReturnButtonsMarkupAsOverflowMenu = function (buttons) {
-		var buttonsMarkup = 
+		var buttonsMarkup =
 			'<div id="container_navigation-controls-and-header" class="overflow-menu"> \n' +
-			'   <div id="text_navigation-controls" ' + 
-			'		class="collapsible overflow-menu-control"> \n' + 
+			'   <div id="text_navigation-controls" ' +
+			'		class="collapsible overflow-menu-control"> \n' +
 			'		<span class="overflow-menu-text">More</span> \n' +
 			'	</div> \n' +
-			'   <div id="container_navigation-controls"> \n' + 
+			'   <div id="container_navigation-controls"> \n' +
 			'		<ul class="button-list-container"> \n';
 		$.each(buttons, function (i, button) {
 			// business rule: even if there's a function restricting rendering permission, the button will always render for admins; if this changes, 
@@ -24782,8 +24786,8 @@
 			}
 			buttonsMarkup += ' \n			</li> \n';
 		});
-		buttonsMarkup += 
-			'		</ul> \n' + 
+		buttonsMarkup +=
+			'		</ul> \n' +
 			'	</div> \n' +
 			'</div> \n';
 
@@ -25797,7 +25801,7 @@
 				$().SetErrorMessage("input#Physical-Demand-Walking", 'Time percentages must add up to 100%');
 			}
 		}
-		
+
 
 	};
 
@@ -26614,19 +26618,19 @@
 
 
 
-    $.fn.ReturnGPCPeopleEditingAccess = function() {
+	$.fn.ReturnGPCPeopleEditingAccess = function () {
 
-        var gpcGroups = $().ReturnGPCGroups();
-        var hasViewPermission = 0;
+		var gpcGroups = $().ReturnGPCGroups();
+		var hasViewPermission = 0;
 
-        $.each(gpcGroups.EditGPCPeople, function(i, person) {
-            if (person.accountLong === uData.account) {
-                hasViewPermission = 1;
-            }
-        });
+		$.each(gpcGroups.EditGPCPeople, function (i, person) {
+			if (person.accountLong === uData.account) {
+				hasViewPermission = 1;
+			}
+		});
 
-        return hasViewPermission;
-    };
+		return hasViewPermission;
+	};
 
 
 
@@ -27126,7 +27130,7 @@
 			scheduleStartDatetime = moment.tz(scheduleStartDatetime, "America/New_York").format();
 			var nowAsISOLocal = $().ReturnFormattedDateTime('nowLocal', null, null);
 			if (
-				moment(scheduleStartDatetime).isAfter(nowAsISOLocal) || 
+				moment(scheduleStartDatetime).isAfter(nowAsISOLocal) ||
 				$('input#Signup-ID').val() == ''
 			) {
 				$("div#signup-people").show("fast").removeClass("hidden");
@@ -27135,8 +27139,8 @@
 				// hide cancellation checkbox
 				$("div#label-and-control_Requester-Cancellation").hide("fast").addClass("hidden");
 				// enable and require radio buttons
-				$("div#signups").find("div.repeat-container").each(function() {
-					$(this).find("input[type='radio']").each(function(index, value) {
+				$("div#signups").find("div.repeat-container").each(function () {
+					$(this).find("input[type='radio']").each(function (index, value) {
 						var radioButtonID = $(this).attr("id");
 						$().SetFieldToEnabled('#' + radioButtonID);
 						radioButtonIDs.push(radioButtonID);
@@ -27151,10 +27155,10 @@
 								.children("span.field-type-indicator")
 								.removeClass("field-optional")
 								.addClass("field-required")
-									.children("span.message")
-									.removeClass("message-optional")
-									.addClass("message-required")
-									.text("Required Field");
+								.children("span.message")
+								.removeClass("message-optional")
+								.addClass("message-required")
+								.text("Required Field");
 						}
 					});
 				});
@@ -27187,7 +27191,7 @@
 					.each(function (index, value) {
 						// console.log('found textarea');
 						// console.log($(this).attr("id"));
-						if($(this).val() !== '') {
+						if ($(this).val() !== '') {
 							var containerSelector = '#label-and-control_' + $(this).attr("id");
 							$(containerSelector).show("fast").removeClass("hidden");
 						}
@@ -27229,9 +27233,9 @@
 		}
 	};
 
-	
-	 
- 	$.fn.SetInHouseNeedsSheetRequestAdditionalViewAccess = function () {
+
+
+	$.fn.SetInHouseNeedsSheetRequestAdditionalViewAccess = function () {
 		$("input#View-Access").val(mData.viewAccess);
 	};
 

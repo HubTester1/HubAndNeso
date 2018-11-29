@@ -382,6 +382,15 @@
 				"disabledForAdmin": ['Submitted', 'Cancelled']
 			}, {
 				"elementType": "field",
+				"controlType": "text",
+				"fieldName": "Position Applying To",
+				"labelContent": "Position Applying To",
+				"requiredForNonAdmin": [""],
+				"requiredForAdmin": [""],
+				"disabledForNonAdmin": ['Submitted', 'Cancelled'],
+				"disabledForAdmin": ['Submitted', 'Cancelled']
+			}, {
+				"elementType": "field",
 				"controlType": "select",
 				"fieldName": "Candidate Position Type",
 				"labelContent": "Position Type",

@@ -10622,14 +10622,6 @@
 				'	<li><b>Phone</b>: ' + eData.candidatePhone + '</li>' +
 				'	<li><b>Email</b>: ' + eData.candidateEmail + '</li>' +
 				'	<li><b>Reference</b>: ' + eData.candidateReference + '</li>' +
-				'</ul>' +
-				'<h2>Office Use Only</h2>' +
-				'<ul>' +
-				'	<li><b>Candidate Hired As</b>: </li>' +
-				'	<li><b>Candidate Hired On</b>: </li>' +
-				'	<li><b>Passes Awarded</b>: </li>' +
-				'	<li><b>Card sent</b>: </li>' +
-				'	<li><b>Payroll Check Request</b> (if applicable): </li>' +
 				'</ul>';
 
 			// all
@@ -16052,14 +16044,26 @@
 					.done(function (returnedUserData) {
 						statusChangeEmployeeData = returnedUserData.docs;
 
-						printContent += '<h2>Staff Member</h2>' +
-							'<ul style="margin: 0;">' +
-							'				<li><b>Name:</b> ' + statusChangeEmployeeData.displayName + '</li>' +
-							'				<li><b>ID:</b> ' + statusChangeEmployeeData.employeeID + '</li>' +
-							'				<li><b>Department:</b> ' + statusChangeEmployeeData.department + '</li>' +
-							'				<li><b>Division:</b> ' + statusChangeEmployeeData.division + '</li>' +
-							'				<li><b>Title:</b> ' + statusChangeEmployeeData.title + '</li>' +
-							'			</ul>';
+						if (statusChangeEmployeeData) {
+							printContent += '<h2>Staff Member</h2>' +
+								'<ul style="margin: 0;">' +
+								'				<li><b>Name:</b> ' + statusChangeEmployeeData.displayName + '</li>' +
+								'				<li><b>ID:</b> ' + statusChangeEmployeeData.employeeID + '</li>' +
+								'				<li><b>Department:</b> ' + statusChangeEmployeeData.department + '</li>' +
+								'				<li><b>Division:</b> ' + statusChangeEmployeeData.division + '</li>' +
+								'				<li><b>Title:</b> ' + statusChangeEmployeeData.title + '</li>' +
+								'			</ul>';
+						} else {
+							printContent += '<h2>Staff Member</h2>' +
+								'<ul style="margin: 0;">' +
+								'				<li><b>Name:</b> ' + formData["Status-Change-Staff-Member"][0]["displayText"] + '</li>' +
+								'				<li><b>ID:</b></li>' +
+								'				<li><b>Department:</b></li>' +
+								'				<li><b>Division:</b></li>' +
+								'				<li><b>Title:</b></li>' +
+								'			</ul>';
+						}
+
 
 
 
