@@ -5,15 +5,15 @@
 		'swf': 1,
 		// 'mosMainKey': 'prod',
 		// 'mosMainKey': 'dev',
-		'mosMainKey': 'devMedium',
-		// 'mosMainKey': 'devLong',
+		// 'mosMainKey': 'devMedium',
+		'mosMainKey': 'devLong',
 		// "useRecordedMOSMainMajorVersion": 1,
 		'currentRequestVersion': 2,
 		'devAdminNotifications': 1,
 		'notifications': 0,
 	};
 
-	console.log("using settings m3");
+	console.log("using settings m1");
 
 
 	var oData = {
@@ -73,31 +73,31 @@
 						'tableID': 'unassigned',
 						'someColsAreUsers': 1,
 						'customCAMLQuery': '<Where>' +
-											'  <And>' +
-											'    <Eq>' +
-											'      <FieldRef Name="RequestStatus"></FieldRef>' +
-											'      <Value Type="Text">Approved</Value>' +
-											'    </Eq>' +
-											'    <IsNull>' +
-											'      <FieldRef Name="AssignedTo"></FieldRef>' +
-											'    </IsNull>' +
-											'  </And>' +
-											'</Where>'
+							'  <And>' +
+							'    <Eq>' +
+							'      <FieldRef Name="RequestStatus"></FieldRef>' +
+							'      <Value Type="Text">Approved</Value>' +
+							'    </Eq>' +
+							'    <IsNull>' +
+							'      <FieldRef Name="AssignedTo"></FieldRef>' +
+							'    </IsNull>' +
+							'  </And>' +
+							'</Where>'
 					}, {
 						'tableTitle': 'Assigned',
 						'tableID': 'assigned',
 						'someColsAreUsers': 1,
 						'customCAMLQuery': '<Where>' +
-											'  <And>' +
-											'    <Eq>' +
-											'      <FieldRef Name="RequestStatus"></FieldRef>' +
-											'      <Value Type="Text">Approved</Value>' +
-											'    </Eq>' +
-											'    <IsNotNull>' +
-											'      <FieldRef Name="AssignedTo"></FieldRef>' +
-											'    </IsNotNull>' +
-											'  </And>' +
-											'</Where>',
+							'  <And>' +
+							'    <Eq>' +
+							'      <FieldRef Name="RequestStatus"></FieldRef>' +
+							'      <Value Type="Text">Approved</Value>' +
+							'    </Eq>' +
+							'    <IsNotNull>' +
+							'      <FieldRef Name="AssignedTo"></FieldRef>' +
+							'    </IsNotNull>' +
+							'  </And>' +
+							'</Where>',
 						'customColumns': [
 							{
 								'displayName': 'Request ID',
@@ -241,41 +241,52 @@
 		'newRequestConditionalConfirmationAdditions': [
 			{
 				'condition': function () {
-					return !($('input#has-computer_has-computer').is(':checked')) || 
-						$('input#needs-reg-vpn_needsregvpn').is(':checked') || 
+					return !($('input#has-computer_has-computer').is(':checked')) ||
+						$('input#needs-reg-vpn_needsregvpn').is(':checked') ||
 						$('input#needs-fundraising_needsfundraising').is(':checked');
 				},
 				'addition': '<h2>Please Note</h2>'
 			}, {
 				'condition': function () { return !($('input#has-computer_has-computer').is(':checked')); },
 				'addition': '<div class="single-message"><p>If a computer needs to be purchased, a signing manager needs to ' +
-							'email the Help Desk with an account code for the purchase of a new ' +
-							'machine. Please also indicate any specialty software other than Office ' +
-							'or other equipment that needs to be purchased.</p>' +
-							'<p><a href="' +
-							'mailto:ithelp@mos.org?subject=computer purchase needed&body=Please charge to the following account:' +
-							'">Start the email now</a></p></div>'
+					'email the Help Desk with an account code for the purchase of a new ' +
+					'machine. Please also indicate any specialty software other than Office ' +
+					'or other equipment that needs to be purchased.</p>' +
+					'<p><a href="' +
+					'mailto:ithelp@mos.org?subject=computer purchase needed&body=Please charge to the following account:' +
+					'">Start the email now</a></p></div>'
 			}, {
 				'condition': function () { return $('input#needs-reg-vpn_needsregvpn').is(':checked'); },
-				'addition': '<div class="single-message"><p>Regular VPN Access also requires <a target="_blank" '+
-							'href="https://bmos.sharepoint.com/sites/iit-vpn-access/SitePages/My%20VPN%20Access%20Requests.aspx">' +
-							'this additional request</a>.</p>'
+				'addition': '<div class="single-message"><p>Regular VPN Access also requires <a target="_blank" ' +
+					'href="https://bmos.sharepoint.com/sites/iit-vpn-access/SitePages/My%20VPN%20Access%20Requests.aspx">' +
+					'this additional request</a>.</p>'
 			}, {
 				'condition': function () { return $('input#needs-fundraising_needsfundraising').is(':checked'); },
 				'addition': '<div class="single-message"><p>Fundraising Database Access also requires <a target="_blank" ' +
-							'href="https://bmos.sharepoint.com/AdvDMSFiles/Fundraising-Database-Access-Request.doc">' +
-							'this additional request</a>.</p>'
+					'href="https://bmos.sharepoint.com/AdvDMSFiles/Fundraising-Database-Access-Request.doc">' +
+					'this additional request</a>.</p>'
 			}
 		],
 		'standardElementGroups': {
 			'standardThisRequestAndRequesterElements': 1,
 			'standardApprovalElements': 1,
-			'standardAdminAssignmentCompletionElements': { 
+			// delete below after UltiPro transition
+			'standardAdminAssignmentCompletionWHRNotificationElements': {
 				'changeRequestStatus': [
 					{ "value": "Complete", "display": "All work for this request has been completed" },
 					{ "value": "Cancel", "display": "This request has been cancelled" }
 				]
-			},
+			}, 
+			
+			// delete above after UltiPro transition
+			// restore below after UltiPro transition
+			/* 'standardAdminAssignmentCompletionElements': {
+				'changeRequestStatus': [
+					{ "value": "Complete", "display": "All work for this request has been completed" },
+					{ "value": "Cancel", "display": "This request has been cancelled" }
+				]
+			}, */
+			// restore above after UltiPro transition
 			'standardButtonElements': 1,
 			'standardComponentGrpAdminOnlyElements': 1
 		},
@@ -291,6 +302,7 @@
 				}
 			},
 		},
+		'hrPhoneEmailNotifications': 1,
 		'versioningMatters': 0,
 
 
@@ -311,16 +323,16 @@
 				'fieldName': "Staff or Volunteer",
 				'choiceSetLabel': "Staff or Volunteer",
 				'choices': [
-						{
-							'value': "staff",
-							'display': "Staff"
-						}, {
-							'value': "volunteer",
-							'display': "Volunteer"
-						}, {
-							'value': "contractor",
-							'display': "Contractor"
-						}
+					{
+						'value': "staff",
+						'display': "Staff"
+					}, {
+						'value': "volunteer",
+						'display': "Volunteer"
+					}, {
+						'value': "contractor",
+						'display': "Contractor"
+					}
 				],
 				'onChange': [
 					{ 'thisFieldEquals': ['staff', 'contractor'], 'addlAndConditions': ['$("input#new-or-change_new").is(":checked")'], 'show': [{ 'fieldName': 'Unpaid Intern' }], 'require': [{ 'fieldName': 'Unpaid Intern', 'type': 'radio' }] },
@@ -340,13 +352,13 @@
 				'fieldName': "Single or Multiple",
 				'choiceSetLabel': "Single Person or Multiple People",
 				'choices': [
-						{
-							'value': "single",
-							'display': "Single Person"
-						}, {
-							'value': "multiple",
-							'display': "Multiple People"
-						}
+					{
+						'value': "single",
+						'display': "Single Person"
+					}, {
+						'value': "multiple",
+						'display': "Multiple People"
+					}
 				],
 				'requiredForNonAdmin': [""],
 				'requiredForAdmin': [""],
@@ -358,13 +370,13 @@
 				'fieldName': "New or Change",
 				'choiceSetLabel': "New Account or Account Change",
 				'choices': [
-						{
-							'value': "new",
-							'display': "New Account(s)"
-						}, {
-							'value': "change",
-							'display': "Account Change"
-						}
+					{
+						'value': "new",
+						'display': "New Account(s)"
+					}, {
+						'value': "change",
+						'display': "Account Change"
+					}
 				],
 				'onChange': [
 					{ 'thisFieldEquals': ["new"], 'addlAndConditions': ['$("input#staff-or-volunteer_staff").is(":checked")'], 'show': [{ 'fieldName': 'Unpaid Intern' }], 'require': [{ 'fieldName': "Unpaid Intern", 'type': "radio" }] },
@@ -381,13 +393,13 @@
 				'fieldName': "Unpaid Intern",
 				'choiceSetLabel': "Unpaid Intern",
 				'choices': [
-						{
-							'value': "intern",
-							'display': "Yes, this is for an unpaid intern"
-						}, {
-							'value': "notIntern",
-							'display': "No, this is not for an unpaid intern"
-						}
+					{
+						'value': "intern",
+						'display': "Yes, this is for an unpaid intern"
+					}, {
+						'value': "notIntern",
+						'display': "No, this is not for an unpaid intern"
+					}
 				],
 				'hideForNonAdmin': ["", "Completed", "Disapproved", "Cancelled", "Disapproved", "Cancelled"],
 				'hideForAdmin': ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
@@ -479,11 +491,11 @@
 				'elementType': "field",
 				'controlType': "check",
 				'fieldName': "Is Manager Without Office",
-				'choiceSetLabel': "Is this person a manager who does not have an office?",
+				'choiceSetLabel': "Is this person a manager, with direct reports, who does not have an office?",
 				'choices': [
 					{
 						'value': "yes",
-						'display': "Yes, this manager does not have an office"
+						'display': "Yes, this person is a manager, with direct reports, who does not have an office"
 					}
 				],
 				'disabledForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
@@ -494,10 +506,10 @@
 				'fieldName': "Has Computer",
 				'choiceSetLabel': "Do You Have a Computer For this Person?",
 				'choices': [
-						{
-							'value': "has-computer",
-							'display': "Yes, I have a computer"
-						}
+					{
+						'value': "has-computer",
+						'display': "Yes, I have a computer"
+					}
 				],
 				'onChange': [
 					{ 'thisFieldIsChecked': 1, 'show': [{ 'fieldName': "Computer Tag" }], 'require': [{ 'fieldName': "Computer Tag", 'type': "text" }] },
@@ -539,7 +551,7 @@
 				'elementType': "field",
 				'controlType': "check",
 				'fieldName': "Needs Intranet",
-				'choiceSetLabel': "Needs Access to a Part of Quark or the Hub?",
+				'choiceSetLabel': "Needs Access to a Part of Quark or The Hub?",
 				'choices': [
 					{
 						'value': "needsIntranet",
@@ -576,7 +588,7 @@
 				'disabledForAdmin': ["Completed", "Disapproved", "Cancelled"],
 				'helpNotes': [
 					{
-						'text': "E.g., https'://matrix.mos.org/depts/iit",
+						'text': "E.g., https://bmos.sharepoint.com/sites/iit-network-access",
 						'htmlID': "intranet-url_help-note",
 						'hideForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
 						'hideForAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
@@ -670,7 +682,7 @@
 				'htmlClass': "staff-or-contractor-only-container",
 				'hideForNonAdmin': ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
 				'hideForAdmin': ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
-			
+
 
 
 
@@ -705,8 +717,8 @@
 				'disabledForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
 				'disabledForAdmin': ["Completed", "Disapproved", "Cancelled"],
 				'onChange': [
-					{ 'thisFieldIsChecked': 1, 'show': [{ 'divID': "shared-email-options-subsection-container"}]},
-					{ 'thisFieldIsChecked': 0, 'hide': [{ 'divID': "shared-email-options-subsection-container"}]}
+					{ 'thisFieldIsChecked': 1, 'show': [{ 'divID': "shared-email-options-subsection-container" }] },
+					{ 'thisFieldIsChecked': 0, 'hide': [{ 'divID': "shared-email-options-subsection-container" }] }
 				],
 			}, {
 				'elementType': "markup",
@@ -1124,7 +1136,7 @@
 				"requiredForNonAdmin": [],
 				"requiredForAdmin": [],
 			}
-			]
+		]
 	};
 
 
@@ -1135,42 +1147,42 @@
 
 
 	fData.CustomScriptLast = 'if (typeof($("input[name=\'Unpaid-Intern\']:checked").val()) != "undefined" && $("input[name=q12_3]:checked").val() != "") { \n' +
-								'   $("div#label-and-control_Unpaid-Intern").show("fast").removeClass("hidden"); \n' +
-								'} \n';
+		'   $("div#label-and-control_Unpaid-Intern").show("fast").removeClass("hidden"); \n' +
+		'} \n';
 
 	fData.CustomScriptLast += 'if ($("input#staff-or-volunteer_volunteer").is(":checked")) { \n' +
-								'   $("div#label-and-control_Personal-Email-Address").show("fast").removeClass("hidden"); \n' +
-								'} \n';
+		'   $("div#label-and-control_Personal-Email-Address").show("fast").removeClass("hidden"); \n' +
+		'} \n';
 
 	fData.CustomScriptLast += 'if ($("input#staff-or-volunteer_staff").is(":checked") || $("input#staff-or-volunteer_contractor").is(":checked")) { \n' +
-								'   $("div.staff-or-contractor-only-container").show("fast").removeClass("hidden"); \n' +
-								'} \n';
+		'   $("div.staff-or-contractor-only-container").show("fast").removeClass("hidden"); \n' +
+		'} \n';
 
 	fData.CustomScriptLast += 'if ($("input#has-computer_has-computer").is(":checked")) { \n' +
-								'   $("div#label-and-control_Computer-Tag").show("fast").removeClass("hidden"); \n' +
-								'} \n';
+		'   $("div#label-and-control_Computer-Tag").show("fast").removeClass("hidden"); \n' +
+		'} \n';
 
 	fData.CustomScriptLast += 'if ($("input#needs-intranet_needsintranet").is(":checked")) { \n' +
-								'   $("div#intranet-parts-and-access-types").show("fast").removeClass("hidden"); \n' +
-								'} \n';
+		'   $("div#intranet-parts-and-access-types").show("fast").removeClass("hidden"); \n' +
+		'} \n';
 
 	fData.CustomScriptLast += 'if ($("input#needs-phone_needsphone").is(":checked")) { \n' +
-								'   $("div#phone-extensions-and-options-subsection-container").show("fast").removeClass("hidden"); \n' +
-								'} \n';
+		'   $("div#phone-extensions-and-options-subsection-container").show("fast").removeClass("hidden"); \n' +
+		'} \n';
 
 	fData.CustomScriptLast += '$("div#swf-specific-approval-preface").html("' +
-								'   Approval is required from each manager whose department\'s resources you will be accessing, ' +
-								'   including your own department\'s manager, if relevant.' +
-								'"); \n';
+		'   Approval is required from each manager whose department\'s resources you will be accessing, ' +
+		'   including your own department\'s manager, if relevant.' +
+		'"); \n';
 
 	fData.CustomScriptLast += 'if ($("input#needs-shared-email_needssharedemail").is(":checked")) { \n' +
-								'   $("div#shared-email-options-subsection-container").show("fast").removeClass("hidden"); \n' +
-								'} \n';
+		'   $("div#shared-email-options-subsection-container").show("fast").removeClass("hidden"); \n' +
+		'} \n';
 
 	fData.CustomScriptLast += 'if ($("input#needs-tessitura_needstessitura").is(":checked")) { \n' +
-								'   $("div#label-and-control_Tessitura-Access-Agreement-Signed").show("fast").removeClass("hidden"); \n' +
-								'   $("div#label-and-control_Specify-Tessitura-Access").show("fast").removeClass("hidden"); \n' +
-								'} \n';
+		'   $("div#label-and-control_Tessitura-Access-Agreement-Signed").show("fast").removeClass("hidden"); \n' +
+		'   $("div#label-and-control_Specify-Tessitura-Access").show("fast").removeClass("hidden"); \n' +
+		'} \n';
 
 
 

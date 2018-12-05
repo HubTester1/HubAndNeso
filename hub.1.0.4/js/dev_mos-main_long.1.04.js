@@ -3133,6 +3133,301 @@
 			}
 		}
 
+		// delete below after UltiPro transition
+		if (typeof (fData.standardElementGroups.standardAdminAssignmentCompletionWHRNotificationElements) != "undefined") {
+
+			var standardAdminAssignmentCompletionElements1 = [
+				{
+					"elementType": "markup",
+					"tag": "div",
+					"htmlID": "admin",
+					"content": '',
+					"begin": 1,
+					"hideForNonAdmin": ["", "Submitted", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+					"hideForAdmin": [""]
+				}, {
+					"elementType": "markup",
+					"tag": "h2",
+					"content": 'Admin',
+					"begin": 1,
+					"end": 1,
+				}, {
+					"elementType": "markup",
+					"tag": "div",
+					"htmlID": "approval-notification-history",
+					"begin": 1,
+					"hideForNonAdmin": ["", "Submitted", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+					"hideForAdmin": ["", "Submitted", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
+				}, {
+					"elementType": "markup",
+					"tag": "h3",
+					"content": 'Approval Notification History',
+					"begin": 1,
+					"end": 1,
+				}, {
+					"elementType": "markup",
+					"tag": "table",
+					"htmlID": "table_approval-notification-history",
+					"content": '  <thead>' +
+						'		 <tr>' +
+						'			  <th id="th_recipient">Recipient</th>' +
+						'			  <th id="th_needed-or-not">Needed or Not Needed</th>' +
+						'			  <th id="th_date">Date & Time</th>' +
+						'		 </tr>' +
+						'	</thead>' +
+						'	<tbody>' +
+						'	</tbody>',
+					"begin": 1,
+					"end": 1,
+				}, {
+					"elementType": "markup",
+					"tag": "div",
+					"end": 1,
+				}, {
+					"elementType": "markup",
+					"tag": "h3",
+					"content": 'Request Status and Notes',
+					"begin": 1,
+					"end": 1,
+				}, {
+					"elementType": "field",
+					"controlType": "select",
+					"fieldName": "Change Request Status",
+					"labelContent": "Change Request Status",
+					"setOptions": fData.standardElementGroups.standardAdminAssignmentCompletionWHRNotificationElements.changeRequestStatus,
+					"hideForNonAdmin": ["Submitted", "Completed", "Disapproved", "Cancelled"],
+					"hideForAdmin": ["Submitted", "Completed", "Disapproved", "Cancelled"],
+					'onChange': [
+						{ 
+							"thisFieldEquals": ["Approve"], 
+							"require": [{ "fieldName": "Assigned To", "type": "peoplepicker" }], 
+							"enable": [{ "fieldName": "Assigned To", "type": "peoplepicker" }], 
+							"show": [{ "divID": "assignment" }] 
+						}, { 
+							"thisFieldEquals": ["Complete"], 
+							"require": [{ "fieldName": "Completed By", "type": "peoplepicker" }, { "fieldName": "HR Notify Boolean", "type": "radio" }], 
+							"enable": [{ "fieldName": "Completed By", "type": "peoplepicker" }, { "fieldName": "HR Notify Boolean", "type": "radio" }], 
+							"show": [{ "divID": "completion" }, { "divID": "assignment" }] 
+						}, { 
+							"thisFieldEquals": ["", "Cancel", "Disapprove"], 
+							"optional": [{ "fieldName": "Assigned To", "type": "peoplepicker" }, { "fieldName": "Completed By", "type": "peoplepicker" }, { "fieldName": "HR Notify Boolean", "type": "radio" }], 
+							"disable": [{ "fieldName": "Assigned To", "type": "peoplepicker" }, { "fieldName": "Completed By", "type": "peoplepicker" }, { "fieldName": "HR Notify Boolean", "type": "radio" }], 
+							"hide": [{ "divID": "completion" }, { "divID": "assignment" }]
+						},
+					],
+				}, {
+					"elementType": "field",
+					"controlType": "text",
+					"fieldName": "Request Status",
+					"listFieldName": "RequestStatus",
+					"labelContent": "Request Status",
+					"disabledForNonAdmin": ["", "Submitted", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+					"disabledForAdmin": ["", "Submitted", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
+				}, {
+					"elementType": "field",
+					"controlType": "textarea",
+					"fieldName": "New Admin Notes",
+					"labelContent": "Admin Notes"
+				}, {
+					"elementType": "field",
+					"controlType": "textarea",
+					"fieldName": "Historical Admin Notes",
+					"labelContent": "Historical Admin Notes",
+					"disabledForNonAdmin": ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+					"disabledForAdmin": ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
+				}, {
+					"elementType": "markup",
+					"tag": "div",
+					"end": 1,
+				}
+			];
+
+			var standardAdminAssignmentCompletionElements2 = [
+				{
+					"elementType": "markup",
+					"tag": "div",
+					"htmlID": "assignment",
+					"hideForNonAdmin": ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+					"hideForAdmin": ["", "Pending Approval"],
+					"begin": 1,
+				}, {
+					"elementType": "markup",
+					"tag": "h3",
+					"content": 'Assignment',
+					"begin": 1,
+					"end": 1
+				}, {
+					"elementType": "field",
+					"controlType": "peoplePicker",
+					"fieldName": "Assigned To on Load",
+					"labelContent": "Assigned To on Load",
+					"yieldsViewPermissions": 1,
+					"hideForNonAdmin": ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+					"hideForAdmin": ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+					"disabledForNonAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+					"disabledForAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
+				}, {
+					"elementType": "field",
+					"controlType": "peoplePicker",
+					"fieldName": "Assigned To",
+					"labelContent": "Assigned To",
+					"listFieldName": "AssignedTo",
+					"disabledForNonAdmin": ["Pending Approval", "Completed", "Disapproved", "Cancelled"],
+					"disabledForAdmin": ["Pending Approval", "Completed", "Disapproved", "Cancelled"]
+				}, {
+					"elementType": "field",
+					"controlType": "datePicker",
+					"fieldName": "Assignment Date",
+					"labelContent": "Assignment Date",
+					"listFieldName": "AssignmentDate",
+					"friendlyFormatOnLoad": {
+						'incomingFormat': null,
+						'returnFormat': 'MMMM D, YYYY',
+						'determineYearDisplayDynamically': 1
+					},
+					"isoFormatOnSubmit": {
+						'incomingFormat': null,
+						'returnFormat': null,
+						'determineYearDisplayDynamically': null
+					},
+					"disabledForNonAdmin": ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+					"disabledForAdmin": ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+					"hideForNonAdmin": ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+					"hideForAdmin": ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
+				}, {
+					"elementType": "markup",
+					"tag": "div",
+					"end": 1
+				}, {
+					"elementType": "markup",
+					"tag": "div",
+					"htmlID": "completion",
+					"hideForNonAdmin": ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+					"hideForAdmin": ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+					"begin": 1,
+				}, {
+					"elementType": "markup",
+					"tag": "h3",
+					"content": 'Completion',
+					"begin": 1,
+					"end": 1
+				}, {
+					"elementType": "field",
+					"controlType": "peoplePicker",
+					"fieldName": "Completed By",
+					"labelContent": "Completed By",
+					"listFieldName": "CompletedBy",
+					"disabledForNonAdmin": ["Pending Approval", "Disapproved", "Cancelled"],
+					"disabledForAdmin": ["Pending Approval", "Disapproved", "Cancelled"],
+					"requiredForNonAdmin": [],
+					"requiredForAdmin": ["Completed"]
+				}, {
+					"elementType": "field",
+					"controlType": "datePicker",
+					"fieldName": "Completion Date",
+					"labelContent": "Completion Date",
+					"listFieldName": "CompletionDate",
+					"friendlyFormatOnLoad": {
+						'incomingFormat': null,
+						'returnFormat': 'MMMM D, YYYY',
+						'determineYearDisplayDynamically': 1
+					},
+					"isoFormatOnSubmit": {
+						'incomingFormat': null,
+						'returnFormat': null,
+						'determineYearDisplayDynamically': null
+					},
+					"disabledForNonAdmin": ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+					"disabledForAdmin": ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+					"hideForNonAdmin": ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+					"hideForAdmin": ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
+				// delete below after UltiPro transition
+				}, {
+					'elementType': "field",
+					'controlType': "radio",
+					'fieldName': "HR Notify Boolean",
+					'choiceSetLabel': "Notify HR of a phone number or email change?",
+					'choices': [
+						{
+							'value': "yes",
+							'display': "Yes, notify HR"
+						}, {
+							'value': "no",
+							'display': "No, no phone number or email has changed"
+						}
+					],
+					'onChange': [
+						{
+							'thisFieldEquals': ['yes'], 
+							'show': [{ 'divID': 'hr-notification-elements' }],
+							'require': [{ "fieldName": "Contact Change Name", "type": "text" }]
+						}, {
+							'thisFieldEquals': ['no'],
+							'hide': [{ 'divID': 'hr-notification-elements' }],
+							'optional': [{ "fieldName": "Contact Change Name", "type": "text" }]
+						},
+					],
+					'requiredForNonAdmin': [''],
+					'requiredForAdmin': [''],
+					'disabledForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+					'disabledForAdmin': ["Completed", "Disapproved", "Cancelled"]
+				
+				}, {
+					"elementType": "markup",
+					"tag": "div",
+					"htmlID": "hr-notification-elements",
+					"begin": 1,
+					"hideForNonAdmin": ["", "Submitted", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+					"hideForAdmin": ["", "Submitted", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
+				}, {
+					"elementType": "field",
+					"controlType": "text",
+					"fieldName": "Contact Change Name",
+					"labelContent": "Whose info is changing?",
+				}, {
+					"elementType": "field",
+					"controlType": "text",
+					"fieldName": "Contact Change Phone Number",
+					"labelContent": "New Phone Number",
+					'helpNotes': [
+						{
+							'text': "Ten digit office phone number",
+							'htmlID': "phone-number-help-note",
+						}
+					],
+				}, {
+					"elementType": "field",
+					"controlType": "text",
+					"fieldName": "Contact Change Phone Extension",
+					"labelContent": "New Phone Extension",
+					'helpNotes': [
+						{
+							'text': "Four digit office phone extension",
+							'htmlID': "phone-extension-help-note",
+						}
+					],
+				}, {
+					"elementType": "field",
+					"controlType": "text",
+					"fieldName": "Contact Change Email Address",
+					"labelContent": "New Email Address",
+				}, {
+					"elementType": "markup",
+					"tag": "div",
+					"end": 1,
+				}, {
+					"elementType": "markup",
+					"tag": "div",
+					"end": 1,
+				}
+			];
+
+
+			var standardAdminAssignmentCompletionWHRNotificationElements = standardAdminAssignmentCompletionElements1.concat(standardAdminAssignmentCompletionElements2);
+		}
+
+		// delete above after UltiPro transition
+
 		if (fData.standardElementGroups.standardAdminElements != undefined) {
 
 			var standardAdminElements1 = [
@@ -3623,6 +3918,10 @@
 
 			if (fData.standardElementGroups.standardAdminAssignmentCompletionElements != undefined) {
 				fData.elements = fData.elements.concat(standardAdminAssignmentCompletionElements);
+			}
+
+			if (fData.standardElementGroups.standardAdminAssignmentCompletionWHRNotificationElements != undefined) {
+				fData.elements = fData.elements.concat(standardAdminAssignmentCompletionWHRNotificationElements);
 			}
 
 			if (fData.standardElementGroups.standardAdminElements != undefined) {
