@@ -3389,10 +3389,11 @@
 					"controlType": "text",
 					"fieldName": "Contact Change Phone Number",
 					"labelContent": "New Phone Number",
+					'addtlValidationType': 'validPhone',
 					'helpNotes': [
 						{
-							'text': "Ten digit office phone number",
-							'htmlID': "phone-number-help-note",
+							"text": "E.g., 617-723-2500",
+							'htmlID': "phone-number-help-note-2",
 						}
 					],
 				}, {
@@ -5517,6 +5518,9 @@
 						$("input#Assignment-Date").val(NowAsISOLocal);
 					}
 
+					console.log('workNewlyNeededArray');
+					console.log(workNewlyNeededArray);
+
 				} // END if (fData.autoProcessAssignments === 1 && rData.endOfLife != 1)
 
 
@@ -7185,6 +7189,18 @@
 							}
 						}
 
+						// delete below after UltiPro transition
+						// if processing standard notifications
+						if (typeof (fData.hrPhoneEmailNotifications) != "undefined") {
+							// if NOT just saving an allowed change after EOL has already been reached
+							if (rData.endOfLife == 1 && rData.endOfLifeIsNew == 1) {
+								// pass sData to ProcessStandardChangeNotifications
+
+								$().ProcessHRPhoneEmailNotifications();
+							}
+						}
+						// delete above after UltiPro transition
+
 						// if processing super simple notifications
 						if (typeof (fData.superSimpleChangeNotifications) != "undefined") {
 							// if NOT just saving an allowed change after EOL has already been reached
@@ -8040,15 +8056,18 @@
 
 				// finish setting up
 				// work needed
+
 				if (eData.workNewlyNeededArray != []) {
 					$.each(eData.workNewlyNeededArray, function (i, w) {
 
+						var addressee = '';
+
 						if (typeof (w.EntityData) != 'undefined') {
 							if (typeof (w.EntityData.Email) != 'undefined') {
-								var addressee = w.EntityData.Email;
+								addressee = w.EntityData.Email.toLowerCase();
 							}
 						} else {
-							var addressee = w.Description.toLowerCase();
+							addressee = w.Description.toLowerCase();
 						}
 
 						notificationsToSend.push({
@@ -8168,6 +8187,117 @@
 		});
 		return emailProcessingPromise.promise();
 	};
+
+	// delete below after UltiPro transition
+	$.fn.ProcessHRPhoneEmailNotifications = function () {
+
+		console.log('inside ProcessHRPhoneEmailNotifications');
+
+		// ============
+		// ---- 1. SET UP VARS
+		// ============
+
+		// sData.requestedForLinkedNamesString = $().ReturnNamesWLinkedEmailsFromPP('Requested For');
+
+		var sData = {
+			notifyHRBoolean: $('input#hr-notify-boolean_yes').is(':checked'),
+			contactChangeName: $('input#Contact-Change-Name').val(),
+			contactChangePhoneNumber: $('input#Contact-Change-Phone-Number').val(),
+			contactChangePhoneExtension: $('input#Contact-Change-Phone-Extension').val(),
+			contactChangeEmail: $('input#Contact-Change-Email-Address').val(),
+			contactChangeElementCount: 0,
+			contactChangeElementOpeningTag: '<p>',
+			contactChangeElementClosingTag: '</p>',
+		};
+		mData.subjectPreface = mData.requestName + ' Request #' + rData.requestID + ': ';
+
+		if (sData.contactChangePhoneNumber) {
+			sData.contactChangeElementCount = sData.contactChangeElementCount + 1;
+		}
+		if (sData.contactChangePhoneExtension) {
+			sData.contactChangeElementCount = sData.contactChangeElementCount + 1;
+		}
+		if (sData.contactChangeEmail) {
+			sData.contactChangeElementCount = sData.contactChangeElementCount + 1;
+		}
+
+		if (sData.contactChangeElementCount > 1) {
+			sData.contactChangeElementOpeningTag = '<li>';
+			sData.contactChangeElementClosingTag = '</li>';
+		}
+		
+		sData.completedByLinkedNamesString = $().ReturnNamesWLinkedEmailsFromPP('Completed By');
+
+		var eData = $.extend(sData, rData, mData, uData, fData);
+
+		var notificationsToSend = [];
+
+		// for debugging
+		if (true) {
+			console.log('eData');
+			console.log(eData);
+		}
+
+
+		// ============
+		// ---- 2. SEND, AS APPROPRIATE
+		// ============
+
+		if (typeof (eData.endOfLife) != 'undefined' && eData.endOfLife == 1 && eData.notifyHRBoolean) {
+			var hrNotifyBodyUnique =
+				'<p>IIT has updated information for ' + eData.contactChangeName + '.</p>';
+
+			if (eData.contactChangeElementCount > 1) {
+				hrNotifyBodyUnique += '<ul>';
+			}
+			if (eData.contactChangePhoneNumber) {
+				hrNotifyBodyUnique +=
+					eData.contactChangeElementOpeningTag +
+					'Phone Number: ' + eData.contactChangePhoneNumber +
+					eData.contactChangeElementClosingTag;
+			}
+			if (eData.contactChangePhoneExtension) {
+				hrNotifyBodyUnique +=
+					eData.contactChangeElementOpeningTag +
+					'Phone Extension: ' + eData.contactChangePhoneExtension +
+					eData.contactChangeElementClosingTag;
+			}
+			if (eData.contactChangeEmail) {
+				hrNotifyBodyUnique +=
+					eData.contactChangeElementOpeningTag +
+					'Email: ' + eData.contactChangeEmail +
+					eData.contactChangeElementClosingTag;
+			}
+			if (eData.contactChangeElementCount > 1) {
+				hrNotifyBodyUnique += '</ul>';
+			}
+
+			hrNotifyBodyUnique += '<p>Contact ' + eData.completedByLinkedNamesString + ' with any issues.</p>'
+
+			notificationsToSend.push({
+				'emailType': 'Notification',
+				'caller': 'networkAccess hrNotify',
+				'to': 'ultipro@mos.org',
+				'subject': eData.subjectPreface + ' user information updated',
+				'bodyUnique': hrNotifyBodyUnique
+			});
+		}
+
+
+
+		// ============
+		// ---- 7. SEND
+		// ============
+
+		// for debugging
+		if (true) {
+			console.log('notificationsToSend');
+			console.log(notificationsToSend);
+		}
+		$().SendEmails(notificationsToSend).then(function () {
+		});
+	};
+	// delete above after UltiPro transition
 
 
 

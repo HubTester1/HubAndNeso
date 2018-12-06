@@ -10,10 +10,10 @@
 		// "useRecordedMOSMainMajorVersion": 1,
 		'currentRequestVersion': 2,
 		'devAdminNotifications': 1,
-		'notifications': 0,
+		'notifications': 1,
 	};
 
-	console.log("using settings m1");
+	console.log("using settings m2");
 
 
 	var oData = {
