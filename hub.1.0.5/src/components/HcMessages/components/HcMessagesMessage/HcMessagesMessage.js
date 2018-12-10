@@ -13,7 +13,9 @@ import ScreenSizes from '../../../../services/ScreenSizes';
 // ----- COMPONENT
 
 function ReturnMessageBody(html) {
-	return { __html: `<div>${html}</div>` };
+	let htmlCopy = html;
+	htmlCopy = htmlCopy.replace(/(\r\n|\n|\r)/gm, '<br />');
+	return { __html: `<div>${htmlCopy}</div>` };
 }
 
 const HcMessagesMessage = props => (
