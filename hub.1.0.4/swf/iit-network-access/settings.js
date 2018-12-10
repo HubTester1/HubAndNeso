@@ -270,12 +270,23 @@
 		'standardElementGroups': {
 			'standardThisRequestAndRequesterElements': 1,
 			'standardApprovalElements': 1,
-			'standardAdminAssignmentCompletionElements': {
+			// delete below after UltiPro transition
+			'standardAdminAssignmentCompletionWHRNotificationElements': {
 				'changeRequestStatus': [
 					{ "value": "Complete", "display": "All work for this request has been completed" },
 					{ "value": "Cancel", "display": "This request has been cancelled" }
 				]
 			},
+
+			// delete above after UltiPro transition
+			// restore below after UltiPro transition
+			/* 'standardAdminAssignmentCompletionElements': {
+				'changeRequestStatus': [
+					{ "value": "Complete", "display": "All work for this request has been completed" },
+					{ "value": "Cancel", "display": "This request has been cancelled" }
+				]
+			}, */
+			// restore above after UltiPro transition
 			'standardButtonElements': 1,
 			'standardComponentGrpAdminOnlyElements': 1
 		},
@@ -291,6 +302,7 @@
 				}
 			},
 		},
+		'hrPhoneEmailNotifications': 1,
 		'versioningMatters': 0,
 
 
