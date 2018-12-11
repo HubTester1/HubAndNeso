@@ -3367,8 +3367,6 @@
 							'optional': [{ "fieldName": "Contact Change Name", "type": "text" }]
 						},
 					],
-					'requiredForNonAdmin': [''],
-					'requiredForAdmin': [''],
 					'disabledForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
 					'disabledForAdmin': ["Completed", "Disapproved", "Cancelled"]
 				
