@@ -26376,6 +26376,8 @@
 
 
 	$.fn.ReturnCurrentUserIsManagerOrAdmin = function () {
+		console.log('uData');
+		console.log(uData);
 		var currentUserIsManagerOrAdmin = 0;
 		if (uData.isAdmin === 1) {
 			currentUserIsManagerOrAdmin = 1;
@@ -26389,8 +26391,11 @@
 	$.fn.ReturnCurrentUserIsManager = function () {
 		var currentUserIsManager = 0;
 		var currentUserAccount = ReplaceAll('@mos.org', '', ReplaceAll('i:0#.f\\|membership\\|', '', uData.account));
-		if (currentUserAccount === 'sp3') {
+		// TO DO - DELETE EXCEPTION FOR NON-SP3 ACCOUNTS BELOW
+
+		if (currentUserAccount === 'sp3' || currentUserAccount === 'ahile') {
 			currentUserIsManager = 1;
+		// TO DO - DELETE EXCEPTION FOR NON-SP3 ACCOUNTS ABOVE
 		} else {
 			var managers = $().ReturnManagers();
 			managers.forEach((manager) => {
