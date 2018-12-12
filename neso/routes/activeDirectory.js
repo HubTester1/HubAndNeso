@@ -38,6 +38,24 @@ router.get('/divDept', (req, res, next) => {
 		// if the promise is rejected with an error, then respond with the error as JSON
 		.catch((error) => { res.json(error); });
 });
+// for GET request for /divDept
+router.get('/divDept/dept/:deptName', (req, res, next) => {
+	// get a promise to retrieve user data
+	nesoActiveDirectory.ReturnAllUsersInDepartment(req.params.deptName)
+		// if the promise is resolved with the docs, then respond with the docs as JSON
+		.then((result) => { res.json(result); })
+		// if the promise is rejected with an error, then respond with the error as JSON
+		.catch((error) => { res.json(error); });
+});
+// for GET request for /divDept
+router.get('/divDept/div/:divName', (req, res, next) => {
+	// get a promise to retrieve user data
+	nesoActiveDirectory.ReturnAllUsersInDivision(req.params.divName)
+		// if the promise is resolved with the docs, then respond with the docs as JSON
+		.then((result) => { res.json(result); })
+		// if the promise is rejected with an error, then respond with the error as JSON
+		.catch((error) => { res.json(error); });
+});
 // for GET request for /depts
 router.get('/depts', (req, res, next) => {
 	// get a promise to retrieve department data
