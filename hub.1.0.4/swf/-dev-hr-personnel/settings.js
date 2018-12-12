@@ -1,15 +1,5 @@
 (function ($) {
 
-	/* $().SPServices.SPUpdateMultipleListItems({
-		//webURL: "",
-		listName: "SWFList",
-		//CAMLQuery: "",
-		batchCmd: "Delete",
-		//valuepairs: [],
-		debug: false,
-		completefunc: null
-	}); */
-
 	var mData = {
 		'componentID': 98,
 		'swf': 1,
