@@ -5,6 +5,7 @@ import { Web } from 'sp-pnp-js';
 import shortID from 'shortid';
 import NesoHTTPClient from '../../services/NesoHTTPClient';
 import MOSUtilities from '../../services/MOSUtilities';
+import AccessControl from '../../services/AccessControl';
 
 // ----- DATA
 
@@ -22,7 +23,7 @@ export default class HcGetItDoneData {
 			.ReturnNesoData('https://neso.mos.org/hcGetItDone/allItems');
 	}
 
-	static ReturnAllGetItDoneData() {
+	static ReturnAllGetItDoneData(uData) {
 		// return a new promise
 		return new Promise(((resolve, reject) => {
 			// collect data async from multiple sources
@@ -34,8 +35,8 @@ export default class HcGetItDoneData {
 			Promise.all(listItemQueryPromises)
 			// if the promise is resolved with the settings
 				.then((resultsReturnArray) => {
-					// console.log('resultsReturnArray');
-					// console.log(resultsReturnArray);
+					console.log('resultsReturnArray');
+					console.log(resultsReturnArray);
 					// set up var to receive all list items
 					const allListItemsAlpha = [];
 					const allListItemsGroupedTempHolder = {};
@@ -44,32 +45,38 @@ export default class HcGetItDoneData {
 					// iterate over the results and push them to allListItemsAlpha
 					resultsReturnArray.forEach((listValue) => {
 						listValue.forEach((itemValue) => {
-							const itemFormatted = {
-								url: '',
-								anchorText: '',
-								type: '',
-							};
-							if (itemValue.ServerRedirectedEmbedUrl) {
-								itemFormatted.url = itemValue.ServerRedirectedEmbedUrl;
-								itemFormatted.anchorText = 
+							let userHasPermission = false;
+							if (!itemValue.restrictedToRoles) {
+								userHasPermission = true;
+							} else {
+								userHasPermission = AccessControl
+									.UserRolesAllowAccess(uData.roles, itemValue.restrictedToRoles, itemValue.restrictedFromRoles);
+							}
+							if (userHasPermission) {
+								const itemFormatted = {
+									url: '',
+									anchorText: '',
+									type: '',
+								};
+								if (itemValue.ServerRedirectedEmbedUrl) {
+									itemFormatted.url = itemValue.ServerRedirectedEmbedUrl;
+									itemFormatted.anchorText =
 										MOSUtilities.ReplaceAll('.pdf', '', MOSUtilities.ReplaceAll('.docx', '', itemValue.FileLeafRef.toString()));
-								itemFormatted.description = itemValue.Title;
-								itemFormatted.groups = ['HR'];
-								itemFormatted.type = 'file';
-								itemFormatted.key = shortID.generate();
+									itemFormatted.description = itemValue.Title;
+									itemFormatted.groups = ['HR'];
+									itemFormatted.type = 'file';
+									itemFormatted.key = shortID.generate();
+								}
+								if (itemValue.URL) {
+									itemFormatted.url = itemValue.URL;
+									itemFormatted.anchorText = itemValue.Name;
+									itemFormatted.description = itemValue.Description;
+									itemFormatted.groups = itemValue.Groups;
+									itemFormatted.type = 'swf';
+									itemFormatted.key = shortID.generate();
+								}
+								allListItemsAlpha.push(itemFormatted);
 							}
-							if (itemValue.URL) {
-								itemFormatted.url = itemValue.URL;
-								itemFormatted.anchorText = itemValue.Name;
-								itemFormatted.description = itemValue.Description;
-								itemFormatted.groups = itemValue.Groups;
-								itemFormatted.type = 'swf';
-								itemFormatted.key = shortID.generate();
-							}
-							if (itemValue.restrictedToRoles) {
-								itemFormatted.restrictedToRoles = itemValue.restrictedToRoles;
-							}
-							allListItemsAlpha.push(itemFormatted);
 						});
 					});
 

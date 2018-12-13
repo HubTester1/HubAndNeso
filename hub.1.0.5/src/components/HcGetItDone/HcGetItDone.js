@@ -38,7 +38,7 @@ export default class HcGetItDone extends React.Component {
 		this.returnHcGetItDoneBody = this.returnHcGetItDoneBody.bind(this);
 	}
 	componentDidMount() {
-		HcGetItDoneData.ReturnAllGetItDoneData()
+		HcGetItDoneData.ReturnAllGetItDoneData(this.props.uData)
 			.then((allGetItDoneItemsData) => {
 				this.setState(() => ({
 					listItemsAlphaArray: allGetItDoneItemsData.allListItemsAlpha,
@@ -47,6 +47,8 @@ export default class HcGetItDone extends React.Component {
 				}));
 			})
 			.catch((error) => {
+				console.log('ReturnAllGetItDoneData error');
+				console.log(error);
 				this.setState(() => ({
 					queryError: true,
 					ready: true,
@@ -68,6 +70,8 @@ export default class HcGetItDone extends React.Component {
 		}));
 	}
 	returnHcGetItDoneBody() {
+		// if this user has no roles property, then uData wasn't constructed properly and 
+		// 		we won't risk exposing links to them inappropriately
 		if (this.props.uData.roles) {
 			return (
 				<div id="hc-get-it-done-body">
@@ -80,16 +84,13 @@ export default class HcGetItDone extends React.Component {
 
 						<HcGetItDoneViewByGroup
 							listItemsGroupedArray={this.state.listItemsGroupedArray}
-							uData={this.props.uData}
 						/>
-
 					}
 					{
 						this.state.showViewByAlpha &&
 
 						<HcGetItDoneViewByAlpha
 							listItemsAlphaArray={this.state.listItemsAlphaArray}
-							uData={this.props.uData}
 						/>
 					}
 				</div>
