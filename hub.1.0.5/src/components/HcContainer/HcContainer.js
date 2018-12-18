@@ -159,6 +159,23 @@ class HcContainer extends React.Component {
 							screenType="medium"
 						/>
 					</MediaQuery>
+					<MediaQuery minWidth={ScreenSizes.ReturnLargeMin()}>
+						<HcPushedItems
+							screenType="large"
+						/>
+						<HcGetItDone
+							screenType="medium"
+							uData={this.state.uData}
+						/>
+						<HcOrganization
+							screenType="medium"
+						/>
+						<HcMessages
+							uData={this.state.uData}
+							allOrTop="all"
+							screenType="medium"
+						/>
+					</MediaQuery>
 					<footer>
 					&copy; {MOSUtilities.ReturnFormattedDateTime({ incomingDateTimeString: 'nowLocal', incomingReturnFormat: 'YYYY' })} Museum of Science
 					</footer>

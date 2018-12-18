@@ -34,12 +34,20 @@ export default class HcPushedItems extends React.Component {
 			});
 	}
 	returnPlaceholder() {
+		if (this.props.screenType === 'medium') {
+			return (
+				<div
+					className="mos-placeholder-column-container hc-pushed-items-placeholder"
+				>
+					<RectShape className="mos-placeholder-column hc-pushed-items-placeholder-column" />
+					<RectShape className="mos-placeholder-column hc-pushed-items-placeholder-column" />
+				</div>
+			);
+		}
 		return (
 			<div
 				className="mos-placeholder-column-container hc-pushed-items-placeholder"
 			>
-				<RectShape className="mos-placeholder-column hc-pushed-items-placeholder-column" />
-				<RectShape className="mos-placeholder-column hc-pushed-items-placeholder-column" />
 				<RectShape className="mos-placeholder-column hc-pushed-items-placeholder-column" />
 				<RectShape className="mos-placeholder-column hc-pushed-items-placeholder-column" />
 				<RectShape className="mos-placeholder-column hc-pushed-items-placeholder-column" />
@@ -73,6 +81,7 @@ export default class HcPushedItems extends React.Component {
 										key={listItemValue.key}
 										listItemId={listItemValue.key}
 										listItemContent={listItemValue}
+										screenType={this.props.screenType}
 									/>
 								))
 							}
@@ -96,6 +105,7 @@ export default class HcPushedItems extends React.Component {
 									key={listItemValue.key}
 									listItemId={listItemValue.key}
 									listItemContent={listItemValue}
+									screenType={this.props.screenType}
 								/>
 							))
 						}

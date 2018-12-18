@@ -77,9 +77,11 @@ div#hc-pushed-items
 	li.hc-pushed-items-item
 		+round-corners
 		+flex-row
+		+small-shadow-bottom-right-very-light-color
+		+font-weight-regular
 		list-style: none
 		min-height: 5.2rem
-		padding: 1rem
+		padding: 1.1rem 1rem .9rem
 		background-color: $white
 		margin: 0 0 1rem 0
 		
@@ -100,6 +102,8 @@ div#hc-pushed-items
 
 			div.hc-pushed-items-item-secondary-link-control-container
 				margin-left: auto
+				transform: scale(1)
+				transition: transform .25s
 			
 				button.hc-pushed-items-item-secondary-link-control
 					width: 2.4rem
@@ -112,69 +116,45 @@ div#hc-pushed-items
 						+block-hidden
 			
 			div.hc-pushed-items-item-secondary-link-container
-				+block-hidden
 
 				a.hc-pushed-items-item-secondary-link
+					+icon
+					+icon-before
+					+circular-before
+					
+					&::before
+						+font-size-6
+						padding: .5rem
+						border: 1px solid transparent
+				
+					&:hover
+						
+						&::before
+							border-color: inherit
 
 					span.hc-pushed-items-item-secondary-link-text-container
 						+inline-hidden
+
+
+				a.hc-pushed-items-item-display-only-link
+					+icon-reading-mode-before
+
+				a.hc-pushed-items-item-handle-file-link
+					+icon-print-before
+
+				a.hc-pushed-items-item-navigation-link
+					+icon-forward-before
+
+
+
+
+
+
+
+
+
+
 						
-		&:hover
-
-			div.hc-pushed-items-item-secondary-link-and-link-control-container
-				
-				div.hc-pushed-items-item-secondary-link-control-container
-					+block-hidden
-
-
-				div.hc-pushed-items-item-secondary-link-container
-					+override-block-hidden
-					margin-left: auto
-
-					a.hc-pushed-items-item-secondary-link
-						+icon
-						+icon-before
-						+circular-before
-						
-						&::before
-							+font-size-6
-							padding: .5rem
-					
-						&:hover
-
-							&::before
-								+hairline-border-before
-
-					a.hc-pushed-items-item-display-only-link
-						+icon-reading-mode-before
-
-					a.hc-pushed-items-item-handle-file-link
-						+icon-print-before
-
-					a.hc-pushed-items-item-navigation-link
-						+icon-forward-before
-
-
-
-
-
-
-	// li.hc-pushed-items-item.file
-	// 	+list-item-icon-bullet
-	// 	+icon-document-before
-	// 	color: $grey-13
-
-	// 	&::before
-	// 		+font-size-7
-
-	// li.hc-pushed-items-item.page
-	// 	+list-item-icon-bullet
-	// 	+icon-link-before
-	// 	color: $grey-13
-
-	// 	&::before
-	// 		+font-size-6
-
 // --- ALL - HC GET IT DONE
 
 div#hc-get-it-done

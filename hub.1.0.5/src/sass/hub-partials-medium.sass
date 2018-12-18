@@ -228,20 +228,45 @@
 		padding: 5rem 5rem 4rem 5rem
 
 		div.hc-pushed-items-placeholder
-			column-count: 5
+			column-count: 2
 
 			div.hc-pushed-items-placeholder-column
-				height: 13rem !important
+				height: 16rem !important
 				background-color: $black-5-percent
 
 		ul#hc-pushed-items-list
 			column-count: 2
-			column-gap: 2rem
+			column-gap: 1rem
 			margin: 0
 
 		li.hc-pushed-items-item
 			break-inside: avoid
 			page-break-inside: avoid
+
+			div.hc-pushed-items-item-secondary-link-and-link-control-container
+
+				div.hc-pushed-items-item-secondary-link-container
+					+block-hidden
+					transform: scale(0)
+					transition: transform .25s
+
+		li.hc-pushed-items-item:hover
+			+small-shadow-bottom-right-light-color
+
+			div.hc-pushed-items-item-secondary-link-and-link-control-container
+				
+				div.hc-pushed-items-item-secondary-link-control-container
+					+block-hidden
+					transform: scale(0)
+
+				div.hc-pushed-items-item-secondary-link-container
+					+override-block-hidden
+					transform: scale(1)
+					margin-left: auto
+
+
+
+
 
 // --- MEDIUM - STAFF LOOKUP
 
