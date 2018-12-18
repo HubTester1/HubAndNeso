@@ -11,7 +11,8 @@ export default class HcPushedItemsData {
 	static ReturnHubDocsForHcPushedDocs() {
 		const hubDocsWeb = new Web('https://bmos.sharepoint.com');
 		return hubDocsWeb.lists.getByTitle('HubDocs').items
-			.select('FileLeafRef', 'ServerRedirectedEmbedUrl', 'PushToHCName')
+			.select('File/ServerRelativeUrl', 'ServerRedirectedEmbedUrl', 'PushToHCName')
+			.expand('File')
 			.filter("PushToHC eq '1'")
 			.get();
 	}
@@ -19,7 +20,8 @@ export default class HcPushedItemsData {
 	static ReturnHRDocsForHcPushedDocs() {
 		const hrDocsWeb = new Web('https://bmos.sharepoint.com');
 		return hrDocsWeb.lists.getByTitle('HR Docs').items
-			.select('FileLeafRef', 'ServerRedirectedEmbedUrl', 'PushToHCName')
+			.select('File/ServerRelativeUrl', 'ServerRedirectedEmbedUrl', 'PushToHCName')
+			.expand('File')
 			.filter('PushToHCName ne null')
 			.get();
 	}
@@ -27,8 +29,10 @@ export default class HcPushedItemsData {
 	static ReturnPublicSafetyDocsForHcPushedDocs() {
 		const psDocsWeb = new Web('https://bmos.sharepoint.com');
 		return psDocsWeb.lists.getByTitle('PublicSafetyDocs').items
-			.select('FileLeafRef', 'ServerRedirectedEmbedUrl', 'PushToHCName')
-			.filter("PushToHC eq '1'").get();
+			.select('File/ServerRelativeUrl', 'ServerRedirectedEmbedUrl', 'PushToHCName')
+			.expand('File')
+			.filter("PushToHC eq '1'")
+			.get();
 	}
 
 	static ReturnHcPushedLinksForHcPushedDocs() {
@@ -50,19 +54,18 @@ export default class HcPushedItemsData {
 			Promise.all(listItemQueryPromises)
 			// if the promise is resolved with the settings
 				.then((resultsReturnArray) => {
+					console.log('resultsReturnArray');
+					console.log(resultsReturnArray);
 					// set up var to receive all list items
 					const alllistItems = [];
 					// iterate over the results and push them to allListItems
 					resultsReturnArray.forEach((listValue) => {
 						// console.log(listValue);
 						listValue.forEach((itemValue) => {
-							const itemFormatted = {
-								url: '',
-								anchorText: '',
-								type: '',
-							};
+							const itemFormatted = {};
 							if (itemValue.ServerRedirectedEmbedUrl) {
-								itemFormatted.url = itemValue.ServerRedirectedEmbedUrl;
+								itemFormatted.displayOnlyUrl = itemValue.ServerRedirectedEmbedUrl;
+								itemFormatted.handleFileUrl = itemValue.File.ServerRelativeUrl;
 								itemFormatted.anchorText = itemValue.PushToHCName;
 								itemFormatted.type = 'file';
 								itemFormatted.key = shortid.generate();
@@ -70,7 +73,7 @@ export default class HcPushedItemsData {
 								alllistItems.push(itemFormatted);
 							}
 							if (itemValue.URL) {
-								itemFormatted.url = itemValue.URL.Url;
+								itemFormatted.displayOnlyUrl = itemValue.URL.Url;
 								itemFormatted.anchorText = itemValue.URL.Description;
 								itemFormatted.type = 'page';
 								itemFormatted.key = shortid.generate();

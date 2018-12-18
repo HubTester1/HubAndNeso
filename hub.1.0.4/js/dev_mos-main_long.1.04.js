@@ -21235,10 +21235,13 @@
 	};
 
 	$.fn.RenderCommandBarAndCapacityForProducts = function () {
+
+		console.log('reading updated');
 		
 		$.ajax({
 			type: "GET",
-			url: 'https://triton.mos.org/products/productsTodayByVenueShow.xml',
+			// url: 'https://triton.mos.org/products/productsTodayByVenueShow.xml',
+			url: 'https://triton.mos.org/products/test_novencap_productsTodayByVenueShow.xml',
 			dataType: "xml",
 		}).done(function (receivedXML) {
 

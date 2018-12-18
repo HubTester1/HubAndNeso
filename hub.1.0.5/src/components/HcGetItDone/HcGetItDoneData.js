@@ -35,8 +35,8 @@ export default class HcGetItDoneData {
 			Promise.all(listItemQueryPromises)
 			// if the promise is resolved with the settings
 				.then((resultsReturnArray) => {
-					console.log('resultsReturnArray');
-					console.log(resultsReturnArray);
+					// console.log('resultsReturnArray');
+					// console.log(resultsReturnArray);
 					// set up var to receive all list items
 					const allListItemsAlpha = [];
 					const allListItemsGroupedTempHolder = {};

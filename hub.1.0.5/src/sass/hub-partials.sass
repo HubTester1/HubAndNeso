@@ -72,29 +72,108 @@ div#hc-staff-lookup
 // --- ALL - PUSHED ITEMS
 
 div#hc-pushed-items
+	background-color: $grey-1
 
 	li.hc-pushed-items-item
+		+round-corners
+		+flex-row
 		list-style: none
+		min-height: 5.2rem
+		padding: 1rem
+		background-color: $white
 		margin: 0 0 1rem 0
+		
+		div.hc-pushed-items-item-primary-link-container,
+		div.hc-pushed-items-item-secondary-link-and-link-control-container
+			+flex-column
 
-		a
-			+font-weight-regular
+		div.hc-pushed-items-item-primary-link-container
+			width: 70%
+			margin-right: 2rem
 
-	li.hc-pushed-items-item.file
-		+list-item-icon-bullet
-		+icon-document-before
-		color: $grey-13
+			a.hc-pushed-items-item-primary-link
+				+font-weight-regular
 
-		&::before
-			+font-size-7
+		div.hc-pushed-items-item-secondary-link-and-link-control-container
+			width: 30%
+			justify-content: end
 
-	li.hc-pushed-items-item.page
-		+list-item-icon-bullet
-		+icon-link-before
-		color: $grey-13
+			div.hc-pushed-items-item-secondary-link-control-container
+				margin-left: auto
+			
+				button.hc-pushed-items-item-secondary-link-control
+					width: 2.4rem
+					background-color: $white
 
-		&::before
-			+font-size-6
+					i.ms-Button-icon
+						+font-weight-semibold
+
+					div.ms-Button-textContainer
+						+block-hidden
+			
+			div.hc-pushed-items-item-secondary-link-container
+				+block-hidden
+
+				a.hc-pushed-items-item-secondary-link
+
+					span.hc-pushed-items-item-secondary-link-text-container
+						+inline-hidden
+						
+		&:hover
+
+			div.hc-pushed-items-item-secondary-link-and-link-control-container
+				
+				div.hc-pushed-items-item-secondary-link-control-container
+					+block-hidden
+
+
+				div.hc-pushed-items-item-secondary-link-container
+					+override-block-hidden
+					margin-left: auto
+
+					a.hc-pushed-items-item-secondary-link
+						+icon
+						+icon-before
+						+circular-before
+						
+						&::before
+							+font-size-6
+							padding: .5rem
+					
+						&:hover
+
+							&::before
+								+hairline-border-before
+
+					a.hc-pushed-items-item-display-only-link
+						+icon-reading-mode-before
+
+					a.hc-pushed-items-item-handle-file-link
+						+icon-print-before
+
+					a.hc-pushed-items-item-navigation-link
+						+icon-forward-before
+
+
+
+
+
+
+	// li.hc-pushed-items-item.file
+	// 	+list-item-icon-bullet
+	// 	+icon-document-before
+	// 	color: $grey-13
+
+	// 	&::before
+	// 		+font-size-7
+
+	// li.hc-pushed-items-item.page
+	// 	+list-item-icon-bullet
+	// 	+icon-link-before
+	// 	color: $grey-13
+
+	// 	&::before
+	// 		+font-size-6
 
 // --- ALL - HC GET IT DONE
 

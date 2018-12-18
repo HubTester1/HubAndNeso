@@ -38,9 +38,9 @@
 
 =override-block-hidden
 	display: block
-	width: auto
+	width: auto !important
 	height: auto
-	text-indent: 0
+	text-indent: 0 !important
 	white-space: normal
 	overflow: visible
 
@@ -157,6 +157,28 @@
 
 =standard-form-control-border
 	border: .1rem solid $grey-7
+
+=circular
+	border-radius: 50%
+
+=circular-before
+	&::before
+		+circular
+
+=circular-after
+	&::after
+		+circular
+
+=hairline-border
+	border: 1px solid
+
+=hairline-border-before
+	&::before
+		+hairline-border
+
+=hairline-border-after
+	&::after
+		+hairline-border
 
 
 // ------------------
@@ -288,6 +310,26 @@
 =icon-link-before
 	&::before
 		content: $ms-icon-code-Link
+
+=icon-forward-before
+	&::before
+		content: $ms-icon-code-Forward
+
+=icon-open-file-before
+	&::before
+		content: $ms-icon-code-OpenFile
+
+=icon-reading-mode-before
+	&::before
+		content: $ms-icon-code-ReadingMode
+
+=icon-print-before
+	&::before
+		content: $ms-icon-code-Print
+
+=icon-download-before
+	&::before
+		content: $ms-icon-code-Download
 
 =icon-contact-link-before
 	&::before
