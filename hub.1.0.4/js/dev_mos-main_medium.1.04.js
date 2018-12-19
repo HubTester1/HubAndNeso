@@ -3205,13 +3205,13 @@
 							"show": [{ "divID": "assignment" }] 
 						}, { 
 							"thisFieldEquals": ["Complete"], 
-							"require": [{ "fieldName": "Completed By", "type": "peoplepicker" }, { "fieldName": "HR Notify Boolean", "type": "radio" }], 
-							"enable": [{ "fieldName": "Completed By", "type": "peoplepicker" }, { "fieldName": "HR Notify Boolean", "type": "radio" }], 
+							"require": [{ "fieldName": "Completed By", "type": "peoplepicker" }], 
+							"enable": [{ "fieldName": "Completed By", "type": "peoplepicker" }], 
 							"show": [{ "divID": "completion" }, { "divID": "assignment" }] 
 						}, { 
 							"thisFieldEquals": ["", "Cancel", "Disapprove"], 
-							"optional": [{ "fieldName": "Assigned To", "type": "peoplepicker" }, { "fieldName": "Completed By", "type": "peoplepicker" }, { "fieldName": "HR Notify Boolean", "type": "radio" }], 
-							"disable": [{ "fieldName": "Assigned To", "type": "peoplepicker" }, { "fieldName": "Completed By", "type": "peoplepicker" }, { "fieldName": "HR Notify Boolean", "type": "radio" }], 
+							"optional": [{ "fieldName": "Assigned To", "type": "peoplepicker" }, { "fieldName": "Completed By", "type": "peoplepicker" }], 
+							"disable": [{ "fieldName": "Assigned To", "type": "peoplepicker" }, { "fieldName": "Completed By", "type": "peoplepicker" }], 
 							"hide": [{ "divID": "completion" }, { "divID": "assignment" }]
 						},
 					],
@@ -3344,25 +3344,25 @@
 				// delete below after UltiPro transition
 				}, {
 					'elementType': "field",
-					'controlType': "radio",
+					'controlType': "check",
 					'fieldName': "HR Notify Boolean",
 					'choiceSetLabel': "Notify HR of a phone number or email change?",
 					'choices': [
 						{
 							'value': "yes",
 							'display': "Yes, notify HR"
-						}, {
-							'value': "no",
-							'display': "No, no phone number or email has changed"
+						// }, {
+						// 	'value': "no",
+						// 	'display': "No, no phone number or email has changed"
 						}
 					],
 					'onChange': [
 						{
-							'thisFieldEquals': ['yes'], 
+							"thisFieldIsChecked": 1,
 							'show': [{ 'divID': 'hr-notification-elements' }],
 							'require': [{ "fieldName": "Contact Change Name", "type": "text" }]
 						}, {
-							'thisFieldEquals': ['no'],
+							"thisFieldIsChecked": 0,
 							'hide': [{ 'divID': 'hr-notification-elements' }],
 							'optional': [{ "fieldName": "Contact Change Name", "type": "text" }]
 						},
@@ -8275,7 +8275,7 @@
 			notificationsToSend.push({
 				'emailType': 'Notification',
 				'caller': 'networkAccess hrNotify',
-				'to': 'ultipro@mos.org',
+				'to': 'jbaker@mos.org',
 				'subject': eData.subjectPreface + ' user information updated',
 				'bodyUnique': hrNotifyBodyUnique
 			});
