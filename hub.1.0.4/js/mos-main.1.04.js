@@ -10934,33 +10934,13 @@
 		sData.requesterPositionType = $("select#Requester-Position-Type").val();
 
 		sData.candidateName = $("input#Candidate-Name").val();
+		sData.candidatePosition = $("input#Position-Name").val();
+		sData.candidateDepartment = $("select#Candidate-Department").val();
 		sData.candidatePositionType = $("select#Candidate-Position-Type").val();
 		sData.candidatePhone = $("input#Candidate-Phone").val();
 		sData.candidateEmail = $("input#Candidate-Email").val();
 		sData.candidateReference = $("textarea#Reference").val();
 
-
-
-		/*		sData.primaryStaffContactArray = JSON.parse($('input#Primary-Staff-Contact_TopSpan_HiddenInput').val());
-				sData.primaryStaffContactName = sData.primaryStaffContactArray[0]["DisplayText"];
-		
-				sData.secondaryStaffContactArray = JSON.parse($('input#Secondary-Staff-Contact_TopSpan_HiddenInput').val());
-				sData.secondaryStaffContactName = sData.secondaryStaffContactArray[0]["DisplayText"];
-		
-				sData.SpecialEventOrProject = $("textarea#Special-Event-or-Project").val();
-		
-				sData.VolunteerTasks = $("textarea#Volunteer-Tasks").val();
-				sData.NumberOfVolunteersDesired = $("input#Number-of-Volunteers-Desired").val();
-				sData.EventOrProjectDate = $().ReturnFormattedDateTime($("input#Event-or-Project-Date").val(), null, 'dddd, MMMM D, YYYY');
-				sData.VolunteerArrivalTimeDate = $().ReturnFormattedDateTime($("input#Event-or-Project-Date").val(), null, 'YYYY-MM-DD');
-				sData.VolunteerArrivalTimeTimezone = $().ReturnFormattedDateTime($("input#Event-or-Project-Date").val(), null, 'Z');
-				sData.VolunteerArrivalTimeHours = $("select#hours-input_Volunteer-Arrival-Time option:selected").val();
-				sData.VolunteerArrivalTimeMinutes = $("select#minutes-input_Volunteer-Arrival-Time option:selected").val();
-				sData.VolunteerArrivalTime = $().ReturnFormattedDateTime(sData.VolunteerArrivalTimeDate + sData.VolunteerArrivalTimeHours + sData.VolunteerArrivalTimeMinutes + sData.VolunteerArrivalTimeTimezone, null, 'h:mm a');
-				sData.EstimatedNumberOfHoursNeeded = $("input#Estimated-Number-of-Hours-Needed").val();
-				sData.SpecialSkillsRequired = $("textarea#Special-Skills-Required").val();
-				sData.AdditionalComments = $("textarea#Additional-Comments").val();
-		*/
 		mData.subjectPreface = mData.requestName + ' Request #' + rData.requestID + ': ';
 
 		mData.uriOverview = mData.fullSiteBaseURL + "/SitePages/" + mData.pageToken + ".aspx"
@@ -11029,7 +11009,8 @@
 			eData.allReferralNotificationRecipients = $().ReturnUserEmailStringAndArray(eData.submittedRecipientsVerbose).array;
 			eData.allReferralNotificationRecipients.push(eData.requesterEmail);
 
-			var beginningOfLifeBodyUnique = '<p>' + eData.requesterName + ' has submitted a new referral. You can ' +
+			var beginningOfLifeBodyUnique = 
+				'<p>' + eData.requesterName + ' has submitted a new referral. You can ' +
 				'<a href="' + eData.uriRequest + '">review this referral\'s details</a>, ' +
 				'<a href="mailto:' + eData.requesterEmail + '">contact the referrer</a> ' +
 				'with any questions, or <a href="' + eData.uriOverview + '">' +
@@ -11045,7 +11026,13 @@
 				'<h2>About the Referred Candidate</h2>' +
 				'<ul>' +
 				'	<li><b>Name</b>: ' + eData.candidateName + '</li>' +
-				'	<li><b>Position Type</b>: ' + eData.candidatePositionType + '</li>' +
+				'	<li><b>Position Type</b>: ' + eData.candidatePositionType + '</li>';
+			if (eData.candidatePositionType === 'Volunteer') {
+				beginningOfLifeBodyUnique += '	<li><b>Department</b>: ' + eData.candidateDepartment + '</li>';
+			} else {
+				beginningOfLifeBodyUnique += '	<li><b>Position Name</b>: ' + eData.candidatePosition + '</li>';
+			}
+			beginningOfLifeBodyUnique += 
 				'	<li><b>Phone</b>: ' + eData.candidatePhone + '</li>' +
 				'	<li><b>Email</b>: ' + eData.candidateEmail + '</li>' +
 				'	<li><b>Reference</b>: ' + eData.candidateReference + '</li>' +
@@ -21235,10 +21222,13 @@
 	};
 
 	$.fn.RenderCommandBarAndCapacityForProducts = function () {
+
+		console.log('reading updated');
 		
 		$.ajax({
 			type: "GET",
-			url: 'https://triton.mos.org/products/productsTodayByVenueShow.xml',
+			// url: 'https://triton.mos.org/products/productsTodayByVenueShow.xml',
+			url: 'https://triton.mos.org/products/test_novencap_productsTodayByVenueShow.xml',
 			dataType: "xml",
 		}).done(function (receivedXML) {
 

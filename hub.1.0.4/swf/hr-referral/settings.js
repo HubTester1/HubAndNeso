@@ -382,15 +382,6 @@
 				"disabledForAdmin": ['Submitted', 'Cancelled']
 			}, {
 				"elementType": "field",
-				"controlType": "text",
-				"fieldName": "Position Applying To",
-				"labelContent": "Position Applying To",
-				"requiredForNonAdmin": [""],
-				"requiredForAdmin": [""],
-				"disabledForNonAdmin": ['Submitted', 'Cancelled'],
-				"disabledForAdmin": ['Submitted', 'Cancelled']
-			}, {
-				"elementType": "field",
 				"controlType": "select",
 				"fieldName": "Candidate Position Type",
 				"labelContent": "Position Type",
@@ -414,46 +405,56 @@
 
 
 
-				"onChange": [{
-
-
-
-
-					"thisFieldEquals": ["Staff", "Paid Intern", "Unpaid Intern"],
-					"show": [{
-						"fieldName": "Position Name"
-					}],
-					"require": [{
-						"fieldName": "Position Name",
-						"type": "text"
-					}],
-					"hide": [{
-						"fieldName": "Department"
-					}],
-					"optional": [{
-						"fieldName": "Department",
-						"type": "select"
-					}],
-				}, {
-
-
-
-					"thisFieldEquals": ["Volunteer"],
-					"hide": [{
-						"fieldName": "Position Name"
-					}],
-					"optional": [{
-						"fieldName": "Position Name",
-						"type": "text"
-					}],
-					"show": [{
-						"fieldName": "Candidate Department"
-					}],
-					"require": [{
-						"fieldName": "Candidate Department",
-						"type": "select"
-					}],
-				}],
+				"onChange": [
+					{
+						"thisFieldEquals": ["Staff", "Paid Intern", "Unpaid Intern"],
+						"show": [{
+							"fieldName": "Position Name"
+						}],
+						"require": [{
+							"fieldName": "Position Name",
+							"type": "text"
+						}],
+						"hide": [{
+							"fieldName": "Candidate Department"
+						}],
+						"optional": [{
+							"fieldName": "Candidate Department",
+							"type": "select"
+						}],
+					}, {
+						"thisFieldEquals": ["Volunteer"],
+						"show": [{
+							"fieldName": "Candidate Department"
+						}],
+						"require": [{
+							"fieldName": "Candidate Department",
+							"type": "select"
+						}],
+						"hide": [{
+							"fieldName": "Position Name"
+						}],
+						"optional": [{
+							"fieldName": "Position Name",
+							"type": "text"
+						}],
+					}, {
+						"thisFieldEquals": [""],
+						"hide": [
+							{ "fieldName": "Position Name" },
+							{ "fieldName": "Candidate Department" }
+						],
+						"optional": [
+							{
+								"fieldName": "Position Name",
+								"type": "text"
+							}, {
+								"fieldName": "Candidate Department",
+								"type": "text"
+							}
+						],
+					}
+				],
 
 
 
