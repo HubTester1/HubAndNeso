@@ -188,7 +188,7 @@ module.exports = {
 	DeleteAllADUsersFromDatabase: () =>
 		// return a new promise
 		new Promise((resolve, reject) => {
-			// get a promise to retrieve all documents from the adDepartments document collection
+			// get a promise to retrieve all documents from the adUsers document collection
 			nesoDBQueries.DeleteAllDocsFromCollection('adUsers')
 				// if the promise is resolved with the docs, then resolve this promise with the docs
 				.then((result) => {
@@ -219,7 +219,7 @@ module.exports = {
 	DeleteAllADDepartmentsFromDatabase: () =>
 		// return a new promise
 		new Promise((resolve, reject) => {
-			// get a promise to retrieve all documents from the adUsers document collection
+			// get a promise to retrieve all documents from the adDepartments document collection
 			nesoDBQueries.DeleteAllDocsFromCollection('adDepartments')
 				// if the promise is resolved with the docs, then resolve this promise with the docs
 				.then((result) => {
@@ -234,7 +234,7 @@ module.exports = {
 	DeleteAllADManagersSimpleFromDatabase: () =>
 		// return a new promise
 		new Promise((resolve, reject) => {
-			// get a promise to retrieve all documents from the adDepartments document collection
+			// get a promise to retrieve all documents from the adManagersFlat document collection
 			nesoDBQueries.DeleteAllDocsFromCollection('adManagersFlat')
 				// if the promise is resolved with the docs, then resolve this promise with the docs
 				.then((result) => {
@@ -1894,6 +1894,13 @@ module.exports = {
 							});
 						}
 					});
+
+					// TO DO - DELETE BELOW HARD-CODING OF DEPARTMENTS ONCE ALGO HAS BETTER DATA TO CRUNCH
+
+					adDepartments.departments.push('Courses');
+
+					// TO DO - DELETE ABOVE HARD-CODING OF DEPARTMENTS ONCE ALGO HAS BETTER DATA TO CRUNCH
+
 					// alphabetize the departments
 					adDepartments.departments.sort();
 					// resolve this promise with a message and the data
