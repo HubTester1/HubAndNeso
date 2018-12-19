@@ -18639,8 +18639,15 @@
 		// replace special characters
 		formDataString = formDataString.replace(/,(?=[^,]*$)/, '');
 
-		// push the string to valuePairs
-		globalSubmissionValuePairsArray.push(["AllRequestData", CDataWrap(formDataString)]);
+		// TO DO - DELETE BELOW IF CONDITION BUT KEEP ARRAY PUSH WHEN PERSONNEL ACTION REQUESTS ARE GONE
+
+		// if this is not PAF
+		if ($("input#Request-Name").val() !== 'Personnel Action') {			
+			// push the string to valuePairs
+			globalSubmissionValuePairsArray.push(["AllRequestData", CDataWrap(formDataString)]);
+		}
+
+		// TO DO - DELETE ABOVE IF CONDITION BUT KEEP ARRAY PUSH WHEN PERSONNEL ACTION REQUESTS ARE GONE
 
 		// return the array
 		console.log('globalSubmissionValuePairsArray');
@@ -21227,8 +21234,8 @@
 		
 		$.ajax({
 			type: "GET",
-			// url: 'https://triton.mos.org/products/productsTodayByVenueShow.xml',
-			url: 'https://triton.mos.org/products/test_novencap_productsTodayByVenueShow.xml',
+			url: 'https://triton.mos.org/products/productsTodayByVenueShow.xml',
+			// url: 'https://triton.mos.org/products/test_novencap_productsTodayByVenueShow.xml',
 			dataType: "xml",
 		}).done(function (receivedXML) {
 
@@ -21293,7 +21300,7 @@
 					htmlToWrite += "<h2 class=\"header_venue\">" + venueTitle + "</h2> \n";
 
 					if (venueTabText === 'Omni') {
-						htmlToWrite += '<p style="padding: 2rem; background-color: #f2ea9a">Until a Tessitura issue is resolved, some Omni shows may not appear here.</p> \n';
+						htmlToWrite += '<p style="padding: 2rem; background-color: #f2ea9a">Until a data feeds issue is resolved in January, Omni shows 5pm and later may not appear here.</p> \n';
 					}
 
 					$(venueValue).find("show").each(function (showIndex, showValue) {
