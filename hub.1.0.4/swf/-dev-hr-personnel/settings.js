@@ -1,7 +1,7 @@
 (function ($) {
 
 	var mData = {
-		'componentID': 98,
+		'componentID': 20098,
 		'swf': 1,
 		// 'mosMainKey': 'prod',
 		// 'mosMainKey': 'dev',
