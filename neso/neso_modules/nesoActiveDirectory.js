@@ -2337,7 +2337,84 @@ module.exports = {
 			// get a promise to retrieve all documents from the adManagersFlat document collection
 			nesoDBQueries.ReturnAllDocsFromCollection('adManagersFlat')
 				// if the promise is resolved with the docs, then resolve this promise with the docs
-				.then((result) => { resolve(result); })
+				.then((result) => {
+					// TO DO - DELETE BELOW HARD-CODING OF MANAGERS ONCE ALGO HAS BETTER DATA TO CRUNCH
+
+					const hardCodedManagers = [
+						{
+							_id: '5c1ab151c3ee4111b4d5269e',
+							account: 'wtatarouns',
+							employeeID: '10726',
+							firstName: 'Wendy',
+							lastName: 'Tatarouns',
+							firstInitial: 'W',
+							lastInitial: 'T',
+							displayName: 'Wendy Tatarouns',
+							title: 'Assistant Manager, Visitor Services',
+							email: 'wtatarouns@mos.org',
+							officePhone: '617-589-0213',
+							mobilePhone: '617-275-3166',
+							manager: 'ahile',
+							department: 'Visitor Services',
+							division: 'Visitor Experience & Operations',
+							securityGroups: [
+								'Tessitura Training',
+								'VS Closing',
+								'Redboard_viewers',
+								'VS_Mgmt',
+								'VS_Training',
+								'mos.org',
+								'SaleWizard Maintenance Users',
+								'TrackIT Users',
+								'LSI_Admits',
+								'DSS Audio Tour Inventory',
+								'Visitor Services',
+								'BoxOffice - Less Restricted Users',
+								'Kiosk Access',
+								'Box Office FAQs',
+								'CSI Project Team',
+								'MOSAccess Admin Users',
+								'VS_MembershipSales',
+								'SP_Staff',
+								"Box Office FAQ - Don''t Use_See Pierre",
+								'Tessitura Ticketing',
+								'MaxFlight',
+								'Box Office FAQs Modify',
+								'PA System Project',
+								'Lockers',
+								'SP_Dept_Write_Volunteer_Supervisors',
+								'BOI',
+								'WWV',
+								'WiFi Access',
+								'Lobby Training',
+								'Shift-Leaders',
+								'SP_Dept_HR_ManagersHandbook',
+								'Digital Signage',
+								'Crystal Enterprise',
+								'SP_Team_Write_Safety',
+								'VS_SW',
+								'4D Theater Operations',
+								'VS_PassDonation',
+								'GSW Scripts and Slides',
+								'VS_Staff',
+								'Box Office Admin',
+								'PompeiiOps',
+								'Admits',
+							],
+						},
+					];
+
+					hardCodedManagers.forEach((hardCodedManager) => {
+						result.docs.push(hardCodedManager);
+					});
+
+					// alphabetize the managers
+					result.docs.sort(module.exports.ReturnUserNameWeightRelativeToAnother);
+
+					// TO DO - DELETE ABOVE HARD-CODING OF MANAGERS ONCE ALGO HAS BETTER DATA TO CRUNCH
+
+					resolve(result);
+				})
 				// if the promise is rejected with an error, then reject this promise with an error
 				.catch((error) => { reject(error); });
 		}),
