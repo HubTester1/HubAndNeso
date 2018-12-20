@@ -142,7 +142,10 @@ class HcContainer extends React.Component {
 							/>
 						</Accordion>
 					</MediaQuery>
-					<MediaQuery minWidth={ScreenSizes.ReturnMediumMin()}>
+					<MediaQuery 
+						minWidth={ScreenSizes.ReturnMediumMin()} 
+						maxWidth={ScreenSizes.ReturnMediumMax()}
+					>
 						<HcPushedItems
 							screenType="medium"
 						/>
