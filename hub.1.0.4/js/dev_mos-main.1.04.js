@@ -21300,7 +21300,7 @@
 					htmlToWrite += "<h2 class=\"header_venue\">" + venueTitle + "</h2> \n";
 
 					if (venueTabText === 'Omni') {
-						htmlToWrite += '<p style="padding: 2rem; background-color: #f2ea9a">Until a data feeds issue is resolved in January, Omni shows 5pm and later may not appear here.</p> \n';
+						htmlToWrite += '<p style="padding: 2rem; background-color: #f2ea9a">Until a technical issue between systems is resolved, Omni shows 5pm and later may not appear here. This will be resolved by IIT in January.</p> \n';
 					}
 
 					$(venueValue).find("show").each(function (showIndex, showValue) {
