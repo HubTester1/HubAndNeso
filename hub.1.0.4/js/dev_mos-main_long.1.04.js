@@ -8275,7 +8275,7 @@
 			notificationsToSend.push({
 				'emailType': 'Notification',
 				'caller': 'networkAccess hrNotify',
-				'to': 'jbaker@mos.org',
+				'to': 'ultipro@mos.org',
 				'subject': eData.subjectPreface + ' user information updated',
 				'bodyUnique': hrNotifyBodyUnique
 			});
