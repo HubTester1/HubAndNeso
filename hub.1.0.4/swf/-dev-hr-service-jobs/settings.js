@@ -13,7 +13,7 @@
 		'notifications': 1
 	};
 
-	console.log("using settings m5");
+	console.log("using settings m7");
 
 	var oData = {
 
@@ -737,7 +737,7 @@
 	fData.CustomScriptLast +=	'$("div#label-and-control_Requested-For, div#container_about-the-requester").hide("fast").addClass("hidden"); \n';
 
 
-	/* // texts
+	// texts
 	fData.CustomScriptLast += '$("input#Request-Nickname").val("Req Nick");';
 	fData.CustomScriptLast += '$("input#Job-Title").val("Job Title");';
 	fData.CustomScriptLast += '$("input#Physical-Demand-Lifting").val("1");';
@@ -756,7 +756,7 @@
 	fData.CustomScriptLast += '$("textarea#Training-Requirements").val("These are the training requirements");';
 	fData.CustomScriptLast += '$("textarea#Dress-Requirements").val("These are the dress requirements");';
 	fData.CustomScriptLast += '$("textarea#Job-Duties").val("These are the job duties");';
- */
+
 
 
 

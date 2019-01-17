@@ -21299,10 +21299,6 @@
 					htmlToWrite += "<div class=\"venue-container\" id=\"" + venueID + "\"> \n";
 					htmlToWrite += "<h2 class=\"header_venue\">" + venueTitle + "</h2> \n";
 
-					if (venueTabText === 'Omni') {
-						htmlToWrite += '<p style="padding: 2rem; background-color: #f2ea9a">Until a technical issue between systems is resolved, Omni shows 5pm and later may not appear here. This will be resolved by IIT in January.</p> \n';
-					}
-
 					$(venueValue).find("show").each(function (showIndex, showValue) {
 
 						htmlToWrite += "<h3 class=\"header_show\">" + $(showValue).children("title").text() + "</h3> \n" +
@@ -26388,7 +26384,7 @@
 		var currentUserAccount = ReplaceAll('@mos.org', '', ReplaceAll('i:0#.f\\|membership\\|', '', uData.account));
 		// TO DO - DELETE EXCEPTION FOR NON-SP3 ACCOUNTS BELOW
 
-		if (currentUserAccount === 'sp3' || currentUserAccount === 'ahile') {
+		if (currentUserAccount === 'sp3' || currentUserAccount === 'ahile' || currentUserAccount === 'jpeeler') {
 			currentUserIsManager = 1;
 			// TO DO - DELETE EXCEPTION FOR NON-SP3 ACCOUNTS ABOVE
 		} else {

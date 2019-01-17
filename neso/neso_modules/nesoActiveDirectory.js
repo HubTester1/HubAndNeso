@@ -2401,6 +2401,23 @@ module.exports = {
 								'PompeiiOps',
 								'Admits',
 							],
+						}, {
+							_id: '5c38bd819e68540958b2816d',
+							account: 'jpeeler',
+							employeeID: '14861',
+							firstName: 'Jackie',
+							lastName: 'Peeler',
+							firstInitial: 'J',
+							lastInitial: 'P',
+							displayName: 'Jackie Peeler',
+							title: 'Manager, Living Collections',
+							email: 'jpeeler@mos.org',
+							officePhone: '',
+							mobilePhone: '',
+							manager: 'bharvey',
+							department: 'Living Collections',
+							division: 'Education',
+							securityGroups: ['mos.org', 'SP_Staff', 'Butterfly Garden', 'OS X Users', 'Web VPN Access', 'Living Collections', 'WiFi Access'],
 						},
 					];
 

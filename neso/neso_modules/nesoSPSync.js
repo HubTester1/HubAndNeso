@@ -38,11 +38,11 @@ module.exports = {
 				.catch((error) => { reject(error); });
 		}),
 
-	SyncListItems: (appToken, collection) =>
+	SyncListItems: (appToken, fields, collection) =>
 		// return a new promise
 		new Promise((resolve, reject) => {
 			// get a promise to get the list
-			nesoSPClient.ReturnSPAppSWFListItems(appToken)
+			nesoSPClient.ReturnSPAppSWFListItems(appToken, fields)
 				// if the promise is resolved with the list items
 				.then((returnListItemsResults) => {
 					// get a promise to delete all items in the specified collection
@@ -96,8 +96,20 @@ module.exports = {
 	SyncGSEJobsListItems: () =>
 		// return a new promise
 		new Promise((resolve, reject) => {
+			// specify which fields to sync
+			const fieldsToSync = [
+				'Id',
+				'JobTitle',
+				'Location',
+				'AllRequestData',
+			];
+
+
+			// NEXT - Filter by RS, then test emails
+
+
 			// get a promise to get the list
-			module.exports.SyncListItems('hr-service-jobs', 'gseJobs')
+			module.exports.SyncListItems('hr-service-jobs', fieldsToSync, 'gseJobs')
 				// if the promise is resolved with the result, then 
 				// 		resolve this promise with the result
 				.then((syncResult) => { resolve(syncResult); })
@@ -109,8 +121,16 @@ module.exports = {
 	SyncGSESchedulesListItems: () =>
 		// return a new promise
 		new Promise((resolve, reject) => {
+			// specify which fields to sync
+			const fieldsToSync = [
+				'Id',
+				'JobID',
+				'Date',
+				'StartTime',
+				'AllRequestData',
+			];
 			// get a promise to get the list
-			module.exports.SyncListItems('hr-service-schedules', 'gseSchedules')
+			module.exports.SyncListItems('hr-service-schedules', fieldsToSync, 'gseSchedules')
 				// if the promise is resolved with the result, then 
 				// 		resolve this promise with the result
 				.then((syncResult) => { resolve(syncResult); })
@@ -122,8 +142,13 @@ module.exports = {
 	SyncGSESignupsListItems: () =>
 		// return a new promise
 		new Promise((resolve, reject) => {
+			// specify which fields to sync
+			const fieldsToSync = [
+				'Id',
+				'AllRequestData',
+			];
 			// get a promise to get the list
-			module.exports.SyncListItems('hr-service-signups', 'gseSignups')
+			module.exports.SyncListItems('hr-service-signups', fieldsToSync, 'gseSignups')
 				// if the promise is resolved with the result, then 
 				// 		resolve this promise with the result
 				.then((syncResult) => { resolve(syncResult); })

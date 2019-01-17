@@ -4444,7 +4444,7 @@
 			
 			
 			
-
+			rData.gseJobData['Job-ID'] = rData.gseJobID;
 			rData.gseJobData['Job-Admin-Name'] = rData.gseJobData['Job-Admin'][0].displayText;
 			rData.gseJobData['Job-Description-Formatted'] = '<p>' + ReplaceAll('%0A', '</p><p>', rData.gseJobData['Job-Description']) + '</p>';
 
@@ -9876,8 +9876,6 @@
 		var sData = {};
 		sData.gseSiteTokens = $().ReturnGSESiteTokens();
 		sData.jobID = $("input#Job-ID").val();
-		console.log('sData.jobID');
-		console.log(sData.jobID);
 
 		// get relevant job as first element of array
 		var gseJobsArray = $().GetFieldsFromSpecifiedRows({
@@ -20933,10 +20931,6 @@
 					htmlToWrite += "<div class=\"venue-container\" id=\"" + venueID + "\"> \n";
 					htmlToWrite += "<h2 class=\"header_venue\">" + venueTitle + "</h2> \n";
 
-					if (venueTabText === 'Omni') {
-						htmlToWrite += '<p style="padding: 2rem; background-color: #f2ea9a">Until a technical issue between systems is resolved, Omni shows 5pm and later may not appear here. This will be resolved by IIT in January.</p> \n';
-					}
-
 					$(venueValue).find("show").each(function (showIndex, showValue) {
 
 						htmlToWrite += "<h3 class=\"header_show\">" + $(showValue).children("title").text() + "</h3> \n" +
@@ -25496,7 +25490,7 @@
 		var currentUserAccount = ReplaceAll('@mos.org', '', ReplaceAll('i:0#.f\\|membership\\|', '', uData.account));
 		// TO DO - DELETE EXCEPTION FOR NON-SP3 ACCOUNTS BELOW
 
-		if (currentUserAccount === 'sp3' || currentUserAccount === 'ahile') {
+		if (currentUserAccount === 'sp3' || currentUserAccount === 'ahile' || currentUserAccount === 'jpeeler') {
 			currentUserIsManager = 1;
 		// TO DO - DELETE EXCEPTION FOR NON-SP3 ACCOUNTS ABOVE
 		} else {
@@ -27548,7 +27542,7 @@
 		// wait for all data retrieval / setting promises to complete (pass or fail) 
 		$.when.apply($, allDataRetrievalAndSettingPromises).always(function () {
 
-			console.log('using dev_mos-main_long.1.04 m7');
+			console.log('using dev_mos-main_long.1.04 m9');
 
 			$().ConfigureAndShowScreenContainerAndAllScreens();
 		});

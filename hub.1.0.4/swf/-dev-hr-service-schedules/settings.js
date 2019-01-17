@@ -2483,9 +2483,9 @@
 
 
 
-	// TEMPORARY
+	/* // TEMPORARY
 
-	/* // repeats
+	// repeats
 	fData.CustomScriptLast += '$().RepeatElement("simple-date");';
 	fData.CustomScriptLast += '$().RepeatElement("simple-date");';
 	fData.CustomScriptLast += '$().RepeatElement("simple-date");';
@@ -2498,14 +2498,14 @@
 	
 	// texts
 	fData.CustomScriptLast += '$("input#Request-Nickname").val("Req Nick");';
-	fData.CustomScriptLast += '$("input#id-or-link_GSE-Job-Request-ID").val("215");';
+	fData.CustomScriptLast += '$("input#id-or-link_GSE-Job-Request-ID").val("1");';
 	fData.CustomScriptLast += '$("input#Number-of-Positions").val("3");';
 	fData.CustomScriptLast += '$("input#Location").val("Lobby");';
-	fData.CustomScriptLast += '$("input#Repeating-Date").val("October 1, 2018");';
-	fData.CustomScriptLast += '$("input#Repeating-Date-repeat-1").val("October 2, 2018");';
-	fData.CustomScriptLast += '$("input#Repeating-Date-repeat-2").val("October 3, 2018");';
-	fData.CustomScriptLast += '$("input#Repeating-Date-repeat-3").val("October 4, 2018");';
-	fData.CustomScriptLast += '$("input#Repeating-Date-repeat-4").val("October 5, 2018");';
+	fData.CustomScriptLast += '$("input#Repeating-Date").val("March 1, 2019");';
+	fData.CustomScriptLast += '$("input#Repeating-Date-repeat-1").val("March 2, 2019");';
+	fData.CustomScriptLast += '$("input#Repeating-Date-repeat-2").val("March 3, 2019");';
+	fData.CustomScriptLast += '$("input#Repeating-Date-repeat-3").val("March 4, 2019");';
+	fData.CustomScriptLast += '$("input#Repeating-Date-repeat-4").val("March 5, 2019");';
 	
 	// selects
 	fData.CustomScriptLast += '$("select#hours-input_StartTime option[value=\'T09\']").attr("selected","selected"); \n';
