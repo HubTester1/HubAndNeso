@@ -38,20 +38,25 @@ module.exports = {
 				.catch((error) => { reject(error); });
 		}),
 
-	SyncListItems: (appToken, fields, collection) =>
+	SyncListItems: options =>
 		// return a new promise
 		new Promise((resolve, reject) => {
+			// construct full site URL
+			const appURL = `https://bmos.sharepoint.com/sites/${options.syncFrom.spApp}`;
 			// get a promise to get the list
-			nesoSPClient.ReturnSPAppSWFListItems(appToken, fields)
+			nesoSPClient
+				.ReturnSPListItems(appURL, options.syncFrom.spList, options.syncFrom.spFields, options.syncFrom.spFilters)
 				// if the promise is resolved with the list items
 				.then((returnListItemsResults) => {
 					// get a promise to delete all items in the specified collection
-					nesoDBQueries.DeleteAllDocsFromCollection(collection)
+					nesoDBQueries.DeleteAllDocsFromCollection(options.syncTo.mongoCollection)
 						// if the promise is resolved with the result, then 
 						// 		resolve this promise with the result
 						.then((deletionResult) => {
 							// set up container for processed list items
 							const listItemsProcessed = [];
+							console.log('---returnListItemsResults');
+							console.log(returnListItemsResults);
 							// for each returned list item
 							returnListItemsResults.listItemsArray.forEach((listItem) => {
 								// make copy of param
@@ -76,7 +81,8 @@ module.exports = {
 								listItemsProcessed.push(listItemCopy);
 							});
 							// get a promise to insert the processed list items into the collection
-							nesoDBQueries.InsertDocIntoCollection(listItemsProcessed, collection)
+							nesoDBQueries
+								.InsertDocIntoCollection(listItemsProcessed, options.syncTo.mongoCollection)
 								// if the promise is resolved with the result, then 
 								// 		resolve this promise with the result
 								.then((insertionResult) => { resolve(insertionResult); })
@@ -96,20 +102,31 @@ module.exports = {
 	SyncGSEJobsListItems: () =>
 		// return a new promise
 		new Promise((resolve, reject) => {
-			// specify which fields to sync
-			const fieldsToSync = [
-				'Id',
-				'JobTitle',
-				'Location',
-				'AllRequestData',
-			];
-
-
-			// NEXT - Filter by RS, then test emails
-
-
-			// get a promise to get the list
-			module.exports.SyncListItems('hr-service-jobs', fieldsToSync, 'gseJobs')
+			// specify sync options
+			const options = {
+				syncFrom: {
+					spApp: 'hr-service-jobs',
+					spList: 'SWFList',
+					spFields: [
+						'Id',
+						'JobTitle',
+						'Location',
+						'AllRequestData',
+					],
+					spFilters: [
+						{
+							field: 'RequestStatus',
+							operator: 'eq',
+							value: '\'Approved\'',
+						},
+					],
+				},
+				syncTo: {
+					mongoCollection: 'gseJobs',
+				},
+			};
+			// get a promise to sync the list items
+			module.exports.SyncListItems(options)
 				// if the promise is resolved with the result, then 
 				// 		resolve this promise with the result
 				.then((syncResult) => { resolve(syncResult); })
@@ -121,16 +138,32 @@ module.exports = {
 	SyncGSESchedulesListItems: () =>
 		// return a new promise
 		new Promise((resolve, reject) => {
-			// specify which fields to sync
-			const fieldsToSync = [
-				'Id',
-				'JobID',
-				'Date',
-				'StartTime',
-				'AllRequestData',
-			];
-			// get a promise to get the list
-			module.exports.SyncListItems('hr-service-schedules', fieldsToSync, 'gseSchedules')
+			// specify sync options
+			const options = {
+				syncFrom: {
+					spApp: 'hr-service-schedules',
+					spList: 'SWFList',
+					spFields: [
+						'Id',
+						'JobID',
+						'Date',
+						'StartTime',
+						'AllRequestData',
+					],
+					spFilters: [
+						// {
+						// 	field: 'RequestStatus',
+						// 	operator: 'eq',
+						// 	value: 'Completed',
+						// },
+					],
+				},
+				syncTo: {
+					mongoCollection: 'gseSchedules',
+				},
+			};
+			// get a promise to sync the list items
+			module.exports.SyncListItems(options)
 				// if the promise is resolved with the result, then 
 				// 		resolve this promise with the result
 				.then((syncResult) => { resolve(syncResult); })
@@ -142,13 +175,29 @@ module.exports = {
 	SyncGSESignupsListItems: () =>
 		// return a new promise
 		new Promise((resolve, reject) => {
-			// specify which fields to sync
-			const fieldsToSync = [
-				'Id',
-				'AllRequestData',
-			];
-			// get a promise to get the list
-			module.exports.SyncListItems('hr-service-signups', fieldsToSync, 'gseSignups')
+			// specify sync options
+			const options = {
+				syncFrom: {
+					spApp: 'hr-service-schedules',
+					spList: 'SWFList',
+					spFields: [
+						'Id',
+						'AllRequestData',
+					],
+					spFilters: [
+						// {
+						// 	field: 'RequestStatus',
+						// 	operator: 'eq',
+						// 	value: 'Completed',
+						// },
+					],
+				},
+				syncTo: {
+					mongoCollection: 'gseSchedules',
+				},
+			};
+			// get a promise to sync the list items
+			module.exports.SyncListItems(options)
 				// if the promise is resolved with the result, then 
 				// 		resolve this promise with the result
 				.then((syncResult) => { resolve(syncResult); })

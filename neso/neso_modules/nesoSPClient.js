@@ -8,13 +8,13 @@ const axios = require('axios');
 
 module.exports = {
 
-	ReturnSPListItems: (siteURL, fields, listName) =>
+	ReturnSPListItems: (appURL, listName, fields, filters) =>
 		// return a new promise
 		new Promise((resolve, reject) => {
 			// not sure why, but the environment vars must be extracted before use
 			const username = process.env.spUser;
 			const password = process.env.spPass;  
-			spauth.getAuth(siteURL, {
+			spauth.getAuth(appURL, {
 				username,
 				password,
 			})
@@ -26,7 +26,7 @@ module.exports = {
 						headers,
 					};
 					// construct endpoint
-					let endpoint = `${siteURL}/_api/web/lists/getByTitle('${listName}')/items?$top=5000`;
+					let endpoint = `${appURL}/_api/web/lists/getByTitle('${listName}')/items?$top=5000`;
 					// if fields is a non-empty array
 					if (typeof (fields) === 'object' && fields[0]) {
 						// start a select clause
@@ -39,6 +39,20 @@ module.exports = {
 							endpoint += fieldValue;
 						});
 					}
+					// if filters is a non-empty array
+					if (typeof (filters) === 'object' && filters[0]) {
+						// start a filter clause
+						endpoint += '&$filter=';
+						// add each filter
+						filters.forEach((filterValue, filterIndex) => {
+							if (filterIndex !== 0) {
+								endpoint += ',';
+							}
+							endpoint += `${filterValue.field} ${filterValue.operator} ${filterValue.value}`;
+						});
+					}
+					console.log('---endpoint');
+					console.log(endpoint);
 					// get a promise to retrieve the data
 					axios.get(endpoint, axiosConfig)
 						// if the promise is resolved
@@ -62,18 +76,4 @@ module.exports = {
 						.catch((error) => { reject(error); });
 				});
 		}),
-
-	ReturnSPAppSWFListItems: (appToken, fields) => 
-		// return a new promise
-		new Promise((resolve, reject) => {
-			// construct full site URL
-			const siteURL = `https://bmos.sharepoint.com/sites/${appToken}`;
-			// get a promise to get the list items
-			module.exports.ReturnSPListItems(siteURL, fields, 'SWFList')
-				// if the promise is resolved with the list items, then respond with the list items
-				.then((result) => { resolve(result); })
-				// if the promise is rejected with an error, then reject this promise with an error
-				.catch((error) => { reject(error); });
-		}),
-
 };

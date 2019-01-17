@@ -454,23 +454,21 @@ cron.schedule(cronConfig.gseSignupReminderNotificationProcessingSchedule, () => 
 			console.log(error);
 		});
 }); */
-
-nesoSPSync.SyncGSESchedulesListItems()
+nesoSPSync.SyncGSEJobsListItems()
 	// if the promise is resolved with the docs, then respond with the docs as JSON
 	.then((result) => {
 		// eslint-disable-next-line no-console
-		console.log('Processed GSE Schedules Data:');
+		console.log('Processed GSE Jobs Data:');
 		// eslint-disable-next-line no-console
 		// console.log(result);
 	})
 	// if the promise is rejected with an error, then respond with the error as JSON
 	.catch((error) => {
 		// eslint-disable-next-line no-console
-		console.log('ERROR - Processing Schedules Data:');
+		console.log('ERROR - Processing Jobs Data:');
 		// eslint-disable-next-line no-console
 		console.log(error);
 	});
-
 
 // PROCESS ---
 
