@@ -8,31 +8,35 @@ const axios = require('axios');
 
 module.exports = {
 
-	ReturnSPListItems: (appURL, listName, fields, filters) =>
+	ReturnSPListItems: options =>
 		// return a new promise
 		new Promise((resolve, reject) => {
 			// not sure why, but the environment vars must be extracted before use
 			const username = process.env.spUser;
 			const password = process.env.spPass;  
-			spauth.getAuth(appURL, {
+			spauth.getAuth(options.syncFrom.spApp, {
 				username,
 				password,
 			})
-				.then((options) => {
+				.then((auth) => {
 					// extract, augment headers; assign to config object
-					const { headers } = options;
+					const { headers } = auth;
 					headers.Accept = 'application/json;odata=nometadata';
 					const axiosConfig = {
 						headers,
 					};
 					// construct endpoint
-					let endpoint = `${appURL}/_api/web/lists/getByTitle('${listName}')/items?$top=5000`;
+					let endpoint = 
+						`${options.syncFrom.spApp}/_api/web/lists/getByTitle('${options.syncFrom.spList}')/items?$top=5000`;
 					// if fields is a non-empty array
-					if (typeof (fields) === 'object' && fields[0]) {
+					if (
+						typeof (options.syncFrom.spFields) === 'object' && 
+						options.syncFrom.spFields[0]
+					) {
 						// start a select clause
 						endpoint += '&$select=';
 						// add each field to be selected
-						fields.forEach((fieldValue, fieldIndex) => {
+						options.syncFrom.spFields.forEach((fieldValue, fieldIndex) => {
 							if (fieldIndex !== 0) {
 								endpoint += ',';
 							}
@@ -40,19 +44,17 @@ module.exports = {
 						});
 					}
 					// if filters is a non-empty array
-					if (typeof (filters) === 'object' && filters[0]) {
+					if (typeof (options.syncFrom.spFilters) === 'object' && options.syncFrom.spFilters[0]) {
 						// start a filter clause
 						endpoint += '&$filter=';
 						// add each filter
-						filters.forEach((filterValue, filterIndex) => {
+						options.syncFrom.spFilters.forEach((filterValue, filterIndex) => {
 							if (filterIndex !== 0) {
 								endpoint += ',';
 							}
 							endpoint += `${filterValue.field} ${filterValue.operator} ${filterValue.value}`;
 						});
 					}
-					console.log('---endpoint');
-					console.log(endpoint);
 					// get a promise to retrieve the data
 					axios.get(endpoint, axiosConfig)
 						// if the promise is resolved

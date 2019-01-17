@@ -41,11 +41,13 @@ module.exports = {
 	SyncListItems: options =>
 		// return a new promise
 		new Promise((resolve, reject) => {
+			// clone incoming param
+			const optionsClone = options;
 			// construct full site URL
-			const appURL = `https://bmos.sharepoint.com/sites/${options.syncFrom.spApp}`;
+			optionsClone.syncFrom.spApp = `https://bmos.sharepoint.com/sites/${options.syncFrom.spApp}`;
 			// get a promise to get the list
 			nesoSPClient
-				.ReturnSPListItems(appURL, options.syncFrom.spList, options.syncFrom.spFields, options.syncFrom.spFilters)
+				.ReturnSPListItems(optionsClone)
 				// if the promise is resolved with the list items
 				.then((returnListItemsResults) => {
 					// get a promise to delete all items in the specified collection
@@ -55,8 +57,6 @@ module.exports = {
 						.then((deletionResult) => {
 							// set up container for processed list items
 							const listItemsProcessed = [];
-							console.log('---returnListItemsResults');
-							console.log(returnListItemsResults);
 							// for each returned list item
 							returnListItemsResults.listItemsArray.forEach((listItem) => {
 								// make copy of param
@@ -151,11 +151,11 @@ module.exports = {
 						'AllRequestData',
 					],
 					spFilters: [
-						// {
-						// 	field: 'RequestStatus',
-						// 	operator: 'eq',
-						// 	value: 'Completed',
-						// },
+						{
+							field: 'RequestStatus',
+							operator: 'eq',
+							value: '\'Submitted\'',
+						},
 					],
 				},
 				syncTo: {
@@ -178,22 +178,22 @@ module.exports = {
 			// specify sync options
 			const options = {
 				syncFrom: {
-					spApp: 'hr-service-schedules',
+					spApp: 'hr-service-signups',
 					spList: 'SWFList',
 					spFields: [
 						'Id',
 						'AllRequestData',
 					],
 					spFilters: [
-						// {
-						// 	field: 'RequestStatus',
-						// 	operator: 'eq',
-						// 	value: 'Completed',
-						// },
+						{
+							field: 'RequestStatus',
+							operator: 'eq',
+							value: '\'Signed Up\'',
+						},
 					],
 				},
 				syncTo: {
-					mongoCollection: 'gseSchedules',
+					mongoCollection: 'gseSignups',
 				},
 			};
 			// get a promise to sync the list items
