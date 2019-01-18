@@ -7,10 +7,6 @@ dotenv.config({ path: './dotenv.env' });
 
 // ----- PULL IN MODULES, ROUTES, CONFIG
 
-// CONFIG ---
-
-const cronConfig = require('./env.config.cron.json');
-
 // NODE MODULES ---
 
 const express = require('express');
@@ -29,6 +25,7 @@ const cron = require('node-cron');
 
 const nesoCORS = require('./neso_modules/nesoCORS');
 const nesoUtilities = require('./neso_modules/nesoUtilities');
+const nesoCronLog = require('./neso_modules/nesoCronLog');
 const nesoEmail = require('./neso_modules/nesoEmail');
 const nesoActiveDirectory = require('./neso_modules/nesoActiveDirectory');
 const nesoHcOrg = require('./neso_modules/nesoHcOrg');
@@ -227,298 +224,371 @@ cron.schedule('0 2 * * *', () => {
 		});
 });
 // schedule as specified in environment
-cron.schedule(cronConfig.adUserProcessingCronSchedule, () => {
+cron.schedule(process.env.adUserProcessingCronSchedule, () => {
 	nesoActiveDirectory.ProcessADUsersData()
-		// if the promise is resolved with the docs, then respond with the docs as JSON
+		// if the promise is resolved, log result
 		.then((result) => {
+			nesoCronLog.Log({
+				process: 'ProcessADUsersData',
+				status: 'success',
+				result,
+			});
 			// eslint-disable-next-line no-console
-			console.log('Processed Active Directory Users data:');
+			// console.log('Processed Active Directory Users data:');
+			// eslint-disable-next-line no-console
 			// console.log(result);
 		})
-		// if the promise is rejected with an error, then respond with the error as JSON
+		// if the promise is rejected, log error
 		.catch((error) => {
+			nesoCronLog.Log({
+				process: 'ProcessADUsersData',
+				status: 'error',
+				error,
+			});
 			// eslint-disable-next-line no-console
-			console.log('ERROR - Processing Active Directory Users data:');
+			// console.log('ERROR - Processing Active Directory Users data:');
 			// eslint-disable-next-line no-console
-			console.log(error);
+			// console.log(error);
 		});
 });
 // schedule as specified in environment
-cron.schedule(cronConfig.adUserByDivisionDepartmentProcessingCronSchedule, () => {
+cron.schedule(process.env.adUserByDivisionDepartmentProcessingCronSchedule, () => {
 	nesoActiveDirectory.ProcessADUsersByDivisionDepartmentData()
-		// if the promise is resolved with the docs, then respond with the docs as JSON
+		// if the promise is resolved, log result
 		.then((result) => {
+			nesoCronLog.Log({
+				process: 'ProcessADUsersByDivisionDepartmentData',
+				status: 'success',
+				result,
+			});
 			// eslint-disable-next-line no-console
-			console.log('Processed Active Directory Users By Division Department data:');
+			// console.log('Processed Active Directory Users By Division Department data:');
+			// eslint-disable-next-line no-console
 			// console.log(result);
 		})
-		// if the promise is rejected with an error, then respond with the error as JSON
+		// if the promise is rejected, log error
 		.catch((error) => {
+			nesoCronLog.Log({
+				process: 'ProcessADUsersByDivisionDepartmentData',
+				status: 'error',
+				error,
+			});
 			// eslint-disable-next-line no-console
-			console.log('ERROR - Processing Active Directory Users By Division Department data:');
+			// console.log('ERROR - Processing Active Directory Users By Division Department data:');
 			// eslint-disable-next-line no-console
-			console.log(error);
+			// console.log(error);
 		});
 });
 // schedule as specified in environment
-cron.schedule(cronConfig.adUserByDivisionDepartmentTeamsProcessingCronSchedule, () => {
+cron.schedule(process.env.adUserByDivisionDepartmentTeamsProcessingCronSchedule, () => {
 	nesoHcOrg.ProcessHcOrgDivDeptWTeamsData()
-		// if the promise is resolved with the docs, then respond with the docs as JSON
+		// if the promise is resolved, log result
 		.then((result) => {
+			nesoCronLog.Log({
+				process: 'ProcessHcOrgDivDeptWTeamsData',
+				status: 'success',
+				result,
+			});
 			// eslint-disable-next-line no-console
-			console.log('Processed HcOrg DivDept data:');
+			// console.log('Processed HcOrg DivDept data:');
+			// eslint-disable-next-line no-console
 			// console.log(result);
 		})
-		// if the promise is rejected with an error, then respond with the error as JSON
+		// if the promise is rejected, log error
 		.catch((error) => {
+			nesoCronLog.Log({
+				process: 'ProcessHcOrgDivDeptWTeamsData',
+				status: 'error',
+				error,
+			});
 			// eslint-disable-next-line no-console
-			console.log('ERROR - Processing HcOrg DivDept data data:');
+			// console.log('ERROR - Processing HcOrg DivDept data data:');
 			// eslint-disable-next-line no-console
-			console.log(error);
+			// console.log(error);
 		});
 });
 // schedule as specified in environment
-cron.schedule(cronConfig.nonDivisionDepartmentTeamsProcessingCronSchedule, () => {
+cron.schedule(process.env.nonDivisionDepartmentTeamsProcessingCronSchedule, () => {
 	nesoHcOrg.ProcessNonDivDeptTeamsData()
-		// if the promise is resolved with the docs, then respond with the docs as JSON
+		// if the promise is resolved, log result
 		.then((result) => {
+			nesoCronLog.Log({
+				process: 'ProcessNonDivDeptTeamsData',
+				status: 'success',
+				result,
+			});
 			// eslint-disable-next-line no-console
-			console.log('Processed HcOrg NONDivDept data:');
+			// console.log('Processed HcOrg NONDivDept data:');
+			// eslint-disable-next-line no-console
 			// console.log(result);
 		})
-		// if the promise is rejected with an error, then respond with the error as JSON
+		// if the promise is rejected, log error
 		.catch((error) => {
+			nesoCronLog.Log({
+				process: 'ProcessNonDivDeptTeamsData',
+				status: 'error',
+				error,
+			});
 			// eslint-disable-next-line no-console
-			console.log('ERROR - Processing HcOrg NONDivDept data data:');
+			// console.log('ERROR - Processing HcOrg NONDivDept data data:');
 			// eslint-disable-next-line no-console
-			console.log(error);
+			// console.log(error);
 		});
 });
 // schedule as specified in environment
-cron.schedule(cronConfig.adDepartmentsProcessingCronSchedule, () => {
+cron.schedule(process.env.adDepartmentsProcessingCronSchedule, () => {
 	nesoActiveDirectory.ProcessADDepartments()
-		// if the promise is resolved with the docs, then respond with the docs as JSON
+		// if the promise is resolved, log result
 		.then((result) => {
+			nesoCronLog.Log({
+				process: 'ProcessADDepartments',
+				status: 'success',
+				result,
+			});
 			// eslint-disable-next-line no-console
-			console.log('Processed Active Directory Departments data:');
+			// console.log('Processed Active Directory Departments data:');
+			// eslint-disable-next-line no-console
 			// console.log(result);
 		})
-		// if the promise is rejected with an error, then respond with the error as JSON
+		// if the promise is rejected, log error
 		.catch((error) => {
+			nesoCronLog.Log({
+				process: 'ProcessADDepartments',
+				status: 'error',
+				error,
+			});
 			// eslint-disable-next-line no-console
-			console.log('ERROR - Processing Active Directory Departments data:');
+			// console.log('ERROR - Processing Active Directory Departments data:');
 			// eslint-disable-next-line no-console
-			console.log(error);
+			// console.log(error);
 		});
 });
 // schedule as specified in environment
-cron.schedule(cronConfig.adManagersSimpleProcessingCronSchedule, () => {
+cron.schedule(process.env.adManagersSimpleProcessingCronSchedule, () => {
 	nesoActiveDirectory.ProcessADManagersSimple()
-		// if the promise is resolved with the docs, then respond with the docs as JSON
+		// if the promise is resolved, log result
 		.then((result) => {
+			nesoCronLog.Log({
+				process: 'ProcessADManagersSimple',
+				status: 'success',
+				result,
+			});
 			// eslint-disable-next-line no-console
-			console.log('Processed Active Directory Managers Simple data:');
+			// console.log('Processed Active Directory Managers Simple data:');
+			// eslint-disable-next-line no-console
 			// console.log(result);
 		})
-		// if the promise is rejected with an error, then respond with the error as JSON
+		// if the promise is rejected, log error
 		.catch((error) => {
+			nesoCronLog.Log({
+				process: 'ProcessADManagersSimple',
+				status: 'error',
+				error,
+			});
 			// eslint-disable-next-line no-console
-			console.log('ERROR - Processing Active Directory Managers Simple data:');
+			// console.log('ERROR - Processing Active Directory Managers Simple data:');
 			// eslint-disable-next-line no-console
-			console.log(error);
+			// console.log(error);
 		});
 });
 // schedule as specified in environment
-cron.schedule(cronConfig.adManagersWithFullFlatDownlinesProcessingCronSchedule, () => {
+cron.schedule(process.env.adManagersWithFullFlatDownlinesProcessingCronSchedule, () => {
 	nesoActiveDirectory.ProcessADManagersWithFullFlatDownlines()
-		// if the promise is resolved with the docs, then respond with the docs as JSON
+		// if the promise is resolved, log result
 		.then((result) => {
+			nesoCronLog.Log({
+				process: 'ProcessADManagersWithFullFlatDownlines',
+				status: 'success',
+				result,
+			});
 			// eslint-disable-next-line no-console
-			console.log('Processed Managers with Full Flat Downlines data:');
+			// console.log('Processed Managers with Full Flat Downlines data:');
+			// eslint-disable-next-line no-console
 			// console.log(result);
 		})
-		// if the promise is rejected with an error, then respond with the error as JSON
+		// if the promise is rejected, log error
 		.catch((error) => {
+			nesoCronLog.Log({
+				process: 'ProcessADManagersWithFullFlatDownlines',
+				status: 'error',
+				error,
+			});
 			// eslint-disable-next-line no-console
-			console.log('ERROR - Processing Managers with Full Flat Downlines data:');
+			// console.log('ERROR - Processing Managers with Full Flat Downlines data:');
 			// eslint-disable-next-line no-console
-			console.log(error);
+			// console.log(error);
 		});
 });
 // schedule as specified in environment
-cron.schedule(cronConfig.adManagersWithFullHierarchicalDownlinesProcessingCronSchedule, () => {
+cron.schedule(process.env.adManagersWithFullHierarchicalDownlinesProcessingCronSchedule, () => {
 	nesoActiveDirectory.ProcessADManagersWithFullHierarchicalDownlines()
-		// if the promise is resolved with the docs, then respond with the docs as JSON
+		// if the promise is resolved, log result
 		.then((result) => {
+			nesoCronLog.Log({
+				process: 'ProcessADManagersWithFullHierarchicalDownlines',
+				status: 'success',
+				result,
+			});
 			// eslint-disable-next-line no-console
-			console.log('Processed Managers with Full Hierarchical Downlines data:');
+			// console.log('Processed Managers with Full Hierarchical Downlines data:');
+			// eslint-disable-next-line no-console
 			// console.log(result);
 		})
-		// if the promise is rejected with an error, then respond with the error as JSON
+		// if the promise is rejected, log error
 		.catch((error) => {
+			nesoCronLog.Log({
+				process: 'ProcessADManagersWithFullHierarchicalDownlines',
+				status: 'error',
+				error,
+			});
 			// eslint-disable-next-line no-console
-			console.log('ERROR - Processing Managers with Full Hierarchical Downlines data:');
+			// console.log('ERROR - Processing Managers with Full Hierarchical Downlines data:');
 			// eslint-disable-next-line no-console
-			console.log(error);
+			// console.log(error);
 		});
 });
 // schedule as specified in environment
-cron.schedule(cronConfig.gseJobsSyncProcessingCronSchedule, () => {
+cron.schedule(process.env.gseJobsSyncProcessingCronSchedule, () => {
 	nesoSPSync.SyncGSEJobsListItems()
-		// if the promise is resolved with the docs, then respond with the docs as JSON
+		// if the promise is resolved, log result
 		.then((result) => {
+			nesoCronLog.Log({
+				process: 'SyncGSEJobsListItems',
+				status: 'success',
+				result,
+			});
 			// eslint-disable-next-line no-console
-			console.log('Processed GSE Jobs Data:');
+			// console.log('Processed GSE Jobs Data:');
 			// eslint-disable-next-line no-console
 			// console.log(result);
 		})
-		// if the promise is rejected with an error, then respond with the error as JSON
+		// if the promise is rejected, log error
 		.catch((error) => {
+			nesoCronLog.Log({
+				process: 'SyncGSEJobsListItems',
+				status: 'error',
+				error,
+			});
 			// eslint-disable-next-line no-console
-			console.log('ERROR - Processing Jobs Data:');
+			// console.log('ERROR - Processing Jobs Data:');
 			// eslint-disable-next-line no-console
-			console.log(error);
+			// console.log(error);
 		});
 });
 // schedule as specified in environment
-cron.schedule(cronConfig.gseSchedulesSyncProcessingCronSchedule, () => {
+cron.schedule(process.env.gseSchedulesSyncProcessingCronSchedule, () => {
 	nesoSPSync.SyncGSESchedulesListItems()
-		// if the promise is resolved with the docs, then respond with the docs as JSON
+		// if the promise is resolved, log result
 		.then((result) => {
+			nesoCronLog.Log({
+				process: 'SyncGSESchedulesListItems',
+				status: 'success',
+				result,
+			});
 			// eslint-disable-next-line no-console
-			console.log('Processed GSE Schedules Data:');
+			// console.log('Processed GSE Schedules Data:');
 			// eslint-disable-next-line no-console
 			// console.log(result);
 		})
-		// if the promise is rejected with an error, then respond with the error as JSON
+		// if the promise is rejected, log error
 		.catch((error) => {
+			nesoCronLog.Log({
+				process: 'SyncGSESchedulesListItems',
+				status: 'error',
+				error,
+			});
 			// eslint-disable-next-line no-console
-			console.log('ERROR - Processing Schedules Data:');
+			// console.log('ERROR - Processing Schedules Data:');
 			// eslint-disable-next-line no-console
-			console.log(error);
+			// console.log(error);
 		});
 });
 // schedule as specified in environment
-cron.schedule(cronConfig.gseSignupsSyncProcessingCronSchedule, () => {
+cron.schedule(process.env.gseSignupsSyncProcessingCronSchedule, () => {
 	nesoSPSync.SyncGSESignupsListItems()
-		// if the promise is resolved with the docs, then respond with the docs as JSON
+		// if the promise is resolved, log result
 		.then((result) => {
+			nesoCronLog.Log({
+				process: 'SyncGSESignupsListItems',
+				status: 'success',
+				result,
+			});
 			// eslint-disable-next-line no-console
-			console.log('Processed GSE Signups Data:');
+			// console.log('Processed GSE Signups Data:');
 			// eslint-disable-next-line no-console
 			// console.log(result);
 		})
-		// if the promise is rejected with an error, then respond with the error as JSON
+		// if the promise is rejected, log error
 		.catch((error) => {
+			nesoCronLog.Log({
+				process: 'SyncGSESignupsListItems',
+				status: 'error',
+				error,
+			});
 			// eslint-disable-next-line no-console
-			console.log('ERROR - Processing Signups Data:');
+			// console.log('ERROR - Processing Signups Data:');
 			// eslint-disable-next-line no-console
-			console.log(error);
+			// console.log(error);
 		});
 });
-/* // schedule as specified in environment
-cron.schedule(cronConfig.gseScheduleCreditReminderNotificationProcessingSchedule, () => {
+// schedule as specified in environment
+cron.schedule(process.env.gseScheduleCreditReminderNotificationProcessingSchedule, () => {
 // get a promise to process gse schedule credit reminders
 	nesoHubEmails.ProcessGSEScheduleCreditReminderNotifications()
-	// if the promise is resolved with the docs, then respond with the docs as JSON
+		// if the promise is resolved, log result
 		.then((result) => {
-		// eslint-disable-next-line no-console
-			console.log('Processed GSE Schedule Credit Reminders:');
+			nesoCronLog.Log({
+				process: 'ProcessGSEScheduleCreditReminderNotifications',
+				status: 'success',
+				result,
+			});
 			// eslint-disable-next-line no-console
-			console.log(result);
+			// console.log('Processed GSE Schedule Credit Reminders:');
+			// eslint-disable-next-line no-console
+			// console.log(result);
 		})
-	// if the promise is rejected with an error, then respond with the error as JSON
+		// if the promise is rejected, log error
 		.catch((error) => {
-		// eslint-disable-next-line no-console
-			console.log('ERROR - Processing GSE Schedule Credit Reminders:');
+			nesoCronLog.Log({
+				process: 'ProcessGSEScheduleCreditReminderNotifications',
+				status: 'error',
+				error,
+			});
 			// eslint-disable-next-line no-console
-			console.log(error);
+			// console.log('ERROR - Processing GSE Schedule Credit Reminders:');
+			// eslint-disable-next-line no-console
+			// console.log(error);
 		});
 });
 // schedule as specified in environment
-cron.schedule(cronConfig.gseSignupReminderNotificationProcessingSchedule, () => {
+cron.schedule(process.env.gseSignupReminderNotificationProcessingSchedule, () => {
 // get a promise to process gse signup reminders
 	nesoHubEmails.ProcessGSESignupReminderNotifications()
-	// if the promise is resolved with the docs, then respond with the docs as JSON
+		// if the promise is resolved, log result
 		.then((result) => {
-		// eslint-disable-next-line no-console
-			console.log('Processed GSE Signup Reminders:');
+			nesoCronLog.Log({
+				process: 'ProcessGSESignupReminderNotifications',
+				status: 'success',
+				result,
+			});
 			// eslint-disable-next-line no-console
-			console.log(result);
+			// console.log('Processed GSE Signup Reminders:');
+			// eslint-disable-next-line no-console
+			// console.log(result);
 		})
-	// if the promise is rejected with an error, then respond with the error as JSON
+		// if the promise is rejected, log error
 		.catch((error) => {
-		// eslint-disable-next-line no-console
-			console.log('ERROR - Processing GSE Signup Reminders:');
+			nesoCronLog.Log({
+				process: 'ProcessGSESignupReminderNotifications',
+				status: 'error',
+				error,
+			});
 			// eslint-disable-next-line no-console
-			console.log(error);
+			// console.log('ERROR - Processing GSE Signup Reminders:');
+			// eslint-disable-next-line no-console
+			// console.log(error);
 		});
-}); */
-
-
-/* nesoSPSync.SyncGSEJobsListItems()
-	// if the promise is resolved with the docs, then respond with the docs as JSON
-	.then((result) => {
-		// eslint-disable-next-line no-console
-		console.log('Processed GSE Jobs Data:');
-		// eslint-disable-next-line no-console
-		// console.log(result);
-	})
-	// if the promise is rejected with an error, then respond with the error as JSON
-	.catch((error) => {
-		// eslint-disable-next-line no-console
-		console.log('ERROR - Processing Jobs Data:');
-		// eslint-disable-next-line no-console
-		console.log(error);
-	});
-nesoSPSync.SyncGSESchedulesListItems()
-	// if the promise is resolved with the docs, then respond with the docs as JSON
-	.then((result) => {
-		// eslint-disable-next-line no-console
-		console.log('Processed GSE Schedules Data:');
-		// eslint-disable-next-line no-console
-		// console.log(result);
-	})
-	// if the promise is rejected with an error, then respond with the error as JSON
-	.catch((error) => {
-		// eslint-disable-next-line no-console
-		console.log('ERROR - Processing Schedules Data:');
-		// eslint-disable-next-line no-console
-		console.log(error);
-	});
-nesoSPSync.SyncGSESignupsListItems()
-	// if the promise is resolved with the docs, then respond with the docs as JSON
-	.then((result) => {
-		// eslint-disable-next-line no-console
-		console.log('Processed GSE Signups Data:');
-		// eslint-disable-next-line no-console
-		// console.log(result);
-	})
-	// if the promise is rejected with an error, then respond with the error as JSON
-	.catch((error) => {
-		// eslint-disable-next-line no-console
-		console.log('ERROR - Processing Signups Data:');
-		// eslint-disable-next-line no-console
-		console.log(error);
-	});
- */	
-	
-nesoHubEmails.ProcessGSEScheduleCreditReminderNotifications()
-	// if the promise is resolved with the docs, then respond with the docs as JSON
-	.then((result) => {
-		// eslint-disable-next-line no-console
-		// console.log('Processed GSE Schedule Credit Reminders:');
-		// eslint-disable-next-line no-console
-		// console.log(result);
-	})
-	// if the promise is rejected with an error, then respond with the error as JSON
-	.catch((error) => {
-		// eslint-disable-next-line no-console
-		console.log('ERROR - Processing GSE Schedule Credit Reminders:');
-		// eslint-disable-next-line no-console
-		console.log(error);
-	});
-
+});
 
 // PROCESS ---
 
