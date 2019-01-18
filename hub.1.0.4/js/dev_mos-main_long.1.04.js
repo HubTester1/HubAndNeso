@@ -1399,48 +1399,57 @@
 		}
 
 
-		var query = "<Query>" +
-					"<Where>";
-		if (opt.where.ands) { 
-			query += "<And>";
-			// curently assumes there are no more than two ands
-			$.each(opt.where.ands, function(i, andObject) {
-				if (!andObject.operator) {
-					andObject.operator = 'Eq';
-				}
-				query += "<" + andObject.operator + ">" +
-					"<FieldRef Name='" + andObject.field + "'></FieldRef>" +
-					"<Value Type='" + andObject.type + "'>" + andObject.value + "</Value>" +
-					"</" + andObject.operator + ">";
-			});
-
-			query += "</And>";
-		}
-
-		if (opt.where.field) {
-			if (!opt.where.operator) {
-				opt.where.operator = 'Eq';
-			}
-
-			if (opt.where.value) {
-				query += "<" + opt.where.operator + ">";
-				query += "<FieldRef Name='" + opt.where.field + "'></FieldRef>" + 
-				"<Value Type='" + opt.where.type + "'>" + opt.where.value + "</Value>";
-				query += "</" + opt.where.operator + ">";
-			} else if (opt.where.values) {
-				query += "<In>";
-				query += "<FieldRef Name='" + opt.where.field + "'></FieldRef>";
-				query += "<Values>";
-				opt.where.values.sourceArray.forEach((item) => {
-					query += "<Value Type='" + opt.where.type + "'>" + item[opt.where.values.property] + "</Value>";
-				});
-				query += "</Values>";
-				query += "</In>";
-			}
-		}
-
-		query +=	"</Where>" +
+		var query = "";
+		
+		if (opt.customCAMLQuery) { 
+			query = "<Query>" + 
+					opt.customCAMLQuery + 
 					"</Query>";
+		} else {
+
+			query = "<Query>" +
+					"<Where>";
+
+			if (opt.where.ands) { 
+				query += "<And>";
+				// curently assumes there are no more than two ands
+				$.each(opt.where.ands, function(i, andObject) {
+					if (!andObject.operator) {
+						andObject.operator = 'Eq';
+					}
+					query += "<" + andObject.operator + ">" +
+						"<FieldRef Name='" + andObject.field + "'></FieldRef>" +
+						"<Value Type='" + andObject.type + "'>" + andObject.value + "</Value>" +
+						"</" + andObject.operator + ">";
+				});
+				query += "</And>";
+			}
+
+			if (opt.where.field) {
+				if (!opt.where.operator) {
+					opt.where.operator = 'Eq';
+				}
+
+				if (opt.where.value) {
+					query += "<" + opt.where.operator + ">";
+					query += "<FieldRef Name='" + opt.where.field + "'></FieldRef>" + 
+					"<Value Type='" + opt.where.type + "'>" + opt.where.value + "</Value>";
+					query += "</" + opt.where.operator + ">";
+				} else if (opt.where.values) {
+					query += "<In>";
+					query += "<FieldRef Name='" + opt.where.field + "'></FieldRef>";
+					query += "<Values>";
+					opt.where.values.sourceArray.forEach((item) => {
+						query += "<Value Type='" + opt.where.type + "'>" + item[opt.where.values.property] + "</Value>";
+					});
+					query += "</Values>";
+					query += "</In>";
+				}
+			}
+
+			query +=	"</Where>" +
+						"</Query>";
+		}
 
 		var fields = "<ViewFields>";
 		$.each(opt.select, function (i, oneField) {
@@ -6234,47 +6243,51 @@
 							var signupMod = {};
 							// set request status and get id and granted values from the DOM
 							signupMod.signupID = $(this).find('input[id^="Signup-ID"]').val();
-							// if credit is being granted or denied
-							if (rData.requestStatus === 'Completed') {
-								signupMod.creditGranted =
-									$(this).find('input[value="yes"]').is(':checked');
-								// if credit is being denied
-								if (!signupMod.creditGranted) {
-									// get a denial reason from the DOM
-									signupMod.creditDenialReason =
-										$(this).find('textarea[id^="Signup-Credit-Denial-Reason"]').val();
-									// set new request status to denied
-									signupMod.requestStatus = "Credit Denied"
+							// if signupID is not an empty string
+							if (signupMod.signupID) {
+								// if credit is being granted or denied
+								if (rData.requestStatus === 'Completed') {
+									signupMod.creditGranted =
+										$(this).find('input[value="yes"]').is(':checked');
+									// if credit is being denied
+									if (!signupMod.creditGranted) {
+										// get a denial reason from the DOM
+										signupMod.creditDenialReason =
+											$(this).find('textarea[id^="Signup-Credit-Denial-Reason"]').val();
+										// set new request status to denied
+										signupMod.requestStatus = "Credit Denied"
+									} else {
+										// set new request status to granted
+										signupMod.requestStatus = "Credit Granted"
+									}
 								} else {
 									// set new request status to granted
-									signupMod.requestStatus = "Credit Granted"
+									signupMod.requestStatus = "Cancelled"
 								}
-							} else {
-								// set new request status to granted
-								signupMod.requestStatus = "Cancelled"
+								// push the signup credit object to the signup credits array
+								signupMods.push(signupMod);
 							}
-							// push the signup credit object to the signup credits array
-							signupMods.push(signupMod);
 						});
 						// for each extracted signup credit object
 						signupMods.forEach((signupMod) => {
 							// get the corresponding row from the GSE Signup SWFList
 							// console.log(signupMod.signupID);
-							signupMod = $.extend($().GetFieldsFromOneRow({
-								"select": [{
-									"nameHere": "formData",
-									"nameInList": "AllRequestData"
-								}, {
-									"nameHere": "RequestedFor",
-									"nameInList": "RequestedFor"
-								}],
-								"webURL": "https://bmos.sharepoint.com/sites/" + gseSiteTokens.signups,
-								"where": {
-									"field": "ID",
-									"type": "Number",
-									"value": signupMod.signupID,
-								}
-							}),
+							signupMod = $.extend(
+								$().GetFieldsFromOneRow({
+									"select": [{
+										"nameHere": "formData",
+										"nameInList": "AllRequestData"
+									}, {
+										"nameHere": "RequestedFor",
+										"nameInList": "RequestedFor"
+									}],
+									"webURL": "https://bmos.sharepoint.com/sites/" + gseSiteTokens.signups,
+									"where": {
+										"field": "ID",
+										"type": "Number",
+										"value": signupMod.signupID,
+									}
+								}),
 								signupMod
 							);
 							// modify formData
@@ -10036,7 +10049,7 @@
 				'subject': eData.subjectPrefaceStaff + 'signup cancelled',
 				'bodyUnique': '<p>You\'re no longer signed up for "' + eData.jobTitle +
 					'", scheduled for ' + eData.scheduleDateTime + '. <a href="' +
-					eData.uriRequest + '">Revisit your signup</a> to review the details or to cancel. ' +
+					eData.uriRequest + '">Revisit your signup</a> to review the details. ' +
 					'Feel free to <a href="mailto:' + eData.jobAdminEmail + '">contact ' +
 					eData.jobAdminName + '</a> ' +
 					'with any questions, <a href="' + eData.uriOverview + '">' +
@@ -22567,21 +22580,24 @@
 					'nameInList': 'AllRequestData'
 				}
 			],
-			"where": {
-				"ands": [
-					{
-						"field": "Date",
-						"type": "DateTime",
-						"operator": "Geq",
-						"value": beginningOfFiscalYear,
-					}, {
-						"field": "Date",
-						"type": "DateTime",
-						"operator": "Leq",
-						"value": endOfFiscalYear,
-					}
-				]
-			}
+			'customCAMLQuery': '<Where>' +
+				'   <And>' +
+				'       <Geq>' +
+				'           <FieldRef Name="Date"></FieldRef>' +
+				'           <Value Type="DateTime">' + beginningOfFiscalYear + '</Value>' +
+				'       </Geq>' +
+				'       <And>' +
+				'           <Leq>' +
+				'               <FieldRef Name="Date"></FieldRef>' +
+				'               <Value Type="DateTime">' + endOfFiscalYear + '</Value>' +
+				'           </Leq>' +
+				'           <Neq>' +
+				'               <FieldRef Name="RequestStatus"></FieldRef>' +
+				'               <Value Type="text">Cancelled</Value>' +
+				'           </Neq>' +
+				'       </And>' +
+				'   </And>' +
+				'</Where>',
 		});
 		// get all jobs
 		var gseJobsArray = $().GetFieldsFromAllRows({
@@ -23153,7 +23169,7 @@
 
 		signupModificationValuePairs.forEach((signupModificationValuePair) => {
 			if (signupModificationValuePair[0] === 'RequestStatus') {
-				sData.RequestStatus = signupModificationValuePair[1]
+				sData.RequestStatus = signupModificationValuePair[1];
 			}
 		});
 
@@ -23173,7 +23189,7 @@
 				'Feel free to <a href="mailto:' + sData.jobAdminEmail + '">contact ' +
 				sData.jobAdminName + '</a> with any questions or <a href="https://bmos.sharepoint.com/sites/' + sData.gseSiteTokens.signups + '/SitePages/App.aspx">' +
 				'review your and your staff\'s other signups</a>.</p>';
-		} else {
+		} else if (sData.RequestStatus === 'Credit Denied') {
 			sData.bodyUniqueStaff =
 				'<p>You\'ve been denied credit for "' + sData.jobTitle + '", which began ' +
 				sData.scheduleDateTime + '. Here\'s why:</p>' +
@@ -23187,6 +23203,21 @@
 				'<p>' + sData.staffName + ' has been denied credit for "' + sData.jobTitle + '", which began ' +
 				sData.scheduleDateTime + '. Here\'s why:</p>' +
 				'<p style="padding-left: 30px">' + creditDenialReason + '</p>' +
+				'<p>Feel free to <a href="mailto:' + sData.jobAdminEmail + '">contact ' +
+				sData.jobAdminName + '</a> with any questions or <a href="https://bmos.sharepoint.com/sites/' + sData.gseSiteTokens.signups + '/SitePages/App.aspx">' +
+				'review your and your staff\'s other signups</a>.</p>';
+		} else if (sData.RequestStatus === 'Cancelled') {
+			sData.bodyUniqueStaff =
+				'<p>Your signup for "' + sData.jobTitle + '", which was scheduled for ' +
+				sData.scheduleDateTime + ', has been cancelled because this GSE was cancelled.</p>' +
+				'<p>Feel free to <a href="mailto:' + sData.jobAdminEmail + '">contact ' +
+				sData.jobAdminName + '</a> with any questions, <a href="https://bmos.sharepoint.com/sites/' + sData.gseSiteTokens.signups + '/SitePages/App.aspx">' +
+				'review your other signups</a>, or ' +
+				'<a href="https://bmos.sharepoint.com/sites/' + sData.gseSiteTokens.schedules + '/SitePages/App.aspx?f=cal">' +
+				'sign up for another GSE</a>.</p>';
+			sData.bodyUniqueManager =
+				'<p>' + sData.staffName + '\'s signup for "' + sData.jobTitle + '", which was scheduled for ' +
+				sData.scheduleDateTime + ', has been cancelled because this GSE was cancelled.</p>' +
 				'<p>Feel free to <a href="mailto:' + sData.jobAdminEmail + '">contact ' +
 				sData.jobAdminName + '</a> with any questions or <a href="https://bmos.sharepoint.com/sites/' + sData.gseSiteTokens.signups + '/SitePages/App.aspx">' +
 				'review your and your staff\'s other signups</a>.</p>';
@@ -27542,7 +27573,7 @@
 		// wait for all data retrieval / setting promises to complete (pass or fail) 
 		$.when.apply($, allDataRetrievalAndSettingPromises).always(function () {
 
-			console.log('using dev_mos-main_long.1.04 m9');
+			console.log('using dev_mos-main_long.1.04 m1');
 
 			$().ConfigureAndShowScreenContainerAndAllScreens();
 		});
