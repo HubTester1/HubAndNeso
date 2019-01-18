@@ -2418,6 +2418,23 @@ module.exports = {
 							department: 'Living Collections',
 							division: 'Education',
 							securityGroups: ['mos.org', 'SP_Staff', 'Butterfly Garden', 'OS X Users', 'Web VPN Access', 'Living Collections', 'WiFi Access'],
+						}, {
+							_id: '5c41f8005ff3860d546c0d47',
+							account: 'gmurray',
+							employeeID: '006207',
+							firstName: 'Greg',
+							lastName: 'Murray',
+							firstInitial: 'G',
+							lastInitial: 'M',
+							displayName: 'Greg Murray',
+							title: 'Manager, Technical Design and Production',
+							email: 'gmurray@mos.org',
+							officePhone: '617-589-4256',
+							mobilePhone: '',
+							manager: 'mhorvath',
+							department: 'Technical Design & Production',
+							division: 'Education',
+							securityGroups: ['COI other', 'CS&amp;T', 'Exhibits_Projects_Random', 'mos.org', 'TrackIT Users', 'Exhibits_Projects_Engineering_2016', 'LeafcutterAnts', 'Current Science &amp; Technology', 'Exhibit Leadership', 'Exhibits_Projects_Tech_and_You', 'SP_Staff', 'Exhibits_Projects_MercuryToMars', 'FinanceSSRSUsers', 'Ship Cases', 'OS X Users', 'Exhibits_Projects_New_Exhibition', 'Budget_Education', 'MMTfolder', 'Exhibits_Titan', 'Live Presentations', 'BWExhibitsPlanningTeam', 'WiFi Access', 'ExhibitsData', 'Outreach', 'ShowControl', 'PGP_BASIC', 'PO and Invoice records', 'Budget_Exhibits', 'Budget_RestrictedAccess', 'Crystal Enterprise', 'SP_Team_Write_Safety', 'Schedules', 'TOE Component', 'Safety_Zeus'],
 						},
 					];
 
