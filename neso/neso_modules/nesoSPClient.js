@@ -28,9 +28,24 @@ module.exports = {
 					// construct endpoint
 					let endpoint = 
 						`${options.syncFrom.spApp}/_api/web/lists/getByTitle('${options.syncFrom.spList}')/items?$top=5000`;
+					// if fields to expand is a non-empty array
+					if (
+						typeof (options.syncFrom.spFieldsExpanded) === 'object' &&
+						options.syncFrom.spFieldsExpanded[0]
+					) {
+						// start a select clause
+						endpoint += '&$expand=';
+						// add each field to be selected
+						options.syncFrom.spFieldsExpanded.forEach((expandValue, expandIndex) => {
+							if (expandIndex !== 0) {
+								endpoint += ',';
+							}
+							endpoint += expandValue;
+						});
+					}
 					// if fields is a non-empty array
 					if (
-						typeof (options.syncFrom.spFields) === 'object' && 
+						typeof (options.syncFrom.spFields) === 'object' &&
 						options.syncFrom.spFields[0]
 					) {
 						// start a select clause
