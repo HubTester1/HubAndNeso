@@ -105,7 +105,7 @@ module.exports = {
 			// specify sync options
 			const options = {
 				syncFrom: {
-					spApp: '-dev-hr-service-jobs',
+					spApp: 'hr-service-jobs',
 					spList: 'SWFList',
 					spFields: [
 						'Id',
@@ -143,7 +143,7 @@ module.exports = {
 			// specify sync options
 			const options = {
 				syncFrom: {
-					spApp: '-dev-hr-service-schedules',
+					spApp: 'hr-service-schedules',
 					spList: 'SWFList',
 					spFields: [
 						'Id',
@@ -180,7 +180,7 @@ module.exports = {
 			// specify sync options
 			const options = {
 				syncFrom: {
-					spApp: '-dev-hr-service-signups',
+					spApp: 'hr-service-signups',
 					spList: 'SWFList',
 					spFields: [
 						'Id',
