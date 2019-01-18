@@ -36,6 +36,9 @@ module.exports = {
 	}),
 
 	ReturnGSESignupReminderNotificationsForOneSchedule: schedule => 
+		// note: this function will always resolve the promise; rejecting for one signup would derail
+		// 		handling all signups; calling function must expect resolution and discern between
+		// 		notification data and error data in the return
 		// return a new promise
 		new Promise((resolve, reject) => {
 			// set up var
@@ -86,18 +89,18 @@ module.exports = {
 								}
 							});
 						})
-					// if the promise is rejected with an error, then 
-					// 		reject this promise with an error
-						.catch((error) => { reject(error); });
+						// if the promise is rejected with an error, then 
+						// 		resolve this promise with an error
+						.catch((error) => { resolve(error); });
 				})
-			// if the promise is rejected with an error, then reject this promise with an error
-				.catch((error) => { reject(error); });
+				// if the promise is rejected with an error, then reject this promise with an error
+				.catch((error) => { resolve(error); });
 		}),
 
 	ProcessGSESignupReminderNotifications: () =>
 		// return a new promise
 		new Promise((resolve, reject) => {
-			if (process.env.use === 'dev') {
+			if (process.env.use === 'prod') {
 				// set up vars
 				const tomorrowTruncated = moment().add(1, 'day').format('YYYY-MM-DD');
 				const oneWeekOutTruncated = moment().add(1, 'week').format('YYYY-MM-DD');
@@ -106,8 +109,8 @@ module.exports = {
 				nesoDBQueries.ReturnAllDocsFromCollection('gseSchedules')
 					// if the promise is resolved with the docs
 					.then((scheduleQueryResult) => {
-						// set up container for schedules that have ended in the last hour
-						const schedulesProcessingPromises = [];
+						// set up container for notification retrieval promises
+						const returnNoticationPromises = [];
 						// for each submitted schedule
 						scheduleQueryResult.docs.forEach((submittedGSESchedule) => {
 							// clone param
@@ -120,18 +123,22 @@ module.exports = {
 								scheduleStartDateTruncated === oneWeekOutTruncated
 							) {
 								// push promise to return signup notifications for it
-								schedulesProcessingPromises
+								returnNoticationPromises
 									.push(module.exports.ReturnGSESignupReminderNotificationsForOneSchedule(scheduleClone));
 							}
 						});
-						// when all schedule processing promises are resolved
-						Promise.all(schedulesProcessingPromises)
-							.then((scheduleProcessingResults) => {
+						// when all notification retrieval promises are resolved
+						Promise.all(returnNoticationPromises)
+							.then((notificationRetrievalResults) => {
 								// extract the emails from the results
-								// for each schedule/result 
-								scheduleProcessingResults.forEach((scheduleProcessingResult) => {
-									scheduleProcessingResult.forEach((notification) => {
-										notificationsToSend.push(notification);
+								// for each notification
+								notificationRetrievalResults.forEach((notificationRetrievalResult) => {
+									notificationRetrievalResult.forEach((notificationOrError) => {
+										// if this is an email and not an error
+										if (notificationOrError.emailType) {
+											// push to notifications to send
+											notificationsToSend.push(notificationOrError);
+										}
 									});
 								});
 								// send the emails
@@ -149,71 +156,79 @@ module.exports = {
 						reject(error);
 					});
 			} else {
-				resolve('environment is not dev');
+				resolve('environment is not prod');
 			}
 		}),
 
-	/* ReturnJobForSelectedSchedule: jobID =>
+	ReturnGSEScheduleCreditReminderNotificationsForOneSchedule: schedule =>
+		// note: this function will always resolve the promise; rejecting for one signup would derail
+		// 		handling all signups; calling function must expect resolution and discern between
+		// 		notification data and error data in the return
 		// return a new promise
 		new Promise((resolve, reject) => {
-			nesoDBQueries.ReturnAllSpecifiedDocsFromCollection('gseJobs', {
-				ID: parseInt(schedule.JobID, 10),
-			}, {})
-				// if the promise is resolved with the job
-				.then((jobQueryResult) => {
-					const job = jobQueryResult.docs[0];
-					const jobAdmin = job.AllRequestData['Requested-For'][0];
-					const scheduleLink =
-						`<a href="https://bmos.sharepoint.com/sites/hr-service-schedules/SitePages/App.aspx?r=${schedule.ID}">grant or deny credit</a>`;
-					const endDateString =
-						moment(schedule.scheduleEndDatetime)
-							.format('MMMM D');
-					const endTimeString =
-						moment(schedule.scheduleEndDatetime)
-							.format('h:mm a');
-					notificationsToSend.push({
-						emailType: 'Notification',
-						caller: 'creditReminder jobAdmin',
-						to: jobAdmin.description.toLowerCase(),
-						subject: `GSE Schedule #${schedule.ID}: credit reminder`,
-						bodyUnique: `This schedule for "${job.JobTitle}" ended on ${endDateString} at ${endTimeString}. Please ${scheduleLink} to those who signed up.`,
-					});
-					module.exports.SendEmails(notificationsToSend)
-						// if the promise is resolved with a result, then 
-						// 		resolve this promise with the result
-						.then((result) => { resolve(result); })
-						// if the promise is rejected with an error, then 
-						// 		reject this promise with an error
-						.catch((error) => { reject(error); });
+			// set up var
+			const notificationsToReturn = [];
+			// get promises to retrieve job and signups for this schedule
+			Promise.all([
+				nesoDBQueries.ReturnAllSpecifiedDocsFromCollection('gseJobs', {
+					ID: parseInt(schedule.JobID, 10),
+				}, {}),
+				nesoDBQueries.ReturnAllSpecifiedDocsFromCollection('gseSignups', {
+					ScheduleID: schedule.ID.toString(),
+				}, {}),
+			])
+				// when all promises have resolved
+				.then((jobAndSignupsResults) => {
+					// extract job and signup data
+					const job = jobAndSignupsResults[0].docs[0];
+					const signups = jobAndSignupsResults[1].docs;
+					// if there was at least one signup
+					if (signups[0]) {
+						// prep and push credit reminder notification
+						const jobAdmin = job.AllRequestData['Requested-For'][0];
+						const scheduleLink =
+							`<a href="https://bmos.sharepoint.com/sites/hr-service-schedules/SitePages/App.aspx?r=${schedule.ID}">grant or deny credit</a>`;
+						const endDateString =
+							moment(schedule.scheduleEndDatetime)
+								.format('MMMM D');
+						const endTimeString =
+							moment(schedule.scheduleEndDatetime)
+								.format('h:mm a');
+						notificationsToReturn.push({
+							emailType: 'Notification',
+							caller: 'creditReminder jobAdmin',
+							to: jobAdmin.description.toLowerCase(),
+							subject: `GSE Schedule #${schedule.ID}: credit reminder`,
+							bodyUnique: `This schedule for "${job.JobTitle}" ended on ${endDateString} at ${endTimeString}. Please ${scheduleLink} to those who signed up.`,
+						});
+					}
+					// resolve this promise with the notifications array
+					resolve(notificationsToReturn);
 				})
-				// if the promise is rejected with an error, then reject this promise with an error
-				.catch((error) => { reject(error); }); * /
+				// if the promise to to retrieve job and signups for this schedule
+				// 		was rejected with an error
+				.catch((jobOrSignupsError) => {
+					// resolve this promise with the error
+					resolve(jobOrSignupsError);
+				});
 		}),
-
-	ReturnSignupsForSelectedSchedule: scheduleID =>
-		// return a new promise
-		new Promise((resolve, reject) => {
-		}), */
 
 	ProcessGSEScheduleCreditReminderNotifications: () =>
 		// return a new promise
 		new Promise((resolve, reject) => {
-			if (process.env.use === 'dev') {
+			if (process.env.use === 'prod') {
 				// set up vars
 				const todayIsMondayOrWednesdayOrFriday = 
-					moment().weekday() % 2 === 0;
+					moment().weekday() % 2 > 0;
 				const notificationsToSend = [];
 				const yesterday = moment().subtract(1, 'day').format('YYYY-MM-DD');
 				const threeDaysAgo = moment().subtract(3, 'day').format('YYYY-MM-DD');
-				// const now = moment();
-				// const oneHourAgo = moment(now).subtract(1, 'hour');
 				// get a promise to retrieve all submitted schedules
 				nesoDBQueries.ReturnAllDocsFromCollection('gseSchedules')
 					// if the promise is resolved with the docs
 					.then((scheduleQueryResult) => {
-						// set up container for schedule that were
-						// 		yesterday or three days ago or earlier
-						const selectedGSESchedules = [];
+						// set up container for notification retrieval promises
+						const returnNoticationPromises = [];
 						// for each submitted schedule
 						scheduleQueryResult.docs.forEach((submittedGSESchedule) => {
 							// clone param
@@ -235,86 +250,54 @@ module.exports = {
 							// 		both of the following are the case:
 							// 		-- today is Monday, Wednesday, or Friday
 							// 		-- the schedule was three days ago or earlier
-							if (
-								moment(scheduleDate).isSame(yesterday) ||
-								(
-									todayIsMondayOrWednesdayOrFriday && 
-									moment(scheduleDate).isSameOrBefore(threeDaysAgo)
-								)
-							) {
+							// if (
+							// 	moment(scheduleDate).isSame(yesterday) ||
+							// 	(
+							// 		todayIsMondayOrWednesdayOrFriday && 
+							// 		moment(scheduleDate).isSameOrBefore(threeDaysAgo)
+							// 	)
+							// ) {
+							if (moment(scheduleDate).isSame(yesterday)) {
 								// add the calculated times to the schedule so we don't have to recalculate them
 								scheduleClone.scheduleStartDatetime =
 									scheduleStartDatetime;
 								scheduleClone.scheduleEndDatetime =
 									scheduleEndDatetime;
-								// push this shedule to the container
-								selectedGSESchedules.push(scheduleClone);
+								// push promise to return signup notifications for it
+								returnNoticationPromises
+									.push(module.exports.ReturnGSEScheduleCreditReminderNotificationsForOneSchedule(scheduleClone));
 							}
 						});
-						// for each selected schedule
-						selectedGSESchedules.forEach((schedule) => {
-							// get promises to retrieve job and signups for this schedule
-							Promise.all([
-								nesoDBQueries.ReturnAllSpecifiedDocsFromCollection('gseJobs', {
-									ID: parseInt(schedule.JobID, 10),
-								}, {}),
-								nesoDBQueries.ReturnAllSpecifiedDocsFromCollection('gseSignups', {
-									ScheduleID: parseInt(schedule.ID, 10),
-								}, {}),
-								// module.exports.ReturnJobForSelectedSchedule(parseInt(schedule.JobID, 10)),
-								// module.exports.ReturnSignupsForSelectedSchedule(parseInt(schedule.ID, 10)),
-							])
-								// when all promises have resolved
-								.then((jobAndSignupsResults) => {
-								})
-								// if the promise to to retrieve job and signups for this schedule 
-								// 		was rejected with an error
-								.catch((jobOrSignupsError) => {
-									// reject this promise with the error
-									reject(jobOrSignupsError);
-								});
-
-							/* // get a promise to retrieve the job for this schedule
-							nesoDBQueries.ReturnAllSpecifiedDocsFromCollection('gseJobs', {
-								ID: parseInt(schedule.JobID, 10),
-							}, {})
-								// if the promise is resolved with the job
-								.then((jobQueryResult) => {
-									const job = jobQueryResult.docs[0];
-									const jobAdmin = job.AllRequestData['Requested-For'][0];
-									const scheduleLink =
-										`<a href="https://bmos.sharepoint.com/sites/hr-service-schedules/SitePages/App.aspx?r=${schedule.ID}">grant or deny credit</a>`;
-									const endDateString =
-										moment(schedule.scheduleEndDatetime)
-											.format('MMMM D');
-									const endTimeString =
-										moment(schedule.scheduleEndDatetime)
-											.format('h:mm a');
-									notificationsToSend.push({
-										emailType: 'Notification',
-										caller: 'creditReminder jobAdmin',
-										to: jobAdmin.description.toLowerCase(),
-										subject: `GSE Schedule #${schedule.ID}: credit reminder`,
-										bodyUnique: `This schedule for "${job.JobTitle}" ended on ${endDateString} at ${endTimeString}. Please ${scheduleLink} to those who signed up.`,
+						// when all notification retrieval promises are resolved
+						Promise.all(returnNoticationPromises)
+							.then((notificationRetrievalResults) => {
+								// extract the emails from the results
+								// for each notification
+								notificationRetrievalResults.forEach((notificationRetrievalResult) => {
+									notificationRetrievalResult.forEach((notificationOrError) => {
+										// if this is an email and not an error
+										if (notificationOrError.emailType) {
+											// push to notifications to send
+											notificationsToSend.push(notificationOrError);
+										}
 									});
-									module.exports.SendEmails(notificationsToSend)
-										// if the promise is resolved with a result, then 
-										// 		resolve this promise with the result
-										.then((result) => { resolve(result); })
-										// if the promise is rejected with an error, then 
-										// 		reject this promise with an error
-										.catch((error) => { reject(error); });
-								})
-								// if the promise is rejected with an error, then reject this promise with an error
-								.catch((error) => { reject(error); }); */
-						});
+								});
+								// send the emails
+								module.exports.SendEmails(notificationsToSend)
+									// if the promise is resolved with a result, then 
+									// 		resolve this promise with the result
+									.then((result) => { resolve(result); })
+									// if the promise is rejected with an error, then 
+									// 		reject this promise with an error
+									.catch((error) => { reject(error); });
+							});
 					})
 					// if the promise is rejected with an error, then reject this promise with an error
 					.catch((error) => {
 						reject(error);
 					});
 			} else {
-				resolve('environment is not dev');
+				resolve('environment is not prod');
 			}
 		}),
 };
