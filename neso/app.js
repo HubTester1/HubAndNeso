@@ -362,7 +362,7 @@ cron.schedule(cronConfig.adManagersWithFullHierarchicalDownlinesProcessingCronSc
 			console.log(error);
 		});
 });
-/* // schedule as specified in environment
+// schedule as specified in environment
 cron.schedule(cronConfig.gseJobsSyncProcessingCronSchedule, () => {
 	nesoSPSync.SyncGSEJobsListItems()
 		// if the promise is resolved with the docs, then respond with the docs as JSON
@@ -416,7 +416,7 @@ cron.schedule(cronConfig.gseSignupsSyncProcessingCronSchedule, () => {
 			console.log(error);
 		});
 });
-// schedule as specified in environment
+/* // schedule as specified in environment
 cron.schedule(cronConfig.gseScheduleCreditReminderNotificationProcessingSchedule, () => {
 // get a promise to process gse schedule credit reminders
 	nesoHubEmails.ProcessGSEScheduleCreditReminderNotifications()
@@ -454,7 +454,9 @@ cron.schedule(cronConfig.gseSignupReminderNotificationProcessingSchedule, () => 
 			console.log(error);
 		});
 }); */
-nesoSPSync.SyncGSEJobsListItems()
+
+
+/* nesoSPSync.SyncGSEJobsListItems()
 	// if the promise is resolved with the docs, then respond with the docs as JSON
 	.then((result) => {
 		// eslint-disable-next-line no-console
@@ -469,6 +471,54 @@ nesoSPSync.SyncGSEJobsListItems()
 		// eslint-disable-next-line no-console
 		console.log(error);
 	});
+nesoSPSync.SyncGSESchedulesListItems()
+	// if the promise is resolved with the docs, then respond with the docs as JSON
+	.then((result) => {
+		// eslint-disable-next-line no-console
+		console.log('Processed GSE Schedules Data:');
+		// eslint-disable-next-line no-console
+		// console.log(result);
+	})
+	// if the promise is rejected with an error, then respond with the error as JSON
+	.catch((error) => {
+		// eslint-disable-next-line no-console
+		console.log('ERROR - Processing Schedules Data:');
+		// eslint-disable-next-line no-console
+		console.log(error);
+	});
+nesoSPSync.SyncGSESignupsListItems()
+	// if the promise is resolved with the docs, then respond with the docs as JSON
+	.then((result) => {
+		// eslint-disable-next-line no-console
+		console.log('Processed GSE Signups Data:');
+		// eslint-disable-next-line no-console
+		// console.log(result);
+	})
+	// if the promise is rejected with an error, then respond with the error as JSON
+	.catch((error) => {
+		// eslint-disable-next-line no-console
+		console.log('ERROR - Processing Signups Data:');
+		// eslint-disable-next-line no-console
+		console.log(error);
+	});
+ */	
+	
+nesoHubEmails.ProcessGSEScheduleCreditReminderNotifications()
+	// if the promise is resolved with the docs, then respond with the docs as JSON
+	.then((result) => {
+		// eslint-disable-next-line no-console
+		// console.log('Processed GSE Schedule Credit Reminders:');
+		// eslint-disable-next-line no-console
+		// console.log(result);
+	})
+	// if the promise is rejected with an error, then respond with the error as JSON
+	.catch((error) => {
+		// eslint-disable-next-line no-console
+		console.log('ERROR - Processing GSE Schedule Credit Reminders:');
+		// eslint-disable-next-line no-console
+		console.log(error);
+	});
+
 
 // PROCESS ---
 
