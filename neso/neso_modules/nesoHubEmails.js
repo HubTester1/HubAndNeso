@@ -250,14 +250,13 @@ module.exports = {
 							// 		both of the following are the case:
 							// 		-- today is Monday, Wednesday, or Friday
 							// 		-- the schedule was three days ago or earlier
-							// if (
-							// 	moment(scheduleDate).isSame(yesterday) ||
-							// 	(
-							// 		todayIsMondayOrWednesdayOrFriday && 
-							// 		moment(scheduleDate).isSameOrBefore(threeDaysAgo)
-							// 	)
-							// ) {
-							if (moment(scheduleDate).isSame(yesterday)) {
+							if (
+								moment(scheduleDate).isSame(yesterday) ||
+								(
+									todayIsMondayOrWednesdayOrFriday && 
+									moment(scheduleDate).isSameOrBefore(threeDaysAgo)
+								)
+							) {
 								// add the calculated times to the schedule so we don't have to recalculate them
 								scheduleClone.scheduleStartDatetime =
 									scheduleStartDatetime;
