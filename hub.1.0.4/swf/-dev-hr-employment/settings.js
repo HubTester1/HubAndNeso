@@ -1035,7 +1035,7 @@
 				'elementType': "field",
 				'controlType': "text",
 				'fieldName': "Replacement Salary",
-				'labelContent': "What was the last salary paid for this position?",
+				'labelContent': "What was the last annual salary paid for this position?",
 				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
 				'disabledForAdmin': ['Submitted', 'Cancelled'],
 				"hideForNonAdmin": ['', 'Submitted', 'Cancelled'],
