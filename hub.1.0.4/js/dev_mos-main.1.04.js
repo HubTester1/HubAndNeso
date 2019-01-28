@@ -21215,8 +21215,8 @@
 		var startingYearOfFirstFiscalYear = 2018;
 		// var thisYear = 2022;
 		// var startingYearOfLastFiscalYear = moment('2022-09-08').isAfter(thisYear + '-06-30') ?
-		// 	parseInt(thisYear) :
-		// 	parseInt(thisYear) - 1;
+		// parseInt(thisYear) :
+		// parseInt(thisYear) - 1;
 		var thisYear = $().ReturnFormattedDateTime('nowLocal', null, 'YYYY');
 		var startingYearOfLastFiscalYear = moment().isAfter(thisYear + '-06-30') ?
 			parseInt(thisYear) :
@@ -21272,6 +21272,13 @@
 				'</div> \n';
 		}
 		if (relevantRole === 'gseManager') {
+			if (uData.roles.indexOf("gseJobAdmin") > -1) {
+				commandBarContents +=
+					'<div class="container_link">' +
+					'	<a class="button-link button-link_new-item undefined command-bar-button" data-button-type="newRequest" href="https://bmos.sharepoint.com/sites/' + gseSiteTokens.schedules + '/SitePages/App.aspx?r=0">New Schedule</a>' +
+					'</div>';
+			}
+
 			commandBarContents +=
 				'<div class="container_link">' +
 				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/' + gseSiteTokens.jobs + '/SitePages/App.aspx">My and My Staff Members\' Jobs</a> \n' +
@@ -21428,11 +21435,15 @@
 		}
 		if (relevantRole === 'gseManager') {
 			tablesToRender.push({
+				'tableTitle': 'Submitted',
 				'tableID': 'submitted',
 				'columns': [
 					{
 						'displayName': "Schedule ID",
-						'dataName': "ViewByIDLink",
+						'dataName': "IDMarkup",
+					}, {
+						'displayName': "Options",
+						'dataName': "Options",
 					}, {
 						'displayName': "Job Title",
 						'dataName': "JobTitle",
@@ -21455,6 +21466,39 @@
 				],
 				'sortColAndOrder': [[2, 'asc'], [3, 'asc']],
 				'dataSource': augmentedSchedules.submitted
+			});
+			tablesToRender.push({
+				'tableTitle': 'Completed',
+				'tableID': 'completed',
+				'columns': [
+					{
+						'displayName': "Schedule ID",
+						'dataName': "IDMarkup",
+					}, {
+						'displayName': "Options",
+						'dataName': "Options",
+					}, {
+						'displayName': "Job Title",
+						'dataName': "JobTitle",
+					}, {
+						'displayName': "Date",
+						'dataName': "Date",
+					}, {
+						'displayName': "Start Time",
+						'dataName': "StartTime",
+					}, {
+						'displayName': "Schedule Length",
+						'dataName': "ShiftLength",
+					}, {
+						'displayName': "Job Admin",
+						'dataName': "JobAdmin",
+					}, {
+						'displayName': "Positions Available",
+						'dataName': "PositionsAvailable",
+					}
+				],
+				'sortColAndOrder': [[2, 'asc'], [3, 'asc']],
+				'dataSource': augmentedSchedules.completed
 			});
 		}
 		if (relevantRole === 'gseUserOnly') {
@@ -21538,15 +21582,12 @@
 			parseInt(thisYear) :
 			parseInt(thisYear) - 1;
 
-
 		var selectedStartYear = GetParamFromUrl(location.search, "y");
 		if (!selectedStartYear || selectedStartYear == '') {
 			selectedStartYear = moment().isAfter(thisYear + '-06-30') ?
 				parseInt(thisYear) :
 				parseInt(thisYear) - 1;
 		}
-
-
 
 		var nowAsISOLocal = $().ReturnFormattedDateTime('nowLocal', null, null);
 		var viewToUse = GetParamFromUrl(location.search, 'view');
@@ -21582,6 +21623,9 @@
 			defaultDate: dateToUse,
 			theme: true,
 			eventClick: function (event, jsEvent, view) {
+
+				console.log('event');
+				console.log(event);
 
 				// close the dialog box
 				$("div#dialog").dialog("close");
@@ -21626,7 +21670,7 @@
 						event.signupURL + '" target="_blank">More Info</a></div>';
 				}
 
-				if (relevantRole === 'gseHRAdmin' || relevantRole === 'gseJobAdmin') {
+				if (relevantRole === 'gseHRAdmin' || event.currentUserIsJobAdmin) {
 					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' +
 						'<a id="gse-schedule-card-dialog-job-link" ' +
 						'class="gse-schedule-card-dialog-button" href="' +
@@ -21646,7 +21690,6 @@
 				$("div#gse-schedule-card-dialog").dialog("open");
 			},
 			events: augmentedSchedules
-
 		});
 
 		$("div.fc-toolbar div.fc-left").append('<div id="container_command-bar"></div>');
@@ -21660,8 +21703,6 @@
 			'<div id="container_navigation-controls-expanded"> \n' +
 			buttonDivs +
 			'</div> \n';
-
-
 
 		commandBarContents +=
 			'<div id="container_filter-controls-and-header"> \n' +
@@ -21688,16 +21729,6 @@
 		// collapse filters
 		$('.collapsible').collapsible();
 
-
-
-
-
-
-
-
-
-
-
 		$("div#app-container").append("<div id=\"gse-schedule-card-dialog\"></div>");
 
 		$("div#gse-schedule-card-dialog").dialog({
@@ -21711,7 +21742,6 @@
 			},
 			width: 400,
 		});
-
 
 		$("div.fc-toolbar, div.fc-view-container").fadeTo(1000, 1);
 
@@ -22369,7 +22399,7 @@
 					'href="/sites/' + gseSiteTokens.schedules + '/SitePages/App.aspx?r=' + schedule.ScheduleID + '" ' +
 					'target="_blank">Edit</a></div >';
 			}
-			if (relevantRole === 'gseJobAdmin') {
+			if (relevantRole === 'gseJobAdmin' || relevantRole === 'gseManager') {
 				row.Options = '<div><a class="link-in-swf-datatable" ' +
 					'href="' + row.viewURL + '" ' +
 					'target="_blank">View</a></div>';
@@ -22407,9 +22437,6 @@
 			tableConfig.theadDetails += "<th>" + column.displayName + "</th>";
 		});
 		table.dataSource.forEach((signup) => {
-			console.log('signup');
-			console.log(signup);
-
 			var row = {};
 			var isoStartDatetime = signup.Schedule.Date.slice(0, 10) + signup.Schedule.StartTime.slice(10, 19);
 			row.Date = $().ReturnSortableDate(isoStartDatetime, null, 'MMMM D, YYYY', 1);
@@ -22476,8 +22503,8 @@
 				]
 			}
 		});
-		console.log('gseSchedulesArray');
-		console.log(gseSchedulesArray);
+		// console.log('gseSchedulesArray');
+		// console.log(gseSchedulesArray);
 		// get all jobs
 		var gseJobsArray = $().GetFieldsFromAllRows({
 			'webURL': 'https://bmos.sharepoint.com/sites/' + gseSiteTokens.jobs,
@@ -22549,9 +22576,11 @@
 				augmentedSchedules.cancelled.push(scheduleCopy);
 			}
 		});
+
 		// return the augmented schedules
 		return augmentedSchedules;
 	};
+
 
 
 	$.fn.ReturnSelectedAugmentedSchedulesForGSESchedulesCalendar = function (selectedStartYear, nowAsISOLocal) {
@@ -22678,13 +22707,11 @@
 			var isInFuture = moment(nowAsISOLocal).isBefore(isoStartDatetime) ?
 				true : false;
 
-
 			var eventItem = {
 				'eventID': schedule.ScheduleID,
 				'start': isoStartDatetime,
 				'end': isoEndDatetime,
 				'title': formattedStartTime + ' | ' + jobThisSchedule.JobTitle,
-
 				'jobID': schedule.JobID,
 				'scheduleID': schedule.ScheduleID,
 				'formattedStartTime': formattedStartTime,
@@ -22692,6 +22719,7 @@
 				'formattedDate': formattedDate,
 				'isInFuture': isInFuture,
 				'jobAdmin': jobThisSchedule.JobAdmin,
+				'currentUserIsJobAdmin': false,
 				'length': length,
 				'location': jobThisSchedule.Location,
 				'jobTitle': jobThisSchedule.JobTitle,
@@ -22702,12 +22730,11 @@
 				'scheduleURL': '/sites/' + gseSiteTokens.schedules + '/SitePages/App.aspx?r=' + schedule.ScheduleID,
 			};
 
+			var jobAdminArray = $().ReturnUserDataFromPersonOrGroupFieldString(jobThisSchedule.JobAdmin);
+			if (jobAdminArray[0] && jobAdminArray[0].account === uData.account) {
+				eventItem.currentUserIsJobAdmin = true;
+			}
 
-			// console.log('signupsThisSchedule');
-			// console.log(signupsThisSchedule);
-			// console.log('uData');
-			// console.log(uData);
-			// console.log('signupPersons');
 			signupsThisSchedule.forEach((signup) => {
 				var signupPersonArray = $().ReturnUserDataFromPersonOrGroupFieldString(signup.SignupPerson);
 				if (signupPersonArray[0] && signupPersonArray[0].account === uData.account) {
@@ -22726,6 +22753,7 @@
 		// return the augmented schedules
 		return augmentedSchedules;
 	};
+
 
 
 	// signups data
@@ -27354,6 +27382,17 @@
 
 		// data for the current user
 		uData = $().ReturnCurrentUserData();
+		/* uData = {
+			account: "i:0#.f|membership|lbeall@mos.org",
+			dept: "Informal Engineering & Computer Science Learning",
+			email: "lbeall@mos.org",
+			firstName: "Lydia",
+			lastName: "Beall",
+			name: "Lydia Beall",
+			phone: "",
+			pictureURL: "",
+			userName: "lbeall@mos.org",
+		}; */
 
 		// metadata for all of The Hub and for all of this app
 		mData = $().ReturnThisAppMData();
