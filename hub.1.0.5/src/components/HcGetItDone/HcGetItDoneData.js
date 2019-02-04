@@ -13,7 +13,8 @@ export default class HcGetItDoneData {
 	static ReturnHRDocsForHcGetItDone() {
 		const hrDocsWeb = new Web('https://bmos.sharepoint.com');
 		return hrDocsWeb.lists.getByTitle('HR Docs').items
-			.select('FileLeafRef', 'ServerRedirectedEmbedUrl', 'Title')
+			.select('File/ServerRelativeUrl', 'FileLeafRef', 'ServerRedirectedEmbedUrl', 'Title')
+			.expand('File')
 			.filter("Category eq 'Request Forms'")
 			.get();
 	}
@@ -59,7 +60,8 @@ export default class HcGetItDoneData {
 									type: '',
 								};
 								if (itemValue.ServerRedirectedEmbedUrl) {
-									itemFormatted.url = itemValue.ServerRedirectedEmbedUrl;
+									itemFormatted.url = itemValue.File.ServerRelativeUrl;
+									// itemFormatted.url = itemValue.ServerRedirectedEmbedUrl;
 									itemFormatted.anchorText =
 										MOSUtilities.ReplaceAll('.pdf', '', MOSUtilities.ReplaceAll('.docx', '', itemValue.FileLeafRef.toString()));
 									itemFormatted.description = itemValue.Title;
