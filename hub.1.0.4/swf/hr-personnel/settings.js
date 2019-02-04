@@ -1,7 +1,7 @@
 (function ($) {
 
 	var mData = {
-		'componentID': 98,
+		'componentID': 20098,
 		'swf': 1,
 		'mosMainKey': 'prod',
 		// 'mosMainKey': 'dev',
@@ -13,7 +13,7 @@
 		'notifications': 0,
 	};
 
-	console.log("using settings m3");
+	console.log("using settings m1");
 
 	var oData = {
 		'admin': {
@@ -1157,12 +1157,12 @@
 							{ "divID": "container_staff-member" },
 							{ "divID": "submit-or-exit" }
 						],
-						"require": [
+						/* "require": [
 							{
 								"fieldName": "Status Change Staff Member",
 								"type": "peoplePicker"
 							}
-						],
+						], */
 					}, {
 						"noneOfSpecificCheckboxesAreChecked": [
 							"#status-change_position-change",
@@ -1180,13 +1180,13 @@
 							{ "divID": "container_staff-member" },
 							{ "divID": "submit-or-exit" }
 						],
-						"optional": [
+/* 						"optional": [
 							{
 								"fieldName": "Status Change Staff Member",
 								"type": "peoplePicker"
 							}
 						],
-					}
+ */					}
 				]
 
 
@@ -1326,7 +1326,12 @@
 				'labelContent': "Which staff member?",
 				'controlType': 'peoplePicker',
 				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
-				'disabledForAdmin': ['Submitted', 'Cancelled']
+				'disabledForAdmin': ['Submitted', 'Cancelled'],
+				"helpNotes": [{
+					"text": "If this person can't be found here, please supply missing information on the printed form.",
+					"htmlID": "status-change-staff-member_help-note",
+				}],
+
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
@@ -1446,9 +1451,6 @@
 				'labelContent': "Grade",
 				"setOptions": [
 					{
-						"value": "Intern",
-						"display": "Intern"
-					}, {
 						"value": "25",
 						"display": "25"
 					}, {
@@ -1938,9 +1940,6 @@
 				'labelContent': "Grade",
 				"setOptions": [
 					{
-						"value": "Intern",
-						"display": "Intern"
-					}, {
 						"value": "25",
 						"display": "25"
 					}, {
@@ -2463,9 +2462,6 @@
 				'labelContent': "Grade",
 				"setOptions": [
 					{
-						"value": "Intern",
-						"display": "Intern"
-					}, {
 						"value": "25",
 						"display": "25"
 					}, {
@@ -3967,7 +3963,7 @@
 	// 				"	'email': 'sp2@mos.org'," + 
 	// 				"	'account': 'i:0#.f|membership|sp2@mos.org'" + 
 	// 				"}]);";
-
+`
 	fData.CustomScriptLast +=	"$().PutAddtlPeopleInPicker('Position Change Manager', [{" + 
 					"	'name': 'Hub Tester3'," + 
 					"	'email': 'sp3@mos.org'," + 

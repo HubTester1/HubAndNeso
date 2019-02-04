@@ -16380,22 +16380,6 @@
 			// get the current date
 			var currentDate = $().ReturnFormattedDateTime('nowLocal', null, 'MMMM D, YYYY');
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 			// get the quantity of account sets
 			var accountSetPropertyNameSuffix;
 
@@ -16460,10 +16444,17 @@
 
 			if (formData["Action"] == "Status Change") {
 
-				var staffUserID = StrInStr(formData["Status-Change-Staff-Member"][0]["description"].toLowerCase(), '@mos.org', 1);
-
-				// console.log('staffUserID');
-				// console.log(staffUserID);
+				var staffUserID = 'noperson';
+				
+				if (
+					formData["Status-Change-Staff-Member"] &&
+					formData["Status-Change-Staff-Member"][0] && 
+					formData["Status-Change-Staff-Member"][0]["description"]
+				) {
+					staffUserID = StrInStr(formData["Status-Change-Staff-Member"][0]["description"].toLowerCase(), '@mos.org', 1);
+				}
+				console.log('staffUserID');
+				console.log(staffUserID);
 
 				$.ajax({
 					async: false,
@@ -16485,15 +16476,24 @@
 								'			</ul>';							
 						} else {
 							printContent += '<h2>Staff Member</h2>' +
-								'<ul style="margin: 0;">' +
-								'				<li><b>Name:</b> ' + formData["Status-Change-Staff-Member"][0]["displayText"] + '</li>' +
-								'				<li><b>ID:</b></li>' +
-								'				<li><b>Department:</b></li>' +
-								'				<li><b>Division:</b></li>' +
-								'				<li><b>Title:</b></li>' +
-								'			</ul>';							
+								'<p><b>Please suppply missing information.</b></p>' +
+								'<ul style="margin: 0;">';
+							if (
+								formData["Status-Change-Staff-Member"] &&
+								formData["Status-Change-Staff-Member"][0] &&
+								formData["Status-Change-Staff-Member"][0]["displayText"]
+							) {
+								printContent += '				<li><b>Name:</b> ' + formData["Status-Change-Staff-Member"][0]["displayText"] + '</li>';
+							} else {
+								printContent += '				<li style="margin: 1rem 0;"><b>Name:</b></li>';
+							}
+								
+							printContent += '				<li style="margin: 1rem 0;"><b>ID:</b></li>' +
+											'				<li style="margin: 1rem 0;"><b>Department:</b></li>' +
+											'				<li style="margin: 1rem 0;"><b>Division:</b></li>' +
+											'				<li style="margin: 1rem 0;"><b>Title:</b></li>' +
+											'			</ul>';							
 						}
-
 
 
 
