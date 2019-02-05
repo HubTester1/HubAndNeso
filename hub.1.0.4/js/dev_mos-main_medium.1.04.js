@@ -20874,22 +20874,19 @@
 	};
 
 	$.fn.RenderCommandBarAndCapacityForProducts = function () {
-
-		console.log('reading updated');
 		
 		$.ajax({
 			type: "GET",
 			url: 'https://triton.mos.org/products/productsTodayByVenueShow.xml',
-			// url: 'https://triton.mos.org/products/test_novencap_productsTodayByVenueShow.xml',
 			dataType: "xml",
 		}).done(function (receivedXML) {
 
-			console.log('got the feed');
-			console.log(receivedXML);
+			// console.log('got the feed');
+			// console.log(receivedXML);
 
-			var feedReadDateAndTimeFriendlyFormat = $().ReturnFormattedDateTime(receivedXML.lastModified.trim(), "MM/DD/YYYY HH:mm:ss", "MMMM D, h:mm a", 0);
-			var feedReadDateFriendlyFormat = $().ReturnFormattedDateTime(receivedXML.lastModified.trim(), "MM/DD/YYYY HH:mm:ss", "YYYY-MM-DD", 0);
-			var feedReadDateAndTimeComparisonFormat = $().ReturnFormattedDateTime(receivedXML.lastModified.trim(), "MM/DD/YYYY HH:mm:ss", "YYYY-MM-DD HH:mm:ss", 0);
+			var feedReadDateAndTimeFriendlyFormat = $().ReturnFormattedDateTime("nowLocal", null, "MMMM D, h:mm a", 0);
+			var feedReadDateFriendlyFormat = $().ReturnFormattedDateTime("nowLocal", null, "YYYY-MM-DD", 0);
+			var feedReadDateAndTimeComparisonFormat = $().ReturnFormattedDateTime("nowLocal", null, "YYYY-MM-DD HH:mm:ss", 0);
 
 			var venuesToExclude = [
 				"Drop-In Activities",
@@ -20992,7 +20989,6 @@
 					htmlToWrite += "</div> \n";
 				}
 			});
-			console.log(htmlToWrite);
 
 			$("div#overview-screen-container").html(htmlToWrite);
 			$("ul#tab-navigation").html(tabsToInsert);
@@ -27612,7 +27608,7 @@
 		// wait for all data retrieval / setting promises to complete (pass or fail) 
 		$.when.apply($, allDataRetrievalAndSettingPromises).always(function () {
 
-			console.log('using dev_mos-main_medium.1.04 m1');
+			console.log('using dev_mos-main_long.1.04 m1');
 
 			$().ConfigureAndShowScreenContainerAndAllScreens();
 		});
