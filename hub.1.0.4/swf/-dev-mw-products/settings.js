@@ -8,9 +8,9 @@
 		// 'mosMainKey': 'dev',
 		// 'mosMainKey': 'devMedium',
 		'mosMainKey': 'devLong',
-		// "useRecordedMOSMainMajorVersion": 1,
 		'devAdminNotifications': 1,
 		'notifications': 0,
+		'detailTitle': 'Museum Product',
 	};
 
 	console.log("using settings m1");
@@ -25,7 +25,7 @@
 					"anchorText": "New Product",
 					"target": null
 				}, {
-				    "linkType": "goForward",
+					"linkType": "goForward",
 					"anchorText": "Product Timeline",
 					"href": "/SitePages/App.aspx?f=tl",
 					"hrefWithLocalSiteToken": 1,
@@ -64,49 +64,6 @@
 				]
 			}
 		},
-		/* 'mwProductsTimeline': {
-			'buttons': [
-			],
-			'sections': {
-				'commonColumns': [
-					{
-						'displayName': 'Request ID',
-						'internalName': 'ID',
-						'formLink': 1
-					}, {
-						'displayName': 'Request Nickname',
-						'internalName': 'Title'
-					}, {
-						'displayName': 'Talk To',
-						'internalName': 'RequestedFor',
-						'userName': 1
-					}, {
-						'displayName': "Staff Volunteer Name(s)",
-						'internalName': "StaffVolNames",
-					}, {
-						'displayName': 'Request Date',
-						'internalName': 'RequestDate',
-						'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
-					}, {
-						'displayName': 'Request Status',
-						'internalName': 'RequestStatus'
-					}
-				],
-				'tables': [
-					{
-						'tableTitle': 'Open',
-						'tableID': 'open',
-						'someColsAreUsers': 1,
-						'basicMyEOLQueryRelevantValue': 0
-					}, {
-						'tableTitle': 'Closed',
-						'tableID': 'closed',
-						'someColsAreUsers': 1,
-						'basicMyEOLQueryRelevantValue': 1
-					}
-				]
-			}
-		} */
 	};
 
 
@@ -207,15 +164,6 @@
 				"yieldsViewPermissions": 1,
 				"hideForNonAdmin": [""],
 				"hideForAdmin": [""],
-				//}, {
-				//    "elementType": "field",
-				//    "controlType": "text",
-				//    "fieldName": "No Contact Could be Migrated",
-				//    "labelContent": "No Contact Could be Migrated",
-				//    "disabledForNonAdmin": ["", "Submitted", "Cancelled"],
-				//    "disabledForAdmin": ["", "Submitted", "Cancelled"],
-				//    "hideForNonAdmin": ["", "Submitted", "Cancelled"],
-				//    "hideForAdmin": ["", "Submitted", "Cancelled"],
 			}, {
 				"elementType": "field",
 				"controlType": "check",
@@ -289,17 +237,6 @@
 				"elementType": "markup",
 				"tag": "div",
 				"end": 1
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -377,7 +314,7 @@
 
 	fData.CustomScriptLast = 'if ($("input#Legacy-Product-Creation-Date").val() != "") { \n' +
 		'   $("div#label-and-control_Request-Date").hide("fast").addClass("hidden"); \n' +
-		'   $("div#label-and-control_Legacy-Product78-Creation-Date").show("fast").removeClass("hidden"); \n' +
+		'   $("div#label-and-control_Legacy-Product-Creation-Date").show("fast").removeClass("hidden"); \n' +
 		'} \n';
 
 

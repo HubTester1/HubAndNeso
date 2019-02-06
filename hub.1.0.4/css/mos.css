@@ -3,7 +3,7 @@ html {
   box-sizing: border-box; }
 
 body {
-  font-family: "Segoe UI","Segoe", Tahoma, Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI Regular WestEuropean', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif !important;
   color: #444; }
 
 div#suiteBarDelta div#suiteBarTop div#O365_NavHeader {
@@ -17,37 +17,43 @@ div#s4-bodyContainer {
 div#s4-workspace,
 div.ui-dialog,
 div#printer-content {
-  font-family: "Segoe UI","Segoe", Tahoma, Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI Regular WestEuropean', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif !important;
   color: #444;
   font-size: 1.3rem; }
   div#s4-workspace h1,
   div.ui-dialog h1,
   div#printer-content h1 {
+    font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI Regular WestEuropean', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif !important;
     font-size: 4.5rem;
     color: #666; }
   div#s4-workspace h2,
   div.ui-dialog h2,
   div#printer-content h2 {
+    font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI Regular WestEuropean', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif !important;
     font-size: 3rem !important;
     color: #666; }
   div#s4-workspace h3,
   div.ui-dialog h3,
   div#printer-content h3 {
+    font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI Regular WestEuropean', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif !important;
     font-size: 2.6rem !important;
     color: #666; }
   div#s4-workspace h4,
   div.ui-dialog h4,
   div#printer-content h4 {
+    font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI Regular WestEuropean', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif !important;
     font-size: 2rem !important;
     color: #666; }
   div#s4-workspace h5,
   div.ui-dialog h5,
   div#printer-content h5 {
+    font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI Regular WestEuropean', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif !important;
     font-size: 1.75rem !important;
     color: #666; }
   div#s4-workspace h6,
   div.ui-dialog h6,
   div#printer-content h6 {
+    font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI Regular WestEuropean', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif !important;
     font-size: 1.5rem !important;
     color: #666; }
   div#s4-workspace .ms-rtestate-field h1,
@@ -187,7 +193,7 @@ a[id*="site_share_button"] {
     display: block !important;
     font-size: 2rem;
     font-weight: 300;
-    font-family: 'Segoe UI', 'Segoe', Roboto, Helvetica Neue, Helvetica,  Arial, sans-serif;
+    font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI Regular WestEuropean', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif !important;
     box-sizing: border-box;
     z-index: 1000; }
   form#aspnetForm div#s4-bodyContainer {
@@ -262,12 +268,13 @@ div#s4-workspace div#s4-titlerow li {
     margin: 0; }
 
 div#s4-workspace div#s4-titlerow h1#pageTitle {
-  font-family: "Segoe UI"; }
+  font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI Regular WestEuropean', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif !important;
+  font-weight: 200; }
 
 div#s4-workspace div#s4-titlerow h1#pageTitle.ms-core-pageTitle, div#s4-workspace div#s4-titlerow h1#pageTitle.ms-core-pageTitle a {
   font-size: 4.5rem;
-  font-family: "Segoe UI","Segoe", Tahoma, Helvetica Neue, Helvetica, Arial, sans-serif;
-  font-weight: 300;
+  font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI Regular WestEuropean', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif !important;
+  font-weight: 200;
   padding-top: .5rem;
   color: #666; }
   div#s4-workspace div#s4-titlerow h1#pageTitle.ms-core-pageTitle a {
@@ -557,7 +564,6 @@ div#remaining-capacities ul#tab-navigation.ui-tabs-nav li a,
 div.fc-toolbar button,
 div.fc-toolbar a.button-link,
 div.fc-toolbar a.collapsible-heading-toggle,
-ul#timeline-options li a,
 a.id-or-link_list-item-chooser,
 a.show-default-station-times,
 a.hide-default-station-times,
@@ -574,6 +580,8 @@ div#s4-workspace div#app-container.event-av div#container_command-bar div#contai
 div#s4-workspace div#app-container.event-av div#container_command-bar ul#container_tab-controls li a,
 div#s4-workspace div#app-container.event-av div#container_command-bar div#container_date-filter-controls-and-header a.collapsible-heading-toggle,
 div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button,
+div#s4-workspace div#app-container.museum-products.mw-products-timeline div#container_command-bar div#container_category-filter-controls-and-header a.collapsible-heading-toggle,
+div#s4-workspace div#app-container.museum-products.mw-products-timeline div#container_command-bar div#container_date-filter-controls-and-header a.collapsible-heading-toggle,
 div#s4-workspace div#app-container.gse-stats div#container_filter-controls-and-header div.container_filter-control a#filter_submit-button,
 div#s4-workspace div#app-container.gse-stats div#container_command-bar div#container_filter-controls-and-header a.collapsible-heading-toggle,
 div#s4-workspace div#app-container.gse-signup div#container_command-bar div#container_filter-controls-and-header a.collapsible-heading-toggle,
@@ -619,7 +627,6 @@ a#gse-schedule-card-dialog-signup-opportunity-link {
   div.fc-toolbar button:hover,
   div.fc-toolbar a.button-link:hover,
   div.fc-toolbar a.collapsible-heading-toggle:hover,
-  ul#timeline-options li a:hover,
   a.id-or-link_list-item-chooser:hover,
   a.show-default-station-times:hover,
   a.hide-default-station-times:hover,
@@ -636,6 +643,8 @@ a#gse-schedule-card-dialog-signup-opportunity-link {
   div#s4-workspace div#app-container.event-av div#container_command-bar ul#container_tab-controls li a:hover,
   div#s4-workspace div#app-container.event-av div#container_command-bar div#container_date-filter-controls-and-header a.collapsible-heading-toggle:hover,
   div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button:hover,
+  div#s4-workspace div#app-container.museum-products.mw-products-timeline div#container_command-bar div#container_category-filter-controls-and-header a.collapsible-heading-toggle:hover,
+  div#s4-workspace div#app-container.museum-products.mw-products-timeline div#container_command-bar div#container_date-filter-controls-and-header a.collapsible-heading-toggle:hover,
   div#s4-workspace div#app-container.gse-stats div#container_filter-controls-and-header div.container_filter-control a#filter_submit-button:hover,
   div#s4-workspace div#app-container.gse-stats div#container_command-bar div#container_filter-controls-and-header a.collapsible-heading-toggle:hover,
   div#s4-workspace div#app-container.gse-signup div#container_command-bar div#container_filter-controls-and-header a.collapsible-heading-toggle:hover,
@@ -654,12 +663,12 @@ div#s4-workspace a.link_exit,
 div.ui-dialog div.ui-dialog-content.ui-widget-content a.ui-dialog-button,
 div.ui-datepicker div.ui-datepicker-header a.ui-datepicker-prev,
 div.ui-datepicker div.ui-datepicker-header a.ui-datepicker-next,
-div#timeline div.vis-item,
 div#s4-workspace div.in-page-persona a.profile,
 div#s4-workspace div#public-community-page_moscars div#call-to-action a,
 div#s4-workspace div#public-community-page_hr div#primary-section_open-enrollment a,
 div#s4-workspace div#app-container.museum-events div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button,
 div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button,
+div#s4-workspace div#app-container.museum-products.mw-products-timeline div#container_data div.vis-timeline div.vis-item,
 div#s4-workspace div#app-container.gse-stats div#container_filter-controls-and-header div.container_filter-control a#filter_submit-button,
 div#s4-workspace div#app-container.gse-signup div#container_command-bar div#container_filter-controls-and-header a#filter_submit-button,
 div#s4-workspace div#app-container.gse-schedule div#container_command-bar div#container_filter-controls-and-header a#filter_submit-button,
@@ -674,12 +683,12 @@ a#gse-schedule-card-dialog-signup-opportunity-link {
   div.ui-dialog div.ui-dialog-content.ui-widget-content a.ui-dialog-button:hover,
   div.ui-datepicker div.ui-datepicker-header a.ui-datepicker-prev:hover,
   div.ui-datepicker div.ui-datepicker-header a.ui-datepicker-next:hover,
-  div#timeline div.vis-item:hover,
   div#s4-workspace div.in-page-persona a.profile:hover,
   div#s4-workspace div#public-community-page_moscars div#call-to-action a:hover,
   div#s4-workspace div#public-community-page_hr div#primary-section_open-enrollment a:hover,
   div#s4-workspace div#app-container.museum-events div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button:hover,
   div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button:hover,
+  div#s4-workspace div#app-container.museum-products.mw-products-timeline div#container_data div.vis-timeline div.vis-item:hover,
   div#s4-workspace div#app-container.gse-stats div#container_filter-controls-and-header div.container_filter-control a#filter_submit-button:hover,
   div#s4-workspace div#app-container.gse-signup div#container_command-bar div#container_filter-controls-and-header a#filter_submit-button:hover,
   div#s4-workspace div#app-container.gse-schedule div#container_command-bar div#container_filter-controls-and-header a#filter_submit-button:hover,
@@ -731,7 +740,6 @@ div#remaining-capacities ul#tab-navigation.ui-tabs-nav li a,
 div.fc-toolbar button,
 div.fc-toolbar a.button-link,
 div.fc-toolbar a.collapsible-heading-toggle,
-ul#timeline-options li a,
 div#app-container a.button_swf-new-request-with-datatable,
 div#app-container a.button_swf-new-event-with-timeline,
 div#app-container a.button_alternate-view-with-timeline,
@@ -742,6 +750,8 @@ div#s4-workspace div#app-container.museum-events div#container_command-bar div#c
 div#s4-workspace div#app-container.event-av div#container_command-bar div#container_new-request-control a,
 div#s4-workspace div#app-container.event-av div#container_command-bar ul#container_tab-controls li a,
 div#s4-workspace div#app-container.event-av div#container_command-bar div#container_date-filter-controls-and-header a.collapsible-heading-toggle,
+div#s4-workspace div#app-container.museum-products.mw-products-timeline div#container_command-bar div#container_category-filter-controls-and-header a.collapsible-heading-toggle,
+div#s4-workspace div#app-container.museum-products.mw-products-timeline div#container_command-bar div#container_date-filter-controls-and-header a.collapsible-heading-toggle,
 div#s4-workspace div#app-container.gse-stats div#container_command-bar div#container_filter-controls-and-header a.collapsible-heading-toggle,
 div#s4-workspace div#app-container.gse-signup div#container_command-bar div#container_filter-controls-and-header a.collapsible-heading-toggle,
 div#s4-workspace div#app-container.gse-schedule div#container_command-bar div#container_filter-controls-and-header a.collapsible-heading-toggle,
@@ -755,7 +765,6 @@ a#standard-printer-button-inside-request {
   div.fc-toolbar button:hover,
   div.fc-toolbar a.button-link:hover,
   div.fc-toolbar a.collapsible-heading-toggle:hover,
-  ul#timeline-options li a:hover,
   div#app-container a.button_swf-new-request-with-datatable:hover,
   div#app-container a.button_swf-new-event-with-timeline:hover,
   div#app-container a.button_alternate-view-with-timeline:hover,
@@ -766,6 +775,8 @@ a#standard-printer-button-inside-request {
   div#s4-workspace div#app-container.event-av div#container_command-bar div#container_new-request-control a:hover,
   div#s4-workspace div#app-container.event-av div#container_command-bar ul#container_tab-controls li a:hover,
   div#s4-workspace div#app-container.event-av div#container_command-bar div#container_date-filter-controls-and-header a.collapsible-heading-toggle:hover,
+  div#s4-workspace div#app-container.museum-products.mw-products-timeline div#container_command-bar div#container_category-filter-controls-and-header a.collapsible-heading-toggle:hover,
+  div#s4-workspace div#app-container.museum-products.mw-products-timeline div#container_command-bar div#container_date-filter-controls-and-header a.collapsible-heading-toggle:hover,
   div#s4-workspace div#app-container.gse-stats div#container_command-bar div#container_filter-controls-and-header a.collapsible-heading-toggle:hover,
   div#s4-workspace div#app-container.gse-signup div#container_command-bar div#container_filter-controls-and-header a.collapsible-heading-toggle:hover,
   div#s4-workspace div#app-container.gse-schedule div#container_command-bar div#container_filter-controls-and-header a.collapsible-heading-toggle:hover,
@@ -982,6 +993,9 @@ div.ui-datepicker div.ui-datepicker-header a.ui-datepicker-next:after {
 div#s4-workspace div.cafe-weekly-menu-and-schedule a.button_swf-new-request-with-datatable {
   display: none; }
 
+div#s4-workspace div#app-container.museum-products.mw-products-timeline div#container_data div.vis-timeline div.vis-item {
+  transition: background-color 250ms; }
+
 div.ui-datepicker div.ui-datepicker-header a.ui-datepicker-next,
 div.ui-datepicker div.ui-datepicker-header a.ui-datepicker-prev {
   padding: .3rem;
@@ -1112,10 +1126,8 @@ div#app-container.mw-buyouts-calendar div.fc-toolbar button.fc-nextYear-button s
   white-space: nowrap;
   overflow: hidden; }
 
-ul#timeline-options li h2.collapsible a {
-  display: block !important;
-  position: relative;
-  top: 50%; }
+div#s4-workspace div#app-container.museum-products.mw-products-timeline div#container_command-bar div.collapsible a {
+  display: block !important; }
 
 div.vis-item div.vis-item-content {
   padding: 1px 5px 3px; }
@@ -3108,6 +3120,9 @@ div#app-container.overnight-bike-cage-parking div#request-form ul#terms-and-cond
 div#app-container.overnight-parking div#request-form ul#terms-and-conditions {
   margin: 10px 0px 0px 22.4rem; }
 
+div#s4-workspace div#app-container.event-av div#overview-table-container {
+  margin-top: 0; }
+
 div#s4-workspace div#app-container.event-av div#container_command-bar-and-tables.ui-tabs.ui-widget.ui-widget-content.ui-corner-all {
   padding: 0;
   border: none;
@@ -3151,8 +3166,7 @@ div#s4-workspace div#app-container.event-av div#container_command-bar {
     display: block; }
 
 div#s4-workspace div#app-container.event-av div#container_date-filter-controls {
-  padding: 1.5rem 1.5rem 0 0;
-  font-weight: 600; }
+  padding: 1.5rem 1.5rem 0 0; }
   div#s4-workspace div#app-container.event-av div#container_date-filter-controls div#date-filter-controls-notice {
     max-width: 75%;
     font-size: 1.3rem;
@@ -3163,11 +3177,13 @@ div#s4-workspace div#app-container.event-av div#container_date-filter-controls {
     padding: 0 0 1.5rem 1.5rem; }
     div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control label.date-selector-label {
       display: inline-block;
-      width: 10.5rem; }
+      padding-right: .5rem;
+      width: 10.5rem;
+      text-align: right; }
     div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control input.date-selector {
       width: 13rem; }
     div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button {
-      margin-left: 11rem !important; }
+      margin-left: 11.5rem !important; }
 
 div#s4-workspace div#app-container.event-av div.table-container {
   margin-top: 2rem; }
@@ -3771,105 +3787,98 @@ div#printer-content table.layout-table {
     div#printer-content table.layout-table td:first-child {
       padding-left: 0; }
 
-body.product-timeline ul#timeline-options {
+div#s4-workspace div#app-container.museum-products.mw-products-timeline div#overview-table-container {
+  margin-top: 0; }
+
+div#s4-workspace div#app-container.museum-products.mw-products-timeline div#container_command-bar {
   color: #222;
   background-color: #ddd;
   display: inline-block; }
-  body.product-timeline ul#timeline-options a {
+  div#s4-workspace div#app-container.museum-products.mw-products-timeline div#container_command-bar a {
     color: #007298 !important; }
-    body.product-timeline ul#timeline-options a:hover {
+    div#s4-workspace div#app-container.museum-products.mw-products-timeline div#container_command-bar a:hover {
       color: #004d66 !important; }
+  div#s4-workspace div#app-container.museum-products.mw-products-timeline div#container_command-bar div.container_link,
+  div#s4-workspace div#app-container.museum-products.mw-products-timeline div#container_command-bar div#container_category-filter-controls-and-header,
+  div#s4-workspace div#app-container.museum-products.mw-products-timeline div#container_command-bar div#container_date-filter-controls-and-header {
+    display: table-cell;
+    vertical-align: top; }
 
-body.product-timeline li#new-product-option,
-body.product-timeline li#category-filter-option,
-body.product-timeline li#date-filter-option {
-  display: table-cell;
-  vertical-align: top; }
-
-body.product-timeline div#categories-children p#control-group-label {
-  display: block !important;
-  width: 0 !important;
-  height: 0;
-  padding: 0 !important;
-  text-indent: 100%;
-  white-space: nowrap;
-  overflow: hidden; }
-
-body.product-timeline div#categories-children div.category-selectors-container {
-  display: table-cell;
-  vertical-align: top; }
-
-body.product-timeline div#categories-children,
-body.product-timeline div#dates-children {
-  padding: 1.5rem 1.5rem 0 0;
-  font-weight: 600; }
-  body.product-timeline div#categories-children div.category-selectors-container,
-  body.product-timeline div#categories-children div.date-selector-container,
-  body.product-timeline div#dates-children div.category-selectors-container,
-  body.product-timeline div#dates-children div.date-selector-container {
+div#s4-workspace div#app-container.museum-products.mw-products-timeline div#container_category-filter-controls {
+  padding: 1.5rem 1.5rem 0 0; }
+  div#s4-workspace div#app-container.museum-products.mw-products-timeline div#container_category-filter-controls p#control-group-label {
+    display: block !important;
+    width: 0 !important;
+    height: 0;
+    padding: 0 !important;
+    text-indent: 100%;
+    white-space: nowrap;
+    overflow: hidden; }
+  div#s4-workspace div#app-container.museum-products.mw-products-timeline div#container_category-filter-controls div.category-selectors-container {
+    display: table-cell;
+    vertical-align: top;
     padding: 0 0 1.5rem 1.5rem; }
-    body.product-timeline div#categories-children div.category-selectors-container label.date-selector-label,
-    body.product-timeline div#categories-children div.date-selector-container label.date-selector-label,
-    body.product-timeline div#dates-children div.category-selectors-container label.date-selector-label,
-    body.product-timeline div#dates-children div.date-selector-container label.date-selector-label {
+
+div#s4-workspace div#app-container.museum-products.mw-products-timeline div#container_date-filter-controls {
+  padding: 1.5rem 1.5rem 0 0; }
+  div#s4-workspace div#app-container.museum-products.mw-products-timeline div#container_date-filter-controls div.container_filter-control {
+    padding: 0 0 1.5rem 1.5rem; }
+    div#s4-workspace div#app-container.museum-products.mw-products-timeline div#container_date-filter-controls div.container_filter-control label.date-selector-label {
       display: inline-block;
-      width: 12.5rem; }
-    body.product-timeline div#categories-children div.category-selectors-container input.date-selector,
-    body.product-timeline div#categories-children div.date-selector-container input.date-selector,
-    body.product-timeline div#dates-children div.category-selectors-container input.date-selector,
-    body.product-timeline div#dates-children div.date-selector-container input.date-selector {
+      padding-right: .5rem;
+      width: 10.5rem;
+      text-align: right; }
+    div#s4-workspace div#app-container.museum-products.mw-products-timeline div#container_date-filter-controls div.container_filter-control input.date-selector {
       width: 13rem; }
 
-body.product-timeline div#timeline div.vis-timeline {
-  border: none;
-  background-color: #eee; }
-  body.product-timeline div#timeline div.vis-timeline div.vis-panel.vis-left,
-  body.product-timeline div#timeline div.vis-timeline div.vis-panel.vis-bottom,
-  body.product-timeline div#timeline div.vis-timeline div.vis-panel.vis-center,
-  body.product-timeline div#timeline div.vis-timeline div.vis-panel.vis-top {
-    border: none; }
-  body.product-timeline div#timeline div.vis-timeline div.vis-panel.vis-center {
-    background-color: transparent; }
-    body.product-timeline div#timeline div.vis-timeline div.vis-panel.vis-center div.vis-background div.vis-group {
-      background-color: rgba(102, 102, 102, 0.35); }
-    body.product-timeline div#timeline div.vis-timeline div.vis-panel.vis-center div.vis-background div.vis-group:nth-child(odd) {
-      background-color: rgba(102, 102, 102, 0.1); }
-    body.product-timeline div#timeline div.vis-timeline div.vis-panel.vis-center div.vis-foreground div.vis-group {
-      border: none;
-      cursor: -webkit-grab;
-      cursor: grab; }
-      body.product-timeline div#timeline div.vis-timeline div.vis-panel.vis-center div.vis-foreground div.vis-group:active, body.product-timeline div#timeline div.vis-timeline div.vis-panel.vis-center div.vis-foreground div.vis-group:focus {
-        cursor: -webkit-grabbing;
-        cursor: grabbing; }
-    body.product-timeline div#timeline div.vis-timeline div.vis-panel.vis-center div.vis-shadow {
-      box-shadow: none; }
-  body.product-timeline div#timeline div.vis-timeline .vis-panel.vis-left {
-    background-color: transparent; }
-    body.product-timeline div#timeline div.vis-timeline .vis-panel.vis-left div.vis-content div.vis-label {
-      background-color: rgba(150, 150, 150, 0.35);
+div#s4-workspace div#app-container.museum-products.mw-products-timeline div#container_data {
+  margin-top: 1rem; }
+  div#s4-workspace div#app-container.museum-products.mw-products-timeline div#container_data div.vis-timeline {
+    border: none;
+    background-color: #eee; }
+    div#s4-workspace div#app-container.museum-products.mw-products-timeline div#container_data div.vis-timeline div.vis-panel.vis-left,
+    div#s4-workspace div#app-container.museum-products.mw-products-timeline div#container_data div.vis-timeline div.vis-panel.vis-bottom,
+    div#s4-workspace div#app-container.museum-products.mw-products-timeline div#container_data div.vis-timeline div.vis-panel.vis-center,
+    div#s4-workspace div#app-container.museum-products.mw-products-timeline div#container_data div.vis-timeline div.vis-panel.vis-top {
       border: none; }
-    body.product-timeline div#timeline div.vis-timeline .vis-panel.vis-left div.vis-content div.vis-label:nth-child(even) {
-      background-color: rgba(150, 150, 150, 0.2); }
+    div#s4-workspace div#app-container.museum-products.mw-products-timeline div#container_data div.vis-timeline div.vis-panel.vis-center {
+      background-color: transparent; }
+      div#s4-workspace div#app-container.museum-products.mw-products-timeline div#container_data div.vis-timeline div.vis-panel.vis-center div.vis-background div.vis-group {
+        background-color: rgba(102, 102, 102, 0.35); }
+      div#s4-workspace div#app-container.museum-products.mw-products-timeline div#container_data div.vis-timeline div.vis-panel.vis-center div.vis-background div.vis-group:nth-child(odd) {
+        background-color: rgba(102, 102, 102, 0.1); }
+      div#s4-workspace div#app-container.museum-products.mw-products-timeline div#container_data div.vis-timeline div.vis-panel.vis-center div.vis-foreground div.vis-group {
+        border: none;
+        cursor: -webkit-grab;
+        cursor: grab; }
+        div#s4-workspace div#app-container.museum-products.mw-products-timeline div#container_data div.vis-timeline div.vis-panel.vis-center div.vis-foreground div.vis-group:active, div#s4-workspace div#app-container.museum-products.mw-products-timeline div#container_data div.vis-timeline div.vis-panel.vis-center div.vis-foreground div.vis-group:focus {
+          cursor: -webkit-grabbing;
+          cursor: grabbing; }
+      div#s4-workspace div#app-container.museum-products.mw-products-timeline div#container_data div.vis-timeline div.vis-panel.vis-center div.vis-shadow {
+        box-shadow: none; }
+    div#s4-workspace div#app-container.museum-products.mw-products-timeline div#container_data div.vis-timeline .vis-panel.vis-left {
+      background-color: transparent; }
+      div#s4-workspace div#app-container.museum-products.mw-products-timeline div#container_data div.vis-timeline .vis-panel.vis-left div.vis-content div.vis-label {
+        background-color: rgba(150, 150, 150, 0.35);
+        border: none; }
+      div#s4-workspace div#app-container.museum-products.mw-products-timeline div#container_data div.vis-timeline .vis-panel.vis-left div.vis-content div.vis-label:nth-child(even) {
+        background-color: rgba(150, 150, 150, 0.2); }
+  div#s4-workspace div#app-container.museum-products.mw-products-timeline div#container_data div.vis-current-time {
+    background-color: #da1884; }
+  div#s4-workspace div#app-container.museum-products.mw-products-timeline div#container_data div.vis-time-axis div.vis-grid.vis-minor,
+  div#s4-workspace div#app-container.museum-products.mw-products-timeline div#container_data div.vis-time-axis div.vis-grid.vis-major,
+  div#s4-workspace div#app-container.museum-products.mw-products-timeline div#container_data div.vis-labelset div.vis-label {
+    border-color: #aaa; }
+  div#s4-workspace div#app-container.museum-products.mw-products-timeline div#container_data div.vis-time-axis div.vis-grid.vis-major {
+    border-width: .2rem; }
+  div#s4-workspace div#app-container.museum-products.mw-products-timeline div#container_data div.vis-item.vis-range {
+    border: none;
+    border-radius: 0;
+    cursor: pointer; }
 
-body.product-timeline div#timeline div.vis-current-time {
-  background-color: #da1884; }
-
-body.product-timeline div#timeline div.vis-time-axis div.vis-grid.vis-minor,
-body.product-timeline div#timeline div.vis-time-axis div.vis-grid.vis-major,
-body.product-timeline div#timeline div.vis-labelset div.vis-label {
-  border-color: #aaa; }
-
-body.product-timeline div#timeline div.vis-time-axis div.vis-grid.vis-major {
-  border-width: 2px; }
-
-body.product-timeline div#timeline div.vis-item.vis-range {
-  border: none;
-  border-radius: 0;
-  cursor: pointer; }
-
-body.product-timeline div.ui-dialog#product-timeline-item-dialog div.ui-dialog-titlebar span.ui-dialog-title {
+div[aria-describedby='museum-wide-products-dialog'] div.ui-dialog-titlebar span.ui-dialog-title {
   white-space: normal; }
-  body.product-timeline div.ui-dialog#product-timeline-item-dialog div.ui-dialog-titlebar span.ui-dialog-title h2.ui-dialog-title-product-date-range {
+  div[aria-describedby='museum-wide-products-dialog'] div.ui-dialog-titlebar span.ui-dialog-title h2.ui-dialog-title-product-date-range {
     white-space: nowrap;
     font-size: 2rem !important;
     font-weight: 300;
@@ -3878,13 +3887,13 @@ body.product-timeline div.ui-dialog#product-timeline-item-dialog div.ui-dialog-t
             margin-block-start: 0;
     -webkit-margin-after: 0;
             margin-block-end: 0; }
-  body.product-timeline div.ui-dialog#product-timeline-item-dialog div.ui-dialog-titlebar span.ui-dialog-title p.ui-dialog-title-product-category {
+  div[aria-describedby='museum-wide-products-dialog'] div.ui-dialog-titlebar span.ui-dialog-title p.ui-dialog-title-product-category {
     font-size: 1.3rem;
     font-weight: 400;
     margin: 0;
     color: #666; }
 
-body.product-timeline div.ui-dialog#product-timeline-item-dialog div.ui-dialog-content p.ui-dialog-product-title {
+div[aria-describedby='museum-wide-products-dialog'] div.ui-dialog-content p.ui-dialog-product-title {
   font-size: 3rem;
   font-weight: 300;
   margin: 0;

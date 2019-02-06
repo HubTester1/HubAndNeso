@@ -7755,7 +7755,7 @@
 		} else if (type === "mwEventCalendar") {
 			$().RenderCommandBarAndCalendarForMWEvents(oData.mwEventCalendar.buttons);
 		} else if (type === "mwProductsTimeline") {
-			$().RenderCommandBarAndTimelineForProducts(oData.mwProductsTimeline.buttons);
+			$().RenderCommandBarAndTimelineForProducts("overview-table-container");
 		} else if (type === "mwProductsTodaysCapacity") {
 			$().RenderCommandBarAndCapacityForProducts();
 		}
@@ -20672,204 +20672,417 @@
 
 
 
-	$.fn.RenderCommandBarAndTimelineForProducts = function (buttons, relevantRole) {
+	$.fn.RenderCommandBarAndTimelineForProducts = function (targetID) {
 
-		var startingYearOfFirstFiscalYear = 2018;
-		// var thisYear = 2022;
-		// var startingYearOfLastFiscalYear = moment('2022-09-08').isAfter(thisYear + '-06-30') ?
-		// 	parseInt(thisYear) :
-		// 	parseInt(thisYear) - 1;
-		var thisYear = $().ReturnFormattedDateTime('nowLocal', null, 'YYYY');
-		var startingYearOfLastFiscalYear = moment().isAfter(thisYear + '-06-30') ?
-			parseInt(thisYear) :
-			parseInt(thisYear) - 1;
+		//var now = $().ReturnFormattedDateTime("nowLocal", null, "YYYY-MM-DD");
+		var timelineInitialStartDate = moment().subtract(1, 'months').format('YYYY-MM-DD');
+		var timelineInitialEndDate = moment().add(11, 'months').format('YYYY-MM-DD');
 
-
-		var selectedStartYear = GetParamFromUrl(location.search, "y");
-		if (!selectedStartYear || selectedStartYear == '') {
-			selectedStartYear = moment().isAfter(thisYear + '-06-30') ?
-				parseInt(thisYear) :
-				parseInt(thisYear) - 1;
-		}
-
-
-
-		var nowAsISOLocal = $().ReturnFormattedDateTime('nowLocal', null, null);
-		var viewToUse = GetParamFromUrl(location.search, 'view');
-		var dateToUse = GetParamFromUrl(location.search, 'date');
-		if (!viewToUse || viewToUse == "") { viewToUse = 'month'; }
-		if (!dateToUse || dateToUse == "") {
-			dateToUse =
-				$().ReturnFormattedDateTime('nowUTC', 'YYYY-MM-DDTHH:mm:ssZ', 'YYYY-MM-DD', 0);
-		}
-
-		var renderPrepStartTime = Date.now();
-
-		var augmentedSchedules = $().ReturnSelectedAugmentedSchedulesForGSESchedulesCalendar(selectedStartYear, nowAsISOLocal);
-
-		console.log('render prep time = ' + (Date.now() - renderPrepStartTime) / 1000 + ' seconds');
-
-		$("div#overview-screen-container").fullCalendar({
-			allDayDefault: true,
-			lazyFetching: false,
-			eventOrder: "start",
-			header: {
-				// right and center are reversed, because our CSS implements obedience to the accessibility imperative that DOM elements exist 
-				//      (and are thus encountered by assistive technologies) in the same order in which they're presented to sighted users
-				left: "",
-				right: "prevYear,prev,title,next,nextYear",
-				center: "today,basicDay,basicWeek,month"
+		// fyi, functions here are custom (not supplied / recommended by the visjs timeline; 
+		//      visjs recommends using a custom function)
+		var options = {
+			"start": timelineInitialStartDate,
+			"end": timelineInitialEndDate,
+			"stack": true,
+			"orientation": {
+				"axis": "both",
+				"item": "top"
 			},
-			validRange: {
-				start: selectedStartYear + '06-30',
-				end: (parseInt(selectedStartYear) + 1) + '2017-06-01'
+			"type": "range",
+			"selectable": false,
+			"editable": true,
+			"groupEditable": {
+				"add": false,
+				"remove": false,
+				"order": true
 			},
-			defaultView: viewToUse,
-			defaultDate: dateToUse,
-			theme: true,
-			eventClick: function (event, jsEvent, view) {
-
-				// close the dialog box
-				$("div#dialog").dialog("close");
-
-				// populate the dialog box
-
-				var dialogTitleBarContent = '<h2 class="gse-schedules-dialog-date-and-time-range">' +
-					'<span class="gse-schedules-dialog-date">' + event.formattedDate + '</span> ' +
-					'<span class="gse-schedules-dialog-start-time">' + event.formattedStartTime + '</span>' +
-					'<span class="gse-schedules-dialog-times-separator"> &ndash; </span>' +
-					'<span class="gse-schedules-dialog-end-time">' + event.formattedEndTime + '</span>' +
-					'</h2>';
-
-				$("div[aria-describedby='gse-schedule-card-dialog'] div.ui-dialog-titlebar span.ui-dialog-title").html(dialogTitleBarContent);
-
-				var dialogBodyContent =
-					'<h3 class="gse-schedule-card-dialog-job-title">' + event.jobTitle + '</h3>' +
-					event.jobDescription;
-
-				if (event.isInFuture) {
-					dialogBodyContent += '<p>Signups Available: ' +
-						(event.quantityPositions - event.quantitySignups) +
-						' / ' + event.quantityPositions;
-				}
-
-				dialogBodyContent += '<div class="gse-schedule-card-dialog-links-container">';
-
-				if (event.mySignupURL) {
-					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' +
-						'<a id="gse-schedule-card-dialog-my-signup-link" ' +
-						'class="gse-schedule-card-dialog-button" href="' +
-						event.mySignupURL + '" target="_blank">More Info / My Signup</a></div>';
-				} else if (event.isInFuture && ((parseInt(event.quantityPositions) - parseInt(event.quantitySignups)) !== 0)) {
-					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' +
-						'<a id="gse-schedule-card-dialog-signup-opportunity-link" ' +
-						'class="gse-schedule-card-dialog-button" href="' +
-						event.signupURL + '" target="_blank">More Info / Sign Up</a></div>';
-				} else {
-					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' +
-						'<a id="gse-schedule-card-dialog-signup-opportunity-link" ' +
-						'class="gse-schedule-card-dialog-button" href="' +
-						event.signupURL + '" target="_blank">More Info</a></div>';
-				}
-
-				if (relevantRole === 'gseHRAdmin' || relevantRole === 'gseJobAdmin') {
-					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' +
-						'<a id="gse-schedule-card-dialog-job-link" ' +
-						'class="gse-schedule-card-dialog-button" href="' +
-						event.jobURL + '" target="_blank">Job Details</a></div>';
-					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' +
-						'<a id="gse-schedule-card-dialog-schedule-link" ' +
-						'class="gse-schedule-card-dialog-button" href="' +
-						event.scheduleURL + '" target="_blank">Schedule Details</a></div>';
-				}
-
-				$("div#gse-schedule-card-dialog").html(dialogBodyContent);
-
-				// position the dialog box
-				$("div#gse-schedule-card-dialog").dialog("option", "position", { my: "left bottom", at: "right top", of: jsEvent });
-
-				// open the dialog box
-				$("div#gse-schedule-card-dialog").dialog("open");
+			"groupOrder": function (a, b) {
+				return a.order - b.order;
 			},
-			events: augmentedSchedules
-
-		});
-
-		$("div.fc-toolbar div.fc-left").append('<div id="container_command-bar"></div>');
-
-		var buttonDivs = $().ReturnButtonsMarkupWithContainerDivs(buttons);
-		var buttonOverflowMenu = $().ReturnButtonsMarkupAsOverflowMenu(buttons);
-
-		var commandBarContents = '';
-
-		commandBarContents +=
-			'<div id="container_navigation-controls-expanded"> \n' +
-			buttonDivs +
-			'</div> \n';
-
-
-
-		commandBarContents +=
-			'<div id="container_filter-controls-and-header"> \n' +
-			'   <div id="text_filter-controls" class="collapsible">Year</div> \n' +
-			'   <div id="container_filter-controls"> \n' +
-			'   	<div class="container_filter-control"> \n' +
-			'   		<label for="filter_year">Year</label><select id="filter_year" name="filter_year"> \n' +
-			'				' + $().ReturnFiscalYearSelectOptions(startingYearOfFirstFiscalYear, startingYearOfLastFiscalYear, true, selectedStartYear) + ' \n' +
-			'			</select>' +
-			'		</div>' +
-			'   	<div class="container_filter-control"> \n' +
-			'			<a id="filter_submit-button">Update</a>' +
-			'		</div>' +
-			'    </div> \n' +
-			'</div> \n';
-
-		commandBarContents += buttonOverflowMenu;
-
-		$("div#container_command-bar").append(commandBarContents);
-
-		// add extra class for styling hook
-		$('div#app-container').addClass('gse-schedule-calendar');
-
-		// collapse filters
-		$('.collapsible').collapsible();
-
-
-
-
-
-
-
-
-
-
-
-		$("div#app-container").append("<div id=\"gse-schedule-card-dialog\"></div>");
-
-		$("div#gse-schedule-card-dialog").dialog({
-			autoOpen: false,
-			draggable: true,
-			modal: true,
-			show: {
-				effect: "bounce",
-				times: 2,
-				duration: 500
+			"groupOrderSwap": function (a, b, groups) {
+				var o = a.order;
+				a.order = b.order;
+				b.order = o;
 			},
-			width: 400,
-		});
+		};
 
-
-		$("div.fc-toolbar, div.fc-view-container").fadeTo(1000, 1);
-
-		// listen for date filtering
-		$("a#filter_submit-button").click(function () {
-			var selectedStartYear = $("select#filter_year").val();
-			if (selectedStartYear == '') {
-				selectedStartYear = moment().isAfter(thisYear + '-06-30') ?
-					parseInt(thisYear) :
-					parseInt(thisYear) - 1;
+		// ids need not be numbers; in case one day they do not match order for some reason,
+		//      id and order are separate properties; fyi, order is a custom property (not part
+		//      of the visjs timeline library)
+		var groups = [
+			{
+				"id": 1,
+				"order": 1,
+				"content": "Permanent Exhibits",
+				"className": "category_permanent-exhibits",
+			}, {
+				"id": 2,
+				"order": 2,
+				"content": "Temporary Exhibits",
+				"className": "category_temporary-exhibits",
+			}, {
+				"id": 3,
+				"order": 3,
+				"content": "Omni",
+				"className": "category_omni",
+			}, {
+				"id": 4,
+				"order": 4,
+				"content": "Planetarium",
+				"className": "category_planetarium",
+			}, {
+				"id": 5,
+				"order": 5,
+				"content": "Promotions",
+				"className": "category_promotions",
+			}, {
+				"id": 6,
+				"order": 6,
+				"content": "Current Science &amp; Technology",
+				"className": "category_cst",
+			}, {
+				"id": 7,
+				"order": 7,
+				"content": "Lectures &amp; Events",
+				"className": "category_lectures-and-events",
+			}, {
+				"id": 8,
+				"order": 8,
+				"content": "3-D / 4-D Cinema",
+				"className": "category_3d4d",
 			}
-			window.location = "/sites/" + mData.siteToken + "/SitePages/App.aspx?f=cal&y=" + selectedStartYear;
+		];
+
+		var getListItemsOptions = {
+			"viewFields": "<ViewFields>" +
+				"   <FieldRef Name='ID' />" +
+				"   <FieldRef Name='AllRequestData' />" +
+				"</ViewFields>",
+			//"query":        "<Query>" +
+			//                "   <Where>" +
+			//                "       <And>" +
+			//                "           <Eq>" +
+			//                "               <FieldRef Name='RequestStatus'></FieldRef>" +
+			//                "               <Value Type='Text'>Submitted</Value>" +
+			//                "           </Eq>" +
+			//                "           <Geq>" +
+			//                "               <FieldRef Name='ID'></FieldRef>" +
+			//                "               <Value Type='Number'>214</Value>" +
+			//                "           </Geq>" +
+			//                "       </And>" +
+			//                "   </Where>" +
+			//                "</Query>",
+			"query": "<Query>" +
+				"   <Where>" +
+				"       <Eq>" +
+				"           <FieldRef Name='RequestStatus'></FieldRef>" +
+				"           <Value Type='Text'>Submitted</Value>" +
+				"       </Eq>" +
+				"   </Where>" +
+				"</Query>",
+			"queryOptions": "<QueryOptions>" +
+				"   <IncludeMandatoryColumns>FALSE</IncludeMandatoryColumns>" +
+				"</QueryOptions>"
+		};
+
+
+
+
+
+
+
+
+
+
+		$().SPServices({
+			operation: "GetListItems",
+			async: false,
+			listName: "SWFList",
+			CAMLViewFields: getListItemsOptions.viewFields,
+			CAMLQuery: getListItemsOptions.query,
+			CAMLQueryOptions: getListItemsOptions.queryOptions,
+			completefunc: function (xData, Status) {
+
+				var regexOne = new RegExp("\r", "g");
+				var regexTwo = new RegExp("\n", "g");
+
+				var itemsInitial = [];
+
+				$(xData.responseXML).SPFilterNode("z:row").each(function () {
+
+					var productItemString = $(this).attr("ows_AllRequestData");
+					productItemString = productItemString.replace(regexOne, "'");
+					productItemString = productItemString.replace(regexTwo, "'");
+					eval("var productItem=" + productItemString);
+					productItem.ID = $(this).attr("ows_ID");
+
+					productItem.friendlyStartDate = $().ReturnFormattedDateTime(productItem["Product-Start-Date"], "YYYY-MM-DDTHH:mm:ss-05:00", "MMMM DD, YYYY", 0);
+
+					productItem.timelineContent = productItem["Product-Title"];
+
+					$(groups).each(function (i, g) {
+						if (g.content == productItem["Product-Category"]) {
+							productItem.groupID = g.id;
+						}
+					});
+
+					var thisProduct = {
+						"id": productItem.ID,
+						"group": productItem.groupID,
+						"content": productItem.timelineContent,
+						"start": productItem["Product-Start-Date"].slice(0, 10),
+						"dialogContent": {
+							"title": productItem["Product-Title"],
+							"category": productItem["Product-Category"],
+							"start": productItem.friendlyStartDate,
+							"editURL": mData.fullSiteBaseURL + "/SitePages/App.aspx?r=" + productItem["ID"],
+						}
+					}
+
+					if (typeof (productItem["Product-End-Date"]) != 'undefined' && productItem["Product-End-Date"] != "") {
+						thisProduct.end = productItem["Product-End-Date"].slice(0, 10);
+						productItem.friendlyEndDate = $().ReturnFormattedDateTime(productItem["Product-End-Date"], "YYYY-MM-DDTHH:mm:ss-05:00", "MMMM DD, YYYY", 0);
+						thisProduct.dialogContent.end = productItem.friendlyEndDate;
+					} else {
+						thisProduct.end = '9000-01-01';
+					}
+
+					if (typeof (productItem["Requested-For"]) != 'undefined' && productItem["Requested-For"] != "") {
+						thisProduct.dialogContent.contact = productItem["Requested-For"]
+					}
+
+					if (typeof (productItem["Product-Description"]) != 'undefined' && productItem["Product-Description"] != "") {
+						thisProduct.dialogContent.description = productItem["Product-Description"]
+					}
+
+					itemsInitial.push(thisProduct);
+				});
+
+
+				var items = new vis.DataSet(itemsInitial);
+
+
+				$("div#app-container").append("<div id=\"museum-wide-products-dialog\"></div>");
+
+				$("div#museum-wide-products-dialog").dialog({
+					autoOpen: false,
+					draggable: true,
+					show: { effect: "bounce", times: 2, duration: 500 },
+					width: 450,
+				});
+
+
+				$("#" + targetID).append('<div id="container_command-bar-and-data"> \n' +
+					'   <div id="container_command-bar"></div> \n' +
+					'   <div id="container_data"></div> \n' +
+					'</div>');
+
+
+				var commandBarContents = 
+					'<div class="container_link"> \n' +
+						$().ReturnButtonLink('newItem', 'New Product', null, null, 'button_swf-new-event-with-timeline') +
+					'</div> \n' +
+					'<div class="container_link"> \n' +
+						$().ReturnButtonLink('goForward', 'Product List', '/SitePages/App.aspx', null, null, 'button_alternate-view-with-timeline', 1) +
+					'</div> \n' +
+					'<div id="container_category-filter-controls-and-header"> \n' +
+					'	<div id="text_category-filter-controls" class="collapsible">Categories</div> \n' +
+					'   <div id="container_category-filter-controls"> \n' +
+					'		<p id="control-group-label">Categories included:</p> \n' +
+					'		<div class="category-selectors-container"> \n' +
+					'			 <div class="category-selector-container"> \n' +
+					'				  <input class="category-selector" id="category_permanent-exhibits" name="category_permanent-exhibits" value="yes" type="checkbox" checked> \n' +
+					'				  <label class="category-selector-label" for="category_permanent-exhibits">Permanent Exhibits</label> \n' +
+					'			 </div> \n' +
+					'			 <div class="category-selector-container"> \n' +
+					'				  <input class="category-selector" id="category_temporary-exhibits" name="category_temporary-exhibits" value="yes" type="checkbox" checked> \n' +
+					'				  <label class="category-selector-label" for="category_temporary-exhibits">Temporary Exhibits</label> \n' +
+					'			 </div> \n' +
+					'			 <div class="category-selector-container"> \n' +
+					'				  <input class="category-selector" id="category_omni" name="category_omni" value="yes" type="checkbox" checked> \n' +
+					'				  <label class="category-selector-label" for="category_omni">Omni</label> \n' +
+					'			 </div> \n' +
+					'			 <div class="category-selector-container"> \n' +
+					'				  <input class="category-selector" id="category_planetarium" name="category_planetarium" value="yes" type="checkbox" checked> \n' +
+					'				  <label class="category-selector-label" for="category_planetarium">Planetarium</label> \n' +
+					'			 </div> \n' +
+					'		</div> \n' +
+					'		<div class="category-selectors-container"> \n' +
+					'			 <div class="category-selector-container"> \n' +
+					'				  <input class="category-selector" id="category_promotions" name="category_promotions" value="yes" type="checkbox" checked> \n' +
+					'				  <label class="category-selector-label" for="category_promotions">Promotions</label> \n' +
+					'			 </div> \n' +
+					'			 <div class="category-selector-container"> \n' +
+					'				  <input class="category-selector" id="category_cst" name="category_cst" value="yes" type="checkbox" checked> \n' +
+					'				  <label class="category-selector-label" for="category_cst">Current Science &amp; Technology</label> \n' +
+					'			 </div> \n' +
+					'			 <div class="category-selector-container"> \n' +
+					'				  <input class="category-selector" id="category_lectures-and-events" name="category_lectures-and-events" value="yes" type="checkbox" checked> \n' +
+					'				  <label class="category-selector-label" for="category_lectures-and-events">Lectures &amp; Events</label> \n' +
+					'			 </div> \n' +
+					'			 <div class="category-selector-container"> \n' +
+					'				  <input class="category-selector" id="category_3d4d" name="category_3d4d" value="yes" type="checkbox" checked> \n' +
+					'				  <label class="category-selector-label" for="category_3d4d">3-D / 4-D Cinema</label> \n' +
+					'			 </div> \n' +
+					'		</div> \n' +
+					'	</div> \n' +
+					'</div> \n' +
+					'<div id="container_date-filter-controls-and-header"> \n' +
+					'	<div id="text_date-filter-controls" class="collapsible">Dates</div> \n' +
+					'   <div id="container_date-filter-controls"> \n' +
+					'		<div class="container_filter-control"> \n' +
+					'			<label for="date_start" class="date-selector-label">Starting On or After</label>' +
+					'			<input class="date-selector" id="date_start" name="date_start" type="text">' +
+					'		</div>' +
+					'		<div class="container_filter-control"> \n' +
+					'			<label for="date_end" class="date-selector-label">Ending On or Before</label>' +
+					'			<input class="date-selector" id="date_end" name="date_end" type="text">' +
+					'		</div>' +
+					// '		<div class="container_filter-control"> \n' +
+					// '			<a id="filter_submit-button">Update</a>' +
+					// '		</div>' +
+					'	 </div> \n' +
+					'</div> \n';
+
+				$("div#container_command-bar").append(commandBarContents);
+
+				// construct the timeline
+				var container = document.getElementById("container_data");
+				var timeline = new vis.Timeline(container, items, groups, options);
+
+				// add extra class for styling hook
+				$('div#app-container').addClass('mw-products-timeline');
+
+				// collapse filters
+				$('.collapsible').collapsible();
+
+				// set datepickers on date filter fields
+				$("input.date-selector").datepicker({
+					changeMonth: "true",
+					changeYear: "true",
+					dateFormat: "MM d, yy"
+				});
+
+				// listen for category filter; re-set groups
+				$("input.category-selector").on("change", function () {
+
+					var categoriesToSet = [];
+
+					$("input.category-selector:checked").each(function () {
+						categoriesToSet.push($(this).attr("id"));
+					});
+
+					function HasClassName(group) {
+						return (categoriesToSet.indexOf(group.className) > -1);
+					}
+
+					var groupsToSet = groups.filter(HasClassName);
+
+					timeline.setGroups(groupsToSet);
+				});
+
+				//  listen for date filter; re-set items
+				$("input.date-selector").on("change", function () {
+
+					var startDateFieldValue = $("input#date_start").val();
+					if (startDateFieldValue == "") {
+						var startDateItems = "1900-01-01";
+						var startDateWindow = null;
+					} else {
+						var startDateItems = $().ReturnFormattedDateTime(startDateFieldValue, 'MMMM D, YYYY', 'YYYY-MM-DD', 0);
+						var startDateWindow = startDateItems;
+					}
+					var endDateFieldValue = $("input#date_end").val();
+					if (endDateFieldValue == "") {
+						var endDateItems = "9000-01-01";
+						var endDateWindow = null;
+					} else {
+						var endDateItems = $().ReturnFormattedDateTime(endDateFieldValue, 'MMMM D, YYYY', 'YYYY-MM-DD', 0);
+						var endDateWindow = endDateItems;
+					}
+
+					function IsOnOrBetweenDates(item) {
+						return (moment(item.start).isSameOrAfter(startDateItems) && moment(item.end).isSameOrBefore(endDateItems))
+					}
+
+					var itemsToSet = itemsInitial.filter(IsOnOrBetweenDates);
+
+					timeline.setItems(itemsToSet);
+					console.log('trying to set window');
+					console.log(startDateWindow);
+					console.log(endDateWindow);
+
+					timeline.setWindow(startDateWindow, endDateWindow, {"duration": 2000, "easingFunction": "easeInOutCubic"});
+
+				});
+
+				// listen for clicks / taps
+				$("div#container_data").on("click", function (event) {
+
+					// close the dialog box
+					$("div#museum-wide-products-dialog").dialog("close");
+
+					var props = timeline.getEventProperties(event);
+
+					if (props.what == "item") {
+
+						var initialItemDialogData = {};
+						$(itemsInitial).each(function (itemKey, itemValue) {
+							if (itemValue.id == props.item) {
+								initialItemDialogData = itemValue.dialogContent;
+							}
+						});
+
+						// populate the dialog box
+						var dialogTitleBarContent = "";
+
+						if (typeof (initialItemDialogData.end) != "undefined") {
+							dialogTitleBarContent += "<h2 class=\"ui-dialog-title-product-date-range\">" + initialItemDialogData.start + " &ndash; " + initialItemDialogData.end + "</h2> \n";
+						} else {
+							dialogTitleBarContent += "<h2 class=\"ui-dialog-title-product-date-range\">Permanent, beginning " + initialItemDialogData.start + "</h2> \n";
+						}
+
+						dialogTitleBarContent += "<p class=\"ui-dialog-title-product-category\">" + initialItemDialogData.category + "</p> \n";
+
+						$("div.ui-dialog-titlebar span.ui-dialog-title").html(dialogTitleBarContent);
+
+						var dialogBodyContent = "<p class=\"ui-dialog-product-title\">" + initialItemDialogData.title + "</p> \n";
+
+						// if both contact and description are there, print in <ul>
+						if (typeof (initialItemDialogData.contact) != "undefined" && typeof (initialItemDialogData.description) != "undefined") {
+							initialItemDialogData.contact = "<a target=\"_blank\" href=\"https://bmos-my.sharepoint.com/_layouts/15/me.aspx?p=" + StrInStr(initialItemDialogData.contact[0]["description"], "@", 1) + "%40mos.org&v=profile\">" + initialItemDialogData.contact[0]["displayText"] + "</a>";
+							dialogBodyContent += "<ul> \n" +
+													"   <li>Description: " + initialItemDialogData.description + "</li> \n" +
+													"   <li>Contact: " + initialItemDialogData.contact + "</li> \n" +
+													"</ul> \n";
+
+						// otherwise, if either is present, print it in <p>
+						} else {
+							if (typeof (initialItemDialogData.contact) != "undefined") {
+								initialItemDialogData.contact = "<a target=\"_blank\" href=\"https://bmos-my.sharepoint.com/_layouts/15/me.aspx?p=" + StrInStr(initialItemDialogData.contact[0]["description"], "@", 1) + "%40mos.org&v=profile\">" + initialItemDialogData.contact[0]["displayText"] + "</a>";
+								dialogBodyContent += "<p>Contact: " + initialItemDialogData.contact + "</p> \n";
+							}
+							if (typeof (initialItemDialogData.description) != "undefined") {
+								dialogBodyContent += "<p>Description: " + initialItemDialogData.description + "</p> \n";
+							}
+						}
+
+						dialogBodyContent += "<a class=\"ui-dialog-button\" target=\"_blank\" href=\"" + initialItemDialogData.editURL + "\">Edit / Delete</a>";
+
+						$("div#museum-wide-products-dialog").html(dialogBodyContent);
+
+						// position the dialog box
+						$("div#museum-wide-products-dialog").dialog("option", "position", { my: "left bottom", at: "right top", of: event });
+
+						// open the dialog box
+						$("div#museum-wide-products-dialog").dialog("open");
+
+
+					}
+
+				});
+
+			}
 		});
 	};
 
@@ -24209,7 +24422,7 @@
 
 
 
-	$.fn.ReturnButtonLink = function (linkType, anchorText, href, idValue, classValues, target) {
+	$.fn.ReturnButtonLink = function (linkType, anchorText, href, idValue, classValues, target, hrefWithLocalSiteToken) {
 		var newLink = "<a";
 		if (typeof (idValue) != "undefined" && idValue != null && idValue != "") {
 			newLink += " id=\"" + idValue + "\"";
@@ -24241,7 +24454,11 @@
 		}
 
 		if (typeof (href) != "undefined" && href != null && href != "") {
-			newLink += " href=\"" + href + "\"";
+			newLink += " href=\"";
+			if (hrefWithLocalSiteToken && hrefWithLocalSiteToken == 1) {
+				newLink += mData.fullSiteBaseURL;
+			}
+			newLink += href + "\"";
 		}
 
 		newLink += ">" + anchorText + "</a>";
@@ -24252,7 +24469,7 @@
 
 
 
-	$.fn.ReturnButtonLinkForOverflowMenu = function (linkType, anchorText, href, idValue, classValues, target) {
+	$.fn.ReturnButtonLinkForOverflowMenu = function (linkType, anchorText, href, idValue, classValues, target, hrefWithLocalSiteToken) {
 		var newLink = "<a";
 		if (typeof (idValue) != "undefined" && idValue != null && idValue != "") {
 			newLink += " id=\"" + idValue + "\"";
@@ -24284,7 +24501,11 @@
 		}
 
 		if (typeof (href) != "undefined" && href != null && href != "") {
-			newLink += " href=\"" + href + "\"";
+			newLink += " href=\"";
+			if (hrefWithLocalSiteToken && hrefWithLocalSiteToken == 1) {
+				newLink += mData.fullSiteBaseURL;
+			}
+			newLink += href + "\"";
 		}
 
 		newLink += ">" + anchorText + "</a>";
@@ -24313,10 +24534,10 @@
 			// business rule: even if there's a function restricting rendering permission, the button will always render for admins; if this changes, 
 			//		will need to update GPC requests
 			if (uData.isAdmin === 1 || typeof (button.renderPermissionsFunction) == "undefined") {
-				buttonsMarkup += $().ReturnButtonLink(button.linkType, button.anchorText, button.href, button.idValue, button.classValues, button.target);
+				buttonsMarkup += $().ReturnButtonLink(button.linkType, button.anchorText, button.href, button.idValue, button.classValues, button.target, button.hrefWithLocalSiteToken);
 			} else {
 				if (CallFunctionFromString(button.renderPermissionsFunction) === 1) {
-					buttonsMarkup += $().ReturnButtonLink(button.linkType, button.anchorText, button.href, button.idValue, button.classValues, button.target);
+					buttonsMarkup += $().ReturnButtonLink(button.linkType, button.anchorText, button.href, button.idValue, button.classValues, button.target, button.hrefWithLocalSiteToken);
 				}
 			}
 		});
@@ -24332,10 +24553,10 @@
 			//		will need to update GPC requests
 			buttonsMarkup += '<div class="container_link">';
 			if (uData.isAdmin === 1 || typeof (button.renderPermissionsFunction) == "undefined") {
-				buttonsMarkup += $().ReturnButtonLink(button.linkType, button.anchorText, button.href, button.idValue, button.classValues, button.target);
+				buttonsMarkup += $().ReturnButtonLink(button.linkType, button.anchorText, button.href, button.idValue, button.classValues, button.target, button.hrefWithLocalSiteToken);
 			} else {
 				if (CallFunctionFromString(button.renderPermissionsFunction) === 1) {
-					buttonsMarkup += $().ReturnButtonLink(button.linkType, button.anchorText, button.href, button.idValue, button.classValues, button.target);
+					buttonsMarkup += $().ReturnButtonLink(button.linkType, button.anchorText, button.href, button.idValue, button.classValues, button.target, button.hrefWithLocalSiteToken);
 				}
 			}
 			buttonsMarkup += '</div>';
@@ -24359,10 +24580,10 @@
 			//		will need to update GPC requests
 			buttonsMarkup += '			<li class="button-list-item"> \n';
 			if (uData.isAdmin === 1 || typeof (button.renderPermissionsFunction) == "undefined") {
-				buttonsMarkup += $().ReturnButtonLinkForOverflowMenu(button.linkType, button.anchorText, button.href, button.idValue, button.classValues, button.target);
+				buttonsMarkup += $().ReturnButtonLinkForOverflowMenu(button.linkType, button.anchorText, button.href, button.idValue, button.classValues, button.target, button.hrefWithLocalSiteToken);
 			} else {
 				if (CallFunctionFromString(button.renderPermissionsFunction) === 1) {
-					buttonsMarkup += $().ReturnButtonLinkForOverflowMenu(button.linkType, button.anchorText, button.href, button.idValue, button.classValues, button.target);
+					buttonsMarkup += $().ReturnButtonLinkForOverflowMenu(button.linkType, button.anchorText, button.href, button.idValue, button.classValues, button.target, button.hrefWithLocalSiteToken);
 				}
 			}
 			buttonsMarkup += ' \n			</li> \n';
@@ -27419,6 +27640,9 @@
 		mData.fullSiteBaseURL = ReturnFullSiteBaseURLFromSitePageURL();
 		mData.pageToken = ReturnSitePageTokenFromURL();
 
+		console.log('mData');
+		console.log(mData);
+
 		mData.thisPageIsASWFAppPage = ReturnThisPageIsASWFAppPage();
 
 		if (typeof (mData.axle) != "undefined" && mData.axle == 1) {
@@ -27608,7 +27832,7 @@
 		// wait for all data retrieval / setting promises to complete (pass or fail) 
 		$.when.apply($, allDataRetrievalAndSettingPromises).always(function () {
 
-			console.log('using dev_mos-main_long.1.04 m1');
+			console.log('using dev_mos-main_medium.1.04 m1');
 
 			$().ConfigureAndShowScreenContainerAndAllScreens();
 		});

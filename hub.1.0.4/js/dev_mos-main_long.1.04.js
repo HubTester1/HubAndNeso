@@ -20835,7 +20835,7 @@
 							"title": productItem["Product-Title"],
 							"category": productItem["Product-Category"],
 							"start": productItem.friendlyStartDate,
-							"editURL": mData.uriRequest + "?requestID=" + productItem["ID"] + "&returnURI=" + window.location.href
+							"editURL": mData.fullSiteBaseURL + "/SitePages/App.aspx?r=" + productItem["ID"],
 						}
 					}
 
@@ -20862,9 +20862,6 @@
 				var items = new vis.DataSet(itemsInitial);
 
 
-				// add extra class for styling hook
-				$('div#app-container').addClass('mw-products-timeline');
-
 				$("div#app-container").append("<div id=\"museum-wide-products-dialog\"></div>");
 
 				$("div#museum-wide-products-dialog").dialog({
@@ -20883,10 +20880,10 @@
 
 				var commandBarContents = 
 					'<div class="container_link"> \n' +
-						$().ReturnButtonLink('newItem', 'New Product', mData.uriRequest + '?returnURI=' + mData.uriRequester) +
+						$().ReturnButtonLink('newItem', 'New Product', null, null, 'button_swf-new-event-with-timeline') +
 					'</div> \n' +
 					'<div class="container_link"> \n' +
-						$().ReturnButtonLink('goForward', 'Product List', '/sites/pt/SitePages/List View.aspx') +
+						$().ReturnButtonLink('goForward', 'Product List', '/SitePages/App.aspx', null, null, 'button_alternate-view-with-timeline', 1) +
 					'</div> \n' +
 					'<div id="container_category-filter-controls-and-header"> \n' +
 					'	<div id="text_category-filter-controls" class="collapsible">Categories</div> \n' +
@@ -20934,11 +20931,11 @@
 					'	<div id="text_date-filter-controls" class="collapsible">Dates</div> \n' +
 					'   <div id="container_date-filter-controls"> \n' +
 					'		<div class="container_filter-control"> \n' +
-					'			<label for="date_start">Starting On or After</label>' +
+					'			<label for="date_start" class="date-selector-label">Starting On or After</label>' +
 					'			<input class="date-selector" id="date_start" name="date_start" type="text">' +
 					'		</div>' +
 					'		<div class="container_filter-control"> \n' +
-					'			<label for="date_end">Ending On or Before</label>' +
+					'			<label for="date_end" class="date-selector-label">Ending On or Before</label>' +
 					'			<input class="date-selector" id="date_end" name="date_end" type="text">' +
 					'		</div>' +
 					// '		<div class="container_filter-control"> \n' +
@@ -20953,13 +20950,18 @@
 				var container = document.getElementById("container_data");
 				var timeline = new vis.Timeline(container, items, groups, options);
 
+				// add extra class for styling hook
+				$('div#app-container').addClass('mw-products-timeline');
+
+				// collapse filters
+				$('.collapsible').collapsible();
+
 				// set datepickers on date filter fields
 				$("input.date-selector").datepicker({
 					changeMonth: "true",
 					changeYear: "true",
 					dateFormat: "MM d, yy"
 				});
-
 
 				// listen for category filter; re-set groups
 				$("input.category-selector").on("change", function () {
@@ -21065,7 +21067,7 @@
 							}
 						}
 
-						dialogBodyContent += "<a class=\"ui-dialog-button\" href=\"" + initialItemDialogData.editURL + "\">Edit / Delete</a>";
+						dialogBodyContent += "<a class=\"ui-dialog-button\" target=\"_blank\" href=\"" + initialItemDialogData.editURL + "\">Edit / Delete</a>";
 
 						$("div#museum-wide-products-dialog").html(dialogBodyContent);
 
@@ -21082,20 +21084,6 @@
 
 			}
 		});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	};
 
 	$.fn.RenderCommandBarAndCapacityForProducts = function () {
