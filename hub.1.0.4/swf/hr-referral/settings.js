@@ -12,6 +12,7 @@
 		// 'currentRequestVersion': 1,
 		'devAdminNotifications': 0,
 		'notifications': 1,
+		'detailTitle': 'Referral',
 	};
 
 	console.log("using settings m1");
