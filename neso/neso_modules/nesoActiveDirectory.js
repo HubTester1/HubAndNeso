@@ -2435,6 +2435,23 @@ module.exports = {
 							department: 'Technical Design & Production',
 							division: 'Education',
 							securityGroups: ['COI other', 'CS&amp;T', 'Exhibits_Projects_Random', 'mos.org', 'TrackIT Users', 'Exhibits_Projects_Engineering_2016', 'LeafcutterAnts', 'Current Science &amp; Technology', 'Exhibit Leadership', 'Exhibits_Projects_Tech_and_You', 'SP_Staff', 'Exhibits_Projects_MercuryToMars', 'FinanceSSRSUsers', 'Ship Cases', 'OS X Users', 'Exhibits_Projects_New_Exhibition', 'Budget_Education', 'MMTfolder', 'Exhibits_Titan', 'Live Presentations', 'BWExhibitsPlanningTeam', 'WiFi Access', 'ExhibitsData', 'Outreach', 'ShowControl', 'PGP_BASIC', 'PO and Invoice records', 'Budget_Exhibits', 'Budget_RestrictedAccess', 'Crystal Enterprise', 'SP_Team_Write_Safety', 'Schedules', 'TOE Component', 'Safety_Zeus'],
+						}, {
+							_id: '5c5b20a1476e8b1078bd9fff',
+							account: 'dmacdonald',
+							employeeID: '005431',
+							firstName: 'Dan',
+							lastName: 'MacDonald',
+							firstInitial: 'D',
+							lastInitial: 'M',
+							displayName: 'Dan MacDonald',
+							title: 'Exhibit Maintenance Manager',
+							email: 'dmacdonald@mos.org',
+							officePhone: '617-589-0161',
+							mobilePhone: '617-851-8813',
+							manager: 'bharvey',
+							department: 'Exhibit Maintenance',
+							division: 'Education',
+							securityGroups: ['Exhibits_Projects_What_Is_Technology', 'Exhibits Operations', 'Exhibits Maintenance', 'COI other', 'Swat team', 'Exhibits_Projects_Random', 'mos.org', 'Exhibits_Projects_Mos_Then_And_Now', 'TrackIT Users', 'Exhibits_Projects_Pixar', 'SP_Team_Write_HHL_Maintenance', 'Audio Visual', 'GWRenovation', 'Exhibit Leadership', 'SP_Staff', 'SN Exhibit Managers', 'FinanceSSRSUsers', 'Butterfly Garden', 'OS X Users', 'Web VPN Access', 'PA System Project', 'Mapping', 'Budget_Education', 'PlatinumUsers', 'Exhibits_Projects_Escher', 'MMTfolder', 'Exhibit Admin Group', 'ProjectManagers', 'Showcase', 'VFT', 'SP_Team_write_exhibitmaintenance', 'Exhibits Projects', 'WiFi Access', 'JanusUsers', 'PGP_BASIC', 'PO and Invoice records', 'Exhibits', 'Making Models', 'SP_Dept_HR_ManagersHandbook', 'Budget_Exhibits', 'Budget_RestrictedAccess', 'Crystal Enterprise', 'SP_Team_Write_Safety', 'Charles River Gallery', 'Exhibits Development', 'GSW Scripts and Slides', 'Safety_Zeus', 'Tech Showcase', 'PompeiiOps', 'TrackIT Technicians', 'AnyConnect VPN Access'],
 						},
 					];
 
