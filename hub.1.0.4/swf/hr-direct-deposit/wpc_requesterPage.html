@@ -1,0 +1,30 @@
+﻿
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        // maintenance mode
+        var allSWFsInMaintenance = $().ReturnMaintenanceModeAllSWFs();
+        var thisSWFInMainenanceMode = $().ReturnMaintenanceModeThisSWF(location);
+        if (allSWFsInMaintenance == false && thisSWFInMainenanceMode == false) {
+
+            var htmlToAppend = '<a class="button-link button-link_new-item button_swf-new-request-with-datatable" href="https://bmos.sharepoint.com/sites/hr-direct-deposit/SitePages/Direct%20Deposit%20Request.aspx?returnURI=https://bmos.sharepoint.com/sites/hr-direct-deposit/SitePages/My%20Direct%20Deposit%20Requests.aspx">new request</a>' + 
+                                '<p style="font-size: 2.75rem; font-weight: 300">Direct Deposit Requests must be printed. Please be mindful of additional information at the top of the form.</p>'
+
+            $("div#button-and-text-container").append(htmlToAppend);
+
+
+        } else {
+            $().RenderMaintenanceMessage();
+        }
+    });
+
+</script>
+
+
+
+<!-- all content -->
+<div id="all-content-container">
+    <div id="button-and-text-container"></div>
+    <div id="overlays-container"></div>
+</div>

@@ -3601,60 +3601,43 @@ div#app-container.cafe-defaults div#request-form a.show-default-station-times,
 div#app-container.cafe-defaults div#request-form a.hide-default-station-times {
   margin: 0 0 1rem 19.5rem !important; }
 
-div#app-container.direct-deposit div#request-form table.signature-and-date {
+div#app-container.direct-deposit div#workflow-contacts {
+  padding-left: 0;
+  padding-top: 2rem; }
+
+div#printer-content div#direct-deposit-printer-content table.signature-and-date {
   width: 100%;
   margin-bottom: 2rem; }
-  div#app-container.direct-deposit div#request-form table.signature-and-date td {
+  div#printer-content div#direct-deposit-printer-content table.signature-and-date td {
     padding-top: 1rem; }
-  div#app-container.direct-deposit div#request-form table.signature-and-date td.label {
+  div#printer-content div#direct-deposit-printer-content table.signature-and-date td.label {
     padding-right: .5rem; }
-  div#app-container.direct-deposit div#request-form table.signature-and-date td.label.date {
+  div#printer-content div#direct-deposit-printer-content table.signature-and-date td.label.date {
     padding-left: 1rem; }
-  div#app-container.direct-deposit div#request-form table.signature-and-date td.space.signature {
+  div#printer-content div#direct-deposit-printer-content table.signature-and-date td.space.signature {
     width: 32rem; }
-  div#app-container.direct-deposit div#request-form table.signature-and-date td.space.date {
+  div#printer-content div#direct-deposit-printer-content table.signature-and-date td.space.date {
     width: 15rem; }
-  div#app-container.direct-deposit div#request-form table.signature-and-date td.space {
+  div#printer-content div#direct-deposit-printer-content table.signature-and-date td.space {
     border-bottom: 0.1rem solid #000; }
-  div#app-container.direct-deposit div#request-form table.signature-and-date span.label {
+  div#printer-content div#direct-deposit-printer-content table.signature-and-date span.label {
     display: inline-block;
     width: 100%;
     text-align: right; }
-  div#app-container.direct-deposit div#request-form table.signature-and-date span.label_help-note {
+  div#printer-content div#direct-deposit-printer-content table.signature-and-date span.label_help-note {
     display: block;
     width: 100%;
     text-align: right;
     font-style: italic;
     color: #777; }
-  div#app-container.direct-deposit div#request-form table.signature-and-date tr#second-signature td.label.date {
+  div#printer-content div#direct-deposit-printer-content table.signature-and-date tr#second-signature td.label.date {
     padding-top: 2rem; }
-
-@media only screen {
-  div#app-container.direct-deposit div#request-form h2#header_about-the-requester {
+  div#printer-content div#direct-deposit-printer-content table.signature-and-date h2#header_about-the-requester {
     display: none; }
-  div#app-container.direct-deposit div#request-form p#print-reminder {
+  div#printer-content div#direct-deposit-printer-content table.signature-and-date p#print-reminder {
     padding: .5rem;
     background-color: #fedd00;
-    color: #111; } }
-
-@media only print {
-  div#app-container.direct-deposit div#request-form h2#header_about-you,
-  div#app-container.direct-deposit div#request-form a.remove-section-anchor,
-  div#app-container.direct-deposit div#request-form a.repeat-section-anchor,
-  div#app-container.direct-deposit div#request-form p#print-reminder,
-  div#app-container.direct-deposit div#request-form span.screen-only,
-  div#app-container.direct-deposit div#request-form div#s4-workspace div#request-form div.field-type-indication,
-  div#app-container.direct-deposit div#request-form div.help-text {
-    display: none !important; }
-  div#app-container.direct-deposit div#request-form div.repeat-container {
-    border-bottom: 1px solid #666; }
-  div#app-container.direct-deposit div#request-form div#s4-workspace div#request-form input[type="text"][readonly] {
-    color: #444; }
-  div#app-container.direct-deposit div#request-form div#s4-workspace div#request-form input[type="text"],
-  div#app-container.direct-deposit div#request-form div#s4-workspace div#request-form select {
-    height: 2rem;
-    padding: 0;
-    border: none; } }
+    color: #111; }
 
 div#app-container.gse-stats div#container_command-bar div#container_date-filter-controls-and-header div#text_date-filter-controls a.collapsible-heading-toggle {
   display: block; }

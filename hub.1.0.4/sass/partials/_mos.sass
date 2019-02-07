@@ -4094,9 +4094,17 @@ div#app-container.cafe-defaults
 
 // --- DIRECT DEPOSIT
 
+	
 div#app-container.direct-deposit
 
-	div#request-form
+	div#workflow-contacts
+		padding-left: 0
+		padding-top: 2rem
+
+
+div#printer-content
+
+	div#direct-deposit-printer-content
 
 		table.signature-and-date
 			width: 100%
@@ -4134,9 +4142,6 @@ div#app-container.direct-deposit
 
 			tr#second-signature td.label.date
 				padding-top: 2rem
-
-		@media only screen
-
 			h2#header_about-the-requester
 				display: none
 
@@ -4145,29 +4150,9 @@ div#app-container.direct-deposit
 				background-color: $yellow
 				color: $grey1
 
-		@media only print
 
-			h2#header_about-you,
-			a.remove-section-anchor,
-			a.repeat-section-anchor,
-			p#print-reminder,
-			span.screen-only,
-			div#s4-workspace div#request-form div.field-type-indication,
-			div.help-text
-				display: none !important
 
-			div.repeat-container
-				border-bottom: 1px solid $grey6
 
-			div#s4-workspace div#request-form input[type="text"][readonly]
-				color: $grey4
-
-			div#s4-workspace div#request-form input[type="text"],
-			div#s4-workspace div#request-form select
-				height: 2rem
-				padding: 0
-				border: none
-	
 
 
 
