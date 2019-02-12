@@ -16222,7 +16222,9 @@
 				printContent += '				<li><b>Department:</b> ' + formData["Other-Department"] + '</li>';
 			}
 
-			printContent += '				<li><b>Position Title:</b> ' + formData["Position-Title"] + '</li>' +
+			printContent += '				<li><b>Approving Manager\'s Name:</b> ' + formData["Manager-Name"] + '</li>' +
+				'				<li><b>Position Title:</b> ' + formData["Position-Title"] + '</li>' +
+				'				<li><b>Number of Positions Requested:</b> ' + formData["Position-Quantity"] + '</li>' +
 				'				<li><b>Grade:</b> ' + formData["Grade"] + '</li>' +
 				'				<li><b>Employee Classification:</b> ' + formData["Employee-Classification"] + '</li>' +
 				'				<li><b>Scheduled Hours, Biweekly:</b> ' + formData["Scheduled-Hours-Biweekly"] + '</li>' +
@@ -16276,7 +16278,16 @@
 					'				</li>';
 			}
 
-			printContent += '				<li><b>Workspace Approved by Facilities?:</b> Yes</li>';
+			console.log('formData');
+			console.log(formData);
+
+			if (formData["workspace-approved_approved"]) {
+				printContent += '				<li><b>Workspace Approved by Facilities?:</b> Yes</li>';
+			} else if (formData["workspace-approved_unneeded"]) {
+				printContent += '				<li><b>Workspace Approved by Facilities?:</b> No, not needed</li>';
+			}
+
+			
 
 
 
@@ -17537,6 +17548,112 @@
 
 
 
+	$.fn.PrintDirectDepositRequest = function () {
+
+		console.log('gonna print 1');
+
+
+		// set working message
+		var workingMessage = $("div#app-container div#overlays-screen-container div#wait-while-working div.message p");
+		$(workingMessage).text("Checking your info");
+
+		// if user-entered data is valid
+		if ($("div#request-form").ValidateForm() != false) {
+
+			// get user-entered data as an object
+			var formData = ReturnRequestFormDataFromDOMAsObject();
+			console.log(formData);
+
+			// build the sheet to be printed
+			var printContent = '<div id="direct-deposit-printer-content">' + 
+				'<h1>Direct Deposit Request</h1>';
+
+			printContent += '<p><strong>This form must be <span class="screen-only">printed and</span>returned to Human Resources with a <em>voided</em> check</strong> — not a deposit slip. If this is a savings account or you do not have checks, contact your bank for an official form that includes your account number, ABA number, and bank authorization. If an account is currently on file, an additional voided check is not necessary.</p>';
+
+			printContent += '<h2>Requester</h2>' +
+				'<ul style="margin: 0;">' +
+				'	<li><b>Name: </b> ' + formData["Requester-Name"] + '</li>' +
+				'	<li><b>Department: </b> ' + formData["Requester-Department"] + '</li>' +
+				'	<li><b>Email: </b> ' + formData["Requester-Email"] + '</li>' +
+				'	<li><b>Phone: </b> ' + formData["Requester-Phone"] + '</li>' +
+				'	<li><b>Employee ID: </b> ' + formData["Requester-Employee-ID"] + '</li>' +
+				'</ul>';
+
+			printContent += '<h2>Accounts</h2>';
+
+			printContent += '<h3>Account 1</h3>' +
+				'<ul style="margin: 0;">' +
+				'	<li><b>Account Type: </b> ' + formData["Account-Type"] + '</li>' +
+				'	<li><b>Bank / Branch Name: </b> ' + formData["Bank-Name"] + '</li>' +
+				'	<li><b>Bank Transit ABA Number: </b> ' + formData["Bank-Transit-ABA-Number"] + '</li>' +
+				'	<li><b>Account Number: </b> ' + formData["Account-Number"] + '</li>' +
+				'	<li><b>Deposit Amount: </b> ' + formData["Deposit-Amount"] + '</li>';
+			
+			if (formData['Deposit-Amount'] == 'Deposit fixed amount') {
+				printContent += '<li><b>Fixed Amount: </b> ' + formData["Fixed-Amount"] + '</li>';
+			}
+
+			printContent += '</ul>';
+
+			if (formData["Account-Type-2"]) {
+
+				printContent += '<h3>Account 2</h3>' +
+					'<ul style="margin: 0;">' +
+					'	<li><b>Account Type: </b> ' + formData["Account-Type-2"] + '</li>' +
+					'	<li><b>Bank / Branch Name: </b> ' + formData["Bank-Name-2"] + '</li>' +
+					'	<li><b>Bank Transit ABA Number: </b> ' + formData["Bank-Transit-ABA-Number-2"] + '</li>' +
+					'	<li><b>Account Number: </b> ' + formData["Account-Number-2"] + '</li>' +
+					'	<li><b>Deposit Amount: </b> ' + formData["Deposit-Amount-2"] + '</li>';
+
+				if (formData['Deposit-Amount-2'] == 'Deposit fixed amount') {
+					printContent += '<li><b>Fixed Amount: </b> ' + formData["Fixed-Amount-2"] + '</li>';
+				}
+
+				printContent += '</ul>';
+
+			}
+
+
+			if (formData["Account-Type-3"]) {
+
+				printContent += '<h3>Account 3</h3>' +
+					'<ul style="margin: 0;">' +
+					'	<li><b>Account Type: </b> ' + formData["Account-Type-3"] + '</li>' +
+					'	<li><b>Bank / Branch Name: </b> ' + formData["Bank-Name-3"] + '</li>' +
+					'	<li><b>Bank Transit ABA Number: </b> ' + formData["Bank-Transit-ABA-Number-3"] + '</li>' +
+					'	<li><b>Account Number: </b> ' + formData["Account-Number-3"] + '</li>' +
+					'	<li><b>Deposit Amount: </b> ' + formData["Deposit-Amount-3"] + '</li>';
+
+				if (formData['Deposit-Amount-3'] == 'Deposit fixed amount') {
+					printContent += '<li><b>Fixed Amount: </b> ' + formData["Fixed-Amount-3"] + '</li>';
+				}
+				printContent += '</ul>';
+			}
+
+			printContent += '<h2>Authorization Agreement</h2>' +
+				'<p class="">I (we) hereby authorize the Museum of Science, either directly or through its payroll service provider, to deposit any amounts owed me, by initiating credit entries to my account at the financial institution (hereinafter "Bank") indicated on this form.  Further, I authorize Bank to accept and to credit any credit entries indicated by the Museum, either directly or through its payroll service provider, to my account.  In the event that the Museum deposits funds erroneously into my account, I authorize the Museum, either directly or through its payroll service provider, to debit my account for an amount not to exceed the original amount of the erroneous credit.</p>' +
+				'<p class="">This authorization is to remain in full force and effect until the Museum and Bank have received written notification from me (or either name on joint account) of its termination in such time and in such manner as to afford the Museum and Bank a reasonable opportunity to act on it.</p>' +
+				'<table class="signature-and-date"><tbody><tr id="first-signature">   <td class="label signature"><span class="label">Signature</span></td>   <td class="space signature"></td>   <td class="label date"><span class="label">Date</span></td>   <td class="space date"></td></tr><tr id="second-signature">   <td class="label signature"><span class="label">Additional Signature</span> <span class="label_help-note">(If Joint Account)</span></td>   <td class="space signature"></td>   <td class="label date"><span class="label">Date</span></td>   <td class="space date"></td></tr></tbody></table>';
+
+			printContent += '</div>';
+
+			printContent = ReturnPrintableContentWithStandardWrapper(printContent, "hr-personnel-action");
+
+			// send print content to printer
+			PrintToPrinter(printContent);
+
+			// if user-entered data is NOT valid
+		} else {
+			// display invalid data overlay
+			$('div#overlays-screen-container').fadeIn(200);
+			$("#mos-form-data-errors").fadeIn(400);
+		}
+	};
+
+
+
+
+
 	$.fn.PrintGPCInitialConceptApprovalRequest = function () {
 
 		moment.locale('en');
@@ -18203,6 +18320,10 @@
 
 			case "PrintNeedsSheet":
 				PrintNeedsSheet();
+				break;
+
+			case "PrintDirectDepositRequest":
+				$().PrintDirectDepositRequest();
 				break;
 
 			case "PrintOutsideEmploymentRequest":

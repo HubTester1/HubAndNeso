@@ -16222,7 +16222,9 @@
 				printContent += '				<li><b>Department:</b> ' + formData["Other-Department"] + '</li>';
 			}
 
-			printContent += '				<li><b>Position Title:</b> ' + formData["Position-Title"] + '</li>' +
+			printContent += '				<li><b>Approving Manager\'s Name:</b> ' + formData["Manager-Name"] + '</li>' +
+				'				<li><b>Position Title:</b> ' + formData["Position-Title"] + '</li>' +
+				'				<li><b>Number of Positions Requested:</b> ' + formData["Position-Quantity"] + '</li>' +
 				'				<li><b>Grade:</b> ' + formData["Grade"] + '</li>' +
 				'				<li><b>Employee Classification:</b> ' + formData["Employee-Classification"] + '</li>' +
 				'				<li><b>Scheduled Hours, Biweekly:</b> ' + formData["Scheduled-Hours-Biweekly"] + '</li>' +
@@ -16276,7 +16278,16 @@
 					'				</li>';
 			}
 
-			printContent += '				<li><b>Workspace Approved by Facilities?:</b> Yes</li>';
+			console.log('formData');
+			console.log(formData);
+
+			if (formData["workspace-approved_approved"]) {
+				printContent += '				<li><b>Workspace Approved by Facilities?:</b> Yes</li>';
+			} else if (formData["workspace-approved_unneeded"]) {
+				printContent += '				<li><b>Workspace Approved by Facilities?:</b> No, not needed</li>';
+			}
+
+			
 
 
 
@@ -27942,7 +27953,7 @@
 		// wait for all data retrieval / setting promises to complete (pass or fail) 
 		$.when.apply($, allDataRetrievalAndSettingPromises).always(function () {
 
-			console.log('using dev_mos-main_long.1.04 m3');
+			console.log('using dev_mos-main_long.1.04 m1');
 
 			$().ConfigureAndShowScreenContainerAndAllScreens();
 		});
