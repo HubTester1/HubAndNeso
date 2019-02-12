@@ -4,10 +4,10 @@
 	var mData = {
 		'componentID': 85,
 		'swf': 1,
-		'mosMainKey': 'prod',
+		// 'mosMainKey': 'prod',
 		// 'mosMainKey': 'dev',
 		// 'mosMainKey': 'devMedium',
-		// 'mosMainKey': 'devLong',
+		'mosMainKey': 'devLong',
 		// "useRecordedMOSMainMajorVersion": 1,
 		"currentRequestVersion": 1,
 		'devAdminNotifications': 1,
@@ -363,8 +363,26 @@
 			}, {
 				'elementType': "field",
 				'controlType': "text",
+				'fieldName': "Manager Name",
+				'labelContent': "Approving Manager's Name",
+				'requiredForNonAdmin': [""],
+				'requiredForAdmin': [""],
+				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
+				'disabledForAdmin': ['Submitted', 'Cancelled']
+			}, {
+				'elementType': "field",
+				'controlType': "text",
 				'fieldName': "Position Title",
 				'labelContent': "Position Title",
+				'requiredForNonAdmin': [""],
+				'requiredForAdmin': [""],
+				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
+				'disabledForAdmin': ['Submitted', 'Cancelled']
+			}, {
+				'elementType': "field",
+				'controlType': "text",
+				'fieldName': "Position Quantity",
+				'labelContent': "Number of Positions Requested",
 				'requiredForNonAdmin': [""],
 				'requiredForAdmin': [""],
 				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
@@ -790,13 +808,16 @@
 
 			}, {
 				'elementType': 'field',
-				'controlType': 'check',
+				'controlType': 'radio',
 				'fieldName': 'Workspace Approved',
 				'choiceSetLabel': 'Workspace Approved by Facilities?',
 				'choices': [
 					{
 						'value': 'approved',
 						'display': 'Yes, Facilities has approved a workspace for this position'
+					}, {
+						'value': 'unneeded',
+						'display': 'No, but a workspace is not needed for this position'
 					}
 				],
 				"requiredForNonAdmin": [""],

@@ -342,7 +342,7 @@
 						"type": "text"
 					}]
 				}, {
-						"thisFieldEquals": ["other"],
+					"thisFieldEquals": ["other"],
 					"show": [{
 						"fieldName": "Other Department"
 					}],
@@ -363,21 +363,39 @@
 			}, {
 				'elementType': "field",
 				'controlType': "text",
+				'fieldName': "Manager Name",
+				'labelContent': "Approving Manager's Name",
+				'requiredForNonAdmin': [""],
+				'requiredForAdmin': [""],
+				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
+				'disabledForAdmin': ['Submitted', 'Cancelled']
+			}, {
+				'elementType': "field",
+				'controlType': "text",
 				'fieldName': "Position Title",
 				'labelContent': "Position Title",
 				'requiredForNonAdmin': [""],
 				'requiredForAdmin': [""],
 				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
 				'disabledForAdmin': ['Submitted', 'Cancelled']
-			// }, {
-			// 	'elementType': "field",
-			// 	'controlType': "text",
-			// 	'fieldName': "Grade",
-			// 	'labelContent': "Grade",
-			// 	'requiredForNonAdmin': [""],
-			// 	'requiredForAdmin': [""],
-			// 	'disabledForNonAdmin': ['Submitted', 'Cancelled'],
-			// 	'disabledForAdmin': ['Submitted', 'Cancelled']
+			}, {
+				'elementType': "field",
+				'controlType': "text",
+				'fieldName': "Position Quantity",
+				'labelContent': "Number of Positions Requested",
+				'requiredForNonAdmin': [""],
+				'requiredForAdmin': [""],
+				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
+				'disabledForAdmin': ['Submitted', 'Cancelled']
+				// }, {
+				// 	'elementType': "field",
+				// 	'controlType': "text",
+				// 	'fieldName': "Grade",
+				// 	'labelContent': "Grade",
+				// 	'requiredForNonAdmin': [""],
+				// 	'requiredForAdmin': [""],
+				// 	'disabledForNonAdmin': ['Submitted', 'Cancelled'],
+				// 	'disabledForAdmin': ['Submitted', 'Cancelled']
 			}, {
 				'elementType': "field",
 				'controlType': "select",
@@ -385,9 +403,6 @@
 				'labelContent': "Grade",
 				"setOptions": [
 					{
-						"value": "Intern",
-						"display": "Intern"
-					}, {
 						"value": "25",
 						"display": "25"
 					}, {
@@ -471,9 +486,9 @@
 					}, {
 						"value": "Regular PT",
 						"display": "Regular, Part-time"
-					// }, {
-					// 	"value": "Casual FT",
-					// 	"display": "Casual, Full-time"
+						// }, {
+						// 	"value": "Casual FT",
+						// 	"display": "Casual, Full-time"
 					}, {
 						"value": "Casual PT",
 						"display": "Casual, Part-time"
@@ -489,21 +504,21 @@
 					}, {
 						"value": "Grant FT",
 						"display": "Grant, Part-time"
-					// }, {
-					// 	"value": "Campaign FT",
-					// 	"display": "Campaign, Full-time"
-					// }, {
-					// 	"value": "Campaign PT",
-					// 	"display": "Campaign, Part-time"
+						// }, {
+						// 	"value": "Campaign FT",
+						// 	"display": "Campaign, Full-time"
+						// }, {
+						// 	"value": "Campaign PT",
+						// 	"display": "Campaign, Part-time"
 					}, {
 						"value": "Intern",
 						"display": "Intern"
-					// }, {
-					// 	"value": "Intern FT",
-					// 	"display": "Intern, Full-time"
-					// }, {
-					// 	"value": "Intern PT",
-					// 	"display": "Intern, Part-time"
+						// }, {
+						// 	"value": "Intern FT",
+						// 	"display": "Intern, Full-time"
+						// }, {
+						// 	"value": "Intern PT",
+						// 	"display": "Intern, Part-time"
 					}, {
 						"value": "Fellow FT",
 						"display": "Fellow, Full-time"
@@ -632,9 +647,9 @@
 				"labelContent": "Funding Source",
 				"setOptions": [
 					{
-					// 	"value": "Campaign Funds",
-					// 	"display": "Campaign Funds"
-					// }, {
+						// 	"value": "Campaign Funds",
+						// 	"display": "Campaign Funds"
+						// }, {
 						"value": "Operating Funds",
 						"display": "Operating Funds"
 					}, {
@@ -793,13 +808,16 @@
 
 			}, {
 				'elementType': 'field',
-				'controlType': 'check',
+				'controlType': 'radio',
 				'fieldName': 'Workspace Approved',
 				'choiceSetLabel': 'Workspace Approved by Facilities?',
 				'choices': [
 					{
 						'value': 'approved',
 						'display': 'Yes, Facilities has approved a workspace for this position'
+					}, {
+						'value': 'unneeded',
+						'display': 'No, but a workspace is not needed for this position'
 					}
 				],
 				"requiredForNonAdmin": [""],
@@ -967,70 +985,70 @@
 				'disabledForAdmin': ['Submitted', 'Cancelled'],
 				"hideForNonAdmin": ['', 'Submitted', 'Cancelled'],
 				"hideForAdmin": ['', 'Submitted', 'Cancelled'],
-				
-			/* }, {
-				'elementType': "field",
-				'controlType': "text",
-				'fieldName': "Grant Funding Source",
-				'labelContent': "Grant Funding Source",
-				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
-				'disabledForAdmin': ['Submitted', 'Cancelled'],
-				"hideForNonAdmin": ['', 'Submitted', 'Cancelled'],
-				"hideForAdmin": ['', 'Submitted', 'Cancelled'],
-				'helpNotes': [
-					{
-						'text': "For restricted funding sources, please specify both Source Number and Name, e.g. 4512 NSF Star Wars Grant.",
-						'htmlID': "help-note_grant-funding-source",
-						'hideForNonAdmin': ['Submitted', 'Cancelled'],
-						'hideForAdmin': ['Submitted', 'Cancelled']
-					}
-				],
-			}, {
-				'elementType': 'field',
-				'controlType': 'radio',
-				'fieldName': 'HRC Grading',
-				'choiceSetLabel': 'HRC Grading',
-				'choices': [
-					{
-						'value': 'graded',
-						'display': 'Graded by HRC'
+
+				/* }, {
+					'elementType': "field",
+					'controlType': "text",
+					'fieldName': "Grant Funding Source",
+					'labelContent': "Grant Funding Source",
+					'disabledForNonAdmin': ['Submitted', 'Cancelled'],
+					'disabledForAdmin': ['Submitted', 'Cancelled'],
+					"hideForNonAdmin": ['', 'Submitted', 'Cancelled'],
+					"hideForAdmin": ['', 'Submitted', 'Cancelled'],
+					'helpNotes': [
+						{
+							'text': "For restricted funding sources, please specify both Source Number and Name, e.g. 4512 NSF Star Wars Grant.",
+							'htmlID': "help-note_grant-funding-source",
+							'hideForNonAdmin': ['Submitted', 'Cancelled'],
+							'hideForAdmin': ['Submitted', 'Cancelled']
+						}
+					],
+				}, {
+					'elementType': 'field',
+					'controlType': 'radio',
+					'fieldName': 'HRC Grading',
+					'choiceSetLabel': 'HRC Grading',
+					'choices': [
+						{
+							'value': 'graded',
+							'display': 'Graded by HRC'
+						}, {
+							'value': 'pending',
+							'display': 'HRC Grading is Pending'
+						}
+					],
+					"requiredForNonAdmin": [""],
+					"requiredForAdmin": [""],
+					'hideForNonAdmin': ['Submitted', 'Cancelled'],
+					'hideForAdmin': ['Submitted', 'Cancelled'],
+					"onChange": [{
+						"thisFieldEquals": ["pending"],
+						"hide": [{
+							"fieldName": "HRC Last Updated"
+						}],
+						"optional": [{
+							"fieldName": "HRC Last Updated",
+							"type": "datePicker"
+						}]
 					}, {
-						'value': 'pending',
-						'display': 'HRC Grading is Pending'
-					}
-				],
-				"requiredForNonAdmin": [""],
-				"requiredForAdmin": [""],
-				'hideForNonAdmin': ['Submitted', 'Cancelled'],
-				'hideForAdmin': ['Submitted', 'Cancelled'],
-				"onChange": [{
-					"thisFieldEquals": ["pending"],
-					"hide": [{
-						"fieldName": "HRC Last Updated"
-					}],
-					"optional": [{
-						"fieldName": "HRC Last Updated",
-						"type": "datePicker"
+						"thisFieldEquals": ["graded"],
+						"show": [{
+							"fieldName": "HRC Last Updated"
+						}],
+						"require": [{
+							"fieldName": "HRC Last Updated",
+							"type": "datePicker"
+						}]
 					}]
 				}, {
-					"thisFieldEquals": ["graded"],
-					"show": [{
-						"fieldName": "HRC Last Updated"
-					}],
-					"require": [{
-						"fieldName": "HRC Last Updated",
-						"type": "datePicker"
-					}]
-				}]
-			}, {
-				'elementType': "field",
-				'controlType': "datePicker",
-				'fieldName': "HRC Last Updated",
-				'labelContent': "On what date was HRC grading last updated?",
-				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
-				'disabledForAdmin': ['Submitted', 'Cancelled'],
-				'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
-				'hideForAdmin': ['', 'Submitted', 'Cancelled'], */
+					'elementType': "field",
+					'controlType': "datePicker",
+					'fieldName': "HRC Last Updated",
+					'labelContent': "On what date was HRC grading last updated?",
+					'disabledForNonAdmin': ['Submitted', 'Cancelled'],
+					'disabledForAdmin': ['Submitted', 'Cancelled'],
+					'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
+					'hideForAdmin': ['', 'Submitted', 'Cancelled'], */
 
 
 
@@ -1071,8 +1089,8 @@
 				'begin': 1,
 				'end': 1,
 				'content': '<h2>Process</h2>' +
-							'<a id="standard-printer-button-inside-request" data-print-function="PrintEmploymentAuthorizationRequest">Print Request</a>' +
-							'<p>Print this request, acquire appropriate signatures, and submit it to Human Resources.</p>'
+					'<a id="standard-printer-button-inside-request" data-print-function="PrintEmploymentAuthorizationRequest">Print Request</a>' +
+					'<p>Print this request, acquire appropriate signatures, and submit it to Human Resources.</p>'
 			}
 		]
 	};
@@ -1135,7 +1153,7 @@
 	fData.CustomScriptLast += '$("div.subsection-container, div#container_primary-fieldset").each(function() { $(this).removeClass("hidden"); });'; */
 
 	fData.CustomScriptLast += '$("input#Proposed-Hourly-Wage, input#Scheduled-Hours-Biweekly, input#Replacement-Salary").on("change", function() { \n' +
-		'console.log("firing");'+
+		'console.log("firing");' +
 		'	$().ProcessEARAndPARHourAndWageFields("Proposed-Hourly-Wage", "Proposed-Annualized-Salary", "Scheduled-Hours-Biweekly", "Scheduled-Hours-Annually", "Replacement-Salary");\n' +
 		'}); \n';
 
