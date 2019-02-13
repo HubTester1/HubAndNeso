@@ -2452,6 +2452,23 @@ module.exports = {
 							department: 'Exhibit Maintenance',
 							division: 'Education',
 							securityGroups: ['Exhibits_Projects_What_Is_Technology', 'Exhibits Operations', 'Exhibits Maintenance', 'COI other', 'Swat team', 'Exhibits_Projects_Random', 'mos.org', 'Exhibits_Projects_Mos_Then_And_Now', 'TrackIT Users', 'Exhibits_Projects_Pixar', 'SP_Team_Write_HHL_Maintenance', 'Audio Visual', 'GWRenovation', 'Exhibit Leadership', 'SP_Staff', 'SN Exhibit Managers', 'FinanceSSRSUsers', 'Butterfly Garden', 'OS X Users', 'Web VPN Access', 'PA System Project', 'Mapping', 'Budget_Education', 'PlatinumUsers', 'Exhibits_Projects_Escher', 'MMTfolder', 'Exhibit Admin Group', 'ProjectManagers', 'Showcase', 'VFT', 'SP_Team_write_exhibitmaintenance', 'Exhibits Projects', 'WiFi Access', 'JanusUsers', 'PGP_BASIC', 'PO and Invoice records', 'Exhibits', 'Making Models', 'SP_Dept_HR_ManagersHandbook', 'Budget_Exhibits', 'Budget_RestrictedAccess', 'Crystal Enterprise', 'SP_Team_Write_Safety', 'Charles River Gallery', 'Exhibits Development', 'GSW Scripts and Slides', 'Safety_Zeus', 'Tech Showcase', 'PompeiiOps', 'TrackIT Technicians', 'AnyConnect VPN Access'],
+						}, {
+							_id: '5c644d1075180509bc07afc5',
+							account: 'rstaley',
+							employeeID: '14450',
+							firstName: 'Robin',
+							lastName: 'Staley',
+							firstInitial: 'R',
+							lastInitial: 'S',
+							displayName: 'Robin Staley',
+							title: 'Director, Curriculum Marketing',
+							email: 'rstaley@mos.org',
+							officePhone: '617-589-0251',
+							mobilePhone: '',
+							manager: 'tsperry',
+							department: 'Curriculum Marketing',
+							division: 'Marketing & External Affairs',
+							securityGroups: ['Budget_Marketing', 'mos.org', 'EiE Senior Leadership', 'EIE - Aspen', 'EiE Mulltimedia', 'SP_Staff', 'FinanceSSRSUsers', 'OS X Users', 'Web VPN Access', 'WiFi Access', 'EiE IRB Approved', 'Budget_RestrictedAccess', 'Marketing', 'EiE Product Strategy', 'AnyConnect VPN Access'],
 						},
 					];
 
