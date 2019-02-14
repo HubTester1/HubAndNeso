@@ -2469,6 +2469,23 @@ module.exports = {
 							department: 'Curriculum Marketing',
 							division: 'Marketing & External Affairs',
 							securityGroups: ['Budget_Marketing', 'mos.org', 'EiE Senior Leadership', 'EIE - Aspen', 'EiE Mulltimedia', 'SP_Staff', 'FinanceSSRSUsers', 'OS X Users', 'Web VPN Access', 'WiFi Access', 'EiE IRB Approved', 'Budget_RestrictedAccess', 'Marketing', 'EiE Product Strategy', 'AnyConnect VPN Access'],
+						}, {
+							_id: '5c65aca14b1ca10e00ded91b',
+							account: 'jpolasek',
+							employeeID: '14445',
+							firstName: 'Jason',
+							lastName: 'Polasek',
+							firstInitial: 'J',
+							lastInitial: 'P',
+							displayName: 'Jason Polasek',
+							title: 'Director, Donor Relations',
+							email: 'jpolasek@mos.org',
+							officePhone: '617-589-0301',
+							mobilePhone: '',
+							manager: 'abuzay',
+							department: 'Donor Relations',
+							division: 'Advancement',
+							securityGroups: ['Budget_Advancement', 'Membership - Aspen', 'mos.org', 'TrackIT Users', 'AdvancementData', 'LSI_Admits', 'Tessitura Advancement', 'Development', 'Special Events', 'SP_Staff', 'FinanceSSRSUsers', 'OS X Users', 'Web VPN Access', 'MMTfolder', 'Endowment', 'Advancement Communications', 'Membership_Staff', 'WiFi Access', 'Budget_RestrictedAccess', 'Crystal Enterprise', 'AnyConnect VPN Access'],
 						},
 					];
 
