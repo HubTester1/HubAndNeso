@@ -244,6 +244,14 @@ function ShowScreen() {
 				document.getElementById('s4-ribbonrow').style.display = 'block';
 				document.getElementById('s4-bodyContainer').style.paddingTop = '1rem';
 			}
+			if (window.uData.account && window.uData.account === 'showe') {
+				// /sites/-dev-hc/Lists/Acc
+				const ribbonForStan = 
+					document.querySelector('form[action^="/Lists/Accounting%20Whats%20New%20Hub"] div#s4-ribbonrow');
+				if (ribbonForStan) {					
+					ribbonForStan.style.display = 'block';
+				}
+			}
 			// hide loading and show other
 			document.getElementById('overlays-screen-container').style.display = 'none';
 			document.getElementById('s4-bodyContainer').className = 'visible';
