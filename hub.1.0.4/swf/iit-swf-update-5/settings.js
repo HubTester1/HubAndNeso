@@ -191,12 +191,21 @@
 
 		'uniqueElements': [
 			{
+				'elementType': "field",
+				'controlType': "text",
+				'fieldName': "Candidate Email",
+				'labelContent': "Email",
+				'addtlValidationType': 'validEmail',
+				'requiredForNonAdmin': [""],
+				'requiredForAdmin': [""],
+				"disabledForNonAdmin": ['Submitted', 'Cancelled'],
+				"disabledForAdmin": ['Submitted', 'Cancelled'],
+			}, {
 				'elementType': "markup",
 				'tag': "h2",
 				'content': "Files",
 				'begin': 1,
 				'end': 1
-
 
 
 
@@ -244,8 +253,8 @@
 						'hideForAdmin': ['Pending Approval', 'Submitted', 'Completed', 'Cancelled']
 					}
 				],
-				'requiredForNonAdmin': [""],
-				'requiredForAdmin': [""],
+				// 'requiredForNonAdmin': [""],
+				// 'requiredForAdmin': [""],
 				// 'hideForNonAdmin': ["", "Completed", "Disapproved", "Cancelled", "Disapproved", "Cancelled"],
 				// 'hideForAdmin': ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
 
