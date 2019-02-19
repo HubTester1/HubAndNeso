@@ -1,0 +1,166 @@
+﻿
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        // maintenance mode
+        var allSWFsInMaintenance = $().ReturnMaintenanceModeAllSWFs();
+        var thisSWFInMainenanceMode = $().ReturnMaintenanceModeThisSWF(location);
+        if (allSWFsInMaintenance == false && thisSWFInMainenanceMode == false) {
+
+            // metadata
+            var mData = {
+                'autoTrackSubmissionAndCancellation': 1,
+                'standardElementGroups': {
+                    'standardThisRequestAndRequesterElements': 1,
+                    'standardAdminElements': 1,
+                    'standardButtonElements': 1,
+                    'standardComponentGrpAdminOnlyElements': 1
+                },
+                'logoReqNotifications': 1,
+                'versioningMatters': 0
+
+            };
+
+            // form elements
+            var elements = [
+                {
+                    'elementType': 'markup',
+                    'tag': 'h2',
+                    'content': 'The Logo(s)',
+                    'begin': 1,
+                    'end': 1
+                }, {
+                    'elementType': 'field',
+                    'controlType': 'text',
+                    'fieldName': 'Project Name',
+                    'labelContent': 'Project Name',
+                    'disabledForNonAdmin': ['Submitted', 'Completed', 'Cancelled'],
+                    'disabledForAdmin': ['Submitted', 'Completed', 'Cancelled'],
+                    'requiredForNonAdmin': [''],
+                    'requiredForAdmin': [''],
+                }, {
+                    'elementType': 'field',
+                    'controlType': 'select',
+                    'fieldName': 'Usage',
+                    'labelContent': 'How Will Logo(s) be Used?',
+                    'setOptions': [
+                        { 'value': 'Vendor', 'display': 'Sending to vendor' },
+                        { 'value': 'Partner', 'display': 'Sending to partner' },
+                        { 'value': 'Own', 'display': 'For my own use' },
+                    ],
+                    'disabledForNonAdmin': ['Submitted', 'Completed', 'Cancelled'],
+                    'disabledForAdmin': ['Submitted', 'Completed', 'Cancelled'],
+                    'requiredForNonAdmin': [''],
+                    'requiredForAdmin': [''],
+                    'helpNotes': [
+                        {
+                            'text': 'Please submit a <a href="https://bmos.sharepoint.com/sites/mea-mc-project/SitePages/My%20MarCom%20Project%20Requests.aspx">MarCom Project Request</a> instead.',
+                            'htmlID': 'submit-project-request',
+                            'emphasis': 1,
+                            'hideForNonAdmin': ['', 'Submitted', 'Completed', 'Cancelled'],
+                            'hideForAdmin': ['', 'Submitted', 'Completed', 'Cancelled'],
+                        }
+                    ],
+                    'onChange': [
+                        { 'thisFieldEquals': ['Own'], 'show': [{ 'fieldName': 'Usage Explanation' }], 'require': [{ 'fieldName': 'Usage Explanation', 'type': 'textarea' }], 'hide': [{ 'noteID': 'submit-project-request' }] },
+                        { 'thisFieldEquals': ['', 'Partner'], 'hide': [{ 'fieldName': 'Usage Explanation' }, { 'noteID': 'submit-project-request' }], 'optional': [{ 'fieldName': 'Usage Explanation', 'type': 'textarea' }] },
+                        { 'thisFieldEquals': ['Vendor'], 'hide': [{ 'fieldName': 'Usage Explanation' }], 'optional': [{ 'fieldName': 'Usage Explanation', 'type': 'textarea' }], 'show': [{ 'noteID': 'submit-project-request' }] },
+                    ]
+                }, {
+                    'elementType': 'field',
+                    'controlType': 'textarea',
+                    'fieldName': 'Usage Explanation',
+                    'labelContent': 'Please Explain Usage',
+                    'disabledForNonAdmin': ['Submitted', 'Completed', 'Cancelled'],
+                    'disabledForAdmin': ['Submitted', 'Completed', 'Cancelled'],
+                    'hideForNonAdmin': ['', 'Submitted', 'Completed', 'Cancelled'],
+                    'hideForAdmin': ['', 'Submitted', 'Completed', 'Cancelled'],
+                }, {
+                    'elementType': 'field',
+                    'controlType': 'datePicker',
+                    'fieldName': 'Needed Date',
+                    'listFieldName': 'NeededDate',
+                    'labelContent': 'Date Needed',
+                    'disabledForNonAdmin': ['Submitted', 'Completed', 'Cancelled'],
+                    'disabledForAdmin': ['Submitted', 'Completed', 'Cancelled'],
+                    'requiredForNonAdmin': [''],
+                    'requiredForAdmin': [''],
+                    'helpNotes': [
+                        {
+                            'text': 'Must be at least two business days from today',
+                            'htmlID': 'date-needed_help-note',
+                            'hideForNonAdmin': ['Submitted', 'Completed', 'Cancelled'],
+                            'hideForAdmin': ['Submitted', 'Completed', 'Cancelled']
+                        }, {
+                            'text': "Due to the short notice, logo(s) may not be ready by this date.",
+                            'htmlID': "needed-date-too-soon",
+                            'emphasis': 1,
+                            'hideForNonAdmin': ['', 'Submitted', 'Completed', 'Cancelled'],
+                            'hideForAdmin': ['', 'Submitted', 'Completed', 'Cancelled'],
+                        }
+                    ],
+                    'onChange': [
+                        { 'thisDateFieldLessThanDaysFromNow': "2", 'show': [{ 'noteID': "needed-date-too-soon" }] },
+                        { 'thisDateFieldGreaterThanDaysFromNowEqualTo': "2", 'hide': [{ 'noteID': "needed-date-too-soon" }] }
+                    ],
+                }, {
+                    'elementType': 'field',
+                    'controlType': 'text',
+                    'fieldName': 'File Type',
+                    'labelContent': 'File Type(s)',
+                    'disabledForNonAdmin': ['Submitted', 'Completed', 'Cancelled'],
+                    'disabledForAdmin': ['Submitted', 'Completed', 'Cancelled'],
+                    'helpNotes': [
+                        {
+                            'text': 'If specific types are needed; e.g., EPS, TIFF, JPG, GIF, etc.',
+                            'htmlID': 'file-types_help-note',
+                            'hideForNonAdmin': ['Submitted', 'Completed', 'Cancelled'],
+                            'hideForAdmin': ['Submitted', 'Completed', 'Cancelled']
+                        }
+                    ]
+                }, {
+                    'elementType': 'field',
+                    'controlType': 'textarea',
+                    'fieldName': 'Description',
+                    'labelContent': 'Which Logo(s) Do You Need?',
+                    'disabledForNonAdmin': ['Submitted', 'Completed', 'Cancelled'],
+                    'disabledForAdmin': ['Submitted', 'Completed', 'Cancelled'],
+                    'requiredForNonAdmin': [''],
+                    'requiredForAdmin': [''],
+                }
+            ];
+
+
+
+            // configure customScript for this SWF here
+            //      (customScriptFirst will be prepended to auto-generated script)
+            //      (customScriptLast will be appended to auto-generated script)
+            var customScriptFirst = '';
+            var customScriptLast = '';
+
+
+
+            // ----- nothing below should need to be configured for a new SWF
+
+            mData = $.extend(
+                $().ReturnThisSiteSettings(),
+                mData
+            );
+            var requestID = $().GetParamFromUrl(location.search, 'requestID');
+            $().LoadSWFFunctions(mData, requestID);
+            $().InitializeForm(mData, elements, customScriptFirst, customScriptLast);
+        } else {
+            $().RenderMaintenanceMessage();
+        }
+    });
+
+</script>
+
+
+
+<!-- all content -->
+<div id="all-content-container">
+    <div id="mos-form" class="mos-form-section"></div>
+    <script id="mos-form-script" type="text/javascript"></script>
+</div>
