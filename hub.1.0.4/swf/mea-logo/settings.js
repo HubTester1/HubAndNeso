@@ -4,17 +4,17 @@
 	var mData = {
 		'componentID': 116,
 		'swf': 1,
-		// 'mosMainKey': 'prod',
+		'mosMainKey': 'prod',
 		// 'mosMainKey': 'dev',
 		// 'mosMainKey': 'devMedium',
-		'mosMainKey': 'devLong',
+		// 'mosMainKey': 'devLong',
 		// "useRecordedMOSMainMajorVersion": 1,
 		'currentRequestVersion': 1,
-		'devAdminNotifications': 1,
+		'devAdminNotifications': 0,
 		'notifications': 1,
 	};
 
-	console.log("using settings m1");
+	console.log("using settings m2");
 
 
 
@@ -136,10 +136,15 @@
 
 
 	var fData = {
-		'autoTrackSubmissionAndCancellation': 1,
+		'autoTrackSubmissionAndCompletionAndCancellation': 1,
 		'standardElementGroups': {
 			'standardThisRequestAndRequesterElements': 1,
-			'standardAdminElements': 1,
+			'standardAdminElements': {
+				'changeRequestStatus': [
+					{ "value": "Complete", "display": "All work for this request has been completed" },
+					{ "value": "Cancel", "display": "This request has been cancelled" }
+				]
+			},
 			'standardButtonElements': 1,
 			'standardComponentGrpAdminOnlyElements': 1
 		},

@@ -11433,25 +11433,25 @@
 		sData.requesterPhone = $("input#Requester-Phone").val();
 		sData.requesterDept = $("input#Requester-Department").val();
 
+		sData.projectName = $("input#Project-Name").val();
 		sData.neededDate = $().ReturnFormattedDateTime($("input#Needed-Date").val(), null, 'MMMM D');
 		sData.fileType = $("input#File-Type").val();
-		sData.description = $("textarea#Description").val();
-		if ($('input#Attachment').val() != '') {
-			sData.hasAttachments = "Yes";
+
+		sData.descriptionOrAttachmentBoolean = $('input[name="Photo-Description-or-Sample"]:checked').val();
+		if (sData.descriptionOrAttachmentBoolean === 'describe') {
+			sData.descriptionOrAttachmentLabel = 'Description';
+			sData.descriptionOrAttachmentValue = $("textarea#Description").val();
 		} else {
-			sData.hasAttachments = "";
+			sData.descriptionOrAttachmentLabel = 'Has Attachments';
+			sData.descriptionOrAttachmentValue = 'Yes';
 		}
+
 		sData.usage = $("textarea#Usage").val();
 
 		mData.subjectPreface = mData.requestName + ' Request #' + rData.requestID + ': ';
-
-		mData.uriPageAdmin = mData.uriAdmin;
-		mData.uriPageRequester = mData.uriRequester;
-		mData.uriPageApprover = 'https://bmos.sharepoint.com';
-
-		mData.uriFormAdmin = mData.uriRequest + '?requestID=' + rData.requestID + '&returnURI=' + mData.uriPageAdmin;
-		mData.uriFormRequester = mData.uriRequest + '?requestID=' + rData.requestID + '&returnURI=' + mData.uriPageRequester;
-		mData.uriFormApprover = mData.uriRequest + '?requestID=' + rData.requestID + '&returnURI=' + mData.uriPageApprover;
+		
+		mData.uriOverview = mData.fullSiteBaseURL + "/SitePages/" + mData.pageToken + ".aspx"
+		mData.uriRequest = mData.uriOverview + "?r=" + rData.requestID;
 
 		var eData = $.extend(sData, rData, mData, uData, fData);
 
@@ -11472,23 +11472,23 @@
 		if (typeof (eData.beginningOfLife) != 'undefined' && eData.beginningOfLife == 1) {
 
 			var adminBeginningOfLifeBodyUnique = '<p>' + eData.requesterName + ' has submitted a new request. You can ' +
-				'<a href="' + eData.uriFormAdmin + '">review this request\'s details and retrieve attachments</a>, ' +
+				'<a href="' + eData.uriRequest + '">review this request\'s details and retrieve attachments</a>, ' +
 				'<a href="mailto:' + eData.requesterEmail + '">contact the requester</a> ' +
-				'with any questions, or <a href="' + eData.uriPageAdmin + '">' +
-				'review other ' + eData.requestName + ' requests</a>.</p>' +
-				'<h2>Request and Requester</h2>' +
+				'with any questions, or <a href="' + eData.uriOverview + '">' +
+				'review other ' + eData.requestName + ' Requests</a>.</p>' +
+				'<h2>Requester</h2>' +
 				'<ul>' +
-				'	<li><b>Request Nickname</b>: ' + eData.requestNick + '</li>' +
+				'	<li><b>Name</b>: ' + eData.requesterName + '</li>' +
 				'	<li><b>Email</b>: ' + eData.requesterEmail + '</li>' +
 				'	<li><b>Phone</b>: ' + eData.requesterPhone + '</li>' +
 				'	<li><b>Dept</b>: ' + eData.requesterDept + '</li>' +
 				'</ul>' +
 				'<h2>Photo</h2>' +
-				'<ul>' +
+				'<ul>' + 
+				'	<li><b>Project Name</b>: ' + eData.projectName + '</li>' +
 				'	<li><b>Date Needed</b>: ' + eData.neededDate + '</li>' +
-				'	<li><b>File Type</b>: ' + eData.fileType + '</li>' +
-				'	<li><b>Description</b>: ' + eData.description + '</li>' +
-				'	<li><b>Attachments</b>: ' + eData.hasAttachments + '</li>' +
+				'	<li><b>File Type</b>: ' + eData.fileType + '</li>' + 
+				'	<li><b>' + eData.descriptionOrAttachmentLabel + '</b>: ' + eData.descriptionOrAttachmentValue + '</li>' +
 				'	<li><b>Usage</b>: ' + eData.usage + '</li>' +
 				'</ul>';
 
@@ -11510,10 +11510,10 @@
 				'to': eData.requesterEmail,
 				'subject': eData.subjectPreface + 'new request received',
 				'bodyUnique': '<p>The request you nicknamed "' + eData.requestNick + '" has been received. You can ' +
-					'<a href="' + eData.uriFormRequester + '">review this request\'s details</a>, ' +
+					'<a href="' + eData.uriRequest + '">review this request\'s details</a>, ' +
 					'<a href="mailto:' + eData.adminEmailString + '">contact the admin</a> ' +
-					'with any questions, or <a href="' + eData.uriPageRequester + '">' +
-					'review other ' + eData.requestName + ' requests</a>.</p>'
+					'with any questions, or <a href="' + eData.uriOverview + '">' +
+					'review other ' + eData.requestName + ' Requests</a>.</p>'
 			});
 
 		}
@@ -11543,7 +11543,7 @@
 				'caller': 'endOfLife requester',
 				'to': eData.requesterEmail,
 				'subject': eData.subjectPreface + eData.requestStatus.toLowerCase(),
-				'bodyUnique': '<p>This is the <a href="' + eData.uriFormAdmin + '">request you nicknamed "' + eData.requestNick +
+				'bodyUnique': '<p>This is the <a href="' + eData.uriRequest + '">request you nicknamed "' + eData.requestNick +
 					'"</a>. Please <a href="mailto:' + eData.adminEmailString + '">contact the admin</a> with any ' +
 					'issues related to this request.'
 			});
@@ -11592,34 +11592,17 @@
 		sData.requesterPhone = $("input#Requester-Phone").val();
 		sData.requesterDept = $("input#Requester-Department").val();
 
-
-
-
 		sData.projectName = $("input#Project-Name").val();
+		sData.usage = $("select#Usage").val();
+		sData.usageExplanation = $("textarea#Usage-Explanation").val();
 		sData.neededDate = $().ReturnFormattedDateTime($("input#Needed-Date").val(), null, 'MMMM D');
 		sData.fileType = $("input#File-Type").val();
 		sData.description = $("textarea#Description").val();
-		if ($('input#Attachment').val() != '') {
-			sData.hasAttachments = "Yes";
-		} else {
-			sData.hasAttachments = "";
-		}
-		sData.usage = $("select#Usage").val();
-		sData.usageExplanation = $("textarea#Usage-Explanation").val();
-
-
-
-
 
 		mData.subjectPreface = mData.requestName + ' Request #' + rData.requestID + ': ';
 
-		mData.uriPageAdmin = mData.uriAdmin;
-		mData.uriPageRequester = mData.uriRequester;
-		mData.uriPageApprover = 'https://bmos.sharepoint.com';
-
-		mData.uriFormAdmin = mData.uriRequest + '?requestID=' + rData.requestID + '&returnURI=' + mData.uriPageAdmin;
-		mData.uriFormRequester = mData.uriRequest + '?requestID=' + rData.requestID + '&returnURI=' + mData.uriPageRequester;
-		mData.uriFormApprover = mData.uriRequest + '?requestID=' + rData.requestID + '&returnURI=' + mData.uriPageApprover;
+		mData.uriOverview = mData.fullSiteBaseURL + "/SitePages/" + mData.pageToken + ".aspx"
+		mData.uriRequest = mData.uriOverview + "?r=" + rData.requestID;
 
 		var eData = $.extend(sData, rData, mData, uData, fData);
 
@@ -11640,25 +11623,30 @@
 		if (typeof (eData.beginningOfLife) != 'undefined' && eData.beginningOfLife == 1) {
 
 			var adminBeginningOfLifeBodyUnique = '<p>' + eData.requesterName + ' has submitted a new request. You can ' +
-				'<a href="' + eData.uriFormAdmin + '">review this request\'s details and retrieve attachments</a>, ' +
+				'<a href="' + eData.uriRequest + '">review this request\'s details</a>, ' +
 				'<a href="mailto:' + eData.requesterEmail + '">contact the requester</a> ' +
-				'with any questions, or <a href="' + eData.uriPageAdmin + '">' +
-				'review other ' + eData.requestName + ' requests</a>.</p>' +
-				'<h2>Request and Requester</h2>' +
+				'with any questions, or <a href="' + eData.uriOverview + '">' +
+				'review other ' + eData.requestName + ' Requests</a>.</p>' +
+				'<h2>Requester</h2>' +
 				'<ul>' +
-				'	<li><b>Project Name</b>: ' + eData.projectName + '</li>' +
+				'	<li><b>Name</b>: ' + eData.requesterName + '</li>' +
 				'	<li><b>Email</b>: ' + eData.requesterEmail + '</li>' +
 				'	<li><b>Phone</b>: ' + eData.requesterPhone + '</li>' +
 				'	<li><b>Dept</b>: ' + eData.requesterDept + '</li>' +
 				'</ul>' +
 				'<h2>Photo</h2>' +
 				'<ul>' +
+				'	<li><b>Project Name</b>: ' + eData.projectName + '</li>' +
+				'	<li><b>Usage</b>: ' + eData.usage + '</li>';
+
+			if (eData.usageExplanation !== '') {
+				adminBeginningOfLifeBodyUnique += 
+					'	<li><b>Usage Explanation</b>: ' + eData.usageExplanation + '</li>';
+			}
+			adminBeginningOfLifeBodyUnique += 
 				'	<li><b>Date Needed</b>: ' + eData.neededDate + '</li>' +
 				'	<li><b>File Type</b>: ' + eData.fileType + '</li>' +
 				'	<li><b>Description</b>: ' + eData.description + '</li>' +
-				'	<li><b>Attachments</b>: ' + eData.hasAttachments + '</li>' +
-				'	<li><b>Usage</b>: ' + eData.usage + '</li>' +
-				'	<li><b>Usage Explanation</b>: ' + eData.usageExplanation + '</li>' +
 				'</ul>';
 
 			// admin
@@ -11679,10 +11667,10 @@
 				'to': eData.requesterEmail,
 				'subject': eData.subjectPreface + 'new request received',
 				'bodyUnique': '<p>The request you nicknamed "' + eData.requestNick + '" has been received. You can ' +
-					'<a href="' + eData.uriFormRequester + '">review this request\'s details</a>, ' +
+					'<a href="' + eData.uriRequest + '">review this request\'s details</a>, ' +
 					'<a href="mailto:' + eData.adminEmailString + '">contact the admin</a> ' +
-					'with any questions, or <a href="' + eData.uriPageRequester + '">' +
-					'review other ' + eData.requestName + ' requests</a>.</p>'
+					'with any questions, or <a href="' + eData.uriOverview + '">' +
+					'review other ' + eData.requestName + ' Requests</a>.</p>'
 			});
 
 		}
@@ -11712,7 +11700,7 @@
 				'caller': 'endOfLife requester',
 				'to': eData.requesterEmail,
 				'subject': eData.subjectPreface + eData.requestStatus.toLowerCase(),
-				'bodyUnique': '<p>This is the <a href="' + eData.uriFormAdmin + '">request you nicknamed "' + eData.requestNick +
+				'bodyUnique': '<p>This is the <a href="' + eData.uriRequest + '">request you nicknamed "' + eData.requestNick +
 					'"</a>. Please <a href="mailto:' + eData.adminEmailString + '">contact the admin</a> with any ' +
 					'issues related to this request.'
 			});
@@ -24241,10 +24229,16 @@
 						"				  <FieldRef Name='EndOfLife'></FieldRef>" +
 						"			 </IsNull>" +
 						"		</Or>" +
-						"		 <Contains>" +
-						"			  <FieldRef Name='" + getRequesterFrom + "'></FieldRef>" +
-						"			  <Value Type='Text'>" + uData.name + "</Value>" +
-						"		 </Contains>" +
+						"		<And>" +
+						"			<Contains>" +
+						"				<FieldRef Name='" + getRequesterFrom + "'></FieldRef>" +
+						"				<Value Type='Text'>" + uData.name + "</Value>" +
+						"			</Contains>" +
+						"			<Neq>" +
+						"				<FieldRef Name='Title'></FieldRef>" +
+						"				<Value Type='Text'>Temporary Title</Value>" +
+						"			</Neq>" +
+						"		</And>" +
 						"	</And>" +
 						"</Where>";
 				} else if (t.basicMyEOLQueryRelevantValue == 1) {
@@ -24254,10 +24248,16 @@
 						"			  <FieldRef Name='EndOfLife'></FieldRef>" +
 						"			  <Value Type='Text'>1</Value>" +
 						"		 </Eq>" +
-						"		 <Contains>" +
-						"			  <FieldRef Name='" + getRequesterFrom + "'></FieldRef>" +
-						"			  <Value Type='Text'>" + uData.name + "</Value>" +
-						"		 </Contains>" +
+						"		<And>" +
+						"			<Contains>" +
+						"				<FieldRef Name='" + getRequesterFrom + "'></FieldRef>" +
+						"				<Value Type='Text'>" + uData.name + "</Value>" +
+						"			</Contains>" +
+						"			<Neq>" +
+						"				<FieldRef Name='Title'></FieldRef>" +
+						"				<Value Type='Text'>Temporary Title</Value>" +
+						"			</Neq>" +
+						"		</And>" +
 						"	</And>" +
 						"</Where>";
 				}
@@ -27966,7 +27966,7 @@
 		// wait for all data retrieval / setting promises to complete (pass or fail) 
 		$.when.apply($, allDataRetrievalAndSettingPromises).always(function () {
 
-			console.log('using dev_mos-main_long.1.04 m1');
+			console.log('using dev_mos-main_long.1.04 m');
 
 			$().ConfigureAndShowScreenContainerAndAllScreens();
 		});

@@ -4,17 +4,17 @@
 	var mData = {
 		'componentID': 117,
 		'swf': 1,
-		// 'mosMainKey': 'prod',
+		'mosMainKey': 'prod',
 		// 'mosMainKey': 'dev',
 		// 'mosMainKey': 'devMedium',
-		'mosMainKey': 'devLong',
+		// 'mosMainKey': 'devLong',
 		// "useRecordedMOSMainMajorVersion": 1,
 		'currentRequestVersion': 2,
-		'devAdminNotifications': 1,
+		'devAdminNotifications': 0,
 		'notifications': 1,
 	};
 
-	console.log("using settings m1");
+	console.log("using settings m4");
 
 
 
@@ -132,10 +132,15 @@
 
 
 	var fData = {
-		'autoTrackSubmissionAndCancellation': 1,
+		'autoTrackSubmissionAndCompletionAndCancellation': 1,
 		'standardElementGroups': {
 			'standardThisRequestAndRequesterElements': 1,
-			'standardAdminElements': 1,
+			'standardAdminElements': {
+				'changeRequestStatus': [
+					{ "value": "Complete", "display": "All work for this request has been completed" },
+					{ "value": "Cancel", "display": "This request has been cancelled" }
+				]
+			},
 			'standardButtonElements': 1,
 			'standardComponentGrpAdminOnlyElements': 1
 		},
@@ -209,9 +214,58 @@
 				]
 			}, {
 				'elementType': 'field',
+				'controlType': 'radio',
+				'fieldName': 'Photo Description or Sample',
+				'choiceSetLabel': 'Do you prefer to describe the photo you need or attach a sample?',
+				'choices': [
+					{
+						'value': 'describe',
+						'display': 'I\'ll describe the photo'
+					}, {
+						'value': 'attach',
+						'display': 'I\'ll attach a sample'
+					}
+				],
+				'disabledForNonAdmin': ['Submitted', 'Completed', 'Cancelled'],
+				'disabledForAdmin': ['Submitted', 'Completed', 'Cancelled'],
+				'onChange': [
+					{
+						"thisFieldEquals": ["describe"],
+						"hide": [
+							{ "fieldName": "Attachment" },
+						],
+						"optional": [
+							{ "fieldName": "Attachment", "type": "mosFile" },
+						],
+						"show": [
+							{ "fieldName": "Description" },
+						],
+						"require": [
+							{ "fieldName": "Description", "type": "textarea" },
+						],
+					}, {
+						"thisFieldEquals": ["attach"],
+						"hide": [
+							{ "fieldName": "Description" },
+						],
+						"optional": [
+							{ "fieldName": "Description", "type": "textarea" },
+						],
+						"show": [
+							{ "fieldName": "Attachment" },
+						],
+						"require": [
+							{ "fieldName": "Attachment", "type": "mosFile" },
+						],
+					}
+				],
+			}, {
+				'elementType': 'field',
 				'controlType': 'textarea',
 				'fieldName': 'Description',
-				'labelContent': 'Either Describe the Photo You Need...',
+				'labelContent': 'Photo Description',
+				'hideForNonAdmin': ['', 'Submitted', 'Completed', 'Cancelled'],
+				'hideForAdmin': ['', 'Submitted', 'Completed', 'Cancelled'],
 				'disabledForNonAdmin': ['Submitted', 'Completed', 'Cancelled'],
 				'disabledForAdmin': ['Submitted', 'Completed', 'Cancelled'],
 				'requiredForNonAdmin': [''],
@@ -224,11 +278,11 @@
 						'hideForAdmin': ['Submitted', 'Completed', 'Cancelled']
 					}
 				],
-				'onChange': [
+				/* 'onChange': [
 					{ 'thisFieldNotEquals': [''], 'optional': [{ 'fieldName': 'Attachment' }] },
 					{ 'thisFieldEquals': [''], 'require': [{ 'fieldName': 'Attachment' }] }
-				],
-			}, {
+				], */
+			/* }, {
 				'elementType': 'field',
 				'controlType': 'file',
 				'fieldName': 'Attachment',
@@ -240,7 +294,35 @@
 				'onChange': [
 					{ 'thisFieldNotEquals': [''], 'optional': [{ 'fieldName': 'Description' }] },
 					{ 'thisFieldEquals': [''], 'require': [{ 'fieldName': 'Description' }] }
-				],
+				], */
+
+			}, {
+				'elementType': 'field',
+				'controlType': 'mosFile',
+				'fieldName': 'Attachment',
+				'labelContent': 'Sample Photo',
+				'hideForNonAdmin': ['', 'Submitted', 'Completed', 'Cancelled'],
+				'hideForAdmin': ['', 'Submitted', 'Completed', 'Cancelled'],
+				'populatableForNonAdmin': [""],
+				'populatableForAdmin': [""],
+				'replaceableForNonAdmin': [''],
+				'replaceableForAdmin': [''],
+				// 'requiredForNonAdmin': [''],
+				// 'requiredForAdmin': [''],
+				/* 'onChange': [
+					{ 'thisFieldNotEquals': [''], 'optional': [{ 'fieldName': 'Description' }] },
+					{ 'thisFieldEquals': [''], 'require': [{ 'fieldName': 'Description' }] }
+				], */
+
+
+
+
+
+
+
+
+
+
 			}, {
 				'elementType': 'field',
 				'controlType': 'textarea',
@@ -261,7 +343,13 @@
 	fData.CustomScriptFirst = '';
 	fData.CustomScriptLast = '';
 
+	fData.CustomScriptLast += 'if($(\'input[name="Photo-Description-or-Sample"]:checked\').val() === "attach") {' +
+		'	$("div#label-and-control_Attachment").removeClass("hidden"); \n' +
+		'}; \n';
 
+	fData.CustomScriptLast += 'if($(\'input[name="Photo-Description-or-Sample"]:checked\').val() === "describe") {' +
+		'	$("div#label-and-control_Description").removeClass("hidden"); \n' +
+		'}; \n';
 
 	$.fn.ReturnThisAppMData = function () {
 		return mData;
