@@ -13,6 +13,7 @@ export default props => (
 				textCollapsed="About this background image"
 				textExpanded="Hide info about this image"
 				buttonClassName="hc-background-info__button"
+				buttonPosition="afterContent"
 			>
 				<div id="hc-background-info__information">
 					<h3>
