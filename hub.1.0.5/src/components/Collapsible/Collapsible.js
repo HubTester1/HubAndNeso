@@ -42,19 +42,35 @@ export default class Collapsible extends React.Component {
 
 		return (
 			<div>
-				<DefaultButton
-					iconProps={{ iconName: iconNameThisState }}
-					text={this.state.collapsed ? this.props.textCollapsed : this.props.textExpanded}
-					className={`collapsible-section-button ${this.props.buttonClassName}`}
-					onClick={this.handleCollapsibleClick}
-					aria-expanded={!this.state.collapsed}
-					data-action="disclosure"
-				/>
+				{
+					this.props.buttonPosition === 'beforeContent' &&
+				
+					<DefaultButton
+						iconProps={{ iconName: iconNameThisState }}
+						text={this.state.collapsed ? this.props.textCollapsed : this.props.textExpanded}
+						className={`collapsible-section-button ${this.props.buttonClassName}`}
+						onClick={this.handleCollapsibleClick}
+						aria-expanded={!this.state.collapsed}
+						data-action="disclosure"
+					/>
+				}
 				<FadeIn
 					in={!this.state.collapsed}
 				>
 					{this.props.children}
 				</FadeIn>
+				{
+					this.props.buttonPosition === 'afterContent' &&
+
+					<DefaultButton
+						iconProps={{ iconName: iconNameThisState }}
+						text={this.state.collapsed ? this.props.textCollapsed : this.props.textExpanded}
+						className={`collapsible-section-button ${this.props.buttonClassName}`}
+						onClick={this.handleCollapsibleClick}
+						aria-expanded={!this.state.collapsed}
+						data-action="disclosure"
+					/>
+				}
 			</div>
 		);
 	}
