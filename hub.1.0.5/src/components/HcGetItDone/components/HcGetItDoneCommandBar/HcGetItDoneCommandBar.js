@@ -4,6 +4,7 @@
 import * as React from 'react';
 import { Fabric } from 'office-ui-fabric-react/lib/Fabric';
 import { CommandBar } from 'office-ui-fabric-react/lib/CommandBar';
+import { SearchBox } from 'office-ui-fabric-react/lib/SearchBox';
 
 
 // ----- COMPONENT
@@ -30,6 +31,14 @@ const HcGetItDoneCommandBar = props => (
 						},
 					]
 				}
+			/>
+			<SearchBox
+				placeholder="Filter"
+				iconProps={{ iconName: 'Filter' }}
+				onSearch={newValue => console.log(`value is ${newValue}`)}
+				onFocus={() => console.log('onFocus called')}
+				onBlur={() => console.log('onBlur called')}
+				onChange={() => console.log('onChange called')}
 			/>
 		</Fabric>
 	</div>
