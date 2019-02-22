@@ -4,6 +4,7 @@
 import * as React from 'react';
 import HcMessagesMessagePreview from '../HcMessagesMessagePreview/HcMessagesMessagePreview';
 
+
 // ----- COMPONENT
 export default class HcMessagesList extends React.Component {
 	render() {

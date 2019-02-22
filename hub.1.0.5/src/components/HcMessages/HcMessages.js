@@ -25,6 +25,7 @@ import './HcMessages.sass';
 import './HcMessagesSmall.sass';
 import './HcMessagesMediumLarge.sass';
 
+
 // ----- COMPONENT
 
 const messagesPerPageSmallScreen = 8;
