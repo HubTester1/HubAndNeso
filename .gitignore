@@ -27,12 +27,3 @@ obj
 
 # Misc
 *.txt
-reactApp.js
-nesoActiveDirectory.js
-nesoActiveDirectoryTwo.js
-activeDirectory.js
-
-
-
-hub.1.0.5/src/components/HcMessages/HcMessages.js
-hub.1.0.5/src/components/HcMessages/components/HcMessagesList/HcMessagesList.js
