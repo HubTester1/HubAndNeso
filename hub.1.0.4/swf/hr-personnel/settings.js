@@ -97,7 +97,7 @@
 			// },
 			// 'standardThisRequestAndRequesterElements': 1,
 			// 'standardButtonElements': 1,
-			'standardButtonElementsInitiallyHidden': 1,
+			// 'standardButtonElementsInitiallyHidden': 1,
 			'standardComponentGrpAdminOnlyElements': 1
 		},
 		'alwaysTalkToRequester': 1,
@@ -3789,7 +3789,7 @@
 					'<a id="standard-printer-button-inside-request" data-print-function="PrintPersonnelActionRequest">Print Request</a>' +
 					'<ul>' +
 					'	<li>Print this request.</li>' +
-					'	<li>Save this request.</li>' +
+					// '	<li>Save this request.</li>' +
 					'	<li>Acquire appropriate signatures, and submit to Human Resources.</li>' +
 					'</ul>'
 
