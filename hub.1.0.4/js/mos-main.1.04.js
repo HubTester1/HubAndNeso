@@ -15250,7 +15250,9 @@
 		var lastRepeatIDNumber = 0;
 		// if any repeats are found, get the number off of the end of the last one's id
 		if ($("[id^='" + originalToRepeat + "-repeat']").length) {
-			lastRepeatIDNumber = Number($("[id^='" + originalToRepeat + "-repeat']").last().attr('id').slice(-1));
+			var lastRepeatID = $("[id^='" + originalToRepeat + "-repeat']").last().attr('id');
+			var lastRepeatIDNumberSeparatorPosition = lastRepeatID.lastIndexOf('-');
+			lastRepeatIDNumber = Number(lastRepeatID.slice(lastRepeatIDNumberSeparatorPosition + 1));
 		}
 
 		// --- determine the id of the element after which to insert the repeat
@@ -15291,8 +15293,9 @@
 				// if there's a submittedID
 				if (typeof (submittedID) != 'undefined') {
 					// use the number on the end of it
-					var newRepeatDescendantIDNumber = submittedID.slice(-1);
-					// otherwise
+					var newRepeatDescendantIDNumberSeparatorPosition = submittedID.lastIndexOf('-');
+					var newRepeatDescendantIDNumber = Number(submittedID.slice(newRepeatDescendantIDNumberSeparatorPosition + 1));
+				// otherwise
 				} else {
 					// construct a new one
 					var newRepeatDescendantIDNumber = lastRepeatIDNumber + 1;
