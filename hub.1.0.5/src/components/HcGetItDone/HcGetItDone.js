@@ -29,12 +29,15 @@ export default class HcGetItDone extends React.Component {
 			showViewByGroup: true,
 			listItemsAlphaArray: [],
 			listItemsGroupedArray: [],
+			listItemsToRenderAlphaArray: [],
+			listItemsToRenderGroupedArray: [],
 			queryError: false,
 			ready: false,
 			fakeReady: false,
 		};
 		this.handleClickViewByAlphaButton = this.handleClickViewByAlphaButton.bind(this);
 		this.handleClickViewByGroupButton = this.handleClickViewByGroupButton.bind(this);
+		this.handleFilterTextChange = this.handleFilterTextChange.bind(this);
 		this.returnHcGetItDoneBody = this.returnHcGetItDoneBody.bind(this);
 	}
 	componentDidMount() {
@@ -43,6 +46,8 @@ export default class HcGetItDone extends React.Component {
 				this.setState(() => ({
 					listItemsAlphaArray: allGetItDoneItemsData.allListItemsAlpha,
 					listItemsGroupedArray: allGetItDoneItemsData.allListItemsGrouped,
+					listItemsToRenderAlphaArray: allGetItDoneItemsData.allListItemsAlpha,
+					listItemsToRenderGroupedArray: allGetItDoneItemsData.allListItemsGrouped,
 					ready: true,
 				}));
 			})
@@ -69,6 +74,17 @@ export default class HcGetItDone extends React.Component {
 			showViewByGroup: true,
 		}));
 	}
+	handleFilterTextChange(filterText) {
+		console.log('handling filter text change');
+		console.log(filterText);
+
+		if (!filterText) {
+			this.setState(() => ({
+				listItemsToRenderAlphaArray: this.state.listItemsAlphaArray,
+				listItemsToRenderGroupedArray: this.state.listItemsGroupedArray,
+			}));
+		}
+	}
 	returnHcGetItDoneBody() {
 		// if this user has no roles property, then uData wasn't constructed properly and 
 		// 		we won't risk exposing links to them inappropriately
@@ -78,19 +94,20 @@ export default class HcGetItDone extends React.Component {
 					<HcGetItDoneCommandBar
 						handleClickViewByGroupButton={this.handleClickViewByGroupButton}
 						handleClickViewByAlphaButton={this.handleClickViewByAlphaButton}
+						handleFilterTextChange={this.handleFilterTextChange}
 					/>
 					{
 						this.state.showViewByGroup &&
 
 						<HcGetItDoneViewByGroup
-							listItemsGroupedArray={this.state.listItemsGroupedArray}
+							listItemsGroupedArray={this.state.listItemsToRenderGroupedArray}
 						/>
 					}
 					{
 						this.state.showViewByAlpha &&
 
 						<HcGetItDoneViewByAlpha
-							listItemsAlphaArray={this.state.listItemsAlphaArray}
+							listItemsAlphaArray={this.state.listItemsToRenderAlphaArray}
 						/>
 					}
 				</div>
@@ -113,6 +130,10 @@ export default class HcGetItDone extends React.Component {
 		);
 	}
 	render() {
+		console.log('this.state.listItemsAlphaArray');
+		console.log(this.state.listItemsAlphaArray);
+		console.log('this.state.listItemsToRenderGroupedArray');
+		console.log(this.state.listItemsToRenderGroupedArray);
 		if (!this.state.queryError && this.props.screenType === 'small') {
 			return (
 				<AccordionItem
