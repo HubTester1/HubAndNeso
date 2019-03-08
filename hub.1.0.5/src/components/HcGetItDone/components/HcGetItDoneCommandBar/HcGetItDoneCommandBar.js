@@ -35,10 +35,7 @@ const HcGetItDoneCommandBar = props => (
 			<SearchBox
 				placeholder="Filter"
 				iconProps={{ iconName: 'Filter' }}
-				onSearch={newValue => console.log(`value is ${newValue}`)}
-				onFocus={() => console.log('onFocus called')}
-				onBlur={() => console.log('onBlur called')}
-				onChange={() => console.log('onChange called')}
+				onChange={props.handleFilterTextChange}
 			/>
 		</Fabric>
 	</div>
