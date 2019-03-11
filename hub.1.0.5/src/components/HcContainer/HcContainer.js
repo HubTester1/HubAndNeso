@@ -72,8 +72,8 @@ class HcContainer extends React.Component {
 	}
 	render() {
 		if (
-			this.state.contextReady && 
-			this.state.nesoIsAvailable && 
+			this.state.contextReady &&
+			this.state.nesoIsAvailable &&
 			!this.state.maintenanceModeThisUser
 		) {
 			document.body.classList.add('contains-hub-central');
@@ -82,8 +82,8 @@ class HcContainer extends React.Component {
 					id="hc-container"
 					className={`mos-react-component-root${this.state.showSmallNav ? ' showing-small-nav' : ''}`}
 				>
-					{/* <div
-						id="hc-header-and-hero-container" 
+					<div
+						id="hc-header-and-hero-container"
 						className="hc-header-and-hero-container"
 					>
 						<MediaQuery maxWidth={ScreenSizes.ReturnSmallMax()}>
@@ -97,7 +97,7 @@ class HcContainer extends React.Component {
 						</MediaQuery>
 						<MediaQuery
 							minWidth={ScreenSizes.ReturnMediumMin()}
-							maxWidth={ScreenSizes.ReturnMediumMax()}	
+							maxWidth={ScreenSizes.ReturnMediumMax()}
 						>
 							<HcHeader
 								screenType="medium"
@@ -116,7 +116,7 @@ class HcContainer extends React.Component {
 								uData={this.state.uData}
 							/>
 						</MediaQuery>
-					</div> */}
+					</div>
 
 
 					<MediaQuery maxWidth={ScreenSizes.ReturnSmallMax()}>
@@ -125,62 +125,62 @@ class HcContainer extends React.Component {
 							accordion={false}
 							role="tablist"
 						>
-							{/* <HcPushedItems
+							<HcPushedItems
 								screenType="small"
-							/> */}
+							/>
 							<HcGetItDone
 								screenType="small"
 								uData={this.state.uData}
 							/>
-							{/* <HcOrganization
+							<HcOrganization
 								screenType="small"
 							/>
 							<HcMessages
 								uData={this.state.uData}
 								allOrTop="all"
 								screenType="small"
-							/> */}
+							/>
 						</Accordion>
 					</MediaQuery>
-					<MediaQuery 
-						minWidth={ScreenSizes.ReturnMediumMin()} 
+					<MediaQuery
+						minWidth={ScreenSizes.ReturnMediumMin()}
 						maxWidth={ScreenSizes.ReturnMediumMax()}
 					>
-						{/* <HcPushedItems
+						<HcPushedItems
 							screenType="medium"
-						/> */}
+						/>
 						<HcGetItDone
 							screenType="medium"
 							uData={this.state.uData}
 						/>
-						{/* <HcOrganization
+						<HcOrganization
 							screenType="medium"
 						/>
 						<HcMessages
 							uData={this.state.uData}
 							allOrTop="all"
 							screenType="medium"
-						/> */}
+						/>
 					</MediaQuery>
 					<MediaQuery minWidth={ScreenSizes.ReturnLargeMin()}>
-						{/* <HcPushedItems
+						<HcPushedItems
 							screenType="large"
-						/> */}
+						/>
 						<HcGetItDone
 							screenType="medium"
 							uData={this.state.uData}
 						/>
-						{/* <HcOrganization
+						<HcOrganization
 							screenType="medium"
 						/>
 						<HcMessages
 							uData={this.state.uData}
 							allOrTop="all"
 							screenType="medium"
-						/> */}
+						/>
 					</MediaQuery>
 					<footer>
-					&copy; {MOSUtilities.ReturnFormattedDateTime({ incomingDateTimeString: 'nowLocal', incomingReturnFormat: 'YYYY' })} Museum of Science
+						&copy; {MOSUtilities.ReturnFormattedDateTime({ incomingDateTimeString: 'nowLocal', incomingReturnFormat: 'YYYY' })} Museum of Science
 					</footer>
 				</div>
 			);
@@ -232,7 +232,7 @@ function ShowScreen() {
 		// if neso is not available
 		if (!window.nesoIsAvailable) {
 			ConfigAndShowNesoUnavailableScreen();
-		// if component is in maintenance mode
+			// if component is in maintenance mode
 		} else if (window.maintenanceModeThisUser) {
 			ShowMaintenanceModeScreen();
 		} else {
@@ -246,9 +246,9 @@ function ShowScreen() {
 			}
 			if (window.uData.account && window.uData.account === 'showe') {
 				// /sites/-dev-hc/Lists/Acc
-				const ribbonForStan = 
+				const ribbonForStan =
 					document.querySelector('form[action^="/Lists/Accounting%20Whats%20New%20Hub"] div#s4-ribbonrow');
-				if (ribbonForStan) {					
+				if (ribbonForStan) {
 					ribbonForStan.style.display = 'block';
 				}
 			}
@@ -306,7 +306,7 @@ function ShowScreen() {
 			}
 
 			personaSet += '</span></span> \n' +
-			'	<span class="name_title"> \n';
+				'	<span class="name_title"> \n';
 			if (typeof (userProfileValues.PreferredName) !== 'undefined' && userProfileValues.PreferredName !== '') {
 				if (typeof (userProfileValues['SPS-PersonalSiteCapabilities']) !== 'undefined' && userProfileValues['SPS-PersonalSiteCapabilities'] !== '') {
 					personaSet += `		<a class="profile" href="https://bmos-my.sharepoint.com/_layouts/15/me.aspx?u=${userProfileValues['msOnline-ObjectId']}" target="_blank">${userProfileValues.PreferredName}</a> \n`;
@@ -320,7 +320,7 @@ function ShowScreen() {
 			}
 
 			personaSet += '	</span> \n' +
-			'</div>\n';
+				'</div>\n';
 		});
 
 		personaSet += '</div>';
