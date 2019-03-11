@@ -19,33 +19,31 @@ export default props => (
 					<h3>
 						<a
 							id="photo-source-link"
-							href="https://unsplash.com/photos/W8KTS-mhFUE"
+							href="https://unsplash.com/photos/E4944K_4SvI"
 							target="_blank"
 							rel="noopener noreferrer"
 						>
 							Photo
 						</a>
-						&nbsp;&quot;Milky Way&quot; by&nbsp;
+						&nbsp;by&nbsp;
 						<a
 							id="photographer-link"
-							href="https://unsplash.com/@billy_huy"
+							href="https://unsplash.com/@ldandersen"
 							target="_blank"
 							rel="noopener noreferrer"
 						>
-							Billy Huynh
+							Buzz Andersen
 						</a>
 					</h3>
 					<p>
-						&quot;More than anything, this photograph was really the
-						result of a series of little accidents. After abandoning
-						a hike halfway through due to lack of sunlight, we
-						subsequently began to make our way back home. As we
-						drove through a long stretch of highway, I made the
-						decision to nap in the back, but before that, for
-						whatever reason, I peered out the window and into
-						the heavens first. At that point, I began screaming
-						like a madman telling everyone to look up. Amazed,
-						we pulled into the next rest stop.&quot;
+						&quot;I was visiting the Big Island of Hawaii with some friends and family, 
+						and my brother convinced the group to take a lava tour by boat. I always kind of 
+						balk a little bit at overtly touristy stuff like that, but I think everyone was 
+						pretty shocked when we got our first look at the Kalapana Lava Flow after about 
+						a half hour boat trip down the coast. It&apos;s such an awesome, 
+						phantasmagorical sight and, since they actually get surprisingly close 
+						to the spots where the rivers of lava meet the ocean and throw up 
+						sulfurous steam clouds, also a pretty visceral sensory experience.&quot;
 					</p>
 				</div>
 			</Collapsible>
