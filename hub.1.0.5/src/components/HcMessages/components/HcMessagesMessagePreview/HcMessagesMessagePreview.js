@@ -10,6 +10,7 @@ import HcMessagesMessage from '../HcMessagesMessage/HcMessagesMessage';
 // import HcMessagesMessageImagePreview from 
 // '../HcMessagesMessageImagePreview/HcMessagesMessageImagePreview';
 import ScreenSizes from '../../../../services/ScreenSizes';
+import MOSUtilities from '../../../../services/MOSUtilities';
 
 // ----- COMPONENT
 
@@ -45,32 +46,49 @@ export default class HcMessagesMessagePreview extends React.Component {
 	returnHtml(html) {
 		return { __html: `<div>${html}</div>` };
 	}
+	returnFriendlyDate(dateString) {
+		// if today
+		// 		time only
+		// else if in the last week
+		// 		day and time
+		// else
+		// 		day and date (display year dynamically)
+		return MOSUtilities.ReturnFormattedDateTime({ incomingDateTimeString: dateString, incomingReturnFormat: 'ddd h:mm a' });
+	}
 	render() {
 		Modal.setAppElement('#hub-central-mount-point');
-		// console.log(this.props.messageContent);
 		return (
-			<li id={`hc-messages-message-preview_${this.props.messageId}`} className="hc-messages-message-preview-or-inline mos-react-component-root">
+			<li className="mos-react-component-root">
+			
 				{
 					!this.state.showInlineFull &&
-
-					<h3 className="hc-messages-message-subject">
-						{this.props.messageContent.subject}
-					</h3>
-				}
-				{
-					!this.state.showInlineFull &&
-
-					<div className="hc-messages-message-preview-truncated-body">
-						<MediaQuery minWidth={ScreenSizes.ReturnMediumMin()}>
+					
+					<div className="hc-messages-message-preview">
+						<h3 className="hc-messages-message-subject">
 							<Truncate
-								lines={2}
-								ellipsis={
-									<span>...</span>
-								}
+								lines={1}
+								ellipsis={<span>...</span>}
 							>
-								<div className="hc-messages-message-body" dangerouslySetInnerHTML={this.returnHtml(this.props.messageContent.body)} />
+								{this.props.messageContent.subject}
 							</Truncate>
-							<div className="hc-messages-message-button-container">
+						</h3>
+						<p className="hc-messages-message-date">
+							<span className="hc-messages-message-date-prefix">Posted: </span>
+							{this.returnFriendlyDate(this.props.messageContent.created)}
+						</p>
+						<p className="hc-messages-message-author">
+							<span className="hc-messages-message-author-prefix">Posted by: </span>
+							{this.props.messageContent.creator.displayName}
+						</p>
+						<div className="hc-messages-message-preview-truncated-body">
+							<MediaQuery minWidth={ScreenSizes.ReturnMediumMin()}>
+								<Truncate
+									lines={1}
+									ellipsis={<span>...</span>}
+								>
+									<div className="hc-messages-message-body" dangerouslySetInnerHTML={this.returnHtml(this.props.messageContent.body)} />
+								</Truncate>
+								
 								<button
 									className="hc-messages-message-full-message-button"
 									onClick={this.handleOpenModalClick}
@@ -80,53 +98,52 @@ export default class HcMessagesMessagePreview extends React.Component {
 								{
 									this.props.messageContent.creator.account === this.props.uData.account &&
 
-									<span className="hc-messages-message-conditional-button-container">
-										<span className="hc-messages-message-conditional-button-separator" />
-										<button
-											className="hc-messages-message-enable-message-update-button"
-											onClick={
-												e => this.props.enableMessageUpdate(this.props.messageContent.messageID, e)
-											}
-										>
-											<span className="button-text-container">Modify message</span>
-										</button>
-									</span>
+									<div className="hc-messages-message-button-container">
+										<span className="hc-messages-message-conditional-button-container">
+											<span className="hc-messages-message-conditional-button-separator" />
+											<button
+												className="hc-messages-message-enable-message-update-button"
+												onClick={
+													e => this.props.enableMessageUpdate(this.props.messageContent.messageID, e)
+												}
+											>
+												<span className="button-text-container">Modify message</span>
+											</button>
+										</span>
+									</div>
 								}
-							</div>
-							<Modal
-								className="hc-messages-message-full-message-modal"
-								isOpen={this.state.showModalFull}
-								onAfterOpen={this.handleAfterModalOpens}
-								onRequestClose={this.handleCloseModalClick}
-								contentLabel="More"
-								ariaHideApp={false}
-							>
-								<HcMessagesMessage
-									messageId={this.props.messageId}
-									messageContent={this.props.messageContent}
-									handleCloseModalClick={this.handleCloseModalClick}
-									handleCloseInlineFullClick={this.handleCloseInlineFullClick}
-								/>
-							</Modal>
-						</MediaQuery>
-						<MediaQuery maxWidth={ScreenSizes.ReturnSmallMax()}>
-							<Truncate
-								lines={1}
-								ellipsis={
-									<span>...</span>
-								}
-							>
-								<div className="hc-messages-message-body" dangerouslySetInnerHTML={this.returnHtml(this.props.messageContent.body)} />
-							</Truncate>
-							<div className="hc-messages-message-button-container">
-								<button
-									className="hc-messages-message-full-message-button"
-									onClick={this.handleOpenInlineFullClick}
+								<Modal
+									className="hc-messages-message-full-message-modal"
+									isOpen={this.state.showModalFull}
+									onAfterOpen={this.handleAfterModalOpens}
+									onRequestClose={this.handleCloseModalClick}
+									contentLabel="More"
+									ariaHideApp={false}
 								>
-									<span className="button-text-container">Full message</span>
-								</button>
-								{
-									this.props.messageContent.creator.account === this.props.uData.account &&
+									<HcMessagesMessage
+										messageId={this.props.messageId}
+										messageContent={this.props.messageContent}
+										handleCloseModalClick={this.handleCloseModalClick}
+										handleCloseInlineFullClick={this.handleCloseInlineFullClick}
+									/>
+								</Modal>
+							</MediaQuery>
+							<MediaQuery maxWidth={ScreenSizes.ReturnSmallMax()}>
+								<Truncate
+									lines={1}
+									ellipsis={<span>...</span>}
+								>
+									<div className="hc-messages-message-body" dangerouslySetInnerHTML={this.returnHtml(this.props.messageContent.body)} />
+								</Truncate>
+								<div className="hc-messages-message-button-container">
+									<button
+										className="hc-messages-message-full-message-button"
+										onClick={this.handleOpenInlineFullClick}
+									>
+										<span className="button-text-container">Full message</span>
+									</button>
+									{
+										this.props.messageContent.creator.account === this.props.uData.account &&
 
 									<button
 										className="hc-messages-message-enable-message-update-button"
@@ -136,9 +153,10 @@ export default class HcMessagesMessagePreview extends React.Component {
 									>
 										<span className="button-text-container">Modify message</span>
 									</button>
-								}
-							</div>
-						</MediaQuery>
+									}
+								</div>
+							</MediaQuery>
+						</div>
 					</div>
 				}
 				{

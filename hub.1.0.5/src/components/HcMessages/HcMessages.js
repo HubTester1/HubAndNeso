@@ -746,6 +746,7 @@ export default class HcMessages extends React.Component {
 		);
 	}
 	render() {
+		console.log(this.state.messagesArray);
 		if (this.props.allOrTop === 'all' && this.props.screenType === 'medium') {
 			return (
 				<div id="hc-messages-all" className="mos-react-component-root" name="hc-messages-all">

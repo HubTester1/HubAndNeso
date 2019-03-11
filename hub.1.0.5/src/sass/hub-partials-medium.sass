@@ -428,11 +428,16 @@
 				padding: 0
 				margin: 0
 
-				li.hc-messages-message-preview-or-inline
+				li.mos-react-component-root
+					list-style: none
+					margin: 0 1rem 1rem 0
+					-webkit-column-break-inside: avoid
+					break-inside: avoid
+					page-break-inside: avoid
+
+				div.hc-messages-message-preview
 					+round-corners
 					+small-shadow-bottom-right-light-color
-					display: block
-					margin: 0 1rem 1rem 0
 					padding: 2rem
 					background-color: $white-5-percent
 					border-top: 5px solid $pink-10
@@ -440,6 +445,7 @@
 					transition: border-color .5s, background-color .5s, height .5s
 
 					h3.hc-messages-message-subject
+						+font-size-6
 						color: white
 
 					button.hc-messages-message-full-message-button,
@@ -490,12 +496,12 @@
 								color: $aqua-5
 								background-color: transparent
 
-				li.hc-messages-message-preview-or-inline:nth-child(3),
-				li.hc-messages-message-preview-or-inline:nth-child(4)
+				li.mos-react-component-root:nth-child(3),
+				li.mos-react-component-root:nth-child(4)
 					display: none
 
-				li.hc-messages-message-preview-or-inline:nth-child(2),
-				li.hc-messages-message-preview-or-inline:nth-child(4)
+				li.mos-react-component-root:nth-child(2),
+				li.mos-react-component-root:nth-child(4)
 					margin-bottom: 0
 
 	// all messages
@@ -519,19 +525,24 @@
 			column-count: 4
 			column-gap: 0
 
-			li.hc-messages-message-preview-or-inline
-				+round-corners
-				+small-shadow-bottom-right-light-color
+			li.mos-react-component-root
 				list-style: none
+				margin: 0 1rem 1rem 0
 				-webkit-column-break-inside: avoid
 				break-inside: avoid
 				page-break-inside: avoid
+
+			div.hc-messages-message-preview
+				+round-corners
+				+small-shadow-bottom-right-light-color
 				padding: 2rem
 				background-color: $white-95-percent
-				margin: 0 1rem 1rem 0
 				border-top: 5px solid $white-10-percent
 				border-bottom: 5px solid $white-10-percent
 				transition: border-color .5s, background-color .5s, height .5s
+
+				h3.hc-messages-message-subject
+					+font-size-6
 
 				div.hc-messages-message-preview-or-inline-truncated-body
 					+font-weight-semilight

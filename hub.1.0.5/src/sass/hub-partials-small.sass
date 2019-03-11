@@ -402,10 +402,14 @@
 
 		ul#hc-messages-list
 
-			li.hc-messages-message-preview-or-inline
+			li.mos-react-component-root
 				list-style: none
-				background-color: $white
 				margin: 3rem 0 0 0
+
+			// preview
+			
+			div.hc-messages-message-preview
+				background-color: $white
 
 				h3.hc-messages-message-subject
 					+font-weight-regular
@@ -428,37 +432,37 @@
 					border: 0
 					cursor: pointer
 
-				// inline full
+			// inline full
 
-				div.hc-messages-message-inline-message
-					+round-corners
-					+grid-element-darkened-1
-					padding: 2rem
-					
-					div.hc-messages-message-image-container
+			div.hc-messages-message-inline-message
+				+round-corners
+				+grid-element-darkened-1
+				padding: 2rem
+				
+				div.hc-messages-message-image-container
 
-						img.hc-messages-message-image
-							max-width: 100%
-							margin-bottom: 2rem
+					img.hc-messages-message-image
+						max-width: 100%
+						margin-bottom: 2rem
 
-					p.hc-messages-message-creator
-						+font-weight-regular
-						margin: 0
-						color: $grey-13
-					
-					p.hc-messages-message-created,
-					p.hc-messages-message-tags
-						font-style: italic
-						color: $grey-11
+				p.hc-messages-message-creator
+					+font-weight-regular
+					margin: 0
+					color: $grey-13
+				
+				p.hc-messages-message-created,
+				p.hc-messages-message-tags
+					font-style: italic
+					color: $grey-11
 
-					div.hc-messages-message-body
-						padding-bottom: 2rem
-						color: $grey-16
+				div.hc-messages-message-body
+					padding-bottom: 2rem
+					color: $grey-16
 
-					button.hc-messages-message-control
-						+button
-						+button-colored
-						margin: 1rem 0 0 0 !important
+				button.hc-messages-message-control
+					+button
+					+button-colored
+					margin: 1rem 0 0 0 !important
 
 		ul.pagination
 			margin-top: 3rem
