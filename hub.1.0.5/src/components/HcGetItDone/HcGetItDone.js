@@ -33,7 +33,6 @@ export default class HcGetItDone extends React.Component {
 			listItemsToRenderGroupedArray: [],
 			queryError: false,
 			ready: false,
-			fakeReady: false,
 		};
 		this.handleClickViewByAlphaButton = this.handleClickViewByAlphaButton.bind(this);
 		this.handleClickViewByGroupButton = this.handleClickViewByGroupButton.bind(this);
@@ -75,15 +74,36 @@ export default class HcGetItDone extends React.Component {
 		}));
 	}
 	handleFilterTextChange(filterText) {
-		console.log('handling filter text change');
+		console.log('filterText');
 		console.log(filterText);
-
 		if (!filterText) {
 			this.setState(() => ({
 				listItemsToRenderAlphaArray: this.state.listItemsAlphaArray,
 				listItemsToRenderGroupedArray: this.state.listItemsGroupedArray,
 			}));
+		} else {
+			// const filterTextLowerCase = filterText.toLowerCase();
+			const newlistItemsToRenderGroupedArray = [];
+			const newListItemsToRenderAlphaArray = this.state.listItemsAlphaArray
+				.filter(this.returnItemIncludesFilterText(filterText));
+			this.state.listItemsGroupedArray.forEach((groupValue, groupIndex) => {
+				const groupCopy = groupValue;
+				groupCopy.items = groupValue.items.filter(this.returnItemIncludesFilterText(filterText));
+				if (groupCopy.items.length) {
+					newlistItemsToRenderGroupedArray.push(groupCopy);
+				}
+			});
+			this.setState(() => ({
+				listItemsToRenderAlphaArray: newListItemsToRenderAlphaArray,
+				listItemsToRenderGroupedArray: newlistItemsToRenderGroupedArray,
+			}));
 		}
+	}
+	returnItemIncludesFilterText(filterText) {
+		const filterTextLowerCase = filterText.toLowerCase();
+		return item => 
+			item.anchorText.toLowerCase().includes(filterTextLowerCase) || 
+			(item.description && item.description.toLowerCase().includes(filterTextLowerCase));
 	}
 	returnHcGetItDoneBody() {
 		// if this user has no roles property, then uData wasn't constructed properly and 
@@ -130,8 +150,8 @@ export default class HcGetItDone extends React.Component {
 		);
 	}
 	render() {
-		console.log('this.state.listItemsAlphaArray');
-		console.log(this.state.listItemsAlphaArray);
+		// console.log('this.state.listItemsToRenderAlphaArray');
+		// console.log(this.state.listItemsToRenderAlphaArray);
 		console.log('this.state.listItemsToRenderGroupedArray');
 		console.log(this.state.listItemsToRenderGroupedArray);
 		if (!this.state.queryError && this.props.screenType === 'small') {
