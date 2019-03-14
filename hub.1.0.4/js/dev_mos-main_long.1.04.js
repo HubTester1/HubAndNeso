@@ -7876,7 +7876,7 @@
 								beginningOfLifeApprovalMention + '.</p>' +
 								'<p>In the meantime, you can contact ' + eData.requestedForLinkedNamesString + ' ' +
 								'with any questions or <a href="' + eData.uriOverview + '">' +
-								'check up on this and any other ' + eData.requestName + ' requests</a>.</p>'
+								'check up on this and any other ' + eData.requestName + ' Requests</a>.</p>'
 						});
 					});
 				}
@@ -7895,7 +7895,7 @@
 							beginningOfLifeApprovalMention + '.</p>' +
 							'<p>In the meantime, you can <a href="mailto:' + eData.adminEmailString + '">' +
 							'contact the admin</a> with any questions or <a href="' + eData.uriOverview + '">' +
-							'check up on this and any other ' + eData.requestName + ' requests</a>.</p>'
+							'check up on this and any other ' + eData.requestName + ' Requests</a>.</p>'
 					});
 				}
 			}
@@ -8018,7 +8018,7 @@
 								'You\'ll be notified again when the relevant people have approved this request.</p>' +
 								'<p>In the meantime, you can contact ' + eData.requestedForLinkedNamesString + ' ' +
 								'or <a href="' + eData.uriOverview + '">check up on this and any other ' +
-								eData.requestName + ' requests</a>.</p>'
+								eData.requestName + ' Requests</a>.</p>'
 						});
 					});
 
@@ -8034,7 +8034,7 @@
 							'have approved this request.</p>' +
 							'<p>In the meantime, you can <a href="mailto:' + eData.adminEmailString + '">' +
 							'contact the admin</a> with any questions or <a href="' + eData.uriOverview + '">' +
-							'check up on this and any other ' + eData.requestName + ' requests</a>.</p>'
+							'check up on this and any other ' + eData.requestName + ' Requests</a>.</p>'
 					});
 				}
 			}
