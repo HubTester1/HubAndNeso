@@ -1417,10 +1417,21 @@
 					if (!andObject.operator) {
 						andObject.operator = 'Eq';
 					}
-					query += "<" + andObject.operator + ">" +
-						"<FieldRef Name='" + andObject.field + "'></FieldRef>" +
-						"<Value Type='" + andObject.type + "'>" + andObject.value + "</Value>" +
-						"</" + andObject.operator + ">";
+					if (andObject.value) {
+						query += "<" + andObject.operator + ">";
+						query += "<FieldRef Name='" + andObject.field + "'></FieldRef>" +
+							"<Value Type='" + andObject.type + "'>" + andObject.value + "</Value>";
+						query += "</" + andObject.operator + ">";
+					} else if (andObject.values) {
+						query += "<In>";
+						query += "<FieldRef Name='" + andObject.field + "'></FieldRef>";
+						query += "<Values>";
+						andObject.values.sourceArray.forEach((item) => {
+							query += "<Value Type='" + andObject.type + "'>" + item[andObject.values.property] + "</Value>";
+						});
+						query += "</Values>";
+						query += "</In>";
+					}
 				});
 				query += "</And>";
 			}
@@ -22207,78 +22218,89 @@
 				selectedManagerWithDownline = manager;
 			}
 		});
-
 		var allMarkup = '';
 		var departmentMarkups = {};
+		var downlineRetrievedFromNeso = true;
 
-		var downlineDivisionKeys = Object.keys(selectedManagerWithDownline.downline);
-		downlineDivisionKeys.forEach((divisionKey) => {
-			var downlineDepartmentKeys = Object.keys(selectedManagerWithDownline.downline[divisionKey]);
-			downlineDepartmentKeys.forEach((departmentKey) => {
-				var departmentKeySanitized =
-					ReplaceAll(' ', '-', ReplaceAll('&', 'and', ReplaceAll('/', 'and', ReplaceAll('\'', '', departmentKey))));
-				var departmentContainerID =
-					'department-content_' + departmentKeySanitized;
-				var departmentMarkup =
-					'<div class="department-container">' +
-					'<h3 class="department-name">' + departmentKey + '</h3> \n' +
-					'<div id="' + departmentContainerID + '" class="department-content"> \n' +
-					'	<table class="gse-signups-user-summary">' +
-					'		<thead><tr>' +
-					'			<th></th><th class="small-column-header">Total</th>' +
-					'			<th class="small-column-header">Credit Granted</th>' +
-					'			<th class="small-column-header">Credit Denied</th>' +
-					'			<th class="small-column-header">Credit Pending</th>' +
-					'		</tr></thead>' +
-					'		<tbody>';
+		if (!selectedManagerWithDownline || !selectedManagerWithDownline.downline) {
+			selectedManagerWithDownline = $().ReturnUser(ReplaceAll('@mos.org', '', uData.userName));
+			selectedManagerWithDownline.downline = {};
+			selectedManagerWithDownline.downline[selectedManagerWithDownline.division] = {};
+			selectedManagerWithDownline.downline[selectedManagerWithDownline.division][selectedManagerWithDownline.department] = [];
+			selectedManagerWithDownline.downline[selectedManagerWithDownline.division][selectedManagerWithDownline.department].push($().ReturnUser(ReplaceAll('@mos.org', '', uData.userName)));
+			downlineRetrievedFromNeso = false;
+		}
 
-				if (selectedManagerWithDownline.downline[divisionKey]) {
-					if (selectedManagerWithDownline.department === departmentKey) {
-						selectedManagerWithDownline.downline[divisionKey][departmentKey].push(selectedManagerWithDownline);
-						selectedManagerWithDownline.downline[divisionKey][departmentKey].sort(CompareUsersByLastNameForArraySorting);
-					}
-					selectedManagerWithDownline.downline[divisionKey][departmentKey].forEach((user, index) => {
-						var evenOrOdd = ((index % 2) == 0) ? 'odd' : 'even';
-						var totalCount = 0;
-						var creditGrantedCount = 0;
-						var creditDeniedCount = 0;
-						var creditPendingCount = 0;
-						if (augmentedSignups[user.account]) {
-							totalCount = augmentedSignups[user.account].length;
-							augmentedSignups[user.account].forEach((signup) => {
-								switch (signup.formData['Request-Status']) {
-									case 'Signed Up':
-										creditPendingCount += 1;
-										break;
-									case 'Credit Denied':
-										creditDeniedCount += 1;
-										break;
-									case 'Credit Granted':
-										creditGrantedCount += 1;
-										break;
-								}
-							});
+		if (selectedManagerWithDownline && selectedManagerWithDownline.downline) {
+			var downlineDivisionKeys = Object.keys(selectedManagerWithDownline.downline);
+			downlineDivisionKeys.forEach((divisionKey) => {
+				var downlineDepartmentKeys = Object.keys(selectedManagerWithDownline.downline[divisionKey]);
+				downlineDepartmentKeys.forEach((departmentKey) => {
+					var departmentKeySanitized =
+						ReplaceAll(' ', '-', ReplaceAll('&', 'and', ReplaceAll('/', 'and', ReplaceAll('\'', '', departmentKey))));
+					var departmentContainerID =
+						'department-content_' + departmentKeySanitized;
+					var departmentMarkup =
+						'<div class="department-container">' +
+						'<h3 class="department-name">' + departmentKey + '</h3> \n' +
+						'<div id="' + departmentContainerID + '" class="department-content"> \n' +
+						'	<table class="gse-signups-user-summary">' +
+						'		<thead><tr>' +
+						'			<th></th><th class="small-column-header">Total</th>' +
+						'			<th class="small-column-header">Credit Granted</th>' +
+						'			<th class="small-column-header">Credit Denied</th>' +
+						'			<th class="small-column-header">Credit Pending</th>' +
+						'		</tr></thead>' +
+						'		<tbody>';
+
+					if (selectedManagerWithDownline.downline[divisionKey]) {
+						if (selectedManagerWithDownline.department === departmentKey && downlineRetrievedFromNeso) {
+							selectedManagerWithDownline.downline[divisionKey][departmentKey].push(selectedManagerWithDownline);
+							selectedManagerWithDownline.downline[divisionKey][departmentKey].sort(CompareUsersByLastNameForArraySorting);
 						}
-						departmentMarkup += '<tr class="' + evenOrOdd + '">';
-						departmentMarkup += totalCount > 0 ?
-							'<td><button class="gse-signups-user-detail-control" data-user-account="' + user.account + '" data-user-name="' + user.displayName + '">' + user.displayName + '</button></td>' :
-							'<td>' + user.displayName + '</td>';
-						departmentMarkup += '<td><div class="small-in-column">' + totalCount + '</div></td>' +
-							'<td><div class="small-in-column">' + creditGrantedCount + '</div></td>' +
-							'<td><div class="small-in-column">' + creditDeniedCount + '</div></td>' +
-							'<td><div class="small-in-column">' + creditPendingCount + '</div></td>' +
-							'</tr>';
-					});
-				}
-				departmentMarkup += '</tbody></table></div></div>';
-				departmentMarkups[departmentKeySanitized] = departmentMarkup;
+						selectedManagerWithDownline.downline[divisionKey][departmentKey].forEach((user, index) => {
+							var evenOrOdd = ((index % 2) == 0) ? 'odd' : 'even';
+							var totalCount = 0;
+							var creditGrantedCount = 0;
+							var creditDeniedCount = 0;
+							var creditPendingCount = 0;
+							if (augmentedSignups[user.account]) {
+								totalCount = augmentedSignups[user.account].length;
+								augmentedSignups[user.account].forEach((signup) => {
+									switch (signup.formData['Request-Status']) {
+										case 'Signed Up':
+											creditPendingCount += 1;
+											break;
+										case 'Credit Denied':
+											creditDeniedCount += 1;
+											break;
+										case 'Credit Granted':
+											creditGrantedCount += 1;
+											break;
+									}
+								});
+							}
+							departmentMarkup += '<tr class="' + evenOrOdd + '">';
+							departmentMarkup += totalCount > 0 ?
+								'<td><button class="gse-signups-user-detail-control" data-user-account="' + user.account + '" data-user-name="' + user.displayName + '">' + user.displayName + '</button></td>' :
+								'<td>' + user.displayName + '</td>';
+							departmentMarkup += '<td><div class="small-in-column">' + totalCount + '</div></td>' +
+								'<td><div class="small-in-column">' + creditGrantedCount + '</div></td>' +
+								'<td><div class="small-in-column">' + creditDeniedCount + '</div></td>' +
+								'<td><div class="small-in-column">' + creditPendingCount + '</div></td>' +
+								'</tr>';
+						});
+					}
+					departmentMarkup += '</tbody></table></div></div>';
+					departmentMarkups[departmentKeySanitized] = departmentMarkup;
+				});
 			});
-		});
-		var departmentMarkupsKeys = Object.keys(departmentMarkups);
-		departmentMarkupsKeys.sort(CompareElementsForArraySorting);
-		departmentMarkupsKeys.forEach((departmentMarkupKey) => {
-			allMarkup += departmentMarkups[departmentMarkupKey];
-		});
+			var departmentMarkupsKeys = Object.keys(departmentMarkups);
+			departmentMarkupsKeys.sort(CompareElementsForArraySorting);
+			departmentMarkupsKeys.forEach((departmentMarkupKey) => {
+				allMarkup += departmentMarkups[departmentMarkupKey];
+			});
+		}
 		$("#container_data").append(allMarkup);
 		$("#app-container").append('<div id="gse-signups-user-detail-dialog"></div>');
 		$("div#gse-signups-user-detail-dialog").dialog({
@@ -23003,13 +23025,22 @@
 				}
 			],
 			"where": {
-				"field": "ScheduleID",
-				"type": "Text",
-				// "operator": "Eq",
-				"values": {
-					"sourceArray": gseSchedulesArray,
-					"property": "ScheduleID"
-				}
+				"ands": [
+					{
+						"field": "ScheduleID",
+						"type": "Text",
+						// "operator": "Eq",
+						"values": {
+							"sourceArray": gseSchedulesArray,
+							"property": "ScheduleID"
+						}
+					}, {
+						"field": "RequestStatus",
+						"type": "Text",
+						"operator": "Eq",
+						"value": "Signed Up",
+					}
+				]
 			}
 		});
 		// reconfig schedules and augment with job and signup data
@@ -26014,6 +26045,29 @@
 	};
 
 
+	$.fn.ReturnUser = function (account) {
+		var managers = [];
+		// query the api for the data
+		$.ajax({
+			async: false,
+			method: "GET",
+			dataType: "json",
+			url: "https://neso.mos.org/activeDirectory/user/" + account,
+		})
+			.done(function (nesoData) {
+				// console.log("nesoData:");
+				// console.log(nesoData);
+				managers = nesoData.docs;
+			})
+			.fail(function (error) {
+				// console.log("no such luck - NESO");
+				// console.log(error);
+				managers = error;
+			});
+		return managers;
+	};
+
+
 
 	$.fn.ReturnOneManagerWithFlatDownline = function (account) {
 		var managers = [];
@@ -27737,15 +27791,26 @@
 		// data for the current user
 		uData = $().ReturnCurrentUserData();
 		/* uData = {
-			account: "i:0#.f|membership|lbeall@mos.org",
-			dept: "Informal Engineering & Computer Science Learning",
-			email: "lbeall@mos.org",
-			firstName: "Lydia",
-			lastName: "Beall",
-			name: "Lydia Beall",
+			account: "i:0#.f|membership|smcduffee@mos.org",
+			dept: "Marketing",
+			email: "smcduffee@mos.org",
+			firstName: "Sam",
+			lastName: "McDuffee",
+			name: "Sam McDuffee",
 			phone: "",
 			pictureURL: "",
-			userName: "lbeall@mos.org",
+			userName: "smcduffee@mos.org",
+		}; */
+		/* uData = {
+			account: "i:0#.f|membership|madams@mos.org",
+			dept: "Traveling Programs",
+			email: "madams@mos.org",
+			firstName: "Mike",
+			lastName: "Adams",
+			name: "Mike Adams",
+			phone: "",
+			pictureURL: "",
+			userName: "madams@mos.org",
 		}; */
 		
 		// metadata for all of The Hub and for all of this app
