@@ -176,7 +176,7 @@ class HcContainer extends React.Component {
 						<HcMessages
 							uData={this.state.uData}
 							allOrTop="all"
-							screenType="medium"
+							screenType="large"
 						/>
 					</MediaQuery>
 					<footer>
