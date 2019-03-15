@@ -167,7 +167,7 @@ class HcContainer extends React.Component {
 							screenType="large"
 						/>
 						<HcGetItDone
-							screenType="medium"
+							screenType="large"
 							uData={this.state.uData}
 						/>
 						<HcOrganization

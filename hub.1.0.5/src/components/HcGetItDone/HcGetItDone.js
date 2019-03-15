@@ -138,7 +138,17 @@ export default class HcGetItDone extends React.Component {
 			<div id="hc-get-it-done-body" />
 		);
 	}
-	returnPlaceholder() {
+	returnPlaceholder(screenType) {
+		if (screenType === 'medium') {
+			return (
+				<div
+					className="mos-placeholder-column-container hc-get-it-done-placeholder"
+				>
+					<RectShape className="mos-placeholder-column hc-get-it-done-placeholder-column" />
+					<RectShape className="mos-placeholder-column hc-get-it-done-placeholder-column" />
+				</div>
+			);
+		}
 		return (
 			<div
 				className="mos-placeholder-column-container hc-get-it-done-placeholder"
@@ -178,12 +188,15 @@ export default class HcGetItDone extends React.Component {
 				</AccordionItem>
 			);
 		}
-		if (!this.state.queryError && this.props.screenType === 'medium') {
+		if (
+			!this.state.queryError && 
+			(this.props.screenType === 'medium' || this.props.screenType === 'large')
+		) {
 			return (
 				<div id="hc-get-it-done" className="mos-react-component-root" name="hc-get-it-done">
 					<h2>Get it Done</h2>
 					<ReactPlaceholder
-						customPlaceholder={this.returnPlaceholder()}
+						customPlaceholder={this.returnPlaceholder(this.props.screenType)}
 						ready={this.state.ready}
 						showLoadingAnimation
 					>

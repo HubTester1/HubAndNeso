@@ -19,31 +19,28 @@ export default props => (
 					<h3>
 						<a
 							id="photo-source-link"
-							href="https://unsplash.com/photos/E4944K_4SvI"
+							href="https://unsplash.com/photos/z2G_mtPCylQ"
 							target="_blank"
 							rel="noopener noreferrer"
 						>
 							Photo
 						</a>
-						&nbsp;by&nbsp;
+						&nbsp;Big Green Bubble by&nbsp;
 						<a
 							id="photographer-link"
-							href="https://unsplash.com/@ldandersen"
+							href="https://unsplash.com/@frostroomhead"
 							target="_blank"
 							rel="noopener noreferrer"
 						>
-							Buzz Andersen
+							Rodion Kutsaev
 						</a>
 					</h3>
 					<p>
-						&quot;I was visiting the Big Island of Hawaii with some friends and family, 
-						and my brother convinced the group to take a lava tour by boat. I always kind of 
-						balk a little bit at overtly touristy stuff like that, but I think everyone was 
-						pretty shocked when we got our first look at the Kalapana Lava Flow after about 
-						a half hour boat trip down the coast. It&apos;s such an awesome, 
-						phantasmagorical sight and, since they actually get surprisingly close 
-						to the spots where the rivers of lava meet the ocean and throw up 
-						sulfurous steam clouds, also a pretty visceral sensory experience.&quot;
+						Part of a collection of &quot;[m]acro photography of water 
+						and sunflower oil in different variations.&quot;
+					</p>
+					<p>
+						From Melitopol, Ukraine.
 					</p>
 				</div>
 			</Collapsible>

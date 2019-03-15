@@ -11,10 +11,13 @@
 @media screen and (min-width: $medium-screen-minimum-width)
 
 	div.hc-header-and-hero-container
-		background-color: $blue-10
-		background-size: 100% auto, 100% auto, 100% auto, cover
-		background-position: top left, top left, top left, top left
-		background-image: linear-gradient(to bottom, $blue-10-80-percent, $blue-10-30-percent 16rem, transparent 20rem, transparent 40rem, $blue-10 60rem), linear-gradient(to right, transparent, $blue-10-10-percent 40%, $blue-10-70-percent 50%, $blue-10-70-percent 90%, $blue-10-20-percent 100%), linear-gradient(to bottom right, $blue-10-40-percent 50%, $green-5-20-percent 100%), url('../../img/bkgrd-medium-screen.jpg')
+		background-color: $white
+		background-size: 100% auto, 100% auto, cover
+		background-position: top left, top left, top center
+		background-image: linear-gradient(to bottom, $green-1, $green-1-50-percent 20rem, transparent 25rem, $coral-3-40-percent 40rem, $coral-3 85rem), linear-gradient(to right, transparent, $white-10-percent 45%, $white-60-percent 55%, $white-50-percent 90%, $white-20-percent 100%), url('../../img/bkgrd-medium-screen.jpg')
+		// background-size: 100% auto, 100% auto, 100% auto, cover
+		// background-position: top left, top left, top left, top left
+		// background-image: linear-gradient(to bottom, $white-80-percent, $white-30-percent 16rem, transparent 20rem, transparent 40rem, $white 60rem), linear-gradient(to right, transparent, $white-10-percent 40%, $white-70-percent 50%, $white-70-percent 90%, $white-20-percent 100%), linear-gradient(to bottom right, $white-40-percent 50%, $white-20-percent 100%), url('../../img/bkgrd-medium-screen.jpg')
 		transition: height .5s
 
 // --- MEDIUM - HEADER
@@ -39,7 +42,7 @@
 
 		div.sticky-inner-wrapper
 			z-index: $z-index-sticky-header
-			background-color: $grey-17
+			background-color: $grey-1
 
 // --- MEDIUM - NAVIGATION
 
@@ -71,7 +74,7 @@
 						text-align: left
 						font-size: 1.3rem
 						background-color: transparent
-						color: $white
+						color: $aqua-8
 						
 						div.ms-Button-flexContainer
 							height: 3rem
@@ -121,20 +124,20 @@
 
 	// STUCK
 
-	div.sticky-outer-wrapper.active
+	// div.sticky-outer-wrapper.active
 
-		nav#hc-navigation
+	// 	nav#hc-navigation
 
-			ul#hc-navigation__items
+	// 		ul#hc-navigation__items
 
-				li.hc-navigation__items__item
+	// 			li.hc-navigation__items__item
 
-					button.hc-navigation__items__item__button
+	// 				button.hc-navigation__items__item__button
 
-						div.ms-Button-flexContainer
+	// 					div.ms-Button-flexContainer
 
-							i.ms-Button-icon
-								color: $aqua-1
+	// 						i.ms-Button-icon
+	// 							color: $aqua-1
 
 // --- MEDIUM - BACKGROUND IMAGE INFO
 
@@ -143,11 +146,9 @@
 	div#staff-lookup-and-background-info
 
 		div#hc-staff-lookup
-			// margin-bottom: auto
 			flex-grow: 1
 		
 		div#hc-background-info-container
-			// margin-top: auto
 			flex-shrink: 0
 			margin-top: 2rem
 
@@ -155,37 +156,27 @@
 				+button
 				+button-colored
 				margin-top: 2rem
-				background-color: $aqua-9 !important
+				color: $aqua-9 !important
+				background-color: $aqua-1 !important
 
 				&:hover
-					background-color: $aqua-10 !important
+					color: $aqua-10 !important
+					background-color: $aqua-2 !important
 
 			div#hc-background-info__information
 				+round-corners
 				+small-shadow-bottom-right-light-color
 				padding: 2rem
-				color: $white
-				background-image: linear-gradient(to right, $blue-10-60-percent, $blue-10-60-percent), linear-gradient(to right, $white-20-percent, $white-20-percent)
-				border-top: 5px solid $pink-10
-				border-bottom: 5px solid $pink-10
+				background-color: $white-70-percent
+				border-top: 5px solid $pink-2
+				border-bottom: 5px solid $pink-2
 				transition: border-color .5s, background-color .5s
-
-				h3
-					color: $white
 
 				&:hover
 					+small-shadow-bottom-right-medium-color
 					padding: 2rem
-					border-color: $pink-7
-					background-image: linear-gradient(to right, $blue-10-60-percent, $blue-10-60-percent), linear-gradient(to right, $white-30-percent, $white-30-percent)
-
-				a#photo-source-link,
-				a#photographer-link
-					color: $aqua-3 !important
-					transition: color .25s
-
-					&:hover
-						color: $aqua-1 !important
+					border-color: $pink-3
+					background-color: $white-80-percent
 
 // --- MEDIUM - HERO SECTION
 
@@ -199,6 +190,9 @@
 			+flex-column
 			width: 60%
 			padding: 0 2.5rem 5rem 5rem
+
+			// h2
+			// 	color: $pink-8
 
 // --- MEDIUM - SECTION HEADER SPACING
 
@@ -228,14 +222,17 @@
 		padding: 5rem 5rem 4rem 5rem
 
 		div.hc-pushed-items-placeholder
-			column-count: 5
+			column-count: 3
 
 			div.hc-pushed-items-placeholder-column
 				height: 13rem !important
 				background-color: $black-5-percent
+		
+		h2
+			color: $grey-13
 
 		ul#hc-pushed-items-list
-			column-count: 5
+			column-count: 3
 			column-gap: 2rem
 			margin: 0
 
@@ -268,15 +265,16 @@
 @media screen and (min-width: $medium-screen-minimum-width)
 	
 	div#hc-get-it-done
-		background-image: linear-gradient(to bottom right, $green-7, $primary-yellow)
+		background-image: linear-gradient(to bottom, $subtle-coral, $purple-3)
+		// background-image: linear-gradient(to bottom right, $green-7, $primary-yellow)
 		// background-image: linear-gradient(to bottom left, $pink-7, $purple-9)
 		padding: 5rem 4rem 5rem 5rem
 
-		h2
-			color: $white
+		// h2
+		// 	color: $white
 
 		div.hc-get-it-done-placeholder
-			column-count: 4
+			column-count: 2
 
 			div.hc-get-it-done-placeholder-column
 				height: 300rem !important
@@ -285,7 +283,7 @@
 		div#hc-get-it-done-view-by-group,
 		div#hc-get-it-done-view-by-alpha > ul
 			padding-top: 1rem
-			column-count: 4
+			column-count: 2
 			column-gap: 0
 
 
@@ -305,7 +303,7 @@
 
 			&:hover
 				+small-shadow-bottom-right-medium-color
-				border-color: $coral-4
+				border-color: $green-3
 				background-color: $white
 
 		a.hc-get-it-done-item-link
@@ -409,9 +407,6 @@
 			width: 40%
 			padding: 0 4rem 5rem 0
 
-			h2
-				color: $white
-
 			div.hc-messages-placeholder
 
 				div.hc-messages-placeholder-column
@@ -424,11 +419,12 @@
 					display: none
 
 			ul#hc-messages-list
-				color: $white
+				// color: $white
 				padding: 0
 				margin: 0
 
 				li.mos-react-component-root
+					+small-shadow-bottom-right-light-color
 					list-style: none
 					margin: 0 1rem 1rem 0
 					-webkit-column-break-inside: avoid
@@ -436,24 +432,27 @@
 					page-break-inside: avoid
 					overflow: hidden
 
+					&:hover
+						+small-shadow-bottom-right-medium-color
+
 				div.hc-messages-message-preview
 					+round-corners
-					+small-shadow-bottom-right-light-color
 					padding: 2rem
-					background-color: $blue-10-10-percent
-					border-top: 5px solid $pink-10
-					border-bottom: 5px solid $pink-10
+					background-color: $white-60-percent
+					border-top: 5px solid $pink-2
+					border-bottom: 5px solid $pink-2
 					transition: border-color .5s, background-color .5s, height .5s
 
-					h3.hc-messages-message-author,
-					p.hc-messages-message-subject,
-					p.hc-messages-message-date,
-					div.hc-messages-message-preview-truncated-body
-						color: $white
+					// h3.hc-messages-message-author,
+					// p.hc-messages-message-subject,
+					// p.hc-messages-message-date,
+					// div.hc-messages-message-preview-truncated-body
+					// 	color: $white
 
 					button.hc-messages-message-full-message-button,
 					button.hc-messages-message-enable-message-update-button
 						+button
+						+font-weight-regular
 						display: block
 						padding: 0
 						height: 2rem
@@ -461,17 +460,16 @@
 						border: .1rem solid transparent
 						border: 0
 						background-color: transparent
-						color: $aqua-3
+						color: $interactive-default
 						transition: color .25s, background-color .25s, border-color .25s, padding .25s, height .25s
 
 						&:after
 							+font-size-7
 
 					&:hover
-						+small-shadow-bottom-right-medium-color
 						padding: 2rem
-						border-color: $pink-7
-						background-color: $white-10-percent
+						border-color: $pink-3
+						background-color: $white-80-percent
 
 						button.hc-messages-message-full-message-button,
 						button.hc-messages-message-enable-message-update-button
@@ -483,11 +481,12 @@
 
 						button.hc-messages-message-full-message-button
 							+icon-fullscreen-after
-							color: $white
-							background-color: $interactive-default
+							color: $aqua-9 !important
+							background-color: $aqua-1 !important
 
 							&:hover
-								background-color: $interactive-active
+								color: $aqua-10 !important
+								background-color: $aqua-2 !important
 
 						button.hc-messages-message-enable-message-update-button
 							+icon-edit-after
@@ -511,10 +510,10 @@
 	
 	div#hc-messages-all
 		padding: 5rem 4rem 5rem 5rem
-		background-image: linear-gradient(to bottom left, $pink-7, $purple-9)
+		background-image: linear-gradient(to bottom, $purple-3, $green-2)
 
-		h2
-			color: $white
+		// h2
+		// 	color: $white
 
 		div.hc-messages-placeholder
 			column-count: 2
@@ -566,7 +565,7 @@
 					
 				&:hover
 					+small-shadow-bottom-right-medium-color
-					border-color: $primary-yellow
+					border-color: $yellow-2
 					background-color: $white
 
 					button.hc-messages-message-full-message-button,
@@ -627,7 +626,10 @@
 	
 	div#hc-organization
 		padding: 5rem
-
+		
+		h2,
+		h3
+			color: $grey-13
 
 		div.hc-organization-placeholder
 			+row

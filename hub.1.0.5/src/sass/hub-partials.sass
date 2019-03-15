@@ -48,7 +48,7 @@ div#hc-container
 			svg
 				
 				g.letterforms
-					fill: $white
+					fill: $aqua-8
 
 // --- ALL - HERO
 
@@ -56,8 +56,14 @@ div#hero-container
 
 	div#hc-staff-lookup
 		
-		h2
-			color: $white
+		// h2
+		// 	color: $white
+
+		div.ms-BasePicker.ms-PeoplePicker
+			background-color: $white-60-percent
+
+			input.ms-BasePicker-input
+				background-color: transparent	
 
 		h3.persona-cards__header
 			+block-hidden
@@ -78,7 +84,7 @@ div#hc-pushed-items
 		margin: 0 0 1rem 0
 
 		a
-			+font-weight-regular
+			+font-weight-semilight
 
 	li.hc-pushed-items-item.file
 		+list-item-icon-bullet

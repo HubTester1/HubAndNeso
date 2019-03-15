@@ -9,13 +9,16 @@
 
 // --- LARGE - HEADER,HERO CONTAINER
 
-@media screen and (min-width: $large-screen-minimum-width)
+// @media screen and (min-width: $large-screen-minimum-width)
 	
-	div.hc-header-and-hero-container
-		background-color: $blue-10
-		background-size: 100% auto, 100% auto, cover
-		background-position: top left, top left, top left
-		background-image: linear-gradient(to bottom, $blue-10-80-percent, $blue-10-20-percent 16rem, transparent 20rem, transparent 70rem, $blue-10 90rem), linear-gradient(to right, transparent, $blue-10-30-percent 40%, $blue-10-80-percent 50%, $blue-10-80-percent 95%, $blue-10-20-percent 100%), url('../../img/bkgrd-medium-screen.jpg')
+// 	div.hc-header-and-hero-container
+// 		background-color: $white
+// 		background-size: 100% auto, cover
+// 		background-position: top left, top center
+// 		background-image: linear-gradient(to bottom, $green-9, $green-9-50-percent 20rem, $orange-3 85rem), url('../../img/bkgrd-medium-screen.jpg')
+
+
+	// linear-gradient(to right, transparent, $green-9-20-percent 40%, $green-9-20-percent 50%, $green-9-20-percent 95%, $green-9-20-percent 100%), 
 	// , 100% auto
 	// , top left
 	// , linear-gradient(to bottom right, $blue-10-40-percent 50%, $green-5-20-percent 100%)
@@ -133,6 +136,30 @@
 
 		div#staff-lookup-and-background-info
 			width: 50%
+
+// --- LARGE - PUSHED ITEMS
+
+@media screen and (min-width: $large-screen-minimum-width)
+	
+	div#hc-pushed-items
+
+		div.hc-pushed-items-placeholder
+			column-count: 5
+
+		ul#hc-pushed-items-list
+			column-count: 5
+
+// --- LARGE - GET IT DONE
+
+@media screen and (min-width: $large-screen-minimum-width)
+	
+	div#hc-get-it-done
+
+		div.hc-get-it-done-placeholder
+			column-count: 4
+
+		div.hc-get-it-done-placeholder
+			column-count: 4
 
 // --- LARGE - MESSAGES
 
