@@ -343,6 +343,20 @@ gulp.task('5-dev-push-js', () =>
 			gulpV5DevConfig.ReturnV5SPSaveDevOptions(),
 			gulpBaseConfig.ReturnGulpSPSaveCredentials(),
 		)));
+// push styles to prod
+gulp.task('5-dev-push-styles', () =>
+	// for all files in the dist folder
+	gulp.src(`${gulpV5DevConfig.ReturnV5DevDistFolder()}/+(*.css|*.css.map)`)
+		// replace the standard pipe method
+		.pipe(plumber())
+		// pipe them into a caching proxy 
+		.pipe(cached('spFiles'))
+		// and then to SP prod location
+		.pipe(spSave(
+			gulpV5DevConfig.ReturnV5SPSaveDevOptions(),
+			gulpBaseConfig.ReturnGulpSPSaveCredentials(),
+		)));
+
 // build dist file and push dist to dev
 gulp.task('5-dev-build-push', () =>
 	// for all files in the src folder
@@ -377,6 +391,11 @@ gulp.task('5-dev-build-push-loader', () =>
 gulp.task('5-dev-watch-all-build-push-js', () => {
 	// watch the src folder; upon changes, build dist file and push dist to dev
 	gulp.watch([`${gulpV5DevConfig.ReturnV5DevSrcFolder()}/**`], gulp.series('5-dev-build', '5-dev-push-js'));
+});
+// when src changes, build dist file and push dist to dev
+gulp.task('5-dev-watch-all-build-push-styles', () => {
+	// watch the src folder; upon changes, build dist file and push dist to dev
+	gulp.watch([`${gulpV5DevConfig.ReturnV5DevSrcFolder()}/**`], gulp.series('5-dev-build', '5-dev-push-styles'));
 });
 // when src changes, build dist file and push dist to dev
 gulp.task('5-dev-watch-all-build-push-loader', () => {
