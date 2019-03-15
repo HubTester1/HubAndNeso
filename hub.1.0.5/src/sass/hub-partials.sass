@@ -171,28 +171,35 @@ div#hc-container
 			div.hc-messages-message-preview
 				display: grid
 				grid-template-areas: "Author Author" "Subject Date" "Body Body"
-				grid-template-rows: auto auto auto;
-				grid-template-columns: 3fr 1fr;
-				grid-column-gap: .5rem;
+				grid-template-rows: auto auto auto
+				grid-template-columns: auto 10rem
+				grid-column-gap: .5rem
 
-				h3.hc-messages-message-subject
-					grid-area: Subject
-				
-				p.hc-messages-message-date
-					grid-area: Date
-					margin: 0
-
-					span.hc-messages-message-date-prefix
-						+inline-hidden
-
-				p.hc-messages-message-author
+				h3.hc-messages-message-author
 					grid-area: Author
 					margin: 0
 
 					span.hc-messages-message-author-prefix
 						+inline-hidden
 
+				p.hc-messages-message-subject
+					grid-area: Subject
+					margin: 0
+				
+				p.hc-messages-message-date
+					+font-size-6
+					grid-area: Date
+					padding-top: .3rem
+					text-align: right
+					margin: 0
+					color: $grey-13
+
+					span.hc-messages-message-date-prefix
+						+inline-hidden
+
 				div.hc-messages-message-preview-truncated-body
+					+font-size-6
+					color: $grey-13
 					grid-area: Body
 
 

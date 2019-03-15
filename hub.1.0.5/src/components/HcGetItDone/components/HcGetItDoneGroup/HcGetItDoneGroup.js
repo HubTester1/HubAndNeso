@@ -30,7 +30,7 @@ export default class HcGetItDoneViewByGroup extends React.Component {
 					</ul>
 				}
 				{
-					!this.props.groupContent.items[1] &&
+					this.props.groupContent.items[0] && !this.props.groupContent.items[1] &&
 
 					<HcGetItDoneLinkDiv
 						key={this.props.groupContent.items[0].key}

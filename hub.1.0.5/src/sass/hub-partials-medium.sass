@@ -242,6 +242,7 @@
 		li.hc-pushed-items-item
 			break-inside: avoid
 			page-break-inside: avoid
+			overflow: hidden
 
 // --- MEDIUM - STAFF LOOKUP
 
@@ -260,6 +261,7 @@
 					margin: 0 0 2rem 0
 					break-inside: avoid
 					page-break-inside: avoid
+					overflow: hidden
 		
 // --- MEDIUM - GET IT DONE
 
@@ -293,6 +295,7 @@
 			+small-shadow-bottom-right-light-color
 			break-inside: avoid
 			page-break-inside: avoid
+			overflow: hidden
 			padding: 3rem
 			background-color: $white-90-percent
 			margin: 0 1rem 1rem 0
@@ -358,16 +361,13 @@
 							+font-size-8
 							margin-right: 1rem
 
-					h3.hc-messages-message-subject,
+					p.hc-messages-message-subject,
 					div.hc-messages-message-image-container,
 					p.hc-messages-message-creator,
 					p.hc-messages-message-created,
 					div.hc-messages-message-body,
 					p.hc-messages-message-tags
 						max-width: 60rem
-
-					h3.hc-messages-message-subject
-						margin-top: 3rem
 
 					div.hc-messages-message-image-container
 
@@ -434,19 +434,22 @@
 					-webkit-column-break-inside: avoid
 					break-inside: avoid
 					page-break-inside: avoid
+					overflow: hidden
 
 				div.hc-messages-message-preview
 					+round-corners
 					+small-shadow-bottom-right-light-color
 					padding: 2rem
-					background-color: $white-5-percent
+					background-color: $blue-10-10-percent
 					border-top: 5px solid $pink-10
 					border-bottom: 5px solid $pink-10
 					transition: border-color .5s, background-color .5s, height .5s
 
-					h3.hc-messages-message-subject
-						+font-size-6
-						color: white
+					h3.hc-messages-message-author,
+					p.hc-messages-message-subject,
+					p.hc-messages-message-date,
+					div.hc-messages-message-preview-truncated-body
+						color: $white
 
 					button.hc-messages-message-full-message-button,
 					button.hc-messages-message-enable-message-update-button
@@ -514,15 +517,15 @@
 			color: $white
 
 		div.hc-messages-placeholder
-			column-count: 4
+			column-count: 2
 
 			div.hc-messages-placeholder-column
 				height: 82rem !important
-				background-color: $white-10-percent
+				background-color: $white-20-percent
 
 		ul#hc-messages-list
 			padding-top: 2rem
-			column-count: 4
+			column-count: 2
 			column-gap: 0
 
 			li.mos-react-component-root
@@ -531,6 +534,7 @@
 				-webkit-column-break-inside: avoid
 				break-inside: avoid
 				page-break-inside: avoid
+				overflow: hidden
 
 			div.hc-messages-message-preview
 				+round-corners
@@ -540,9 +544,6 @@
 				border-top: 5px solid $white-10-percent
 				border-bottom: 5px solid $white-10-percent
 				transition: border-color .5s, background-color .5s, height .5s
-
-				h3.hc-messages-message-subject
-					+font-size-6
 
 				div.hc-messages-message-preview-or-inline-truncated-body
 					+font-weight-semilight
@@ -619,21 +620,6 @@
 
 		label[for='hc-messages-images-file-input']
 			padding: .5rem 0
-
-// --- MEDIUM - CALENDARDS & SCHEDULES
-
-@media screen and (min-width: $medium-screen-minimum-width)
-	
-	div#hc-calendars-and-schedules
-		padding: 5rem
-
-		ul#hc-calendars-and-schedules__list-items
-			column-count: 4
-			column-gap: 2rem
-
-			li
-				break-inside: avoid
-				page-break-inside: avoid
 	
 // --- MEDIUM - HC ORG
 
@@ -680,17 +666,6 @@
 			div#hc-organization__teams--other-teams
 				+column
 				width: 30%
-		
-		// MISSION
-
-		div#hc-organization-mission
-			column-count: 2
-			column-gap: 2rem
-
-			p,
-			ul
-				break-inside: avoid
-				page-break-inside: avoid
 
 // --- MEDIUM - FOOTER
 

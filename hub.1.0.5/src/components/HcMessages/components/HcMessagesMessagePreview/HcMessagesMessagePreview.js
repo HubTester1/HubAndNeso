@@ -2,13 +2,14 @@
 // ----- IMPORTS
 
 import * as React from 'react';
+import moment from 'moment';
 import Truncate from 'react-truncate';
 import Modal from 'react-modal';
 import MediaQuery from 'react-responsive';
 
 import HcMessagesMessage from '../HcMessagesMessage/HcMessagesMessage';
 // import HcMessagesMessageImagePreview from 
-// '../HcMessagesMessageImagePreview/HcMessagesMessageImagePreview';
+// '../HcMessagesMessageImagePreview/HcMessagesMessageImƒƒagePreview';
 import ScreenSizes from '../../../../services/ScreenSizes';
 import MOSUtilities from '../../../../services/MOSUtilities';
 
@@ -47,13 +48,15 @@ export default class HcMessagesMessagePreview extends React.Component {
 		return { __html: `<div>${html}</div>` };
 	}
 	returnFriendlyDate(dateString) {
-		// if today
-		// 		time only
-		// else if in the last week
-		// 		day and time
-		// else
-		// 		day and date (display year dynamically)
-		return MOSUtilities.ReturnFormattedDateTime({ incomingDateTimeString: dateString, incomingReturnFormat: 'ddd h:mm a' });
+		if (moment().isSame(dateString, 'day')) {
+			return MOSUtilities.ReturnFormattedDateTime({ incomingDateTimeString: dateString, incomingReturnFormat: 'h:mm a' });
+		// } else if (moment(dateString).isAfter(moment().subtract(8, 'days'), 'day')) {
+		} else if (moment().isSame(dateString, 'week')) {
+			return MOSUtilities.ReturnFormattedDateTime({ incomingDateTimeString: dateString, incomingReturnFormat: 'ddd h:mm a' });
+		} else if (moment(dateString).isAfter(moment().subtract(1, 'month'))) {
+			return MOSUtilities.ReturnFormattedDateTime({ incomingDateTimeString: dateString, incomingReturnFormat: 'ddd M/D' });
+		}
+		return MOSUtilities.ReturnFormattedDateTime({ incomingDateTimeString: dateString, incomingReturnFormat: 'M/D/YYYY' });
 	}
 	render() {
 		Modal.setAppElement('#hub-central-mount-point');
@@ -64,27 +67,29 @@ export default class HcMessagesMessagePreview extends React.Component {
 					!this.state.showInlineFull &&
 					
 					<div className="hc-messages-message-preview">
-						<h3 className="hc-messages-message-subject">
+						<h3 className="hc-messages-message-author">
+							<span className="hc-messages-message-author-prefix">Posted by: </span>
+							{this.props.messageContent.creator.displayName}
+						</h3>
+						<p className="hc-messages-message-subject">
 							<Truncate
 								lines={1}
 								ellipsis={<span>...</span>}
+								trimWhitespace
 							>
 								{this.props.messageContent.subject}
 							</Truncate>
-						</h3>
+						</p>
 						<p className="hc-messages-message-date">
 							<span className="hc-messages-message-date-prefix">Posted: </span>
-							{this.returnFriendlyDate(this.props.messageContent.created)}
-						</p>
-						<p className="hc-messages-message-author">
-							<span className="hc-messages-message-author-prefix">Posted by: </span>
-							{this.props.messageContent.creator.displayName}
+							{this.returnFriendlyDate(this.props.messageContent.modified)}
 						</p>
 						<div className="hc-messages-message-preview-truncated-body">
 							<MediaQuery minWidth={ScreenSizes.ReturnMediumMin()}>
 								<Truncate
 									lines={1}
 									ellipsis={<span>...</span>}
+									trimWhitespace
 								>
 									<div className="hc-messages-message-body" dangerouslySetInnerHTML={this.returnHtml(this.props.messageContent.body)} />
 								</Truncate>
@@ -132,6 +137,7 @@ export default class HcMessagesMessagePreview extends React.Component {
 								<Truncate
 									lines={1}
 									ellipsis={<span>...</span>}
+									trimWhitespace
 								>
 									<div className="hc-messages-message-body" dangerouslySetInnerHTML={this.returnHtml(this.props.messageContent.body)} />
 								</Truncate>

@@ -512,7 +512,6 @@ export default class HcMessages extends React.Component {
 	handleClickHideNewMessageButton(e) {
 		// prevent submitting using the SP form tag
 		e.preventDefault();
-		console.log('handleClickHideNewMessageButton');
 		// set state
 		this.setState(() => ({
 			showNewMessageForm: false,
@@ -622,7 +621,10 @@ export default class HcMessages extends React.Component {
 						hideFirstLastPages
 					/>
 				</MediaQuery>
-				<MediaQuery minWidth={ScreenSizes.ReturnMediumMin()}>
+				<MediaQuery
+					minWidth={ScreenSizes.ReturnMediumMin()}
+					maxWidth={ScreenSizes.ReturnMediumMax()}
+				>
 					<HcMessagesList
 						messagesThisPage={this.state.messagesThisPageLargeScreen}
 						uData={this.props.uData}
@@ -633,7 +635,27 @@ export default class HcMessages extends React.Component {
 						itemsCountPerPage={messagesPerPageLargeScreen}
 						totalItemsCount={this.state.messagesArray.length}
 						pageRangeDisplayed={
-							(this.state.messagesArray.length / messagesPerPageLargeScreen) + 1
+							((this.state.messagesArray.length / messagesPerPageLargeScreen) + 1) > 7 ?
+								7 :
+								(this.state.messagesArray.length / messagesPerPageLargeScreen) + 1
+						}
+						onChange={this.handlePageChange}
+					/>
+				</MediaQuery>
+				<MediaQuery minWidth={ScreenSizes.ReturnLargeMin()}>
+					<HcMessagesList
+						messagesThisPage={this.state.messagesThisPageLargeScreen}
+						uData={this.props.uData}
+						enableMessageUpdate={this.enableMessageUpdate}
+					/>
+					<Pagination
+						activePage={this.state.activePage}
+						itemsCountPerPage={messagesPerPageLargeScreen}
+						totalItemsCount={this.state.messagesArray.length}
+						pageRangeDisplayed={
+							((this.state.messagesArray.length / messagesPerPageLargeScreen) + 1) > 10 ?
+								10 :
+								(this.state.messagesArray.length / messagesPerPageLargeScreen) + 1
 						}
 						onChange={this.handlePageChange}
 					/>
@@ -733,7 +755,17 @@ export default class HcMessages extends React.Component {
 			};
 		});
 	}
-	returnPlaceholder() {
+	returnPlaceholder(screenType) {
+		if (screenType === 'medium') {
+			return (
+				<div
+					className="mos-placeholder-column-container hc-messages-placeholder"
+				>
+					<RectShape className="mos-placeholder-column hc-messages-placeholder-column" />
+					<RectShape className="mos-placeholder-column hc-messages-placeholder-column" />
+				</div>
+			);
+		}
 		return (
 			<div
 				className="mos-placeholder-column-container hc-messages-placeholder"
@@ -746,13 +778,15 @@ export default class HcMessages extends React.Component {
 		);
 	}
 	render() {
-		console.log(this.state.messagesArray);
-		if (this.props.allOrTop === 'all' && this.props.screenType === 'medium') {
+		if (
+			this.props.allOrTop === 'all' && 
+			(this.props.screenType === 'medium' || this.props.screenType === 'large')
+		) {
 			return (
 				<div id="hc-messages-all" className="mos-react-component-root" name="hc-messages-all">
 					<h2>Messages</h2>
 					<ReactPlaceholder
-						customPlaceholder={this.returnPlaceholder()}
+						customPlaceholder={this.returnPlaceholder(this.props.screenType)}
 						ready={this.state.ready}
 						showLoadingAnimation
 					>
@@ -833,7 +867,7 @@ export default class HcMessages extends React.Component {
 					!this.state.showNewMessageForm &&
 
 					<ReactPlaceholder
-						customPlaceholder={this.returnPlaceholder()}
+						customPlaceholder={this.returnPlaceholder(this.props.screenType)}
 						ready={this.state.ready}
 						showLoadingAnimation
 					>

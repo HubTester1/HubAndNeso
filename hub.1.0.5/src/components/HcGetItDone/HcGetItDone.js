@@ -74,21 +74,22 @@ export default class HcGetItDone extends React.Component {
 		}));
 	}
 	handleFilterTextChange(filterText) {
-		console.log('filterText');
-		console.log(filterText);
+		console.log(`filterText = ${filterText}`);
+		console.log('base set = ', this.state.listItemsGroupedArray);
 		if (!filterText) {
 			this.setState(() => ({
 				listItemsToRenderAlphaArray: this.state.listItemsAlphaArray,
 				listItemsToRenderGroupedArray: this.state.listItemsGroupedArray,
 			}));
 		} else {
-			// const filterTextLowerCase = filterText.toLowerCase();
 			const newlistItemsToRenderGroupedArray = [];
 			const newListItemsToRenderAlphaArray = this.state.listItemsAlphaArray
 				.filter(this.returnItemIncludesFilterText(filterText));
 			this.state.listItemsGroupedArray.forEach((groupValue, groupIndex) => {
-				const groupCopy = groupValue;
-				groupCopy.items = groupValue.items.filter(this.returnItemIncludesFilterText(filterText));
+				const groupCopy = JSON.parse(JSON.stringify(groupValue));
+				const groupCopyOriginalItems = JSON.parse(JSON.stringify(groupCopy.items));
+				groupCopy.items = 
+					groupCopyOriginalItems.filter(this.returnItemIncludesFilterText(filterText));
 				if (groupCopy.items.length) {
 					newlistItemsToRenderGroupedArray.push(groupCopy);
 				}
@@ -100,12 +101,12 @@ export default class HcGetItDone extends React.Component {
 		}
 	}
 	returnItemIncludesFilterText(filterText) {
-		const filterTextLowerCase = filterText.toLowerCase();
 		return item => 
-			item.anchorText.toLowerCase().includes(filterTextLowerCase) || 
-			(item.description && item.description.toLowerCase().includes(filterTextLowerCase));
+			item.anchorText.toLowerCase().includes(filterText.toLowerCase()) || 
+			(item.description && item.description.toLowerCase().includes(filterText.toLowerCase()));
 	}
 	returnHcGetItDoneBody() {
+		console.log('GET BODY');
 		// if this user has no roles property, then uData wasn't constructed properly and 
 		// 		we won't risk exposing links to them inappropriately
 		if (this.props.uData.roles) {
@@ -150,10 +151,9 @@ export default class HcGetItDone extends React.Component {
 		);
 	}
 	render() {
-		// console.log('this.state.listItemsToRenderAlphaArray');
-		// console.log(this.state.listItemsToRenderAlphaArray);
-		console.log('this.state.listItemsToRenderGroupedArray');
-		console.log(this.state.listItemsToRenderGroupedArray);
+		console.log('render set = ', this.state.listItemsToRenderGroupedArray);
+		// console.log('this.state.listItemsToRenderGroupedArray');
+		// console.log(this.state.listItemsToRenderGroupedArray);
 		if (!this.state.queryError && this.props.screenType === 'small') {
 			return (
 				<AccordionItem

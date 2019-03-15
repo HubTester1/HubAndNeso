@@ -165,24 +165,18 @@
 				li.mos-react-component-root
 					break-inside: avoid
 					page-break-inside: avoid
-					
-// --- LARGE - HC ORG
-
-@media screen and (min-width: $large-screen-minimum-width)
-	
-	div#hc-organization
-
-		div#hc-organization-mission
-			column-count: 4
-			column-gap: 2rem
-
-			p,
-			ul
-				break-inside: avoid
-				page-break-inside: avoid
+					overflow: hidden
 
 
+		// all messages
+		
+		div#hc-messages-all
 
+			div.hc-messages-placeholder
+				column-count: 4
+
+			ul#hc-messages-list
+				column-count: 4
 
 
 
