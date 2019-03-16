@@ -152,6 +152,12 @@
 	border-bottom-left-radius: 0
 	border-bottom-right-radius: 0
 
+=round-corners-bottom
+	border-top-left-radius: 0
+	border-top-right-radius: 0
+	border-bottom-left-radius: .2rem
+	border-bottom-right-radius: .2rem
+
 =round-corners-left
 	border-top-left-radius: .2rem
 	border-bottom-left-radius: .2rem
@@ -285,6 +291,10 @@
 =icon-after
 	+font-size-7
 	margin-left: .8rem
+
+=icon-filter-before
+	&::before
+		content: $ms-icon-code-Filter
 
 =icon-close-before
 	&::before

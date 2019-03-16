@@ -74,39 +74,59 @@ export default class HcGetItDone extends React.Component {
 		}));
 	}
 	handleFilterTextChange(filterText) {
-		console.log(`filterText = ${filterText}`);
-		console.log('base set = ', this.state.listItemsGroupedArray);
+		// if there's no filterText
 		if (!filterText) {
+			// set individual and grouped lists of items to render to base individual and grouped lists
 			this.setState(() => ({
 				listItemsToRenderAlphaArray: this.state.listItemsAlphaArray,
 				listItemsToRenderGroupedArray: this.state.listItemsGroupedArray,
 			}));
+		// if there's filterText
 		} else {
-			const newlistItemsToRenderGroupedArray = [];
+			// get list of individual items to render by filtering base individual list
 			const newListItemsToRenderAlphaArray = this.state.listItemsAlphaArray
-				.filter(this.returnItemIncludesFilterText(filterText));
+				.filter(this.returnItemIncludesFilterTextCaseInsensitive(filterText));
+			// set up container for groups of items to render
+			const newlistItemsToRenderGroupedArray = [];
+			// for each base group of items
 			this.state.listItemsGroupedArray.forEach((groupValue, groupIndex) => {
-				const groupCopy = JSON.parse(JSON.stringify(groupValue));
-				const groupCopyOriginalItems = JSON.parse(JSON.stringify(groupCopy.items));
-				groupCopy.items = 
-					groupCopyOriginalItems.filter(this.returnItemIncludesFilterText(filterText));
-				if (groupCopy.items.length) {
-					newlistItemsToRenderGroupedArray.push(groupCopy);
+				// if group name includes filterText
+				if (groupValue.name.toLowerCase().includes(filterText.toLowerCase())) {
+					// push the group to the groups container
+					newlistItemsToRenderGroupedArray.push(groupValue);
+				// if group name does not include filterText
+				} else {
+					// make deep copies of the whole group and of its items
+					const groupCopy = JSON.parse(JSON.stringify(groupValue));
+					const groupCopyOriginalItems = JSON.parse(JSON.stringify(groupCopy.items));
+					// replace the group copy's items with a list of items by filtering the original items
+					groupCopy.items =
+						groupCopyOriginalItems
+							.filter(this.returnItemIncludesFilterTextCaseInsensitive(filterText));
+					// if there are still any items in the group
+					if (groupCopy.items.length) {
+						// push the group, with its filtered list of items, to the groups container
+						newlistItemsToRenderGroupedArray.push(groupCopy);
+					}
 				}
 			});
+			// set individual and grouped lists of items to render to 
+			// 		filtered individual and grouped lists
 			this.setState(() => ({
 				listItemsToRenderAlphaArray: newListItemsToRenderAlphaArray,
 				listItemsToRenderGroupedArray: newlistItemsToRenderGroupedArray,
 			}));
 		}
 	}
-	returnItemIncludesFilterText(filterText) {
+	returnGroupNameIncludesFilterTextCaseInsensitive(filterText, groupName) {
+		return groupName.toLowerCase().includes(filterText.toLowerCase());
+	}
+	returnItemIncludesFilterTextCaseInsensitive(filterText) {
 		return item => 
 			item.anchorText.toLowerCase().includes(filterText.toLowerCase()) || 
 			(item.description && item.description.toLowerCase().includes(filterText.toLowerCase()));
 	}
 	returnHcGetItDoneBody() {
-		console.log('GET BODY');
 		// if this user has no roles property, then uData wasn't constructed properly and 
 		// 		we won't risk exposing links to them inappropriately
 		if (this.props.uData.roles) {
@@ -161,9 +181,6 @@ export default class HcGetItDone extends React.Component {
 		);
 	}
 	render() {
-		console.log('render set = ', this.state.listItemsToRenderGroupedArray);
-		// console.log('this.state.listItemsToRenderGroupedArray');
-		// console.log(this.state.listItemsToRenderGroupedArray);
 		if (!this.state.queryError && this.props.screenType === 'small') {
 			return (
 				<AccordionItem

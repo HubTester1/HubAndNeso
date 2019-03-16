@@ -6,7 +6,6 @@ import { Fabric } from 'office-ui-fabric-react/lib/Fabric';
 import { CommandBar } from 'office-ui-fabric-react/lib/CommandBar';
 import { SearchBox } from 'office-ui-fabric-react/lib/SearchBox';
 
-
 // ----- COMPONENT
 
 const HcGetItDoneCommandBar = props => (
@@ -28,15 +27,17 @@ const HcGetItDoneCommandBar = props => (
 							icon: 'HalfAlpha',
 							ariaLabel: 'Alphabetical list',
 							onClick: props.handleClickViewByAlphaButton,
+						}, {
+							key: 'search',
+							onRender: () => (<SearchBox
+								placeholder="Filter"
+								onChange={props.handleFilterTextChange}
+							/>),
 						},
 					]
 				}
 			/>
-			<SearchBox
-				placeholder="Filter"
-				iconProps={{ iconName: 'Filter' }}
-				onChange={props.handleFilterTextChange}
-			/>
+			{/*  */}
 		</Fabric>
 	</div>
 );

@@ -531,9 +531,14 @@ div#hc-container
 					+font-weight-semibold
 			
 			div.ms-CommandBarItem:last-child
-
+				
+				div.ms-SearchBox,
+				input.ms-SearchBox-field,
 				button.ms-CommandBarItem-link
 					+round-corners-right
+
+				div.ms-SearchBox,
+				button.ms-CommandBarItem-link
 
 					&:hover
 						+small-shadow-bottom-left-light-color
@@ -547,30 +552,142 @@ div#hc-container
 
 					&:hover
 						+small-shadow-bottom-right-light-color
-				
-div#hc-container
+
+			div.ms-SearchBox
+				border: 0 !important
+				background-color: $white-50-percent
+				height: 4rem
+				padding: 0
+
+				div.ms-SearchBox-iconContainer
+					+icon
+					+icon-before
+					+icon-filter-before
+					margin-right: 0
+					padding-left: 1.5rem
+					overflow: hidden
+
+					// transition speed and easing are copied from MSFT to
+					// 		avoid a conflict with their styling
+					&::before
+						width: 1.5rem
+						opacity: 1
+						transition: width .167s ease 0s, opacity .167s ease 0s
+
+					i.ms-SearchBox-icon
+						+inline-hidden
+
+				input.ms-SearchBox-field
+					border: 0
+					background-color: transparent
+					height: 4rem
+			
+			div.ms-SearchBox.is-active
+
+				div.ms-SearchBox-iconContainer
+
+					&::before
+						width: 0
+						opacity: 0
+
+// div#hc-container
 	
-	.accordion__body
+// 	.accordion__body
 
-		div.ms-CommandBar
+// 		div.ms-CommandBar
 
-			div.ms-CommandBar-primaryCommands
+// 			div.ms-CommandBar-primaryCommands
 
-				button.ms-CommandBarItem-link
-					color: $aqua-7
-					background-color: $aqua-1
+// 				button.ms-CommandBarItem-link
+// 					color: $aqua-7
+// 					background-color: $aqua-1
 
-					&:hover
-						color: $aqua-8
-						background-color: $aqua-2
+// 					&:hover
+// 						color: $aqua-8
+// 						background-color: $aqua-2
 
-					i.ms-CommandBarItem-icon
-						color: $aqua-7
+// 					i.ms-CommandBarItem-icon
+// 						color: $aqua-7
+
+// 						&:hover
+// 							color: $aqua-8
+// 							background-color: $aqua-2
+
+div.ms-Layer
+
+	div.ms-Layer-content
+
+		div.ms-Callout-container
+
+			div.ms-Callout
+
+				div.ms-Callout-beak
+					background-color: $grey-3
+		
+				div.ms-ContextualMenu
+					background-color: $grey-3
+					padding: .3rem
+
+					li.ms-ContextualMenu-item:first-child
+						
+						button.ms-ContextualMenu-link,
+						div.ms-SearchBox
+							+round-corners-top
+
+					li.ms-ContextualMenu-item:last-child
+						
+						button.ms-ContextualMenu-link,
+						div.ms-SearchBox
+							+round-corners-bottom
+
+					button.ms-ContextualMenu-link
+						color: $aqua-1
+						background-color: $aqua-7
 
 						&:hover
-							color: $aqua-8
-							background-color: $aqua-2
+							color: $aqua-2
+							background-color: $aqua-8
 
+						i.ms-ContextualMenu-icon
+							color: $white
+
+							&:hover
+								color: $aqua-8
+								background-color: $aqua-2
+
+					div.ms-SearchBox
+						border: 0 !important
+						background-color: $white
+						padding: .2rem .2rem .2rem 0
+
+						div.ms-SearchBox-iconContainer
+							+icon
+							+icon-before
+							+icon-filter-before
+							margin-right: 0
+
+							// transition speed and easing are copied from MSFT to
+							// 		avoid a conflict with their styling
+							&::before
+								position: relative
+								top: 1.5rem
+								opacity: 1
+								transition: width .167s ease 0s, opacity .167s ease 0s
+
+							i.ms-SearchBox-icon
+								+inline-hidden
+
+						input.ms-SearchBox-field
+							border: 0
+					
+					div.ms-SearchBox.is-active
+
+						div.ms-SearchBox-iconContainer
+
+							&::before
+								width: 0
+								opacity: 0
+	
 // ACCORDION
 
 div#hc-container
