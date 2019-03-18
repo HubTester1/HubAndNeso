@@ -13,22 +13,25 @@ export default class HcGetItDoneData {
 	static ReturnHRDocsForHcGetItDone() {
 		const hrDocsWeb = new Web('https://bmos.sharepoint.com');
 		return hrDocsWeb.lists.getByTitle('HR Docs').items
-			.select('File/ServerRelativeUrl', 'FileLeafRef', 'ServerRedirectedEmbedUrl', 'Title')
+			.select('File/ServerRelativeUrl', 'FileLeafRef', 'ServerRedirectedEmbedUrl', 'Title', 'HCProminent')
 			.expand('File')
 			.filter("Category eq 'Request Forms'")
 			.get();
 	}
-
 	static ReturnNesoDataForHcGetItDone() {
+		return NesoHTTPClient
+			.ReturnNesoData('https://neso.mos.org/hcGetItDone/settings');
+	}
+	static ReturnNesoSettngsForHcGetItDone() {
 		return NesoHTTPClient
 			.ReturnNesoData('https://neso.mos.org/hcGetItDone/allItems');
 	}
-
 	static ReturnAllGetItDoneData(uData) {
 		// return a new promise
 		return new Promise(((resolve, reject) => {
 			// collect data async from multiple sources
 			const listItemQueryPromises = [
+				this.ReturnNesoSettngsForHcGetItDone(),
 				this.ReturnHRDocsForHcGetItDone(),
 				this.ReturnNesoDataForHcGetItDone(),
 			];
@@ -36,50 +39,72 @@ export default class HcGetItDoneData {
 			Promise.all(listItemQueryPromises)
 			// if the promise is resolved with the settings
 				.then((resultsReturnArray) => {
-					// console.log('resultsReturnArray');
-					// console.log(resultsReturnArray);
 					// set up var to receive all list items
 					const allListItemsAlpha = [];
 					const allListItemsGroupedTempHolder = {};
 					let allListItemsGroupedTempHolderKeys;
 					const allListItemsGrouped = [];
+					let collapsedGroups;
+					const allListItemsGroupedSegmented = [];
 					// iterate over the results and push them to allListItemsAlpha
-					resultsReturnArray.forEach((listValue) => {
-						listValue.forEach((itemValue) => {
-							let userHasPermission = false;
-							if (!itemValue.restrictedToRoles) {
-								userHasPermission = true;
-							} else {
-								userHasPermission = AccessControl
-									.UserRolesAllowAccess(uData.roles, itemValue.restrictedToRoles, itemValue.restrictedFromRoles);
-							}
-							if (userHasPermission) {
-								const itemFormatted = {
-									url: '',
-									anchorText: '',
-									type: '',
-								};
-								if (itemValue.ServerRedirectedEmbedUrl) {
-									itemFormatted.url = itemValue.File.ServerRelativeUrl;
-									// itemFormatted.url = itemValue.ServerRedirectedEmbedUrl;
-									itemFormatted.anchorText =
-										MOSUtilities.ReplaceAll('.pdf', '', MOSUtilities.ReplaceAll('.docx', '', itemValue.FileLeafRef.toString()));
-									itemFormatted.description = itemValue.Title;
-									itemFormatted.groups = ['HR'];
-									itemFormatted.type = 'file';
-									itemFormatted.key = shortID.generate();
+					resultsReturnArray.forEach((resultValue) => {
+						// if this result's first child contains a collapsedGroups property
+						if (resultValue[0].collapsedGroups) {
+							// this is settings; extract the collapsed groups
+							// eslint-disable-next-line prefer-destructuring
+							collapsedGroups = resultValue[0].collapsedGroups;
+						// if this result's first child does NOT contain a collapsedGroups property
+						} else {
+							console.log('resultValue');
+							console.log(resultValue);
+							// this is content; extract the content items
+							resultValue.forEach((itemValue) => {
+								let userHasPermission = false;
+								if (!itemValue.restrictedToRoles) {
+									userHasPermission = true;
+								} else {
+									userHasPermission = AccessControl
+										.UserRolesAllowAccess(uData.roles, itemValue.restrictedToRoles, itemValue.restrictedFromRoles);
 								}
-								if (itemValue.URL) {
-									itemFormatted.url = itemValue.URL;
-									itemFormatted.anchorText = itemValue.Name;
-									itemFormatted.description = itemValue.Description;
-									itemFormatted.groups = itemValue.Groups;
-									itemFormatted.type = 'swf';
-									itemFormatted.key = shortID.generate();
+								if (userHasPermission) {
+									const itemFormatted = {
+										url: '',
+										anchorText: '',
+										type: '',
+									};
+									if (itemValue.ServerRedirectedEmbedUrl) {
+										itemFormatted.url = itemValue.File.ServerRelativeUrl;
+										// itemFormatted.url = itemValue.ServerRedirectedEmbedUrl;
+										itemFormatted.anchorText =
+											MOSUtilities.ReplaceAll('.pdf', '', MOSUtilities.ReplaceAll('.docx', '', itemValue.FileLeafRef.toString()));
+										itemFormatted.description = itemValue.Title;
+										itemFormatted.groups = ['HR'];
+										if (itemValue['odata.type'] === 'SP.Data.HRDocsItem') {
+											itemFormatted.groups = ['HR'];
+										} else {
+											itemFormatted.groups = ['Accounting'];
+										}
+										if (itemValue.HCProminent) {
+											itemFormatted.prominent = true;
+										}
+										itemFormatted.type = 'file';
+										itemFormatted.key = shortID.generate();
+									}
+									if (itemValue.URL) {
+										itemFormatted.url = itemValue.URL;
+										itemFormatted.anchorText = itemValue.Name;
+										itemFormatted.description = itemValue.Description;
+										itemFormatted.groups = itemValue.Groups;
+										if (itemValue.HCProminent) {
+											itemFormatted.prominent = true;
+										}
+										itemFormatted.type = 'swf';
+										itemFormatted.key = shortID.generate();
+									}
+									allListItemsAlpha.push(itemFormatted);
 								}
-								allListItemsAlpha.push(itemFormatted);
-							}
-						});
+							});
+						}
 					});
 
 					// sort allListItemsAlpha by anchorText properties
@@ -105,12 +130,10 @@ export default class HcGetItDoneData {
 						});
 					});
 
-					// note: what we're doing next is essentially converting an object to an array
-
 					// extract into array from object its "child" / first level keys;
 					// 		these keys correspond to group names
 					// eslint-disable-next-line
-						allListItemsGroupedTempHolderKeys = Object.keys(allListItemsGroupedTempHolder);
+					allListItemsGroupedTempHolderKeys = Object.keys(allListItemsGroupedTempHolder);
 					// sort groups key alphabetically
 					allListItemsGroupedTempHolderKeys.sort();
 					// for each group key
@@ -121,10 +144,49 @@ export default class HcGetItDoneData {
 							items: allListItemsGroupedTempHolder[keyValue].items,
 						});
 					});
+
+
+					// for each group
+					allListItemsGrouped.forEach((groupValue) => {
+						// set up var
+						let thisGroupShouldBeSegmented = false;
+						// for each group that can be collapsed
+						collapsedGroups.forEach((collapsedValue) => {
+							// if this group name matches the name of this group that can be collapsed
+							if (collapsedValue === groupValue.name) {
+								// indicate that this group should be segmented
+								thisGroupShouldBeSegmented = true;
+							}
+						});
+						// if this group should not be segmented
+						if (!thisGroupShouldBeSegmented) {
+							allListItemsGroupedSegmented.push(groupValue);
+						} else {
+							const segmentedGroup = {
+								name: groupValue.name,
+								key: groupValue.key,
+								items: {
+									prominent: [],
+									collapsed: [],
+								},
+							};
+							groupValue.items.forEach((itemValue) => {
+								if (itemValue.prominent) {
+									segmentedGroup.items.prominent.push(itemValue);
+								} else {
+									segmentedGroup.items.collapsed.push(itemValue);
+								}
+							});
+							allListItemsGroupedSegmented.push(segmentedGroup);
+						}
+					});
+
+
 					// resolve this promise with the requested items
 					resolve({
 						allListItemsAlpha,
 						allListItemsGrouped,
+						allListItemsGroupedSegmented,
 					});
 				})
 				.catch((queryError) => {

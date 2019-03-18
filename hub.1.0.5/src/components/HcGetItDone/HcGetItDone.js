@@ -27,8 +27,10 @@ export default class HcGetItDone extends React.Component {
 		this.state = {
 			showViewByAlpha: false,
 			showViewByGroup: true,
+			collapsible: true,
 			listItemsAlphaArray: [],
 			listItemsGroupedArray: [],
+			listItemsGroupedSegmentedArray: [],
 			listItemsToRenderAlphaArray: [],
 			listItemsToRenderGroupedArray: [],
 			queryError: false,
@@ -42,9 +44,12 @@ export default class HcGetItDone extends React.Component {
 	componentDidMount() {
 		HcGetItDoneData.ReturnAllGetItDoneData(this.props.uData)
 			.then((allGetItDoneItemsData) => {
+				console.log('allGetItDoneItemsData');
+				console.log(allGetItDoneItemsData);
 				this.setState(() => ({
 					listItemsAlphaArray: allGetItDoneItemsData.allListItemsAlpha,
 					listItemsGroupedArray: allGetItDoneItemsData.allListItemsGrouped,
+					listItemsGroupedSegmentedArray: allGetItDoneItemsData.allListItemsGroupedSegmented,
 					listItemsToRenderAlphaArray: allGetItDoneItemsData.allListItemsAlpha,
 					listItemsToRenderGroupedArray: allGetItDoneItemsData.allListItemsGrouped,
 					ready: true,
@@ -78,6 +83,7 @@ export default class HcGetItDone extends React.Component {
 		if (!filterText) {
 			// set individual and grouped lists of items to render to base individual and grouped lists
 			this.setState(() => ({
+				collapsible: true,
 				listItemsToRenderAlphaArray: this.state.listItemsAlphaArray,
 				listItemsToRenderGroupedArray: this.state.listItemsGroupedArray,
 			}));
@@ -113,6 +119,7 @@ export default class HcGetItDone extends React.Component {
 			// set individual and grouped lists of items to render to 
 			// 		filtered individual and grouped lists
 			this.setState(() => ({
+				collapsible: false,
 				listItemsToRenderAlphaArray: newListItemsToRenderAlphaArray,
 				listItemsToRenderGroupedArray: newlistItemsToRenderGroupedArray,
 			}));
@@ -138,10 +145,17 @@ export default class HcGetItDone extends React.Component {
 						handleFilterTextChange={this.handleFilterTextChange}
 					/>
 					{
-						this.state.showViewByGroup &&
+						this.state.showViewByGroup && !this.state.collapsible &&
 
 						<HcGetItDoneViewByGroup
 							listItemsGroupedArray={this.state.listItemsToRenderGroupedArray}
+						/>
+					}
+					{
+						this.state.showViewByGroup && this.state.collapsible &&
+
+						<HcGetItDoneViewByGroup
+							listItemsGroupedArray={this.state.listItemsGroupedSegmentedArray}
 						/>
 					}
 					{

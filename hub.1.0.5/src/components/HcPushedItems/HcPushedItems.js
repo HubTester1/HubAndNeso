@@ -33,7 +33,18 @@ export default class HcPushedItems extends React.Component {
 				}));
 			});
 	}
-	returnPlaceholder() {
+	returnPlaceholder(screenType) {
+		if (screenType === 'medium') {
+			return (
+				<div
+					className="mos-placeholder-column-container hc-pushed-items-placeholder"
+				>
+					<RectShape className="mos-placeholder-column hc-pushed-items-placeholder-column" />
+					<RectShape className="mos-placeholder-column hc-pushed-items-placeholder-column" />
+					<RectShape className="mos-placeholder-column hc-pushed-items-placeholder-column" />
+				</div>
+			);
+		}
 		return (
 			<div
 				className="mos-placeholder-column-container hc-pushed-items-placeholder"
@@ -85,7 +96,7 @@ export default class HcPushedItems extends React.Component {
 			<div id="hc-pushed-items" className="mos-react-component-root" name="hc-pushed-items">
 				<h2>Quick Hits</h2>
 				<ReactPlaceholder
-					customPlaceholder={this.returnPlaceholder()}
+					customPlaceholder={this.returnPlaceholder(this.props.screenType)}
 					ready={this.state.ready}
 					showLoadingAnimation
 				>
