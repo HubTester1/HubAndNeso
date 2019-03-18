@@ -2,15 +2,14 @@
 (function ($) {
 
 	var mData = {
-		// 'componentID': 79,
 		'componentID': 173,
 		'swf': 1,
-		// 'mosMainKey': 'prod',
+		'mosMainKey': 'prod',
 		// 'mosMainKey': 'dev',
 		// 'mosMainKey': 'devMedium',
-		'mosMainKey': 'devLong',
+		// 'mosMainKey': 'devLong',
 		// "useRecordedMOSMainMajorVersion": 1,
-		'devAdminNotifications': 1,
+		'devAdminNotifications': 0,
 		'notifications': 1,
 	};
 
@@ -29,35 +28,32 @@
 						'internalName': 'ID',
 						'formLink': 1
 					}, {
-						'displayName': 'Request Status',
-						'internalName': 'RequestStatus'
-					}, {
-						'displayName': 'Requested By',
-						'internalName': 'Author',
-						'userName': 1
-					}, {
 						'displayName': 'Talk To',
 						'internalName': 'RequestedFor',
 						'userName': 1
 					}, {
-						'displayName': "Staff, Volunteer, Contractor Name(s)",
-						'internalName': "StaffVolNames",
+						'displayName': "Number of Passes",
+						'internalName': "Quantity",
 					}, {
-						'displayName': "Start Date",
-						'internalName': "StartDate",
-						'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+						'displayName': "Venue",
+						'internalName': "Venue",
 					}, {
-						'displayName': 'Request Date',
-						'internalName': 'RequestDate',
+						'displayName': 'Pickup Date',
+						'internalName': 'PickupDate',
 						'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
 					}
 				],
 				'tables': [
 					{
-						'tableTitle': 'Submitted',
-						'tableID': 'submitted',
+						'tableTitle': 'Pending Approval',
+						'tableID': 'pending-approval',
 						'someColsAreUsers': 1,
-						'basicRSQueryRelevantStatus': 'Submitted'
+						'basicRSQueryRelevantStatus': 'Pending Approval'
+					}, {
+						'tableTitle': 'Approved',
+						'tableID': 'approved',
+						'someColsAreUsers': 1,
+						'basicRSQueryRelevantStatus': 'Approved'
 					}, {
 						'tableTitle': 'Closed',
 						'tableID': 'closed',
@@ -71,6 +67,11 @@
 		'my': {
 			'buttons': [
 			],
+			'preamble': '<p style="margin-top: 1rem;">Request 100+ Museum paper passes. Please request smaller quantities of ' +
+				'passes from Marketing or your VP.</p>' + 
+				'<p>Before your request can be approved, ' + 
+				'you must submit your pass log to Brian Therrien or Yasmina  Blaise for review. ' +
+				'Allow 7 days for approval and fulfillment.</p>',
 			'sections': {
 				'commonColumns': [
 					{
@@ -78,35 +79,38 @@
 						'internalName': 'ID',
 						'formLink': 1
 					}, {
-						'displayName': 'Request Nickname',
-						'internalName': 'Title'
-					}, {
 						'displayName': 'Talk To',
 						'internalName': 'RequestedFor',
 						'userName': 1
 					}, {
-						'displayName': "Staff Volunteer Name(s)",
-						'internalName': "StaffVolNames",
+						'displayName': "Number of Passes",
+						'internalName': "Quantity",
 					}, {
-						'displayName': 'Request Date',
-						'internalName': 'RequestDate',
+						'displayName': "Venue",
+						'internalName': "Venue",
+					}, {
+						'displayName': 'Pickup Date',
+						'internalName': 'PickupDate',
 						'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
-					}, {
-						'displayName': 'Request Status',
-						'internalName': 'RequestStatus'
 					}
 				],
 				'tables': [
 					{
-						'tableTitle': 'Open',
-						'tableID': 'open',
+						'tableTitle': 'Pending Approval',
+						'tableID': 'pending-approval',
 						'someColsAreUsers': 1,
-						'basicMyEOLQueryRelevantValue': 0
+						'myRSQueryRelevantStatus': 'Pending Approval'
+					}, {
+						'tableTitle': 'Approved',
+						'tableID': 'approved',
+						'someColsAreUsers': 1,
+						'myRSQueryRelevantStatus': 'Approved'
 					}, {
 						'tableTitle': 'Closed',
 						'tableID': 'closed',
 						'someColsAreUsers': 1,
-						'basicMyEOLQueryRelevantValue': 1
+						'sortColAndOrder': [0, 'desc'],
+						'basicMyEOLQueryRelevantValue': 1,
 					}
 				]
 			}
@@ -118,6 +122,7 @@
 	var fData = {
 		'autoProcessApprovals': 1,
 		'approvalStmt': 'Approval indicates that the above passes should be issued',
+		'newRequestConfirmationAddition': '<p>Before your request can be approved, you must submit your pass log to Brian Therrien or Yasmina Blaise for review.</p>',
 		'standardElementGroups': {
 			'standardThisRequestAndRequesterElements': 1,
 			'standardAdminElements': {
@@ -163,6 +168,7 @@
 				'elementType': "field",
 				'controlType': "text",
 				'fieldName': "Quantity",
+				'listFieldName': "Quantity",
 				'labelContent': "Number of Passes",
 				'requiredForNonAdmin': [""],
 				'requiredForAdmin': [""],
@@ -172,6 +178,7 @@
 				'elementType': "field",
 				'controlType': "text",
 				'fieldName': "Venue",
+				'listFieldName': "Venue",
 				'labelContent': "Venue",
 				'requiredForNonAdmin': [""],
 				'requiredForAdmin': [""],
@@ -208,6 +215,7 @@
 				'elementType': "field",
 				'controlType': 'datePicker',
 				'fieldName': "Pass Pickup Date",
+				'listFieldName': "PickupDate",
 				'labelContent': "Pass Pickup Date",
 				'requiredForNonAdmin': [""],
 				'requiredForAdmin': [""],
