@@ -7,6 +7,10 @@ dotenv.config({ path: './dotenv.env' });
 
 // ----- PULL IN MODULES, ROUTES, CONFIG
 
+// CONFIG ---
+
+const cronConfig = require('./env.config.cron.json');
+
 // NODE MODULES ---
 
 const express = require('express');
@@ -224,7 +228,7 @@ cron.schedule('0 2 * * *', () => {
 		});
 });
 // schedule as specified in environment
-cron.schedule(process.env.adUserProcessingCronSchedule, () => {
+cron.schedule(cronConfig.adUserProcessingCronSchedule, () => {
 	nesoActiveDirectory.ProcessADUsersData()
 		// if the promise is resolved, log result
 		.then((result) => {
@@ -252,7 +256,7 @@ cron.schedule(process.env.adUserProcessingCronSchedule, () => {
 		});
 });
 // schedule as specified in environment
-cron.schedule(process.env.adUserByDivisionDepartmentProcessingCronSchedule, () => {
+cron.schedule(cronConfig.adUserByDivisionDepartmentProcessingCronSchedule, () => {
 	nesoActiveDirectory.ProcessADUsersByDivisionDepartmentData()
 		// if the promise is resolved, log result
 		.then((result) => {
@@ -280,7 +284,7 @@ cron.schedule(process.env.adUserByDivisionDepartmentProcessingCronSchedule, () =
 		});
 });
 // schedule as specified in environment
-cron.schedule(process.env.adUserByDivisionDepartmentTeamsProcessingCronSchedule, () => {
+cron.schedule(cronConfig.adUserByDivisionDepartmentTeamsProcessingCronSchedule, () => {
 	nesoHcOrg.ProcessHcOrgDivDeptWTeamsData()
 		// if the promise is resolved, log result
 		.then((result) => {
@@ -308,7 +312,7 @@ cron.schedule(process.env.adUserByDivisionDepartmentTeamsProcessingCronSchedule,
 		});
 });
 // schedule as specified in environment
-cron.schedule(process.env.nonDivisionDepartmentTeamsProcessingCronSchedule, () => {
+cron.schedule(cronConfig.nonDivisionDepartmentTeamsProcessingCronSchedule, () => {
 	nesoHcOrg.ProcessNonDivDeptTeamsData()
 		// if the promise is resolved, log result
 		.then((result) => {
@@ -336,7 +340,7 @@ cron.schedule(process.env.nonDivisionDepartmentTeamsProcessingCronSchedule, () =
 		});
 });
 // schedule as specified in environment
-cron.schedule(process.env.adDepartmentsProcessingCronSchedule, () => {
+cron.schedule(cronConfig.adDepartmentsProcessingCronSchedule, () => {
 	nesoActiveDirectory.ProcessADDepartments()
 		// if the promise is resolved, log result
 		.then((result) => {
@@ -364,7 +368,7 @@ cron.schedule(process.env.adDepartmentsProcessingCronSchedule, () => {
 		});
 });
 // schedule as specified in environment
-cron.schedule(process.env.adManagersSimpleProcessingCronSchedule, () => {
+cron.schedule(cronConfig.adManagersSimpleProcessingCronSchedule, () => {
 	nesoActiveDirectory.ProcessADManagersSimple()
 		// if the promise is resolved, log result
 		.then((result) => {
@@ -392,7 +396,7 @@ cron.schedule(process.env.adManagersSimpleProcessingCronSchedule, () => {
 		});
 });
 // schedule as specified in environment
-cron.schedule(process.env.adManagersWithFullFlatDownlinesProcessingCronSchedule, () => {
+cron.schedule(cronConfig.adManagersWithFullFlatDownlinesProcessingCronSchedule, () => {
 	nesoActiveDirectory.ProcessADManagersWithFullFlatDownlines()
 		// if the promise is resolved, log result
 		.then((result) => {
@@ -420,7 +424,7 @@ cron.schedule(process.env.adManagersWithFullFlatDownlinesProcessingCronSchedule,
 		});
 });
 // schedule as specified in environment
-cron.schedule(process.env.adManagersWithFullHierarchicalDownlinesProcessingCronSchedule, () => {
+cron.schedule(cronConfig.adManagersWithFullHierarchicalDownlinesProcessingCronSchedule, () => {
 	nesoActiveDirectory.ProcessADManagersWithFullHierarchicalDownlines()
 		// if the promise is resolved, log result
 		.then((result) => {
@@ -448,7 +452,7 @@ cron.schedule(process.env.adManagersWithFullHierarchicalDownlinesProcessingCronS
 		});
 });
 // schedule as specified in environment
-cron.schedule(process.env.gseJobsSyncProcessingCronSchedule, () => {
+cron.schedule(cronConfig.gseJobsSyncProcessingCronSchedule, () => {
 	nesoSPSync.SyncGSEJobsListItems()
 		// if the promise is resolved, log result
 		.then((result) => {
@@ -476,7 +480,7 @@ cron.schedule(process.env.gseJobsSyncProcessingCronSchedule, () => {
 		});
 });
 // schedule as specified in environment
-cron.schedule(process.env.gseSchedulesSyncProcessingCronSchedule, () => {
+cron.schedule(cronConfig.gseSchedulesSyncProcessingCronSchedule, () => {
 	nesoSPSync.SyncGSESchedulesListItems()
 		// if the promise is resolved, log result
 		.then((result) => {
@@ -504,7 +508,7 @@ cron.schedule(process.env.gseSchedulesSyncProcessingCronSchedule, () => {
 		});
 });
 // schedule as specified in environment
-cron.schedule(process.env.gseSignupsSyncProcessingCronSchedule, () => {
+cron.schedule(cronConfig.gseSignupsSyncProcessingCronSchedule, () => {
 	nesoSPSync.SyncGSESignupsListItems()
 		// if the promise is resolved, log result
 		.then((result) => {
@@ -532,7 +536,7 @@ cron.schedule(process.env.gseSignupsSyncProcessingCronSchedule, () => {
 		});
 });
 // schedule as specified in environment
-cron.schedule(process.env.gseScheduleCreditReminderNotificationProcessingSchedule, () => {
+cron.schedule(cronConfig.gseScheduleCreditReminderNotificationProcessingSchedule, () => {
 // get a promise to process gse schedule credit reminders
 	nesoHubEmails.ProcessGSEScheduleCreditReminderNotifications()
 		// if the promise is resolved, log result
@@ -561,7 +565,7 @@ cron.schedule(process.env.gseScheduleCreditReminderNotificationProcessingSchedul
 		});
 });
 // schedule as specified in environment
-cron.schedule(process.env.gseSignupReminderNotificationProcessingSchedule, () => {
+cron.schedule(cronConfig.gseSignupReminderNotificationProcessingSchedule, () => {
 // get a promise to process gse signup reminders
 	nesoHubEmails.ProcessGSESignupReminderNotifications()
 		// if the promise is resolved, log result
