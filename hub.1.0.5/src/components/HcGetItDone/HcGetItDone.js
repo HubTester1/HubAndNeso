@@ -44,8 +44,6 @@ export default class HcGetItDone extends React.Component {
 	componentDidMount() {
 		HcGetItDoneData.ReturnAllGetItDoneData(this.props.uData)
 			.then((allGetItDoneItemsData) => {
-				console.log('allGetItDoneItemsData');
-				console.log(allGetItDoneItemsData);
 				this.setState(() => ({
 					listItemsAlphaArray: allGetItDoneItemsData.allListItemsAlpha,
 					listItemsGroupedArray: allGetItDoneItemsData.allListItemsGrouped,
@@ -133,7 +131,7 @@ export default class HcGetItDone extends React.Component {
 			item.anchorText.toLowerCase().includes(filterText.toLowerCase()) || 
 			(item.description && item.description.toLowerCase().includes(filterText.toLowerCase()));
 	}
-	returnHcGetItDoneBody() {
+	returnHcGetItDoneBody(screenType) {
 		// if this user has no roles property, then uData wasn't constructed properly and 
 		// 		we won't risk exposing links to them inappropriately
 		if (this.props.uData.roles) {
@@ -143,6 +141,7 @@ export default class HcGetItDone extends React.Component {
 						handleClickViewByGroupButton={this.handleClickViewByGroupButton}
 						handleClickViewByAlphaButton={this.handleClickViewByAlphaButton}
 						handleFilterTextChange={this.handleFilterTextChange}
+						screenType={screenType}
 					/>
 					{
 						this.state.showViewByGroup && !this.state.collapsible &&
@@ -202,6 +201,7 @@ export default class HcGetItDone extends React.Component {
 					className="hc-get-it-done mos-react-component-root accordion__item"
 					hideBodyClassName="accordion__item--hidden"
 					name="hc-get-it-done"
+					expanded
 				>
 					<AccordionItemTitle
 						className="hc-get-it-done__title accordion__title accordion__title--animated"
@@ -214,7 +214,7 @@ export default class HcGetItDone extends React.Component {
 					<AccordionItemBody
 						className="hc-get-it-done__body accordion__body"
 					>
-						{this.returnHcGetItDoneBody()}
+						{this.returnHcGetItDoneBody(this.props.screenType)}
 					</AccordionItemBody>
 				</AccordionItem>
 			);
@@ -231,7 +231,7 @@ export default class HcGetItDone extends React.Component {
 						ready={this.state.ready}
 						showLoadingAnimation
 					>
-						{this.returnHcGetItDoneBody()}
+						{this.returnHcGetItDoneBody(this.props.screenType)}
 					</ReactPlaceholder>
 				</div>
 			);

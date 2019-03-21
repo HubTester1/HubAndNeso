@@ -558,6 +558,7 @@ div#hc-container
 				background-color: $white-50-percent
 				height: 4rem
 				padding: 0
+				transition: background-color .25s
 
 				div.ms-SearchBox-iconContainer
 					+icon
@@ -581,6 +582,9 @@ div#hc-container
 					border: 0
 					background-color: transparent
 					height: 4rem
+				
+				&:hover
+					background-color: $white-80-percent
 			
 			div.ms-SearchBox.is-active
 

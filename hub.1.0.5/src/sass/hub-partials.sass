@@ -61,7 +61,12 @@ div#hero-container
 
 		div.ms-BasePicker.ms-PeoplePicker
 			background-color: $white-60-percent
-
+			transition: background-color .25s
+			
+			&:hover
+				+small-shadow-bottom-right-light-color
+				background-color: $white-80-percent
+		
 			input.ms-BasePicker-input
 				background-color: transparent	
 
@@ -81,9 +86,10 @@ div#hc-pushed-items
 
 	li.hc-pushed-items-item
 		list-style: none
-		margin: 0 0 1rem 0
+		margin: 0 0 1.5rem 0
 
 		a
+			+font-size-6
 			+font-weight-semilight
 
 	li.hc-pushed-items-item.file
@@ -92,7 +98,7 @@ div#hc-pushed-items
 		color: $grey-13
 
 		&::before
-			+font-size-7
+			+font-size-8
 
 	li.hc-pushed-items-item.page
 		+list-item-icon-bullet
@@ -100,7 +106,7 @@ div#hc-pushed-items
 		color: $grey-13
 
 		&::before
-			+font-size-6
+			+font-size-7
 
 // --- ALL - HC GET IT DONE
 
@@ -126,6 +132,13 @@ div#hc-get-it-done
 	p.hc-get-it-done-item-link-container
 		+font-weight-regular
 		margin-bottom: 0
+
+	p.hc-get-it-done-item-description-container
+		+font-size-6
+
+	button.collapsible-section-button
+		+button
+		+button-light
 
 // --- ALL - HC ORG
 

@@ -106,9 +106,6 @@
 		margin: 0
 		overflow: visible
 		cursor: pointer
-		
-		&:hover
-			background-color: $interactive-active
 
 		.hamburger__lines
 			display: inline-block
@@ -146,6 +143,16 @@
 			.hamburger__lines__contents::after
 				top: 16px
 				transition: transform .275s cubic-bezier(.68, -.55, .265, 1.55)
+
+		&:hover
+			background-color: $interactive-active
+
+			.hamburger__lines
+
+				.hamburger__lines__contents,
+				.hamburger__lines__contents::before,
+				.hamburger__lines__contents::after
+					background-color: $white
 
 	div#hc-container.showing-small-nav
 		
@@ -284,6 +291,7 @@
 
 			h2
 				+font-size-3
+				+font-weight-regular
 				margin-bottom: 1rem
 			
 // --- SMALL - HC SECTIONS / ACCORDION
@@ -307,41 +315,29 @@
 					padding-top: 4rem
 					padding-bottom: 4rem
 					border-bottom: 0
+					background-size: 100% auto, 500%
+					background-image: linear-gradient(to right, $coral-1-90-percent, $coral-1-60-percent 23rem, $purple-1-50-percent 85%, $purple-1-80-percent), url('../../img/bkgrds-small-screen.jpg')
 
 					h2
 						+font-size-3
+						+font-weight-regular
 						color: $aqua-9
 
 				> div.accordion__body
 					border-left: 0
 
-			div.hc-pushed-items.accordion__item
+			div.hc-pushed-items.accordion__item > .accordion__title
+				background-position: left top, 25% 60%
 
-				> .accordion__title
-					background-size: 100%, 500%
-					background-position: left top, 25% 60%
-					background-image: linear-gradient(to right, $coral-2, $coral-2-80-percent 18rem, $coral-2-70-percent 23rem, $purple-2-70-percent 85%, $purple-2-90-percent), url('../../img/bkgrds-small-screen.jpg')
 
-			div.hc-get-it-done.accordion__item
+			div.hc-get-it-done.accordion__item > .accordion__title
+				background-position: left top, 50% center
 
-				> .accordion__title
-					background-size: 100% auto, 500%
-					background-position: left top, 50% center
-					background-image: linear-gradient(to right, $coral-2, $coral-2-80-percent 18rem, $coral-2-70-percent 23rem, $purple-2-70-percent 85%, $purple-2-90-percent), url('../../img/bkgrds-small-screen.jpg')
+			div.hc-organization.accordion__item > .accordion__title
+				background-position: left top, 75% 10%
 
-			div.hc-organization.accordion__item
-
-				> .accordion__title
-					background-size: 100% auto, 500%
-					background-position: left top, 75% 10%
-					background-image: linear-gradient(to right, $coral-2, $coral-2-80-percent 18rem, $coral-2-70-percent 23rem, $purple-2-70-percent 85%, $purple-2-90-percent), url('../../img/bkgrds-small-screen.jpg')
-
-			div.hc-messages-all.accordion__item
-
-				> .accordion__title
-					background-size: 100% auto, 500%
-					background-position: left top, 100% center
-					background-image: linear-gradient(to right, $coral-2, $coral-2-80-percent 18rem, $coral-2-70-percent 23rem, $purple-2-70-percent 85%, $purple-2-90-percent), url('../../img/bkgrds-small-screen.jpg')
+			div.hc-messages-all.accordion__item > .accordion__title
+				background-position: left top, 100% center
 
 // --- SMALL - PUSHED ITEMS
 

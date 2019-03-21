@@ -55,8 +55,6 @@ export default class HcGetItDoneData {
 							collapsedGroups = resultValue[0].collapsedGroups;
 						// if this result's first child does NOT contain a collapsedGroups property
 						} else {
-							console.log('resultValue');
-							console.log(resultValue);
 							// this is content; extract the content items
 							resultValue.forEach((itemValue) => {
 								let userHasPermission = false;
