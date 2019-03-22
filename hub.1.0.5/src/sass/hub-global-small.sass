@@ -29,6 +29,61 @@ div#internet-explorer-upgrade
 	h6
 		+font-weight-semilight
 
+// --- SMALL - COMMAND BAR
+
+@media screen and (max-width: $small-screen-maximum-width)
+
+	div#hc-container
+
+		div.command-bar
+
+			button.command-bar__collapsible-button
+				+button
+				+button-light
+
+				div.ms-Button-textContainer
+					+inline-hidden
+
+			div.command-bar__items-container
+
+				ul.command-bar__items-list
+					+round-corners
+					display: inline-block
+
+					li.command-bar__items-list__list-item
+
+						div.command-bar__item
+
+							button.command-bar__button
+								width: 100%
+
+								div.ms-Button-textContainer
+									text-align: left
+
+							div.ms-SearchBox
+								background-color: $grey-2
+								
+								&:hover
+									+small-shadow-bottom-right-light-color
+									color: $black
+									background-color: $grey-1
+
+					li.command-bar__items-list__list-item:first-child
+
+						div.command-bar__item
+
+							button.command-bar__button,
+							div.ms-SearchBox
+								+round-corners-top-only
+
+					li.command-bar__items-list__list-item:last-child
+
+						div.command-bar__item
+
+							button.command-bar__button,
+							div.ms-SearchBox
+								+round-corners-bottom-only
+
 // --- SMALL - PERSONA CARD
 
 @media screen and (max-width: $small-screen-maximum-width)

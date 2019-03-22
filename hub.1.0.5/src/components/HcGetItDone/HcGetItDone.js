@@ -201,7 +201,6 @@ export default class HcGetItDone extends React.Component {
 					className="hc-get-it-done mos-react-component-root accordion__item"
 					hideBodyClassName="accordion__item--hidden"
 					name="hc-get-it-done"
-					expanded
 				>
 					<AccordionItemTitle
 						className="hc-get-it-done__title accordion__title accordion__title--animated"

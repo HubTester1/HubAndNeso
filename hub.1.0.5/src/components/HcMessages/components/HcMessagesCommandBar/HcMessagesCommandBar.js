@@ -2,14 +2,14 @@
 // ----- IMPORTS
 
 import * as React from 'react';
-import { Fabric } from 'office-ui-fabric-react/lib/Fabric';
-import { CommandBar } from 'office-ui-fabric-react/lib/CommandBar';
+import CommandBar from '../../../CommandBar/CommandBar';
 
 // ----- COMPONENT
 
 export default class HcMessagesCommandBar extends React.Component {
 	returnCommandBarItems() {
 		let hideShowButton = {
+			type: 'button',
 			key: 'newMessage',
 			name: 'New',
 			icon: 'Add',
@@ -18,6 +18,7 @@ export default class HcMessagesCommandBar extends React.Component {
 		};
 		if (this.props.showingNewMessageForm && !this.props.updatingMessage) {
 			hideShowButton = {
+				type: 'button',
 				key: 'hideNewMessage',
 				name: 'Hide New Message',
 				icon: 'ChevronUpMed',
@@ -27,6 +28,7 @@ export default class HcMessagesCommandBar extends React.Component {
 		}
 		if (this.props.showingNewMessageForm && this.props.updatingMessage) {
 			hideShowButton = {
+				type: 'button',
 				key: 'hideUpdateMessage',
 				name: 'Cancel Message Modification',
 				icon: 'ChevronUpMed',
@@ -34,26 +36,35 @@ export default class HcMessagesCommandBar extends React.Component {
 				onClick: this.props.handleClickHideNewMessageButton,
 			};
 		}
-			
+
 		return [
 			hideShowButton,
 			{
+				type: 'contextualMenu',
 				key: 'tagFilter',
 				name: 'Category',
 				icon: 'Filter',
 				items: this.returnTagFilterItems(),
 				onClick: this.props.handleClickTagFilterMenuLabel,
+			}, {
+				type: 'searchBox',
+				key: 'search',
+				placeholder: 'Filter',
+				icon: 'Filter',
+				onChange: () => console.log('text changed'),
 			},
 		];
 	}
 	returnTagFilterItems() {
 		const tagFilterItemsGenerated = this.props.tagsArray.map(tagObject => ({
+			type: 'button',
 			key: tagObject.camlName,
 			name: tagObject.name,
 			onClick: this.props.handleClickTagFilterMenuItem,
 		}));
 		const tagFilterItems = [
 			{
+				type: 'button',
 				key: 'all',
 				name: 'All',
 				onClick: this.props.handleClickTagFilterMenuItem,
@@ -65,12 +76,12 @@ export default class HcMessagesCommandBar extends React.Component {
 	render() {
 		return (
 			<div id="hc-messages-command-bar" className="mos-react-component-root">
-				<Fabric>
-					<CommandBar
-						isSearchBoxVisible={false}
-						items={this.returnCommandBarItems()}
-					/>
-				</Fabric>
+				<CommandBar
+					screenType={this.props.screenType}
+					collapseOnScreenTypes={['small']}
+					scopeName="Messages"
+					items={this.returnCommandBarItems()}
+				/>
 			</div>
 		);
 	}

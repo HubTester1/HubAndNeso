@@ -103,6 +103,7 @@ export default class HcOrganization extends React.Component {
 					handleClickShowStaffLookup={this.handleClickShowStaffLookup}
 					handleClickOtherContacts={this.handleClickOtherContacts}
 					handleClickShowMission={this.handleClickShowMission}
+					screenType={this.props.screenType}
 				/>
 				{
 					this.state.showTeams &&

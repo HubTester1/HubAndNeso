@@ -33,6 +33,42 @@
 					margin-top: 1rem
 
 
+// --- MEDIUM - COMMAND BAR
+
+@media screen and (min-width: $medium-screen-minimum-width)
+
+	div#hc-container
+
+		div.command-bar
+
+			div.command-bar__items-container
+
+				ul.command-bar__items-list
+					display: flex
+
+					li.command-bar__items-list__list-item:first-child
+
+						div.command-bar__item
+
+							button.command-bar__button,
+							div.ms-SearchBox
+								+round-corners-left-only
+
+								&:hover
+									+small-shadow-bottom-right-light-color
+
+					li.command-bar__items-list__list-item:last-child
+
+						div.command-bar__item
+
+							button.command-bar__button,
+							div.ms-SearchBox
+								+round-corners-right-only
+
+								&:hover
+									+small-shadow-bottom-left-light-color
+
+
 // --- MEDIUM - MAINTENANCE MODE
 
 @media screen and (min-width: $medium-screen-minimum-width)

@@ -82,7 +82,7 @@ class HcContainer extends React.Component {
 					id="hc-container"
 					className={`mos-react-component-root${this.state.showSmallNav ? ' showing-small-nav' : ''}`}
 				>
-					{/* <div
+					<div
 						id="hc-header-and-hero-container"
 						className="hc-header-and-hero-container"
 					>
@@ -116,7 +116,7 @@ class HcContainer extends React.Component {
 								uData={this.state.uData}
 							/>
 						</MediaQuery>
-					</div> */}
+					</div>
 
 
 					<MediaQuery maxWidth={ScreenSizes.ReturnSmallMax()}>
@@ -125,59 +125,59 @@ class HcContainer extends React.Component {
 							accordion={false}
 							role="tablist"
 						>
-							{/* <HcPushedItems
+							<HcPushedItems
 								screenType="small"
-							/> */}
+							/>
 							<HcGetItDone
 								screenType="small"
 								uData={this.state.uData}
 							/>
-							{/* <HcOrganization
+							<HcOrganization
 								screenType="small"
 							/>
 							<HcMessages
 								uData={this.state.uData}
 								allOrTop="all"
 								screenType="small"
-							/> */}
+							/>
 						</Accordion>
 					</MediaQuery>
 					<MediaQuery
 						minWidth={ScreenSizes.ReturnMediumMin()}
 						maxWidth={ScreenSizes.ReturnMediumMax()}
 					>
-						{/* <HcPushedItems
+						<HcPushedItems
 							screenType="medium"
-						/> */}
+						/>
 						<HcGetItDone
 							screenType="medium"
 							uData={this.state.uData}
 						/>
-						{/* <HcOrganization
+						<HcOrganization
 							screenType="medium"
 						/>
 						<HcMessages
 							uData={this.state.uData}
 							allOrTop="all"
 							screenType="medium"
-						/> */}
+						/>
 					</MediaQuery>
 					<MediaQuery minWidth={ScreenSizes.ReturnLargeMin()}>
-						{/* <HcPushedItems
+						<HcPushedItems
 							screenType="large"
-						/> */}
+						/>
 						<HcGetItDone
 							screenType="large"
 							uData={this.state.uData}
 						/>
-						{/* <HcOrganization
-							screenType="medium"
+						<HcOrganization
+							screenType="large"
 						/>
 						<HcMessages
 							uData={this.state.uData}
 							allOrTop="all"
 							screenType="large"
-						/> */}
+						/>
 					</MediaQuery>
 					<footer>
 						&copy; {MOSUtilities.ReturnFormattedDateTime({ incomingDateTimeString: 'nowLocal', incomingReturnFormat: 'YYYY' })} Museum of Science

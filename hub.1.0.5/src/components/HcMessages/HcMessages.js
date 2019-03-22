@@ -557,6 +557,7 @@ export default class HcMessages extends React.Component {
 		return (
 			<div id="hc-messages-all-body">
 				<HcMessagesCommandBar
+					screenType={this.props.screenType}
 					tagsArray={this.state.tagsArray}
 					handleClickNewMessageButton={this.handleClickNewMessageButton}
 					handleClickHideNewMessageButton={this.handleClickHideNewMessageButton}
@@ -802,6 +803,7 @@ export default class HcMessages extends React.Component {
 					className="hc-messages-all mos-react-component-root accordion__item"
 					hideBodyClassName="accordion__item--hidden"
 					name="hc-messages-all"
+					expanded
 				>
 					<AccordionItemTitle
 						className="hc-messages-all__title accordion__title accordion__title--animated"

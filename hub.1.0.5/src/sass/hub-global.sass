@@ -407,7 +407,7 @@ div#hc-container
 				color: $interactive-active-darkened-1
 
 		div.file-upload-preview__file-image
-			+round-corners-left
+			+round-corners-left-only
 			width: 5rem
 			height: 5rem
 			background-repeat: no-repeat
@@ -491,131 +491,68 @@ div#hc-container
 
 div#hc-container
 
-	div.ms-CommandBar
-		background-color: transparent
+	div.command-bar
 
-		div.ms-CommandBar-primaryCommands
-			margin: 0
+		div.command-bar__items-container
 
-			div.ms-CommandBarItem:hover
-				height: 5rem
-				background-color: transparent
-
-			button.ms-CommandBarItem-link
-				height: 4rem
+			ul.command-bar__items-list
 				margin: 0
-				padding: 0 2rem
-				color: $interactive-default-darkened-1
-				background-color: $interactive-light
-				transition-property: color, background-color
-				transition-duration: .25s
 
-				&:hover
-					+small-shadow-bottom-right-light-color
-					color: $interactive-active-darkened-1
-					background-color: $interactive-light-active
-					z-index: $z-index-command-bar-button-active
+				li.command-bar__items-list__list-item
+					margin: 0
+					list-style: none
 
-					i.ms-CommandBarItem-icon,
-					i.ms-CommandBarItem-chevronDown
-						color: $interactive-active-darkened-1
+					div.command-bar__item
 
-				i.ms-CommandBarItem-icon,
-				i.ms-CommandBarItem-chevronDown
-					+font-weight-semibold
-					color: $interactive-default-darkened-1
-					transition-property: color
-					transition-duration: .25s
+						button.command-bar__button
+							+button
+							+button-light
+							+straight-corners
 				
-				span.ms-CommandBarItem-commandText
-					+font-weight-semibold
-			
-			div.ms-CommandBarItem:last-child
-				
-				div.ms-SearchBox,
-				input.ms-SearchBox-field,
-				button.ms-CommandBarItem-link
-					+round-corners-right
+						div.ms-SearchBox
+							border: 0 !important
+							background-color: $white-50-percent
+							height: 4rem
+							padding: 0
+							transition: background-color .25s
 
-				div.ms-SearchBox,
-				button.ms-CommandBarItem-link
+							div.ms-SearchBox-iconContainer
+								+icon
+								+icon-before
+								+icon-filter-before
+								margin-right: 0
+								padding-left: 1.5rem
+								padding-top: 1.3rem
+								overflow: hidden
 
-					&:hover
-						+small-shadow-bottom-left-light-color
-				
-			// keep first below last, so that first has priority; in cases of only one button, 
-			// 		first and last are same, but we want the shadow on the right
-			div.ms-CommandBarItem:first-child
+								// transition speed and easing are copied from MSFT to
+								// 		avoid a conflict with their styling
+								&::before
+									width: 1.5rem
+									opacity: 1
+									transition: width .167s ease 0s, opacity .167s ease 0s
+									color: $grey-13
 
-				button.ms-CommandBarItem-link
-					+round-corners-left
+								i.ms-SearchBox-icon
+									+inline-hidden
 
-					&:hover
-						+small-shadow-bottom-right-light-color
+							input.ms-SearchBox-field
+								border: 0
+								background-color: transparent
+								height: 4rem
+							
+							&:hover
+								background-color: $white-80-percent
+						
+						div.ms-SearchBox.is-active
 
-			div.ms-SearchBox
-				border: 0 !important
-				background-color: $white-50-percent
-				height: 4rem
-				padding: 0
-				transition: background-color .25s
+							div.ms-SearchBox-iconContainer
 
-				div.ms-SearchBox-iconContainer
-					+icon
-					+icon-before
-					+icon-filter-before
-					margin-right: 0
-					padding-left: 1.5rem
-					overflow: hidden
+								&::before
+									width: 0
+									opacity: 0
 
-					// transition speed and easing are copied from MSFT to
-					// 		avoid a conflict with their styling
-					&::before
-						width: 1.5rem
-						opacity: 1
-						transition: width .167s ease 0s, opacity .167s ease 0s
-
-					i.ms-SearchBox-icon
-						+inline-hidden
-
-				input.ms-SearchBox-field
-					border: 0
-					background-color: transparent
-					height: 4rem
-				
-				&:hover
-					background-color: $white-80-percent
-			
-			div.ms-SearchBox.is-active
-
-				div.ms-SearchBox-iconContainer
-
-					&::before
-						width: 0
-						opacity: 0
-
-// div#hc-container
-	
-// 	.accordion__body
-
-// 		div.ms-CommandBar
-
-// 			div.ms-CommandBar-primaryCommands
-
-// 				button.ms-CommandBarItem-link
-// 					color: $aqua-7
-// 					background-color: $aqua-1
-
-// 					&:hover
-// 						color: $aqua-8
-// 						background-color: $aqua-2
-
-// 					i.ms-CommandBarItem-icon
-// 						color: $aqua-7
-
-// 						&:hover
-// 							color: $aqua-8
-// 							background-color: $aqua-2
+// CONTEXTUAL MENU
 
 div.ms-Layer
 
@@ -624,73 +561,29 @@ div.ms-Layer
 		div.ms-Callout-container
 
 			div.ms-Callout
-
-				div.ms-Callout-beak
-					background-color: $grey-3
 		
 				div.ms-ContextualMenu
-					background-color: $grey-3
+					+round-corners
 					padding: .3rem
 
 					li.ms-ContextualMenu-item:first-child
 						
-						button.ms-ContextualMenu-link,
-						div.ms-SearchBox
-							+round-corners-top
+						button.ms-ContextualMenu-link
+							+round-corners-top-only
 
 					li.ms-ContextualMenu-item:last-child
 						
-						button.ms-ContextualMenu-link,
-						div.ms-SearchBox
-							+round-corners-bottom
+						button.ms-ContextualMenu-link
+							+round-corners-bottom-only
 
 					button.ms-ContextualMenu-link
-						color: $aqua-1
-						background-color: $aqua-7
+						+button
+						+button-light
 
-						&:hover
-							color: $aqua-2
-							background-color: $aqua-8
+						div.ms-ContextualMenu-linkContent
 
-						i.ms-ContextualMenu-icon
-							color: $white
-
-							&:hover
-								color: $aqua-8
-								background-color: $aqua-2
-
-					div.ms-SearchBox
-						border: 0 !important
-						background-color: $white
-						padding: .2rem .2rem .2rem 0
-
-						div.ms-SearchBox-iconContainer
-							+icon
-							+icon-before
-							+icon-filter-before
-							margin-right: 0
-
-							// transition speed and easing are copied from MSFT to
-							// 		avoid a conflict with their styling
-							&::before
-								position: relative
-								top: 1.5rem
-								opacity: 1
-								transition: width .167s ease 0s, opacity .167s ease 0s
-
-							i.ms-SearchBox-icon
-								+inline-hidden
-
-						input.ms-SearchBox-field
-							border: 0
-					
-					div.ms-SearchBox.is-active
-
-						div.ms-SearchBox-iconContainer
-
-							&::before
-								width: 0
-								opacity: 0
+							span.ms-ContextualMenu-itemText
+								line-height: 100%
 	
 // ACCORDION
 
