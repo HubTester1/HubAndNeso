@@ -13,7 +13,9 @@ const webpackV2ProdConfig = require('./webpack/v2.prod.css.config');
 const webpackV4DevConfig = require('./webpack/v4.dev.css.config');
 const webpackV4ProdConfig = require('./webpack/v4.prod.css.config');
 const webpackV5DevConfig = require('./webpack/v5.dev.config');
+const webpackV5StageConfig = require('./webpack/v5.stage.config');
 const webpackV5DevLoaderConfig = require('./webpack/v5.dev.loader.config');
+const webpackV5StageLoaderConfig = require('./webpack/v5.stage.loader.config');
 const webpackV5ProdConfig = require('./webpack/v5.prod.config');
 const gulpBaseConfig = require('./gulp/base.config');
 const gulpV1ProdConfig = require('./gulp/v1.prod.config');
@@ -21,6 +23,7 @@ const gulpV2ProdConfig = require('./gulp/v2.prod.config');
 const gulpV4DevConfig = require('./gulp/v4.dev.config');
 const gulpV4ProdConfig = require('./gulp/v4.prod.config');
 const gulpV5DevConfig = require('./gulp/v5.dev.config');
+const gulpV5StageConfig = require('./gulp/v5.stage.config');
 const gulpV5ProdConfig = require('./gulp/v5.prod.config');
 
 // ----- CONFIG TASKS
@@ -228,6 +231,109 @@ gulp.task('4-dev-watch-push-api', () => {
 	gulp.watch([gulpV4DevConfig.ReturnV4DevSWFAPIFile(argv.api)], gulp.series('4-dev-push-api'));
 });
 
+// STAGE
+
+// build dist file
+gulp.task('5-stage-build', () =>
+	// for all files in the src folder
+	gulp.src(`${gulpV5StageConfig.ReturnV5StageSrcFolder()}/**`)
+		// replace the standard pipe method
+		.pipe(plumber())
+		// pipe them through webpack
+		.pipe(webpackStream(webpackV5StageConfig), webpack)
+		// to the dist folder
+		.pipe(gulp.dest(`${gulpV5StageConfig.ReturnV5StageDistFolder()}`)));
+// push dist to stage
+gulp.task('5-stage-push', () =>
+	// for all files in the dist folder
+	gulp.src(`${gulpV5StageConfig.ReturnV5StageDistFolder()}/**`)
+		// replace the standard pipe method
+		.pipe(plumber())
+		// pipe them into a caching proxy 
+		.pipe(cached('spFiles'))
+		// and then to SP stage location
+		.pipe(spSave(
+			gulpV5StageConfig.ReturnV5SPSaveStageOptions(),
+			gulpBaseConfig.ReturnGulpSPSaveCredentials(),
+		)));
+// push js to stage
+gulp.task('5-stage-push-js', () =>
+	// for all files in the dist folder
+	gulp.src(`${gulpV5StageConfig.ReturnV5StageDistFolder()}/+(*.js|*.js.map)`)
+		// replace the standard pipe method
+		.pipe(plumber())
+		// pipe them into a caching proxy 
+		.pipe(cached('spFiles'))
+		// and then to SP stage location
+		.pipe(spSave(
+			gulpV5StageConfig.ReturnV5SPSaveStageOptions(),
+			gulpBaseConfig.ReturnGulpSPSaveCredentials(),
+		)));
+// push styles to stage
+gulp.task('5-stage-push-styles', () =>
+	// for all files in the dist folder
+	gulp.src(`${gulpV5StageConfig.ReturnV5StageDistFolder()}/+(*.css|*.css.map)`)
+		// replace the standard pipe method
+		.pipe(plumber())
+		// pipe them into a caching proxy 
+		.pipe(cached('spFiles'))
+		// and then to SP stage location
+		.pipe(spSave(
+			gulpV5StageConfig.ReturnV5SPSaveStageOptions(),
+			gulpBaseConfig.ReturnGulpSPSaveCredentials(),
+		)));
+
+// build dist file and push dist to stage
+gulp.task('5-stage-build-push', () =>
+	// for all files in the src folder
+	gulp.src(`${gulpV5StageConfig.ReturnV5StageSrcFolder()}/**`)
+		// replace the standard pipe method
+		.pipe(plumber())
+		// pipe them through webpack
+		.pipe(webpackStream(webpackV5StageConfig), webpack)
+		// to the dist folder
+		.pipe(gulp.dest(`${gulpV5StageConfig.ReturnV5StageDistFolder()}`))
+		// and then to SP stage location
+		.pipe(spSave(
+			gulpV5StageConfig.ReturnV5SPSaveStageOptions(),
+			gulpBaseConfig.ReturnGulpSPSaveCredentials(),
+		)));
+// build dist file and push dist to stage
+gulp.task('5-stage-build-push-loader', () =>
+	// for all files in the src folder
+	gulp.src(`${gulpV5StageConfig.ReturnV5StageSrcFolder()}/**`)
+		// replace the standard pipe method
+		.pipe(plumber())
+		// pipe them through webpack
+		.pipe(webpackStream(webpackV5StageLoaderConfig), webpack)
+		// to the dist folder
+		.pipe(gulp.dest(`${gulpV5StageConfig.ReturnV5StageDistFolder()}`))
+		// and then to SP stage location
+		.pipe(spSave(
+			gulpV5StageConfig.ReturnV5SPSaveStageOptions(),
+			gulpBaseConfig.ReturnGulpSPSaveCredentials(),
+		)));
+// when src changes, build dist file and push dist to stage
+gulp.task('5-stage-watch-all-build-push-js', () => {
+	// watch the src folder; upon changes, build dist file and push dist to stage
+	gulp.watch([`${gulpV5StageConfig.ReturnV5StageSrcFolder()}/**`], gulp.series('5-stage-build', '5-stage-push-js'));
+});
+// when src changes, build dist file and push dist to stage
+gulp.task('5-stage-watch-all-build-push-styles', () => {
+	// watch the src folder; upon changes, build dist file and push dist to stage
+	gulp.watch([`${gulpV5StageConfig.ReturnV5StageSrcFolder()}/**`], gulp.series('5-stage-build', '5-stage-push-styles'));
+});
+// when src changes, build dist file and push dist to stage
+gulp.task('5-stage-watch-all-build-push-loader', () => {
+	// watch the src folder; upon changes, build dist file and push dist to stage
+	gulp.watch([`${gulpV5StageConfig.ReturnV5StageSrcFolder()}/**`], gulp.series('5-stage-build-push-loader'));
+});
+// when src changes, build dist file and push dist to stage
+gulp.task('5-stage-watch-build-push', () => {
+	// watch the src folder; upon changes, build dist file and push dist to stage
+	gulp.watch([`${gulpV5StageConfig.ReturnV5StageSrcFolder()}/**`], gulp.series('5-stage-build-push'));
+});
+
 // PROD
 
 // build style file
@@ -327,7 +433,7 @@ gulp.task('5-dev-push', () =>
 		.pipe(cached('spFiles'))
 		// and then to SP dev location
 		.pipe(spSave(
-			gulpV5DevConfig.ReturnV5SPSaveDevOptions(), 
+			gulpV5DevConfig.ReturnV5SPSaveDevOptions(),
 			gulpBaseConfig.ReturnGulpSPSaveCredentials(),
 		)));
 // push js to dev
@@ -338,12 +444,12 @@ gulp.task('5-dev-push-js', () =>
 		.pipe(plumber())
 		// pipe them into a caching proxy 
 		.pipe(cached('spFiles'))
-		// and then to SP prod location
+		// and then to SP dev location
 		.pipe(spSave(
 			gulpV5DevConfig.ReturnV5SPSaveDevOptions(),
 			gulpBaseConfig.ReturnGulpSPSaveCredentials(),
 		)));
-// push styles to prod
+// push styles to dev
 gulp.task('5-dev-push-styles', () =>
 	// for all files in the dist folder
 	gulp.src(`${gulpV5DevConfig.ReturnV5DevDistFolder()}/+(*.css|*.css.map)`)
@@ -351,7 +457,7 @@ gulp.task('5-dev-push-styles', () =>
 		.pipe(plumber())
 		// pipe them into a caching proxy 
 		.pipe(cached('spFiles'))
-		// and then to SP prod location
+		// and then to SP dev location
 		.pipe(spSave(
 			gulpV5DevConfig.ReturnV5SPSaveDevOptions(),
 			gulpBaseConfig.ReturnGulpSPSaveCredentials(),

@@ -28,9 +28,10 @@ if (location.pathname.indexOf('sites/') !== -1) {
 
 // config base paths of file storage locations
 const devCentrallyManagedFileBasePathBasePath = 'https://bmos.sharepoint.com/sites/hubdev/DevCode5/';
+const stageCentrallyManagedFileBasePathBasePath = 'https://bmos.sharepoint.com/sites/hubdev/StageCode5/';
 const prodCentrallyManagedFileBasePathBasePath = 'https://bmos.sharepoint.com/sites/hubprod/Code5/';
 let centrallyManagedFileBasePathBasePath = prodCentrallyManagedFileBasePathBasePath;
-// note: will determine whether or not the centrally managed dev file base path should 
+// note: will determine whether or not the centrally managed dev or stage file base path should 
 // 		be used instead, but can only do so after the site's local settings have been 
 // 		loaded and parsed
 
@@ -135,8 +136,14 @@ function LoadJSFiles(filesToLoad, promiseTracker, mData, callback) {
 function LoadFiles() {
 	LoadJSFiles(settingsToLoad, settingsLoadingPromises, null, () => {
 		const { mData } = window;
+		console.log('looking at mData');
 		if (typeof (mData) !== 'undefined' && mData.mosKey.indexOf('dev') !== -1) {
+			console.log('found dev in mData');
 			centrallyManagedFileBasePathBasePath = devCentrallyManagedFileBasePathBasePath;
+		}
+		if (typeof (mData) !== 'undefined' && mData.mosKey.indexOf('stage') !== -1) {
+			console.log('found stage in mData');
+			centrallyManagedFileBasePathBasePath = stageCentrallyManagedFileBasePathBasePath;
 		}
 		LoadCSSFiles(stylesheetsToLoad, () => {
 			LoadJSFiles(mosToLoad, mosLoadingPromises, mData, () => {
