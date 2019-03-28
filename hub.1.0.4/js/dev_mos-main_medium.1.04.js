@@ -22129,7 +22129,7 @@
 		if (relevantRole === 'gseHRAdmin') {
 			selectedManager = GetParamFromUrl(location.search, "m");
 			if (!selectedManager || selectedManager == '') {
-				selectedManager = 'imiaoulis';
+				selectedManager = 'wbouchard';
 			}
 		}
 		if (relevantRole === 'gseManager') {

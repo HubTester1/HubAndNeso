@@ -22129,7 +22129,7 @@
 		if (relevantRole === 'gseHRAdmin') {
 			selectedManager = GetParamFromUrl(location.search, "m");
 			if (!selectedManager || selectedManager == '') {
-				selectedManager = 'imiaoulis';
+				selectedManager = 'wbouchard';
 			}
 		}
 		if (relevantRole === 'gseManager') {
@@ -28034,7 +28034,7 @@
 		// wait for all data retrieval / setting promises to complete (pass or fail) 
 		$.when.apply($, allDataRetrievalAndSettingPromises).always(function () {
 
-			console.log('using dev_mos-main_medium.1.04 m1');
+			console.log('using dev_mos-main.1.04 m1');
 
 			$().ConfigureAndShowScreenContainerAndAllScreens();
 		});
