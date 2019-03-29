@@ -49,9 +49,8 @@ export default class HcMessagesCommandBar extends React.Component {
 			}, {
 				type: 'searchBox',
 				key: 'search',
-				placeholder: 'Filter',
-				icon: 'Filter',
-				onChange: () => console.log('text changed'),
+				placeholder: 'Enter text to filter',
+				onChange: this.props.handleFilterTextChange,
 			},
 		];
 	}

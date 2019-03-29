@@ -18,6 +18,14 @@ export default class HcGetItDoneData {
 			.filter("Category eq 'Request Forms'")
 			.get();
 	}
+	static ReturnAccountingDocsForHcGetItDone() {
+		const hrDocsWeb = new Web('https://bmos.sharepoint.com');
+		return hrDocsWeb.lists.getByTitle('Accounting Documents').items
+			.select('File/ServerRelativeUrl', 'FileLeafRef', 'ServerRedirectedEmbedUrl', 'Title', 'HCProminent')
+			.expand('File')
+			.filter("Custom1 eq 'Forms'")
+			.get();
+	}
 	static ReturnNesoDataForHcGetItDone() {
 		return NesoHTTPClient
 			.ReturnNesoData('https://neso.mos.org/hcGetItDone/settings');
@@ -33,6 +41,7 @@ export default class HcGetItDoneData {
 			const listItemQueryPromises = [
 				this.ReturnNesoSettngsForHcGetItDone(),
 				this.ReturnHRDocsForHcGetItDone(),
+				this.ReturnAccountingDocsForHcGetItDone(),
 				this.ReturnNesoDataForHcGetItDone(),
 			];
 				// wait for all queries to be completed
@@ -74,7 +83,7 @@ export default class HcGetItDoneData {
 										itemFormatted.url = itemValue.File.ServerRelativeUrl;
 										// itemFormatted.url = itemValue.ServerRedirectedEmbedUrl;
 										itemFormatted.anchorText =
-											MOSUtilities.ReplaceAll('.pdf', '', MOSUtilities.ReplaceAll('.docx', '', itemValue.FileLeafRef.toString()));
+											MOSUtilities.ReplaceAll('.pdf', '', MOSUtilities.ReplaceAll('.doc', '', MOSUtilities.ReplaceAll('.docx', '', MOSUtilities.ReplaceAll('.xls', '', MOSUtilities.ReplaceAll('.xlsx', '', itemValue.FileLeafRef.toString())))));
 										itemFormatted.description = itemValue.Title;
 										itemFormatted.groups = ['HR'];
 										if (itemValue['odata.type'] === 'SP.Data.HRDocsItem') {
@@ -99,7 +108,9 @@ export default class HcGetItDoneData {
 										itemFormatted.type = 'swf';
 										itemFormatted.key = shortID.generate();
 									}
-									allListItemsAlpha.push(itemFormatted);
+									if (itemFormatted.url) {										
+										allListItemsAlpha.push(itemFormatted);
+									}
 								}
 							});
 						}
@@ -114,6 +125,9 @@ export default class HcGetItDoneData {
 
 					// for each item in allListItemsAlpha
 					allListItemsAlpha.forEach((itemValue) => {
+						if (!itemValue.groups) {
+							console.log(itemValue);
+						}
 						// for each group in the item
 						itemValue.groups.forEach((groupValue) => {
 							// if this group isn't already in the container, add it with 

@@ -30,8 +30,7 @@ const HcGetItDoneCommandBar = props => (
 				}, {
 					type: 'searchBox',
 					key: 'search',
-					placeholder: 'Filter',
-					icon: 'Filter',
+					placeholder: 'Enter text to filter',
 					onChange: props.handleFilterTextChange,
 				},
 			]}

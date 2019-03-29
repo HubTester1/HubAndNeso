@@ -78,7 +78,7 @@ export default class HcGetItDone extends React.Component {
 	}
 	handleFilterTextChange(filterText) {
 		// if there's no filterText
-		if (!filterText) {
+		if (!filterText || filterText.length < 3) {
 			// set individual and grouped lists of items to render to base individual and grouped lists
 			this.setState(() => ({
 				collapsible: true,
@@ -137,6 +137,19 @@ export default class HcGetItDone extends React.Component {
 		if (this.props.uData.roles) {
 			return (
 				<div id="hc-get-it-done-body">
+					<div className="section-notice section-notice__neutral">
+						<p className="section-notice__text">
+							Learn about&nbsp;
+							<a 
+								target="_blank" 
+								rel="noopener noreferrer"
+								href="https://bmos.sharepoint.com/SitePages/Get%20it%20Done%20Update,%20March%202019.aspx"
+							>
+								March 2019 updates to Get it Done
+							</a>
+							.
+						</p>
+					</div>
 					<HcGetItDoneCommandBar
 						handleClickViewByGroupButton={this.handleClickViewByGroupButton}
 						handleClickViewByAlphaButton={this.handleClickViewByAlphaButton}

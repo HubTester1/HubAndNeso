@@ -491,6 +491,14 @@ div#hc-container
 
 div#hc-container
 
+	button.collapsible-section-button
+		+button
+
+	
+// COMMAND BAR
+
+div#hc-container
+
 	div.command-bar
 
 		div.command-bar__items-container
@@ -517,24 +525,27 @@ div#hc-container
 							transition: background-color .25s
 
 							div.ms-SearchBox-iconContainer
-								+icon
-								+icon-before
-								+icon-filter-before
-								margin-right: 0
-								padding-left: 1.5rem
-								padding-top: 1.3rem
-								overflow: hidden
+								color: $interactive-default
 
-								// transition speed and easing are copied from MSFT to
-								// 		avoid a conflict with their styling
-								&::before
-									width: 1.5rem
-									opacity: 1
-									transition: width .167s ease 0s, opacity .167s ease 0s
-									color: $grey-13
+							// div.ms-SearchBox-iconContainer
+							// 	+icon
+							// 	+icon-before
+							// 	+icon-filter-before
+							// 	margin-right: 0
+							// 	padding-left: 1.5rem
+							// 	padding-top: 1.3rem
+							// 	overflow: hidden
 
-								i.ms-SearchBox-icon
-									+inline-hidden
+							// 	// transition speed and easing are copied from MSFT to
+							// 	// 		avoid a conflict with their styling
+							// 	&::before
+							// 		width: 1.5rem
+							// 		opacity: 1
+							// 		transition: width .167s ease 0s, opacity .167s ease 0s
+							// 		color: $grey-13
+
+							// 	i.ms-SearchBox-icon
+							// 		+inline-hidden
 
 							input.ms-SearchBox-field
 								border: 0
@@ -547,10 +558,15 @@ div#hc-container
 						div.ms-SearchBox.is-active
 
 							div.ms-SearchBox-iconContainer
+								color: $interactive-active
+						
+						// div.ms-SearchBox.is-active
 
-								&::before
-									width: 0
-									opacity: 0
+						// 	div.ms-SearchBox-iconContainer
+
+						// 		&::before
+						// 			width: 0
+						// 			opacity: 0
 
 // CONTEXTUAL MENU
 
@@ -974,6 +990,29 @@ div.ms-Fabric
 	button
 		min-width: 0
 	
+// SECTION NOTICES
+
+form#aspnetForm
+	
+	div.section-notice
+		+round-corners
+		display: inline-block
+		padding: 1rem 2rem
+		max-width: 60rem
+		margin: 0 0 1rem
+		background-color: $white
+		// position: absolute;
+		// right: 5rem;
+		// top: 5rem;
+		// width: calc(25% - 3rem);
+		// padding: 5rem 5rem 2rem;
+		// height: 14rem
+		
+		p.section-notice__text
+			+p-icon-before
+			+icon-link-before
+			margin: 0
+
 // BANNERS
 
 form#aspnetForm

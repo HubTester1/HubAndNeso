@@ -271,6 +271,15 @@
 		background-image: linear-gradient(to bottom, $subtle-coral, $purple-3)
 		padding: 5rem 4rem 5rem 5rem
 
+		div.section-notice
+			background-color: $coral-4
+
+			a
+				color: $interactive-default-darkened-1
+
+				&:hover
+					color: $interactive-active-darkened-1
+
 		div.banner
 			margin-top: 2rem
 
@@ -294,7 +303,7 @@
 			+small-shadow-bottom-right-light-color
 			break-inside: avoid
 			page-break-inside: avoid
-			overflow: hidden
+			overflow: visible
 			padding: 3rem
 			background-color: $white-90-percent
 			margin: 0 1rem 1rem 0
@@ -456,13 +465,14 @@
 						+font-weight-regular
 						display: block
 						padding: 0
-						height: 2rem
+						// height: 2rem
 						margin: 1rem 0 0 0 !important
 						border: .1rem solid transparent
 						border: 0
 						background-color: transparent
 						color: $interactive-default
-						transition: color .25s, background-color .25s, border-color .25s, padding .25s, height .25s
+						transition: color .25s, background-color .25s, border-color .25s, padding .25s
+						// , height .25s
 
 						&:after
 							+font-size-7
@@ -475,7 +485,7 @@
 						button.hc-messages-message-full-message-button,
 						button.hc-messages-message-enable-message-update-button
 							+button-icon-after
-							height: 4rem
+							// height: 4rem
 							padding: 0 2rem
 								
 						// span.hc-messages-message-conditional-button-separator
@@ -512,6 +522,18 @@
 	div#hc-messages-all
 		padding: 5rem 4rem 5rem 5rem
 		background-image: linear-gradient(to bottom, $purple-3, $green-2)
+
+		div.section-notice
+			background-color: $purple-4
+
+			a
+				color: $interactive-default-darkened-1
+
+				&:hover
+					color: $interactive-active-darkened-1
+
+		div.banner
+			margin-top: 2rem
 
 		div.hc-messages-placeholder
 			column-count: 2
@@ -550,13 +572,14 @@
 					+button
 					+font-weight-regular
 					display: block
-					height: 2rem
+					// height: 2rem
 					padding: 0
 					margin: 1rem 0 0 0 !important
 					border: .1rem solid transparent
 					background-color: transparent
 					color: $interactive-default
-					transition: color .25s, background-color .25s, border-color .25s, padding .25s, height .25s
+					transition: color .25s, background-color .25s, border-color .25s, padding .25s
+					// , height .25s
 
 					&::after
 						+font-size-7
@@ -569,7 +592,7 @@
 					button.hc-messages-message-full-message-button,
 					button.hc-messages-message-enable-message-update-button
 						+button-icon-after
-						height: 4rem
+						// height: 4rem
 						padding: 0 2rem
 
 					button.hc-messages-message-full-message-button

@@ -36,7 +36,10 @@ export default class HcMessages extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			categoryFilter: '',
+			textFilter: '',
 			messagesArray: [],
+			messagesToRenderArray: [],
 			messagesThisPageSmallScreen: [],
 			messagesThisPageLargeScreen: [],
 			activePage: startingPageNumber,
@@ -71,6 +74,7 @@ export default class HcMessages extends React.Component {
 		this.handleClickHideNewMessageButton = this.handleClickHideNewMessageButton.bind(this);
 		this.handleClickTagFilterMenuLabel = this.handleClickTagFilterMenuLabel.bind(this);
 		this.handleClickTagFilterMenuItem = this.handleClickTagFilterMenuItem.bind(this);
+		this.handleFilterTextChange = this.handleFilterTextChange.bind(this);
 		this.handlePageChange = this.handlePageChange.bind(this);
 		this.returnHcMessagesAllBody = this.returnHcMessagesAllBody.bind(this);
 		this.enableMessageUpdate = this.enableMessageUpdate.bind(this);
@@ -106,6 +110,7 @@ export default class HcMessages extends React.Component {
 						this.returnMessagesThisPage(startingPageNumber, allMessageMessages);
 					this.setState(() => ({
 						messagesArray: allMessageMessages,
+						messagesToRenderArray: allMessageMessages,
 						messagesThisPageSmallScreen: messagesThisPage.messagesThisPageSmallScreen,
 						messagesThisPageLargeScreen: messagesThisPage.messagesThisPageLargeScreen,
 						ready: true,
@@ -117,6 +122,7 @@ export default class HcMessages extends React.Component {
 				.then((allMessageMessages) => {
 					this.setState(() => ({
 						messagesArray: allMessageMessages,
+						messagesToRenderArray: allMessageMessages,
 						ready: true,
 					}));
 				});
@@ -451,7 +457,7 @@ export default class HcMessages extends React.Component {
 	}
 	handlePageChange(pageNumber) {
 		const messagesThisPage =
-			this.returnMessagesThisPage(pageNumber, this.state.messagesArray);
+			this.returnMessagesThisPage(pageNumber, this.state.messagesToRenderArray);
 		this.setState({
 			activePage: pageNumber,
 			messagesThisPageSmallScreen: messagesThisPage.messagesThisPageSmallScreen,
@@ -494,6 +500,7 @@ export default class HcMessages extends React.Component {
 				this.returnMessagesThisPage(startingPageNumber, newMessageArray);
 			return {
 				messagesArray: newMessageArray,
+				messagesToRenderArray: newMessageArray,
 				messagesThisPageSmallScreen: messagesThisPage.messagesThisPageSmallScreen,
 				messagesThisPageLargeScreen: messagesThisPage.messagesThisPageLargeScreen,
 			};
@@ -526,36 +533,110 @@ export default class HcMessages extends React.Component {
 		// 		a button has been clicked inside a form tag); unfortunately, this also
 		// 		prevents the menu from closing
 		e.preventDefault();
-
-		if (menuItem.name === 'All') {
-			HcMessagesData.ReturnHcMessagesAllMessages()
-				.then((allMessageMessages) => {
-					const messagesThisPage =
-						this.returnMessagesThisPage(startingPageNumber, allMessageMessages);
-					this.setState(() => ({
-						messagesArray: allMessageMessages,
-						messagesThisPageSmallScreen: messagesThisPage.messagesThisPageSmallScreen,
-						messagesThisPageLargeScreen: messagesThisPage.messagesThisPageLargeScreen,
-					}));
-				});
-		} else {
-			HcMessagesData.ReturnHcMessagesAllMessagesWSpecifiedTag(menuItem.name, menuItem.key)
-				.then((specifiedMessages) => {
-					const messagesThisPage = 
-						this.returnMessagesThisPage(startingPageNumber, specifiedMessages);
-					this.setState(() => ({
-						messagesArray: specifiedMessages,
-						messagesThisPageSmallScreen: messagesThisPage.messagesThisPageSmallScreen,
-						messagesThisPageLargeScreen: messagesThisPage.messagesThisPageLargeScreen,
-					}));
-				});
+		let categoryFilter = '';
+		if (menuItem.name !== 'All') {
+			categoryFilter = menuItem.name;
 		}
+		this.setState(() => ({
+			categoryFilter,
+		}));
+		this.filterMessages(this.state.textFilter, categoryFilter);
 		// return true to close the menu
 		return true;
+	}
+	handleFilterTextChange(filterText) {
+		const newFilterText = (filterText.length > 2) ? filterText : '';
+		this.setState(() => ({
+			textFilter: newFilterText,
+		}));
+		this.filterMessages(newFilterText, this.state.categoryFilter);
+	}
+	filterMessages(textFilter, categoryFilter) {
+		// if both filters are clear
+		let messagesToRenderArray;
+		if (!textFilter && !categoryFilter) {
+			// use all messages
+			messagesToRenderArray = this.state.messagesArray;
+		// if there's a cateogry filter and no text filter
+		} else if (!textFilter && categoryFilter) {
+			// get a filtered array from a deep copy of all messages
+			messagesToRenderArray = 
+				this.returnCategoryFilteredMessages(JSON.parse(JSON.stringify(this.state.messagesArray)), categoryFilter);
+		} else if (textFilter && !categoryFilter) {
+			// get a filtered array from a deep copy of all messages
+			messagesToRenderArray =
+				this.returnTextFilteredMessages(JSON.parse(JSON.stringify(this.state.messagesArray)), textFilter);
+		} else if (textFilter && categoryFilter) {
+			// text filtering will probably eliminate the most messages; 
+			// 		starting there will make the second filtering more efficient
+			// get a text filtered array from a deep copy of all messages
+			const textFilteredMessages =
+				this.returnTextFilteredMessages(JSON.parse(JSON.stringify(this.state.messagesArray)), textFilter);
+			// get a category-filtered array from the text-filtered array
+			messagesToRenderArray =
+				this.returnCategoryFilteredMessages(textFilteredMessages, categoryFilter);
+		}
+		// get paginated messages
+		const messagesThisPage =
+			this.returnMessagesThisPage(startingPageNumber, messagesToRenderArray);
+		// set state with paginated messages
+		this.setState(() => ({
+			messagesToRenderArray,
+			messagesThisPageSmallScreen: messagesThisPage.messagesThisPageSmallScreen,
+			messagesThisPageLargeScreen: messagesThisPage.messagesThisPageLargeScreen,
+		}));
+	}
+	returnCategoryFilteredMessages(messagePool, categoryFilter) {
+		return messagePool
+			.filter(this.returnItemIncludesCategoryTag(categoryFilter));
+	}
+	returnTextFilteredMessages(messagePool, textFilter) {
+		return messagePool
+			.filter(this.returnItemIncludesFilterTextCaseInsensitive(textFilter));
+	}
+	returnItemIncludesFilterTextCaseInsensitive(textFilter) {
+		return message =>
+			message.body.toLowerCase().includes(textFilter.toLowerCase()) ||
+			message.subject.toLowerCase().includes(textFilter.toLowerCase()) ||
+			message.creator.displayName.toLowerCase().includes(textFilter.toLowerCase());
+	}
+	returnItemIncludesCategoryTag(categoryFilter) {
+		return (message) => {
+			let includesTag = false;
+			message.tags.forEach((tagValue) => {
+				if (tagValue.name === categoryFilter) {
+					includesTag = true;
+				}
+			});
+			return includesTag;
+		};
+	}
+	returnSortedMessages(messages) {
+
+		/* // sort messages according to modified property
+		allMessagesMessages.sort((a, b) => {
+			if (moment(a.modified).isBefore(moment(b.modified))) {
+				return 1;
+			}
+			return -1;
+		}); */
 	}
 	returnHcMessagesAllBody() {
 		return (
 			<div id="hc-messages-all-body">
+				<div className="section-notice section-notice__neutral">
+					<p className="section-notice__text">
+						Learn about&nbsp;
+						<a
+							target="_blank"
+							rel="noopener noreferrer"
+							href="https://bmos.sharepoint.com/SitePages/Messages%20Update,%20March%202019.aspx"
+						>
+							March 2019 updates to Messages
+						</a>
+						.
+					</p>
+				</div>
 				<HcMessagesCommandBar
 					screenType={this.props.screenType}
 					tagsArray={this.state.tagsArray}
@@ -565,6 +646,7 @@ export default class HcMessages extends React.Component {
 					updatingMessage={this.state.updatingMessage}
 					handleClickTagFilterMenuLabel={this.handleClickTagFilterMenuLabel}
 					handleClickTagFilterMenuItem={this.handleClickTagFilterMenuItem}
+					handleFilterTextChange={this.handleFilterTextChange}
 				/>
 				<HcMessagesNewMessageForm
 					showNewMessageForm={this.state.showNewMessageForm}
@@ -611,11 +693,11 @@ export default class HcMessages extends React.Component {
 					<Pagination
 						activePage={this.state.activePage}
 						itemsCountPerPage={messagesPerPageSmallScreen}
-						totalItemsCount={this.state.messagesArray.length}
+						totalItemsCount={this.state.messagesToRenderArray.length}
 						pageRangeDisplayed={
-							((this.state.messagesArray.length / messagesPerPageSmallScreen) + 1) > 3 ?
+							((this.state.messagesToRenderArray.length / messagesPerPageSmallScreen) + 1) > 3 ?
 								3 :
-								(this.state.messagesArray.length / messagesPerPageSmallScreen) + 1
+								(this.state.messagesToRenderArray.length / messagesPerPageSmallScreen) + 1
 						}
 						onChange={this.handlePageChange}
 						hideDisabled
@@ -634,11 +716,11 @@ export default class HcMessages extends React.Component {
 					<Pagination
 						activePage={this.state.activePage}
 						itemsCountPerPage={messagesPerPageLargeScreen}
-						totalItemsCount={this.state.messagesArray.length}
+						totalItemsCount={this.state.messagesToRenderArray.length}
 						pageRangeDisplayed={
-							((this.state.messagesArray.length / messagesPerPageLargeScreen) + 1) > 7 ?
+							((this.state.messagesToRenderArray.length / messagesPerPageLargeScreen) + 1) > 7 ?
 								7 :
-								(this.state.messagesArray.length / messagesPerPageLargeScreen) + 1
+								(this.state.messagesToRenderArray.length / messagesPerPageLargeScreen) + 1
 						}
 						onChange={this.handlePageChange}
 					/>
@@ -652,11 +734,11 @@ export default class HcMessages extends React.Component {
 					<Pagination
 						activePage={this.state.activePage}
 						itemsCountPerPage={messagesPerPageLargeScreen}
-						totalItemsCount={this.state.messagesArray.length}
+						totalItemsCount={this.state.messagesToRenderArray.length}
 						pageRangeDisplayed={
-							((this.state.messagesArray.length / messagesPerPageLargeScreen) + 1) > 10 ?
+							((this.state.messagesToRenderArray.length / messagesPerPageLargeScreen) + 1) > 10 ?
 								10 :
-								(this.state.messagesArray.length / messagesPerPageLargeScreen) + 1
+								(this.state.messagesToRenderArray.length / messagesPerPageLargeScreen) + 1
 						}
 						onChange={this.handlePageChange}
 					/>
@@ -668,7 +750,7 @@ export default class HcMessages extends React.Component {
 		// prevent submitting using the SP form tag
 		e.preventDefault();
 		// set state
-		this.state.messagesArray.forEach((message) => {
+		this.state.messagesToRenderArray.forEach((message) => {
 			const messageCopy = message;
 			if (messageCopy.messageID === incomingMessageID) {
 				if (typeof (messageCopy.expiration) === 'string') {
@@ -733,7 +815,7 @@ export default class HcMessages extends React.Component {
 			// set up container for updated messages
 			const newMessageArray = [];
 			// iterate over the existing message
-			prevState.messagesArray.forEach((prevMessage) => {
+			prevState.messagesToRenderArray.forEach((prevMessage) => {
 				const prevMessageCopy = prevMessage;
 				// if this is the message to update
 				if (prevMessageCopy.messageID === newMessageProperties.newMessageID) {
@@ -751,6 +833,7 @@ export default class HcMessages extends React.Component {
 				this.returnMessagesThisPage(startingPageNumber, newMessageArray);
 			return {
 				messagesArray: newMessageArray,
+				messagesToRenderArray: newMessageArray,
 				messagesThisPageSmallScreen: messagesThisPage.messagesThisPageSmallScreen,
 				messagesThisPageLargeScreen: messagesThisPage.messagesThisPageLargeScreen,
 			};
@@ -803,7 +886,6 @@ export default class HcMessages extends React.Component {
 					className="hc-messages-all mos-react-component-root accordion__item"
 					hideBodyClassName="accordion__item--hidden"
 					name="hc-messages-all"
-					expanded
 				>
 					<AccordionItemTitle
 						className="hc-messages-all__title accordion__title accordion__title--animated"
@@ -874,7 +956,7 @@ export default class HcMessages extends React.Component {
 						showLoadingAnimation
 					>
 						<HcMessagesList
-							messagesThisPage={this.state.messagesArray}
+							messagesThisPage={this.state.messagesToRenderArray}
 							enableMessageUpdate={this.enableMessageUpdate}
 							uData={this.props.uData}
 						/>
