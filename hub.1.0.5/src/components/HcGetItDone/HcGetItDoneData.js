@@ -18,12 +18,20 @@ export default class HcGetItDoneData {
 			.filter("Category eq 'Request Forms'")
 			.get();
 	}
-	static ReturnAccountingDocsForHcGetItDone() {
+	static ReturnAccountingFormsForHcGetItDone() {
 		const hrDocsWeb = new Web('https://bmos.sharepoint.com');
 		return hrDocsWeb.lists.getByTitle('Accounting Documents').items
 			.select('File/ServerRelativeUrl', 'FileLeafRef', 'ServerRedirectedEmbedUrl', 'Title', 'HCProminent')
 			.expand('File')
 			.filter("Custom1 eq 'Forms'")
+			.get();
+	}
+	static ReturnAccountingTaxDocsForHcGetItDone() {
+		const hrDocsWeb = new Web('https://bmos.sharepoint.com');
+		return hrDocsWeb.lists.getByTitle('Accounting Documents').items
+			.select('File/ServerRelativeUrl', 'FileLeafRef', 'ServerRedirectedEmbedUrl', 'Title', 'HCProminent')
+			.expand('File')
+			.filter("Custom1 eq 'Tax Documents'")
 			.get();
 	}
 	static ReturnNesoDataForHcGetItDone() {
@@ -41,7 +49,8 @@ export default class HcGetItDoneData {
 			const listItemQueryPromises = [
 				this.ReturnNesoSettngsForHcGetItDone(),
 				this.ReturnHRDocsForHcGetItDone(),
-				this.ReturnAccountingDocsForHcGetItDone(),
+				this.ReturnAccountingFormsForHcGetItDone(),
+				this.ReturnAccountingTaxDocsForHcGetItDone(),
 				this.ReturnNesoDataForHcGetItDone(),
 			];
 				// wait for all queries to be completed

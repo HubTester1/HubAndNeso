@@ -188,23 +188,31 @@ div#hc-container
 
 			div.hc-messages-message-preview
 				display: grid
-				grid-template-areas: "Author Author" "Subject Date" "Body Body"
-				grid-template-rows: auto auto auto
-				grid-template-columns: auto 10rem
+				grid-template-areas: "Author Author" "Subject Date" "Body Body" "Button Button"
+				grid-template-rows: auto auto auto auto
+				grid-template-columns: calc(100% - 10.5rem) 10rem
 				grid-column-gap: .5rem
 
-				h3.hc-messages-message-author
+				h3.hc-messages-message-preview-author
 					grid-area: Author
 					margin: 0
+					height: 3.3rem
+					text-overflow: ellipsis
+					overflow: hidden
+					white-space: nowrap
 
 					span.hc-messages-message-author-prefix
 						+inline-hidden
 
-				p.hc-messages-message-subject
+				p.hc-messages-message-preview-subject
 					grid-area: Subject
 					margin: 0
+					height: 2.4rem
+					text-overflow: ellipsis
+					overflow: hidden
+					white-space: nowrap
 				
-				p.hc-messages-message-date
+				p.hc-messages-message-preview-date
 					+font-size-6
 					grid-area: Date
 					padding-top: .3rem
@@ -215,11 +223,16 @@ div#hc-container
 					span.hc-messages-message-date-prefix
 						+inline-hidden
 
-				div.hc-messages-message-preview-truncated-body
+				p.hc-messages-message-preview-body
 					+font-size-6
-					color: $grey-13
 					grid-area: Body
-
+					height: 2rem
+					text-overflow: ellipsis
+					overflow: hidden
+					white-space: nowrap
+				
+				div.hc-messages-message-preview-button-container
+					grid-area: Button
 
 	// new message form
 	div#hc-messages-new-message-form

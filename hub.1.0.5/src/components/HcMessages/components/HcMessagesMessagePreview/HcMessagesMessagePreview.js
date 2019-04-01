@@ -3,15 +3,14 @@
 
 import * as React from 'react';
 import moment from 'moment';
-import Truncate from 'react-truncate';
 import Modal from 'react-modal';
 import MediaQuery from 'react-responsive';
 
 import HcMessagesMessage from '../HcMessagesMessage/HcMessagesMessage';
-// import HcMessagesMessageImagePreview from 
-// '../HcMessagesMessageImagePreview/HcMessagesMessageImƒƒagePreview';
 import ScreenSizes from '../../../../services/ScreenSizes';
 import MOSUtilities from '../../../../services/MOSUtilities';
+
+const StripTags = require('locutus/php/strings/strip_tags');
 
 // ----- COMPONENT
 
@@ -45,7 +44,7 @@ export default class HcMessagesMessagePreview extends React.Component {
 		this.setState({ showInlineFull: false });
 	}
 	returnHtml(html) {
-		return { __html: `<div>${html}</div>` };
+		return { __html: `${html}` };
 	}
 	returnFriendlyDate(dateString) {
 		if (moment().isSame(dateString, 'day')) {
@@ -67,102 +66,107 @@ export default class HcMessagesMessagePreview extends React.Component {
 					!this.state.showInlineFull &&
 					
 					<div className="hc-messages-message-preview">
-						<h3 className="hc-messages-message-author">
+						<h3 className="hc-messages-message-preview-author">
 							<span className="hc-messages-message-author-prefix">Posted by: </span>
 							{this.props.messageContent.creator.displayName}
 						</h3>
-						<p className="hc-messages-message-subject">
-							<Truncate
-								lines={1}
-								ellipsis={<span>...</span>}
-								trimWhitespace
-							>
-								{this.props.messageContent.subject}
-							</Truncate>
+						<p className="hc-messages-message-preview-subject">
+							{this.props.messageContent.subject.slice(0, 49)}
 						</p>
-						<p className="hc-messages-message-date">
+						<p className="hc-messages-message-preview-date">
 							<span className="hc-messages-message-date-prefix">Posted: </span>
 							{this.returnFriendlyDate(this.props.messageContent.modified)}
 						</p>
-						<div className="hc-messages-message-preview-truncated-body">
-							<MediaQuery minWidth={ScreenSizes.ReturnMediumMin()}>
-								<Truncate
-									lines={1}
-									ellipsis={<span>...</span>}
-									trimWhitespace
+						{/* <MediaQuery minWidth={ScreenSizes.ReturnMediumMin()}> */}
+						<p
+							className="hc-messages-message-preview-body"
+							// eslint-disable-next-line react/no-danger
+							dangerouslySetInnerHTML={
+								this.returnHtml(StripTags(this.props.messageContent.body).slice(0, 99))
+							}
+						/>
+						<div className="hc-messages-message-preview-button-container">
+							<MediaQuery maxWidth={ScreenSizes.ReturnSmallMax()}>
+								<button
+									className="hc-messages-message-preview-full-message-button"
+									onClick={this.handleOpenInlineFullClick}
 								>
-									<div className="hc-messages-message-body" dangerouslySetInnerHTML={this.returnHtml(this.props.messageContent.body)} />
-								</Truncate>
-								
+									<span className="button-text-container">Full message</span>
+								</button>
+							</MediaQuery>
+							<MediaQuery minWidth={ScreenSizes.ReturnMediumMin()}>
+								<button
+									className="hc-messages-message-preview-full-message-button"
+									onClick={this.handleOpenModalClick}
+								>
+									<span className="button-text-container">Full message</span>
+								</button>
+							</MediaQuery>
+							{
+								this.props.messageContent.creator.account === this.props.uData.account &&
+
+								<div className="hc-messages-message-button-container">
+									<span className="hc-messages-message-conditional-button-container">
+										<span className="hc-messages-message-conditional-button-separator" />
+										<button
+											className="hc-messages-message-preview-enable-message-update-button"
+											onClick={
+												e => this.props.enableMessageUpdate(this.props.messageContent.messageID, e)
+											}
+										>
+											<span className="button-text-container">Modify message</span>
+										</button>
+									</span>
+								</div>
+							}
+						</div>
+						<MediaQuery minWidth={ScreenSizes.ReturnMediumMin()}>
+							<Modal
+								className="hc-messages-message-full-message-modal"
+								isOpen={this.state.showModalFull}
+								onAfterOpen={this.handleAfterModalOpens}
+								onRequestClose={this.handleCloseModalClick}
+								contentLabel="More"
+								ariaHideApp={false}
+							>
+								<HcMessagesMessage
+									messageId={this.props.messageId}
+									messageContent={this.props.messageContent}
+									handleCloseModalClick={this.handleCloseModalClick}
+									handleCloseInlineFullClick={this.handleCloseInlineFullClick}
+								/>
+							</Modal>
+						</MediaQuery>
+						{/* </MediaQuery>
+						<MediaQuery maxWidth={ScreenSizes.ReturnSmallMax()}>
+							<p
+								className="hc-messages-message-preview-body"
+								// eslint-disable-next-line react/no-danger
+								dangerouslySetInnerHTML={
+									this.returnHtml(StripTags(this.props.messageContent.body).slice(0, 99))
+								}
+							/>
+							<div className="hc-messages-message-button-container">
 								<button
 									className="hc-messages-message-full-message-button"
-									onClick={this.handleOpenModalClick}
+									onClick={this.handleOpenInlineFullClick}
 								>
 									<span className="button-text-container">Full message</span>
 								</button>
 								{
 									this.props.messageContent.creator.account === this.props.uData.account &&
 
-									<div className="hc-messages-message-button-container">
-										<span className="hc-messages-message-conditional-button-container">
-											<span className="hc-messages-message-conditional-button-separator" />
-											<button
-												className="hc-messages-message-enable-message-update-button"
-												onClick={
-													e => this.props.enableMessageUpdate(this.props.messageContent.messageID, e)
-												}
-											>
-												<span className="button-text-container">Modify message</span>
-											</button>
-										</span>
-									</div>
-								}
-								<Modal
-									className="hc-messages-message-full-message-modal"
-									isOpen={this.state.showModalFull}
-									onAfterOpen={this.handleAfterModalOpens}
-									onRequestClose={this.handleCloseModalClick}
-									contentLabel="More"
-									ariaHideApp={false}
-								>
-									<HcMessagesMessage
-										messageId={this.props.messageId}
-										messageContent={this.props.messageContent}
-										handleCloseModalClick={this.handleCloseModalClick}
-										handleCloseInlineFullClick={this.handleCloseInlineFullClick}
-									/>
-								</Modal>
-							</MediaQuery>
-							<MediaQuery maxWidth={ScreenSizes.ReturnSmallMax()}>
-								<Truncate
-									lines={1}
-									ellipsis={<span>...</span>}
-									trimWhitespace
-								>
-									<div className="hc-messages-message-body" dangerouslySetInnerHTML={this.returnHtml(this.props.messageContent.body)} />
-								</Truncate>
-								<div className="hc-messages-message-button-container">
-									<button
-										className="hc-messages-message-full-message-button"
-										onClick={this.handleOpenInlineFullClick}
-									>
-										<span className="button-text-container">Full message</span>
-									</button>
-									{
-										this.props.messageContent.creator.account === this.props.uData.account &&
-
-									<button
-										className="hc-messages-message-enable-message-update-button"
-										onClick={
-											e => this.props.enableMessageUpdate(this.props.messageContent.messageID, e)
-										}
-									>
-										<span className="button-text-container">Modify message</span>
-									</button>
+								<button
+									className="hc-messages-message-enable-message-update-button"
+									onClick={
+										e => this.props.enableMessageUpdate(this.props.messageContent.messageID, e)
 									}
-								</div>
-							</MediaQuery>
-						</div>
+								>
+									<span className="button-text-container">Modify message</span>
+								</button>
+								}
+							</div>
+						</MediaQuery> */}
 					</div>
 				}
 				{

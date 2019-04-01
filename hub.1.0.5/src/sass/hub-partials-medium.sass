@@ -268,17 +268,38 @@
 @media screen and (min-width: $medium-screen-minimum-width)
 	
 	div#hc-get-it-done
+		position: relative
+		padding: 5rem 4rem 4rem 5rem
 		background-image: linear-gradient(to bottom, $subtle-coral, $purple-3)
-		padding: 5rem 4rem 5rem 5rem
 
 		div.section-notice
-			background-color: $coral-4
+			+round-corners-bottom-only
+			+small-shadow-bottom-right-very-light-color
+			+font-size-6
+			position: absolute
+			top: 0
+			right: 5rem
+			width: calc(25% - 5rem)
+			height: 14rem
+			padding: 3rem 3rem 1rem
+			text-align: center
+			background-color: $coral-2
 
-			a
-				color: $interactive-default-darkened-1
+			p.section-notice__text
+				position: absolute
+				bottom: 2rem
+				left: 3rem
+				width: calc(100% - 6rem)
+				margin: 0 auto
 
-				&:hover
-					color: $interactive-active-darkened-1
+				a
+					color: $interactive-default-darkened-1
+
+					&:hover
+						color: $interactive-active-darkened-1
+			
+			&:hover
+				+small-shadow-bottom-right-light-color
 
 		div.banner
 			margin-top: 2rem
@@ -292,7 +313,7 @@
 
 		div#hc-get-it-done-view-by-group,
 		div#hc-get-it-done-view-by-alpha > ul
-			padding-top: 1rem
+			padding-top: 2rem
 			column-count: 2
 			column-gap: 0
 
@@ -301,11 +322,10 @@
 		div#hc-get-it-done-view-by-alpha > ul > li.hc-get-it-done-item
 			+round-corners
 			+small-shadow-bottom-right-light-color
-			break-inside: avoid
-			page-break-inside: avoid
-			overflow: visible
+			display: inline-block
+			width: calc(100% - 1rem)
 			padding: 3rem
-			background-color: $white-90-percent
+			background-color: $white-60-percent
 			margin: 0 1rem 1rem 0
 			border-top: 5px solid $white-10-percent
 			border-bottom: 5px solid $white-10-percent
@@ -406,16 +426,13 @@
 					p.hc-messages-message-tags
 						margin-bottom: 2rem
 
-	// to do
-	// hc-messages-no-messages-message
-
 	// top messages
 
 	div#staff-lookup-and-background-info-and-top-messages
 			
 		div#hc-messages-top
 			width: 40%
-			padding: 0 4rem 5rem 0
+			padding: 0 4rem 4rem 0
 
 			div.hc-messages-placeholder
 
@@ -429,18 +446,15 @@
 					display: none
 
 			ul#hc-messages-list
-				// color: $white
 				padding: 0
 				margin: 0
 
 				li.mos-react-component-root
 					+small-shadow-bottom-right-light-color
+					display: inline-block
 					list-style: none
+					width: calc(100% - 1rem)
 					margin: 0 1rem 1rem 0
-					-webkit-column-break-inside: avoid
-					break-inside: avoid
-					page-break-inside: avoid
-					overflow: hidden
 
 					&:hover
 						+small-shadow-bottom-right-medium-color
@@ -453,26 +467,18 @@
 					border-bottom: 5px solid $pink-2
 					transition: border-color .5s, background-color .5s, height .5s
 
-					// h3.hc-messages-message-author,
-					// p.hc-messages-message-subject,
-					// p.hc-messages-message-date,
-					// div.hc-messages-message-preview-truncated-body
-					// 	color: $white
-
-					button.hc-messages-message-full-message-button,
-					button.hc-messages-message-enable-message-update-button
+					button.hc-messages-message-preview-full-message-button,
+					button.hc-messages-message-preview-enable-message-update-button
 						+button
 						+font-weight-regular
 						display: block
 						padding: 0
-						// height: 2rem
 						margin: 1rem 0 0 0 !important
 						border: .1rem solid transparent
 						border: 0
 						background-color: transparent
 						color: $interactive-default
 						transition: color .25s, background-color .25s, border-color .25s, padding .25s
-						// , height .25s
 
 						&:after
 							+font-size-7
@@ -482,15 +488,12 @@
 						border-color: $pink-3
 						background-color: $white-80-percent
 
-						button.hc-messages-message-full-message-button,
-						button.hc-messages-message-enable-message-update-button
+						button.hc-messages-message-preview-full-message-button,
+						button.hc-messages-message-preview-enable-message-update-button
 							+button-icon-after
-							// height: 4rem
 							padding: 0 2rem
-								
-						// span.hc-messages-message-conditional-button-separator
 
-						button.hc-messages-message-full-message-button
+						button.hc-messages-message-preview-full-message-button
 							+icon-fullscreen-after
 							color: $aqua-9 !important
 							background-color: $aqua-1 !important
@@ -499,7 +502,7 @@
 								color: $aqua-10 !important
 								background-color: $aqua-2 !important
 
-						button.hc-messages-message-enable-message-update-button
+						button.hc-messages-message-preview-enable-message-update-button
 							+icon-edit-after
 							+button-outlined-medium
 							color: $aqua-4
@@ -513,24 +516,41 @@
 				li.mos-react-component-root:nth-child(4)
 					display: none
 
-				li.mos-react-component-root:nth-child(2),
-				li.mos-react-component-root:nth-child(4)
-					margin-bottom: 0
-
 	// all messages
 	
 	div#hc-messages-all
+		position: relative
 		padding: 5rem 4rem 5rem 5rem
 		background-image: linear-gradient(to bottom, $purple-3, $green-2)
 
 		div.section-notice
-			background-color: $purple-4
+			+round-corners-bottom-only
+			+small-shadow-bottom-right-very-very-light-color
+			+font-size-6
+			position: absolute
+			top: 0
+			right: 5rem
+			width: calc(25% - 3rem)
+			height: 14rem
+			padding: 3rem 3rem 1rem
+			text-align: center
+			background-color: $purple-2
 
-			a
-				color: $interactive-default-darkened-1
+			p.section-notice__text
+				position: absolute
+				bottom: 2rem
+				left: 3rem
+				width: calc(100% - 6rem)
+				margin: 0 auto
 
-				&:hover
-					color: $interactive-active-darkened-1
+				a
+					color: $interactive-default-darkened-1
+
+					&:hover
+						color: $interactive-active-darkened-1
+			
+			&:hover
+				+small-shadow-bottom-right-very-light-color
 
 		div.banner
 			margin-top: 2rem
@@ -548,54 +568,51 @@
 			column-gap: 0
 
 			li.mos-react-component-root
+				+small-shadow-bottom-right-light-color
+				display: inline-block
 				list-style: none
+				width: calc(100% - 1rem)
 				margin: 0 1rem 1rem 0
-				-webkit-column-break-inside: avoid
-				break-inside: avoid
-				page-break-inside: avoid
-				overflow: hidden
+
+				&:hover
+					+small-shadow-bottom-right-medium-color
 
 			div.hc-messages-message-preview
 				+round-corners
-				+small-shadow-bottom-right-light-color
 				padding: 2rem
-				background-color: $white-95-percent
+				background-color: $white-50-percent
 				border-top: 5px solid $white-10-percent
 				border-bottom: 5px solid $white-10-percent
 				transition: border-color .5s, background-color .5s, height .5s
 
-				div.hc-messages-message-preview-or-inline-truncated-body
-					+font-weight-semilight
+				// div.hc-messages-message-preview-or-inline-truncated-body
+				// 	+font-weight-semilight
 
-				button.hc-messages-message-full-message-button,
-				button.hc-messages-message-enable-message-update-button
+				button.hc-messages-message-preview-full-message-button,
+				button.hc-messages-message-preview-enable-message-update-button
 					+button
 					+font-weight-regular
 					display: block
-					// height: 2rem
 					padding: 0
 					margin: 1rem 0 0 0 !important
 					border: .1rem solid transparent
 					background-color: transparent
 					color: $interactive-default
 					transition: color .25s, background-color .25s, border-color .25s, padding .25s
-					// , height .25s
 
 					&::after
 						+font-size-7
 					
 				&:hover
-					+small-shadow-bottom-right-medium-color
 					border-color: $yellow-2
 					background-color: $white
 
-					button.hc-messages-message-full-message-button,
-					button.hc-messages-message-enable-message-update-button
+					button.hc-messages-message-preview-full-message-button,
+					button.hc-messages-message-preview-enable-message-update-button
 						+button-icon-after
-						// height: 4rem
 						padding: 0 2rem
 
-					button.hc-messages-message-full-message-button
+					button.hc-messages-message-preview-full-message-button
 						+icon-fullscreen-after
 						color: $white
 						background-color: $interactive-default
@@ -604,7 +621,7 @@
 							background-color: $interactive-active
 							
 
-					button.hc-messages-message-enable-message-update-button
+					button.hc-messages-message-preview-enable-message-update-button
 						+icon-edit-after
 						+button-outlined-default
 						color: $interactive-default

@@ -630,9 +630,9 @@ export default class HcMessages extends React.Component {
 						<a
 							target="_blank"
 							rel="noopener noreferrer"
-							href="https://bmos.sharepoint.com/SitePages/Messages%20Update,%20March%202019.aspx"
+							href="https://bmos.sharepoint.com/SitePages/Messages%20Update,%20April%202019.aspx"
 						>
-							March 2019 updates to Messages
+							April 2019 updates to Messages
 						</a>
 						.
 					</p>

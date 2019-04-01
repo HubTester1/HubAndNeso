@@ -161,6 +161,11 @@
 		div.hc-get-it-done-placeholder
 			column-count: 4
 
+		div.section-notice
+			+font-size-5
+			width: calc(25% - 3.3rem)
+			padding: 5rem 3rem 1rem
+
 		div#hc-get-it-done-view-by-group,
 		div#hc-get-it-done-view-by-alpha > ul
 			column-count: 4
@@ -191,12 +196,12 @@
 
 				li.mos-react-component-root:nth-child(3),
 				li.mos-react-component-root:nth-child(4)
-					display: block !important
+					display: inline-block !important
 
-				li.mos-react-component-root
-					break-inside: avoid
-					page-break-inside: avoid
-					overflow: hidden
+				// li.mos-react-component-root
+				// 	break-inside: avoid
+				// 	page-break-inside: avoid
+				// 	overflow: hidden
 
 
 		// all messages
@@ -205,6 +210,11 @@
 
 			div.hc-messages-placeholder
 				column-count: 4
+
+			div.section-notice
+				+font-size-5
+				width: calc(25% - 3rem)
+				padding: 5rem 3rem 1rem
 
 			ul#hc-messages-list
 				column-count: 4

@@ -143,9 +143,9 @@ export default class HcGetItDone extends React.Component {
 							<a 
 								target="_blank" 
 								rel="noopener noreferrer"
-								href="https://bmos.sharepoint.com/SitePages/Get%20it%20Done%20Update,%20March%202019.aspx"
+								href="https://bmos.sharepoint.com/SitePages/Get%20it%20Done%20Update,%20April%202019.aspx"
 							>
-								March 2019 updates to Get it Done
+								April 2019 updates to Get it Done
 							</a>
 							.
 						</p>
