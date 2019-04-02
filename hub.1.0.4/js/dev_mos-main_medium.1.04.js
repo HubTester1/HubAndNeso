@@ -21923,7 +21923,7 @@
 		// 	parseInt(thisYear) :
 		// 	parseInt(thisYear) - 1;
 		var thisYear = $().ReturnFormattedDateTime('nowLocal', null, 'YYYY');
-		var startingYearOfLastFiscalYear = moment().isAfter(thisYear + '-06-30') ?
+		var startingYearOfLastFiscalYear = moment().isAfter(thisYear + '-01-01') ?
 			parseInt(thisYear) :
 			parseInt(thisYear) - 1;
 
