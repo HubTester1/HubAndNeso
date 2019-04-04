@@ -554,19 +554,23 @@ div#hc-container
 							
 							&:hover
 								background-color: $white-80-percent
+
+								
 						
 						div.ms-SearchBox.is-active
 
 							div.ms-SearchBox-iconContainer
 								color: $interactive-active
 						
-						// div.ms-SearchBox.is-active
-
-						// 	div.ms-SearchBox-iconContainer
-
-						// 		&::before
-						// 			width: 0
-						// 			opacity: 0
+						// target MS Edge
+						@supports (-ms-ime-align: auto)
+							
+							div.ms-SearchBox
+								padding-right: 1.1rem
+								
+								input.ms-SearchBox-field
+									min-width: 20rem
+							
 
 // CONTEXTUAL MENU
 
