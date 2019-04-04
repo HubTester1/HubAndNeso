@@ -78,7 +78,7 @@ export default class HcGetItDone extends React.Component {
 	}
 	handleFilterTextChange(filterText) {
 		// if there's no filterText
-		if (!filterText || filterText.length < 3) {
+		if (!filterText || filterText.length < 2) {
 			// set individual and grouped lists of items to render to base individual and grouped lists
 			this.setState(() => ({
 				collapsible: true,

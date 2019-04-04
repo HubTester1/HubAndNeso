@@ -545,7 +545,7 @@ export default class HcMessages extends React.Component {
 		return true;
 	}
 	handleFilterTextChange(filterText) {
-		const newFilterText = (filterText.length > 2) ? filterText : '';
+		const newFilterText = (filterText.length > 1) ? filterText : '';
 		this.setState(() => ({
 			textFilter: newFilterText,
 		}));
