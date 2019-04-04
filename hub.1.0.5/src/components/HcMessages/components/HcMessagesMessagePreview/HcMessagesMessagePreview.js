@@ -74,7 +74,7 @@ export default class HcMessagesMessagePreview extends React.Component {
 							{this.props.messageContent.subject.slice(0, 49)}
 						</p>
 						<p className="hc-messages-message-preview-date">
-							<span className="hc-messages-message-date-prefix">Posted: </span>
+							<span className="hc-messages-message-date-prefix">Last Modified: </span>
 							{this.returnFriendlyDate(this.props.messageContent.modified)}
 						</p>
 						{/* <MediaQuery minWidth={ScreenSizes.ReturnMediumMin()}> */}
