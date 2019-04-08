@@ -90,7 +90,7 @@ div#hc-pushed-items
 
 		a
 			+font-size-6
-			+font-weight-semilight
+			+font-weight-regular
 
 	li.hc-pushed-items-item.file
 		+list-item-icon-bullet
@@ -188,29 +188,29 @@ div#hc-container
 
 			div.hc-messages-message-preview
 				display: grid
-				grid-template-areas: "Author Author" "Subject Date" "Body Body" "Button Button"
+				grid-template-areas: "Subject Subject" "Author Date" "Body Body" "Button Button"
 				grid-template-rows: auto auto auto auto
 				grid-template-columns: calc(100% - 10.5rem) 10rem
 				grid-column-gap: .5rem
 
-				h3.hc-messages-message-preview-author
-					grid-area: Author
+				h3.hc-messages-message-preview-subject
+					grid-area: Subject
 					margin: 0
 					height: 3.3rem
 					text-overflow: ellipsis
 					overflow: hidden
 					white-space: nowrap
 
-					span.hc-messages-message-author-prefix
-						+inline-hidden
-
-				p.hc-messages-message-preview-subject
-					grid-area: Subject
+				p.hc-messages-message-preview-author
+					grid-area: Author
 					margin: 0
 					height: 2.4rem
 					text-overflow: ellipsis
 					overflow: hidden
 					white-space: nowrap
+
+					span.hc-messages-message-author-prefix
+						+inline-hidden
 				
 				p.hc-messages-message-preview-date
 					+font-size-6

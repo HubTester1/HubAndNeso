@@ -66,18 +66,17 @@ export default class HcMessagesMessagePreview extends React.Component {
 					!this.state.showInlineFull &&
 					
 					<div className="hc-messages-message-preview">
-						<h3 className="hc-messages-message-preview-author">
+						<h3 className="hc-messages-message-preview-subject">
+							{this.props.messageContent.subject.slice(0, 49)}
+						</h3>
+						<p className="hc-messages-message-preview-author">
 							<span className="hc-messages-message-author-prefix">Posted by: </span>
 							{this.props.messageContent.creator.displayName}
-						</h3>
-						<p className="hc-messages-message-preview-subject">
-							{this.props.messageContent.subject.slice(0, 49)}
 						</p>
 						<p className="hc-messages-message-preview-date">
 							<span className="hc-messages-message-date-prefix">Last Modified: </span>
 							{this.returnFriendlyDate(this.props.messageContent.modified)}
 						</p>
-						{/* <MediaQuery minWidth={ScreenSizes.ReturnMediumMin()}> */}
 						<p
 							className="hc-messages-message-preview-body"
 							// eslint-disable-next-line react/no-danger
@@ -137,36 +136,6 @@ export default class HcMessagesMessagePreview extends React.Component {
 								/>
 							</Modal>
 						</MediaQuery>
-						{/* </MediaQuery>
-						<MediaQuery maxWidth={ScreenSizes.ReturnSmallMax()}>
-							<p
-								className="hc-messages-message-preview-body"
-								// eslint-disable-next-line react/no-danger
-								dangerouslySetInnerHTML={
-									this.returnHtml(StripTags(this.props.messageContent.body).slice(0, 99))
-								}
-							/>
-							<div className="hc-messages-message-button-container">
-								<button
-									className="hc-messages-message-full-message-button"
-									onClick={this.handleOpenInlineFullClick}
-								>
-									<span className="button-text-container">Full message</span>
-								</button>
-								{
-									this.props.messageContent.creator.account === this.props.uData.account &&
-
-								<button
-									className="hc-messages-message-enable-message-update-button"
-									onClick={
-										e => this.props.enableMessageUpdate(this.props.messageContent.messageID, e)
-									}
-								>
-									<span className="button-text-container">Modify message</span>
-								</button>
-								}
-							</div>
-						</MediaQuery> */}
 					</div>
 				}
 				{
