@@ -9980,16 +9980,18 @@
 
 			// mgr
 			$.each(eData.requesterManagerEmailArray, function (i, toManager) {
-				notificationsToSend.push({
-					'emailType': 'Notification',
-					'caller': 'beginningOfLife mgr',
-					'to': toManager,
-					'subject': eData.subjectPrefaceJobAdmin + 'new signup',
-					'bodyUnique': '<p>' + eData.requesterName + ' has signed up for "' + sData.jobTitle +
-						'", scheduled for ' + sData.scheduleDateTime + 
-						'. Feel free to <a href="mailto:' + eData.requesterEmail + '">' +
-						'contact ' + eData.requesterName + '</a> if you need to follow up.</p>'
-				});
+				if (toManager) {
+					notificationsToSend.push({
+						'emailType': 'Notification',
+						'caller': 'beginningOfLife mgr',
+						'to': toManager,
+						'subject': eData.subjectPrefaceJobAdmin + 'new signup',
+						'bodyUnique': '<p>' + eData.requesterName + ' has signed up for "' + sData.jobTitle +
+							'", scheduled for ' + sData.scheduleDateTime +
+							'. Feel free to <a href="mailto:' + eData.requesterEmail + '">' +
+							'contact ' + eData.requesterName + '</a> if you need to follow up.</p>'
+					});
+				}
 			});
 
 			// staff
@@ -17669,6 +17671,301 @@
 
 
 
+	$.fn.PrintIITEventAVRequest = function () {
+
+		moment.locale('en');
+		moment.suppressDeprecationWarnings = true;
+
+		// get raw data
+		var sheetData = rData.formData;
+		var printerRequestID = rData.requestID;
+		var requesterData = $().ReturnUserDataUsingAccountName(sheetData["Requester-Account"]);
+
+		sheetData["Printer-Event-Start-Datetime"] = $().ReturnFormattedDateTime(sheetData["datetime-storage_Event-Beginning-Datetime"], "YYYY-MM-DDTHH:mm:ss", "MMMM D, YYYY, h:mm a", 1);
+		sheetData["Printer-Event-End-Datetime"] = $().ReturnFormattedDateTime(sheetData["datetime-storage_Event-Ending-Datetime"], "YYYY-MM-DDTHH:mm:ss", "MMMM D, YYYY, h:mm a", 1);
+		sheetData["Printer-AV-Start-Datetime"] = $().ReturnFormattedDateTime(sheetData["datetime-storage_AV-Beginning-Datetime"], "YYYY-MM-DDTHH:mm:ss", "MMMM D, YYYY, h:mm a", 1);
+
+		var deliveryNeedsQuantity = 0;
+		var displayNeedsQuantity = 0;
+		var audioNeedsQuantity = 0;
+		var miscNeedsQuantity = 0;
+		var micTypesQuantity = 0;
+		var deliveryNeedsElement = 'p';
+		var displayNeedsElement = 'p';
+		var audioNeedsElement = 'p';
+		var miscNeedsElement = 'p';
+		var micTypesElement = 'p';
+
+		if (sheetData['delivery-or-receipt_pickup']) {
+			deliveryNeedsQuantity++;
+		}
+		if (sheetData['delivery-or-receipt_delivery']) {
+			deliveryNeedsQuantity++;
+		}
+		if (sheetData['delivery-or-receipt_techneededforsetup']) {
+			deliveryNeedsQuantity++;
+		}
+		if (sheetData['delivery-or-receipt_techneededforduration']) {
+			deliveryNeedsQuantity++;
+		}
+
+		if (sheetData['display_projection']) {
+			displayNeedsQuantity++;
+		}
+		if (sheetData['display_monitor']) {
+			displayNeedsQuantity++;
+		}
+		if (sheetData['display_dvdplayer']) {
+			displayNeedsQuantity++;
+		}
+		if (sheetData['display_cstscreen']) {
+			displayNeedsQuantity++;
+		}
+		if (sheetData['display_other']) {
+			displayNeedsQuantity++;
+		}
+
+		if (sheetData['audio_avmusic']) {
+			audioNeedsQuantity++;
+		}
+		if (sheetData['audio_clientmusic']) {
+			audioNeedsQuantity++;
+		}
+		if (sheetData['audio_podium']) {
+			audioNeedsQuantity++;
+		}
+		if (sheetData['audio_mic']) {
+			audioNeedsQuantity++;
+		}
+		if (sheetData['audio_portablesoundsystem']) {
+			audioNeedsQuantity++;
+		}
+		if (sheetData['audio_assistivelisteningdevice']) {
+			audioNeedsQuantity++;
+		}
+		if (sheetData['audio_other']) {
+			audioNeedsQuantity++;
+		}
+
+		if (sheetData['miscellaneous-equipment_laserpointer']) {
+			miscNeedsQuantity++;
+		}
+		if (sheetData['miscellaneous-equipment_powerstrips']) {
+			miscNeedsQuantity++;
+		}
+		
+		if (sheetData['mic-types_headset']) {
+			micTypesQuantity++;
+		}
+		if (sheetData['mic-types_lavalier']) {
+			micTypesQuantity++;
+		}
+		if (sheetData['mic-types_handheld']) {
+			micTypesQuantity++;
+		}
+		if (sheetData['mic-types_podium']) {
+			micTypesQuantity++;
+		}
+		if (sheetData['mic-types_stand']) {
+			micTypesQuantity++;
+		}
+
+		if (deliveryNeedsQuantity > 1) {
+			deliveryNeedsElement = 'li';
+		}
+		if (displayNeedsQuantity > 1) {
+			displayNeedsElement = 'li';
+		}
+		if (audioNeedsQuantity > 1) {
+			audioNeedsElement = 'li';
+		}
+		if (miscNeedsQuantity > 1) {
+			miscNeedsElement = 'li';
+		}
+		if (micTypesQuantity > 1) {
+			micTypesElement = 'li';
+		}
+
+		console.log('deliveryNeedsQuantity');
+		console.log(deliveryNeedsQuantity);
+		console.log('displayNeedsQuantity');
+		console.log(displayNeedsQuantity);
+		console.log('audioNeedsQuantity');
+		console.log(audioNeedsQuantity);
+		console.log('miscNeedsQuantity');
+		console.log(miscNeedsQuantity);
+		console.log('micTypesQuantity');
+		console.log(micTypesQuantity);
+
+		console.log(sheetData);
+
+
+
+		// build the sheet to be printed
+		var printContent = '<h1>Event AV Request</h1>';
+
+		printContent += '<p><b>Request ID: </b>' + printerRequestID + '</p>';
+
+		printContent += 
+			'<table class="layout-table">' +
+			'	<tbody><tr><td><h2>Event</h2>' +
+			'	<ul style="margin: 0;">' +
+			'		<li><b>Event Name: </b> ' + sheetData["Event-Name"] + '</li>';
+		if (sheetData["Additional-Information"]) {
+			printContent += '		<li><b>Event Description: </b> ' + sheetData["Additional-Information"] + '</li>';
+		}
+
+		printContent += '		<li><b>Space: </b> ' + sheetData["Event-Space"] + '</li>' + 
+			'		<li><b>Event Starting: </b> ' + sheetData["Printer-Event-Start-Datetime"] + '</li>' + 
+			'		<li><b>Event Ending: </b> ' + sheetData["Printer-Event-End-Datetime"] + '</li>' + 
+			'		<li><b>Check-in / Pick Up Time: </b> ' + sheetData["Printer-AV-Start-Datetime"] + '</li>' + 
+			'		<li><b>Onsite Contact: </b> ' + sheetData["Onsite-Contact"] + '</li>' + 
+			'		<li><b>Account #: </b> ' + sheetData["Account-Number"] + '</li>' + 
+			'	</ul></td>';
+
+/* 
+		var deliveryNeedsQuantity = 0;
+		var displayNeedsQuantity = 0;
+		var audioNeedsQuantity = 0;
+		var miscNeedsQuantity = 0;
+		var micTypesQuantity = 0;
+		var deliveryNeedsElement = 'p';
+		var displayNeedsElement = 'p';
+		var audioNeedsElement = 'p';
+		var miscNeedsElement = 'p';
+		var micTypesElement = 'p';
+ */			
+		printContent += 
+			'	<td><h2>Equipment Needs</h2>';
+		
+		if (deliveryNeedsQuantity > 0) {
+			printContent += '	<h3>Delivery / Receipt</h3>';
+			if (deliveryNeedsQuantity > 1) {
+				printContent += '	<ul style="margin: 0;">';
+			}
+			if (sheetData['delivery-or-receipt_pickup']) {
+				printContent += '	<' + deliveryNeedsElement + '>Pickup<' + deliveryNeedsElement + '>';
+			}
+			if (sheetData['delivery-or-receipt_delivery']) {
+				printContent += '	<' + deliveryNeedsElement + '>Delivery<' + deliveryNeedsElement + '>';
+			}
+			if (sheetData['delivery-or-receipt_techneededforsetup']) {
+				printContent += '	<' + deliveryNeedsElement + '>PickTech Needed for Setup<' + deliveryNeedsElement + '>';
+			}
+			if (sheetData['delivery-or-receipt_techneededforduration']) {
+				printContent += '	<' + deliveryNeedsElement + '>Tech Needed for Duration<' + deliveryNeedsElement + '>';
+			}
+			if (deliveryNeedsQuantity > 1) {
+				printContent += '	</ul>';
+			}
+		}
+		
+			
+			
+			
+			
+
+		if (displayNeedsQuantity > 0) {
+			printContent += '	<h3>Display</h3>';
+			if (displayNeedsQuantity > 1) {
+				printContent += '	<ul style="margin: 0;">';
+			}
+			if (sheetData['display_projection']) {
+				printContent += '	<' + displayNeedsElement + '>Projection<' + displayNeedsElement + '>';
+			}
+			if (sheetData['display_monitor']) {
+				printContent += '	<' + displayNeedsElement + '>Monitor<' + displayNeedsElement + '>';
+			}
+			if (sheetData['display_dvdplayer']) {
+				printContent += '	<' + displayNeedsElement + '>DVD player<' + displayNeedsElement + '>';
+			}
+			if (sheetData['display_cstscreen']) {
+				printContent += '	<' + displayNeedsElement + '>CS&T Screen<' + displayNeedsElement + '>';
+			}
+			if (sheetData['display_other']) {
+				printContent += '	<' + displayNeedsElement + '>' + sheetData['Other-Display'] + '<' + displayNeedsElement + '>';
+			}
+
+			if (displayNeedsQuantity > 1) {
+				printContent += '	</ul>';
+			}
+		}
+
+		
+
+
+
+				
+		if (audioNeedsQuantity > 0) {
+			printContent += '	<h3>Audio</h3>';
+			if (audioNeedsQuantity > 1) {
+				printContent += '	<ul style="margin: 0;">';
+			}
+			if (sheetData['delivery-or-receipt_pickup']) {
+				printContent += '	<' + audioNeedsElement + '>Pickup<' + audioNeedsElement + '>';
+			}
+
+
+
+			if (sheetData['display_other']) {
+				printContent += '	<' + displayNeedsElement + '>' + sheetData['Other-Display'] + '<' + displayNeedsElement + '>';
+			}
+			if (audioNeedsQuantity > 1) {
+				printContent += '	</ul>';
+			}
+		}
+
+
+
+
+
+				
+		if (deliveryNeedsQuantity > 0) {
+			printContent += '	<h3>Delivery / Receipt</h3>';
+			if (deliveryNeedsQuantity > 1) {
+				printContent += '	<ul style="margin: 0;">';
+			}
+			if (sheetData['delivery-or-receipt_pickup']) {
+				printContent += '	<' + deliveryNeedsElement + '>Pickup<' + deliveryNeedsElement + '>';
+			}		
+		
+			if (deliveryNeedsQuantity > 1) {
+				printContent += '	</ul>';
+			}
+		}
+
+
+
+
+
+
+		if (deliveryNeedsQuantity > 0) {
+			printContent += '	<h3>Delivery / Receipt</h3>';
+			if (deliveryNeedsQuantity > 1) {
+				printContent += '	<ul style="margin: 0;">';
+			}
+			if (sheetData['delivery-or-receipt_pickup']) {
+				printContent += '	<' + deliveryNeedsElement + '>Pickup<' + deliveryNeedsElement + '>';
+			}
+
+			if (deliveryNeedsQuantity > 1) {
+				printContent += '	</ul>';
+			}
+		}
+
+			
+			
+
+		printContent += '</td></tr></tbody></table>';
+		
+		printContent = ReturnPrintableContentWithStandardWrapper(printContent, "iit-event-av");
+		PrintToPrinter(printContent);
+	};
+
+
+
+
+
 	$.fn.PrintGPCInitialConceptApprovalRequest = function () {
 
 		moment.locale('en');
@@ -18351,6 +18648,10 @@
 
 			case "PrintPersonnelActionRequest":
 				PrintPersonnelActionRequest();
+				break;
+
+			case "PrintIITEventAVRequest":
+				$().PrintIITEventAVRequest();
 				break;
 
 			case "PrintGPCInitialConceptApprovalRequest":
@@ -19798,6 +20099,9 @@
 			'<div id="container_new-request-control"> \n' +
 			'   <a class="button-link button-link_new-item button_swf-new-request-with-datatable" data-button-type="newRequest" href="/sites/' + mData.siteToken + '/SitePages/App.aspx?r=0">New Request</a> \n' +
 			'</div> \n' +
+			// '<div id="container_new-request-control"> \n' +
+			// '   <a id="standard-printer-button-inside-request" class="" data-print-function="PrintIITEventAVRequest">Print Request</a> \n' +
+			// '</div> \n' +
 			'<ul id="container_tab-controls"> \n' +
 			'   <li><a href="#table-container_pending-approval">Pending Approval</a></li> \n' +
 			'   <li><a href="#table-container_approved">Approved</a></li> \n' +
@@ -19826,7 +20130,9 @@
 		$("div#container_command-bar").html(commandBarContents);
 
 		// turn some command bar elements into tab controls and the turn the corresponding contents into tabbed content
-		$("div#container_command-bar-and-tables").tabs();
+		$("div#container_command-bar-and-tables").tabs({
+			active: 1
+		});
 
 		// set datepickers on date filter fields
 		$("input#filter--start-date_to, input#filter--start-date_from").datepicker({
@@ -28034,7 +28340,7 @@
 		// wait for all data retrieval / setting promises to complete (pass or fail) 
 		$.when.apply($, allDataRetrievalAndSettingPromises).always(function () {
 
-			console.log('using dev_mos-main_long.1.04 m1');
+			console.log('using dev_mos-main_long.1.04 m2');
 
 			$().ConfigureAndShowScreenContainerAndAllScreens();
 		});
