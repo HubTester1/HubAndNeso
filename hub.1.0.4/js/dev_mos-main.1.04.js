@@ -9980,16 +9980,18 @@
 
 			// mgr
 			$.each(eData.requesterManagerEmailArray, function (i, toManager) {
-				notificationsToSend.push({
-					'emailType': 'Notification',
-					'caller': 'beginningOfLife mgr',
-					'to': toManager,
-					'subject': eData.subjectPrefaceJobAdmin + 'new signup',
-					'bodyUnique': '<p>' + eData.requesterName + ' has signed up for "' + sData.jobTitle +
-						'", scheduled for ' + sData.scheduleDateTime + 
-						'. Feel free to <a href="mailto:' + eData.requesterEmail + '">' +
-						'contact ' + eData.requesterName + '</a> if you need to follow up.</p>'
-				});
+				if (toManager) {
+					notificationsToSend.push({
+						'emailType': 'Notification',
+						'caller': 'beginningOfLife mgr',
+						'to': toManager,
+						'subject': eData.subjectPrefaceJobAdmin + 'new signup',
+						'bodyUnique': '<p>' + eData.requesterName + ' has signed up for "' + sData.jobTitle +
+							'", scheduled for ' + sData.scheduleDateTime + 
+							'. Feel free to <a href="mailto:' + eData.requesterEmail + '">' +
+							'contact ' + eData.requesterName + '</a> if you need to follow up.</p>'
+					});
+				}
 			});
 
 			// staff
