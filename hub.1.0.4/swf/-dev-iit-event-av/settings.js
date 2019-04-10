@@ -359,6 +359,7 @@
 				'elementType': 'field',
 				'controlType': 'check',
 				'fieldName': 'Delivery or Receipt',
+				'listFieldName': 'DeliveryOrReceipt',
 				'choiceSetLabel': 'Delivery / Receipt',
 				'choices': [
 					{
@@ -378,7 +379,7 @@
 				'requiredForAdmin': [''],
 				'requiredForNonAdmin': [''],
 				"disabledForNonAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-				"disabledForAdmin": [],
+				"disabledForAdmin": []
 			}, {
 				'elementType': 'field',
 				'controlType': 'check',
@@ -848,6 +849,33 @@
 
 	fData.CustomScriptLast += 'if ($("input#audio_mic").is(":checked")) { \n' +
 								'	$("div#label-and-control_Mic-Types").show("fast").removeClass("hidden"); \n' +
+								'} \n';
+
+
+
+
+	fData.CustomScriptLast += 'if ($("input#mic-types_headset").is(":checked")) { \n' +
+								'	$("div#label-and-control_Headset-Mic-Quantity").show("fast").removeClass("hidden"); \n' +
+								'} \n';
+
+	fData.CustomScriptLast += 'if ($("input#mic-types_lavalier").is(":checked")) { \n' +
+								'	$("div#label-and-control_Lavalier-Mic-Quantity").show("fast").removeClass("hidden"); \n' +
+								'} \n';
+
+	fData.CustomScriptLast += 'if ($("input#mic-types_handheld").is(":checked")) { \n' +
+								'	$("div#label-and-control_Handheld-Mic-Quantity").show("fast").removeClass("hidden"); \n' +
+								'} \n';
+
+	fData.CustomScriptLast += 'if ($("input#mic-types_podium").is(":checked")) { \n' +
+								'	$("div#label-and-control_Podium-Mic-Quantity").show("fast").removeClass("hidden"); \n' +
+								'} \n';
+
+	fData.CustomScriptLast += 'if ($("input#mic-types_stand").is(":checked")) { \n' +
+								'	$("div#label-and-control_Stand-Mic-Quantity").show("fast").removeClass("hidden"); \n' +
+								'} \n';
+
+	fData.CustomScriptLast += 'if ($("input#miscellaneous-equipment_powerstrips").is(":checked")) { \n' +
+								'	$("div#label-and-control_Power-Strip-Quantity").show("fast").removeClass("hidden"); \n' +
 								'} \n';
 
 
