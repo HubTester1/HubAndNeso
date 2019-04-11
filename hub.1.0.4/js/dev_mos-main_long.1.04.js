@@ -20038,6 +20038,10 @@
 		var tData = {
 			'commonColumns': [
 				{
+					'displayName': 'Check-in / Pickup Date & Time',
+					'internalName': 'AVBeginningDatetime',
+					'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'ddd, MMM D, YYYY h:mm a', 'determineYearDisplayDynamically': 1 }
+				}, {
 					'displayName': 'Event Start Date & Time',
 					'internalName': 'EventBeginningDatetime',
 					'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'ddd, MMM D, YYYY h:mm a', 'determineYearDisplayDynamically': 1 }
@@ -20066,6 +20070,7 @@
 					'tableID': 'pending-approval',
 					'someColsAreUsers': 1,
 					'basicRSQueryRelevantStatus': 'Pending Approval',
+					'sortColAndOrder': [1, 'asc']
 				}, {
 					'tableID': 'approved',
 					'someColsAreUsers': 1,
@@ -20089,6 +20094,10 @@
 						'</Where>',
 					'customColumns': [
 						{
+							'displayName': 'Check-in / Pickup Date & Time',
+							'internalName': 'AVBeginningDatetime',
+							'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'ddd, MMM D, YYYY h:mm a', 'determineYearDisplayDynamically': 1 }
+						}, {
 							'displayName': 'Event Start Date & Time',
 							'internalName': 'EventBeginningDatetime',
 							'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'ddd, MMM D, YYYY h:mm a', 'determineYearDisplayDynamically': 1 }
@@ -20116,7 +20125,7 @@
 							'formLink': 1
 						}
 					],
-					// 'sortColAndOrder': [1, 'asc']
+					'sortColAndOrder': [1, 'asc']
 
 				}, {
 					'tableID': 'closed',
@@ -20141,6 +20150,10 @@
 						'</Where>',
 					'customColumns': [
 						{
+							'displayName': 'Check-in / Pickup Date & Time',
+							'internalName': 'AVBeginningDatetime',
+							'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'ddd, MMM D, YYYY h:mm a', 'determineYearDisplayDynamically': 1 }
+						}, {
 							'displayName': 'Event Start Date & Time',
 							'internalName': 'EventBeginningDatetime',
 							'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'ddd, MMM D, YYYY h:mm a', 'determineYearDisplayDynamically': 1 }
@@ -20171,6 +20184,7 @@
 							'formLink': 1
 						}
 					],
+					'sortColAndOrder': [1, 'asc']
 				}
 			]
 		};

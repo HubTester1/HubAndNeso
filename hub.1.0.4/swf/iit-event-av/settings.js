@@ -79,7 +79,7 @@
 			'standardPrintButton': {
 				'buttonText': 'Print Request',
 				'printFunction': 'PrintIITEventAVRequest',
-				'hideForNonAdmin': ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+				'hideForNonAdmin': [""],
 				'hideForAdmin': [""],
 			},
 			'standardThisRequestAndRequesterElements': 1,
