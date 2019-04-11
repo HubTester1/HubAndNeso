@@ -11,8 +11,8 @@ export default class HcGetItDoneData {
 	static ReturnHRDocsForHcOrg() {
 		const hrDocsWeb = new Web('https://bmos.sharepoint.com');
 		return hrDocsWeb.lists.getByTitle('HR Docs').items
-			.select('FileLeafRef', 'ServerRedirectedEmbedUrl', 'Title', 'HRISKey')
-			.filter('HRISKey ne null')
+			.select('FileLeafRef', 'ServerRedirectedEmbedUrl', 'Title', 'HubKey')
+			.filter("Category eq 'Organization Charts'")
 			.get();
 	}
 
@@ -83,7 +83,7 @@ export default class HcGetItDoneData {
 						// for each org chart
 						orgChartsReturn.forEach((orgChart) => {
 							// if this org chart is for this division
-							if (orgChart.HRISKey === divisionCopy.name) {
+							if (orgChart.HubKey === divisionCopy.name) {
 								divisionCopy.orgChart = orgChart.ServerRedirectedEmbedUrl;
 							}
 						});
@@ -94,7 +94,7 @@ export default class HcGetItDoneData {
 							// for each org chart
 							orgChartsReturn.forEach((orgChart) => {
 								// if this org chart is for this department
-								if (orgChart.HRISKey === departmentCopy.name) {
+								if (orgChart.HubKey === departmentCopy.name) {
 									departmentCopy.orgChart = orgChart.ServerRedirectedEmbedUrl;
 								}
 							});

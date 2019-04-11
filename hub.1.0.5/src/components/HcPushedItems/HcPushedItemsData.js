@@ -17,24 +17,6 @@ export default class HcPushedItemsData {
 			.get();
 	}
 
-	static ReturnHRDocsForHcPushedDocs() {
-		const hrDocsWeb = new Web('https://bmos.sharepoint.com');
-		return hrDocsWeb.lists.getByTitle('HR Docs').items
-			.select('File/ServerRelativeUrl', 'ServerRedirectedEmbedUrl', 'PushToHCName')
-			.expand('File')
-			.filter('PushToHCName ne null')
-			.get();
-	}
-
-	static ReturnPublicSafetyDocsForHcPushedDocs() {
-		const psDocsWeb = new Web('https://bmos.sharepoint.com');
-		return psDocsWeb.lists.getByTitle('PublicSafetyDocs').items
-			.select('File/ServerRelativeUrl', 'ServerRedirectedEmbedUrl', 'PushToHCName')
-			.expand('File')
-			.filter("PushToHC eq '1'")
-			.get();
-	}
-
 	static ReturnHcPushedLinksForHcPushedDocs() {
 		const pushedLinksWeb = new Web('https://bmos.sharepoint.com');
 		return pushedLinksWeb.lists.getByTitle('HCPushedLinks').items.get();
@@ -46,8 +28,6 @@ export default class HcPushedItemsData {
 			// collect data async from multiple sources
 			const listItemQueryPromises = [
 				this.ReturnHubDocsForHcPushedDocs(),
-				this.ReturnHRDocsForHcPushedDocs(),
-				this.ReturnPublicSafetyDocsForHcPushedDocs(),
 				this.ReturnHcPushedLinksForHcPushedDocs(),
 			];
 			// wait for all queries to be completed

@@ -13,7 +13,7 @@ export default class HcGetItDoneData {
 	static ReturnHRDocsForHcGetItDone() {
 		const hrDocsWeb = new Web('https://bmos.sharepoint.com');
 		return hrDocsWeb.lists.getByTitle('HR Docs').items
-			.select('File/ServerRelativeUrl', 'FileLeafRef', 'ServerRedirectedEmbedUrl', 'Title', 'HCProminent')
+			.select('File/ServerRelativeUrl', 'FileLeafRef', 'ServerRedirectedEmbedUrl', 'Title', 'GetItDoneProminent')
 			.expand('File')
 			.filter("Category eq 'Request Forms'")
 			.get();
@@ -21,7 +21,7 @@ export default class HcGetItDoneData {
 	static ReturnAccountingFormsForHcGetItDone() {
 		const hrDocsWeb = new Web('https://bmos.sharepoint.com');
 		return hrDocsWeb.lists.getByTitle('Accounting Documents').items
-			.select('File/ServerRelativeUrl', 'FileLeafRef', 'ServerRedirectedEmbedUrl', 'Title', 'HCProminent')
+			.select('File/ServerRelativeUrl', 'FileLeafRef', 'ServerRedirectedEmbedUrl', 'Title', 'GetItDoneProminent')
 			.expand('File')
 			.filter("Custom1 eq 'Forms'")
 			.get();
@@ -29,7 +29,7 @@ export default class HcGetItDoneData {
 	static ReturnAccountingTaxDocsForHcGetItDone() {
 		const hrDocsWeb = new Web('https://bmos.sharepoint.com');
 		return hrDocsWeb.lists.getByTitle('Accounting Documents').items
-			.select('File/ServerRelativeUrl', 'FileLeafRef', 'ServerRedirectedEmbedUrl', 'Title', 'HCProminent')
+			.select('File/ServerRelativeUrl', 'FileLeafRef', 'ServerRedirectedEmbedUrl', 'Title', 'GetItDoneProminent')
 			.expand('File')
 			.filter("Custom1 eq 'Tax Documents'")
 			.get();
@@ -100,7 +100,7 @@ export default class HcGetItDoneData {
 										} else {
 											itemFormatted.groups = ['Accounting'];
 										}
-										if (itemValue.HCProminent) {
+										if (itemValue.GetItDoneProminent) {
 											itemFormatted.prominent = true;
 										}
 										itemFormatted.type = 'file';
@@ -111,7 +111,7 @@ export default class HcGetItDoneData {
 										itemFormatted.anchorText = itemValue.Name;
 										itemFormatted.description = itemValue.Description;
 										itemFormatted.groups = itemValue.Groups;
-										if (itemValue.HCProminent) {
+										if (itemValue.GetItDoneProminent) {
 											itemFormatted.prominent = true;
 										}
 										itemFormatted.type = 'swf';
@@ -134,9 +134,6 @@ export default class HcGetItDoneData {
 
 					// for each item in allListItemsAlpha
 					allListItemsAlpha.forEach((itemValue) => {
-						if (!itemValue.groups) {
-							console.log(itemValue);
-						}
 						// for each group in the item
 						itemValue.groups.forEach((groupValue) => {
 							// if this group isn't already in the container, add it with 
