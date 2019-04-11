@@ -50,8 +50,6 @@ export default class HcGetItDoneData {
 			Promise.all(listItemQueryPromises)
 				// if the promises are resolved with the data
 				.then((resultsReturnArray) => {
-					// console.log('alll qs resolved');
-					// console.log(resultsReturnArray);
 					// set up vars
 					let orgChartsReturn;
 					let divDeptWTeamsReturn;
@@ -79,15 +77,27 @@ export default class HcGetItDoneData {
 					// note: we're going to mash up the org charts and the divDeptWTeams
 					// note: in divDeptWReturn, divs and depts already have keys for react
 					// for each division
-					divDeptWTeamsReturn.forEach((division) => {
+					divDeptWTeamsReturn.forEach((divisionValue) => {
 						// preserve parameter
-						const divisionCopy = division;
+						const divisionCopy = divisionValue;
 						// for each org chart
 						orgChartsReturn.forEach((orgChart) => {
 							// if this org chart is for this division
 							if (orgChart.HRISKey === divisionCopy.name) {
 								divisionCopy.orgChart = orgChart.ServerRedirectedEmbedUrl;
 							}
+						});
+						// check the departments for corresponding org charts
+						divisionValue.depts.forEach((departmentValue) => {
+							// preserve parameter
+							const departmentCopy = departmentValue;
+							// for each org chart
+							orgChartsReturn.forEach((orgChart) => {
+								// if this org chart is for this department
+								if (orgChart.HRISKey === departmentCopy.name) {
+									departmentCopy.orgChart = orgChart.ServerRedirectedEmbedUrl;
+								}
+							});
 						});
 						// push this copy of the division (with or without org chart) 
 						// 		to the final array

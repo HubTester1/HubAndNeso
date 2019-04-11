@@ -36,6 +36,19 @@ export default class HcOrganizationTeamsDepartment extends React.Component {
 						className="hc-organization__teams__department-body accordion__body"
 					>
 						{
+							this.props.departmentContent.orgChart &&
+
+							<p>
+								<a
+									href={this.props.departmentContent.orgChart}
+									target="_blank"
+									className="hc-organization__teams__department-org-chart-link org-chart-link"
+								>
+									Organization Chart
+								</a>
+							</p>
+						}
+						{
 							this.props.departmentContent.hubScreenToken &&
 
 							<p>
