@@ -4,16 +4,16 @@
 	var mData = {
 		'componentID': 173,
 		'swf': 1,
-		'mosMainKey': 'prod',
+		// 'mosMainKey': 'prod',
 		// 'mosMainKey': 'dev',
 		// 'mosMainKey': 'devMedium',
-		// 'mosMainKey': 'devLong',
+		'mosMainKey': 'devLong',
 		// "useRecordedMOSMainMajorVersion": 1,
-		'devAdminNotifications': 0,
-		'notifications': 1,
+		'devAdminNotifications': 1,
+		'notifications': 0,
 	};
 
-	console.log("using settings m3");
+	console.log("using settings m4");
 
 
 
@@ -67,11 +67,11 @@
 		'my': {
 			'buttons': [
 			],
-			'preamble': '<p style="margin-top: 1rem;">Request 100+ Museum paper passes. Please request smaller quantities of ' +
-				'passes from Marketing or your VP.</p>' + 
-				'<p>Before your request can be approved, ' + 
-				'you must submit your pass log to Brian Therrien or Yasmina  Blaise for review. ' +
-				'Allow 7 days for approval and fulfillment.</p>',
+			'preamble': '<p style="margin-top: 1rem;">Request 100+ Museum paper passes. ' +
+				'Please request smaller quantities of passes from Marketing or your VP.</p>' + 
+				'<p>If you\'re required to keep a log of your passes, this log must be reviewed ' +
+				'by Brian Therrien or Yasmina Blaise before your request can be approved.</p>' +
+				'<p>Allow 7 days for approval and fulfillment.</p>',
 			'sections': {
 				'commonColumns': [
 					{
@@ -122,7 +122,12 @@
 	var fData = {
 		'autoProcessApprovals': 1,
 		'approvalStmt': 'Approval indicates that the above passes should be issued',
-		'newRequestConfirmationAddition': '<p>Before your request can be approved, you must submit your pass log to Brian Therrien or Yasmina Blaise for review.</p>',
+		'newRequestConditionalConfirmationAdditions': [
+			{
+				'condition': function () { return ($('input#replenishment-or-not_replenishing').is(':checked')); },
+				'addition': '<p>Before your request can be approved, you must submit your pass log to Brian Therrien or Yasmina Blaise for review.</p>'
+			}
+		],
 		'standardElementGroups': {
 			'standardThisRequestAndRequesterElements': 1,
 			'standardAdminElements': {
@@ -138,7 +143,6 @@
 		'standardChangeNotifications': {
 			'beginningOfLife': { 'admin': 1, 'requester': 1 },
 			'newlyApprOrPending': { 'admin': 1, 'requester': 1 },
-			// 'assignmentHasChanged': { 'workNewlyNeededNotify': 1, 'workNotNeededNotify': 1 },
 			'endOfLife': {
 				'admin': 1,
 				'requester': {
@@ -166,6 +170,28 @@
 				"end": 1
 			}, {
 				'elementType': "field",
+				'controlType': 'radio',
+				'fieldName': "Replenishment or Not",
+				'choiceSetLabel': "Are you replenishing a stock of passes?",
+				'choices': [
+					{
+						'value': "replenishing",
+						'display': "Yes, I am replenishing a stock"
+					}, {
+						'value': "notReplenishing",
+						'display': "No, this is a one-off request"
+					}
+				],
+				'requiredForNonAdmin': [""],
+				'requiredForAdmin': [""],
+				'disabledForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+				'disabledForAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
+
+			
+			
+			
+			}, {
+				'elementType': "field",
 				'controlType': "text",
 				'fieldName': "Quantity",
 				'listFieldName': "Quantity",
@@ -180,15 +206,6 @@
 				'fieldName': "Venue",
 				'listFieldName': "Venue",
 				'labelContent': "Venue",
-				'requiredForNonAdmin': [""],
-				'requiredForAdmin': [""],
-				'disabledForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-				'disabledForAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
-			}, {
-				'elementType': "field",
-				'controlType': "textarea",
-				'fieldName': "Users",
-				'labelContent': "Who will use these passes?",
 				'requiredForNonAdmin': [""],
 				'requiredForAdmin': [""],
 				'disabledForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
@@ -234,6 +251,24 @@
 					{ 'thisDateFieldLessThanDaysFromNow': "7", 'show': [{ 'noteID': "start-date-too-soon" }] },
 					{ 'thisDateFieldGreaterThanDaysFromNowEqualTo': "7", 'hide': [{ 'noteID': "start-date-too-soon" }] }
 				],
+			}, {
+				'elementType': "field",
+				'controlType': "textarea",
+				'fieldName': "Campaign",
+				'labelContent': "For which campaign / appeal will these passes be used?",
+				'requiredForNonAdmin': [""],
+				'requiredForAdmin': [""],
+				'disabledForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+				'disabledForAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
+			}, {
+				'elementType': "field",
+				'controlType': "textarea",
+				'fieldName': "Users",
+				'labelContent': "Who will use these passes?",
+				'requiredForNonAdmin': [""],
+				'requiredForAdmin': [""],
+				'disabledForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+				'disabledForAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
 			}, {
 				'elementType': "field",
 				'controlType': "textarea",
