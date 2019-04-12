@@ -1898,6 +1898,8 @@ module.exports = {
 					// TO DO - DELETE BELOW HARD-CODING OF DEPARTMENTS ONCE ALGO HAS BETTER DATA TO CRUNCH
 
 					adDepartments.departments.push('Courses');
+					adDepartments.departments.push('Community Initiatives');
+					adDepartments.departments.push('Relation Development');
 
 					// TO DO - DELETE ABOVE HARD-CODING OF DEPARTMENTS ONCE ALGO HAS BETTER DATA TO CRUNCH
 
