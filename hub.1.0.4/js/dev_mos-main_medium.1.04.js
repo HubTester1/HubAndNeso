@@ -9518,9 +9518,9 @@
 					url: 'https://neso.mos.org/activeDirectory/user/' + userAccount,
 				})
 					.done(function (returnedUserData) {
-						// console.log(uData);
+						// console.log('returnedUserData');
 						// console.log(returnedUserData);
-						var userManagerAccount = returnedUserData.docs.manager;
+						var userManagerAccount = returnedUserData.docs.manager.toLowerCase();
 						$.ajax({
 							async: false,
 							method: "GET",
@@ -9528,8 +9528,12 @@
 							url: 'https://neso.mos.org/activeDirectory/user/' + userManagerAccount,
 						})
 							.done(function (returnedManagerData) {
-								gseJobAdminManagerEmailArray
-										.push(returnedManagerData.docs.email);
+								// console.log('returnedManagerData');
+								// console.log(returnedManagerData);
+								if (returnedManagerData.docs.email) {
+									gseJobAdminManagerEmailArray
+											.push(returnedManagerData.docs.email);
+								}
 							});
 					});
 			}
@@ -28214,8 +28218,22 @@
 			phone: "",
 			pictureURL: "",
 			userName: "madams@mos.org",
-		}; */
+		};
 		
+		uData = {
+			account: "i:0#.f|membership|lbrogna@mos.org",
+			dept: "Exhibit Maintenance",
+			email: "lbrogna@mos.org",
+			firstName: "Leslie",
+			lastName: "Brogna",
+			name: "Leslie Brogna",
+			phone: "",
+			pictureURL: "",
+			userName: "lbrogna@mos.org",
+		}; */
+
+
+
 		// metadata for all of The Hub and for all of this app
 		mData = $().ReturnThisAppMData();
 
@@ -28392,6 +28410,8 @@
 			}
 		}
 
+		console.log('uData');
+		console.log(uData);
 		console.log(uData.roles);
 
 		uData.alternateOverviewScreen = $().UserNeedsAlternateOverviewScreen();
