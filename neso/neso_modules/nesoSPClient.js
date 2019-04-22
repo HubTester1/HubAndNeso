@@ -1,6 +1,7 @@
 
 // ----- PULL IN MODULES
 
+const envConfig = require('../env.json');
 const spauth = require('node-sp-auth');
 const axios = require('axios');
 
@@ -12,8 +13,8 @@ module.exports = {
 		// return a new promise
 		new Promise((resolve, reject) => {
 			// not sure why, but the environment vars must be extracted before use
-			const username = process.env.spUser;
-			const password = process.env.spPass;  
+			const username = envConfig.spUser;
+			const password = envConfig.spPass;
 			spauth.getAuth(options.syncFrom.spApp, {
 				username,
 				password,
