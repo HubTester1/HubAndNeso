@@ -359,7 +359,7 @@
 				'elementType': 'field',
 				'controlType': 'check',
 				'fieldName': 'Delivery or Receipt',
-				'listFieldName': 'DeliveryOrReceipt',
+				// 'listFieldName': 'DeliveryOrReceipt',
 				'choiceSetLabel': 'Delivery / Receipt',
 				'choices': [
 					{
