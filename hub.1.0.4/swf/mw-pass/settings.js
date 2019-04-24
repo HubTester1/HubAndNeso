@@ -4,13 +4,13 @@
 	var mData = {
 		'componentID': 173,
 		'swf': 1,
-		// 'mosMainKey': 'prod',
+		'mosMainKey': 'prod',
 		// 'mosMainKey': 'dev',
 		// 'mosMainKey': 'devMedium',
-		'mosMainKey': 'devLong',
+		// 'mosMainKey': 'devLong',
 		// "useRecordedMOSMainMajorVersion": 1,
-		'devAdminNotifications': 1,
-		'notifications': 0,
+		'devAdminNotifications': 0,
+		'notifications': 1,
 	};
 
 	console.log("using settings m4");
@@ -67,7 +67,7 @@
 		'my': {
 			'buttons': [
 			],
-			'preamble': '<p style="margin-top: 1rem;">Request 100+ Museum paper passes. ' +
+			'preamble': '<p style="margin-top: 1rem;">Request 25+ Museum paper passes. ' +
 				'Please request smaller quantities of passes from Marketing or your VP.</p>' + 
 				'<p>If you\'re required to keep a log of your passes, this log must be reviewed ' +
 				'by Brian Therrien or Yasmina Blaise before your request can be approved.</p>' +
