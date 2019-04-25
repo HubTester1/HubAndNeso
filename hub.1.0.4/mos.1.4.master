@@ -48,20 +48,6 @@
 		// s.src = "/sites/hubdev/DevCode4/js/dev_mos-loader.js?ts=" + Date.now();
 		document.getElementsByTagName('head')[0].appendChild(s);
 	</script>
-	<!--  -->
-	<!-- 
-	<script type="text/javascript" src="/sites/hubprod/Code4/js/libs/_libs.concatenated.1.0.js"></script>
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bowser/1.0.0/bowser.min.js"></script>
-	<script type="text/javascript" src="/sites/iit-swf-update-5/SiteAssets/settings.js"></script>
-	<script type="text/javascript" src="/sites/iit-swf-update-5/_layouts/15/clienttemplates.js"></script>
-	<script type="text/javascript" src="/sites/iit-swf-update-5/_layouts/15/clientforms.js"></script>
-	<script type="text/javascript" src="/sites/iit-swf-update-5/_layouts/15/clientpeoplepicker.js"></script>
-	<script type="text/javascript" src="/sites/iit-swf-update-5/_layouts/15/autofill.js"></script>
-	<script type="text/javascript" src="/sites/hubdev/DevCode4/js/dev_mos-main_long.1.04.js"></script>
-
-	<link rel="stylesheet" type="text/css" href="/sites/hubprod/Code4/css/libs/_libs.concatenated.1.0.css">
-	<link rel="stylesheet" type="text/css" href="/sites/hubdev/DevCode4/css/mos.css">
-	 -->
 	
 	<style>
 		div#s4-bodyContainer {
