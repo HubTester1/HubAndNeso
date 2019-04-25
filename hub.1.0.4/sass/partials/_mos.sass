@@ -3377,7 +3377,75 @@ div#s4-workspace div.community-contact
 // INDIVIDUAL SWF
 // ------------------
 
+// --- HUB FEEDBACK
 
+
+div#app-container.hub-feedback
+
+	div#request-form
+
+		div#requirement-legend
+			margin: 1rem 0
+
+			div.label
+				width: 33.5rem;
+
+		div#container_predefined
+
+			div#radio-button-set-fake-labels
+				margin-bottom: 1rem
+
+				div#fake-label_not-important
+					margin-left: 29rem
+
+				div.radio-button-set-fake-label
+					display: inline-block
+
+					&:before
+						display: inline-block
+						width: 7rem
+						text-align: center
+
+				div#fake-label_not-important:before
+					content: "Not Important"
+
+				div#fake-label_slightly-important:before
+					content: "Slightly Important"
+
+				div#fake-label_moderately-important:before
+					content: "Moderately Important"
+
+				div#fake-label_very-important:before
+					content: "Very Important"
+
+				div#fake-label_extremely-important:before
+					content: "Extremely Important"
+
+
+	
+
+			div.label-and-control.radio
+
+				div.label
+					width: 25rem
+
+				div.control
+					width: 35rem
+
+					div.choice-container
+						display: inline-block
+						width: 6.5rem
+						text-align: center
+
+						input
+							margin-left: auto
+							margin-right: auto
+
+						label
+							display: none
+
+		div#admin
+			+blockHidden
 
 // --- GPC CONFIGURATION
 

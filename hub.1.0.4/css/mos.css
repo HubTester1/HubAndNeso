@@ -3006,6 +3006,56 @@ div#s4-workspace div.community-contact a[href^="https://bmos-my"], div#s4-worksp
     color: #fff !important;
     background-color: #004d66 !important; }
 
+div#app-container.hub-feedback div#request-form div#requirement-legend {
+  margin: 1rem 0; }
+  div#app-container.hub-feedback div#request-form div#requirement-legend div.label {
+    width: 33.5rem; }
+
+div#app-container.hub-feedback div#request-form div#container_predefined div#radio-button-set-fake-labels {
+  margin-bottom: 1rem; }
+  div#app-container.hub-feedback div#request-form div#container_predefined div#radio-button-set-fake-labels div#fake-label_not-important {
+    margin-left: 29rem; }
+  div#app-container.hub-feedback div#request-form div#container_predefined div#radio-button-set-fake-labels div.radio-button-set-fake-label {
+    display: inline-block; }
+    div#app-container.hub-feedback div#request-form div#container_predefined div#radio-button-set-fake-labels div.radio-button-set-fake-label:before {
+      display: inline-block;
+      width: 7rem;
+      text-align: center; }
+  div#app-container.hub-feedback div#request-form div#container_predefined div#radio-button-set-fake-labels div#fake-label_not-important:before {
+    content: "Not Important"; }
+  div#app-container.hub-feedback div#request-form div#container_predefined div#radio-button-set-fake-labels div#fake-label_slightly-important:before {
+    content: "Slightly Important"; }
+  div#app-container.hub-feedback div#request-form div#container_predefined div#radio-button-set-fake-labels div#fake-label_moderately-important:before {
+    content: "Moderately Important"; }
+  div#app-container.hub-feedback div#request-form div#container_predefined div#radio-button-set-fake-labels div#fake-label_very-important:before {
+    content: "Very Important"; }
+  div#app-container.hub-feedback div#request-form div#container_predefined div#radio-button-set-fake-labels div#fake-label_extremely-important:before {
+    content: "Extremely Important"; }
+
+div#app-container.hub-feedback div#request-form div#container_predefined div.label-and-control.radio div.label {
+  width: 25rem; }
+
+div#app-container.hub-feedback div#request-form div#container_predefined div.label-and-control.radio div.control {
+  width: 35rem; }
+  div#app-container.hub-feedback div#request-form div#container_predefined div.label-and-control.radio div.control div.choice-container {
+    display: inline-block;
+    width: 6.5rem;
+    text-align: center; }
+    div#app-container.hub-feedback div#request-form div#container_predefined div.label-and-control.radio div.control div.choice-container input {
+      margin-left: auto;
+      margin-right: auto; }
+    div#app-container.hub-feedback div#request-form div#container_predefined div.label-and-control.radio div.control div.choice-container label {
+      display: none; }
+
+div#app-container.hub-feedback div#request-form div#admin {
+  display: block !important;
+  width: 0 !important;
+  height: 0;
+  padding: 0 !important;
+  text-indent: 100%;
+  white-space: nowrap;
+  overflow: hidden; }
+
 div#app-container.gpc-configuration div#request-form h2#header_this-request,
 div#app-container.gpc-configuration div#request-form div#requirement-legend,
 div#app-container.gpc-configuration div#request-form div#label-and-control_Request-ID,
