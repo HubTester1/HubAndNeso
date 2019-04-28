@@ -58,36 +58,40 @@ module.exports = {
 						// if the promise is resolved with the docs
 						.then((signupsResult) => {
 							const signupsArray = signupsResult.docs;
-							signupsArray.forEach((signup, signupIndex) => {
-								// extract data as vars
-								const signupPerson = signup.AllRequestData['Requested-For'][0];
-								const signupLink =
-												`<a href="https://bmos.sharepoint.com/sites/hr-service-signups/SitePages/App.aspx?r=${signup.ID}">review the details</a>`;
-								const jobAdminLink = 
-												`<a href="mailto:${jobAdmin.description}">${jobAdmin.displayText}</a>`;
-								const scheduleStartDatetimeRaw = 
-												schedule.Date.slice(0, 10) +
-												schedule.StartTime.slice(10, 20);
-								const scheduleStartDatetime = 
-												moment(scheduleStartDatetimeRaw).isDST() ?
-													moment(scheduleStartDatetimeRaw).subtract(1, 'hour') :
-													moment(scheduleStartDatetimeRaw);
-								const scheduleStartDateString = moment(scheduleStartDatetime).format('MMMM D');
-								const scheduleStartTimeString = moment(scheduleStartDatetime).format('h:mm a');
-								// push a notification object
-								notificationsToReturn.push({
-									emailType: 'Notification',
-									caller: 'signupReminder requestedFor',
-									to: signupPerson.description,
-									subject: `GSE Signup #${signup.ID}: reminder`,
-									bodyUnique: `Please report to ${job.Location} on ${scheduleStartDateString} at ${scheduleStartTimeString} for "${job.JobTitle}". Feel free to ${signupLink} or contact ${jobAdminLink} with any questions.`,
+							if (signupsArray.length) {
+								signupsArray.forEach((signup, signupIndex) => {
+									// extract data as vars
+									const signupPerson = signup.AllRequestData['Requested-For'][0];
+									const signupLink =
+													`<a href="https://bmos.sharepoint.com/sites/hr-service-signups/SitePages/App.aspx?r=${signup.ID}">review the details</a>`;
+									const jobAdminLink = 
+													`<a href="mailto:${jobAdmin.description}">${jobAdmin.displayText}</a>`;
+									const scheduleStartDatetimeRaw = 
+													schedule.Date.slice(0, 10) +
+													schedule.StartTime.slice(10, 20);
+									const scheduleStartDatetime = 
+													moment(scheduleStartDatetimeRaw).isDST() ?
+														moment(scheduleStartDatetimeRaw).subtract(1, 'hour') :
+														moment(scheduleStartDatetimeRaw);
+									const scheduleStartDateString = moment(scheduleStartDatetime).format('MMMM D');
+									const scheduleStartTimeString = moment(scheduleStartDatetime).format('h:mm a');
+									// push a notification object
+									notificationsToReturn.push({
+										emailType: 'Notification',
+										caller: 'signupReminder requestedFor',
+										to: signupPerson.description,
+										subject: `GSE Signup #${signup.ID}: reminder`,
+										bodyUnique: `Please report to ${job.Location} on ${scheduleStartDateString} at ${scheduleStartTimeString} for "${job.JobTitle}". Feel free to ${signupLink} or contact ${jobAdminLink} with any questions.`,
+									});
+									// if this is the last signup in signupsArray
+									if ((signupIndex + 1) === signupsArray.length) {
+										// resolve this promise with all notifications
+										resolve(notificationsToReturn);
+									}
 								});
-								// if this is the last signup in signupsArray
-								if ((signupIndex + 1) === signupsArray.length) {
-									// resolve this promise with all notifications
-									resolve(notificationsToReturn);
-								}
-							});
+							} else {
+								resolve(notificationsToReturn);
+							}
 						})
 						// if the promise is rejected with an error, then 
 						// 		resolve this promise with an error
