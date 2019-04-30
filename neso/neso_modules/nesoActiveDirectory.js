@@ -2726,6 +2726,23 @@ module.exports = {
 							department: '',
 							division: '',
 							securityGroups: ['mos.org', 'TrackIT Users', 'AdvancementData', 'Tessitura Advancement', 'Development', 'SP_Staff', 'OS X Users', 'Web VPN Access', 'WiFi Access', 'AnyConnect VPN Access'],
+						}, {
+							_id: '5cc773e1e4787e0dc42c3a40',
+							account: 'rkipling',
+							employeeID: '009934',
+							firstName: 'Becki',
+							lastName: 'Kipling',
+							firstInitial: 'B',
+							lastInitial: 'K',
+							displayName: 'Becki Kipling',
+							title: 'Manager, Early Childhood Development & Education',
+							email: 'rkipling@mos.org',
+							officePhone: '617-589-0429',
+							mobilePhone: '',
+							manager: 'tporter',
+							department: 'Early Childhood Development & Education',
+							division: 'Education',
+							securityGroups: ['BWVisitorExp', 'Exhibits_Projects_Share', 'Living Lab Finances', 'DCTechStudio', 'mos.org', 'TrackIT Users', 'Visitor Programs', 'OnSite Research', 'Exhibits_Projects_TechGallery', 'Youth Programs', 'DC-LL Staff', 'Exhibits_Projects_Engineering_2016', 'Volsupervisors', 'National Living Lab', 'Living Laboratory - DC', 'ECEMgr', 'Exhibit Leadership', 'Exhibits_Projects_Tech_and_You', 'SP_Staff', 'FinanceSSRSUsers', 'Exhibits_Projects_ProductiveStruggle', 'OS X Users', 'Pixar Ed Programs', 'Budget_Education', 'SP_Dept_Write_Volunteer_Supervisors', 'BWCoreTeam', 'WWV', 'Discovery', 'Education', 'Exhibits_Projects_Bird_Refurb_2016', 'BWExhibitsPlanningTeam', 'WiFi Access', 'ExhibitsData', 'PGP_BASIC', 'Exhibits_Projects_ELEEE_New_Restricted', 'SP_Dept_HR_ManagersHandbook', 'IRB Documentation', 'Budget_Exhibits', 'Budget_RestrictedAccess', 'Exhibits WS', 'Crystal Enterprise', 'WWV-R &amp; VS-RW', 'Exhibits_Projects_EmotionalEntanglement', 'Exhibit Content Development', 'GSW Scripts and Slides', 'Schedules', 'NLL - Teens', 'BWEducationExp'],
 						},
 					];
 
