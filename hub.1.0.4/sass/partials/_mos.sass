@@ -675,6 +675,8 @@ div#s4-workspace div#app-container.event-av div#container_command-bar div#contai
 div#s4-workspace div#app-container.event-av div#container_command-bar ul#container_tab-controls li a,
 div#s4-workspace div#app-container.event-av div#container_command-bar div#container_date-filter-controls-and-header a.collapsible-heading-toggle,
 div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button,
+div#s4-workspace div#app-container.hub-feedback div#container_command-bar div#container_date-filter-controls-and-header a.collapsible-heading-toggle,
+div#s4-workspace div#app-container.hub-feedback div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button,
 div#s4-workspace div#app-container.museum-products.mw-products-timeline div#container_command-bar div#container_category-filter-controls-and-header a.collapsible-heading-toggle,
 div#s4-workspace div#app-container.museum-products.mw-products-timeline div#container_command-bar div#container_date-filter-controls-and-header a.collapsible-heading-toggle,
 div#s4-workspace div#app-container.gse-stats div#container_filter-controls-and-header div.container_filter-control a#filter_submit-button,
@@ -704,6 +706,7 @@ div#s4-workspace div#public-community-page_moscars div#call-to-action a,
 div#s4-workspace div#public-community-page_hr div#primary-section_open-enrollment a,
 div#s4-workspace div#app-container.museum-events div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button,
 div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button,
+div#s4-workspace div#app-container.hub-feedback div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button,
 div#s4-workspace div#app-container.museum-products.mw-products-timeline div#container_data div.vis-timeline div.vis-item,
 div#s4-workspace div#app-container.gse-stats div#container_filter-controls-and-header div.container_filter-control a#filter_submit-button,
 div#s4-workspace div#app-container.gse-signup div#container_command-bar div#container_filter-controls-and-header a#filter_submit-button,
@@ -760,6 +763,10 @@ div#s4-workspace div#app-container.museum-events div#container_command-bar div#c
 div#s4-workspace div#app-container.event-av div#container_command-bar div#container_new-request-control a,
 div#s4-workspace div#app-container.event-av div#container_command-bar ul#container_tab-controls li a,
 div#s4-workspace div#app-container.event-av div#container_command-bar div#container_date-filter-controls-and-header a.collapsible-heading-toggle,
+
+div#s4-workspace div#app-container.hub-feedback div#container_command-bar div#container_new-request-control a,
+div#s4-workspace div#app-container.hub-feedback div#container_command-bar ul#container_tab-controls li a,
+div#s4-workspace div#app-container.hub-feedback div#container_command-bar div#container_date-filter-controls-and-header a.collapsible-heading-toggle,
 div#s4-workspace div#app-container.museum-products.mw-products-timeline div#container_command-bar div#container_category-filter-controls-and-header a.collapsible-heading-toggle,
 div#s4-workspace div#app-container.museum-products.mw-products-timeline div#container_command-bar div#container_date-filter-controls-and-header a.collapsible-heading-toggle,
 div#s4-workspace div#app-container.gse-stats div#container_command-bar div#container_filter-controls-and-header a.collapsible-heading-toggle,
@@ -1443,6 +1450,8 @@ div#s4-workspace
 
 
 	div.community-contact
+		+round-corners
+		background-image: linear-gradient(to bottom, #f2ea9a, #e5c5d3)
 		color: $textOnYellow !important
 		background-color: $yellow
 
@@ -1942,6 +1951,7 @@ div#s4-workspace
 // --- MY REQUESTS, ALTERNATE OVERVIEW SCREENS
 
 div#overview-screen-container.my-requests,
+div#overview-screen-container.myHubFeedback-requests,
 div#overview-screen-container.myReferrals-requests,
 div#overview-screen-container.gpcInitialConceptApprovalViewer-requests,
 div#overview-screen-container.gpcSubmissionApprovalViewer-requests,
@@ -3385,13 +3395,15 @@ div#app-container.hub-feedback
 	div#request-form
 
 		div#requirement-legend
-			margin: 1rem 0
+			margin: 0 0 1rem 0
 
 			div.label
-				width: 33.5rem;
+				width: 33.5rem;			
 
-		div#container_predefined
-
+		div#container_predefined,
+		div#container_user-defined
+			margin-bottom: 2rem
+			
 			div#radio-button-set-fake-labels
 				margin-bottom: 1rem
 
@@ -3421,9 +3433,6 @@ div#app-container.hub-feedback
 				div#fake-label_extremely-important:before
 					content: "Extremely Important"
 
-
-	
-
 			div.label-and-control.radio
 
 				div.label
@@ -3442,7 +3451,65 @@ div#app-container.hub-feedback
 							margin-right: auto
 
 						label
-							display: none
+							+blockHidden
+
+		div#container_user-defined
+
+			div.repeat-container.user-defined-set
+				display: grid
+				grid-template-columns: 25rem 35rem
+				grid-template-areas:	"label likert" "remove1 remove2"
+
+				div.label-and-control.textarea.item-of-importance
+					grid-area: label
+
+					// div.control
+					// 	padding-left: 0
+
+				div.label-and-control.radio.importance-level
+					display: block
+					grid-area: likert
+					width: 100%
+					padding-left: 3rem
+
+				div.label-and-control.textarea.item-of-importance,
+				div.label-and-control.radio.importance-level
+
+					div.label,
+					div.field-type-indication
+						+blockHidden
+
+					div.control
+						display: block
+						width: 100%
+
+						textarea
+								height: 5.8rem;
+
+				div.remove-section-anchor-container
+					grid-area: remove1
+
+					a.remove-section-anchor
+						display: block
+						margin: 0 0 2rem 1rem !important
+						width: 12rem
+
+			div#user-defined-set
+
+				div.remove-section-anchor-container
+					display: none
+
+			a.repeat-section-anchor
+				margin: 1rem 0 1rem 1rem !important
+
+		div#container_tell-us-more,
+		div#submit-or-exit
+
+			div.label
+				width: 25rem
+
+			div.control
+				width: 35rem
 
 		div#admin
 			+blockHidden
@@ -3635,6 +3702,43 @@ div#app-container.overnight-parking div#request-form ul#terms-and-conditions
 	margin: 10px 0px 0px 22.4rem
 
 
+// --- HUB FEEDBACK
+
+div#s4-workspace div#app-container.hub-feedback
+	
+	div#container_command-bar
+		+gridElementDarkened1
+		display: inline-block
+
+		h2#header_command-bar
+			+blockHidden
+
+		div#container_new-request-control,
+		div#container_date-filter-controls-and-header,
+		div#container_other-controls
+			+col
+
+		div#container_date-filter-controls-and-header div#text_date-filter-controls a.collapsible-heading-toggle
+			display: block
+
+	div#container_date-filter-controls
+		padding: 1.5rem 1.5rem 0 0
+
+		div.container_date-filter-control
+			padding: 0 0 1.5rem 1.5rem
+
+			label.date-selector-label
+				display: inline-block
+				padding-right: .5rem
+				width: 10.5rem
+				text-align: right
+
+			input.date-selector
+				width: 13rem
+
+			a#filter--submit-button
+				margin-left: 11.5rem !important
+
 
 // --- EVENT AV
 
@@ -3661,7 +3765,8 @@ div#s4-workspace div#app-container.event-av
 
 		div#container_new-request-control,
 		ul#container_tab-controls,
-		div#container_date-filter-controls-and-header
+		div#container_date-filter-controls-and-header,
+		div#container_other-controls
 			+col
 
 		ul#container_tab-controls
@@ -3705,6 +3810,108 @@ div#s4-workspace div#app-container.event-av
 
 	div.table-container
 		margin-top: 2rem
+
+
+body.event-av-analytics
+
+	div#ui-datepicker-div
+		z-index: 120 !important
+
+div#s4-workspace div#app-container.event-av.event-av-analytics
+
+	div#data-container
+		margin-top: 1rem
+
+		div#analytics-metadata
+
+			h2#header_legend
+				+blockHidden
+
+			ul#legend-items
+				padding: 0
+
+				li.legend-item
+					display: inline-block
+					font-size: 1.75rem
+					list-style: none
+					margin: 0 2.25rem 0 0
+
+				span.color-indicator
+					display: inline-block
+					position: relative
+					top: -0.25rem
+					height: .75rem
+					width: .75rem
+					margin-right: .5rem
+
+				span.color-indicator.events
+					background-color: $bold-purple
+
+				span.color-indicator.techs
+					background-color: $bold-pink
+
+
+		div.vis-timeline
+			border: none
+			background-color: $grey13
+
+			div.vis-panel.vis-left,
+			div.vis-panel.vis-bottom,
+			div.vis-panel.vis-center,
+			div.vis-panel.vis-top
+				border: none
+
+			div.vis-background.vis-horizontal
+				z-index: 100
+			
+			div.vis-background.vis-vertical
+				z-index: 105
+
+			div.vis-panel.vis-center
+				z-index: 110
+				background-color: rgba(255,255,255,0.35)
+
+				div.vis-shadow
+					box-shadow: none
+
+				div.vis-content
+
+					div.vis-line-graph
+
+						svg
+
+							path.vis-graph-group0,
+							rect.vis-graph-group0
+								fill: $bold-purple
+								stroke: $bold-purple
+
+							path.vis-graph-group1,
+							rect.vis-graph-group1
+								fill: $bold-pink
+								stroke: $bold-pink
+
+		div.vis-current-time
+			background-color: $bold-orange
+
+		// major vertical lines in content area
+		div.vis-time-axis div.vis-grid.vis-minor,
+		div.vis-time-axis div.vis-grid.vis-major,
+		div.vis-labelset div.vis-label
+			border-color: $grey9
+
+		div.vis-time-axis div.vis-grid.vis-major
+			border-width: .2rem
+
+		div.vis-panel.vis-background.vis-horizontal
+		
+			div.vis-grid.vis-horizontal.vis-minor
+				border-color: $grey11
+
+
+
+
+
+
 
 
 

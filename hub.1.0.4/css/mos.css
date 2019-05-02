@@ -580,6 +580,8 @@ div#s4-workspace div#app-container.event-av div#container_command-bar div#contai
 div#s4-workspace div#app-container.event-av div#container_command-bar ul#container_tab-controls li a,
 div#s4-workspace div#app-container.event-av div#container_command-bar div#container_date-filter-controls-and-header a.collapsible-heading-toggle,
 div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button,
+div#s4-workspace div#app-container.hub-feedback div#container_command-bar div#container_date-filter-controls-and-header a.collapsible-heading-toggle,
+div#s4-workspace div#app-container.hub-feedback div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button,
 div#s4-workspace div#app-container.museum-products.mw-products-timeline div#container_command-bar div#container_category-filter-controls-and-header a.collapsible-heading-toggle,
 div#s4-workspace div#app-container.museum-products.mw-products-timeline div#container_command-bar div#container_date-filter-controls-and-header a.collapsible-heading-toggle,
 div#s4-workspace div#app-container.gse-stats div#container_filter-controls-and-header div.container_filter-control a#filter_submit-button,
@@ -643,6 +645,8 @@ a#gse-schedule-card-dialog-signup-opportunity-link {
   div#s4-workspace div#app-container.event-av div#container_command-bar ul#container_tab-controls li a:hover,
   div#s4-workspace div#app-container.event-av div#container_command-bar div#container_date-filter-controls-and-header a.collapsible-heading-toggle:hover,
   div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button:hover,
+  div#s4-workspace div#app-container.hub-feedback div#container_command-bar div#container_date-filter-controls-and-header a.collapsible-heading-toggle:hover,
+  div#s4-workspace div#app-container.hub-feedback div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button:hover,
   div#s4-workspace div#app-container.museum-products.mw-products-timeline div#container_command-bar div#container_category-filter-controls-and-header a.collapsible-heading-toggle:hover,
   div#s4-workspace div#app-container.museum-products.mw-products-timeline div#container_command-bar div#container_date-filter-controls-and-header a.collapsible-heading-toggle:hover,
   div#s4-workspace div#app-container.gse-stats div#container_filter-controls-and-header div.container_filter-control a#filter_submit-button:hover,
@@ -668,6 +672,7 @@ div#s4-workspace div#public-community-page_moscars div#call-to-action a,
 div#s4-workspace div#public-community-page_hr div#primary-section_open-enrollment a,
 div#s4-workspace div#app-container.museum-events div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button,
 div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button,
+div#s4-workspace div#app-container.hub-feedback div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button,
 div#s4-workspace div#app-container.museum-products.mw-products-timeline div#container_data div.vis-timeline div.vis-item,
 div#s4-workspace div#app-container.gse-stats div#container_filter-controls-and-header div.container_filter-control a#filter_submit-button,
 div#s4-workspace div#app-container.gse-signup div#container_command-bar div#container_filter-controls-and-header a#filter_submit-button,
@@ -688,6 +693,7 @@ a#gse-schedule-card-dialog-signup-opportunity-link {
   div#s4-workspace div#public-community-page_hr div#primary-section_open-enrollment a:hover,
   div#s4-workspace div#app-container.museum-events div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button:hover,
   div#s4-workspace div#app-container.event-av div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button:hover,
+  div#s4-workspace div#app-container.hub-feedback div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button:hover,
   div#s4-workspace div#app-container.museum-products.mw-products-timeline div#container_data div.vis-timeline div.vis-item:hover,
   div#s4-workspace div#app-container.gse-stats div#container_filter-controls-and-header div.container_filter-control a#filter_submit-button:hover,
   div#s4-workspace div#app-container.gse-signup div#container_command-bar div#container_filter-controls-and-header a#filter_submit-button:hover,
@@ -750,6 +756,9 @@ div#s4-workspace div#app-container.museum-events div#container_command-bar div#c
 div#s4-workspace div#app-container.event-av div#container_command-bar div#container_new-request-control a,
 div#s4-workspace div#app-container.event-av div#container_command-bar ul#container_tab-controls li a,
 div#s4-workspace div#app-container.event-av div#container_command-bar div#container_date-filter-controls-and-header a.collapsible-heading-toggle,
+div#s4-workspace div#app-container.hub-feedback div#container_command-bar div#container_new-request-control a,
+div#s4-workspace div#app-container.hub-feedback div#container_command-bar ul#container_tab-controls li a,
+div#s4-workspace div#app-container.hub-feedback div#container_command-bar div#container_date-filter-controls-and-header a.collapsible-heading-toggle,
 div#s4-workspace div#app-container.museum-products.mw-products-timeline div#container_command-bar div#container_category-filter-controls-and-header a.collapsible-heading-toggle,
 div#s4-workspace div#app-container.museum-products.mw-products-timeline div#container_command-bar div#container_date-filter-controls-and-header a.collapsible-heading-toggle,
 div#s4-workspace div#app-container.gse-stats div#container_command-bar div#container_filter-controls-and-header a.collapsible-heading-toggle,
@@ -775,6 +784,9 @@ a#standard-printer-button-inside-request {
   div#s4-workspace div#app-container.event-av div#container_command-bar div#container_new-request-control a:hover,
   div#s4-workspace div#app-container.event-av div#container_command-bar ul#container_tab-controls li a:hover,
   div#s4-workspace div#app-container.event-av div#container_command-bar div#container_date-filter-controls-and-header a.collapsible-heading-toggle:hover,
+  div#s4-workspace div#app-container.hub-feedback div#container_command-bar div#container_new-request-control a:hover,
+  div#s4-workspace div#app-container.hub-feedback div#container_command-bar ul#container_tab-controls li a:hover,
+  div#s4-workspace div#app-container.hub-feedback div#container_command-bar div#container_date-filter-controls-and-header a.collapsible-heading-toggle:hover,
   div#s4-workspace div#app-container.museum-products.mw-products-timeline div#container_command-bar div#container_category-filter-controls-and-header a.collapsible-heading-toggle:hover,
   div#s4-workspace div#app-container.museum-products.mw-products-timeline div#container_command-bar div#container_date-filter-controls-and-header a.collapsible-heading-toggle:hover,
   div#s4-workspace div#app-container.gse-stats div#container_command-bar div#container_filter-controls-and-header a.collapsible-heading-toggle:hover,
@@ -1352,6 +1364,8 @@ div#s4-workspace div.targeted-links {
 
 div#s4-workspace div.community-contact,
 div#s4-workspace div#workflow-contacts div.in-page-personas {
+  border-radius: .2rem;
+  background-image: linear-gradient(to bottom, #f2ea9a, #e5c5d3);
   color: #333 !important;
   background-color: #fedd00; }
   div#s4-workspace div.community-contact h2 nobr span, div#s4-workspace div#workflow-contacts div.in-page-personas h2 nobr span,
@@ -1669,6 +1683,7 @@ div#s4-workspace div#workflow-contacts {
   padding-top: 2rem; }
 
 div#overview-screen-container.my-requests,
+div#overview-screen-container.myHubFeedback-requests,
 div#overview-screen-container.myReferrals-requests,
 div#overview-screen-container.gpcInitialConceptApprovalViewer-requests,
 div#overview-screen-container.gpcSubmissionApprovalViewer-requests,
@@ -1686,6 +1701,8 @@ div#overview-screen-container.mwProductsList-requests {
   padding-top: 2rem; }
   div#overview-screen-container.my-requests div.table-container,
   div#overview-screen-container.my-requests div#workflow-contacts,
+  div#overview-screen-container.myHubFeedback-requests div.table-container,
+  div#overview-screen-container.myHubFeedback-requests div#workflow-contacts,
   div#overview-screen-container.myReferrals-requests div.table-container,
   div#overview-screen-container.myReferrals-requests div#workflow-contacts,
   div#overview-screen-container.gpcInitialConceptApprovalViewer-requests div.table-container,
@@ -3007,45 +3024,116 @@ div#s4-workspace div.community-contact a[href^="https://bmos-my"], div#s4-worksp
     background-color: #004d66 !important; }
 
 div#app-container.hub-feedback div#request-form div#requirement-legend {
-  margin: 1rem 0; }
+  margin: 0 0 1rem 0; }
   div#app-container.hub-feedback div#request-form div#requirement-legend div.label {
     width: 33.5rem; }
 
-div#app-container.hub-feedback div#request-form div#container_predefined div#radio-button-set-fake-labels {
-  margin-bottom: 1rem; }
-  div#app-container.hub-feedback div#request-form div#container_predefined div#radio-button-set-fake-labels div#fake-label_not-important {
-    margin-left: 29rem; }
-  div#app-container.hub-feedback div#request-form div#container_predefined div#radio-button-set-fake-labels div.radio-button-set-fake-label {
-    display: inline-block; }
-    div#app-container.hub-feedback div#request-form div#container_predefined div#radio-button-set-fake-labels div.radio-button-set-fake-label:before {
+div#app-container.hub-feedback div#request-form div#container_predefined,
+div#app-container.hub-feedback div#request-form div#container_user-defined {
+  margin-bottom: 2rem; }
+  div#app-container.hub-feedback div#request-form div#container_predefined div#radio-button-set-fake-labels,
+  div#app-container.hub-feedback div#request-form div#container_user-defined div#radio-button-set-fake-labels {
+    margin-bottom: 1rem; }
+    div#app-container.hub-feedback div#request-form div#container_predefined div#radio-button-set-fake-labels div#fake-label_not-important,
+    div#app-container.hub-feedback div#request-form div#container_user-defined div#radio-button-set-fake-labels div#fake-label_not-important {
+      margin-left: 29rem; }
+    div#app-container.hub-feedback div#request-form div#container_predefined div#radio-button-set-fake-labels div.radio-button-set-fake-label,
+    div#app-container.hub-feedback div#request-form div#container_user-defined div#radio-button-set-fake-labels div.radio-button-set-fake-label {
+      display: inline-block; }
+      div#app-container.hub-feedback div#request-form div#container_predefined div#radio-button-set-fake-labels div.radio-button-set-fake-label:before,
+      div#app-container.hub-feedback div#request-form div#container_user-defined div#radio-button-set-fake-labels div.radio-button-set-fake-label:before {
+        display: inline-block;
+        width: 7rem;
+        text-align: center; }
+    div#app-container.hub-feedback div#request-form div#container_predefined div#radio-button-set-fake-labels div#fake-label_not-important:before,
+    div#app-container.hub-feedback div#request-form div#container_user-defined div#radio-button-set-fake-labels div#fake-label_not-important:before {
+      content: "Not Important"; }
+    div#app-container.hub-feedback div#request-form div#container_predefined div#radio-button-set-fake-labels div#fake-label_slightly-important:before,
+    div#app-container.hub-feedback div#request-form div#container_user-defined div#radio-button-set-fake-labels div#fake-label_slightly-important:before {
+      content: "Slightly Important"; }
+    div#app-container.hub-feedback div#request-form div#container_predefined div#radio-button-set-fake-labels div#fake-label_moderately-important:before,
+    div#app-container.hub-feedback div#request-form div#container_user-defined div#radio-button-set-fake-labels div#fake-label_moderately-important:before {
+      content: "Moderately Important"; }
+    div#app-container.hub-feedback div#request-form div#container_predefined div#radio-button-set-fake-labels div#fake-label_very-important:before,
+    div#app-container.hub-feedback div#request-form div#container_user-defined div#radio-button-set-fake-labels div#fake-label_very-important:before {
+      content: "Very Important"; }
+    div#app-container.hub-feedback div#request-form div#container_predefined div#radio-button-set-fake-labels div#fake-label_extremely-important:before,
+    div#app-container.hub-feedback div#request-form div#container_user-defined div#radio-button-set-fake-labels div#fake-label_extremely-important:before {
+      content: "Extremely Important"; }
+  div#app-container.hub-feedback div#request-form div#container_predefined div.label-and-control.radio div.label,
+  div#app-container.hub-feedback div#request-form div#container_user-defined div.label-and-control.radio div.label {
+    width: 25rem; }
+  div#app-container.hub-feedback div#request-form div#container_predefined div.label-and-control.radio div.control,
+  div#app-container.hub-feedback div#request-form div#container_user-defined div.label-and-control.radio div.control {
+    width: 35rem; }
+    div#app-container.hub-feedback div#request-form div#container_predefined div.label-and-control.radio div.control div.choice-container,
+    div#app-container.hub-feedback div#request-form div#container_user-defined div.label-and-control.radio div.control div.choice-container {
       display: inline-block;
-      width: 7rem;
+      width: 6.5rem;
       text-align: center; }
-  div#app-container.hub-feedback div#request-form div#container_predefined div#radio-button-set-fake-labels div#fake-label_not-important:before {
-    content: "Not Important"; }
-  div#app-container.hub-feedback div#request-form div#container_predefined div#radio-button-set-fake-labels div#fake-label_slightly-important:before {
-    content: "Slightly Important"; }
-  div#app-container.hub-feedback div#request-form div#container_predefined div#radio-button-set-fake-labels div#fake-label_moderately-important:before {
-    content: "Moderately Important"; }
-  div#app-container.hub-feedback div#request-form div#container_predefined div#radio-button-set-fake-labels div#fake-label_very-important:before {
-    content: "Very Important"; }
-  div#app-container.hub-feedback div#request-form div#container_predefined div#radio-button-set-fake-labels div#fake-label_extremely-important:before {
-    content: "Extremely Important"; }
+      div#app-container.hub-feedback div#request-form div#container_predefined div.label-and-control.radio div.control div.choice-container input,
+      div#app-container.hub-feedback div#request-form div#container_user-defined div.label-and-control.radio div.control div.choice-container input {
+        margin-left: auto;
+        margin-right: auto; }
+      div#app-container.hub-feedback div#request-form div#container_predefined div.label-and-control.radio div.control div.choice-container label,
+      div#app-container.hub-feedback div#request-form div#container_user-defined div.label-and-control.radio div.control div.choice-container label {
+        display: block !important;
+        width: 0 !important;
+        height: 0;
+        padding: 0 !important;
+        text-indent: 100%;
+        white-space: nowrap;
+        overflow: hidden; }
 
-div#app-container.hub-feedback div#request-form div#container_predefined div.label-and-control.radio div.label {
+div#app-container.hub-feedback div#request-form div#container_user-defined div.repeat-container.user-defined-set {
+  display: grid;
+  grid-template-columns: 25rem 35rem;
+  grid-template-areas: "label likert" "remove1 remove2"; }
+  div#app-container.hub-feedback div#request-form div#container_user-defined div.repeat-container.user-defined-set div.label-and-control.textarea.item-of-importance {
+    grid-area: label; }
+  div#app-container.hub-feedback div#request-form div#container_user-defined div.repeat-container.user-defined-set div.label-and-control.radio.importance-level {
+    display: block;
+    grid-area: likert;
+    width: 100%;
+    padding-left: 3rem; }
+  div#app-container.hub-feedback div#request-form div#container_user-defined div.repeat-container.user-defined-set div.label-and-control.textarea.item-of-importance div.label,
+  div#app-container.hub-feedback div#request-form div#container_user-defined div.repeat-container.user-defined-set div.label-and-control.textarea.item-of-importance div.field-type-indication,
+  div#app-container.hub-feedback div#request-form div#container_user-defined div.repeat-container.user-defined-set div.label-and-control.radio.importance-level div.label,
+  div#app-container.hub-feedback div#request-form div#container_user-defined div.repeat-container.user-defined-set div.label-and-control.radio.importance-level div.field-type-indication {
+    display: block !important;
+    width: 0 !important;
+    height: 0;
+    padding: 0 !important;
+    text-indent: 100%;
+    white-space: nowrap;
+    overflow: hidden; }
+  div#app-container.hub-feedback div#request-form div#container_user-defined div.repeat-container.user-defined-set div.label-and-control.textarea.item-of-importance div.control,
+  div#app-container.hub-feedback div#request-form div#container_user-defined div.repeat-container.user-defined-set div.label-and-control.radio.importance-level div.control {
+    display: block;
+    width: 100%; }
+    div#app-container.hub-feedback div#request-form div#container_user-defined div.repeat-container.user-defined-set div.label-and-control.textarea.item-of-importance div.control textarea,
+    div#app-container.hub-feedback div#request-form div#container_user-defined div.repeat-container.user-defined-set div.label-and-control.radio.importance-level div.control textarea {
+      height: 5.8rem; }
+  div#app-container.hub-feedback div#request-form div#container_user-defined div.repeat-container.user-defined-set div.remove-section-anchor-container {
+    grid-area: remove1; }
+    div#app-container.hub-feedback div#request-form div#container_user-defined div.repeat-container.user-defined-set div.remove-section-anchor-container a.remove-section-anchor {
+      display: block;
+      margin: 0 0 2rem 1rem !important;
+      width: 12rem; }
+
+div#app-container.hub-feedback div#request-form div#container_user-defined div#user-defined-set div.remove-section-anchor-container {
+  display: none; }
+
+div#app-container.hub-feedback div#request-form div#container_user-defined a.repeat-section-anchor {
+  margin: 1rem 0 1rem 1rem !important; }
+
+div#app-container.hub-feedback div#request-form div#container_tell-us-more div.label,
+div#app-container.hub-feedback div#request-form div#submit-or-exit div.label {
   width: 25rem; }
 
-div#app-container.hub-feedback div#request-form div#container_predefined div.label-and-control.radio div.control {
+div#app-container.hub-feedback div#request-form div#container_tell-us-more div.control,
+div#app-container.hub-feedback div#request-form div#submit-or-exit div.control {
   width: 35rem; }
-  div#app-container.hub-feedback div#request-form div#container_predefined div.label-and-control.radio div.control div.choice-container {
-    display: inline-block;
-    width: 6.5rem;
-    text-align: center; }
-    div#app-container.hub-feedback div#request-form div#container_predefined div.label-and-control.radio div.control div.choice-container input {
-      margin-left: auto;
-      margin-right: auto; }
-    div#app-container.hub-feedback div#request-form div#container_predefined div.label-and-control.radio div.control div.choice-container label {
-      display: none; }
 
 div#app-container.hub-feedback div#request-form div#admin {
   display: block !important;
@@ -3170,6 +3258,44 @@ div#app-container.overnight-bike-cage-parking div#request-form ul#terms-and-cond
 div#app-container.overnight-parking div#request-form ul#terms-and-conditions {
   margin: 10px 0px 0px 22.4rem; }
 
+div#s4-workspace div#app-container.hub-feedback div#container_command-bar {
+  color: #333;
+  background-color: #eee;
+  display: inline-block; }
+  div#s4-workspace div#app-container.hub-feedback div#container_command-bar a {
+    color: #298aab !important; }
+    div#s4-workspace div#app-container.hub-feedback div#container_command-bar a:hover {
+      color: #007298 !important; }
+  div#s4-workspace div#app-container.hub-feedback div#container_command-bar h2#header_command-bar {
+    display: block !important;
+    width: 0 !important;
+    height: 0;
+    padding: 0 !important;
+    text-indent: 100%;
+    white-space: nowrap;
+    overflow: hidden; }
+  div#s4-workspace div#app-container.hub-feedback div#container_command-bar div#container_new-request-control,
+  div#s4-workspace div#app-container.hub-feedback div#container_command-bar div#container_date-filter-controls-and-header,
+  div#s4-workspace div#app-container.hub-feedback div#container_command-bar div#container_other-controls {
+    display: table-cell;
+    vertical-align: top; }
+  div#s4-workspace div#app-container.hub-feedback div#container_command-bar div#container_date-filter-controls-and-header div#text_date-filter-controls a.collapsible-heading-toggle {
+    display: block; }
+
+div#s4-workspace div#app-container.hub-feedback div#container_date-filter-controls {
+  padding: 1.5rem 1.5rem 0 0; }
+  div#s4-workspace div#app-container.hub-feedback div#container_date-filter-controls div.container_date-filter-control {
+    padding: 0 0 1.5rem 1.5rem; }
+    div#s4-workspace div#app-container.hub-feedback div#container_date-filter-controls div.container_date-filter-control label.date-selector-label {
+      display: inline-block;
+      padding-right: .5rem;
+      width: 10.5rem;
+      text-align: right; }
+    div#s4-workspace div#app-container.hub-feedback div#container_date-filter-controls div.container_date-filter-control input.date-selector {
+      width: 13rem; }
+    div#s4-workspace div#app-container.hub-feedback div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button {
+      margin-left: 11.5rem !important; }
+
 div#s4-workspace div#app-container.event-av div#overview-table-container {
   margin-top: 0; }
 
@@ -3199,7 +3325,8 @@ div#s4-workspace div#app-container.event-av div#container_command-bar {
     overflow: hidden; }
   div#s4-workspace div#app-container.event-av div#container_command-bar div#container_new-request-control,
   div#s4-workspace div#app-container.event-av div#container_command-bar ul#container_tab-controls,
-  div#s4-workspace div#app-container.event-av div#container_command-bar div#container_date-filter-controls-and-header {
+  div#s4-workspace div#app-container.event-av div#container_command-bar div#container_date-filter-controls-and-header,
+  div#s4-workspace div#app-container.event-av div#container_command-bar div#container_other-controls {
     display: table-cell;
     vertical-align: top; }
   div#s4-workspace div#app-container.event-av div#container_command-bar ul#container_tab-controls {
@@ -3237,6 +3364,73 @@ div#s4-workspace div#app-container.event-av div#container_date-filter-controls {
 
 div#s4-workspace div#app-container.event-av div.table-container {
   margin-top: 2rem; }
+
+body.event-av-analytics div#ui-datepicker-div {
+  z-index: 120 !important; }
+
+div#s4-workspace div#app-container.event-av.event-av-analytics div#data-container {
+  margin-top: 1rem; }
+  div#s4-workspace div#app-container.event-av.event-av-analytics div#data-container div#analytics-metadata h2#header_legend {
+    display: block !important;
+    width: 0 !important;
+    height: 0;
+    padding: 0 !important;
+    text-indent: 100%;
+    white-space: nowrap;
+    overflow: hidden; }
+  div#s4-workspace div#app-container.event-av.event-av-analytics div#data-container div#analytics-metadata ul#legend-items {
+    padding: 0; }
+    div#s4-workspace div#app-container.event-av.event-av-analytics div#data-container div#analytics-metadata ul#legend-items li.legend-item {
+      display: inline-block;
+      font-size: 1.75rem;
+      list-style: none;
+      margin: 0 2.25rem 0 0; }
+    div#s4-workspace div#app-container.event-av.event-av-analytics div#data-container div#analytics-metadata ul#legend-items span.color-indicator {
+      display: inline-block;
+      position: relative;
+      top: -0.25rem;
+      height: .75rem;
+      width: .75rem;
+      margin-right: .5rem; }
+    div#s4-workspace div#app-container.event-av.event-av-analytics div#data-container div#analytics-metadata ul#legend-items span.color-indicator.events {
+      background-color: #490c66; }
+    div#s4-workspace div#app-container.event-av.event-av-analytics div#data-container div#analytics-metadata ul#legend-items span.color-indicator.techs {
+      background-color: #a60063; }
+  div#s4-workspace div#app-container.event-av.event-av-analytics div#data-container div.vis-timeline {
+    border: none;
+    background-color: #ddd; }
+    div#s4-workspace div#app-container.event-av.event-av-analytics div#data-container div.vis-timeline div.vis-panel.vis-left,
+    div#s4-workspace div#app-container.event-av.event-av-analytics div#data-container div.vis-timeline div.vis-panel.vis-bottom,
+    div#s4-workspace div#app-container.event-av.event-av-analytics div#data-container div.vis-timeline div.vis-panel.vis-center,
+    div#s4-workspace div#app-container.event-av.event-av-analytics div#data-container div.vis-timeline div.vis-panel.vis-top {
+      border: none; }
+    div#s4-workspace div#app-container.event-av.event-av-analytics div#data-container div.vis-timeline div.vis-background.vis-horizontal {
+      z-index: 100; }
+    div#s4-workspace div#app-container.event-av.event-av-analytics div#data-container div.vis-timeline div.vis-background.vis-vertical {
+      z-index: 105; }
+    div#s4-workspace div#app-container.event-av.event-av-analytics div#data-container div.vis-timeline div.vis-panel.vis-center {
+      z-index: 110;
+      background-color: rgba(255, 255, 255, 0.35); }
+      div#s4-workspace div#app-container.event-av.event-av-analytics div#data-container div.vis-timeline div.vis-panel.vis-center div.vis-shadow {
+        box-shadow: none; }
+      div#s4-workspace div#app-container.event-av.event-av-analytics div#data-container div.vis-timeline div.vis-panel.vis-center div.vis-content div.vis-line-graph svg path.vis-graph-group0,
+      div#s4-workspace div#app-container.event-av.event-av-analytics div#data-container div.vis-timeline div.vis-panel.vis-center div.vis-content div.vis-line-graph svg rect.vis-graph-group0 {
+        fill: #490c66;
+        stroke: #490c66; }
+      div#s4-workspace div#app-container.event-av.event-av-analytics div#data-container div.vis-timeline div.vis-panel.vis-center div.vis-content div.vis-line-graph svg path.vis-graph-group1,
+      div#s4-workspace div#app-container.event-av.event-av-analytics div#data-container div.vis-timeline div.vis-panel.vis-center div.vis-content div.vis-line-graph svg rect.vis-graph-group1 {
+        fill: #a60063;
+        stroke: #a60063; }
+  div#s4-workspace div#app-container.event-av.event-av-analytics div#data-container div.vis-current-time {
+    background-color: #e24301; }
+  div#s4-workspace div#app-container.event-av.event-av-analytics div#data-container div.vis-time-axis div.vis-grid.vis-minor,
+  div#s4-workspace div#app-container.event-av.event-av-analytics div#data-container div.vis-time-axis div.vis-grid.vis-major,
+  div#s4-workspace div#app-container.event-av.event-av-analytics div#data-container div.vis-labelset div.vis-label {
+    border-color: #999; }
+  div#s4-workspace div#app-container.event-av.event-av-analytics div#data-container div.vis-time-axis div.vis-grid.vis-major {
+    border-width: .2rem; }
+  div#s4-workspace div#app-container.event-av.event-av-analytics div#data-container div.vis-panel.vis-background.vis-horizontal div.vis-grid.vis-horizontal.vis-minor {
+    border-color: #bbb; }
 
 div#s4-workspace div#app-container.museum-events div#container_command-bar {
   color: #333;
