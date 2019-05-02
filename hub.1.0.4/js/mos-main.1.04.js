@@ -404,6 +404,12 @@
 			case "gpcSubmissionApprovalViewer":
 				newTitle = mData.requestName + " Requests";
 				break;
+			case "adminHubFeedback":
+				newTitle = "All Hub Feedback Submissions";
+				break;
+			case "myHubFeedback":
+				newTitle = "My Hub Feedback Submissions";
+				break;
 			case "adminReferrals":
 				newTitle = "All Referrals";
 				break;
@@ -414,6 +420,14 @@
 			case "adminEventAV":
 				newTitle = "Admin Event AV Requests";
 				break;
+
+			case "analyticsHubFeedback":
+				newTitle = "Hub Feedback Analytics";
+				break;
+			case "analyticsEventAV":
+				newTitle = "Event AV Request Analytics";
+				break;
+				
 			case "gseStatsHRAdmin":
 				newTitle = "GSE Stats";
 				break;
@@ -510,6 +524,12 @@
 
 			case "adminEventAV":
 
+			case "adminHubFeedback":
+			case "myHubFeedback":
+
+			case "analyticsHubFeedback":
+			case "analyticsEventAV":
+
 			case "adminReferrals":
 			case "myReferrals":
 
@@ -592,6 +612,12 @@
 			case "gpcSubmissionApprovalViewer":
 
 			case "adminEventAV":
+
+			case "analyticsHubFeedback":
+			case "analyticsEventAV":
+
+			case "adminHubFeedback":
+			case "myHubFeedback":
 
 			case "adminReferrals":
 			case "myReferrals":
@@ -693,6 +719,12 @@
 
 			case "adminEventAV":
 
+			case "analyticsHubFeedback":
+			case "analyticsEventAV":
+
+			case "adminHubFeedback":
+			case "myHubFeedback":
+
 			case "adminReferrals":
 			case "myReferrals":
 
@@ -765,6 +797,19 @@
 
 			case "adminEventAV":
 				$().ConfigureOverviewScreen("adminEventAV");
+				break;
+			case "analyticsHubFeedback":
+				$().ConfigureOverviewScreen("analyticsHubFeedback");
+				break;
+			case "analyticsEventAV":
+				$().ConfigureOverviewScreen("analyticsEventAV");
+				break;
+
+			case "adminHubFeedback":
+				$().ConfigureOverviewScreen("adminHubFeedback");
+				break;
+			case "myHubFeedback":
+				$().ConfigureOverviewScreen("myHubFeedback");
 				break;
 
 			case "adminReferrals":
@@ -883,9 +928,13 @@
 					"myRequests",
 					"gpcInitialConceptApprovalViewer",
 					"gpcSubmissionApprovalViewer",
+					"adminHubFeedback",
+					"myHubFeedback",
 					"adminReferrals",
 					"myReferrals",
 					"adminEventAV",
+					"analyticsHubFeedback",
+					"analyticsEventAV",
 					"gseStatsHRAdmin",
 					"gseJobsHRAdmin",
 					"gseJobsJobAdmin",
@@ -1019,9 +1068,13 @@
 			case "myRequests":
 			case "gpcInitialConceptApprovalViewer":
 			case "gpcSubmissionApprovalViewer":
+			case "adminHubFeedback":
+			case "myHubFeedback":
 			case "adminReferrals":
 			case "myReferrals":
 			case "adminEventAV":
+			case "analyticsHubFeedback":
+			case "analyticsEventAV":
 			case "gseStatsHRAdmin":
 			case "gseJobsHRAdmin":
 			case "gseJobsJobAdmin":
@@ -1046,7 +1099,7 @@
 			case "mwProductsTimeline":
 			case "mwProductsTodaysCapacity":
 			case "mwProductsList":
-				$("div#overview-screen-container").empty().removeClass('adminRequests-requests myRequests-requests gpcInitialConceptApprovalViewer-requests gpcSubmissionApprovalViewer-requests adminReferrals-requests myReferrals-requests adminEventAV-requests gseStatsHRAdmin-requests gseJobsHRAdmin-requests gseJobsJobAdmin-requests gseJobsManager-requests gseSchedulesCalendarHRAdmin-requests gseSchedulesCalendarJobAdmin-requests gseSchedulesCalendarManager-requests gseSchedulesCalendarStaff-requests gseSchedulesListHRAdmin-requests gseSchedulesListJobAdmin-requests gseSchedulesListManager-requests gseSchedulesListStaff-requests gseSignupsHRAdmin-requests gseSignupsJobAdmin-requests gseSignupsManager-requests gseSignupsStaff-requests mwBuyoutCalendar-requests mwBuyoutList-requests mwEventCalendar-requests mwEventList-requests mwProductsTimeline-requests mwProductsTodaysCapacity-requests mwProductsList-requests');
+				$("div#overview-screen-container").empty().removeClass('adminRequests-requests myRequests-requests gpcInitialConceptApprovalViewer-requests gpcSubmissionApprovalViewer-requests adminHubFeedback-requests  myHubFeedback-requests  adminReferrals-requests myReferrals-requests adminEventAV-requests analyticsHubFeedback-requests analyticsEventAV-requests gseStatsHRAdmin-requests gseJobsHRAdmin-requests gseJobsJobAdmin-requests gseJobsManager-requests gseSchedulesCalendarHRAdmin-requests gseSchedulesCalendarJobAdmin-requests gseSchedulesCalendarManager-requests gseSchedulesCalendarStaff-requests gseSchedulesListHRAdmin-requests gseSchedulesListJobAdmin-requests gseSchedulesListManager-requests gseSchedulesListStaff-requests gseSignupsHRAdmin-requests gseSignupsJobAdmin-requests gseSignupsManager-requests gseSignupsStaff-requests mwBuyoutCalendar-requests mwBuyoutList-requests mwEventCalendar-requests mwEventList-requests mwProductsTimeline-requests mwProductsTodaysCapacity-requests mwProductsList-requests');
 				$("div#overview-screen-container").append('<div id="overview-table-container" class="table-container"></div>');
 			case "gseSchedulesListHRAdmin":
 				$("div#gse-schedule-card-dialog").remove();
@@ -1876,6 +1929,28 @@
 					});
 				}
 				break;
+
+			case "Hub Feedback":
+				if (uData.isAdmin === 1) {
+					if (GetParamFromUrl(location.search, "f") === "an") {
+						userNeedsAlternateOverviewScreen = "analyticsHubFeedback";
+					} else {
+						userNeedsAlternateOverviewScreen = "adminHubFeedback";
+					}
+				} else {
+					userNeedsAlternateOverviewScreen = "myHubFeedback";
+				}
+				break;
+
+			case "Event AV":
+				if (uData.isAdmin === 1) {
+					if (GetParamFromUrl(location.search, "f") === "an") {
+						userNeedsAlternateOverviewScreen = "analyticsEventAV";
+					} else {
+						userNeedsAlternateOverviewScreen = "adminEventAV";
+					}
+				}
+				break;
 			case "Refer a Friend":
 				if (uData.isAdmin === 0) {
 					userNeedsAlternateOverviewScreen = "myReferrals";
@@ -1884,11 +1959,6 @@
 				}
 				break;
 
-			case "Event AV":
-				if (uData.isAdmin === 1) {
-					userNeedsAlternateOverviewScreen = "adminEventAV";
-				}
-				break;
 			case "GSE Configuration":
 				if (uData.roles.indexOf("gseHRAdmin") > -1) {
 					userNeedsAlternateOverviewScreen = "gseStatsHRAdmin";
@@ -7691,6 +7761,19 @@
 
 		} else if (type === "adminEventAV") {
 			$().RenderCommandBarAndDatatablesForEventAVForAdmin();
+
+		} else if (type === "analyticsHubFeedback") {
+			$().RenderCommandBarAndAnalyticsForHubFeedbackForAdmin();
+		} else if (type === "analyticsEventAV") {
+			$().RenderCommandBarAndAnalyticsForEventAVForAdmin();
+
+		} else if (type === "adminHubFeedback") {
+			$().RenderOverviewScreenButtons(oData.adminHubFeedback.buttons, 0);
+			$().RenderAllDataTables(oData.adminHubFeedback.sections, "overview-table-container");
+		} else if (type === "myHubFeedback") {
+			$().RenderOverviewScreenButtons(oData.myHubFeedback.buttons, 0);
+			$().RenderAllDataTables(oData.myHubFeedback.sections, "overview-table-container");
+			$().RenderWorkflowContacts();
 		} else if (type === "adminReferrals") {
 			$().RenderOverviewScreenButtons(oData.adminReferrals.buttons, 0);
 			$().RenderAllDataTables(oData.adminReferrals.sections, "overview-table-container");
@@ -14346,6 +14429,9 @@
 
 		field += $().AddMarkupClass(e, "hideForAdmin", "hideForNonAdmin");
 
+		if (typeof (e.htmlClass) !== "undefined") {
+			field += ' ' + e.htmlClass
+		}
 		field += '">' +
 			'	 <div class="label"><span id="choice-set-label_' + e.hypehnatedNameLower + '">' + e.choiceSetLabel + '</span></div>' +
 			'	 <div class="field-type-indication">' +
@@ -20224,7 +20310,11 @@
 			'            <a id="filter--submit-button">Update</a> \n' +
 			'        </div> \n' +
 			'    </div> \n' +
+			'</div> \n' +
+			'<div id="container_other-controls"> \n' +
+			'   <a class="button-link button-link_go-forward" href="/sites/' + mData.siteToken + '/SitePages/App.aspx?f=an">Analytics</a> \n' +
 			'</div> \n';
+
 		$().RenderAllDataTables(tData, "table-container");
 
 		// insert contents into containers
@@ -20267,6 +20357,292 @@
 			var newStartDateTo = $().ReturnFormattedDateTime(startDateToFieldValue, null, 'YYYY-MM-DD');
 
 			window.location = "/sites/" + mData.siteToken + "/SitePages/App.aspx?startDateFrom=" + newStartDateFrom + "&startDateTo=" + newStartDateTo;
+		});
+	};
+
+
+
+	$.fn.RenderCommandBarAndAnalyticsForEventAVForAdmin = function () {
+
+		// get date params
+		var startDateFrom = GetParamFromUrl(location.search, 'startDateFrom');
+		var startDateTo = GetParamFromUrl(location.search, 'startDateTo');
+
+		if (startDateFrom == "") {
+			startDateFrom = moment().subtract(1, 'year').format('YYYY-MM-DD');
+		}
+
+		if (startDateTo == "") {
+			startDateTo = moment().format('YYYY-MM-DD');
+		}
+
+		// insert container and sub-containers
+		$("div#overview-table-container").prepend('<div id="container_command-bar-and-tables"> \n' +
+			'   <div id="container_command-bar"></div> \n' +
+			'   <div id="data-container"></div> \n' +
+			'</div>');
+
+		var commandBarContents = '<h2 id="header_command-bar">Commands</h2> \n' +
+			'<div id="container_new-request-control"> \n' +
+			'   <a class="button-link button-link_new-item button_swf-new-request-with-datatable" data-button-type="newRequest" href="/sites/' + mData.siteToken + '/SitePages/App.aspx?r=0">New Request</a> \n' +
+			'</div> \n' +
+			'<div id="container_date-filter-controls-and-header"> \n' +
+			'   <div id="text_date-filter-controls" class="collapsible">Dates</div> \n' +
+			'   <div id="container_date-filter-controls"> \n' +
+			'        <div class="container_date-filter-control"> \n' +
+			'            <label class="date-selector-label" for="filter--start-date_from">Earliest Event Date</label> \n' +
+			'            <input class="date-selector" id="filter--start-date_from" name="filter--start-date_from" type="text"> \n' +
+			'        </div> \n' +
+			'        <div class="container_date-filter-control"> \n' +
+			'            <label class="date-selector-label" for="filter--start-date_to">Latest Event Date</label> \n' +
+			'            <input class="date-selector" id="filter--start-date_to" name="filter--start-date_to" type="text"> \n' +
+			'        </div> \n' +
+			'        <div class="container_date-filter-control"> \n' +
+			'            <a id="filter--submit-button">Update</a> \n' +
+			'        </div> \n' +
+			'    </div> \n' +
+			'</div> \n' +
+			'<div id="container_other-controls"> \n' +
+			'   <a class="button-link button-link_go-forward" href="/sites/' + mData.siteToken + '/SitePages/App.aspx">Admin Requests</a> \n' +
+			'</div> \n';
+
+		var legendContents = "<div id=\"analytics-metadata\"> \n" +
+				"	<h2 id=\"header_legend\" aria-hidden=\"true\">Legend</h2> \n" +
+				"	<ul id=\"legend-items\" aria-hidden=\"true\"> \n" +
+				"		<li class=\"legend-item\"><span class=\"color-indicator events\"></span>Events</li> \n" +
+				"		<li class=\"legend-item\"><span class=\"color-indicator techs\"></span>Techs</li> \n" +
+				"	</ul> \n" +
+				"</div> \n";
+
+
+		// insert contents into containers
+		$("div#container_command-bar").html(commandBarContents);
+		// insert contents into containers
+		$("div#data-container").html(legendContents);
+
+
+		var container = document.getElementById('data-container');
+
+
+		var getListItemsOptions = {
+			"viewFields": "<ViewFields>" +
+				"   <FieldRef Name='ID' />" +
+				"   <FieldRef Name='AllRequestData' />" +
+				"</ViewFields>",
+			"query":	'<Query><Where>' +
+						'       <And>' +
+						'           <Geq>' +
+						'               <FieldRef Name="EventBeginningDatetime"></FieldRef>' +
+						'               <Value Type="DateTime" IncludeTimeValue="FALSE">' + startDateFrom + 'T00:00:00Z</Value>' +
+						'           </Geq>' +
+						'           <Leq>' +
+						'               <FieldRef Name="EventBeginningDatetime"></FieldRef>' +
+						'               <Value Type="DateTime" IncludeTimeValue="FALSE">' + startDateTo + 'T00:00:00Z</Value>' +
+						'           </Leq>' +
+						'       </And>' +
+						'</Where></Query>',
+			"queryOptions": "<QueryOptions>" +
+				"   <IncludeMandatoryColumns>FALSE</IncludeMandatoryColumns>" +
+				"</QueryOptions>"
+		};
+		
+		$().SPServices({
+			operation: "GetListItems",
+			async: false,
+			listName: "SWFList",
+			CAMLViewFields: getListItemsOptions.viewFields,
+			CAMLQuery: getListItemsOptions.query,
+			CAMLQueryOptions: getListItemsOptions.queryOptions,
+			completefunc: function (xData, Status) {
+
+				var requestQuantityItemsByWeek = {};
+				var techQuantityItemsByWeek = {};
+				var items = [];
+				
+				var regexOne = new RegExp("\r", "g");
+				var regexTwo = new RegExp("\n", "g");
+
+				$(xData.responseXML).SPFilterNode("z:row").each(function () {
+
+					var eventItemString = $(this).attr("ows_AllRequestData");
+					eventItemString = eventItemString.replace(regexOne, "'");
+					eventItemString = eventItemString.replace(regexTwo, "'");
+					eval("var eventItem=" + eventItemString);
+					// handle request item
+					if (
+						eventItem["datetime-storage_Event-Beginning-Datetime"]
+					) {
+						var startOfWeekForThisEvent = moment(eventItem["datetime-storage_Event-Beginning-Datetime"]).startOf('week');
+						if (requestQuantityItemsByWeek[startOfWeekForThisEvent]) {
+							requestQuantityItemsByWeek[startOfWeekForThisEvent] += 1;
+						} else {
+							requestQuantityItemsByWeek[startOfWeekForThisEvent] = 1;
+						}
+						// handle tech item
+						if (eventItem["Assigned-To"]) {
+							if (techQuantityItemsByWeek[startOfWeekForThisEvent]) {
+								techQuantityItemsByWeek[startOfWeekForThisEvent] += eventItem["Assigned-To"].length;
+							} else {
+								techQuantityItemsByWeek[startOfWeekForThisEvent] = eventItem["Assigned-To"].length;
+							}
+						}
+					}					
+				});
+				// start building the items as quantities per week
+				var requestQuantityItemsByWeekKeys = Object.keys(requestQuantityItemsByWeek);
+				var techQuantityItemsByWeekKeys = Object.keys(techQuantityItemsByWeek);
+
+				requestQuantityItemsByWeekKeys.forEach((itemKey) => {
+					items.push({
+						x: moment(itemKey).format('YYYY-MM-DD'),
+						y: requestQuantityItemsByWeek[itemKey],
+						group: 'Events',
+						// label: {
+						// 	content: moment(itemKey).format('W')
+						// }
+					});
+				});
+
+				techQuantityItemsByWeekKeys.forEach((itemKey) => {
+					items.push({
+						x: moment(itemKey).format('YYYY-MM-DD'),
+						y: techQuantityItemsByWeek[itemKey],
+						group: 'Techs',
+						// label: {
+						// 	content: moment(itemKey).format('W')
+						// }
+					});
+				});
+
+				var dataset = new vis.DataSet(items);
+				var options = {
+					start: startDateFrom,
+					end: startDateTo,
+				};
+				var graph2d = new vis.Graph2d(container, dataset, options);
+			}
+		});
+		
+		// add extra class for styling hook
+		$('div#app-container').addClass('event-av-analytics');
+		$('body').addClass('event-av-analytics');
+
+		// set datepickers on date filter fields
+		$("input#filter--start-date_to, input#filter--start-date_from").datepicker({
+			changeMonth: "true",
+			changeYear: "true",
+			dateFormat: "MM d, yy"
+		});
+
+		// set currently-used dates into date fields
+		$("input#filter--start-date_from").val(moment(startDateFrom, 'YYYY-MM-DD').format('MMMM D, YYYY'));
+		$("input#filter--start-date_to").val(moment(startDateTo, 'YYYY-MM-DD').format('MMMM D, YYYY'));
+
+		// collapse collapsible
+		$('.collapsible').collapsible();
+
+		// listen for date filtering
+		$("a#filter--submit-button").click(function () {
+
+			var startDateFromFieldValue = $("input#filter--start-date_from").val();
+			var startDateToFieldValue = $("input#filter--start-date_to").val();
+
+			if (startDateFromFieldValue == "") {
+				startDateFromFieldValue = $().ReturnFormattedDateTime('nowLocal', null, 'MMMM D, YYYY');
+			}
+
+			if (startDateToFieldValue == "") {
+				startDateToFieldValue = moment(startDateFromFieldValue, 'MMMM D, YYYY').add(14, "days").format('MMMM D, YYYY');
+			}
+
+			var newStartDateFrom = $().ReturnFormattedDateTime(startDateFromFieldValue, null, 'YYYY-MM-DD');
+			var newStartDateTo = $().ReturnFormattedDateTime(startDateToFieldValue, null, 'YYYY-MM-DD');
+
+			window.location = "/sites/" + mData.siteToken + "/SitePages/App.aspx?f=an&startDateFrom=" + newStartDateFrom + "&startDateTo=" + newStartDateTo;
+		});
+	};
+
+
+
+	$.fn.RenderCommandBarAndAnalyticsForHubFeedbackForAdmin = function () {
+
+		// get date params
+		var startDateFrom = GetParamFromUrl(location.search, 'startDateFrom');
+		var startDateTo = GetParamFromUrl(location.search, 'startDateTo');
+
+		if (startDateFrom == "") {
+			startDateFrom = $().ReturnFormattedDateTime('nowLocal', null, 'YYYY-MM-DD');
+		}
+
+		if (startDateTo == "") {
+			startDateTo = moment(startDateFrom, 'YYYY-MM-DD').add(14, "days").format('YYYY-MM-DD');
+		}
+
+		// insert container and sub-containers
+		$("div#overview-table-container").prepend('<div id="container_command-bar-and-tables"> \n' +
+			'   <div id="container_command-bar"></div> \n' +
+			'   <div id="table-container">This is Analytics Container</div> \n' +
+			'</div>');
+
+		var commandBarContents = '<h2 id="header_command-bar">Commands</h2> \n' +
+			'<div id="container_new-request-control"> \n' +
+			'   <a class="button-link button-link_new-item button_swf-new-request-with-datatable" data-button-type="newRequest" href="/sites/' + mData.siteToken + '/SitePages/App.aspx?r=0">New Request</a> \n' +
+			'</div> \n' +
+			'<div id="container_date-filter-controls-and-header"> \n' +
+			'   <div id="text_date-filter-controls" class="collapsible">Dates</div> \n' +
+			'   <div id="container_date-filter-controls"> \n' +
+			'        <div class="container_date-filter-control"> \n' +
+			'            <label class="date-selector-label" for="filter--start-date_from">Start Date From</label> \n' +
+			'            <input class="date-selector" id="filter--start-date_from" name="filter--start-date_from" type="text"> \n' +
+			'        </div> \n' +
+			'        <div class="container_date-filter-control"> \n' +
+			'            <label class="date-selector-label" for="filter--start-date_to">Start Date To</label> \n' +
+			'            <input class="date-selector" id="filter--start-date_to" name="filter--start-date_to" type="text"> \n' +
+			'        </div> \n' +
+			'        <div class="container_date-filter-control"> \n' +
+			'            <a id="filter--submit-button">Update</a> \n' +
+			'        </div> \n' +
+			'    </div> \n' +
+			'</div> \n' +
+			'<div id="container_other-controls"> \n' +
+			'   <a class="button-link button-link_go-forward" href="/sites/' + mData.siteToken + '/SitePages/App.aspx">All Submissions</a> \n' +
+			'</div> \n';
+
+		// insert contents into containers
+		$("div#container_command-bar").html(commandBarContents);
+
+		// set datepickers on date filter fields
+		$("input#filter--start-date_to, input#filter--start-date_from").datepicker({
+			changeMonth: "true",
+			changeYear: "true",
+			dateFormat: "MM d, yy"
+		});
+
+		// set currently-used dates into date fields
+		$("input#filter--start-date_from").val(moment(startDateFrom, 'YYYY-MM-DD').format('MMMM D, YYYY'));
+		$("input#filter--start-date_to").val(moment(startDateTo, 'YYYY-MM-DD').format('MMMM D, YYYY'));
+
+		// collapse collapsible
+		$('.collapsible').collapsible();
+
+		// listen for date filtering
+		$("a#filter--submit-button").click(function () {
+
+			var startDateFromFieldValue = $("input#filter--start-date_from").val();
+			var startDateToFieldValue = $("input#filter--start-date_to").val();
+
+			if (startDateFromFieldValue == "") {
+				startDateFromFieldValue = $().ReturnFormattedDateTime('nowLocal', null, 'MMMM D, YYYY');
+			}
+
+			if (startDateToFieldValue == "") {
+				startDateToFieldValue = moment(startDateFromFieldValue, 'MMMM D, YYYY').add(14, "days").format('MMMM D, YYYY');
+			}
+
+			var newStartDateFrom = $().ReturnFormattedDateTime(startDateFromFieldValue, null, 'YYYY-MM-DD');
+			var newStartDateTo = $().ReturnFormattedDateTime(startDateToFieldValue, null, 'YYYY-MM-DD');
+
+			window.location = "/sites/" + mData.siteToken + "/SitePages/App.aspx?f=an&startDateFrom=" + newStartDateFrom + "&startDateTo=" + newStartDateTo;
 		});
 	};
 
@@ -28457,7 +28833,7 @@
 		// wait for all data retrieval / setting promises to complete (pass or fail) 
 		$.when.apply($, allDataRetrievalAndSettingPromises).always(function () {
 
-			console.log('using mos-main.1.04 m1');
+			console.log('using mos-main.1.04 m100000');
 
 			$().ConfigureAndShowScreenContainerAndAllScreens();
 		});
