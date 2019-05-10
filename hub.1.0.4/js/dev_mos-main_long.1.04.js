@@ -657,7 +657,6 @@
 
 			case "mwBuyoutCalendar":
 			case "mwEventCalendar":
-			
 				$().ReplacePageTitle(newTitle);
 				$("div#overview-screen-container").fadeIn(mData.gracefulScreenTransitionTime).removeClass("hidden");
 				$('div#overview-screen-container').fullCalendar('render');
@@ -960,13 +959,11 @@
 					"mwProductsList",
 				];
 				if (overviewScreens.indexOf(options.toScreen) > -1) {
-
 					// check to see if we need to stop for maintenance mode
 					$().TryMaintenanceModeThisComponentThisUser();
 
 					// if we don't need to stop for maintenance mode
 					if (uData.maintenanceModeForThisUser != 1) {
-
 						// update history, as needed
 						// console.log("update browser history");
 						$().UpdateBrowserHistoryAsNeeded(options.toScreen, options.requestID, options.addBrowserHistoryEntry, options.replaceBrowserHistoryEntry);
@@ -15380,18 +15377,23 @@
 		} else {
 			// construct a new one
 			var newRepeatID = originalToRepeat + "-repeat-" + (lastRepeatIDNumber + 1);
-		}		
+		}
 
 		// --- create and insert the new repeat; give it the appropriate ID and data-original-to-repeat values
-		$("#" + insertAfterID).after($("#" + originalToRepeat).clone().attr("id", newRepeatID).attr("data-original-to-repeat", originalToRepeat));
+		
+		// $("#" + insertAfterID).after($("#" + originalToRepeat).clone(true).attr("id", newRepeatID).attr("data-original-to-repeat", originalToRepeat));
 
+		var clonedSet = $("#" + originalToRepeat).clone(true);
+		clonedSet.find(':checked').attr('checked', false);
+		clonedSet.attr("id", newRepeatID);
+		clonedSet.attr("data-original-to-repeat", originalToRepeat);
+		$("#" + insertAfterID).after(clonedSet);
 
 		// --- update ID, for, aria-described-by attributes on new repeat's descendant elements
+
 		$('#' + newRepeatID)
 			.find('[id^="label-and-control"], label, div.label > span, span.content-placeholder, span.field-type-indicator, div.help-text, :input, a, div.mos-drag-and-drop-file-attachment, div.mos-drag-and-drop-file-attachment div, div.mos-drag-and-drop-file-attachment progress')
 			.each(function () {
-
-				// console.log($(this));
 
 				// if there's a submittedID
 				if (typeof (submittedID) != 'undefined') {
@@ -15442,8 +15444,8 @@
 				}
 			});
 
-
 		// --- clear the values in the new repeat
+
 		$("#" + newRepeatID).find(':input').each(function () {
 			switch (this.type) {
 				case 'password':
@@ -15461,7 +15463,6 @@
 					$(this).prop('checked', false);
 			}
 		});
-
 		$("#" + newRepeatID).find('a').each(function () {
 			// do not remove file-related functionality here; still used for older requests which load with the old file control
 			if ($(this).attr('data-source-type') == 'url' || $(this).attr('data-source-type') == 'file') {
@@ -20410,7 +20411,7 @@
 				"	<h2 id=\"header_legend\" aria-hidden=\"true\">Legend</h2> \n" +
 				"	<ul id=\"legend-items\" aria-hidden=\"true\"> \n" +
 				"		<li class=\"legend-item\"><span class=\"color-indicator events\"></span>Events</li> \n" +
-				"		<li class=\"legend-item\"><span class=\"color-indicator techs\"></span>Techs</li> \n" +
+				"		<li class=\"legend-item\"><span class=\"color-indicator techs\"></span>Techs for Durations</li> \n" +
 				"	</ul> \n" +
 				"</div> \n";
 
@@ -20422,7 +20423,6 @@
 
 
 		var container = document.getElementById('data-container');
-
 
 		var getListItemsOptions = {
 			"viewFields": "<ViewFields>" +
@@ -20468,22 +20468,23 @@
 					eventItemString = eventItemString.replace(regexOne, "'");
 					eventItemString = eventItemString.replace(regexTwo, "'");
 					eval("var eventItem=" + eventItemString);
+					
 					// handle request item
 					if (
 						eventItem["datetime-storage_Event-Beginning-Datetime"]
 					) {
-						var startOfWeekForThisEvent = moment(eventItem["datetime-storage_Event-Beginning-Datetime"]).startOf('week');
+						var startOfWeekForThisEvent = moment(eventItem["datetime-storage_Event-Beginning-Datetime"]).startOf('week').format('YYYY-MM-DD');
 						if (requestQuantityItemsByWeek[startOfWeekForThisEvent]) {
 							requestQuantityItemsByWeek[startOfWeekForThisEvent] += 1;
 						} else {
 							requestQuantityItemsByWeek[startOfWeekForThisEvent] = 1;
 						}
 						// handle tech item
-						if (eventItem["Assigned-To"]) {
+						if (eventItem["delivery-or-receipt_techneededforduration"]) {
 							if (techQuantityItemsByWeek[startOfWeekForThisEvent]) {
-								techQuantityItemsByWeek[startOfWeekForThisEvent] += eventItem["Assigned-To"].length;
+								techQuantityItemsByWeek[startOfWeekForThisEvent] += 1;
 							} else {
-								techQuantityItemsByWeek[startOfWeekForThisEvent] = eventItem["Assigned-To"].length;
+								techQuantityItemsByWeek[startOfWeekForThisEvent] = 1;
 							}
 						}
 					}					
@@ -22699,7 +22700,7 @@
 
 	// schedules calendar
 	$.fn.RenderCommandBarAndCalendarForGSESchedules = function (buttons, relevantRole) {
-		
+
 		var startingYearOfFirstFiscalYear = 2018;
 		// var thisYear = 2022;
 		// var startingYearOfLastFiscalYear = moment('2022-09-08').isAfter(thisYear + '-06-30') ?
@@ -22722,8 +22723,13 @@
 		var dateToUse = GetParamFromUrl(location.search, 'date');
 		if (!viewToUse || viewToUse == "") { viewToUse = 'month'; }
 		if (!dateToUse || dateToUse == "") {
-			dateToUse =
-				$().ReturnFormattedDateTime('nowUTC', 'YYYY-MM-DDTHH:mm:ssZ', 'YYYY-MM-DD', 0);
+			// if first date of the selected fiscal year is after today,
+			if (moment(selectedStartYear + '-07-01').isAfter(moment())) {
+				dateToUse = selectedStartYear + '-07-01';
+			} else {
+				dateToUse =
+					$().ReturnFormattedDateTime('nowUTC', 'YYYY-MM-DDTHH:mm:ssZ', 'YYYY-MM-DD', 0);
+			}
 		}
 
 		var renderPrepStartTime = Date.now();
@@ -22732,6 +22738,7 @@
 
 		console.log('render prep time = ' + (Date.now() - renderPrepStartTime) / 1000 + ' seconds');
 
+		$('div#overview-screen-container').fullCalendar('destroy');
 		$("div#overview-screen-container").fullCalendar({
 			allDayDefault: true,
 			lazyFetching: false,
@@ -22744,8 +22751,8 @@
 				center: "today,basicDay,basicWeek,month"
 			},
 			validRange: {
-				start: selectedStartYear + '06-30',
-				end: (parseInt(selectedStartYear) + 1) + '2017-06-01'
+				start: selectedStartYear + '-07-01',
+				end: (parseInt(selectedStartYear) + 1) + '-06-30'
 			},
 			defaultView: viewToUse,
 			defaultDate: dateToUse,
@@ -22819,6 +22826,7 @@
 			},
 			events: augmentedSchedules
 		});
+		$('div#overview-screen-container').fullCalendar('refetchEvents');
 
 		$("div.fc-toolbar div.fc-left").append('<div id="container_command-bar"></div>');
 
@@ -22868,7 +22876,7 @@
 				times: 2,
 				duration: 500
 			},
-			width: 400,
+			width: 600,
 		});
 
 		$("div.fc-toolbar, div.fc-view-container").fadeTo(1000, 1);
@@ -24469,8 +24477,11 @@
 				t.pageLength = 30;
 			}
 
-
-			if (typeof (t.webURL) == 'undefined') {
+			if (mData.mosMainKey.includes('dev') && t.devWebURL) {
+				t.webURLToUse = t.devWebURL;
+			} else if (t.webURL) {
+				t.webURLToUse = t.webURL;
+			} else {
 				mData = $.extend(
 					$().GetFieldsFromOneRow({
 						"listName": "ComponentLog",
@@ -24488,7 +24499,7 @@
 					mData
 				);
 
-				t.webURL = StrInStr(mData.uriRoot, '/Lists/SWFList', 1);
+				t.webURLToUse = StrInStr(mData.uriRoot, '/Lists/SWFList', 1);
 			}
 
 			$.each(columns, function (i, column) {
@@ -25103,7 +25114,7 @@
 
 			var listForDatatable = $().GetListDataForDatatable({
 				'listName': 'SWFList',
-				'webURL': t.webURL,
+				'webURL': t.webURLToUse,
 				'query': query,
 				'someColsAreUsers': t.someColsAreUsers,
 				'viewFields': camlViewFields,
