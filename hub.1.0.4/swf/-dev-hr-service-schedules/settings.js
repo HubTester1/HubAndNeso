@@ -10,7 +10,7 @@
 		// 'mosMainKey': 'devMedium',
 		'mosMainKey': 'devLong',
 		'devAdminNotifications': 1,
-		'notifications': 1,
+		'notifications': 0,
 		'detailTitle': [
 			{
 				'roles': ['gseHRAdmin', 'gseJobAdmin', 'gseManager'],
@@ -1010,6 +1010,7 @@
 						{
 							'tableID': 'list-item-view',
 							'webURL': 'https://bmos.sharepoint.com/sites/hr-service-jobs',
+							'devWebURL': 'https://bmos.sharepoint.com/sites/-dev-hr-service-jobs',
 							'myRSQueryRelevantStatus': 'Approved',
 							'getRequesterFrom': 'JobAdmin',
 							'sortColAndOrder': [0, 'desc']
@@ -2483,13 +2484,13 @@
 
 
 
-	/* // TEMPORARY
+	// TEMPORARY
 
-	// repeats
-	fData.CustomScriptLast += '$().RepeatElement("simple-date");';
-	fData.CustomScriptLast += '$().RepeatElement("simple-date");';
-	fData.CustomScriptLast += '$().RepeatElement("simple-date");';
-	fData.CustomScriptLast += '$().RepeatElement("simple-date");';
+	/* // repeats
+	// fData.CustomScriptLast += '$().RepeatElement("simple-date");';
+	// fData.CustomScriptLast += '$().RepeatElement("simple-date");';
+	// fData.CustomScriptLast += '$().RepeatElement("simple-date");';
+	// fData.CustomScriptLast += '$().RepeatElement("simple-date");';
 	
 	// radios / checks
 	fData.CustomScriptLast += '$("input#shiftlength_35-hours").prop("checked", true).attr("checked", true); \n';
@@ -2502,10 +2503,10 @@
 	fData.CustomScriptLast += '$("input#Number-of-Positions").val("3");';
 	fData.CustomScriptLast += '$("input#Location").val("Lobby");';
 	fData.CustomScriptLast += '$("input#Repeating-Date").val("March 1, 2019");';
-	fData.CustomScriptLast += '$("input#Repeating-Date-repeat-1").val("March 2, 2019");';
-	fData.CustomScriptLast += '$("input#Repeating-Date-repeat-2").val("March 3, 2019");';
-	fData.CustomScriptLast += '$("input#Repeating-Date-repeat-3").val("March 4, 2019");';
-	fData.CustomScriptLast += '$("input#Repeating-Date-repeat-4").val("March 5, 2019");';
+	// fData.CustomScriptLast += '$("input#Repeating-Date-repeat-1").val("March 2, 2019");';
+	// fData.CustomScriptLast += '$("input#Repeating-Date-repeat-2").val("March 3, 2019");';
+	// fData.CustomScriptLast += '$("input#Repeating-Date-repeat-3").val("March 4, 2019");';
+	// fData.CustomScriptLast += '$("input#Repeating-Date-repeat-4").val("March 5, 2019");';
 	
 	// selects
 	fData.CustomScriptLast += '$("select#hours-input_StartTime option[value=\'T09\']").attr("selected","selected"); \n';
