@@ -4,17 +4,18 @@
 	var mData = {
 		'componentID': 174,
 		'swf': 1,
-		// 'mosMainKey': 'prod',
+		'mosMainKey': 'prod',
 		// 'mosMainKey': 'dev',
 		// 'mosMainKey': 'devMedium',
-		'mosMainKey': 'devLong',
+		// 'mosMainKey': 'devLong',
 		// "useRecordedMOSMainMajorVersion": 1,
 		'currentRequestVersion': 2,
 		'devAdminNotifications': 1,
 		'notifications': 0,
+		'detailTitle': 'Hub Feedback Submission'
 	};
 
-	console.log("using settings m1");
+	console.log("using settings m2");
 
 
 	var oData = {
@@ -217,6 +218,7 @@
 				"fieldName": "Requested For",
 				"labelContent": "If needed, talk to",
 				"listFieldName": "RequestedFor",
+				"yieldsViewPermissions": 1,
 				"hideForNonAdmin": ["", "Submitted", "Completed", "Cancelled"],
 				"hideForAdmin": [""],
 				"disabledForNonAdmin": ["Submitted", "Completed", "Cancelled"],
@@ -565,7 +567,7 @@
 
 
 
-			}, {
+			/* }, {
 				'elementType': 'markup',
 				'tag': 'h2',
 				'content': 'What Else is Important?',
@@ -681,7 +683,7 @@
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
-				'end': 1,
+				'end': 1, */
 
 
 
@@ -711,7 +713,7 @@
 			}, {
 				'elementType': 'field',
 				'controlType': 'textarea',
-				'fieldName': 'Other Lower Priority',
+				'fieldName': 'Other Development',
 				'labelContent': 'What else should The Hub be doing?',
 				"disabledForNonAdmin": ["Submitted", "Completed", "Disapproved", "Cancelled"],
 				"disabledForAdmin": ["Submitted", "Completed", "Disapproved", "Cancelled"],
@@ -723,6 +725,20 @@
 						'hideForAdmin': ["Submitted", "Completed", "Disapproved", "Cancelled"],
 					},
 				],
+			}, {
+				'elementType': 'field',
+				'controlType': 'textarea',
+				'fieldName': 'Doing Well',
+				'labelContent': 'Please tell us anything you have difficulty finding on The Hub',
+				"disabledForNonAdmin": ["Submitted", "Completed", "Disapproved", "Cancelled"],
+				"disabledForAdmin": ["Submitted", "Completed", "Disapproved", "Cancelled"],
+			}, {
+				'elementType': 'field',
+				'controlType': 'textarea',
+				'fieldName': 'Usability Challenges',
+				'labelContent': 'Please describe any parts of The Hub you find difficult to use',
+				"disabledForNonAdmin": ["Submitted", "Completed", "Disapproved", "Cancelled"],
+				"disabledForAdmin": ["Submitted", "Completed", "Disapproved", "Cancelled"],
 			}, {
 				'elementType': 'field',
 				'controlType': 'textarea',
@@ -745,6 +761,9 @@
 	fData.CustomScriptFirst = '';
 
 	fData.CustomScriptLast = '$("input#Request-Nickname").val("nickname"); \n';
+
+	fData.CustomScriptLast += '$("div#mos-form-submission-confirmation a.link_exit").remove();';
+
 
 	$.fn.ReturnThisAppMData = function () {
 		return mData;
