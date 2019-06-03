@@ -443,44 +443,47 @@
 
 
 			case "gseSchedulesCalendarHRAdmin":
-				newTitle = "All GSE Schedules";
-				break;
 			case "gseSchedulesCalendarJobAdmin":
-				newTitle = "All GSE Schedules";
-				break;
 			case "gseSchedulesCalendarManager":
-				newTitle = "All GSE Schedules";
+				var fiscalYear = $().ReturnSelectedOrCurrentFourDigitFiscalYear();
+				newTitle = "GSE Schedules, FY " + fiscalYear;
 				break;
 			case "gseSchedulesCalendarStaff":
-				newTitle = "GSE Signup Opportunities";
+				var fiscalYear = $().ReturnSelectedOrCurrentFourDigitFiscalYear();
+				newTitle = "GSE Signup Opportunities, FY " + fiscalYear;
 				break;
 
 
 			case "gseSchedulesListHRAdmin":
-				newTitle = "All GSE Schedules";
+				var fiscalYear = $().ReturnSelectedOrCurrentFourDigitFiscalYear();
+				newTitle = "GSE Schedules, FY " + fiscalYear;
 				break;
 			case "gseSchedulesListJobAdmin":
-				newTitle = "My GSE Schedules";
+				var fiscalYear = $().ReturnSelectedOrCurrentFourDigitFiscalYear();
+				newTitle = "My GSE Schedules, FY " + fiscalYear;
 				break;
 			case "gseSchedulesListManager":
-				newTitle = "GSE Schedules";
+				var fiscalYear = $().ReturnSelectedOrCurrentFourDigitFiscalYear();
+				newTitle = "GSE Schedules, FY " + fiscalYear;
 				break;
 			case "gseSchedulesListStaff":
-				newTitle = "GSE Signup Opportunities";
+				var fiscalYear = $().ReturnSelectedOrCurrentFourDigitFiscalYear();
+				newTitle = "GSE Signup Opportunities, FY " + fiscalYear;
 				break;
 
 
 			case "gseSignupsHRAdmin":
-				newTitle = "All GSE Signups";
-				break;
-			case "gseSignupsJobAdmin":
-				newTitle = "My GSE Signups";
-				break;
-			case "gseSignupsManager":
-				newTitle = "My and My Staff Members' GSE Signups";
+				var fiscalYear = $().ReturnSelectedOrCurrentFourDigitFiscalYear();
+				newTitle = "GSE Signups, FY " + fiscalYear;
 				break;
 			case "gseSignupsStaff":
-				newTitle = "My GSE Signups";
+			case "gseSignupsJobAdmin":
+				var fiscalYear = $().ReturnSelectedOrCurrentFourDigitFiscalYear();
+				newTitle = "My GSE Signups, FY " + fiscalYear;
+				break;
+			case "gseSignupsManager":
+				var fiscalYear = $().ReturnSelectedOrCurrentFourDigitFiscalYear();
+				newTitle = "My and My Staff Members' GSE Signups, FY " + fiscalYear;
 				break;
 
 			case "mwBuyoutCalendar":
@@ -666,8 +669,6 @@
 			case "mwProductsTimeline":
 				$().ReplacePageTitle(newTitle);
 				$("div#overview-screen-container").fadeIn(mData.gracefulScreenTransitionTime).removeClass("hidden");
-				// initialize timeline
-				// $('div#overview-screen-container').fullCalendar('render');
 				$('#s4-workspace').scrollTop(0);
 				break;
 
@@ -16321,7 +16322,8 @@
 				'<table style="width: 100%;">' +
 				'	<tr style="width: 100%;">' +
 				'		<td style="width: 50%; vertical-align: top;">' +
-				'			<ul style="margin: 0;">';
+				'			<ul style="margin: 0;">' + 
+				'				<li><b>Position Title:</b> ' + formData["Position-Title"] + '</li>';
 
 			if (formData["Department"] != "Other") {
 				printContent += '				<li><b>Department:</b> ' + formData["Department"] + '</li>';
@@ -16330,8 +16332,7 @@
 				printContent += '				<li><b>Department:</b> ' + formData["Other-Department"] + '</li>';
 			}
 
-			printContent += '				<li><b>Approving Manager\'s Name:</b> ' + formData["Manager-Name"] + '</li>' +
-				'				<li><b>Position Title:</b> ' + formData["Position-Title"] + '</li>' +
+			printContent += 
 				'				<li><b>Number of Positions Requested:</b> ' + formData["Position-Quantity"] + '</li>' +
 				'				<li><b>Grade:</b> ' + formData["Grade"] + '</li>' +
 				'				<li><b>Employee Classification:</b> ' + formData["Employee-Classification"] + '</li>' +
@@ -16431,6 +16432,8 @@
 					printContent += '				<li><b>Salary Change Reason:</b> ' + formData["Salary-Change-Reason"] + '</li>';
 				}
 			}
+
+			printContent += '				<li><b>Approving Manager\'s Name:</b> ' + formData["Manager-Name"] + '</li>';
 
 			// if (typeof(formData["hrc-grading_graded"]) !== "undefined") {
 			// 	printContent += '				<li><b>HRC Grading:</b> Graded by HRC</li>' + 
@@ -17425,10 +17428,10 @@
 			'				<h3>Public Safety</h3>';
 
 		var publicSafetyContentQuantity = 0;
-		if (typeof (sheetData["parking-validation_under20"]) != "undefined") { publicSafetyContentQuantity++; }
-		if (typeof (sheetData["parking-validation_20plus"]) != "undefined") { publicSafetyContentQuantity++; }
+		if (typeof (sheetData["parking-validation_under10"]) != "undefined") { publicSafetyContentQuantity++; }
+		if (typeof (sheetData["parking-validation_10Plus"]) != "undefined") { publicSafetyContentQuantity++; }
 		if (typeof (sheetData["security-detail_yes"]) != "undefined") { publicSafetyContentQuantity++; }
-		if (typeof (sheetData["guest-access_yes"]) != "undefined") { publicSafetyContentQuantity++; }
+		// if (typeof (sheetData["guest-access_yes"]) != "undefined") { publicSafetyContentQuantity++; }
 		if (typeof (sheetData["elevator-access_4andor5"]) != "undefined") { publicSafetyContentQuantity++; }
 		if (typeof (sheetData["crowd-management_yes"]) != "undefined") { publicSafetyContentQuantity++; }
 
@@ -17453,11 +17456,11 @@
 				printContent += '<ul style="margin: 0;">';
 			}
 
-			if (typeof (sheetData["parking-validation_under20"]) != "undefined") {
+			if (typeof (sheetData["parking-validation_under10"]) != "undefined") {
 				printContent += publicSafetyOpeningTag + '<b>Parking: </b>Leaving validation at Info Desk' + publicSafetyClosingTag;
 			}
 
-			if (typeof (sheetData["parking-validation_20plus"]) != "undefined") {
+			if (typeof (sheetData["parking-validation_10Plus"]) != "undefined") {
 				printContent += publicSafetyOpeningTag + '<b>Parking: </b>Requested free or $5 flat rate validator' + publicSafetyClosingTag;
 			}
 
@@ -17470,13 +17473,13 @@
 					'</ul>' + publicSafetyClosingTag;
 			}
 
-			if (typeof (sheetData["guest-access_yes"]) != "undefined") {
+			/* if (typeof (sheetData["guest-access_yes"]) != "undefined") {
 				printContent += publicSafetyOpeningTag + '<b>Guest Access:</b><ul style="margin: 0;">' +
 					'	<li><b>Location: </b>' + sheetData["Guest-Access-Location"] + '</li>' +
 					'	<li><b>Starting: </b>' + sheetData["Printer-Guest-Access-Beginning-Datetime"] + '</li>' +
 					'	<li><b>Ending: </b>' + sheetData["Printer-Guest-Access-Ending-Datetime"] + '</li>' +
 					'</ul>' + publicSafetyClosingTag;
-			}
+			} */
 
 			if (typeof (sheetData["elevator-access_4andor5"]) != "undefined") {
 				printContent += publicSafetyOpeningTag + '<b>Key off elevator for 4th and 5th floor</b>' + publicSafetyClosingTag;
@@ -17513,9 +17516,12 @@
 
 			'			<td style="border: 2px solid black;padding: 1rem;">' +
 			'				<h3>Facilities</h3>';
-
+		console.log('sheetData');
+		console.log(sheetData);
+		console.log('sheetData["facilities_threeminutedelay"]');
+		console.log(sheetData["facilities_threeminutedelay"]);
 		var facilitiesContentQuantity = 0;
-		if (typeof (sheetData["facilities_fiveminutedelay"]) != "undefined") { facilitiesContentQuantity++; }
+		if (typeof (sheetData["facilities_threeminutedelay"]) != "undefined") { facilitiesContentQuantity++; }
 		if (typeof (sheetData["facilities_tempcontrol"]) != "undefined") { facilitiesContentQuantity++; }
 		if (typeof (sheetData["facilities_more"]) != "undefined") { facilitiesContentQuantity++; }
 
@@ -17524,7 +17530,8 @@
 		} else {
 			var facilitiesHasContent = 0;
 		}
-
+		console.log('facilitiesContentQuantity');
+		console.log(facilitiesContentQuantity);
 		if (facilitiesContentQuantity > 1) {
 			var facilitiesUseList = 1;
 			var facilitiesOpeningTag = '<li>';
@@ -17541,8 +17548,8 @@
 			}
 
 
-			if (typeof (sheetData["facilities_fiveminutedelay"]) != "undefined") {
-				printContent += facilitiesOpeningTag + '<b>Five-minute delay</b>' + facilitiesClosingTag;
+			if (typeof (sheetData["facilities_threeminutedelay"]) != "undefined") {
+				printContent += facilitiesOpeningTag + '<b>Three-minute delay</b>' + facilitiesClosingTag;
 			}
 
 			if (typeof (sheetData["facilities_tempcontrol"]) != "undefined") {
@@ -20882,14 +20889,15 @@
 					allEvents.push(thisEvent);
 
 				});
-				console.log('m1');
-				console.log('allEvents');
-				console.log(allEvents);
+				// console.log('m1');
+				// console.log('allEvents');
+				// console.log(allEvents);
 				// console.log('viewToUse');
 				// console.log(viewToUse);
 				// console.log('dateToUse');
 				// console.log(dateToUse);
 
+				$('div#overview-screen-container').fullCalendar('destroy');
 				$("div#overview-screen-container").fullCalendar({
 					allDayDefault: true,
 					lazyFetching: false,
@@ -20955,6 +20963,7 @@
 					},
 					events: allEvents
 				});
+				$('div#overview-screen-container').fullCalendar('refetchEvents');
 
 				var commandBarContents = $().ReturnButtonsMarkup(buttons);
 
@@ -21486,14 +21495,15 @@
 					} */
 				});
 
-				console.log('m1');
-				console.log('allEvents');
-				console.log(allEvents);
+				// console.log('m1');
+				// console.log('allEvents');
+				// console.log(allEvents);
 				// console.log('viewToUse');
 				// console.log(viewToUse);
 				// console.log('dateToUse');
 				// console.log(dateToUse);
 
+				$('div#overview-screen-container').fullCalendar('destroy');
 				$("div#overview-screen-container").fullCalendar({
 					allDayDefault: true,
 					lazyFetching: false,
@@ -21557,6 +21567,7 @@
 					},
 					events: allEvents
 				});
+				$('div#overview-screen-container').fullCalendar('refetchEvents');
 
 				var commandBarContents = $().ReturnButtonsMarkup(buttons);
 
@@ -22337,6 +22348,19 @@
 	};
 
 
+	$.fn.ReturnSelectedOrCurrentFourDigitFiscalYear = function () {
+		var thisYear = $().ReturnFormattedDateTime('nowLocal', null, 'YYYY');
+		var selectedStartYear = GetParamFromUrl(location.search, "y");
+		if (!selectedStartYear || selectedStartYear == '') {
+			selectedStartYear = moment().isAfter(thisYear + '-06-30') ?
+				parseInt(thisYear) :
+				parseInt(thisYear) - 1;
+		}
+		var fiscalYear = parseInt(selectedStartYear) + 1;
+		return fiscalYear;
+	};
+
+
 	// schedules list
 	$.fn.RenderCommandBarAndDataTablesForGSESchedules = function (buttons, targetID, relevantRole) {
 		var renderPrepStartTime = Date.now();
@@ -22347,7 +22371,7 @@
 		// parseInt(thisYear) :
 		// parseInt(thisYear) - 1;
 		var thisYear = $().ReturnFormattedDateTime('nowLocal', null, 'YYYY');
-		var startingYearOfLastFiscalYear = moment().isAfter(thisYear + '-06-30') ?
+		var startingYearOfLastFiscalYear = moment().isAfter(thisYear + '-01-01') ?
 			parseInt(thisYear) :
 			parseInt(thisYear) - 1;
 
@@ -22373,6 +22397,7 @@
 					'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/' + gseSiteTokens.config + '/SitePages/App.aspx?r=1">Configuration</a> \n' +
 					'</div>';
 			}
+
 			commandBarContents +=
 				'<div class="container_link">' +
 				'	<a class="button-link button-link_new-item undefined command-bar-button" data-button-type="newRequest" href="https://bmos.sharepoint.com/sites/' + gseSiteTokens.schedules + '/SitePages/App.aspx?r=0">New Schedule</a>' +
@@ -22839,8 +22864,8 @@
 			'<div id="container_navigation-controls-expanded"> \n' +
 				buttonDivs + 
 			'</div> \n';
-		
-		commandBarContents += 
+
+		commandBarContents +=
 			'<div id="container_filter-controls-and-header"> \n' +
 			'   <div id="text_filter-controls" class="collapsible">Year</div> \n' +
 			'   <div id="container_filter-controls"> \n' +
@@ -22906,7 +22931,7 @@
 		// 	parseInt(thisYear) :
 		// 	parseInt(thisYear) - 1;
 		var thisYear = $().ReturnFormattedDateTime('nowLocal', null, 'YYYY');
-		var startingYearOfLastFiscalYear = moment().isAfter(thisYear + '-06-30') ?
+		var startingYearOfLastFiscalYear = moment().isAfter(thisYear + '-01-01') ?
 			parseInt(thisYear) :
 			parseInt(thisYear) - 1;
 
@@ -23009,17 +23034,42 @@
 				selectedManagerWithDownline = manager;
 			}
 		});
+
+		
 		var allMarkup = '';
 		var departmentMarkups = {};
-		var downlineRetrievedFromNeso = true;
 
+		// if there's no downline, create one and populate with current user
 		if (!selectedManagerWithDownline || !selectedManagerWithDownline.downline) {
 			selectedManagerWithDownline = $().ReturnUser(ReplaceAll('@mos.org', '', uData.userName));
 			selectedManagerWithDownline.downline = {};
 			selectedManagerWithDownline.downline[selectedManagerWithDownline.division] = {};
 			selectedManagerWithDownline.downline[selectedManagerWithDownline.division][selectedManagerWithDownline.department] = [];
 			selectedManagerWithDownline.downline[selectedManagerWithDownline.division][selectedManagerWithDownline.department].push($().ReturnUser(ReplaceAll('@mos.org', '', uData.userName)));
-			downlineRetrievedFromNeso = false;
+
+		// if there's a downline, add the manager to it
+		} else {
+			var addedMgr = false;
+			var downlineDivisionKeys = Object.keys(selectedManagerWithDownline.downline);
+			downlineDivisionKeys.forEach((divisionKey) => {
+				var downlineDepartmentKeys = Object.keys(selectedManagerWithDownline.downline[divisionKey]);
+				downlineDepartmentKeys.forEach((departmentKey) => {
+					if (selectedManagerWithDownline.department === departmentKey) {
+						selectedManagerWithDownline.downline[divisionKey][departmentKey].push(selectedManagerWithDownline);
+						selectedManagerWithDownline.downline[divisionKey][departmentKey].sort(CompareUsersByLastNameForArraySorting);
+						addedMgr = true;
+					}
+				});
+			});
+			if (!addedMgr) {
+				if (!selectedManagerWithDownline.downline[selectedManagerWithDownline.division]) {
+					selectedManagerWithDownline.downline[selectedManagerWithDownline.division] = {};
+				}
+				if (!selectedManagerWithDownline.downline[selectedManagerWithDownline.division][selectedManagerWithDownline.department]) {
+					selectedManagerWithDownline.downline[selectedManagerWithDownline.division][selectedManagerWithDownline.department] = [];
+				}
+				selectedManagerWithDownline.downline[selectedManagerWithDownline.division][selectedManagerWithDownline.department].push($().ReturnUser(ReplaceAll('@mos.org', '', uData.userName)));
+			}
 		}
 
 		if (selectedManagerWithDownline && selectedManagerWithDownline.downline) {
@@ -23045,10 +23095,6 @@
 						'		<tbody>';
 
 					if (selectedManagerWithDownline.downline[divisionKey]) {
-						if (selectedManagerWithDownline.department === departmentKey && downlineRetrievedFromNeso) {
-							selectedManagerWithDownline.downline[divisionKey][departmentKey].push(selectedManagerWithDownline);
-							selectedManagerWithDownline.downline[divisionKey][departmentKey].sort(CompareUsersByLastNameForArraySorting);
-						}
 						selectedManagerWithDownline.downline[divisionKey][departmentKey].forEach((user, index) => {
 							var evenOrOdd = ((index % 2) == 0) ? 'odd' : 'even';
 							var totalCount = 0;
@@ -23181,7 +23227,7 @@
 		// 	parseInt(thisYear) :
 		// 	parseInt(thisYear) - 1;
 		var thisYear = $().ReturnFormattedDateTime('nowLocal', null, 'YYYY');
-		var startingYearOfLastFiscalYear = moment().isAfter(thisYear + '-06-30') ?
+		var startingYearOfLastFiscalYear = moment().isAfter(thisYear + '-01-01') ?
 			parseInt(thisYear) :
 			parseInt(thisYear) - 1;
 
@@ -26726,11 +26772,11 @@
 	$.fn.ReturnCurrentUserIsManager = function () {
 		var currentUserIsManager = 0;
 		var currentUserAccount = ReplaceAll('@mos.org', '', ReplaceAll('i:0#.f\\|membership\\|', '', uData.account));
-		// TO DO - DELETE EXCEPTION FOR NON-SP3 ACCOUNTS BELOW
+		// TO DO - DELETE EXCEPTION FOR NON-SP3 ACCOUNTS BELOW AFTER ULTIPRO INTEGRATION
 
 		if (currentUserAccount === 'sp3' || currentUserAccount === 'ahile' || currentUserAccount === 'jpeeler') {
 			currentUserIsManager = 1;
-		// TO DO - DELETE EXCEPTION FOR NON-SP3 ACCOUNTS ABOVE
+		// TO DO - DELETE EXCEPTION FOR NON-SP3 ACCOUNTS ABOVE AFTER ULTIPRO INTEGRATION
 		} else {
 			var managers = $().ReturnManagers();
 			managers.forEach((manager) => {
@@ -28584,6 +28630,17 @@
 
 		// data for the current user
 		uData = $().ReturnCurrentUserData();
+		/* uData = {
+			account: "i:0#.f|membership|tporter@mos.org",
+			dept: "Exhibit Content & Learning",
+			email: "tporter@mos.org",
+			firstName: "Tim",
+			lastName: "Porter",
+			name: "Tim Porter",
+			phone: "",
+			pictureURL: "",
+			userName: "tporter@mos.org",
+		}; */
 		/* uData = {
 			account: "i:0#.f|membership|smcduffee@mos.org",
 			dept: "Marketing",
