@@ -15,7 +15,7 @@
 		'detailTitle': 'Hub Feedback Submission'
 	};
 
-	console.log("using settings m2");
+	console.log("using settings m3");
 
 
 	var oData = {
@@ -39,10 +39,10 @@
 						'displayName': 'Sumbission ID',
 						'internalName': 'ID',
 						'formLink': 1
-					}, {
-						'displayName': 'Talk To',
-						'internalName': 'RequestedFor',
-						'userName': 1
+					// }, {
+					// 	'displayName': 'Talk To',
+					// 	'internalName': 'RequestedFor',
+					// 	'userName': 1
 					}, {
 						'displayName': 'Sumbission Date',
 						'internalName': 'RequestDate',
@@ -763,6 +763,8 @@
 	fData.CustomScriptLast = '$("input#Request-Nickname").val("nickname"); \n';
 
 	fData.CustomScriptLast += '$("div#mos-form-submission-confirmation a.link_exit").remove();';
+	
+	fData.CustomScriptLast += '$("div#label-and-control_Requested-For").hide("fast").addClass("hidden");';
 
 
 	$.fn.ReturnThisAppMData = function () {
