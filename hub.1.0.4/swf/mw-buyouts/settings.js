@@ -13,7 +13,7 @@
 		'notifications': 0,
 	};
 
-	console.log("using settings m1");
+	console.log("using settings m3");
 
 	var oData = {
 		'mwBuyoutList': {
@@ -129,13 +129,13 @@
 				"htmlID": "header_this-request",
 				"begin": 1,
 				"end": 1
-			// }, {
-			// 	'elementType': 'field',
-			// 	'controlType': 'url',
-			// 	'fieldName': 'Quark Request',
-			// 	'labelContent': 'Quark Request',
-			// 	'editableForNonAdmin': [],
-			// 	'editableForAdmin': [],
+				// }, {
+				// 	'elementType': 'field',
+				// 	'controlType': 'url',
+				// 	'fieldName': 'Quark Request',
+				// 	'labelContent': 'Quark Request',
+				// 	'editableForNonAdmin': [],
+				// 	'editableForAdmin': [],
 			}, {
 				"elementType": "field",
 				"controlType": "text",
@@ -397,7 +397,7 @@
 
 
 
-			
+
 			}, {
 				'elementType': 'field',
 				'controlType': 'datePicker',
@@ -454,15 +454,16 @@
 		'} \n'; */
 
 
-	/* // =============================
+	// =============================
 
-	// selects
+	/* // selects
 	fData.CustomScriptLast += '$("select#Self-or-Other option[value=\'Self\']").attr("selected","selected"); \n';
 	fData.CustomScriptLast += '$("select#hours-input_Start-Time option[value=\'T09\']").attr("selected","selected"); \n';
 	fData.CustomScriptLast += '$("select#minutes-input_Start-Time option[value=\':00:00\']").attr("selected","selected"); \n';
 	fData.CustomScriptLast += '$("select#hours-input_End-Time option[value=\'T17\']").attr("selected","selected"); \n';
 	fData.CustomScriptLast += '$("select#minutes-input_End-Time option[value=\':00:00\']").attr("selected","selected"); \n';
 	fData.CustomScriptLast += '$("select#Buyout-Department option[value=\'Accessibility\']").attr("selected","selected"); \n';
+	fData.CustomScriptLast += '$("select#Buyout-Location option[value=\'Omni Theater\']").attr("selected","selected"); \n';
 
 	// hidden
 	fData.CustomScriptLast += '$("input#time-storage_Start-Time").val("2000-01-01T09:00:00Z"); \n';
@@ -470,8 +471,8 @@
 
 	// texts
 	fData.CustomScriptLast += '$("input#Buyout-Order-Number").val("123456");';
-	fData.CustomScriptLast += '$("input#Buyout-Title").val("Buyout Title");';
-	// fData.CustomScriptLast += '$("input#Buyout-Location").val("Location");';
+	fData.CustomScriptLast += '$("input#Request-Nickname").val("Buyout Title");';
+	fData.CustomScriptLast += '$("input#Buyout-Product-Title").val("Product Title");';
 	fData.CustomScriptLast += '$("input#Buyout-Date").val("November 8, 2018");';
 
 	// people picker
