@@ -14,7 +14,7 @@
 		'notifications': 0,
 	};
 
-	console.log("using settings m2");
+	console.log("using settings m3");
 
 
 
@@ -318,6 +318,15 @@
 				'begin': 1,
 				'end': 1
 			}, {
+				'elementType': "field",
+				'controlType': "text",
+				'fieldName': "Position Title",
+				'labelContent': "Position Title",
+				'requiredForNonAdmin': [""],
+				'requiredForAdmin': [""],
+				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
+				'disabledForAdmin': ['Submitted', 'Cancelled']
+			}, {
 				"elementType": "field",
 				"controlType": "select",
 				"fieldName": "Department",
@@ -360,24 +369,6 @@
 				'disabledForAdmin': ['Submitted', 'Cancelled'],
 				'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
 				'hideForAdmin': ['', 'Submitted', 'Cancelled'],
-			}, {
-				'elementType': "field",
-				'controlType': "text",
-				'fieldName': "Manager Name",
-				'labelContent': "Approving Manager's Name",
-				'requiredForNonAdmin': [""],
-				'requiredForAdmin': [""],
-				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
-				'disabledForAdmin': ['Submitted', 'Cancelled']
-			}, {
-				'elementType': "field",
-				'controlType': "text",
-				'fieldName': "Position Title",
-				'labelContent': "Position Title",
-				'requiredForNonAdmin': [""],
-				'requiredForAdmin': [""],
-				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
-				'disabledForAdmin': ['Submitted', 'Cancelled']
 			}, {
 				'elementType': "field",
 				'controlType': "text",
@@ -1087,6 +1078,15 @@
 				'tag': 'div',
 				'end': 1,
 			}, {
+				'elementType': "field",
+				'controlType': "text",
+				'fieldName': "Manager Name",
+				'labelContent': "Approving Manager's Name",
+				'requiredForNonAdmin': [""],
+				'requiredForAdmin': [""],
+				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
+				'disabledForAdmin': ['Submitted', 'Cancelled']
+			}, {
 				'elementType': 'markup',
 				'tag': 'div',
 				'begin': 1,
@@ -1124,10 +1124,10 @@
 
 	fData.CustomScriptLast +=	'$("input#Position-Title").val("Position Title"); \n';
 	fData.CustomScriptLast +=	'$("input#Grade").val("Grade 1"); \n';
-	// fData.CustomScriptLast +=	'$("input#Scheduled-Hours-Biweekly").val("80"); \n';
-	// fData.CustomScriptLast +=	'$("input#Scheduled-Hours-Annually").val("2080"); \n';
-	// fData.CustomScriptLast +=	'$("input#Proposed-Hourly-Wage").val("35"); \n';
-	// fData.CustomScriptLast +=	'$("input#Proposed-Annualized-Salary").val("72000"); \n';
+	fData.CustomScriptLast +=	'$("input#Scheduled-Hours-Biweekly").val("80"); \n';
+	fData.CustomScriptLast +=	'$("input#Scheduled-Hours-Annually").val("2080"); \n';
+	fData.CustomScriptLast +=	'$("input#Proposed-Hourly-Wage").val("35"); \n';
+	fData.CustomScriptLast +=	'$("input#Proposed-Annualized-Salary").val("72000"); \n';
 	fData.CustomScriptLast +=	'$("input#Proposed-Start-Date").val("June 26, 2018"); \n';
 	fData.CustomScriptLast +=	'$("input#Proposed-End-Date").val("June 27, 2018"); \n';
 	fData.CustomScriptLast +=	'$("input#Grant-Project-Code").val("123"); \n';
@@ -1145,15 +1145,11 @@
 	fData.CustomScriptLast +=	'$("textarea#Schedule").val("M-F, 9-5"); \n';
 	// fData.CustomScriptLast +=	'$("textarea#XXXXXXXXXXXXXXXX").val("XXXXXXXXXXXXX"); \n';
 
-
-
-
-
-
-
-
-
 	fData.CustomScriptLast += '$("div.subsection-container, div#container_primary-fieldset").each(function() { $(this).removeClass("hidden"); });'; */
+
+
+
+
 
 	fData.CustomScriptLast += '$("input#Proposed-Hourly-Wage, input#Scheduled-Hours-Biweekly, input#Replacement-Salary").on("change", function() { \n' +
 		'console.log("firing");'+
