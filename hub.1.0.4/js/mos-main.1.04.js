@@ -427,7 +427,7 @@
 			case "analyticsEventAV":
 				newTitle = "Event AV Request Analytics";
 				break;
-				
+
 			case "gseStatsHRAdmin":
 				newTitle = "GSE Stats";
 				break;
@@ -1171,11 +1171,11 @@
 		if (rData.requestID != "" && rData.requestID == 0 && rData.gseScheduleID == "") {
 			initialScreen = "newRequest";
 			secondaryScreen = overviewScreen;
-		// if the URL contains a request ID (r) greater than 0 -OR- the URL contains a GSE Schedule ID (gseScheduleID) greater than 0
+			// if the URL contains a request ID (r) greater than 0 -OR- the URL contains a GSE Schedule ID (gseScheduleID) greater than 0
 		} else if ((rData.requestID != "" && rData.requestID > 0) || (rData.gseScheduleID != "" && rData.gseScheduleID > 0)) {
 			initialScreen = "existingRequest";
 			secondaryScreen = overviewScreen;
-		// if the URL does not contain a request ID (r)
+			// if the URL does not contain a request ID (r)
 		} else if (rData.requestID === "") {
 			initialScreen = overviewScreen;
 			secondaryScreen = "newRequest";
@@ -1451,20 +1451,20 @@
 
 
 		var query = "";
-		
-		if (opt.customCAMLQuery) { 
-			query = "<Query>" + 
-					opt.customCAMLQuery + 
-					"</Query>";
+
+		if (opt.customCAMLQuery) {
+			query = "<Query>" +
+				opt.customCAMLQuery +
+				"</Query>";
 		} else {
 
 			query = "<Query>" +
-					"<Where>";
+				"<Where>";
 
-			if (opt.where.ands) { 
+			if (opt.where.ands) {
 				query += "<And>";
 				// curently assumes there are no more than two ands
-				$.each(opt.where.ands, function(i, andObject) {
+				$.each(opt.where.ands, function (i, andObject) {
 					if (!andObject.operator) {
 						andObject.operator = 'Eq';
 					}
@@ -1494,8 +1494,8 @@
 
 				if (opt.where.value) {
 					query += "<" + opt.where.operator + ">";
-					query += "<FieldRef Name='" + opt.where.field + "'></FieldRef>" + 
-					"<Value Type='" + opt.where.type + "'>" + opt.where.value + "</Value>";
+					query += "<FieldRef Name='" + opt.where.field + "'></FieldRef>" +
+						"<Value Type='" + opt.where.type + "'>" + opt.where.value + "</Value>";
 					query += "</" + opt.where.operator + ">";
 				} else if (opt.where.values) {
 					query += "<In>";
@@ -1509,8 +1509,8 @@
 				}
 			}
 
-			query +=	"</Where>" +
-						"</Query>";
+			query += "</Where>" +
+				"</Query>";
 		}
 
 		var fields = "<ViewFields>";
@@ -1572,7 +1572,7 @@
 	};
 
 
-	
+
 	$.fn.GetFieldsFromAllRows = function (options) {
 
 		var returnValue = [];
@@ -1697,9 +1697,9 @@
 					$.each(opt.select, function (i, oneField) {
 
 						if (
-							oneField.nameHere === "formData" || 
-							oneField.nameHere === "defaultDataForNewRequests" || 
-							oneField.nameHere === "gseJobData" || 
+							oneField.nameHere === "formData" ||
+							oneField.nameHere === "defaultDataForNewRequests" ||
+							oneField.nameHere === "gseJobData" ||
 							oneField.nameHere === "gseScheduleData"
 						) {
 							console.log('found field to interpret');
@@ -3286,20 +3286,20 @@
 					"hideForNonAdmin": ["Submitted", "Completed", "Disapproved", "Cancelled"],
 					"hideForAdmin": ["Submitted", "Completed", "Disapproved", "Cancelled"],
 					'onChange': [
-						{ 
-							"thisFieldEquals": ["Approve"], 
-							"require": [{ "fieldName": "Assigned To", "type": "peoplepicker" }], 
-							"enable": [{ "fieldName": "Assigned To", "type": "peoplepicker" }], 
-							"show": [{ "divID": "assignment" }] 
-						}, { 
-							"thisFieldEquals": ["Complete"], 
-							"require": [{ "fieldName": "Completed By", "type": "peoplepicker" }], 
-							"enable": [{ "fieldName": "Completed By", "type": "peoplepicker" }], 
-							"show": [{ "divID": "completion" }, { "divID": "assignment" }] 
-						}, { 
-							"thisFieldEquals": ["", "Cancel", "Disapprove"], 
-							"optional": [{ "fieldName": "Assigned To", "type": "peoplepicker" }, { "fieldName": "Completed By", "type": "peoplepicker" }], 
-							"disable": [{ "fieldName": "Assigned To", "type": "peoplepicker" }, { "fieldName": "Completed By", "type": "peoplepicker" }], 
+						{
+							"thisFieldEquals": ["Approve"],
+							"require": [{ "fieldName": "Assigned To", "type": "peoplepicker" }],
+							"enable": [{ "fieldName": "Assigned To", "type": "peoplepicker" }],
+							"show": [{ "divID": "assignment" }]
+						}, {
+							"thisFieldEquals": ["Complete"],
+							"require": [{ "fieldName": "Completed By", "type": "peoplepicker" }],
+							"enable": [{ "fieldName": "Completed By", "type": "peoplepicker" }],
+							"show": [{ "divID": "completion" }, { "divID": "assignment" }]
+						}, {
+							"thisFieldEquals": ["", "Cancel", "Disapprove"],
+							"optional": [{ "fieldName": "Assigned To", "type": "peoplepicker" }, { "fieldName": "Completed By", "type": "peoplepicker" }],
+							"disable": [{ "fieldName": "Assigned To", "type": "peoplepicker" }, { "fieldName": "Completed By", "type": "peoplepicker" }],
 							"hide": [{ "divID": "completion" }, { "divID": "assignment" }]
 						},
 					],
@@ -3429,7 +3429,7 @@
 					"disabledForAdmin": ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
 					"hideForNonAdmin": ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
 					"hideForAdmin": ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
-				// delete below after UltiPro transition
+					// delete below after UltiPro transition
 				}, {
 					'elementType': "field",
 					'controlType': "check",
@@ -3439,9 +3439,9 @@
 						{
 							'value': "yes",
 							'display': "Yes, notify HR"
-						// }, {
-						// 	'value': "no",
-						// 	'display': "No, no phone number or email has changed"
+							// }, {
+							// 	'value': "no",
+							// 	'display': "No, no phone number or email has changed"
 						}
 					],
 					'onChange': [
@@ -3457,7 +3457,7 @@
 					],
 					'disabledForNonAdmin': ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
 					'disabledForAdmin': ["Completed", "Disapproved", "Cancelled"]
-				
+
 				}, {
 					"elementType": "markup",
 					"tag": "div",
@@ -4490,9 +4490,9 @@
 			delete rData.gseScheduleData['Requester-Email'];
 			delete rData.gseJobData['Requester-Phone'];
 			delete rData.gseScheduleData['Requester-Phone'];
-			
+
 			// calculate positions remaining
-			
+
 			// prep some of the data before populating fields and placeholders with it
 			var otherSignupsForThisSchedule = $().GetFieldsFromSpecifiedRows({
 				"select": [{
@@ -4518,7 +4518,7 @@
 				rData.gseScheduleData['time-storage_StartTime'].substring(11, 16);
 			scheduleStartDateTime = moment.tz(scheduleStartDateTime, "America/New_York").format();
 			var NowAsISOLocal = $().ReturnFormattedDateTime('nowLocal', null, null);
-			rData.gseScheduleData['Positions-Available'] = 
+			rData.gseScheduleData['Positions-Available'] =
 				parseInt(rData.gseScheduleData['Number-of-Positions']) - otherSignupsForThisSchedule.length;
 			rData.gseScheduleData['Friendly-Date'] = $().ReturnFormattedDateTime(rData.gseScheduleData['Date'], null, 'dddd, MMMM D, YYYY', 1);
 			rData.gseScheduleData['Shift-Length'] = rData.gseScheduleData['shiftlength_35-hours'] ? '3.5 hours' : '7 hours';
@@ -4529,9 +4529,9 @@
 			if (rData.gseScheduleData['time-storage_MealTime']) {
 				rData.gseScheduleData['Meal-Time'] = $().ReturnFormattedDateTime(rData.gseScheduleData['time-storage_MealTime'].substring(0, 19), null, 'h:mm a');
 			}
-			
-			
-			
+
+
+
 			rData.gseJobData['Job-ID'] = rData.gseJobID;
 			rData.gseJobData['Job-Admin-Name'] = rData.gseJobData['Job-Admin'][0].displayText;
 			rData.gseJobData['Job-Description-Formatted'] = '<p>' + ReplaceAll('%0A', '</p><p>', rData.gseJobData['Job-Description']) + '</p>';
@@ -4566,12 +4566,12 @@
 
 			// dress requirements
 			// start with the two persistent requirements
-			rData.gseJobData['Dress-Requirements-List-Items'] = 
-				'<li>Clothing and shoes must be in good condition.</li>' + 
+			rData.gseJobData['Dress-Requirements-List-Items'] =
+				'<li>Clothing and shoes must be in good condition.</li>' +
 				'<li>MOS badge must be worn above the waist at all times.</li>';
 			// add any other requirements
 			if (rData.gseJobData['Dress-Requirements']) {
-				rData.gseJobData['Dress-Requirements-List-Items'] += 
+				rData.gseJobData['Dress-Requirements-List-Items'] +=
 					'<li>' + ReplaceAll('%0A', '</li><li>', rData.gseJobData['Dress-Requirements']) + '</li>';
 			}
 
@@ -4605,7 +4605,7 @@
 
 			if (rData.gseScheduleData['Notes']) {
 				rData.gseScheduleData['Notes-Formatted'] = '<h3>Notes</h3>' +
-					'<p>' + ReplaceAll('%0A', '</p><p>', rData.gseScheduleData['Notes']) + '</p>';					
+					'<p>' + ReplaceAll('%0A', '</p><p>', rData.gseScheduleData['Notes']) + '</p>';
 			}
 
 			console.log('rData.gseScheduleData');
@@ -4614,7 +4614,7 @@
 			console.log(rData.gseJobData);
 			console.log('rData.formDataOnLoad');
 			console.log(rData.formDataOnLoad);
-			
+
 			// populate the placeholder <span>s with job and schedule data
 			PopulateFormData("div#request-form", rData.gseJobData, mData.uriRoot, rData.requestID, mData.checkForAlternateEventDataToPopulate);
 			PopulateFormData("div#request-form", rData.gseScheduleData, mData.uriRoot, rData.requestID, mData.checkForAlternateEventDataToPopulate);
@@ -6307,7 +6307,7 @@
 				if (typeof (fData.autoProcessGSESignupCreditFromSchedule) != 'undefined' && fData.autoProcessGSESignupCreditFromSchedule == 1) {
 
 					$(workingMessage).text("Handling GSE Modifications");
-					
+
 					// if this schedule is newly completed or cancelled
 					if (
 						(rData.requestStatus === 'Completed' || rData.requestStatus === 'Cancelled') &&
@@ -6394,7 +6394,7 @@
 								valuepairs: signupMod.submissionValuePairsArray,
 								completefunc: function (xData, Status) {
 									// determine success of save; then...
-									var swfListSaveSuccess = 
+									var swfListSaveSuccess =
 										$().HandleListUpdateReturn(xData, Status, 'Hub SWF List Item Error - GSE Signup Credit');
 									if (swfListSaveSuccess === 1) {
 										scheduleData = rData;
@@ -7822,14 +7822,14 @@
 			// $().RenderOverviewScreenButtons(oData.gseSchedulesListStaff.buttons, 0);
 			$().RenderCommandBarAndDataTablesForGSESchedules(oData.gseSchedulesListStaff.buttons, "overview-table-container", 'gseUserOnly');
 			$().RenderWorkflowContacts();
-		
-		
+
+
 		} else if (type === "mwEventList") {
 			$().RenderCommandBarAndDataTablesForMWEvents(oData.mwEventList.sections);
 			$().RenderWorkflowContacts();
-		
-		
-		
+
+
+
 		} else if (type === "gseSignupsHRAdmin") {
 			$().RenderCommandBarAndMarkupForGSESignupsForHRAdminOrManager("overview-table-container", 'gseHRAdmin');
 		} else if (type === "gseSignupsManager") {
@@ -8329,7 +8329,7 @@
 			sData.contactChangeElementOpeningTag = '<li>';
 			sData.contactChangeElementClosingTag = '</li>';
 		}
-		
+
 		sData.completedByLinkedNamesString = $().ReturnNamesWLinkedEmailsFromPP('Completed By');
 
 		var eData = $.extend(sData, rData, mData, uData, fData);
@@ -9583,41 +9583,41 @@
 		// if (typeof (mData.devAdminNotifications) != 'undefined' && mData.devAdminNotifications === 1) {
 		// 	var gseJobAdminManagerEmailArray = $().ReturnUserEmailStringAndArray(mData.devAdminNotificationPersons).array;
 		// } else {
-			var gseJobAdminManagerEmailArray = [];
-			var userAccount = ReplaceAll('i:0#.f\\|membership\\|', '', ReplaceAll('@mos.org', '', incomingUserAccount));
-			// console.log('userAccount');
-			// console.log(userAccount);
-			// undo
-			if (userAccount === 'sp1' || userAccount === 'sp2' || userAccount === 'sp3' || userAccount === 'sp4' || userAccount === 'sp5' || userAccount === 'sp6') {
-				gseJobAdminManagerEmailArray
-					.push('sp3@mos.org');
-			} else {
-				$.ajax({
-					async: false,
-					method: "GET",
-					dataType: "json",
-					url: 'https://neso.mos.org/activeDirectory/user/' + userAccount,
-				})
-					.done(function (returnedUserData) {
-						// console.log('returnedUserData');
-						// console.log(returnedUserData);
-						var userManagerAccount = returnedUserData.docs.manager.toLowerCase();
-						$.ajax({
-							async: false,
-							method: "GET",
-							dataType: "json",
-							url: 'https://neso.mos.org/activeDirectory/user/' + userManagerAccount,
-						})
-							.done(function (returnedManagerData) {
-								// console.log('returnedManagerData');
-								// console.log(returnedManagerData);
-								if (returnedManagerData.docs.email) {
-									gseJobAdminManagerEmailArray
-											.push(returnedManagerData.docs.email);
-								}
-							});
-					});
-			}
+		var gseJobAdminManagerEmailArray = [];
+		var userAccount = ReplaceAll('i:0#.f\\|membership\\|', '', ReplaceAll('@mos.org', '', incomingUserAccount));
+		// console.log('userAccount');
+		// console.log(userAccount);
+		// undo
+		if (userAccount === 'sp1' || userAccount === 'sp2' || userAccount === 'sp3' || userAccount === 'sp4' || userAccount === 'sp5' || userAccount === 'sp6') {
+			gseJobAdminManagerEmailArray
+				.push('sp3@mos.org');
+		} else {
+			$.ajax({
+				async: false,
+				method: "GET",
+				dataType: "json",
+				url: 'https://neso.mos.org/activeDirectory/user/' + userAccount,
+			})
+				.done(function (returnedUserData) {
+					// console.log('returnedUserData');
+					// console.log(returnedUserData);
+					var userManagerAccount = returnedUserData.docs.manager.toLowerCase();
+					$.ajax({
+						async: false,
+						method: "GET",
+						dataType: "json",
+						url: 'https://neso.mos.org/activeDirectory/user/' + userManagerAccount,
+					})
+						.done(function (returnedManagerData) {
+							// console.log('returnedManagerData');
+							// console.log(returnedManagerData);
+							if (returnedManagerData.docs.email) {
+								gseJobAdminManagerEmailArray
+									.push(returnedManagerData.docs.email);
+							}
+						});
+				});
+		}
 		// }
 		return gseJobAdminManagerEmailArray;
 	};
@@ -9637,7 +9637,7 @@
 
 		sData.requesterManagerEmailArray = $().ReturnManagerOfUserEmailArray(uData.account);
 		sData.jobCreationAdditionalNotificationRecipients = $().ReturnGSEJobCreationAdditionalNotificationRecipients();
-		
+
 		jobAdminArray = JSON.parse($('input#Job-Admin_TopSpan_HiddenInput').val());
 		sData.requesterName = jobAdminArray[0].DisplayText;
 		sData.requesterEmail = jobAdminArray[0].Description;
@@ -9692,7 +9692,7 @@
 					'to': toAdmin,
 					'subject': eData.subjectPreface + 'new request received',
 					'bodyUnique': '<p>' + eData.requesterName + ' has submitted a new request. Please ' +
-						'<a href="' + eData.uriRequest + '">review this request</a> and <a href="mailto:' + 
+						'<a href="' + eData.uriRequest + '">review this request</a> and <a href="mailto:' +
 						eData.adminEmailString + '">' + 'contact the admin</a> with any issues.</p>'
 				});
 			});
@@ -9719,7 +9719,7 @@
 				'to': eData.requesterEmail,
 				'subject': eData.subjectPreface + 'new request received',
 				'bodyUnique': '<p>This is the request you nicknamed "' + eData.requestNick + '". You can ' +
-					'<a href="' + eData.uriRequest + '">review the details at any time</a> and you\'ll be ' + 
+					'<a href="' + eData.uriRequest + '">review the details at any time</a> and you\'ll be ' +
 					'notified again when the relevant people have approved it.</p>' +
 					'<p>In the meantime, you can <a href="mailto:' + eData.adminEmailString + '">' +
 					'contact the admin</a> with any questions or <a href="' + eData.uriOverview + '">' +
@@ -9769,7 +9769,7 @@
 				'subject': eData.subjectPreface + eData.requestStatus.toLowerCase(),
 				'bodyUnique': '<p>This is the request you nicknamed "' + eData.requestNick + '". You must ' +
 					'<a href="https://bmos.sharepoint.com/sites/' + eData.gseSiteTokens.schedules + '/SitePages/App.aspx">schedule this job</a> ' +
-					'before anyone can sign up for it. You can ' + 
+					'before anyone can sign up for it. You can ' +
 					'<a href="mailto:' + eData.adminEmailString + '">contact the admin</a> with any ' +
 					'issues related thereto.'
 			});
@@ -9852,7 +9852,7 @@
 		var sData = {};
 
 		sData.gseSiteTokens = $().ReturnGSESiteTokens();
-		
+
 		if (rData.beginningOfLife && rData.beginningOfLife == 1) {
 			// iterate over the elements of the first schedule
 			rData.gseSchedules[0].forEach((scheduleElement) => {
@@ -9863,7 +9863,7 @@
 		} else {
 			sData.jobID = rData.formData['id-or-link_GSE-Job-Request-ID'];
 		}
-		
+
 		// get relevant job as first element of array
 		var gseJobsArray = $().GetFieldsFromSpecifiedRows({
 			"select": [
@@ -9888,7 +9888,7 @@
 		sData.jobTitle = gseJobsArray[0].JobTitle;
 		sData.jobAdminName = sData.jobAdmin[0].name;
 		sData.jobAdminEmail = sData.jobAdmin[0].email;
-		sData.jobAdminLinkedNamesString = 
+		sData.jobAdminLinkedNamesString =
 			'<a href="mailto:' + sData.jobAdminEmail.toLowerCase() + '">' + sData.jobAdminName + '</a>';
 
 		sData.requestNick = $("input#Request-Nickname").val();
@@ -9898,7 +9898,7 @@
 		} else {
 			mData.subjectPreface = mData.requestName + ' #' + rData.requestID + ': ';
 		}
-	
+
 		mData.uriOverview = mData.fullSiteBaseURL + "/SitePages/" + mData.pageToken + ".aspx"
 		mData.uriRequest = mData.uriOverview + "?r=" + rData.requestID;
 
@@ -9925,7 +9925,7 @@
 				'caller': 'beginningOfLife jobAdmin',
 				'to': sData.jobAdminEmail,
 				'subject': eData.subjectPreface + 'created',
-				'bodyUnique': '<p>This is the schedule, or set of schedules, you nicknamed "' + 
+				'bodyUnique': '<p>This is the schedule, or set of schedules, you nicknamed "' +
 					eData.requestNick + '". You can <a href="mailto:' + eData.adminEmailString + '">' +
 					'contact the admin</a> with any questions or <a href="' + eData.uriOverview + '">' +
 					'check up on this and any other ' + eData.requestName + ' requests</a>.</p>'
@@ -10010,7 +10010,7 @@
 		sData.jobTitle = gseJobsArray[0].JobTitle;
 		sData.jobAdminName = sData.jobAdmin[0].name;
 		sData.jobAdminEmail = sData.jobAdmin[0].email;
-		sData.jobAdminLinkedNamesString = 
+		sData.jobAdminLinkedNamesString =
 			'<a href="mailto:' + sData.jobAdminEmail.toLowerCase() + '">' + sData.jobAdminName + '</a>';
 
 		sData.requesterName = $("input#Requester-Name").val();
@@ -10021,7 +10021,7 @@
 
 		sData.scheduleNickJobAdmin = rData.gseScheduleData['Request-Nickname'];
 
-		sData.scheduleDateTime = 
+		sData.scheduleDateTime =
 			$().ReturnFormattedDateTime($("input#Schedule-Start-Datetime").val(), null, 'dddd, MMMM D, YYYY, h:mm a');
 
 		mData.subjectPrefaceStaff = 'GSE Signup #' + rData.requestID + ': ';
@@ -10056,9 +10056,9 @@
 				'caller': 'beginningOfLife jobAdmin',
 				'to': sData.jobAdminEmail,
 				'subject': eData.subjectPrefaceJobAdmin + 'new signup',
-				'bodyUnique': '<p>' + eData.requesterName + ' has signed up for the ' + 
-					sData.scheduleDateTime + ' schedule nicknamed "' + 
-					sData.scheduleNickJobAdmin + '", which is for the job titled "' + 
+				'bodyUnique': '<p>' + eData.requesterName + ' has signed up for the ' +
+					sData.scheduleDateTime + ' schedule nicknamed "' +
+					sData.scheduleNickJobAdmin + '", which is for the job titled "' +
 					sData.jobTitle + '". Feel free to <a href="mailto:' + eData.requesterEmail + '">' +
 					'contact ' + eData.requesterName + '</a> if you need to follow up.</p>'
 			});
@@ -10085,14 +10085,14 @@
 				'caller': 'beginningOfLife staff',
 				'to': eData.requesterEmail,
 				'subject': eData.subjectPrefaceStaff + 'signup',
-				'bodyUnique': '<p>You\'ve signed up for "' + eData.jobTitle + 
-					'", scheduled for ' + eData.scheduleDateTime + '. <a href="' + 
+				'bodyUnique': '<p>You\'ve signed up for "' + eData.jobTitle +
+					'", scheduled for ' + eData.scheduleDateTime + '. <a href="' +
 					eData.uriRequest + '">Revisit your signup</a> to review the details or to cancel. ' +
-					'Feel free to <a href="mailto:' + eData.jobAdminEmail + '">contact ' + 
+					'Feel free to <a href="mailto:' + eData.jobAdminEmail + '">contact ' +
 					eData.jobAdminName + '</a> ' +
 					'with any questions, <a href="' + eData.uriOverview + '">' +
-					'review your other signups</a>, or ' + 
-					'<a href="https://bmos.sharepoint.com/sites/' + eData.gseSiteTokens.schedules + '/SitePages/App.aspx?f=cal">' + 
+					'review your other signups</a>, or ' +
+					'<a href="https://bmos.sharepoint.com/sites/' + eData.gseSiteTokens.schedules + '/SitePages/App.aspx?f=cal">' +
 					'sign up for another GSE</a>.</p>'
 			});
 		}
@@ -10132,8 +10132,8 @@
 					'caller': 'staffCancellation mgr',
 					'to': toManager,
 					'subject': eData.subjectPrefaceJobAdmin + 'signup cancelled',
-					'bodyUnique': '<p>' + eData.requesterName + ' is no longer signed up for "' + 
-						eData.jobTitle + '", scheduled for ' + eData.scheduleDateTime + 
+					'bodyUnique': '<p>' + eData.requesterName + ' is no longer signed up for "' +
+						eData.jobTitle + '", scheduled for ' + eData.scheduleDateTime +
 						'. Feel free to <a href="mailto:' + eData.requesterEmail + '">' +
 						'contact ' + eData.requesterName + '</a> if you need to follow up.</p>'
 				});
@@ -11121,7 +11121,7 @@
 			eData.allReferralNotificationRecipients = $().ReturnUserEmailStringAndArray(eData.submittedRecipientsVerbose).array;
 			eData.allReferralNotificationRecipients.push(eData.requesterEmail);
 
-			var beginningOfLifeBodyUnique = 
+			var beginningOfLifeBodyUnique =
 				'<p>' + eData.requesterName + ' has submitted a new referral. You can ' +
 				'<a href="' + eData.uriRequest + '">review this referral\'s details</a>, ' +
 				'<a href="mailto:' + eData.requesterEmail + '">contact the referrer</a> ' +
@@ -11144,7 +11144,7 @@
 			} else {
 				beginningOfLifeBodyUnique += '	<li><b>Position Name</b>: ' + eData.candidatePosition + '</li>';
 			}
-			beginningOfLifeBodyUnique += 
+			beginningOfLifeBodyUnique +=
 				'	<li><b>Phone</b>: ' + eData.candidatePhone + '</li>' +
 				'	<li><b>Email</b>: ' + eData.candidateEmail + '</li>' +
 				'	<li><b>Reference</b>: ' + eData.candidateReference + '</li>' +
@@ -11547,7 +11547,7 @@
 		sData.usage = $("textarea#Usage").val();
 
 		mData.subjectPreface = mData.requestName + ' Request #' + rData.requestID + ': ';
-		
+
 		mData.uriOverview = mData.fullSiteBaseURL + "/SitePages/" + mData.pageToken + ".aspx"
 		mData.uriRequest = mData.uriOverview + "?r=" + rData.requestID;
 
@@ -11582,10 +11582,10 @@
 				'	<li><b>Dept</b>: ' + eData.requesterDept + '</li>' +
 				'</ul>' +
 				'<h2>Photo</h2>' +
-				'<ul>' + 
+				'<ul>' +
 				'	<li><b>Project Name</b>: ' + eData.projectName + '</li>' +
 				'	<li><b>Date Needed</b>: ' + eData.neededDate + '</li>' +
-				'	<li><b>File Type</b>: ' + eData.fileType + '</li>' + 
+				'	<li><b>File Type</b>: ' + eData.fileType + '</li>' +
 				'	<li><b>' + eData.descriptionOrAttachmentLabel + '</b>: ' + eData.descriptionOrAttachmentValue + '</li>' +
 				'	<li><b>Usage</b>: ' + eData.usage + '</li>' +
 				'</ul>';
@@ -11738,10 +11738,10 @@
 				'	<li><b>Usage</b>: ' + eData.usage + '</li>';
 
 			if (eData.usageExplanation !== '') {
-				adminBeginningOfLifeBodyUnique += 
+				adminBeginningOfLifeBodyUnique +=
 					'	<li><b>Usage Explanation</b>: ' + eData.usageExplanation + '</li>';
 			}
-			adminBeginningOfLifeBodyUnique += 
+			adminBeginningOfLifeBodyUnique +=
 				'	<li><b>Date Needed</b>: ' + eData.neededDate + '</li>' +
 				'	<li><b>File Type</b>: ' + eData.fileType + '</li>' +
 				'	<li><b>Description</b>: ' + eData.description + '</li>' +
@@ -13009,21 +13009,21 @@
 	};
 
 
-/* 
-	$.fn.ProcessStandardHubEmail = function (p) {
-
-		// augment message body
-		p.body = '<div style="font-family: \'wf_segoe-ui_normal\', \'Segoe UI\', \'Segoe WP\', Arial, sans-serif; ' +
-			'	color: #212121; font-size: 15px">' +
-			p.bodyUnique +
-			'	<p style="font-weight: 700">The Hub</p>' +
-			'</div>';
-
-		// send
-		$().SendEmail(p);
-	};
-
- */
+	/* 
+		$.fn.ProcessStandardHubEmail = function (p) {
+	
+			// augment message body
+			p.body = '<div style="font-family: \'wf_segoe-ui_normal\', \'Segoe UI\', \'Segoe WP\', Arial, sans-serif; ' +
+				'	color: #212121; font-size: 15px">' +
+				p.bodyUnique +
+				'	<p style="font-weight: 700">The Hub</p>' +
+				'</div>';
+	
+			// send
+			$().SendEmail(p);
+		};
+	
+	 */
 
 	function validPeoplePicker(value, element) {
 		var ppArray = JSON.parse($(element).val());
@@ -14989,7 +14989,7 @@
 			if (type == "radio" || type == "check" || type == "checkorradio") {
 				// repeat function needs to alter input names before this can begin to be made to work
 				$('input[name^="' + id + '-repeat"]').each(function () {
-					 repeatIDs.push($(this).attr('name'));
+					repeatIDs.push($(this).attr('name'));
 				});
 			} else if (type == "peoplepicker") {
 				// repeat function needs to alter people picker IDs before this can begin to be made to work
@@ -15381,7 +15381,7 @@
 		}
 
 		// --- create and insert the new repeat; give it the appropriate ID and data-original-to-repeat values
-		
+
 		// $("#" + insertAfterID).after($("#" + originalToRepeat).clone(true).attr("id", newRepeatID).attr("data-original-to-repeat", originalToRepeat));
 
 		var clonedSet = $("#" + originalToRepeat).clone(true);
@@ -15401,7 +15401,7 @@
 					// use the number on the end of it
 					var newRepeatDescendantIDNumberSeparatorPosition = submittedID.lastIndexOf('-');
 					var newRepeatDescendantIDNumber = Number(submittedID.slice(newRepeatDescendantIDNumberSeparatorPosition + 1));
-				// otherwise
+					// otherwise
 				} else {
 					// construct a new one
 					var newRepeatDescendantIDNumber = lastRepeatIDNumber + 1;
@@ -16322,7 +16322,7 @@
 				'<table style="width: 100%;">' +
 				'	<tr style="width: 100%;">' +
 				'		<td style="width: 50%; vertical-align: top;">' +
-				'			<ul style="margin: 0;">' + 
+				'			<ul style="margin: 0;">' +
 				'				<li><b>Position Title:</b> ' + formData["Position-Title"] + '</li>';
 
 			if (formData["Department"] != "Other") {
@@ -16332,7 +16332,7 @@
 				printContent += '				<li><b>Department:</b> ' + formData["Other-Department"] + '</li>';
 			}
 
-			printContent += 
+			printContent +=
 				'				<li><b>Number of Positions Requested:</b> ' + formData["Position-Quantity"] + '</li>' +
 				'				<li><b>Grade:</b> ' + formData["Grade"] + '</li>' +
 				'				<li><b>Employee Classification:</b> ' + formData["Employee-Classification"] + '</li>' +
@@ -16396,7 +16396,7 @@
 				printContent += '				<li><b>Workspace Approved by Facilities?:</b> No, not needed</li>';
 			}
 
-			
+
 
 
 
@@ -16567,10 +16567,10 @@
 			if (formData["Action"] == "Status Change") {
 
 				var staffUserID = 'noperson';
-				
+
 				if (
 					formData["Status-Change-Staff-Member"] &&
-					formData["Status-Change-Staff-Member"][0] && 
+					formData["Status-Change-Staff-Member"][0] &&
 					formData["Status-Change-Staff-Member"][0]["description"]
 				) {
 					staffUserID = StrInStr(formData["Status-Change-Staff-Member"][0]["description"].toLowerCase(), '@mos.org', 1);
@@ -16595,7 +16595,7 @@
 								'				<li><b>Department:</b> ' + statusChangeEmployeeData.department + '</li>' +
 								'				<li><b>Division:</b> ' + statusChangeEmployeeData.division + '</li>' +
 								'				<li><b>Title:</b> ' + statusChangeEmployeeData.title + '</li>' +
-								'			</ul>';							
+								'			</ul>';
 						} else {
 							printContent += '<h2>Staff Member</h2>' +
 								'<p><b>Please suppply missing information.</b></p>' +
@@ -16609,12 +16609,12 @@
 							} else {
 								printContent += '				<li style="margin: 1rem 0;"><b>Name:</b></li>';
 							}
-								
+
 							printContent += '				<li style="margin: 1rem 0;"><b>ID:</b></li>' +
-											'				<li style="margin: 1rem 0;"><b>Department:</b></li>' +
-											'				<li style="margin: 1rem 0;"><b>Division:</b></li>' +
-											'				<li style="margin: 1rem 0;"><b>Title:</b></li>' +
-											'			</ul>';							
+								'				<li style="margin: 1rem 0;"><b>Department:</b></li>' +
+								'				<li style="margin: 1rem 0;"><b>Division:</b></li>' +
+								'				<li style="margin: 1rem 0;"><b>Title:</b></li>' +
+								'			</ul>';
 						}
 
 
@@ -17680,7 +17680,7 @@
 			console.log(formData);
 
 			// build the sheet to be printed
-			var printContent = '<div id="direct-deposit-printer-content">' + 
+			var printContent = '<div id="direct-deposit-printer-content">' +
 				'<h1>Direct Deposit Request</h1>';
 
 			printContent += '<p><strong>This form must be <span class="screen-only">printed and</span>returned to Human Resources with a <em>voided</em> check</strong> — not a deposit slip. If this is a savings account or you do not have checks, contact your bank for an official form that includes your account number, ABA number, and bank authorization. If an account is currently on file, an additional voided check is not necessary.</p>';
@@ -17703,7 +17703,7 @@
 				'	<li><b>Bank Transit ABA Number: </b> ' + formData["Bank-Transit-ABA-Number"] + '</li>' +
 				'	<li><b>Account Number: </b> ' + formData["Account-Number"] + '</li>' +
 				'	<li><b>Deposit Amount: </b> ' + formData["Deposit-Amount"] + '</li>';
-			
+
 			if (formData['Deposit-Amount'] == 'Deposit fixed amount') {
 				printContent += '<li><b>Fixed Amount: </b> ' + formData["Fixed-Amount"] + '</li>';
 			}
@@ -17788,8 +17788,8 @@
 		if (typeof (sheetData["Onsite-Contact"]) === "object") {
 			sheetData["Printer-Onsite-Contact"] = sheetData["Onsite-Contact"][0].displayText;
 		}
-		
-		if (typeof(sheetData["Onsite-Contact"]) === "string") {
+
+		if (typeof (sheetData["Onsite-Contact"]) === "string") {
 			sheetData["Printer-Onsite-Contact"] = sheetData["Onsite-Contact"];
 		}
 
@@ -17890,7 +17890,7 @@
 		if (sheetData['miscellaneous-equipment_powerstrips']) {
 			miscNeedsQuantity++;
 		}
-		
+
 		if (sheetData['mic-types_headset']) {
 			micTypesQuantity++;
 		}
@@ -17932,7 +17932,7 @@
 
 		printContent += '<p><b>Request ID: </b>' + printerRequestID + '</p>';
 
-		printContent += 
+		printContent +=
 			'<table class="layout-table">' +
 			'	<tbody><tr><td style="width: 50%;"><h2>Event</h2>' +
 			'	<ul style="margin: 0;">' +
@@ -17941,8 +17941,8 @@
 			printContent += '		<li><b>Event Description: </b> ' + sheetData["Additional-Information"] + '</li>';
 		}
 
-		printContent += '		<li><b>Space: </b> ' + sheetData["Event-Space"] + '</li>' + 
-			'		<li><b>Event Starting: </b> ' + sheetData["Printer-Event-Start-Datetime"] + '</li>' + 
+		printContent += '		<li><b>Space: </b> ' + sheetData["Event-Space"] + '</li>' +
+			'		<li><b>Event Starting: </b> ' + sheetData["Printer-Event-Start-Datetime"] + '</li>' +
 			'		<li><b>Event Ending: </b> ' + sheetData["Printer-Event-End-Datetime"] + '</li>';
 
 		if (sheetData["Printer-AV-Start-Datetime"]) {
@@ -17953,16 +17953,16 @@
 			'		<li><b>Onsite Contact: </b> ' + sheetData["Printer-Onsite-Contact"] + '</li>';
 
 		if (sheetData["Account-Number"]) {
-			printContent += 
-				'		<li><b>Account #: </b> ' + sheetData["Account-Number"] + '</li>' + 
+			printContent +=
+				'		<li><b>Account #: </b> ' + sheetData["Account-Number"] + '</li>' +
 				'	</ul></td>';
 		}
-			
-			
-			
-		printContent += 
+
+
+
+		printContent +=
 			'	<td style="width: 50%;"><h2>Equipment Needs</h2>';
-		
+
 		if (deliveryNeedsQuantity > 0) {
 			printContent += '	<h3>Delivery / Receipt</h3>';
 			if (deliveryNeedsQuantity > 1) {
@@ -17984,7 +17984,7 @@
 				printContent += '	</ul>';
 			}
 		}
-		
+
 
 		if (videoNeedsQuantity > 0) {
 			printContent += '	<h3>Video</h3>';
@@ -18014,7 +18014,7 @@
 		}
 
 
-			
+
 
 		if (displayNeedsQuantity > 0) {
 			printContent += '	<h3>Display</h3>';
@@ -18042,11 +18042,11 @@
 			}
 		}
 
-		
 
 
 
-				
+
+
 		if (audioNeedsQuantity > 0) {
 			printContent += '	<h3>Audio</h3>';
 			if (audioNeedsQuantity > 1) {
@@ -18109,7 +18109,7 @@
 
 
 
-				
+
 		if (miscNeedsQuantity > 0) {
 			printContent += '	<h3>Miscellaneous</h3>';
 			if (miscNeedsQuantity > 1) {
@@ -18117,10 +18117,10 @@
 			}
 			if (sheetData['miscellaneous-equipment_laserpointer']) {
 				printContent += '	<' + miscNeedsElement + '>Laser Pointer</' + miscNeedsElement + '>';
-			}		
+			}
 			if (sheetData['miscellaneous-equipment_powerstrips']) {
 				printContent += '	<' + miscNeedsElement + '>Power Strip(s) &mdash; ' + sheetData["Power-Strip-Quantity"] + '</' + miscNeedsElement + '>';
-			}		
+			}
 			if (miscNeedsQuantity > 1) {
 				printContent += '	</ul>';
 			}
@@ -18129,7 +18129,7 @@
 
 
 		printContent += '</td></tr></tbody></table>';
-		
+
 		printContent = ReturnPrintableContentWithStandardWrapper(printContent, "iit-event-av");
 		PrintToPrinter(printContent);
 	};
@@ -19267,7 +19267,7 @@
 		// TO DO - DELETE BELOW IF CONDITION BUT KEEP ARRAY PUSH WHEN PERSONNEL ACTION REQUESTS ARE GONE
 
 		// if this is not PAF
-		if ($("input#Request-Name").val() !== 'Personnel Action') {			
+		if ($("input#Request-Name").val() !== 'Personnel Action') {
 			// push the string to valuePairs
 			globalSubmissionValuePairsArray.push(["AllRequestData", CDataWrap(formDataString)]);
 		}
@@ -19299,7 +19299,7 @@
 		var submissionValuePairsArrayOfArraysToReturn = [];
 
 		// get the dates; we'll create one row in SWFList for each date
-		
+
 		if ($("input#individual-or-pattern_individual").is(":checked")) {
 			$(form).find('input[id^="Repeating-Date"]').each(function () {
 				scheduleDates.push($(this).val());
@@ -20153,10 +20153,10 @@
 				}, {
 					'displayName': 'Space',
 					'internalName': 'EventSpace'
-				// }, {
-				// 	'displayName': 'Delivery or Receipt',
-				// 	'internalName': 'DeliveryOrReceipt',
-				// 	'reinterpretCamelCaseValues': 1
+					// }, {
+					// 	'displayName': 'Delivery or Receipt',
+					// 	'internalName': 'DeliveryOrReceipt',
+					// 	'reinterpretCamelCaseValues': 1
 				}, {
 					'displayName': 'Request ID',
 					'internalName': 'ID',
@@ -20209,10 +20209,10 @@
 						}, {
 							'displayName': 'Space',
 							'internalName': 'EventSpace'
-						// }, {
-						// 	'displayName': 'Delivery or Receipt',
-						// 	'internalName': 'DeliveryOrReceipt',
-						// 	'reinterpretCamelCaseValues': 1
+							// }, {
+							// 	'displayName': 'Delivery or Receipt',
+							// 	'internalName': 'DeliveryOrReceipt',
+							// 	'reinterpretCamelCaseValues': 1
 						}, {
 							'displayName': 'Assigned To',
 							'internalName': 'AssignedTo',
@@ -20265,10 +20265,10 @@
 						}, {
 							'displayName': 'Space',
 							'internalName': 'EventSpace'
-						// }, {
-						// 	'displayName': 'Delivery or Receipt',
-						// 	'internalName': 'DeliveryOrReceipt',
-						// 	'reinterpretCamelCaseValues': 1
+							// }, {
+							// 	'displayName': 'Delivery or Receipt',
+							// 	'internalName': 'DeliveryOrReceipt',
+							// 	'reinterpretCamelCaseValues': 1
 						}, {
 							'displayName': 'Assigned To',
 							'internalName': 'AssignedTo',
@@ -20415,12 +20415,12 @@
 			'</div> \n';
 
 		var legendContents = "<div id=\"analytics-metadata\"> \n" +
-				"	<h2 id=\"header_legend\" aria-hidden=\"true\">Legend</h2> \n" +
-				"	<ul id=\"legend-items\" aria-hidden=\"true\"> \n" +
-				"		<li class=\"legend-item\"><span class=\"color-indicator events\"></span>Events</li> \n" +
-				"		<li class=\"legend-item\"><span class=\"color-indicator techs\"></span>Techs for Durations</li> \n" +
-				"	</ul> \n" +
-				"</div> \n";
+			"	<h2 id=\"header_legend\" aria-hidden=\"true\">Legend</h2> \n" +
+			"	<ul id=\"legend-items\" aria-hidden=\"true\"> \n" +
+			"		<li class=\"legend-item\"><span class=\"color-indicator events\"></span>Events</li> \n" +
+			"		<li class=\"legend-item\"><span class=\"color-indicator techs\"></span>Techs for Durations</li> \n" +
+			"	</ul> \n" +
+			"</div> \n";
 
 
 		// insert contents into containers
@@ -20436,23 +20436,23 @@
 				"   <FieldRef Name='ID' />" +
 				"   <FieldRef Name='AllRequestData' />" +
 				"</ViewFields>",
-			"query":	'<Query><Where>' +
-						'       <And>' +
-						'           <Geq>' +
-						'               <FieldRef Name="EventBeginningDatetime"></FieldRef>' +
-						'               <Value Type="DateTime" IncludeTimeValue="FALSE">' + startDateFrom + 'T00:00:00Z</Value>' +
-						'           </Geq>' +
-						'           <Leq>' +
-						'               <FieldRef Name="EventBeginningDatetime"></FieldRef>' +
-						'               <Value Type="DateTime" IncludeTimeValue="FALSE">' + startDateTo + 'T00:00:00Z</Value>' +
-						'           </Leq>' +
-						'       </And>' +
-						'</Where></Query>',
+			"query": '<Query><Where>' +
+				'       <And>' +
+				'           <Geq>' +
+				'               <FieldRef Name="EventBeginningDatetime"></FieldRef>' +
+				'               <Value Type="DateTime" IncludeTimeValue="FALSE">' + startDateFrom + 'T00:00:00Z</Value>' +
+				'           </Geq>' +
+				'           <Leq>' +
+				'               <FieldRef Name="EventBeginningDatetime"></FieldRef>' +
+				'               <Value Type="DateTime" IncludeTimeValue="FALSE">' + startDateTo + 'T00:00:00Z</Value>' +
+				'           </Leq>' +
+				'       </And>' +
+				'</Where></Query>',
 			"queryOptions": "<QueryOptions>" +
 				"   <IncludeMandatoryColumns>FALSE</IncludeMandatoryColumns>" +
 				"</QueryOptions>"
 		};
-		
+
 		$().SPServices({
 			operation: "GetListItems",
 			async: false,
@@ -20465,7 +20465,7 @@
 				var requestQuantityItemsByWeek = {};
 				var techQuantityItemsByWeek = {};
 				var items = [];
-				
+
 				var regexOne = new RegExp("\r", "g");
 				var regexTwo = new RegExp("\n", "g");
 
@@ -20475,7 +20475,7 @@
 					eventItemString = eventItemString.replace(regexOne, "'");
 					eventItemString = eventItemString.replace(regexTwo, "'");
 					eval("var eventItem=" + eventItemString);
-					
+
 					// handle request item
 					if (
 						eventItem["datetime-storage_Event-Beginning-Datetime"]
@@ -20494,7 +20494,7 @@
 								techQuantityItemsByWeek[startOfWeekForThisEvent] = 1;
 							}
 						}
-					}					
+					}
 				});
 				// start building the items as quantities per week
 				var requestQuantityItemsByWeekKeys = Object.keys(requestQuantityItemsByWeek);
@@ -20530,7 +20530,7 @@
 				var graph2d = new vis.Graph2d(container, dataset, options);
 			}
 		});
-		
+
 		// add extra class for styling hook
 		$('div#app-container').addClass('event-av-analytics');
 		$('body').addClass('event-av-analytics');
@@ -20579,17 +20579,24 @@
 		var startDateTo = GetParamFromUrl(location.search, 'startDateTo');
 
 		if (startDateFrom == "") {
-			startDateFrom = $().ReturnFormattedDateTime('nowLocal', null, 'YYYY-MM-DD');
+			startDateFrom = moment().subtract(1, "years").format('YYYY-MM-DD');
 		}
 
 		if (startDateTo == "") {
-			startDateTo = moment(startDateFrom, 'YYYY-MM-DD').add(14, "days").format('YYYY-MM-DD');
+			startDateTo = $().ReturnFormattedDateTime('nowLocal', null, 'YYYY-MM-DD');
 		}
 
 		// insert container and sub-containers
 		$("div#overview-table-container").prepend('<div id="container_command-bar-and-tables"> \n' +
 			'   <div id="container_command-bar"></div> \n' +
-			'   <div id="table-container">This is Analytics Container</div> \n' +
+			'   <div id="table-container"> \n' +
+			'		<div id="summary-container"> \n' +
+			'		</div> \n' +
+			'		<div id="chart-container"> \n' +
+			'		</div> \n' +
+			'		<div id="text-container"> \n' +
+			'		</div> \n' +
+			'	</div> \n' +
 			'</div>');
 
 		var commandBarContents = '<h2 id="header_command-bar">Commands</h2> \n' +
@@ -20618,6 +20625,208 @@
 
 		// insert contents into containers
 		$("div#container_command-bar").html(commandBarContents);
+
+		var getListItemsOptions = {
+			"viewFields": "<ViewFields>" +
+				"   <FieldRef Name='ID' />" +
+				"   <FieldRef Name='AllRequestData' />" +
+				"</ViewFields>",
+			"query": '<Query><Where>' +
+				'       <And>' +
+				'           <Geq>' +
+				'               <FieldRef Name="RequestDate"></FieldRef>' +
+				'               <Value Type="DateTime" IncludeTimeValue="FALSE">' + startDateFrom + 'T00:00:00Z</Value>' +
+				'           </Geq>' +
+				'           <Leq>' +
+				'               <FieldRef Name="RequestDate"></FieldRef>' +
+				'               <Value Type="DateTime" IncludeTimeValue="FALSE">' + startDateTo + 'T00:00:00Z</Value>' +
+				'           </Leq>' +
+				'       </And>' +
+				'</Where></Query>',
+			"queryOptions": "<QueryOptions>" +
+				"   <IncludeMandatoryColumns>FALSE</IncludeMandatoryColumns>" +
+				"</QueryOptions>"
+		};
+
+		$().SPServices({
+			operation: "GetListItems",
+			async: false,
+			listName: "SWFList",
+			CAMLViewFields: getListItemsOptions.viewFields,
+			CAMLQuery: getListItemsOptions.query,
+			CAMLQueryOptions: getListItemsOptions.queryOptions,
+			completefunc: function (xData, Status) {
+
+				var quantitySubmissions = 0;
+
+				var fasterMass = 0;
+				var responsiveMass = 0;
+				var orgMass = 0;
+				var collaborationMass = 0;
+				var iitResourcesMass = 0;
+				var pdResourcesMass = 0;
+				var searchMass = 0;
+				var integrationMass = 0;
+
+				var otherDevResponseList = '<ul id="response-list_other-dev" class="response-list"> \n';
+				// var difficultyFindingResponseList = '<ul id="response-list_difficulty-finding" class="response-list"> \n';
+				var usabilityResponseList = '<ul id="response-list_usability" class="response-list"> \n';
+				var doingWellResponseList = '<ul id="response-list_doing-well" class="response-list"> \n';
+
+				var summary = '';
+				var allTextResponses = '';
+
+				var regexOne = new RegExp("\r", "g");
+				var regexTwo = new RegExp("\n", "g");
+
+				$(xData.responseXML).SPFilterNode("z:row").each(function () {
+
+					// construct feedback item object
+					var feedbackItemString = $(this).attr("ows_AllRequestData");
+					feedbackItemString = feedbackItemString.replace(regexOne, "'");
+					feedbackItemString = feedbackItemString.replace(regexTwo, "'");
+					eval("var feedbackItem=" + feedbackItemString);
+					var feedbackItemID = $(this).attr("ows_ID");
+					var feedbackItemURL = '/sites/' + mData.siteToken + '/SitePages/App.aspx?r=' + feedbackItemID;
+
+					// handle feedback item object
+					quantitySubmissions++;
+
+					if (feedbackItem["faster_1"]) { fasterMass += 1; }
+					if (feedbackItem["faster_2"]) { fasterMass += 2; }
+					if (feedbackItem["faster_3"]) { fasterMass += 3; }
+					if (feedbackItem["faster_4"]) { fasterMass += 4; }
+
+					if (feedbackItem["mobile-friendly_1"]) { responsiveMass += 1; }
+					if (feedbackItem["mobile-friendly_2"]) { responsiveMass += 2; }
+					if (feedbackItem["mobile-friendly_3"]) { responsiveMass += 3; }
+					if (feedbackItem["mobile-friendly_4"]) { responsiveMass += 4; }
+
+					if (feedbackItem["more-museum-info_1"]) { orgMass += 1; }
+					if (feedbackItem["more-museum-info_2"]) { orgMass += 2; }
+					if (feedbackItem["more-museum-info_3"]) { orgMass += 3; }
+					if (feedbackItem["more-museum-info_4"]) { orgMass += 4; }
+
+					if (feedbackItem["more-collaboration_1"]) { collaborationMass += 1; }
+					if (feedbackItem["more-collaboration_2"]) { collaborationMass += 2; }
+					if (feedbackItem["more-collaboration_3"]) { collaborationMass += 3; }
+					if (feedbackItem["more-collaboration_4"]) { collaborationMass += 4; }
+
+					if (feedbackItem["iit-help-and-learning_1"]) { iitResourcesMass += 1; }
+					if (feedbackItem["iit-help-and-learning_2"]) { iitResourcesMass += 2; }
+					if (feedbackItem["iit-help-and-learning_3"]) { iitResourcesMass += 3; }
+					if (feedbackItem["iit-help-and-learning_4"]) { iitResourcesMass += 4; }
+
+					if (feedbackItem["professional-development_1"]) { pdResourcesMass += 1; }
+					if (feedbackItem["professional-development_2"]) { pdResourcesMass += 2; }
+					if (feedbackItem["professional-development_3"]) { pdResourcesMass += 3; }
+					if (feedbackItem["professional-development_4"]) { pdResourcesMass += 4; }
+
+					if (feedbackItem["unified-search_1"]) { searchMass += 1; }
+					if (feedbackItem["unified-search_2"]) { searchMass += 2; }
+					if (feedbackItem["unified-search_3"]) { searchMass += 3; }
+					if (feedbackItem["unified-search_4"]) { searchMass += 4; }
+
+					if (feedbackItem["data-intregration_1"]) { integrationMass += 1; }
+					if (feedbackItem["data-intregration_2"]) { integrationMass += 2; }
+					if (feedbackItem["data-intregration_3"]) { integrationMass += 3; }
+					if (feedbackItem["data-intregration_4"]) { integrationMass += 4; }
+
+
+					if (feedbackItem["Other-Development"]) {
+						otherDevResponseList += '	<li class="response-list-item">' +
+							ReplaceAll('%0A', '<br />', feedbackItem["Other-Development"]) +
+							' (<a target="_blank" href="' + feedbackItemURL + '">' + feedbackItemID + '</a>)</li> \n';
+					}
+					/* if (feedbackItem["Finding-Challenges"]) {
+						difficultyFindingResponseList += '	<li class="response-list-item">' + 
+							ReplaceAll('%0A', '<br />', feedbackItem["Finding-Challenges"]) +
+							' (<a target="_blank" href="' + feedbackItemURL + '">' + feedbackItemID + '</a>)</li> \n';
+					} */
+					if (feedbackItem["Usability-Challenges"]) {
+						usabilityResponseList += '	<li class="response-list-item">' +
+							ReplaceAll('%0A', '<br />', feedbackItem["Usability-Challenges"]) +
+							' (<a target="_blank" href="' + feedbackItemURL + '">' + feedbackItemID + '</a>)</li> \n';
+					}
+					if (feedbackItem["Doing-Well"]) {
+						doingWellResponseList += '	<li class="response-list-item">' +
+							ReplaceAll('%0A', '<br />', feedbackItem["Doing-Well"]) +
+							' (<a target="_blank" href="' + feedbackItemURL + '">' + feedbackItemID + '</a>)</li> \n';
+					}
+				});
+
+				otherDevResponseList += '</ul> \n';
+				// difficultyFindingResponseList += '</ul> \n';
+				usabilityResponseList += '</ul> \n';
+				doingWellResponseList += '</ul> \n';
+
+				// summary
+
+				summary +=
+					'<h2>Submission Quantity</h2> \n' +
+					quantitySubmissions + ' submissions';
+				$("div#summary-container").html(summary);
+
+				// chart
+
+				$("div#chart-container").html(
+					'<h2>Which of these is important for The Hub\'s future development?</h2> \n' +
+					'<canvas \n' +
+					'	id="likert-chart" \n' +
+					'	role="image" \n' +
+					'	aria-label="Bar Chart showing weighted values for each presented option.  \n' +
+					'		Faster: ' + fasterMass + ', \n' +
+					'		Responsive: ' + responsiveMass + ', \n' +
+					'		Organizational Info: ' + orgMass + ', \n' +
+					'		Collaboration: ' + collaborationMass + ', \n' +
+					'		IIT Resources: ' + iitResourcesMass + ', \n' +
+					'		PD Resources: ' + pdResourcesMass + ', \n' +
+					'		Unified Search: ' + searchMass + ', \n' +
+					'		Data / System Integration: ' + integrationMass + '." \n' +
+					'	> \n' +
+					'</canvas> \n'
+				);
+
+				var chartElement = document.getElementById('likert-chart').getContext('2d');
+				var likertChart = new Chart(chartElement, {
+					type: 'bar',
+					data: {
+						labels: ['Faster', 'Responsive', 'Organizational Info', 'Collaboration', 'IIT Resources', 'PD Resources', 'Unified Search', 'Data / System Integration'],
+						datasets: [{
+							data: [fasterMass, responsiveMass, orgMass, collaborationMass, iitResourcesMass, pdResourcesMass, searchMass, integrationMass],
+							backgroundColor: 'rgba(0, 0, 0, 0.5)',
+						}]
+					},
+					options: {
+						legend: {
+							display: false,
+						},
+						fontFamily: "'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI Regular WestEuropean', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif",
+						scales: {
+							yAxes: [{
+								ticks: {
+									beginAtZero: true
+								}
+							}]
+						}
+					}
+				});
+
+				// text responses
+
+				allTextResponses +=
+					'<h2>What else should The Hub be doing?</h2> \n' +
+					otherDevResponseList +
+					// '<h2>Please tell us anything you have difficulty finding on The Hub</h2> \n' +
+					// difficultyFindingResponseList +
+					'<h2>Please describe any parts of The Hub you find difficult to use</h2> \n' +
+					usabilityResponseList +
+					'<h2>What is The Hub already doing well?</h2> \n' +
+					doingWellResponseList;
+
+				$("div#text-container").html(allTextResponses);
+			}
+		});
 
 		// set datepickers on date filter fields
 		$("input#filter--start-date_to, input#filter--start-date_from").datepicker({
@@ -20853,11 +21062,11 @@
 						eventItem.contactName = eventItem["Legacy-Contact"];
 					}
 
-					var isoStartDatetime = 
-						eventItem["Buyout-Date"].slice(0, 10) + 
+					var isoStartDatetime =
+						eventItem["Buyout-Date"].slice(0, 10) +
 						eventItem["time-storage_Start-Time"].slice(10, 19);
-					var isoEndDatetime = 
-						eventItem["Buyout-Date"].slice(0, 10) + 
+					var isoEndDatetime =
+						eventItem["Buyout-Date"].slice(0, 10) +
 						eventItem["time-storage_End-Time"].slice(10, 19);
 					var formattedStartTime = $().ReturnFormattedDateTime(isoStartDatetime, "YYYY-MM-DDTHH:mm:ss", "h:mma", 0);
 					formattedStartTime = formattedStartTime.slice(0, formattedStartTime.length - 1);
@@ -20948,7 +21157,7 @@
 						if (event.orderNumber) {
 							dialogBodyContent += "	<li class=\"event-id\">Buyout Order Number: " + event.orderNumber + "</li> \n";
 						}
-						dialogBodyContent += 
+						dialogBodyContent +=
 							"	<li class=\"event-id\">Hub Buyout ID: " + event.eventID + "</li>" +
 							"</ul> \n" +
 							"<a class=\"ui-dialog-button\" href=\"" + event.editURL + "\">Edit / Delete</a>";
@@ -21552,7 +21761,7 @@
 						if (event.contactName) {
 							dialogBodyContent += "	<li class=\"event-contact\">Contact: " + event.contactName + "</li> \n";
 						}
-						dialogBodyContent += 
+						dialogBodyContent +=
 							"	<li class=\"event-id\">Event ID: " + event.eventID + "</li>" +
 							"</ul> \n" +
 							"<a class=\"ui-dialog-button\" href=\"" + event.editURL + "\">Edit / Delete</a>";
@@ -21809,12 +22018,12 @@
 					'</div>');
 
 
-				var commandBarContents = 
+				var commandBarContents =
 					'<div class="container_link"> \n' +
-						$().ReturnButtonLink('newItem', 'New Product', null, null, 'button_swf-new-event-with-timeline') +
+					$().ReturnButtonLink('newItem', 'New Product', null, null, 'button_swf-new-event-with-timeline') +
 					'</div> \n' +
 					'<div class="container_link"> \n' +
-						$().ReturnButtonLink('goForward', 'Product List', '/SitePages/App.aspx', null, null, 'button_alternate-view-with-timeline', 1) +
+					$().ReturnButtonLink('goForward', 'Product List', '/SitePages/App.aspx', null, null, 'button_alternate-view-with-timeline', 1) +
 					'</div> \n' +
 					'<div id="container_category-filter-controls-and-header"> \n' +
 					'	<div id="text_category-filter-controls" class="collapsible">Categories</div> \n' +
@@ -21943,7 +22152,7 @@
 					console.log(startDateWindow);
 					console.log(endDateWindow);
 
-					timeline.setWindow(startDateWindow, endDateWindow, {"duration": 2000, "easingFunction": "easeInOutCubic"});
+					timeline.setWindow(startDateWindow, endDateWindow, { "duration": 2000, "easingFunction": "easeInOutCubic" });
 
 				});
 
@@ -21983,11 +22192,11 @@
 						if (typeof (initialItemDialogData.contact) != "undefined" && typeof (initialItemDialogData.description) != "undefined") {
 							initialItemDialogData.contact = "<a target=\"_blank\" href=\"https://bmos-my.sharepoint.com/_layouts/15/me.aspx?p=" + StrInStr(initialItemDialogData.contact[0]["description"], "@", 1) + "%40mos.org&v=profile\">" + initialItemDialogData.contact[0]["displayText"] + "</a>";
 							dialogBodyContent += "<ul> \n" +
-													"   <li>Description: " + initialItemDialogData.description + "</li> \n" +
-													"   <li>Contact: " + initialItemDialogData.contact + "</li> \n" +
-													"</ul> \n";
+								"   <li>Description: " + initialItemDialogData.description + "</li> \n" +
+								"   <li>Contact: " + initialItemDialogData.contact + "</li> \n" +
+								"</ul> \n";
 
-						// otherwise, if either is present, print it in <p>
+							// otherwise, if either is present, print it in <p>
 						} else {
 							if (typeof (initialItemDialogData.contact) != "undefined") {
 								initialItemDialogData.contact = "<a target=\"_blank\" href=\"https://bmos-my.sharepoint.com/_layouts/15/me.aspx?p=" + StrInStr(initialItemDialogData.contact[0]["description"], "@", 1) + "%40mos.org&v=profile\">" + initialItemDialogData.contact[0]["displayText"] + "</a>";
@@ -22018,7 +22227,7 @@
 	};
 
 	$.fn.RenderCommandBarAndCapacityForProducts = function () {
-		
+
 		$.ajax({
 			type: "GET",
 			url: 'https://triton.mos.org/products/productsTodayByVenueShow.xml',
@@ -22150,7 +22359,7 @@
 
 
 
-	
+
 
 
 
@@ -22262,7 +22471,7 @@
 					hoursGrantedCredit += lengthThisSchedule;
 				}
 			});
-			
+
 		});
 
 		$("#" + targetID).append('<div id="container_command-bar-and-data"> \n' +
@@ -22317,11 +22526,11 @@
 		// console.log(hoursScheduled);
 		// console.log(hoursGrantedCredit);
 
-		var statsMarkup = 
+		var statsMarkup =
 			'<h2>Jobs Scheduled</h2>' +
-			'<p>' + distinctJobIDs.length.toString() + '</p>' + 
+			'<p>' + distinctJobIDs.length.toString() + '</p>' +
 			'<h2>Hours Scheduled</h2>' +
-			'<p>' + hoursScheduled.toString() + '</p>' + 
+			'<p>' + hoursScheduled.toString() + '</p>' +
 			'<h2>Hours Granted Credit</h2>' +
 			'<p>' + hoursGrantedCredit.toString() + '</p>';
 
@@ -22392,7 +22601,7 @@
 		var commandBarContents = '';
 		if (relevantRole === 'gseHRAdmin' || relevantRole === 'gseJobAdmin') {
 			if (relevantRole === 'gseHRAdmin') {
-				commandBarContents += 
+				commandBarContents +=
 					'<div class="container_link">' +
 					'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/' + gseSiteTokens.config + '/SitePages/App.aspx?r=1">Configuration</a> \n' +
 					'</div>';
@@ -22801,27 +23010,27 @@
 
 				$("div[aria-describedby='gse-schedule-card-dialog'] div.ui-dialog-titlebar span.ui-dialog-title").html(dialogTitleBarContent);
 
-				var dialogBodyContent = 
-					'<h3 class="gse-schedule-card-dialog-job-title">' + event.jobTitle + '</h3>' + 
+				var dialogBodyContent =
+					'<h3 class="gse-schedule-card-dialog-job-title">' + event.jobTitle + '</h3>' +
 					event.jobDescription;
 
 				if (event.isInFuture) {
-					dialogBodyContent += '<p>Signups Available: ' + 
-					(event.quantityPositions - event.quantitySignups) + 
-					' / ' + event.quantityPositions;
+					dialogBodyContent += '<p>Signups Available: ' +
+						(event.quantityPositions - event.quantitySignups) +
+						' / ' + event.quantityPositions;
 				}
 
 				dialogBodyContent += '<div class="gse-schedule-card-dialog-links-container">';
 
 				if (event.mySignupURL) {
-					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' + 
-						'<a id="gse-schedule-card-dialog-my-signup-link" ' + 
-						'class="gse-schedule-card-dialog-button" href="' + 
+					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' +
+						'<a id="gse-schedule-card-dialog-my-signup-link" ' +
+						'class="gse-schedule-card-dialog-button" href="' +
 						event.mySignupURL + '" target="_blank">More Info / My Signup</a></div>';
 				} else if (event.isInFuture && ((parseInt(event.quantityPositions) - parseInt(event.quantitySignups)) !== 0)) {
-					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' + 
-						'<a id="gse-schedule-card-dialog-signup-opportunity-link" ' + 
-						'class="gse-schedule-card-dialog-button" href="' + 
+					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' +
+						'<a id="gse-schedule-card-dialog-signup-opportunity-link" ' +
+						'class="gse-schedule-card-dialog-button" href="' +
 						event.signupURL + '" target="_blank">More Info / Sign Up</a></div>';
 				} else {
 					dialogBodyContent += '<div class="gse-schedule-card-dialog-link-container">' +
@@ -22840,7 +23049,7 @@
 						'class="gse-schedule-card-dialog-button" href="' +
 						event.scheduleURL + '" target="_blank">Schedule Details</a></div>';
 				}
-				
+
 				$("div#gse-schedule-card-dialog").html(dialogBodyContent);
 
 				// position the dialog box
@@ -22862,7 +23071,7 @@
 
 		commandBarContents +=
 			'<div id="container_navigation-controls-expanded"> \n' +
-				buttonDivs + 
+			buttonDivs +
 			'</div> \n';
 
 		commandBarContents +=
@@ -22879,7 +23088,7 @@
 			'		</div>' +
 			'    </div> \n' +
 			'</div> \n';
-		
+
 		commandBarContents += buttonOverflowMenu;
 
 		$("div#container_command-bar").append(commandBarContents);
@@ -22965,7 +23174,7 @@
 
 		var commandBarContents = '';
 		if (relevantRole === 'gseHRAdmin') {
-			commandBarContents += 
+			commandBarContents +=
 				'<div class="container_link">' +
 				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/' + gseSiteTokens.jobs + '/SitePages/App.aspx">Jobs</a> \n' +
 				'</div>' +
@@ -23035,7 +23244,7 @@
 			}
 		});
 
-		
+
 		var allMarkup = '';
 		var departmentMarkups = {};
 
@@ -23047,7 +23256,7 @@
 			selectedManagerWithDownline.downline[selectedManagerWithDownline.division][selectedManagerWithDownline.department] = [];
 			selectedManagerWithDownline.downline[selectedManagerWithDownline.division][selectedManagerWithDownline.department].push($().ReturnUser(ReplaceAll('@mos.org', '', uData.userName)));
 
-		// if there's a downline, add the manager to it
+			// if there's a downline, add the manager to it
 		} else {
 			var addedMgr = false;
 			var downlineDivisionKeys = Object.keys(selectedManagerWithDownline.downline);
@@ -23550,10 +23759,10 @@
 			row.JobTitle = schedule.Job.JobTitle;
 			row.NumberOfPositions = schedule.NumberOfPositions;
 			if (schedule.Signups) {
-				row.PositionsAvailable = '<div class="small-in-column">' + 
+				row.PositionsAvailable = '<div class="small-in-column">' +
 					(schedule.NumberOfPositions - schedule.Signups.length) + '</div>';
 			} else {
-				row.PositionsAvailable = '<div class="small-in-column">' + 
+				row.PositionsAvailable = '<div class="small-in-column">' +
 					schedule.NumberOfPositions + '</div>';
 			}
 			row.ShiftLength = schedule.formData['shiftlength_35-hours'] ? '3.5 hours' : '7.5 hours'
@@ -23605,7 +23814,7 @@
 			}
 			if (relevantRole === 'gseManager' || relevantRole === 'gseUserOnly') {
 				row.ViewByIDLink =
-					'<a href="' + row.viewURL + '" class="link_request-id" target="_blank">' + 
+					'<a href="' + row.viewURL + '" class="link_request-id" target="_blank">' +
 					schedule.ScheduleID + '</a>';
 			}
 			tableConfig.datatableData.push(row);
@@ -23651,7 +23860,7 @@
 	// - raw data queries + mashup
 
 	// schedules list data
-	$.fn.ReturnSelectedAugmentedSchedulesForGSESchedulesOverviews = function(selectedStartYear) {
+	$.fn.ReturnSelectedAugmentedSchedulesForGSESchedulesOverviews = function (selectedStartYear) {
 
 		var beginningOfFiscalYear = selectedStartYear + '-07-01T00:00:00Z';
 		var endOfFiscalYear = (parseInt(selectedStartYear) + 1) + '-06-30T00:00:00Z';
@@ -23959,7 +24168,7 @@
 
 
 	// signups data
-	$.fn.ReturnSelectedAugmentedSignupsForGSESignupsOverviews = function(selectedStartYear) {
+	$.fn.ReturnSelectedAugmentedSignupsForGSESignupsOverviews = function (selectedStartYear) {
 		// get, mash up, all GSE data
 		var augmentedSignups = {};
 		var beginningOfFiscalYear = selectedStartYear + '-07-01T00:00:00Z';
@@ -24013,9 +24222,9 @@
 				}, {
 					'nameHere': 'JobAdmin',
 					'nameInList': 'JobAdmin'
-				// }, {
-				// 	'nameHere': 'Location',
-				// 	'nameInList': 'Location'
+					// }, {
+					// 	'nameHere': 'Location',
+					// 	'nameInList': 'Location'
 				}
 			]
 		});
@@ -24074,7 +24283,7 @@
 		return augmentedSignups;
 	};
 
-	
+
 
 	// - handling archivals and cancellations
 
@@ -24112,7 +24321,7 @@
 		});
 	};
 
-	$.fn.CancelSchedule = function(scheduleData) {
+	$.fn.CancelSchedule = function (scheduleData) {
 		var gseSiteTokens = $().ReturnGSESiteTokens();
 		// modify formData
 		scheduleData.formData['Request-Status'] = 'Cancelled';
@@ -24143,7 +24352,7 @@
 		$().SPServices(updateListItemsOptions);
 	};
 
-	$.fn.ProcessGSEScheduleCancellationNotifications = function(scheduleData) {
+	$.fn.ProcessGSEScheduleCancellationNotifications = function (scheduleData) {
 		// console.log('ProcessGSEScheduleCancellationNotifications scheduleData');
 		// console.log(scheduleData);
 
@@ -24207,9 +24416,9 @@
 			'caller': 'programmatic schedule cancellation jobAdmin',
 			'to': eData.jobAdminEmail,
 			'subject': eData.subjectPreface + 'cancelled',
-			'bodyUnique': '<p>This schedule was nicknamed "' + sData.requestNick + 
-				'". It was for the job titled "' + sData.jobTitle + 
-				'" and was scheduled for ' + sData.scheduleDateTime + '. Please <a href="mailto:' + 
+			'bodyUnique': '<p>This schedule was nicknamed "' + sData.requestNick +
+				'". It was for the job titled "' + sData.jobTitle +
+				'" and was scheduled for ' + sData.scheduleDateTime + '. Please <a href="mailto:' +
 				eData.adminEmailString + '">contact the admin</a> with any issues.'
 		});
 
@@ -24317,7 +24526,7 @@
 
 		sData.scheduleDateTime =
 			$().ReturnFormattedDateTime(scheduleData.formData['Date'].slice(0, 10) + scheduleData.formData['time-storage_StartTime'].slice(10, 19), null, 'dddd, MMMM D, YYYY, h:mm a');
-		
+
 
 		mData.subjectPreface = 'GSE Schedule #' + scheduleData.ScheduleID + ': ';
 
@@ -24343,7 +24552,7 @@
 			'bodyUnique': '<p>The "' + eData.jobTitle +
 				'" GSE, scheduled for ' + eData.scheduleDateTime + ' has been cancelled. ' +
 				'Feel free to <a href="mailto:' + eData.jobAdminEmail + '">contact ' +
-					eData.jobAdminName + '</a> ' +
+				eData.jobAdminName + '</a> ' +
 				'with any questions, <a href="' + eData.uriOverview + '">' +
 				'review your other signups</a>, or ' +
 				'<a href="https://bmos.sharepoint.com/sites/' + eData.gseSiteTokens.schedules + '/SitePages/App.aspx?f=cal">' +
@@ -24408,7 +24617,7 @@
 				'<p>You\'ve been granted credit for "' + sData.jobTitle + '", which began ' +
 				sData.scheduleDateTime + '.</p> ' +
 				'<p>Please <a href="http://www.surveygizmo.com/s3/3485668/GSE-Survey">provide feedback on your experience</a>. ' +
-				'Feel free to <a href="mailto:' + sData.jobAdminEmail + '">contact ' + sData.jobAdminName + 
+				'Feel free to <a href="mailto:' + sData.jobAdminEmail + '">contact ' + sData.jobAdminName +
 				'</a> with any questions, <a href="https://bmos.sharepoint.com/sites/' + sData.gseSiteTokens.signups + '/SitePages/App.aspx">' +
 				'review your other signups</a>, or ' +
 				'<a href="https://bmos.sharepoint.com/sites/' + sData.gseSiteTokens.schedules + '/SitePages/App.aspx?f=cal">' +
@@ -24635,8 +24844,8 @@
 					"		</Eq>" +
 					"	</Or>" +
 					"</Where>";
-			
-			
+
+
 			} else if (typeof (t.meOrMyDownlineIsRequesterAndRSQuery) != "undefined") {
 
 				if (typeof (t.meOrMyDownlineIsRequesterAndRSQuery.getRequesterFrom) == 'undefined') {
@@ -24694,7 +24903,7 @@
 					"	<And>" +
 					"		 <Eq>" +
 					"		      <FieldRef Name='EndOfLife'></FieldRef>" +
-				"		      <Value Type='Text'>" + t.meOrMyDownlineIsRequesterAndEOL.endOfLfe + "</Value>" +
+					"		      <Value Type='Text'>" + t.meOrMyDownlineIsRequesterAndEOL.endOfLfe + "</Value>" +
 					"		 </Eq>" +
 					"		 <" + operator + ">" +
 					"			  <FieldRef Name='" + getRequesterFrom + "'></FieldRef>" +
@@ -25273,7 +25482,7 @@
 	$.fn.RenderPersonLinks = function (usersRaw) {
 
 		var returnValue = "";
-		if (typeof(usersRaw) === 'string') {
+		if (typeof (usersRaw) === 'string') {
 			var userArray = usersRaw.split(";#");
 
 			$.each(userArray, function (i, userData) {
@@ -25402,7 +25611,7 @@
 				retVal += moment(dateTimeString, incomingFormat).format(returnFormat);
 			}
 
-		// if incoming format is not null, use it to parse dateTimeString
+			// if incoming format is not null, use it to parse dateTimeString
 		} else {
 
 			// if incomingFormat contains ', YYYY' and dateTimeString doesn't end with that value and determineYearDisplayDynamically == 1
@@ -25575,13 +25784,13 @@
 
 
 	$.fn.ReturnButtonsMarkupAsOverflowMenu = function (buttons) {
-		var buttonsMarkup = 
+		var buttonsMarkup =
 			'<div id="container_navigation-controls-and-header" class="overflow-menu"> \n' +
-			'   <div id="text_navigation-controls" ' + 
-			'		class="collapsible overflow-menu-control"> \n' + 
+			'   <div id="text_navigation-controls" ' +
+			'		class="collapsible overflow-menu-control"> \n' +
 			'		<span class="overflow-menu-text">More</span> \n' +
 			'	</div> \n' +
-			'   <div id="container_navigation-controls"> \n' + 
+			'   <div id="container_navigation-controls"> \n' +
 			'		<ul class="button-list-container"> \n';
 		$.each(buttons, function (i, button) {
 			// business rule: even if there's a function restricting rendering permission, the button will always render for admins; if this changes, 
@@ -25596,8 +25805,8 @@
 			}
 			buttonsMarkup += ' \n			</li> \n';
 		});
-		buttonsMarkup += 
-			'		</ul> \n' + 
+		buttonsMarkup +=
+			'		</ul> \n' +
 			'	</div> \n' +
 			'</div> \n';
 
@@ -26611,7 +26820,7 @@
 				$().SetErrorMessage("input#Physical-Demand-Walking", 'Time percentages must add up to 100%');
 			}
 		}
-		
+
 
 	};
 
@@ -26776,7 +26985,7 @@
 
 		if (currentUserAccount === 'sp3' || currentUserAccount === 'ahile' || currentUserAccount === 'jpeeler') {
 			currentUserIsManager = 1;
-		// TO DO - DELETE EXCEPTION FOR NON-SP3 ACCOUNTS ABOVE AFTER ULTIPRO INTEGRATION
+			// TO DO - DELETE EXCEPTION FOR NON-SP3 ACCOUNTS ABOVE AFTER ULTIPRO INTEGRATION
 		} else {
 			var managers = $().ReturnManagers();
 			managers.forEach((manager) => {
@@ -27480,19 +27689,19 @@
 
 
 
-    $.fn.ReturnGPCPeopleEditingAccess = function() {
+	$.fn.ReturnGPCPeopleEditingAccess = function () {
 
-        var gpcGroups = $().ReturnGPCGroups();
-        var hasViewPermission = 0;
+		var gpcGroups = $().ReturnGPCGroups();
+		var hasViewPermission = 0;
 
-        $.each(gpcGroups.EditGPCPeople, function(i, person) {
-            if (person.accountLong === uData.account) {
-                hasViewPermission = 1;
-            }
-        });
+		$.each(gpcGroups.EditGPCPeople, function (i, person) {
+			if (person.accountLong === uData.account) {
+				hasViewPermission = 1;
+			}
+		});
 
-        return hasViewPermission;
-    };
+		return hasViewPermission;
+	};
 
 
 
@@ -27992,7 +28201,7 @@
 			scheduleStartDatetime = moment.tz(scheduleStartDatetime, "America/New_York").format();
 			var nowAsISOLocal = $().ReturnFormattedDateTime('nowLocal', null, null);
 			if (
-				moment(scheduleStartDatetime).isAfter(nowAsISOLocal) || 
+				moment(scheduleStartDatetime).isAfter(nowAsISOLocal) ||
 				$('input#Signup-ID').val() == ''
 			) {
 				$("div#signup-people").show("fast").removeClass("hidden");
@@ -28001,8 +28210,8 @@
 				// hide cancellation checkbox
 				$("div#label-and-control_Requester-Cancellation").hide("fast").addClass("hidden");
 				// enable and require radio buttons
-				$("div#signups").find("div.repeat-container").each(function() {
-					$(this).find("input[type='radio']").each(function(index, value) {
+				$("div#signups").find("div.repeat-container").each(function () {
+					$(this).find("input[type='radio']").each(function (index, value) {
 						var radioButtonID = $(this).attr("id");
 						$().SetFieldToEnabled('#' + radioButtonID);
 						radioButtonIDs.push(radioButtonID);
@@ -28017,10 +28226,10 @@
 								.children("span.field-type-indicator")
 								.removeClass("field-optional")
 								.addClass("field-required")
-									.children("span.message")
-									.removeClass("message-optional")
-									.addClass("message-required")
-									.text("Required Field");
+								.children("span.message")
+								.removeClass("message-optional")
+								.addClass("message-required")
+								.text("Required Field");
 						}
 					});
 				});
@@ -28053,7 +28262,7 @@
 					.each(function (index, value) {
 						// console.log('found textarea');
 						// console.log($(this).attr("id"));
-						if($(this).val() !== '') {
+						if ($(this).val() !== '') {
 							var containerSelector = '#label-and-control_' + $(this).attr("id");
 							$(containerSelector).show("fast").removeClass("hidden");
 						}
@@ -28096,9 +28305,9 @@
 		}
 	};
 
-	
-	 
- 	$.fn.SetInHouseNeedsSheetRequestAdditionalViewAccess = function () {
+
+
+	$.fn.SetInHouseNeedsSheetRequestAdditionalViewAccess = function () {
 		$("input#View-Access").val(mData.viewAccess);
 	};
 

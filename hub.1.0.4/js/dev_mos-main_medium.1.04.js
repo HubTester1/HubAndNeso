@@ -20579,17 +20579,24 @@
 		var startDateTo = GetParamFromUrl(location.search, 'startDateTo');
 
 		if (startDateFrom == "") {
-			startDateFrom = $().ReturnFormattedDateTime('nowLocal', null, 'YYYY-MM-DD');
+			startDateFrom = moment().subtract(1, "years").format('YYYY-MM-DD');
 		}
 
 		if (startDateTo == "") {
-			startDateTo = moment(startDateFrom, 'YYYY-MM-DD').add(14, "days").format('YYYY-MM-DD');
+			startDateTo = $().ReturnFormattedDateTime('nowLocal', null, 'YYYY-MM-DD');
 		}
 
 		// insert container and sub-containers
 		$("div#overview-table-container").prepend('<div id="container_command-bar-and-tables"> \n' +
-			'   <div id="container_command-bar"></div> \n' +
-			'   <div id="table-container">This is Analytics Container</div> \n' +
+			'   <div id="container_command-bar"></div> \n' + 
+			'   <div id="table-container"> \n' + 
+			'		<div id="summary-container"> \n' +
+			'		</div> \n' + 
+			'		<div id="chart-container"> \n' +
+			'		</div> \n' + 
+			'		<div id="text-container"> \n' +
+			'		</div> \n' + 
+			'	</div> \n' +
 			'</div>');
 
 		var commandBarContents = '<h2 id="header_command-bar">Commands</h2> \n' +
@@ -20618,6 +20625,201 @@
 
 		// insert contents into containers
 		$("div#container_command-bar").html(commandBarContents);
+		
+		var getListItemsOptions = {
+			"viewFields": "<ViewFields>" +
+				"   <FieldRef Name='ID' />" +
+				"   <FieldRef Name='AllRequestData' />" +
+				"</ViewFields>",
+			"query": '<Query><Where>' +
+				'       <And>' +
+				'           <Geq>' +
+				'               <FieldRef Name="RequestDate"></FieldRef>' +
+				'               <Value Type="DateTime" IncludeTimeValue="FALSE">' + startDateFrom + 'T00:00:00Z</Value>' +
+				'           </Geq>' +
+				'           <Leq>' +
+				'               <FieldRef Name="RequestDate"></FieldRef>' +
+				'               <Value Type="DateTime" IncludeTimeValue="FALSE">' + startDateTo + 'T00:00:00Z</Value>' +
+				'           </Leq>' +
+				'       </And>' +
+				'</Where></Query>',
+			"queryOptions": "<QueryOptions>" +
+				"   <IncludeMandatoryColumns>FALSE</IncludeMandatoryColumns>" +
+				"</QueryOptions>"
+		};
+
+		$().SPServices({
+			operation: "GetListItems",
+			async: false,
+			listName: "SWFList",
+			CAMLViewFields: getListItemsOptions.viewFields,
+			CAMLQuery: getListItemsOptions.query,
+			CAMLQueryOptions: getListItemsOptions.queryOptions,
+			completefunc: function (xData, Status) {
+			
+				var quantitySubmissions = 0;
+
+				var fasterMass = 0;
+				var responsiveMass = 0;
+				var orgMass = 0;
+				var collaborationMass = 0;
+				var iitResourcesMass = 0;
+				var pdResourcesMass = 0;
+				var searchMass = 0;
+				var integrationMass = 0;
+
+				var otherDevResponseList = '<ul id="response-list_other-dev" class="response-list"> \n';
+				// var difficultyFindingResponseList = '<ul id="response-list_difficulty-finding" class="response-list"> \n';
+				var usabilityResponseList = '<ul id="response-list_usability" class="response-list"> \n';
+				var doingWellResponseList = '<ul id="response-list_doing-well" class="response-list"> \n';
+
+				var summary = '';
+				var allTextResponses = '';
+
+				var regexOne = new RegExp("\r", "g");
+				var regexTwo = new RegExp("\n", "g");
+
+				$(xData.responseXML).SPFilterNode("z:row").each(function () {
+
+					// construct feedback item object
+					var feedbackItemString = $(this).attr("ows_AllRequestData");
+					feedbackItemString = feedbackItemString.replace(regexOne, "'");
+					feedbackItemString = feedbackItemString.replace(regexTwo, "'");
+					eval("var feedbackItem=" + feedbackItemString);
+					var feedbackItemID = $(this).attr("ows_ID");
+					var feedbackItemURL = '/sites/' + mData.siteToken + '/SitePages/App.aspx?r=' + feedbackItemID ;
+
+					// handle feedback item object
+					quantitySubmissions++;
+
+					if (feedbackItem["faster_1"]) { fasterMass += 1; }
+					if (feedbackItem["faster_2"]) { fasterMass += 2; }
+					if (feedbackItem["faster_3"]) { fasterMass += 3; }
+					if (feedbackItem["faster_4"]) { fasterMass += 4; }
+
+					if (feedbackItem["mobile-friendly_1"]) { responsiveMass += 1; }
+					if (feedbackItem["mobile-friendly_2"]) { responsiveMass += 2; }
+					if (feedbackItem["mobile-friendly_3"]) { responsiveMass += 3; }
+					if (feedbackItem["mobile-friendly_4"]) { responsiveMass += 4; }
+
+					if (feedbackItem["more-museum-info_1"]) { orgMass += 1; }
+					if (feedbackItem["more-museum-info_2"]) { orgMass += 2; }
+					if (feedbackItem["more-museum-info_3"]) { orgMass += 3; }
+					if (feedbackItem["more-museum-info_4"]) { orgMass += 4; }
+
+					if (feedbackItem["more-collaboration_1"]) { collaborationMass += 1; }
+					if (feedbackItem["more-collaboration_2"]) { collaborationMass += 2; }
+					if (feedbackItem["more-collaboration_3"]) { collaborationMass += 3; }
+					if (feedbackItem["more-collaboration_4"]) { collaborationMass += 4; }
+
+					if (feedbackItem["iit-help-and-learning_1"]) { iitResourcesMass += 1; }
+					if (feedbackItem["iit-help-and-learning_2"]) { iitResourcesMass += 2; }
+					if (feedbackItem["iit-help-and-learning_3"]) { iitResourcesMass += 3; }
+					if (feedbackItem["iit-help-and-learning_4"]) { iitResourcesMass += 4; }
+
+					if (feedbackItem["professional-development_1"]) { pdResourcesMass += 1; }
+					if (feedbackItem["professional-development_2"]) { pdResourcesMass += 2; }
+					if (feedbackItem["professional-development_3"]) { pdResourcesMass += 3; }
+					if (feedbackItem["professional-development_4"]) { pdResourcesMass += 4; }
+
+					if (feedbackItem["unified-search_1"]) { searchMass += 1; }
+					if (feedbackItem["unified-search_2"]) { searchMass += 2; }
+					if (feedbackItem["unified-search_3"]) { searchMass += 3; }
+					if (feedbackItem["unified-search_4"]) { searchMass += 4; }
+
+					if (feedbackItem["data-intregration_1"]) { integrationMass += 1; }
+					if (feedbackItem["data-intregration_2"]) { integrationMass += 2; }
+					if (feedbackItem["data-intregration_3"]) { integrationMass += 3; }
+					if (feedbackItem["data-intregration_4"]) { integrationMass += 4; }
+
+
+					if (feedbackItem["Other-Development"]) {
+						otherDevResponseList += '	<li class="response-list-item">' + 
+							ReplaceAll('%0A', '<br />', feedbackItem["Other-Development"]) + 
+							' (<a target="_blank" href="' + feedbackItemURL + '">' + feedbackItemID + '</a>)</li> \n';
+					}
+					/* if (feedbackItem["Finding-Challenges"]) {
+						difficultyFindingResponseList += '	<li class="response-list-item">' + 
+							ReplaceAll('%0A', '<br />', feedbackItem["Finding-Challenges"]) +
+							' (<a target="_blank" href="' + feedbackItemURL + '">' + feedbackItemID + '</a>)</li> \n';
+					} */
+					if (feedbackItem["Usability-Challenges"]) {
+						usabilityResponseList += '	<li class="response-list-item">' + 
+							ReplaceAll('%0A', '<br />', feedbackItem["Usability-Challenges"]) +
+							' (<a target="_blank" href="' + feedbackItemURL + '">' + feedbackItemID + '</a>)</li> \n';
+					}
+					if (feedbackItem["Doing-Well"]) {
+						doingWellResponseList += '	<li class="response-list-item">' + 
+							ReplaceAll('%0A', '<br />', feedbackItem["Doing-Well"]) +
+							' (<a target="_blank" href="' + feedbackItemURL + '">' + feedbackItemID + '</a>)</li> \n';
+					}
+				});
+
+				otherDevResponseList += '</ul> \n';
+				// difficultyFindingResponseList += '</ul> \n';
+				usabilityResponseList += '</ul> \n';
+				doingWellResponseList += '</ul> \n';
+
+				// summary
+
+				summary +=
+					'<h2>Submission Quantity</h2> \n' +
+					quantitySubmissions + ' submissions';
+				$("div#summary-container").html(summary);
+
+				// chart
+
+				$("div#chart-container").html(
+					'<h2>Which of these is important for The Hub\'s future development?</h2> \n' +
+					'<canvas \n' +
+					'	id="likert-chart" \n' +
+					'	role="image" \n' +
+					'	aria-label="Bar Chart showing weighted values for each presented option.  \n' +
+					'		Faster: ' + fasterMass + ', \n' +
+					'		Responsive: ' + responsiveMass + ', \n' +
+					'		Organizational Info: ' + orgMass + ', \n' +
+					'		Collaboration: ' + collaborationMass + ', \n' +
+					'		IIT Resources: ' + iitResourcesMass + ', \n' +
+					'		PD Resources: ' + pdResourcesMass + ', \n' +
+					'		Unified Search: ' + searchMass + ', \n' +
+					'		Data / System Integration: ' + integrationMass + '." \n' +
+					'	> \n' +
+					'</canvas> \n'
+				);
+
+				var chartElement = document.getElementById('likert-chart').getContext('2d');
+				var likertChart = new Chart(chartElement, {
+					type: 'bar',
+					data: {
+						labels: ['Faster', 'Responsive', 'Organizational Info', 'Collaboration', 'IIT Resources', 'PD Resources', 'Unified Search', 'Data / System Integration'],
+						datasets: [{
+							data: [fasterMass, responsiveMass, orgMass, collaborationMass, iitResourcesMass, pdResourcesMass, searchMass, integrationMass],
+							backgroundColor: 'rgba(0, 0, 0, 0.5)',
+						}]
+					},
+					options: {
+						legend: {
+							display: false,
+						},
+						fontFamily: "'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI Regular WestEuropean', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif",
+					}
+				});
+
+				// text responses
+
+				allTextResponses +=
+					'<h2>What else should The Hub be doing?</h2> \n' +
+					otherDevResponseList +
+					// '<h2>Please tell us anything you have difficulty finding on The Hub</h2> \n' +
+					// difficultyFindingResponseList +
+					'<h2>Please describe any parts of The Hub you find difficult to use</h2> \n' +
+					usabilityResponseList +
+					'<h2>What is The Hub already doing well?</h2> \n' +
+					doingWellResponseList;
+
+				$("div#text-container").html(allTextResponses);
+			}
+		});
 
 		// set datepickers on date filter fields
 		$("input#filter--start-date_to, input#filter--start-date_from").datepicker({

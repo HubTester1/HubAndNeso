@@ -44,7 +44,7 @@ var timestamp = date.getTime();
 
 
 
-if (debugMode) { console.log("using mos-loader m250") }
+if (debugMode) { console.log("using mos-loader m247") }
 
 
 
@@ -86,7 +86,9 @@ var stylesheetsToLoad = [
 		{ "centrallyManaged": 1, "css": 1, "lib": 1, 	"path": "office-ui-fabric.2.5.0.components.min.css" },
 	*/
 	// Concatenation of above files
-	{ "centrallyManaged": 1, "css": 1, "lib": 1, 	"path": "_libs.concatenated." + latestLibrariesCSSVersion + ".css" },
+	{ "centrallyManaged": 1, "css": 1, "lib": 1, "path": "_libs.concatenated." + latestLibrariesCSSVersion + ".css" },
+	// Chart
+	{ "centrallyManaged": 1, "css": 1, "lib": 1, "path": "chart.2.8.0.min.css" },
 	// MOS
 	// { "centrallyManaged": 1, "css": 1, 				"path": "mos." + latestMOSCSSVersion + ".css" },
 	{ "centrallyManaged": 1, "css": 1, 				"path": "mos.css" },
@@ -117,6 +119,9 @@ var librariesToLoad = [
 	*/
 	// Concatenation of above files
 	{ "centrallyManaged": 1, "js": 1, "lib": 1, 					"path": "_libs.concatenated." + latestConcatenatedLibsVersion + ".js" },
+
+	// Chart
+	{ "centrallyManaged": 1, "js": 1, "lib": 1, 					"path": "chart.2.8.0.min.js" },
 
 	// Bowser
 	{ "centrallyManaged": 0, 										"path": "https://cdnjs.cloudflare.com/ajax/libs/bowser/1.9.3/bowser.min.js" },
