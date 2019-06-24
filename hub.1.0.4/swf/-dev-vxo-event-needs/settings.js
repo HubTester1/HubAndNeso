@@ -2,7 +2,6 @@
 (function ($) {
 
 
-	console.log("using settings m42");
 
 	var mData = {
 		'componentID': 20123,
@@ -17,6 +16,7 @@
 		"notifications": 0
 	};
 
+	console.log("using settings m2");
 
 
 
@@ -184,7 +184,7 @@
 				'addition': '		   <li>WPC  \n' +
 					'			   <ul>  \n' +
 					'				   <li>When this request is approved, you must submit a <a href="https://bmos.sharepoint.com/ECSDocs/Puck%20Conference%20Catering%20Form.docx" target="_blank">Conference Catering Request</a>.</li>  \n' +
-					'				   <li>Questions: x3197.</li>  \n' +
+					'				   <li>Questions: x3198 or x3199.</li>  \n' +
 					'			   </ul>  \n' +
 					'		   </li>  \n'
 			}, {
@@ -207,7 +207,7 @@
 				'condition': function () { return $('input#exhibit-maintenance_scatterbenches').is(':checked') || $('input#exhibit-maintenance_other').is(':checked'); },
 				'addition': '		   <li>Exhibit maintenance questions: x0161.</li> \n'
 			}, {
-				'condition': function () { return $('input#parking-validation_under10').is(':checked') || $('input#parking-validation_10Plus').is(':checked') || $('input#security-detail_yes').is(':checked') || $('input#guest-access_yes').is(':checked') || $('input#crowd-management_yes').is(':checked'); },
+				'condition': function () { return $('input#parking-validation_under10').is(':checked') || $('input#parking-validation_10Plus').is(':checked') || $('input#security-detail_yes').is(':checked') || $('input#crowd-management_yes').is(':checked'); }, // $('input#guest-access_yes').is(':checked') || 
 				'addition': '		   <li>Public Safety  \n' +
 					'			  <ul>  \n' +
 					'				  <li>Free or $5 parking validation: submit a <a href="https://bmos.sharepoint.com/sites/ps-garage-discount/SitePages/My%20Garage%20Discount%20Requests.aspx" target="_blank">Garage Discount Request</a>.</li>  \n' +
@@ -1098,9 +1098,11 @@
 				'end': 1,
 			}, {
 				'elementType': 'field',
-				'controlType': 'complexFile',
+				'controlType': 'mosFile',
 				'fieldName': 'Floor Plan',
 				'labelContent': 'Floor Plan',
+
+
 				'populatableForNonAdmin': ['', 'Pending Revision', 'Pending Approval'],
 				'populatableForAdmin': ['', 'Pending Revision', 'Pending Approval', 'Approved'],
 				'replaceableForNonAdmin': ['Pending Revision', 'Pending Approval'],
@@ -2497,13 +2499,13 @@
 
 	// floor plan
 
-	fData.CustomScriptLast += '$("select#Change-Request-Status").on("change", function () { \n ' +
+	/* fData.CustomScriptLast += '$("select#Change-Request-Status").on("change", function () { \n ' +
 		'	if($(this).val() == "Approve") { \n' +
 		'		$().SetFieldToRequired("Floor-Plan", "complexFile", 0); \n' +
 		'	} else {  \n' +
 		'		$().SetFieldToOptional("Floor-Plan", "complexFile", 0); \n' +
 		'	} \n' +
-		'}); \n';
+		'}); \n'; */
 
 	// Tables, Equipment, and Cleaning
 
