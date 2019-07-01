@@ -15725,7 +15725,7 @@
 					// for each value in the show array
 					$.each(chg.show, function (i, sh) {
 						if (typeof (sh.fieldName) != "undefined") {
-							var shID = '#label-and-control_' + ReplaceAll("\\.", "", ReplaceAll(" ", "-", sh.fieldName));
+							var shID = '#label-and-control_' + ReplaceAll("\\.", "", ReplaceAll("\\'", "", ReplaceAll(" ", "-", sh.fieldName)));
 						}
 						if (typeof (sh.noteID) != "undefined") {
 							var shID = '#' + ReplaceAll("\\.", "", ReplaceAll(" ", "-", sh.noteID));
@@ -15755,7 +15755,7 @@
 					// for each value in the show array
 					$.each(chg.hide, function (i, hd) {
 						if (typeof (hd.fieldName) != "undefined") {
-							var hdID = '#label-and-control_' + ReplaceAll("\\.", "", ReplaceAll(" ", "-", hd.fieldName));
+							var hdID = '#label-and-control_' + ReplaceAll("\\.", "", ReplaceAll("\\'", "", ReplaceAll(" ", "-", hd.fieldName)));
 						}
 						if (typeof (hd.noteID) != "undefined") {
 							var hdID = '#' + ReplaceAll("\\.", "", ReplaceAll(" ", "-", hd.noteID));
@@ -15793,7 +15793,7 @@
 						/* stmtsToAdd += '		if (!$("#label-and-control_' + ReplaceAll("\\.", "", ReplaceAll(" ", "-", req.fieldName)) + ' div.field-type-indication span.field-type-indicator").hasClass("field-required")) { \n' +
 							'			$(this).SetFieldToRequired("' + ReplaceAll("\\.", "", ReplaceAll(" ", "-", req.fieldName)) + '", "' + req.type + '", "' + req.repeatable + '"); \n' +
 							'		} \n'; */
-						stmtsToAdd += '		$(this).SetFieldToRequired("' + ReplaceAll("\\.", "", ReplaceAll(" ", "-", req.fieldName)) + '", "' + req.type + '", "' + req.repeatable + '"); \n';
+						stmtsToAdd += '		$(this).SetFieldToRequired("' + ReplaceAll("\\.", "", ReplaceAll("\\'", "", ReplaceAll(" ", "-", req.fieldName))) + '", "' + req.type + '", "' + req.repeatable + '"); \n';
 					});
 
 				}
@@ -15812,7 +15812,7 @@
 						/* stmtsToAdd += '		if ($("#label-and-control_' + ReplaceAll("\\.", "", ReplaceAll(" ", "-", optl.fieldName)) + ' div.field-type-indication span.field-type-indicator").hasClass("field-required")) { \n' +
 							'			$(this).SetFieldToOptional("' + ReplaceAll("\\.", "", ReplaceAll(" ", "-", optl.fieldName)) + '", "' + optl.type + '", "' + optl.repeatable + '"); \n' +
 							'		} \n'; */
-						stmtsToAdd += '		$(this).SetFieldToOptional("' + ReplaceAll("\\.", "", ReplaceAll(" ", "-", optl.fieldName)) + '", "' + optl.type + '", "' + optl.repeatable + '"); \n';
+						stmtsToAdd += '		$(this).SetFieldToOptional("' + ReplaceAll("\\.", "", ReplaceAll("\\'", "", ReplaceAll(" ", "-", optl.fieldName))) + '", "' + optl.type + '", "' + optl.repeatable + '"); \n';
 					});
 
 				}
@@ -17198,9 +17198,11 @@
 			'	</ul></td>' +
 			'	<td><ul style="margin: 0;"><li><b>Onsite Contact:</b><ul>' +
 			'		<li><b>Name:</b> ' + sheetData["Printer-Onsite-Contact-Name"] + '</li>' +
-			'		<li><b>Department:</b> ' + sheetData["Printer-Onsite-Contact-Department"] + '</li>' +
-			'		<li><b>Phone:</b> ' + sheetData["Printer-Onsite-Contact-Phone"] + '</li>' +
-			'	</ul></li></ul></td></tr></tbody>' +
+			'		<li><b>Department:</b> ' + sheetData["Printer-Onsite-Contact-Department"] + '</li>';
+		if (sheetData["Printer-Onsite-Contact-Phone"]) {
+			printContent += '		<li><b>Phone:</b> ' + sheetData["Printer-Onsite-Contact-Phone"] + '</li>';
+		}
+		printContent += '	</ul></li></ul></td></tr></tbody>' +
 			'<table>';
 
 		// event schedule
@@ -18801,6 +18803,10 @@
 	function CallFunctionFromString(functionName, functionArgumentsObject) {
 
 		switch (functionName) {
+
+			case "ReturnOne":
+				$().ReturnOne();
+				break;
 
 			case "PrintNeedsSheet":
 				PrintNeedsSheet();
@@ -20802,6 +20808,13 @@
 							display: false,
 						},
 						fontFamily: "'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI Regular WestEuropean', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif",
+						scales: {
+							yAxes: [{
+								ticks: {
+									beginAtZero: true
+								}
+							}]
+						}
 					}
 				});
 
@@ -27444,6 +27457,11 @@
 
 
 
+	$.fn.ReturnOne = function () {
+		return 1;
+	};
+
+
 
 	$.fn.SetGPCSubmissionNeedsPeople = function () {
 
@@ -27792,6 +27810,91 @@
 
 		return UserIsInFieldOfAllRequestData;
 	};
+
+
+	$.fn.SetEventNeedsRequestNonWriteAccess = function () {
+
+		// context:
+		//		1 - some users are given view permissions in other functions
+		//		2 - since these people are not admins, they have the same field editing permissions as the requester 
+		//			(because standard setup assumes that anyone who can view and isn't the admin is the requester)
+		//		3 - they should not have editing rights
+		//		4 - Don't do anything at all if this is a new request (RS = ""); anyone can begin a new request
+
+		// for viewers who are not admin and not requester
+		//		1 - all non-file fields will be disabled
+		//		2 - file fields will be "disabled" if
+
+		/* // don't do anything if this is a new request
+		if ($("input#Request-Status").val() != "") {
+
+			// set up vars; start off assuming that editing rights will be deined
+			var userIsAdminOrRequester = 0;
+
+			// determine whether or not the viewer is both not an admin and not a requester; only for such a viewer do we need to consider the possibility of special editing rights
+			if (uData.isAdmin == 1 || $().UserIsInFieldOfAllRequestData("Requested For") == 1 || $().UserIsInFieldOfAllRequestData("MOS Principal Investigator") == 1 || $().UserIsInFieldOfAllRequestData("MOS Co-Investigator") == 1 || $().UserIsInFieldOfAllRequestData("Proposal Developer") == 1) {
+				userIsAdminOrRequester = 1;
+			}
+
+			// if this user is NOT admin or requester
+			if (userIsAdminOrRequester == 0) {
+
+				// 1 - disable non-file fields
+
+				// handle inputs
+				$("#request-form").find('input').each(function () {
+					var thisInputID = $(this).attr("id");
+					if (thisInputID.indexOf('TopSpan_HiddenInput') < 0) {
+						var thisInputType = $(this).attr("type");
+						$('#' + thisInputID).addClass('disabled');
+						if (thisInputType != "file" && thisInputType != "hidden" && thisInputType != "button") {
+							$().SetFieldToDisabled('#' + thisInputID);
+						}
+					}
+				});
+
+				// handle people pickers
+				$("#request-form").find('div[data-control-type="PeoplePicker"]').each(function () {
+					var thisPeoplePickerID = $(this).attr("id");
+					$('#' + thisPeoplePickerID).addClass('disabled');
+					$().SetFieldToDisabled('#' + thisPeoplePickerID);
+				});
+
+				// handle selects
+				$("#request-form").find('select').each(function () {
+					var thisSelectID = $(this).attr("id");
+					$('#' + thisSelectID).addClass('disabled');
+					$().SetFieldToDisabled('#' + thisSelectID);
+				});
+
+				// handle others
+				$('textarea#PID-Comments').addClass('disabled');
+				// $('textarea#EEP-Staff-Member-Names').addClass('disabled');
+				// $('textarea#EDC-Staff-Member-Names').addClass('disabled');
+				// $('textarea#New-Staff-Positions').addClass('disabled');
+				$().SetFieldToDisabled('textarea#PID-Comments');
+				// $().SetFieldToDisabled('textarea#EEP-Staff-Member-Names');
+				// $().SetFieldToDisabled('textarea#EDC-Staff-Member-Names');
+				// $().SetFieldToDisabled('textarea#New-Staff-Positions');
+
+				$("div#label-and-control_Request-Nickname").hide("fast").addClass("hidden");
+				$("div#label-and-control_Requester-Cancellation").hide("fast").addClass("hidden");
+				$("div#label-and-control_Ready-for-Submission-to-Committee").hide("fast").addClass("hidden");
+				$("div#rfp-or-other-website-link_help-note").hide("fast").addClass("hidden");
+				$("input#Proposal-Due-Date").datepicker("destroy");
+				$("input#Expected-Decision-Date").datepicker("destroy");
+
+
+				// 2 - disable file fields
+
+				// project narrative
+				if ($().ReturnGPCSubmissionApprovalRequestProjectNarrativeWriteAccess() == 0) {
+					$().SetFieldToDisabled("#Project-Description-File");
+				}
+			}
+		} */
+	};
+
 
 
 	$.fn.SetGPCInitialConceptApprovalRequestNonWriteAccess = function () {
@@ -29103,7 +29206,7 @@
 		// wait for all data retrieval / setting promises to complete (pass or fail) 
 		$.when.apply($, allDataRetrievalAndSettingPromises).always(function () {
 
-			console.log('using dev_mos-main_medium.1.04 m1');
+			console.log('using dev_mos-main_medium.1.04 m14');
 
 			$().ConfigureAndShowScreenContainerAndAllScreens();
 		});

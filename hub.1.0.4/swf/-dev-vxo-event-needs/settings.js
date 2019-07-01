@@ -16,7 +16,7 @@
 		"notifications": 0
 	};
 
-	console.log("using settings m2");
+	console.log("using settings m13");
 
 
 
@@ -165,6 +165,7 @@
 
 
 	var fData = {
+		'additionalViewPermissionsFunction': 'ReturnOne',
 		'autoTrackSubmissionAndCancellation': 1,
 		'newRequestConditionalConfirmationAdditions': [
 			{
@@ -229,6 +230,7 @@
 				'buttonText': 'Print Needs Sheet',
 				'printFunction': 'PrintNeedsSheet'
 			},
+			'standardThisRequestAndRequesterElements': 1,
 			'standardAdminElements': {
 				'changeRequestStatus': [
 					// { "value": "Approve", "display": "This request is approved" },
@@ -258,13 +260,13 @@
 			'approved': { 'admin': 1, 'requester': 1, 'additional': 1 },
 			'pendingApproval': { 'admin': 1, 'requester': 1 },
 			'floorplanChanged': { 'admin': 1, 'requester': 1, 'additional': 1 },
-			'endOfLife': { 'admin': ['Cancelled'], 'requester': ['Disapproved', 'Cancelled'] }
+			'endOfLife': { 'admin': ['Cancelled'], 'requester': ['Cancelled'] }
 		}, */
 		'versioningMatters': 0,
 
 		'uniqueElements': [
 			{
-				"elementType": "markup",
+				/* "elementType": "markup",
 				"tag": "div",
 				"htmlID": "print-to-screen",
 				"begin": 1,
@@ -293,8 +295,8 @@
 				"labelContent": "Request ID",
 				"hideForNonAdmin": [""],
 				"hideForAdmin": [""],
-				"disabledForNonAdmin": ["", "Submitted", "Completed", "Cancelled"],
-				"disabledForAdmin": ["", "Submitted", "Completed", "Cancelled"]
+				"disabledForNonAdmin": ["", "Submitted", "Cancelled"],
+				"disabledForAdmin": ["", "Submitted", "Cancelled"]
 			}, {
 				"elementType": "field",
 				"controlType": "text",
@@ -313,8 +315,8 @@
 				},
 				"hideForNonAdmin": [""],
 				"hideForAdmin": [""],
-				"disabledForNonAdmin": ["", "Submitted", "Completed", "Cancelled"],
-				"disabledForAdmin": ["", "Submitted", "Completed", "Cancelled"]
+				"disabledForNonAdmin": ["", "Submitted", "Cancelled"],
+				"disabledForAdmin": ["", "Submitted", "Cancelled"]
 			}, {
 				"elementType": "field",
 				"controlType": "text",
@@ -325,14 +327,14 @@
 					"text": "Give this request a name you can reference later",
 					"htmlID": "request-nickname_help-note",
 					"urgent": 0,
-					"hideForNonAdmin": ["Submitted", "Completed", "Cancelled"],
-					"hideForAdmin": ["Submitted", "Completed", "Cancelled"]
+					"hideForNonAdmin": ["Submitted", "Cancelled"],
+					"hideForAdmin": ["Submitted", "Cancelled"]
 				}],
 				"requiredForNonAdmin": [""],
 				"requiredForAdmin": [""],
-				"disabledForNonAdmin": ["Submitted", "Completed", "Cancelled"],
-				"disabledForAdmin": ["Submitted", "Completed", "Cancelled"],
-				"hideForAdmin": ["Submitted", "Completed", "Cancelled"]
+				"disabledForNonAdmin": ["Submitted", "Cancelled"],
+				"disabledForAdmin": ["Submitted", "Cancelled"],
+				"hideForAdmin": ["Submitted", "Cancelled"]
 			}, {
 				"elementType": "field",
 				"controlType": "select",
@@ -345,12 +347,12 @@
 					"value": "Other",
 					"display": "Talk to someone else"
 				}],
-				"requiredForNonAdmin": ["", "Pending Approval"],
-				"requiredForAdmin": ["", "Pending Approval"],
-				"hideForNonAdmin": ["Submitted", "Completed", "Cancelled"],
-				"hideForAdmin": ["Submitted", "Completed", "Cancelled"],
-				"disabledForNonAdmin": ["Submitted", "Completed", "Cancelled"],
-				"disabledForAdmin": ["Submitted", "Completed", "Cancelled"],
+				"requiredForNonAdmin": [""],
+				"requiredForAdmin": [""],
+				"hideForNonAdmin": ["Submitted", "Cancelled"],
+				"hideForAdmin": ["Submitted", "Cancelled"],
+				"disabledForNonAdmin": ["Submitted", "Cancelled"],
+				"disabledForAdmin": ["Submitted", "Cancelled"],
 				"onChange": [{
 					"thisFieldEquals": ["Self"],
 					"hide": [{
@@ -389,8 +391,8 @@
 				"yieldsViewPermissions": 1,
 				"hideForNonAdmin": [""],
 				"hideForAdmin": [""],
-				"disabledForNonAdmin": ["Submitted", "Completed", "Cancelled"],
-				"disabledForAdmin": ["Submitted", "Completed", "Cancelled"]
+				"disabledForNonAdmin": ["Submitted", "Cancelled"],
+				"disabledForAdmin": ["Submitted", "Cancelled"]
 			}, {
 				"elementType": "field",
 				"controlType": "check",
@@ -400,11 +402,11 @@
 					"value": "cancel",
 					"display": "Yes, I wish to cancel this request"
 				}],
-				"hideForNonAdmin": ["", "Completed", "Cancelled"],
-				"hideForAdmin": ["", "Submitted", "Completed", "Cancelled"],
-				"disabledForNonAdmin": ["Completed", "Cancelled"],
-				"disabledForAdmin": ["Completed", "Cancelled"]
-			}, {
+				"hideForNonAdmin": ["", "Cancelled"],
+				"hideForAdmin": ["", "Submitted", "Cancelled"],
+				"disabledForNonAdmin": ["Cancelled"],
+				"disabledForAdmin": ["Cancelled"] */
+			/* }, {
 				"elementType": "field",
 				"controlType": "check",
 				"fieldName": "Requester Reversion to Pending Revision",
@@ -417,13 +419,13 @@
 					"text": "Save this request using the <b>Save</b> button. Then, re-select this request from under the <b>Pending Revision</b> header.",
 					"htmlID": "requester-reversion-to-pending-approval_help-note",
 					"emphasis": 1,
-					"hideForNonAdmin": ["Submitted", "Completed", "Cancelled"],
-					"hideForAdmin": ["Submitted", "Completed", "Cancelled"]
+					"hideForNonAdmin": ["Submitted", "Cancelled"],
+					"hideForAdmin": ["Submitted", "Cancelled"]
 				}],
-				"hideForNonAdmin": ["", "Submitted", "Completed", "Cancelled"],
-				"hideForAdmin": ["", "Submitted", "Completed", "Cancelled"],
-				"disabledForNonAdmin": ["", "Submitted", "Completed", "Cancelled"],
-				"disabledForAdmin": ["", "Submitted", "Completed", "Cancelled"],
+				"hideForNonAdmin": ["", "Submitted", "Cancelled"],
+				"hideForAdmin": ["", "Submitted", "Cancelled"],
+				"disabledForNonAdmin": ["", "Submitted", "Cancelled"],
+				"disabledForAdmin": ["", "Submitted", "Cancelled"],
 				"onChange": [{
 					"allOfSpecificCheckboxesAreChecked": ["#requester-reversion-to-pending-approval_revert"],
 					"show": [{ "noteID": "requester-reversion-to-pending-approval_help-note" }],
@@ -446,25 +448,25 @@
 					"text": "This request cannot be approved until you've saved this request with this box checked.",
 					"htmlID": "requester-reversion-to-pending-approval_help-note",
 					"emphasis": 1,
-					"hideForNonAdmin": ["", "Submitted", "Completed", "Cancelled"],
-					"hideForAdmin": ["", "Submitted", "Completed", "Cancelled"]
+					"hideForNonAdmin": ["", "Submitted", "Cancelled"],
+					"hideForAdmin": ["", "Submitted", "Cancelled"]
 				}],
-				"hideForNonAdmin": ["", "Submitted", "Completed", "Cancelled"],
-				"hideForAdmin": ["", "Submitted", "Completed", "Cancelled"],
-				"disabledForNonAdmin": ["", "Submitted", "Completed", "Cancelled"],
-				"disabledForAdmin": ["", "Submitted", "Completed", "Cancelled"],
+				"hideForNonAdmin": ["", "Submitted", "Cancelled"],
+				"hideForAdmin": ["", "Submitted", "Cancelled"],
+				"disabledForNonAdmin": ["", "Submitted", "Cancelled"],
+				"disabledForAdmin": ["", "Submitted", "Cancelled"], */
 
 
 
 
 
 				// about the requester
-			}, {
+			/* }, {
 				"elementType": "markup",
 				"tag": "div",
 				"htmlID": "container_about-the-requester",
 				"begin": 1,
-				"hideForNonAdmin": ["", "Submitted", "Completed", "Cancelled"],
+				"hideForNonAdmin": ["", "Submitted", "Cancelled"],
 				"hideForAdmin": [""],
 			}, {
 				"elementType": "markup",
@@ -477,39 +479,39 @@
 				"controlType": "text",
 				"fieldName": "Requester Name",
 				"labelContent": "Name",
-				"disabledForNonAdmin": ["", "Submitted", "Completed", "Cancelled"],
-				"disabledForAdmin": ["", "Submitted", "Completed", "Cancelled"]
+				"disabledForNonAdmin": ["", "Submitted", "Cancelled"],
+				"disabledForAdmin": ["", "Submitted", "Cancelled"]
 			}, {
 				"elementType": "field",
 				"controlType": "text",
 				"fieldName": "Requester Department",
 				"labelContent": "Department",
-				"disabledForNonAdmin": ["", "Submitted", "Completed", "Cancelled"],
-				"disabledForAdmin": ["", "Submitted", "Completed", "Cancelled"]
+				"disabledForNonAdmin": ["", "Submitted", "Cancelled"],
+				"disabledForAdmin": ["", "Submitted", "Cancelled"]
 			}, {
 				"elementType": "field",
 				"controlType": "text",
 				"fieldName": "Requester Email",
 				"labelContent": "Email",
-				"disabledForNonAdmin": ["", "Submitted", "Completed", "Cancelled"],
-				"disabledForAdmin": ["", "Submitted", "Completed", "Cancelled"]
+				"disabledForNonAdmin": ["", "Submitted", "Cancelled"],
+				"disabledForAdmin": ["", "Submitted", "Cancelled"]
 			}, {
 				"elementType": "field",
 				"controlType": "text",
 				"fieldName": "Requester Phone",
 				"labelContent": "Phone",
-				"disabledForNonAdmin": ["", "Submitted", "Completed", "Cancelled"],
-				"disabledForAdmin": ["", "Submitted", "Completed", "Cancelled"]
+				"disabledForNonAdmin": ["", "Submitted", "Cancelled"],
+				"disabledForAdmin": ["", "Submitted", "Cancelled"]
 			}, {
 				"elementType": "field",
 				"controlType": "text",
 				"fieldName": "Requester Account",
 				"labelContent": "Account",
 				"yieldsViewPermissions": 1,
-				"hideForNonAdmin": ["", "Submitted", "Completed", "Cancelled"],
-				"hideForAdmin": ["", "Submitted", "Completed", "Cancelled"],
-				"disabledForNonAdmin": ["", "Submitted", "Completed", "Cancelled"],
-				"disabledForAdmin": ["", "Submitted", "Completed", "Cancelled"]
+				"hideForNonAdmin": ["", "Submitted", "Cancelled"],
+				"hideForAdmin": ["", "Submitted", "Cancelled"],
+				"disabledForNonAdmin": ["", "Submitted", "Cancelled"],
+				"disabledForAdmin": ["", "Submitted", "Cancelled"]
 			}, {
 				"elementType": "field",
 				"controlType": "peoplePicker",
@@ -517,14 +519,14 @@
 				"labelContent": "Requested By",
 				"listFieldName": "RequestedBy",
 				"yieldsViewPermissions": 1,
-				"hideForNonAdmin": ["", "Submitted", "Completed", "Cancelled"],
-				"hideForAdmin": ["", "Submitted", "Completed", "Cancelled"],
-				"disabledForNonAdmin": ["", "Submitted", "Completed", "Cancelled"],
-				"disabledForAdmin": ["", "Submitted", "Completed", "Cancelled"]
+				"hideForNonAdmin": ["", "Submitted", "Cancelled"],
+				"hideForAdmin": ["", "Submitted", "Cancelled"],
+				"disabledForNonAdmin": ["", "Submitted", "Cancelled"],
+				"disabledForAdmin": ["", "Submitted", "Cancelled"]
 			}, {
 				"elementType": "markup",
 				"tag": "div",
-				"end": 1
+				"end": 1 */
 
 
 
@@ -551,14 +553,14 @@
 
 
 
-			}, {
+			// }, {
 				'elementType': 'markup',
 				'tag': 'h2',
 				'content': 'Space Request',
 				'begin': 1,
 				'end': 1,
-				'hideForNonAdmin': ["Submitted", "Completed", "Cancelled"],
-				'hideForAdmin': ["Submitted", "Completed", "Cancelled"]
+				'hideForNonAdmin': ["Submitted", "Cancelled"],
+				'hideForAdmin': ["Submitted", "Cancelled"]
 			}, {
 				'elementType': 'field',
 				'controlType': 'radio',
@@ -581,8 +583,8 @@
 						'text': "You must have a space confirmed prior to submitting this request",
 						'htmlID': "no-space-confirmed",
 						'emphasis': 1,
-						'hideForNonAdmin': ["", "Submitted", "Completed", "Cancelled"],
-						'hideForAdmin': ["", "Submitted", "Completed", "Cancelled"]
+						'hideForNonAdmin': ["", "Submitted", "Cancelled"],
+						'hideForAdmin': ["", "Submitted", "Cancelled"]
 					}
 				],
 				'onChange': [
@@ -638,12 +640,12 @@
 						],
 					}
 				],
-				"requiredForNonAdmin": ["", "Pending Approval"],
-				"requiredForAdmin": ["", "Pending Approval"],
-				"disabledForNonAdmin": ["Completed", "Cancelled"],
-				"disabledForAdmin": ["Completed", "Cancelled"],
-				'hideForNonAdmin': ["Submitted", "Completed", "Cancelled"],
-				'hideForAdmin': ["Submitted", "Completed", "Cancelled"]
+				"requiredForNonAdmin": [""],
+				"requiredForAdmin": [""],
+				"disabledForNonAdmin": ["Cancelled"],
+				"disabledForAdmin": ["Cancelled"],
+				'hideForNonAdmin': ["Submitted", "Cancelled"],
+				'hideForAdmin': ["Submitted", "Cancelled"]
 
 
 				/*}, {
@@ -668,8 +670,8 @@
 						'text': 'You must contact WPC and/or submit a <a href="https://bmos.sharepoint.com/sites/wpc-catering/SitePages/My%20Puck%20Catering%20Requests.aspx" target="_blank">Puck Catering Request</a> prior to submitting this request',
 						'htmlID': "wpc-not-contacted",
 						'emphasis': 1,
-						'hideForNonAdmin': ["", "Submitted", "Completed", "Cancelled"],
-						'hideForAdmin': ["", "Submitted", "Completed", "Cancelled"]
+						'hideForNonAdmin': ["", "Submitted", "Cancelled"],
+						'hideForAdmin': ["", "Submitted", "Cancelled"]
 					}
 				],
 				'onChange': [
@@ -762,10 +764,10 @@
 				],
 				"requiredForNonAdmin": [""],
 				"requiredForAdmin": [""],
-				"disabledForNonAdmin": ["Completed", "Cancelled"],
-				"disabledForAdmin": ["Completed", "Cancelled"],
-				'hideForNonAdmin': ["Submitted", "Completed", "Cancelled"],
-				'hideForAdmin': ["Submitted", "Completed", "Cancelled"]
+				"disabledForNonAdmin": ["Cancelled"],
+				"disabledForAdmin": ["Cancelled"],
+				'hideForNonAdmin': ["Submitted", "Cancelled"],
+				'hideForAdmin': ["Submitted", "Cancelled"]
 
 			}, {
 				'elementType': 'field',
@@ -789,8 +791,8 @@
 						'text': 'You must contact AV and/or submit a <a href="https://bmos.sharepoint.com/sites/iit-event-av/SitePages/My%20Event%20AV%20Requests.aspx" target="_blank">Event AV Request</a> prior to submitting this request',
 						'htmlID': "av-not-contacted",
 						'emphasis': 1,
-						'hideForNonAdmin': ["", "Submitted", "Completed", "Cancelled"],
-						'hideForAdmin': ["", "Submitted", "Completed", "Cancelled"]
+						'hideForNonAdmin': ["", "Submitted", "Cancelled"],
+						'hideForAdmin': ["", "Submitted", "Cancelled"]
 					}
 				],
 				'onChange': [
@@ -883,10 +885,10 @@
 				],
 				"requiredForNonAdmin": [""],
 				"requiredForAdmin": [""],
-				"disabledForNonAdmin": ["Completed", "Cancelled"],
-				"disabledForAdmin": ["Completed", "Cancelled"],
-				'hideForNonAdmin': ["Submitted", "Completed", "Cancelled"],
-				'hideForAdmin': ["Submitted", "Completed", "Cancelled"]
+				"disabledForNonAdmin": ["Cancelled"],
+				"disabledForAdmin": ["Cancelled"],
+				'hideForNonAdmin': ["Submitted", "Cancelled"],
+				'hideForAdmin': ["Submitted", "Cancelled"]
 
 					*/
 
@@ -965,14 +967,14 @@
 					{
 						'text': "E.g., 77",
 						'htmlID': "help-note_event-space-request-id",
-						'hideForNonAdmin': ["Submitted", "Completed", "Cancelled"],
-						'hideForAdmin': ["Submitted", "Completed", "Cancelled"]
+						'hideForNonAdmin': ["Submitted", "Cancelled"],
+						'hideForAdmin': ["Submitted", "Cancelled"]
 					}
 				],
 				'hideForNonAdmin': [""],
 				'hideForAdmin': [""],
-				'hideButtonForNonAdmin': ["Completed", "Cancelled"],
-				'hideButtonForAdmin': ["Completed", "Cancelled"],
+				'hideButtonForNonAdmin': ["Cancelled"],
+				'hideButtonForAdmin': ["Cancelled"],
 				'onChange': [
 					{ 'thisFieldIsPositiveInteger': 1, 'show': [{ 'divID': "label-and-control_Import-from-Event-Space-Request" }] },
 					{ 'thisFieldIsPositiveInteger': 0, 'hide': [{ 'divID': "label-and-control_Import-from-Event-Space-Request" }] }
@@ -989,10 +991,10 @@
 						'htmlID': "help-note_import-from-event-space-request",
 					}
 				],
-				'hideForNonAdmin': ["", "Submitted", "Completed", "Cancelled"],
-				'hideForAdmin': ["", "Submitted", "Completed", "Cancelled"],
-				"disabledForNonAdmin": ["Completed", "Cancelled"],
-				"disabledForAdmin": ["Completed", "Cancelled"],
+				'hideForNonAdmin': ["", "Submitted", "Cancelled"],
+				'hideForAdmin': ["", "Submitted", "Cancelled"],
+				"disabledForNonAdmin": ["Cancelled"],
+				"disabledForAdmin": ["Cancelled"],
 			}, {
 				'elementType': 'field',
 				'controlType': 'check',
@@ -1030,10 +1032,10 @@
 						'value': 'Other', 'display': 'Other'
 					}
 				],
-				'disabledForNonAdmin': ['Approved', 'Completed', 'Disapproved', 'Cancelled'],
-				'disabledForAdmin': ['Approved', 'Completed', 'Disapproved', 'Cancelled'],
-				'requiredForNonAdmin': ["", "Pending Approval"],
-				'requiredForAdmin': ["", "Pending Approval"],
+				'disabledForNonAdmin': ['Cancelled'],
+				'disabledForAdmin': ['Cancelled'],
+				'requiredForNonAdmin': [""],
+				'requiredForAdmin': [""],
 				'onChange': [
 					{
 						'allOfSpecificCheckboxesAreChecked': ['input#event-space_other'],
@@ -1045,10 +1047,31 @@
 					}, {
 						'noneOfSpecificCheckboxesAreChecked': ['input#event-space_other'],
 						'hide': [
-							{ 'divID': 'event-space-specification-container' },
 							{ 'fieldName': 'Other Event Space' },
 						],
 						'optional': [{ 'fieldName': 'Other Event Space', 'type': 'text' }]
+					}, {
+						'noneOfSpecificCheckboxesAreChecked': [
+							'input#event-space_other', 
+							'input#event-space_skyline-or-darbeloff'
+						],
+						'hide': [
+							{ 'divID': 'event-space-specification-container' },
+						],
+					}, {
+						'noneOfSpecificCheckboxesAreChecked': ['input#event-space_skyline-or-darbeloff'],
+						'hide': [
+							{ 'fieldName': 'Skyline or d\'Arbeloff' },
+						],
+						'optional': [{ 'fieldName': 'Skyline or d\'Arbeloff', 'type': 'select' }]
+					}, {
+						'allOfSpecificCheckboxesAreChecked': ['input#event-space_skyline-or-darbeloff'],
+						'addlOrConditions': ['$("input#Current-User-is-Admin").val() == 1'],
+						'show': [
+							{ 'divID': 'event-space-specification-container' },
+							{ 'fieldName': 'Skyline or d\'Arbeloff' },
+						],
+
 					},
 				],
 			}, {
@@ -1057,8 +1080,8 @@
 				'begin': 1,
 				'htmlID': 'event-space-specification-container',
 				'htmlClass': 'subsection-container',
-				'hideForNonAdmin': ['', 'Pending Revision', 'Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
-				'hideForAdmin': ['', 'Pending Revision', 'Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
+				'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
+				'hideForAdmin': ['', 'Submitted', 'Cancelled'],
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
@@ -1070,10 +1093,10 @@
 				'fieldName': 'Other Event Space',
 				'listFieldName': 'OtherEventSpace',
 				'labelContent': 'Other Event Space',
-				"disabledForNonAdmin": ["Completed", "Cancelled"],
-				"disabledForAdmin": ["Completed", "Cancelled"],
-				'hideForNonAdmin': ['', 'Pending Revision', 'Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
-				'hideForAdmin': ['', 'Pending Revision', 'Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
+				"disabledForNonAdmin": ["Cancelled"],
+				"disabledForAdmin": ["Cancelled"],
+				'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
+				'hideForAdmin': ['', 'Submitted', 'Cancelled'],
 			}, {
 				'elementType': 'field',
 				'controlType': 'select',
@@ -1084,10 +1107,10 @@
 					{ 'value': 'Skyline', 'display': 'Skyline' },
 					{ 'value': 'd\'Arbeloff', 'display': 'd\'Arbeloff' }
 				],
-				'disabledForNonAdmin': ['', 'Pending Revision', 'Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
-				'disabledForAdmin': ['Completed', 'Disapproved', 'Cancelled'],
-				'hideForNonAdmin': ['', 'Pending Revision', 'Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
-				'hideForAdmin': ['', 'Pending Revision', 'Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
+				'disabledForNonAdmin': ['', 'Submitted', 'Cancelled'],
+				'disabledForAdmin': ['Cancelled'],
+				'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
+				'hideForAdmin': ['', 'Submitted', 'Cancelled'],
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
@@ -1103,75 +1126,75 @@
 				'labelContent': 'Floor Plan',
 
 
-				'populatableForNonAdmin': ['', 'Pending Revision', 'Pending Approval'],
-				'populatableForAdmin': ['', 'Pending Revision', 'Pending Approval', 'Approved'],
-				'replaceableForNonAdmin': ['Pending Revision', 'Pending Approval'],
-				'replaceableForAdmin': ['Pending Revision', 'Pending Approval', 'Approved'],
+				'populatableForNonAdmin': ['', 'Submitted'],
+				'populatableForAdmin': ['', 'Submitted'],
+				'replaceableForNonAdmin': ['Submitted'],
+				'replaceableForAdmin': ['Submitted'],
 			}, {
 				'elementType': 'field',
 				'controlType': 'text',
 				'fieldName': 'Event Name',
 				'listFieldName': 'EventName',
 				'labelContent': 'Event Name',
-				'requiredForNonAdmin': ['', 'Pending Revision', 'Pending Approval'],
-				'requiredForAdmin': ['', 'Pending Revision', 'Pending Approval'],
-				"disabledForNonAdmin": ["Completed", "Cancelled"],
-				"disabledForAdmin": ["Completed", "Cancelled"],
+				'requiredForNonAdmin': ['', 'Submitted'],
+				'requiredForAdmin': ['', 'Submitted'],
+				"disabledForNonAdmin": ["Cancelled"],
+				"disabledForAdmin": ["Cancelled"],
 			}, {
 				'elementType': 'field',
 				'controlType': 'text',
 				'fieldName': 'Total Attendance',
 				'labelContent': 'Total Attendance',
-				'requiredForNonAdmin': ['', 'Pending Revision', 'Pending Approval'],
-				'requiredForAdmin': ['', 'Pending Revision', 'Pending Approval'],
-				"disabledForNonAdmin": ["Completed", "Cancelled"],
-				"disabledForAdmin": ["Completed", "Cancelled"],
+				'requiredForNonAdmin': ['', 'Submitted'],
+				'requiredForAdmin': ['', 'Submitted'],
+				"disabledForNonAdmin": ["Cancelled"],
+				"disabledForAdmin": ["Cancelled"],
 			}, {
 				'elementType': 'field',
 				'controlType': 'text',
 				'fieldName': 'Total Non-Staff Attendance',
 				'labelContent': 'Total Non-Staff Attendance',
-				'requiredForNonAdmin': ['', 'Pending Revision', 'Pending Approval'],
-				'requiredForAdmin': ['', 'Pending Revision', 'Pending Approval'],
-				"disabledForNonAdmin": ["Completed", "Cancelled"],
-				"disabledForAdmin": ["Completed", "Cancelled"],
+				'requiredForNonAdmin': ['', 'Submitted'],
+				'requiredForAdmin': ['', 'Submitted'],
+				"disabledForNonAdmin": ["Cancelled"],
+				"disabledForAdmin": ["Cancelled"],
 			}, {
 				'elementType': 'field',
 				'controlType': 'datetime',
 				'fieldName': 'Event Beginning Datetime',
 				'listFieldName': 'EventBeginningDatetime',
 				'labelContent': 'Starting',
-				'requiredForNonAdmin': ['', 'Pending Revision', 'Pending Approval'],
-				'requiredForAdmin': ['', 'Pending Revision', 'Pending Approval'],
-				"disabledForNonAdmin": ["Completed", "Cancelled"],
-				"disabledForAdmin": ["Completed", "Cancelled"],
+				'requiredForNonAdmin': ['', 'Submitted'],
+				'requiredForAdmin': ['', 'Submitted'],
+				"disabledForNonAdmin": ["Cancelled"],
+				"disabledForAdmin": ["Cancelled"],
 			}, {
 				'elementType': 'field',
 				'controlType': 'datetime',
 				'fieldName': 'Event Ending Datetime',
 				'labelContent': 'Ending',
-				'requiredForNonAdmin': ['', 'Pending Revision', 'Pending Approval'],
-				'requiredForAdmin': ['', 'Pending Revision', 'Pending Approval'],
-				"disabledForNonAdmin": ["Completed", "Cancelled"],
-				"disabledForAdmin": ["Completed", "Cancelled"],
+				'requiredForNonAdmin': ['', 'Submitted'],
+				'requiredForAdmin': ['', 'Submitted'],
+				"disabledForNonAdmin": ["Cancelled"],
+				"disabledForAdmin": ["Cancelled"],
 			}, {
 				'elementType': 'field',
 				'controlType': 'datetime',
 				'fieldName': 'Space Reserved Beginning Datetime',
 				'labelContent': 'Space Reserved Starting',
-				'requiredForNonAdmin': ['', 'Pending Revision', 'Pending Approval'],
-				'requiredForAdmin': ['', 'Pending Revision', 'Pending Approval'],
-				"disabledForNonAdmin": ["Completed", "Cancelled"],
-				"disabledForAdmin": ["Completed", "Cancelled"],
+				'requiredForNonAdmin': ['', 'Submitted'],
+				'requiredForAdmin': ['', 'Submitted'],
+				"disabledForNonAdmin": ["Cancelled"],
+				"disabledForAdmin": ["Cancelled"],
 			}, {
 				'elementType': 'field',
 				'controlType': 'datetime',
 				'fieldName': 'Space Reserved Ending Datetime',
 				'labelContent': 'Space Reserved Ending',
-				'requiredForNonAdmin': ['', 'Pending Revision', 'Pending Approval'],
-				'requiredForAdmin': ['', 'Pending Revision', 'Pending Approval'],
-				"disabledForNonAdmin": ["Completed", "Cancelled"],
-				"disabledForAdmin": ["Completed", "Cancelled"],
+				'requiredForNonAdmin': ['', 'Submitted'],
+				'requiredForAdmin': ['', 'Submitted'],
+				"disabledForNonAdmin": ["Cancelled"],
+				"disabledForAdmin": ["Cancelled"],
 
 
 
@@ -1182,20 +1205,20 @@
 				// 	'fieldName': 'Skyline  Date',
 				// 	'listFieldName': 'EventBeginningDatetime',
 				// 	'labelContent': 'Starting',
-				// 	'requiredForNonAdmin': ['', 'Pending Revision', 'Pending Approval'],
-				// 	'requiredForAdmin': ['', 'Pending Revision', 'Pending Approval'],
-				// 	"disabledForNonAdmin": ["Completed", "Cancelled"],
-				// 	"disabledForAdmin": ["Completed", "Cancelled"],
+				// 	'requiredForNonAdmin': ['', 'Submitted'],
+				// 	'requiredForAdmin': ['', 'Submitted'],
+				// 	"disabledForNonAdmin": ["Cancelled"],
+				// 	"disabledForAdmin": ["Cancelled"],
 			}, {
 				"elementType": "field",
 				"controlType": "peoplePicker",
 				"fieldName": "Onsite Contact",
 				"labelContent": "Onsite Contact",
 				"yieldsViewPermissions": 1,
-				'requiredForNonAdmin': ['', 'Pending Revision', 'Pending Approval'],
-				'requiredForAdmin': ['', 'Pending Revision', 'Pending Approval'],
-				"disabledForNonAdmin": ["Completed", "Cancelled"],
-				"disabledForAdmin": ["Completed", "Cancelled"],
+				'requiredForNonAdmin': ['', 'Submitted'],
+				'requiredForAdmin': ['', 'Submitted'],
+				"disabledForNonAdmin": ["Cancelled"],
+				"disabledForAdmin": ["Cancelled"],
 			}, {
 				'elementType': 'markup',
 				'tag': 'h2',
@@ -1207,8 +1230,8 @@
 				'controlType': 'textarea',
 				'fieldName': 'Schedule',
 				'labelContent': 'What\'s happening when?',
-				"disabledForNonAdmin": ["Completed", "Cancelled"],
-				"disabledForAdmin": ["Completed", "Cancelled"],
+				"disabledForNonAdmin": ["Cancelled"],
+				"disabledForAdmin": ["Cancelled"],
 
 
 
@@ -1233,15 +1256,15 @@
 				'controlType': 'text',
 				'fieldName': 'Time',
 				'labelContent': 'Time',
-				"disabledForNonAdmin": ["Completed", "Cancelled"],
-				"disabledForAdmin": ["Completed", "Cancelled"],
+				"disabledForNonAdmin": ["Cancelled"],
+				"disabledForAdmin": ["Cancelled"],
 			}, {
 				'elementType': 'field',
 				'controlType': 'text',
 				'fieldName': 'Schedule Item',
 				'labelContent': 'What\'s scheduled?',
-				"disabledForNonAdmin": ["Completed", "Cancelled"],
-				"disabledForAdmin": ["Completed", "Cancelled"],
+				"disabledForNonAdmin": ["Cancelled"],
+				"disabledForAdmin": ["Cancelled"],
 			}, {
 				'elementType': 'markup',
 				'tag': 'a',
@@ -1250,8 +1273,8 @@
 				'htmlClass': 'remove-section-anchor',
 				'content': 'Remove this Item',
 				'removeThisRepeat': 1,
-				'hideForNonAdmin': ["Completed", "Cancelled"],
-				'hideForAdmin': ["Completed", "Cancelled"],
+				'hideForNonAdmin': ["Cancelled"],
+				'hideForAdmin': ["Cancelled"],
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
@@ -1265,8 +1288,8 @@
 				'htmlClass': 'repeat-section-anchor',
 				'content': 'Add a schedule item',
 				'repeatSectionID': 'event-element-and-time',
-				'hideForNonAdmin': ["Completed", "Cancelled"],
-				'hideForAdmin': ["Completed", "Cancelled"],
+				'hideForNonAdmin': ["Cancelled"],
+				'hideForAdmin': ["Cancelled"],
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
@@ -1369,38 +1392,38 @@
 						'calibrateOddEvenSubsectionClasses': ['div#tables-cleaning-equipment-registration-table-times-container', 'div#tables-cleaning-equipment-rental-equipment-container', 'div#tables-cleaning-equipment-more-container']
 					}
 				],
-				"disabledForNonAdmin": ["Completed", "Cancelled"],
-				"disabledForAdmin": ["Completed", "Cancelled"],
+				"disabledForNonAdmin": ["Cancelled"],
+				"disabledForAdmin": ["Cancelled"],
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
 				'begin': 1,
 				'htmlID': 'tables-cleaning-equipment-options-container',
 				'htmlClass': 'subsection-container',
-				'hideForNonAdmin': ['', 'Pending Revision', 'Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
-				'hideForAdmin': ['', 'Pending Revision', 'Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
+				'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
+				'hideForAdmin': ['', 'Submitted', 'Cancelled'],
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
 				'begin': 1,
 				'htmlClass': 'subsection',
 				'htmlID': 'tables-cleaning-equipment-registration-table-times-container',
-				'hideForNonAdmin': ['', 'Pending Revision', 'Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
-				'hideForAdmin': ['', 'Pending Revision', 'Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
+				'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
+				'hideForAdmin': ['', 'Submitted', 'Cancelled'],
 			}, {
 				'elementType': 'field',
 				'controlType': 'datetime',
 				'fieldName': 'Registration Table Beginning Datetime',
 				'labelContent': 'Setup Completed By',
-				"disabledForNonAdmin": ["Completed", "Cancelled"],
-				"disabledForAdmin": ["Completed", "Cancelled"],
+				"disabledForNonAdmin": ["Cancelled"],
+				"disabledForAdmin": ["Cancelled"],
 			}, {
 				'elementType': 'field',
 				'controlType': 'datetime',
 				'fieldName': 'Registration Table Ending Datetime',
 				'labelContent': 'Breakdown Starting',
-				"disabledForNonAdmin": ["Completed", "Cancelled"],
-				"disabledForAdmin": ["Completed", "Cancelled"],
+				"disabledForNonAdmin": ["Cancelled"],
+				"disabledForAdmin": ["Cancelled"],
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
@@ -1411,8 +1434,8 @@
 				'begin': 1,
 				'htmlClass': 'subsection',
 				'htmlID': 'tables-cleaning-equipment-rental-equipment-container',
-				'hideForNonAdmin': ['', 'Pending Revision', 'Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
-				'hideForAdmin': ['', 'Pending Revision', 'Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
+				'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
+				'hideForAdmin': ['', 'Submitted', 'Cancelled'],
 			}, {
 				'elementType': 'field',
 				'controlType': 'radio',
@@ -1427,8 +1450,8 @@
 						'display': 'C&W will set up (for an additional fee)'
 					}
 				],
-				'disabledForNonAdmin': ['Approved', 'Completed', 'Disapproved', 'Cancelled'],
-				'disabledForAdmin': ['Approved', 'Completed', 'Disapproved', 'Cancelled'],
+				'disabledForNonAdmin': ['Cancelled'],
+				'disabledForAdmin': ['Cancelled'],
 			}, {
 				'elementType': 'field',
 				'controlType': 'radio',
@@ -1446,8 +1469,8 @@
 						'display': 'Event Space'
 					}
 				],
-				'disabledForNonAdmin': ['Approved', 'Completed', 'Disapproved', 'Cancelled'],
-				'disabledForAdmin': ['Approved', 'Completed', 'Disapproved', 'Cancelled'],
+				'disabledForNonAdmin': ['Cancelled'],
+				'disabledForAdmin': ['Cancelled'],
 			}, {
 				'elementType': 'field',
 				'controlType': 'check',
@@ -1465,8 +1488,8 @@
 						//	 'display': 'Porter service will not be needed'
 					}
 				],
-				'disabledForNonAdmin': ['Approved', 'Completed', 'Disapproved', 'Cancelled'],
-				'disabledForAdmin': ['Approved', 'Completed', 'Disapproved', 'Cancelled'],
+				'disabledForNonAdmin': ['Cancelled'],
+				'disabledForAdmin': ['Cancelled'],
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
@@ -1477,15 +1500,15 @@
 				'begin': 1,
 				'htmlClass': 'subsection',
 				'htmlID': 'tables-cleaning-equipment-more-container',
-				'hideForNonAdmin': ['', 'Pending Revision', 'Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
-				'hideForAdmin': ['', 'Pending Revision', 'Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
+				'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
+				'hideForAdmin': ['', 'Submitted', 'Cancelled'],
 			}, {
 				'elementType': 'field',
 				'controlType': 'textarea',
 				'fieldName': 'More Tables and Equipment and Cleaning',
 				'labelContent': 'What more tables, equipment, and cleaning?',
-				"disabledForNonAdmin": ["Completed", "Cancelled"],
-				"disabledForAdmin": ["Completed", "Cancelled"],
+				"disabledForNonAdmin": ["Cancelled"],
+				"disabledForAdmin": ["Cancelled"],
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
@@ -1555,16 +1578,16 @@
 						'optional': [{ 'fieldName': 'WPC Other', 'type': 'textarea' }]
 					}
 				],
-				"disabledForNonAdmin": ["Completed", "Cancelled"],
-				"disabledForAdmin": ["Completed", "Cancelled"],
+				"disabledForNonAdmin": ["Cancelled"],
+				"disabledForAdmin": ["Cancelled"],
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
 				'begin': 1,
 				'htmlID': 'wpc-details-container',
 				'htmlClass': 'subsection-container',
-				'hideForNonAdmin': ['', 'Pending Revision', 'Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
-				'hideForAdmin': ['', 'Pending Revision', 'Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
+				'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
+				'hideForAdmin': ['', 'Submitted', 'Cancelled'],
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
@@ -1575,19 +1598,19 @@
 				'controlType': 'text',
 				'fieldName': 'WPC Account Number',
 				'labelContent': 'Account #',
-				'hideForNonAdmin': ['', 'Pending Revision', 'Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
-				'hideForAdmin': ['', 'Pending Revision', 'Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
-				"disabledForNonAdmin": ["Completed", "Cancelled"],
-				"disabledForAdmin": ["Completed", "Cancelled"],
+				'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
+				'hideForAdmin': ['', 'Submitted', 'Cancelled'],
+				"disabledForNonAdmin": ["Cancelled"],
+				"disabledForAdmin": ["Cancelled"],
 			}, {
 				'elementType': 'field',
 				'controlType': 'textarea',
 				'fieldName': 'WPC Other',
 				'labelContent': 'What other from WPC?',
-				'hideForNonAdmin': ['', 'Pending Revision', 'Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
-				'hideForAdmin': ['', 'Pending Revision', 'Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
-				"disabledForNonAdmin": ["Completed", "Cancelled"],
-				"disabledForAdmin": ["Completed", "Cancelled"],
+				'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
+				'hideForAdmin': ['', 'Submitted', 'Cancelled'],
+				"disabledForNonAdmin": ["Cancelled"],
+				"disabledForAdmin": ["Cancelled"],
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
@@ -1632,20 +1655,20 @@
 					{
 						'text': "E.g., phone, netbook, networking",
 						'htmlID': "help-note_help-desk-or-infra-assistance-needed",
-						'hideForNonAdmin': ["Submitted", "Completed", "Cancelled"],
-						'hideForAdmin': ["Submitted", "Completed", "Cancelled"]
+						'hideForNonAdmin': ["Submitted", "Cancelled"],
+						'hideForAdmin': ["Submitted", "Cancelled"]
 					}
 				],
-				"disabledForNonAdmin": ["Completed", "Cancelled"],
-				"disabledForAdmin": ["Completed", "Cancelled"],
+				"disabledForNonAdmin": ["Cancelled"],
+				"disabledForAdmin": ["Cancelled"],
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
 				'begin': 1,
 				'htmlID': 'help-desk-or-infra-account-number-container',
 				'htmlClass': 'subsection-container',
-				'hideForNonAdmin': ['', 'Pending Revision', 'Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
-				'hideForAdmin': ['', 'Pending Revision', 'Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
+				'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
+				'hideForAdmin': ['', 'Submitted', 'Cancelled'],
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
@@ -1656,8 +1679,8 @@
 				'controlType': 'text',
 				'fieldName': 'Help Desk or Infrastracture Account Number',
 				'labelContent': 'Account #',
-				"disabledForNonAdmin": ["Completed", "Cancelled"],
-				"disabledForAdmin": ["Completed", "Cancelled"],
+				"disabledForNonAdmin": ["Cancelled"],
+				"disabledForAdmin": ["Cancelled"],
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
@@ -1690,16 +1713,16 @@
 					{ 'anyOfSpecificCheckboxesAreChecked': ['input#iit-av_yes'], 'show': [{ 'divID': 'av-account-number-container' }], 'require': [{ 'fieldName': 'AV Account Number', 'type': 'text' }] },
 					{ 'noneOfSpecificCheckboxesAreChecked': ['input#iit-av_yes'], 'hide': [{ 'divID': 'av-account-number-container' }], 'optional': [{ 'fieldName': 'AV Account Number', 'type': 'text' }] },
 				],
-				"disabledForNonAdmin": ["Completed", "Cancelled"],
-				"disabledForAdmin": ["Completed", "Cancelled"],
+				"disabledForNonAdmin": ["Cancelled"],
+				"disabledForAdmin": ["Cancelled"],
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
 				'begin': 1,
 				'htmlID': 'av-account-number-container',
 				'htmlClass': 'subsection-container',
-				'hideForNonAdmin': ['', 'Pending Revision', 'Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
-				'hideForAdmin': ['', 'Pending Revision', 'Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
+				'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
+				'hideForAdmin': ['', 'Submitted', 'Cancelled'],
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
@@ -1710,8 +1733,8 @@
 				'controlType': 'text',
 				'fieldName': 'AV Account Number',
 				'labelContent': 'Account #',
-				"disabledForNonAdmin": ["Completed", "Cancelled"],
-				"disabledForAdmin": ["Completed", "Cancelled"],
+				"disabledForNonAdmin": ["Cancelled"],
+				"disabledForAdmin": ["Cancelled"],
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
@@ -1743,18 +1766,18 @@
 					{ 'anyOfSpecificCheckboxesAreChecked': ['input#exhibit-maintenance_other'], 'show': [{ 'divID': 'other-exhibit-maintenance-service-container' }], 'require': [{ 'fieldName': 'Other Exhibit Maintenance Service', 'type': 'textarea' }] },
 					{ 'noneOfSpecificCheckboxesAreChecked': ['input#exhibit-maintenance_other'], 'hide': [{ 'divID': 'other-exhibit-maintenance-service-container' }], 'optional': [{ 'fieldName': 'Other Exhibit Maintenance Service', 'type': 'textarea' }] },
 				],
-				"disabledForNonAdmin": ["Completed", "Cancelled"],
-				"disabledForAdmin": ["Completed", "Cancelled"],
+				"disabledForNonAdmin": ["Cancelled"],
+				"disabledForAdmin": ["Cancelled"],
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
 				'begin': 1,
 				'htmlID': 'other-exhibit-maintenance-service-container',
 				'htmlClass': 'subsection-container',
-				'hideForNonAdmin': ['', 'Pending Revision', 'Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
-				'hideForAdmin': ['', 'Pending Revision', 'Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
-				"disabledForNonAdmin": ["Completed", "Cancelled"],
-				"disabledForAdmin": ["Completed", "Cancelled"],
+				'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
+				'hideForAdmin': ['', 'Submitted', 'Cancelled'],
+				"disabledForNonAdmin": ["Cancelled"],
+				"disabledForAdmin": ["Cancelled"],
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
@@ -1765,8 +1788,8 @@
 				'controlType': 'textarea',
 				'fieldName': 'Other Exhibit Maintenance Service',
 				'labelContent': 'Specify Other Exhibit Maintenance Service',
-				"disabledForNonAdmin": ["Completed", "Cancelled"],
-				"disabledForAdmin": ["Completed", "Cancelled"],
+				"disabledForNonAdmin": ["Cancelled"],
+				"disabledForAdmin": ["Cancelled"],
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
@@ -1807,8 +1830,8 @@
 						'display': 'No parking validation needed'
 					}
 				],
-				"disabledForNonAdmin": ["Completed", "Cancelled"],
-				"disabledForAdmin": ["Completed", "Cancelled"],
+				"disabledForNonAdmin": ["Cancelled"],
+				"disabledForAdmin": ["Cancelled"],
 			}, {
 				'elementType': 'field',
 				'controlType': 'check',
@@ -1846,16 +1869,16 @@
 						]
 					}
 				],
-				"disabledForNonAdmin": ["Completed", "Cancelled"],
-				"disabledForAdmin": ["Completed", "Cancelled"],
+				"disabledForNonAdmin": ["Cancelled"],
+				"disabledForAdmin": ["Cancelled"],
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
 				'begin': 1,
 				'htmlID': 'security-detail-details-container',
 				'htmlClass': 'subsection-container',
-				'hideForNonAdmin': ['', 'Pending Revision', 'Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
-				'hideForAdmin': ['', 'Pending Revision', 'Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
+				'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
+				'hideForAdmin': ['', 'Submitted', 'Cancelled'],
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
@@ -1866,29 +1889,29 @@
 				'controlType': 'text',
 				'fieldName': 'Security Detail Account Number',
 				'labelContent': 'Account #',
-				"disabledForNonAdmin": ["Completed", "Cancelled"],
-				"disabledForAdmin": ["Completed", "Cancelled"],
+				"disabledForNonAdmin": ["Cancelled"],
+				"disabledForAdmin": ["Cancelled"],
 			}, {
 				'elementType': 'field',
 				'controlType': 'text',
 				'fieldName': 'Security Detail Location',
 				'labelContent': 'Location',
-				"disabledForNonAdmin": ["Completed", "Cancelled"],
-				"disabledForAdmin": ["Completed", "Cancelled"],
+				"disabledForNonAdmin": ["Cancelled"],
+				"disabledForAdmin": ["Cancelled"],
 			}, {
 				'elementType': 'field',
 				'controlType': 'datetime',
 				'fieldName': 'Security Detail Beginning Datetime',
 				'labelContent': 'Starting',
-				"disabledForNonAdmin": ["Completed", "Cancelled"],
-				"disabledForAdmin": ["Completed", "Cancelled"],
+				"disabledForNonAdmin": ["Cancelled"],
+				"disabledForAdmin": ["Cancelled"],
 			}, {
 				'elementType': 'field',
 				'controlType': 'datetime',
 				'fieldName': 'Security Detail Ending Datetime',
 				'labelContent': 'Ending',
-				"disabledForNonAdmin": ["Completed", "Cancelled"],
-				"disabledForAdmin": ["Completed", "Cancelled"],
+				"disabledForNonAdmin": ["Cancelled"],
+				"disabledForAdmin": ["Cancelled"],
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
@@ -1937,16 +1960,16 @@
 						]
 					}
 				],
-				"disabledForNonAdmin": ["Completed", "Cancelled"],
-				"disabledForAdmin": ["Completed", "Cancelled"],
+				"disabledForNonAdmin": ["Cancelled"],
+				"disabledForAdmin": ["Cancelled"],
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
 				'begin': 1,
 				'htmlID': 'guest-access-details-container',
 				'htmlClass': 'subsection-container',
-				'hideForNonAdmin': ['', 'Pending Revision', 'Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
-				'hideForAdmin': ['', 'Pending Revision', 'Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
+				'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
+				'hideForAdmin': ['', 'Submitted', 'Cancelled'],
 
 			}, {
 				'elementType': 'markup',
@@ -1958,22 +1981,22 @@
 				'controlType': 'text',
 				'fieldName': 'Guest Access Location',
 				'labelContent': 'Location',
-				"disabledForNonAdmin": ["Completed", "Cancelled"],
-				"disabledForAdmin": ["Completed", "Cancelled"],
+				"disabledForNonAdmin": ["Cancelled"],
+				"disabledForAdmin": ["Cancelled"],
 			}, {
 				'elementType': 'field',
 				'controlType': 'datetime',
 				'fieldName': 'Guest Access Beginning Datetime',
 				'labelContent': 'Starting',
-				"disabledForNonAdmin": ["Completed", "Cancelled"],
-				"disabledForAdmin": ["Completed", "Cancelled"],
+				"disabledForNonAdmin": ["Cancelled"],
+				"disabledForAdmin": ["Cancelled"],
 			}, {
 				'elementType': 'field',
 				'controlType': 'datetime',
 				'fieldName': 'Guest Access Ending Datetime',
 				'labelContent': 'Ending',
-				"disabledForNonAdmin": ["Completed", "Cancelled"],
-				"disabledForAdmin": ["Completed", "Cancelled"],
+				"disabledForNonAdmin": ["Cancelled"],
+				"disabledForAdmin": ["Cancelled"],
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
@@ -2012,16 +2035,16 @@
 						'optional': [{ 'fieldName': 'Elevator Access Security', 'type': 'radio' }]
 					}
 				],
-				"disabledForNonAdmin": ["Completed", "Cancelled"],
-				"disabledForAdmin": ["Completed", "Cancelled"],
+				"disabledForNonAdmin": ["Cancelled"],
+				"disabledForAdmin": ["Cancelled"],
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
 				'begin': 1,
 				'htmlID': 'elevator-access-details-container',
 				'htmlClass': 'subsection-container',
-				'hideForNonAdmin': ['', 'Pending Revision', 'Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
-				'hideForAdmin': ['', 'Pending Revision', 'Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
+				'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
+				'hideForAdmin': ['', 'Submitted', 'Cancelled'],
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
@@ -2041,8 +2064,8 @@
 						'display': 'We will handle 4th and/or 5th floor security ourselves'
 					}
 				],
-				"disabledForNonAdmin": ["Completed", "Cancelled"],
-				"disabledForAdmin": ["Completed", "Cancelled"],
+				"disabledForNonAdmin": ["Cancelled"],
+				"disabledForAdmin": ["Cancelled"],
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
@@ -2087,8 +2110,8 @@
 						'display': 'More'
 					}
 				],
-				"disabledForNonAdmin": ["Completed", "Cancelled"],
-				"disabledForAdmin": ["Completed", "Cancelled"],
+				"disabledForNonAdmin": ["Cancelled"],
+				"disabledForAdmin": ["Cancelled"],
 				'onChange': [
 					{
 						'noneOfSpecificCheckboxesAreChecked': ['#facilities_tempcontrol', '#facilities_more'],
@@ -2164,34 +2187,34 @@
 				'begin': 1,
 				'htmlID': 'facilities-subsection-container',
 				'htmlClass': 'subsection-container',
-				'hideForNonAdmin': ['', 'Pending Revision', 'Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
-				'hideForAdmin': ['', 'Pending Revision', 'Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
+				'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
+				'hideForAdmin': ['', 'Submitted', 'Cancelled'],
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
 				'begin': 1,
 				'htmlID': 'facilities-temperature-control-subsection',
 				'htmlClass': 'subsection',
-				'hideForNonAdmin': ['', 'Pending Revision', 'Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
-				'hideForAdmin': ['', 'Pending Revision', 'Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
+				'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
+				'hideForAdmin': ['', 'Submitted', 'Cancelled'],
 			}, {
 				'elementType': 'field',
 				'controlType': 'datetime',
 				'fieldName': 'Temperature Control Beginning Datetime',
 				'labelContent': 'Temperature Control Starting',
-				'hideForNonAdmin': ['', 'Pending Revision', 'Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
-				'hideForAdmin': ['', 'Pending Revision', 'Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
-				"disabledForNonAdmin": ["Completed", "Cancelled"],
-				"disabledForAdmin": ["Completed", "Cancelled"],
+				'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
+				'hideForAdmin': ['', 'Submitted', 'Cancelled'],
+				"disabledForNonAdmin": ["Cancelled"],
+				"disabledForAdmin": ["Cancelled"],
 			}, {
 				'elementType': 'field',
 				'controlType': 'datetime',
 				'fieldName': 'Temperature Control Ending Datetime',
 				'labelContent': 'Temperature Control Ending',
-				'hideForNonAdmin': ['', 'Pending Revision', 'Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
-				'hideForAdmin': ['', 'Pending Revision', 'Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
-				"disabledForNonAdmin": ["Completed", "Cancelled"],
-				"disabledForAdmin": ["Completed", "Cancelled"],
+				'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
+				'hideForAdmin': ['', 'Submitted', 'Cancelled'],
+				"disabledForNonAdmin": ["Cancelled"],
+				"disabledForAdmin": ["Cancelled"],
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
@@ -2204,17 +2227,17 @@
 				'begin': 1,
 				'htmlID': 'facilities-more-subsection',
 				'htmlClass': 'subsection',
-				'hideForNonAdmin': ['', 'Pending Revision', 'Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
-				'hideForAdmin': ['', 'Pending Revision', 'Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
+				'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
+				'hideForAdmin': ['', 'Submitted', 'Cancelled'],
 			}, {
 				'elementType': 'field',
 				'controlType': 'textarea',
 				'fieldName': 'More Facilities',
 				'labelContent': 'What more from Facilities?',
-				'hideForNonAdmin': ['', 'Pending Revision', 'Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
-				'hideForAdmin': ['', 'Pending Revision', 'Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
-				"disabledForNonAdmin": ["Completed", "Cancelled"],
-				"disabledForAdmin": ["Completed", "Cancelled"],
+				'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
+				'hideForAdmin': ['', 'Submitted', 'Cancelled'],
+				"disabledForNonAdmin": ["Cancelled"],
+				"disabledForAdmin": ["Cancelled"],
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
@@ -2251,24 +2274,24 @@
 					{
 						'text': 'Required for 100+ attendees when alcohol is served',
 						'htmlID': 'crowd-management_help-note',
-						'hideForNonAdmin': ['Pending Revision', 'Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
-						'hideForAdmin': ['Pending Revision', 'Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled']
+						'hideForNonAdmin': ['Cancelled'],
+						'hideForAdmin': ['Cancelled']
 					}
 				],
 				'onChange': [
 					{ 'thisFieldIsChecked': 1, 'set': [{ 'fieldName': 'Number of Crowd Managers', 'type': 'text', 'method': 'dynamic', 'value': 'Math.max(1, Math.floor($("input#Total-Attendance").val()/250))' }], 'show': [{ 'divID': 'crowd-management-details-container' }], 'require': [{ 'fieldName': 'Number of Crowd Managers', 'type': 'text' }] },
 					{ 'thisFieldIsChecked': 0, 'hide': [{ 'divID': 'crowd-management-details-container' }], 'optional': [{ 'fieldName': 'Number of Crowd Managers', 'type': 'text' }] }
 				],
-				"disabledForNonAdmin": ["Completed", "Cancelled"],
-				"disabledForAdmin": ["Completed", "Cancelled"],
+				"disabledForNonAdmin": ["Cancelled"],
+				"disabledForAdmin": ["Cancelled"],
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
 				'begin': 1,
 				'htmlID': 'crowd-management-details-container',
 				'htmlClass': 'subsection-container',
-				'hideForNonAdmin': ['', 'Pending Revision', 'Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
-				'hideForAdmin': ['', 'Pending Revision', 'Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
+				'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
+				'hideForAdmin': ['', 'Submitted', 'Cancelled'],
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
@@ -2283,12 +2306,12 @@
 					{
 						'text': '1 crowd manager required for every 250 attendees',
 						'htmlID': 'crowd-management_help-note',
-						'hideForNonAdmin': ['Pending Revision', 'Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
-						'hideForAdmin': ['Pending Revision', 'Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled']
+						'hideForNonAdmin': ['Submitted', 'Cancelled'],
+						'hideForAdmin': ['Submitted', 'Cancelled']
 					}
 				],
-				"disabledForNonAdmin": ["Completed", "Cancelled"],
-				"disabledForAdmin": ["Completed", "Cancelled"],
+				"disabledForNonAdmin": ["Cancelled"],
+				"disabledForAdmin": ["Cancelled"],
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
@@ -2323,16 +2346,16 @@
 					{ 'thisFieldIsChecked': 1, 'show': [{ 'divID': 'buyout-details-container' }], 'require': [{ 'fieldName': 'Buyout Venues', 'type': 'check' }, { 'fieldName': 'Buyout Scheduled or Not', 'type': 'radio' }, { 'fieldName': 'Buyout Titles', 'type': 'text' }, { 'fieldName': 'Buyout Show Time', 'type': 'text' }, { 'fieldName': 'Buyout Order Number', 'type': 'text' }] },
 					{ 'thisFieldIsChecked': 0, 'hide': [{ 'divID': 'buyout-details-container' }], 'optional': [{ 'fieldName': 'Buyout Venues', 'type': 'check' }, { 'fieldName': 'Other Buyout Venue', 'type': 'text' }, { 'fieldName': 'Buyout Scheduled or Not', 'type': 'radio' }, { 'fieldName': 'Buyout Titles', 'type': 'text' }, { 'fieldName': 'Buyout Show Time', 'type': 'text' }, { 'fieldName': 'Buyout Order Number', 'type': 'text' }] },
 				],
-				"disabledForNonAdmin": ["Completed", "Cancelled"],
-				"disabledForAdmin": ["Completed", "Cancelled"],
+				"disabledForNonAdmin": ["Cancelled"],
+				"disabledForAdmin": ["Cancelled"],
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
 				'begin': 1,
 				'htmlID': 'buyout-details-container',
 				'htmlClass': 'subsection-container',
-				'hideForNonAdmin': ['', 'Pending Revision', 'Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
-				'hideForAdmin': ['', 'Pending Revision', 'Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
+				'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
+				'hideForAdmin': ['', 'Submitted', 'Cancelled'],
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
@@ -2368,17 +2391,17 @@
 					{ 'anyOfSpecificCheckboxesAreChecked': ['input#buyout-venues_other'], 'show': [{ 'fieldName': 'Other Buyout Venue' }], 'require': [{ 'fieldName': 'Other Buyout Venue', 'type': 'text' }] },
 					{ 'noneOfSpecificCheckboxesAreChecked': ['input#buyout-venues_other'], 'hide': [{ 'fieldName': 'Other Buyout Venue' }], 'optional': [{ 'fieldName': 'Other Buyout Venue', 'type': 'text' }] },
 				],
-				"disabledForNonAdmin": ["Completed", "Cancelled"],
-				"disabledForAdmin": ["Completed", "Cancelled"],
+				"disabledForNonAdmin": ["Cancelled"],
+				"disabledForAdmin": ["Cancelled"],
 			}, {
 				'elementType': 'field',
 				'controlType': 'text',
 				'fieldName': 'Other Buyout Venue',
 				'labelContent': 'Specify Other Venue',
-				'hideForNonAdmin': ['', 'Pending Revision', 'Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
-				'hideForAdmin': ['', 'Pending Revision', 'Pending Approval', 'Approved', 'Completed', 'Disapproved', 'Cancelled'],
-				"disabledForNonAdmin": ["Completed", "Cancelled"],
-				"disabledForAdmin": ["Completed", "Cancelled"],
+				'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
+				'hideForAdmin': ['', 'Submitted', 'Cancelled'],
+				"disabledForNonAdmin": ["Cancelled"],
+				"disabledForAdmin": ["Cancelled"],
 			}, {
 				'elementType': 'field',
 				'controlType': 'radio',
@@ -2393,29 +2416,29 @@
 						'display': 'Unscheduled'
 					}
 				],
-				"disabledForNonAdmin": ["Completed", "Cancelled"],
-				"disabledForAdmin": ["Completed", "Cancelled"],
+				"disabledForNonAdmin": ["Cancelled"],
+				"disabledForAdmin": ["Cancelled"],
 			}, {
 				'elementType': 'field',
 				'controlType': 'text',
 				'fieldName': 'Buyout Titles',
 				'labelContent': 'Title(s)',
-				"disabledForNonAdmin": ["Completed", "Cancelled"],
-				"disabledForAdmin": ["Completed", "Cancelled"],
+				"disabledForNonAdmin": ["Cancelled"],
+				"disabledForAdmin": ["Cancelled"],
 			}, {
 				'elementType': 'field',
 				'controlType': 'text',
 				'fieldName': 'Buyout Show Time',
 				'labelContent': 'Show Time(s)',
-				"disabledForNonAdmin": ["Completed", "Cancelled"],
-				"disabledForAdmin": ["Completed", "Cancelled"],
+				"disabledForNonAdmin": ["Cancelled"],
+				"disabledForAdmin": ["Cancelled"],
 			}, {
 				'elementType': 'field',
 				'controlType': 'text',
 				'fieldName': 'Buyout Order Number',
 				'labelContent': 'Order Number',
-				"disabledForNonAdmin": ["Completed", "Cancelled"],
-				"disabledForAdmin": ["Completed", "Cancelled"],
+				"disabledForNonAdmin": ["Cancelled"],
+				"disabledForAdmin": ["Cancelled"],
 
 
 
@@ -2430,8 +2453,8 @@
 				'controlType': 'textarea',
 				'fieldName': 'Buyout Notes',
 				'labelContent': 'Notes',
-				"disabledForNonAdmin": ["Completed", "Cancelled"],
-				"disabledForAdmin": ["Completed", "Cancelled"],
+				"disabledForNonAdmin": ["Cancelled"],
+				"disabledForAdmin": ["Cancelled"],
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
@@ -2452,8 +2475,8 @@
 				'controlType': 'textarea',
 				'fieldName': 'Additional Notes',
 				'labelContent': 'Additional Notes',
-				"disabledForNonAdmin": ["Completed", "Cancelled"],
-				"disabledForAdmin": ["Completed", "Cancelled"],
+				"disabledForNonAdmin": ["Cancelled"],
+				"disabledForAdmin": ["Cancelled"],
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
@@ -2512,27 +2535,27 @@
 	fData.CustomScriptLast += 'if ($("input#tables-and-equipment-and-cleaning_registrationtable").is(":checked")) { \n' +
 		'   $("div#tables-cleaning-equipment-options-container").show("fast").removeClass("hidden"); \n' +
 		'   $("div#tables-cleaning-equipment-registration-table-times-container").show("fast").removeClass("hidden"); \n' +
-		// '	if ($("input#Request-Status").val() == "Pending Revision" || $("input#Request-Status").val() == "Pending Approval") { \n' +
-		// '		$().SetFieldToRequired("Registration-Table-Beginning-Datetime", "datetime", 0); \n' +
-		// '		$().SetFieldToRequired("Registration-Table-Ending-Datetime", "datetime", 0); \n' +
-		// '	} \n' +
+		'	if ($("input#Request-Status").val() == "Submitted") { \n' +
+		'		$().SetFieldToRequired("Registration-Table-Beginning-Datetime", "datetime", 0); \n' +
+		'		$().SetFieldToRequired("Registration-Table-Ending-Datetime", "datetime", 0); \n' +
+		'	} \n' +
 		'} \n';
 
 	fData.CustomScriptLast += 'if ($("input#tables-and-equipment-and-cleaning_rentalequipment").is(":checked")) { \n' +
 		'   $("div#tables-cleaning-equipment-options-container").show("fast").removeClass("hidden"); \n' +
 		'   $("div#tables-cleaning-equipment-rental-equipment-container").show("fast").removeClass("hidden"); \n' +
-		// '	if ($("input#Request-Status").val() == "Pending Revision" || $("input#Request-Status").val() == "Pending Approval") { \n' +
-		// '		$().SetFieldToRequired("Rental-Equipment-Setup", "radio", 0); \n' +
-		// '		$().SetFieldToRequired("Rental-Equipment-Pickup-Location", "radio", 0); \n' +
-		// '	} \n' +
+		'	if ($("input#Request-Status").val() == "Submitted") { \n' +
+		'		$().SetFieldToRequired("Rental-Equipment-Setup", "radio", 0); \n' +
+		'		$().SetFieldToRequired("Rental-Equipment-Pickup-Location", "radio", 0); \n' +
+		'	} \n' +
 		'} \n';
 
 	fData.CustomScriptLast += 'if ($("input#tables-and-equipment-and-cleaning_more").is(":checked")) { \n' +
 		'   $("div#tables-cleaning-equipment-options-container").show("fast").removeClass("hidden"); \n' +
 		'   $("div#tables-cleaning-equipment-more-container").show("fast").removeClass("hidden"); \n' +
-		// '	if ($("input#Request-Status").val() == "Pending Revision" || $("input#Request-Status").val() == "Pending Approval") { \n' +
-		// '		$().SetFieldToRequired("More-Tables-and-Equipment-and-Cleaning", "textarea", 0); \n' +
-		// '	} \n' +
+		'	if ($("input#Request-Status").val() == "Submitted") { \n' +
+		'		$().SetFieldToRequired("More-Tables-and-Equipment-and-Cleaning", "textarea", 0); \n' +
+		'	} \n' +
 		'} \n';
 
 	// Wolfgang Puck Catering
@@ -2540,63 +2563,63 @@
 	fData.CustomScriptLast += 'if ($("input#wolfgang-puck-catering_linens").is(":checked") || $("input#wolfgang-puck-catering_menu").is(":checked") || $("input#wolfgang-puck-catering_other").is(":checked")) { \n' +
 		'   $("div#wpc-details-container").show("fast").removeClass("hidden"); \n' +
 		'   $("div#label-and-control_WPC-Account-Number").show("fast").removeClass("hidden"); \n' +
-		// '	if ($("input#Request-Status").val() == "Pending Revision" || $("input#Request-Status").val() == "Pending Approval") { \n' +
-		// '		$().SetFieldToRequired("WPC-Account-Number", "text", 0); \n' +
-		// '	} \n' +
+		'	if ($("input#Request-Status").val() == "Submitted") { \n' +
+		'		$().SetFieldToRequired("WPC-Account-Number", "text", 0); \n' +
+		'	} \n' +
 		'} \n';
 
 
 	fData.CustomScriptLast += 'if ($("input#wolfgang-puck-catering_other").is(":checked")) { \n' +
 		'   $("div#label-and-control_WPC-Other").show("fast").removeClass("hidden"); \n' +
-		// '	if ($("input#Request-Status").val() == "Pending Revision" || $("input#Request-Status").val() == "Pending Approval") { \n' +
-		// '		$().SetFieldToRequired("WPC-Other", "textarea", 0); \n' +
-		// '	} \n' +
+		'	if ($("input#Request-Status").val() == "Submitted") { \n' +
+		'		$().SetFieldToRequired("WPC-Other", "textarea", 0); \n' +
+		'	} \n' +
 		'} \n';
 
 	// IIT Help Desk and/or Infrastracture
 
 	fData.CustomScriptLast += 'if ($("input#iit-help-desk-and-infrastracture_yes").is(":checked")) { \n' +
 		'   $("div#help-desk-or-infra-account-number-container").show("fast").removeClass("hidden"); \n' +
-		// '	if ($("input#Request-Status").val() == "Pending Revision" || $("input#Request-Status").val() == "Pending Approval") { \n' +
-		// '		$().SetFieldToRequired("Help-Desk-or-Infrastracture-Account-Number", "text", 0); \n' +
-		// '	} \n' +
+		'	if ($("input#Request-Status").val() == "Submitted") { \n' +
+		'		$().SetFieldToRequired("Help-Desk-or-Infrastracture-Account-Number", "text", 0); \n' +
+		'	} \n' +
 		'} \n';
 
 	// IIT A/V
 
 	fData.CustomScriptLast += 'if ($("input#iit-av_yes").is(":checked")) { \n' +
 		'   $("div#av-account-number-container").show("fast").removeClass("hidden"); \n' +
-		// '	if ($("input#Request-Status").val() == "Pending Revision" || $("input#Request-Status").val() == "Pending Approval") { \n' +
-		// '		$().SetFieldToRequired("AV-Account-Number", "text", 0); \n' +
-		// '	} \n' +
+		'	if ($("input#Request-Status").val() == "Submitted") { \n' +
+		'		$().SetFieldToRequired("AV-Account-Number", "text", 0); \n' +
+		'	} \n' +
 		'} \n';
 
 	// Exhibit Maintenance
 
 	fData.CustomScriptLast += 'if ($("input#exhibit-maintenance_other").is(":checked")) { \n' +
 		'   $("div#other-exhibit-maintenance-service-container").show("fast").removeClass("hidden"); \n' +
-		// '	if ($("input#Request-Status").val() == "Pending Revision" || $("input#Request-Status").val() == "Pending Approval") { \n' +
-		// '		$().SetFieldToRequired("Other-Exhibit-Maintenance-Service", "textarea", 0); \n' +
-		// '	} \n' +
+		'	if ($("input#Request-Status").val() == "Submitted") { \n' +
+		'		$().SetFieldToRequired("Other-Exhibit-Maintenance-Service", "textarea", 0); \n' +
+		'	} \n' +
 		'} \n';
 
 	// Security Detail
 
 	fData.CustomScriptLast += 'if ($("input#security-detail_yes").is(":checked")) { \n' +
 		'   $("div#security-detail-details-container").show("fast").removeClass("hidden"); \n' +
-		// '	if ($("input#Request-Status").val() == "Pending Revision" || $("input#Request-Status").val() == "Pending Approval") { \n' +
-		// '		$().SetFieldToRequired("Security-Detail-Account-Number", "text", 0); \n' +
-		// '		$().SetFieldToRequired("Security-Detail-Location", "text", 0); \n' +
-		// '		$().SetFieldToRequired("Security-Detail-Beginning-Datetime", "datetime", 0); \n' +
-		// '		$().SetFieldToRequired("Security-Detail-Ending-Datetime", "datetime", 0); \n' +
-		// '	} \n' +
+		'	if ($("input#Request-Status").val() == "Submitted") { \n' +
+		'		$().SetFieldToRequired("Security-Detail-Account-Number", "text", 0); \n' +
+		'		$().SetFieldToRequired("Security-Detail-Location", "text", 0); \n' +
+		'		$().SetFieldToRequired("Security-Detail-Beginning-Datetime", "datetime", 0); \n' +
+		'		$().SetFieldToRequired("Security-Detail-Ending-Datetime", "datetime", 0); \n' +
+		'	} \n' +
 		'} \n';
 
 	// Guest Access
 
 	/* fData.CustomScriptLast += 'if ($("input#guest-access_yes").is(":checked")) { \n' +
 		'   $("div#guest-access-details-container").show("fast").removeClass("hidden"); \n' +
-		'	if ($("input#Request-Status").val() == "Pending Revision" || $("input#Request-Status").val() == "Pending Approval") { \n' +
+		'	if ($("input#Request-Status").val() == "Submitted") { \n' +
 		'		$().SetFieldToRequired("Guest-Access-Location", "text", 0); \n' +
 		'		$().SetFieldToRequired("Guest-Access-Beginning-Datetime", "datetime", 0); \n' +
 		'		$().SetFieldToRequired("Guest-Access-Ending-Datetime", "datetime", 0); \n' +
@@ -2607,9 +2630,9 @@
 
 	fData.CustomScriptLast += 'if ($("input#elevator-access_4andor5").is(":checked")) { \n' +
 		'   $("div#elevator-access-details-container").show("fast").removeClass("hidden"); \n' +
-		// '	if ($("input#Request-Status").val() == "Pending Revision" || $("input#Request-Status").val() == "Pending Approval") { \n' +
-		// '		$().SetFieldToRequired("Elevator-Access-Security", "radio", 0); \n' +
-		// '	} \n' +
+		'	if ($("input#Request-Status").val() == "Submitted") { \n' +
+		'		$().SetFieldToRequired("Elevator-Access-Security", "radio", 0); \n' +
+		'	} \n' +
 		'} \n';
 
 
@@ -2623,51 +2646,53 @@
 		'   $("div#facilities-temperature-control-subsection").show("fast").removeClass("hidden"); \n' +
 		'   $("div#label-and-control_Temperature-Control-Beginning-Datetime").show("fast").removeClass("hidden"); \n' +
 		'   $("div#label-and-control_Temperature-Control-Ending-Datetime").show("fast").removeClass("hidden"); \n' +
-		// '	if ($("input#Request-Status").val() == "Pending Revision" || $("input#Request-Status").val() == "Pending Approval") { \n' +
-		// '		$().SetFieldToRequired("Temperature-Control-Beginning-Datetime", "datetime", 0); \n' +
-		// '		$().SetFieldToRequired("Temperature-Control-Ending-Datetime", "datetime", 0); \n' +
-		// '	} \n' +
+		'	if ($("input#Request-Status").val() == "Submitted") { \n' +
+		'		$().SetFieldToRequired("Temperature-Control-Beginning-Datetime", "datetime", 0); \n' +
+		'		$().SetFieldToRequired("Temperature-Control-Ending-Datetime", "datetime", 0); \n' +
+		'	} \n' +
 		'} \n';
 
 	fData.CustomScriptLast += 'if ($("input#facilities_more").is(":checked")) { \n' +
 		'   $("div#facilities-more-subsection").show("fast").removeClass("hidden"); \n' +
 		'   $("div#label-and-control_More-Facilities").show("fast").removeClass("hidden"); \n' +
-		// '	if ($("input#Request-Status").val() == "Pending Revision" || $("input#Request-Status").val() == "Pending Approval") { \n' +
-		// '		$().SetFieldToRequired("More-Facilities", "textarea", 0); \n' +
-		// '	} \n' +
+		'	if ($("input#Request-Status").val() == "Submitted") { \n' +
+		'		$().SetFieldToRequired("More-Facilities", "textarea", 0); \n' +
+		'	} \n' +
 		'} \n';
 
 	// Crowd Management
 
 	fData.CustomScriptLast += 'if ($("input#crowd-management_yes").is(":checked")) { \n' +
 		'   $("div#crowd-management-details-container").show("fast").removeClass("hidden"); \n' +
-		// '	if ($("input#Request-Status").val() == "Pending Revision" || $("input#Request-Status").val() == "Pending Approval") { \n' +
-		// '		$().SetFieldToRequired("Number-of-Crowd-Managers", "textarea", 0); \n' +
-		// '	} \n' +
+		'	if ($("input#Request-Status").val() == "Submitted") { \n' +
+		'		$().SetFieldToRequired("Number-of-Crowd-Managers", "textarea", 0); \n' +
+		'	} \n' +
 		'} \n';
 
 	// Buyouts
 
 	fData.CustomScriptLast += 'if ($("input#buyouts_yes").is(":checked")) { \n' +
 		'   $("div#buyout-details-container").show("fast").removeClass("hidden"); \n' +
-		// '	if ($("input#Request-Status").val() == "Pending Revision" || $("input#Request-Status").val() == "Pending Approval") { \n' +
-		// '		$().SetFieldToRequired("Buyout-Venues", "check", 0); \n' +
-		// '		$().SetFieldToRequired("Buyout-Scheduled-or-Not", "radio", 0); \n' +
-		// '		$().SetFieldToRequired("Buyout-Titles", "text", 0); \n' +
-		// '		$().SetFieldToRequired("Buyout-Show-Time", "text", 0); \n' +
-		// '		$().SetFieldToRequired("Buyout-Order-Number", "text", 0); \n' +
-		// '	} \n' +
+		'	if ($("input#Request-Status").val() == "Submitted") { \n' +
+		'		$().SetFieldToRequired("Buyout-Venues", "check", 0); \n' +
+		'		$().SetFieldToRequired("Buyout-Scheduled-or-Not", "radio", 0); \n' +
+		'		$().SetFieldToRequired("Buyout-Titles", "text", 0); \n' +
+		'		$().SetFieldToRequired("Buyout-Show-Time", "text", 0); \n' +
+		'		$().SetFieldToRequired("Buyout-Order-Number", "text", 0); \n' +
+		'	} \n' +
 		'} \n';
 
 	fData.CustomScriptLast += 'if ($("input#buyout-venues_other").is(":checked")) { \n' +
 		'   $("div#label-and-control_Other-Buyout-Venue").show("fast").removeClass("hidden"); \n' +
-		// '	if ($("input#Request-Status").val() == "Pending Revision" || $("input#Request-Status").val() == "Pending Approval") { \n' +
-		// '		$().SetFieldToRequired("Other-Buyout-Venue", "text", 0); \n' +
-		// '	} \n' +
+		'	if ($("input#Request-Status").val() == "Submitted") { \n' +
+		'		$().SetFieldToRequired("Other-Buyout-Venue", "text", 0); \n' +
+		'	} \n' +
 		'} \n';
 
 	fData.CustomScriptLast += '$("div#container_about-the-requester").hide("fast").addClass("hidden"); \n';
 
+
+	fData.CustomScriptLast += '$().SetEventNeedsRequestNonWriteAccess(); \n';
 
 
 
@@ -2781,10 +2806,15 @@
 	fData.CustomScriptLast += '$("input#space-reservation_eventspacerequest").prop("checked", true).attr("checked", true); \n';
 
 	// people picker
+	fData.CustomScriptLast += "$().PutAddtlPeopleInPicker('Requested For', [{" +
+		"	'name': 'Hub Tester4'," +
+		"	'email': 'sp4@mos.org'," +
+		"	'account': 'i:0#.f|membership|sp4@mos.org'" +
+		"}]);";
 	fData.CustomScriptLast += "$().PutAddtlPeopleInPicker('Onsite Contact', [{" +
-		"	'name': 'Hub Tester1'," +
-		"	'email': 'sp1@mos.org'," +
-		"	'account': 'i:0#.f|membership|sp1@mos.org'" +
+		"	'name': 'Hub Tester4'," +
+		"	'email': 'sp4@mos.org'," +
+		"	'account': 'i:0#.f|membership|sp4@mos.org'" +
 		"}]);";
 
 
@@ -2794,7 +2824,7 @@
 	fData.CustomScriptLast += '$("div#submit-or-exit").show("fast").removeClass("hidden"); \n';
 
 	// import
-	fData.CustomScriptLast += '$().ImportEventSpaceRequestDataToEventRequest($("#id-or-link_Event-Space-Request-ID").val()); \n';
+	// fData.CustomScriptLast += '$().ImportEventSpaceRequestDataToEventRequest($("#id-or-link_Event-Space-Request-ID").val()); \n';
 
 
 
