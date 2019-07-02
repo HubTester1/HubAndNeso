@@ -36,7 +36,6 @@ const nesoHcOrg = require('./neso_modules/nesoHcOrg');
 const nesoSPSync = require('./neso_modules/nesoSPSync');
 const nesoHubEmails = require('./neso_modules/nesoHubEmails');
 
-
 // NESO (MOS) ROUTES ---
 
 const index = require('./routes/index');
@@ -47,6 +46,7 @@ const hcMessages = require('./routes/hcMessages');
 const hcGetItDone = require('./routes/hcGetItDone');
 const hcOrg = require('./routes/hcOrg');
 const images = require('./routes/images');
+const hubExports = require('./routes/hubExports');
 
 // ----- INSTANTIATE, CONFIG EXPRESS APP
 
@@ -160,6 +160,7 @@ app.use('/hcMessages', cors(nesoCORS.RequestingDomainWhitelistedForHcMessagesAPI
 app.use('/hcGetItDone', cors(nesoCORS.RequestingDomainWhitelistedForHcGetItDoneAPI), hcGetItDone);
 app.use('/images', cors(nesoCORS.RequestingDomainWhitelistedForHcGetItDoneAPI), images);
 app.use('/hcOrg', cors(nesoCORS.RequestingDomainWhitelistedForHcGetItDoneAPI), hcOrg);
+app.use('/hubExports', cors(nesoCORS.RequestingDomainWhitelistedForHubExportsAPI), hubExports);
 
 // STATIC LOCATIONS ---
 

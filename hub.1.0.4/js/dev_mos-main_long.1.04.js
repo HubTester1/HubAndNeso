@@ -22538,9 +22538,30 @@
 			'<h2>Hours Scheduled</h2>' +
 			'<p>' + hoursScheduled.toString() + '</p>' + 
 			'<h2>Hours Granted Credit</h2>' +
-			'<p>' + hoursGrantedCredit.toString() + '</p>';
+			'<p>' + hoursGrantedCredit.toString() + '</p>' + 
+			'<h2>Export</h2>' +
+			'<p id="gse-stats-export-link">Building...</p>';
 
 		$("div#container_data").append(statsMarkup);
+
+		// query the api for the data
+		$.ajax({
+			async: false,
+			method: "GET",
+			dataType: "json",
+			url: "https://neso.mos.org:3001/hubExports/gseStats",
+		})
+			.done(function (nesoData) {
+				console.log("nesoData:");
+				console.log(nesoData);
+				$("p#gse-stats-export-link").html('<a href="https://neso.mos.org/exports/gseStats.csv">Download CSV</a>');
+			})
+			.fail(function (error) {
+				console.log("no such luck - NESO");
+				console.log(error);
+				$("p#gse-stats-export-link").html('There was an error generating the export. Please contact <a href="mailto:hubhelp@mos.org">hubhelp@mos.org</a> for assistance.');
+			});
+
 
 		// listen for date filtering
 		$("a#filter_submit-button").click(function () {
@@ -29206,7 +29227,7 @@
 		// wait for all data retrieval / setting promises to complete (pass or fail) 
 		$.when.apply($, allDataRetrievalAndSettingPromises).always(function () {
 
-			console.log('using dev_mos-main_long.1.04 m1');
+			console.log('using dev_mos-main_long.1.04 m7');
 
 			$().ConfigureAndShowScreenContainerAndAllScreens();
 		});
