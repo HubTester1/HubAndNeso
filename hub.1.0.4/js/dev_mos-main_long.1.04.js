@@ -22549,7 +22549,7 @@
 			async: false,
 			method: "GET",
 			dataType: "json",
-			url: "https://neso.mos.org:3001/hubExports/gseStats",
+			url: "https://neso.mos.org:3001/hubExports/gseStats/" + selectedStartDate + "/" + selectedEndDate,
 		})
 			.done(function (nesoData) {
 				console.log("nesoData:");
@@ -29227,7 +29227,7 @@
 		// wait for all data retrieval / setting promises to complete (pass or fail) 
 		$.when.apply($, allDataRetrievalAndSettingPromises).always(function () {
 
-			console.log('using dev_mos-main_long.1.04 m7');
+			console.log('using dev_mos-main_long.1.04 m8');
 
 			$().ConfigureAndShowScreenContainerAndAllScreens();
 		});

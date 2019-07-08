@@ -3,6 +3,7 @@
 
 const nesoDBQueries = require('./nesoDBQueries');
 const nesoSPSync = require('./nesoSPSync');
+const moment = require('moment');
 
 
 // ----- DEFINE HEALTH FUNCTIONS
@@ -37,38 +38,79 @@ module.exports = {
 				.catch((error) => { reject(error); });
 		})),
 
-	ReturnGSEStats: () =>
+	ReturnGSEStats: (startDate, endDate) =>
 		// return a new promise
 		new Promise((resolve, reject) => {
 			// get a promise to retrieve all documents from the nesoHealth document collection
-			module.exports.ProcessGSEExport()
+			module.exports.ProcessGSEExport(startDate, endDate)
 				// if the promise is resolved with the docs, then resolve this promise with the docs
 				.then((result) => { resolve(result); })
 				// if the promise is rejected with an error, then reject this promise with an error
 				.catch((error) => { reject(error); });
 		}),
 
-	ProcessGSEExport: () =>
+	ProcessGSEExport: (startDate, endDate) =>
 		// return a new promise
 		new Promise((resolve, reject) => {
+			const formattedStartDate = moment(startDate).format('YYYY/MM/DDTHH:mm:ssZ');
+			const formattedEndDate = moment(endDate).format('YYYY/MM/DDTHH:mm:ssZ');
 			// get a promise to sync all GSE data from SPO to Neso
-			module.exports.SyncGSEItems()
+			module.exports.SyncGSEItemsForExport(formattedStartDate, formattedEndDate)
 				// if the promise is resolved with a result
 				.then((result) => {
+					/* 
+
+					for each signup in the date range, get name and accountname
+
+					get from schedules:
+					schedule date
+					half or full
+
+					get from people:
+					employee id
+
+					write object to JSON
+
+					 */
 					resolve(result);
 				})
 				// if the promise is rejected with an error, then reject this promise with an error
 				.catch((error) => { reject(error); });
 		}),
 
-	SyncGSEItems: () =>
+	SyncGSEItemsForExport: (startDate, endDate) =>
+		// return a new promise
+		new Promise((resolve, reject) => {
+			// create promises to sync all GSE data from SPO to Neso
+			nesoSPSync.SyncGSECompletedInDateRangeSchedulesListItems(startDate, endDate)
+			/* Promise.all([
+				nesoSPSync.SyncGSECompletedInDateRangeSchedulesListItems(startDate, endDate),
+				// nesoSPSync.SyncGSECreditGrantedInDateRangeSignupsListItems(startDate, endDate),
+			])
+ */				// when all promises have resolved
+				.then((syncResults) => {
+					// resolve with non-error flag
+					resolve({
+						error: false,
+					});
+				})
+				// if a promise was rejected with an error
+				.catch((syncErrors) => {
+					// reject with error flag
+					reject({
+						error: false,
+						syncErrors,
+					});
+				});
+		}),
+
+	/* ReturnGSEItemsFromDBForExport: (startDate, endDate) =>
 		// return a new promise
 		new Promise((resolve, reject) => {
 			// create promises to sync all GSE data from SPO to Neso
 			Promise.all([
-				nesoSPSync.SyncGSEJobsListItems(),
-				nesoSPSync.SyncGSESchedulesListItems(),
-				nesoSPSync.SyncGSESignupsListItems(),
+				nesoDBQueries.ReturnAllDocsFromCollection('exportSettings'),
+				nesoSPSync.SyncGSECreditGrantedInDateRangeSignupsListItems(startDate, endDate),
 			])
 				// when all promises have resolved
 				.then((syncResults) => {
@@ -85,5 +127,5 @@ module.exports = {
 						syncErrors,
 					});
 				});
-		}),
+		}), */
 };

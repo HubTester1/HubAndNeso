@@ -99,7 +99,7 @@ module.exports = {
 				.catch((error) => { reject(error); });
 		}),
 
-	SyncGSEJobsListItems: () =>
+	SyncGSEApprovedJobsListItems: () =>
 		// return a new promise
 		new Promise((resolve, reject) => {
 			// specify sync options
@@ -124,7 +124,7 @@ module.exports = {
 					],
 				},
 				syncTo: {
-					mongoCollection: 'gseJobs',
+					mongoCollection: 'gseApprovedJobs',
 				},
 			};
 			// get a promise to sync the list items
@@ -137,7 +137,7 @@ module.exports = {
 				.catch((error) => { reject(error); });
 		}),
 
-	SyncGSESchedulesListItems: () =>
+	SyncGSESubmittedSchedulesListItems: () =>
 		// return a new promise
 		new Promise((resolve, reject) => {
 			// specify sync options
@@ -161,7 +161,7 @@ module.exports = {
 					],
 				},
 				syncTo: {
-					mongoCollection: 'gseSchedules',
+					mongoCollection: 'gseSubmittedSchedules',
 				},
 			};
 			// get a promise to sync the list items
@@ -174,7 +174,7 @@ module.exports = {
 				.catch((error) => { reject(error); });
 		}),
 
-	SyncGSESignupsListItems: () =>
+	SyncGSESignedUpSignupsListItems: () =>
 		// return a new promise
 		new Promise((resolve, reject) => {
 			// specify sync options
@@ -196,7 +196,92 @@ module.exports = {
 					],
 				},
 				syncTo: {
-					mongoCollection: 'gseSignups',
+					mongoCollection: 'gseSignedUpSignups',
+				},
+			};
+			// get a promise to sync the list items
+			module.exports.SyncListItems(options)
+				// if the promise is resolved with the result, then 
+				// 		resolve this promise with the result
+				.then((syncResult) => { resolve(syncResult); })
+				// if the promise is rejected with an error, then 
+				// 		reject this promise with an error
+				.catch((error) => { reject(error); });
+		}),
+
+	SyncGSECompletedInDateRangeSchedulesListItems: (startDate, endDate) =>
+		// return a new promise
+		new Promise((resolve, reject) => {
+			// specify sync options
+			const options = {
+				syncFrom: {
+					spApp: 'hr-service-schedules',
+					spList: 'SWFList',
+					spFields: [
+						'Id',
+						'RequestDate',
+					],
+					spFilters: [
+						{
+							field: 'RequestStatus',
+							operator: 'eq',
+							value: '\'Completed\'',
+						}, {
+							field: 'RequestDate',
+							operator: 'ge',
+							value: `'${startDate}'`,
+						// }, {
+						// 	field: 'Last_x0020_Modified',
+						// 	operator: 'leq',
+						// 	value: `'${endDate}'`,
+						},
+					],
+				},
+				syncTo: {
+					mongoCollection: 'gseCompletedInDateRangeSchedules',
+				},
+			};
+			// get a promise to sync the list items
+			module.exports.SyncListItems(options)
+				// if the promise is resolved with the result, then 
+				// 		resolve this promise with the result
+				.then((syncResult) => { resolve(syncResult); })
+				// if the promise is rejected with an error, then 
+				// 		reject this promise with an error
+				.catch((error) => { reject(error); });
+		}),
+
+	SyncGSECreditGrantedInDateRangeSignupsListItems: (startDate, endDate) =>
+		// return a new promise
+		new Promise((resolve, reject) => {
+			// specify sync options
+			const options = {
+				syncFrom: {
+					spApp: 'hr-service-signups',
+					spList: 'SWFList',
+					spFields: [
+						'Id',
+						'ScheduleID',
+						'AllRequestData',
+					],
+					spFilters: [
+						{
+							field: 'RequestStatus',
+							operator: 'eq',
+							value: '\'CreditGranted\'',
+						}, {
+							field: 'Last_x0020_Modified',
+							operator: 'geq',
+							value: `'${startDate}'`,
+						}, {
+							field: 'Last_x0020_Modified',
+							operator: 'leq',
+							value: `'${endDate}'`,
+						},
+					],
+				},
+				syncTo: {
+					mongoCollection: 'gseCreditGrantedInDateRangeSignups',
 				},
 			};
 			// get a promise to sync the list items

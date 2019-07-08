@@ -35,6 +35,7 @@ const nesoActiveDirectory = require('./neso_modules/nesoActiveDirectory');
 const nesoHcOrg = require('./neso_modules/nesoHcOrg');
 const nesoSPSync = require('./neso_modules/nesoSPSync');
 const nesoHubEmails = require('./neso_modules/nesoHubEmails');
+const nesoHubExports = require('./neso_modules/nesoHubExports');
 
 // NESO (MOS) ROUTES ---
 
@@ -454,11 +455,11 @@ cron.schedule(cronConfig.adManagersWithFullHierarchicalDownlinesProcessingCronSc
 });
 // schedule as specified in environment
 cron.schedule(cronConfig.gseJobsSyncProcessingCronSchedule, () => {
-	nesoSPSync.SyncGSEJobsListItems()
+	nesoSPSync.SyncGSEApprovedJobsListItems()
 		// if the promise is resolved, log result
 		.then((result) => {
 			nesoCronLog.Log({
-				process: 'SyncGSEJobsListItems',
+				process: 'SyncGSEApprovedJobsListItems',
 				status: 'success',
 				result,
 			});
@@ -470,7 +471,7 @@ cron.schedule(cronConfig.gseJobsSyncProcessingCronSchedule, () => {
 		// if the promise is rejected, log error
 		.catch((error) => {
 			nesoCronLog.Log({
-				process: 'SyncGSEJobsListItems',
+				process: 'SyncGSEApprovedJobsListItems',
 				status: 'error',
 				error,
 			});
@@ -482,11 +483,11 @@ cron.schedule(cronConfig.gseJobsSyncProcessingCronSchedule, () => {
 });
 // schedule as specified in environment
 cron.schedule(cronConfig.gseSchedulesSyncProcessingCronSchedule, () => {
-	nesoSPSync.SyncGSESchedulesListItems()
+	nesoSPSync.SyncGSESubmittedSchedulesListItems()
 		// if the promise is resolved, log result
 		.then((result) => {
 			nesoCronLog.Log({
-				process: 'SyncGSESchedulesListItems',
+				process: 'SyncGSESubmittedSchedulesListItems',
 				status: 'success',
 				result,
 			});
@@ -498,7 +499,7 @@ cron.schedule(cronConfig.gseSchedulesSyncProcessingCronSchedule, () => {
 		// if the promise is rejected, log error
 		.catch((error) => {
 			nesoCronLog.Log({
-				process: 'SyncGSESchedulesListItems',
+				process: 'SyncGSESubmittedSchedulesListItems',
 				status: 'error',
 				error,
 			});
@@ -510,11 +511,11 @@ cron.schedule(cronConfig.gseSchedulesSyncProcessingCronSchedule, () => {
 });
 // schedule as specified in environment
 cron.schedule(cronConfig.gseSignupsSyncProcessingCronSchedule, () => {
-	nesoSPSync.SyncGSESignupsListItems()
+	nesoSPSync.SyncGSESignedUpSignupsListItems()
 		// if the promise is resolved, log result
 		.then((result) => {
 			nesoCronLog.Log({
-				process: 'SyncGSESignupsListItems',
+				process: 'SyncGSESignedUpSignupsListItems',
 				status: 'success',
 				result,
 			});
@@ -526,7 +527,7 @@ cron.schedule(cronConfig.gseSignupsSyncProcessingCronSchedule, () => {
 		// if the promise is rejected, log error
 		.catch((error) => {
 			nesoCronLog.Log({
-				process: 'SyncGSESignupsListItems',
+				process: 'SyncGSESignedUpSignupsListItems',
 				status: 'error',
 				error,
 			});
@@ -594,6 +595,23 @@ cron.schedule(cronConfig.gseSignupReminderNotificationProcessingSchedule, () => 
 			// console.log(error);
 		});
 });
+
+// get a promise to process gse signup reminders
+nesoHubExports.ProcessGSEExport('2019-06-30T20:00:00-04:00', '2019-05-29T20:00:00-04:00')
+	// if the promise is resolved, log result
+	.then((result) => {
+		// eslint-disable-next-line no-console
+		// console.log('Processed GSE Signup Reminders:');
+		// eslint-disable-next-line no-console
+		// console.log(result);
+	})
+	// if the promise is rejected, log error
+	.catch((error) => {
+		// eslint-disable-next-line no-console
+		// console.log('ERROR - Processing GSE Signup Reminders:');
+		// eslint-disable-next-line no-console
+		// console.log(error);
+	});
 
 // PROCESS ---
 

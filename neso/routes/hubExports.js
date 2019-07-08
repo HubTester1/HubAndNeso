@@ -13,9 +13,9 @@ router.get('/', (req, res, next) => {
 });
 
 // for GET request for /gseStats
-router.get('/gseStats', (req, res, next) => {
+router.get('/gseStats/:startDate/:endDate', (req, res, next) => {
 	// get a promise to retrieve health status data
-	nesoHubExports.ReturnGSEStats()
+	nesoHubExports.ReturnGSEStats(req.params.startDate, req.params.endDate)
 		// if the promise is resolved with the docs, then respond with the docs as JSON
 		.then((result) => { res.json(result); })
 		// if the promise is rejected with an error, then respond with the error as JSON
