@@ -1900,6 +1900,7 @@ module.exports = {
 					adDepartments.departments.push('Courses');
 					adDepartments.departments.push('Community Initiatives');
 					adDepartments.departments.push('Relation Development');
+					adDepartments.departments.push('Direct Charged Grant Admin');
 
 					// TO DO - DELETE ABOVE HARD-CODING OF DEPARTMENTS ONCE ALGO HAS BETTER DATA TO CRUNCH
 
