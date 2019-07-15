@@ -35,7 +35,9 @@
   "dependencies": {
     "add": "^2.0.6",
     "axios": "^0.18.0",
+    "fs-extra": "^8.1.0",
     "he": "^1.2.0",
+    "jsonexport": "^2.4.1",
     "locutus": "^2.0.10",
     "moment": "^2.22.1",
     "office-ui-fabric-react": "^5.135.0",
