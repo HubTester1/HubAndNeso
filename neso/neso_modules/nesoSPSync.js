@@ -61,22 +61,25 @@ module.exports = {
 							returnListItemsResults.listItemsArray.forEach((listItem) => {
 								// make copy of param
 								const listItemCopy = listItem;
-								// extract the AllRequestData string
-								let temporaryAllRequestData = listItem.AllRequestData;
-								// replace some characters in the string
-								// eslint-disable-next-line no-control-regex
-								const regexOne = new RegExp('\r', 'g');
-								// eslint-disable-next-line no-control-regex
-								const regexTwo = new RegExp('\n', 'g');
-								temporaryAllRequestData = temporaryAllRequestData.replace(regexOne, "'");
-								temporaryAllRequestData = temporaryAllRequestData.replace(regexTwo, "'");
-								// get object from string
-								// eslint-disable-next-line prefer-const
-								let formDataObj = {};
-								// eslint-disable-next-line no-eval
-								eval(`formDataObj=${temporaryAllRequestData}`);
-								// replace the string with the object in the list item copy
-								listItemCopy.AllRequestData = formDataObj;
+								// if listItem.AllRequestData exists
+								if (listItem.AllRequestData) {
+									// extract the AllRequestData string
+									let temporaryAllRequestData = listItem.AllRequestData;
+									// replace some characters in the string
+									// eslint-disable-next-line no-control-regex
+									const regexOne = new RegExp('\r', 'g');
+									// eslint-disable-next-line no-control-regex
+									const regexTwo = new RegExp('\n', 'g');
+									temporaryAllRequestData = temporaryAllRequestData.replace(regexOne, "'");
+									temporaryAllRequestData = temporaryAllRequestData.replace(regexTwo, "'");
+									// get object from string
+									// eslint-disable-next-line prefer-const
+									let formDataObj = {};
+									// eslint-disable-next-line no-eval
+									eval(`formDataObj=${temporaryAllRequestData}`);
+									// replace the string with the object in the list item copy
+									listItemCopy.AllRequestData = formDataObj;
+								}
 								// push the list item copy to the processed array
 								listItemsProcessed.push(listItemCopy);
 							});
@@ -219,7 +222,8 @@ module.exports = {
 					spList: 'SWFList',
 					spFields: [
 						'Id',
-						'RequestDate',
+						'Date',
+						'ShiftLength',
 					],
 					spFilters: [
 						{
@@ -227,13 +231,13 @@ module.exports = {
 							operator: 'eq',
 							value: '\'Completed\'',
 						}, {
-							field: 'RequestDate',
+							field: 'Modified',
 							operator: 'ge',
 							value: `'${startDate}'`,
-						// }, {
-						// 	field: 'Last_x0020_Modified',
-						// 	operator: 'leq',
-						// 	value: `'${endDate}'`,
+						}, {
+							field: 'Modified',
+							operator: 'le',
+							value: `'${endDate}'`,
 						},
 					],
 				},
@@ -268,14 +272,14 @@ module.exports = {
 						{
 							field: 'RequestStatus',
 							operator: 'eq',
-							value: '\'CreditGranted\'',
+							value: '\'Credit Granted\'',
 						}, {
-							field: 'Last_x0020_Modified',
-							operator: 'geq',
+							field: 'Modified',
+							operator: 'ge',
 							value: `'${startDate}'`,
 						}, {
-							field: 'Last_x0020_Modified',
-							operator: 'leq',
+							field: 'Modified',
+							operator: 'le',
 							value: `'${endDate}'`,
 						},
 					],

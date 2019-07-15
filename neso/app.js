@@ -596,23 +596,6 @@ cron.schedule(cronConfig.gseSignupReminderNotificationProcessingSchedule, () => 
 		});
 });
 
-// get a promise to process gse signup reminders
-nesoHubExports.ProcessGSEExport('2019-06-30T20:00:00-04:00', '2019-05-29T20:00:00-04:00')
-	// if the promise is resolved, log result
-	.then((result) => {
-		// eslint-disable-next-line no-console
-		// console.log('Processed GSE Signup Reminders:');
-		// eslint-disable-next-line no-console
-		// console.log(result);
-	})
-	// if the promise is rejected, log error
-	.catch((error) => {
-		// eslint-disable-next-line no-console
-		// console.log('ERROR - Processing GSE Signup Reminders:');
-		// eslint-disable-next-line no-console
-		// console.log(error);
-	});
-
 // PROCESS ---
 
 // upon the event of an unhandled promise rejection

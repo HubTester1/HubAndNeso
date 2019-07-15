@@ -66,25 +66,17 @@ module.exports = {
 						// add each filter
 						options.syncFrom.spFilters.forEach((filterValue, filterIndex) => {
 							if (filterIndex !== 0) {
-								endpoint += ',';
+								endpoint += ' and ';
 							}
 							endpoint += `${filterValue.field} ${filterValue.operator} ${filterValue.value}`;
 						});
 					}
-					console.log('endpoint');
-					console.log(endpoint);
-
-					const endpoint2 = "https://bmos.sharepoint.com/sites/hr-service-schedules/_api/web/lists/getByTitle('SWFList')/items?$top=5000&$select=Title&$filter=RequestStatus eq 'Completed' and RequestDate ge '2019/05/29T00:00:00Z'";
-
-					console.log('endpoint2');
-					console.log(endpoint2);
 					// get a promise to retrieve the data
-					axios.get(endpoint2, axiosConfig)
+					axios.get(endpoint, axiosConfig)
 						// if the promise is resolved
 						.then((result) => {
 							// if status indicates success
 							if (result.status === 200) {
-								console.log('SUCCESS with ID');
 								// resolve this promise with the list items  
 								resolve({ listItemsArray: result.data.value });
 							} else {

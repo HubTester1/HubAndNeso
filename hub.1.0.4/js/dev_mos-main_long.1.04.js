@@ -22554,12 +22554,12 @@
 			.done(function (nesoData) {
 				console.log("nesoData:");
 				console.log(nesoData);
-				$("p#gse-stats-export-link").html('<a href="https://neso.mos.org/exports/gseStats.csv">Download CSV</a>');
+				$("p#gse-stats-export-link").html('<a href="https://neso.mos.org:3001/exports/hr/gse/gseStats.csv">Download CSV</a>');
 			})
 			.fail(function (error) {
 				console.log("no such luck - NESO");
 				console.log(error);
-				$("p#gse-stats-export-link").html('There was an error generating the export. Please contact <a href="mailto:hubhelp@mos.org">hubhelp@mos.org</a> for assistance.');
+				$("p#gse-stats-export-link").html('There was an error generating the export. Please try again by refreshing this screen. If the problem persists, contact <a href="mailto:hubhelp@mos.org">hubhelp@mos.org</a> for assistance.');
 			});
 
 
