@@ -22538,9 +22538,30 @@
 			'<h2>Hours Scheduled</h2>' +
 			'<p>' + hoursScheduled.toString() + '</p>' + 
 			'<h2>Hours Granted Credit</h2>' +
-			'<p>' + hoursGrantedCredit.toString() + '</p>';
+			'<p>' + hoursGrantedCredit.toString() + '</p>' + 
+			'<h2>Export</h2>' +
+			'<p id="gse-stats-export-link">Building...</p>';
 
 		$("div#container_data").append(statsMarkup);
+
+		// query the api for the data
+		$.ajax({
+			async: false,
+			method: "GET",
+			dataType: "json",
+			url: "https://neso.mos.org/hubExports/gseStats/" + selectedStartDate + "/" + selectedEndDate,
+		})
+			.done(function (nesoData) {
+				console.log("nesoData:");
+				console.log(nesoData);
+				$("p#gse-stats-export-link").html('<a href="https://neso.mos.org/exports/hr/gse/gseStats.csv">Download CSV</a>');
+			})
+			.fail(function (error) {
+				console.log("no such luck - NESO");
+				console.log(error);
+				$("p#gse-stats-export-link").html('There was an error generating the export. Please try again by refreshing this screen. If the problem persists, contact <a href="mailto:hubhelp@mos.org">hubhelp@mos.org</a> for assistance.');
+			});
+
 
 		// listen for date filtering
 		$("a#filter_submit-button").click(function () {
@@ -28979,6 +29000,18 @@
 			phone: "",
 			pictureURL: "",
 			userName: "lbrogna@mos.org",
+		};
+
+		uData = {
+			account: "i:0#.f|membership|lbroderick@mos.org",
+			dept: "Human Resources",
+			email: "lbroderick@mos.org",
+			firstName: "Lorah",
+			lastName: "Broderick",
+			name: "Lorah Broderick",
+			phone: "",
+			pictureURL: "",
+			userName: "lbroderick@mos.org",
 		}; */
 
 
@@ -29161,7 +29194,6 @@
 
 		console.log('uData');
 		console.log(uData);
-		console.log(uData.roles);
 
 		uData.alternateOverviewScreen = $().UserNeedsAlternateOverviewScreen();
 
