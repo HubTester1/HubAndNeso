@@ -44,7 +44,7 @@ module.exports = {
 			// set up var
 			const notificationsToReturn = [];
 			// get a promise to retrieve all submitted schedules
-			nesoDBQueries.ReturnAllSpecifiedDocsFromCollection('gseJobs', {
+			nesoDBQueries.ReturnAllSpecifiedDocsFromCollection('gseApprovedJobs', {
 				ID: parseInt(schedule.JobID, 10),
 			}, {})
 			// if the promise is resolved with the docs
@@ -52,7 +52,7 @@ module.exports = {
 					const job = jobQueryResult.docs[0];
 					const jobAdmin = job.AllRequestData['Requested-For'][0];
 					// get a promise to retrieve all submitted schedules
-					nesoDBQueries.ReturnAllSpecifiedDocsFromCollection('gseSignups', {
+					nesoDBQueries.ReturnAllSpecifiedDocsFromCollection('gseSignedUpSignups', {
 						ScheduleID: schedule.ID.toString(),
 					}, {})
 						// if the promise is resolved with the docs
@@ -174,10 +174,10 @@ module.exports = {
 			const notificationsToReturn = [];
 			// get promises to retrieve job and signups for this schedule
 			Promise.all([
-				nesoDBQueries.ReturnAllSpecifiedDocsFromCollection('gseJobs', {
+				nesoDBQueries.ReturnAllSpecifiedDocsFromCollection('gseApprovedJobs', {
 					ID: parseInt(schedule.JobID, 10),
 				}, {}),
-				nesoDBQueries.ReturnAllSpecifiedDocsFromCollection('gseSignups', {
+				nesoDBQueries.ReturnAllSpecifiedDocsFromCollection('gseSignedUpSignups', {
 					ScheduleID: schedule.ID.toString(),
 				}, {}),
 			])
@@ -228,7 +228,7 @@ module.exports = {
 				const yesterday = moment().subtract(1, 'day').format('YYYY-MM-DD');
 				const threeDaysAgo = moment().subtract(3, 'day').format('YYYY-MM-DD');
 				// get a promise to retrieve all submitted schedules
-				nesoDBQueries.ReturnAllDocsFromCollection('gseSchedules')
+				nesoDBQueries.ReturnAllDocsFromCollection('gseSubmittedSchedules')
 					// if the promise is resolved with the docs
 					.then((scheduleQueryResult) => {
 						// set up container for notification retrieval promises
