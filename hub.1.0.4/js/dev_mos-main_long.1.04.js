@@ -16291,8 +16291,9 @@
 			// get the current date
 			var currentDate = $().ReturnFormattedDateTime('nowLocal', null, 'MMMM D, YYYY');
 
-			// get the quantity of account sets
-			var accountSetPropertyNameSuffix = '';
+			// set default quantities of account sets
+			var basicAccountSetPropertyNameSuffix = '';
+			var salaryChangeAccountSetPropertyNameSuffix = '';
 
 			// construct print content
 			var printContent = '<h1>Employment Authorization Request</h1>' +
@@ -16371,16 +16372,19 @@
 				printContent += '				<li><b>Accounts:</b> ' +
 					'					<ol>';
 
+				var quantityBasicAccountsFound = 0;
 				$.each(formData["RepeatedElements"], function (i, accountSet) {
-
-					if (i != 0) { accountSetPropertyNameSuffix = '-repeat-' + i; }
-					printContent += '						<li>Account ' + (i + 1) +
-						'							<ol>' +
-						'								<li><b>Grant Project Code:</b> ' + accountSet["Grant-Project-Code" + accountSetPropertyNameSuffix] + '</li>' +
-						'								<li><b>Grant Source Code:</b> ' + accountSet["Grant-Source-Code" + accountSetPropertyNameSuffix] + '</li>' +
-						'								<li><b>Percent Salary from this Account:</b> ' + accountSet["Percent-Salary-from-this-Account" + accountSetPropertyNameSuffix] + '</li>' +
-						'							</ol>' +
-						'						</li>';
+					if (!(accountSet.ID.includes('salary-change'))) {
+						if (quantityBasicAccountsFound != 0) { basicAccountSetPropertyNameSuffix = '-repeat-' + quantityBasicAccountsFound; }
+						printContent += '						<li>Account ' + (quantityBasicAccountsFound + 1) +
+							'							<ol>' +
+							'								<li><b>Grant Project Code:</b> ' + accountSet["Grant-Project-Code" + basicAccountSetPropertyNameSuffix] + '</li>' +
+							'								<li><b>Grant Source Code:</b> ' + accountSet["Grant-Source-Code" + basicAccountSetPropertyNameSuffix] + '</li>' +
+							'								<li><b>Percent Salary from this Account:</b> ' + accountSet["Percent-Salary-from-this-Account" + basicAccountSetPropertyNameSuffix] + '</li>' +
+							'							</ol>' +
+							'						</li>';
+						quantityBasicAccountsFound =+ 1;
+					}
 				});
 
 				printContent += '					</ol>' +
@@ -16426,9 +16430,40 @@
 
 			if (typeof (formData["Replacement-Salary"]) !== "undefined") {
 				printContent += '				<li><b>Last Salary for Position:</b> ' + formData["Replacement-Salary"] + '</li>';
-				var salaryChangeString = parseFloat(formData["Salary-Change"].replace("\$", "").replace(/[,]/g, ""));
+				var salaryChangeNumber = parseFloat(formData["Salary-Change"].replace("\$", "").replace(/[,]/g, ""));
 				printContent += '				<li><b>Salary Change:</b> ' + formData["Salary-Change"] + '</li>';
-				if (salaryChangeString !== 0) {
+				if (salaryChangeNumber > 0) {
+					printContent += '				<li><b>Salary Change Funding Source:</b> ' + formData["Salary-Change-Funding-Source"] + '</li>';
+
+					// -----------------
+
+					if (formData["Salary-Change-Funding-Source"] == "Grant Funds" || formData["Salary-Change-Funding-Source"] == "Endowment Funds") {
+						printContent += '				<li><b>Accounts:</b> ' +
+							'					<ol>';
+
+						var quantitySalaryChangeAccountsFound = 0;
+						$.each(formData["RepeatedElements"], function (i, accountSet) {
+							if ((accountSet.ID.includes('salary-change'))) {
+								if (quantitySalaryChangeAccountsFound != 0) { salaryChangeAccountSetPropertyNameSuffix = '-repeat-' + quantitySalaryChangeAccountsFound; }
+								printContent += '						<li>Account ' + (quantitySalaryChangeAccountsFound + 1) +
+									'							<ol>' +
+									'								<li><b>Grant Project Code:</b> ' + accountSet["Salary-Change-Grant-Project-Code" + salaryChangeAccountSetPropertyNameSuffix] + '</li>' +
+									'								<li><b>Grant Source Code:</b> ' + accountSet["Salary-Change-Grant-Source-Code" + salaryChangeAccountSetPropertyNameSuffix] + '</li>' +
+									'								<li><b>Percent Salary from this Account:</b> ' + accountSet["Salary-Change-Percent-Salary-from-this-Account" + salaryChangeAccountSetPropertyNameSuffix] + '</li>' +
+									'							</ol>' +
+									'						</li>';
+								quantitySalaryChangeAccountsFound = + 1;
+							}
+						});
+
+						printContent += '					</ol>' +
+							'				</li>';
+					}
+
+					// -----------------
+
+				}
+				if (salaryChangeNumber !== 0) {
 					printContent += '				<li><b>Salary Change Reason:</b> ' + formData["Salary-Change-Reason"] + '</li>';
 				}
 			}
@@ -26905,6 +26940,7 @@
 
 
 	$.fn.ProcessEARAndPARHourAndWageFields = function (hourlyWageFieldID, annualWageFieldID, biweeklyHoursFieldID, annualHoursFieldID, lastSalaryFieldID) {
+		console.log('processing');		
 		var earHoursFieldsProcessed = $().ProcessEARAndPARHourFields(biweeklyHoursFieldID, annualHoursFieldID);
 		if (earHoursFieldsProcessed == 1) {
 			var hourlyWageString = $("input#" + hourlyWageFieldID).val().replace("\$", "").replace(/[,]/g, "");
@@ -26930,6 +26966,14 @@
 								if (salaryChangeString != 0) {
 									$().SetFieldToRequired('Salary-Change-Reason', 'textarea');
 									$("div#label-and-control_Salary-Change-Reason").show("fast").removeClass("hidden");
+								}
+								if (salaryChangeString > 0) {
+									$().SetFieldToRequired('Salary-Change-Funding-Source', 'select');
+									$("div#label-and-control_Salary-Change-Funding-Source").show("fast").removeClass("hidden");
+								}
+								if (salaryChangeString <= 0) {
+									$().SetFieldToOptional('Salary-Change-Funding-Source', 'select');
+									$("div#label-and-control_Salary-Change-Funding-Source").hide("fast").addClass("hidden");
 								}
 							}
 						}
@@ -29238,7 +29282,7 @@
 		// wait for all data retrieval / setting promises to complete (pass or fail) 
 		$.when.apply($, allDataRetrievalAndSettingPromises).always(function () {
 
-			console.log('using dev_mos-main_long.1.04 m1');
+			console.log('using dev_mos-main_long.1.04 m2');
 
 			$().ConfigureAndShowScreenContainerAndAllScreens();
 		});
