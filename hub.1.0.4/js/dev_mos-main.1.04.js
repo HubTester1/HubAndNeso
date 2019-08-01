@@ -417,6 +417,10 @@
 				newTitle = "My Referrals";
 				break;
 
+			case "nonAdminInHouseNeedsSheets":
+				newTitle = "All In-House Needs Sheets Requests";
+				break;
+
 			case "adminEventAV":
 				newTitle = "Admin Event AV Requests";
 				break;
@@ -525,6 +529,7 @@
 			case "gpcInitialConceptApprovalViewer":
 			case "gpcSubmissionApprovalViewer":
 
+			case "nonAdminInHouseNeedsSheets":
 			case "adminEventAV":
 
 			case "adminHubFeedback":
@@ -614,6 +619,7 @@
 			case "gpcInitialConceptApprovalViewer":
 			case "gpcSubmissionApprovalViewer":
 
+			case "nonAdminInHouseNeedsSheets":
 			case "adminEventAV":
 
 			case "analyticsHubFeedback":
@@ -717,6 +723,7 @@
 			case "gpcInitialConceptApprovalViewer":
 			case "gpcSubmissionApprovalViewer":
 
+			case "nonAdminInHouseNeedsSheets":
 			case "adminEventAV":
 
 			case "analyticsHubFeedback":
@@ -794,7 +801,9 @@
 				$().ConfigureOverviewScreen("gpcSubmissionApprovalViewer");
 				break;
 
-
+			case "nonAdminInHouseNeedsSheets":
+				$().ConfigureOverviewScreen("nonAdminInHouseNeedsSheets");
+				break;
 			case "adminEventAV":
 				$().ConfigureOverviewScreen("adminEventAV");
 				break;
@@ -804,7 +813,6 @@
 			case "analyticsEventAV":
 				$().ConfigureOverviewScreen("analyticsEventAV");
 				break;
-
 			case "adminHubFeedback":
 				$().ConfigureOverviewScreen("adminHubFeedback");
 				break;
@@ -932,6 +940,7 @@
 					"myHubFeedback",
 					"adminReferrals",
 					"myReferrals",
+					"nonAdminInHouseNeedsSheets",
 					"adminEventAV",
 					"analyticsHubFeedback",
 					"analyticsEventAV",
@@ -1070,6 +1079,7 @@
 			case "myHubFeedback":
 			case "adminReferrals":
 			case "myReferrals":
+			case "nonAdminInHouseNeedsSheets":
 			case "adminEventAV":
 			case "analyticsHubFeedback":
 			case "analyticsEventAV":
@@ -1097,7 +1107,7 @@
 			case "mwProductsTimeline":
 			case "mwProductsTodaysCapacity":
 			case "mwProductsList":
-				$("div#overview-screen-container").empty().removeClass('adminRequests-requests myRequests-requests gpcInitialConceptApprovalViewer-requests gpcSubmissionApprovalViewer-requests adminHubFeedback-requests  myHubFeedback-requests  adminReferrals-requests myReferrals-requests adminEventAV-requests analyticsHubFeedback-requests analyticsEventAV-requests gseStatsHRAdmin-requests gseJobsHRAdmin-requests gseJobsJobAdmin-requests gseJobsManager-requests gseSchedulesCalendarHRAdmin-requests gseSchedulesCalendarJobAdmin-requests gseSchedulesCalendarManager-requests gseSchedulesCalendarStaff-requests gseSchedulesListHRAdmin-requests gseSchedulesListJobAdmin-requests gseSchedulesListManager-requests gseSchedulesListStaff-requests gseSignupsHRAdmin-requests gseSignupsJobAdmin-requests gseSignupsManager-requests gseSignupsStaff-requests mwBuyoutCalendar-requests mwBuyoutList-requests mwEventCalendar-requests mwEventList-requests mwProductsTimeline-requests mwProductsTodaysCapacity-requests mwProductsList-requests');
+				$("div#overview-screen-container").empty().removeClass('adminRequests-requests myRequests-requests gpcInitialConceptApprovalViewer-requests gpcSubmissionApprovalViewer-requests adminHubFeedback-requests  myHubFeedback-requests  adminReferrals-requests myReferrals-requests nonAdminInHouseNeedsSheets-requests adminEventAV-requests analyticsHubFeedback-requests analyticsEventAV-requests gseStatsHRAdmin-requests gseJobsHRAdmin-requests gseJobsJobAdmin-requests gseJobsManager-requests gseSchedulesCalendarHRAdmin-requests gseSchedulesCalendarJobAdmin-requests gseSchedulesCalendarManager-requests gseSchedulesCalendarStaff-requests gseSchedulesListHRAdmin-requests gseSchedulesListJobAdmin-requests gseSchedulesListManager-requests gseSchedulesListStaff-requests gseSignupsHRAdmin-requests gseSignupsJobAdmin-requests gseSignupsManager-requests gseSignupsStaff-requests mwBuyoutCalendar-requests mwBuyoutList-requests mwEventCalendar-requests mwEventList-requests mwProductsTimeline-requests mwProductsTodaysCapacity-requests mwProductsList-requests');
 				$("div#overview-screen-container").append('<div id="overview-table-container" class="table-container"></div>');
 			case "gseSchedulesListHRAdmin":
 				$("div#gse-schedule-card-dialog").remove();
@@ -1940,6 +1950,11 @@
 				}
 				break;
 
+			case "In-House Needs Sheet":
+				if (uData.isAdmin === 0) {
+					userNeedsAlternateOverviewScreen = "nonAdminInHouseNeedsSheets";
+				}
+				break;
 			case "Event AV":
 				if (uData.isAdmin === 1) {
 					if (GetParamFromUrl(location.search, "f") === "an") {
@@ -4047,7 +4062,6 @@
 
 		// if request status != '' and user is not an admin
 		if (rData.requestStatus != "" && uData.isAdmin === 0) {
-			console.log('checking permission');
 			// array of non-admin users who have permission to view the form
 			var permitted = [];
 			// this user's permission flag
@@ -7340,8 +7354,7 @@
 									'beginningOfLife': beginningOfLife,
 									'newReqStatus': newReqStatus,
 									'endOfLife': endOfLife
-
-									// only when that's done
+								// only when that's done
 								}).then(function () {
 									// resolve promise to process any needed notifications
 									notificationProcessingPromise.resolve();
@@ -7759,12 +7772,15 @@
 
 		} else if (type === "adminEventAV") {
 			$().RenderCommandBarAndDatatablesForEventAVForAdmin();
-
+		} else if (type === "nonAdminInHouseNeedsSheets") {
+			$().RenderOverviewScreenButtons(oData.nonAdminInHouseNeedsSheets.buttons);
+			$().RenderOverviewScreenPreamble(oData.nonAdminInHouseNeedsSheets.preamble);
+			$().RenderAllDataTables(oData.nonAdminInHouseNeedsSheets.sections, "overview-table-container");
+			$().RenderWorkflowContacts();
 		} else if (type === "analyticsHubFeedback") {
 			$().RenderCommandBarAndAnalyticsForHubFeedbackForAdmin();
 		} else if (type === "analyticsEventAV") {
 			$().RenderCommandBarAndAnalyticsForEventAVForAdmin();
-
 		} else if (type === "adminHubFeedback") {
 			$().RenderOverviewScreenButtons(oData.adminHubFeedback.buttons, 0);
 			$().RenderAllDataTables(oData.adminHubFeedback.sections, "overview-table-container");
@@ -10190,14 +10206,24 @@
 		sData.requesterName = $("input#Requester-Name").val();
 		sData.requesterEmail = $("input#Requester-Email").val();
 
-		sData.requestedForLinkedNamesString = $().ReturnNamesWLinkedEmailsFromPP('Requested For');
+		// sData.requestedForLinkedNamesString = $().ReturnNamesWLinkedEmailsFromPP('Requested For');
 
 		sData.requestNick = $("input#Request-Nickname").val();
-		sData.replacedFloorplan = $('input#Replacement-flag-for-Floor-Plan').val();
+		// sData.replacedFloorplan = $('input#Replacement-flag-for-Floor-Plan').val();
+
+		// notifications don't only go out because of a change in request status; the request
+		// 		status in sData is a *changed* request status; therefore, to judge the current
+		// 		request status, we much get it anew
+		sData.requestStatus = $("input#Request-Status").val();
+
+		var notifyTeam = 0;
+		if ($("input#additional-notification_yes").is(":checked")) {
+			notifyTeam = 1;
+		}
 
 		mData.subjectPreface = mData.requestName + ' Request #' + rData.requestID + ': ';
 
-		mData.uriOverview = mData.fullSiteBaseURL + "/SitePages/" + mData.pageToken + ".aspx"
+		mData.uriOverview = mData.fullSiteBaseURL + "/SitePages/" + mData.pageToken + ".aspx";
 		mData.uriRequest = mData.uriOverview + "?r=" + rData.requestID;
 
 		var eData = $.extend(sData, rData, mData, uData, fData);
@@ -10218,7 +10244,7 @@
 
 		if (typeof (eData.beginningOfLife) != 'undefined' && eData.beginningOfLife == 1) {
 
-			// admin
+			/* // admin
 			if (typeof (eData.eventNeedsNotifications.beginningOfLife.admin) != "undefined") {
 				if (eData.eventNeedsNotifications.beginningOfLife.admin == 1) {
 					$.each(eData.adminEmailArray, function (i, toAdmin) {
@@ -10235,29 +10261,113 @@
 						});
 					});
 				}
+			} */
+
+			if (notifyTeam === 1) {
+				notificationsToSend.push({
+					'emailType': 'Notification',
+					'caller': 'beginningOfLife team',
+					'to': 'swvincent@mos.org',
+					'subject': eData.subjectPreface + 'new request received',
+					'bodyUnique': '<p>' + eData.requesterName + ' has submitted a new request. You can ' +
+						'<a href="' + eData.uriRequest + '">review this request\'s details</a>, ' +
+						'<a href="mailto:' + eData.requesterEmail + '">contact the requester</a> ' +
+						'with any questions, or <a href="' + eData.uriOverview + '">' +
+						'review other ' + eData.requestName + ' requests</a>.</p>'
+				});
+				notificationsToSend.push({
+					'emailType': 'Notification',
+					'caller': 'beginningOfLife team',
+					'to': 'aalbert@mos.org',
+					'subject': eData.subjectPreface + 'new request received',
+					'bodyUnique': '<p>' + eData.requesterName + ' has submitted a new request. You can ' +
+						'<a href="' + eData.uriRequest + '">review this request\'s details</a>, ' +
+						'<a href="mailto:' + eData.requesterEmail + '">contact the requester</a> ' +
+						'with any questions, or <a href="' + eData.uriOverview + '">' +
+						'review other ' + eData.requestName + ' requests</a>.</p>'
+				});
+				notificationsToSend.push({
+					'emailType': 'Notification',
+					'caller': 'beginningOfLife team',
+					'to': 'bwroblewski@mos.org',
+					'subject': eData.subjectPreface + 'new request received',
+					'bodyUnique': '<p>' + eData.requesterName + ' has submitted a new request. You can ' +
+						'<a href="' + eData.uriRequest + '">review this request\'s details</a>, ' +
+						'<a href="mailto:' + eData.requesterEmail + '">contact the requester</a> ' +
+						'with any questions, or <a href="' + eData.uriOverview + '">' +
+						'review other ' + eData.requestName + ' requests</a>.</p>'
+				});
 			}
 
 			// requester
-			if (typeof (eData.eventNeedsNotifications.beginningOfLife.requester) != "undefined") {
-				if (eData.eventNeedsNotifications.beginningOfLife.requester == 1) {
+			notificationsToSend.push({
+				'emailType': 'Notification',
+				'caller': 'beginningOfLife requester',
+				'to': eData.requesterEmail,
+				'subject': eData.subjectPreface + 'new request received',
+				'bodyUnique': '<p>The request you nicknamed "' + eData.requestNick + '" has been received. You can ' +
+					'<a href="' + eData.uriRequest + '">modify this request\'s details</a> until 7 days before the event. ' +
+					'You can also <a href="mailto:' + eData.adminEmailString + '">contact the admin</a> ' +
+					'with any questions or <a href="' + eData.uriOverview + '">' +
+					'review other ' + eData.requestName + ' requests</a>.</p>'
+			});
+		} else {
+			if (eData.requestStatus !== 'Cancelled') {
+				if (notifyTeam === 1) {
 					notificationsToSend.push({
 						'emailType': 'Notification',
-						'caller': 'beginningOfLife requester',
-						'to': eData.requesterEmail,
-						'subject': eData.subjectPreface + 'new request received',
-						'bodyUnique': '<p>The request you nicknamed "' + eData.requestNick + '" has been received. You can ' +
+						'caller': 'modification team',
+						'to': 'swvincent@mos.org',
+						'subject': eData.subjectPreface + 'modified',
+						'bodyUnique': '<p>This request has been modified. You can ' +
 							'<a href="' + eData.uriRequest + '">review this request\'s details</a>, ' +
-							'<a href="mailto:' + eData.adminEmailString + '">contact the admin</a> ' +
+							'<a href="mailto:' + eData.requesterEmail + '">contact the requester</a> ' +
+							'with any questions, or <a href="' + eData.uriOverview + '">' +
+							'review other ' + eData.requestName + ' requests</a>.</p>'
+					});
+					notificationsToSend.push({
+						'emailType': 'Notification',
+						'caller': 'modification team',
+						'to': 'aalbert@mos.org',
+						'subject': eData.subjectPreface + 'modified',
+						'bodyUnique': '<p>This request has been modified. You can ' +
+							'<a href="' + eData.uriRequest + '">review this request\'s details</a>, ' +
+							'<a href="mailto:' + eData.requesterEmail + '">contact the requester</a> ' +
+							'with any questions, or <a href="' + eData.uriOverview + '">' +
+							'review other ' + eData.requestName + ' requests</a>.</p>'
+					});
+					notificationsToSend.push({
+						'emailType': 'Notification',
+						'caller': 'modification team',
+						'to': 'bwroblewski@mos.org',
+						'subject': eData.subjectPreface + 'modified',
+						'bodyUnique': '<p>This request has been modified. You can ' +
+							'<a href="' + eData.uriRequest + '">review this request\'s details</a>, ' +
+							'<a href="mailto:' + eData.requesterEmail + '">contact the requester</a> ' +
 							'with any questions, or <a href="' + eData.uriOverview + '">' +
 							'review other ' + eData.requestName + ' requests</a>.</p>'
 					});
 				}
+				notificationsToSend.push({
+					'emailType': 'Notification',
+					'caller': 'modification requester',
+					'to': eData.requesterEmail,
+					'subject': eData.subjectPreface + 'modified',
+					'bodyUnique': '<p>This request has been modified. You can ' +
+						'<a href="' + eData.uriRequest + '">review this request\'s details</a>, ' +
+						'<a href="mailto:' + eData.requesterEmail + '">contact the requester</a> ' +
+						'with any questions, or <a href="' + eData.uriOverview + '">' +
+						'review other ' + eData.requestName + ' requests</a>.</p>'
+				});
 			}
 		}
 
 
 
-		// ============
+	
+
+
+		/* // ============
 		// ---- APPROVED
 		// ============
 
@@ -10516,7 +10626,7 @@
 					});
 				}
 			}
-		}
+		} */
 
 
 
@@ -10525,8 +10635,45 @@
 		// ============
 
 		if (typeof (eData.endOfLife) != 'undefined' && eData.endOfLife == 1) {
+			if (eData.requestStatus === 'Cancelled') {
+				notificationsToSend.push({
+					'emailType': 'Notification',
+					'caller': 'endOfLife team',
+					'to': 'swvincent@mos.org',
+					'subject': eData.subjectPreface + eData.requestStatus.toLowerCase(),
+					'bodyUnique': '<p>Feel free to <a href="mailto:' + eData.requesterEmail + '">' +
+						'contact the requester</a> if you need to follow up.</p>'
+				});
+				notificationsToSend.push({
+					'emailType': 'Notification',
+					'caller': 'endOfLife team',
+					'to': 'aalbert@mos.org',
+					'subject': eData.subjectPreface + eData.requestStatus.toLowerCase(),
+					'bodyUnique': '<p>Feel free to <a href="mailto:' + eData.requesterEmail + '">' +
+						'contact the requester</a> if you need to follow up.</p>'
+				});
+				notificationsToSend.push({
+					'emailType': 'Notification',
+					'caller': 'endOfLife team',
+					'to': 'bwroblewski@mos.org',
+					'subject': eData.subjectPreface + eData.requestStatus.toLowerCase(),
+					'bodyUnique': '<p>Feel free to <a href="mailto:' + eData.requesterEmail + '">' +
+						'contact the requester</a> if you need to follow up.</p>'
+				});
+				notificationsToSend.push({
+					'emailType': 'Notification',
+					'caller': 'endOfLife requester generic',
+					'to': eData.requesterEmail,
+					'subject': eData.subjectPreface + eData.requestStatus.toLowerCase(),
+					'bodyUnique': '<p>This is the <a href="' + eData.uriRequest + '">request you nicknamed "' + eData.requestNick +
+						'"</a>. Please <a href="mailto:' + eData.adminEmailString + '">contact the admin</a> with any ' +
+						'issues related to this request.'
+				});
+			}
 
-			// admin
+
+			
+			/* // admin
 			var adminSendEOL = 0;
 			var adminComparisonBank = [];
 
@@ -10551,7 +10698,7 @@
 						});
 					});
 				}
-			}
+			} 
 
 			// requester
 			var requesterSendEOL = 0;
@@ -10577,7 +10724,7 @@
 							'issues related to this request.'
 					});
 				}
-			}
+			}*/
 		}
 
 
@@ -12749,6 +12896,9 @@
 					case "validAllVisibleCheckedInSet":
 						validAllVisibleCheckedInSet(addtlValidationTypeObject.checkboxFields, addtlValidationTypeObject.errorField, addtlValidationTypeObject.errorFieldValue, addtlValidationTypeObject.errorMessage);
 						break;
+					case "validMaxDaysFromNow":
+						validMaxDaysFromNow(value, this);
+						break;
 				}
 			}
 
@@ -12787,6 +12937,16 @@
 	$.fn.RemoveErrorMessage = function (element) {
 		$(element).closest("div.control").find("div.error-message").remove();
 		$(element).closest("div.control").parent("div.label-and-control").removeClass("contains-errors");
+	};
+
+
+
+	$.fn.ValidateInRealTimeForMaxDaysFromNow = function (value, element, days) {
+		if (moment(value).subtract(days, 'days').isSameOrBefore(moment(), 'day')) {
+			$().SetErrorMessage(element, 'Please enter a date more than ' + days + ' days from today');
+		} else {
+			$().RemoveErrorMessage(element);
+		}
 	};
 
 
@@ -13222,6 +13382,14 @@
 			$().SetErrorMessage(element, 'Please enter a valid phone number');
 		}
 	}
+
+	function validMaxDaysFromNow(value, element) {
+		var days = $(element).attr("data-validation-quantity");
+		if (moment(value).subtract(days, 'days').isSameOrBefore(moment(), 'day')) {
+			$().SetErrorMessage(element, 'Please enter a date more than ' + days + ' days from today');
+		}
+	}
+	
 
 
 	// ---- INITIALIZE & POPULATE CONTROLS
@@ -13932,6 +14100,9 @@
 		if (typeof (e.addtlValidationType) !== "undefined") {
 			field += ' data-validation="' + e.addtlValidationType + '" ';
 		}
+		if (typeof (e.addtlValidationQuantity) !== "undefined") {
+			field += ' data-validation-quantity="' + e.addtlValidationQuantity + '" ';
+		}
 
 		if (typeof (e.listFieldName) !== "undefined") {
 			field += ' listFieldName="' + e.listFieldName + '" ';
@@ -14135,8 +14306,15 @@
 			'		  <input type="text" id="date-input_' + e.hypehnatedName + '" data-is-date="true" validate="validDate"';
 		field += 'class="date-input' +
 			$().AddMarkupClass(e, "disabledForAdmin", "disabledForNonAdmin") +
-			$().AddMarkupClass(e, "requiredForAdmin", "requiredForNonAdmin") +
-			'" ';
+			$().AddMarkupClass(e, "requiredForAdmin", "requiredForNonAdmin") + '" ';
+
+		if (typeof (e.addtlValidationType) !== "undefined") {
+			field += ' data-validation="' + e.addtlValidationType + '" ';
+		}
+		if (typeof (e.addtlValidationQuantity) !== "undefined") {
+			field += ' data-validation-quantity="' + e.addtlValidationQuantity + '" ';
+		}
+			
 		field += ' aria-describedby="field-type-indicator_' + e.hypehnatedNameLower + ' datetime-label_' + e.hypehnatedNameLower;
 		if (typeof (e.helpNotes) != "undefined") {
 			field += $().AddHelpNotesReferences(e, uData.isAdmin, rData.requestStatus);
@@ -16291,8 +16469,9 @@
 			// get the current date
 			var currentDate = $().ReturnFormattedDateTime('nowLocal', null, 'MMMM D, YYYY');
 
-			// get the quantity of account sets
-			var accountSetPropertyNameSuffix = '';
+			// set default quantities of account sets
+			var basicAccountSetPropertyNameSuffix = '';
+			var salaryChangeAccountSetPropertyNameSuffix = '';
 
 			// construct print content
 			var printContent = '<h1>Employment Authorization Request</h1>' +
@@ -16371,16 +16550,19 @@
 				printContent += '				<li><b>Accounts:</b> ' +
 					'					<ol>';
 
+				var quantityBasicAccountsFound = 0;
 				$.each(formData["RepeatedElements"], function (i, accountSet) {
-
-					if (i != 0) { accountSetPropertyNameSuffix = '-repeat-' + i; }
-					printContent += '						<li>Account ' + (i + 1) +
-						'							<ol>' +
-						'								<li><b>Grant Project Code:</b> ' + accountSet["Grant-Project-Code" + accountSetPropertyNameSuffix] + '</li>' +
-						'								<li><b>Grant Source Code:</b> ' + accountSet["Grant-Source-Code" + accountSetPropertyNameSuffix] + '</li>' +
-						'								<li><b>Percent Salary from this Account:</b> ' + accountSet["Percent-Salary-from-this-Account" + accountSetPropertyNameSuffix] + '</li>' +
-						'							</ol>' +
-						'						</li>';
+					if (!(accountSet.ID.includes('salary-change'))) {
+						if (quantityBasicAccountsFound != 0) { basicAccountSetPropertyNameSuffix = '-repeat-' + quantityBasicAccountsFound; }
+						printContent += '						<li>Account ' + (quantityBasicAccountsFound + 1) +
+							'							<ol>' +
+							'								<li><b>Grant Project Code:</b> ' + accountSet["Grant-Project-Code" + basicAccountSetPropertyNameSuffix] + '</li>' +
+							'								<li><b>Grant Source Code:</b> ' + accountSet["Grant-Source-Code" + basicAccountSetPropertyNameSuffix] + '</li>' +
+							'								<li><b>Percent Salary from this Account:</b> ' + accountSet["Percent-Salary-from-this-Account" + basicAccountSetPropertyNameSuffix] + '</li>' +
+							'							</ol>' +
+							'						</li>';
+						quantityBasicAccountsFound =+ 1;
+					}
 				});
 
 				printContent += '					</ol>' +
@@ -16426,9 +16608,40 @@
 
 			if (typeof (formData["Replacement-Salary"]) !== "undefined") {
 				printContent += '				<li><b>Last Salary for Position:</b> ' + formData["Replacement-Salary"] + '</li>';
-				var salaryChangeString = parseFloat(formData["Salary-Change"].replace("\$", "").replace(/[,]/g, ""));
+				var salaryChangeNumber = parseFloat(formData["Salary-Change"].replace("\$", "").replace(/[,]/g, ""));
 				printContent += '				<li><b>Salary Change:</b> ' + formData["Salary-Change"] + '</li>';
-				if (salaryChangeString !== 0) {
+				if (salaryChangeNumber > 0) {
+					printContent += '				<li><b>Salary Change Funding Source:</b> ' + formData["Salary-Change-Funding-Source"] + '</li>';
+
+					// -----------------
+
+					if (formData["Salary-Change-Funding-Source"] == "Grant Funds" || formData["Salary-Change-Funding-Source"] == "Endowment Funds") {
+						printContent += '				<li><b>Accounts:</b> ' +
+							'					<ol>';
+
+						var quantitySalaryChangeAccountsFound = 0;
+						$.each(formData["RepeatedElements"], function (i, accountSet) {
+							if ((accountSet.ID.includes('salary-change'))) {
+								if (quantitySalaryChangeAccountsFound != 0) { salaryChangeAccountSetPropertyNameSuffix = '-repeat-' + quantitySalaryChangeAccountsFound; }
+								printContent += '						<li>Account ' + (quantitySalaryChangeAccountsFound + 1) +
+									'							<ol>' +
+									'								<li><b>Grant Project Code:</b> ' + accountSet["Salary-Change-Grant-Project-Code" + salaryChangeAccountSetPropertyNameSuffix] + '</li>' +
+									'								<li><b>Grant Source Code:</b> ' + accountSet["Salary-Change-Grant-Source-Code" + salaryChangeAccountSetPropertyNameSuffix] + '</li>' +
+									'								<li><b>Percent Salary from this Account:</b> ' + accountSet["Salary-Change-Percent-Salary-from-this-Account" + salaryChangeAccountSetPropertyNameSuffix] + '</li>' +
+									'							</ol>' +
+									'						</li>';
+								quantitySalaryChangeAccountsFound = + 1;
+							}
+						});
+
+						printContent += '					</ol>' +
+							'				</li>';
+					}
+
+					// -----------------
+
+				}
+				if (salaryChangeNumber !== 0) {
 					printContent += '				<li><b>Salary Change Reason:</b> ' + formData["Salary-Change-Reason"] + '</li>';
 				}
 			}
@@ -25104,6 +25317,32 @@
 					"	 <And>" +
 					"		  <Eq>" +
 					"				<FieldRef Name='RequestStatus'></FieldRef>" +
+					"				<Value Type='Text'>" + t.rsQueryAndFieldGEQToday[0] + "</Value>" +
+					"		  </Eq>" +
+					"		  <Geq>" +
+					"			  <FieldRef Name='" + t.rsQueryAndFieldGEQToday[1] + "'></FieldRef>" +
+					"			  <Value Type='DateTime'>" + moment().format("YYYY-MM-DD") + " 00:00:00" + "</Value>" +
+					"		  </Geq>" +
+					"	 </And>" +
+					"</Where>";
+			} else if (typeof (t.rsQueryAndFieldLessThanToday) != "undefined") {
+				query = "<Where>" +
+					"	 <And>" +
+					"		  <Eq>" +
+					"				<FieldRef Name='RequestStatus'></FieldRef>" +
+					"				<Value Type='Text'>" + t.rsQueryAndFieldLessThanToday[0] + "</Value>" +
+					"		  </Eq>" +
+					"		  <Lt>" +
+					"			  <FieldRef Name='" + t.rsQueryAndFieldLessThanToday[1] + "'></FieldRef>" +
+					"			  <Value Type='DateTime'>" + moment().format("YYYY-MM-DD") + " 00:00:00" + "</Value>" +
+					"		  </Lt>" +
+					"	 </And>" +
+					"</Where>";
+			} else if (typeof (t.rsQueryAndFieldGEQToday) != "undefined") {
+				query = "<Where>" +
+					"	 <And>" +
+					"		  <Eq>" +
+					"				<FieldRef Name='RequestStatus'></FieldRef>" +
 					"				<Value Type='Text'>" + t.rsQueryAndFieldGEQToday.requestStatus + "</Value>" +
 					"		  </Eq>" +
 					"		  <Geq>" +
@@ -25215,6 +25454,7 @@
 					"		 </And>" +
 					"	</And>" +
 					"</Where>";
+
 			} else if (typeof (t.MyRSQueryAndFieldLTDate) != "undefined") {
 
 				var myName = $().SPServices.SPGetCurrentUser({
@@ -25439,6 +25679,11 @@
 			queryOptions = "<QueryOptions><ExpandUserField>TRUE</ExpandUserField></QueryOptions>"
 		}
 
+		console.log('opt', opt);
+		console.log('fields', fields);
+		console.log('query', query);
+		console.log('queryOptions', queryOptions);
+
 		$().SPServices({
 			operation: "GetListItems",
 			async: false,
@@ -25449,11 +25694,16 @@
 			CAMLQueryOptions: queryOptions,
 			completefunc: function (xData, Status) {
 
+				console.log('in complete func');
+
 				// iterate through every list item returned
 				$(xData.responseXML).SPFilterNode("z:row").each(function () {
 
 					var thisItem = $(this);
 					var itemDataForReturn = {};
+
+					console.log('thisItem');
+					console.log(thisItem);
 
 					$.each(opt.lookupFields, function (i, lookupField) {
 
@@ -26806,6 +27056,15 @@
 
 
 
+	$.fn.ProcessInHouseNeedsSheetsDateField = function () {
+		var eventStartDate = moment($("input#date-input_Event-Beginning-Datetime").val());
+		if (eventStartDate) {
+			$().ValidateInRealTimeForMaxDaysFromNow(eventStartDate, "input#date-input_Event-Beginning-Datetime", 7);
+		}
+	};
+
+
+
 	$.fn.ProcessGSEJobPhysicalDemandPoundFields = function () {
 		var liftingNumber = $("input#Physical-Demand-Lifting").val();
 		if (liftingNumber) {
@@ -26905,6 +27164,7 @@
 
 
 	$.fn.ProcessEARAndPARHourAndWageFields = function (hourlyWageFieldID, annualWageFieldID, biweeklyHoursFieldID, annualHoursFieldID, lastSalaryFieldID) {
+		console.log('processing');		
 		var earHoursFieldsProcessed = $().ProcessEARAndPARHourFields(biweeklyHoursFieldID, annualHoursFieldID);
 		if (earHoursFieldsProcessed == 1) {
 			var hourlyWageString = $("input#" + hourlyWageFieldID).val().replace("\$", "").replace(/[,]/g, "");
@@ -26930,6 +27190,14 @@
 								if (salaryChangeString != 0) {
 									$().SetFieldToRequired('Salary-Change-Reason', 'textarea');
 									$("div#label-and-control_Salary-Change-Reason").show("fast").removeClass("hidden");
+								}
+								if (salaryChangeString > 0) {
+									$().SetFieldToRequired('Salary-Change-Funding-Source', 'select');
+									$("div#label-and-control_Salary-Change-Funding-Source").show("fast").removeClass("hidden");
+								}
+								if (salaryChangeString <= 0) {
+									$().SetFieldToOptional('Salary-Change-Funding-Source', 'select');
+									$("div#label-and-control_Salary-Change-Funding-Source").hide("fast").addClass("hidden");
 								}
 							}
 						}
@@ -27835,37 +28103,47 @@
 
 	$.fn.SetEventNeedsRequestNonWriteAccess = function () {
 
-		// context:
-		//		1 - some users are given view permissions in other functions
-		//		2 - since these people are not admins, they have the same field editing permissions as the requester 
-		//			(because standard setup assumes that anyone who can view and isn't the admin is the requester)
-		//		3 - they should not have editing rights
-		//		4 - Don't do anything at all if this is a new request (RS = ""); anyone can begin a new request
-
-		// for viewers who are not admin and not requester
-		//		1 - all non-file fields will be disabled
-		//		2 - file fields will be "disabled" if
-
-		/* // don't do anything if this is a new request
+		// don't do anything if this is a new request
 		if ($("input#Request-Status").val() != "") {
 
 			// set up vars; start off assuming that editing rights will be deined
+			var userIsRequester = 0;
 			var userIsAdminOrRequester = 0;
+			var editingDeadlineIsInFuture = 0;
 
-			// determine whether or not the viewer is both not an admin and not a requester; only for such a viewer do we need to consider the possibility of special editing rights
-			if (uData.isAdmin == 1 || $().UserIsInFieldOfAllRequestData("Requested For") == 1 || $().UserIsInFieldOfAllRequestData("MOS Principal Investigator") == 1 || $().UserIsInFieldOfAllRequestData("MOS Co-Investigator") == 1 || $().UserIsInFieldOfAllRequestData("Proposal Developer") == 1) {
+			// determine whether or not the viewer is the requester
+			if ($().UserIsInFieldOfAllRequestData("Requested For") == 1 || $().UserIsInFieldOfAllRequestData("Onsite Contact") == 1) {
+				userIsRequester = 1;
+			}
+			// determine whether or not the viewer is either an admin or the requester or onsite contact
+			if (uData.isAdmin == 1 || userIsRequester == 1) {
 				userIsAdminOrRequester = 1;
 			}
+			// determine whether or not the editing deadline is in the future; i.e., if now is before the date 7 calendar days before the event start date
+			if (moment().isBefore(moment($('input#datetime-storage_Event-Beginning-Datetime').val()).subtract(7, 'days'))) {
+				editingDeadlineIsInFuture = 1;
+			}
 
-			// if this user is NOT admin or requester
-			if (userIsAdminOrRequester == 0) {
+			console.log('userIsRequester');
+			console.log(userIsRequester);
+			console.log('uData.isAdmin');
+			console.log(uData.isAdmin);
+			console.log('userIsAdminOrRequester');
+			console.log(userIsAdminOrRequester);
+			console.log('editingDeadlineIsInFuture');
+			console.log(editingDeadlineIsInFuture);
 
-				// 1 - disable non-file fields
+			// handle inputs that are not people pickers
 
-				// handle inputs
+			// note: input are a special case because the requester needs to be able to cancel event
+			// 		at any time but others should not be bothered with this disabled option
+
+			// if requester and deadline has passed
+			if (userIsRequester === 1 && editingDeadlineIsInFuture == 0) {
+				// disable all inputs except cancellation
 				$("#request-form").find('input').each(function () {
 					var thisInputID = $(this).attr("id");
-					if (thisInputID.indexOf('TopSpan_HiddenInput') < 0) {
+					if (thisInputID.indexOf('TopSpan_HiddenInput') < 0 && thisInputID !== 'requester-cancellation_cancel') {
 						var thisInputType = $(this).attr("type");
 						$('#' + thisInputID).addClass('disabled');
 						if (thisInputType != "file" && thisInputType != "hidden" && thisInputType != "button") {
@@ -27873,6 +28151,29 @@
 						}
 					}
 				});
+			// if admin
+			} else if (uData.isAdmin == 1) {
+				// disable and hide cancellation
+				$().SetFieldToDisabled('#requester-cancellation_cancel');
+				$("div#label-and-control_Requester-Cancellation").hide("fast").addClass("hidden");
+			// if not requester and not admin
+			} else if (userIsAdminOrRequester == 0) {
+				// disable all input and hide cancellation
+				$("#request-form").find('input').each(function () {
+					var thisInputID = $(this).attr("id");
+					if (thisInputID.indexOf('TopSpan_HiddenInput') < 0 ) {
+						var thisInputType = $(this).attr("type");
+						$('#' + thisInputID).addClass('disabled');
+						if (thisInputType != "file" && thisInputType != "hidden" && thisInputType != "button") {
+							$().SetFieldToDisabled('#' + thisInputID);
+						}
+					}
+				});
+				$("div#label-and-control_Requester-Cancellation").hide("fast").addClass("hidden");
+			}
+
+			// if this user is NOT admin or requester, or if user is not admin and the editing deadline has passed
+			if (userIsAdminOrRequester === 0 || (uData.isAdmin === 0 && editingDeadlineIsInFuture == 0)) {
 
 				// handle people pickers
 				$("#request-form").find('div[data-control-type="PeoplePicker"]').each(function () {
@@ -27888,32 +28189,19 @@
 					$().SetFieldToDisabled('#' + thisSelectID);
 				});
 
+				// handle textareas
+				$("#request-form").find('textarea').each(function () {
+					var thisTextareaID = $(this).attr("id");
+					$('#' + thisTextareaID).addClass('disabled');
+					$().SetFieldToDisabled('#' + thisTextareaID);
+				});
+
 				// handle others
-				$('textarea#PID-Comments').addClass('disabled');
-				// $('textarea#EEP-Staff-Member-Names').addClass('disabled');
-				// $('textarea#EDC-Staff-Member-Names').addClass('disabled');
-				// $('textarea#New-Staff-Positions').addClass('disabled');
-				$().SetFieldToDisabled('textarea#PID-Comments');
-				// $().SetFieldToDisabled('textarea#EEP-Staff-Member-Names');
-				// $().SetFieldToDisabled('textarea#EDC-Staff-Member-Names');
-				// $().SetFieldToDisabled('textarea#New-Staff-Positions');
-
-				$("div#label-and-control_Request-Nickname").hide("fast").addClass("hidden");
-				$("div#label-and-control_Requester-Cancellation").hide("fast").addClass("hidden");
-				$("div#label-and-control_Ready-for-Submission-to-Committee").hide("fast").addClass("hidden");
-				$("div#rfp-or-other-website-link_help-note").hide("fast").addClass("hidden");
-				$("input#Proposal-Due-Date").datepicker("destroy");
-				$("input#Expected-Decision-Date").datepicker("destroy");
-
-
-				// 2 - disable file fields
-
-				// project narrative
-				if ($().ReturnGPCSubmissionApprovalRequestProjectNarrativeWriteAccess() == 0) {
-					$().SetFieldToDisabled("#Project-Description-File");
-				}
+				// $().SetFieldToDisabled('textarea#Schedule');
+				// $().SetFieldToDisabled('textarea#Additional-Notes');
+				$().SetFieldToDisabled("#Floor-Plan");
 			}
-		} */
+		}
 	};
 
 
