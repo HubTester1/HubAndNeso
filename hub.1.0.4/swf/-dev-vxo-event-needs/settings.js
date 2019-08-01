@@ -13,10 +13,10 @@
 		// "useRecordedMOSMainMajorVersion": 1,
 		"currentRequestVersion": 1,
 		"devAdminNotifications": 1,
-		"notifications": 0
+		"notifications": 1
 	};
 
-	console.log("using settings m13");
+	console.log("using settings m101");
 
 
 
@@ -62,31 +62,19 @@
 				],
 				'tables': [
 					{
-						'tableTitle': 'Pending Revision',
-						'tableID': 'pending-revision',
+						'tableTitle': 'Today & Upcoming',
+						'tableID': 'upcoming',
 						'someColsAreUsers': 1,
-						'basicRSQueryRelevantStatus': "Pending Revision",
+						'rsQueryAndFieldGEQToday': ["Submitted", "EventBeginningDatetime"],
 						'sortColAndOrder': [2, 'asc']
 					}, {
-						'tableTitle': 'Pending Approval',
-						'tableID': 'pending-approval',
+						'tableTitle': 'Past',
+						'tableID': 'past',
 						'someColsAreUsers': 1,
-						'basicRSQueryRelevantStatus': "Pending Approval",
+						'rsQueryAndFieldLessThanToday': ["Submitted", "EventBeginningDatetime"],
 						'sortColAndOrder': [2, 'asc']
-					// }, {
-					// 	'tableTitle': 'Approved, Today & Upcoming',
-					// 	'tableID': 'upcoming',
-					// 	'someColsAreUsers': 1,
-					// 	'rsQueryAndFieldGEQDate': ["EventBeginningDatetime", moment().format("YYYY-MM-DD") + " 00:00:00"],
-					// 	'sortColAndOrder': [2, 'asc']
-					// }, {
-					// 	'tableTitle': 'Approved, Past',
-					// 	'tableID': 'past',
-					// 	'someColsAreUsers': 1,
-					// 	'rsQueryAndFieldGEQDate': ["EventBeginningDatetime", moment().format("YYYY-MM-DD") + " 00:00:00"],
-					// 	'sortColAndOrder': [2, 'asc']
 					}, {
-						'tableTitle': 'Closed',
+						'tableTitle': 'Cancelled',
 						'tableID': 'closed',
 						'someColsAreUsers': 1,
 						'basicEOLQueryRelevantValue': 1,
@@ -95,18 +83,16 @@
 				]
 			}
 		},
-		'my': {
+		'nonAdminInHouseNeedsSheets': {
 			'buttons': [
 			],
+			'preamble': '<p style="font-size: 2rem; font-weight: 300; margin-top: 1rem">Events may not be created or modified after 7 days from their start date.</p>',
 			'sections': {
 				'commonColumns': [
 					{
 						'displayName': 'Request ID',
 						'internalName': 'ID',
 						'formLink': 1
-					}, {
-						'displayName': 'Request Nickname',
-						'internalName': 'Title'
 					}, {
 						'displayName': 'Event Name',
 						'internalName': 'EventName',
@@ -122,6 +108,10 @@
 						'internalName': 'RequestedFor',
 						'userName': 1
 					}, {
+						'displayName': 'Requested By',
+						'internalName': 'Author',
+						'userName': 1
+					}, {
 						'displayName': 'Request Date',
 						'internalName': 'RequestDate',
 						'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
@@ -129,33 +119,55 @@
 				],
 				'tables': [
 					{
-						'tableTitle': 'Pending Revision',
-						'tableID': 'pending-revision',
+						'tableTitle': 'Today & Upcoming',
+						'tableID': 'upcoming',
 						'someColsAreUsers': 1,
-						'myRSQueryRelevantStatus': 'Pending Revision'
+						'rsQueryAndFieldGEQToday': ["Submitted", "EventBeginningDatetime"],
+						'sortColAndOrder': [2, 'asc']
 					}, {
-						'tableTitle': 'Pending Approval',
-						'tableID': 'pending-approval',
+						'tableTitle': 'Past',
+						'tableID': 'past',
 						'someColsAreUsers': 1,
-						'myRSQueryRelevantStatus': 'Pending Approval'
-					// }, {
-					// 	'tableTitle': 'Approved, Today & Upcoming',
-					// 	'tableID': 'upcoming',
-					// 	'someColsAreUsers': 1,
-					// 	'MyRSQueryAndFieldGEQDate': ["EventBeginningDatetime", moment().format("YYYY-MM-DD") + " 00:00:00"],
-					// 	'sortColAndOrder': [3, 'asc']
-					// }, {
-					// 	'tableTitle': 'Approved, Past',
-					// 	'tableID': 'past',
-					// 	'someColsAreUsers': 1,
-					// 	'MyRSQueryAndFieldLTDate': ["EventBeginningDatetime", moment().format("YYYY-MM-DD") + " 00:00:00"],
-					// 	'sortColAndOrder': [3, 'desc']
+						'rsQueryAndFieldLessThanToday': ["Submitted", "EventBeginningDatetime"],
+						'sortColAndOrder': [2, 'asc']
+					}, {
+						'tableTitle': 'Cancelled',
+						'tableID': 'closed',
+						'someColsAreUsers': 1,
+						'basicEOLQueryRelevantValue': 1,
+						'sortColAndOrder': [2, 'desc']
+
+
+
+
+
+
+
+
+
+						/* 'tableTitle': 'Today & Upcoming',
+						'tableID': 'upcoming',
+						'someColsAreUsers': 1,
+						'MyRSQueryAndFieldGEQToday': {
+							requestStatus: "Submitted",
+							field: "EventBeginningDatetime"
+						},
+						'sortColAndOrder': [3, 'asc']
+					}, {
+						'tableTitle': 'Past',
+						'tableID': 'past',
+						'someColsAreUsers': 1,
+						'MyRSQueryAndFieldLTToday': {
+							requestStatus: "Submitted",
+							field: "EventBeginningDatetime"
+						},
+						'sortColAndOrder': [3, 'desc']
 					}, {
 						'tableTitle': 'Closed',
 						'tableID': 'closed',
 						'someColsAreUsers': 1,
 						'basicMyEOLQueryRelevantValue': 1,
-						'sortColAndOrder': [3, 'desc']
+						'sortColAndOrder': [3, 'desc'] */
 					}
 				]
 			}
@@ -233,29 +245,14 @@
 			'standardThisRequestAndRequesterElements': 1,
 			'standardAdminElements': {
 				'changeRequestStatus': [
-					// { "value": "Approve", "display": "This request is approved" },
-					// { "value": "Disapprove", "display": "This request is disapproved" },
-					// { "value": "Complete", "display": "All work for this request has been completed" },
 					{ "value": "Cancel", "display": "This request has been cancelled" }
 				]
 			},
 			'standardButtonElementsInitiallyHidden': 1,
 			'standardComponentGrpAdminOnlyElements': 1
 		},
-		/* 'conditionalSubmissionNoticesAndButtonValues': [
-			{
-				'condition': function () {
-					return ($('input#Request-Status').val() == "" || $('input#Request-Status').val() == "Pending Approval");
-				},
-				'submissionNotice': 'You can modify this request until it\'s approved.',
-			}, {
-				'condition': function () {
-					return ($('input#Request-Status').val() == "Completed" || $('input#Request-Status').val() == "Disapproved" || $('input#Request-Status').val() == "Cancelled");
-				},
-				'submissionNotice': '',
-			}
-		], */
-		/* 'eventNeedsNotifications': {
+		'eventNeedsNotifications': 1, 
+		/* {
 			'beginningOfLife': { 'admin': 1, 'requester': 1 },
 			'approved': { 'admin': 1, 'requester': 1, 'additional': 1 },
 			'pendingApproval': { 'admin': 1, 'requester': 1 },
@@ -266,294 +263,6 @@
 
 		'uniqueElements': [
 			{
-				/* "elementType": "markup",
-				"tag": "div",
-				"htmlID": "print-to-screen",
-				"begin": 1,
-				"end": 1
-			}, {
-				"elementType": "markup",
-				"tag": "h2",
-				"content": "This Request",
-				"htmlID": "header_this-request",
-				"begin": 1,
-				"end": 1
-			}, {
-				"elementType": "markup",
-				"tag": "div",
-				"htmlClass": "label-and-control",
-				"htmlID": "requirement-legend",
-				"content": '	<div class="label"></div>' +
-					'	<div class="field-type-indication"><span class="field-type-indicator field-required"><span class="message message-required"></span></span></div>' +
-					'	<div class="control">= required field</div>',
-				"begin": 1,
-				"end": 1
-			}, {
-				"elementType": "field",
-				"controlType": "text",
-				"fieldName": "Request ID",
-				"labelContent": "Request ID",
-				"hideForNonAdmin": [""],
-				"hideForAdmin": [""],
-				"disabledForNonAdmin": ["", "Submitted", "Cancelled"],
-				"disabledForAdmin": ["", "Submitted", "Cancelled"]
-			}, {
-				"elementType": "field",
-				"controlType": "text",
-				"fieldName": "Request Date",
-				"labelContent": "Request Date",
-				"listFieldName": "RequestDate",
-				"friendlyFormatOnLoad": {
-					'incomingFormat': null,
-					'returnFormat': 'MMMM D, YYYY',
-					'determineYearDisplayDynamically': 1
-				},
-				"isoFormatOnSubmit": {
-					'incomingFormat': null,
-					'returnFormat': null,
-					'determineYearDisplayDynamically': null
-				},
-				"hideForNonAdmin": [""],
-				"hideForAdmin": [""],
-				"disabledForNonAdmin": ["", "Submitted", "Cancelled"],
-				"disabledForAdmin": ["", "Submitted", "Cancelled"]
-			}, {
-				"elementType": "field",
-				"controlType": "text",
-				"fieldName": "Request Nickname",
-				"labelContent": "Request Nickname",
-				"listFieldName": "Title",
-				"helpNotes": [{
-					"text": "Give this request a name you can reference later",
-					"htmlID": "request-nickname_help-note",
-					"urgent": 0,
-					"hideForNonAdmin": ["Submitted", "Cancelled"],
-					"hideForAdmin": ["Submitted", "Cancelled"]
-				}],
-				"requiredForNonAdmin": [""],
-				"requiredForAdmin": [""],
-				"disabledForNonAdmin": ["Submitted", "Cancelled"],
-				"disabledForAdmin": ["Submitted", "Cancelled"],
-				"hideForAdmin": ["Submitted", "Cancelled"]
-			}, {
-				"elementType": "field",
-				"controlType": "select",
-				"fieldName": "Self or Other",
-				"labelContent": "If we have questions, talk to you or someone else?",
-				"setOptions": [{
-					"value": "Self",
-					"display": "Talk to me"
-				}, {
-					"value": "Other",
-					"display": "Talk to someone else"
-				}],
-				"requiredForNonAdmin": [""],
-				"requiredForAdmin": [""],
-				"hideForNonAdmin": ["Submitted", "Cancelled"],
-				"hideForAdmin": ["Submitted", "Cancelled"],
-				"disabledForNonAdmin": ["Submitted", "Cancelled"],
-				"disabledForAdmin": ["Submitted", "Cancelled"],
-				"onChange": [{
-					"thisFieldEquals": ["Self"],
-					"hide": [{
-						"fieldName": "Requested For"
-					}],
-					"optional": [{
-						"fieldName": "Requested For",
-						"type": "peoplepicker"
-					}],
-					"set": [{
-						"fieldName": "Requested For",
-						"type": "peoplePicker",
-						"value": "currentUser"
-					}]
-				}, {
-					"thisFieldEquals": ["Other"],
-					"show": [{
-						"fieldName": "Requested For"
-					}],
-					"require": [{
-						"fieldName": "Requested For",
-						"type": "peoplepicker"
-					}],
-					"set": [{
-						"fieldName": "Requested For",
-						"type": "peoplePicker",
-						"value": ""
-					}]
-				}]
-			}, {
-				"elementType": "field",
-				"controlType": "peoplePicker",
-				"fieldName": "Requested For",
-				"labelContent": "If needed, talk to",
-				"listFieldName": "RequestedFor",
-				"yieldsViewPermissions": 1,
-				"hideForNonAdmin": [""],
-				"hideForAdmin": [""],
-				"disabledForNonAdmin": ["Submitted", "Cancelled"],
-				"disabledForAdmin": ["Submitted", "Cancelled"]
-			}, {
-				"elementType": "field",
-				"controlType": "check",
-				"fieldName": "Requester Cancellation",
-				"choiceSetLabel": "Cancellation",
-				"choices": [{
-					"value": "cancel",
-					"display": "Yes, I wish to cancel this request"
-				}],
-				"hideForNonAdmin": ["", "Cancelled"],
-				"hideForAdmin": ["", "Submitted", "Cancelled"],
-				"disabledForNonAdmin": ["Cancelled"],
-				"disabledForAdmin": ["Cancelled"] */
-			/* }, {
-				"elementType": "field",
-				"controlType": "check",
-				"fieldName": "Requester Reversion to Pending Revision",
-				"choiceSetLabel": "Make Changes to This Approved Request",
-				"choices": [{
-					"value": "revert",
-					"display": "Yes, I wish to make changes to this request and restart the approval process"
-				}],
-				"helpNotes": [{
-					"text": "Save this request using the <b>Save</b> button. Then, re-select this request from under the <b>Pending Revision</b> header.",
-					"htmlID": "requester-reversion-to-pending-approval_help-note",
-					"emphasis": 1,
-					"hideForNonAdmin": ["Submitted", "Cancelled"],
-					"hideForAdmin": ["Submitted", "Cancelled"]
-				}],
-				"hideForNonAdmin": ["", "Submitted", "Cancelled"],
-				"hideForAdmin": ["", "Submitted", "Cancelled"],
-				"disabledForNonAdmin": ["", "Submitted", "Cancelled"],
-				"disabledForAdmin": ["", "Submitted", "Cancelled"],
-				"onChange": [{
-					"allOfSpecificCheckboxesAreChecked": ["#requester-reversion-to-pending-approval_revert"],
-					"show": [{ "noteID": "requester-reversion-to-pending-approval_help-note" }],
-					"set": [{ "fieldName": "Request Status", "type": "text", "value": "Pending Approval" }]
-				}, {
-					"noneOfSpecificCheckboxesAreChecked": ["#requester-reversion-to-pending-approval_revert"],
-					"hide": [{ "noteID": "requester-reversion-to-pending-approval_help-note" }],
-					"set": [{ "fieldName": "Request Status", "type": "text", "value": "Approved" }]
-				}]
-			}, {
-				"elementType": "field",
-				"controlType": "check",
-				"fieldName": "Requester Restart Approval Process",
-				"choiceSetLabel": "Re-submit For Approval",
-				"choices": [{
-					"value": "ready",
-					"display": "Yes, my changes are ready for approval"
-				}],
-				"helpNotes": [{
-					"text": "This request cannot be approved until you've saved this request with this box checked.",
-					"htmlID": "requester-reversion-to-pending-approval_help-note",
-					"emphasis": 1,
-					"hideForNonAdmin": ["", "Submitted", "Cancelled"],
-					"hideForAdmin": ["", "Submitted", "Cancelled"]
-				}],
-				"hideForNonAdmin": ["", "Submitted", "Cancelled"],
-				"hideForAdmin": ["", "Submitted", "Cancelled"],
-				"disabledForNonAdmin": ["", "Submitted", "Cancelled"],
-				"disabledForAdmin": ["", "Submitted", "Cancelled"], */
-
-
-
-
-
-				// about the requester
-			/* }, {
-				"elementType": "markup",
-				"tag": "div",
-				"htmlID": "container_about-the-requester",
-				"begin": 1,
-				"hideForNonAdmin": ["", "Submitted", "Cancelled"],
-				"hideForAdmin": [""],
-			}, {
-				"elementType": "markup",
-				"tag": "h2",
-				"content": "About the Requester",
-				"begin": 1,
-				"end": 1
-			}, {
-				"elementType": "field",
-				"controlType": "text",
-				"fieldName": "Requester Name",
-				"labelContent": "Name",
-				"disabledForNonAdmin": ["", "Submitted", "Cancelled"],
-				"disabledForAdmin": ["", "Submitted", "Cancelled"]
-			}, {
-				"elementType": "field",
-				"controlType": "text",
-				"fieldName": "Requester Department",
-				"labelContent": "Department",
-				"disabledForNonAdmin": ["", "Submitted", "Cancelled"],
-				"disabledForAdmin": ["", "Submitted", "Cancelled"]
-			}, {
-				"elementType": "field",
-				"controlType": "text",
-				"fieldName": "Requester Email",
-				"labelContent": "Email",
-				"disabledForNonAdmin": ["", "Submitted", "Cancelled"],
-				"disabledForAdmin": ["", "Submitted", "Cancelled"]
-			}, {
-				"elementType": "field",
-				"controlType": "text",
-				"fieldName": "Requester Phone",
-				"labelContent": "Phone",
-				"disabledForNonAdmin": ["", "Submitted", "Cancelled"],
-				"disabledForAdmin": ["", "Submitted", "Cancelled"]
-			}, {
-				"elementType": "field",
-				"controlType": "text",
-				"fieldName": "Requester Account",
-				"labelContent": "Account",
-				"yieldsViewPermissions": 1,
-				"hideForNonAdmin": ["", "Submitted", "Cancelled"],
-				"hideForAdmin": ["", "Submitted", "Cancelled"],
-				"disabledForNonAdmin": ["", "Submitted", "Cancelled"],
-				"disabledForAdmin": ["", "Submitted", "Cancelled"]
-			}, {
-				"elementType": "field",
-				"controlType": "peoplePicker",
-				"fieldName": "Requested By",
-				"labelContent": "Requested By",
-				"listFieldName": "RequestedBy",
-				"yieldsViewPermissions": 1,
-				"hideForNonAdmin": ["", "Submitted", "Cancelled"],
-				"hideForAdmin": ["", "Submitted", "Cancelled"],
-				"disabledForNonAdmin": ["", "Submitted", "Cancelled"],
-				"disabledForAdmin": ["", "Submitted", "Cancelled"]
-			}, {
-				"elementType": "markup",
-				"tag": "div",
-				"end": 1 */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-			// }, {
 				'elementType': 'markup',
 				'tag': 'h2',
 				'content': 'Space Request',
@@ -1164,6 +873,8 @@
 				'fieldName': 'Event Beginning Datetime',
 				'listFieldName': 'EventBeginningDatetime',
 				'labelContent': 'Starting',
+				'addtlValidationType': 'validMaxDaysFromNow',
+				'addtlValidationQuantity': 7,
 				'requiredForNonAdmin': ['', 'Submitted'],
 				'requiredForAdmin': ['', 'Submitted'],
 				"disabledForNonAdmin": ["Cancelled"],
@@ -1172,6 +883,7 @@
 				'elementType': 'field',
 				'controlType': 'datetime',
 				'fieldName': 'Event Ending Datetime',
+				// 'listFieldName': 'EventEndingDatetime',
 				'labelContent': 'Ending',
 				'requiredForNonAdmin': ['', 'Submitted'],
 				'requiredForAdmin': ['', 'Submitted'],
@@ -1195,20 +907,6 @@
 				'requiredForAdmin': ['', 'Submitted'],
 				"disabledForNonAdmin": ["Cancelled"],
 				"disabledForAdmin": ["Cancelled"],
-
-
-
-
-				// }, {
-				// 	'elementType': 'field',
-				// 	'controlType': 'date',
-				// 	'fieldName': 'Skyline  Date',
-				// 	'listFieldName': 'EventBeginningDatetime',
-				// 	'labelContent': 'Starting',
-				// 	'requiredForNonAdmin': ['', 'Submitted'],
-				// 	'requiredForAdmin': ['', 'Submitted'],
-				// 	"disabledForNonAdmin": ["Cancelled"],
-				// 	"disabledForAdmin": ["Cancelled"],
 			}, {
 				"elementType": "field",
 				"controlType": "peoplePicker",
@@ -1232,69 +930,6 @@
 				'labelContent': 'What\'s happening when?',
 				"disabledForNonAdmin": ["Cancelled"],
 				"disabledForAdmin": ["Cancelled"],
-
-
-
-
-
-
-				/*}, {
-				'elementType': 'markup',
-				'tag': 'div',
-				'begin': 1,
-				'htmlID': 'event-elements-and-times',
-				'htmlClass': 'repeating-content-container',
-			}, {
-				'elementType': 'markup',
-				'tag': 'div',
-				'begin': 1,
-				'htmlID': 'event-element-and-time',
-				'htmlClass': 'repeat-container',
-				'repeatable': 1
-			}, {
-				'elementType': 'field',
-				'controlType': 'text',
-				'fieldName': 'Time',
-				'labelContent': 'Time',
-				"disabledForNonAdmin": ["Cancelled"],
-				"disabledForAdmin": ["Cancelled"],
-			}, {
-				'elementType': 'field',
-				'controlType': 'text',
-				'fieldName': 'Schedule Item',
-				'labelContent': 'What\'s scheduled?',
-				"disabledForNonAdmin": ["Cancelled"],
-				"disabledForAdmin": ["Cancelled"],
-			}, {
-				'elementType': 'markup',
-				'tag': 'a',
-				'begin': 1,
-				'end': 1,
-				'htmlClass': 'remove-section-anchor',
-				'content': 'Remove this Item',
-				'removeThisRepeat': 1,
-				'hideForNonAdmin': ["Cancelled"],
-				'hideForAdmin': ["Cancelled"],
-			}, {
-				'elementType': 'markup',
-				'tag': 'div',
-				'end': 1,
-			}, {
-				'elementType': 'markup',
-				'tag': 'a',
-				'begin': 1,
-				'end': 1,
-				'htmlID': 'repeat-event-element-and-time',
-				'htmlClass': 'repeat-section-anchor',
-				'content': 'Add a schedule item',
-				'repeatSectionID': 'event-element-and-time',
-				'hideForNonAdmin': ["Cancelled"],
-				'hideForAdmin': ["Cancelled"],
-			}, {
-				'elementType': 'markup',
-				'tag': 'div',
-				'end': 1
-				*/
 			}, {
 				'elementType': 'markup',
 				'tag': 'h2',
@@ -1483,9 +1118,6 @@
 					}, {
 						'value': 'afterSetup',
 						'display': 'Porter service will be needed for pickup'
-						// }, {
-						//	 'value': 'afterSetup',
-						//	 'display': 'Porter service will not be needed'
 					}
 				],
 				'disabledForNonAdmin': ['Cancelled'],
@@ -1517,22 +1149,6 @@
 				'elementType': 'markup',
 				'tag': 'div',
 				'end': 1,
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 			}, {
 				'elementType': 'field',
@@ -1922,90 +1538,6 @@
 				'end': 1,
 
 
-
-
-
-			/* }, {
-				'elementType': 'field',
-				'controlType': 'check',
-				'fieldName': 'Guest Access',
-				'choiceSetLabel': 'Guest Access',
-				'choices': [
-					{
-						'value': 'yes',
-						'display': 'Yes, guests will need special access'
-					}
-				],
-				'onChange': [
-					{
-						'thisFieldIsChecked': 1,
-						'show': [{ 'divID': 'guest-access-details-container' }],
-						'require': [
-							{ 'fieldName': 'Guest Access Location', 'type': 'text' },
-							{ 'fieldName': 'Guest Access Beginning Datetime', 'type': 'datetime' },
-							{ 'fieldName': 'Guest Access Ending Datetime', 'type': 'datetime' }
-						],
-						'set': [
-							{ 'fieldName': 'Guest Access Location', 'type': 'text', 'method': 'dynamic', 'value': '$("input#Event-Space").val()' },
-							{ 'fieldName': 'Guest Access Beginning Datetime', 'type': 'datetime', 'method': 'dynamic', 'valueFromFieldName': 'Event Beginning Datetime' },
-							{ 'fieldName': 'Guest Access Ending Datetime', 'type': 'datetime', 'method': 'dynamic', 'valueFromFieldName': 'Event Ending Datetime' },
-						]
-					}, {
-						'thisFieldIsChecked': 0,
-						'hide': [{ 'divID': 'guest-access-details-container' }],
-						'optional': [
-							{ 'fieldName': 'Guest Access Location', 'type': 'text' },
-							{ 'fieldName': 'Guest Access Beginning Datetime', 'type': 'datetime' },
-							{ 'fieldName': 'Guest Access Ending Datetime', 'type': 'datetime' }
-						]
-					}
-				],
-				"disabledForNonAdmin": ["Cancelled"],
-				"disabledForAdmin": ["Cancelled"],
-			}, {
-				'elementType': 'markup',
-				'tag': 'div',
-				'begin': 1,
-				'htmlID': 'guest-access-details-container',
-				'htmlClass': 'subsection-container',
-				'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
-				'hideForAdmin': ['', 'Submitted', 'Cancelled'],
-
-			}, {
-				'elementType': 'markup',
-				'tag': 'div',
-				'begin': 1,
-				'htmlClass': 'subsection',
-			}, {
-				'elementType': 'field',
-				'controlType': 'text',
-				'fieldName': 'Guest Access Location',
-				'labelContent': 'Location',
-				"disabledForNonAdmin": ["Cancelled"],
-				"disabledForAdmin": ["Cancelled"],
-			}, {
-				'elementType': 'field',
-				'controlType': 'datetime',
-				'fieldName': 'Guest Access Beginning Datetime',
-				'labelContent': 'Starting',
-				"disabledForNonAdmin": ["Cancelled"],
-				"disabledForAdmin": ["Cancelled"],
-			}, {
-				'elementType': 'field',
-				'controlType': 'datetime',
-				'fieldName': 'Guest Access Ending Datetime',
-				'labelContent': 'Ending',
-				"disabledForNonAdmin": ["Cancelled"],
-				"disabledForAdmin": ["Cancelled"],
-			}, {
-				'elementType': 'markup',
-				'tag': 'div',
-				'end': 1,
-			}, {
-				'elementType': 'markup',
-				'tag': 'div',
-				'end': 1,
-*/
 
 
 
@@ -2480,6 +2012,39 @@
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
+				'begin': 1,
+				'htmlID': 'email-notification-boolean-container',
+				// "hideForNonAdmin": [""],
+				// "hideForAdmin": [""],
+			}, {
+				'elementType': 'markup',
+				'tag': 'h2',
+				'content': 'Notification',
+				'begin': 1,
+				'end': 1,
+			}, {
+				'elementType': 'field',
+				'controlType': 'radio',
+				'fieldName': 'Additional Notification',
+				'choiceSetLabel': 'Notify the internal events team?',
+				'choices': [
+					{
+						'value': 'yes',
+						'display': 'Yes, email <a href="mailto:internalevents@mos.org">internalevents@mos.org</a>'
+					}, {
+						'value': 'no',
+						'display': 'No, do not notify the team'
+					}
+				],
+				'requiredForNonAdmin': ['', 'Submitted'],
+				'requiredForAdmin': ['', 'Submitted'],
+			}, {
+				'elementType': 'markup',
+				'tag': 'div',
+				'end': 1,
+			}, {
+				'elementType': 'markup',
+				'tag': 'div',
 				'end': 1,
 			}
 		]
@@ -2495,16 +2060,25 @@
 
 	fData.CustomScriptLast = '';
 	
-	
-	/* if ($("input#Request-Status").val() == "") { \n' +
-		'   $().SetInHouseNeedsSheetRequestAdditionalViewAccess(); \n' +
-		'} \n';
- */
 	// data import
 
 	fData.CustomScriptLast = '$("#Import-from-Event-Space-Request").on("click", function () { \n' +
-		'	$().ImportEventSpaceRequestDataToEventRequest($("#id-or-link_Event-Space-Request-ID").val()); \n' +
+		'	console.log("clickedddddddd");$().ImportEventSpaceRequestDataToEventRequest($("#id-or-link_Event-Space-Request-ID").val()); \n' +
 		'}); \n';
+
+	// clear last notification selection
+
+	fData.CustomScriptLast += '$("input#additional-notification_no").prop("checked", false).attr("checked", false); \n' +
+		'$("input#additional-notification_yes").prop("checked", false).attr("checked", false);';
+
+	// event space reserved through Outlook
+
+	fData.CustomScriptLast += 	'if ($("input#Request-Status").val() !== "") { \n' +
+								'	if ($("input#space-reservation_outlook").is(":checked")) { \n' +
+								'	   $("div#label-and-control_Event-Space-Request-ID").hide("fast").addClass("hidden"); \n' +
+								'	} \n' + 
+								'} \n';
+
 
 	// event space = other
 
@@ -2519,6 +2093,13 @@
 		'   $("div#event-space-specification-container").show("fast").removeClass("hidden"); \n' +
 		'   $("div#label-and-control_Skyline-or-dArbeloff").show("fast").removeClass("hidden"); \n' +
 		'} \n';
+
+	// validate event date
+
+	fData.CustomScriptLast += '$("input#date-input_Event-Beginning-Datetime, input#date-input_Event-Ending-Datetime, input#date-input_Space-Reserved-Beginning-Datetime, input#date-input_Space-Reserved-Ending-Datetime").on("change", function() { \n' +
+		'	$().ProcessInHouseNeedsSheetsDateField();\n' +
+		'}); \n';
+
 
 	// floor plan
 
@@ -2615,17 +2196,6 @@
 		'	} \n' +
 		'} \n';
 
-	// Guest Access
-
-	/* fData.CustomScriptLast += 'if ($("input#guest-access_yes").is(":checked")) { \n' +
-		'   $("div#guest-access-details-container").show("fast").removeClass("hidden"); \n' +
-		'	if ($("input#Request-Status").val() == "Submitted") { \n' +
-		'		$().SetFieldToRequired("Guest-Access-Location", "text", 0); \n' +
-		'		$().SetFieldToRequired("Guest-Access-Beginning-Datetime", "datetime", 0); \n' +
-		'		$().SetFieldToRequired("Guest-Access-Ending-Datetime", "datetime", 0); \n' +
-		'	} \n' +
-		'} \n'; */
-
 	// Elevator Access
 
 	fData.CustomScriptLast += 'if ($("input#elevator-access_4andor5").is(":checked")) { \n' +
@@ -2692,13 +2262,17 @@
 	fData.CustomScriptLast += '$("div#container_about-the-requester").hide("fast").addClass("hidden"); \n';
 
 
+	fData.CustomScriptLast += 	'$("input#requester-cancellation_cancel").change(function() { \n' +
+								'	if ($("input#requester-cancellation_cancel").is(":checked")) { \n' +
+								'   	$("div#email-notification-boolean-container").hide("fast").addClass("hidden"); \n' +
+								'   	$().SetFieldToOptional("Additional-Notification", "check", 0); \n' + 
+								'	} else { \n' +
+								'   	$("div#email-notification-boolean-container").show("fast").removeClass("hidden"); \n' +
+								'   	$().SetFieldToRequired("Additional-Notification", "check", 0); \n' + 
+								'	} \n' + 
+								'}); \n';
+
 	fData.CustomScriptLast += '$().SetEventNeedsRequestNonWriteAccess(); \n';
-
-
-
-
-
-
 
 
 	// fData.CustomScriptLast +=	 '$("input#WPC-Account-Number").on("change", function () { \n ' + 

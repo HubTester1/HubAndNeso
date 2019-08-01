@@ -1697,7 +1697,8 @@ div#overview-screen-container.gseSchedulesListManager-requests,
 div#overview-screen-container.gseSignupsManager-requests,
 div#overview-screen-container.mwBuyoutList-requests,
 div#overview-screen-container.mwEventList-requests,
-div#overview-screen-container.mwProductsList-requests {
+div#overview-screen-container.mwProductsList-requests,
+div#overview-screen-container.nonAdminInHouseNeedsSheets-requests {
   padding-top: 2rem; }
   div#overview-screen-container.my-requests div.table-container,
   div#overview-screen-container.my-requests div#workflow-contacts,
@@ -1730,7 +1731,9 @@ div#overview-screen-container.mwProductsList-requests {
   div#overview-screen-container.mwEventList-requests div.table-container,
   div#overview-screen-container.mwEventList-requests div#workflow-contacts,
   div#overview-screen-container.mwProductsList-requests div.table-container,
-  div#overview-screen-container.mwProductsList-requests div#workflow-contacts {
+  div#overview-screen-container.mwProductsList-requests div#workflow-contacts,
+  div#overview-screen-container.nonAdminInHouseNeedsSheets-requests div.table-container,
+  div#overview-screen-container.nonAdminInHouseNeedsSheets-requests div#workflow-contacts {
     display: table-cell;
     vertical-align: top; }
 
