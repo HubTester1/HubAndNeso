@@ -6,17 +6,17 @@
 	var mData = {
 		'componentID': 123,
 		"swf": 1,
-		// "mosMainKey": "prod",
+		"mosMainKey": "prod",
 		// "mosMainKey": "dev",
 		// "mosMainKey": "devMedium",
-		"mosMainKey": "devLong",
+		// "mosMainKey": "devLong",
 		// "useRecordedMOSMainMajorVersion": 1,
 		"currentRequestVersion": 1,
 		"devAdminNotifications": 1,
 		"notifications": 1
 	};
 
-	console.log("using settings m6");
+	console.log("using settings m1");
 
 
 	var oData = {
