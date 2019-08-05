@@ -25679,11 +25679,6 @@
 			queryOptions = "<QueryOptions><ExpandUserField>TRUE</ExpandUserField></QueryOptions>"
 		}
 
-		console.log('opt', opt);
-		console.log('fields', fields);
-		console.log('query', query);
-		console.log('queryOptions', queryOptions);
-
 		$().SPServices({
 			operation: "GetListItems",
 			async: false,
@@ -25694,16 +25689,11 @@
 			CAMLQueryOptions: queryOptions,
 			completefunc: function (xData, Status) {
 
-				console.log('in complete func');
-
 				// iterate through every list item returned
 				$(xData.responseXML).SPFilterNode("z:row").each(function () {
 
 					var thisItem = $(this);
 					var itemDataForReturn = {};
-
-					console.log('thisItem');
-					console.log(thisItem);
 
 					$.each(opt.lookupFields, function (i, lookupField) {
 
