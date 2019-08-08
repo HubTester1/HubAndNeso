@@ -232,6 +232,16 @@
 				'requiredForAdmin': [''],
 				"disabledForNonAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
 				"disabledForAdmin": [],
+				'helpNotes': [
+					{
+						'text': "Due to the short notice, your request may not be approved",
+						'htmlID': "av-beginning-datetime_date-too-soon",
+						'emphasis': 1,
+						'hideForNonAdmin': ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+						'hideForAdmin': ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
+					}
+				],
+
 			}, {
 				'elementType': 'field',
 				'controlType': 'datetime',
@@ -379,7 +389,70 @@
 				'requiredForAdmin': [''],
 				'requiredForNonAdmin': [''],
 				"disabledForNonAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-				"disabledForAdmin": []
+				"disabledForAdmin": [],
+				'helpNotes': [
+					{
+						'text': "Due to the short notice, your request may not be approved",
+						'htmlID': "delivery-or-receipt_date-too-soon",
+						'emphasis': 1,
+						'hideForNonAdmin': ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+						'hideForAdmin': ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
+					}
+				],
+				/* 'onChange': [
+					{
+						'dateFieldGreaterThanDaysFromNowEqualTo': {
+							'days': 1,
+							'id': 'input#date-input_AV-Beginning-Datetime'
+						},
+						'addlAndConditions': ['$("input#delivery-or-receipt_pickup").is(":checked")'],
+						'show': [
+							{ 'noteID': "delivery-or-receipt_date-too-soon" },
+							{ 'noteID': "av-beginning-datetime_date-too-soon" }
+						]
+					}, {
+						'dateFieldGreaterThanDaysFromNowEqualTo': {
+							'days': 3,
+							'id': 'input#date-input_AV-Beginning-Datetime'
+						},
+						'addlAndConditions': ['$("input#delivery-or-receipt_delivery").is(":checked")'],
+						'show': [
+							{ 'noteID': "delivery-or-receipt_date-too-soon" },
+							{ 'noteID': "av-beginning-datetime_date-too-soon" }
+						]
+					}, {
+						'dateFieldGreaterThanDaysFromNowEqualTo': {
+							'days': 7,
+							'id': 'input#date-input_AV-Beginning-Datetime'
+						},
+						'addlAndConditions': ['$("input#delivery-or-receipt_techneededforsetup").is(":checked")'],
+						'show': [
+							{ 'noteID': "delivery-or-receipt_date-too-soon" },
+							{ 'noteID': "av-beginning-datetime_date-too-soon" }
+						]
+					}, {
+						'dateFieldGreaterThanDaysFromNowEqualTo': {
+							'days': 7,
+							'id': 'input#date-input_AV-Beginning-Datetime'
+						},
+						'addlAndConditions': ['$("input#delivery-or-receipt_techneededforduration").is(":checked")'],
+						'show': [
+							{ 'noteID': "delivery-or-receipt_date-too-soon" },
+							{ 'noteID': "av-beginning-datetime_date-too-soon" }
+						]
+					}, {
+						'noneOfSpecificCheckboxesAreChecked': [
+							'#delivery-or-receipt_pickup', 
+							'#delivery-or-receipt_delivery', 
+							'#delivery-or-receipt_techneededforsetup', 
+							'#delivery-or-receipt_techneededforduration'
+						],
+						'hide': [
+							{ 'noteID': "delivery-or-receipt_date-too-soon" },
+							{ 'noteID': "av-beginning-datetime_date-too-soon" }
+						]
+					}
+				], */
 			}, {
 				'elementType': 'field',
 				'controlType': 'check',
@@ -877,6 +950,10 @@
 	fData.CustomScriptLast += 'if ($("input#miscellaneous-equipment_powerstrips").is(":checked")) { \n' +
 								'	$("div#label-and-control_Power-Strip-Quantity").show("fast").removeClass("hidden"); \n' +
 								'} \n';
+
+	fData.CustomScriptLast +=	'$("input#delivery-or-receipt_pickup, input#delivery-or-receipt_delivery, input#delivery-or-receipt_techneededforsetup, input#delivery-or-receipt_techneededforduration, input#date-input_AV-Beginning-Datetime").on("change", function() { \n' +
+								'	$().ProcessEventAVDateAndDeliveryReceiptFields();\n' +
+								'}); \n';
 
 
 

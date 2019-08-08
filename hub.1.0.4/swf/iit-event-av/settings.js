@@ -379,7 +379,7 @@
 				'requiredForAdmin': [''],
 				'requiredForNonAdmin': [''],
 				"disabledForNonAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
-				"disabledForAdmin": []
+				"disabledForAdmin": [],
 			}, {
 				'elementType': 'field',
 				'controlType': 'check',
