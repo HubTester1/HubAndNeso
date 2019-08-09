@@ -66,31 +66,56 @@ module.exports = {
 					nesoDBQueries.ReturnAllDocsFromCollection('gseCreditGrantedInDateRangeSignups')
 						// if the promise is resolved with the docs
 						.then((signupQueryResult) => {
-							Promise.all(signupQueryResult.docs.map(signup => module.exports.ReturnProcessedSignup(signup)))
+							// get a group of promises to get a processed version of each signup
+							// 		with schedule data added
+							Promise.all(signupQueryResult.docs
+								.map(signup => module.exports.ReturnProcessedSignup(signup)))
 								// if the promises were all resolved with a result set
 								.then((signupProcessingResults) => {
-									console.log('signupProcessingResults');
-									console.log(signupProcessingResults);
-
-									jsonexport(signupProcessingResults, (error, csv) => {
-										if (error) return error;
-										console.log('csv');
-										console.log(csv);
-										fse.writeFile(storagePath, csv, 'utf8', (err) => {
-											if (err) {
-												console.log('Some error occured - file either not saved or corrupted file saved.');
-											} else {
-												console.log('It\'s saved!');
-											}
+									// get a group of promises to get job info added to each result
+									Promise.all(signupProcessingResults.map(schedule => 
+										module.exports.ReturnProcessedSchedule(schedule)))
+										// if the promises were all resolved with a result set
+										.then((scheduleProcessingResults) => {
+											// set up var to contain final version of result set
+											const finalResults = [];
+											// iterate over returned results and push the 
+											// 		non-blank ones to the final results set
+											scheduleProcessingResults.forEach((result) => {
+												if (result.name) {
+													finalResults.push(result);
+												}
+											});
+											// convert finalResults to CSV
+											jsonexport(finalResults, (error, csv) => {
+												if (error) return error;
+												// write CSV to file
+												fse.writeFile(storagePath, csv, 'utf8', (err) => {
+													// log success or error message
+													// if (err) {
+													// 	console.log(`Some error occured - 
+													// 	file either not saved or corrupted file saved.`);
+													// } else {
+													// 	console.log('It\'s saved!');
+													// }
+												});
+												// resolve top-level promise
+												resolve(csv);
+											});
+										})
+										// if the promise is rejected with an error
+										.catch((scheduleProcessingError) => {
+											console.log('scheduleProcessingError');
+											console.log(scheduleProcessingError);
+											// reject this promise with the error
+											reject(scheduleProcessingError);
 										});
-										resolve(csv);
-										return null;
-									});
 								})
 								// if the promise is rejected with an error
 								.catch((signupProcessingError) => {
 									console.log('signupProcessingError');
 									console.log(signupProcessingError);
+									// reject this promise with the error
 									reject(signupProcessingError);
 								});
 						})
@@ -106,28 +131,36 @@ module.exports = {
 	ReturnProcessedSignup: signup =>
 		// return a new promise
 		new Promise((resolve, reject) => {
+			// set up a reconstructed version of the signup and extract the signup account info
 			const reconstructedSignup = {
 				name: signup.AllRequestData['Requested-For'][0].displayText,
 			};
-			const signupAccount = nesoUtilities.ReplaceAll('@mos.org', '', nesoUtilities.ReplaceAll('i:0#.f\\|membership\\|', '', signup.AllRequestData['Requested-For'][0].account));
+			const signupAccount = 
+				nesoUtilities
+					.ReplaceAll('@mos.org', '', nesoUtilities.ReplaceAll('i:0#.f\\|membership\\|', '', signup.AllRequestData['Requested-For'][0].account));
+			// get a promise to get schedules from db
 			nesoDBQueries.ReturnOneSpecifiedDocFromCollection('gseCompletedInDateRangeSchedules', {
 				ID: parseInt(signup.ScheduleID, 10),
 			}, {})
 				// if the promise is resolved with the docs
 				.then((scheduleQueryResult) => {
+					// add schedule info to the reconstructed signup
 					reconstructedSignup.date = scheduleQueryResult.docs.Date;
 					reconstructedSignup.length = scheduleQueryResult.docs.ShiftLength;
+					reconstructedSignup.jobID = scheduleQueryResult.docs.JobID;
+					// get a promise to get user info from the db
 					nesoDBQueries.ReturnOneSpecifiedDocFromCollection('adUsers', {
 						account: signupAccount,
 					}, {})
 						// if the promise is resolved with the docs
 						.then((userQueryResult) => {
+							// if the user's employee ID could be found
 							if (userQueryResult.docs && userQueryResult.docs.employeeID) {
+								// add it to the reconstructed signup
 								reconstructedSignup.employeeID = userQueryResult.docs.employeeID;
-								resolve(reconstructedSignup);
-							} else {
-								resolve({});
 							}
+							// resolve this promise with the reconstructed signup
+							resolve(reconstructedSignup);
 						})
 						// if the promise is rejected with an error, 
 						// 		then reject this promise with an error
@@ -139,6 +172,37 @@ module.exports = {
 				// 		then reject this promise with an error
 				.catch((scheduleQueryError) => {
 					reject(scheduleQueryError);
+				});
+		}),
+
+	ReturnProcessedSchedule: schedule =>
+		// return a new promise
+		new Promise((resolve, reject) => {
+			// set up a reconstructed schedule
+			const reconstructedSchedule = {
+				name: schedule.name,
+				date: schedule.date,
+				length: schedule.length,
+				employeeID: schedule.employeeID,
+			};
+			// get a promise to get job info for this schedule from the db
+			nesoDBQueries.ReturnOneSpecifiedDocFromCollection('gseApprovedJobs', {
+				ID: parseInt(schedule.jobID, 10),
+			}, {})
+				// if the promise is resolved with the docs
+				.then((jobQueryResult) => {
+					// if the job title could be found
+					if (jobQueryResult.docs && jobQueryResult.docs.JobTitle) {
+						// add it to the reconstructed schedule
+						reconstructedSchedule.title = jobQueryResult.docs.JobTitle;
+					}
+					// resolve this promise with the reconstructed schedule
+					resolve(reconstructedSchedule);
+				})
+				// if the promise is rejected with an error, 
+				// 		then reject this promise with an error
+				.catch((jobQueryError) => {
+					reject(jobQueryError);
 				});
 		}),
 
@@ -166,29 +230,4 @@ module.exports = {
 					});
 				});
 		}),
-
-	/* ReturnGSEItemsFromDBForExport: (startDate, endDate) =>
-		// return a new promise
-		new Promise((resolve, reject) => {
-			// create promises to sync all GSE data from SPO to Neso
-			Promise.all([
-				nesoDBQueries.ReturnAllDocsFromCollection('exportSettings'),
-				nesoSPSync.SyncGSECreditGrantedInDateRangeSignupsListItems(startDate, endDate),
-			])
-				// when all promises have resolved
-				.then((syncResults) => {
-					// resolve with non-error flag
-					resolve({
-						error: false,
-					});
-				})
-				// if a promise was rejected with an error
-				.catch((syncErrors) => {
-					// reject with error flag
-					reject({
-						error: false,
-						syncErrors,
-					});
-				});
-		}), */
 };
