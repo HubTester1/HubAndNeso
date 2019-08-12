@@ -13,8 +13,7 @@
 		'devAdminNotifications': 1,
 		'notifications': 0,
 	};
-
-	console.log("using settings m3");
+	console.log("using settings m1");
 
 
 
@@ -844,6 +843,7 @@
 						'show': [
 							{ 'fieldName': 'Backfill For' },
 							{ 'fieldName': 'Replacement Salary' },
+							// 
 						],
 						"require": [
 							{
@@ -1064,6 +1064,181 @@
 				'disabledForAdmin': ['', 'Submitted', 'Cancelled'],
 				"hideForNonAdmin": ['', 'Submitted', 'Cancelled'],
 				"hideForAdmin": ['', 'Submitted', 'Cancelled'],
+
+
+
+
+
+
+			}, {
+				"elementType": "field",
+				"controlType": "select",
+				"fieldName": "Salary Change Funding Source",
+				"labelContent": "Salary Change Funding Source",
+				"setOptions": [
+					{
+						"value": "Operating Funds",
+						"display": "Operating Funds"
+					}, {
+						"value": "1% Merit Pool",
+						"display": "1% Merit Pool"
+					}, {
+						"value": "Endowment Funds",
+						"display": "Endowment Funds"
+					}, {
+						"value": "Grant Funds",
+						"display": "Grant Funds"
+					}
+				],
+				"disabledForNonAdmin": ['Submitted', 'Cancelled'],
+				"disabledForAdmin": ['Submitted', 'Cancelled'],
+				"hideForNonAdmin": ['', 'Submitted', 'Cancelled'],
+				"hideForAdmin": ['', 'Submitted', 'Cancelled'],
+				"onChange": [
+					{
+						"thisFieldNotEquals": ["Grant Funds", "Endowment Funds"],
+						"hide": [{
+							"divID": "salary-change-account-numbers-sets"
+						}],
+						"optional": [
+							{
+								"fieldName": "Salary Change Grant Project Code",
+								"type": "text",
+								'repeatable': 1
+							}, {
+								"fieldName": "Salary Change Grant Source Code",
+								"type": "text",
+								'repeatable': 1
+							}, {
+								"fieldName": "Salary Change Percent Salary from this Account",
+								"type": "text",
+								'repeatable': 1
+							}
+						]
+					}, {
+						"thisFieldEquals": ["Grant Funds", "Endowment Funds"],
+						"show": [{
+							"divID": "salary-change-account-numbers-sets"
+						}],
+						"require": [
+							{
+								"fieldName": "Salary Change Grant Project Code",
+								"type": "text",
+								'repeatable': 1
+							}, {
+								"fieldName": "Salary Change Grant Source Code",
+								"type": "text",
+								'repeatable': 1
+							}, {
+								"fieldName": "Salary Change Percent Salary from this Account",
+								"type": "text",
+								'repeatable': 1
+							}
+						]
+					}
+				]
+			}, {
+				'elementType': "markup",
+				'tag': "div",
+				'begin': 1,
+				'htmlID': "salary-change-account-numbers-sets",
+				'htmlClass': "subsection-container repeating-content-container",
+				'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
+				'hideForAdmin': ['', 'Submitted', 'Cancelled']
+			}, {
+				'elementType': "markup",
+				'tag': "div",
+				'begin': 1,
+				'htmlID': "salary-change-account-numbers-set",
+				'htmlClass': "subsection repeat-container",
+				'repeatable': 1
+			}, {
+				'elementType': "field",
+				'controlType': "text",
+				'fieldName': "Salary Change Grant Project Code",
+				'labelContent': "Grant Project Code",
+				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
+				'disabledForAdmin': ['Submitted', 'Cancelled'],
+				// 'helpNotes': [
+				// 	{
+				// 		'text': "E.g., https'://matrix.mos.org/depts/iit",
+				// 		'htmlID': "intranet-url_help-note",
+				// 		'hideForNonAdmin': ['Submitted', 'Cancelled'],
+				// 		'hideForAdmin': ['Submitted', 'Cancelled']
+				// 	}
+				// ]
+			}, {
+				'elementType': "field",
+				'controlType': "text",
+				'fieldName': "Salary Change Grant Source Code",
+				'labelContent': "Grant Source Code",
+				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
+				'disabledForAdmin': ['Submitted', 'Cancelled'],
+				// 'helpNotes': [
+				// 	{
+				// 		'text': "E.g., view, edit, receive notifications, etc.",
+				// 		'htmlID': "intranet-access-type_help-note",
+				// 		'hideForNonAdmin': ['Submitted', 'Cancelled'],
+				// 		'hideForAdmin': ['Submitted', 'Cancelled']
+				// 	}
+				// ]
+			}, {
+				'elementType': "field",
+				'controlType': "text",
+				'fieldName': "Salary Change Percent Salary from this Account",
+				'labelContent': "Percent Salary from this Account",
+				'htmlClass': 'format-percent',
+				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
+				'disabledForAdmin': ['Submitted', 'Cancelled'],
+				// 'helpNotes': [
+				// 	{
+				// 		'text': "E.g., view, edit, receive notifications, etc.",
+				// 		'htmlID': "intranet-access-type_help-note",
+				// 		'hideForNonAdmin': ['Submitted', 'Cancelled'],
+				// 		'hideForAdmin': ['Submitted', 'Cancelled']
+				// 	}
+				// ]
+			}, {
+				'elementType': "markup",
+				'tag': "a",
+				'begin': 1,
+				'end': 1,
+				'htmlClass': "remove-section-anchor",
+				'content': "Remove",
+				'removeThisRepeat': 1,
+				'hideForNonAdmin': ['Submitted', 'Cancelled'],
+				'hideForAdmin': ['Submitted', 'Cancelled'],
+			}, {
+				'elementType': "markup",
+				'tag': "div",
+				'end': 1,
+			}, {
+				'elementType': "markup",
+				'tag': "a",
+				'begin': 1,
+				'end': 1,
+				'htmlID': "repeat-salary-change-account-numbers-set",
+				'htmlClass': "repeat-section-anchor",
+				'content': "Insert an Account",
+				'repeatSectionID': "salary-change-account-numbers-set",
+				'hideForNonAdmin': ['Submitted', 'Cancelled'],
+				'hideForAdmin': ['Submitted', 'Cancelled'],
+			}, {
+				'elementType': "markup",
+				'tag': "div",
+				'end': 1
+
+
+
+
+
+
+
+
+
+
+
+
 			}, {
 				'elementType': "field",
 				'controlType': "textarea",
@@ -1105,54 +1280,70 @@
 	fData.CustomScriptFirst = '';
 	fData.CustomScriptLast = '';
 
-
-	/* fData.CustomScriptLast += '$("input#job-description_yes").prop("checked", true).attr("checked", true); \n';
+	/* // CHECK / RADIO
+	fData.CustomScriptLast += '$("input#job-description_yes").prop("checked", true).attr("checked", true); \n';
 	fData.CustomScriptLast +=	'$("input#overtime-status_exempt").prop("checked", true).attr("checked", true); \n';
 	fData.CustomScriptLast +=	'$("input#workspace-approved_approved").prop("checked", true).attr("checked", true); \n';
 	fData.CustomScriptLast +=	'$("input#job-opening-reason_replacement").prop("checked", true).attr("checked", true); \n';
 	// fData.CustomScriptLast +=	'$("input#job-opening-reason_grant").prop("checked", true).attr("checked", true); \n';
+	// fData.CustomScriptLast +=	'$("input#job-opening-reason_backfill").prop("checked", true).attr("checked", true); \n';
 	fData.CustomScriptLast +=	'$("input#hrc-grading_graded").prop("checked", true).attr("checked", true); \n';
 	// fData.CustomScriptLast +=	'$("input#XXXXXXXXXXXXXXXX").prop("checked", true).attr("checked", true); \n';
 
-
+	// SELECTS
 	fData.CustomScriptLast += '$("select#Department option[value=\'Accounting\']").attr("selected","selected"); \n';
 	fData.CustomScriptLast += '$("select#Grade option[value=\'25\']").attr("selected","selected"); \n';
 	fData.CustomScriptLast +=	'$("select#Employee-Classification option[value=\'Grant FT\']").attr("selected","selected"); \n';
 	fData.CustomScriptLast +=	'$("select#Funding-Source option[value=\'Grant Funds\']").attr("selected","selected"); \n';
 	// fData.CustomScriptLast +=	'$("select#XXXXXXXXXXXXXXXX option[value=\'XXXXXXXXXXXXXXXX\']").attr("selected","selected"); \n';
 
-
+	// TEXTS
 	fData.CustomScriptLast +=	'$("input#Position-Title").val("Position Title"); \n';
 	fData.CustomScriptLast +=	'$("input#Grade").val("Grade 1"); \n';
+	fData.CustomScriptLast +=	'$("input#Position-Quantity").val("1"); \n';
 	fData.CustomScriptLast +=	'$("input#Scheduled-Hours-Biweekly").val("80"); \n';
 	fData.CustomScriptLast +=	'$("input#Scheduled-Hours-Annually").val("2080"); \n';
-	fData.CustomScriptLast +=	'$("input#Proposed-Hourly-Wage").val("35"); \n';
-	fData.CustomScriptLast +=	'$("input#Proposed-Annualized-Salary").val("72000"); \n';
+	fData.CustomScriptLast +=	'$("input#Proposed-Hourly-Wage").val("40"); \n';
+	fData.CustomScriptLast +=	'$("input#Proposed-Annualized-Salary").val("83200"); \n';
 	fData.CustomScriptLast +=	'$("input#Proposed-Start-Date").val("June 26, 2018"); \n';
 	fData.CustomScriptLast +=	'$("input#Proposed-End-Date").val("June 27, 2018"); \n';
 	fData.CustomScriptLast +=	'$("input#Grant-Project-Code").val("123"); \n';
 	fData.CustomScriptLast +=	'$("input#Grant-Source-Code").val("4567"); \n';
 	fData.CustomScriptLast +=	'$("input#Percent-Salary-from-this-Account").val("49"); \n';
-	fData.CustomScriptLast +=	'$("input#Grant-Funding-Source").val("This grant funding source"); \n';
+	// fData.CustomScriptLast +=	'$("input#Grant-Funding-Source").val("This grant funding source"); \n';
 	// fData.CustomScriptLast +=	'$("input#HRC-Last-Updated").val("June 28, 2018"); \n';
 	fData.CustomScriptLast +=	'$("input#Backfill-For").val("Backfill Name"); \n';
 	fData.CustomScriptLast +=	'$("input#Promotion-For").val("Promotion Name"); \n';
 	fData.CustomScriptLast +=	'$("input#Wage-or-Schedule-Change-For").val("Wage Change Name"); \n';
 	// fData.CustomScriptLast +=	'$("input#Replacement-Salary").val("71000"); \n';
-	// fData.CustomScriptLast +=	'$("input#XXXXXXXXXXXXXXXX").val("XXXXXXXXXXXXX"); \n';
-
-
+	fData.CustomScriptLast +=	'$("input#Manager-Name").val("Hub Tester1"); \n';
 	fData.CustomScriptLast +=	'$("textarea#Schedule").val("M-F, 9-5"); \n';
 	// fData.CustomScriptLast +=	'$("textarea#XXXXXXXXXXXXXXXX").val("XXXXXXXXXXXXX"); \n';
+	fData.CustomScriptLast +=	'$("input#Salary-Change-Grant-Project-Code").val("123"); \n';
+	fData.CustomScriptLast +=	'$("input#Salary-Change-Grant-Source-Code").val("4567"); \n';
+	fData.CustomScriptLast +=	'$("input#Salary-Change-Percent-Salary-from-this-Account").val("100"); \n';
+	fData.CustomScriptLast +=	'$("textarea#Salary-Change-Reason").val("This is the salary change reason."); \n';
 
-	fData.CustomScriptLast += '$("div.subsection-container, div#container_primary-fieldset").each(function() { $(this).removeClass("hidden"); });'; */
+	// UNHIDE PRIMARY FIELDSET
+	fData.CustomScriptLast += '$("div#container_primary-fieldset").each(function() { $(this).removeClass("hidden"); });'; */
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 
 
 	fData.CustomScriptLast += '$("input#Proposed-Hourly-Wage, input#Scheduled-Hours-Biweekly, input#Replacement-Salary").on("change", function() { \n' +
-		'console.log("firing");' +
 		'	$().ProcessEARAndPARHourAndWageFields("Proposed-Hourly-Wage", "Proposed-Annualized-Salary", "Scheduled-Hours-Biweekly", "Scheduled-Hours-Annually", "Replacement-Salary");\n' +
 		'}); \n';
 

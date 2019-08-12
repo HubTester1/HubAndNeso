@@ -1345,7 +1345,6 @@
 
 
 	fData.CustomScriptLast += '$("input#Proposed-Hourly-Wage, input#Scheduled-Hours-Biweekly, input#Replacement-Salary").on("change", function() { \n' +
-		'console.log("firing");'+
 		'	$().ProcessEARAndPARHourAndWageFields("Proposed-Hourly-Wage", "Proposed-Annualized-Salary", "Scheduled-Hours-Biweekly", "Scheduled-Hours-Annually", "Replacement-Salary");\n' +
 		'}); \n';
 
