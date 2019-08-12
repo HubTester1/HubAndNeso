@@ -15853,6 +15853,10 @@
 					stmtsToAdd += '	if ($(this).val() > ' + chg.thisFieldLessThan + ') { \n';
 				} else if (typeof (chg.thisFieldGreaterThanEqualTo) != "undefined") {
 					stmtsToAdd += '	if ($(this).val() >= ' + chg.thisFieldGreaterThanEqualTo + ') { \n';
+
+
+
+
 				} else if (typeof (chg.thisDateFieldLessThanDaysFromNow) != "undefined") {
 					stmtsToAdd += '	if ($().ReturnDateDifferenceInDays($(this).val(), "' + new Date().toLocaleString() + '") < ' + chg.thisDateFieldLessThanDaysFromNow + ') { \n';
 				} else if (typeof (chg.thisDateFieldLessThanEqualToDaysFromNow) != "undefined") {
@@ -15861,6 +15865,20 @@
 					stmtsToAdd += '	if ($().ReturnDateDifferenceInDays($(this).val(), "' + new Date() + '") > ' + chg.thisDateFieldGreaterThanDaysFromNow + ') { \n';
 				} else if (typeof (chg.thisDateFieldGreaterThanDaysFromNowEqualTo) != "undefined") {
 					stmtsToAdd += '	if ($().ReturnDateDifferenceInDays($(this).val(), "' + new Date().toLocaleString() + '") >= ' + chg.thisDateFieldGreaterThanDaysFromNowEqualTo + ') { \n';
+
+
+
+				} else if (typeof (chg.dateFieldLessThanDaysFromNow) != "undefined") {
+					stmtsToAdd += '	if ($().ReturnDateDifferenceInDays($("' + chg.dateFieldLessThanDaysFromNow.id + '").val(), "' + new Date().toLocaleString() + '") < ' + chg.dateFieldLessThanDaysFromNow.days + ') { \n';
+				} else if (typeof (chg.dateFieldLessThanEqualToDaysFromNow) != "undefined") {
+					stmtsToAdd += '	if ($().ReturnDateDifferenceInDays($("' + chg.dateFieldLessThanEqualToDaysFromNow.id + '").val(), "' + new Date() + '") <= ' + chg.dateFieldLessThanEqualToDaysFromNow.days + ') { \n';
+				} else if (typeof (chg.dateFieldGreaterThanDaysFromNow) != "undefined") {
+					stmtsToAdd += '	if ($().ReturnDateDifferenceInDays($("' + chg.dateFieldGreaterThanDaysFromNow.id + '").val(), "' + new Date() + '") > ' + chg.dateFieldGreaterThanDaysFromNow.days + ') { \n';
+				} else if (typeof (chg.dateFieldGreaterThanDaysFromNowEqualTo) != "undefined") {
+					stmtsToAdd += '	if ($().ReturnDateDifferenceInDays($("' + chg.dateFieldGreaterThanDaysFromNowEqualTo.id + '").val(), "' + new Date().toLocaleString() + '") >= ' + chg.dateFieldGreaterThanDaysFromNowEqualTo.days + ') { \n';
+
+
+
 				} else if (typeof (chg.thisTimeFieldSetEarlierThan) != "undefined") {
 					stmtsToAdd += '	if (typeof($("select#hours-input_' + e.hypehnatedName + '").val()) != "undefined" && $("select#hours-input_' + e.hypehnatedName + '").val() != "" && typeof($("select#minutes-input_' + e.hypehnatedName + '").val()) != "undefined" && $("select#minutes-input_' + e.hypehnatedName + '").val()!= "" && $().ReturnTimeOneIsEarlierThanTimeTwo($("select#hours-input_' + e.hypehnatedName + '").val(), $("select#minutes-input_' + e.hypehnatedName + '").val(), "' + chg.thisTimeFieldSetEarlierThan.hours + '", "' + chg.thisTimeFieldSetEarlierThan.minutes + '") != 0) { \n';
 				} else if (typeof (chg.thisTimeFieldSetLaterThan) != "undefined") {
@@ -27127,6 +27145,29 @@
 		}
 		if (typeof ($("input#Cost-Share").val()) !== "undefined" && $("input#Cost-Share").val() != "" && $("input#Cost-Share").val() != "0") {
 			$("input#Cost-Share").val(numeral($("input#Cost-Share").val().replace("\$", "").replace(/[,]/g, "")).format('$0,0.00'));
+		}
+	};
+
+
+
+	$.fn.ProcessEventAVDateAndDeliveryReceiptFields = function() {
+		var avStartDate = $("input#date-input_AV-Beginning-Datetime").val();
+		if (avStartDate !== '') {
+			if (
+				($("input#delivery-or-receipt_pickup").is(":checked") && moment(avStartDate).subtract(1, "days").isBefore(moment(), 'day')) || 
+				($("input#delivery-or-receipt_delivery").is(":checked") && moment(avStartDate).subtract(3, "days").isBefore(moment(), 'day')) || 
+				($("input#delivery-or-receipt_techneededforsetup").is(":checked") && moment(avStartDate).subtract(7, "days").isBefore(moment(), 'day')) || 
+				($("input#delivery-or-receipt_techneededforduration").is(":checked") && moment(avStartDate).subtract(7, "days").isBefore(moment(), 'day'))
+			) {
+				$("#delivery-or-receipt_date-too-soon").show("fast").removeClass("hidden");
+				$("#av-beginning-datetime_date-too-soon").show("fast").removeClass("hidden");
+			} else {
+				$("#delivery-or-receipt_date-too-soon").hide("fast").addClass("hidden");
+				$("#av-beginning-datetime_date-too-soon").hide("fast").addClass("hidden");
+			}
+		} else {
+			$("#delivery-or-receipt_date-too-soon").hide("fast").addClass("hidden");
+			$("#av-beginning-datetime_date-too-soon").hide("fast").addClass("hidden");
 		}
 	};
 
