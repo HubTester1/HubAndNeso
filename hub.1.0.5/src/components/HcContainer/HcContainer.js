@@ -244,7 +244,7 @@ function ShowScreen() {
 				document.getElementById('s4-ribbonrow').style.display = 'block';
 				document.getElementById('s4-bodyContainer').style.paddingTop = '1rem';
 			}
-			if (window.uData.account && window.uData.account === 'showe') {
+			if (window.uData.account && (window.uData.account === 'showe' || window.uData.account === 'shudson')) {
 				// /sites/-dev-hc/Lists/Acc
 				const ribbonForStan =
 					document.querySelector('form[action^="/Lists/Accounting%20Whats%20New%20Hub"] div#s4-ribbonrow');
