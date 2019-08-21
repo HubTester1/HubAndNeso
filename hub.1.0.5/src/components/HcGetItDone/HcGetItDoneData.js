@@ -117,6 +117,7 @@ export default class HcGetItDoneData {
 										itemFormatted.type = 'file';
 										itemFormatted.key = shortID.generate();
 									}
+
 									if (itemValue.URL) {
 										itemFormatted.url = itemValue.URL;
 										itemFormatted.anchorText = itemValue.Name;
