@@ -18,6 +18,14 @@ export default class HcGetItDoneData {
 			.filter("Category eq 'Request Forms'")
 			.get();
 	}
+	static ReturnCRMDocsForHcGetItDone() {
+		const crmDocsWeb = new Web('https://bmos.sharepoint.com');
+		return crmDocsWeb.lists.getByTitle('CRMDocs').items
+			.select('File/ServerRelativeUrl', 'FileLeafRef', 'ServerRedirectedEmbedUrl', 'Title')
+			.expand('File')
+			// .filter("Category eq 'Request Forms'")
+			.get();
+	}
 	static ReturnAccountingFormsForHcGetItDone() {
 		const hrDocsWeb = new Web('https://bmos.sharepoint.com');
 		return hrDocsWeb.lists.getByTitle('Accounting Documents').items
@@ -52,6 +60,7 @@ export default class HcGetItDoneData {
 				this.ReturnAccountingFormsForHcGetItDone(),
 				this.ReturnAccountingTaxDocsForHcGetItDone(),
 				this.ReturnNesoDataForHcGetItDone(),
+				this.ReturnCRMDocsForHcGetItDone(),
 			];
 				// wait for all queries to be completed
 			Promise.all(listItemQueryPromises)
@@ -97,6 +106,8 @@ export default class HcGetItDoneData {
 										itemFormatted.groups = ['HR'];
 										if (itemValue['odata.type'] === 'SP.Data.HRDocsItem') {
 											itemFormatted.groups = ['HR'];
+										} else if (itemValue['odata.type'] === 'SP.Data.CRMDocsItem') {
+											itemFormatted.groups = ['CRM', 'Tessitura'];
 										} else {
 											itemFormatted.groups = ['Accounting'];
 										}

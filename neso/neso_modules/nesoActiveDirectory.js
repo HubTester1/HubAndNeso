@@ -2813,6 +2813,23 @@ module.exports = {
 							department: 'Curriculum Marketing',
 							division: 'Marketing & External Affairs',
 							securityGroups: ['mos.org', 'Data Protection Compliance', 'EIE - Aspen', 'SP_Staff', 'OS X Users', 'Web VPN Access', 'WiFi Access', 'Marketing', 'EiE Product Strategy', 'AnyConnect VPN Access'],
+						}, {
+							_id: '5d508fe0cdcdbb0b880ca7c8',
+							account: 'amelia',
+							employeeID: '12741',
+							firstName: 'Adrian',
+							lastName: 'Melia',
+							firstInitial: 'A',
+							lastInitial: 'M',
+							displayName: 'Adrian Melia',
+							title: 'Program Manager, Informal Engineering & Computer Science Learning',
+							email: 'amelia@mos.org',
+							officePhone: '617-589-4246',
+							mobilePhone: '',
+							manager: 'lbeall',
+							department: 'Informal Engineering & Computer Science Learning',
+							division: 'Education',
+							securityGroups: ['BWVisitorExp', 'Exhibits_Projects_TechGallery', 'Exhibits_Projects_Engineering_2016', 'Design Challenge', 'CCPlace', 'SP_Staff', 'Exhibits_Projects_MercuryToMars', 'OS X Users', 'Web VPN Access', 'Pixar Ed Programs', 'SP_Dept_Write_Volunteer_Supervisors', 'WiFi Access', 'Exhibits WS', 'Crystal Enterprise'],
 						},
 					];
 

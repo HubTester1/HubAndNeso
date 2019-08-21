@@ -14,8 +14,7 @@
 		'notifications': 1,
 	};
 
-	console.log("using settings m4");
-
+	console.log("using settings m1");
 
 
 	var oData = {
