@@ -92,8 +92,13 @@ export default class User {
 					// hard code some roles for service accounts
 					if (uData.account === 'sp1') {
 						uData.roles.push('pafAdmin');
+						uData.roles.push('earAdmin');
 						uData.roles.push('manager');
 						uData.roles.push('gseManager');
+					}
+					if (uData.account === 'sp2') {
+						uData.roles.push('pafAdmin');
+						uData.roles.push('earAdmin');
 					}
 					if (uData.account === 'sp3') {
 						uData.roles.push('manager');
@@ -144,14 +149,11 @@ export default class User {
 					});
 					// for each hrvsMember returned
 					resultsArray[4].forEach((hrvsMember) => {
-						// if the hrvsMember's account is the current user's account and
-						// 		the hrvsMember's department is not Volunteer Services
-						if (
-							hrvsMember.account === uData.account && 
-								hrvsMember.department !== 'Volunteer Services'
-						) {
+						// if the hrvsMember's account is the current user's account
+						if (hrvsMember.account === uData.account) {
 							// push manager and hrvsMember roles to uData
 							uData.roles.push('pafAdmin');
+							uData.roles.push('earAdmin');
 						}
 					});
 					// resolve this promise with the user data
