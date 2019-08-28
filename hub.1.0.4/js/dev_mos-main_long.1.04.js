@@ -20469,7 +20469,7 @@
 						'   <And>' +
 						'       <Eq>' +
 						'           <FieldRef Name="EndOfLife"></FieldRef>' +
-						'           <Value Type="Text">1</Value>' +
+						'           <Value Type="Number">1</Value>' +
 						'       </Eq>' +
 						'       <And>' +
 						'           <Geq>' +
@@ -25145,6 +25145,8 @@
 
 			} else if (typeof (t.meOrMyDownlineIsRequesterAndEOL) != "undefined") {
 
+				console.log(' =========== m48 ============');
+
 				if (typeof (t.meOrMyDownlineIsRequesterAndEOL.getRequesterFrom) == 'undefined') {
 					var getRequesterFrom = 'Author';
 				} else {
@@ -25161,7 +25163,7 @@
 					"	<And>" +
 					"		 <Eq>" +
 					"		      <FieldRef Name='EndOfLife'></FieldRef>" +
-				"		      <Value Type='Text'>" + t.meOrMyDownlineIsRequesterAndEOL.endOfLfe + "</Value>" +
+					"		      <Value Type='Number'>" + t.meOrMyDownlineIsRequesterAndEOL.endOfLfe + "</Value>" +
 					"		 </Eq>" +
 					"		 <" + operator + ">" +
 					"			  <FieldRef Name='" + getRequesterFrom + "'></FieldRef>" +
@@ -25542,7 +25544,7 @@
 						"		<Or>" +
 						"		 	<Eq>" +
 						"			  	<FieldRef Name='EndOfLife'></FieldRef>" +
-						"			  	<Value Type='Text'>0</Value>" +
+						"			  	<Value Type='Number'>0</Value>" +
 						"		  	</Eq>" +
 						"		 	<IsNull>" +
 						"			  	<FieldRef Name='EndOfLife'></FieldRef>" +
@@ -25559,7 +25561,7 @@
 						"	<And>" +
 						"		<Eq>" +
 						"		 	<FieldRef Name='EndOfLife'></FieldRef>" +
-						"		 	<Value Type='Text'>1</Value>" +
+						"		 	<Value Type='Number'>1</Value>" +
 						"		</Eq>" +
 						"		<Neq>" +
 						"			<FieldRef Name='Title'></FieldRef>" +
@@ -25591,7 +25593,7 @@
 						"		<Or>" +
 						"			 <Eq>" +
 						"				  <FieldRef Name='EndOfLife'></FieldRef>" +
-						"				  <Value Type='Text'>0</Value>" +
+						"				  <Value Type='Number'>0</Value>" +
 						"			  </Eq>" +
 						"			 <IsNull>" +
 						"				  <FieldRef Name='EndOfLife'></FieldRef>" +
@@ -25614,7 +25616,7 @@
 						"	<And>" +
 						"		 <Eq>" +
 						"			  <FieldRef Name='EndOfLife'></FieldRef>" +
-						"			  <Value Type='Text'>1</Value>" +
+						"			  <Value Type='Number'>1</Value>" +
 						"		 </Eq>" +
 						"		<And>" +
 						"			<Contains>" +
@@ -25663,7 +25665,6 @@
 				'returnURI': mData.returnURI
 			});
 
-
 			$().RenderListAsDatatable({
 				'tableTitle': t.tableTitle,
 				'tableID': t.tableID,
@@ -25705,6 +25706,7 @@
 			CAMLViewFields: fields,
 			CAMLQuery: query,
 			CAMLQueryOptions: queryOptions,
+			CAMLRowLimit: 0,
 			completefunc: function (xData, Status) {
 
 				// iterate through every list item returned
