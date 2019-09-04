@@ -11552,7 +11552,7 @@
 
     $.fn.RenderAllDataTables = function(tData, mData) {
 
-        console.log('using dev_mos-swf_medium.js m1');
+        console.log('using dev_mos-swf.js m47');
 
 
         $.each(tData.tables, function(i, t) {
@@ -11812,7 +11812,7 @@
                         "   <Or>" +
                         "        <Eq>" +
                         "             <FieldRef Name='EndOfLife'></FieldRef>" +
-                        "             <Value Type='Text'>0</Value>" +
+                        "             <Value Type='Number'>0</Value>" +
                         "         </Eq>" +
                         "        <IsNull>" +
                         "             <FieldRef Name='EndOfLife'></FieldRef>" +
@@ -11823,7 +11823,7 @@
                     query = "<Where>" +
                         "   <Eq>" +
                         "        <FieldRef Name='EndOfLife'></FieldRef>" +
-                        "        <Value Type='Text'>1</Value>" +
+                        "        <Value Type='Number'>1</Value>" +
                         "   </Eq>" +
                         "</Where>";
                 }
@@ -11846,7 +11846,7 @@
                         "       <Or>" +
                         "            <Eq>" +
                         "                 <FieldRef Name='EndOfLife'></FieldRef>" +
-                        "                 <Value Type='Text'>0</Value>" +
+                        "                 <Value Type='Number'>0</Value>" +
                         "             </Eq>" +
                         "            <IsNull>" +
                         "                 <FieldRef Name='EndOfLife'></FieldRef>" +
@@ -11863,7 +11863,7 @@
                         "   <And>" +
                         "        <Eq>" +
                         "             <FieldRef Name='EndOfLife'></FieldRef>" +
-                        "             <Value Type='Text'>1</Value>" +
+                        "             <Value Type='Number'>1</Value>" +
                         "        </Eq>" +
                         "        <Contains>" +
                         "             <FieldRef Name='" + getRequesterFrom + "'></FieldRef>" +
