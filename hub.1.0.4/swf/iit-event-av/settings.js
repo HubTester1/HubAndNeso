@@ -13,7 +13,7 @@
 		'notifications': 1,
 	};
 
-	console.log("using settings m1");
+	console.log("using settings m2");
 
 
 	// admin screen is hard-coded in API > RenderCommandBarAndDatatablesForEventAVForAdmin()
@@ -232,6 +232,16 @@
 				'requiredForAdmin': [''],
 				"disabledForNonAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
 				"disabledForAdmin": [],
+				'helpNotes': [
+					{
+						'text': 'Due to the short notice, you must contact AV at x0163 or <a href="mailto:av@mos.org">av@mos.org</a> before your request can be approved',
+						'htmlID': "av-beginning-datetime_date-too-soon",
+						'emphasis': 1,
+						'hideForNonAdmin': ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+						'hideForAdmin': ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
+					}
+				],
+
 			}, {
 				'elementType': 'field',
 				'controlType': 'datetime',
@@ -380,6 +390,69 @@
 				'requiredForNonAdmin': [''],
 				"disabledForNonAdmin": ["Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
 				"disabledForAdmin": [],
+				'helpNotes': [
+					{
+						'text': 'Due to the short notice, you must contact AV at x0163 or <a href="mailto:av@mos.org">av@mos.org</a> before your request can be approved',
+						'htmlID': "delivery-or-receipt_date-too-soon",
+						'emphasis': 1,
+						'hideForNonAdmin': ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+						'hideForAdmin': ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
+					}
+				],
+				/* 'onChange': [
+					{
+						'dateFieldGreaterThanDaysFromNowEqualTo': {
+							'days': 1,
+							'id': 'input#date-input_AV-Beginning-Datetime'
+						},
+						'addlAndConditions': ['$("input#delivery-or-receipt_pickup").is(":checked")'],
+						'show': [
+							{ 'noteID': "delivery-or-receipt_date-too-soon" },
+							{ 'noteID': "av-beginning-datetime_date-too-soon" }
+						]
+					}, {
+						'dateFieldGreaterThanDaysFromNowEqualTo': {
+							'days': 3,
+							'id': 'input#date-input_AV-Beginning-Datetime'
+						},
+						'addlAndConditions': ['$("input#delivery-or-receipt_delivery").is(":checked")'],
+						'show': [
+							{ 'noteID': "delivery-or-receipt_date-too-soon" },
+							{ 'noteID': "av-beginning-datetime_date-too-soon" }
+						]
+					}, {
+						'dateFieldGreaterThanDaysFromNowEqualTo': {
+							'days': 7,
+							'id': 'input#date-input_AV-Beginning-Datetime'
+						},
+						'addlAndConditions': ['$("input#delivery-or-receipt_techneededforsetup").is(":checked")'],
+						'show': [
+							{ 'noteID': "delivery-or-receipt_date-too-soon" },
+							{ 'noteID': "av-beginning-datetime_date-too-soon" }
+						]
+					}, {
+						'dateFieldGreaterThanDaysFromNowEqualTo': {
+							'days': 7,
+							'id': 'input#date-input_AV-Beginning-Datetime'
+						},
+						'addlAndConditions': ['$("input#delivery-or-receipt_techneededforduration").is(":checked")'],
+						'show': [
+							{ 'noteID': "delivery-or-receipt_date-too-soon" },
+							{ 'noteID': "av-beginning-datetime_date-too-soon" }
+						]
+					}, {
+						'noneOfSpecificCheckboxesAreChecked': [
+							'#delivery-or-receipt_pickup', 
+							'#delivery-or-receipt_delivery', 
+							'#delivery-or-receipt_techneededforsetup', 
+							'#delivery-or-receipt_techneededforduration'
+						],
+						'hide': [
+							{ 'noteID': "delivery-or-receipt_date-too-soon" },
+							{ 'noteID': "av-beginning-datetime_date-too-soon" }
+						]
+					}
+				], */
 			}, {
 				'elementType': 'field',
 				'controlType': 'check',
@@ -877,6 +950,10 @@
 	fData.CustomScriptLast += 'if ($("input#miscellaneous-equipment_powerstrips").is(":checked")) { \n' +
 		'	$("div#label-and-control_Power-Strip-Quantity").show("fast").removeClass("hidden"); \n' +
 		'} \n';
+
+	fData.CustomScriptLast += '$("input#delivery-or-receipt_pickup, input#delivery-or-receipt_delivery, input#delivery-or-receipt_techneededforsetup, input#delivery-or-receipt_techneededforduration, input#date-input_AV-Beginning-Datetime").on("change", function() { \n' +
+		'	$().ProcessEventAVDateAndDeliveryReceiptFields();\n' +
+		'}); \n';
 
 
 

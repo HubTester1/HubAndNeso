@@ -234,7 +234,7 @@
 				"disabledForAdmin": [],
 				'helpNotes': [
 					{
-						'text': "Due to the short notice, your request may not be approved",
+						'text': 'Due to the short notice, you must contact AV at x0163 or <a href="mailto:av@mos.org">av@mos.org</a> before your request can be approved',
 						'htmlID': "av-beginning-datetime_date-too-soon",
 						'emphasis': 1,
 						'hideForNonAdmin': ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
@@ -392,7 +392,7 @@
 				"disabledForAdmin": [],
 				'helpNotes': [
 					{
-						'text': "Due to the short notice, your request may not be approved",
+						'text': 'Due to the short notice, you must contact AV at x0163 or <a href="mailto:av@mos.org">av@mos.org</a> before your request can be approved',
 						'htmlID': "delivery-or-receipt_date-too-soon",
 						'emphasis': 1,
 						'hideForNonAdmin': ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
