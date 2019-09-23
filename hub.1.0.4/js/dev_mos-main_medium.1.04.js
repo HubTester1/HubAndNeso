@@ -10286,17 +10286,6 @@
 						'with any questions, or <a href="' + eData.uriOverview + '">' +
 						'review other ' + eData.requestName + ' requests</a>.</p>'
 				});
-				notificationsToSend.push({
-					'emailType': 'Notification',
-					'caller': 'beginningOfLife team',
-					'to': 'bwroblewski@mos.org',
-					'subject': eData.subjectPreface + 'new request received',
-					'bodyUnique': '<p>' + eData.requesterName + ' has submitted a new request. You can ' +
-						'<a href="' + eData.uriRequest + '">review this request\'s details</a>, ' +
-						'<a href="mailto:' + eData.requesterEmail + '">contact the requester</a> ' +
-						'with any questions, or <a href="' + eData.uriOverview + '">' +
-						'review other ' + eData.requestName + ' requests</a>.</p>'
-				});
 			}
 
 			// requester
@@ -10329,17 +10318,6 @@
 						'emailType': 'Notification',
 						'caller': 'modification team',
 						'to': 'aalbert@mos.org',
-						'subject': eData.subjectPreface + 'modified',
-						'bodyUnique': '<p>This request has been modified. You can ' +
-							'<a href="' + eData.uriRequest + '">review this request\'s details</a>, ' +
-							'<a href="mailto:' + eData.requesterEmail + '">contact the requester</a> ' +
-							'with any questions, or <a href="' + eData.uriOverview + '">' +
-							'review other ' + eData.requestName + ' requests</a>.</p>'
-					});
-					notificationsToSend.push({
-						'emailType': 'Notification',
-						'caller': 'modification team',
-						'to': 'bwroblewski@mos.org',
 						'subject': eData.subjectPreface + 'modified',
 						'bodyUnique': '<p>This request has been modified. You can ' +
 							'<a href="' + eData.uriRequest + '">review this request\'s details</a>, ' +
@@ -10648,14 +10626,6 @@
 					'emailType': 'Notification',
 					'caller': 'endOfLife team',
 					'to': 'aalbert@mos.org',
-					'subject': eData.subjectPreface + eData.requestStatus.toLowerCase(),
-					'bodyUnique': '<p>Feel free to <a href="mailto:' + eData.requesterEmail + '">' +
-						'contact the requester</a> if you need to follow up.</p>'
-				});
-				notificationsToSend.push({
-					'emailType': 'Notification',
-					'caller': 'endOfLife team',
-					'to': 'bwroblewski@mos.org',
 					'subject': eData.subjectPreface + eData.requestStatus.toLowerCase(),
 					'bodyUnique': '<p>Feel free to <a href="mailto:' + eData.requesterEmail + '">' +
 						'contact the requester</a> if you need to follow up.</p>'
@@ -17478,6 +17448,7 @@
 				printContent += tablesEquipmentCleaningOpeningTag + '<b>Registration Table:</b><ul style="margin: 0;">' +
 					'	<li><b>Setup Completed By: </b>' + sheetData["Printer-Registration-Table-Beginning-Datetime"] + '</li>' +
 					'	<li><b>Breakdown Starting: </b>' + sheetData["Printer-Registration-Table-Ending-Datetime"] + '</li>' +
+					'	<li><b>Table Details: </b>' + sheetData["Registration-Table-Details"] + '</li>' +
 					'</ul>' + tablesEquipmentCleaningClosingTag;
 			}
 
@@ -17490,7 +17461,7 @@
 			}
 
 			if (typeof (sheetData["tables-and-equipment-and-cleaning_more"]) != "undefined") {
-				printContent += tablesEquipmentCleaningOpeningTag + '<b>Notes: </b><br />' + ReplaceAll("%0A", "<br />", sheetData["More-Tables-and-Equipment-and-Cleaning"]) + tablesEquipmentCleaningClosingTag;
+				printContent += tablesEquipmentCleaningOpeningTag + '<b>Account: </b>' + ReplaceAll("%0A", "<br />", sheetData["More-Tables-and-Equipment-and-Cleaning"]) + tablesEquipmentCleaningClosingTag;
 			}
 
 
@@ -17519,15 +17490,9 @@
 			exhibitMaintenanceHasContent = 1;
 		}
 
-		if (typeof (sheetData["exhibit-maintenance_scatterbenches"]) != "undefined" && typeof (sheetData["exhibit-maintenance_other"]) != "undefined") {
-			var exhibitMaintenanceUseList = 1;
-			var exhibitMaintenanceOpeningTag = '<li>';
-			var exhibitMaintenanceClosingTag = '</li>';
-		} else {
-			var exhibitMaintenanceUseList = 0;
-			var exhibitMaintenanceOpeningTag = '<p>';
-			var exhibitMaintenanceClosingTag = '</p>';
-		}
+		var exhibitMaintenanceUseList = 1;
+		var exhibitMaintenanceOpeningTag = '<li>';
+		var exhibitMaintenanceClosingTag = '</li>';
 
 		if (exhibitMaintenanceHasContent == 1) {
 			if (exhibitMaintenanceUseList == 1) {
@@ -17541,6 +17506,8 @@
 			if (typeof (sheetData["exhibit-maintenance_other"]) != "undefined") {
 				printContent += exhibitMaintenanceOpeningTag + '<b>Notes: </b><br />' + ReplaceAll("%0A", "<br />", sheetData["Other-Exhibit-Maintenance-Service"]) + exhibitMaintenanceClosingTag;
 			}
+
+			printContent += exhibitMaintenanceOpeningTag + '<b>Account: </b>' + sheetData["Exhibit-Maintenance-Account-Number"] + exhibitMaintenanceClosingTag;
 
 
 			if (exhibitMaintenanceUseList == 1) {
@@ -17596,27 +17563,27 @@
 
 		printContent += '			</td>' +
 			'			<td style="border: 2px solid black;padding: 1rem;">' +
-			'				<h3>IIT AV</h3>';
+			'				<h3>IT AV</h3>';
 
-		var iitAVHasContent = 0;
-		if (typeof (sheetData["iit-av_yes"]) != "undefined") {
-			iitAVHasContent = 1;
+		var itAVHasContent = 0;
+		if (typeof (sheetData["it-av_yes"]) != "undefined") {
+			itAVHasContent = 1;
 		}
 
-		var iitAVUseList = 1;
-		var iitAVOpeningTag = '<li>';
-		var iitAVClosingTag = '</li>';
+		var itAVUseList = 1;
+		var itAVOpeningTag = '<li>';
+		var itAVClosingTag = '</li>';
 
-		if (iitAVHasContent == 1) {
-			if (iitAVUseList == 1) {
+		if (itAVHasContent == 1) {
+			if (itAVUseList == 1) {
 				printContent += '<ul style="margin: 0;">';
 			}
 
-			printContent += iitAVOpeningTag + '<b>Assistance needed</b>' + iitAVClosingTag;
+			printContent += itAVOpeningTag + '<b>Assistance needed</b>' + itAVClosingTag;
 
-			printContent += iitAVOpeningTag + '<b>Account: </b>' + sheetData["AV-Account-Number"] + iitAVClosingTag;
+			printContent += itAVOpeningTag + '<b>Account: </b>' + sheetData["AV-Account-Number"] + itAVClosingTag;
 
-			if (iitAVUseList == 1) {
+			if (itAVUseList == 1) {
 				printContent += '</ul>';
 			}
 		} else {
@@ -17628,28 +17595,28 @@
 
 		printContent += '		<tr>' +
 			'			<td style="border: 2px solid black;padding: 1rem;">' +
-			'				<h3>IIT Help Desk / Infrastracture</h3>';
+			'				<h3>IT Service Desk / Infrastracture</h3>';
 
 
-		var iitInfraHasContent = 0;
-		if (typeof (sheetData["iit-help-desk-and-infrastracture_yes"]) != "undefined") {
-			iitInfraHasContent = 1;
+		var itInfraHasContent = 0;
+		if (typeof (sheetData["it-service-desk-and-infrastracture_yes"]) != "undefined") {
+			itInfraHasContent = 1;
 		}
 
-		var iitInfraUseList = 1;
-		var iitInfraOpeningTag = '<li>';
-		var iitInfraClosingTag = '</li>';
+		var itInfraUseList = 1;
+		var itInfraOpeningTag = '<li>';
+		var itInfraClosingTag = '</li>';
 
-		if (iitInfraHasContent == 1) {
-			if (iitInfraUseList == 1) {
+		if (itInfraHasContent == 1) {
+			if (itInfraUseList == 1) {
 				printContent += '<ul style="margin: 0;">';
 			}
 
-			printContent += iitInfraOpeningTag + '<b>Assistance needed</b>' + iitInfraClosingTag;
+			printContent += itInfraOpeningTag + '<b>Assistance needed</b>' + itInfraClosingTag;
 
-			printContent += iitInfraOpeningTag + '<b>Account: </b>' + sheetData["Help-Desk-or-Infrastracture-Account-Number"] + iitInfraClosingTag;
+			printContent += itInfraOpeningTag + '<b>Account: </b>' + sheetData["Service-Desk-or-Infrastracture-Account-Number"] + itInfraClosingTag;
 
-			if (iitInfraUseList == 1) {
+			if (itInfraUseList == 1) {
 				printContent += '</ul>';
 			}
 		} else {
@@ -17665,7 +17632,8 @@
 		if (typeof (sheetData["parking-validation_10Plus"]) != "undefined") { publicSafetyContentQuantity++; }
 		if (typeof (sheetData["security-detail_yes"]) != "undefined") { publicSafetyContentQuantity++; }
 		// if (typeof (sheetData["guest-access_yes"]) != "undefined") { publicSafetyContentQuantity++; }
-		if (typeof (sheetData["elevator-access_4andor5"]) != "undefined") { publicSafetyContentQuantity++; }
+		// if (typeof (sheetData["elevator-access_4andor5"]) != "undefined") { publicSafetyContentQuantity++; }
+		if (typeof (sheetData["elevator-access_6ordarb"]) != "undefined") { publicSafetyContentQuantity++; }
 		if (typeof (sheetData["crowd-management_yes"]) != "undefined") { publicSafetyContentQuantity++; }
 
 		if (publicSafetyContentQuantity > 0) {
@@ -17714,12 +17682,12 @@
 					'</ul>' + publicSafetyClosingTag;
 			} */
 
-			if (typeof (sheetData["elevator-access_4andor5"]) != "undefined") {
+			/* if (typeof (sheetData["elevator-access_4andor5"]) != "undefined") {
 				printContent += publicSafetyOpeningTag + '<b>Key off elevator for 4th and 5th floor</b>' + publicSafetyClosingTag;
-			}
+			} */
 
 			if (typeof (sheetData["elevator-access_6ordarb"]) != "undefined") {
-				printContent += publicSafetyOpeningTag + '<b>Key off elevator for 6th floor and d\'Arb</b>' + publicSafetyClosingTag;
+				printContent += publicSafetyOpeningTag + '<b>Key off elevator after business hours for 6th floor and d\'Arb</b>' + publicSafetyClosingTag;
 			}
 
 			if (typeof (sheetData["elevator-access_4andor5"]) != "undefined" && typeof (sheetData["elevator-access-security_hired"]) != "undefined") {

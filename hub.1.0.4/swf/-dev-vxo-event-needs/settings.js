@@ -16,7 +16,7 @@
 		"notifications": 1
 	};
 
-	console.log("using settings m101");
+	console.log("using settings m1");
 
 
 
@@ -183,7 +183,7 @@
 			{
 				'condition': function () { return true; },
 				'addition': '<ul> \n' +
-					'   <li>Add your event to the <a href="https://quark.mos.org/schedule/uberschedule/calendarview.cfm" target="_blank">Museum Calendar</a> and attend the weekly logistics meeting Wednesdays at 10 a.m. in the Hodgkinson Conference Room.</li> \n' +
+					'   <li>Add your event to the <a href="https://bmos.sharepoint.com/sites/mw-events/SitePages/App.aspx?f=cal" target="_blank">Museum Events Calendar</a> and attend the weekly logistics meeting Wednesdays at 10 a.m. in the Hodgkinson Conference Room.</li> \n' +
 					'   <li>Floorplans must be submitted for Skyline, d\'Arbeloff, Caf&eacute;, Blue Wing, Atrium, Hornblower, Green Wing, Nichols, HHL, Omni and Planetarium Foyer, and Omni and Planetarium Foyer and Atrium.</li> \n'
 			}, {
 				'condition': function () { return true; },
@@ -196,23 +196,23 @@
 				'condition': function () { return $('input#wolfgang-puck-catering_linens').is(':checked') || $('input#wolfgang-puck-catering_menu').is(':checked') || $('input#wolfgang-puck-catering_other').is(':checked'); },
 				'addition': '		   <li>WPC  \n' +
 					'			   <ul>  \n' +
-					'				   <li>When this request is approved, you must submit a <a href="https://bmos.sharepoint.com/ECSDocs/Puck%20Conference%20Catering%20Form.docx" target="_blank">Conference Catering Request</a>.</li>  \n' +
+					'				   <li>Submit a <a href="https://bmos.sharepoint.com/ECSDocs/Puck%20Conference%20Catering%20Form.docx" target="_blank">Conference Catering Request</a>.</li>  \n' +
 					'				   <li>Questions: x3198 or x3199.</li>  \n' +
 					'			   </ul>  \n' +
 					'		   </li>  \n'
 			}, {
-				'condition': function () { return $('input#iit-help-desk-and-infrastracture_yes').is(':checked'); },
-				'addition': '		   <li>IIT help desk / infrastructure service  \n' +
+				'condition': function () { return $('input#it-service-desk-and-infrastracture_yes').is(':checked'); },
+				'addition': '		   <li>IT service desk / infrastructure service  \n' +
 					'			  <ul>  \n' +
-					'				  <li><a href="http://kepler/TIWEB8/scripts/TIWebPortal/TrackItUser.asp" target="_blank">Submit a work order</a>. (Must be connected to the Museum network.)</li>  \n' +
+					'				  <li><a href="https://museumofscience.service-now.com/nav_to.do?uri=com.glideapp.servicecatalog_category_view.do?sysparm_parent=72d040dedb27230056580252ba96193f" target="_blank">Create a service ticket</a>.</li>  \n' +
 					'				  <li>Questions: x0131.</li>  \n' +
 					'			  </ul>  \n' +
 					'		   </li>  \n'
 			}, {
-				'condition': function () { return $('input#iit-av_yes').is(':checked'); },
-				'addition': '		   <li>IIT A/V service  \n' +
+				'condition': function () { return $('input#it-av_yes').is(':checked'); },
+				'addition': '		   <li>IT A/V service  \n' +
 					'			  <ul>  \n' +
-					'				  <li>When this request is approved, you must submit an <a href="https://quark.mos.org/getitdone/avrequest/avrequest.php" target="_blank">Event AV Request</a>.</li>  \n' +
+					'				  <li>When this request is approved, you must submit an <a href="https://bmos.sharepoint.com/sites/iit-event-av/SitePages/App.aspx" target="_blank">Event AV Request</a>.</li>  \n' +
 					'				  <li>Questions: x3163.</li>  \n' +
 					'			  </ul>  \n' +
 					'		   </li>  \n'
@@ -229,7 +229,7 @@
 					'		   </li>  \n'
 			}, {
 				'condition': function () { return $('input#facilities_threeMinuteDelay').is(':checked') || $('input#facilities_tempcontrol').is(':checked') || $('input#facilities_more').is(':checked'); },
-				'addition': '		   <li>Facilities: <a href="http://kepler/TIWEB8/scripts/TIWebPortal/TrackItUser.asp" target="_blank">submit a work order</a>. (Must be connected to the Museum network.)</li>  \n'
+				'addition': '		   <li>Facilities: <a href="https://museumofscience.service-now.com/nav_to.do?uri=com.glideapp.servicecatalog_category_view.do?sysparm_parent=7b81889edb27230056580252ba9619b4" target="_blank">create a service ticket</a>.</li>  \n'
 			}, {
 				'condition': function () { return true; },
 				'addition': '	   </ul> \n' +
@@ -704,6 +704,52 @@
 				'hideForAdmin': ["", "Submitted", "Cancelled"],
 				"disabledForNonAdmin": ["Cancelled"],
 				"disabledForAdmin": ["Cancelled"],
+
+
+			}, {
+				'elementType': 'field',
+				'controlType': 'datetime',
+				'fieldName': 'Event Beginning Datetime',
+				'listFieldName': 'EventBeginningDatetime',
+				'labelContent': 'Starting',
+				'addtlValidationType': 'validMaxDaysFromNow',
+				'addtlValidationQuantity': 7,
+				'requiredForNonAdmin': ['', 'Submitted'],
+				'requiredForAdmin': ['', 'Submitted'],
+				"disabledForNonAdmin": ["Cancelled"],
+				"disabledForAdmin": ["Cancelled"],
+			}, {
+				'elementType': 'field',
+				'controlType': 'datetime',
+				'fieldName': 'Event Ending Datetime',
+				// 'listFieldName': 'EventEndingDatetime',
+				'labelContent': 'Ending',
+				'requiredForNonAdmin': ['', 'Submitted'],
+				'requiredForAdmin': ['', 'Submitted'],
+				"disabledForNonAdmin": ["Cancelled"],
+				"disabledForAdmin": ["Cancelled"],
+			}, {
+				'elementType': 'field',
+				'controlType': 'datetime',
+				'fieldName': 'Space Reserved Beginning Datetime',
+				'labelContent': 'Space Reserved Starting',
+				'requiredForNonAdmin': ['', 'Submitted'],
+				'requiredForAdmin': ['', 'Submitted'],
+				"disabledForNonAdmin": ["Cancelled"],
+				"disabledForAdmin": ["Cancelled"],
+			}, {
+				'elementType': 'field',
+				'controlType': 'datetime',
+				'fieldName': 'Space Reserved Ending Datetime',
+				'labelContent': 'Space Reserved Ending',
+				'requiredForNonAdmin': ['', 'Submitted'],
+				'requiredForAdmin': ['', 'Submitted'],
+				"disabledForNonAdmin": ["Cancelled"],
+				"disabledForAdmin": ["Cancelled"],
+
+
+
+
 			}, {
 				'elementType': 'field',
 				'controlType': 'check',
@@ -868,46 +914,6 @@
 				"disabledForNonAdmin": ["Cancelled"],
 				"disabledForAdmin": ["Cancelled"],
 			}, {
-				'elementType': 'field',
-				'controlType': 'datetime',
-				'fieldName': 'Event Beginning Datetime',
-				'listFieldName': 'EventBeginningDatetime',
-				'labelContent': 'Starting',
-				'addtlValidationType': 'validMaxDaysFromNow',
-				'addtlValidationQuantity': 7,
-				'requiredForNonAdmin': ['', 'Submitted'],
-				'requiredForAdmin': ['', 'Submitted'],
-				"disabledForNonAdmin": ["Cancelled"],
-				"disabledForAdmin": ["Cancelled"],
-			}, {
-				'elementType': 'field',
-				'controlType': 'datetime',
-				'fieldName': 'Event Ending Datetime',
-				// 'listFieldName': 'EventEndingDatetime',
-				'labelContent': 'Ending',
-				'requiredForNonAdmin': ['', 'Submitted'],
-				'requiredForAdmin': ['', 'Submitted'],
-				"disabledForNonAdmin": ["Cancelled"],
-				"disabledForAdmin": ["Cancelled"],
-			}, {
-				'elementType': 'field',
-				'controlType': 'datetime',
-				'fieldName': 'Space Reserved Beginning Datetime',
-				'labelContent': 'Space Reserved Starting',
-				'requiredForNonAdmin': ['', 'Submitted'],
-				'requiredForAdmin': ['', 'Submitted'],
-				"disabledForNonAdmin": ["Cancelled"],
-				"disabledForAdmin": ["Cancelled"],
-			}, {
-				'elementType': 'field',
-				'controlType': 'datetime',
-				'fieldName': 'Space Reserved Ending Datetime',
-				'labelContent': 'Space Reserved Ending',
-				'requiredForNonAdmin': ['', 'Submitted'],
-				'requiredForAdmin': ['', 'Submitted'],
-				"disabledForNonAdmin": ["Cancelled"],
-				"disabledForAdmin": ["Cancelled"],
-			}, {
 				"elementType": "field",
 				"controlType": "peoplePicker",
 				"fieldName": "Onsite Contact",
@@ -963,11 +969,12 @@
 						'require': [
 							{ 'fieldName': 'Registration Table Beginning Datetime', 'type': 'datetime' },
 							{ 'fieldName': 'Registration Table Ending Datetime', 'type': 'datetime' },
+							{ 'fieldName': 'Registration Table Details', 'type': 'textarea' }
 						],
 						'calibrateOddEvenSubsectionClasses': ['div#tables-cleaning-equipment-registration-table-times-container', 'div#tables-cleaning-equipment-rental-equipment-container', 'div#tables-cleaning-equipment-more-container'],
 						'set': [
 							{ 'fieldName': 'Registration Table Beginning Datetime', 'type': 'datetime', 'method': 'dynamic', 'valueFromFieldName': 'Event Beginning Datetime' },
-							{ 'fieldName': 'Registration Table Ending Datetime', 'type': 'datetime', 'method': 'dynamic', 'valueFromFieldName': 'Event Ending Datetime' },
+							{ 'fieldName': 'Registration Table Ending Datetime', 'type': 'datetime', 'method': 'dynamic', 'valueFromFieldName': 'Event Ending Datetime' }
 						]
 					}, {
 						'noneOfSpecificCheckboxesAreChecked': ['input#tables-and-equipment-and-cleaning_registrationtable'],
@@ -977,6 +984,7 @@
 						'optional': [
 							{ 'fieldName': 'Registration Table Beginning Datetime', 'type': 'datetime' },
 							{ 'fieldName': 'Registration Table Ending Datetime', 'type': 'datetime' },
+							{ 'fieldName': 'Registration Table Details', 'type': 'textarea' }
 						],
 						'calibrateOddEvenSubsectionClasses': ['div#tables-cleaning-equipment-registration-table-times-container', 'div#tables-cleaning-equipment-rental-equipment-container', 'div#tables-cleaning-equipment-more-container']
 					}, {
@@ -1059,6 +1067,17 @@
 				'labelContent': 'Breakdown Starting',
 				"disabledForNonAdmin": ["Cancelled"],
 				"disabledForAdmin": ["Cancelled"],
+			}, {
+				'elementType': 'field',
+				'controlType': 'textarea',
+				'fieldName': 'Registration Table Details',
+				'labelContent': 'Registration Table Details',
+				"disabledForNonAdmin": ["Cancelled"],
+				"disabledForAdmin": ["Cancelled"],
+
+
+
+
 			}, {
 				'elementType': 'markup',
 				'tag': 'div',
@@ -1255,22 +1274,22 @@
 			}, {
 				'elementType': 'field',
 				'controlType': 'check',
-				'fieldName': 'IIT Help Desk and Infrastracture',
-				'choiceSetLabel': 'IIT Help Desk and/or Infrastracture',
+				'fieldName': 'IT Service Desk and Infrastracture',
+				'choiceSetLabel': 'IT Service Desk and/or Infrastracture',
 				'choices': [
 					{
 						'value': 'yes',
-						'display': 'Yes, I\'ll need help desk and/or infrastracture assistance'
+						'display': 'Yes, I\'ll need Service Desk and/or Infrastracture assistance'
 					}
 				],
 				'onChange': [
-					{ 'anyOfSpecificCheckboxesAreChecked': ['input#iit-help-desk-and-infrastracture_yes'], 'show': [{ 'divID': 'help-desk-or-infra-account-number-container' }], 'require': [{ 'fieldName': 'Help Desk or Infrastracture Account Number', 'type': 'text' }] },
-					{ 'noneOfSpecificCheckboxesAreChecked': ['input#iit-help-desk-and-infrastracture_yes'], 'hide': [{ 'divID': 'help-desk-or-infra-account-number-container' }], 'optional': [{ 'fieldName': 'Help Desk or Infrastracture Account Number', 'type': 'text' }] },
+					{ 'anyOfSpecificCheckboxesAreChecked': ['input#it-service-desk-and-infrastracture_yes'], 'show': [{ 'divID': 'service-desk-or-infra-account-number-container' }], 'require': [{ 'fieldName': 'Service Desk or Infrastracture Account Number', 'type': 'text' }] },
+					{ 'noneOfSpecificCheckboxesAreChecked': ['input#it-service-desk-and-infrastracture_yes'], 'hide': [{ 'divID': 'service-desk-or-infra-account-number-container' }], 'optional': [{ 'fieldName': 'Service Desk or Infrastracture Account Number', 'type': 'text' }] },
 				],
 				'helpNotes': [
 					{
-						'text': "E.g., phone, netbook, networking",
-						'htmlID': "help-note_help-desk-or-infra-assistance-needed",
+						'text': "E.g., phone, computer, networking",
+						'htmlID': "help-note_service-desk-or-infra-assistance-needed",
 						'hideForNonAdmin': ["Submitted", "Cancelled"],
 						'hideForAdmin': ["Submitted", "Cancelled"]
 					}
@@ -1281,7 +1300,7 @@
 				'elementType': 'markup',
 				'tag': 'div',
 				'begin': 1,
-				'htmlID': 'help-desk-or-infra-account-number-container',
+				'htmlID': 'service-desk-or-infra-account-number-container',
 				'htmlClass': 'subsection-container',
 				'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
 				'hideForAdmin': ['', 'Submitted', 'Cancelled'],
@@ -1293,7 +1312,7 @@
 			}, {
 				'elementType': 'field',
 				'controlType': 'text',
-				'fieldName': 'Help Desk or Infrastracture Account Number',
+				'fieldName': 'Service Desk or Infrastracture Account Number',
 				'labelContent': 'Account #',
 				"disabledForNonAdmin": ["Cancelled"],
 				"disabledForAdmin": ["Cancelled"],
@@ -1317,8 +1336,8 @@
 			}, {
 				'elementType': 'field',
 				'controlType': 'check',
-				'fieldName': 'IIT AV',
-				'choiceSetLabel': 'IIT A/V',
+				'fieldName': 'IT AV',
+				'choiceSetLabel': 'IT A/V',
 				'choices': [
 					{
 						'value': 'yes',
@@ -1326,8 +1345,8 @@
 					}
 				],
 				'onChange': [
-					{ 'anyOfSpecificCheckboxesAreChecked': ['input#iit-av_yes'], 'show': [{ 'divID': 'av-account-number-container' }], 'require': [{ 'fieldName': 'AV Account Number', 'type': 'text' }] },
-					{ 'noneOfSpecificCheckboxesAreChecked': ['input#iit-av_yes'], 'hide': [{ 'divID': 'av-account-number-container' }], 'optional': [{ 'fieldName': 'AV Account Number', 'type': 'text' }] },
+					{ 'anyOfSpecificCheckboxesAreChecked': ['input#it-av_yes'], 'show': [{ 'divID': 'av-account-number-container' }], 'require': [{ 'fieldName': 'AV Account Number', 'type': 'text' }] },
+					{ 'noneOfSpecificCheckboxesAreChecked': ['input#it-av_yes'], 'hide': [{ 'divID': 'av-account-number-container' }], 'optional': [{ 'fieldName': 'AV Account Number', 'type': 'text' }] },
 				],
 				"disabledForNonAdmin": ["Cancelled"],
 				"disabledForAdmin": ["Cancelled"],
@@ -1379,8 +1398,53 @@
 					}
 				],
 				'onChange': [
-					{ 'anyOfSpecificCheckboxesAreChecked': ['input#exhibit-maintenance_other'], 'show': [{ 'divID': 'other-exhibit-maintenance-service-container' }], 'require': [{ 'fieldName': 'Other Exhibit Maintenance Service', 'type': 'textarea' }] },
-					{ 'noneOfSpecificCheckboxesAreChecked': ['input#exhibit-maintenance_other'], 'hide': [{ 'divID': 'other-exhibit-maintenance-service-container' }], 'optional': [{ 'fieldName': 'Other Exhibit Maintenance Service', 'type': 'textarea' }] },
+					{ 
+						'anyOfSpecificCheckboxesAreChecked': [
+							'input#exhibit-maintenance_other',
+							'input#exhibit-maintenance_scatterbenches',
+						], 
+						'show': [
+							{ 'divID': 'other-exhibit-maintenance-service-container' },
+							{ 'fieldName': 'Exhibit Maintenance Account Number' }
+						],
+						'require': [
+							{ 'fieldName': 'Exhibit Maintenance Account Number', 'type': 'text' }
+						]
+					}, {
+						'noneOfSpecificCheckboxesAreChecked': [
+							'input#exhibit-maintenance_other',
+							'input#exhibit-maintenance_scatterbenches',
+						],
+						'hide': [
+							{ 'divID': 'other-exhibit-maintenance-service-container' },
+							{ 'fieldName': 'Exhibit Maintenance Account Number' }
+						],
+						'optional': [
+							{ 'fieldName': 'Exhibit Maintenance Account Number', 'type': 'text' }
+						]
+					}, {
+						'anyOfSpecificCheckboxesAreChecked': [
+							'input#exhibit-maintenance_other',
+						],
+						'require': [
+							{ 'fieldName': 'Other Exhibit Maintenance Service', 'type': 'textarea' }
+						],
+						'show': [
+							{ 'fieldName': 'Other Exhibit Maintenance Service' }
+						],
+					}, {
+						'noneOfSpecificCheckboxesAreChecked': [
+							'input#exhibit-maintenance_other',
+						],
+						'optional': [
+							{ 'fieldName': 'Other Exhibit Maintenance Service', 'type': 'textarea' }
+						],
+						'hide': [
+							{ 'fieldName': 'Other Exhibit Maintenance Service' }
+						],
+					},
+
+
 				],
 				"disabledForNonAdmin": ["Cancelled"],
 				"disabledForAdmin": ["Cancelled"],
@@ -1401,9 +1465,20 @@
 				'htmlClass': 'subsection',
 			}, {
 				'elementType': 'field',
+				'controlType': 'text',
+				'fieldName': 'Exhibit Maintenance Account Number',
+				'labelContent': 'Account #',
+				'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
+				'hideForAdmin': ['', 'Submitted', 'Cancelled'],
+				"disabledForNonAdmin": ["Cancelled"],
+				"disabledForAdmin": ["Cancelled"],
+			}, {
+				'elementType': 'field',
 				'controlType': 'textarea',
 				'fieldName': 'Other Exhibit Maintenance Service',
 				'labelContent': 'Specify Other Exhibit Maintenance Service',
+				'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
+				'hideForAdmin': ['', 'Submitted', 'Cancelled'],
 				"disabledForNonAdmin": ["Cancelled"],
 				"disabledForAdmin": ["Cancelled"],
 			}, {
@@ -1546,14 +1621,14 @@
 				'elementType': 'field',
 				'controlType': 'check',
 				'fieldName': 'Elevator Access',
-				'choiceSetLabel': 'Enable elevator access without museum badge?',
+				'choiceSetLabel': 'Enable elevator access without museum badge to 6th floor after business hours?',
 				'choices': [
 					{
-						'value': '4AndOr5',
-						'display': '4th and/or 5th floors'
-					}, {
+						// 'value': '4AndOr5',
+						// 'display': '4th and/or 5th floors'
+					// }, {
 						'value': '6OrdArb',
-						'display': '6th floor or d\'Arbeloff'
+						'display': 'Yes, after business hours, key off 6th floor or d\'Arbeloff'
 					}
 				],
 				'onChange': [
@@ -1565,6 +1640,14 @@
 						'noneOfSpecificCheckboxesAreChecked': ['input#elevator-access_4andor5'],
 						'hide': [{ 'divID': 'elevator-access-details-container' }],
 						'optional': [{ 'fieldName': 'Elevator Access Security', 'type': 'radio' }]
+					}
+				],
+				'helpNotes': [
+					{
+						'text': 'Guests must always be escorted to 4th and 5th floor. During business hours, guests must be escorted to 6th floor.',
+						'htmlID': 'elevator-access_help-note',
+						'hideForNonAdmin': ['Cancelled'],
+						'hideForAdmin': ['Cancelled']
 					}
 				],
 				"disabledForNonAdmin": ["Cancelled"],
@@ -2157,18 +2240,18 @@
 		'	} \n' +
 		'} \n';
 
-	// IIT Help Desk and/or Infrastracture
+	// IT Service Desk and/or Infrastracture
 
-	fData.CustomScriptLast += 'if ($("input#iit-help-desk-and-infrastracture_yes").is(":checked")) { \n' +
-		'   $("div#help-desk-or-infra-account-number-container").show("fast").removeClass("hidden"); \n' +
+	fData.CustomScriptLast += 'if ($("input#it-service-desk-and-infrastracture_yes").is(":checked")) { \n' +
+		'   $("div#service-desk-or-infra-account-number-container").show("fast").removeClass("hidden"); \n' +
 		'	if ($("input#Request-Status").val() == "Submitted") { \n' +
-		'		$().SetFieldToRequired("Help-Desk-or-Infrastracture-Account-Number", "text", 0); \n' +
+		'		$().SetFieldToRequired("Service-Desk-or-Infrastracture-Account-Number", "text", 0); \n' +
 		'	} \n' +
 		'} \n';
 
-	// IIT A/V
+	// IT A/V
 
-	fData.CustomScriptLast += 'if ($("input#iit-av_yes").is(":checked")) { \n' +
+	fData.CustomScriptLast += 'if ($("input#it-av_yes").is(":checked")) { \n' +
 		'   $("div#av-account-number-container").show("fast").removeClass("hidden"); \n' +
 		'	if ($("input#Request-Status").val() == "Submitted") { \n' +
 		'		$().SetFieldToRequired("AV-Account-Number", "text", 0); \n' +
@@ -2177,12 +2260,31 @@
 
 	// Exhibit Maintenance
 
-	fData.CustomScriptLast += 'if ($("input#exhibit-maintenance_other").is(":checked")) { \n' +
+	fData.CustomScriptLast += 'if ($("input#exhibit-maintenance_scatterbenches").is(":checked") || $("input#exhibit-maintenance_other").is(":checked")) { \n' +
 		'   $("div#other-exhibit-maintenance-service-container").show("fast").removeClass("hidden"); \n' +
+		'   $("div#label-and-control_Exhibit-Maintenance-Account-Number").show("fast").removeClass("hidden"); \n' +
+		'	if ($("input#Request-Status").val() == "Submitted") { \n' +
+		'		$().SetFieldToRequired("Exhibit-Maintenance-Account-Number", "textarea", 0); \n' +
+		'	} \n' +
+		'} \n';
+
+	fData.CustomScriptLast += 'if ($("input#exhibit-maintenance_other").is(":checked")) { \n' +
+		'   $("div#label-and-control_Other-Exhibit-Maintenance-Service").show("fast").removeClass("hidden"); \n' +
 		'	if ($("input#Request-Status").val() == "Submitted") { \n' +
 		'		$().SetFieldToRequired("Other-Exhibit-Maintenance-Service", "textarea", 0); \n' +
 		'	} \n' +
 		'} \n';
+
+
+
+
+
+
+
+
+
+
+// exhibit-maintenance_scatterbenches
 
 	// Security Detail
 
@@ -2276,33 +2378,33 @@
 
 
 	// fData.CustomScriptLast +=	 '$("input#WPC-Account-Number").on("change", function () { \n ' + 
-	//						 '   if($("input#IIT-Account-Number").val() == "") { \n ' + 
+	//						 '   if($("input#IT-Account-Number").val() == "") { \n ' + 
 	//						 '	   if($("input#WPC-Account-Number").val() != "") { \n ' + 
-	//						 '		   $("input#IIT-Account-Number").val($("input#WPC-Account-Number").val()) \n ' + 
+	//						 '		   $("input#IT-Account-Number").val($("input#WPC-Account-Number").val()) \n ' + 
 	//						 '	   } else if($("input#Security-Detail-Account-Number").val() != "") { \n ' + 
-	//						 '		   $("input#IIT-Account-Number").val($("input#Security-Detail-Account-Number").val()) \n ' + 
+	//						 '		   $("input#IT-Account-Number").val($("input#Security-Detail-Account-Number").val()) \n ' + 
 	//						 '	   } \n ' + 
 	//						 '   } \n ' + 
 	//						 '   if($("input#Security-Detail-Account-Number").val() == "") { \n ' + 
 	//						 '	   if($("input#WPC-Account-Number").val() != "") { \n ' + 
 	//						 '		   $("input#Security-Detail-Account-Number").val($("input#WPC-Account-Number").val()) \n ' + 
-	//						 '	   } else if($("input#IIT-Account-Number").val() != "") { \n ' + 
-	//						 '		   $("input#Security-Detail-Account-Number").val($("input#IIT-Account-Number").val()) \n ' + 
+	//						 '	   } else if($("input#IT-Account-Number").val() != "") { \n ' + 
+	//						 '		   $("input#Security-Detail-Account-Number").val($("input#IT-Account-Number").val()) \n ' + 
 	//						 '	   } \n ' + 
 	//						 '   } \n ' + 
 	//						 '}); \n ';
 
-	// fData.CustomScriptLast +=	 '$("input#IIT-Account-Number").on("change", function () { \n ' + 
+	// fData.CustomScriptLast +=	 '$("input#IT-Account-Number").on("change", function () { \n ' + 
 	//						 '   if($("input#Security-Detail-Account-Number").val() == "") { \n ' + 
 	//						 '	   if($("input#WPC-Account-Number").val() != "") { \n ' + 
 	//						 '		   $("input#Security-Detail-Account-Number").val($("input#WPC-Account-Number").val()) \n ' + 
-	//						 '	   } else if($("input#IIT-Account-Number").val() != "") { \n ' + 
-	//						 '		   $("input#Security-Detail-Account-Number").val($("input#IIT-Account-Number").val()) \n ' + 
+	//						 '	   } else if($("input#IT-Account-Number").val() != "") { \n ' + 
+	//						 '		   $("input#Security-Detail-Account-Number").val($("input#IT-Account-Number").val()) \n ' + 
 	//						 '	   } \n ' + 
 	//						 '   } \n ' + 
 	//						 '   if($("input#WPC-Account-Number").val() == "") { \n ' + 
-	//						 '	   if($("input#IIT-Account-Number").val() != "") { \n ' + 
-	//						 '		   $("input#WPC-Account-Number").val($("input#IIT-Account-Number").val()) \n ' + 
+	//						 '	   if($("input#IT-Account-Number").val() != "") { \n ' + 
+	//						 '		   $("input#WPC-Account-Number").val($("input#IT-Account-Number").val()) \n ' + 
 	//						 '	   } else if($("input#Security-Detail-Account-Number").val() != "") { \n ' + 
 	//						 '		   $("input#WPC-Account-Number").val($("input#Security-Detail-Account-Number").val()) \n ' + 
 	//						 '	   } \n ' + 
@@ -2310,16 +2412,16 @@
 	//						 '}); \n ';
 
 	// fData.CustomScriptLast +=	 '$("input#Security-Detail-Account-Number").on("change", function () { \n ' + 
-	//						 '   if($("input#IIT-Account-Number").val() == "") { \n ' + 
+	//						 '   if($("input#IT-Account-Number").val() == "") { \n ' + 
 	//						 '	   if($("input#WPC-Account-Number").val() != "") { \n ' + 
-	//						 '		   $("input#IIT-Account-Number").val($("input#WPC-Account-Number").val()) \n ' + 
+	//						 '		   $("input#IT-Account-Number").val($("input#WPC-Account-Number").val()) \n ' + 
 	//						 '	   } else if($("input#Security-Detail-Account-Number").val() != "") { \n ' + 
-	//						 '		   $("input#IIT-Account-Number").val($("input#Security-Detail-Account-Number").val()) \n ' + 
+	//						 '		   $("input#IT-Account-Number").val($("input#Security-Detail-Account-Number").val()) \n ' + 
 	//						 '	   } \n ' + 
 	//						 '   } \n ' + 
 	//						 '   if($("input#WPC-Account-Number").val() == "") { \n ' + 
-	//						 '	   if($("input#IIT-Account-Number").val() != "") { \n ' + 
-	//						 '		   $("input#WPC-Account-Number").val($("input#IIT-Account-Number").val()) \n ' + 
+	//						 '	   if($("input#IT-Account-Number").val() != "") { \n ' + 
+	//						 '		   $("input#WPC-Account-Number").val($("input#IT-Account-Number").val()) \n ' + 
 	//						 '	   } else if($("input#Security-Detail-Account-Number").val() != "") { \n ' + 
 	//						 '		   $("input#WPC-Account-Number").val($("input#Security-Detail-Account-Number").val()) \n ' + 
 	//						 '	   } \n ' + 
@@ -2365,7 +2467,7 @@
 
 
 
-
+/* 
 	// TEMPORARY
 
 	// texts
@@ -2401,7 +2503,7 @@
 	// fData.CustomScriptLast += '$().ImportEventSpaceRequestDataToEventRequest($("#id-or-link_Event-Space-Request-ID").val()); \n';
 
 
-
+ */
 	$.fn.ReturnThisAppMData = function () {
 		return mData;
 	}
