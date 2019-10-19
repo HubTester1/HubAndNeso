@@ -1902,6 +1902,7 @@ module.exports = {
 					adDepartments.departments.push('Relation Development');
 					adDepartments.departments.push('Direct Charged Grant Admin');
 					adDepartments.departments.push('Exhibit Innovation Projects');
+					adDepartments.departments.push('Education Technology');
 
 					// TO DO - DELETE ABOVE HARD-CODING OF DEPARTMENTS ONCE ALGO HAS BETTER DATA TO CRUNCH
 
@@ -2474,6 +2475,40 @@ module.exports = {
 							division: 'Education',
 							securityGroups: ['Exhibits_Projects_What_Is_Technology', 'Exhibits Operations', 'Exhibits Maintenance', 'COI other', 'Swat team', 'Exhibits_Projects_Random', 'mos.org', 'Exhibits_Projects_Mos_Then_And_Now', 'TrackIT Users', 'Exhibits_Projects_Pixar', 'SP_Team_Write_HHL_Maintenance', 'Audio Visual', 'GWRenovation', 'Exhibit Leadership', 'SP_Staff', 'SN Exhibit Managers', 'FinanceSSRSUsers', 'Butterfly Garden', 'OS X Users', 'Web VPN Access', 'PA System Project', 'Mapping', 'Budget_Education', 'PlatinumUsers', 'Exhibits_Projects_Escher', 'MMTfolder', 'Exhibit Admin Group', 'ProjectManagers', 'Showcase', 'VFT', 'SP_Team_write_exhibitmaintenance', 'Exhibits Projects', 'WiFi Access', 'JanusUsers', 'PGP_BASIC', 'PO and Invoice records', 'Exhibits', 'Making Models', 'SP_Dept_HR_ManagersHandbook', 'Budget_Exhibits', 'Budget_RestrictedAccess', 'Crystal Enterprise', 'SP_Team_Write_Safety', 'Charles River Gallery', 'Exhibits Development', 'GSW Scripts and Slides', 'Safety_Zeus', 'Tech Showcase', 'PompeiiOps', 'TrackIT Technicians', 'AnyConnect VPN Access'],
 						}, {
+							_id: '5d8cd271b07f56116cb2828d',
+							account: 'madams',
+							employeeID: '10385',
+							firstName: 'Mike',
+							lastName: 'Adams',
+							firstInitial: 'M',
+							lastInitial: 'A',
+							displayName: 'Mike Adams',
+							title: 'Manager, Traveling Programs',
+							email: 'madams@mos.org',
+							officePhone: '617-589-4253',
+							mobilePhone: '',
+							manager: 'shorrigan',
+							department: 'Traveling Programs',
+							division: 'Education',
+							securityGroups: ['SP_Team_Write_EEP', 'mos.org', 'TrackIT Users', 'Traveling Programs', 'Budget_EdPrograms', 'SP_Staff', 'FinanceSSRSUsers', 'Traveling Programs admin', 'Budget_Education', 'MMTfolder', 'WiFi Access', 'Outreach', 'PGP_BASIC', 'Community Outreach', 'Tessitura Education', 'SP_Dept_HR_ManagersHandbook', 'Budget_RestrictedAccess', 'Crystal Enterprise', 'SP_Team_Write_Safety', 'EEP', 'GSW Scripts and Slides', 'Safety_Zeus', 'BWEducationExp'],
+						}, {
+							_id: '5d8cd271b07f56116cb2836d',
+							account: 'tfarrand',
+							employeeID: '14710',
+							firstName: 'Tony',
+							lastName: 'Farrand',
+							firstInitial: 'T',
+							lastInitial: 'F',
+							displayName: 'Tony Farrand',
+							title: 'Manager of System Support Services',
+							email: 'tfarrand@mos.org',
+							officePhone: '617-589-0493',
+							mobilePhone: '',
+							manager: 'psheppard',
+							department: 'IIT- Infrastructure',
+							division: 'Finance & Systems Services',
+							securityGroups: ['Budget_Finance', 'PGP_ADMIN', 'mos.org', 'DameWare Admins', 'IITProd', 'SP_Dept_Write_IIT', 'Tessitura Administration', 'SP_Team_Write_IIT', 'SP_Staff', 'OS X Users', 'Web VPN Access', 'IIT group', 'MMTfolder', 'aqmsalerts', 'WiFi Access', 'Office 365 Admins', 'Budget_RestrictedAccess', 'SN IT Service Desk', 'AnyConnect VPN Access'],
+						}, {
 							_id: '5c644d1075180509bc07afc5',
 							account: 'rstaley',
 							employeeID: '14450',
@@ -2830,6 +2865,23 @@ module.exports = {
 							department: 'Curriculum Marketing',
 							division: 'Marketing & External Affairs',
 							securityGroups: ['mos.org', 'Data Protection Compliance', 'EIE - Aspen', 'SP_Staff', 'OS X Users', 'Web VPN Access', 'WiFi Access', 'Marketing', 'EiE Product Strategy', 'AnyConnect VPN Access'],
+						}, {
+							_id: '5da873e0c73220081050599e',
+							account: 'rvenegas',
+							employeeID: '14810',
+							firstName: 'Renee',
+							lastName: 'Venegas',
+							firstInitial: 'R',
+							lastInitial: 'V',
+							displayName: 'Renee Venegas',
+							title: 'Associate Regional Sales Manager',
+							email: 'rvenegas@mos.org',
+							officePhone: '',
+							mobilePhone: '',
+							manager: 'hgunsallus',
+							department: 'EiE Business Operations & Sales',
+							division: 'Education',
+							securityGroups: ['mos.org', 'EiE Implementation', 'SP_Staff', 'Web VPN Access', 'WiFi Access', 'AnyConnect VPN Access'],
 						}, {
 							_id: '5d508fe0cdcdbb0b880ca7c8',
 							account: 'amelia',
