@@ -13,7 +13,7 @@
 		'notifications': 0,
 	};
 
-	console.log("using settings m1");
+	console.log("using settings m7");
 
 	var oData = {
 		'admin': {
@@ -442,6 +442,9 @@
 								"fieldName": "Hire Department",
 								"type": "select"
 							}, {
+								"fieldName": "Hire Division",
+								"type": "text"
+							}, {
 								"fieldName": "Hire Position Title",
 								"type": "text"
 							}, {
@@ -512,6 +515,9 @@
 							}, {
 								"fieldName": "Hire Department",
 								"type": "select"
+							}, {
+								"fieldName": "Hire Division",
+								"type": "text"
 							}, {
 								"fieldName": "Hire Position Title",
 								"type": "text"
@@ -633,6 +639,9 @@
 							}, {
 								"fieldName": "Position Change Department",
 								"type": "select"
+							}, {
+								"fieldName": "Position Change Division",
+								"type": "text"
 							// }, {
 							// 	"fieldName": "Position Change Previous Manager",
 							// 	"type": "peoplePicker"
@@ -692,6 +701,9 @@
 							}, {
 								"fieldName": "Position Change Department",
 								"type": "select"
+							}, {
+								"fieldName": "Position Change Division",
+								"type": "text"
 							// }, {
 							// 	"fieldName": "Position Change Previous Manager",
 							// 	"type": "peoplePicker"
@@ -781,6 +793,9 @@
 								"fieldName": "Additional Position Department",
 								"type": "select"
 							}, {
+								"fieldName": "Additional Position Division",
+								"type": "select"
+							}, {
 								"fieldName": "Additional Position Grade",
 								"type": "select"
 							}, {
@@ -817,6 +832,9 @@
 								"type": "text"
 							}, {
 								"fieldName": "Additional Position Department",
+								"type": "select"
+							}, {
+								"fieldName": "Additional Position Division",
 								"type": "select"
 							}, {
 								"fieldName": "Additional Position Grade",
@@ -873,6 +891,9 @@
 								"fieldName": "Wage Change Department",
 								"type": "select"
 							}, {
+								"fieldName": "Wage Change Division",
+								"type": "text"
+							}, {
 								"fieldName": "Wage Change Scheduled Hours Biweekly",
 								"type": "text"
 							}, {
@@ -921,6 +942,9 @@
 								"fieldName": "Wage Change Department",
 								"type": "select"
 							}, {
+								"fieldName": "Wage Change Division",
+								"type": "text"
+							}, {
 								"fieldName": "Wage Change Scheduled Hours Biweekly",
 								"type": "text"
 							}, {
@@ -961,6 +985,9 @@
 							}, {
 								"fieldName": "Schedule Change Department",
 								"type": "select"
+							}, {
+								"fieldName": "Schedule Change Division",
+								"type": "tet"
 							// }, {
 							// 	"fieldName": "Schedule Change Previous Scheduled Hours Biweekly",
 							// 	"type": "text"
@@ -990,6 +1017,9 @@
 							}, {
 								"fieldName": "Schedule Change Department",
 								"type": "select"
+							}, {
+								"fieldName": "Schedule Change Division",
+								"type": "text"
 							// }, {
 							// 	"fieldName": "Schedule Change Previous Scheduled Hours Biweekly",
 							// 	"type": "text"
@@ -1440,6 +1470,13 @@
 			}, {
 				'elementType': "field",
 				'controlType': "text",
+				'fieldName': "Hire Division",
+				'labelContent': "Division",
+				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
+				'disabledForAdmin': ['Submitted', 'Cancelled']
+			}, {
+				'elementType': "field",
+				'controlType': "text",
 				'fieldName': "Hire Position Title",
 				'labelContent': "Position Title",
 				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
@@ -1840,7 +1877,13 @@
 				},
 				"disabledForNonAdmin": ['Submitted', 'Cancelled'],
 				"disabledForAdmin": ['Submitted', 'Cancelled'],
-
+			}, {
+				'elementType': "field",
+				'controlType': "text",
+				'fieldName': "Position Change Division",
+				'labelContent': "Division",
+				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
+				'disabledForAdmin': ['Submitted', 'Cancelled']
 
 			// }, {
 			// 	'elementType': "field",
@@ -1852,10 +1895,9 @@
 			// 	"disabledForAdmin": ['Submitted', 'Cancelled'],
 			}, {
 				'elementType': "field",
-				'controlType': "text",
+				'controlType': "peoplePicker",
 				'fieldName': "Position Change Manager",
 				'labelContent': "Manager",
-				'controlType': 'peoplePicker',
 				'disabledForNonAdmin': ['', 'Submitted', 'Cancelled'],
 				'disabledForAdmin': ['', 'Submitted', 'Cancelled']
 
@@ -2295,6 +2337,11 @@
 								"type": "select",
 								"copyField": "Position Change Department",
 							}, {
+								"fieldName": "Wage Change Division",
+								"type": "text",
+								"method": "dynamic",
+								"value": "$('input#Position-Change-Division').val()"
+							}, {
 								"fieldName": "Wage Change Scheduled Hours Biweekly",
 								"type": "text",
 								"method": "dynamic",
@@ -2316,6 +2363,9 @@
 							}, {
 								"fieldName": "Wage Change Department",
 								"type": "select"
+							}, {
+								"fieldName": "Wage Change Division",
+								"type": "text"
 							}, {
 								"fieldName": "Wage Change Scheduled Hours Biweekly",
 								"type": "text"
@@ -2356,6 +2406,9 @@
 							}, {
 								"fieldName": "Wage Change Department",
 								"type": "select"
+							}, {
+								"fieldName": "Wage Change Division",
+								"type": "text"
 							}, {
 								"fieldName": "Wage Change Scheduled Hours Biweekly",
 								"type": "text"
@@ -2464,6 +2517,13 @@
 				},
 				"disabledForNonAdmin": ['Submitted', 'Cancelled'],
 				"disabledForAdmin": ['Submitted', 'Cancelled'],
+			}, {
+				'elementType': "field",
+				'controlType': "text",
+				'fieldName': "Additional Position Division",
+				'labelContent': "Division",
+				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
+				'disabledForAdmin': ['Submitted', 'Cancelled']
 			}, {
 				'elementType': "field",
 				'controlType': "select",
@@ -2845,6 +2905,13 @@
 			}, {
 				'elementType': "field",
 				'controlType': "text",
+				'fieldName': "Wage Change Division",
+				'labelContent': "Division",
+				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
+				'disabledForAdmin': ['Submitted', 'Cancelled']
+			}, {
+				'elementType': "field",
+				'controlType': "text",
 				'fieldName': "Wage Change Scheduled Hours Biweekly",
 				'labelContent': "Scheduled Hours, Biweekly",
 				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
@@ -3164,6 +3231,14 @@
 				},
 				"disabledForNonAdmin": ['Submitted', 'Cancelled'],
 				"disabledForAdmin": ['Submitted', 'Cancelled'],
+			}, {
+				'elementType': "field",
+				'controlType': "text",
+				'fieldName': "Schedule Change Division",
+				'labelContent': "Division",
+				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
+				'disabledForAdmin': ['Submitted', 'Cancelled']
+			}, {
 			// }, {
 			// 	'elementType': "field",
 			// 	'controlType': "text",
@@ -3975,7 +4050,7 @@
 	// 				"	'email': 'sp2@mos.org'," + 
 	// 				"	'account': 'i:0#.f|membership|sp2@mos.org'" + 
 	// 				"}]);";
-`
+
 	fData.CustomScriptLast +=	"$().PutAddtlPeopleInPicker('Position Change Manager', [{" + 
 					"	'name': 'Hub Tester3'," + 
 					"	'email': 'sp3@mos.org'," + 
@@ -3995,8 +4070,8 @@
 	// fData.CustomScriptLast +=	'$().ProcessEARAndPARHourFields("Position-Change-Previous-Scheduled-Hours-Biweekly", "Position-Change-Previous-Scheduled-Hours-Annually");';
 	fData.CustomScriptLast +=	'$().ProcessEARAndPARHourFields("Position-Change-Scheduled-Hours-Biweekly", "Position-Change-Scheduled-Hours-Annually");';
 	fData.CustomScriptLast +=	'$().ProcessEARAndPARHourAndWageFields("Additional-Position-Proposed-Hourly-Wage", "Additional-Position-Proposed-Annualized-Salary", "Additional-Position-Scheduled-Hours-Biweekly", "Additional-Position-Scheduled-Hours-Annually");';
-	// fData.CustomScriptLast +=	'$().ProcessEARAndPARHourAndWageFields("Wage-Change-Hourly-Wage", "Wage-Change-Annualized-Salary", "Wage-Change-Scheduled-Hours-Biweekly", "Wage-Change-Scheduled-Hours-Annually");'; */
-	
+	// fData.CustomScriptLast +=	'$().ProcessEARAndPARHourAndWageFields("Wage-Change-Hourly-Wage", "Wage-Change-Annualized-Salary", "Wage-Change-Scheduled-Hours-Biweekly", "Wage-Change-Scheduled-Hours-Annually");';
+	*/
 
 
 	$.fn.ReturnThisAppMData = function () {

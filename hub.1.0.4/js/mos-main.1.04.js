@@ -16727,6 +16727,7 @@
 					'	<li><b>Last Name:</b> ' + formData["Hire-Last-Name"] + '</li>' +
 					'	<li><b>Manager / Supervisor:</b> ' + formData["Hire-Manager"][0]["displayText"] + '</li>' +
 					'	<li><b>Department:</b> ' + formData["Hire-Department"] + '</li>' +
+					'	<li><b>Division:</b> ' + formData["Hire-Division"] + '</li>' +
 					'	<li><b>Position Title:</b> ' + formData["Hire-Position-Title"] + '</li>' +
 					'	<li><b>Grade:</b> ' + formData["Hire-Grade"] + '</li>' +
 					'	<li><b>Employee Classification:</b> ' + formData["Hire-Employee-Classification"] + '</li>' +
@@ -16856,6 +16857,7 @@
 								'			<ul style="margin: 0;">' +
 								'				<li><b>Position Title:</b> ' + formData["Position-Change-Position-Title"] + '</li>' +
 								'				<li><b>Department:</b> ' + formData["Position-Change-Department"] + '</li>' +
+								'				<li><b>Division:</b> ' + formData["Position-Change-Division"] + '</li>' +
 								'				<li><b>Manager / Supervisor:</b> ' + formData["Position-Change-Manager"][0]["displayText"] + '</li>' +
 								'				<li><b>Grade:</b> ' + formData["Position-Change-Grade"] + '</li>' +
 								'				<li><b>Scheduled Hours, Biweekly:</b> ' + formData["Position-Change-Scheduled-Hours-Biweekly"] + '</li>' +
@@ -16900,6 +16902,7 @@
 								'<ul style="margin: 0;">' +
 								'	<li><b>Position Title:</b> ' + formData["Additional-Position-Position-Title"] + '</li>' +
 								'	<li><b>Department:</b> ' + formData["Additional-Position-Department"] + '</li>' +
+								'	<li><b>Division:</b> ' + formData["Additional-Position-Division"] + '</li>' +
 								'	<li><b>Grade:</b> ' + formData["Additional-Position-Grade"] + '</li>' +
 								'	<li><b>Scheduled Hours, Biweekly:</b> ' + formData["Additional-Position-Scheduled-Hours-Biweekly"] + '</li>' +
 								'	<li><b>Scheduled Hours, Annually:</b> ' + formData["Additional-Position-Scheduled-Hours-Annually"] + '</li>' +
@@ -16941,6 +16944,7 @@
 								'<ul style="margin: 0;">' +
 								'	<li><b>Anticipated Start Date:</b> ' + formData["Wage-Change-Effective-Beginning-Date"] + '</li>' +
 								'	<li><b>Department:</b> ' + formData["Wage-Change-Department"] + '</li>' +
+								'	<li><b>Division:</b> ' + formData["Wage-Change-Division"] + '</li>' +
 								'	<li><b>Scheduled Hours, Biweekly:</b> ' + formData["Wage-Change-Scheduled-Hours-Biweekly"] + '</li>' +
 								'	<li><b>Scheduled Hours, Annually:</b> ' + formData["Wage-Change-Scheduled-Hours-Annually"] + '</li>' +
 								// '	<li><b>Previous Hourly Wage:</b> ' + formData["Wage-Change-Previous-Hourly-Wage"] + '</li>' + 
@@ -16988,7 +16992,9 @@
 							if (typeof (formData["Schedule-Change-Effective-End-Date"]) !== "undefined") {
 								printContent += '	<li><b>Anticipated End Date:</b> ' + formData["Schedule-Change-Effective-End-Date"] + '</li>';
 							}
-							printContent += '	<li><b>Department:</b> ' + formData["Schedule-Change-Department"] + '</li>' +
+							printContent += 
+								'	<li><b>Department:</b> ' + formData["Schedule-Change-Department"] + '</li>' +
+								'	<li><b>Division:</b> ' + formData["Schedule-Change-Division"] + '</li>' +
 								// '	<li><b>Previous Scheduled Hours, Biweekly:</b> ' + formData["Schedule-Change-Previous-Scheduled-Hours-Biweekly"] + '</li>' + 
 								'	<li><b>Scheduled Hours, Biweekly:</b> ' + formData["Schedule-Change-Scheduled-Hours-Biweekly"] + '</li>' +
 								'	<li><b>Reason:</b> ' + formData["Schedule-Change-Reason"] + '</li>' +
