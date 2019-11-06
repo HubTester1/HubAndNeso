@@ -19,28 +19,24 @@ export default props => (
 					<h3>
 						<a
 							id="photo-source-link"
-							href="https://unsplash.com/photos/z2G_mtPCylQ"
+							href="https://unsplash.com/photos/LtnPejWDSAY"
 							target="_blank"
 							rel="noopener noreferrer"
 						>
 							Photo
 						</a>
-						&nbsp;Big Green Bubble by&nbsp;
+						&nbsp;by&nbsp;
 						<a
 							id="photographer-link"
-							href="https://unsplash.com/@frostroomhead"
+							href="https://unsplash.com/@lightscape"
 							target="_blank"
 							rel="noopener noreferrer"
 						>
-							Rodion Kutsaev
+							Lightscape
 						</a>
 					</h3>
 					<p>
-						Part of a collection of &quot;[m]acro photography of water 
-						and sunflower oil in different variations.&quot;
-					</p>
-					<p>
-						From Melitopol, Ukraine.
+						&quot;Amazing light display from Mother Nature, very humbled and in awe to capture a multi-hued color Aurora at Tromso, Norway.&quot;
 					</p>
 				</div>
 			</Collapsible>

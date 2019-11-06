@@ -11,13 +11,13 @@
 @media screen and (min-width: $medium-screen-minimum-width)
 
 	div.hc-header-and-hero-container
-		background-color: $white
-		background-size: 100% auto, 100% auto, cover
-		background-position: top left, top left, top center
-		background-image: linear-gradient(to bottom, $green-1, $green-1-50-percent 20rem, transparent 25rem, $coral-3-40-percent 40rem, $coral-3 85rem), linear-gradient(to right, transparent, $white-10-percent 45%, $white-60-percent 55%, $white-50-percent 90%, $white-20-percent 100%), url('../../img/bkgrd-medium-screen.jpg')
-		// background-size: 100% auto, 100% auto, 100% auto, cover
-		// background-position: top left, top left, top left, top left
-		// background-image: linear-gradient(to bottom, $white-80-percent, $white-30-percent 16rem, transparent 20rem, transparent 40rem, $white 60rem), linear-gradient(to right, transparent, $white-10-percent 40%, $white-70-percent 50%, $white-70-percent 90%, $white-20-percent 100%), linear-gradient(to bottom right, $white-40-percent 50%, $white-20-percent 100%), url('../../img/bkgrd-medium-screen.jpg')
+		background-color: $blue-10
+		// background-size: 100% auto, 100% auto, cover
+		// background-position: top left, top left, top center
+		// background-image: linear-gradient(to bottom, $green-1, $green-1-50-percent 20rem, transparent 25rem, $coral-3-40-percent 40rem, $coral-3 85rem), linear-gradient(to right, transparent, $white-10-percent 45%, $white-60-percent 55%, $white-50-percent 90%, $white-20-percent 100%), url('../../img/bkgrd-medium-screen.jpg')
+		background-size: 100% auto, 100% auto, 100% auto, cover
+		background-position: top left, top left, top left, top left
+		background-image: linear-gradient(to bottom, $purple-10-40-percent, $purple-10-10-percent 16rem, transparent 20rem, transparent 40rem, $purple-10 60rem), linear-gradient(to right, transparent, $purple-10-10-percent 40%, $purple-10-30-percent 50%, $purple-10-30-percent 90%, $purple-10-10-percent 100%), linear-gradient(to bottom right, $purple-10-20-percent 50%, $green-5-20-percent 100%), url('../../img/bkgrd-medium-screen.jpg')
 		transition: height .5s
 
 // --- MEDIUM - HEADER
@@ -42,7 +42,8 @@
 
 		div.sticky-inner-wrapper
 			z-index: $z-index-sticky-header
-			background-color: $grey-1
+			background-color: $grey-17
+			// background-color: $grey-1
 
 // --- MEDIUM - NAVIGATION
 
@@ -74,7 +75,8 @@
 						text-align: left
 						font-size: 1.3rem
 						background-color: transparent
-						color: $aqua-8
+						color: $aqua-2
+						// color: $aqua-8
 						
 						div.ms-Button-flexContainer
 							height: 3rem
@@ -156,27 +158,50 @@
 				+button
 				+button-colored
 				margin-top: 2rem
-				color: $aqua-9 !important
-				background-color: $aqua-1 !important
+				color: $aqua-1 !important
+				background-color: $aqua-9 !important
+				// color: $aqua-9 !important
+				// background-color: $aqua-1 !important
 
 				&:hover
-					color: $aqua-10 !important
-					background-color: $aqua-2 !important
+					color: $aqua-2 !important
+					background-color: $aqua-10 !important
+					// color: $aqua-10 !important
+					// background-color: $aqua-2 !important
 
 			div#hc-background-info__information
 				+round-corners
 				+small-shadow-bottom-right-light-color
 				padding: 2rem
-				background-color: $white-70-percent
-				border-top: 5px solid $pink-2
-				border-bottom: 5px solid $pink-2
+				background-image: linear-gradient(to right, $blue-10-60-percent, $blue-10-60-percent), linear-gradient(to right, $white-20-percent, $white-20-percent)
+				// background-color: $white-70-percent
+				color: $white
+				border-top: 5px solid $pink-10
+				border-bottom: 5px solid $pink-10
+				// border-top: 5px solid $pink-2
+				// border-bottom: 5px solid $pink-2
 				transition: border-color .5s, background-color .5s
+
+				h3
+					color: $white
 
 				&:hover
 					+small-shadow-bottom-right-medium-color
 					padding: 2rem
-					border-color: $pink-3
-					background-color: $white-80-percent
+					border-color: $pink-7
+					// border-color: $pink-3
+					background-image: linear-gradient(to right, $blue-10-60-percent, $blue-10-60-percent), linear-gradient(to right, $white-30-percent, $white-30-percent)
+					// background-color: $white-80-percent
+
+				a#photo-source-link,
+				a#photographer-link
+					color: $aqua-3 !important
+					transition: color .25s
+
+					&:hover
+						color: $aqua-1 !important
+
+
 
 // --- MEDIUM - HERO SECTION
 
@@ -199,7 +224,7 @@
 @media screen and (min-width: $medium-screen-minimum-width)
 
 	div#hero-container div#staff-lookup-and-background-info,
-	div#hero-container div#hc-messages-top
+	div#hero-container div#hc-messages-top,
 	div#hc-pushed-items,
 	div#hc-get-it-done,
 	div#hc-organization,
@@ -210,12 +235,13 @@
 			margin-bottom: 1rem
 
 	div#hero-container div#staff-lookup-and-background-info,
-	div#hero-container div#hc-messages-top
+	div#hero-container div#hc-messages-top,
 	div#hc-get-it-done,
 	div#hc-messages-all
 
 		h2
-			color: $grey-18
+			color: $white
+			// color: $grey-18
 
 // --- MEDIUM - PUSHED ITEMS
 
@@ -231,8 +257,8 @@
 				height: 26rem !important
 				background-color: $blue-2
 		
-		h2
-			color: $grey-13
+		// h2
+		// 	color: $grey-13
 
 		ul#hc-pushed-items-list
 			column-count: 3
@@ -272,36 +298,38 @@
 	div#hc-get-it-done
 		position: relative
 		padding: 5rem 4rem 4rem 5rem
-		background-image: linear-gradient(to bottom, $subtle-coral, $purple-3)
+		background-image: linear-gradient(to bottom, $bold-purple, $bold-green)
+		// background-image: linear-gradient(to bottom left, $pink-7, $purple-9)
+		// background-image: linear-gradient(to bottom, $subtle-coral, $purple-3)
 
-		div.section-notice
-			+round-corners-bottom-only
-			+small-shadow-bottom-right-very-light-color
-			+font-size-6
-			position: absolute
-			top: 0
-			right: 5rem
-			width: calc(25% - 5rem)
-			height: 14rem
-			padding: 3rem 3rem 1rem
-			text-align: center
-			background-color: $coral-2
+		// div.section-notice
+		// 	+round-corners-bottom-only
+		// 	+small-shadow-bottom-right-very-light-color
+		// 	+font-size-6
+		// 	position: absolute
+		// 	top: 0
+		// 	right: 5rem
+		// 	width: calc(25% - 5rem)
+		// 	height: 14rem
+		// 	padding: 3rem 3rem 1rem
+		// 	text-align: center
+		// 	background-color: $coral-2
 
-			p.section-notice__text
-				position: absolute
-				bottom: 2rem
-				left: 3rem
-				width: calc(100% - 6rem)
-				margin: 0 auto
+		// 	p.section-notice__text
+		// 		position: absolute
+		// 		bottom: 2rem
+		// 		left: 3rem
+		// 		width: calc(100% - 6rem)
+		// 		margin: 0 auto
 
-				a
-					color: $interactive-default-darkened-1
+		// 		a
+		// 			color: $interactive-default-darkened-1
 
-					&:hover
-						color: $interactive-active-darkened-1
+		// 			&:hover
+		// 				color: $interactive-active-darkened-1
 			
-			&:hover
-				+small-shadow-bottom-right-light-color
+		// 	&:hover
+		// 		+small-shadow-bottom-right-light-color
 
 		div.banner
 			margin-top: 2rem
@@ -327,7 +355,7 @@
 			display: inline-block
 			width: calc(100% - 1rem)
 			padding: 3rem
-			background-color: $white-60-percent
+			background-color: $white-80-percent
 			margin: 0 1rem 1rem 0
 			border-top: 5px solid $white-10-percent
 			border-bottom: 5px solid $white-10-percent
@@ -335,7 +363,9 @@
 
 			&:hover
 				+small-shadow-bottom-right-medium-color
-				border-color: $green-3
+				border-color: $purple-4
+				// border-color: $coral-4
+				// border-color: $green-3
 				background-color: $white
 
 		a.hc-get-it-done-item-link
@@ -450,6 +480,7 @@
 			ul#hc-messages-list
 				padding: 0
 				margin: 0
+				color: $white
 
 				li.mos-react-component-root
 					+small-shadow-bottom-right-light-color
@@ -464,10 +495,16 @@
 				div.hc-messages-message-preview
 					+round-corners
 					padding: 2rem
-					background-color: $white-60-percent
-					border-top: 5px solid $pink-2
-					border-bottom: 5px solid $pink-2
+					background-color: $white-5-percent
+					// background-color: $white-60-percent
+					border-top: 5px solid $pink-10
+					border-bottom: 5px solid $pink-10
+					// border-top: 5px solid $pink-2
+					// border-bottom: 5px solid $pink-2
 					transition: border-color .5s, background-color .5s, height .5s
+
+					h3.hc-messages-message-preview-subject
+						color: $white
 
 					button.hc-messages-message-preview-full-message-button,
 					button.hc-messages-message-preview-enable-message-update-button
@@ -479,7 +516,8 @@
 						border: .1rem solid transparent
 						border: 0
 						background-color: transparent
-						color: $interactive-default
+						color: $aqua-3
+						// color: $interactive-default
 						transition: color .25s, background-color .25s, border-color .25s, padding .25s
 
 						&:after
@@ -487,8 +525,10 @@
 
 					&:hover
 						padding: 2rem
-						border-color: $pink-3
-						background-color: $white-80-percent
+						border-color: $pink-7
+						background-color: $white-10-percent
+						// border-color: $pink-3
+						// background-color: $white-80-percent
 
 						button.hc-messages-message-preview-full-message-button,
 						button.hc-messages-message-preview-enable-message-update-button
@@ -497,12 +537,15 @@
 
 						button.hc-messages-message-preview-full-message-button
 							+icon-fullscreen-after
-							color: $aqua-9 !important
-							background-color: $aqua-1 !important
+							color: $white
+							background-color: $interactive-default
+							// color: $aqua-9 !important
+							// background-color: $aqua-1 !important
 
 							&:hover
-								color: $aqua-10 !important
-								background-color: $aqua-2 !important
+								background-color: $interactive-active
+								// color: $aqua-10 !important
+								// background-color: $aqua-2 !important
 
 						button.hc-messages-message-preview-enable-message-update-button
 							+icon-edit-after
@@ -523,39 +566,43 @@
 	div#hc-messages-all
 		position: relative
 		padding: 5rem 4rem 5rem 5rem
-		background-image: linear-gradient(to bottom, $purple-3, $green-2)
+		background-image: linear-gradient(to bottom, $bold-green, $blue-10)
+		// background-image: linear-gradient(to bottom, $purple-3, $green-2)
 
-		div.section-notice
-			+round-corners-bottom-only
-			+small-shadow-bottom-right-very-very-light-color
-			+font-size-6
-			position: absolute
-			top: 0
-			right: 5rem
-			width: calc(25% - 3rem)
-			height: 14rem
-			padding: 3rem 3rem 1rem
-			text-align: center
-			background-color: $purple-2
+		h2
+			color: $white
 
-			p.section-notice__text
-				position: absolute
-				bottom: 2rem
-				left: 3rem
-				width: calc(100% - 6rem)
-				margin: 0 auto
+		// div.section-notice
+		// 	+round-corners-bottom-only
+		// 	+small-shadow-bottom-right-very-very-light-color
+		// 	+font-size-6
+		// 	position: absolute
+		// 	top: 0
+		// 	right: 5rem
+		// 	width: calc(25% - 3rem)
+		// 	height: 14rem
+		// 	padding: 3rem 3rem 1rem
+		// 	text-align: center
+		// 	background-color: $purple-2
 
-				a
-					color: $interactive-default-darkened-1
+		// 	p.section-notice__text
+		// 		position: absolute
+		// 		bottom: 2rem
+		// 		left: 3rem
+		// 		width: calc(100% - 6rem)
+		// 		margin: 0 auto
 
-					&:hover
-						color: $interactive-active-darkened-1
+		// 		a
+		// 			color: $interactive-default-darkened-1
+
+		// 			&:hover
+		// 				color: $interactive-active-darkened-1
 			
-			&:hover
-				+small-shadow-bottom-right-very-light-color
+		// 	&:hover
+		// 		+small-shadow-bottom-right-very-light-color
 
-		div.banner
-			margin-top: 2rem
+		// div.banner
+		// 	margin-top: 2rem
 
 		div.hc-messages-placeholder
 			column-count: 2
@@ -582,7 +629,7 @@
 			div.hc-messages-message-preview
 				+round-corners
 				padding: 2rem
-				background-color: $white-50-percent
+				background-color: $white-80-percent
 				border-top: 5px solid $white-10-percent
 				border-bottom: 5px solid $white-10-percent
 				transition: border-color .5s, background-color .5s, height .5s
@@ -606,7 +653,8 @@
 						+font-size-7
 					
 				&:hover
-					border-color: $yellow-2
+					border-color: $primary-green
+					// border-color: $yellow-2
 					background-color: $white
 
 					button.hc-messages-message-preview-full-message-button,
@@ -667,9 +715,9 @@
 	div#hc-organization
 		padding: 5rem
 		
-		h2,
-		h3
-			color: $grey-13
+		// h2,
+		// h3
+		// 	color: $grey-13
 
 		div.hc-organization-placeholder
 			+row

@@ -137,7 +137,7 @@ export default class HcGetItDone extends React.Component {
 		if (this.props.uData.roles) {
 			return (
 				<div id="hc-get-it-done-body">
-					<div className="section-notice section-notice__neutral">
+					{/* <div className="section-notice section-notice__neutral">
 						<p className="section-notice__text">
 							Learn about&nbsp;
 							<a 
@@ -149,7 +149,7 @@ export default class HcGetItDone extends React.Component {
 							</a>
 							.
 						</p>
-					</div>
+					</div> */}
 					<HcGetItDoneCommandBar
 						handleClickViewByGroupButton={this.handleClickViewByGroupButton}
 						handleClickViewByAlphaButton={this.handleClickViewByAlphaButton}
