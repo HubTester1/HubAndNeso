@@ -20,7 +20,8 @@
     "5-dev-build": "webpack --config webpack/v5.dev.config.js",
     "5-dev-watch-build": "webpack --config webpack/v5.dev.config.js --watch",
     "5-serve": "webpack-dev-server --config webpack/v5.dev.serve.config.js",
-    "5-prod-build": "webpack -p --config webpack/v5.prod.config.js"
+    "5-prod-build": "webpack -p --config webpack/v5.prod.config.js",
+    "next": "next"
   },
   "repository": {
     "type": "git",
@@ -44,11 +45,12 @@
     "jsonexport": "^2.4.1",
     "locutus": "^2.0.10",
     "moment": "^2.22.1",
+    "next": "^9.1.2",
     "office-ui-fabric-react": "^5.135.0",
     "pug": "^2.0.4",
-    "react": "^16.3.2",
+    "react": "^16.11.0",
     "react-accessible-accordion": "^2.4.0",
-    "react-dom": "^16.3.2",
+    "react-dom": "^16.11.0",
     "react-dropzone": "^4.2.9",
     "react-js-pagination": "^3.0.2",
     "react-modal": "^3.4.4",
