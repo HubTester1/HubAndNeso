@@ -134,59 +134,60 @@ module.exports = {
 						nesoErrors.ProcessError(errorToReport);
 						// reject this promise with the error
 						reject(errorToReport);
-						// if there was NOT an error
+					// if there was NOT an error
 					} else {
+						// move pinned messages to beginning of array
+						const messagesWithPinnedFirst = module.exports.ReturnMessagesWithPinnedFirst(docs);
 						// resolve the promise and return the docs
 						resolve({
 							error: false,
 							mongoDBError: false,
-							docs,
+							docs: messagesWithPinnedFirst,
 						});
 					}
 				});
 		}),
 
+	ReturnMessagesWithPinnedFirst: (messages) => {
+		// set up container arrays
+		const messagesNotPinned = [];
+		const messagesPinned = [];
+		let allMessages = [];
+		// for each message
+		messages.forEach((message) => {
+			// if this message has a pinnedUntil property and
+			// 		the pinnedUntil datetime is in the future
+			if (message.pinnedUntil && moment(message.pinnedUntil).isAfter(moment())) {
+				// push this message to the messagesPinned array
+				messagesPinned.push(message);
+			// if this message has no pinnedUntil property OR 
+			// 		the pinnedUntil dateime is NOT in the future
+			} else {
+				// push this message to the messagesNotPinned array
+				messagesNotPinned.push(message);
+			}
+		});
+		// concatenate message arrays, with pinned messages first
+		allMessages = messagesPinned.concat(messagesNotPinned);
+		// return array of messages, with pinned messages first
+		return allMessages;
+	},
+
 	ReturnHcMessagesDescendingLimit4: () =>
 		// return a new promise
 		new Promise((resolve, reject) => {
-			// note: sortObject and projectionObject MUST be constructed in the following way;
-			// 		attempts to "optimize" the relevant lines result in errors
-			const sortObject = {};
-			const projectionObject = {};
-			const queryObject = {};
-			
-			sortObject.messageModified = -1;
-
-			projectionObject.sort = sortObject;
-			projectionObject.limit = 4;
-
-			queryObject.messageExpiration = { $gte: new Date() };
-
-			// use nesoDBConnection object to query db
-			nesoDBConnection.get('hcMessages')
-				.find(queryObject, projectionObject, (error, docs) => {
-					// if there was an error
-					if (error) {
-						// construct a custom error
-						const errorToReport = {
-							error: true,
-							mongoDBError: true,
-							mongoDBErrorDetails: error,
-						};
-						// add error to Twitter
-						nesoErrors.ProcessError(errorToReport);
-						// reject this promise with the error
-						reject(errorToReport);
-						// if there was NOT an error
-					} else {
-						// resolve the promise and return the docs
-						resolve({
-							error: false,
-							mongoDBError: false,
-							docs,
-						});
-					}
-				});
+			// get a promise to get all messages with pinned messages first
+			module.exports.ReturnHcMessagesDescending()
+				// if the promise is resolved with the messages, then resolve this promise with the docs
+				.then((result) => {
+					resolve({
+						error: false,
+						mongoDBError: false,
+						docs: result.docs.slice(0, 4),
+					}); 
+				})
+				// if the promise is rejected with an error, then reject this promise with an error
+				.catch((error) => { reject(error); });
 		}),
 
 	ReturnHcMessagesDescendingWithSpecifiedTag: (name, camlName) =>

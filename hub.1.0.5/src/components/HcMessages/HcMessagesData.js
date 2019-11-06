@@ -78,12 +78,12 @@ export default class HcMessagesData {
 						}
 					});
 					// sort messages according to modified property
-					allMessagesMessages.sort((a, b) => {
-						if (moment(a.modified).isBefore(moment(b.modified))) {
-							return 1;
-						}
-						return -1;
-					});
+					// allMessagesMessages.sort((a, b) => {
+					// 	if (moment(a.modified).isBefore(moment(b.modified))) {
+					// 		return 1;
+					// 	}
+					// 	return -1;
+					// });
 					// resolve this promise with the requested items
 					resolve(allMessagesMessages);
 				});
@@ -99,7 +99,6 @@ export default class HcMessagesData {
 		messageFormattedCopy.creator = messageValues.messageCreator;
 		messageFormattedCopy.body = messageValues.messageBody;
 		messageFormattedCopy.expiration = messageValues.messageExpiration;
-
 		messageFormattedCopy.key = shortid.generate();
 
 		if (messageValues.messageImages && messageValues.messageImages[0]) {
@@ -144,12 +143,12 @@ export default class HcMessagesData {
 						}
 					});
 					// sort messages according to modified property
-					allMessagesMessages.sort((a, b) => {
-						if (moment(a.modified).isBefore(moment(b.modified))) {
-							return 1;
-						}
-						return -1;
-					});
+					// allMessagesMessages.sort((a, b) => {
+					// 	if (moment(a.modified).isBefore(moment(b.modified))) {
+					// 		return 1;
+					// 	}
+					// 	return -1;
+					// });
 					// resolve this promise with the requested items
 					resolve(allMessagesMessages);
 				});
