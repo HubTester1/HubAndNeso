@@ -596,9 +596,13 @@ export default class HcMessages extends React.Component {
 	}
 	returnItemIncludesFilterTextCaseInsensitive(textFilter) {
 		return message =>
-			message.body.toLowerCase().includes(textFilter.toLowerCase()) ||
-			message.subject.toLowerCase().includes(textFilter.toLowerCase()) ||
-			message.creator.displayName.toLowerCase().includes(textFilter.toLowerCase());
+			(message.body && message.body.toLowerCase().includes(textFilter.toLowerCase())) ||
+			(message.subject && message.subject.toLowerCase().includes(textFilter.toLowerCase())) ||
+			(
+				message.creator && 
+				message.creator.displayName && 
+				message.creator.displayName.toLowerCase().includes(textFilter.toLowerCase())
+			);
 	}
 	returnItemIncludesCategoryTag(categoryFilter) {
 		return (message) => {
@@ -624,7 +628,7 @@ export default class HcMessages extends React.Component {
 	returnHcMessagesAllBody() {
 		return (
 			<div id="hc-messages-all-body">
-				<div className="section-notice section-notice__neutral">
+				{/* <div className="section-notice section-notice__neutral">
 					<p className="section-notice__text">
 						Learn about&nbsp;
 						<a
@@ -636,7 +640,7 @@ export default class HcMessages extends React.Component {
 						</a>
 						.
 					</p>
-				</div>
+				</div> */}
 				<HcMessagesCommandBar
 					screenType={this.props.screenType}
 					tagsArray={this.state.tagsArray}
