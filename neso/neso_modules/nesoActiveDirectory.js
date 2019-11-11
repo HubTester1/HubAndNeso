@@ -1740,12 +1740,11 @@ module.exports = {
 					const adUsersByDivisionDepartment = {};
 					// iterate over adUsers
 					adUsers.forEach((adUser, adUserIndex) => {
-						// if this user has a division and department and manager
+						// if this user has a division and department
 						// 		(ReturnAllADUsersFromCSVWithLegacyPhoneNumbers() 
 						// 		will not return anyone without an account)
-						if (adUser.division && adUser.division !== '' &&
-							adUser.department && adUser.department !== '' &&
-							adUser.manager && adUser.manager !== '') {
+						if (adUser.division && adUser.division !== '' && 
+							adUser.department && adUser.department !== '') {
 							// get copies of the division and department names without 
 							// 		characters that are illegal as MongoDB key names
 							const adUserDivision = nesoUtilities.ReplaceAll('\\.', '', adUser.division);
@@ -1770,22 +1769,25 @@ module.exports = {
 								.members.push(adUser);
 							// determine whether or not this user's manager 
 							// 		is already in adUsersByDivisionDepartment
-							// set up flag indicating that manager is not already added
-							let thisManagerAlreadyAdded = false;
-							// iterate over manages already added
-							adUsersByDivisionDepartment[adUserDivision][adUserDepartment].managers
-								.forEach((manager, managerIndex) => {
-									// if this already added manager is the user's manager
-									if (manager === adUser.manager) {
-										// set flag to indicate that this user's manager was already added
-										thisManagerAlreadyAdded = true;
-									}
-								});
-							// if this user's manager is not already added to adUsersByDivisionDepartment
-							if (!thisManagerAlreadyAdded) {
-								// add this user's manager's account to adUsersByDivisionDepartment
-								adUsersByDivisionDepartment[adUserDivision][adUserDepartment]
-									.managers.push(adUser.manager);
+							// if this user's manager exists
+							if (adUser.manager && adUser.manager !== '') {
+								// set up flag indicating that manager is not already added
+								let thisManagerAlreadyAdded = false;
+								// iterate over managers already added
+								adUsersByDivisionDepartment[adUserDivision][adUserDepartment].managers
+									.forEach((manager, managerIndex) => {
+										// if this already added manager is the user's manager
+										if (manager === adUser.manager) {
+											// set flag to indicate that this user's manager was already added
+											thisManagerAlreadyAdded = true;
+										}
+									});
+								// if this user's manager is not already added to adUsersByDivisionDepartment
+								if (!thisManagerAlreadyAdded) {
+									// add this user's manager's account to adUsersByDivisionDepartment
+									adUsersByDivisionDepartment[adUserDivision][adUserDepartment]
+										.managers.push(adUser.manager);
+								}
 							}
 						}
 					});
