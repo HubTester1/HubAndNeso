@@ -53,12 +53,12 @@
 										<SharePoint:CssRegistration Name="Themable/corev15.css" runat="server" />
 
 										<%-- TEMP --%>
-										<script type="text/javascript" src="/sites/hubprod/Code4/js/libs/jquery.2.2.0.js"></script>
-										<script type="text/javascript" src="/sites/hubprod/Code4/js/libs/jquery.SPServices.2014.02.min.js"></script>
+										<%-- <script type="text/javascript" src="/sites/hubprod/Code4/js/libs/jquery.2.2.0.js"></script>
+										<script type="text/javascript" src="/sites/hubprod/Code4/js/libs/jquery.SPServices.2014.02.min.js"></script> --%>
 
 
 										<style>
-											body {
+											/* body {
 												overflow: visible;
 											}
 
@@ -153,7 +153,7 @@
 													color: #840852;
 													background-color: #e5c5d3;
 												}
-											}
+											} */
 
 										
 										</style>
@@ -409,7 +409,7 @@
 													<SharePoint:DelegateControl id="ID_SuiteBarDelegate" ControlId="SuiteBarDelegate" runat="server" /></SharePoint:FlightedContent>
 											</SharePoint:AjaxDelta>
 											<div id="ms-hcTest"></div>
-											<div id="overlays-screen-container" class="screen-container hidden">
+											<!-- <div id="overlays-screen-container" class="screen-container hidden">
 												<div id="maintenance-mode" class="overlay-screen hidden">
 													<div class="screen-content">
 														<div class="message">
@@ -484,15 +484,16 @@
 														</div>
 													</div>
 												</div>
-											</div>
-											<div id="loading-screen" class="visible">
+											</div> -->
+											<!-- <div id="loading-screen" class="visible">
 												<div id="internet-explorer-upgrade" class="banner banner--critical"    style="display: none;">
 													<p class="banner__text">Internet Explorer was replaced in 2015. Please upgrade from Internet Explorer to Edge, or switch to Chrome or Firefox. If you need assistance doing so, please contact IIT System Support Services at x0130.
 												</div>
 												<p id="loading-text">Loading...</p>
-												<div id="loading-logo"></div>
+												<div id="loading-logo"></div> -->
 											</div>
-											<div id="hub-central-mount-point" class="hidden"></div>
+											<!-- <div id="hub-central-mount-point" class="hidden"></div> -->
+											<iframe src="https://neso.mos.org:3101/test.html"></iframe>
 											<div id="s4-ribbonrow">
 												<div id="globalNavBox" class="noindex">
 													<div id="ribbonBox">
@@ -769,7 +770,7 @@
 											ga('send', 'pageview');
 
 											// TO DO - remove
-											$.holdReady(true);
+											/* $.holdReady(true);
 
 											// load the loader, which will un-hold the ready event when all files have loaded
 											var s = document.createElement('script');
@@ -777,8 +778,8 @@
 											s.src = "/sites/hubprod/Code5/mos.1.0.5.Loader.js?ts=" + Date.now();
 											// s.src = "/sites/hubdev/DevCode5/mos.1.0.5.Loader.js?ts=" + Date.now();
 											// s.src = "/sites/hubdev/StageCode5/mos.1.0.5.Loader.js?ts=" + Date.now();
-											document.getElementsByTagName('body')[0].appendChild(s);
-											console.log('using master m1');
+											document.getElementsByTagName('body')[0].appendChild(s); */
+											console.log('using master m222');
 										</script>
 									</body>
 								</SharePoint:SPHtmlTag>
