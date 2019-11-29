@@ -5,18 +5,23 @@ import styled from 'styled-components';
 import StylePatterns from '../../services/StylePatterns';
 
 
-const HeaderLarge = styled.div`
-	position: fixed;
-	left: 0;
-	width: 20rem;
-	height: 100%;
+const Header = styled.header`
+	${props => props.screenType !== 'small' && `
+		height: 100%;
+		width: 6.8rem;
+		position: fixed;
+		z-index: 1;
+		top: 0;
+		left: 0;
+		overflow-x: hidden;
+	`}
+	${props => props.screenType === 'small' && `
+		grid-area: bottom;
+	`}
 	z-index: 999;
-	overflow-y: auto;
-	background-color: #000;
+	background-color: #003;
+
 `;
-/* const BrandContainerLarge = styled.div`
-	padding: 4rem 5rem 1rem 2rem;
-`; */
 
 const NavLarge = styled.nav`
 	padding: 2rem;
@@ -35,31 +40,52 @@ const NavLargeListItem = styled.li`
 	font-size: ${StylePatterns.FontSize('m', 'medium')};
 	font-weight: ${StylePatterns.FontWeight('light')};
 `;
-const NavLargeLink = styled(Link)`
-	display: block;
-	padding: 1.9rem 0 1.9rem;
-	border-bottom: 0;
-
-	&:hover {
-		border-bottom: 0;
-	}
-
-`;
 
 const AppHeaderNav = props => (
-	<header>
-		{
-			props.screenType === 'large' &&
+	<Header
+		screenType={props.screenType}
+	>
+		<NavLarge>
+			<NavLargeList>
+				<NavLargeListItem>
+					<Link href="/">
+						<a>The Hub</a>
+					</Link>
+				</NavLargeListItem>
+				<NavLargeListItem>
+					<Link href="/news">
+						<a>News</a>
+					</Link>
+				</NavLargeListItem>
+				<NavLargeListItem>
+					<Link href="/classfieds">
+						<a>Classfieds</a>
+					</Link>
+				</NavLargeListItem>
+				<NavLargeListItem>
+					<Link href="/org">
+						<a>Organization, Teams, & Staff</a>
+					</Link>
+				</NavLargeListItem>
+				<NavLargeListItem>
+					<Link href="/around">
+						<a>Around The Hub</a>
+					</Link>
+				</NavLargeListItem>
+			</NavLargeList>
+		</NavLarge>
+	</Header>
+);
 
-			<HeaderLarge>
-				{/* <BrandContainerLarge>
+{/* <BrandContainerLarge>
 					<BrandLink
 						to="/"
 					>
 						<Brand />
 					</BrandLink>
 				</BrandContainerLarge> */}
-				{/* <HeaderLargeTagline>
+
+{/* <HeaderLargeTagline>
 					<p>Greater Boston</p>
 					<p>
 						<a href={ProfileBrief}>
@@ -73,22 +99,6 @@ const AppHeaderNav = props => (
 
 					</p>
 				</HeaderLargeTagline> */}
-				<NavLarge>
-					<NavLargeList>
-						<NavLargeListItem><NavLargeLink href="/"><a>The Hub</a></NavLargeLink></NavLargeListItem>
-						<NavLargeListItem><NavLargeLink href="/news"><a>News</a></NavLargeLink></NavLargeListItem>
-						<NavLargeListItem><NavLargeLink href="/classfieds"><a>Classfieds</a></NavLargeLink></NavLargeListItem>
-						<NavLargeListItem><NavLargeLink href="/org"><a>Organization, Teams, & Staff</a></NavLargeLink></NavLargeListItem>
-						<NavLargeListItem><NavLargeLink href="/around"><a>Around The Hub</a></NavLargeLink></NavLargeListItem>
-					</NavLargeList>
-					<NavLargeList>
-						<NavLargeListItem><NavLargeLink href="/servicenow"><a>Help</a></NavLargeLink></NavLargeListItem>
-						<NavLargeListItem><NavLargeLink href="/settings"><a>Settings</a></NavLargeLink></NavLargeListItem>
-					</NavLargeList>
-				</NavLarge>
-			</HeaderLarge>
-		}
-	</header>
-);
+
 
 export default AppHeaderNav;

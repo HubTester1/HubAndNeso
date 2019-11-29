@@ -4,10 +4,6 @@ import styled from 'styled-components';
 import StylePatterns from '../../services/StylePatterns';
 
 const MainContainer = styled.main`
-	margin-left: ${props => (props.screenType === 'large' ?
-		'20rem' : '0')};
-	padding-top: ${props => (props.screenType === 'large' ?
-		'5rem' : '0')};
 `;
 
 const AppMainContent = ({ children, title, screenType }) => (

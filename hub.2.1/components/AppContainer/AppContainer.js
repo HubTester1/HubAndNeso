@@ -2,9 +2,9 @@
 
 import MediaQuery from 'react-responsive';
 import { createGlobalStyle } from 'styled-components';
+import styled from 'styled-components';
 import ScreenSizes from '../../services/ScreenSizes';
 import StylePatterns from '../../services/StylePatterns';
-
 import AppHeaderSearch from '../AppHeaderSearch/AppHeaderSearch';
 import AppHeaderNav from '../AppHeaderNav/AppHeaderNav';
 import AppMainContent from '../AppMainContent/AppMainContent';
@@ -201,47 +201,88 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 
-const AppContainer = ({ children, title, props }) => (
-	<div id="app-container">
+
+
+/* 		grid-template-rows: 10rem auto;
+		grid-template-columns: 6.8rem auto;
+		grid-template-areas:	"topLeft topRight"
+								"bottomLeft bottomRight";
+ */
+
+
+
+const AppContainer = styled.div`
+	${props => props.screenType === 'small' && `
+		display: grid;
+		grid-template-columns: 1fr;
+		grid-template-rows: 10rem auto 10rem;
+		grid-template-areas:	"top"
+								"mid"
+								"bottom";
+	`}
+`;
+
+
+
+
+const AppHeaderSearchAndMainContainerLargeMediumScreen = styled.div`
+	margin-left: 6.8rem;
+	overflow-y: hidden;
+`;
+
+const App = ({ children, title, props }) => (
+	<AppContainer id="app-container">
 		<MediaQuery maxWidth={ScreenSizes.ReturnSmallMax()}>
 			<GlobalStyle screenType="small" />
-			<AppHeaderSearch
-				screenType="small"
-				// handleHamburgerOrNavItemClick={this.handleHamburgerOrNavItemClick}
-			/>
 			<AppHeaderNav
 				screenType="small"
 			/>
+			<AppHeaderSearch
+				screenType="small"
+			/>
+			<AppMainContent
+				screenType="small"
+				title={title}
+			>
+				{children}
+			</AppMainContent>
 		</MediaQuery>
 		<MediaQuery
 			minWidth={ScreenSizes.ReturnMediumMin()}
 			maxWidth={ScreenSizes.ReturnMediumMax()}
 		>
-			<GlobalStyle screenType="small" />
-			<AppHeaderSearch
-				screenType="medium"
-			/>
+			<GlobalStyle screenType="medium" />
 			<AppHeaderNav
 				screenType="medium"
 			/>
-		</MediaQuery>
-		<MediaQuery minWidth={ScreenSizes.ReturnLargeMin()}>
-			<GlobalStyle screenType="small" />
 			<AppHeaderSearch
-				screenType="large"
-			/>
-			<AppHeaderNav
-				screenType="large"
+				screenType="medium"
 			/>
 			<AppMainContent
-				screenType="large"
+				screenType="medium"
 				title={title}
 			>
 				{children}
 			</AppMainContent>
-
 		</MediaQuery>
-	</div>
+		<MediaQuery minWidth={ScreenSizes.ReturnLargeMin()}>
+			<GlobalStyle screenType="large" />
+			<AppHeaderNav
+				screenType="large"
+			/>
+			<AppHeaderSearchAndMainContainerLargeMediumScreen>
+				<AppHeaderSearch
+					screenType="large"
+				/>
+				<AppMainContent
+					screenType="large"
+					title={title}
+				>
+					{children}
+				</AppMainContent>
+			</AppHeaderSearchAndMainContainerLargeMediumScreen>
+		</MediaQuery>
+	</AppContainer>
 );
 
-export default AppContainer;
+export default App;

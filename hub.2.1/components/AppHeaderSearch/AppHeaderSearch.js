@@ -1,29 +1,60 @@
 /* eslint-disable  react/react-in-jsx-scope */
 
 import styled from 'styled-components';
+// import Sticky from 'react-stickynode';
+// import { StickyContainer, Sticky } from 'react-sticky';
+import Sticky from 'react-sticky-el';
 import StylePatterns from '../../services/StylePatterns';
 
 
-const HeaderLarge = styled.div`
-	position: fixed;
-	left: 20rem;
-	height: 5rem;
-	width: 100%;
-	z-index: 999;
-	overflow-y: auto;
-	background-color: #222;
-`;
+export default class AppHeaderSearch extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			stuck: false,
+		};
+		this.handleFixedToggle = this.handleFixedToggle.bind(this);
+	}
+	handleFixedToggle(free) {
+		this.setState(prevState => ({
+			stuck: !free,
+		}));
+	}
+	render() {
 
-const AppHeaderSearch = props => (
-	<header>
-		{
-			props.screenType === 'large' &&
+		const HeaderLarge = styled.header`
+			grid-area: topRight;	
+			height: 5rem;
+			z-index: 999;
+			background-color: ${props => props.stuck ?
+				'#322' : '#411' };
+		`;
+		return (
+			<div>
+				{
+					this.props.screenType === 'large' &&
 
-			<HeaderLarge>
-				<input type="text" />
-			</HeaderLarge>
-		}
-	</header>
-);
+					<Sticky onFixedToggle={this.handleFixedToggle}>
+						<HeaderLarge
+							stuck={this.state.stuck}
+						>
+							<input type="text" />
 
-export default AppHeaderSearch;
+							{
+								this.state.stuck &&
+
+								<p>This is stuck.</p>
+							}
+							{
+								!this.state.stuck &&
+
+								<p>This is NOT stuck.</p>
+							}
+						</HeaderLarge>
+					</Sticky>
+
+				}
+			</div>
+		);
+	}
+}
