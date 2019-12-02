@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import styled from 'styled-components';
-import StylePatterns from '../../services/StylePatterns';
+import StylePatterns from '../../../services/StylePatterns';
 
 
 const Header = styled.header`
@@ -17,22 +17,25 @@ const Header = styled.header`
 	`}
 	${props => props.screenType === 'small' && `
 		grid-area: bottom;
+		position: fixed;
+		bottom: 0;
+		width: 100%;
+		left: 0;
 	`}
 	z-index: 999;
 	background-color: #003;
-
 `;
 
-const NavLarge = styled.nav`
+const Nav = styled.nav`
 	padding: 2rem;
 `;
 
-const NavLargeList = styled.ul`
+const NavList = styled.ul`
 	padding: 0;
 	margin: 0;
 	list-style: none;
 `;
-const NavLargeListItem = styled.li`
+const NavListItem = styled.li`
 	display: block;	
 	list-style: none;
 	position: relative;
@@ -45,35 +48,35 @@ const AppHeaderNav = props => (
 	<Header
 		screenType={props.screenType}
 	>
-		<NavLarge>
-			<NavLargeList>
-				<NavLargeListItem>
+		<Nav>
+			<NavList>
+				<NavListItem>
 					<Link href="/">
 						<a>The Hub</a>
 					</Link>
-				</NavLargeListItem>
-				<NavLargeListItem>
+				</NavListItem>
+				<NavListItem>
 					<Link href="/news">
 						<a>News</a>
 					</Link>
-				</NavLargeListItem>
-				<NavLargeListItem>
+				</NavListItem>
+				<NavListItem>
 					<Link href="/classfieds">
 						<a>Classfieds</a>
 					</Link>
-				</NavLargeListItem>
-				<NavLargeListItem>
+				</NavListItem>
+				<NavListItem>
 					<Link href="/org">
 						<a>Organization, Teams, & Staff</a>
 					</Link>
-				</NavLargeListItem>
-				<NavLargeListItem>
+				</NavListItem>
+				<NavListItem>
 					<Link href="/around">
 						<a>Around The Hub</a>
 					</Link>
-				</NavLargeListItem>
-			</NavLargeList>
-		</NavLarge>
+				</NavListItem>
+			</NavList>
+		</Nav>
 	</Header>
 );
 
