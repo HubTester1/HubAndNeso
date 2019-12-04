@@ -67,16 +67,24 @@ export default class User {
 		// return a new promise
 		return new Promise((resolve, reject) => {
 			resolve({
-				"email": "jbaker@mos.org",
-				"displayName": "James Baker",
-				"account": "jbaker",
-				"accountLong": "i:0#.f|membership|jbaker@mos.org",
-				"roles": [
-					"admin",
-					"componentGrpAdmin"
-				],
-				"hubSettings": {
-					"colorMode": "dark"
+				error: false,
+				uData: {
+					"email": "jbaker@mos.org",
+					"displayName": "James Baker",
+					"account": "jbaker",
+					"accountLong": "i:0#.f|membership|jbaker@mos.org",
+					"roles": [
+						"admin",
+						"componentGrpAdmin",
+						"o365GlobalAdmin"
+					],
+					"preferences": {
+						"colorMode": "dark",
+						"pinned": [
+							"Network Access Request",
+							"Equipment Loan Request"
+						]
+					}
 				}
 			});
 			
