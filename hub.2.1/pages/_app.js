@@ -4,7 +4,7 @@
 import { Provider } from "react-redux";
 import App from "next/app";
 import configureStore from '../services/DataStore/store/configureStore';
-import { startSetUserData } from '../services/DataStore/actions/init';
+import { startSetUserData, setIsServerSide } from '../services/DataStore/actions/init';
 
 // ----- SET UP REDUX DATA STORE
 
@@ -12,6 +12,8 @@ import { startSetUserData } from '../services/DataStore/actions/init';
 const store = configureStore();
 // dispatch init action startSetUserData
 store.dispatch(startSetUserData());
+// dispatch init action setIsServerSide
+store.dispatch(setIsServerSide());
 
 // ----- EXTEND NEXT APP W/ REDUX DATA STORE
 

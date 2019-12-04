@@ -1,6 +1,6 @@
 /* eslint-disable  react/react-in-jsx-scope */
 
-import AppContainer from '../components/scaffolding/AppContainer/AppContainer';
+import AppContainer from '../components/Layout/AppContainer/AppContainer';
 
 const Index = () => (
 	<AppContainer

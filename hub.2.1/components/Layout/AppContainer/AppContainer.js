@@ -1,15 +1,12 @@
 
-// import MediaQuery from 'react-responsive';
-import { connect } from 'react-redux';
-import { useMediaQuery } from 'react-responsive'
-import { createGlobalStyle } from 'styled-components';
-import styled from 'styled-components';
-import ScreenSizes from '../../../services/ScreenSizes';
-import StylePatterns from '../../../services/StylePatterns';
-import AppHeaderSearch from '../AppHeaderSearch/AppHeaderSearch';
-import AppHeaderNav from '../AppHeaderNav/AppHeaderNav';
-import AppMainContent from '../AppMainContent/AppMainContent';
+// ----- IMPORTS
 
+import MediaQuery from 'react-responsive';
+import { connect } from 'react-redux';
+import StylePatterns from '../../../services/StylePatterns';
+import { createGlobalStyle } from 'styled-components';
+import ScreenSizes from '../../../services/ScreenSizes';
+import AppGrid from '../AppGrid/AppGrid';
 
 const GlobalStyle = createGlobalStyle`
 	@import url('https://rsms.me/inter/inter.css');
@@ -186,48 +183,53 @@ const GlobalStyle = createGlobalStyle`
 		z-index: ${StylePatterns.ZIndex('smallNav')};
 	}
 `;
-const GridContainer = styled.div`
-	${props => props.screenType === 'small' && `
-		display: grid;
-		grid-template-columns: 1fr;
-		grid-template-rows: 10rem auto 10rem;
-		grid-template-areas:	"top"
-								"mid"
-								"bottom";
-	`}
-`;
-const AppHeaderSearchAndMainContainerLargeMediumScreen = styled.div`
-	margin-left: 6.8rem;
-`;
-const AppContainer = (props) => (
-	<div id="app-container">
-		<GridContainer Container screenType="large" >
-			<GlobalStyle 
-				screenType="large"
-			/>
-			<AppHeaderNav
-				screenType="large"
-			/>
-			<AppHeaderSearch
-				screenType="large"
-			/>
-			<AppMainContent
-				screenType="large"
-				title={props.title}
-			>
-				{props.children}
-			</AppMainContent>
-		</GridContainer>
-	</div>
-);
-
-const ConnectedAppContainer = connect((state) => {
-	return {
-		uData: state.uData
+const AppContainer = (props) => {
+	if (props.initStatesReady.length === props.initStatesToReadyQuantity && !props.stateError) {
+		return (
+			<div id="app-container">
+				<GlobalStyle
+					screenType="small"
+				/>
+				<MediaQuery maxWidth={ScreenSizes.ReturnSmallMax()}>
+					<AppGrid
+						screenType="small"
+						title={props.title}
+						content={props.children}
+					/>
+				</MediaQuery>
+				<MediaQuery
+					minWidth={ScreenSizes.ReturnMediumMin()}
+					maxWidth={ScreenSizes.ReturnMediumMax()}
+				>
+					<AppGrid screenType="medium" />
+				</MediaQuery>
+				<MediaQuery minWidth={ScreenSizes.ReturnLargeMin()}>
+					<AppGrid
+						screenType="large"
+						title={props.title}
+						content={props.children}
+					/>
+				</MediaQuery>
+			</div>
+		)
 	}
+	if (props.initStatesReady.length !== props.initStatesToReadyQuantity) {
+		return (
+			<div id="app-container">
+				<p>Loading...</p>
+			</div>
+		)
+	}
+	return (
+		<div id="app-container">
+			<p>Error!</p>
+		</div>
+	)
+
+	
+};
+const ConnectedAppContainer = connect((state) => {
+	return state;
 })(AppContainer);
 
-
-
-
-export default AppContainer;
+export default ConnectedAppContainer;

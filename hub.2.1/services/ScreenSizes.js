@@ -1,4 +1,3 @@
-
 module.exports = {
 	ReturnLargeMin: () => 1121,
 	// ReturnLargeMin: () => 1025,

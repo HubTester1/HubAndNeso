@@ -24,3 +24,8 @@ export const startSetUserData = () => {
 			});
 	}
 }
+// call setIsServerSide reducer
+export const setIsServerSide = () => ({
+	type: 'SET_IS_SERVER_SIDE',
+	isServerSide: typeof window !== 'undefined' ? false : true
+});
