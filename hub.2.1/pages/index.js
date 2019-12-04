@@ -8,7 +8,7 @@ const Index = () => (
 	>
 		<div>
 			<p>There&apos;s no place like home.</p>
-			<p>There&apos;s no place like home.</p>
+			<p><a href="https://google.com">There&apos;s no place like home</a>.</p>
 			<p>There&apos;s no place like home.</p>
 			<p>There&apos;s no place like home.</p>
 			<p>There&apos;s no place like home.</p>

@@ -6,7 +6,12 @@ const initReducerDefaultState = {
 	initStatesToReadyQuantity: 2,
 	initStatesReady: [],
 	stateError: false,
-	uData: {},
+	uData: {
+		preferences: {
+			colorMode: 'dark'
+		}
+
+	},
 	isServerSide: false
 };
 // configure reducer with state defaulting to defined default state

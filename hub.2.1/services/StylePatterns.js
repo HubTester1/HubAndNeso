@@ -4,7 +4,7 @@ module.exports = {
 	// FONT
 
 	FontFamily: () =>
-		`font-family: 'Inter', -apple-system, BlinkMacSystemFont,'Roboto', 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, 'Liberation Sans', Arial, 'Lucida Grande', sans-serif;`,
+		`font-family: 'akzidenz-grotesk-pro', -apple-system, BlinkMacSystemFont,'Roboto', 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, 'Liberation Sans', Arial, 'Lucida Grande', sans-serif;`,
 
 
 	// for large screens
@@ -90,8 +90,30 @@ module.exports = {
 	
 	// COLORS
 
-	Color: (token) => {
+	Color: (token, colorMode) => {
 		switch (token) {
+			case 'bodyColor':
+				if (colorMode === 'dark') {
+					return module.exports.Color('white');
+				} else {
+					return module.exports.Color('grey-1');
+				}
+			case 'backgroundColor':
+
+				if (colorMode === 'dark') {
+					return module.exports.Color('grey-1');
+				} else {
+					return module.exports.Color('white');
+				}
+			case 'interactiveDefault':
+				if (colorMode === 'dark') {
+					return module.exports.Color('interactive-on-dark-default');
+				} else {
+					return module.exports.Color('interactive-on-light-default');
+				}
+			
+			
+			
 			case 'yellow-1':
 				return '#ffa200';
 			case 'yellow-2':

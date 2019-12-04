@@ -9,7 +9,7 @@ import ScreenSizes from '../../../services/ScreenSizes';
 import AppGrid from '../AppGrid/AppGrid';
 
 const GlobalStyle = createGlobalStyle`
-	@import url('https://rsms.me/inter/inter.css');
+	@import url('https://use.typekit.net/sul5jci.css');
 	* { box-sizing: border-box; }
 	html {
 		${StylePatterns.FontFamily()}
@@ -18,15 +18,15 @@ const GlobalStyle = createGlobalStyle`
 	}
 	@supports (font-variation-settings: normal) {
 		html {
-			font-family: 'Inter var', 'Inter', -apple-system, BlinkMacSystemFont,'Roboto', 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, 'Liberation Sans', Arial, 'Lucida Grande', sans-serif;
+			font-family: ${StylePatterns.FontFamily()};
 		}
 	}
 	body {
 		font-weight: ${StylePatterns.FontWeight('light')};
 		margin: 0;
-		color: ${StylePatterns.Color('white')};
+		background-color: ${props => (StylePatterns.Color('backgroundColor', props.colorMode))};
+		color: ${props => (StylePatterns.Color('bodyColor', props.colorMode))};
 		text-align: left;
-		background-color: ${StylePatterns.Color('blue-1')};
 	}
 	@media screen and (-webkit-min-device-pixel-ratio:0) {
 		@font-face {
@@ -93,7 +93,7 @@ const GlobalStyle = createGlobalStyle`
 	a,
 	a:visited {
 		text-decoration: none;
-		color: ${StylePatterns.Color('interactive-on-dark-default')};
+		color: ${props => (StylePatterns.Color('interactiveDefault', props.colorMode))};
 		transition: color .25s;
 		border-bottom: .1rem dotted ${StylePatterns.Color('interactive-on-dark-default')};
 
@@ -189,6 +189,8 @@ const AppContainer = (props) => {
 			<div id="app-container">
 				<GlobalStyle
 					screenType="small"
+					colorMode={props.uData.preferences.colorMode}
+
 				/>
 				<MediaQuery maxWidth={ScreenSizes.ReturnSmallMax()}>
 					<AppGrid
