@@ -235,3 +235,8 @@ const ConnectedAppContainer = connect((state) => {
 })(AppContainer);
 
 export default ConnectedAppContainer;
+
+/* 
+document.querySelector('head title').textContent = 'The Hub - Home';
+
+*/
