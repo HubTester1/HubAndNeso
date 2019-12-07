@@ -4,8 +4,9 @@
 const debugMode = true;
 const date = new Date();
 const timestamp = date.getTime();
+const userName = _spPageContextInfo.userLoginName.slice(0, -8);
 
-if (debugMode) { console.log('using app-loader m3'); }
+if (debugMode) { console.log('using app-loader m6'); }
 
 // Note: param map:
 // 		s = screen requested, e.g., messages
@@ -21,7 +22,6 @@ if (window.location.pathname.indexOf('/App.aspx') !== -1) {
 	if (debugMode) { console.log('on APP'); }
 	// extract params from URL into array
 	const paramsReceived = window.location.search.substring(1).split("&");
-	
 	// set up array to hold params to be sent
 	const paramsToSend = [];
 	// set up base of iframe url
@@ -48,47 +48,46 @@ if (window.location.pathname.indexOf('/App.aspx') !== -1) {
 			}
 		});
 	}
-
 	// get current user
-	paramsToSend.push('u=' + _spPageContextInfo.userLoginName.slice(0,-8));
-
+	paramsToSend.push('u=' + userName);
 	// construct iframe URL
 	paramsToSend.forEach((paramValue, paramIndex) => {
 		iframeURL = paramIndex === 0 ? 
 			iframeURL + '?' + paramValue :
 			iframeURL + '&' + paramValue;
 	});
-
-	// append CSS
-	const cssString = `
-		#app-iframe{position:absolute;width:100%;height:100%}
-		#s4-ribbonrow{display:none;}
-		#s4-workspace{display:none;}
-	`;
-
-	var linkElement = document.createElement('link');
-	linkElement.setAttribute('rel', 'stylesheet');
-	linkElement.setAttribute('type', 'text/css');
-	linkElement.setAttribute('href', 'data:text/css;charset=UTF-8,' + encodeURIComponent(cssString));
-	document.getElementsByTagName('head')[0].appendChild(linkElement);
-
-
-	// append iframe	
+	// mount iframe on app mount point
 	var iframeElement = document.createElement('iframe');
 	iframeElement.id = 'app-iframe';
 	iframeElement.src = iframeURL;
 	document.getElementById('app-mount-point').appendChild(iframeElement);
-
-	// hide loading
-	document.getElementById('overlays-screen-container').style.display = 'none';
+	// show app mount point
 	document.getElementById('app-mount-point').className = 'visible';
+	// hide loading screen
+	document.getElementById('overlays-screen-container').style.display = 'none';
 	document.getElementById('loading-screen').className = 'hidden';
-
 // if this is NOT App.aspx
 } else {
+	// hide loading screen
 	document.getElementById('overlays-screen-container').style.display = 'none';
-	document.getElementById('s4-bodyContainer').className = 'visible';
-	document.getElementById('app-mount-point').className = 'visible';
 	document.getElementById('loading-screen').className = 'hidden';
+	// show SP main content
+	document.getElementById('s4-workspace').className = 'visible';
+	document.getElementById('s4-bodyContainer').className = 'visible';
+	// if user is jbaker
+	if (userName && userName === 'jbaker') {
+		// show SP ribbon and make room for it
+		document.getElementById('s4-ribbonrow').className = 'visible';
+		document.getElementById('s4-bodyContainer').style.paddingTop = '1rem';
+	}
+	// for certain other users
+	if (userName && (userName === 'showe' || userName === 'shudson')) {
+		// try to get the ribbon for Accounting What's New list
+			document.querySelector('form[action^="/Lists/Accounting%20Whats%20New%20Hub"] div#s4-ribbonrow');
+		// if that ribbon was found
+		if (ribbonForStanSarah) {
+			// show it
+			ribbonForStanSarah.style.display = 'block';
+		}
+	}
 }
-

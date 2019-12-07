@@ -187,12 +187,12 @@ const AppContainer = (props) => {
 	if (props.initStatesReady.length === props.initStatesToReadyQuantity && !props.stateError) {
 		return (
 			<div id="app-container">
-				<GlobalStyle
-					screenType="small"
-					colorMode={props.uData.preferences.colorMode}
-
-				/>
 				<MediaQuery maxWidth={ScreenSizes.ReturnSmallMax()}>
+					<GlobalStyle
+						screenType="small"
+						colorMode={props.uData.preferences.colorMode}
+
+					/>
 					<AppGrid
 						screenType="small"
 						title={props.title}
@@ -203,9 +203,23 @@ const AppContainer = (props) => {
 					minWidth={ScreenSizes.ReturnMediumMin()}
 					maxWidth={ScreenSizes.ReturnMediumMax()}
 				>
-					<AppGrid screenType="medium" />
+					<GlobalStyle
+						screenType="medium"
+						colorMode={props.uData.preferences.colorMode}
+
+					/>
+					<AppGrid
+						screenType="medium"
+						title={props.title}
+						content={props.children}
+					/>
 				</MediaQuery>
 				<MediaQuery minWidth={ScreenSizes.ReturnLargeMin()}>
+					<GlobalStyle
+						screenType="large"
+						colorMode={props.uData.preferences.colorMode}
+
+					/>
 					<AppGrid
 						screenType="large"
 						title={props.title}
@@ -215,28 +229,9 @@ const AppContainer = (props) => {
 			</div>
 		)
 	}
-	if (props.initStatesReady.length !== props.initStatesToReadyQuantity) {
-		return (
-			<div id="app-container">
-				<p>Loading...</p>
-			</div>
-		)
-	}
-	return (
-		<div id="app-container">
-			<p>Error!</p>
-		</div>
-	)
-
-	
 };
 const ConnectedAppContainer = connect((state) => {
 	return state;
 })(AppContainer);
 
 export default ConnectedAppContainer;
-
-/* 
-document.querySelector('head title').textContent = 'The Hub - Home';
-
-*/

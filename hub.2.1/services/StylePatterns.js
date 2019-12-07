@@ -56,7 +56,7 @@ module.exports = {
 	FontWeight: (token) => {
 		switch (token) {
 			default:
-			case 'this':
+			case 'thin':
 				return '100';
 			case 'extra-light':
 				return '200';
