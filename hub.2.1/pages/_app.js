@@ -1,31 +1,56 @@
 
 // ----- IMPORTS
 
-import { Provider } from "react-redux";
-import App from "next/app";
-import configureStore from '../services/DataStore/store/configureStore';
-import { startSetUserData, setIsServerSide } from '../services/DataStore/actions/init';
+import { Provider } from 'react-redux';
+import App from 'next/app';
+import withRedux from 'next-redux-wrapper';
+import makeStore from '../services/DataStore/MakeStore/makeStore';
 
-// ----- SET UP REDUX DATA STORE
-
-// get a store
-const store = configureStore();
-// dispatch init action startSetUserData
-store.dispatch(startSetUserData());
-// dispatch init action setIsServerSide
-store.dispatch(setIsServerSide());
-
-// ----- EXTEND NEXT APP W/ REDUX DATA STORE
+// --- DEFINE APP COMPONENT
 
 class AppWithRedux extends App {
+	// get Index's props and, optionally, dispatch here
+	static async getInitialProps({ Component, ctx }) {
+		// get props passed from Index (Component)
+		await Component.getInitialProps(ctx)
+			.then((indexProps) => {
+				ctx.store.dispatch({
+					type: 'SET_SUBSCREEN',
+					partialScreen: indexProps.p
+				});
+				ctx.store.dispatch({
+					type: 'SET_SCREEN',
+					screen: indexProps.s
+				});
+				if (!indexProps.stateError) {					
+					ctx.store.dispatch({
+						type: 'SET_USER_DATA',
+						uData: indexProps.uData
+					});
+				} else {
+					ctx.store.dispatch({
+						type: 'SET_STATE_ERROR',
+						error: indexProps.stateError
+					});
+				}
+				return { indexProps };
+			})
+			.catch((error) => {
+				ctx.store.dispatch({
+					type: 'SET_STATE_ERROR',
+					error: error
+				});
+			});
+	}
+	// return Index with access to store state (and its own props)
 	render() {
-		const { Component, pageProps } = this.props
+		const { Component, indexProps, store } = this.props;
 		return (
 			<Provider store={store}>
-				<Component {...pageProps} />
+				<Component {...indexProps} />
 			</Provider>
 		);
 	}
-};
+}
 
-export default AppWithRedux;
+export default withRedux(makeStore)(AppWithRedux);

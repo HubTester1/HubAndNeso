@@ -4,11 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-	"build": "next build",
-	"devLocal": "next",
-	"startLocal": "next start",
-	"devRemote": "node-dev server.js",
-	"startRemote": "node server.js"
+    "build": "next build",
+    "devLocal": "next",
+    "startLocal": "next start",
+    "devRemote": "node-dev server.js",
+    "startRemote": "node server.js"
   },
   "author": "",
   "license": "ISC",
@@ -24,6 +24,7 @@
     "import": "0.0.6",
     "moment": "^2.24.0",
     "next": "^9.1.4",
+    "next-redux-wrapper": "^4.0.1",
     "office-ui-fabric-react": "^7.65.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",

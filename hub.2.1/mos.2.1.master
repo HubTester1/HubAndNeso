@@ -801,6 +801,9 @@
 
 
 										<script>
+											// marker
+											console.log('using master m1');
+											
 											// analytics
 											(function (i, s, o, g, r, a, m) {
 												i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
@@ -811,29 +814,14 @@
 											ga('create', 'UA-51830655-1', 'sharepoint.com');
 											ga('send', 'pageview');
 
-
-
-											console.log('using master m4');
-
+											// load loader
 											var s = document.createElement('script');
 											s.type = "text/javascript";
 											s.src = "https://neso.mos.org:3001/app-loader.js?ts=" + Date.now();
-											// s.src = "/sites/hubdev/DevCode5/mos.1.0.5.Loader.js?ts=" + Date.now();
-											// s.src = "/sites/hubdev/StageCode5/mos.1.0.5.Loader.js?ts=" + Date.now();
 											document.getElementsByTagName('body')[0].appendChild(s);
-
-
-
-											// TO DO - remove
-											/* $.holdReady(true);
-
-											// load the loader, which will un-hold the ready event when all files have loaded
-											var s = document.createElement('script');
-											s.type = "text/javascript";
-											s.src = "/sites/hubprod/Code5/mos.1.0.5.Loader.js?ts=" + Date.now();
-											// s.src = "/sites/hubdev/DevCode5/mos.1.0.5.Loader.js?ts=" + Date.now();
-											// s.src = "/sites/hubdev/StageCode5/mos.1.0.5.Loader.js?ts=" + Date.now();
-											document.getElementsByTagName('body')[0].appendChild(s); */
+											
+											// genericize head title
+											document.querySelector('head title').textContent = 'The Hub';
 										</script>
 									</body>
 								</SharePoint:SPHtmlTag>

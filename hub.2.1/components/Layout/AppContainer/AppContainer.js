@@ -184,13 +184,13 @@ const GlobalStyle = createGlobalStyle`
 	}
 `;
 const AppContainer = (props) => {
-	if (props.initStatesReady.length === props.initStatesToReadyQuantity && !props.stateError) {
+	// if (props.initStatesReady.length === props.initStatesToReadyQuantity && !props.stateError) {
 		return (
 			<div id="app-container">
 				<MediaQuery maxWidth={ScreenSizes.ReturnSmallMax()}>
 					<GlobalStyle
 						screenType="small"
-						colorMode={props.uData.preferences.colorMode}
+						// colorMode={props.uData.preferences.colorMode}
 
 					/>
 					<AppGrid
@@ -205,7 +205,7 @@ const AppContainer = (props) => {
 				>
 					<GlobalStyle
 						screenType="medium"
-						colorMode={props.uData.preferences.colorMode}
+						// colorMode={props.uData.preferences.colorMode}
 
 					/>
 					<AppGrid
@@ -217,7 +217,7 @@ const AppContainer = (props) => {
 				<MediaQuery minWidth={ScreenSizes.ReturnLargeMin()}>
 					<GlobalStyle
 						screenType="large"
-						colorMode={props.uData.preferences.colorMode}
+						// colorMode={props.uData.preferences.colorMode}
 
 					/>
 					<AppGrid
@@ -227,8 +227,8 @@ const AppContainer = (props) => {
 					/>
 				</MediaQuery>
 			</div>
-		)
-	}
+		);
+	// }
 };
 const ConnectedAppContainer = connect((state) => {
 	return state;
