@@ -1,27 +1,21 @@
 
 const initReducerDefaultState = {
 	stateError: false,
-	screen: '',
-	partialScreen: '',
 	uData: {},
+	sData: {},
 	isServerSide: false,
 };
 const initReducer = (state = initReducerDefaultState, action) => {
 	switch (action.type) {
-	case 'SET_SCREEN':
-		return {
-			...state,
-			screen: action.screen,
-		};
-	case 'SET_SUBSCREEN':
-		return {
-			...state,
-			partialScreen: action.partialScreen,
-		};
 	case 'SET_USER_DATA':
 		return {
 			...state,
 			uData: action.uData,
+		};
+	case 'SET_SCREEN_DATA':
+		return {
+			...state,
+			sData: action.sData,
 		};
 	case 'SET_STATE_ERROR':
 		return {

@@ -63,29 +63,33 @@ export default class User {
 	} */
 
 
-	static ReturnUData() {
+	static ReturnUData(u, o) {
 		// return a new promise
 		return new Promise((resolve, reject) => {
 			resolve({
 				error: false,
 				uData: {
-					"email": "jbaker@mos.org",
-					"displayName": "James Baker",
-					"account": "jbaker",
-					"accountLong": "i:0#.f|membership|jbaker@mos.org",
-					"roles": [
-						"admin",
-						"componentGrpAdmin",
-						"o365GlobalAdmin"
-					],
-					"preferences": {
-						"colorMode": "dark",
-						"pinned": [
-							"Network Access Request",
-							"Equipment Loan Request"
-						]
-					}
-				}
+					u: 'jbaker',
+					o: 'sp1',
+					user: {
+						email: 'jbaker@mos.org',
+						displayName: 'James Baker',
+						account: 'jbaker',
+						accountLong: 'i:0#.f|membership|jbaker@mos.org',
+						roles: [
+							'admin',
+							'componentGrpAdmin',
+							'o365GlobalAdmin',
+						],
+						preferences: {
+							colorMode: 'dark',
+							pinned: [
+								'Network Access Request',
+								'Equipment Loan Request',
+							],
+						},
+					},
+				},
 			});
 			
 			/* // collect data async from multiple sources

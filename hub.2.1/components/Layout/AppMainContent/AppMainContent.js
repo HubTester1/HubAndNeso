@@ -1,7 +1,9 @@
 
-// Primary purpose: main content
+// Primary purpose: show requested screen
 
 import styled from 'styled-components';
+import { connect } from 'react-redux';
+
 
 const MainContainer = styled.main`
 	${props => props.screenType === 'small' && `
@@ -9,13 +11,96 @@ const MainContainer = styled.main`
 	`}
 `;
 
-const AppMainContent = ({ children, title, screenType }) => (
+const AppMainContent = ({
+	screenType, screen, partialScreen, uData, isServerSide, 
+}) => (
 	<MainContainer
 		screenType={screenType}
 	>
-		<h1>{title}</h1>
-		{children}
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
+		<p>Why, hello there, beautiful.</p>
 	</MainContainer>
 );
 
-export default AppMainContent;
+export default connect(state => state)(AppMainContent);

@@ -4,7 +4,7 @@
 import { Provider } from 'react-redux';
 import App from 'next/app';
 import withRedux from 'next-redux-wrapper';
-import makeStore from '../services/DataStore/MakeStore/makeStore';
+import makeStore from '../services/State/MakeStore/makeStore';
 
 class AppWithRedux extends App {
 	// get Index's props and, optionally, dispatch here
@@ -12,15 +12,11 @@ class AppWithRedux extends App {
 		// get props passed from Index (Component)
 		await Component.getInitialProps(ctx)
 			.then((indexProps) => {
-				ctx.store.dispatch({
-					type: 'SET_SUBSCREEN',
-					partialScreen: indexProps.p,
-				});
-				ctx.store.dispatch({
-					type: 'SET_SCREEN',
-					screen: indexProps.s,
-				});
 				if (!indexProps.stateError) {					
+					ctx.store.dispatch({
+						type: 'SET_SCREEN_DATA',
+						sData: indexProps.sData,
+					});
 					ctx.store.dispatch({
 						type: 'SET_USER_DATA',
 						uData: indexProps.uData,

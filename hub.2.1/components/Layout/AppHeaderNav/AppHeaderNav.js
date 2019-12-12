@@ -3,7 +3,7 @@
 
 import Link from 'next/link';
 import styled from 'styled-components';
-import StylePatterns from '../../../services/StylePatterns';
+import Style from '../../../services/Style';
 
 
 const Header = styled.header`
@@ -41,8 +41,8 @@ const NavListItem = styled.li`
 	list-style: none;
 	position: relative;
 	margin: 0;
-	font-size: ${StylePatterns.FontSize('m', 'medium')};
-	font-weight: ${StylePatterns.FontWeight('light')};
+	font-size: ${Style.FontSize('m', 'medium')};
+	font-weight: ${Style.FontWeight('light')};
 `;
 
 const AppHeaderNav = props => (

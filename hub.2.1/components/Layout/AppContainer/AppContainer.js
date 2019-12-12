@@ -4,28 +4,28 @@
 import MediaQuery from 'react-responsive';
 import { connect } from 'react-redux';
 import { createGlobalStyle } from 'styled-components';
-import StylePatterns from '../../../services/StylePatterns';
-import ScreenSizes from '../../../services/ScreenSizes';
+import Style from '../../../services/Style';
+import Screen from '../../../services/Screen';
 import AppGrid from '../AppGrid/AppGrid';
 
 const GlobalStyle = createGlobalStyle`
 	@import url('https://use.typekit.net/sul5jci.css');
 	* { box-sizing: border-box; }
 	html {
-		${StylePatterns.FontFamily()}
+		${Style.FontFamily()}
 		font-size: 10px;
 		text-align: center;
 	}
 	@supports (font-variation-settings: normal) {
 		html {
-			font-family: ${StylePatterns.FontFamily()};
+			font-family: ${Style.FontFamily()};
 		}
 	}
 	body {
-		font-weight: ${StylePatterns.FontWeight('light')};
+		font-weight: ${Style.FontWeight('light')};
 		margin: 0;
-		background-color: ${props => (StylePatterns.Color('backgroundColor', props.colorMode))};
-		color: ${props => (StylePatterns.Color('bodyColor', props.colorMode))};
+		background-color: ${props => (Style.Color('backgroundColor', props.colorMode))};
+		color: ${props => (Style.Color('bodyColor', props.colorMode))};
 		text-align: left;
 	}
 	@media screen and (-webkit-min-device-pixel-ratio:0) {
@@ -43,27 +43,27 @@ const GlobalStyle = createGlobalStyle`
 		100%	{opacity: 1;}
 	}
 	h1 {
-		font-weight: ${StylePatterns.FontWeight('semi-bold')};
+		font-weight: ${Style.FontWeight('semi-bold')};
 		margin: 1rem 0 .25rem;
 	}
 	h2 {
-		font-weight: ${StylePatterns.FontWeight('semi-bold')};
+		font-weight: ${Style.FontWeight('semi-bold')};
 		margin: 1rem 0 .25rem;
 	}
 	h3 {
-		font-weight: ${StylePatterns.FontWeight('semi-bold')};
+		font-weight: ${Style.FontWeight('semi-bold')};
 		margin: 1rem 0 .25rem;
 	}
 	h4 {
-		font-weight: ${StylePatterns.FontWeight('medium')};
+		font-weight: ${Style.FontWeight('medium')};
 		margin: 1rem 0 .25rem;
 	}
 	h5 {
-		font-weight: ${StylePatterns.FontWeight('medium')};
+		font-weight: ${Style.FontWeight('medium')};
 		margin: .5rem 0 .25rem;
 	}
 	h6 {
-		font-weight: ${StylePatterns.FontWeight('regular')};
+		font-weight: ${Style.FontWeight('regular')};
 		font-style:  italic;
 		margin: .5rem 0 .25rem;
 	}
@@ -93,128 +93,123 @@ const GlobalStyle = createGlobalStyle`
 	a,
 	a:visited {
 		text-decoration: none;
-		color: ${props => (StylePatterns.Color('interactiveDefault', props.colorMode))};
+		color: ${props => (Style.Color('interactiveDefault', props.colorMode))};
 		transition: color .25s;
-		border-bottom: .1rem dotted ${StylePatterns.Color('interactive-on-dark-default')};
+		border-bottom: .1rem dotted ${Style.Color('interactive-on-dark-default')};
 
 		&:hover,
 		&:active {
-			color: ${StylePatterns.Color('interactive-on-dark-active')};
-			border-bottom: .1rem dotted ${StylePatterns.Color('interactive-on-dark-active')};
+			color: ${Style.Color('interactive-on-dark-active')};
+			border-bottom: .1rem dotted ${Style.Color('interactive-on-dark-active')};
 		}
 	}
 	em {
-		color: ${StylePatterns.Color('blue-12')};
+		color: ${Style.Color('blue-12')};
 		font-style: normal;
 	}
 	b {
-		font-weight: ${StylePatterns.FontWeight('bold')};
+		font-weight: ${Style.FontWeight('bold')};
 	}
 	${({ screenType }) => screenType === 'small' && `
 		body {
-			font-size: ${StylePatterns.FontSize('m', 'small')};
+			font-size: ${Style.FontSize('m', 'small')};
 		}
 		h1 {
-			font-size: ${StylePatterns.FontSize('xxxl', 'small')};
+			font-size: ${Style.FontSize('xxxl', 'small')};
 		}
 		h2 {
-			font-size: ${StylePatterns.FontSize('xxl', 'small')};
+			font-size: ${Style.FontSize('xxl', 'small')};
 		}
 		h3 {
-			font-size: ${StylePatterns.FontSize('xl', 'small')};
+			font-size: ${Style.FontSize('xl', 'small')};
 		}
 		h4 {
-			font-size: ${StylePatterns.FontSize('l', 'small')};
+			font-size: ${Style.FontSize('l', 'small')};
 		}
 		h5 {
-			font-size: ${StylePatterns.FontSize('m', 'small')};
+			font-size: ${Style.FontSize('m', 'small')};
 		}
 		h6 {
-			font-size: ${StylePatterns.FontSize('m', 'small')};
+			font-size: ${Style.FontSize('m', 'small')};
 		}
 	`}
 	${({ screenType }) => screenType === 'medium' && `
 		body {
-			font-size: ${StylePatterns.FontSize('m', 'medium')};
+			font-size: ${Style.FontSize('m', 'medium')};
 		}
 		h1 {
-			font-size: ${StylePatterns.FontSize('xxxl', 'medium')};
+			font-size: ${Style.FontSize('xxxl', 'medium')};
 		}
 		h2 {
-			font-size: ${StylePatterns.FontSize('xxl', 'medium')};
+			font-size: ${Style.FontSize('xxl', 'medium')};
 		}
 		h3 {
-			font-size: ${StylePatterns.FontSize('xl', 'medium')};
+			font-size: ${Style.FontSize('xl', 'medium')};
 		}
 		h4 {
-			font-size: ${StylePatterns.FontSize('l', 'medium')};
+			font-size: ${Style.FontSize('l', 'medium')};
 		}
 		h5 {
-			font-size: ${StylePatterns.FontSize('m', 'medium')};
+			font-size: ${Style.FontSize('m', 'medium')};
 		}
 		h6 {
-			font-size: ${StylePatterns.FontSize('m', 'medium')};
+			font-size: ${Style.FontSize('m', 'medium')};
 		}
 	`}
 	${({ screenType }) => screenType === 'large' && `
 		body {
-			font-size: ${StylePatterns.FontSize('m', 'large')};
+			font-size: ${Style.FontSize('m', 'large')};
 		}
 		h1 {
-			font-size: ${StylePatterns.FontSize('xxxl', 'large')};
+			font-size: ${Style.FontSize('xxxl', 'large')};
 		}
 		h2 {
-			font-size: ${StylePatterns.FontSize('xxl', 'large')};
+			font-size: ${Style.FontSize('xxl', 'large')};
 		}
 		h3 {
-			font-size: ${StylePatterns.FontSize('xl', 'large')};
+			font-size: ${Style.FontSize('xl', 'large')};
 		}
 		h4 {
-			font-size: ${StylePatterns.FontSize('l', 'large')};
+			font-size: ${Style.FontSize('l', 'large')};
 		}
 		h5 {
-			font-size: ${StylePatterns.FontSize('m', 'large')};
+			font-size: ${Style.FontSize('m', 'large')};
 		}
 		h6 {
-			font-size: ${StylePatterns.FontSize('m', 'large')};
+			font-size: ${Style.FontSize('m', 'large')};
 		}
 	`}
 	div.sticky-outer-wrapper.active div.sticky-inner-wrapper {
-		z-index: ${StylePatterns.ZIndex('smallNav')};
+		z-index: ${Style.ZIndex('smallNav')};
 	}
 `;
 const AppContainer = props => (
 	<div id="app-container">
-		<MediaQuery maxWidth={ScreenSizes.ReturnSmallMax()}>
+		<MediaQuery maxWidth={Screen.ReturnSmallMax()}>
 			<GlobalStyle
 				screenType="small"
-				colorMode={props.uData.preferences.colorMode}
-
+				colorMode={props.uData.user.preferences.colorMode}
 			/>
 			<AppGrid screenType="small" />
 		</MediaQuery>
 		<MediaQuery
-			minWidth={ScreenSizes.ReturnMediumMin()}
-			maxWidth={ScreenSizes.ReturnMediumMax()}
+			minWidth={Screen.ReturnMediumMin()}
+			maxWidth={Screen.ReturnMediumMax()}
 		>
 			<GlobalStyle
 				screenType="medium"
-				colorMode={props.uData.preferences.colorMode}
-
+				colorMode={props.uData.user.preferences.colorMode}
 			/>
 			<AppGrid screenType="medium" />
 		</MediaQuery>
-		<MediaQuery minWidth={ScreenSizes.ReturnLargeMin()}>
+		<MediaQuery minWidth={Screen.ReturnLargeMin()}>
 			<GlobalStyle
 				screenType="large"
-				colorMode={props.uData.preferences.colorMode}
-
+				colorMode={props.uData.user.preferences.colorMode}
 			/>
 			<AppGrid screenType="large" />
 		</MediaQuery>
 	</div>
 );
 
-const ConnectedAppContainer = connect(state => state)(AppContainer);
-
-export default ConnectedAppContainer;
+export default connect(state => state)(AppContainer);

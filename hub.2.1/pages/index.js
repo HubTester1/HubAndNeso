@@ -6,6 +6,7 @@ import { Component } from 'react';
 import { connect } from 'react-redux';
 import AppContainer from '../components/Layout/AppContainer/AppContainer';
 import User from '../services/User';
+import Screen from '../services/Screen';
 
 class Index extends Component {
 	// add props to component and dispatch data to store; called on both 
@@ -18,14 +19,15 @@ class Index extends Component {
 			s, o, u, p, 
 		} = query;
 		try {
-			const uDataResponse = await User.ReturnUData(u);
+			const uDataResponse = await User.ReturnUData(u, o);
 			const uData = await uDataResponse.uData;
+			const sData = Screen.ReturnSData(s, p);
 			return {
-				s, o, u, p, uData, 
+				uData, sData,
 			};
 		} catch (error) {
 			return {
-				s, o, u, p, stateError: error, 
+				stateError: error, 
 			};
 		}
 	}

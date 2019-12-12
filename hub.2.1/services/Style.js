@@ -4,7 +4,7 @@ module.exports = {
 	// FONT
 
 	FontFamily: () =>
-		`font-family: 'akzidenz-grotesk-pro', -apple-system, BlinkMacSystemFont,'Roboto', 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, 'Liberation Sans', Arial, 'Lucida Grande', sans-serif;`,
+		'font-family: \'akzidenz-grotesk-pro\', -apple-system, BlinkMacSystemFont,\'Roboto\', \'HelveticaNeue-Light\', \'Helvetica Neue Light\', \'Helvetica Neue\', Helvetica, \'Liberation Sans\', Arial, \'Lucida Grande\', sans-serif;',
 
 
 	// for large screens
@@ -13,77 +13,78 @@ module.exports = {
 	FontSize: (token, screenType) => {
 		if (screenType !== 'small') {
 			switch (token) {
-				case 'xxxl':
-					return `${1.8 * 3.998}rem`;
-				case 'xxl':
-					return `${1.8 * 2.827}rem`;
-				case 'xl':
-					return `${1.8 * 1.999}rem`;
-				case 'l':
-					return `${1.8 * 1.414}rem`;
-				case 'm':
-				default:
-					return `${1.8 * 1}rem`;
-				case 's':
-					return `${1.8 * 0.833}rem`;
-				case 'xs':
-					return `${1.8 * 0.694}rem`;
-				case 'xxs':
-					return `${1.8 * 0.579}rem`;
+			case 'xxxl':
+				return `${1.8 * 3.998}rem`;
+			case 'xxl':
+				return `${1.8 * 2.827}rem`;
+			case 'xl':
+				return `${1.8 * 1.999}rem`;
+			case 'l':
+				return `${1.8 * 1.414}rem`;
+			case 'm':
+			default:
+				return `${1.8 * 1}rem`;
+			case 's':
+				return `${1.8 * 0.833}rem`;
+			case 'xs':
+				return `${1.8 * 0.694}rem`;
+			case 'xxs':
+				return `${1.8 * 0.579}rem`;
 			}
 		} else {
 			switch (token) {
-				case 'xxxl':
-					return `${1.8 * 2.441}rem`;
-				case 'xxl':
-					return `${1.8 * 1.728}rem`;
-				case 'xl':
-					return `${1.8 * 1.44}rem`;
-				case 'l':
-					return `${1.8 * 1.2}rem`;
-				case 'm':
-				default:
-					return `${1.8 * 1}rem`;
-				case 's':
-					return `${1.8 * 0.833}rem`;
-				case 'xs':
-					return `${1.8 * 0.694}rem`;
-				case 'xxs':
-					return `${1.8 * 0.579}rem`;			}
+			case 'xxxl':
+				return `${1.8 * 2.441}rem`;
+			case 'xxl':
+				return `${1.8 * 1.728}rem`;
+			case 'xl':
+				return `${1.8 * 1.44}rem`;
+			case 'l':
+				return `${1.8 * 1.2}rem`;
+			case 'm':
+			default:
+				return `${1.8 * 1}rem`;
+			case 's':
+				return `${1.8 * 0.833}rem`;
+			case 'xs':
+				return `${1.8 * 0.694}rem`;
+			case 'xxs':
+				return `${1.8 * 0.579}rem`;			
+}
 		}
 	},
 
 	FontWeight: (token) => {
 		switch (token) {
-			default:
-			case 'thin':
-				return '100';
-			case 'extra-light':
-				return '200';
-			case 'light':
-				return '300';
-			case 'regular':
-				return '400';
-			case 'medium':
-				return '500';
-			case 'semi-bold':
-				return '600';
-			case 'bold':
-				return '700';
-			case 'extra-bold':
-				return '800';
-			case 'black':
-				return '900';
+		default:
+		case 'thin':
+			return '100';
+		case 'extra-light':
+			return '200';
+		case 'light':
+			return '300';
+		case 'regular':
+			return '400';
+		case 'medium':
+			return '500';
+		case 'semi-bold':
+			return '600';
+		case 'bold':
+			return '700';
+		case 'extra-bold':
+			return '800';
+		case 'black':
+			return '900';
 		}
 	},
 
 	FontStyle: (token) => {
 		switch (token) {
-			default:
-			case 'normal':
-				return 'normal';
-			case 'italic':
-				return 'italic';
+		default:
+		case 'normal':
+			return 'normal';
+		case 'italic':
+			return 'italic';
 		}
 	},
 
@@ -95,9 +96,9 @@ module.exports = {
 			case 'bodyColor':
 				if (colorMode === 'dark') {
 					return module.exports.Color('white');
-				} else {
+				} 
 					return module.exports.Color('grey-1');
-				}
+				
 			case 'backgroundColor':
 
 				if (colorMode === 'dark') {
@@ -375,9 +376,9 @@ module.exports = {
 
 	ZIndex: (token) => {
 		switch (token) {
-			case 'smallNav':
-				return 1000;
-			default: 'auto'
+		case 'smallNav':
+			return 1000;
+		default: 'auto';
 		}
 	},
 };
