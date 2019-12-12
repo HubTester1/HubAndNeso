@@ -3,8 +3,8 @@
 
 import MediaQuery from 'react-responsive';
 import { connect } from 'react-redux';
-import StylePatterns from '../../../services/StylePatterns';
 import { createGlobalStyle } from 'styled-components';
+import StylePatterns from '../../../services/StylePatterns';
 import ScreenSizes from '../../../services/ScreenSizes';
 import AppGrid from '../AppGrid/AppGrid';
 
@@ -183,55 +183,53 @@ const GlobalStyle = createGlobalStyle`
 		z-index: ${StylePatterns.ZIndex('smallNav')};
 	}
 `;
-const AppContainer = (props) => {
+const AppContainer = props => 
 	// if (props.initStatesReady.length === props.initStatesToReadyQuantity && !props.stateError) {
-		return (
-			<div id="app-container">
-				<MediaQuery maxWidth={ScreenSizes.ReturnSmallMax()}>
-					<GlobalStyle
-						screenType="small"
-						// colorMode={props.uData.preferences.colorMode}
+	(
+		<div id="app-container">
+			<MediaQuery maxWidth={ScreenSizes.ReturnSmallMax()}>
+				<GlobalStyle
+					screenType="small"
+					// colorMode={props.uData.preferences.colorMode}
 
-					/>
-					<AppGrid
-						screenType="small"
-						title={props.title}
-						content={props.children}
-					/>
-				</MediaQuery>
-				<MediaQuery
-					minWidth={ScreenSizes.ReturnMediumMin()}
-					maxWidth={ScreenSizes.ReturnMediumMax()}
-				>
-					<GlobalStyle
-						screenType="medium"
-						// colorMode={props.uData.preferences.colorMode}
+				/>
+				<AppGrid
+					screenType="small"
+					title={props.title}
+					content={props.children}
+				/>
+			</MediaQuery>
+			<MediaQuery
+				minWidth={ScreenSizes.ReturnMediumMin()}
+				maxWidth={ScreenSizes.ReturnMediumMax()}
+			>
+				<GlobalStyle
+					screenType="medium"
+					// colorMode={props.uData.preferences.colorMode}
 
-					/>
-					<AppGrid
-						screenType="medium"
-						title={props.title}
-						content={props.children}
-					/>
-				</MediaQuery>
-				<MediaQuery minWidth={ScreenSizes.ReturnLargeMin()}>
-					<GlobalStyle
-						screenType="large"
-						// colorMode={props.uData.preferences.colorMode}
+				/>
+				<AppGrid
+					screenType="medium"
+					title={props.title}
+					content={props.children}
+				/>
+			</MediaQuery>
+			<MediaQuery minWidth={ScreenSizes.ReturnLargeMin()}>
+				<GlobalStyle
+					screenType="large"
+					// colorMode={props.uData.preferences.colorMode}
 
-					/>
-					<AppGrid
-						screenType="large"
-						title={props.title}
-						content={props.children}
-					/>
-				</MediaQuery>
-			</div>
-		);
+				/>
+				<AppGrid
+					screenType="large"
+					title={props.title}
+					content={props.children}
+				/>
+			</MediaQuery>
+		</div>
+	)
 	// }
-};
-const ConnectedAppContainer = connect((state) => {
-	return state;
-})(AppContainer);
+;
+const ConnectedAppContainer = connect(state => state)(AppContainer);
 
 export default ConnectedAppContainer;
