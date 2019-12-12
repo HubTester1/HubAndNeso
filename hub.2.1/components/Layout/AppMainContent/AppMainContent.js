@@ -1,7 +1,6 @@
 /* eslint-disable  react/react-in-jsx-scope */
 
 import styled from 'styled-components';
-import StylePatterns from '../../../services/StylePatterns';
 
 const MainContainer = styled.main`
 	${props => props.screenType === 'small' && `

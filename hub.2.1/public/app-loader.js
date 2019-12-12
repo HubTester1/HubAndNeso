@@ -2,10 +2,9 @@
 // ---- GLOBAL VARS
 
 const debugMode = true;
-const date = new Date();
-const timestamp = date.getTime();
+// eslint-disable-next-line no-undef
 const userName = _spPageContextInfo.userLoginName.slice(0, -8);
-
+// eslint-disable-next-line no-console
 if (debugMode) { console.log('using app-loader m6'); }
 
 // Note: param map:
@@ -19,45 +18,44 @@ if (debugMode) { console.log('using app-loader m6'); }
 
 // if this page is App.aspx
 if (window.location.pathname.indexOf('/App.aspx') !== -1) {
-	if (debugMode) { console.log('on APP'); }
 	// extract params from URL into array
-	const paramsReceived = window.location.search.substring(1).split("&");
+	const paramsReceived = window.location.search.substring(1).split('&');
 	// set up array to hold params to be sent
 	const paramsToSend = [];
 	// set up base of iframe url
 	let iframeURL = 'https://neso.mos.org:3001/index';
 	// if there are params
-	if (paramsReceived[0] !== "") {
+	if (paramsReceived[0] !== '') {
 		// iterate over each param
 		paramsReceived.forEach((paramValue, paramIndex) => {
 			const paramLabel = paramValue.substring(0, 1);
 			const paramToken = paramValue.substring(2);
 			// push param with corresponding label; u param is ignored here
 			switch (paramLabel) {
-				case 's':
-					paramsToSend.push('s=' + paramToken);
-					break;
-				case 'p':
-					paramsToSend.push('p=' + paramToken);
-					break;
-				case 'o':
-					paramsToSend.push('o=' + paramToken);
-					break;
-				default:
-					break;
+			case 's':
+				paramsToSend.push(`s=${paramToken}`);
+				break;
+			case 'p':
+				paramsToSend.push(`p=${paramToken}`);
+				break;
+			case 'o':
+				paramsToSend.push(`o=${paramToken}`);
+				break;
+			default:
+				break;
 			}
 		});
 	}
 	// get current user
-	paramsToSend.push('u=' + userName);
+	paramsToSend.push(`u=${userName}`);
 	// construct iframe URL
 	paramsToSend.forEach((paramValue, paramIndex) => {
 		iframeURL = paramIndex === 0 ? 
-			iframeURL + '?' + paramValue :
-			iframeURL + '&' + paramValue;
+			`${iframeURL}?${paramValue}` :
+			`${iframeURL}&${paramValue}`;
 	});
 	// mount iframe on app mount point
-	var iframeElement = document.createElement('iframe');
+	const iframeElement = document.createElement('iframe');
 	iframeElement.id = 'app-iframe';
 	iframeElement.src = iframeURL;
 	document.getElementById('app-mount-point').appendChild(iframeElement);
@@ -83,7 +81,7 @@ if (window.location.pathname.indexOf('/App.aspx') !== -1) {
 	// for certain other users
 	if (userName && (userName === 'showe' || userName === 'shudson')) {
 		// try to get the ribbon for Accounting What's New list
-			document.querySelector('form[action^="/Lists/Accounting%20Whats%20New%20Hub"] div#s4-ribbonrow');
+		const ribbonForStanSarah = document.querySelector('form[action^="/Lists/Accounting%20Whats%20New%20Hub"] div#s4-ribbonrow');
 		// if that ribbon was found
 		if (ribbonForStanSarah) {
 			// show it

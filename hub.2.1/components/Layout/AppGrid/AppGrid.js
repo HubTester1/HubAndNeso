@@ -21,7 +21,7 @@ const AppHeaderSearchAndMainContainer = styled.div`
 		margin-left: 6.8rem;
 	`}
 `;
-const AppGrid = (props) => (
+const AppGrid = props => (
 	<GridContainer>
 		<AppHeaderNav
 			screenType={props.screenType}

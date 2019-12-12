@@ -40,7 +40,8 @@
 			{
 				"allow": [
 					"_id",
-					"_user"
+					"_user",
+					"__REDUX_DEVTOOLS_EXTENSION_COMPOSE__"
 				]
 			}
 		]

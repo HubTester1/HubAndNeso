@@ -1,6 +1,6 @@
-import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
-import initReducer from '../Reducers/initReducer';
+import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
+import initReducer from '../Reducers/initReducer';
 
 
 // define the compose enhancers to be used; if server, compose; if client, dev tools
@@ -9,20 +9,18 @@ const composeEnhancers =
 	compose;
 
 
-const makeStore = (initialState, options) => {
+const makeStore = (initialState, options) => 
 	/**
 	* @param {object} initialState
 	* @param {boolean} options.isServer indicates whether it is a server side or client side
-	* @param {Request} options.req NodeJS Request object (not set when client applies initialState from server)
-	* @param {Request} options.res NodeJS Request object (not set when client applies initialState from server)
+	* @param {Request} options.req NodeJS Request object
+	* @param {Request} options.res NodeJS Request object
 	* @param {boolean} options.debug User-defined debug mode param
-	* @param {string} options.storeKey This key will be used to preserve store in global namespace for safe HMR
+	* @param {string} options.storeKey Preserve store in global namespace for safe HMR
 	*/
-	return createStore(
+	createStore(
 		initReducer, 
 		initialState,
-		composeEnhancers(applyMiddleware(thunk))
+		composeEnhancers(applyMiddleware(thunk)),
 	);
-};
-
 export default makeStore;

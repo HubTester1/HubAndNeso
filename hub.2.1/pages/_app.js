@@ -16,21 +16,21 @@ class AppWithRedux extends App {
 			.then((indexProps) => {
 				ctx.store.dispatch({
 					type: 'SET_SUBSCREEN',
-					partialScreen: indexProps.p
+					partialScreen: indexProps.p,
 				});
 				ctx.store.dispatch({
 					type: 'SET_SCREEN',
-					screen: indexProps.s
+					screen: indexProps.s,
 				});
 				if (!indexProps.stateError) {					
 					ctx.store.dispatch({
 						type: 'SET_USER_DATA',
-						uData: indexProps.uData
+						uData: indexProps.uData,
 					});
 				} else {
 					ctx.store.dispatch({
 						type: 'SET_STATE_ERROR',
-						error: indexProps.stateError
+						error: indexProps.stateError,
 					});
 				}
 				return { indexProps };
@@ -38,7 +38,7 @@ class AppWithRedux extends App {
 			.catch((error) => {
 				ctx.store.dispatch({
 					type: 'SET_STATE_ERROR',
-					error: error
+					error,
 				});
 			});
 	}

@@ -17,12 +17,10 @@ export default class AppHeaderSearch extends React.Component {
 		}));
 	}
 	render() {
-
 		const Container = styled.div`
 			height: 5rem;
 			z-index: 999;
-			background-color: ${props => props.stuck ?
-				'#322' : '#411' };
+			background-color: ${props => (props.stuck ? '#322' : '#411')};
 		`;
 		return (
 			<header>

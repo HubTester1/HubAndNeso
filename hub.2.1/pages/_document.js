@@ -12,9 +12,8 @@ export default class DocumentWithStyledComponents extends Document {
 		const sheet = new ServerStyleSheet();
 
 		// Step 2: Retrieve styles from components in the page
-		const page = renderPage((App) => (props) =>
-			sheet.collectStyles(<App {...props} />),
-		);
+		const page = renderPage(App => props =>
+			sheet.collectStyles(<App {...props} />));
 
 		// Step 3: Extract the styles as <style> tags
 		const styleTags = sheet.getStyleElement();
@@ -25,14 +24,13 @@ export default class DocumentWithStyledComponents extends Document {
 
 	render() {
 		return (
-			<html>
-				<Head>
-				</Head>
+			<html lang="en">
+				<Head />
 				<body>
 					<Main />
 					<NextScript />
 				</body>
 			</html>
-		)
+		);
 	}
 }

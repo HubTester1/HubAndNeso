@@ -80,28 +80,4 @@ const AppHeaderNav = props => (
 	</Header>
 );
 
-{/* <BrandContainerLarge>
-					<BrandLink
-						to="/"
-					>
-						<Brand />
-					</BrandLink>
-				</BrandContainerLarge> */}
-
-{/* <HeaderLargeTagline>
-					<p>Greater Boston</p>
-					<p>
-						<a href={ProfileBrief}>
-							Profile Brief
-									<Icon
-								iconPosition="after"
-								iconContent="cloud-download"
-								iconSize="1.5"
-							/>
-						</a>
-
-					</p>
-				</HeaderLargeTagline> */}
-
-
 export default AppHeaderNav;
