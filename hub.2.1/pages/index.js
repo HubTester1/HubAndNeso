@@ -1,6 +1,5 @@
 /* eslint-disable  react/react-in-jsx-scope */
 
-
 import { Component } from 'react';
 import { connect } from 'react-redux';
 import AppContainer from '../components/Layout/AppContainer/AppContainer';
@@ -31,78 +30,7 @@ class Index extends Component {
 	}
 	render() {
 		return (
-			<AppContainer
-				title="Home"
-			>
-				<div>Screen from Redux in App -- {this.props.screen}</div>
-				<div>Partial screen from Redux in App -- {this.props.partialScreen}</div>
-				<div>&nbsp;</div>
-				<p>There&apos;s no place like home.</p>
-				<p><a href="https://google.com">There&apos;s no place like home</a>.</p>
-				<p>There&apos;s no place like home.</p>
-				<p>There&apos;s no place like home.</p>
-				<p>There&apos;s no place like home.</p>
-				<p>There&apos;s no place like home.</p>
-				<p>There&apos;s no place like home.</p>
-				<p>There&apos;s no place like home.</p>
-				<p>There&apos;s no place like home.</p>
-				<p>There&apos;s no place like home.</p>
-				<p>There&apos;s no place like home.</p>
-				<p>There&apos;s no place like home.</p>
-				<p>There&apos;s no place like home.</p>
-				<p>There&apos;s no place like home.</p>
-				<p>There&apos;s no place like home.</p>
-				<p>There&apos;s no place like home.</p>
-				<p>There&apos;s no place like home.</p>
-				<p>There&apos;s no place like home.</p>
-				<p>There&apos;s no place like home.</p>
-				<p>There&apos;s no place like home.</p>
-				<p>There&apos;s no place like home.</p>
-				<p>There&apos;s no place like home.</p>
-				<p>There&apos;s no place like home.</p>
-				<p>There&apos;s no place like home.</p>
-				<p>There&apos;s no place like home.</p>
-				<p>There&apos;s no place like home.</p>
-				<p>There&apos;s no place like home.</p>
-				<p>There&apos;s no place like home.</p>
-				<p>There&apos;s no place like home.</p>
-				<p>There&apos;s no place like home.</p>
-				<p>There&apos;s no place like home.</p>
-				<p>There&apos;s no place like home.</p>
-				<p>There&apos;s no place like home.</p>
-				<p>There&apos;s no place like home.</p>
-				<p>There&apos;s no place like home.</p>
-				<p>There&apos;s no place like home.</p>
-				<p>There&apos;s no place like home.</p>
-				<p>There&apos;s no place like home.</p>
-				<p>There&apos;s no place like home.</p>
-				<p>There&apos;s no place like home.</p>
-				<p>There&apos;s no place like home.</p>
-				<p>There&apos;s no place like home.</p>
-				<p>There&apos;s no place like home.</p>
-				<p>There&apos;s no place like home.</p>
-				<p>There&apos;s no place like home.</p>
-				<p>There&apos;s no place like home.</p>
-				<p>There&apos;s no place like home.</p>
-				<p>There&apos;s no place like home.</p>
-				<p>There&apos;s no place like home.</p>
-				<p>There&apos;s no place like home.</p>
-				<p>There&apos;s no place like home.</p>
-				<p>There&apos;s no place like home.</p>
-				<p>There&apos;s no place like home.</p>
-				<p>There&apos;s no place like home.</p>
-				<p>There&apos;s no place like home.</p>
-				<p>There&apos;s no place like home.</p>
-				<p>There&apos;s no place like home.</p>
-				<p>There&apos;s no place like home.</p>
-				<p>There&apos;s no place like home.</p>
-				<p>There&apos;s no place like home.</p>
-				<p>There&apos;s no place like home.</p>
-				<p>There&apos;s no place like home.</p>
-				<p>There&apos;s no place like home.</p>
-				<p>There&apos;s no place like home - zzzzz.</p>
-
-			</AppContainer>
+			<AppContainer />
 		);
 	}
 }

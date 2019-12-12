@@ -1,9 +1,10 @@
 /* eslint-disable  react/react-in-jsx-scope */
 
+import { Component } from 'react';
 import styled from 'styled-components';
 import Sticky from 'react-sticky-el';
 
-export default class AppHeaderSearch extends React.Component {
+export default class AppHeaderSearch extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {

@@ -183,53 +183,38 @@ const GlobalStyle = createGlobalStyle`
 		z-index: ${StylePatterns.ZIndex('smallNav')};
 	}
 `;
-const AppContainer = props => 
-	// if (props.initStatesReady.length === props.initStatesToReadyQuantity && !props.stateError) {
-	(
-		<div id="app-container">
-			<MediaQuery maxWidth={ScreenSizes.ReturnSmallMax()}>
-				<GlobalStyle
-					screenType="small"
-					// colorMode={props.uData.preferences.colorMode}
+const AppContainer = props => (
+	<div id="app-container">
+		<MediaQuery maxWidth={ScreenSizes.ReturnSmallMax()}>
+			<GlobalStyle
+				screenType="small"
+				colorMode={props.uData.preferences.colorMode}
 
-				/>
-				<AppGrid
-					screenType="small"
-					title={props.title}
-					content={props.children}
-				/>
-			</MediaQuery>
-			<MediaQuery
-				minWidth={ScreenSizes.ReturnMediumMin()}
-				maxWidth={ScreenSizes.ReturnMediumMax()}
-			>
-				<GlobalStyle
-					screenType="medium"
-					// colorMode={props.uData.preferences.colorMode}
+			/>
+			<AppGrid screenType="small" />
+		</MediaQuery>
+		<MediaQuery
+			minWidth={ScreenSizes.ReturnMediumMin()}
+			maxWidth={ScreenSizes.ReturnMediumMax()}
+		>
+			<GlobalStyle
+				screenType="medium"
+				colorMode={props.uData.preferences.colorMode}
 
-				/>
-				<AppGrid
-					screenType="medium"
-					title={props.title}
-					content={props.children}
-				/>
-			</MediaQuery>
-			<MediaQuery minWidth={ScreenSizes.ReturnLargeMin()}>
-				<GlobalStyle
-					screenType="large"
-					// colorMode={props.uData.preferences.colorMode}
+			/>
+			<AppGrid screenType="medium" />
+		</MediaQuery>
+		<MediaQuery minWidth={ScreenSizes.ReturnLargeMin()}>
+			<GlobalStyle
+				screenType="large"
+				colorMode={props.uData.preferences.colorMode}
 
-				/>
-				<AppGrid
-					screenType="large"
-					title={props.title}
-					content={props.children}
-				/>
-			</MediaQuery>
-		</div>
-	)
-	// }
-;
+			/>
+			<AppGrid screenType="large" />
+		</MediaQuery>
+	</div>
+);
+
 const ConnectedAppContainer = connect(state => state)(AppContainer);
 
 export default ConnectedAppContainer;
