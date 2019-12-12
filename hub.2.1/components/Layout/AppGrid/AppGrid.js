@@ -1,5 +1,5 @@
 
-// ----- IMPORTS
+// Primary purpose: layout of headers and main content
 
 import styled from 'styled-components';
 import AppHeaderSearch from '../AppHeaderSearch/AppHeaderSearch';
@@ -34,7 +34,6 @@ const AppGrid = props => (
 			/>
 			<AppMainContent
 				screenType={props.screenType}
-				title={props.title}
 			>
 				{props.content}
 			</AppMainContent>

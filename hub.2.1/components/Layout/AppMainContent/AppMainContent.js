@@ -1,4 +1,5 @@
-/* eslint-disable  react/react-in-jsx-scope */
+
+// Primary purpose: main content
 
 import styled from 'styled-components';
 
@@ -6,9 +7,6 @@ const MainContainer = styled.main`
 	${props => props.screenType === 'small' && `
 		margin-bottom: 12rem;
 	`}
-
-
-
 `;
 
 const AppMainContent = ({ children, title, screenType }) => (

@@ -1,5 +1,5 @@
 
-// ----- IMPORTS
+// Primary purpose: compute and inject global styles, get screen type, call AppGrid
 
 import MediaQuery from 'react-responsive';
 import { connect } from 'react-redux';

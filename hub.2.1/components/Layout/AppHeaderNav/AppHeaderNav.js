@@ -1,4 +1,5 @@
-/* eslint-disable  react/react-in-jsx-scope */
+
+// Primary purpose: navigational header
 
 import Link from 'next/link';
 import styled from 'styled-components';

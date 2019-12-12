@@ -1,10 +1,11 @@
 /* eslint-disable  react/react-in-jsx-scope */
 
+// Primary purpose: retrieve data and send it to _app; call AppContainer
+
 import { Component } from 'react';
 import { connect } from 'react-redux';
 import AppContainer from '../components/Layout/AppContainer/AppContainer';
 import User from '../services/User';
-
 
 class Index extends Component {
 	// add props to component and dispatch data to store; called on both 

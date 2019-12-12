@@ -1,4 +1,5 @@
-/* eslint-disable  react/react-in-jsx-scope */
+
+// Primary purpose: search header
 
 import { Component } from 'react';
 import styled from 'styled-components';

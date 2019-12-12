@@ -1,12 +1,10 @@
 
-// ----- IMPORTS
+// Primary purpose: create state store; get data from index and send to state via reducers
 
 import { Provider } from 'react-redux';
 import App from 'next/app';
 import withRedux from 'next-redux-wrapper';
 import makeStore from '../services/DataStore/MakeStore/makeStore';
-
-// --- DEFINE APP COMPONENT
 
 class AppWithRedux extends App {
 	// get Index's props and, optionally, dispatch here
