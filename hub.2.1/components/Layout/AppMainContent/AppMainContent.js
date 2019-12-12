@@ -11,95 +11,20 @@ const MainContainer = styled.main`
 	`}
 `;
 
-const AppMainContent = ({
-	screenType, screen, partialScreen, uData, isServerSide, 
-}) => (
+const AppMainContent = ({ screenType, sData }) => (
 	<MainContainer
 		screenType={screenType}
 	>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
-		<p>Why, hello there, beautiful.</p>
+		{
+			sData.s === 'home' &&
+
+			<p>Home screen.</p>
+		}
+		{
+			sData.s === 'messages' &&
+
+			<p>Messages screen.</p>
+		}
 	</MainContainer>
 );
 

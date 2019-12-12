@@ -5,7 +5,7 @@ import { Component } from 'react';
 import styled from 'styled-components';
 import Sticky from 'react-sticky-el';
 
-export default class AppHeaderSearch extends Component {
+export default class AppHeaderSearchTitleSecondaryNav extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {

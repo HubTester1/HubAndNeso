@@ -2,8 +2,8 @@
 // Primary purpose: layout of headers and main content
 
 import styled from 'styled-components';
-import AppHeaderSearch from '../AppHeaderSearch/AppHeaderSearch';
-import AppHeaderNav from '../AppHeaderNav/AppHeaderNav';
+import AppHeaderSearchTitleSecondaryNav from '../AppHeaderSearchTitleSecondaryNav/AppHeaderSearchTitleSecondaryNav';
+import AppHeaderPrimaryNav from '../AppHeaderPrimaryNav/AppHeaderPrimaryNav';
 import AppMainContent from '../AppMainContent/AppMainContent';
 
 const GridContainer = styled.div`
@@ -16,28 +16,26 @@ const GridContainer = styled.div`
 								"bottom";
 	`}
 `;
-const AppHeaderSearchAndMainContainer = styled.div`
+const AppHeaderSearchTitleSecondaryNavAndMainContainer = styled.div`
 	${props => props.screenType !== 'small' && `
 		margin-left: 6.8rem;
 	`}
 `;
 const AppGrid = props => (
 	<GridContainer>
-		<AppHeaderNav
+		<AppHeaderPrimaryNav
 			screenType={props.screenType}
 		/>
-		<AppHeaderSearchAndMainContainer
+		<AppHeaderSearchTitleSecondaryNavAndMainContainer
 			screenType={props.screenType}
 		>
-			<AppHeaderSearch
+			<AppHeaderSearchTitleSecondaryNav
 				screenType={props.screenType}
 			/>
 			<AppMainContent
 				screenType={props.screenType}
-			>
-				{props.content}
-			</AppMainContent>
-		</AppHeaderSearchAndMainContainer>
+			/>
+		</AppHeaderSearchTitleSecondaryNavAndMainContainer>
 	</GridContainer>
 );
 

@@ -45,7 +45,7 @@ const NavListItem = styled.li`
 	font-weight: ${Style.FontWeight('light')};
 `;
 
-const AppHeaderNav = props => (
+const AppHeaderPrimaryNav = props => (
 	<Header
 		screenType={props.screenType}
 	>
@@ -81,4 +81,4 @@ const AppHeaderNav = props => (
 	</Header>
 );
 
-export default AppHeaderNav;
+export default AppHeaderPrimaryNav;

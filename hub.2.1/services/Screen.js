@@ -5,7 +5,7 @@ module.exports = {
 	// ReturnMediumMax: () => 1024,
 	ReturnMediumMax: () => 1120,
 	ReturnSmallMax: () => 767,
-	ReturnSData: (s, p) => (
+	ReturnSData: (s = 'home', p = 'todayRecent') => (
 		{
 			s,
 			p,
