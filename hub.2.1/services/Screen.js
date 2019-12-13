@@ -10,26 +10,26 @@ module.exports = {
 			s,
 			p,
 			screens: {
-				Home: {
+				home: {
 					title: 'Home',
-					defaultPartial: 'TodayAndRecent',
+					defaultPartial: 'todayAndRecent',
 					partials: {
-						TodayAndRecent: {
+						todayAndRecent: {
 							title: 'Today & Recent',
 						},
-						Pinned: {
+						pinned: {
 							title: 'Pinned',
 						},
 					},
 				},
-				Messages: {
+				messages: {
 					title: 'Messages',
-					defaultPartial: 'Announcements',
+					defaultPartial: 'announcements',
 					partials: {
-						Announcements: {
+						announcements: {
 							title: 'Announcements',
 						},
-						Classifieds: {
+						classifieds: {
 							title: 'Classifieds',
 						},
 					},

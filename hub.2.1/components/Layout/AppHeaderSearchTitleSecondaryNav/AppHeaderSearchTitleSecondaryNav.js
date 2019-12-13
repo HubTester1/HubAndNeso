@@ -4,50 +4,64 @@
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import Sticky from 'react-sticky-el';
-import Utilities from '../../../services/Utilities';
-
 
 const Header = styled.header`
 	height: 5rem;
 	z-index: 999;
 	background-color: ${props => (props.stuck ? '#322' : '#411')};
 `;
-
 const Wrapper = styled.div`
 	background-color: #000;
 `;
+const Tab = styled.p`
+	${({ selected }) => selected && `
+		border-bottom: 1px dotted blue;
+	`}
+`;
+const AppHeaderSearchTitleSecondaryNav = ({ hData, sData, dispatch }) => {
+	const screenTitle = sData.screens[sData.s].title;
+	const partialScreenKeysArray = Object.keys(sData.screens[sData.s].partials);
+	const selectedPartialScreen = sData.p;
+	return (
+		<Sticky
+			onFixedToggle={(free) => {
+				dispatch({
+					type: 'SET_HEADER_STUCK',
+					headerStuck: !free,
+				});
+			}}
+			wrapperCmp="div"
+		>
+			<Wrapper>
+				<Header
+					stuck={hData.headerStuck}
+				>
+					<input type="text" />
 
-const AppHeaderSearchTitleSecondaryNav = ({ hData, sData, dispatch }) => (
-	<Sticky
-		onFixedToggle={(free) => {
-			dispatch({
-				type: 'SET_HEADER_STUCK',
-				headerStuck: !free,
-			});
-		}}
-		wrapperCmp="div"
-	>
-		<Wrapper>
-			<Header
-				stuck={hData.headerStuck}
-			>
-				<input type="text" />
-
-				{
-					hData.headerStuck &&
+					{
+						hData.headerStuck &&
 
 				<p>This is stuck.</p>
-				}
-				{
-					!hData.headerStuck &&
+					}
+					{
+						!hData.headerStuck &&
 
 				<p>This is NOT stuck.</p>
+					}
+				</Header>
+				<h1>{screenTitle}</h1>
+				{
+					partialScreenKeysArray.map(keyValue => (
+						<Tab
+							selected={keyValue === selectedPartialScreen}
+						>
+							{sData.screens[sData.s].partials[keyValue].title}
+						</Tab>
+					))
 				}
-			</Header>
-			<h1>{sData.screens[Utilities.ReturnStringWithInitialCapital(sData.s)].title}</h1>
-			{/* <p>sData.screens[Utilities.ReturnStringWithInitialCapital(sData.s)].title}</p> */}
-		</Wrapper>
-	</Sticky>
-);
+			</Wrapper>
+		</Sticky>
+	);
+};
 
 export default connect(state => state)(AppHeaderSearchTitleSecondaryNav);
