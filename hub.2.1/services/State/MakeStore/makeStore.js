@@ -2,12 +2,10 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import initReducer from '../Reducers/initReducer';
 
-
 // define the compose enhancers to be used; if server, compose; if client, dev tools
 const composeEnhancers =
 	(typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ||
 	compose;
-
 
 const makeStore = (initialState, options) => 
 	/**
@@ -19,7 +17,7 @@ const makeStore = (initialState, options) =>
 	* @param {string} options.storeKey Preserve store in global namespace for safe HMR
 	*/
 	createStore(
-		initReducer, 
+		initReducer,
 		initialState,
 		composeEnhancers(applyMiddleware(thunk)),
 	);

@@ -2,6 +2,7 @@
 const initReducerDefaultState = {
 	stateError: false,
 	uData: {},
+	hData: { headerStuck: false },
 	sData: {},
 	isServerSide: false,
 };
@@ -22,6 +23,11 @@ const initReducer = (state = initReducerDefaultState, action) => {
 			...state,
 			stateError: true,
 			stateErrorDetails: action.error,
+		};
+	case 'SET_HEADER_STUCK':
+		return {
+			...state,
+			hData: { headerStuck: action.headerStuck },
 		};
 	default:
 		return state;
