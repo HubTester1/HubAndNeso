@@ -5,31 +5,31 @@ module.exports = {
 	// ReturnMediumMax: () => 1024,
 	ReturnMediumMax: () => 1120,
 	ReturnSmallMax: () => 767,
-	ReturnSData: (s = 'home', p = 'todayRecent') => (
+	ReturnSData: (s = 'home', p) => (
 		{
 			s,
 			p,
 			screens: {
-				home: {
+				Home: {
 					title: 'Home',
-					defaultPartial: 'todayRecent',
+					defaultPartial: 'TodayAndRecent',
 					partials: {
-						todayRecent: {
+						TodayAndRecent: {
 							title: 'Today & Recent',
 						},
-						pinned: {
+						Pinned: {
 							title: 'Pinned',
 						},
 					},
 				},
-				messages: {
+				Messages: {
 					title: 'Messages',
-					defaultPartial: 'announcements',
+					defaultPartial: 'Announcements',
 					partials: {
-						announcements: {
+						Announcements: {
 							title: 'Announcements',
 						},
-						classifieds: {
+						Classifieds: {
 							title: 'Classifieds',
 						},
 					},

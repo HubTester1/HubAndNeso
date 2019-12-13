@@ -1,5 +1,6 @@
 
 // Primary purpose: Collect and handle styles from styled-components
+// Used by Next.js in transpilation; overrides default Next.js _document
 
 import Document, { Head, Main, NextScript } from 'next/document';
 import { ServerStyleSheet } from 'styled-components';

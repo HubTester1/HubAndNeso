@@ -1,6 +1,7 @@
 /* eslint-disable  react/react-in-jsx-scope */
 
 // Primary purpose: retrieve data and send it to _app; call AppContainer
+// Used when /index is requested
 
 import { Component } from 'react';
 import { connect } from 'react-redux';

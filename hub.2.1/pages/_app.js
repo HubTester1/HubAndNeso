@@ -1,5 +1,6 @@
 
 // Primary purpose: create state store; get data from index and send to state via reducers
+// Used by Next.js in transpilation; overrides default Next.js _app
 
 import { Provider } from 'react-redux';
 import App from 'next/app';
