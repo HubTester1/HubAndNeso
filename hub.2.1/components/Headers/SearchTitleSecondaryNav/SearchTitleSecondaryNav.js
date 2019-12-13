@@ -4,23 +4,19 @@
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import Sticky from 'react-sticky-el';
-import Style from '../../../services/Style';
 
+const Wrapper = styled.div`
+	background-color: #000;
+`;
 const Header = styled.header`
 	height: 5rem;
 	z-index: 999;
 	background-color: ${props => (props.stuck ? '#322' : '#411')};
 `;
-const Wrapper = styled.div`
-	background-color: #000;
-`;
 const Tab = styled.p`
 	${({ selected }) => selected && `
 		border-bottom: 1px dotted blue;
 	`}
-`;
-const SiteTitle = styled.h1`
-	${Style.BlockHidden()}
 `;
 const AppHeaderSearchTitleSecondaryNav = ({ hData, sData, dispatch }) => {
 	const screenTitle = sData.screens[sData.s].title;
@@ -53,19 +49,19 @@ const AppHeaderSearchTitleSecondaryNav = ({ hData, sData, dispatch }) => {
 				<p>This is NOT stuck.</p>
 					}
 				</Header>
-				<SiteTitle>The Hub</SiteTitle>
 				<h2>{screenTitle}</h2>
-				
-				{
-					partialScreenKeysArray.map(keyValue => (
-						<Tab
-							selected={keyValue === selectedPartialScreen}
-							key={keyValue}
-						>
-							{sData.screens[sData.s].partials[keyValue].title}
-						</Tab>
-					))
-				}
+				<nav role="navigation">
+					{
+						partialScreenKeysArray.map(keyValue => (
+							<Tab
+								selected={keyValue === selectedPartialScreen}
+								key={keyValue}
+							>
+								{sData.screens[sData.s].partials[keyValue].title}
+							</Tab>
+						))
+					}
+				</nav>
 			</Wrapper>
 		</Sticky>
 	);

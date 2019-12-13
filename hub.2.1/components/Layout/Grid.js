@@ -16,9 +16,8 @@ const GridContainer = styled.div`
 								"bottom";
 	`}
 `;
-const SearchTitleSecondaryNavAndMainContainer = styled.main.attrs({
-	role: 'main',
-})`${props => props.screenType !== 'small' && `
+const SearchTitleSecondaryNavAndMainContainer = styled.main`
+	${props => props.screenType !== 'small' && `
 		margin-left: 6.8rem;
 	`}
 `;
@@ -29,6 +28,7 @@ const Grid = props => (
 		/>
 		<SearchTitleSecondaryNavAndMainContainer
 			screenType={props.screenType}
+			role="main"
 		>
 			<SearchTitleSecondaryNav
 				screenType={props.screenType}

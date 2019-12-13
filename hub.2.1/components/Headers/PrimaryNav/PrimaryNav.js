@@ -5,7 +5,6 @@ import Link from 'next/link';
 import styled from 'styled-components';
 import Style from '../../../services/Style';
 
-
 const Header = styled.header`
 	${props => props.screenType !== 'small' && `
 		height: 100%;
@@ -26,11 +25,12 @@ const Header = styled.header`
 	z-index: 999;
 	background-color: #003;
 `;
-
+const SiteTitle = styled.h1`
+	${Style.BlockHidden()}
+`;
 const Nav = styled.nav`
 	padding: 2rem;
 `;
-
 const NavList = styled.ul`
 	padding: 0;
 	margin: 0;
@@ -44,12 +44,15 @@ const NavListItem = styled.li`
 	font-size: ${Style.FontSize('m', 'medium')};
 	font-weight: ${Style.FontWeight('light')};
 `;
-
 const AppHeaderPrimaryNav = props => (
 	<Header
 		screenType={props.screenType}
+		role="banner"
 	>
-		<Nav>
+		<SiteTitle>The Hub</SiteTitle>
+		<Nav
+			role="navigation"
+		>
 			<NavList>
 				<NavListItem>
 					<Link href="/">
