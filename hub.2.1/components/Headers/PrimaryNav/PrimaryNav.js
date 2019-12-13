@@ -5,6 +5,9 @@ import Link from 'next/link';
 import styled from 'styled-components';
 import Style from '../../../services/Style';
 
+import Icon from '../../Ingredients/Icon/Icon.Pres';
+import Button from '../../Ingredients/Button/Button.Pres';
+
 const Header = styled.header`
 	${props => props.screenType !== 'small' && `
 		height: 100%;
@@ -47,9 +50,9 @@ const NavListItem = styled.li`
 	font-size: ${Style.FontSize('m', 'medium')};
 	font-weight: ${Style.FontWeight('light')};
 `;
-const AppHeaderPrimaryNav = props => (
+const AppHeaderPrimaryNav = ({ screenType }) => (
 	<Header
-		screenType={props.screenType}
+		screenType={screenType}
 		role="banner"
 	>
 		<SiteTitleElement>The Hub</SiteTitleElement>
@@ -58,9 +61,19 @@ const AppHeaderPrimaryNav = props => (
 		>
 			<NavList>
 				<NavListItem>
-					<Link href="/">
-						<a>The Hub</a>
-					</Link>
+					<Button
+						buttonHeight="3"
+						iconPosition="before"
+						iconContent="tachometer"
+						contentHeight="2.2"
+						text="The Hub"
+						textInvisible={screenType === 'small'}
+						defaultBackgroundColor="transparent"
+						defaultContentColor={Style.Color('red5')}
+						activeBackgroundColor="transparent"
+						activeContentColor={Style.Color('red3')}
+						clickHandler={null}
+					/>
 				</NavListItem>
 				<NavListItem>
 					<Link href="/news">

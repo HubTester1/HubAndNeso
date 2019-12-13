@@ -8,6 +8,12 @@ import Style from '../../services/Style';
 import Screen from '../../services/Screen';
 import Grid from './Grid';
 
+import LineAwesomeEOT from '../Ingredients/Fonts/line-awesome.eot';
+import LineAwesomeTTF from '../Ingredients/Fonts/line-awesome.ttf';
+import LineAwesomeWOFF from '../Ingredients/Fonts/line-awesome.woff';
+import LineAwesomeWOFF2 from '../Ingredients/Fonts/line-awesome.woff2';
+import LineAwesomeSVG from '../Ingredients/Fonts/line-awesome.svg';
+
 const GlobalStyle = createGlobalStyle`
 	@import url('https://use.typekit.net/sul5jci.css');
 	* { box-sizing: border-box; }
@@ -28,10 +34,21 @@ const GlobalStyle = createGlobalStyle`
 		color: ${props => (Style.Color('bodyColor', props.colorMode))};
 		text-align: left;
 	}
+	@font-face {
+		font-family: 'LineAwesome';
+		src: url(${LineAwesomeEOT});
+		src: url(${LineAwesomeEOT}) format("embedded-opentype"),
+			url(${LineAwesomeWOFF2}) format("woff2"),
+			url(${LineAwesomeWOFF}) format("woff"),
+			url(${LineAwesomeTTF}) format("truetype"),
+			url(${LineAwesomeSVG}) format("svg");
+		font-weight: normal;
+		font-style: normal;
+	}
 	@media screen and (-webkit-min-device-pixel-ratio:0) {
 		@font-face {
 			font-family: "LineAwesome";
-			src: url("../fonts/line-awesome.svg?v=1.1.#fa") format("svg");
+			src: url("../Ingredients/Fonts/line-awesome.svg?v=1.1.#fa") format("svg");
 		}
 	}
 	.transition-entering {
