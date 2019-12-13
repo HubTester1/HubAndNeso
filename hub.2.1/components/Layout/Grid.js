@@ -2,9 +2,9 @@
 // Primary purpose: layout of headers and ScreenContainer content
 
 import styled from 'styled-components';
-import PrimaryNav from '../../Headers/PrimaryNav/PrimaryNav';
-import SearchTitleSecondaryNav from '../../Headers/SearchTitleSecondaryNav/SearchTitleSecondaryNav';
-import Screen from '../../Screens/Screen';
+import PrimaryNav from '../Headers/PrimaryNav/PrimaryNav';
+import SearchTitleSecondaryNav from '../Headers/SearchTitleSecondaryNav/SearchTitleSecondaryNav';
+import Screen from '../Screens/Screen';
 
 const GridContainer = styled.div`
 	${props => props.screenType === 'small' && `
@@ -22,7 +22,7 @@ const SearchTitleSecondaryNavAndMainContainer = styled.main.attrs({
 		margin-left: 6.8rem;
 	`}
 `;
-const AppGrid = props => (
+const Grid = props => (
 	<GridContainer>
 		<PrimaryNav
 			screenType={props.screenType}
@@ -40,4 +40,4 @@ const AppGrid = props => (
 	</GridContainer>
 );
 
-export default AppGrid;
+export default Grid;

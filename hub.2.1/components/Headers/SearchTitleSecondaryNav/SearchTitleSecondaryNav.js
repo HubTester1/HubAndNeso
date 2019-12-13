@@ -60,6 +60,7 @@ const AppHeaderSearchTitleSecondaryNav = ({ hData, sData, dispatch }) => {
 					partialScreenKeysArray.map(keyValue => (
 						<Tab
 							selected={keyValue === selectedPartialScreen}
+							key={keyValue}
 						>
 							{sData.screens[sData.s].partials[keyValue].title}
 						</Tab>

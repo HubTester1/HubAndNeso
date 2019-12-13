@@ -1,11 +1,11 @@
 /* eslint-disable  react/react-in-jsx-scope */
 
-// Primary purpose: retrieve data and send it to _app; call AppContainer
+// Primary purpose: retrieve data and send it to _app; call Container
 // Used when /index is requested
 
 import { Component } from 'react';
 import { connect } from 'react-redux';
-import AppContainer from '../components/Layout/AppContainer/AppContainer';
+import Container from '../components/Layout/Container';
 import User from '../services/User';
 import Screen from '../services/Screen';
 
@@ -34,7 +34,7 @@ class Index extends Component {
 	}
 	render() {
 		return (
-			<AppContainer />
+			<Container />
 		);
 	}
 }

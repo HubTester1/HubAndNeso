@@ -1,12 +1,12 @@
 
-// Primary purpose: compute and inject global styles, get screen type, call AppGrid
+// Primary purpose: compute and inject global styles, get screen type, call Grid
 
 import MediaQuery from 'react-responsive';
 import { connect } from 'react-redux';
 import { createGlobalStyle } from 'styled-components';
-import Style from '../../../services/Style';
-import Screen from '../../../services/Screen';
-import AppGrid from '../AppGrid/AppGrid';
+import Style from '../../services/Style';
+import Screen from '../../services/Screen';
+import Grid from './Grid';
 
 const GlobalStyle = createGlobalStyle`
 	@import url('https://use.typekit.net/sul5jci.css');
@@ -190,7 +190,7 @@ const AppContainer = props => (
 				screenType="small"
 				colorMode={props.uData.user.preferences.colorMode}
 			/>
-			<AppGrid screenType="small" />
+			<Grid screenType="small" />
 		</MediaQuery>
 		<MediaQuery
 			minWidth={Screen.ReturnMediumMin()}
@@ -200,14 +200,14 @@ const AppContainer = props => (
 				screenType="medium"
 				colorMode={props.uData.user.preferences.colorMode}
 			/>
-			<AppGrid screenType="medium" />
+			<Grid screenType="medium" />
 		</MediaQuery>
 		<MediaQuery minWidth={Screen.ReturnLargeMin()}>
 			<GlobalStyle
 				screenType="large"
 				colorMode={props.uData.user.preferences.colorMode}
 			/>
-			<AppGrid screenType="large" />
+			<Grid screenType="large" />
 		</MediaQuery>
 	</div>
 );

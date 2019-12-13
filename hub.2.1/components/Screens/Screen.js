@@ -1,9 +1,9 @@
 
 import { connect } from 'react-redux';
 import Utilities from '../../services/Utilities';
-import * as PartialScreenRegistry from '../PartialScreens/Registry';
+import * as PartialScreenRegistry from './Partials/Registry';
 
-const PartialScreen = ({ screenType, sData }) => {
+const Screen = ({ screenType, sData }) => {
 	// all partial screens are imported as PartialScreenRegistry, above; create component equal
 	// 		to the partial screen component specified in sData; render said component below
 	const SelectedPartialScreen =
@@ -11,4 +11,4 @@ const PartialScreen = ({ screenType, sData }) => {
 	return (<SelectedPartialScreen screenType />);
 };
 
-export default connect(state => state)(PartialScreen);
+export default connect(state => state)(Screen);
