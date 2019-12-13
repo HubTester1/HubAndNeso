@@ -1,7 +1,7 @@
 
 import { connect } from 'react-redux';
 import Utilities from '../../services/Utilities';
-import * as PartialScreenRegistry from '../PartialScreens/Messages/MessagesRegistry';
+import * as PartialScreenRegistry from '../PartialScreens/Registry';
 
 const PartialScreen = ({ screenType, sData }) => {
 	// all partial screens are imported as PartialScreenRegistry, above; create component equal

@@ -1,9 +1,10 @@
 
-// Primary purpose: search and h1 and partial screen tabs header
+// Primary purpose: search and h1 and partial screen tabs (secondary nav) header
 
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import Sticky from 'react-sticky-el';
+import Style from '../../../services/Style';
 
 const Header = styled.header`
 	height: 5rem;
@@ -17,6 +18,9 @@ const Tab = styled.p`
 	${({ selected }) => selected && `
 		border-bottom: 1px dotted blue;
 	`}
+`;
+const SiteTitle = styled.h1`
+	${Style.BlockHidden()}
 `;
 const AppHeaderSearchTitleSecondaryNav = ({ hData, sData, dispatch }) => {
 	const screenTitle = sData.screens[sData.s].title;
@@ -49,7 +53,9 @@ const AppHeaderSearchTitleSecondaryNav = ({ hData, sData, dispatch }) => {
 				<p>This is NOT stuck.</p>
 					}
 				</Header>
-				<h1>{screenTitle}</h1>
+				<SiteTitle>The Hub</SiteTitle>
+				<h2>{screenTitle}</h2>
+				
 				{
 					partialScreenKeysArray.map(keyValue => (
 						<Tab

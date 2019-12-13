@@ -1,10 +1,10 @@
 
-// Primary purpose: layout of headers and main content
+// Primary purpose: layout of headers and ScreenContainer content
 
 import styled from 'styled-components';
-import AppHeaderSearchTitleSecondaryNav from '../AppHeaderSearchTitleSecondaryNav/AppHeaderSearchTitleSecondaryNav';
-import AppHeaderPrimaryNav from '../AppHeaderPrimaryNav/AppHeaderPrimaryNav';
-import AppMainContent from '../AppMainContent/AppMainContent';
+import PrimaryNav from '../../Headers/PrimaryNav/PrimaryNav';
+import SearchTitleSecondaryNav from '../../Headers/SearchTitleSecondaryNav/SearchTitleSecondaryNav';
+import Screen from '../../Screens/Screen';
 
 const GridContainer = styled.div`
 	${props => props.screenType === 'small' && `
@@ -16,26 +16,27 @@ const GridContainer = styled.div`
 								"bottom";
 	`}
 `;
-const AppHeaderSearchTitleSecondaryNavAndMainContainer = styled.div`
-	${props => props.screenType !== 'small' && `
+const SearchTitleSecondaryNavAndMainContainer = styled.main.attrs({
+	role: 'main',
+})`${props => props.screenType !== 'small' && `
 		margin-left: 6.8rem;
 	`}
 `;
 const AppGrid = props => (
 	<GridContainer>
-		<AppHeaderPrimaryNav
+		<PrimaryNav
 			screenType={props.screenType}
 		/>
-		<AppHeaderSearchTitleSecondaryNavAndMainContainer
+		<SearchTitleSecondaryNavAndMainContainer
 			screenType={props.screenType}
 		>
-			<AppHeaderSearchTitleSecondaryNav
+			<SearchTitleSecondaryNav
 				screenType={props.screenType}
 			/>
-			<AppMainContent
+			<Screen
 				screenType={props.screenType}
 			/>
-		</AppHeaderSearchTitleSecondaryNavAndMainContainer>
+		</SearchTitleSecondaryNavAndMainContainer>
 	</GridContainer>
 );
 
