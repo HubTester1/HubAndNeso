@@ -25,7 +25,10 @@ const Header = styled.header`
 	z-index: 999;
 	background-color: #003;
 `;
-const SiteTitle = styled.h1`
+const SiteTitleElement = styled.h1.attrs(props => ({
+	role: 'heading',
+	'aria-level': '1',
+}))`
 	${Style.BlockHidden()}
 `;
 const Nav = styled.nav`
@@ -49,7 +52,7 @@ const AppHeaderPrimaryNav = props => (
 		screenType={props.screenType}
 		role="banner"
 	>
-		<SiteTitle>The Hub</SiteTitle>
+		<SiteTitleElement>The Hub</SiteTitleElement>
 		<Nav
 			role="navigation"
 		>

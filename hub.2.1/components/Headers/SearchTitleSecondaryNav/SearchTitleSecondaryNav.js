@@ -18,6 +18,10 @@ const Tab = styled.p`
 		border-bottom: 1px dotted blue;
 	`}
 `;
+const ScreenTitleElement = styled.h2.attrs(props => ({
+	role: 'heading',
+	'aria-level': '2',
+}))``;
 const AppHeaderSearchTitleSecondaryNav = ({ hData, sData, dispatch }) => {
 	const screenTitle = sData.screens[sData.s].title;
 	const partialScreenKeysArray = Object.keys(sData.screens[sData.s].partials);
@@ -49,7 +53,7 @@ const AppHeaderSearchTitleSecondaryNav = ({ hData, sData, dispatch }) => {
 				<p>This is NOT stuck.</p>
 					}
 				</Header>
-				<h2>{screenTitle}</h2>
+				<ScreenTitleElement>{screenTitle}</ScreenTitleElement>
 				<nav role="navigation">
 					{
 						partialScreenKeysArray.map(keyValue => (
