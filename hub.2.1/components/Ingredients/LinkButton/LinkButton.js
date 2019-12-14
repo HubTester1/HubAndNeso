@@ -14,7 +14,7 @@ const LinkButton = ({
 		iconPosition="before"
 		iconContent="home"
 		contentHeight="1.8"
-		text="Home 5"
+		text="HOME 2"
 		defaultBackgroundColor="transparent"
 		defaultContentColor={Style.Color('interactive-on-dark-default')}
 		activeBackgroundColor="transparent"
@@ -27,6 +27,7 @@ const mapStateToProps = state => state;// ownProps
 
 const mapDispatchToProps = dispatch => ({// ownProps
 	handleClick: (newS, newP) => {
+		// window.history.pushState(null, null, 'index?s=home');
 		dispatch({
 			type: 'UPDATE_SELECTED_SCREEN_AND_PARTIAL',
 			s: newS,

@@ -19,6 +19,7 @@ class Index extends Component {
 		const {
 			s, o, u, p, 
 		} = query;
+
 		try {
 			const uDataResponse = await User.ReturnUData(u, o);
 			const uData = await uDataResponse.uData;
