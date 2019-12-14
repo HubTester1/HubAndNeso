@@ -1,12 +1,9 @@
 
 // Primary purpose: navigational header
-
-import Link from 'next/link';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 import Style from '../../../services/Style';
-
-import Icon from '../../Ingredients/Icon/Icon.Pres';
-import Button from '../../Ingredients/Button/Button.Pres';
+import LinkButton from '../../Ingredients/LinkButton/LinkButton';
 
 const Header = styled.header`
 	${props => props.screenType !== 'small' && `
@@ -50,7 +47,7 @@ const NavListItem = styled.li`
 	font-size: ${Style.FontSize('m', 'medium')};
 	font-weight: ${Style.FontWeight('light')};
 `;
-const AppHeaderPrimaryNav = ({ screenType }) => (
+const PrimaryNav = ({ screenType }) => (
 	<Header
 		screenType={screenType}
 		role="banner"
@@ -61,43 +58,29 @@ const AppHeaderPrimaryNav = ({ screenType }) => (
 		>
 			<NavList>
 				<NavListItem>
-					<Button
-						buttonHeight="3"
-						iconPosition="before"
-						iconContent="tachometer"
-						contentHeight="2.2"
-						text="The Hub"
-						textInvisible={screenType === 'small'}
-						defaultBackgroundColor="transparent"
-						defaultContentColor={Style.Color('red5')}
-						activeBackgroundColor="transparent"
-						activeContentColor={Style.Color('red3')}
-						clickHandler={null}
+					<LinkButton
+						newS="home"
+						newP="todayAndRecent"
 					/>
 				</NavListItem>
 				<NavListItem>
-					<Link href="/news">
-						<a>News</a>
-					</Link>
-				</NavListItem>
-				<NavListItem>
-					<Link href="/classfieds">
+					{/* <Link href="/classfieds">
 						<a>Classfieds</a>
-					</Link>
+					</Link> */}
 				</NavListItem>
 				<NavListItem>
-					<Link href="/org">
+					{/* <Link href="/org">
 						<a>Organization, Teams, & Staff</a>
-					</Link>
+					</Link> */}
 				</NavListItem>
 				<NavListItem>
-					<Link href="/around">
+					{/* <Link href="/around">
 						<a>Around The Hub</a>
-					</Link>
+					</Link> */}
 				</NavListItem>
 			</NavList>
 		</Nav>
 	</Header>
 );
 
-export default AppHeaderPrimaryNav;
+export default PrimaryNav;

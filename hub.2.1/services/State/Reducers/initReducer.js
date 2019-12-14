@@ -29,6 +29,16 @@ const initReducer = (state = initReducerDefaultState, action) => {
 			...state,
 			hData: { headerStuck: action.headerStuck },
 		};
+	case 'UPDATE_SELECTED_SCREEN_AND_PARTIAL':
+		return {
+			...state,
+			sData: { 
+				s: action.s,
+				p: action.p ? action.p : state.sData.p,
+				screens: state.sData.screens,
+			},
+		};
+
 	default:
 		return state;
 	}
