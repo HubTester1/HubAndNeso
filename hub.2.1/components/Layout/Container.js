@@ -8,31 +8,6 @@ import Style from '../../services/Style';
 import Screen from '../../services/Screen';
 import Grid from './Grid';
 
-/* import LineAwesomeEOT from '../Ingredients/Fonts/line-awesome.eot';
-import LineAwesomeTTF from '../Ingredients/Fonts/line-awesome.ttf';
-import LineAwesomeWOFF from '../Ingredients/Fonts/line-awesome.woff';
-import LineAwesomeWOFF2 from '../Ingredients/Fonts/line-awesome.woff2';
-import LineAwesomeSVG from '../Ingredients/Fonts/line-awesome.svg';
-
-@font-face {
-	font - family: 'LineAwesome';
-	src: url(${ LineAwesomeEOT });
-	src: url(${ LineAwesomeEOT }) format("embedded-opentype"),
-		url(${ LineAwesomeWOFF2 }) format("woff2"),
-			url(${ LineAwesomeWOFF }) format("woff"),
-				url(${ LineAwesomeTTF }) format("truetype"),
-					url(${ LineAwesomeSVG }) format("svg");
-	font - weight: normal;
-	font - style: normal;
-}
-@media screen and(-webkit - min - device - pixel - ratio: 0) {
-	@font-face {
-		font - family: "LineAwesome";
-		src: url("../Ingredients/Fonts/line-awesome.svg?v=1.1.#fa") format("svg");
-	}
-} */
-
-
 const GlobalStyle = createGlobalStyle`
 	@import url('https://use.typekit.net/sul5jci.css');
 	* { box-sizing: border-box; }
@@ -41,11 +16,6 @@ const GlobalStyle = createGlobalStyle`
 		font-size: 10px;
 		text-align: center;
 	}
-	@supports (font-variation-settings: normal) {
-		html {
-			font-family: ${Style.FontFamily()};
-		}
-	}
 	body {
 		font-weight: ${Style.FontWeight('light')};
 		margin: 0;
@@ -53,24 +23,16 @@ const GlobalStyle = createGlobalStyle`
 		color: ${props => (Style.Color('bodyColor', props.colorMode))};
 		text-align: left;
 	}
-	.transition-entering {
-		animation-name: entering-animation;
-		animation-duration: .5s;
-	}
-	@keyframes entering-animation {
-		0%		{opacity: 0;}
-		100%	{opacity: 1;}
-	}
 	h1 {
-		font-weight: ${Style.FontWeight('semi-bold')};
+		font-weight: ${Style.FontWeight('bold')};
 		margin: 1rem 0 .25rem;
 	}
 	h2 {
-		font-weight: ${Style.FontWeight('semi-bold')};
+		font-weight: ${Style.FontWeight('bold')};
 		margin: 1rem 0 .25rem;
 	}
 	h3 {
-		font-weight: ${Style.FontWeight('semi-bold')};
+		font-weight: ${Style.FontWeight('bold')};
 		margin: 1rem 0 .25rem;
 	}
 	h4 {
@@ -114,17 +76,16 @@ const GlobalStyle = createGlobalStyle`
 		text-decoration: none;
 		color: ${props => (Style.Color('interactiveDefault', props.colorMode))};
 		transition: color .25s;
-		border-bottom: .1rem dotted ${Style.Color('interactive-on-dark-default')};
+		border-bottom: .1rem dotted ${props => (Style.Color('interactiveDefault', props.colorMode))};
 
 		&:hover,
 		&:active {
-			color: ${Style.Color('interactive-on-dark-active')};
-			border-bottom: .1rem dotted ${Style.Color('interactive-on-dark-active')};
+			color: ${props => (Style.Color('interactiveActive', props.colorMode))};
+			border-bottom: .1rem dotted ${props => (Style.Color('interactiveActive', props.colorMode))};
 		}
 	}
 	em {
-		color: ${Style.Color('blue-12')};
-		font-style: normal;
+		font-style: italic;
 	}
 	b {
 		font-weight: ${Style.FontWeight('bold')};
@@ -198,10 +159,13 @@ const GlobalStyle = createGlobalStyle`
 			font-size: ${Style.FontSize('m', 'large')};
 		}
 	`}
-	div.sticky-outer-wrapper.active div.sticky-inner-wrapper {
-		z-index: ${Style.ZIndex('smallNav')};
-	}
 `;
+
+
+/* 	div.sticky-outer-wrapper.active div.sticky-inner-wrapper {
+		z-index: ${Style.ZIndex('smallNav')};
+	} */
+
 const AppContainer = props => (
 	<div id="app-container">
 		<MediaQuery maxWidth={Screen.ReturnSmallMax()}>

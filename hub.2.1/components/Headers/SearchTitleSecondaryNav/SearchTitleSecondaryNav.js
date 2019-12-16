@@ -2,27 +2,32 @@
 // Primary purpose: search and h1 and partial screen tabs (secondary nav) header
 
 import { connect } from 'react-redux';
-import styled from 'styled-components';
 import Sticky from 'react-sticky-el';
+import styled from 'styled-components';
+import Style from '../../../services/Style';
 
 const Wrapper = styled.div`
-	background-color: #000;
+	background-color: ${props => (Style.Color('interface2', props.darkMode))};
 `;
 const Header = styled.header`
 	height: 5rem;
 	z-index: 999;
-	background-color: ${props => (props.stuck ? '#322' : '#411')};
 `;
 const Tab = styled.p`
 	${({ selected }) => selected && `
-		border-bottom: 1px dotted blue;
+		border-bottom: ${props => (Style.Color('interface1', props.darkMode))};
 	`}
 `;
 const ScreenTitleElement = styled.h2.attrs(props => ({
 	role: 'heading',
 	'aria-level': '2',
 }))``;
-const AppHeaderSearchTitleSecondaryNav = ({ hData, sData, dispatch }) => {
+const SearchTitleSecondaryNav = ({
+	hData,
+	sData,
+	uData,
+	dispatch,
+}) => {
 	const screenTitle = sData.screens[sData.s].title;
 	const partialScreenKeysArray = Object.keys(sData.screens[sData.s].partials);
 	const selectedPartialScreen = sData.p;
@@ -36,7 +41,9 @@ const AppHeaderSearchTitleSecondaryNav = ({ hData, sData, dispatch }) => {
 			}}
 			wrapperCmp="div"
 		>
-			<Wrapper>
+			<Wrapper
+				darkMode={uData.user.preferences.darkMode}
+			>
 				<Header
 					stuck={hData.headerStuck}
 				>
@@ -60,6 +67,7 @@ const AppHeaderSearchTitleSecondaryNav = ({ hData, sData, dispatch }) => {
 							<Tab
 								selected={keyValue === selectedPartialScreen}
 								key={keyValue}
+								darkMode={uData.user.preferences.darkMode}
 							>
 								{sData.screens[sData.s].partials[keyValue].title}
 							</Tab>
@@ -71,4 +79,4 @@ const AppHeaderSearchTitleSecondaryNav = ({ hData, sData, dispatch }) => {
 	);
 };
 
-export default connect(state => state)(AppHeaderSearchTitleSecondaryNav);
+export default connect(state => state)(SearchTitleSecondaryNav);

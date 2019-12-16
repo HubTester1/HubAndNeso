@@ -82,7 +82,7 @@ export default class User {
 							'o365GlobalAdmin',
 						],
 						preferences: {
-							colorMode: 'dark',
+							darkMode: true,
 							pinned: [
 								'Network Access Request',
 								'Equipment Loan Request',

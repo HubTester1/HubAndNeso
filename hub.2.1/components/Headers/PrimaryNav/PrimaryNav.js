@@ -1,5 +1,6 @@
 
 // Primary purpose: navigational header
+
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import Style from '../../../services/Style';
@@ -23,7 +24,7 @@ const Header = styled.header`
 		left: 0;
 	`}
 	z-index: 999;
-	background-color: #003;
+	background-color: ${props => (Style.Color('interface2', props.darkMode))};
 `;
 const SiteTitleElement = styled.h1.attrs(props => ({
 	role: 'heading',
@@ -47,10 +48,11 @@ const NavListItem = styled.li`
 	font-size: ${Style.FontSize('m', 'medium')};
 	font-weight: ${Style.FontWeight('light')};
 `;
-const PrimaryNav = ({ screenType }) => (
+const PrimaryNav = ({ screenType, uData }) => (
 	<Header
 		screenType={screenType}
 		role="banner"
+		darkMode={uData.user.preferences.darkMode}
 	>
 		<SiteTitleElement>The Hub</SiteTitleElement>
 		<Nav
@@ -83,4 +85,4 @@ const PrimaryNav = ({ screenType }) => (
 	</Header>
 );
 
-export default PrimaryNav;
+export default connect(state => state)(PrimaryNav);
