@@ -4827,8 +4827,8 @@
 		}
 
 		// append approvalPreface, if appropriate
-		if (typeof (mData.approvalPreface) != 'undefined') {
-			$('div#swf-specific-approval-preface').html(mData.approvalPreface);
+		if (typeof (fData.approvalPreface) != 'undefined') {
+			$('div#swf-specific-approval-preface').html(fData.approvalPreface);
 		}
 
 		// enable approval radio buttons and notes for this user, as relevant

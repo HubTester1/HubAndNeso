@@ -1,0 +1,160 @@
+﻿
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        // maintenance mode
+        var allSWFsInMaintenance = $().ReturnMaintenanceModeAllSWFs();
+        var thisSWFInMainenanceMode = $().ReturnMaintenanceModeThisSWF(location);
+        if (allSWFsInMaintenance == false && thisSWFInMainenanceMode == false) {
+
+
+
+            // metadata
+            var mData = {
+                'autoProcessApprovals': 1,
+                'autoDateCompletion': 1,
+                'autoPopulateRequestedBy': 1,
+                'approvalPreface': 'Approval is required from the key recipient\'s manager, supervisor, or VP.',
+                'approvalStmt': 'Approval indicates that the designated keys should be issued.',
+                'standardElementGroups': {
+                    'standardThisRequestAndRequesterElements': 1,
+                    'standardApprovalElements': 1,
+                    'standardAdminElements': 1,
+                    'standardButtonElements': 1,
+                    'standardComponentGrpAdminOnlyElements': 1
+                },
+                'standardChangeNotifications': {
+                    'beginningOfLife': { 'admin': 1, 'requester': 1 },
+                    'newlyApprOrPending': { 'admin': 1, 'requester': 1 },
+                    'endOfLife': {
+                        'admin': 1,
+                        'requester': {
+                            'nonCompletion': 1,
+                            'completion': 'unique', //  specific, generic
+                            'uniqueBody': function (uriFormAdmin, requestNick, adminEmailString) {
+                                return '<p>This is the <a href="' + uriFormAdmin + '">request you nicknamed "' + requestNick +
+                                        '"</a>. Please pick up keys in the Public Safety office. <a href="mailto:' + adminEmailString + '">Contact ' +
+                                        'the admin</a> with any issues related to this request.';
+                            }
+                        }
+                    },
+                },
+               'versioningMatters': 0
+            };
+
+            console.log('using m1');
+
+            // form elements
+            var elements = [
+                {
+                    'elementType': 'markup',
+                    'tag': 'h2',
+                    'content': 'Key Needs',
+                    'begin': 1,
+                    'end': 1
+                }, {
+                    "elementType": "field",
+                    "controlType": "text",
+                    "fieldName": "Keys are For",
+                    "labelContent": "Who are these keys for?",
+                    "listFieldName": "KeysFor",
+                    "requiredForNonAdmin": [""],
+                    "requiredForAdmin": [""],
+                    "disabledForNonAdmin": ["Submitted", "Pending Validator", "Validator Issued", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+                    "disabledForAdmin": ["Submitted", "Pending Validator", "Validator Issued", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
+                }, {
+                    "elementType": "field",
+                    "controlType": "text",
+                    "fieldName": "Reason for Keys",
+                    "labelContent": "Why are these keys needed?",
+                    "requiredForNonAdmin": [""],
+                    "requiredForAdmin": [""],
+                    "disabledForNonAdmin": ["Submitted", "Pending Validator", "Validator Issued", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+                    "disabledForAdmin": ["Submitted", "Pending Validator", "Validator Issued", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+                    "helpNotes": [
+                        {
+                            "text": "E.g., lost keys, new employee, replacing Jane Doe, etc.",
+                            "htmlID": "reason-for-keys_help-note",
+                            "urgent": 0,
+                            "hideForNonAdmin": ["Pending Validator", "Validator Issued", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+                            "hideForAdmin": ["Pending Validator", "Validator Issued", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
+                        }
+                    ]
+                }, {
+                    "elementType": "field",
+                    "controlType": "textarea",
+                    "fieldName": "Which Keys",
+                    "labelContent": "Which keys are needed?",
+                    "requiredForNonAdmin": [""],
+                    "requiredForAdmin": [""],
+                    "disabledForNonAdmin": ["Submitted", "Pending Validator", "Validator Issued", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+                    "disabledForAdmin": ["Submitted", "Pending Validator", "Validator Issued", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+                    "helpNotes": [
+                        {
+                            "text": "Describe either the keys or what you need to access",
+                            "htmlID": "which-keys_help-note",
+                            "urgent": 0,
+                            "hideForNonAdmin": ["Pending Validator", "Validator Issued", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+                            "hideForAdmin": ["Pending Validator", "Validator Issued", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
+                        }
+                    ]
+                }, {
+                    'elementType': 'markup',
+                    'tag': 'h2',
+                    'content': 'Completion Date',
+                    'begin': 1,
+                    'end': 1,
+                    "hideForNonAdmin": ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+                    "hideForAdmin": ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
+                }, {
+                    "elementType": "field",
+                    "controlType": "datePicker",
+                    "fieldName": "Completion Date",
+                    "labelContent": "Completion Date",
+                    "listFieldName": "CompletionDate",
+                    "friendlyFormatOnLoad": { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 },
+                    "isoFormatOnSubmit": { 'incomingFormat': null, 'returnFormat': null, 'determineYearDisplayDynamically': null },
+                    "disabledForNonAdmin": ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+                    "disabledForAdmin": ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+                    "hideForNonAdmin": ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"],
+                    "hideForAdmin": ["", "Pending Approval", "Approved", "Completed", "Disapproved", "Cancelled"]
+                }
+            ];
+
+
+
+            // configure customScript for this SWF here
+            //      (customScriptFirst will be prepended to auto-generated script)
+            //      (customScriptLast will be appended to auto-generated script)
+            var customScriptFirst = '';
+            var customScriptLast = '$("option[value=\'Complete\']").text("Keys are ready for pickup"); \n \n';
+
+            customScriptLast +=     'if ($("input#Keys-are-For").val() == "") { \n' +
+                                    '   $("input#Keys-are-For").val($("input#Requester-Name").val()) \n' +
+                                    '}';
+
+
+            // ----- nothing below should need to be configured for a new SWF
+
+            mData = $.extend(
+                $().ReturnThisSiteSettings(),
+                mData
+            );
+            var requestID = $().GetParamFromUrl(location.search, 'requestID');
+            $().LoadSWFFunctions(mData, requestID);
+            $().InitializeForm(mData, elements, customScriptFirst, customScriptLast);
+        } else {
+            $().RenderMaintenanceMessage();
+        }
+    });
+
+</script>
+
+
+
+<!-- all content -->
+<div id="all-content-container">
+    <div id="mos-form" class="mos-form-section"></div>
+    <script id="mos-form-script" type="text/javascript"></script>
+</div>

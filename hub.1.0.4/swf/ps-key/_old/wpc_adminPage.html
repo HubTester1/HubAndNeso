@@ -1,0 +1,80 @@
+﻿
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        // maintenance mode
+        var allSWFsInMaintenance = $().ReturnMaintenanceModeAllSWFs();
+        var thisSWFInMainenanceMode = $().ReturnMaintenanceModeThisSWF(location);
+        if (allSWFsInMaintenance == false && thisSWFInMainenanceMode == false) {
+
+
+
+            // configure tables here
+            var tData = {
+                'commonColumns': [
+                    {
+                        'displayName': 'Request ID',
+                        'internalName': 'ID',
+                        'formLink': 1
+                    }, {
+                        'displayName': 'Keys For',
+                        'internalName': 'KeysFor',
+                        'userName': 1
+                    }, {
+                        'displayName': 'Requested By',
+                        'internalName': 'RequestedBy',
+                        'userName': 1
+                    }, {
+                        'displayName': 'Talk To',
+                        'internalName': 'RequestedFor',
+                        'userName': 1
+                    }, {
+                        'displayName': 'Request Date',
+                        'internalName': 'RequestDate',
+                        'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+                    }
+                ],
+                'tables': [
+                    {
+                        'tableTitle': 'Pending Approval',
+                        'tableID': 'pending-approval',
+                        'someColsAreUsers': 1,
+                        'basicRSQueryRelevantStatus': 'Pending Approval'
+                    }, {
+                        'tableTitle': 'Approved',
+                        'tableID': 'approved',
+                        'someColsAreUsers': 1,
+                        'basicRSQueryRelevantStatus': 'Approved'
+                    }, {
+                        'tableTitle': 'Ready For Pickup <span class="table-title-parenthetical-note">(Last 30 Days)</span>',
+                        'tableID': 'ready-for-pickup',
+                        'someColsAreUsers': 1,
+                        'fieldGEQDaysBeforeToday': ['CompletionDate', 30],
+                    }
+                ]
+            };
+
+
+
+            // ----- nothing below should need to be configured for a new SWF
+
+            mData = $().ReturnThisSiteSettings();
+            var requestID = $().GetParamFromUrl(location.search, 'requestID');
+            $().LoadSWFFunctions(mData, requestID);
+            $().InitializeAdminPage(mData, tData);
+
+        } else {
+            $().RenderMaintenanceMessage();
+        }
+    });
+
+</script>
+
+
+
+<!-- all content -->
+<div id="all-content-container">
+    <div id="table-container"></div>
+    <div id="overlays-container"></div>
+</div>
