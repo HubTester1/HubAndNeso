@@ -43,11 +43,11 @@ module.exports = {
 			(!p || !screens[selectedScreen].partials[p]) ? 
 				screens[selectedScreen].defaultPartial :
 				p;
-		
 		return (
 			{
 				s: selectedScreen,
 				p: selectedPartialScreen,
+				size: '',
 				screens,
 			}
 		);

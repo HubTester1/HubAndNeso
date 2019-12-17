@@ -10,10 +10,10 @@ module.exports = {
 	// for large screens
 	// augmented fourth scale above 1
 	// minor third scale below 1
-	FontSize: (token, screenType) => {
+	FontSize: (token, screenSize) => {
 		if (token === 'base') {
 			return 1.8;
-		} else if (screenType !== 'small') {
+		} else if (screenSize !== 'small') {
 			switch (token) {
 			case 'xxxl':
 				return `${module.exports.FontSize('base') * 3.998}rem`;
@@ -86,7 +86,7 @@ module.exports = {
 
 	// Z-INDEX
 
-	/* ZIndex: (token, screenType) => {
+	/* ZIndex: (token, screenSize) => {
 		switch (token) {
 			case 'commandBarButtonActive':
 				return '1';

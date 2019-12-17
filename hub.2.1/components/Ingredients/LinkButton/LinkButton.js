@@ -2,24 +2,35 @@
 // import styled from 'styled-components';
 import { connect } from 'react-redux';
 import Button from '../Button/Button.Pres';
-import Style from '../../../services/Style';
+// import Style from '../../../services/Style';
 
 const LinkButton = ({ 
 	newS,
 	newP,
 	handleClick,
+	buttonHeight,
+	iconPosition,
+	iconContent,
+	contentHeight,
+	text,
+	textInvisible,
+	defaultBackgroundColor,
+	defaultContentColor,
+	activeBackgroundColor,
+	activeContentColor,
 }) => (
 	<Button
-		buttonHeight="3"
-		iconPosition="before"
-		iconContent="home"
-		contentHeight="1.8"
-		text="HOME 2"
-		defaultBackgroundColor="transparent"
-		defaultContentColor={Style.Color('interactive-on-dark-default')}
-		activeBackgroundColor="transparent"
-		activeContentColor={Style.Color('interactive-on-dark-active')}
-		clickHandler={() => handleClick('home', 'todayAndRecent')}
+		buttonHeight
+		iconPosition
+		iconContent
+		iconHeight
+		text
+		textInvisible
+		defaultBackgroundColor
+		defaultContentColor
+		activeBackgroundColor
+		activeContentColor
+		clickHandler={() => handleClick(newS, newP)}
 	/>
 );
 

@@ -46,47 +46,59 @@ const InvisibleTextWrapper = styled.span`
 	${Style.InlineHidden()}
 `;
 
-export default props => (
+export default ({
+	clickHandler,
+	buttonHeight,
+	iconPosition,
+	iconContent,
+	contentHeight,
+	text,
+	textInvisible,
+	defaultBackgroundColor,
+	defaultContentColor,
+	activeBackgroundColor,
+	activeContentColor,
+}) => (
 	<ButtonBase
-		onClick={props.clickHandler}
-		buttonHeight={props.buttonHeight}
-		contentHeight={props.contentHeight}
-		defaultBackgroundColor={props.defaultBackgroundColor}
-		defaultContentColor={props.defaultContentColor}
-		activeBackgroundColor={props.activeBackgroundColor}
-		activeContentColor={props.activeContentColor}
+		onClick={clickHandler}
+		buttonHeight={buttonHeight || contentHeight}
+		contentHeight={contentHeight || '1.8'} // TO DO - get font size from Style; need screenSize - Style.FontSize()
+		defaultBackgroundColor={defaultBackgroundColor || 'transparent'}
+		defaultContentColor={defaultContentColor || 'red'}
+		activeBackgroundColor={activeBackgroundColor || 'transparent'}
+		activeContentColor={activeContentColor || 'red'}
 	>
 		{
-			props.iconPosition === 'before' && props.iconContent && 
+			iconPosition === 'before' && iconContent && 
 
 			<Icon
 				iconPosition="before"
-				iconContent={props.iconContent}
-				iconSize={props.contentHeight}
+				iconContent={iconContent}
+				iconSize={contentHeight}
 			/>
 		}
 		{
-			!props.textInvisible &&
+			!textInvisible &&
 
 			<VisibleTextWrapper
-				textSize={props.contentHeight}
-				iconContent={props.iconContent}
+				textSize={contentHeight}
+				iconContent={iconContent}
 			>
-				{props.text}
+				{text}
 			</VisibleTextWrapper>
 		}
 		{
-			props.textInvisible &&
+			textInvisible &&
 
-			<InvisibleTextWrapper>{props.text}</InvisibleTextWrapper>
+			<InvisibleTextWrapper>{text}</InvisibleTextWrapper>
 		}
 		{
-			props.iconPosition === 'after' && props.iconContent &&
+			iconPosition === 'after' && iconContent &&
 
 			<Icon
 				iconPosition="after"
-				iconContent={props.iconContent}
-				iconSize={props.contentHeight}
+				iconContent={iconContent}
+				iconSize={contentHeight}
 			/>
 		}
 	</ButtonBase>

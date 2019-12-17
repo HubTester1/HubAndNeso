@@ -1,7 +1,6 @@
 
 // Primary purpose: compute and inject global styles, get screen type, call Grid
 
-import MediaQuery from 'react-responsive';
 import { connect } from 'react-redux';
 import { createGlobalStyle } from 'styled-components';
 import Style from '../../services/Style';
@@ -90,7 +89,7 @@ const GlobalStyle = createGlobalStyle`
 	b {
 		font-weight: ${Style.FontWeight('bold')};
 	}
-	${({ screenType }) => screenType === 'small' && `
+	${({ screenSize }) => screenSize === 'small' && `
 		body {
 			font-size: ${Style.FontSize('m', 'small')};
 		}
@@ -113,7 +112,7 @@ const GlobalStyle = createGlobalStyle`
 			font-size: ${Style.FontSize('m', 'small')};
 		}
 	`}
-	${({ screenType }) => screenType === 'medium' && `
+	${({ screenSize }) => screenSize === 'medium' && `
 		body {
 			font-size: ${Style.FontSize('m', 'medium')};
 		}
@@ -136,7 +135,7 @@ const GlobalStyle = createGlobalStyle`
 			font-size: ${Style.FontSize('m', 'medium')};
 		}
 	`}
-	${({ screenType }) => screenType === 'large' && `
+	${({ screenSize }) => screenSize === 'large' && `
 		body {
 			font-size: ${Style.FontSize('m', 'large')};
 		}
@@ -166,33 +165,40 @@ const GlobalStyle = createGlobalStyle`
 		z-index: ${Style.ZIndex('smallNav')};
 	} */
 
-const AppContainer = props => (
-	<div id="app-container">
-		<MediaQuery maxWidth={Screen.ReturnSmallMax()}>
+
+const useWindowSize = (dispatch, sData) => {
+	React.useEffect(() => {
+		const updateSize = () => {
+			let screenSize = 'medium';
+			const sDataCopy = JSON.parse(JSON.stringify(sData));
+			if (window.matchMedia(`(max-width: ${Screen.ReturnSmallMax()}px)`).matches) {
+				screenSize = 'small';
+			} else if (window.matchMedia(`(min-width: ${Screen.ReturnLargeMin()}px)`).matches) {
+				screenSize = 'large';
+			}
+			sDataCopy.size = screenSize;
+			dispatch({
+				type: 'SET_SCREEN_DATA',
+				sData: sDataCopy,
+			});
+		};
+		window.addEventListener('resize', updateSize);
+		updateSize();
+		return () => window.removeEventListener('resize', updateSize);
+	}, []);
+};
+
+const AppContainer = ({ uData, sData, dispatch }) => {
+	useWindowSize(dispatch, sData);
+	return (
+		<div id="app-container">
 			<GlobalStyle
-				screenType="small"
-				colorMode={props.uData.user.preferences.colorMode}
+				screenSize={sData.size}
+				colorMode={uData.user.preferences.colorMode}
 			/>
-			<Grid screenType="small" />
-		</MediaQuery>
-		<MediaQuery
-			minWidth={Screen.ReturnMediumMin()}
-			maxWidth={Screen.ReturnMediumMax()}
-		>
-			<GlobalStyle
-				screenType="medium"
-				colorMode={props.uData.user.preferences.colorMode}
-			/>
-			<Grid screenType="medium" />
-		</MediaQuery>
-		<MediaQuery minWidth={Screen.ReturnLargeMin()}>
-			<GlobalStyle
-				screenType="large"
-				colorMode={props.uData.user.preferences.colorMode}
-			/>
-			<Grid screenType="large" />
-		</MediaQuery>
-	</div>
-);
+			<Grid screenSize={sData.size} />
+		</div>
+	); 
+};
 
 export default connect(state => state)(AppContainer);

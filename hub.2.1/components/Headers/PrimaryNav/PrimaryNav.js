@@ -7,7 +7,7 @@ import Style from '../../../services/Style';
 import LinkButton from '../../Ingredients/LinkButton/LinkButton';
 
 const Header = styled.header`
-	${props => props.screenType !== 'small' && `
+	${props => props.screenSize !== 'small' && `
 		height: 100%;
 		width: 6.8rem;
 		position: fixed;
@@ -16,7 +16,7 @@ const Header = styled.header`
 		left: 0;
 		overflow-x: hidden;
 	`}
-	${props => props.screenType === 'small' && `
+	${props => props.screenSize === 'small' && `
 		grid-area: bottom;
 		position: fixed;
 		bottom: 0;
@@ -48,9 +48,9 @@ const NavListItem = styled.li`
 	font-size: ${Style.FontSize('m', 'medium')};
 	font-weight: ${Style.FontWeight('light')};
 `;
-const PrimaryNav = ({ screenType, uData }) => (
+const PrimaryNav = ({ sData, uData }) => (
 	<Header
-		screenType={screenType}
+		screenSize={sData.size}
 		role="banner"
 		darkMode={uData.user.preferences.darkMode}
 	>
@@ -63,6 +63,11 @@ const PrimaryNav = ({ screenType, uData }) => (
 					<LinkButton
 						newS="home"
 						newP="todayAndRecent"
+						buttonHeight="3"
+						iconPosition="before"
+						iconContent="home"
+						contentHeight="1.8"
+						text="HOME 2"
 					/>
 				</NavListItem>
 				<NavListItem>
