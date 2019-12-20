@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 
 module.exports = {
 	
@@ -84,26 +85,63 @@ module.exports = {
 		}
 	},
 
+	// TRANSITIONS, ANIMATION
+
+	StandardTransitionTime: () => '.25s',
+
+
+	// HIDDEN
+
+	BlockHidden: () =>
+		`display: block;
+		width: 0;
+		height: 0;
+		padding: 0;
+		text-indent: 100%;
+		white-space: nowrap;
+		overflow: hidden;`,
+	OverrideBlockHidden: () =>
+		`display: block;
+		width: auto;
+		height: auto;
+		text-indent: 0;
+		white-space: normal;
+		overflow: visible;`,
+	InlineHidden: () =>
+		`display: inline-block;
+		width: 0;
+		height: 0;
+		text-indent: 100%;
+		white-space: nowrap;
+		overflow: hidden;`,
+	TableColumnHidden: () =>
+		`display: table-cell;
+		width: 0;
+		height: 0;
+		text-indent: 100%;
+		white-space: nowrap;
+		overflow: hidden;`,
+
+
+	// ALIGNMENT
+
+
+	VerticalAlignMiddle: () =>
+		`position: relative;
+		top: 50%;
+		transform: translateY(-50%);`,
+
+
 	// Z-INDEX
 
-	/* ZIndex: (token, screenSize) => {
+	ZIndex: (token) => {
 		switch (token) {
-			case 'commandBarButtonActive':
-				return '1';
-			case 'commandBarButtonActive:':
-				return '1';
-			case 'stickyHeader:':
-				return '1000';
-			case 'modalFullMessage:':
-				return '2000';
-			case 'modalFullImage:':
-				return '2010';
-			case 'overlayScreenContainer:':
-				return '3000';
-			case 'overlayScreen:':
-				return '3001';
+			case 'smallNav':
+				return 1000;
+			default:
+				return 'auto';
 		}
-	}, */
+	},
 
 	// COLORS
 
@@ -120,6 +158,143 @@ module.exports = {
 
 	Color: (token, darkMode) => {
 		switch (token) {
+
+			// CONTEXT COLORS
+
+			// base, elevations, text
+
+			case 'ux-base':
+				if (darkMode) {
+					return module.exports.Color('grey-26');
+				}
+				return module.exports.Color('white');
+			case 'ux-l-1': // 1 dp
+				if (darkMode) {
+					return module.exports.Color('white-5-percent');
+				}
+				return module.exports.Color('grey-02');
+			case 'ux-l-2': // 2 dp
+				if (darkMode) {
+					return module.exports.Color('white-7-percent');
+				}
+				return module.exports.Color('grey-05');
+			case 'ux-l-3': // 3 dp
+				if (darkMode) {
+					return module.exports.Color('white-8-percent');
+				}
+				return module.exports.Color('black-8-percent');
+			case 'ux-l-4': // 4 dp
+				if (darkMode) {
+					return module.exports.Color('white-9-percent');
+				}
+				return module.exports.Color('black-9-percent');
+			case 'ux-l-5': // 6 dp
+				if (darkMode) {
+					return module.exports.Color('white-11-percent');
+				}
+				return module.exports.Color('black-11-percent');
+			case 'ux-l-6': // 8 dp
+				if (darkMode) {
+					return module.exports.Color('white-12-percent');
+				}
+				return module.exports.Color('black-12-percent');
+			case 'ux-l-7': // 12 dp
+				if (darkMode) {
+					return module.exports.Color('white-14-percent');
+				}
+				return module.exports.Color('black-14-percent');
+			case 'ux-l-8': // 16 dp
+				if (darkMode) {
+					return module.exports.Color('white-15-percent');
+				}
+				return module.exports.Color('black-15-percent');
+			case 'ux-l-9': // 24 dp
+				if (darkMode) {
+					return module.exports.Color('white-16-percent');
+				}
+				return module.exports.Color('black-16-percent');
+
+			case 'ux-base-text':
+				if (darkMode) {
+					return module.exports.Color('white');
+				}
+				return module.exports.Color('grey-26');
+
+			// selected hues
+
+			case 'ux-pink-1':
+				if (darkMode) {
+					return module.exports.Color('pink-4');
+				}
+				return module.exports.Color('pink-7');
+			case 'ux-orange-1':
+				if (darkMode) {
+					return module.exports.Color('orange-4');
+				}
+				return module.exports.Color('orange-2');
+			case 'ux-yellow-1':
+				if (darkMode) {
+					return module.exports.Color('yellow-4');
+				}
+				return module.exports.Color('yellow-2');
+			case 'ux-teal-1':
+				if (darkMode) {
+					return module.exports.Color('teal-4');
+				}
+				return module.exports.Color('teal-2');
+			case 'ux-green-1':
+				if (darkMode) {
+					return module.exports.Color('green-4');
+				}
+				return module.exports.Color('green-7');
+			case 'ux-blue-1':
+				if (darkMode) {
+					return module.exports.Color('blue-4');
+				}
+				return module.exports.Color('blue-7');
+			case 'ux-aqua-1':
+				if (darkMode) {
+					return module.exports.Color('aqua-4');
+				}
+				return module.exports.Color('aqua-7');
+			case 'ux-purple-1':
+				if (darkMode) {
+					return module.exports.Color('purple-4');
+				}
+				return module.exports.Color('purple-7');
+
+			// cases
+
+			case 'interactive-default':
+				if (darkMode) {
+					return module.exports.Color('pink-4');
+				}
+				return module.exports.Color('pink-7');
+			case 'interactive-active':
+				if (darkMode) {
+					return module.exports.Color('pink-4');
+				}
+				return module.exports.Color('pink-8');
+			case 'error':
+				if (darkMode) {
+					return module.exports.Color('pink-4');
+				}
+				return module.exports.Color('pink-8');
+
+
+
+
+
+
+
+
+
+
+
+
+
+			// COLOR DEFS
+
 			default:
 			case 'black':
 				return '#000000';
@@ -172,11 +347,11 @@ module.exports = {
 			case 'grey-23':
 				return '#242424';
 			case 'grey-24':
-				return '#222222';
+				return '#212121';
 			case 'grey-25':
 				return '#1f1f1f';
 			case 'grey-26':
-				return '#111111';
+				return '#121212';
 
 			// --- PRIMARY
 
@@ -412,6 +587,8 @@ module.exports = {
 			// ALPHA COLORS
 			// ------------------
 
+			// BLACK
+
 			case 'black-5-percent':
 				return `rgba(${module.exports.ReturnRGBFromHex(module.exports.Color('black'))}, .05)`;
 			case 'black-10-percent':
@@ -432,6 +609,52 @@ module.exports = {
 				return `rgba(${module.exports.Color('black')}, .8)`;
 			case 'black-90-percent':
 				return `rgba(${module.exports.Color('black')}, .9)`;
+
+			// WHITE
+
+			case 'white-5-percent':
+				return `rgba(${module.exports.Color('white')}, .05)`;
+			case 'white-7-percent':
+				return `rgba(${module.exports.Color('white')}, .07)`;
+			case 'white-8-percent':
+				return `rgba(${module.exports.Color('white')}, .08)`;
+			case 'white-9-percent':
+				return `rgba(${module.exports.Color('white')}, .09)`;
+			case 'white-10-percent':
+				return `rgba(${module.exports.Color('white')}, .1)`;
+			case 'white-11-percent':
+				return `rgba(${module.exports.Color('white')}, .11)`;
+			case 'white-12-percent':
+				return `rgba(${module.exports.Color('white')}, .12)`;
+			case 'white-14-percent':
+				return `rgba(${module.exports.Color('white')}, .14)`;
+			case 'white-15-percent':
+				return `rgba(${module.exports.Color('white')}, .15)`;
+			case 'white-16-percent':
+				return `rgba(${module.exports.Color('white')}, .16)`;
+			case 'white-20-percent':
+				return `rgba(${module.exports.Color('white')}, .2)`;
+			case 'white-30-percent':
+				return `rgba(${module.exports.Color('white')}, .3)`;
+			case 'white-40-percent':
+				return `rgba(${module.exports.Color('white')}, .4)`;
+			case 'white-50-percent':
+				return `rgba(${module.exports.Color('white')}, .5)`;
+			case 'white-60-percent':
+				return `rgba(${module.exports.Color('white')}, .6)`;
+			case 'white-70-percent':
+				return `rgba(${module.exports.Color('white')}, .7)`;
+			case 'white-80-percent':
+				return `rgba(${module.exports.Color('white')}, .8)`;
+			case 'white-90-percent':
+				return `rgba(${module.exports.Color('white')}, .9)`;
+			case 'white-95-percent':
+				return `rgba(${module.exports.Color('white')}, .95)`;
+
+
+
+
+
 			case 'grey-17-10-percent':
 				return `rgba(${module.exports.Color('grey-17')}, .1)`;
 			case 'grey-17-20-percent':
@@ -472,30 +695,9 @@ module.exports = {
 				return `rgba(${module.exports.Color('grey-18')}, .9)`;
 			case 'grey-18-95-percent':
 				return `rgba(${module.exports.Color('grey-18')}, .95)`;
-			case 'white-5-percent':
-				return `rgba(${module.exports.Color('white')}, .05)`;
-			case 'white-10-percent':
-				return `rgba(${module.exports.Color('white')}, .1)`;
-			case 'white-20-percent':
-				return `rgba(${module.exports.Color('white')}, .2)`;
-			case 'white-30-percent':
-				return `rgba(${module.exports.Color('white')}, .3)`;
-			case 'white-40-percent':
-				return `rgba(${module.exports.Color('white')}, .4)`;
-			case 'white-50-percent':
-				return `rgba(${module.exports.Color('white')}, .5)`;
-			case 'white-60-percent':
-				return `rgba(${module.exports.Color('white')}, .6)`;
-			case 'white-70-percent':
-				return `rgba(${module.exports.Color('white')}, .7)`;
-			case 'white-80-percent':
-				return `rgba(${module.exports.Color('white')}, .8)`;
-			case 'white-90-percent':
-				return `rgba(${module.exports.Color('white')}, .9)`;
-			case 'white-95-percent':
-				return `rgba(${module.exports.Color('white')}, .95)`;
 
 			// YELLOW
+
 			case 'yellow-1-10-percent':
 				return `rgba(${module.exports.Color('yellow-1')}, .1)`;
 			case 'yellow-1-20-percent':
@@ -590,104 +792,6 @@ module.exports = {
 				return `rgba(${module.exports.Color('yellow-5')}, .8)`;
 			case 'yellow-5-90-percent':
 				return `rgba(${module.exports.Color('yellow-5')}, .9)`;
-
-			// AQUA
-
-			case 'aqua-1-10-percent':
-				return `rgba(${module.exports.Color('aqua-1')}, .1)`;
-			case 'aqua-1-20-percent':
-				return `rgba(${module.exports.Color('aqua-1')}, .2)`;
-			case 'aqua-1-30-percent':
-				return `rgba(${module.exports.Color('aqua-1')}, .3)`;
-			case 'aqua-1-40-percent':
-				return `rgba(${module.exports.Color('aqua-1')}, .4)`;
-			case 'aqua-1-50-percent':
-				return `rgba(${module.exports.Color('aqua-1')}, .5)`;
-			case 'aqua-1-60-percent':
-				return `rgba(${module.exports.Color('aqua-1')}, .6)`;
-			case 'aqua-1-70-percent':
-				return `rgba(${module.exports.Color('aqua-1')}, .7)`;
-			case 'aqua-1-80-percent':
-				return `rgba(${module.exports.Color('aqua-1')}, .8)`;
-			case 'aqua-1-90-percent':
-				return `rgba(${module.exports.Color('aqua-1')}, .9)`;
-
-			case 'aqua-2-10-percent':
-				return `rgba(${module.exports.Color('aqua-2')}, .1)`;
-			case 'aqua-2-20-percent':
-				return `rgba(${module.exports.Color('aqua-2')}, .2)`;
-			case 'aqua-2-30-percent':
-				return `rgba(${module.exports.Color('aqua-2')}, .3)`;
-			case 'aqua-2-40-percent':
-				return `rgba(${module.exports.Color('aqua-2')}, .4)`;
-			case 'aqua-2-50-percent':
-				return `rgba(${module.exports.Color('aqua-2')}, .5)`;
-			case 'aqua-2-60-percent':
-				return `rgba(${module.exports.Color('aqua-2')}, .6)`;
-			case 'aqua-2-70-percent':
-				return `rgba(${module.exports.Color('aqua-2')}, .7)`;
-			case 'aqua-2-80-percent':
-				return `rgba(${module.exports.Color('aqua-2')}, .8)`;
-			case 'aqua-2-90-percent':
-				return `rgba(${module.exports.Color('aqua-2')}, .9)`;
-
-			case 'aqua-3-10-percent':
-				return `rgba(${module.exports.Color('aqua-3')}, .1)`;
-			case 'aqua-3-20-percent':
-				return `rgba(${module.exports.Color('aqua-3')}, .2)`;
-			case 'aqua-3-30-percent':
-				return `rgba(${module.exports.Color('aqua-3')}, .3)`;
-			case 'aqua-3-40-percent':
-				return `rgba(${module.exports.Color('aqua-3')}, .4)`;
-			case 'aqua-3-50-percent':
-				return `rgba(${module.exports.Color('aqua-3')}, .5)`;
-			case 'aqua-3-60-percent':
-				return `rgba(${module.exports.Color('aqua-3')}, .6)`;
-			case 'aqua-3-70-percent':
-				return `rgba(${module.exports.Color('aqua-3')}, .7)`;
-			case 'aqua-3-80-percent':
-				return `rgba(${module.exports.Color('aqua-3')}, .8)`;
-			case 'aqua-3-90-percent':
-				return `rgba(${module.exports.Color('aqua-3')}, .9)`;
-
-			case 'aqua-4-10-percent':
-				return `rgba(${module.exports.Color('aqua-4')}, .1)`;
-			case 'aqua-4-20-percent':
-				return `rgba(${module.exports.Color('aqua-4')}, .2)`;
-			case 'aqua-4-30-percent':
-				return `rgba(${module.exports.Color('aqua-4')}, .3)`;
-			case 'aqua-4-40-percent':
-				return `rgba(${module.exports.Color('aqua-4')}, .4)`;
-			case 'aqua-4-50-percent':
-				return `rgba(${module.exports.Color('aqua-4')}, .5)`;
-			case 'aqua-4-60-percent':
-				return `rgba(${module.exports.Color('aqua-4')}, .6)`;
-			case 'aqua-4-70-percent':
-				return `rgba(${module.exports.Color('aqua-4')}, .7)`;
-			case 'aqua-4-80-percent':
-				return `rgba(${module.exports.Color('aqua-4')}, .8)`;
-			case 'aqua-4-90-percent':
-				return `rgba(${module.exports.Color('aqua-4')}, .9)`;
-
-			case 'aqua-5-10-percent':
-				return `rgba(${module.exports.Color('aqua-5')}, .1)`;
-			case 'aqua-5-20-percent':
-				return `rgba(${module.exports.Color('aqua-5')}, .2)`;
-			case 'aqua-5-30-percent':
-				return `rgba(${module.exports.Color('aqua-5')}, .3)`;
-			case 'aqua-5-40-percent':
-				return `rgba(${module.exports.Color('aqua-5')}, .4)`;
-			case 'aqua-5-50-percent':
-				return `rgba(${module.exports.Color('aqua-5')}, .5)`;
-			case 'aqua-5-60-percent':
-				return `rgba(${module.exports.Color('aqua-5')}, .6)`;
-			case 'aqua-5-70-percent':
-				return `rgba(${module.exports.Color('aqua-5')}, .7)`;
-			case 'aqua-5-80-percent':
-				return `rgba(${module.exports.Color('aqua-5')}, .8)`;
-			case 'aqua-5-90-percent':
-				return `rgba(${module.exports.Color('aqua-5')}, .9)`;
-
 
 			// GREEN
 
@@ -1861,147 +1965,6 @@ module.exports = {
 				return `rgba(${module.exports.Color('purple-10')}, .8)`;
 			case 'purple-10-90-percent':
 				return `rgba(${module.exports.Color('purple-10')}, .9)`;
-
-
-
-
-
-			// CONTEXT COLORS
-
-			/* case 'interactive-default':
-				return 'aqua-7';
-			case 'interactive-active':
-				return 'aqua-8';
-			case 'interactive-default-darkened-1':
-				return 'aqua-8';
-			case 'interactive-active-darkened-1':
-				return 'aqua-9';
-			case 'interactive-default-darkened-2':
-				return 'aqua-9';
-			case 'interactive-active-darkened-2':
-				return 'aqua-10';
-			case 'interactive-light':
-				return 'aqua-1';
-			case 'interactive-light-active':
-				return 'aqua-2';
-			case 'text-on-interactive-default':
-				return 'white';
-			case 'text-on-interactive-active':
-				return 'white';
-			case 'text-on-interactive-light':
-				return 'aqua-7';
-			case 'text-on-interactive-light-active':
-				return 'aqua-9'; */
-
-
-
-
-			case 'interface1':
-				if (darkMode) {
-					return module.exports.Color('grey-25');
-				}
-				return module.exports.Color('white');
-			case 'interface2':
-				if (darkMode) {
-					return module.exports.Color('grey-23');
-				}
-				return module.exports.Color('grey-01');
-			case 'interface3':
-				if (darkMode) {
-					return module.exports.Color('grey-22');
-				}
-				return module.exports.Color('grey-02');
-			case 'interface4':
-				if (darkMode) {
-					return module.exports.Color('grey-21');
-				}
-				return module.exports.Color('grey-04');
-			case 'interface5':
-				if (darkMode) {
-					return module.exports.Color('grey-20');
-				}
-				return module.exports.Color('grey-05');
-			case 'interface6':
-				if (darkMode) {
-					return module.exports.Color('grey-19');
-				}
-				return module.exports.Color('grey-06');
-
-
-
-
-
-
-
-			case 'bodyColor':
-				return module.exports.Color('interface1', darkMode);
-
-			case 'backgroundColor':
-				return module.exports.Color('interface1', !darkMode);
-
-			case 'interactiveDefault':
-				if (darkMode) {
-					return module.exports.Color('interactive-on-dark-default');
-				}
-				return module.exports.Color('interactive-on-light-default');
-		}
-	},
-
-
-	// TRANSITIONS, ANIMATION
-
-	StandardTransitionTime: () => '.25s',
-
-
-	// HIDDEN
-
-	BlockHidden: () =>
-		`display: block;
-		width: 0;
-		height: 0;
-		padding: 0;
-		text-indent: 100%;
-		white-space: nowrap;
-		overflow: hidden;`,
-	OverrideBlockHidden: () =>
-		`display: block;
-		width: auto;
-		height: auto;
-		text-indent: 0;
-		white-space: normal;
-		overflow: visible;`,
-	InlineHidden: () =>
-		`display: inline-block;
-		width: 0;
-		height: 0;
-		text-indent: 100%;
-		white-space: nowrap;
-		overflow: hidden;`,
-	TableColumnHidden: () =>
-		`display: table-cell;
-		width: 0;
-		height: 0;
-		text-indent: 100%;
-		white-space: nowrap;
-		overflow: hidden;`,
-
-
-	// ALIGNMENT
-
-
-	VerticalAlignMiddle: () =>
-		`position: relative;
-		top: 50%;
-		transform: translateY(-50%);`,
-
-
-	// Z-INDEX
-
-	ZIndex: (token) => {
-		switch (token) {
-		case 'smallNav':
-			return 1000;
-		default: 'auto';
 		}
 	},
 };

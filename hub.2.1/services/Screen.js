@@ -17,6 +17,9 @@ module.exports = {
 					pinned: {
 						title: 'Pinned',
 					},
+					ux: {
+						title: 'UX',
+					},
 				},
 			},
 			messages: {

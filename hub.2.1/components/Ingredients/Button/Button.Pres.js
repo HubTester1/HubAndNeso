@@ -2,6 +2,7 @@
 // --- IMPORTS
 
 import * as React from 'react';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 import Icon from '../Icon/Icon.Pres';
 import Style from '../../../services/Style';
@@ -46,7 +47,9 @@ const InvisibleTextWrapper = styled.span`
 	${Style.InlineHidden()}
 `;
 
-export default ({
+const Button = ({
+	sData,
+	uData,
 	clickHandler,
 	buttonHeight,
 	iconPosition,
@@ -62,11 +65,17 @@ export default ({
 	<ButtonBase
 		onClick={clickHandler}
 		buttonHeight={buttonHeight || contentHeight}
-		contentHeight={contentHeight || '1.8'} // TO DO - get font size from Style; need screenSize - Style.FontSize()
+		contentHeight={contentHeight || Style.FontSize('m', sData.size)}
 		defaultBackgroundColor={defaultBackgroundColor || 'transparent'}
-		defaultContentColor={defaultContentColor || 'red'}
+		defaultContentColor={
+			defaultContentColor || 
+			Style.Color('interactive-default', uData.user.preferences.darkMode)
+		}
 		activeBackgroundColor={activeBackgroundColor || 'transparent'}
-		activeContentColor={activeContentColor || 'red'}
+		activeContentColor={
+			activeContentColor || 
+			Style.Color('interactive-active', uData.user.preferences.darkMode)
+		}
 	>
 		{
 			iconPosition === 'before' && iconContent && 
@@ -103,3 +112,5 @@ export default ({
 		}
 	</ButtonBase>
 );
+
+export default connect(state => state)(Button);

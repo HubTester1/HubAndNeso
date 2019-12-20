@@ -24,7 +24,7 @@ const Header = styled.header`
 		left: 0;
 	`}
 	z-index: 999;
-	background-color: ${props => (Style.Color('interface2', props.darkMode))};
+	background-color: ${props => (Style.Color('ux-l-1', props.darkMode))};
 `;
 const SiteTitleElement = styled.h1.attrs(props => ({
 	role: 'heading',

@@ -18,8 +18,8 @@ const GlobalStyle = createGlobalStyle`
 	body {
 		font-weight: ${Style.FontWeight('light')};
 		margin: 0;
-		background-color: ${props => (Style.Color('backgroundColor', props.colorMode))};
-		color: ${props => (Style.Color('bodyColor', props.colorMode))};
+		background-color: ${props => (Style.Color('ux-base', props.darkMode))};
+		color: ${props => (Style.Color('ux-base-text', props.darkMode))};
 		text-align: left;
 	}
 	h1 {
@@ -73,14 +73,14 @@ const GlobalStyle = createGlobalStyle`
 	a,
 	a:visited {
 		text-decoration: none;
-		color: ${props => (Style.Color('interactiveDefault', props.colorMode))};
+		color: ${props => (Style.Color('interactive-default', props.darkMode))};
 		transition: color .25s;
-		border-bottom: .1rem dotted ${props => (Style.Color('interactiveDefault', props.colorMode))};
+		border-bottom: .1rem dotted ${props => (Style.Color('interactive-default', props.darkMode))};
 
 		&:hover,
 		&:active {
-			color: ${props => (Style.Color('interactiveActive', props.colorMode))};
-			border-bottom: .1rem dotted ${props => (Style.Color('interactiveActive', props.colorMode))};
+			color: ${props => (Style.Color('interactive-active', props.darkMode))};
+			border-bottom: .1rem dotted ${props => (Style.Color('interactive-active', props.darkMode))};
 		}
 	}
 	em {
@@ -167,6 +167,7 @@ const GlobalStyle = createGlobalStyle`
 
 
 const useWindowSize = (dispatch, sData) => {
+	// eslint-disable-next-line no-undef
 	React.useEffect(() => {
 		const updateSize = () => {
 			let screenSize = 'medium';
@@ -194,7 +195,7 @@ const AppContainer = ({ uData, sData, dispatch }) => {
 		<div id="app-container">
 			<GlobalStyle
 				screenSize={sData.size}
-				colorMode={uData.user.preferences.colorMode}
+				darkMode={uData.user.preferences.darkMode}
 			/>
 			<Grid screenSize={sData.size} />
 		</div>

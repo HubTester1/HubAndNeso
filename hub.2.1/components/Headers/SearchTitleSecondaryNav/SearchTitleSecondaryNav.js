@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import Style from '../../../services/Style';
 
 const Wrapper = styled.div`
-	background-color: ${props => (Style.Color('interface2', props.darkMode))};
+	background-color: ${props => (Style.Color('ux-l-1', props.darkMode))};
 `;
 const Header = styled.header`
 	height: 5rem;
@@ -15,7 +15,7 @@ const Header = styled.header`
 `;
 const Tab = styled.p`
 	${({ selected }) => selected && `
-		border-bottom: ${props => (Style.Color('interface1', props.darkMode))};
+		border-bottom: ${props => (Style.Color('ux-l-1', props.darkMode))};
 	`}
 `;
 const ScreenTitleElement = styled.h2.attrs(props => ({
@@ -52,12 +52,12 @@ const SearchTitleSecondaryNav = ({
 					{
 						hData.headerStuck &&
 
-				<p>This is stuck.</p>
+						<p>This is stuck.</p>
 					}
 					{
 						!hData.headerStuck &&
 
-				<p>This is NOT stuck.</p>
+						<p>This is NOT stuck.</p>
 					}
 				</Header>
 				<ScreenTitleElement>{screenTitle}</ScreenTitleElement>
