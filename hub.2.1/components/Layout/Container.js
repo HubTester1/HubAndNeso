@@ -73,9 +73,9 @@ const GlobalStyle = createGlobalStyle`
 	a,
 	a:visited {
 		text-decoration: none;
-		color: ${props => (Style.Color('interactive-default', props.darkMode))};
+		color: ${props => (Style.Color('ux-interactive-default', props.darkMode))};
 		transition: color .25s;
-		border-bottom: .1rem dotted ${props => (Style.Color('interactive-default', props.darkMode))};
+		border-bottom: .1rem dotted ${props => (Style.Color('ux-interactive-default', props.darkMode))};
 
 		&:hover,
 		&:active {

@@ -69,7 +69,7 @@ const Button = ({
 		defaultBackgroundColor={defaultBackgroundColor || 'transparent'}
 		defaultContentColor={
 			defaultContentColor || 
-			Style.Color('interactive-default', uData.user.preferences.darkMode)
+			Style.Color('ux-interactive-default', uData.user.preferences.darkMode)
 		}
 		activeBackgroundColor={activeBackgroundColor || 'transparent'}
 		activeContentColor={
