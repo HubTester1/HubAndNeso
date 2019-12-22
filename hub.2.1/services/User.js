@@ -66,31 +66,61 @@ export default class User {
 	static ReturnUData(u, o) {
 		// return a new promise
 		return new Promise((resolve, reject) => {
-			resolve({
-				error: false,
-				uData: {
-					u: 'jbaker',
-					o: 'sp1',
-					user: {
-						email: 'jbaker@mos.org',
-						displayName: 'James Baker',
-						account: 'jbaker',
-						accountLong: 'i:0#.f|membership|jbaker@mos.org',
-						roles: [
-							'admin',
-							'componentGrpAdmin',
-							'o365GlobalAdmin',
-						],
-						preferences: {
-							darkMode: true,
-							pinned: [
-								'Network Access Request',
-								'Equipment Loan Request',
+			let userToReturn = u;
+			if (!userToReturn) {
+				userToReturn = 'jbaker';
+			}
+			if (u === 'jbaker' && o) {
+				userToReturn = o;
+			}
+
+			if (userToReturn === 'jbaker') {
+				resolve({
+					error: false,
+					uData: {
+						u: 'jbaker',
+						o: 'sp1',
+						user: {
+							email: 'jbaker@mos.org',
+							displayName: 'James Baker',
+							account: 'jbaker',
+							accountLong: 'i:0#.f|membership|jbaker@mos.org',
+							roles: [
+								'admin',
+								'componentGrpAdmin',
+								'o365GlobalAdmin',
 							],
+							preferences: {
+								darkMode: true,
+								pinned: [
+									'Network Access Request',
+									'Equipment Loan Request',
+								],
+							},
 						},
 					},
-				},
-			});
+				});
+			} else {
+				resolve({
+					error: false,
+					uData: {
+						u: 'jbaker',
+						o: 'sp1',
+						user: {
+							email: 'sp1@mos.org',
+							displayName: 'Hub Tester1',
+							account: 'sp1',
+							accountLong: 'i:0#.f|membership|sp1@mos.org',
+							roles: [],
+							preferences: {
+								darkMode: false,
+								pinned: [],
+							},
+						},
+					},
+				});
+			}
+
 			
 			/* // collect data async from multiple sources
 			const userDataQueryPromises = [

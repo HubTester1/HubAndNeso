@@ -143,6 +143,73 @@ module.exports = {
 		}
 	},
 
+	/* Elevation: (distanceFromBase, distanceFromPreviousLayer, darkMode) => {
+		const overlayColor = module.exports.Color('ux-overlay', darkMode, 0.05);
+		const overlayColorAlpha = module.exports.Color('ux-overlay', darkMode, 0.05);
+		const baseColor = module.exports.Color('ux-base', darkMode);
+		return `linear-gradient(to right, ${overlayColor}, ${overlayColor}),
+							linear-gradient(to right, ${baseColor}, ${baseColor})`;
+	}, */
+
+	// SHADOWS
+	/* offset-x | offset-y | blur-radius | spread-radius | color */
+	Shadow: (shadowToken) => {
+		switch (shadowToken) {
+			case 'ux-l-1':
+				return `0 0.4px .9px rgba(0, 0, 0, 0.13),
+						0 0.8px .22px rgba(0, 0, 0, 0.11)`;
+			case 'ux-l-2':
+				return `0 0.8px 1.8px rgba(0, 0, 0, 0.13),
+						0 0.15px .45px rgba(0, 0, 0, 0.11)`;
+			case 'ux-l-3':
+				return `0 1.2px 2.7px rgba(0, 0, 0, 0.13),
+						0 .22px .68px rgba(0, 0, 0, 0.11)`;
+			case 'ux-l-4':
+				return `0 1.6px 5.4px rgba(0, 0, 0, 0.13),
+						0 .3px .9px rgba(0, 0, 0, 0.11)`;
+			case 'ux-l-6':
+				return `0 2.4px 5.4px rgba(0, 0, 0, 0.13),
+						0 0.45px 1.35px rgba(0, 0, 0, 0.11)`;
+			case 'ux-l-8':
+			default:
+				return `0 3.2px 7.2px rgba(0, 0, 0, 0.13),
+						0 0.6px 1.8px rgba(0, 0, 0, 0.11)`;
+			case 'ux-l-9':
+				return `0 3.6px 8.1px rgba(0, 0, 0, 0.13),
+						0 0.68px 2.03px rgba(0, 0, 0, 0.11)`;
+			case 'ux-l-12':
+				return `0 4.8px 10.8px rgba(0, 0, 0, 0.13),
+						0 0.9px 2.7px rgba(0, 0, 0, 0.11)`;
+			case 'ux-l-16':
+				return `0 6.4px 14.4px rgba(0, 0, 0, 0.13),
+						0 1.2px 3.6px rgba(0, 0, 0, 0.11)`;
+			case 'ux-l-24':
+				return `0 9.6px 21.6px rgba(0, 0, 0, 0.13),
+						0 1.8px 5.4px rgba(0, 0, 0, 0.11)`;
+			case 'ux-l-32':
+				return `0 12.8px 28.8px rgba(0, 0, 0, 0.22),
+						0 2.4px 7.2px rgba(0, 0, 0, 0.18)`;
+			case 'ux-l-40':
+				return `0 16px 36px rgba(0, 0, 0, 0.22),
+						0 3px 9px rgba(0, 0, 0, 0.18)`;
+			case 'ux-l-48':
+				return `0 19.2px 43.2px rgba(0, 0, 0, 0.22),
+						0 3.8px 10.8px rgba(0, 0, 0, 0.18)`;
+			case 'ux-l-64':
+				return `0 25.6px 57.6px rgba(0, 0, 0, 0.22),
+						0 4.8px 14.4px rgba(0, 0, 0, 0.18)`;
+			case 'ux-l-80':
+				return `0 32px 72px rgba(0, 0, 0, 0.22),
+						0 6px 18px rgba(0, 0, 0, 0.18)`;
+			case 'ux-l-96':
+				return `0 38.4px 86.4px rgba(0, 0, 0, 0.22),
+						0 7.2px 21.6px rgba(0, 0, 0, 0.18)`;
+			case 'ux-l-192':
+				return `0 76.8px 172.8px rgba(0, 0, 0, 0.13),
+						0 14.4px 43.2px rgba(0, 0, 0, 0.11)`;
+		}
+	},
+
 	// COLORS
 
 	Color: (colorToken, darkMode, alpha) => {
@@ -161,52 +228,57 @@ module.exports = {
 				if (darkMode) {
 					return module.exports.Color('grey-26');
 				}
-				return module.exports.Color('white');
-			case 'ux-l-1': // 1 dp
-				if (darkMode) {
-					return module.exports.Color('white', null, 0.05);
-				}
-				return module.exports.Color('grey-02');
-			case 'ux-l-2': // 2 dp
-				if (darkMode) {
-					return module.exports.Color('white', null, 0.07);
-				}
 				return module.exports.Color('grey-05');
+			/* case 'ux-overlay':
+				if (darkMode) {
+					return module.exports.Color('white');
+				}
+				return module.exports.Color('black'); */
+			case 'ux-l-1': // 1 dp
+				/* if (darkMode) {
+					return module.exports.Color('white', null, 0.05);
+				} */
+				return module.exports.Color('white', null, 0.05);
+			case 'ux-l-2': // 2 dp
+				/* if (darkMode) {
+					return module.exports.Color('white', null, 0.07);
+				} */
+				return module.exports.Color('white', null, 0.07);
 			case 'ux-l-3': // 3 dp
-				if (darkMode) {
+				/* if (darkMode) {
 					return module.exports.Color('white', null, 0.08);
-				}
-				return module.exports.Color('black', null, 0.08);
+				} */
+				return module.exports.Color('white', null, 0.08);
 			case 'ux-l-4': // 4 dp
-				if (darkMode) {
+				/* if (darkMode) {
 					return module.exports.Color('white', null, 0.09);
-				}
-				return module.exports.Color('black', null, 0.09);
+				} */
+				return module.exports.Color('white', null, 0.09);
 			case 'ux-l-5': // 6 dp
-				if (darkMode) {
+				/* if (darkMode) {
 					return module.exports.Color('white', null, 0.11);
-				}
-				return module.exports.Color('black', null, 0.11);
+				} */
+				return module.exports.Color('white', null, 0.11);
 			case 'ux-l-6': // 8 dp
-				if (darkMode) {
+				/* if (darkMode) {
 					return module.exports.Color('white', null, 0.12);
-				}
-				return module.exports.Color('black', null, 0.12);
+				} */
+				return module.exports.Color('white', null, 0.12);
 			case 'ux-l-7': // 12 dp
-				if (darkMode) {
+				/* if (darkMode) {
 					return module.exports.Color('white', null, 0.14);
-				}
-				return module.exports.Color('black', null, 0.14);
+				} */
+				return module.exports.Color('white', null, 0.14);
 			case 'ux-l-8': // 16 dp
-				if (darkMode) {
+				/* if (darkMode) {
 					return module.exports.Color('white', null, 0.15);
-				}
-				return module.exports.Color('black', null, 0.15);
+				} */
+				return module.exports.Color('white', null, 0.15);
 			case 'ux-l-9': // 24 dp
-				if (darkMode) {
+				/* if (darkMode) {
 					return module.exports.Color('white', null, 0.16);
-				}
-				return module.exports.Color('black', null, 0.16);
+				} */
+				return module.exports.Color('white', null, 0.16);
 
 			case 'ux-base-text':
 				if (darkMode) {
@@ -216,42 +288,42 @@ module.exports = {
 
 			// selected hues
 
-			case 'ux-pink-1':
+			case 'ux-pink':
 				if (darkMode) {
 					return module.exports.Color('pink-4');
 				}
 				return module.exports.Color('pink-7');
-			case 'ux-orange-1':
+			case 'ux-orange':
 				if (darkMode) {
 					return module.exports.Color('orange-4');
 				}
 				return module.exports.Color('orange-2');
-			case 'ux-yellow-1':
+			case 'ux-yellow':
 				if (darkMode) {
 					return module.exports.Color('yellow-4');
 				}
 				return module.exports.Color('yellow-2');
-			case 'ux-teal-1':
+			case 'ux-teal':
 				if (darkMode) {
 					return module.exports.Color('teal-4');
 				}
 				return module.exports.Color('teal-2');
-			case 'ux-green-1':
+			case 'ux-green':
 				if (darkMode) {
 					return module.exports.Color('green-4');
 				}
 				return module.exports.Color('green-7');
-			case 'ux-blue-1':
+			case 'ux-blue':
 				if (darkMode) {
 					return module.exports.Color('blue-4');
 				}
 				return module.exports.Color('blue-7');
-			case 'ux-aqua-1':
+			case 'ux-aqua':
 				if (darkMode) {
 					return module.exports.Color('aqua-4');
 				}
 				return module.exports.Color('aqua-7');
-			case 'ux-purple-1':
+			case 'ux-purple':
 				if (darkMode) {
 					return module.exports.Color('purple-4');
 				}
@@ -276,7 +348,7 @@ module.exports = {
 				return module.exports.Color('pink-8');
 		
 			default:
-				break;
+				return '';
 		}
 	},
 
@@ -363,6 +435,8 @@ module.exports = {
 				return '121,35,46';
 			case 'bold-orange':
 				return '226,67,1';
+			case 'bold-pink':
+				return '166,0,99';
 
 			// --- SUBTLE
 

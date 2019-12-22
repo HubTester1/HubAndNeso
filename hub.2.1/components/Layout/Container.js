@@ -14,6 +14,7 @@ const GlobalStyle = createGlobalStyle`
 		${Style.FontFamily()}
 		font-size: 10px;
 		text-align: center;
+		height: 100%;
 	}
 	body {
 		font-weight: ${Style.FontWeight('light')};
@@ -21,6 +22,7 @@ const GlobalStyle = createGlobalStyle`
 		background-color: ${props => (Style.Color('ux-base', props.darkMode))};
 		color: ${props => (Style.Color('ux-base-text', props.darkMode))};
 		text-align: left;
+		height: 100%;
 	}
 	h1 {
 		font-weight: ${Style.FontWeight('bold')};
@@ -79,8 +81,8 @@ const GlobalStyle = createGlobalStyle`
 
 		&:hover,
 		&:active {
-			color: ${props => (Style.Color('interactive-active', props.darkMode))};
-			border-bottom: .1rem dotted ${props => (Style.Color('interactive-active', props.darkMode))};
+			color: ${props => (Style.Color('ux-interactive-active', props.darkMode))};
+			border-bottom: .1rem dotted ${props => (Style.Color('ux-interactive-active', props.darkMode))};
 		}
 	}
 	em {
