@@ -2,98 +2,133 @@
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import Style from '../../../services/Style';
-/* 
-	&:hover {
-		${props => (props.interactive ? 'padding: 0;' : '')}
-	}
-	&:focus {
-		${props => (props.interactive ? 'padding: 0;' : '')}
-	}
-	&:active {
-		${props => (props.interactive ? 'padding: .4rem;' : '')}
-	}
 
+const ReturnElevationValues = (elevationString) => {
+	const elevationBase = parseInt(elevationString, 10);
+	const elevationUp = (elevationBase + 2 > 16) ? 16 : (elevationBase + 2);
+	const elevationDown = (elevationBase - 2 < 0) ? 0 : (elevationBase - 2);
+	return {
+		base: elevationBase,
+		up: elevationUp,
+		down: elevationDown,
+	};
+};
+/* 
+			if (contentColor) {
+				returnValue +=
+					`&:focus {
+						border-color: ${Style.Color(contentColor, darkMode)}
+					}`;
+			} else {
+				returnValue +=
+					`&:focus {
+						border-color: ${Style.Color('ux-base-text', darkMode)}
+					}`;
+			}
 
 */
-const Container = styled.div`
-	margin: 3rem;
-	background-color: #333;
-	padding: .2rem;
-	display: flex;
-	flex-direction: column;
-	transition: padding ${Style.StandardTransitionTime()};
-`;
 const Base = styled.div`
+	${({ widthInRem }) => (widthInRem && `width: ${widthInRem}rem`)}
+	${({ heightInRem }) => (heightInRem && `height: ${heightInRem}rem`)}
+	border-width: .5rem;
+	border-style: solid;
+	border-color: ${({ elevationLevel, darkMode }) => (Style.Color(`ux-l-${elevationLevel}`, darkMode))};
+	background-color: ${({ backgroundColor, darkMode }) => {
+		if (backgroundColor) {
+			return (Style.Color(backgroundColor, darkMode));
+		}
+		return (Style.Color('ux-base', darkMode));
+	}};
+	box-shadow: ${({ elevationLevel }) => (Style.Shadow(`ux-l-${elevationLevel}`))};
+	transition: border-color ${Style.StandardTransitionTime()}, margin ${Style.StandardTransitionTime()}, box-shadow ${Style.StandardTransitionTime()};
+	${({ interactive, contentColor, darkMode }) => {
+		let returnValue = '';
+		if (interactive) {
+			returnValue = 
+					`&:hover {
+						margin: -.2rem;
+						box-shadow: ${({ elevationLevel }) => (Style.Shadow(`ux-l-${ReturnElevationValues(elevationLevel).up}`))};
+						background-color: ${({ elevationLevel }) => (Style.Color(`ux-l-${ReturnElevationValues(elevationLevel).up}`, darkMode))};
+					}`;
+			if (contentColor) {
+				returnValue +=
+					`&:active {
+						margin: .2rem;
+						border-color: ${Style.Color(contentColor, darkMode)}
+					}`;
+			} else {
+				returnValue +=
+					`&:active {
+						margin: .2rem;
+						border-color: ${Style.Color('ux-base-text', darkMode)}
+					}`;
+			}
+		}
+		return returnValue;
+	}}
+`;
+const Light = styled.div`
 	display: flex;
 	flex-direction: column;
-	border-width: 2rem
-	border-style: solid;
-	border-color: ${props => (Style.Color(`ux-l-${props.elevation}`, props.darkMode))};
-	background-color: ${(props) => {
-		if (props.backgroundColor) {
-			return (Style.Color(props.backgroundColor, props.darkMode));
-		} 
-		return (Style.Color('ux-base', props.darkMode));
-	}};
-	&:hover {
-		${props => (props.interactive ? `border-color: ${props.contentColor};` : '')}
-	}
-	&:focus {
-		${props => (props.interactive ? `border-color: ${props.contentColor};` : '')}
-	}
-	&:active {
-		${props => (props.interactive ? `border-color: ${props.contentColor};` : '')}
-	}
-`;
-const State = styled.div`
-	background-color: ${props => (Style.Color(`ux-l-${props.elevation}`, props.darkMode))};
-`;
-
-const Content = styled.div`
-	color: ${(props) => {
-		if (props.contentColor) {
-			return (Style.Color(props.contentColor, props.darkMode));
+	height: 100%;
+	background-color: ${({ elevationLevel, darkMode }) => (Style.Color(`ux-l-${elevationLevel}`, darkMode))};
+	transition: background-color ${Style.StandardTransitionTime()};
+	${({ interactive, elevationLevel, darkMode }) => (interactive && `
+		&:hover {
+			background-color: ${(Style.Color(`ux-l-${ReturnElevationValues(elevationLevel).up}`, darkMode))};
 		}
-		return (Style.Color('ux-base-text', props.darkMode));
-	}};
-
-
-
-
-
+		&:active {	
+			background-color: ${(Style.Color(`ux-l-${ReturnElevationValues(elevationLevel).down}`, darkMode))};
+		}`
+	)}
 `;
-
+const Content = styled.div`
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	${({ paddingInRem }) => (paddingInRem && `padding: ${paddingInRem}rem`)}
+	color: ${({ contentColor, darkMode }) => {
+		if (contentColor) {
+			return (Style.Color(contentColor, darkMode));
+		}
+		return (Style.Color('ux-base-text', darkMode));
+	}};
+`;
 const Plane = ({
-	elevation,
+	elevationLevel,
 	uData,
 	children,
 	backgroundColor,
 	contentColor,
 	interactive,
+	widthInRem,
+	heightInRem,
+	paddingInRem,
 }) => (
-	<Container
-		className="container"
+	<Base
+		elevationLevel={elevationLevel || 0}
+		backgroundColor={backgroundColor}
+		contentColor={contentColor}
+		darkMode={uData.user.preferences.darkMode}
+		className="base"
 		interactive={interactive}
+		widthInRem={widthInRem}
+		heightInRem={heightInRem}
 	>
-		<Base
-			elevation={elevation}
-			backgroundColor={backgroundColor}
-			contentColor={contentColor}
-			darkMode={uData.user.preferences.darkMode}
-			className="base"
+		<Light
+			elevationLevel={elevationLevel || 0}
+			className="light"
+			interactive={interactive}
 		>
-			<State
-				elevation={elevation}
-				className="state"
+			<Content
+				contentColor={contentColor}
+				className="content"
+				paddingInRem={paddingInRem}
 			>
-				<Content
-					contentColor={contentColor}
-				>
-					{children}
-				</Content>
-			</State>
-		</Base>
-	</Container>
+				{children}
+			</Content>
+		</Light>
+	</Base>
 );
 
 export default connect(state => state)(Plane);
