@@ -147,6 +147,8 @@ module.exports = {
 	/* offset-x | offset-y | blur-radius | spread-radius | color */
 	Shadow: (shadowToken) => {
 		switch (shadowToken) {
+			case 'ux-l-0': // 1 dp
+				return 'none';
 			case 'ux-l-1': // 1 dp
 				return `0 0.4px .9px rgba(0, 0, 0, 0.23),
 						0 0.8px .22px rgba(0, 0, 0, 0.16)`;
@@ -223,6 +225,8 @@ module.exports = {
 					return module.exports.Color('white');
 				}
 				return module.exports.Color('grey-26');
+			case 'ux-l-0': // 0 dp
+				return module.exports.Color('white', null, 0.0000000001);
 			case 'ux-l-1': // 1 dp
 				return module.exports.Color('white', null, 0.05);
 			case 'ux-l-2': // 2 dp

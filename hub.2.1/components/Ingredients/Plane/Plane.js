@@ -13,20 +13,6 @@ const ReturnElevationValues = (elevationString) => {
 		down: elevationDown,
 	};
 };
-/* 
-			if (contentColor) {
-				returnValue +=
-					`&:focus {
-						border-color: ${Style.Color(contentColor, darkMode)}
-					}`;
-			} else {
-				returnValue +=
-					`&:focus {
-						border-color: ${Style.Color('ux-base-text', darkMode)}
-					}`;
-			}
-
-*/
 const Base = styled.div`
 	${({ widthInRem }) => (widthInRem && `width: ${widthInRem}rem`)}
 	${({ heightInRem }) => (heightInRem && `height: ${heightInRem}rem`)}
@@ -119,11 +105,13 @@ const Plane = ({
 			elevationLevel={elevationLevel || 0}
 			className="light"
 			interactive={interactive}
+			darkMode={uData.user.preferences.darkMode}
 		>
 			<Content
 				contentColor={contentColor}
 				className="content"
 				paddingInRem={paddingInRem}
+				darkMode={uData.user.preferences.darkMode}
 			>
 				{children}
 			</Content>

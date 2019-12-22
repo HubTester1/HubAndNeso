@@ -1,7 +1,7 @@
 
 import { connect } from 'react-redux';
-import Plane from '../../../Ingredients/Plane/Plane';
-import Button from '../../../Ingredients/Button/Button';
+import Plane from '../../../../Ingredients/Plane/Plane';
+import Button from '../../../../Ingredients/Button/Button';
 
 const UX = ({ uData }) => (
 	<Plane
@@ -15,11 +15,14 @@ const UX = ({ uData }) => (
 			elevationLevel="4"
 			backgroundColor="ux-pink"
 			contentColor="blue-3"
-			heightInRem="5"
-			paddingInRem="1"
+			heightInRem="20"
+			paddingInRem="2"
 			interactive
-			text="Button Text Here"
-		/>
+		>
+				Button Text Here
+		</Button>
+			
+
 	</Plane>
 );
 

@@ -1,7 +1,7 @@
 
 // import styled from 'styled-components';
 import { connect } from 'react-redux';
-import Button from '../Button/Button.Pres';
+import Button from '../Button/Button';
 // import Style from '../../../services/Style';
 
 const LinkButton = ({ 
