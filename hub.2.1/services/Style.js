@@ -145,7 +145,7 @@ module.exports = {
 
 	// SHADOWS
 	/* offset-x | offset-y | blur-radius | spread-radius | color */
-	Shadow: (shadowToken) => {
+	Shadow: (shadowToken, darkMode) => {
 		switch (shadowToken) {
 			case 'ux-l-0': // 1 dp
 				return 'none';
@@ -225,9 +225,14 @@ module.exports = {
 				return module.exports.Color('grey-05');
 			case 'ux-base-text':
 				if (darkMode) {
-					return module.exports.Color('white');
+					return module.exports.Color('grey-05');
 				}
 				return module.exports.Color('grey-26');
+			case 'ux-plane-base':
+				if (darkMode) {
+					return module.exports.Color('white', null, 0.05);
+				}
+				return module.exports.Color('white');
 			case 'ux-l-0': // 0 dp
 				return module.exports.Color('white', null, 0.0000000001);
 			case 'ux-l-1': // 1 dp

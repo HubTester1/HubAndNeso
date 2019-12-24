@@ -13,33 +13,14 @@ const ReturnButtonVerticalPadding = (buttonHeight, contentHeight, topOrBottom) =
 const ReturnVisibleTextWrapperHorizontalPadding =
 	iconPosition => (iconPosition === 'before' ? 'padding-left: 1rem;' : 'padding-right: 1rem;');
 
-const ReturnButtonWidth = fullWidth => (fullWidth ? '100%' : 'auto');
-/* 
-	display: inline-block;
-	width: ${props => ReturnButtonWidth(props.fullWidth)};
-	padding: ${props => ReturnButtonVerticalPadding(props.buttonHeight, props.contentHeight, 'top')}rem 1rem ${props => ReturnButtonVerticalPadding(props.buttonHeight, props.contentHeight, 'bottom')}rem 1rem;
-	border: 0;
-	background-color: ${props => props.defaultBackgroundColor};
-	color: ${props => props.defaultContentColor};
-	cursor: pointer;
-	transition: color ${Style.StandardTransitionTime()}, background-color ${Style.StandardTransitionTime()};
-
-	&:hover {
-		background-color: ${props => props.activeBackgroundColor};
-		color: ${props => props.activeContentColor};
-	}
-	&:focus {
-		border: 2px solid ${({ backgroundColor, darkMode }) => (Style.Color(`${backgroundColor}`, darkMode))};
-		outline: 2px solid ${({ contentColor, darkMode }) => (Style.Color(`${contentColor}`, darkMode))};
-	}
-
-*/
 const ButtonBase = styled.button`
 	border: 0;
 	padding: 0;
 	background-color: transparent;
-	${({ widthInRem }) => (widthInRem && `width: ${widthInRem}rem`)}
-	${({ heightInRem }) => (heightInRem && `height: ${heightInRem}rem`)}
+	${({ widthInRem }) => (widthInRem && `width: ${widthInRem}rem`)};
+	${({ heightInRem }) => (heightInRem && `height: ${heightInRem}rem`)};
+	${({ marginInRem }) => (marginInRem && `margin: ${marginInRem}rem`)};
+	cursor: pointer;
 `;
 const VisibleTextWrapper = styled.span`
 	font-size: ${props => props.textSize}rem;
@@ -51,45 +32,31 @@ const InvisibleTextWrapper = styled.span`
 	${Style.InlineHidden()}
 `;
 const Button = ({
-	// sData,
-	// uData,
 	clickHandler,
-	// buttonHeight,
+	buttonHeight,
+	contentHeight,
 	// iconPosition,
 	// iconContent,
-	contentHeight,
 	text,
 	textInvisible,
-	// defaultBackgroundColor,
-	// defaultContentColor,
-	// activeBackgroundColor,
-	// activeContentColor,
 	elevationLevel,
 	backgroundColor,
 	contentColor,
 	heightInRem,
 	widthInRem,
-	paddingInRem,
+	marginInRem,
 }) => (
 	<ButtonBase
 		onClick={clickHandler}
 		heightInRem={heightInRem}
 		widthInRem={widthInRem}
 		contentColor={contentColor}
-		/* backgroundColor={backgroundColor}
-		darkMode={false}
+		marginInRem={marginInRem}
 		buttonHeight={buttonHeight || contentHeight}
-			contentHeight={contentHeight || Style.FontSize('m', sData.size)}
-			defaultBackgroundColor={defaultBackgroundColor || 'transparent'}
-			defaultContentColor={
-				defaultContentColor || 
-				Style.Color('ux-interactive-default', uData.user.preferences.darkMode)
-			}
-			activeBackgroundColor={activeBackgroundColor || 'transparent'}
-			activeContentColor={
-				activeContentColor || 
-				Style.Color('interactive-active', uData.user.preferences.darkMode)
-			} */
+		/* 
+		contentHeight={contentHeight || Style.FontSize('m', sData.size)}
+		
+		*/
 	>
 		<Plane
 			elevationLevel={elevationLevel}
@@ -97,7 +64,13 @@ const Button = ({
 			contentColor={contentColor}
 			heightInRem={heightInRem}
 			widthInRem={widthInRem}
-			paddingInRem={paddingInRem}
+			paddingInRem={{
+				top: ReturnButtonVerticalPadding(buttonHeight, contentHeight, 'top'),
+				right: 1,
+				bottom: ReturnButtonVerticalPadding(buttonHeight, contentHeight, 'bottom'),
+				left: 1,
+			}}
+			verticallyCenterContent
 			interactive
 			role="button"
 			tabindex="0"

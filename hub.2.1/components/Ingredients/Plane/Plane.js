@@ -24,8 +24,9 @@ const ReturnDimensionValues = (dimensionInRem) => {
 	};
 };
 const Container = styled.div`
-	${({ widthInRem }) => (widthInRem && `${widthInRem}rem`)};
+	${({ widthInRem }) => (widthInRem && `width: ${widthInRem}rem`)};
 	${({ heightInRem }) => (heightInRem && `height: ${heightInRem}rem`)};
+	${({ marginInRem }) => (marginInRem && `margin: ${marginInRem}rem`)};
 `;
 const Base = styled.div`
 	position: relative;
@@ -35,9 +36,9 @@ const Base = styled.div`
 		if (backgroundColor) {
 			return (Style.Color(backgroundColor, darkMode));
 		}
-		return (Style.Color('ux-base', darkMode));
+		return (Style.Color('ux-plane-base', darkMode));
 	}};
-	box-shadow: ${({ elevationLevel }) => (Style.Shadow(`ux-l-${elevationLevel}`))};
+	box-shadow: ${({ elevationLevel, darkMode }) => (Style.Shadow(`ux-l-${elevationLevel}`, darkMode))};
 	transition: all ${Style.StandardTransitionTime()};
 
 	&::before {
@@ -66,7 +67,7 @@ const Base = styled.div`
 					width: ${ReturnDimensionValues(widthInRem).up}rem;
 					height: ${ReturnDimensionValues(heightInRem).up}rem;
 					margin: -.2rem;
-					box-shadow: ${Style.Shadow(`ux-l-${ReturnElevationValues(elevationLevel).up}`)};
+					box-shadow: ${Style.Shadow(`ux-l-${ReturnElevationValues(elevationLevel).up}`, darkMode)};
 
 
 					&::before {
@@ -81,7 +82,7 @@ const Base = styled.div`
 					width: ${ReturnDimensionValues(widthInRem).down}rem;
 					height: ${ReturnDimensionValues(heightInRem).down}rem;
 					margin: .2rem
-					box-shadow: ${Style.Shadow(`ux-l-${ReturnElevationValues(elevationLevel).up}`)};	
+					box-shadow: ${Style.Shadow(`ux-l-${ReturnElevationValues(elevationLevel).up}`, darkMode)};	
 				`;
 			if (contentColor) {
 				returnValue +=
@@ -103,14 +104,20 @@ const Base = styled.div`
 	}}
 `;
 const Content = styled.div`
-	${({ paddingInRem }) => (paddingInRem && `padding: ${paddingInRem}rem`)}
+	${({ paddingInRem }) => (typeof (paddingInRem) === 'string' && `padding: ${paddingInRem}rem`)};
+	${({ paddingInRem }) => (typeof (paddingInRem) === 'object' && `padding: ${paddingInRem.top}rem ${paddingInRem.right}rem ${paddingInRem.bottom}rem ${paddingInRem.left}rem`)};
 	color: ${({ contentColor, darkMode }) => {
 		if (contentColor) {
-			return (Style.Color(contentColor, darkMode));
+			return Style.Color(contentColor, darkMode);
 		}
-		return (Style.Color('ux-base-text', darkMode));
+		return Style.Color('ux-base-text', darkMode);
 	}};
-	${Style.VerticalAlignMiddle()};
+	${({ verticallyCenterContent }) => {
+		if (verticallyCenterContent) {
+			return Style.VerticalAlignMiddle();
+		}
+		return '';
+	}};
 `;
 const Plane = ({
 	elevationLevel,
@@ -122,10 +129,14 @@ const Plane = ({
 	widthInRem,
 	heightInRem,
 	paddingInRem,
+	verticallyCenterContent,
+	marginInRem,
 }) => (
 	<Container
 		widthInRem={widthInRem}
 		heightInRem={heightInRem}
+		className="plane-container"
+		marginInRem={marginInRem}
 	>
 		<Base
 			elevationLevel={elevationLevel || 0}
@@ -142,6 +153,7 @@ const Plane = ({
 				className="content"
 				paddingInRem={paddingInRem}
 				darkMode={uData.user.preferences.darkMode}
+				verticallyCenterContent={verticallyCenterContent}
 			>
 				{children}
 			</Content>
