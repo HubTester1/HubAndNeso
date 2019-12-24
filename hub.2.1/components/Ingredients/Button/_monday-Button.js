@@ -73,12 +73,21 @@ const Button = ({
 	widthInRem,
 	paddingInRem,
 }) => (
-	<ButtonBase
-		onClick={clickHandler}
+	<Plane
+		elevationLevel={elevationLevel}
 		backgroundColor={backgroundColor}
 		contentColor={contentColor}
-		darkMode={false}
-		/* buttonHeight={buttonHeight || contentHeight}
+		heightInRem={heightInRem}
+		widthInRem={widthInRem}
+		paddingInRem={paddingInRem}
+		interactive
+	>
+		<ButtonBase
+			onClick={clickHandler}
+			backgroundColor={backgroundColor}
+			contentColor={contentColor}
+			darkMode={false}
+			/* buttonHeight={buttonHeight || contentHeight}
 			contentHeight={contentHeight || Style.FontSize('m', sData.size)}
 			defaultBackgroundColor={defaultBackgroundColor || 'transparent'}
 			defaultContentColor={
@@ -90,17 +99,6 @@ const Button = ({
 				activeContentColor || 
 				Style.Color('interactive-active', uData.user.preferences.darkMode)
 			} */
-	>
-		<Plane
-			elevationLevel={elevationLevel}
-			backgroundColor={backgroundColor}
-			contentColor={contentColor}
-			heightInRem={heightInRem}
-			widthInRem={widthInRem}
-			paddingInRem={paddingInRem}
-			interactive
-			role="button"
-			tabindex="0"
 		>
 			{/* {
 				iconPosition === 'before' && iconContent && 
@@ -136,8 +134,8 @@ const Button = ({
 					iconSize={contentHeight}
 				/>
 			} */}
-		</Plane>
-	</ButtonBase>
+		</ButtonBase>
+	</Plane>
 );
 
 export default Button;

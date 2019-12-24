@@ -4,23 +4,15 @@ import Plane from '../../../Ingredients/Plane/Plane';
 import Button from '../../../Ingredients/Button/Button';
 
 const UX = ({ uData }) => (
-	<Plane
-		elevationLevel="0"
-		heightInRem="30"
-		paddingInRem="2"
-	>
-			Level 2, static
-			
-		<Button
-			elevationLevel="4"
-			backgroundColor="ux-pink"
-			contentColor="blue-3"
-			heightInRem="5"
-			paddingInRem="1"
-			interactive
-			text="Button Text Here"
-		/>
-	</Plane>
+	<Button
+		elevationLevel="4"
+		backgroundColor="ux-pink"
+		contentColor="blue-3"
+		heightInRem="5"
+		paddingInRem="1"
+		interactive
+		text="Button Text Here"
+	/>
 );
 
 export default connect(state => state)(UX);

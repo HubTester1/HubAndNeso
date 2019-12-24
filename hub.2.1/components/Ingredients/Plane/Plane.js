@@ -38,13 +38,15 @@ const Base = styled.div`
 					}`;
 			if (contentColor) {
 				returnValue +=
-					`&:active {
+					`&:focus,
+					&:active {
 						margin: .2rem;
 						border-color: ${Style.Color(contentColor, darkMode)}
 					}`;
 			} else {
 				returnValue +=
-					`&:active {
+					`&:focus,
+					&:active {
 						margin: .2rem;
 						border-color: ${Style.Color('ux-base-text', darkMode)}
 					}`;
@@ -63,7 +65,8 @@ const Light = styled.div`
 		&:hover {
 			background-color: ${(Style.Color(`ux-l-${ReturnElevationValues(elevationLevel).up}`, darkMode))};
 		}
-		&:active {	
+		&:focus,
+		&:active {
 			background-color: ${(Style.Color(`ux-l-${ReturnElevationValues(elevationLevel).down}`, darkMode))};
 		}`
 	)}

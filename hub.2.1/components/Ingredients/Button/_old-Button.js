@@ -4,7 +4,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import Icon from '../Icon/Icon.Pres';
+import Icon from '../Icon/Icon';
 import Style from '../../../services/Style';
 
 // --- COMPONENT
