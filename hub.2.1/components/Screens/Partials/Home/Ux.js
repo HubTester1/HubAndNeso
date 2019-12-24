@@ -13,13 +13,10 @@ const UX = ({ uData }) => (
 			// backgroundColor="ux-pink"
 			contentColor="blue-5"
 			heightInRem="5"
-			widthInRem="20"
-			// paddingInRem="1"
+			widthInRem="17"
 			marginInRem="2"
 			interactive
 			text="Button Text Here"
-			buttonHeight="4"
-			contentHeight="2"
 
 		/>
 		<Plane

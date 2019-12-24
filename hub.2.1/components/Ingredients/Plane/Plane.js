@@ -118,18 +118,27 @@ const Content = styled.div`
 		}
 		return '';
 	}};
+	${({ horizontallyCenterContent }) => {
+		if (horizontallyCenterContent) {
+			return 'text-align: center;';
+		}
+		return '';
+	}};
 `;
 const Plane = ({
 	elevationLevel,
 	uData,
+	sData,
 	children,
 	backgroundColor,
 	contentColor,
 	interactive,
 	widthInRem,
 	heightInRem,
+	contentHeightInRem,
 	paddingInRem,
 	verticallyCenterContent,
+	horizontallyCenterContent,
 	marginInRem,
 }) => (
 	<Container
@@ -154,6 +163,8 @@ const Plane = ({
 				paddingInRem={paddingInRem}
 				darkMode={uData.user.preferences.darkMode}
 				verticallyCenterContent={verticallyCenterContent}
+				horizontallyCenterContent={horizontallyCenterContent}
+				contentHeightInRem={contentHeightInRem || Style.FontSize('m', sData.size).slice(0, -3)}
 			>
 				{children}
 			</Content>

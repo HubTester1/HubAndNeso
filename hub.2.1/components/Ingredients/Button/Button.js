@@ -1,11 +1,16 @@
 
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 import Icon from '../Icon/Icon';
 import Plane from '../Plane/Plane';
 import Style from '../../../services/Style';
 
-const ReturnButtonVerticalPadding = (buttonHeight, contentHeight, topOrBottom) => {
-	const timesTen = parseFloat(((buttonHeight - contentHeight) / 2).toFixed(2)) * 10;
+const ReturnContentHeightInRem = (contentHeightInRem, screenSize) => 
+	(contentHeightInRem || Style.FontSize('m', screenSize).slice(0, -3));
+
+const ReturnButtonVerticalPadding = (heightInRem, contentHeightInRem, topOrBottom) => {
+	const timesTen = 
+		parseFloat(((heightInRem - contentHeightInRem) / 2).toFixed(2)) * 10;
 	const rounded = topOrBottom === 'top' ? Math.ceil(timesTen) : Math.floor(timesTen);
 	return rounded / 10;
 };
@@ -32,11 +37,11 @@ const InvisibleTextWrapper = styled.span`
 	${Style.InlineHidden()}
 `;
 const Button = ({
-	clickHandler,
-	buttonHeight,
-	contentHeight,
+	sData,
 	// iconPosition,
 	// iconContent,
+	clickHandler,
+	contentHeightInRem,
 	text,
 	textInvisible,
 	elevationLevel,
@@ -52,27 +57,24 @@ const Button = ({
 		widthInRem={widthInRem}
 		contentColor={contentColor}
 		marginInRem={marginInRem}
-		buttonHeight={buttonHeight || contentHeight}
-		/* 
-		contentHeight={contentHeight || Style.FontSize('m', sData.size)}
-		
-		*/
+		role="button"
 	>
 		<Plane
 			elevationLevel={elevationLevel}
 			backgroundColor={backgroundColor}
 			contentColor={contentColor}
-			heightInRem={heightInRem}
 			widthInRem={widthInRem}
+			heightInRem={heightInRem}
+			contentHeightInRem={ReturnContentHeightInRem(contentHeightInRem, sData.size)}
 			paddingInRem={{
-				top: ReturnButtonVerticalPadding(buttonHeight, contentHeight, 'top'),
+				top: ReturnButtonVerticalPadding(heightInRem, ReturnContentHeightInRem(contentHeightInRem, sData.size), 'top'),
 				right: 1,
-				bottom: ReturnButtonVerticalPadding(buttonHeight, contentHeight, 'bottom'),
+				bottom: ReturnButtonVerticalPadding(heightInRem, ReturnContentHeightInRem(contentHeightInRem, sData.size), 'bottom'),
 				left: 1,
 			}}
+			horizontallyCenterContent
 			verticallyCenterContent
 			interactive
-			role="button"
 			tabindex="0"
 		>
 			{/* {
@@ -81,14 +83,14 @@ const Button = ({
 				<Icon
 					iconPosition="before"
 					iconContent={iconContent}
-					iconSize={contentHeight}
+					iconSize={contentHeightInRem}
 				/>
 			} */}
 			{
 				!textInvisible &&
 
 				<VisibleTextWrapper
-					textSize={contentHeight}
+					textSize={contentHeightInRem}
 					// iconContent={iconContent}
 					className="VisibleTextWrapper"
 				>
@@ -106,11 +108,11 @@ const Button = ({
 				<Icon
 					iconPosition="after"
 					iconContent={iconContent}
-					iconSize={contentHeight}
+					iconSize={contentHeightInRem}
 				/>
 			} */}
 		</Plane>
 	</ButtonBase>
 );
 
-export default Button;
+export default connect(state => state)(Button);
