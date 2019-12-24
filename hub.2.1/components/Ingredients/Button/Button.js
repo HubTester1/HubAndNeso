@@ -28,19 +28,18 @@ const ReturnButtonWidth = fullWidth => (fullWidth ? '100%' : 'auto');
 		background-color: ${props => props.activeBackgroundColor};
 		color: ${props => props.activeContentColor};
 	}
+	&:focus {
+		border: 2px solid ${({ backgroundColor, darkMode }) => (Style.Color(`${backgroundColor}`, darkMode))};
+		outline: 2px solid ${({ contentColor, darkMode }) => (Style.Color(`${contentColor}`, darkMode))};
+	}
 
 */
 const ButtonBase = styled.button`
 	border: 0;
 	padding: 0;
 	background-color: transparent;
-	&:not(.default)::-moz-focus-inner {
-		border-style: none;
-	}
-	&:focus {
-		border: 2px solid ${({ backgroundColor, darkMode }) => (Style.Color(`${backgroundColor}`, darkMode))};
-		outline: 2px solid ${({ contentColor, darkMode }) => (Style.Color(`${contentColor}`, darkMode))};
-	}
+	${({ widthInRem }) => (widthInRem && `width: ${widthInRem}rem`)}
+	${({ heightInRem }) => (heightInRem && `height: ${heightInRem}rem`)}
 `;
 const VisibleTextWrapper = styled.span`
 	font-size: ${props => props.textSize}rem;
@@ -48,7 +47,6 @@ const VisibleTextWrapper = styled.span`
 	text-align: ${props => props.textAlignment || 'left'};
 	${props => ReturnVisibleTextWrapperHorizontalPadding(props.iconPosition)}
 `;
-
 const InvisibleTextWrapper = styled.span`
 	${Style.InlineHidden()}
 `;
@@ -75,10 +73,12 @@ const Button = ({
 }) => (
 	<ButtonBase
 		onClick={clickHandler}
-		backgroundColor={backgroundColor}
+		heightInRem={heightInRem}
+		widthInRem={widthInRem}
 		contentColor={contentColor}
+		/* backgroundColor={backgroundColor}
 		darkMode={false}
-		/* buttonHeight={buttonHeight || contentHeight}
+		buttonHeight={buttonHeight || contentHeight}
 			contentHeight={contentHeight || Style.FontSize('m', sData.size)}
 			defaultBackgroundColor={defaultBackgroundColor || 'transparent'}
 			defaultContentColor={

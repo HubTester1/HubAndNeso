@@ -5,20 +5,32 @@ import Style from '../../../services/Style';
 
 const ReturnElevationValues = (elevationString) => {
 	const elevationBase = parseInt(elevationString, 10);
-	const elevationUp = (elevationBase + 2 > 16) ? 16 : (elevationBase + 2);
-	const elevationDown = (elevationBase - 2 < 0) ? 0 : (elevationBase - 2);
+	const elevationUp = (elevationBase + 4 > 16) ? 16 : (elevationBase + 4);
+	const elevationDown = (elevationBase - 4 < 0) ? 0 : (elevationBase - 4);
 	return {
 		base: elevationBase,
 		up: elevationUp,
 		down: elevationDown,
 	};
 };
+const ReturnDimensionValues = (dimensionInRem) => {
+	const dimensionBase = parseInt(dimensionInRem, 10);
+	const dimensionUp = dimensionBase + 0.4;
+	const dimensionDown = dimensionBase - 0.4;
+	return {
+		base: dimensionBase,
+		up: dimensionUp,
+		down: dimensionDown,
+	};
+};
+const Container = styled.div`
+	${({ widthInRem }) => (widthInRem && `${widthInRem}rem`)};
+	${({ heightInRem }) => (heightInRem && `height: ${heightInRem}rem`)};
+`;
 const Base = styled.div`
-	${({ widthInRem }) => (widthInRem && `width: ${widthInRem}rem`)}
-	${({ heightInRem }) => (heightInRem && `height: ${heightInRem}rem`)}
-	border-width: .5rem;
-	border-style: solid;
-	border-color: ${({ elevationLevel, darkMode }) => (Style.Color(`ux-l-${elevationLevel}`, darkMode))};
+	position: relative;
+	${({ widthInRem }) => (widthInRem && `width: ${widthInRem}rem`)};
+	${({ heightInRem }) => (heightInRem && `height: ${heightInRem}rem`)};
 	background-color: ${({ backgroundColor, darkMode }) => {
 		if (backgroundColor) {
 			return (Style.Color(backgroundColor, darkMode));
@@ -26,55 +38,71 @@ const Base = styled.div`
 		return (Style.Color('ux-base', darkMode));
 	}};
 	box-shadow: ${({ elevationLevel }) => (Style.Shadow(`ux-l-${elevationLevel}`))};
-	transition: border-color ${Style.StandardTransitionTime()}, margin ${Style.StandardTransitionTime()}, box-shadow ${Style.StandardTransitionTime()};
-	${({ interactive, contentColor, darkMode }) => {
+	transition: all ${Style.StandardTransitionTime()};
+
+	&::before {
+		box-sizing: border-box;
+		content: '';
+		display: block;
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: ${({ elevationLevel, darkMode }) => (Style.Color(`ux-l-${elevationLevel}`, darkMode))};
+		border-width: .5rem;
+		border-style: solid;
+		border-color: transparent;
+		transition: all ${Style.StandardTransitionTime()};
+	}
+
+	${({
+		interactive, contentColor, darkMode, elevationLevel, widthInRem, heightInRem,
+	}) => {
 		let returnValue = '';
 		if (interactive) {
-			returnValue = 
-					`&:hover {
-						margin: -.2rem;
-						box-shadow: ${({ elevationLevel }) => (Style.Shadow(`ux-l-${ReturnElevationValues(elevationLevel).up}`))};
-						background-color: ${({ elevationLevel }) => (Style.Color(`ux-l-${ReturnElevationValues(elevationLevel).up}`, darkMode))};
-					}`;
+			returnValue += 
+				`&:hover {
+					width: ${ReturnDimensionValues(widthInRem).up}rem;
+					height: ${ReturnDimensionValues(heightInRem).up}rem;
+					margin: -.2rem;
+					box-shadow: ${Style.Shadow(`ux-l-${ReturnElevationValues(elevationLevel).up}`)};
+
+
+					&::before {
+						width: ${ReturnDimensionValues(widthInRem).up}rem;
+						height: ${ReturnDimensionValues(heightInRem).up}rem;
+						background-color: ${(Style.Color(`ux-l-${ReturnElevationValues(elevationLevel).up}`, darkMode))};
+					};
+				}`;
+			returnValue += 
+				`&:focus,
+				&:active {
+					width: ${ReturnDimensionValues(widthInRem).down}rem;
+					height: ${ReturnDimensionValues(heightInRem).down}rem;
+					margin: .2rem
+					box-shadow: ${Style.Shadow(`ux-l-${ReturnElevationValues(elevationLevel).up}`)};	
+				`;
 			if (contentColor) {
 				returnValue +=
-					`&:focus,
-					&:active {
-						margin: .2rem;
-						border-color: ${Style.Color(contentColor, darkMode)}
-					}`;
+					`border-color: ${Style.Color(contentColor, darkMode)};`;
 			} else {
 				returnValue +=
-					`&:focus,
-					&:active {
-						margin: .2rem;
-						border-color: ${Style.Color('ux-base-text', darkMode)}
-					}`;
+					`border-color: ${Style.Color('ux-base-text', darkMode)};`;
 			}
+			returnValue +=
+				`&::before {
+					width: ${ReturnDimensionValues(widthInRem).down}rem;
+					height: ${ReturnDimensionValues(heightInRem).down}rem;
+					background-color: ${(Style.Color(`ux-l-${ReturnElevationValues(elevationLevel).down}`, darkMode))};
+					border-color: ${Style.Color(contentColor, darkMode)};
+				};
+			}`;
 		}
 		return returnValue;
 	}}
 `;
-const Light = styled.div`
-	display: flex;
-	flex-direction: column;
-	height: 100%;
-	background-color: ${({ elevationLevel, darkMode }) => (Style.Color(`ux-l-${elevationLevel}`, darkMode))};
-	transition: background-color ${Style.StandardTransitionTime()};
-	${({ interactive, elevationLevel, darkMode }) => (interactive && `
-		&:hover {
-			background-color: ${(Style.Color(`ux-l-${ReturnElevationValues(elevationLevel).up}`, darkMode))};
-		}
-		&:focus,
-		&:active {
-			background-color: ${(Style.Color(`ux-l-${ReturnElevationValues(elevationLevel).down}`, darkMode))};
-		}`
-	)}
-`;
 const Content = styled.div`
-	display: flex;
-	flex-direction: column;
-	height: 100%;
 	${({ paddingInRem }) => (paddingInRem && `padding: ${paddingInRem}rem`)}
 	color: ${({ contentColor, darkMode }) => {
 		if (contentColor) {
@@ -82,6 +110,7 @@ const Content = styled.div`
 		}
 		return (Style.Color('ux-base-text', darkMode));
 	}};
+	${Style.VerticalAlignMiddle()};
 `;
 const Plane = ({
 	elevationLevel,
@@ -94,21 +123,19 @@ const Plane = ({
 	heightInRem,
 	paddingInRem,
 }) => (
-	<Base
-		elevationLevel={elevationLevel || 0}
-		backgroundColor={backgroundColor}
-		contentColor={contentColor}
-		darkMode={uData.user.preferences.darkMode}
-		className="base"
-		interactive={interactive}
+	<Container
 		widthInRem={widthInRem}
 		heightInRem={heightInRem}
 	>
-		<Light
+		<Base
 			elevationLevel={elevationLevel || 0}
-			className="light"
-			interactive={interactive}
+			backgroundColor={backgroundColor}
+			contentColor={contentColor}
 			darkMode={uData.user.preferences.darkMode}
+			className="base"
+			interactive={interactive}
+			widthInRem={widthInRem}
+			heightInRem={heightInRem}
 		>
 			<Content
 				contentColor={contentColor}
@@ -118,8 +145,8 @@ const Plane = ({
 			>
 				{children}
 			</Content>
-		</Light>
-	</Base>
+		</Base>
+	</Container>
 );
 
 export default connect(state => state)(Plane);

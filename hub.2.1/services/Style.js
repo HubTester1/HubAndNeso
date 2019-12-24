@@ -204,12 +204,15 @@ module.exports = {
 	// COLORS
 
 	Color: (colorToken, darkMode, alpha) => {
+		if (colorToken) {
 		if (colorToken.substring(0, 3) === 'ux-') {
 			return module.exports.ColorUXStatement(colorToken, darkMode);
 		} else if (alpha) {
 			return `rgba(${module.exports.ColorRGBValue(colorToken, darkMode)},${alpha})`;
 		} 
 		return `rgb(${module.exports.ColorRGBValue(colorToken, darkMode)})`;
+		}
+		return '';
 	},
 
 	ColorUXStatement: (colorToken, darkMode) => {
