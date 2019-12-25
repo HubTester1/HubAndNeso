@@ -1,12 +1,11 @@
-
-// ----- IMPORTS
+/**
+ * @module services/User
+ * @description Fetch and return data about user.
+ */
 
 // import pnp, { Web } from 'sp-pnp-js';
 // import MOSUtilities from './MOSUtilities';
 // import NesoHTTPClient from './NesoHTTPClient';
-
-
-// ----- DATA
 
 export default class User {
 	/* static ReturnGSEConfig() {

@@ -17,7 +17,8 @@ const UX = ({ uData }) => (
 			marginInRem="2"
 			interactive
 			text="Button Text Here"
-
+			iconContent="Messages"
+			iconPosition="after"
 		/>
 		<Plane
 			paddingInRem="2"

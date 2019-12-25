@@ -38,8 +38,8 @@ const InvisibleTextWrapper = styled.span`
 `;
 const Button = ({
 	sData,
-	// iconPosition,
-	// iconContent,
+	iconPosition,
+	iconContent,
 	clickHandler,
 	contentHeightInRem,
 	text,
@@ -55,7 +55,6 @@ const Button = ({
 		onClick={clickHandler}
 		heightInRem={heightInRem}
 		widthInRem={widthInRem}
-		contentColor={contentColor}
 		marginInRem={marginInRem}
 		role="button"
 	>
@@ -77,22 +76,22 @@ const Button = ({
 			interactive
 			tabindex="0"
 		>
-			{/* {
-				iconPosition === 'before' && iconContent && 
+			{
+				iconContent && iconPosition === 'before' && 
 
 				<Icon
-					iconPosition="before"
+					iconPosition={iconPosition}
 					iconContent={iconContent}
-					iconSize={contentHeightInRem}
+					contentColor={contentColor}
+					contentHeightInRem={ReturnContentHeightInRem(contentHeightInRem, sData.size)}
 				/>
-			} */}
+			}
 			{
 				!textInvisible &&
 
 				<VisibleTextWrapper
 					textSize={contentHeightInRem}
-					// iconContent={iconContent}
-					className="VisibleTextWrapper"
+					iconPosition={iconPosition}
 				>
 					{text}
 				</VisibleTextWrapper>
@@ -102,15 +101,16 @@ const Button = ({
 
 				<InvisibleTextWrapper>{text}</InvisibleTextWrapper>
 			}
-			{/* {
-				iconPosition === 'after' && iconContent &&
+			{
+				iconContent && iconPosition === 'after' && 
 
 				<Icon
-					iconPosition="after"
+					iconPosition={iconPosition}
 					iconContent={iconContent}
-					iconSize={contentHeightInRem}
+					contentColor={contentColor}
+					contentHeightInRem={ReturnContentHeightInRem(contentHeightInRem, sData.size)}
 				/>
-			} */}
+			}
 		</Plane>
 	</ButtonBase>
 );

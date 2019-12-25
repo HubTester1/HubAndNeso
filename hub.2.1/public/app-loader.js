@@ -1,20 +1,19 @@
+/**
+ * @file app-loader.js
+ * 
+ * @description File is loaded by JS script in SharePoint Online (SPO) master page (mos.2.1.master).
+ * JS code executes automatically. This is the connection between SPO and this app.
+ * 
+ * Code either loads the app or arranges things for other SPO areas that use 
+ * the same master page.
+ */
 
-// ---- GLOBAL VARS
-
+// global vars
 const debugMode = true;
 // eslint-disable-next-line no-undef
 const userName = _spPageContextInfo.userLoginName.slice(0, -8);
 // eslint-disable-next-line no-console
 if (debugMode) { console.log('using app-loader m6'); }
-
-// Note: param map:
-// 		s = screen requested, e.g., messages
-// 		p = partial screen requested, e.g., classifieds tab within messages
-// 		u = user's account name
-// 		o = user override, e.g., emulate sp1 while signed in as jbaker
-// Note: we can't assume that a URL contains an accurate u param, as people
-// 		will pass URLs around; therefore, we must extract the others and then 
-// 		retrieve a new u param from Microsoft
 
 // if this page is App.aspx
 if (window.location.pathname.indexOf('/App.aspx') !== -1) {

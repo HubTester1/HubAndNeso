@@ -1,4 +1,6 @@
 
+// Every two-dimensional space within 
+
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import Style from '../../../services/Style';
@@ -28,7 +30,7 @@ const Container = styled.div`
 	${({ heightInRem }) => (heightInRem && `height: ${heightInRem}rem`)};
 	${({ marginInRem }) => (marginInRem && `margin: ${marginInRem}rem`)};
 `;
-const Base = styled.div`
+const BaseAndLight = styled.div`
 	position: relative;
 	${({ widthInRem }) => (widthInRem && `width: ${widthInRem}rem`)};
 	${({ heightInRem }) => (heightInRem && `height: ${heightInRem}rem`)};
@@ -144,22 +146,19 @@ const Plane = ({
 	<Container
 		widthInRem={widthInRem}
 		heightInRem={heightInRem}
-		className="plane-container"
 		marginInRem={marginInRem}
 	>
-		<Base
+		<BaseAndLight
 			elevationLevel={elevationLevel || 0}
 			backgroundColor={backgroundColor}
 			contentColor={contentColor}
 			darkMode={uData.user.preferences.darkMode}
-			className="base"
 			interactive={interactive}
 			widthInRem={widthInRem}
 			heightInRem={heightInRem}
 		>
 			<Content
 				contentColor={contentColor}
-				className="content"
 				paddingInRem={paddingInRem}
 				darkMode={uData.user.preferences.darkMode}
 				verticallyCenterContent={verticallyCenterContent}
@@ -168,7 +167,7 @@ const Plane = ({
 			>
 				{children}
 			</Content>
-		</Base>
+		</BaseAndLight>
 	</Container>
 );
 

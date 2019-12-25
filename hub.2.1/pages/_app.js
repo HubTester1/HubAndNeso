@@ -1,12 +1,19 @@
 
-// Primary purpose: create state store; get data from index and send to state via reducers
-// Used by Next.js in transpilation; overrides default Next.js _app
-
 import { Provider } from 'react-redux';
 import App from 'next/app';
 import withRedux from 'next-redux-wrapper';
 import makeStore from '../services/State/MakeStore/makeStore';
 
+/**
+ * @class AppWithRedux
+ * @extends {App}
+ * 
+ * @description Connect Next.js to Redux.
+ * 
+ * Create state store. Get data from index page component and send to state store via reducers.
+ * 
+ * Used by Next.js in transpilation; overrides default Next.js _app.
+ */
 class AppWithRedux extends App {
 	// get Index's props and, optionally, dispatch here
 	static async getInitialProps({ Component, ctx }) {

@@ -1,3 +1,8 @@
+/**
+ * @module services/Screen
+ * @description Returns data about screen breakpoints and contents.
+ */
+
 module.exports = {
 	ReturnLargeMin: () => 1121,
 	// ReturnLargeMin: () => 1025,

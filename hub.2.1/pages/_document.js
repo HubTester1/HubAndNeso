@@ -1,10 +1,15 @@
 
-// Primary purpose: Collect and handle styles from styled-components
-// Used by Next.js in transpilation; overrides default Next.js _document
-
 import Document, { Head, Main, NextScript } from 'next/document';
 import { ServerStyleSheet } from 'styled-components';
 
+/**
+ * Collect and handle styles from styled-components. Render <html>.
+ * Used by Next.js in transpilation; overrides default Next.js _document.
+ *
+ * @export
+ * @class DocumentWithStyledComponents
+ * @extends {Document}
+ */
 export default class DocumentWithStyledComponents extends Document {
 	static getInitialProps({ renderPage }) {
 		// create an instance of ServerStyleSheet

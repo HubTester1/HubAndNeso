@@ -1,3 +1,8 @@
+/**
+ * @module services/Utilities
+ * @description Miscellaneous utility functions.
+ */
+
 module.exports = {
 	ReturnStringWithInitialCapital: string => (
 		string.replace(/^\w/, c => c.toUpperCase())

@@ -1,4 +1,8 @@
 /* eslint-disable indent */
+/**
+ * @module services/Style
+ * @description Centralized style computations, variables, specs, and patterns.
+ */
 
 module.exports = {
 	
