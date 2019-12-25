@@ -1,6 +1,8 @@
 /**
+ * Home icon component. Contains SVG.
  * @component
- * @description Home icon component. Contains SVG.
+ * 
+ * @category Assets
  */
 const IconHome = props => (
 	<svg

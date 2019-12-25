@@ -1,6 +1,8 @@
 /* eslint-disable indent */
 /**
- * @module services/Style
+ * @name Style Service
+ * @module
+ * @category Services
  * @description Centralized style computations, variables, specs, and patterns.
  */
 

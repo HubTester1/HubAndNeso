@@ -1,6 +1,4 @@
 
-// Primary purpose: navigational header
-
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import Style from '../../../services/Style';

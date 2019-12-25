@@ -1,6 +1,13 @@
 /**
- * @module services/User
+ * @name User Service
+ * @module
+ * @category Services
  * @description Fetch and return data about user.
+ * 
+ * @todo Refactor into module instead of class
+ * @todo Fetch live data
+ * @todo Assign roles in cloud
+ * @todo Set mosManager as a role in cloud
  */
 
 // import pnp, { Web } from 'sp-pnp-js';

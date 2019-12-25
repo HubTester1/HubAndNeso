@@ -9,7 +9,7 @@
     "startLocal": "next start",
     "devRemote": "node-dev server.js",
     "startRemote": "node server.js",
-    "doc": "jsdoc -c jsdoc.json"
+    "doc": "jsdoc -r -c jsdoc.json"
   },
   "author": "",
   "license": "ISC",
@@ -40,6 +40,7 @@
     "uuid": "^3.3.3"
   },
   "devDependencies": {
+    "babel-core": "^6.26.3",
     "better-docs": "^1.4.7",
     "jsdoc": "^3.6.3"
   }

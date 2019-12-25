@@ -1,11 +1,14 @@
 /**
- * @file app-loader.js
- * 
+ * @name App Loader Service
+ * @category Services
  * @description File is loaded by JS script in SharePoint Online (SPO) master page (mos.2.1.master).
  * JS code executes automatically. This is the connection between SPO and this app.
  * 
  * Code either loads the app or arranges things for other SPO areas that use 
  * the same master page.
+ * 
+ * This is vanilla ES6; it is not compiled or otherwise manipulated. 
+ * Thus, it is both source and distribution, and lives in /public.
  */
 
 // global vars

@@ -1,6 +1,10 @@
 /**
- * @module services/Screen
- * @description Returns data about screen breakpoints and contents.
+ * @name Screen Service
+ * @module
+ * @category Services
+ * @description Returns data about screen breakpoints and contents. Users cannot navigate
+ * to screens or partial screens not listed in ReturnSData > screens.
+ * 
  */
 
 module.exports = {

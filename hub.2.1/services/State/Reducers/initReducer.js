@@ -1,3 +1,13 @@
+/**
+ * @name State Store Service - Init Reducer
+ * @function
+ * @category Services
+ * @description Define Redux state store reducer. Due to Next.js limitations, this
+ * is the only reducer.
+ * @param {object} action
+ * @returns {object} Modified state object
+ */
+
 
 const initReducerDefaultState = {
 	stateError: false,
@@ -38,7 +48,6 @@ const initReducer = (state = initReducerDefaultState, action) => {
 				screens: state.sData.screens,
 			},
 		};
-
 	default:
 		return state;
 	}

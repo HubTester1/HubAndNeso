@@ -1,5 +1,7 @@
 /**
- * @module services/Utilities
+ * @name Utilities Service
+ * @module
+ * @category Services
  * @description Miscellaneous utility functions.
  */
 
