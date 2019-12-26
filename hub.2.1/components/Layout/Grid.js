@@ -1,5 +1,12 @@
-
-// Primary purpose: layout of headers and ScreenContainer content
+/**
+ * @name Grid
+ * @component
+ * @category Components - Layout
+ * @description Scaffolding for headers and screen contents.
+ * @returns {Component} &lt;Grid />
+ *
+ * @todo params, types, required or optional
+ */
 
 import styled from 'styled-components';
 import PrimaryNav from '../Headers/PrimaryNav/PrimaryNav';

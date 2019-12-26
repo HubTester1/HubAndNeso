@@ -1,9 +1,10 @@
-
-// ----- IMPORTS
-
-import * as React from 'react';
-
-// ----- COMPONENT
+/**
+ * @name Brand - Hub - Logo Only
+ * @component
+ * @category Assets
+ * @description SVG.
+ * @returns {Component} &lt;BrandLogoOnly />
+ */
 
 const BrandLogoOnly = props =>
 	(

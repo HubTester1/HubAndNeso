@@ -1,3 +1,10 @@
+/**
+ * @name Icon - Search - Pointed Right
+ * @component
+ * @category Assets
+ * @description SVG from Microsoft Fabric UI
+ * @returns {Component} &lt;IconMessages />
+ */
 
 const IconMessages = props => (
 	<svg

@@ -1,9 +1,10 @@
-
-// ----- IMPORTS
-
-import * as React from 'react';
-
-// ----- COMPONENT
+/**
+ * @name Brand - Hub - Logo + Wordmark - Horizontal
+ * @component
+ * @category Assets
+ * @description SVG. Letterforms in Akzidenz Grotesk.
+ * @returns {Component} &lt;BrandHorizontal />
+ */
 
 const BrandHorizontal = props => 
 	(

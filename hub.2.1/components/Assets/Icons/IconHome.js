@@ -1,8 +1,9 @@
 /**
- * Home icon component. Contains SVG.
+ * @name Icon - Home
  * @component
- * 
  * @category Assets
+ * @description SVG from Microsoft Fabric UI
+ * @returns {Component} &lt;IconHome />
  */
 const IconHome = props => (
 	<svg

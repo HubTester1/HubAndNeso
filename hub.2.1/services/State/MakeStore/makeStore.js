@@ -13,7 +13,7 @@ import initReducer from '../Reducers/initReducer';
  * @param {Response} options.res NodeJS Response object
  * @param {boolean} options.debug User-defined debug mode param
  * @param {string} options.storeKey Preserve store in global namespace for safe HMR
- * @returns {object} Modified state object
+ * @returns {object} Store, an object that holds complete state
  */
 
 // define the compose enhancers to be used; if server, compose; if client, dev tools

@@ -1,3 +1,14 @@
+/**
+ * @name Button
+ * @component
+ * @category Components - Ingredients
+ * @description Button. Connected to Redux store.
+ * @returns {Component} &lt;Button />
+ *
+ * @todo mapStateToProps
+ * @todo mapDispatchToProps
+ * @todo params, types, required or optional
+ */
 
 import { connect } from 'react-redux';
 import styled from 'styled-components';

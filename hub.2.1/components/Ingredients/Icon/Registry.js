@@ -1,3 +1,11 @@
+/**
+ * @name Icon Registry
+ * @component
+ * @category Components - Ingredients
+ * @description Registry (exports) of all icon assets. 
+ * Icon component gets its icon content from this registry.
+ */
+
 
 export { default as Home } from '../../Assets/Icons/IconHome';
 export { default as Messages } from '../../Assets/Icons/IconMessages';

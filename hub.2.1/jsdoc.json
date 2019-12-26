@@ -4,9 +4,12 @@
 		"node_modules/better-docs/component",
 		"node_modules/better-docs/category"
 	],
+	"ignoreCode": {
+		"dynamicImports": true
+	},
 	"recurseDepth": 10,
 	"source": {
-		"include": ["./components", "./pages", "./public", "./services"],
+		"include": ["./components", "./pages", "./public", "./services", "meta/agenda.txt"],
 		"includePattern": ".+\\.js(doc|x)?$"
 	},
 	"sourceType": "module",

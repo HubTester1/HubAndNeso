@@ -1,3 +1,10 @@
+/**
+ * @name Partial Screen Registry
+ * @component
+ * @category Components - Screens
+ * @description Registry (exports) of all partial screen components.
+ * Screen component gets its partial screen content from this registry.
+ */
 
 export { default as TodayAndRecent } from './Home/TodayAndRecent';
 export { default as Pinned } from './Home/Pinned';

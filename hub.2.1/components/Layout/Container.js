@@ -1,5 +1,20 @@
-
-// Primary purpose: compute and inject global styles, get screen type, call Grid
+/**
+ * @name Container
+ * @component
+ * @category Components - Layout
+ * @description App root.
+ * 
+ * Compute and inject global styles. Determine screen size and 
+ * dispatch to state store. Listen for screen resize events and 
+ * re-dispatch screen size to state store. Render App Grid.
+ * 
+ * Connected to Redux store.
+ * @returns {Component} &lt;Container />
+ *
+ * @todo mapStateToProps
+ * @todo mapDispatchToProps
+ * @todo Remove disused sticky header styles
+ */
 
 import { connect } from 'react-redux';
 import { createGlobalStyle } from 'styled-components';
@@ -191,7 +206,7 @@ const useWindowSize = (dispatch, sData) => {
 	}, []);
 };
 
-const AppContainer = ({ uData, sData, dispatch }) => {
+const Container = ({ uData, sData, dispatch }) => {
 	useWindowSize(dispatch, sData);
 	return (
 		<div id="app-container">
@@ -204,4 +219,4 @@ const AppContainer = ({ uData, sData, dispatch }) => {
 	); 
 };
 
-export default connect(state => state)(AppContainer);
+export default connect(state => state)(Container);

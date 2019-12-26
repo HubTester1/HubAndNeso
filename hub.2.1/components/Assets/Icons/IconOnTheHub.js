@@ -1,5 +1,12 @@
+/**
+ * @name Icon - On The Hub
+ * @component
+ * @category Assets
+ * @description SVG from Microsoft Fabric UI
+ * @returns {Component} &lt;IconOnTheHub />
+ */
 
-const IconMessages = props => (
+const IconOnTheHub = props => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
 		version="1.1"
@@ -14,4 +21,4 @@ const IconMessages = props => (
 	</svg>
 );
 
-export default IconMessages;
+export default IconOnTheHub;

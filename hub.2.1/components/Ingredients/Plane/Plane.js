@@ -1,5 +1,14 @@
-
-// Every two-dimensional space within 
+/**
+ * @name Plane
+ * @component
+ * @category Components - Ingredients
+ * @description Every two-dimensional space within app. Connected to Redux store.
+ * @returns {Component} &lt;Plane />
+ *
+ * @todo mapStateToProps
+ * @todo mapDispatchToProps
+ * @todo params, types, required or optional
+ */
 
 import { connect } from 'react-redux';
 import styled from 'styled-components';

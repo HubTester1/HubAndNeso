@@ -1,5 +1,15 @@
 
 // Primary purpose: search and h1 and partial screen tabs (secondary nav) header
+/**
+ * @name Search - Title - Secondary Nav
+ * @component
+ * @category Components - Headers
+ * @description Search box, screen title, partial screen tabs (secondary navigation). Connected to Redux store.
+ * @returns {Component} SearchTitleSecondaryNav
+ *
+ * @todo mapStateToProps
+ * @todo mapDispatchToProps
+ */
 
 import { connect } from 'react-redux';
 import Sticky from 'react-sticky-el';

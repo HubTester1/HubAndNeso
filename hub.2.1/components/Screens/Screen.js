@@ -1,3 +1,14 @@
+/**
+ * @name Screen
+ * @component
+ * @category Components - Screens
+ * @description Main content within app. Corresponds to "s" url param. Connected to Redux store.
+ * @returns {Component} &lt;Screen />
+ *
+ * @todo mapStateToProps
+ * @todo mapDispatchToProps
+ * @todo params, types, required or optional
+ */
 
 import { connect } from 'react-redux';
 import Utilities from '../../services/Utilities';

@@ -1,4 +1,12 @@
-
+/**
+ * @name Link Button
+ * @component
+ * @category Components - Ingredients
+ * @description Facilitates navigation between screens. Connected to Redux store.
+ * @returns {Component} &lt;LinkButton />
+ *
+ * @todo params, types, required or optional
+ */
 // import styled from 'styled-components';
 import { connect } from 'react-redux';
 import Button from '../Button/Button';

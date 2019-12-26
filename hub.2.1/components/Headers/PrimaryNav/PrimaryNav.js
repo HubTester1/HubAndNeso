@@ -1,3 +1,13 @@
+/**
+ * @name Primary Nav
+ * @component
+ * @category Components - Headers
+ * @description Primary navigation within app. Connected to Redux store.
+ * @returns {Component} &lt;PrimaryNav />
+ * 
+ * @todo mapStateToProps
+ * @todo mapDispatchToProps
+ */
 
 import { connect } from 'react-redux';
 import styled from 'styled-components';

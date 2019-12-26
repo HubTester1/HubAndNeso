@@ -1,3 +1,10 @@
+/**
+ * @name Icon - Search - Pointed Left
+ * @component
+ * @category Assets
+ * @description SVG from Microsoft Fabric UI
+ * @returns {Component} &lt;IconSearchToLeft />
+ */
 
 const IconSearchToLeft = props => (
 	<svg

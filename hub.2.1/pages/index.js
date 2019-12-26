@@ -1,17 +1,19 @@
 /* eslint-disable  react/react-in-jsx-scope */
+/**
+ * @name Index
+ * @component
+ * @category Next.js Overrides
+ * @description Fetch data and send it to _app. Render Container component.
+ * 
+ * Used by Next.js whenever /index is requested.
+ */
 
 import { Component } from 'react';
 import { connect } from 'react-redux';
 import Container from '../components/Layout/Container';
 import User from '../services/User';
 import Screen from '../services/Screen';
-/**
- * Fetch data and send it to _app. Render Container component.
- * Used by Next.js whenever /index is requested.
- *
- * @class Index
- * @extends {Component}
- */
+
 class Index extends Component {
 	// add props to component and dispatch data to store; called on both 
 	// 		server side and client side, but with different args. 
