@@ -1,8 +1,12 @@
 {
-	"extends": "airbnb",
+	"extends": [
+		"airbnb",
+		"plugin:jsdoc/recommended"
+	],
 	"parser": "babel-eslint",
 	"plugins": [
-		"babel"
+		"babel",
+		"jsdoc"
 	],
 	"parserOptions": {
 		"ecmaVersion": 2017

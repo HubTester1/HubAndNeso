@@ -47,7 +47,7 @@ const BaseAndLight = styled.div`
 		if (backgroundColor) {
 			return (Style.Color(backgroundColor, darkMode));
 		}
-		return (Style.Color('ux-plane-base', darkMode));
+		return (Style.Color('ux-base', darkMode));
 	}};
 	box-shadow: ${({ elevationLevel, darkMode }) => (Style.Shadow(`ux-l-${elevationLevel}`, darkMode))};
 	transition: all ${Style.StandardTransitionTime()};

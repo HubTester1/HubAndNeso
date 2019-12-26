@@ -6,12 +6,12 @@ import Button from '../../../Ingredients/Button/Button';
 const UX = ({ uData }) => (
 	<Plane
 		paddingInRem="2"
-		elevationLevel="1"
+		elevationLevel="2"
 	>
 		<Button
 			elevationLevel="4"
-			// backgroundColor="ux-pink"
-			contentColor="blue-5"
+			backgroundColor="ux-pink"
+			contentColor="blue-grey-5"
 			heightInRem="5"
 			widthInRem="17"
 			marginInRem="2"
@@ -22,7 +22,14 @@ const UX = ({ uData }) => (
 		/>
 		<Plane
 			paddingInRem="2"
-			elevationLevel="8"
+			elevationLevel="4"
+			marginInRem="2"
+		>
+			This is a paragraph under the button. This is a paragraph under the button. This is a paragraph under the button. This is a paragraph under the button. This is a paragraph under the button. This is a paragraph under the button. This is a paragraph under the button. This is a paragraph under the button. This is a paragraph under the button. This is a paragraph under the button. This is a paragraph under the button. This is a paragraph under the button. This is a paragraph under the button. This is a paragraph under the button.
+		</Plane>
+		<Plane
+			paddingInRem="2"
+			elevationLevel="16"
 			marginInRem="2"
 		>
 			This is a paragraph under the button. This is a paragraph under the button. This is a paragraph under the button. This is a paragraph under the button. This is a paragraph under the button. This is a paragraph under the button. This is a paragraph under the button. This is a paragraph under the button. This is a paragraph under the button. This is a paragraph under the button. This is a paragraph under the button. This is a paragraph under the button. This is a paragraph under the button. This is a paragraph under the button.

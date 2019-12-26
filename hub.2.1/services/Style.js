@@ -226,7 +226,7 @@ module.exports = {
 			// base, elevations, text
 			case 'ux-base':
 				if (darkMode) {
-					return module.exports.Color('grey-26');
+					return module.exports.Color('blue-grey-21');
 				}
 				return module.exports.Color('grey-05');
 			case 'ux-base-text':
@@ -234,45 +234,40 @@ module.exports = {
 					return module.exports.Color('grey-05');
 				}
 				return module.exports.Color('grey-26');
-			case 'ux-plane-base':
-				if (darkMode) {
-					return module.exports.Color('white', null, 0.05);
-				}
-				return module.exports.Color('white');
 			case 'ux-l-0': // 0 dp
-				return module.exports.Color('white', null, 0.0000000001);
+				return module.exports.Color('blue-grey-8', null, 0.0000000001);
 			case 'ux-l-1': // 1 dp
-				return module.exports.Color('white', null, 0.05);
+				return module.exports.Color('blue-grey-8', null, 0.05);
 			case 'ux-l-2': // 2 dp
-				return module.exports.Color('white', null, 0.07);
+				return module.exports.Color('blue-grey-8', null, 0.07);
 			case 'ux-l-3': // 3 dp
-				return module.exports.Color('white', null, 0.08);
+				return module.exports.Color('blue-grey-8', null, 0.08);
 			case 'ux-l-4': // 4 dp
-				return module.exports.Color('white', null, 0.09);
+				return module.exports.Color('blue-grey-8', null, 0.09);
 			case 'ux-l-5': // 6 dp
-				return module.exports.Color('white', null, 0.11);
+				return module.exports.Color('blue-grey-8', null, 0.11);
 			case 'ux-l-6': // 8 dp
-				return module.exports.Color('white', null, 0.12);
+				return module.exports.Color('blue-grey-8', null, 0.12);
 			case 'ux-l-7': // 12 dp
-				return module.exports.Color('white', null, 0.14);
+				return module.exports.Color('blue-grey-8', null, 0.14);
 			case 'ux-l-8': // 16 dp
-				return module.exports.Color('white', null, 0.15);
+				return module.exports.Color('blue-grey-8', null, 0.15);
 			case 'ux-l-9': // 24 dp
-				return module.exports.Color('white', null, 0.16);
+				return module.exports.Color('blue-grey-8', null, 0.16);
 			case 'ux-l-10': // 32 dp
-				return module.exports.Color('white', null, 0.18);
+				return module.exports.Color('blue-grey-8', null, 0.18);
 			case 'ux-l-11': // 40 dp
-				return module.exports.Color('white', null, 0.2);
+				return module.exports.Color('blue-grey-8', null, 0.2);
 			case 'ux-l-12': // 48 dp
-				return module.exports.Color('white', null, 0.22);
+				return module.exports.Color('blue-grey-8', null, 0.22);
 			case 'ux-l-13': // 64 dp
-				return module.exports.Color('white', null, 0.24);
+				return module.exports.Color('blue-grey-8', null, 0.24);
 			case 'ux-l-14': // 80 dp
-				return module.exports.Color('white', null, 0.26);
+				return module.exports.Color('blue-grey-8', null, 0.26);
 			case 'ux-l-15': // 96 dp
-				return module.exports.Color('white', null, 0.28);
+				return module.exports.Color('blue-grey-8', null, 0.28);
 			case 'ux-l-16': // 192 dp
-				return module.exports.Color('white', null, 0.30);
+				return module.exports.Color('blue-grey-8', null, 0.30);
 
 			// selected hues
 
@@ -417,6 +412,8 @@ module.exports = {
 
 			case 'bold-purple':
 				return '73,12,102';
+			case 'bold-blue':
+				return '0,47,86';
 			case 'bold-green':
 				return '3,68,54';
 			case 'bold-maroon':
@@ -505,8 +502,76 @@ module.exports = {
 				return '42,99,144';
 			case 'blue-8':
 				return '21,73,115';
+			case 'blue-9':
+				return module.exports.ColorRGBValue('bold-blue');
 			case 'blue-10':
 				return '0,32,59';
+			case 'blue-11':
+				return '0,42,76';
+			case 'blue-12':
+				return '0,36,66';
+			case 'blue-13':
+				return '0,31,56';
+			case 'blue-14':
+				return '0,25,46';
+			case 'blue-15':
+				return '0,20,36';
+			case 'blue-16':
+				return '0,15,26';
+			case 'blue-17':
+				return '0,10,16';
+
+			// --- BLUE-GREYS
+
+			case 'blue-grey-1':
+				return '233,236,243';
+			case 'blue-grey-2':
+				return '222,227,238';
+			case 'blue-grey-3':
+				return '213,222,229';
+			case 'blue-grey-4':
+				return '201,213,223';
+			case 'blue-grey-5':
+				return '194,205,214';
+			case 'blue-grey-6':
+				return '183,196,207';
+			case 'blue-grey-7':
+				return '177,183,201';
+			case 'blue-grey-8':
+				return '163,180,193';
+			case 'blue-grey-9':
+				return '153,172,187';
+			case 'blue-grey-10':
+				return '133,155,173';
+			case 'blue-grey-11':
+				return '112,138,160';
+			case 'blue-grey-12':
+				return '95,121,143';
+			case 'blue-grey-13':
+				return '82,104,122';
+			case 'blue-grey-14':
+				return '65,87,105';
+			case 'blue-grey-15':
+				return '51,70,85';
+			case 'blue-grey-16':
+				return '37,52,65';
+			case 'blue-grey-17':
+				return '24,35,44';
+			case 'blue-grey-18':
+				return '17,26,34';
+			case 'blue-grey-19':
+				return '13,21,28';
+			case 'blue-grey-20':
+				return '10,18,24';
+			case 'blue-grey-21':
+				return '6,11,15';
+
+
+
+
+
+
+
 
 			// --- AQUA
 
