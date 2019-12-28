@@ -1,13 +1,19 @@
 
+
 import { connect } from 'react-redux';
+import { ReturnPartialScreenTitle } from '../../../../services/State/Selectors';
 import Plane from '../../../Ingredients/Plane/Plane';
+import PartialScreenHeader from '../Common/PartialScreenHeader';
 import Button from '../../../Ingredients/Button/Button';
 
-const UX = ({ uData }) => (
+const UX = ({ partialScreenTitle }) => (
 	<Plane
 		paddingInRem="2"
 		elevationLevel="2"
 	>
+		<PartialScreenHeader
+			title={partialScreenTitle}
+		/>
 		<Button
 			elevationLevel="4"
 			backgroundColor="ux-pink"
@@ -37,4 +43,10 @@ const UX = ({ uData }) => (
 	</Plane>
 );
 
-export default connect(state => state)(UX);
+const mapStateToProps = state => ({
+	partialScreenTitle: ReturnPartialScreenTitle(state)
+});
+
+export default connect(
+	mapStateToProps,
+)(UX);

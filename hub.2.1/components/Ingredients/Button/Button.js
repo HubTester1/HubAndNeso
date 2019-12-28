@@ -5,12 +5,11 @@
  * @description Button. Connected to Redux store.
  * @returns {Component} &lt;Button />
  *
- * @todo mapStateToProps
- * @todo mapDispatchToProps
  * @todo params, types, required or optional
  */
 
 import { connect } from 'react-redux';
+import { ReturnScreenSize } from '../../../services/State/Selectors';
 import styled from 'styled-components';
 import Icon from '../Icon/Icon';
 import Plane from '../Plane/Plane';
@@ -48,7 +47,7 @@ const InvisibleTextWrapper = styled.span`
 	${Style.InlineHidden()}
 `;
 const Button = ({
-	sData,
+	screenSize,
 	iconPosition,
 	iconContent,
 	clickHandler,
@@ -75,11 +74,11 @@ const Button = ({
 			contentColor={contentColor}
 			widthInRem={widthInRem}
 			heightInRem={heightInRem}
-			contentHeightInRem={ReturnContentHeightInRem(contentHeightInRem, sData.size)}
+			contentHeightInRem={ReturnContentHeightInRem(contentHeightInRem, screenSize)}
 			paddingInRem={{
-				top: ReturnButtonVerticalPadding(heightInRem, ReturnContentHeightInRem(contentHeightInRem, sData.size), 'top'),
+				top: ReturnButtonVerticalPadding(heightInRem, ReturnContentHeightInRem(contentHeightInRem, screenSize), 'top'),
 				right: 1,
-				bottom: ReturnButtonVerticalPadding(heightInRem, ReturnContentHeightInRem(contentHeightInRem, sData.size), 'bottom'),
+				bottom: ReturnButtonVerticalPadding(heightInRem, ReturnContentHeightInRem(contentHeightInRem, screenSize), 'bottom'),
 				left: 1,
 			}}
 			horizontallyCenterContent
@@ -94,7 +93,7 @@ const Button = ({
 					iconPosition={iconPosition}
 					iconContent={iconContent}
 					contentColor={contentColor}
-					contentHeightInRem={ReturnContentHeightInRem(contentHeightInRem, sData.size)}
+					contentHeightInRem={ReturnContentHeightInRem(contentHeightInRem, screenSize)}
 				/>
 			}
 			{
@@ -119,11 +118,17 @@ const Button = ({
 					iconPosition={iconPosition}
 					iconContent={iconContent}
 					contentColor={contentColor}
-					contentHeightInRem={ReturnContentHeightInRem(contentHeightInRem, sData.size)}
+					contentHeightInRem={ReturnContentHeightInRem(contentHeightInRem, screenSize)}
 				/>
 			}
 		</Plane>
 	</ButtonBase>
 );
 
-export default connect(state => state)(Button);
+const mapStateToProps = state => ({
+	screenSize: ReturnScreenSize(state),
+});
+
+export default connect(
+	mapStateToProps,
+)(Button);

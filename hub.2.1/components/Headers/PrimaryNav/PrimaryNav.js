@@ -5,11 +5,11 @@
  * @description Primary navigation within app. Connected to Redux store.
  * @returns {Component} &lt;PrimaryNav />
  * 
- * @todo mapStateToProps
- * @todo mapDispatchToProps
  */
 
 import { connect } from 'react-redux';
+import { ReturnScreenSize } from '../../../services/State/Selectors';
+import { ReturnDarkMode } from '../../../services/State/Selectors';
 import styled from 'styled-components';
 import Style from '../../../services/Style';
 import LinkButton from '../../Ingredients/LinkButton/LinkButton';
@@ -56,11 +56,14 @@ const NavListItem = styled.li`
 	font-size: ${Style.FontSize('m', 'medium')};
 	font-weight: ${Style.FontWeight('light')};
 `;
-const PrimaryNav = ({ sData, uData }) => (
+const PrimaryNav = ({ 
+	darkMode,
+	screenSize,
+}) => (
 	<Header
-		screenSize={sData.size}
+		screenSize={screenSize}
 		role="banner"
-		darkMode={uData.user.preferences.darkMode}
+		darkMode={darkMode}
 	>
 		<SiteTitleElement>The Hub</SiteTitleElement>
 		<Nav
@@ -98,4 +101,11 @@ const PrimaryNav = ({ sData, uData }) => (
 	</Header>
 );
 
-export default connect(state => state)(PrimaryNav);
+const mapStateToProps = state => ({
+	screenSize: ReturnScreenSize(state),
+	darkMode: ReturnDarkMode(state)
+});
+
+export default connect(
+	mapStateToProps,
+)(PrimaryNav);

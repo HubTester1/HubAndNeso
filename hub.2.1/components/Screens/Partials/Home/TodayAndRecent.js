@@ -5,15 +5,18 @@
  * @description Must document upon completion. Connected to Redux store.
  * @returns {Component} &lt;TodayAndRecent />
  *
- * @todo Connect to Redux store
- * @todo mapStateToProps
- * @todo mapDispatchToProps
- * @todo params, types, required or optional
  * @todo document upon completion
  */
 
-const TodayAndRecent = () => (
+import { connect } from 'react-redux';
+import { ReturnPartialScreenTitle } from '../../../../services/State/Selectors';
+import PartialScreenHeader from '../Common/PartialScreenHeader';
+
+const TodayAndRecent = ({ partialScreenTitle }) => (
 	<div>
+		<PartialScreenHeader
+			title={partialScreenTitle}
+		/>
 		<ul>
 			<li>Today and Recent partial screen</li>
 			<li>Today and Recent partial screen</li>
@@ -86,4 +89,10 @@ const TodayAndRecent = () => (
 	</div>
 );
 
-export default TodayAndRecent;
+const mapStateToProps = state => ({
+	partialScreenTitle: ReturnPartialScreenTitle(state)
+});
+
+export default connect(
+	mapStateToProps,
+)(TodayAndRecent);

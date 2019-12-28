@@ -12,7 +12,7 @@
 import { Provider } from 'react-redux';
 import App from 'next/app';
 import withRedux from 'next-redux-wrapper';
-import makeStore from '../services/State/MakeStore/makeStore';
+import makeStore from '../services/State/MakeStore';
 
 class AppWithRedux extends App {
 	// get Index's props and, optionally, dispatch here

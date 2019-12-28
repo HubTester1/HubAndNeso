@@ -5,17 +5,26 @@
  * @description Must document upon completion. Connected to Redux store.
  * @returns {Component} &lt;Announcements />
  *
- * @todo Connect to Redux store
- * @todo mapStateToProps
- * @todo mapDispatchToProps
- * @todo params, types, required or optional
  * @todo document upon completion
  */
 
-const Announcements = () => (
+import { connect } from 'react-redux';
+import { ReturnPartialScreenTitle } from '../../../../services/State/Selectors';
+import PartialScreenHeader from '../Common/PartialScreenHeader';
+
+const Announcements = ({ partialScreenTitle }) => (
 	<div>
+		<PartialScreenHeader
+			title={partialScreenTitle}
+		/>
 		Announcements partial screen
 	</div>
 );
 
-export default Announcements;
+const mapStateToProps = state => ({
+	partialScreenTitle: ReturnPartialScreenTitle(state)
+});
+
+export default connect(
+	mapStateToProps,
+)(Announcements);

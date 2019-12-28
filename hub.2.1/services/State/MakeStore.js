@@ -1,6 +1,6 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
-import initReducer from '../Reducers/initReducer';
+import reducer from './Reducer';
 
 /**
  * @name State Store Service - Make Store
@@ -23,7 +23,7 @@ const composeEnhancers =
 
 const makeStore = (initialState, options) => 
 	createStore(
-		initReducer,
+		reducer,
 		initialState,
 		composeEnhancers(applyMiddleware(thunk)),
 	);

@@ -5,23 +5,27 @@
  * @description Must document upon completion. Connected to Redux store.
  * @returns {Component} &lt;Pinned />
  *
- * @todo mapStateToProps
- * @todo mapDispatchToProps
  * @todo params, types, required or optional
  * @todo document upon completion
  */
 
-
 import { connect } from 'react-redux';
+import { ReturnPartialScreenTitle } from '../../../../services/State/Selectors';
 import PartialScreenHeader from '../Common/PartialScreenHeader';
 
-const Pinned = ({ sData }) => (
+const Pinned = ({ partialScreenTitle }) => (
 	<div>
 		<PartialScreenHeader
-			title={sData.screens[sData.s].partials[sData.p].title}
+			title={partialScreenTitle}
 		/>
 		Pinned partial screen
 	</div>
 );
 
-export default connect(state => state)(Pinned);
+const mapStateToProps = state => ({ 
+	partialScreenTitle: ReturnPartialScreenTitle(state) 
+});
+
+export default connect(
+	mapStateToProps,
+)(Pinned);

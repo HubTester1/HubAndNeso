@@ -1,5 +1,5 @@
 /**
- * @name State Store Service - Init Reducer
+ * @name State Store Service - Reducer
  * @function
  * @category Services
  * @description Define Redux state store reducer. Due to Next.js limitations, this
@@ -8,15 +8,14 @@
  * @returns {object} Modified state object
  */
 
-
-const initReducerDefaultState = {
+const reducerDefaultState = {
 	stateError: false,
 	uData: {},
 	hData: { headerStuck: false },
 	sData: {},
 	isServerSide: false,
 };
-const initReducer = (state = initReducerDefaultState, action) => {
+const reducer = (state = reducerDefaultState, action) => {
 	switch (action.type) {
 	case 'SET_USER_DATA':
 		return {
@@ -53,4 +52,4 @@ const initReducer = (state = initReducerDefaultState, action) => {
 	}
 };
 
-export default initReducer;
+export default reducer;

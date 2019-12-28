@@ -34,6 +34,7 @@
     "react-sticky-el": "^1.1.0",
     "redux": "^4.0.4",
     "redux-thunk": "^2.3.0",
+    "reselect": "^4.0.0",
     "shortid": "^2.2.15",
     "styled-components": "^4.4.1",
     "url": "^0.11.0",

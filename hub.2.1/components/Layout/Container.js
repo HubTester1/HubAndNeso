@@ -11,12 +11,13 @@
  * Connected to Redux store.
  * @returns {Component} &lt;Container />
  *
- * @todo mapStateToProps
- * @todo mapDispatchToProps
  * @todo Remove disused sticky header styles
  */
 
 import { connect } from 'react-redux';
+import { ReturnSData } from '../../services/State/Selectors';
+import { ReturnScreenSize } from '../../services/State/Selectors';
+import { ReturnDarkMode } from '../../services/State/Selectors';
 import { createGlobalStyle } from 'styled-components';
 import Style from '../../services/Style';
 import Screen from '../../services/Screen';
@@ -32,7 +33,7 @@ const GlobalStyle = createGlobalStyle`
 		height: 100%;
 	}
 	body {
-		font-weight: ${Style.FontWeight('light')};
+		font-weight: ${Style.FontWeight('regular')};
 		margin: 0;
 		background-color: ${props => (Style.Color('ux-base', props.darkMode))};
 		color: ${props => (Style.Color('ux-base-text', props.darkMode))};
@@ -177,46 +178,56 @@ const GlobalStyle = createGlobalStyle`
 	`}
 `;
 
-
 /* 	div.sticky-outer-wrapper.active div.sticky-inner-wrapper {
 		z-index: ${Style.ZIndex('smallNav')};
 	} */
 
-
-const useWindowSize = (dispatch, sData) => {
-	// eslint-disable-next-line no-undef
-	React.useEffect(() => {
-		const updateSize = () => {
-			let screenSize = 'medium';
-			const sDataCopy = JSON.parse(JSON.stringify(sData));
-			if (window.matchMedia(`(max-width: ${Screen.ReturnSmallMax()}px)`).matches) {
-				screenSize = 'small';
-			} else if (window.matchMedia(`(min-width: ${Screen.ReturnLargeMin()}px)`).matches) {
-				screenSize = 'large';
-			}
-			sDataCopy.size = screenSize;
-			dispatch({
-				type: 'SET_SCREEN_DATA',
-				sData: sDataCopy,
-			});
-		};
-		window.addEventListener('resize', updateSize);
-		updateSize();
-		return () => window.removeEventListener('resize', updateSize);
-	}, []);
-};
-
-const Container = ({ uData, sData, dispatch }) => {
-	useWindowSize(dispatch, sData);
+const Container = ({ darkMode, screenSize, sData, useWindowSize }) => {
+	useWindowSize(sData);
 	return (
 		<div id="app-container">
 			<GlobalStyle
-				screenSize={sData.size}
-				darkMode={uData.user.preferences.darkMode}
+				screenSize={screenSize}
+				darkMode={darkMode}
 			/>
-			<Grid screenSize={sData.size} />
+			<Grid screenSize={screenSize} />
 		</div>
 	); 
 };
 
-export default connect(state => state)(Container);
+const mapStateToProps = state => ({
+	screenSize: ReturnScreenSize(state),
+	darkMode: ReturnDarkMode(state),
+	sData: ReturnSData(state),
+});
+const mapDispatchToProps = dispatch => {
+	return {
+		useWindowSize: (sData) => {
+			// eslint-disable-next-line no-undef
+			React.useEffect(() => {
+				const updateSize = () => {
+					console.log('updating size');
+					let screenSize = 'medium';
+					const sDataCopy = JSON.parse(JSON.stringify(sData));
+					if (window.matchMedia(`(max-width: ${Screen.ReturnSmallMax()}px)`).matches) {
+						screenSize = 'small';
+					} else if (window.matchMedia(`(min-width: ${Screen.ReturnLargeMin()}px)`).matches) {
+						screenSize = 'large';
+					}
+					sDataCopy.size = screenSize;
+					dispatch({
+						type: 'SET_SCREEN_DATA',
+						sData: sDataCopy,
+					});
+				};
+				window.addEventListener('resize', updateSize);
+				updateSize();
+				return () => window.removeEventListener('resize', updateSize);
+			}, []);
+		}
+	}
+};
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps,
+)(Container);

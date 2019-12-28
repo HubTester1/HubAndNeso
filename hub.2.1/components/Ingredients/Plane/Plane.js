@@ -4,13 +4,13 @@
  * @category Components - Ingredients
  * @description Every two-dimensional space within app. Connected to Redux store.
  * @returns {Component} &lt;Plane />
- *
- * @todo mapStateToProps
- * @todo mapDispatchToProps
+ * 
  * @todo params, types, required or optional
  */
 
 import { connect } from 'react-redux';
+import { ReturnScreenSize } from '../../../services/State/Selectors';
+import { ReturnDarkMode } from '../../../services/State/Selectors';
 import styled from 'styled-components';
 import Style from '../../../services/Style';
 
@@ -138,8 +138,8 @@ const Content = styled.div`
 `;
 const Plane = ({
 	elevationLevel,
-	uData,
-	sData,
+	darkMode,
+	screenSize,
 	children,
 	backgroundColor,
 	contentColor,
@@ -161,7 +161,7 @@ const Plane = ({
 			elevationLevel={elevationLevel || 0}
 			backgroundColor={backgroundColor}
 			contentColor={contentColor}
-			darkMode={uData.user.preferences.darkMode}
+			darkMode={darkMode}
 			interactive={interactive}
 			widthInRem={widthInRem}
 			heightInRem={heightInRem}
@@ -169,10 +169,10 @@ const Plane = ({
 			<Content
 				contentColor={contentColor}
 				paddingInRem={paddingInRem}
-				darkMode={uData.user.preferences.darkMode}
+				darkMode={darkMode}
 				verticallyCenterContent={verticallyCenterContent}
 				horizontallyCenterContent={horizontallyCenterContent}
-				contentHeightInRem={contentHeightInRem || Style.FontSize('m', sData.size).slice(0, -3)}
+				contentHeightInRem={contentHeightInRem || Style.FontSize('m', screenSize).slice(0, -3)}
 			>
 				{children}
 			</Content>
@@ -180,4 +180,11 @@ const Plane = ({
 	</Container>
 );
 
-export default connect(state => state)(Plane);
+const mapStateToProps = state => ({
+	screenSize: ReturnScreenSize(state),
+	darkMode: ReturnDarkMode(state)
+});
+
+export default connect(
+	mapStateToProps,
+)(Plane);
