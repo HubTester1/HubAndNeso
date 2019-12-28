@@ -1,7 +1,11 @@
 {
 	"name": "hub.2.1",
 	"version": "1.0.0",
-	"description": "",
+	"description": "2.1 build of The Hub Intranet web app for Museum of Science, Boston",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/HubTester1/HubAndNeso"
+	},
 	"main": "index.js",
 	"scripts": {
 		"build": "next build",
@@ -17,7 +21,7 @@
 	"dependencies": {
 		"dotenv": "^8.2.0",
 		"https": "^1.0.0",
-		"next": "^9.1.4",
+		"next": "^9.1.6",
 		"next-redux-wrapper": "^4.0.1",
 		"react": "^16.12.0",
 		"react-dom": "^16.12.0",
@@ -31,8 +35,8 @@
 	"devDependencies": {
 		"babel-core": "^6.26.3",
 		"better-docs": "^1.4.7",
+		"eslint": "^6.8.0",
 		"eslint-plugin-jsdoc": "^18.4.4",
-		"jsdoc": "^3.6.3",
-		"jsdoc-ignore-code": "^1.0.1"
+		"jsdoc": "^3.6.3"
 	}
 }
