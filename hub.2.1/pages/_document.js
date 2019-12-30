@@ -7,7 +7,7 @@
  * Used by Next.js in transpilation; overrides default Next.js _document.
  */
 
-import Document, { Head, Main, NextScript } from 'next/document';
+// import Document, { Head, Main, NextScript } from 'next/document';
 import { ServerStyleSheet } from 'styled-components';
 
 export default class DocumentWithStyledComponents extends Document {

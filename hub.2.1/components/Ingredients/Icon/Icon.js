@@ -3,14 +3,13 @@
  * @component
  * @category Components - Ingredients
  * @description Icon component. Gets icon content from Icon Registry. Connected to Redux store.
- * @returns {Component} &lt;Icon />
- *
- * @todo params, types, required or optional
+ * @returns {Component} &lt;Icon />.
  */
 
 import { connect } from 'react-redux';
-import { ReturnDarkMode } from '../../../services/State/Selectors';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
+import { ReturnDarkMode } from '../../../services/State/Selectors';
 import Style from '../../../services/Style';
 import * as IconRegistry from './Registry';
 
@@ -20,12 +19,7 @@ const IconContainer = styled.span`
 
 	svg {
 		height: ${({ contentHeightInRem }) => (`${contentHeightInRem}rem;`)};
-		fill: ${({ contentColor, darkMode }) => {
-		if (contentColor) {
-			return Style.Color(contentColor, darkMode);
-		}
-		return Style.Color('ux-base-text', darkMode);
-	}};
+		fill: ${({ contentColor, darkMode }) => (`${Style.Color(contentColor, darkMode)};`)};
 	}
 `;
 
@@ -47,11 +41,33 @@ const Icon = ({
 	); 
 };
 
+Icon.propTypes = {
+	/**
+	 * Which SVG should be used. E.g., "Home".
+	 */
+	iconContent: PropTypes.string.isRequired,
+	/**
+	 * Fill color for SVG. Will be used to find color from Style service. E.g., "ux-pink".
+	 */
+	contentColor: PropTypes.string,
+	/**
+	 * Height of icon, measured in rem. E.g., "4".
+	 */
+	contentHeightInRem: PropTypes.string.isRequired,
+	/**
+	 * From state store. Whether user prefers dark mode. E.g., "true".
+	 */
+	darkMode: PropTypes.bool,
+};
+
+Icon.defaultProps = {
+	contentColor: 'ux-base-text',
+	darkMode: false,
+};
+
 
 const mapStateToProps = state => ({
-	darkMode: ReturnDarkMode(state)
+	darkMode: ReturnDarkMode(state),
 });
 
-export default connect(
-	mapStateToProps,
-)(Icon);
+export default connect(mapStateToProps)(Icon);

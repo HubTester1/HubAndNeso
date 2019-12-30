@@ -8,6 +8,8 @@
  * @todo Fetch live data
  * @todo Assign roles in cloud
  * @todo Set mosManager as a role in cloud
+ * @todo Get showe and shudson ribbon permission from database - in user service
+ * @todo Get jbaker ribbon permission from database - in user service
  */
 
 // import pnp, { Web } from 'sp-pnp-js';

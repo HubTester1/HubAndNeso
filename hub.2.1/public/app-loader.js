@@ -10,8 +10,8 @@
  * This is vanilla ES6; it is not compiled or otherwise manipulated. 
  * Thus, it is both source and distribution, and lives in /public.
  * 
- * @todo Get showe and shudson ribbon permission from database 
- * @todo Get jbaker ribbon permission from database 
+ * @todo Get showe and shudson ribbon permission from database - in user service
+ * @todo Get jbaker ribbon permission from database - in user service
  */
 
 // global vars
