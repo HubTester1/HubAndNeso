@@ -252,6 +252,15 @@ function ShowScreen() {
 					ribbonForStan.style.display = 'block';
 				}
 			}
+			if (window.uData.account && (window.uData.account === 'acurtis')) {
+				// /SitePages/VPN%20Remote%20Access%20Policy.aspx
+				const ribbonForAllie =
+					document.querySelector('form[action^="/SitePages/VPN%20Remote%20Access%20Policy.aspx"] div#s4-ribbonrow');
+				if (ribbonForAllie) {
+					ribbonForAllie.style.display = 'block';
+				}
+			}
+
 			// hide loading and show other
 			document.getElementById('overlays-screen-container').style.display = 'none';
 			document.getElementById('s4-bodyContainer').className = 'visible';
