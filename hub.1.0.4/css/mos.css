@@ -3299,6 +3299,23 @@ div#s4-workspace div#app-container.hub-feedback div#container_date-filter-contro
     div#s4-workspace div#app-container.hub-feedback div#container_date-filter-controls div.container_date-filter-control a#filter--submit-button {
       margin-left: 11.5rem !important; }
 
+div#s4-workspace div#app-container.coffee-talk div#container_command-bar {
+  color: #333;
+  background-color: #eee;
+  display: inline-block; }
+  div#s4-workspace div#app-container.coffee-talk div#container_command-bar a {
+    color: #298aab !important; }
+    div#s4-workspace div#app-container.coffee-talk div#container_command-bar a:hover {
+      color: #007298 !important; }
+  div#s4-workspace div#app-container.coffee-talk div#container_command-bar h2#header_command-bar {
+    display: block !important;
+    width: 0 !important;
+    height: 0;
+    padding: 0 !important;
+    text-indent: 100%;
+    white-space: nowrap;
+    overflow: hidden; }
+
 div#s4-workspace div#app-container.event-av div#overview-table-container {
   margin-top: 0; }
 
@@ -4084,10 +4101,8 @@ div#s4-workspace div#app-container.museum-products.mw-products-timeline div#cont
         background-color: rgba(102, 102, 102, 0.1); }
       div#s4-workspace div#app-container.museum-products.mw-products-timeline div#container_data div.vis-timeline div.vis-panel.vis-center div.vis-foreground div.vis-group {
         border: none;
-        cursor: -webkit-grab;
         cursor: grab; }
         div#s4-workspace div#app-container.museum-products.mw-products-timeline div#container_data div.vis-timeline div.vis-panel.vis-center div.vis-foreground div.vis-group:active, div#s4-workspace div#app-container.museum-products.mw-products-timeline div#container_data div.vis-timeline div.vis-panel.vis-center div.vis-foreground div.vis-group:focus {
-          cursor: -webkit-grabbing;
           cursor: grabbing; }
       div#s4-workspace div#app-container.museum-products.mw-products-timeline div#container_data div.vis-timeline div.vis-panel.vis-center div.vis-shadow {
         box-shadow: none; }

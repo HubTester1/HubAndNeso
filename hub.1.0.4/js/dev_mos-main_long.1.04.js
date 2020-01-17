@@ -424,6 +424,12 @@
 			case "adminEventAV":
 				newTitle = "Admin Event AV Requests";
 				break;
+			case "publicCoffeeTalk":
+				newTitle = "Upcoming Talks";
+				break;
+			case "adminCoffeeTalk":
+				newTitle = "Admin Coffee Talk Requests";
+				break;
 
 			case "analyticsHubFeedback":
 				newTitle = "Hub Feedback Analytics";
@@ -531,6 +537,8 @@
 
 			case "nonAdminInHouseNeedsSheets":
 			case "adminEventAV":
+			case "publicCoffeeTalk":
+			case "adminCoffeeTalk":
 
 			case "adminHubFeedback":
 			case "myHubFeedback":
@@ -621,6 +629,9 @@
 
 			case "nonAdminInHouseNeedsSheets":
 			case "adminEventAV":
+
+			case "publicCoffeeTalk":
+			case "adminCoffeeTalk":
 
 			case "analyticsHubFeedback":
 			case "analyticsEventAV":
@@ -725,6 +736,8 @@
 
 			case "nonAdminInHouseNeedsSheets":
 			case "adminEventAV":
+			case "publicCoffeeTalk":
+			case "adminCoffeeTalk":
 
 			case "analyticsHubFeedback":
 			case "analyticsEventAV":
@@ -806,6 +819,12 @@
 				break;
 			case "adminEventAV":
 				$().ConfigureOverviewScreen("adminEventAV");
+				break;
+			case "publicCoffeeTalk":
+				$().ConfigureOverviewScreen("publicCoffeeTalk");
+				break;
+			case "adminCoffeeTalk":
+				$().ConfigureOverviewScreen("adminCoffeeTalk");
 				break;
 			case "analyticsHubFeedback":
 				$().ConfigureOverviewScreen("analyticsHubFeedback");
@@ -942,6 +961,8 @@
 					"myReferrals",
 					"nonAdminInHouseNeedsSheets",
 					"adminEventAV",
+					"publicCoffeeTalk",
+					"adminCoffeeTalk",
 					"analyticsHubFeedback",
 					"analyticsEventAV",
 					"gseStatsHRAdmin",
@@ -1081,6 +1102,8 @@
 			case "myReferrals":
 			case "nonAdminInHouseNeedsSheets":
 			case "adminEventAV":
+			case "publicCoffeeTalk":
+			case "adminCoffeeTalk":
 			case "analyticsHubFeedback":
 			case "analyticsEventAV":
 			case "gseStatsHRAdmin":
@@ -1107,7 +1130,7 @@
 			case "mwProductsTimeline":
 			case "mwProductsTodaysCapacity":
 			case "mwProductsList":
-				$("div#overview-screen-container").empty().removeClass('adminRequests-requests myRequests-requests gpcInitialConceptApprovalViewer-requests gpcSubmissionApprovalViewer-requests adminHubFeedback-requests  myHubFeedback-requests  adminReferrals-requests myReferrals-requests nonAdminInHouseNeedsSheets-requests adminEventAV-requests analyticsHubFeedback-requests analyticsEventAV-requests gseStatsHRAdmin-requests gseJobsHRAdmin-requests gseJobsJobAdmin-requests gseJobsManager-requests gseSchedulesCalendarHRAdmin-requests gseSchedulesCalendarJobAdmin-requests gseSchedulesCalendarManager-requests gseSchedulesCalendarStaff-requests gseSchedulesListHRAdmin-requests gseSchedulesListJobAdmin-requests gseSchedulesListManager-requests gseSchedulesListStaff-requests gseSignupsHRAdmin-requests gseSignupsJobAdmin-requests gseSignupsManager-requests gseSignupsStaff-requests mwBuyoutCalendar-requests mwBuyoutList-requests mwEventCalendar-requests mwEventList-requests mwProductsTimeline-requests mwProductsTodaysCapacity-requests mwProductsList-requests');
+				$("div#overview-screen-container").empty().removeClass('adminRequests-requests myRequests-requests gpcInitialConceptApprovalViewer-requests gpcSubmissionApprovalViewer-requests adminHubFeedback-requests  myHubFeedback-requests  adminReferrals-requests myReferrals-requests nonAdminInHouseNeedsSheets-requests adminEventAV-requests publicCoffeeTalk-requests adminCoffeeTalk-requests analyticsHubFeedback-requests analyticsEventAV-requests gseStatsHRAdmin-requests gseJobsHRAdmin-requests gseJobsJobAdmin-requests gseJobsManager-requests gseSchedulesCalendarHRAdmin-requests gseSchedulesCalendarJobAdmin-requests gseSchedulesCalendarManager-requests gseSchedulesCalendarStaff-requests gseSchedulesListHRAdmin-requests gseSchedulesListJobAdmin-requests gseSchedulesListManager-requests gseSchedulesListStaff-requests gseSignupsHRAdmin-requests gseSignupsJobAdmin-requests gseSignupsManager-requests gseSignupsStaff-requests mwBuyoutCalendar-requests mwBuyoutList-requests mwEventCalendar-requests mwEventList-requests mwProductsTimeline-requests mwProductsTodaysCapacity-requests mwProductsList-requests');
 				$("div#overview-screen-container").append('<div id="overview-table-container" class="table-container"></div>');
 			case "gseSchedulesListHRAdmin":
 				$("div#gse-schedule-card-dialog").remove();
@@ -1962,6 +1985,13 @@
 					} else {
 						userNeedsAlternateOverviewScreen = "adminEventAV";
 					}
+				}
+				break;
+			case "Coffee Talk":
+				if (GetParamFromUrl(location.search, "f") === "p") {
+					userNeedsAlternateOverviewScreen = "publicCoffeeTalk";
+				} else if (uData.isAdmin === 1) {
+					userNeedsAlternateOverviewScreen = "adminCoffeeTalk";
 				}
 				break;
 			case "Refer a Friend":
@@ -7772,6 +7802,10 @@
 
 		} else if (type === "adminEventAV") {
 			$().RenderCommandBarAndDatatablesForEventAVForAdmin();
+		} else if (type === "publicCoffeeTalk") {
+			$().RenderCommandBarAndDatatablesForCoffeeTalkForPublic();
+		} else if (type === "adminCoffeeTalk") {
+			$().RenderCommandBarAndDatatablesForCoffeeTalkForAdmin();
 		} else if (type === "nonAdminInHouseNeedsSheets") {
 			$().RenderOverviewScreenButtons(oData.nonAdminInHouseNeedsSheets.buttons);
 			$().RenderOverviewScreenPreamble(oData.nonAdminInHouseNeedsSheets.preamble);
@@ -20329,6 +20363,182 @@
 
 
 	// ---- CUSTOM OVERVIEW SCREENS
+	
+	$.fn.RenderCommandBarAndDatatablesForCoffeeTalkForPublic = function () {
+		var today = moment().format('YYYY-MM-DD')
+
+		var tData = {
+			'commonColumns': [{
+				'displayName': "Date & Time",
+				'internalName': "Datetime",
+				'friendlyFormatOnLoad': {
+					'incomingFormat': null,
+					'returnFormat': 'dddd, MMM D, YYYY, hA',
+					'determineYearDisplayDynamically': 1
+				}
+			}, {
+				'displayName': "Title",
+				'internalName': "TalkTitle",
+			}, {
+				'displayName': 'Speaker(s)',
+				'internalName': 'Speakers',
+				'userName': 1
+			}, {
+				'displayName': "Space",
+				'internalName': "Space",
+			}],
+			'tables': [{
+				// 'tableTitle': 'Upcoming Talks',
+				'tableID': 'approved-upcoming',
+				'someColsAreUsers': 1,
+				'sortColAndOrder': [0, 'desc'],
+				'customCAMLQuery': '<Where>' +
+					'   <And>' +
+					'       <Eq>' +
+					'           <FieldRef Name="RequestStatus"></FieldRef>' +
+					'           <Value Type="Text">Approved</Value>' +
+					'       </Eq>' +
+					'       <Geq>' +
+					'           <FieldRef Name="Datetime"></FieldRef>' +
+					'           <Value Type="DateTime" IncludeTimeValue="TRUE">' + today + 'T00:00:00Z</Value>' +
+					'       </Geq>' +
+					'   </And>' +
+					'</Where>',
+			}]
+		};
+
+		// insert container and sub-containers
+		$("div#overview-table-container").prepend('<div id="container_command-bar-and-tables"> \n' +
+			'   <div id="container_command-bar"></div> \n' +
+			'   <div id="table-container"></div> \n' +
+			'</div>');
+
+		var commandBarContents = '<h2 id="header_command-bar">Commands</h2> \n' +
+			'<div id="container_new-request-control"> \n' +
+			'   <a class="button-link button-link_new-item button_swf-new-request-with-datatable" data-button-type="newRequest" href="/sites/' + mData.siteToken + '/SitePages/App.aspx?r=0">New Request</a> \n';
+		if (uData.isAdmin) {
+			commandBarContents += '   <a class="button-link button-link_go-forward" href="/sites/' + mData.siteToken + '/SitePages/App.aspx">Admin Requests</a> \n';
+		} else {
+			commandBarContents += '   <a class="button-link button-link_go-forward" href="/sites/' + mData.siteToken + '/SitePages/App.aspx">My Requests</a> \n';
+		}
+
+			'</div> \n';
+
+		$().RenderAllDataTables(tData, "table-container");
+
+		// insert contents into containers
+		$("div#container_command-bar").html(commandBarContents);
+	};
+
+	$.fn.RenderCommandBarAndDatatablesForCoffeeTalkForAdmin = function () {
+		var today = moment().format('YYYY-MM-DD')
+
+		var tData = {
+			'commonColumns': [{
+				'displayName': 'Request ID',
+				'internalName': 'ID',
+				'formLink': 1
+			}, {
+				'displayName': 'Requested By',
+				'internalName': 'Author',
+				'userName': 1
+			}, {
+				'displayName': 'Talk To',
+				'internalName': 'RequestedFor',
+				'userName': 1
+			}, {
+				'displayName': "Title",
+				'internalName': "TalkTitle",
+			}, {
+				'displayName': 'Speaker(s)',
+				'internalName': 'Speakers',
+				'userName': 1
+			}, {
+				'displayName': "Date & Time",
+				'internalName': "Datetime",
+				'friendlyFormatOnLoad': {
+					'incomingFormat': null,
+					'returnFormat': 'dddd, MMM D, YYYY, hA',
+					'determineYearDisplayDynamically': 1
+				}
+			}, {
+				'displayName': "Space",
+				'internalName': "Space",
+			}],
+			'tables': [{
+				'tableTitle': 'Pending Approval',
+				'tableID': 'pending-approval',
+				'someColsAreUsers': 1,
+				'basicRSQueryRelevantStatus': 'Pending Approval'
+			}, {
+				'tableTitle': 'Approved, Upcoming',
+				'tableID': 'approved-upcoming',
+				'someColsAreUsers': 1,
+				'customCAMLQuery': '<Where>' +
+					'   <And>' +
+					'       <Eq>' +
+					'           <FieldRef Name="RequestStatus"></FieldRef>' +
+					'           <Value Type="Text">Approved</Value>' +
+					'       </Eq>' +
+					'       <Geq>' +
+					'           <FieldRef Name="Datetime"></FieldRef>' +
+					'           <Value Type="DateTime" IncludeTimeValue="TRUE">' + today + 'T00:00:00Z</Value>' +
+					'       </Geq>' +
+					'   </And>' +
+					'</Where>',
+				}, {
+					'tableTitle': 'Approved, Past',
+					'tableID': 'approved-past',
+					'someColsAreUsers': 1,
+					'customCAMLQuery': '<Where>' +
+						'   <And>' +
+						'       <Eq>' +
+						'           <FieldRef Name="RequestStatus"></FieldRef>' +
+						'           <Value Type="Text">Approved</Value>' +
+						'       </Eq>' +
+						'       <Lt>' +
+						'           <FieldRef Name="Datetime"></FieldRef>' +
+						'           <Value Type="DateTime" IncludeTimeValue="TRUE">' + today + 'T00:00:00Z</Value>' +
+						'       </Lt>' +
+						'   </And>' +
+						'</Where>',
+				}, {
+					'tableTitle': 'Cancelled & Disapproved',
+					'tableID': 'closed',
+					'someColsAreUsers': 1,
+					'sortColAndOrder': [0, 'desc'],
+					'basicRSQueryTwoRelevantStatuses': ["Cancelled", "Disapproved"],
+			}]
+		};
+
+		// insert container and sub-containers
+		$("div#overview-table-container").prepend('<div id="container_command-bar-and-tables"> \n' +
+			'   <div id="container_command-bar"></div> \n' +
+			'   <div id="table-container"></div> \n' +
+			'</div>');
+
+		var commandBarContents = '<h2 id="header_command-bar">Commands</h2> \n' +
+			'<div id="container_new-request-control"> \n' +
+			'   <a class="button-link button-link_new-item button_swf-new-request-with-datatable" data-button-type="newRequest" href="/sites/' + mData.siteToken + '/SitePages/App.aspx?r=0">New Request</a> \n' +
+			'   <a class="button-link button-link_go-forward" href="/sites/' + mData.siteToken + '/SitePages/App.aspx?f=p">Upcoming Talks</a> \n' +
+
+			'</div> \n';
+
+		$().RenderAllDataTables(tData, "table-container");
+
+		// insert contents into containers
+		$("div#container_command-bar").html(commandBarContents);
+
+	};
+
+
+
+
+
+
+
+
+
 
 	$.fn.RenderCommandBarAndDatatablesForEventAVForAdmin = function () {
 
@@ -29533,7 +29743,7 @@
 		// wait for all data retrieval / setting promises to complete (pass or fail) 
 		$.when.apply($, allDataRetrievalAndSettingPromises).always(function () {
 
-			console.log('using dev_mos-main_long.1.04 m1');
+			console.log('using dev_mos-main_long.1.04 m5');
 
 			$().ConfigureAndShowScreenContainerAndAllScreens();
 		});
