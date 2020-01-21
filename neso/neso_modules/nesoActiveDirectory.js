@@ -2443,6 +2443,23 @@ module.exports = {
 							division: '',
 							securityGroups: ['mos.org', 'EIE - Aspen', 'OS X Users', 'Web VPN Access', 'WiFi Access', 'PGP_BASIC'],
 						}, {
+							_id: '5e26f5d14d169d1058cf18a5',
+							account: 'pippolito',
+							employeeID: '011704',
+							firstName: 'Paul',
+							lastName: 'Ippolito',
+							firstInitial: 'P',
+							lastInitial: 'I',
+							displayName: 'Paul Ippolito',
+							title: 'Associate Vice President, Facilities',
+							email: 'pippolito@mos.org',
+							officePhone: '617-589-0154',
+							mobilePhone: '617-733-1684',
+							manager: 'jburke',
+							department: 'Facilities',
+							division: 'Visitor Experience & Ops',
+							securityGroups: ['BWVisitorExp', 'COI other', 'Budget_VisitorServices', 'mos.org', 'Exhibits_Projects_Mos_Then_And_Now', 'TrackIT Users', 'BPT', 'Facilities group', 'SN Facilities Managers', 'Master Planning', 'GWRenovation', 'BWPhysicalExp', 'Wayfinder', 'SP_Staff', 'Facilities Admin', 'FinanceSSRSUsers', 'Unicco_Grp', 'Butterfly Garden', 'Web VPN Access', 'Facility_Users', 'SN Facilities Technicians', 'MMTfolder', 'BWCoreTeam', 'ProjectManagers', 'GreenTeam', 'WiFi Access', 'PGP_BASIC', 'Power Users', 'Facilities-Exhibit Projects', 'SP_Dept_HR_ManagersHandbook', 'SP_Team_Write_Safety_Ldrs', 'Safety Leadership', 'Emergency Management Plan', 'Budget_RestrictedAccess', 'Accessibility_Shared', 'Crystal Enterprise', 'SP_Team_Write_Safety', 'Safety_Zeus', 'space', 'TrackIT Technicians', 'AnyConnect VPN Access', 'BPT - Aspen'],
+						}, {
 							_id: '5c41f8005ff3860d546c0d47',
 							account: 'gmurray',
 							employeeID: '006207',
@@ -2934,7 +2951,7 @@ module.exports = {
 							manager: 'jslakey',
 							department: 'Controller\'s Office',
 							division: 'Finance & System Services',
-							securityGroups: ['Data Services', 'VS Closing', 'COI other', 'CFO', 'mos.org', 'TrackIT Users', 'HRIS Project 2017', 'Garage Bank', 'CRM System Services', 'Fundware Finance Users', 'Master Planning', 'Mangrove', 'SP_Team_Write_HRIS_Payroll', 'Accounting', 'EIEgrants', 'Payroll Printer', 'SP_Staff', 'Wellness Committee', 'SP_Wellness_Read_Devpages', 'FinanceSSRSUsers', 'Budget_FullAccess', 'SP_Team_Write_ISGT', 'Web VPN Access', 'Lockers', 'MMTfolder', 'COI MOS', 'Business Services', 'WiFi Access', 'PGP_BASIC', 'CompBudget', 'payroll finance', 'SP_Team_Write_NEST', 'Financial Edge', 'SP_Dept_HR_ManagersHandbook', 'ISGT', 'EE Staff', 'Controller', 'Crystal Enterprise', 'SC Purchase Orders', 'Tessitura Finance', 'NISE Finance', 'AnyConnect VPN Access']
+							securityGroups: ['Data Services', 'VS Closing', 'COI other', 'CFO', 'mos.org', 'TrackIT Users', 'HRIS Project 2017', 'Garage Bank', 'CRM System Services', 'Fundware Finance Users', 'Master Planning', 'Mangrove', 'SP_Team_Write_HRIS_Payroll', 'Accounting', 'EIEgrants', 'Payroll Printer', 'SP_Staff', 'Wellness Committee', 'SP_Wellness_Read_Devpages', 'FinanceSSRSUsers', 'Budget_FullAccess', 'SP_Team_Write_ISGT', 'Web VPN Access', 'Lockers', 'MMTfolder', 'COI MOS', 'Business Services', 'WiFi Access', 'PGP_BASIC', 'CompBudget', 'payroll finance', 'SP_Team_Write_NEST', 'Financial Edge', 'SP_Dept_HR_ManagersHandbook', 'ISGT', 'EE Staff', 'Controller', 'Crystal Enterprise', 'SC Purchase Orders', 'Tessitura Finance', 'NISE Finance', 'AnyConnect VPN Access'],
 						}, {
 							_id: '5dfb8260708c920b2409d894',
 							account: 'apetroff',
@@ -2951,7 +2968,7 @@ module.exports = {
 							manager: 'hcalvin',
 							department: 'CRM System Services',
 							division: 'Visitor Experience & Ops',
-							securityGroups: ['Tessitura Training', 'Membership - Aspen', 'TStatsUsers', 'Budget_VisitorServices', 'mos.org', 'LSI_Admits', 'CRM System Services', 'Tessitura Users', 'Tessitura Advancement', 'OneLogin', 'Tessitura Administration', 'SP_Staff', 'FinanceSSRSUsers', 'Tessitura Ticketing', 'SN CRM System Users', 'OS X Users', 'Web VPN Access', 'MMTfolder', 'WiFi Access', 'Tessitura Marketing', 'Tessitura HelpDocs', 'Tessitura Education', 'Budget_RestrictedAccess', 'Tessitura Core Team', 'Tessitura Shared', 'Tessitura Finance', 'AnyConnect VPN Access']
+							securityGroups: ['Tessitura Training', 'Membership - Aspen', 'TStatsUsers', 'Budget_VisitorServices', 'mos.org', 'LSI_Admits', 'CRM System Services', 'Tessitura Users', 'Tessitura Advancement', 'OneLogin', 'Tessitura Administration', 'SP_Staff', 'FinanceSSRSUsers', 'Tessitura Ticketing', 'SN CRM System Users', 'OS X Users', 'Web VPN Access', 'MMTfolder', 'WiFi Access', 'Tessitura Marketing', 'Tessitura HelpDocs', 'Tessitura Education', 'Budget_RestrictedAccess', 'Tessitura Core Team', 'Tessitura Shared', 'Tessitura Finance', 'AnyConnect VPN Access'],
 						},
 					];
 
