@@ -424,8 +424,8 @@
 			case "adminEventAV":
 				newTitle = "Admin Event AV Requests";
 				break;
-			case "publicCoffeeTalk":
-				newTitle = "Upcoming Talks";
+			case "coffeeTalkCalendar":
+				newTitle = "Coffee Talk Calendar";
 				break;
 			case "adminCoffeeTalk":
 				newTitle = "Admin Coffee Talk Requests";
@@ -537,7 +537,6 @@
 
 			case "nonAdminInHouseNeedsSheets":
 			case "adminEventAV":
-			case "publicCoffeeTalk":
 			case "adminCoffeeTalk":
 
 			case "adminHubFeedback":
@@ -575,6 +574,7 @@
 			case "gseSchedulesCalendarManager":
 			case "gseSchedulesCalendarStaff":
 			case "mwBuyoutCalendar":
+			case "coffeeTalkCalendar":
 			case "mwEventCalendar":
 				if (addBrowserHistoryEntry === 1) { $().AddBrowserHistoryEntry(toScreen, newTitle, "App.aspx?f=cal"); }
 				if (replaceBrowserHistoryEntry === 1) { $().ReplaceBrowserHistoryEntry(toScreen, newTitle, "App.aspx?f=cal"); }
@@ -630,7 +630,6 @@
 			case "nonAdminInHouseNeedsSheets":
 			case "adminEventAV":
 
-			case "publicCoffeeTalk":
 			case "adminCoffeeTalk":
 
 			case "analyticsHubFeedback":
@@ -674,7 +673,7 @@
 			case "gseSchedulesCalendarJobAdmin":
 			case "gseSchedulesCalendarManager":
 			case "gseSchedulesCalendarStaff":
-
+			case "coffeeTalkCalendar":
 			case "mwBuyoutCalendar":
 			case "mwEventCalendar":
 				$().ReplacePageTitle(newTitle);
@@ -736,7 +735,7 @@
 
 			case "nonAdminInHouseNeedsSheets":
 			case "adminEventAV":
-			case "publicCoffeeTalk":
+			case "coffeeTalkCalendar":
 			case "adminCoffeeTalk":
 
 			case "analyticsHubFeedback":
@@ -820,8 +819,8 @@
 			case "adminEventAV":
 				$().ConfigureOverviewScreen("adminEventAV");
 				break;
-			case "publicCoffeeTalk":
-				$().ConfigureOverviewScreen("publicCoffeeTalk");
+			case "coffeeTalkCalendar":
+				$().ConfigureOverviewScreen("coffeeTalkCalendar");
 				break;
 			case "adminCoffeeTalk":
 				$().ConfigureOverviewScreen("adminCoffeeTalk");
@@ -961,7 +960,7 @@
 					"myReferrals",
 					"nonAdminInHouseNeedsSheets",
 					"adminEventAV",
-					"publicCoffeeTalk",
+					"coffeeTalkCalendar",
 					"adminCoffeeTalk",
 					"analyticsHubFeedback",
 					"analyticsEventAV",
@@ -1102,7 +1101,7 @@
 			case "myReferrals":
 			case "nonAdminInHouseNeedsSheets":
 			case "adminEventAV":
-			case "publicCoffeeTalk":
+			case "coffeeTalkCalendar":
 			case "adminCoffeeTalk":
 			case "analyticsHubFeedback":
 			case "analyticsEventAV":
@@ -1130,12 +1129,14 @@
 			case "mwProductsTimeline":
 			case "mwProductsTodaysCapacity":
 			case "mwProductsList":
-				$("div#overview-screen-container").empty().removeClass('adminRequests-requests myRequests-requests gpcInitialConceptApprovalViewer-requests gpcSubmissionApprovalViewer-requests adminHubFeedback-requests  myHubFeedback-requests  adminReferrals-requests myReferrals-requests nonAdminInHouseNeedsSheets-requests adminEventAV-requests publicCoffeeTalk-requests adminCoffeeTalk-requests analyticsHubFeedback-requests analyticsEventAV-requests gseStatsHRAdmin-requests gseJobsHRAdmin-requests gseJobsJobAdmin-requests gseJobsManager-requests gseSchedulesCalendarHRAdmin-requests gseSchedulesCalendarJobAdmin-requests gseSchedulesCalendarManager-requests gseSchedulesCalendarStaff-requests gseSchedulesListHRAdmin-requests gseSchedulesListJobAdmin-requests gseSchedulesListManager-requests gseSchedulesListStaff-requests gseSignupsHRAdmin-requests gseSignupsJobAdmin-requests gseSignupsManager-requests gseSignupsStaff-requests mwBuyoutCalendar-requests mwBuyoutList-requests mwEventCalendar-requests mwEventList-requests mwProductsTimeline-requests mwProductsTodaysCapacity-requests mwProductsList-requests');
+				$("div#overview-screen-container").empty().removeClass('adminRequests-requests myRequests-requests gpcInitialConceptApprovalViewer-requests gpcSubmissionApprovalViewer-requests adminHubFeedback-requests  myHubFeedback-requests  adminReferrals-requests myReferrals-requests nonAdminInHouseNeedsSheets-requests adminEventAV-requests coffeeTalkCalendar-requests adminCoffeeTalk-requests analyticsHubFeedback-requests analyticsEventAV-requests gseStatsHRAdmin-requests gseJobsHRAdmin-requests gseJobsJobAdmin-requests gseJobsManager-requests gseSchedulesCalendarHRAdmin-requests gseSchedulesCalendarJobAdmin-requests gseSchedulesCalendarManager-requests gseSchedulesCalendarStaff-requests gseSchedulesListHRAdmin-requests gseSchedulesListJobAdmin-requests gseSchedulesListManager-requests gseSchedulesListStaff-requests gseSignupsHRAdmin-requests gseSignupsJobAdmin-requests gseSignupsManager-requests gseSignupsStaff-requests mwBuyoutCalendar-requests mwBuyoutList-requests mwEventCalendar-requests mwEventList-requests mwProductsTimeline-requests mwProductsTodaysCapacity-requests mwProductsList-requests');
 				$("div#overview-screen-container").append('<div id="overview-table-container" class="table-container"></div>');
 			case "gseSchedulesListHRAdmin":
 				$("div#gse-schedule-card-dialog").remove();
 				break;
-
+			case "coffeeTalkCalendar":
+				$("div#mw-coffee-talk-dialog").remove();
+				break;
 			case "mwBuyoutCalendar":
 				$("div#mw-buyout-card-dialog").remove();
 				break;
@@ -1988,8 +1989,8 @@
 				}
 				break;
 			case "Coffee Talk":
-				if (GetParamFromUrl(location.search, "f") === "p") {
-					userNeedsAlternateOverviewScreen = "publicCoffeeTalk";
+				if (GetParamFromUrl(location.search, "f") === "cal") {
+					userNeedsAlternateOverviewScreen = "coffeeTalkCalendar";
 				} else if (uData.isAdmin === 1) {
 					userNeedsAlternateOverviewScreen = "adminCoffeeTalk";
 				}
@@ -4977,8 +4978,8 @@
 			draggable: true,
 			show: {
 				effect: "bounce",
-				times: 2,
-				duration: 500
+				times: 1,
+				duration: 200
 			},
 			width: 400,
 		});
@@ -7802,8 +7803,8 @@
 
 		} else if (type === "adminEventAV") {
 			$().RenderCommandBarAndDatatablesForEventAVForAdmin();
-		} else if (type === "publicCoffeeTalk") {
-			$().RenderCommandBarAndDatatablesForCoffeeTalkForPublic();
+		} else if (type === "coffeeTalkCalendar") {
+			$().RenderCommandBarAndCalendarForCoffeeTalk();
 		} else if (type === "adminCoffeeTalk") {
 			$().RenderCommandBarAndDatatablesForCoffeeTalkForAdmin();
 		} else if (type === "nonAdminInHouseNeedsSheets") {
@@ -16211,7 +16212,7 @@
 				'$("div#list-item-dialog").dialog({ \n' +
 				'	autoOpen: false, \n' +
 				'	draggable: true, \n' +
-				'	show: { effect: "bounce", times: 2, duration: 500 }, \n' +
+				'	show: { effect: "bounce", times: 1, duration: 200 }, \n' +
 				'	width: 1200, \n' +
 				'	maxHeight: 600, \n' +
 				'}); \n' +
@@ -20364,70 +20365,246 @@
 
 	// ---- CUSTOM OVERVIEW SCREENS
 	
-	$.fn.RenderCommandBarAndDatatablesForCoffeeTalkForPublic = function () {
-		var today = moment().format('YYYY-MM-DD')
+	$.fn.RenderCommandBarAndCalendarForCoffeeTalk = function () {
+		var buttons = [
+			{
+				"linkType": "newItem",
+				"anchorText": "New Request",
+				"href": "/sites/-dev-mw-coffee-talk/SitePages/App.aspx?r=0",
+			}, {
+				"linkType": "goForward",
+				"anchorText": "List",
+				"href": "/sites/-dev-mw-coffee-talk/SitePages/App.aspx",
+				// "idValue": "",
+				// "classValues": "button_swf-new-event-with-timeline",
+				"target": null
+			}
+		];
 
-		var tData = {
-			'commonColumns': [{
-				'displayName': "Date & Time",
-				'internalName': "Datetime",
-				'friendlyFormatOnLoad': {
-					'incomingFormat': null,
-					'returnFormat': 'dddd, MMM D, YYYY, hA',
-					'determineYearDisplayDynamically': 1
-				}
-			}, {
-				'displayName': "Title",
-				'internalName': "TalkTitle",
-			}, {
-				'displayName': 'Speaker(s)',
-				'internalName': 'Speakers',
-				'userName': 1
-			}, {
-				'displayName': "Space",
-				'internalName': "Space",
-			}],
-			'tables': [{
-				// 'tableTitle': 'Upcoming Talks',
-				'tableID': 'approved-upcoming',
-				'someColsAreUsers': 1,
-				'sortColAndOrder': [0, 'desc'],
-				'customCAMLQuery': '<Where>' +
-					'   <And>' +
+		var todayValueForQuery = moment().format('YYYY-MM-DD');
+		var viewToUse = GetParamFromUrl(location.search, "view");
+		var dateToUse = GetParamFromUrl(location.search, "date");
+		if (viewToUse == "") {
+			viewToUse = "month";
+		}
+		if (dateToUse == "") {
+			dateToUse = $().ReturnFormattedDateTime("nowUTC", "YYYY-MM-DDTHH:mm:ssZ", "YYYY-MM-DD", 0);
+		}
+
+		var getListItemsOptions = {
+			"viewFields": "<ViewFields>" +
+				"   <FieldRef Name='ID' />" +
+				"   <FieldRef Name='AllRequestData' />" +
+				"</ViewFields>",
+			"query": '<Query>' +
+					'   <Where>' +
+					'   <Or>' +
 					'       <Eq>' +
 					'           <FieldRef Name="RequestStatus"></FieldRef>' +
 					'           <Value Type="Text">Approved</Value>' +
 					'       </Eq>' +
-					'       <Geq>' +
-					'           <FieldRef Name="Datetime"></FieldRef>' +
-					'           <Value Type="DateTime" IncludeTimeValue="TRUE">' + today + 'T00:00:00Z</Value>' +
-					'       </Geq>' +
-					'   </And>' +
-					'</Where>',
-			}]
+					'		<And>' +
+					'       	<Eq>' +
+					'           	<FieldRef Name="TalkTitle"></FieldRef>' +
+					'           	<Value Type="Text">Open</Value>' +
+					'       	</Eq>' +
+					'       	<Neq>' +
+					'           	<FieldRef Name="RequestStatus"></FieldRef>' +
+					'           	<Value Type="Text">Cancelled</Value>' +
+					'       	</Neq>' +
+					'		</And>' +
+					'   </Or>' +
+					'   </Where>' +
+					'</Query>',
+			// "queryOptions": "<QueryOptions>" +
+			// 	"   <IncludeMandatoryColumns>FALSE</IncludeMandatoryColumns>" +
+			// 	"</QueryOptions>"
 		};
 
-		// insert container and sub-containers
-		$("div#overview-table-container").prepend('<div id="container_command-bar-and-tables"> \n' +
-			'   <div id="container_command-bar"></div> \n' +
-			'   <div id="table-container"></div> \n' +
-			'</div>');
+		$().SPServices({
+			operation: "GetListItems",
+			async: false,
+			listName: "SWFList",
+			CAMLViewFields: getListItemsOptions.viewFields,
+			CAMLQuery: getListItemsOptions.query,
+			CAMLRowLimit: getListItemsOptions.rowLimit,
+			CAMLQueryOptions: getListItemsOptions.queryOptions,
+			completefunc: function (xData, Status) {
 
-		var commandBarContents = '<h2 id="header_command-bar">Commands</h2> \n' +
-			'<div id="container_new-request-control"> \n' +
-			'   <a class="button-link button-link_new-item button_swf-new-request-with-datatable" data-button-type="newRequest" href="/sites/' + mData.siteToken + '/SitePages/App.aspx?r=0">New Request</a> \n';
-		if (uData.isAdmin) {
-			commandBarContents += '   <a class="button-link button-link_go-forward" href="/sites/' + mData.siteToken + '/SitePages/App.aspx">Admin Requests</a> \n';
-		} else {
-			commandBarContents += '   <a class="button-link button-link_go-forward" href="/sites/' + mData.siteToken + '/SitePages/App.aspx">My Requests</a> \n';
-		}
+				var regexOne = new RegExp("\r", "g");
+				var regexTwo = new RegExp("\n", "g");
+				var allEvents = [];
 
+				$(xData.responseXML).SPFilterNode("z:row").each(function () {
+
+					var eventItemString = $(this).attr("ows_AllRequestData");
+					eventItemString = eventItemString.replace(regexOne, "'");
+					eventItemString = eventItemString.replace(regexTwo, "'");
+					eval("var eventItem=" + eventItemString);
+					eventItem.ID = $(this).attr("ows_ID");
+					eventItem.contactName = '';
+					if (typeof (eventItem["Requested-For"]) == "object") {
+						eventItem.contactName = "<a target=\"_blank\" href=\"https://bmos-my.sharepoint.com/_layouts/15/me.aspx?p=" + StrInStr(eventItem["Requested-For"][0]["description"], "@", 1) + "%40mos.org&v=profile\">" + eventItem["Requested-For"][0]["displayText"] + "</a>";
+					}
+					if (typeof (eventItem["Legacy-Contact"]) == "string") {
+						eventItem.contactName = eventItem["Legacy-Contact"];
+					}
+
+					var isoStartDatetime = eventItem["datetime-storage_Datetime"];
+					var isoEndDatetime = moment(isoStartDatetime.slice(0, 19)).add(30, 'minutes').format('YYYY-MM-DDTHH:mm:ss');
+
+					var formattedStartTime = $().ReturnFormattedDateTime(isoStartDatetime, "YYYY-MM-DDTHH:mm:ss", "h:mma", 0);
+					formattedStartTime = formattedStartTime.slice(0, formattedStartTime.length - 1);
+					var formattedEndTime = $().ReturnFormattedDateTime(isoEndDatetime, "YYYY-MM-DDTHH:mm:ss", "h:mma", 0);
+					formattedEndTime = formattedEndTime.slice(0, formattedEndTime.length - 1);
+					var formattedDate = $().ReturnFormattedDateTime(isoStartDatetime, "YYYY-MM-DDTHH:mm:ss", "ddd, M/D/YY", 0);
+					var formattedSpeakers = '';
+					if (eventItem.Speakers[0]) {
+						eventItem.Speakers.forEach((speakerValue, speakerIndex) => {
+							var prefix = '';
+							if (speakerIndex !== 0 && speakerIndex !== eventItem.Speakers.length) {
+								prefix = ', ';
+							}
+							if (speakerIndex !== 0 && speakerIndex === eventItem.Speakers.length) {
+								prefix = ', and ';
+							}
+							formattedSpeakers += prefix + speakerValue.displayText
+						});
+					}
+
+					var thisEvent = {
+						"eventID": eventItem["ID"],
+						"title": formattedStartTime + " | " + eventItem["Talk-Title"],
+						"speakers": formattedSpeakers,
+						"formattedStartTime": formattedStartTime,
+						"formattedEndTime": formattedEndTime,
+						"formattedDate": formattedDate,
+						"start": isoStartDatetime,
+						"end": isoEndDatetime,
+						"editURL": "/sites/-dev-mw-coffee-talk/SitePages/App.aspx?r=" + eventItem["ID"],
+						"location": eventItem["Space-Assignment"],
+						"talkTitle": eventItem["Talk-Title"],
+						"talkDescription": eventItem["Description"],
+						"className": eventItem["Talk-Title"].toLowerCase() === 'open' ? 'open-slot' : 'scheduled-item',
+					};
+
+					allEvents.push(thisEvent);
+
+				});
+				console.log('m3');
+				console.log(getListItemsOptions.query);
+				console.log('allEvents');
+				console.log(allEvents);
+				// console.log('viewToUse');
+				// console.log(viewToUse);
+				// console.log('dateToUse');
+				// console.log(dateToUse);
+
+				// $('div#overview-screen-container').fullCalendar('destroy');
+				$("div#overview-screen-container").fullCalendar({
+					allDayDefault: true,
+					lazyFetching: false,
+					eventOrder: "start",
+					header: {
+						// right and center are reversed, because our CSS implements obedience to the accessibility imperative that DOM elements exist 
+						//      (and are thus encountered by assistive technologies) in the same order in which they're presented to sighted users
+						left: "",
+						right: "prevYear,prev,title,next,nextYear",
+						center: "today,basicDay,basicWeek,month"
+					},
+					defaultView: viewToUse,
+					defaultDate: dateToUse,
+					dayClick: function (date, jsEvent, view) {
+						location.href = "/sites/-dev-mw-coffee-talk/SitePages/App.aspx?f=cal&view=basicDay&date=" + $(this).attr("data-date");
+					},
+					theme: true,
+					eventClick: function (event, jsEvent, view) {
+
+						// close the dialog box
+						$("div#mw-coffee-talk-dialog").dialog("close");
+
+						// populate the dialog box
+						var dialogTitleBarContent = "<h2 class=\"ui-dialog-talk-title-date-and-time-range\"> \n" +
+							"   <span class=\"ui-dialog-talk-title-date\">" + event.formattedDate + "</span> \n" +
+							"   <span class=\"ui-dialog-title-talk-start-time\">" + event.formattedStartTime + "</span> \n" +
+							"   <span class=\"ui-dialog-title-talk-times-separator\"> &ndash; </span> \n" +
+							"   <span class=\"ui-dialog-title-talk-end-time\">" + event.formattedEndTime + "</span> \n" +
+							"</h2> \n";
+
+						if (typeof (event.location) != "undefined") {
+							dialogTitleBarContent += "<p class=\"ui-dialog-title-talk-location\">" + event.location + "</p> \n";
+						}
+
+						$('div.ui-dialog[aria-describedby="mw-coffee-talk-dialog"] div.ui-dialog-titlebar span.ui-dialog-title').html(dialogTitleBarContent);
+
+						var dialogBodyContent = "<p class=\"ui-dialog-talk-title\">" + event.talkTitle + "</p> \n" +
+							"<ul> \n";
+						if (event.speakers) {
+							dialogBodyContent += "	<p class=\"talk-speakers\">Speaker(s): " + event.speakers + "</p> \n";
+						}
+						if (event.talkDescription) {
+							dialogBodyContent += "	<p class=\"talk-description\">" + event.talkDescription + "</p> \n";
+						}
+						if (uData.isAdmin && event.editURL) {
+							dialogBodyContent += "<a class=\"ui-dialog-button\" href=\"" + event.editURL + "\">Update</a>";
+						}
+						$("div#mw-coffee-talk-dialog").html(dialogBodyContent);
+
+						// position the dialog box
+						$("div#mw-coffee-talk-dialog").dialog("option", "position", {
+							my: "left bottom",
+							at: "right top",
+							of: jsEvent
+						});
+
+						// open the dialog box
+						$("div#mw-coffee-talk-dialog").dialog("open");
+					},
+					events: allEvents
+				});
+				$('div#overview-screen-container').fullCalendar('refetchEvents');
+
+				var commandBarContents = $().ReturnButtonsMarkup(buttons);
+
+				$("div.fc-toolbar div.fc-left").append(commandBarContents);
+
+				$("button.ui-button, a.ui-button, a.ui-dialog-button").on("click", function () {
+					$("div#mw-coffee-talk-dialog").dialog("close");
+				});
+
+				$("div.fc-toolbar, div.fc-view-container").fadeTo(1000, 1);
+			}
+		});
+
+		// add extra class for styling hook
+		$('div#app-container').addClass('mw-coffee-talks-calendar');
+
+		$("div#app-container").append("<div id=\"mw-coffee-talk-dialog\"></div>");
+
+		$("div#mw-coffee-talk-dialog").dialog({
+			autoOpen: false,
+			draggable: true,
+			modal: true,
+			show: {
+				effect: "bounce",
+				times: 1,
+				duration: 200
+			},
+			width: 450,
+		});
+
+		var legend =
+			'<div id="talks-metadata" style="opacity: 1;"> \n' +
+			'	<h2 id="header_legend">Legend</h2> \n' +
+			'	<ul id="legend-items" aria-hidden="true"> \n' +
+			'		<li class="legend-item"><span class="color-indicator open-slot"></span>Open</li> \n' +
+			'		<li class="legend-item"><span class="color-indicator scheduled-item"></span>Scheduled</li> \n' +
+			'	</ul> \n' +
 			'</div> \n';
 
-		$().RenderAllDataTables(tData, "table-container");
+		$(legend).insertBefore($("div.fc-toolbar"));
 
-		// insert contents into containers
-		$("div#container_command-bar").html(commandBarContents);
+		$("div.fc-toolbar, div.fc-view-container").fadeTo(1000, 1);
 	};
 
 	$.fn.RenderCommandBarAndDatatablesForCoffeeTalkForAdmin = function () {
@@ -20520,7 +20697,7 @@
 		var commandBarContents = '<h2 id="header_command-bar">Commands</h2> \n' +
 			'<div id="container_new-request-control"> \n' +
 			'   <a class="button-link button-link_new-item button_swf-new-request-with-datatable" data-button-type="newRequest" href="/sites/' + mData.siteToken + '/SitePages/App.aspx?r=0">New Request</a> \n' +
-			'   <a class="button-link button-link_go-forward" href="/sites/' + mData.siteToken + '/SitePages/App.aspx?f=p">Upcoming Talks</a> \n' +
+			'   <a class="button-link button-link_go-forward" href="/sites/' + mData.siteToken + '/SitePages/App.aspx?f=cal">Calendar</a> \n' +
 
 			'</div> \n';
 
@@ -21618,8 +21795,8 @@
 			modal: true,
 			show: {
 				effect: "bounce",
-				times: 2,
-				duration: 500
+				times: 1,
+				duration: 200
 			},
 			width: 400,
 		});
@@ -22222,8 +22399,8 @@
 			modal: true,
 			show: {
 				effect: "bounce",
-				times: 2,
-				duration: 500
+				times: 1,
+				duration: 200
 			},
 			width: 400,
 		});
@@ -22428,7 +22605,7 @@
 				$("div#museum-wide-products-dialog").dialog({
 					autoOpen: false,
 					draggable: true,
-					show: { effect: "bounce", times: 2, duration: 500 },
+					show: { effect: "bounce", times: 1, duration: 200 },
 					width: 450,
 				});
 
@@ -23549,8 +23726,8 @@
 			modal: true,
 			show: {
 				effect: "bounce",
-				times: 2,
-				duration: 500
+				times: 1,
+				duration: 200
 			},
 			width: 600,
 		});
@@ -23794,7 +23971,7 @@
 		$("div#gse-signups-user-detail-dialog").dialog({
 			autoOpen: false,
 			draggable: true,
-			show: { effect: "bounce", times: 2, duration: 500 },
+			show: { effect: "bounce", times: 1, duration: 200 },
 			width: 800,
 			maxHeight: 600,
 		});
@@ -28928,9 +29105,34 @@
 	};
 
 	
-	 
- 	$.fn.SetInHouseNeedsSheetRequestAdditionalViewAccess = function () {
+	
+	$.fn.SetInHouseNeedsSheetRequestAdditionalViewAccess = function () {
 		$("input#View-Access").val(mData.viewAccess);
+	};
+
+
+
+	$.fn.ProcessCoffeeTalkSpaceFieldsViewAccessOnLoad = function () {
+		if (
+			$("input#standard-or-alternate-space-admin_alternate").is(":checked") && 
+			uData.isAdmin === 1
+		) {
+			$("div#label-and-control_Alternate-Space-Selection").show("fast").removeClass("hidden");
+		}
+	};
+
+
+
+	$.fn.ProcessCoffeeTalkSpaceFieldsPopulation = function () {
+		if ($("input#standard-or-alternate-space-admin_science-live-stage").is(":checked")) {
+			$("input#Space-Assignment").val('Science Live Stage');
+		} else if ($("input#standard-or-alternate-space-admin_hornblower").is(":checked")) {
+			$("input#Space-Assignment").val('Hornblower');
+		} else if ($("input#Alternate-Space-Selection").val() !== '') {
+			$("input#Space-Assignment").val($("input#Alternate-Space-Selection").val());
+		} else {
+			$("input#Space-Assignment").val('');
+		}
 	};
 
 
@@ -29743,7 +29945,7 @@
 		// wait for all data retrieval / setting promises to complete (pass or fail) 
 		$.when.apply($, allDataRetrievalAndSettingPromises).always(function () {
 
-			console.log('using dev_mos-main_long.1.04 m5');
+			console.log('using dev_mos-main_long.1.04 m15');
 
 			$().ConfigureAndShowScreenContainerAndAllScreens();
 		});

@@ -1133,7 +1133,8 @@ div.ui-dialog div.ui-dialog-titlebar.ui-widget-header button.ui-button
 				color: $intActive !important
 
 div#app-container.mw-events-calendar,
-div#app-container.mw-buyouts-calendar
+div#app-container.mw-buyouts-calendar,
+div#app-container.mw-coffee-talks-calendar
 
 	div.fc-toolbar
 
@@ -1964,6 +1965,7 @@ div#overview-screen-container.gseJobsManager-requests,
 div#overview-screen-container.gseSchedulesListManager-requests,
 div#overview-screen-container.gseSignupsManager-requests,
 div#overview-screen-container.mwBuyoutList-requests,
+div#overview-screen-container.adminCoffeeTalk-requests,
 div#overview-screen-container.mwEventList-requests,
 div#overview-screen-container.mwProductsList-requests,
 div#overview-screen-container.nonAdminInHouseNeedsSheets-requests
@@ -4755,7 +4757,8 @@ div[aria-describedby='museum-wide-products-dialog'],
 // 		a lot of repetition, but a few differences
 
 div#app-container.mw-events-calendar,
-div#app-container.mw-buyouts-calendar
+div#app-container.mw-buyouts-calendar,
+div#app-container.mw-coffee-talks-calendar
 
 	div.fc-toolbar
 		height: 4.5rem
@@ -4790,9 +4793,11 @@ div#app-container.mw-buyouts-calendar
 			line-height: 3.75rem !important
 			padding: .25rem 3rem .5rem
 
-div#app-container.mw-buyouts-calendar
+div#app-container.mw-buyouts-calendar,
+div#app-container.mw-coffee-talks-calendar
 
-	div#buyouts-metadata
+	div#buyouts-metadata,
+	div#talks-metadata
 		opacity: 0
 
 		h2#header_legend
@@ -4836,15 +4841,18 @@ div#app-container.mw-buyouts-calendar
 				// background-color: $bold-maroon
 				background-color: $subtle-green
 
-			span.nichols-gallery
+			span.nichols-gallery,
+			span.open-slot
 				// background-color: $bold-pink
 				background-color: $subtle-blue
 
-			span.stearns-gallery
+			span.stearns-gallery,
+			span.scheduled-item
 				// background-color: $bold-orange
 				background-color: $purple-3
 
 div#app-container.mw-buyouts-calendar,
+div#app-container.mw-coffee-talks-calendar,
 div#app-container.mw-events-calendar
 
 	div.fc-view-container
@@ -4909,12 +4917,14 @@ div#app-container.mw-events-calendar
 		background-color: $subtle-green
 		color: $grey3 !important
 
-	a.fc-event.nichols-gallery
+	a.fc-event.nichols-gallery,
+	a.fc-event.open-slot
 		// background-color: $bold-pink
 		background-color: $subtle-blue
 		color: $grey3 !important
 
-	a.fc-event.stearns-gallery
+	a.fc-event.stearns-gallery,
+	a.fc-event.scheduled-item
 		// background-color: $bold-orange
 		background-color: $purple-3
 		color: $grey3 !important
@@ -5094,6 +5104,7 @@ div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar
 
 div[aria-describedby='museum-wide-event-dialog'],
 div[aria-describedby='buyout-dialog'],
+div[aria-describedby='mw-coffee-talk-dialog'],
 div[aria-describedby='gse-schedule-card-dialog']
 
 	div.ui-dialog-titlebar
@@ -5102,6 +5113,7 @@ div[aria-describedby='gse-schedule-card-dialog']
 			white-space: normal
 
 			h2.ui-dialog-buyout-title-date-and-time-range,
+			h2.ui-dialog-talk-title-date-and-time-range,
 			h2.gse-schedules-dialog-date-and-time-range
 				white-space: nowrap
 				font-size: 2rem !important
@@ -5110,10 +5122,12 @@ div[aria-describedby='gse-schedule-card-dialog']
 				margin-block-start: 0
 				margin-block-end: 0
 
-				span.ui-dialog-title-buyout-start-time
+				span.ui-dialog-title-buyout-start-time,
+				span.ui-dialog-title-talk-start-time
 					margin-left: 1rem
 
-			p.ui-dialog-title-buyout-location
+			p.ui-dialog-title-buyout-location,
+			p.ui-dialog-title-talk-location
 				font-size: 1.3rem
 				font-weight: 400
 				margin: 0
@@ -5121,7 +5135,8 @@ div[aria-describedby='gse-schedule-card-dialog']
 
 	div.ui-dialog-content
 
-		p.ui-dialog-buyout-title
+		p.ui-dialog-buyout-title,
+		p.ui-dialog-talk-title
 			font-size: 2.6rem
 			font-weight: 300
 			margin: 0

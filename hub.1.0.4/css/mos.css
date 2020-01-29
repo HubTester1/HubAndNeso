@@ -1110,17 +1110,22 @@ div#app-container.mw-events-calendar div.fc-toolbar a.button-link,
 div#app-container.mw-events-calendar div.fc-toolbar a.collapsible-heading-toggle,
 div#app-container.mw-buyouts-calendar div.fc-toolbar button,
 div#app-container.mw-buyouts-calendar div.fc-toolbar a.button-link,
-div#app-container.mw-buyouts-calendar div.fc-toolbar a.collapsible-heading-toggle {
+div#app-container.mw-buyouts-calendar div.fc-toolbar a.collapsible-heading-toggle,
+div#app-container.mw-coffee-talks-calendar div.fc-toolbar button,
+div#app-container.mw-coffee-talks-calendar div.fc-toolbar a.button-link,
+div#app-container.mw-coffee-talks-calendar div.fc-toolbar a.collapsible-heading-toggle {
   position: relative;
   top: 50%;
   transform: translateY(-50%); }
 
 div#app-container.mw-events-calendar div.fc-toolbar div.fc-left button,
-div#app-container.mw-buyouts-calendar div.fc-toolbar div.fc-left button {
+div#app-container.mw-buyouts-calendar div.fc-toolbar div.fc-left button,
+div#app-container.mw-coffee-talks-calendar div.fc-toolbar div.fc-left button {
   margin-top: 1rem !important; }
 
 div#app-container.mw-events-calendar div.fc-toolbar div.fc-right > div > button,
-div#app-container.mw-buyouts-calendar div.fc-toolbar div.fc-right > div > button {
+div#app-container.mw-buyouts-calendar div.fc-toolbar div.fc-right > div > button,
+div#app-container.mw-coffee-talks-calendar div.fc-toolbar div.fc-right > div > button {
   transform: translateY(-3.25rem); }
 
 div#app-container.mw-events-calendar div.fc-toolbar button.fc-prevYear-button span.button-text,
@@ -1130,7 +1135,11 @@ div#app-container.mw-events-calendar div.fc-toolbar button.fc-nextYear-button sp
 div#app-container.mw-buyouts-calendar div.fc-toolbar button.fc-prevYear-button span.button-text,
 div#app-container.mw-buyouts-calendar div.fc-toolbar button.fc-prev-button span.button-text,
 div#app-container.mw-buyouts-calendar div.fc-toolbar button.fc-next-button span.button-text,
-div#app-container.mw-buyouts-calendar div.fc-toolbar button.fc-nextYear-button span.button-text {
+div#app-container.mw-buyouts-calendar div.fc-toolbar button.fc-nextYear-button span.button-text,
+div#app-container.mw-coffee-talks-calendar div.fc-toolbar button.fc-prevYear-button span.button-text,
+div#app-container.mw-coffee-talks-calendar div.fc-toolbar button.fc-prev-button span.button-text,
+div#app-container.mw-coffee-talks-calendar div.fc-toolbar button.fc-next-button span.button-text,
+div#app-container.mw-coffee-talks-calendar div.fc-toolbar button.fc-nextYear-button span.button-text {
   display: inline-block;
   width: 0;
   height: 0;
@@ -1696,6 +1705,7 @@ div#overview-screen-container.gseJobsManager-requests,
 div#overview-screen-container.gseSchedulesListManager-requests,
 div#overview-screen-container.gseSignupsManager-requests,
 div#overview-screen-container.mwBuyoutList-requests,
+div#overview-screen-container.adminCoffeeTalk-requests,
 div#overview-screen-container.mwEventList-requests,
 div#overview-screen-container.mwProductsList-requests,
 div#overview-screen-container.nonAdminInHouseNeedsSheets-requests {
@@ -1728,6 +1738,8 @@ div#overview-screen-container.nonAdminInHouseNeedsSheets-requests {
   div#overview-screen-container.gseSignupsManager-requests div#workflow-contacts,
   div#overview-screen-container.mwBuyoutList-requests div.table-container,
   div#overview-screen-container.mwBuyoutList-requests div#workflow-contacts,
+  div#overview-screen-container.adminCoffeeTalk-requests div.table-container,
+  div#overview-screen-container.adminCoffeeTalk-requests div#workflow-contacts,
   div#overview-screen-container.mwEventList-requests div.table-container,
   div#overview-screen-container.mwEventList-requests div#workflow-contacts,
   div#overview-screen-container.mwProductsList-requests div.table-container,
@@ -4150,42 +4162,56 @@ div[aria-describedby='museum-wide-products-dialog'] div.ui-dialog-content p.ui-d
   padding: 1rem 0; }
 
 div#app-container.mw-events-calendar div.fc-toolbar,
-div#app-container.mw-buyouts-calendar div.fc-toolbar {
+div#app-container.mw-buyouts-calendar div.fc-toolbar,
+div#app-container.mw-coffee-talks-calendar div.fc-toolbar {
   height: 4.5rem;
   margin-bottom: 1rem;
   opacity: 0; }
   div#app-container.mw-events-calendar div.fc-toolbar div.fc-left,
-  div#app-container.mw-buyouts-calendar div.fc-toolbar div.fc-left {
+  div#app-container.mw-buyouts-calendar div.fc-toolbar div.fc-left,
+  div#app-container.mw-coffee-talks-calendar div.fc-toolbar div.fc-left {
     float: left;
     height: 4.5rem; }
   div#app-container.mw-events-calendar div.fc-toolbar div.fc-right,
-  div#app-container.mw-buyouts-calendar div.fc-toolbar div.fc-right {
+  div#app-container.mw-buyouts-calendar div.fc-toolbar div.fc-right,
+  div#app-container.mw-coffee-talks-calendar div.fc-toolbar div.fc-right {
     float: none;
     display: inline-block;
     height: 4.5rem; }
     div#app-container.mw-events-calendar div.fc-toolbar div.fc-right > div,
-    div#app-container.mw-buyouts-calendar div.fc-toolbar div.fc-right > div {
+    div#app-container.mw-buyouts-calendar div.fc-toolbar div.fc-right > div,
+    div#app-container.mw-coffee-talks-calendar div.fc-toolbar div.fc-right > div {
       height: 4.5rem; }
   div#app-container.mw-events-calendar div.fc-toolbar div.fc-center,
-  div#app-container.mw-buyouts-calendar div.fc-toolbar div.fc-center {
+  div#app-container.mw-buyouts-calendar div.fc-toolbar div.fc-center,
+  div#app-container.mw-coffee-talks-calendar div.fc-toolbar div.fc-center {
     float: right;
     height: 4.5rem; }
     div#app-container.mw-events-calendar div.fc-toolbar div.fc-center > div,
-    div#app-container.mw-buyouts-calendar div.fc-toolbar div.fc-center > div {
+    div#app-container.mw-buyouts-calendar div.fc-toolbar div.fc-center > div,
+    div#app-container.mw-coffee-talks-calendar div.fc-toolbar div.fc-center > div {
       height: 4.5rem; }
     div#app-container.mw-events-calendar div.fc-toolbar div.fc-center button.ui-button,
-    div#app-container.mw-buyouts-calendar div.fc-toolbar div.fc-center button.ui-button {
+    div#app-container.mw-buyouts-calendar div.fc-toolbar div.fc-center button.ui-button,
+    div#app-container.mw-coffee-talks-calendar div.fc-toolbar div.fc-center button.ui-button {
       text-transform: capitalize; }
   div#app-container.mw-events-calendar div.fc-toolbar h2,
-  div#app-container.mw-buyouts-calendar div.fc-toolbar h2 {
+  div#app-container.mw-buyouts-calendar div.fc-toolbar h2,
+  div#app-container.mw-coffee-talks-calendar div.fc-toolbar h2 {
     display: inline-block;
     font-size: 3.75rem !important;
     line-height: 3.75rem !important;
     padding: .25rem 3rem .5rem; }
 
-div#app-container.mw-buyouts-calendar div#buyouts-metadata {
+div#app-container.mw-buyouts-calendar div#buyouts-metadata,
+div#app-container.mw-buyouts-calendar div#talks-metadata,
+div#app-container.mw-coffee-talks-calendar div#buyouts-metadata,
+div#app-container.mw-coffee-talks-calendar div#talks-metadata {
   opacity: 0; }
-  div#app-container.mw-buyouts-calendar div#buyouts-metadata h2#header_legend {
+  div#app-container.mw-buyouts-calendar div#buyouts-metadata h2#header_legend,
+  div#app-container.mw-buyouts-calendar div#talks-metadata h2#header_legend,
+  div#app-container.mw-coffee-talks-calendar div#buyouts-metadata h2#header_legend,
+  div#app-container.mw-coffee-talks-calendar div#talks-metadata h2#header_legend {
     display: block !important;
     width: 0 !important;
     height: 0;
@@ -4193,14 +4219,23 @@ div#app-container.mw-buyouts-calendar div#buyouts-metadata {
     text-indent: 100%;
     white-space: nowrap;
     overflow: hidden; }
-  div#app-container.mw-buyouts-calendar div#buyouts-metadata ul#legend-items {
+  div#app-container.mw-buyouts-calendar div#buyouts-metadata ul#legend-items,
+  div#app-container.mw-buyouts-calendar div#talks-metadata ul#legend-items,
+  div#app-container.mw-coffee-talks-calendar div#buyouts-metadata ul#legend-items,
+  div#app-container.mw-coffee-talks-calendar div#talks-metadata ul#legend-items {
     padding: 0; }
-    div#app-container.mw-buyouts-calendar div#buyouts-metadata ul#legend-items li.legend-item {
+    div#app-container.mw-buyouts-calendar div#buyouts-metadata ul#legend-items li.legend-item,
+    div#app-container.mw-buyouts-calendar div#talks-metadata ul#legend-items li.legend-item,
+    div#app-container.mw-coffee-talks-calendar div#buyouts-metadata ul#legend-items li.legend-item,
+    div#app-container.mw-coffee-talks-calendar div#talks-metadata ul#legend-items li.legend-item {
       display: inline-block;
       font-size: 1.75rem;
       list-style: none;
       margin: 0 2.25rem 0 0; }
-    div#app-container.mw-buyouts-calendar div#buyouts-metadata ul#legend-items span.color-indicator {
+    div#app-container.mw-buyouts-calendar div#buyouts-metadata ul#legend-items span.color-indicator,
+    div#app-container.mw-buyouts-calendar div#talks-metadata ul#legend-items span.color-indicator,
+    div#app-container.mw-coffee-talks-calendar div#buyouts-metadata ul#legend-items span.color-indicator,
+    div#app-container.mw-coffee-talks-calendar div#talks-metadata ul#legend-items span.color-indicator {
       display: inline-block;
       height: .5rem;
       width: 2rem;
@@ -4208,45 +4243,80 @@ div#app-container.mw-buyouts-calendar div#buyouts-metadata {
       position: relative;
       top: 50%;
       transform: translateY(-50%); }
-    div#app-container.mw-buyouts-calendar div#buyouts-metadata ul#legend-items span.omni-theater {
+    div#app-container.mw-buyouts-calendar div#buyouts-metadata ul#legend-items span.omni-theater,
+    div#app-container.mw-buyouts-calendar div#talks-metadata ul#legend-items span.omni-theater,
+    div#app-container.mw-coffee-talks-calendar div#buyouts-metadata ul#legend-items span.omni-theater,
+    div#app-container.mw-coffee-talks-calendar div#talks-metadata ul#legend-items span.omni-theater {
       background-color: #f2ea9a; }
-    div#app-container.mw-buyouts-calendar div#buyouts-metadata ul#legend-items span.three-four-d-digital-cinema {
+    div#app-container.mw-buyouts-calendar div#buyouts-metadata ul#legend-items span.three-four-d-digital-cinema,
+    div#app-container.mw-buyouts-calendar div#talks-metadata ul#legend-items span.three-four-d-digital-cinema,
+    div#app-container.mw-coffee-talks-calendar div#buyouts-metadata ul#legend-items span.three-four-d-digital-cinema,
+    div#app-container.mw-coffee-talks-calendar div#talks-metadata ul#legend-items span.three-four-d-digital-cinema {
       background-color: #ffc999; }
-    div#app-container.mw-buyouts-calendar div#buyouts-metadata ul#legend-items span.butterfly-garden {
+    div#app-container.mw-buyouts-calendar div#buyouts-metadata ul#legend-items span.butterfly-garden,
+    div#app-container.mw-buyouts-calendar div#talks-metadata ul#legend-items span.butterfly-garden,
+    div#app-container.mw-coffee-talks-calendar div#buyouts-metadata ul#legend-items span.butterfly-garden,
+    div#app-container.mw-coffee-talks-calendar div#talks-metadata ul#legend-items span.butterfly-garden {
       background-color: #ffb4aa; }
-    div#app-container.mw-buyouts-calendar div#buyouts-metadata ul#legend-items span.planetarium {
+    div#app-container.mw-buyouts-calendar div#buyouts-metadata ul#legend-items span.planetarium,
+    div#app-container.mw-buyouts-calendar div#talks-metadata ul#legend-items span.planetarium,
+    div#app-container.mw-coffee-talks-calendar div#buyouts-metadata ul#legend-items span.planetarium,
+    div#app-container.mw-coffee-talks-calendar div#talks-metadata ul#legend-items span.planetarium {
       background-color: #e5c5d3; }
-    div#app-container.mw-buyouts-calendar div#buyouts-metadata ul#legend-items span.skyline-room {
+    div#app-container.mw-buyouts-calendar div#buyouts-metadata ul#legend-items span.skyline-room,
+    div#app-container.mw-buyouts-calendar div#talks-metadata ul#legend-items span.skyline-room,
+    div#app-container.mw-coffee-talks-calendar div#buyouts-metadata ul#legend-items span.skyline-room,
+    div#app-container.mw-coffee-talks-calendar div#talks-metadata ul#legend-items span.skyline-room {
       background-color: #c6f2ef; }
-    div#app-container.mw-buyouts-calendar div#buyouts-metadata ul#legend-items span.nichols-gallery {
+    div#app-container.mw-buyouts-calendar div#buyouts-metadata ul#legend-items span.nichols-gallery,
+    div#app-container.mw-buyouts-calendar div#buyouts-metadata ul#legend-items span.open-slot,
+    div#app-container.mw-buyouts-calendar div#talks-metadata ul#legend-items span.nichols-gallery,
+    div#app-container.mw-buyouts-calendar div#talks-metadata ul#legend-items span.open-slot,
+    div#app-container.mw-coffee-talks-calendar div#buyouts-metadata ul#legend-items span.nichols-gallery,
+    div#app-container.mw-coffee-talks-calendar div#buyouts-metadata ul#legend-items span.open-slot,
+    div#app-container.mw-coffee-talks-calendar div#talks-metadata ul#legend-items span.nichols-gallery,
+    div#app-container.mw-coffee-talks-calendar div#talks-metadata ul#legend-items span.open-slot {
       background-color: #94c0e9; }
-    div#app-container.mw-buyouts-calendar div#buyouts-metadata ul#legend-items span.stearns-gallery {
+    div#app-container.mw-buyouts-calendar div#buyouts-metadata ul#legend-items span.stearns-gallery,
+    div#app-container.mw-buyouts-calendar div#buyouts-metadata ul#legend-items span.scheduled-item,
+    div#app-container.mw-buyouts-calendar div#talks-metadata ul#legend-items span.stearns-gallery,
+    div#app-container.mw-buyouts-calendar div#talks-metadata ul#legend-items span.scheduled-item,
+    div#app-container.mw-coffee-talks-calendar div#buyouts-metadata ul#legend-items span.stearns-gallery,
+    div#app-container.mw-coffee-talks-calendar div#buyouts-metadata ul#legend-items span.scheduled-item,
+    div#app-container.mw-coffee-talks-calendar div#talks-metadata ul#legend-items span.stearns-gallery,
+    div#app-container.mw-coffee-talks-calendar div#talks-metadata ul#legend-items span.scheduled-item {
       background-color: #d1b6e0; }
 
 div#app-container.mw-buyouts-calendar div.fc-view-container,
+div#app-container.mw-coffee-talks-calendar div.fc-view-container,
 div#app-container.mw-events-calendar div.fc-view-container {
   opacity: 0; }
 
 div#app-container.mw-buyouts-calendar div.fc-bg td.fc-day,
+div#app-container.mw-coffee-talks-calendar div.fc-bg td.fc-day,
 div#app-container.mw-events-calendar div.fc-bg td.fc-day {
   padding: 1rem .2rem .2rem 4.5rem !important; }
 
 div#app-container.mw-buyouts-calendar div.fc-bg td.ui-state-highlight,
+div#app-container.mw-coffee-talks-calendar div.fc-bg td.ui-state-highlight,
 div#app-container.mw-events-calendar div.fc-bg td.ui-state-highlight {
   background-color: #ddd;
   border-color: #ddd; }
 
 div#app-container.mw-buyouts-calendar div.fc-content-skeleton td.fc-day-number,
+div#app-container.mw-coffee-talks-calendar div.fc-content-skeleton td.fc-day-number,
 div#app-container.mw-events-calendar div.fc-content-skeleton td.fc-day-number {
   padding: .5rem .2rem .2rem 1.5rem !important;
   font-size: 2rem;
   text-align: left; }
 
 div#app-container.mw-buyouts-calendar div.fc-content-skeleton td.fc-day-number.add-schedule-on-click,
+div#app-container.mw-coffee-talks-calendar div.fc-content-skeleton td.fc-day-number.add-schedule-on-click,
 div#app-container.mw-events-calendar div.fc-content-skeleton td.fc-day-number.add-schedule-on-click {
   cursor: pointer; }
 
 div#app-container.mw-buyouts-calendar a.fc-event,
+div#app-container.mw-coffee-talks-calendar a.fc-event,
 div#app-container.mw-events-calendar a.fc-event {
   font-size: 1.3rem;
   line-height: 2rem;
@@ -4258,37 +4328,50 @@ div#app-container.mw-events-calendar a.fc-event {
   color: #fff !important; }
 
 div#app-container.mw-buyouts-calendar a.fc-event.omni-theater,
+div#app-container.mw-coffee-talks-calendar a.fc-event.omni-theater,
 div#app-container.mw-events-calendar a.fc-event.omni-theater {
   background-color: #f2ea9a;
   color: #333 !important; }
 
 div#app-container.mw-buyouts-calendar a.fc-event.three-four-d-digital-cinema,
+div#app-container.mw-coffee-talks-calendar a.fc-event.three-four-d-digital-cinema,
 div#app-container.mw-events-calendar a.fc-event.three-four-d-digital-cinema {
   background-color: #ffc999;
   color: #333 !important; }
 
 div#app-container.mw-buyouts-calendar a.fc-event.butterfly-garden,
+div#app-container.mw-coffee-talks-calendar a.fc-event.butterfly-garden,
 div#app-container.mw-events-calendar a.fc-event.butterfly-garden {
   background-color: #ffb4aa;
   color: #333 !important; }
 
 div#app-container.mw-buyouts-calendar a.fc-event.planetarium,
+div#app-container.mw-coffee-talks-calendar a.fc-event.planetarium,
 div#app-container.mw-events-calendar a.fc-event.planetarium {
   background-color: #e5c5d3;
   color: #333 !important; }
 
 div#app-container.mw-buyouts-calendar a.fc-event.skyline-room,
+div#app-container.mw-coffee-talks-calendar a.fc-event.skyline-room,
 div#app-container.mw-events-calendar a.fc-event.skyline-room {
   background-color: #c6f2ef;
   color: #333 !important; }
 
 div#app-container.mw-buyouts-calendar a.fc-event.nichols-gallery,
-div#app-container.mw-events-calendar a.fc-event.nichols-gallery {
+div#app-container.mw-buyouts-calendar a.fc-event.open-slot,
+div#app-container.mw-coffee-talks-calendar a.fc-event.nichols-gallery,
+div#app-container.mw-coffee-talks-calendar a.fc-event.open-slot,
+div#app-container.mw-events-calendar a.fc-event.nichols-gallery,
+div#app-container.mw-events-calendar a.fc-event.open-slot {
   background-color: #94c0e9;
   color: #333 !important; }
 
 div#app-container.mw-buyouts-calendar a.fc-event.stearns-gallery,
-div#app-container.mw-events-calendar a.fc-event.stearns-gallery {
+div#app-container.mw-buyouts-calendar a.fc-event.scheduled-item,
+div#app-container.mw-coffee-talks-calendar a.fc-event.stearns-gallery,
+div#app-container.mw-coffee-talks-calendar a.fc-event.scheduled-item,
+div#app-container.mw-events-calendar a.fc-event.stearns-gallery,
+div#app-container.mw-events-calendar a.fc-event.scheduled-item {
   background-color: #d1b6e0;
   color: #333 !important; }
 
@@ -4503,13 +4586,20 @@ div#s4-workspace div#app-container.gse-schedule.gse-schedule-calendar div#overvi
 
 div[aria-describedby='museum-wide-event-dialog'] div.ui-dialog-titlebar span.ui-dialog-title,
 div[aria-describedby='buyout-dialog'] div.ui-dialog-titlebar span.ui-dialog-title,
+div[aria-describedby='mw-coffee-talk-dialog'] div.ui-dialog-titlebar span.ui-dialog-title,
 div[aria-describedby='gse-schedule-card-dialog'] div.ui-dialog-titlebar span.ui-dialog-title {
   white-space: normal; }
   div[aria-describedby='museum-wide-event-dialog'] div.ui-dialog-titlebar span.ui-dialog-title h2.ui-dialog-buyout-title-date-and-time-range,
+  div[aria-describedby='museum-wide-event-dialog'] div.ui-dialog-titlebar span.ui-dialog-title h2.ui-dialog-talk-title-date-and-time-range,
   div[aria-describedby='museum-wide-event-dialog'] div.ui-dialog-titlebar span.ui-dialog-title h2.gse-schedules-dialog-date-and-time-range,
   div[aria-describedby='buyout-dialog'] div.ui-dialog-titlebar span.ui-dialog-title h2.ui-dialog-buyout-title-date-and-time-range,
+  div[aria-describedby='buyout-dialog'] div.ui-dialog-titlebar span.ui-dialog-title h2.ui-dialog-talk-title-date-and-time-range,
   div[aria-describedby='buyout-dialog'] div.ui-dialog-titlebar span.ui-dialog-title h2.gse-schedules-dialog-date-and-time-range,
+  div[aria-describedby='mw-coffee-talk-dialog'] div.ui-dialog-titlebar span.ui-dialog-title h2.ui-dialog-buyout-title-date-and-time-range,
+  div[aria-describedby='mw-coffee-talk-dialog'] div.ui-dialog-titlebar span.ui-dialog-title h2.ui-dialog-talk-title-date-and-time-range,
+  div[aria-describedby='mw-coffee-talk-dialog'] div.ui-dialog-titlebar span.ui-dialog-title h2.gse-schedules-dialog-date-and-time-range,
   div[aria-describedby='gse-schedule-card-dialog'] div.ui-dialog-titlebar span.ui-dialog-title h2.ui-dialog-buyout-title-date-and-time-range,
+  div[aria-describedby='gse-schedule-card-dialog'] div.ui-dialog-titlebar span.ui-dialog-title h2.ui-dialog-talk-title-date-and-time-range,
   div[aria-describedby='gse-schedule-card-dialog'] div.ui-dialog-titlebar span.ui-dialog-title h2.gse-schedules-dialog-date-and-time-range {
     white-space: nowrap;
     font-size: 2rem !important;
@@ -4520,23 +4610,51 @@ div[aria-describedby='gse-schedule-card-dialog'] div.ui-dialog-titlebar span.ui-
     -webkit-margin-after: 0;
             margin-block-end: 0; }
     div[aria-describedby='museum-wide-event-dialog'] div.ui-dialog-titlebar span.ui-dialog-title h2.ui-dialog-buyout-title-date-and-time-range span.ui-dialog-title-buyout-start-time,
+    div[aria-describedby='museum-wide-event-dialog'] div.ui-dialog-titlebar span.ui-dialog-title h2.ui-dialog-buyout-title-date-and-time-range span.ui-dialog-title-talk-start-time,
+    div[aria-describedby='museum-wide-event-dialog'] div.ui-dialog-titlebar span.ui-dialog-title h2.ui-dialog-talk-title-date-and-time-range span.ui-dialog-title-buyout-start-time,
+    div[aria-describedby='museum-wide-event-dialog'] div.ui-dialog-titlebar span.ui-dialog-title h2.ui-dialog-talk-title-date-and-time-range span.ui-dialog-title-talk-start-time,
     div[aria-describedby='museum-wide-event-dialog'] div.ui-dialog-titlebar span.ui-dialog-title h2.gse-schedules-dialog-date-and-time-range span.ui-dialog-title-buyout-start-time,
+    div[aria-describedby='museum-wide-event-dialog'] div.ui-dialog-titlebar span.ui-dialog-title h2.gse-schedules-dialog-date-and-time-range span.ui-dialog-title-talk-start-time,
     div[aria-describedby='buyout-dialog'] div.ui-dialog-titlebar span.ui-dialog-title h2.ui-dialog-buyout-title-date-and-time-range span.ui-dialog-title-buyout-start-time,
+    div[aria-describedby='buyout-dialog'] div.ui-dialog-titlebar span.ui-dialog-title h2.ui-dialog-buyout-title-date-and-time-range span.ui-dialog-title-talk-start-time,
+    div[aria-describedby='buyout-dialog'] div.ui-dialog-titlebar span.ui-dialog-title h2.ui-dialog-talk-title-date-and-time-range span.ui-dialog-title-buyout-start-time,
+    div[aria-describedby='buyout-dialog'] div.ui-dialog-titlebar span.ui-dialog-title h2.ui-dialog-talk-title-date-and-time-range span.ui-dialog-title-talk-start-time,
     div[aria-describedby='buyout-dialog'] div.ui-dialog-titlebar span.ui-dialog-title h2.gse-schedules-dialog-date-and-time-range span.ui-dialog-title-buyout-start-time,
+    div[aria-describedby='buyout-dialog'] div.ui-dialog-titlebar span.ui-dialog-title h2.gse-schedules-dialog-date-and-time-range span.ui-dialog-title-talk-start-time,
+    div[aria-describedby='mw-coffee-talk-dialog'] div.ui-dialog-titlebar span.ui-dialog-title h2.ui-dialog-buyout-title-date-and-time-range span.ui-dialog-title-buyout-start-time,
+    div[aria-describedby='mw-coffee-talk-dialog'] div.ui-dialog-titlebar span.ui-dialog-title h2.ui-dialog-buyout-title-date-and-time-range span.ui-dialog-title-talk-start-time,
+    div[aria-describedby='mw-coffee-talk-dialog'] div.ui-dialog-titlebar span.ui-dialog-title h2.ui-dialog-talk-title-date-and-time-range span.ui-dialog-title-buyout-start-time,
+    div[aria-describedby='mw-coffee-talk-dialog'] div.ui-dialog-titlebar span.ui-dialog-title h2.ui-dialog-talk-title-date-and-time-range span.ui-dialog-title-talk-start-time,
+    div[aria-describedby='mw-coffee-talk-dialog'] div.ui-dialog-titlebar span.ui-dialog-title h2.gse-schedules-dialog-date-and-time-range span.ui-dialog-title-buyout-start-time,
+    div[aria-describedby='mw-coffee-talk-dialog'] div.ui-dialog-titlebar span.ui-dialog-title h2.gse-schedules-dialog-date-and-time-range span.ui-dialog-title-talk-start-time,
     div[aria-describedby='gse-schedule-card-dialog'] div.ui-dialog-titlebar span.ui-dialog-title h2.ui-dialog-buyout-title-date-and-time-range span.ui-dialog-title-buyout-start-time,
-    div[aria-describedby='gse-schedule-card-dialog'] div.ui-dialog-titlebar span.ui-dialog-title h2.gse-schedules-dialog-date-and-time-range span.ui-dialog-title-buyout-start-time {
+    div[aria-describedby='gse-schedule-card-dialog'] div.ui-dialog-titlebar span.ui-dialog-title h2.ui-dialog-buyout-title-date-and-time-range span.ui-dialog-title-talk-start-time,
+    div[aria-describedby='gse-schedule-card-dialog'] div.ui-dialog-titlebar span.ui-dialog-title h2.ui-dialog-talk-title-date-and-time-range span.ui-dialog-title-buyout-start-time,
+    div[aria-describedby='gse-schedule-card-dialog'] div.ui-dialog-titlebar span.ui-dialog-title h2.ui-dialog-talk-title-date-and-time-range span.ui-dialog-title-talk-start-time,
+    div[aria-describedby='gse-schedule-card-dialog'] div.ui-dialog-titlebar span.ui-dialog-title h2.gse-schedules-dialog-date-and-time-range span.ui-dialog-title-buyout-start-time,
+    div[aria-describedby='gse-schedule-card-dialog'] div.ui-dialog-titlebar span.ui-dialog-title h2.gse-schedules-dialog-date-and-time-range span.ui-dialog-title-talk-start-time {
       margin-left: 1rem; }
   div[aria-describedby='museum-wide-event-dialog'] div.ui-dialog-titlebar span.ui-dialog-title p.ui-dialog-title-buyout-location,
+  div[aria-describedby='museum-wide-event-dialog'] div.ui-dialog-titlebar span.ui-dialog-title p.ui-dialog-title-talk-location,
   div[aria-describedby='buyout-dialog'] div.ui-dialog-titlebar span.ui-dialog-title p.ui-dialog-title-buyout-location,
-  div[aria-describedby='gse-schedule-card-dialog'] div.ui-dialog-titlebar span.ui-dialog-title p.ui-dialog-title-buyout-location {
+  div[aria-describedby='buyout-dialog'] div.ui-dialog-titlebar span.ui-dialog-title p.ui-dialog-title-talk-location,
+  div[aria-describedby='mw-coffee-talk-dialog'] div.ui-dialog-titlebar span.ui-dialog-title p.ui-dialog-title-buyout-location,
+  div[aria-describedby='mw-coffee-talk-dialog'] div.ui-dialog-titlebar span.ui-dialog-title p.ui-dialog-title-talk-location,
+  div[aria-describedby='gse-schedule-card-dialog'] div.ui-dialog-titlebar span.ui-dialog-title p.ui-dialog-title-buyout-location,
+  div[aria-describedby='gse-schedule-card-dialog'] div.ui-dialog-titlebar span.ui-dialog-title p.ui-dialog-title-talk-location {
     font-size: 1.3rem;
     font-weight: 400;
     margin: 0;
     color: #666; }
 
 div[aria-describedby='museum-wide-event-dialog'] div.ui-dialog-content p.ui-dialog-buyout-title,
+div[aria-describedby='museum-wide-event-dialog'] div.ui-dialog-content p.ui-dialog-talk-title,
 div[aria-describedby='buyout-dialog'] div.ui-dialog-content p.ui-dialog-buyout-title,
-div[aria-describedby='gse-schedule-card-dialog'] div.ui-dialog-content p.ui-dialog-buyout-title {
+div[aria-describedby='buyout-dialog'] div.ui-dialog-content p.ui-dialog-talk-title,
+div[aria-describedby='mw-coffee-talk-dialog'] div.ui-dialog-content p.ui-dialog-buyout-title,
+div[aria-describedby='mw-coffee-talk-dialog'] div.ui-dialog-content p.ui-dialog-talk-title,
+div[aria-describedby='gse-schedule-card-dialog'] div.ui-dialog-content p.ui-dialog-buyout-title,
+div[aria-describedby='gse-schedule-card-dialog'] div.ui-dialog-content p.ui-dialog-talk-title {
   font-size: 2.6rem;
   font-weight: 300;
   margin: 0;
