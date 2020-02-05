@@ -13130,7 +13130,7 @@
 			var standardizedHubEmail = $().CreateStandardHubEmail(emailData);
 
 			emailSendingPromises.push($.ajax({
-							url: "https://ir769r5hk8.execute-api.us-east-1.amazonaws.com/dev/email/send",
+							url: "https://kn9p96t26h.execute-api.us-east-1.amazonaws.com/dev/email/send",
 							type: "POST",
 							crossDomain: true,
 							contentType: 'text/plain',
