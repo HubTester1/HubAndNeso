@@ -7,8 +7,8 @@
 		'swf': 1,
 		// 'mosMainKey': 'prod',
 		// 'mosMainKey': 'dev',
-		// 'mosMainKey': 'devMedium',
-		'mosMainKey': 'devLong',
+		'mosMainKey': 'devMedium',
+		// 'mosMainKey': 'devLong',
 		// "useRecordedMOSMainMajorVersion": 1,
 		'currentRequestVersion': 2,
 		'devAdminNotifications': 1,
@@ -191,16 +191,16 @@
 
 		'uniqueElements': [
 			{
-				'elementType': "field",
-				'controlType': "text",
-				'fieldName': "Candidate Email",
-				'labelContent': "Email",
-				'addtlValidationType': 'validEmail',
-				'requiredForNonAdmin': [""],
-				'requiredForAdmin': [""],
-				"disabledForNonAdmin": ['Submitted', 'Cancelled'],
-				"disabledForAdmin": ['Submitted', 'Cancelled'],
-			}, {
+			// 	'elementType': "field",
+			// 	'controlType': "text",
+			// 	'fieldName': "Candidate Email",
+			// 	'labelContent': "Email",
+			// 	'addtlValidationType': 'validEmail',
+			// 	'requiredForNonAdmin': [""],
+			// 	'requiredForAdmin': [""],
+			// 	"disabledForNonAdmin": ['Submitted', 'Cancelled'],
+			// 	"disabledForAdmin": ['Submitted', 'Cancelled'],
+			// }, {
 				'elementType': "markup",
 				'tag': "h2",
 				'content': "Files",
