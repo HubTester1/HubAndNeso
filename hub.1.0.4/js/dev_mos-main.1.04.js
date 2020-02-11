@@ -13131,6 +13131,7 @@
 
 			emailSendingPromises.push($.ajax({
 				url: "https://neso.mos.org/email/send",
+				// url: "https://kn9p96t26h.execute-api.us-east-1.amazonaws.com/dev/email/send",
 				type: "POST",
 				crossDomain: true,
 				contentType: 'application/json',
@@ -16775,7 +16776,15 @@
 					'	<li><b>Proposed Hourly Wage:</b> ' + formData["Hire-Proposed-Hourly-Wage"] + '</li>' +
 					'	<li><b>Proposed Annualized Salary:</b> ' + formData["Hire-Proposed-Annualized-Salary"] + '</li>' +
 					'	<li><b>Anticipated Start Date:</b> ' + formData["Hire-Start-Date"] + '</li>';
-				if (formData["Hire-Employee-Classification"] != "Regular, Full-time" && formData["Hire-Employee-Classification"] != "Regular, Part-time") {
+				if (formData["Hire-End-Date"]
+					/* formData["Hire-Employee-Classification"] === "Casual, Part-time" || 
+					formData["Hire-Employee-Classification"] === "Temporary, Part-time" ||
+					formData["Hire-Employee-Classification"] === "Temporary, Full-time" ||
+					formData["Hire-Employee-Classification"] === "Intern" ||
+
+					formData["Hire-Funding-Source"] === "Endowment Funds" ||
+					formData["Hire-Funding-Source"] === "Grant Funds" */
+				) {
 					printContent += '	<li><b>Anticipated End Date:</b> ' + formData["Hire-End-Date"] + '</li>';
 				}
 				printContent += '	<li><b>Funding Source:</b> ' + formData["Hire-Funding-Source"] + '</li>';
@@ -29949,7 +29958,7 @@
 		// wait for all data retrieval / setting promises to complete (pass or fail) 
 		$.when.apply($, allDataRetrievalAndSettingPromises).always(function () {
 
-			console.log('using dev_mos-main_medium.1.04 m1');
+			console.log('using dev_mos-main.1.04 m1');
 
 			$().ConfigureAndShowScreenContainerAndAllScreens();
 		});

@@ -13,7 +13,7 @@
 		'notifications': 0,
 	};
 
-	console.log("using settings m7");
+	console.log("using settings m1");
 
 	var oData = {
 		'admin': {
@@ -1572,14 +1572,11 @@
 					}, {
 						"value": "Regular PT",
 						"display": "Regular, Part-time"
-						// }, {
-						// 	"value": "Casual FT",
-						// 	"display": "Casual, Full-time"
 					}, {
 						"value": "Casual PT",
 						"display": "Casual, Part-time"
 					}, {
-						"value": "Temporary PT",
+						"value": "Temporary FT",
 						"display": "Temporary, Full-time"
 					}, {
 						"value": "Temporary PT",
@@ -1590,21 +1587,9 @@
 					}, {
 						"value": "Grant FT",
 						"display": "Grant, Part-time"
-						// }, {
-						// 	"value": "Campaign FT",
-						// 	"display": "Campaign, Full-time"
-						// }, {
-						// 	"value": "Campaign PT",
-						// 	"display": "Campaign, Part-time"
 					}, {
 						"value": "Intern",
 						"display": "Intern"
-						// }, {
-						// 	"value": "Intern FT",
-						// 	"display": "Intern, Full-time"
-						// }, {
-						// 	"value": "Intern PT",
-						// 	"display": "Intern, Part-time"
 					}, {
 						"value": "Fellow FT",
 						"display": "Fellow, Full-time"
@@ -1616,20 +1601,24 @@
 				"disabledForNonAdmin": ['Submitted', 'Cancelled'],
 				"disabledForAdmin": ['Submitted', 'Cancelled'],
 				"onChange": [{
-					"thisFieldEquals": ["Regular FT", "Regular PT"],
-					"hide": [{
-						"fieldName": "Hire End Date"
-					}],
-					"optional": [{
-						"fieldName": "Hire End Date",
-						"type": "datePicker"
-					}]
-				}, {
-					"thisFieldNotEquals": ["Regular FT", "Regular PT"],
+					"thisFieldEquals": ["Casual PT", "Temporary PT", "Temporary FT", "Intern"],
 					"show": [{
 						"fieldName": "Hire End Date"
 					}],
 					"require": [{
+						"fieldName": "Hire End Date",
+						"type": "datePicker"
+					}]
+				}, {
+					"thisFieldNotEquals": ["Casual PT", "Temporary PT", "Temporary FT", "Intern"],
+					"addlAndConditions": [
+						"$('select#Hire-Funding-Source').val() !== 'Grant Funds'",
+						"$('select#Hire-Funding-Source').val() !== 'Endowment Funds'",
+					],
+					"hide": [{
+						"fieldName": "Hire End Date"
+					}],
+					"optional": [{
 						"fieldName": "Hire End Date",
 						"type": "datePicker"
 					}]
@@ -1665,22 +1654,6 @@
 				'disabledForNonAdmin': ['', 'Submitted', 'Cancelled'],
 				'disabledForAdmin': ['', 'Submitted', 'Cancelled']
 			}, {
-				'elementType': "field",
-				'controlType': "datePicker",
-				'fieldName': "Hire Start Date",
-				'labelContent': "Start Date",
-				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
-				'disabledForAdmin': ['Submitted', 'Cancelled']
-			}, {
-				'elementType': "field",
-				'controlType': "datePicker",
-				'fieldName': "Hire End Date",
-				'labelContent': "End Date",
-				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
-				'disabledForAdmin': ['Submitted', 'Cancelled'],
-				'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
-				'hideForAdmin': ['', 'Submitted', 'Cancelled']
-			}, {
 				"elementType": "field",
 				"controlType": "select",
 				"fieldName": "Hire Funding Source",
@@ -1704,10 +1677,41 @@
 				"disabledForAdmin": ['Submitted', 'Cancelled'],
 				"onChange": [
 					{
+						"thisFieldEquals": ["Grant Funds", "Endowment Funds"],
+						"show": [
+							{ "divID": "Hire-account-numbers-sets" },
+							{ "fieldName": "Hire End Date" }
+						],
+						"require": [
+							{
+								"fieldName": "Hire Grant Project Code",
+								"type": "text",
+								'repeatable': 1
+							}, {
+								"fieldName": "Hire Grant Source Code",
+								"type": "text",
+								'repeatable': 1
+							}, {
+								"fieldName": "Hire Percent Salary from this Account",
+								"type": "text",
+								'repeatable': 1
+							}, {
+								"fieldName": "Hire End Date",
+								"type": "datePicker"
+							}
+						]
+					}, {
 						"thisFieldNotEquals": ["Grant Funds", "Endowment Funds"],
-						"hide": [{
-							"divID": "Hire-account-numbers-sets"
-						}],
+						"addlAndConditions": [
+							"$('select#Hire-Employee-Classification').val() !== 'Casual PT'",
+							"$('select#Hire-Employee-Classification').val() !== 'Temporary PT'",
+							"$('select#Hire-Employee-Classification').val() !== 'Temporary FT'",
+							"$('select#Hire-Employee-Classification').val() !== 'Intern'",
+						],
+						"hide": [
+							{ "divID": "Hire-account-numbers-sets" },
+							{ "fieldName": "Hire End Date" }
+						],
 						"optional": [
 							{
 								"fieldName": "Hire Grant Project Code",
@@ -1721,14 +1725,23 @@
 								"fieldName": "Hire Percent Salary from this Account",
 								"type": "text",
 								'repeatable': 1
+							}, {
+								"fieldName": "Hire End Date",
+								"type": "datePicker"
 							}
 						]
 					}, {
-						"thisFieldEquals": ["Grant Funds", "Endowment Funds"],
-						"show": [{
+						"thisFieldNotEquals": ["Grant Funds", "Endowment Funds"],
+						"addlOrConditions": [
+							"$('select#Hire-Employee-Classification').val() == 'Casual PT'",
+							"$('select#Hire-Employee-Classification').val() == 'Temporary PT'",
+							"$('select#Hire-Employee-Classification').val() == 'Temporary FT'",
+							"$('select#Hire-Employee-Classification').val() == 'Intern'",
+						],
+						"hide": [{
 							"divID": "Hire-account-numbers-sets"
 						}],
-						"require": [
+						"optional": [
 							{
 								"fieldName": "Hire Grant Project Code",
 								"type": "text",
@@ -1815,7 +1828,22 @@
 				'elementType': 'markup',
 				'tag': 'div',
 				'end': 1,
-
+			}, {
+				'elementType': "field",
+				'controlType': "datePicker",
+				'fieldName': "Hire Start Date",
+				'labelContent': "Start Date",
+				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
+				'disabledForAdmin': ['Submitted', 'Cancelled']
+			}, {
+				'elementType': "field",
+				'controlType': "datePicker",
+				'fieldName': "Hire End Date",
+				'labelContent': "End Date",
+				'disabledForNonAdmin': ['Submitted', 'Cancelled'],
+				'disabledForAdmin': ['Submitted', 'Cancelled'],
+				'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
+				'hideForAdmin': ['', 'Submitted', 'Cancelled']
 
 
 
