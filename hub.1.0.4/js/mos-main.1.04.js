@@ -20383,11 +20383,11 @@
 			{
 				"linkType": "newItem",
 				"anchorText": "New Request",
-				"href": "/sites/-dev-mw-coffee-talk/SitePages/App.aspx?r=0",
+				"href": "/sites/mw-coffee-talk/SitePages/App.aspx?r=0",
 			}, {
 				"linkType": "goForward",
 				"anchorText": "List",
-				"href": "/sites/-dev-mw-coffee-talk/SitePages/App.aspx",
+				"href": "/sites/mw-coffee-talk/SitePages/App.aspx",
 				// "idValue": "",
 				// "classValues": "button_swf-new-event-with-timeline",
 				"target": null
@@ -20494,7 +20494,7 @@
 						"formattedDate": formattedDate,
 						"start": isoStartDatetime,
 						"end": isoEndDatetime,
-						"editURL": "/sites/-dev-mw-coffee-talk/SitePages/App.aspx?r=" + eventItem["ID"],
+						"editURL": "/sites/mw-coffee-talk/SitePages/App.aspx?r=" + eventItem["ID"],
 						"location": eventItem["Space-Assignment"],
 						"talkTitle": eventItem["Talk-Title"],
 						"talkDescription": eventItem["Description"],
@@ -20528,7 +20528,7 @@
 					defaultView: viewToUse,
 					defaultDate: dateToUse,
 					dayClick: function (date, jsEvent, view) {
-						location.href = "/sites/-dev-mw-coffee-talk/SitePages/App.aspx?f=cal&view=basicDay&date=" + $(this).attr("data-date");
+						location.href = "/sites/mw-coffee-talk/SitePages/App.aspx?f=cal&view=basicDay&date=" + $(this).attr("data-date");
 					},
 					theme: true,
 					eventClick: function (event, jsEvent, view) {
@@ -20613,6 +20613,7 @@
 			'		<li class="legend-item"><span class="color-indicator open-slot"></span>Open</li> \n' +
 			'		<li class="legend-item"><span class="color-indicator scheduled-item"></span>Scheduled</li> \n' +
 			'	</ul> \n' +
+			'	<p><a href="https://bmos.sharepoint.com/CoffeeTalkDocs/Coffee%20Talk%20Outlook%20Calendar.pdf" target="_blank">Learn how to add Coffee Talk to your Outlook calendar</a>.</p> \n' + 
 			'</div> \n';
 
 		$(legend).insertBefore($("div.fc-toolbar"));
