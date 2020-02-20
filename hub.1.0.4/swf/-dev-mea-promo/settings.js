@@ -1,16 +1,16 @@
 (function ($) {
 
 	var mData = {
-		'componentID': 65,
+		'componentID': 20065,
 		'swf': 1,
-		'mosMainKey': 'prod',
+		// 'mosMainKey': 'prod',
 		// 'mosMainKey': 'dev',
 		// 'mosMainKey': 'devMedium',
-		// 'mosMainKey': 'devLong',
+		'mosMainKey': 'devLong',
 		// "useRecordedMOSMainMajorVersion": 1,
 		'currentRequestVersion': 2,
-		'devAdminNotifications': 0,
-		'notifications': 1,
+		'devAdminNotifications': 1,
+		'notifications': 0,
 	};
 
 	console.log("using settings m1");

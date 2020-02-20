@@ -1,0 +1,101 @@
+<script type="text/javascript">
+	
+	$(document).ready(function () {
+
+		console.log('m4');
+		/* var userMsg = `<p><strong>Note</strong>: Loading this page causes data to be converted. The console
+			may show results. A large job may take several minutes and this simple importer doesn't provide
+			any user feedback, so just be careful not to close the browser tab early. Disable the import code in SiteAssets
+			> wpc_converter.html.</p>`; */
+		var userMsg = `<p><strong>Note</strong>: Code has been disabled. You can re-enable in SiteAssets >
+			wpc_converter.html.</p>`;
+
+		$('div#all-content-container').append(userMsg);
+
+
+		/* var allListItemsIncoming = $().GetFieldsFromAllRows({
+			'webURL': 'https://bmos.sharepoint.com/sites/-dev-mea-promo',
+			'select': [
+				{
+					'nameHere': 'ID',
+					'nameInList': 'ID'
+				}, {
+					'nameHere': 'RequestStatus',
+					'nameInList': 'RequestStatus'
+				}, {
+					'nameHere': 'AllRequestDataIncoming',
+					'nameInList': 'AllRequestData'
+				}
+			]
+		});
+
+		console.log('allListItemsIncoming');
+		console.log(allListItemsIncoming);
+
+		var allListItemsToUpdate = [];
+
+		allListItemsIncoming.forEach((item) => {
+			if (item.RequestStatus === 'Web Live') {
+				var regexOne = new RegExp("\r", "g");
+				var regexTwo = new RegExp("\n", "g");
+				var value = item.AllRequestDataIncoming;
+				value = value.replace(regexOne, "'");
+				value = value.replace(regexTwo, "'");
+				eval("var formDataObj=" + value);
+				// item.EventStartTime = item.EventStartTime + 'Z';
+				// item.EventEndTime = item.EventEndTime + 'Z';
+				item.AllRequestDataObject = formDataObj;
+				item.AllRequestDataObject['Request-Status'] = 'Completed';
+				item.AllRequestDataObject['Request-Status-Static'] = 'Completed';
+				item.AllRequestDataObject['End-of-Life'] = '1';
+
+
+				item.AllRequestData = CDataWrap(JSON.stringify(item.AllRequestDataObject));
+				var updateObject = {
+					ID: item.ID
+				}
+				updateObject.submissionValuePairsArray = [
+					['RequestStatus', 'Completed'],
+					['AllRequestData', item.AllRequestData],
+					['EndOfLife', 1]
+				];
+				allListItemsToUpdate.push(updateObject);
+			}
+		});
+
+		console.log('allListItemsToUpdate');
+		console.log(allListItemsToUpdate);
+
+		allListItemsToUpdate.forEach((item) => {
+			// update SWFList
+			var updateListItemsOptions = {
+				operation: 'UpdateListItems',
+				listName: 'SWFList',
+				webURL: 'https://bmos.sharepoint.com/sites/-dev-mea-promo',
+				batchCmd: 'Update',
+				ID: item.ID,
+				valuepairs: item.submissionValuePairsArray,
+				completefunc: function (xData, Status) {
+					// determine success of save; then...
+					var swfListSaveSuccess =
+						$().HandleListUpdateReturn(xData, Status, 'Hub SWF List Item Error - Dev Promo Requests');
+					if (swfListSaveSuccess === 1) {
+						console.log('success');
+					} else {
+						console.log('error');
+					}
+				}
+			};
+			$().SPServices(updateListItemsOptions);
+		}); */
+	});
+	
+
+	function CDataWrap(value) {
+		return "<![CDATA[" + value + "]]>";
+	}
+
+
+</script>
+
+<div id="all-content-container"></div>
