@@ -20421,10 +20421,10 @@
 					'           	<FieldRef Name="TalkTitle"></FieldRef>' +
 					'           	<Value Type="Text">Open</Value>' +
 					'       	</Eq>' +
-					'       	<Neq>' +
+					'       	<Eq>' +
 					'           	<FieldRef Name="RequestStatus"></FieldRef>' +
-					'           	<Value Type="Text">Cancelled</Value>' +
-					'       	</Neq>' +
+					'           	<Value Type="Text">Pending Approval</Value>' +
+					'       	</Eq>' +
 					'		</And>' +
 					'   </Or>' +
 					'   </Where>' +

@@ -20421,10 +20421,10 @@
 					'           	<FieldRef Name="TalkTitle"></FieldRef>' +
 					'           	<Value Type="Text">Open</Value>' +
 					'       	</Eq>' +
-					'       	<Neq>' +
+					'       	<Eq>' +
 					'           	<FieldRef Name="RequestStatus"></FieldRef>' +
-					'           	<Value Type="Text">Cancelled</Value>' +
-					'       	</Neq>' +
+					'           	<Value Type="Text">Pending Approval</Value>' +
+					'       	</Eq>' +
 					'		</And>' +
 					'   </Or>' +
 					'   </Where>' +
@@ -29959,7 +29959,7 @@
 		// wait for all data retrieval / setting promises to complete (pass or fail) 
 		$.when.apply($, allDataRetrievalAndSettingPromises).always(function () {
 
-			console.log('using mos-main.1.04 m1');
+			console.log('using mos-main.1.04 m47');
 
 			$().ConfigureAndShowScreenContainerAndAllScreens();
 		});
