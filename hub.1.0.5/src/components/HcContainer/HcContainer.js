@@ -190,7 +190,7 @@ class HcContainer extends React.Component {
 }
 
 // eslint-disable-next-line no-console
-console.log('hc m4');
+console.log('hc m1');
 const screenShower = setInterval(ShowScreen, 500);
 if (EnvironmentDetector.ReturnIsHCScreen()) {
 	document.querySelector('head title').textContent = 'The Hub - Home';
