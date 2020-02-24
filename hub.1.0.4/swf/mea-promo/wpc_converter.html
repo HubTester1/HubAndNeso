@@ -13,8 +13,8 @@
 		$('div#all-content-container').append(userMsg);
 
 
-		var allListItemsIncoming = $().GetFieldsFromAllRows({
-			'webURL': 'https://bmos.sharepoint.com/sites/-dev-mea-promo',
+		/* var allListItemsIncoming = $().GetFieldsFromAllRows({
+			'webURL': 'https://bmos.sharepoint.com/sites/mea-promo',
 			'select': [
 				{
 					'nameHere': 'ID',
@@ -29,13 +29,17 @@
 			]
 		});
 
+		const idLimit = 700;
+		console.log('idLimit');
+		console.log(idLimit);
+
 		console.log('allListItemsIncoming');
 		console.log(allListItemsIncoming);
 
 		var allListItemsToUpdate = [];
 
 		allListItemsIncoming.forEach((item) => {
-			if (item.RequestStatus === 'Web Live' && item.ID < 5) {
+			if (item.RequestStatus === 'Web Live' && item.ID < idLimit) {
 				var regexOne = new RegExp("\r", "g");
 				var regexTwo = new RegExp("\n", "g");
 				var value = item.AllRequestDataIncoming;
@@ -71,7 +75,7 @@
 			var updateListItemsOptions = {
 				operation: 'UpdateListItems',
 				listName: 'SWFList',
-				webURL: 'https://bmos.sharepoint.com/sites/-dev-mea-promo',
+				webURL: 'https://bmos.sharepoint.com/sites/mea-promo',
 				batchCmd: 'Update',
 				ID: item.ID,
 				valuepairs: item.submissionValuePairsArray,
@@ -87,7 +91,7 @@
 				}
 			};
 			$().SPServices(updateListItemsOptions);
-		});
+		}); */
 	});
 	
 
