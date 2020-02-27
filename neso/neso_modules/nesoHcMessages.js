@@ -104,6 +104,17 @@ module.exports = {
 				});
 		}),
 
+	ReturnAllMessages: () =>
+		// return a new promise
+		new Promise((resolve, reject) => {
+			// use nesoDBQueries to get all messages
+			nesoDBQueries.ReturnAllDocsFromCollection('hcMessages')
+				// if the promise is resolved with the docs, then resolve this promise with the docs
+				.then((result) => { resolve(result); })
+				// if the promise is rejected with an error, then reject this promise with an error
+				.catch((error) => { reject(error); });
+		}),
+
 	ReturnHcMessagesDescending: () =>
 		// return a new promise
 		new Promise((resolve, reject) => {

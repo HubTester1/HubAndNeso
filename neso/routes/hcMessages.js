@@ -32,6 +32,16 @@ router.get('/messages', (req, res, next) => {
 		.catch((error) => { res.json(error); });
 });
 
+// for GET request for /messages
+router.get('/messages/all', (req, res, next) => {
+	// get a promise to retrieve health status data
+	hcMessages.ReturnAllMessages()
+		// if the promise is resolved with the docs, then respond with the docs as JSON
+		.then((result) => { res.json(result); })
+		// if the promise is rejected with an error, then respond with the error as JSON
+		.catch((error) => { res.json(error); });
+});
+
 // for GET request for /nextMessageID
 router.get('/nextMessageID', (req, res, next) => {
 	// get a promise to retrieve health status data
