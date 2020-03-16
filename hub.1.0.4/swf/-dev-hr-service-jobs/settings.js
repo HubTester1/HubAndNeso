@@ -843,6 +843,8 @@
 	fData.CustomScriptLast +=	'$("div#label-and-control_Requested-For, div#container_about-the-requester").hide("fast").addClass("hidden"); \n';
 
 
+	/* // TEMPORARY
+
 	// texts
 	fData.CustomScriptLast += '$("input#Request-Nickname").val("Req Nick");';
 	fData.CustomScriptLast += '$("input#Job-Title").val("Job Title");';
@@ -861,8 +863,7 @@
 	fData.CustomScriptLast += '$("textarea#Job-Description").val("This is the job description.");';
 	fData.CustomScriptLast += '$("textarea#Training-Requirements").val("These are the training requirements");';
 	fData.CustomScriptLast += '$("textarea#Dress-Requirements").val("These are the dress requirements");';
-	fData.CustomScriptLast += '$("textarea#Job-Duties").val("These are the job duties");';
-
+	fData.CustomScriptLast += '$("textarea#Job-Duties").val("These are the job duties");'; */
 
 
 

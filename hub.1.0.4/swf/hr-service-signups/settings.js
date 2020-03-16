@@ -244,7 +244,7 @@
 				"end": 1,
 				"hideForNonAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"],
 				"hideForAdmin": ["", "Signed Up", "Credit Granted", "Credit Denied", "Cancelled"]
-				
+
 			}, {
 				'elementType': "markup",
 				'tag': "div",
@@ -269,8 +269,8 @@
 			}, {
 				'elementType': "markup",
 				'tag': "li",
-				'content': 'Positions Available: <span id="Positions-Available" class="content-placeholder"></span>' + 
-							' out of <span id="Number-of-Positions" class="content-placeholder"></span>',
+				'content': 'Positions Available: <span id="Positions-Available" class="content-placeholder"></span>' +
+					' out of <span id="Number-of-Positions" class="content-placeholder"></span>',
 				'begin': 1,
 				'end': 1
 			}, {
@@ -279,10 +279,21 @@
 				'content': 'Date: <span id="Friendly-Date" class="content-placeholder"></span>',
 				'begin': 1,
 				'end': 1
+				/* 
+					CORONAVIRUS MOD
+					schedules are no longer half or full days
+				*/
+
+				/* }, {
+					'elementType': "markup",
+					'tag': "li",
+					'content': 'Shift Length: <span id="Shift-Length" class="content-placeholder"></span>',
+					'begin': 1,
+					'end': 1 */
 			}, {
 				'elementType': "markup",
 				'tag': "li",
-				'content': 'Shift Length: <span id="Shift-Length" class="content-placeholder"></span>',
+				'content': 'Hours: <span id="Shift-Length" class="content-placeholder"></span>',
 				'begin': 1,
 				'end': 1
 			}, {
@@ -312,7 +323,7 @@
 			}, {
 				'elementType': "markup",
 				'tag': "li",
-				'content': 'Location: <span id="Location" class="content-placeholder"></span>',
+				'content': 'Location / Venue: <span id="Location" class="content-placeholder"></span>',
 				'begin': 1,
 				'end': 1
 			}, {
@@ -714,9 +725,17 @@
 				"controlType": "check",
 				"fieldName": "Sign Up",
 				"choiceSetLabel": "Do you wish to sign up?",
-				"choices": [{
+				/* 
+					CORONAVIRUS MOD
+					Since technically using for more than "jobs", e.g., "affinity groups", changing language
+					*/
+				/* "choices": [{
 					"value": "signUp",
 					"display": "Yes, I wish to do this job at this date and time"
+				}], */
+				"choices": [{
+					"value": "signUp",
+					"display": "Yes, I wish to participate in this activity at this date and time"
 				}],
 				"requiredForNonAdmin": [""],
 				"requiredForAdmin": [""],
@@ -745,7 +764,7 @@
 				"tag": "div",
 				"content": '',
 				"end": 1,
-			
+
 			}, {
 				"elementType": "markup",
 				"tag": "div",
@@ -838,16 +857,16 @@
 
 	fData.CustomScriptLast = '$().DisableGSESignups(); \n';
 
-	fData.CustomScriptLast += 
-								'if ($("span#Meal-Time").is(":empty")) {' + 
-								'	$("span#Meal-Time").closest("li").hide("fast").addClass("hidden");' +
-								'}';
-	
-	fData.CustomScriptLast += 
-								'if ($("span#Break-Time").is(":empty")) {' + 
-								'	$("span#Break-Time").closest("li").hide("fast").addClass("hidden");' +
-								'}';
-	
+	fData.CustomScriptLast +=
+		'if ($("span#Meal-Time").is(":empty")) {' +
+		'	$("span#Meal-Time").closest("li").hide("fast").addClass("hidden");' +
+		'}';
+
+	fData.CustomScriptLast +=
+		'if ($("span#Break-Time").is(":empty")) {' +
+		'	$("span#Break-Time").closest("li").hide("fast").addClass("hidden");' +
+		'}';
+
 
 
 	$.fn.ReturnThisAppMData = function () {

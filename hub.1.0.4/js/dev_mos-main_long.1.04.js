@@ -1488,6 +1488,12 @@
 
 
 	$.fn.GetFieldsFromSpecifiedRows = function (options) {
+		
+		if (options.webURL === 'https://bmos.sharepoint.com/sites/-dev-hr-service-schedules') {
+			console.log('options');
+			console.log(options);
+		}
+
 
 		var returnValue = [];
 
@@ -1502,7 +1508,6 @@
 			// assume HubProd
 			opt.webURL = 'https://bmos.sharepoint.com/sites/hubprod';
 		}
-
 
 		var query = "";
 		
@@ -1572,6 +1577,7 @@
 			fields += " <FieldRef Name='" + oneField.nameInList + "' />";
 		});
 		fields += "</ViewFields>";
+
 
 		$().SPServices({
 			operation: "GetListItems",
@@ -1756,8 +1762,6 @@
 							oneField.nameHere === "gseJobData" || 
 							oneField.nameHere === "gseScheduleData"
 						) {
-							console.log('found field to interpret');
-
 							var value = $(zRow).attr("ows_" + oneField.nameInList);
 
 							var regexOne = new RegExp("\r", "g");
@@ -4589,7 +4593,12 @@
 			rData.gseScheduleData['Positions-Available'] = 
 				parseInt(rData.gseScheduleData['Number-of-Positions']) - otherSignupsForThisSchedule.length;
 			rData.gseScheduleData['Friendly-Date'] = $().ReturnFormattedDateTime(rData.gseScheduleData['Date'], null, 'dddd, MMMM D, YYYY', 1);
-			rData.gseScheduleData['Shift-Length'] = rData.gseScheduleData['shiftlength_35-hours'] ? '3.5 hours' : '7 hours';
+			/* 
+				CORONAVIRUS MOD
+				schedules are no longer half or full days
+			*/
+			rData.gseScheduleData['Hours'] = rData.gseScheduleData['Hours'];
+			rData.gseScheduleData['Shift-Length'] = rData.gseScheduleData['Hours'] + ' hour(s)';
 			rData.gseScheduleData['Start-Time'] = $().ReturnFormattedDateTime(rData.gseScheduleData['time-storage_StartTime'].substring(0, 19), null, 'h:mm a');
 			if (rData.gseScheduleData['time-storage_BreakTime']) {
 				rData.gseScheduleData['Break-Time'] = $().ReturnFormattedDateTime(rData.gseScheduleData['time-storage_BreakTime'].substring(0, 19), null, 'h:mm a');
@@ -4635,7 +4644,11 @@
 			// dress requirements
 			// start with the two persistent requirements
 			rData.gseJobData['Dress-Requirements-List-Items'] = 
-				'<li>Clothing and shoes must be in good condition.</li>' + 
+				/* 
+					CORONAVIRUS MOD
+					Only badge required during closure
+				*/
+				// '<li>Clothing and shoes must be in good condition.</li>' + 
 				'<li>MOS badge must be worn above the waist at all times.</li>';
 			// add any other requirements
 			if (rData.gseJobData['Dress-Requirements']) {
@@ -4676,12 +4689,12 @@
 					'<p>' + ReplaceAll('%0A', '</p><p>', rData.gseScheduleData['Notes']) + '</p>';					
 			}
 
-			console.log('rData.gseScheduleData');
-			console.log(rData.gseScheduleData);
-			console.log('rData.gseJobData');
-			console.log(rData.gseJobData);
-			console.log('rData.formDataOnLoad');
-			console.log(rData.formDataOnLoad);
+			// console.log('rData.gseScheduleData');
+			// console.log(rData.gseScheduleData);
+			// console.log('rData.gseJobData');
+			// console.log(rData.gseJobData);
+			// console.log('rData.formDataOnLoad');
+			// console.log(rData.formDataOnLoad);
 			
 			// populate the placeholder <span>s with job and schedule data
 			PopulateFormData("div#request-form", rData.gseJobData, mData.uriRoot, rData.requestID, mData.checkForAlternateEventDataToPopulate);
@@ -6459,8 +6472,6 @@
 								['EndOfLife', 1],
 								['AllRequestData', CDataWrap(JSON.stringify(signupMod.formData))]
 							];
-
-							// console.log(signupMod);
 
 							// update SWFList
 							var updateListItemsOptions = {
@@ -23145,7 +23156,13 @@
 				distinctJobIDs.push(schedule.JobID)
 			}
 			var positionsThisSchedule = schedule.formData['Number-of-Positions'];
-			var lengthThisSchedule = schedule.formData['shiftlength_35-hours'] ? 3.5 : 7;
+			/* 
+				CORONAVIRUS MOD
+				schedules are no longer half or full days
+			*/
+			// var lengthThisSchedule = schedule.formData['shiftlength_35-hours'] ? 3.5 : 7;
+			var lengthThisSchedule = schedule.formData['Hours'] ? 3.5 : 7;
+
 			hoursScheduled += positionsThisSchedule * lengthThisSchedule;
 			gseSignupsArray.forEach((signup) => {
 				if (signup.ScheduleID === schedule.ScheduleID && signup.RequestStatus === 'Credit Granted') {
@@ -24052,10 +24069,10 @@
 						'<div id="' + departmentContainerID + '" class="department-content"> \n' +
 						'	<table class="gse-signups-user-summary">' +
 						'		<thead><tr>' +
-						'			<th></th><th class="small-column-header">Total</th>' +
-						'			<th class="small-column-header">Credit Granted</th>' +
-						'			<th class="small-column-header">Credit Denied</th>' +
-						'			<th class="small-column-header">Credit Pending</th>' +
+						'			<th></th><th class="small-column-header">Total Hours</th>' +
+						'			<th class="small-column-header">Hours Credit Granted</th>' +
+						'			<th class="small-column-header">Hours Credit Denied</th>' +
+						'			<th class="small-column-header">Hours Credit Pending</th>' +
 						'		</tr></thead>' +
 						'		<tbody>';
 
@@ -24066,26 +24083,30 @@
 							var creditGrantedCount = 0;
 							var creditDeniedCount = 0;
 							var creditPendingCount = 0;
-							if (augmentedSignups[user.account]) {
-								totalCount = augmentedSignups[user.account].length;
-								augmentedSignups[user.account].forEach((signup) => {
-									switch (signup.formData['Request-Status']) {
-										case 'Signed Up':
-											creditPendingCount += 1;
-											break;
-										case 'Credit Denied':
-											creditDeniedCount += 1;
-											break;
-										case 'Credit Granted':
-											creditGrantedCount += 1;
-											break;
-									}
-								});
+							if (user && user.account) {
+								if (augmentedSignups[user.account]) {
+									augmentedSignups[user.account].forEach((signup) => {
+										totalCount += parseFloat(signup.Schedule.Hours);
+										switch (signup.formData['Request-Status']) {
+											case 'Signed Up':
+												creditPendingCount += parseFloat(signup.Schedule.Hours);
+												break;
+											case 'Credit Denied':
+												creditDeniedCount += parseFloat(signup.Schedule.Hours);
+												break;
+											case 'Credit Granted':
+												creditGrantedCount += parseFloat(signup.Schedule.Hours);
+												break;
+										}
+									});
+								}
 							}
 							departmentMarkup += '<tr class="' + evenOrOdd + '">';
-							departmentMarkup += totalCount > 0 ?
-								'<td><button class="gse-signups-user-detail-control" data-user-account="' + user.account + '" data-user-name="' + user.displayName + '">' + user.displayName + '</button></td>' :
-								'<td>' + user.displayName + '</td>';
+							if (user && user.account) {
+								departmentMarkup += totalCount > 0 ?
+									'<td><button class="gse-signups-user-detail-control" data-user-account="' + user.account + '" data-user-name="' + user.displayName + '">' + user.displayName + '</button></td>' :
+									'<td>' + user.displayName + '</td>';
+							}
 							departmentMarkup += '<td><div class="small-in-column">' + totalCount + '</div></td>' +
 								'<td><div class="small-in-column">' + creditGrantedCount + '</div></td>' +
 								'<td><div class="small-in-column">' + creditDeniedCount + '</div></td>' +
@@ -24153,7 +24174,12 @@
 					'<td>' + $().RenderPersonLinks(signup.Job.JobAdmin) + '</td>' +
 					'<td>' + $().ReturnFormattedDateTime(isoStartDatetime, null, 'MMMM D, YYYY') + '</td>' +
 					'<td>' + $().ReturnFormattedDateTime(isoStartDatetime, null, 'h:mm a') + '</td>' +
-					'<td>' + signup.Schedule.ShiftLength + '</td>' +
+					/* 
+						CORONAVIRUS MOD
+						schedules are no longer half or full days
+					 */
+					// '<td>' + signup.Schedule.ShiftLength + '</td>' +
+					'<td>' + signup.Schedule.Hours + ' hour(s)</td>' +
 					'<td>' + signup.formData['Request-Status'] + '</td>' +
 					'</tr>';
 			});
@@ -24249,9 +24275,20 @@
 				}, {
 					'nameHere': 'StartTime',
 					'nameInList': 'StartTime'
-				}, {
+				/*
+					CORONAVIRUS MOD
+					schedules are no longer half or full days
+				 */
+
+				/* }, {
 					'nameHere': 'ShiftLength',
-					'nameInList': 'ShiftLength'
+					'nameInList': 'ShiftLength' */
+				}, {
+					'nameHere': 'Hours',
+					'nameInList': 'Hours'
+				}, {
+					'nameHere': 'Hours',
+					'nameInList': 'Hours'
 				}
 			]
 		});
@@ -24381,9 +24418,16 @@
 				}, {
 					'displayName': "Start Time",
 					'dataName': "StartTime",
-				}, {
+				/*
+					CORONAVIRUS MOD
+					schedules are no longer half or full days
+				 */
+				/* }, {
 					'displayName': "Schedule Length",
-					'dataName': "ShiftLength",
+					'dataName': "ShiftLength", */
+				}, {
+					'displayName': "Hours",
+					'dataName': "Hours",
 				}
 			],
 			'sortColAndOrder': [[3, 'asc'], [4, 'asc']],
@@ -24405,9 +24449,16 @@
 				}, {
 					'displayName': "Start Time",
 					'dataName': "StartTime",
+					/*
+						CORONAVIRUS MOD
+						schedules are no longer half or full days
+					 */
+					/* }, {
+						'displayName': "Schedule Length",
+						'dataName': "ShiftLength", */
 				}, {
-					'displayName': "Schedule Length",
-					'dataName': "ShiftLength",
+					'displayName': "Hours",
+					'dataName': "Hours",
 				}
 			],
 			'sortColAndOrder': [[3, 'asc'], [4, 'asc']],
@@ -24429,9 +24480,16 @@
 				}, {
 					'displayName': "Start Time",
 					'dataName': "StartTime",
-				}, {
+				/*
+					CORONAVIRUS MOD
+					schedules are no longer half or full days
+				 */
+				/* }, {
 					'displayName': "Schedule Length",
-					'dataName': "ShiftLength",
+					'dataName': "ShiftLength", */
+				}, {
+					'displayName': "Hours",
+					'dataName': "Hours",
 				}
 			],
 			'sortColAndOrder': [[3, 'asc'], [4, 'asc']],
@@ -24453,9 +24511,16 @@
 				}, {
 					'displayName': "Start Time",
 					'dataName': "StartTime",
-				}, {
+				/*
+					CORONAVIRUS MOD
+					schedules are no longer half or full days
+				 */
+				/* }, {
 					'displayName': "Schedule Length",
-					'dataName': "ShiftLength",
+					'dataName': "ShiftLength", */
+				}, {
+					'displayName': "Hours",
+					'dataName': "Hours",
 				}
 			],
 			'sortColAndOrder': [[3, 'asc'], [4, 'asc']],
@@ -24621,7 +24686,12 @@
 				"class=\"link_request-id\">" +
 				signup.SignupID + "</a>";
 			row.JobTitle = signup.Job.JobTitle;
-			row.ShiftLength = signup.Schedule.ShiftLength;
+			/*
+				CORONAVIRUS MOD
+				schedules are no longer half or full days
+			*/
+			// row.ShiftLength = signup.Schedule.ShiftLength;
+			row.Hours = signup.Schedule.Hours;
 			tableConfig.datatableData.push(row);
 		});
 		return tableConfig;
@@ -24884,8 +24954,8 @@
 			// var isoEndDatetime = schedule.formData['shiftlength_35-hours'] ?
 			// 	moment(isoStartDatetime).add(3.5, 'hours') :
 			// 	moment(isoStartDatetime).add(7, 'hours');
-			var isoEndDatetime = moment(isoStartDatetime).add(schedule.formData['Hours'], 'hours'):
-			var length = schedule.formData['shiftlength_35-hours'] ? '3.5 hours' : '7 hours';
+			var isoEndDatetime = moment(isoStartDatetime).add(schedule.formData['Hours'], 'hours');
+			var length = schedule.formData['Hours'] + ' hours';
 			var formattedStartTime =
 				$().ReturnFormattedDateTime(isoStartDatetime, null, "h:mma", 0);
 			formattedStartTime = formattedStartTime.slice(0, formattedStartTime.length - 1);
@@ -24965,9 +25035,16 @@
 				}, {
 					'nameHere': 'StartTime',
 					'nameInList': 'StartTime'
+				/*
+					CORONAVIRUS MOD
+					schedules are no longer half or full days
+				 */
+				/* }, {
+					'nameHere': "Schedule Length",
+					'nameInList': "ShiftLength", */
 				}, {
-					'nameHere': 'ShiftLength',
-					'nameInList': 'ShiftLength'
+					'nameHere': "Hours",
+					'nameInList': "Hours",
 				}
 			],
 			"where": {
@@ -24986,6 +25063,8 @@
 				]
 			}
 		});
+		console.log('gseSchedulesArray');
+		console.log(gseSchedulesArray);
 		// get all jobs
 		var gseJobsArray = $().GetFieldsFromAllRows({
 			'webURL': 'https://bmos.sharepoint.com/sites/' + gseSiteTokens.jobs,
@@ -29231,6 +29310,7 @@
 	$.fn.DisableGSESignups = function () {
 		if ($("input#Request-Status").val() === "") {
 			var gseSiteTokens = $().ReturnGSESiteTokens();
+			var jobAdminAccountBrief = '';
 			var positionsAvailable = parseInt($("input#Positions-Available").val());
 			var scheduleStartDatetime = $("input#Schedule-Start-Datetime").val();
 			var currentDatetime = $("input#Current-Datetime").val();
@@ -29248,7 +29328,9 @@
 					"value": jobID,
 				}
 			});
-			var jobAdminAccountBrief = ReplaceAll("i:0#.f\\|membership\\|", "", ReplaceAll("@mos.org", "", jobData.gseJobData['Requested-For'][0].account.toLowerCase()));
+			if (jobData && jobData.gseJobData && jobData.gseJobData['Requested-For'] && jobData.gseJobData['Requested-For'][0]) {
+				jobAdminAccountBrief = ReplaceAll("i:0#.f\\|membership\\|", "", ReplaceAll("@mos.org", "", jobData.gseJobData['Requested-For'][0].account.toLowerCase()));
+			}
 
 			if (
 				!(positionsAvailable > 0) ||
@@ -30103,7 +30185,7 @@
 		// wait for all data retrieval / setting promises to complete (pass or fail) 
 		$.when.apply($, allDataRetrievalAndSettingPromises).always(function () {
 
-			console.log('using dev_mos-main_long.1.04 m22');
+			console.log('using dev_mos-main_long.1.04 m1');
 
 			$().ConfigureAndShowScreenContainerAndAllScreens();
 		});

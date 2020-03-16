@@ -23,7 +23,7 @@
 		]
 	};
 
-	console.log("using settings m13");
+	console.log("using settings m1");
 
 	var oData = {
 		
@@ -398,6 +398,11 @@
 		'gseSchedulesCalendarManager': {
 			'buttons': [
 				{
+					"linkType": "newItem",
+					"anchorText": "New Schedule",
+					"href": "/sites/hr-service-schedules/SitePages/App.aspx?r=0",
+					"target": null
+				}, {
 					"linkType": "goForward",
 					"anchorText": "My and My Staff Members' Jobs",
 					"href": "/sites/hr-service-jobs/SitePages/App.aspx",
@@ -459,6 +464,11 @@
 		'gseSchedulesCalendarStaff': {
 			'buttons': [
 				{
+					"linkType": "newItem",
+					"anchorText": "New Schedule",
+					"href": "/sites/hr-service-schedules/SitePages/App.aspx?r=0",
+					"target": null
+				}, {
 					"linkType": "goForward",
 					"anchorText": "Signup Opportunities List",
 					"href": "/sites/hr-service-schedules/SitePages/App.aspx",
@@ -1005,72 +1015,6 @@
 						'optional': [{ 'fieldName': 'Repeating Date', 'type': 'datepicker', 'repeatable': 1 }]
 					},
 				],
-
- 			/* }, {
-				'elementType': 'field',
-				'controlType': 'check',
-				'fieldName': 'Change Pattern of Repeating Dates',
-				'choiceSetLabel': 'Change Pattern of Repeating Dates',
-				'choices': [
-					{
-						'value': 'yes',
-						'display': 'Yes, I want to change the pattern'
-					}
-				],
-				'hideForNonAdmin': ["", "Completed", "Cancelled"],
-				'hideForAdmin': ["", "Completed", "Cancelled"],
-				'helpNotes': [
-					{
-						'text': "This will cause any changes to specific occurrences in the series to be cancelled.",
-						'htmlID': "pattern-change-warning",
-					}, {
-						'text': "If there were changes to specific occurrences in the series, the changes will be cancelled and those occurrences will match the series again.",
-						'htmlID': "pattern-change-urgent-warning",
-						'emphasis': 1,
-						'hideForNonAdmin': ["", "Submitted", "Completed", "Cancelled"],
-						'hideForAdmin': ["", "Submitted", "Completed", "Cancelled"]
-					}
-				],
-				'onChange': [
-					{
-						'thisFieldIsChecked': 1,
-						'disable': [{ 'fieldName': 'Change Pattern of Repeating Dates', 'inputIDs': ['change-pattern-of-repeating-dates_yes'] }],
-						'enable': [
-							{ 'fieldName': 'Pattern Basis' },
-							{ 'fieldName': 'X Days' },
-							{ 'fieldName': 'X Weeks' },
-							{
-								'fieldName': 'Days of Week for X Weeks', 'inputIDs': [
-									'days-of-week-for-x-weeks_1',
-									'days-of-week-for-x-weeks_2',
-									'days-of-week-for-x-weeks_3',
-									'days-of-week-for-x-weeks_4',
-									'days-of-week-for-x-weeks_5',
-									'days-of-week-for-x-weeks_6',
-									'days-of-week-for-x-weeks_7',
-								]
-							},
-							{ 'fieldName': 'X Months For Same Day' },
-							{ 'fieldName': 'Day of Month for X Months' },
-							{ 'fieldName': 'X Months For Same Week' },
-							{ 'fieldName': 'Ordinal and Day of Week For X Months For Same Week', 'selectIDs': ['Ordinal-For-Day-of-Week-For-X-Months-For-Same-Week', 'Days-of-Week-For-X-Months-For-Same-Week'] },
-							{ 'fieldName': 'Month and Monthly Date for Same Date Each Year', 'selectIDs': ['Months-for-Same-Date-Each-Year'], 'inputIDs': ['Date-for-Same-Date-Each-Year'] },
-							{ 'fieldName': 'Ordinal and Day of Week For Same Week Each Year', 'selectIDs': ['Ordinal-For-Same-Week-Each-Year', 'Days-of-Week-For-Same-Week-Each-Year'] },
-							{ 'fieldName': 'Months for Same Week Each Year' },
-							{ 'fieldName': 'Start Date' },
-							{ 'fieldName': 'Ending Basis' },
-							{ 'fieldName': 'Qty Occurrences' },
-							{ 'fieldName': 'Ending Date' },
-						],
-						'show': [{ 'noteID': "pattern-change-urgent-warning" }],
-						'hide': [{ 'noteID': "pattern-change-warning" }]
-					},
-				], */
-
-
-
-
-
 
 
 			}, {
@@ -2270,7 +2214,7 @@
 
 	// TEMPORARY
 
-	// repeats
+	/* // repeats
 	// fData.CustomScriptLast += '$().RepeatElement("simple-date");';
 	// fData.CustomScriptLast += '$().RepeatElement("simple-date");';
 	// fData.CustomScriptLast += '$().RepeatElement("simple-date");';
@@ -2304,7 +2248,7 @@
 	fData.CustomScriptLast += '$("input#time-storage_StartTime").val("2000-01-01T09:00:00Z"); \n';
 	// fData.CustomScriptLast += '$("input#time-storage_MealTime").val("2000-01-01T11:00:00Z"); \n';
 	// fData.CustomScriptLast += '$("input#time-storage_BreakTime").val("2000-01-01T13:30:00Z"); \n';
-	fData.CustomScriptLast += '$("div#simple-dates").removeClass("hidden"); \n';
+	fData.CustomScriptLast += '$("div#simple-dates").removeClass("hidden"); \n'; */
 
 
 

@@ -9,6 +9,7 @@
 		// 'mosMainKey': 'dev',
 		// 'mosMainKey': 'devMedium',
 		// 'mosMainKey': 'devLong',
+		'currentRequestVersion': 2,
 		'devAdminNotifications': 0,
 		'notifications': 1,
 		'detailTitle': [
@@ -22,7 +23,7 @@
 		]
 	};
 
-	console.log("using settings m2");
+	console.log("using settings m1");
 
 	var oData = {
 		
@@ -61,59 +62,6 @@
 					"target": null
 				}
 			],
-			/* 'sections': {
-				'commonColumns': [
-					{
-						'displayName': 'Schedule ID',
-						'internalName': 'ID',
-					}, {
-						'displayName': "Job Admin",
-						'dataName': "JobAdmin",
-					}, {
-						'displayName': "Date",
-						'internalName': "Date",
-						'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
-					}, {
-						'displayName': 'Start Time',
-						'internalName': 'StartTime',
-						'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'h:mm a' }
-					}, {
-						'displayName': "Schedule Length",
-						'internalName': "ShiftLength",
-					}, {
-						'displayName': "Location",
-						'internalName': "Location",
-					}, {
-						'displayName': "Positions Available",
-						'dataName': "PositionsAvailable",
-					}, {
-						'displayName': "Signups",
-						'dataName': "Signups",
-					}, {
-						'internalName': "NumberOfPositions",
-					}, {
-						'internalName': "JobID",
-					}
-				],
-				'tables': [
-					{
-						'tableTitle': 'Submitted',
-						'tableID': 'submitted',
-						'someColsAreUsers': 1,
-						'basicRSQueryRelevantStatus': 'Submitted'
-					}, {
-						'tableTitle': 'Completed',
-						'tableID': 'completed',
-						'someColsAreUsers': 1,
-						'basicRSQueryRelevantStatus': 'Completed'
-					}, {
-						'tableTitle': 'Cancelled',
-						'tableID': 'cancelled',
-						'someColsAreUsers': 1,
-						'basicRSQueryRelevantStatus': 'Cancelled'
-					}
-				]
-			} */
 		},
 		
 		// screen 2.3
@@ -141,65 +89,6 @@
 					"target": null
 				}
 			],
-			/* 'sections': {
-				'commonColumns': [
-					{
-						'displayName': 'Request ID',
-						'internalName': 'ID',
-						'formLink': 1
-					}, {
-						'displayName': 'Requested By',
-						'internalName': 'Author',
-						'userName': 1
-					}, {
-						'displayName': 'Start Time',
-						'internalName': 'StartTime'
-					}, {
-						'displayName': "Shift Length",
-						'internalName': "ShiftLength",
-					}, {
-						'displayName': "Number of Positions",
-						'internalName': "NumberOfPositions",
-					}, {
-						'displayName': "Location",
-						'internalName': "Location",
-					}, {
-						'displayName': "JobID",
-						'internalName': "JobID",
-					}, {
-						'displayName': "Date",
-						'internalName': "Date",
-						'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
-					}, {
-						'displayName': 'Request Date',
-						'internalName': 'RequestDate',
-						'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
-					}
-				],
-				'tables': [
-					{
-						'tableTitle': 'Unassigned',
-						'tableID': 'unassigned',
-						'someColsAreUsers': 1,
-						'customCAMLQuery': '<Where>' +
-											'  <And>' +
-											'	<Eq>' +
-											'	  <FieldRef Name="RequestStatus"></FieldRef>' +
-											'	  <Value Type="Text">Approved</Value>' +
-											'	</Eq>' +
-											'	<IsNull>' +
-											'	  <FieldRef Name="AssignedTo"></FieldRef>' +
-											'	</IsNull>' +
-											'  </And>' +
-											'</Where>'
-					}, {
-						'tableTitle': 'Assigned',
-						'tableID': 'assigned',
-						'someColsAreUsers': 1,
-						'myRSQueryRelevantStatusAssigned': 'Approved'
-					}
-				]
-			} */
 		},
 		
 		// screen 2.3
@@ -228,72 +117,17 @@
 					"target": null
 				}
 			],
-			/* 'sections': {
-				'commonColumns': [
-					{
-						'displayName': 'Request ID',
-						'internalName': 'ID',
-						'formLink': 1
-					}, {
-						'displayName': 'Requested By',
-						'internalName': 'Author',
-						'userName': 1
-					}, {
-						'displayName': 'Start Time',
-						'internalName': 'StartTime'
-					}, {
-						'displayName': "Shift Length",
-						'internalName': "ShiftLength",
-					}, {
-						'displayName': "Number of Positions",
-						'internalName': "NumberOfPositions",
-					}, {
-						'displayName': "Location",
-						'internalName': "Location",
-					}, {
-						'displayName': "JobID",
-						'internalName': "JobID",
-					}, {
-						'displayName': "Date",
-						'internalName': "Date",
-						'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
-					}, {
-						'displayName': 'Request Date',
-						'internalName': 'RequestDate',
-						'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
-					}
-				],
-				'tables': [
-					{
-						'tableTitle': 'Unapproved',
-						'tableID': 'pending-approval',
-						'someColsAreUsers': 1,
-						'myDeptRSQueryRelevantStatus': 'Pending Approval'
-					}, {
-						'tableTitle': 'Unassigned',
-						'tableID': 'unassigned',
-						'someColsAreUsers': 1,
-						'myDeptRSQueryRelevantStatusUnassigned': 'Approved'
-					}, {
-						'tableTitle': 'Assigned',
-						'tableID': 'assigned',
-						'someColsAreUsers': 1,
-						'myDeptRSQueryRelevantStatusAssigned': 'Approved'
-					}, {
-						'tableTitle': 'Closed',
-						'tableID': 'closed',
-						'someColsAreUsers': 1,
-						'sortColAndOrder': [0, 'desc'],
-						'myDeptRSQueryRelevantStatus': 'Closed'
-					}
-				]
-			} */
 		},
 		
 		// screen 2.3
 		'gseSchedulesListStaff': {
 			'buttons': [
 				{
+					"linkType": "newItem",
+					"anchorText": "New Schedule",
+					"href": "/sites/hr-service-schedules/SitePages/App.aspx?r=0",
+					"target": null
+				}, {
 					"linkType": "goForward",
 					"anchorText": "My Signups",
 					"href": "/sites/hr-service-signups/SitePages/App.aspx",
@@ -305,65 +139,6 @@
 					"target": null
 				}
 			],
-			/* 'sections': {
-				'commonColumns': [
-					{
-						'displayName': 'Request ID',
-						'internalName': 'ID',
-						'formLink': 1
-					}, {
-						'displayName': 'Requested By',
-						'internalName': 'Author',
-						'userName': 1
-					}, {
-						'displayName': 'Start Time',
-						'internalName': 'StartTime'
-					}, {
-						'displayName': "Shift Length",
-						'internalName': "ShiftLength",
-					}, {
-						'displayName': "Number of Positions",
-						'internalName': "NumberOfPositions",
-					}, {
-						'displayName': "Location",
-						'internalName': "Location",
-					}, {
-						'displayName': "JobID",
-						'internalName': "JobID",
-					}, {
-						'displayName': "Date",
-						'internalName': "Date",
-						'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
-					}, {
-						'displayName': 'Request Date',
-						'internalName': 'RequestDate',
-						'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
-					}
-				],
-				'tables': [
-					{
-						'tableTitle': 'Unassigned',
-						'tableID': 'unassigned',
-						'someColsAreUsers': 1,
-						'customCAMLQuery': '<Where>' +
-											'  <And>' +
-											'	<Eq>' +
-											'	  <FieldRef Name="RequestStatus"></FieldRef>' +
-											'	  <Value Type="Text">Approved</Value>' +
-											'	</Eq>' +
-											'	<IsNull>' +
-											'	  <FieldRef Name="AssignedTo"></FieldRef>' +
-											'	</IsNull>' +
-											'  </And>' +
-											'</Where>'
-					}, {
-						'tableTitle': 'Assigned',
-						'tableID': 'assigned',
-						'someColsAreUsers': 1,
-						'myRSQueryRelevantStatusAssigned': 'Approved'
-					}
-				]
-			} */
 		},
 		
 
@@ -623,6 +398,11 @@
 		'gseSchedulesCalendarManager': {
 			'buttons': [
 				{
+					"linkType": "newItem",
+					"anchorText": "New Schedule",
+					"href": "/sites/hr-service-schedules/SitePages/App.aspx?r=0",
+					"target": null
+				}, {
 					"linkType": "goForward",
 					"anchorText": "My and My Staff Members' Jobs",
 					"href": "/sites/hr-service-jobs/SitePages/App.aspx",
@@ -684,6 +464,11 @@
 		'gseSchedulesCalendarStaff': {
 			'buttons': [
 				{
+					"linkType": "newItem",
+					"anchorText": "New Schedule",
+					"href": "/sites/hr-service-schedules/SitePages/App.aspx?r=0",
+					"target": null
+				}, {
 					"linkType": "goForward",
 					"anchorText": "Signup Opportunities List",
 					"href": "/sites/hr-service-schedules/SitePages/App.aspx",
@@ -1010,6 +795,7 @@
 						{
 							'tableID': 'list-item-view',
 							'webURL': 'https://bmos.sharepoint.com/sites/hr-service-jobs',
+							'devWebURL': 'https://bmos.sharepoint.com/sites/-dev-hr-service-jobs',
 							'myRSQueryRelevantStatus': 'Approved',
 							'getRequesterFrom': 'JobAdmin',
 							'sortColAndOrder': [0, 'desc']
@@ -1020,26 +806,7 @@
 				'hideButtonForNonAdmin': ['Submitted', 'Completed', 'Cancelled'],
 				'hideButtonForAdmin': ['Submitted', 'Completed', 'Cancelled'],
 				"requiredForNonAdmin": [""],
-				"requiredForAdmin": [""]
-			// }, {
-			// 	'elementType': "field",
-			// 	'controlType': "text",
-			// 	'fieldName': "Job Title",
-			// 	'labelContent': "Job Title",
-			// 	'requiredForNonAdmin': [''],
-			// 	'requiredForAdmin': [''],
-			// 	'disabledForNonAdmin': ['', 'Submitted', 'Completed', 'Cancelled'],
-			// 	'disabledForAdmin': ['', 'Submitted', 'Completed', 'Cancelled']
-			// }, {
-			// 	'elementType': "field",
-			// 	'controlType': "textarea",
-			// 	'fieldName': "Job Description",
-			// 	'labelContent': "Job Description",
-			// 	'requiredForNonAdmin': [''],
-			// 	'requiredForAdmin': [''],
-			// 	'disabledForNonAdmin': ['', 'Submitted', 'Completed', 'Cancelled'],
-			// 	'disabledForAdmin': ['', 'Submitted', 'Completed', 'Cancelled']
-			
+				"requiredForAdmin": [""]			
 			
 			}, {
 				'elementType': "markup",
@@ -1057,9 +824,15 @@
 				'requiredForAdmin': [''],
 				'disabledForNonAdmin': ["Submitted", "Completed", "Cancelled"],
 				'disabledForAdmin': ["Submitted", "Completed", "Cancelled"]
+			/*
+				CORONAVIRUS MOD
+				schedules no longer half or full days
+			*/
+
 			}, {
 				'elementType': "field",
 				'controlType': "radio",
+				'requestVersion': 1,
 				'fieldName': "ShiftLength",
 				'listFieldName': "ShiftLength",
 				'choiceSetLabel': "Shift Length",
@@ -1099,7 +872,22 @@
 						],
 					}
 				]
-
+			/*
+				CORONAVIRUS MOD
+				schedule durations now in hours
+			*/
+			}, {
+				'elementType': "field",
+				'controlType': "text",
+				'requestVersion': 2,
+				'fieldName': "Hours",
+				'listFieldName': "Hours",
+				'labelContent': "How many hours will this last?",
+				'addtlValidationType': 'validPositiveFloat',
+				'requiredForNonAdmin': [''],
+				'requiredForAdmin': [''],
+				'disabledForNonAdmin': ["Submitted", "Completed", "Cancelled"],
+				'disabledForAdmin': ["Submitted", "Completed", "Cancelled"],
 
 
 
@@ -1115,13 +903,18 @@
 				'requiredForAdmin': [''],
 				'disabledForNonAdmin': ["Submitted", "Completed", "Cancelled"],
 				'disabledForAdmin': ["Submitted", "Completed", "Cancelled"]
+
+			/*
+				CORONAVIRUS MOD
+				During closure, durations are open-ended. Meal and break scheduling is optional.
+			*/
 			}, {
 				'elementType': "field",
 				'controlType': "time",
 				'fieldName': "Meal Time",
 				'labelContent': "Meal Time",
-				'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
-				'hideForAdmin': ['', 'Submitted', 'Cancelled'],
+				// 'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
+				// 'hideForAdmin': ['', 'Submitted', 'Cancelled'],
 				'disabledForNonAdmin': ["Submitted", "Completed", "Cancelled"],
 				'disabledForAdmin': ["Submitted", "Completed", "Cancelled"]
 			}, {
@@ -1129,8 +922,8 @@
 				'controlType': "time",
 				'fieldName': "Break Time",
 				'labelContent': "Break Time",
-				'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
-				'hideForAdmin': ['', 'Submitted', 'Cancelled'],
+				// 'hideForNonAdmin': ['', 'Submitted', 'Cancelled'],
+				// 'hideForAdmin': ['', 'Submitted', 'Cancelled'],
 				'disabledForNonAdmin': ["Submitted", "Completed", "Cancelled"],
 				'disabledForAdmin': ["Submitted", "Completed", "Cancelled"]
 			}, {
@@ -1222,72 +1015,6 @@
 						'optional': [{ 'fieldName': 'Repeating Date', 'type': 'datepicker', 'repeatable': 1 }]
 					},
 				],
-
- 			/* }, {
-				'elementType': 'field',
-				'controlType': 'check',
-				'fieldName': 'Change Pattern of Repeating Dates',
-				'choiceSetLabel': 'Change Pattern of Repeating Dates',
-				'choices': [
-					{
-						'value': 'yes',
-						'display': 'Yes, I want to change the pattern'
-					}
-				],
-				'hideForNonAdmin': ["", "Completed", "Cancelled"],
-				'hideForAdmin': ["", "Completed", "Cancelled"],
-				'helpNotes': [
-					{
-						'text': "This will cause any changes to specific occurrences in the series to be cancelled.",
-						'htmlID': "pattern-change-warning",
-					}, {
-						'text': "If there were changes to specific occurrences in the series, the changes will be cancelled and those occurrences will match the series again.",
-						'htmlID': "pattern-change-urgent-warning",
-						'emphasis': 1,
-						'hideForNonAdmin': ["", "Submitted", "Completed", "Cancelled"],
-						'hideForAdmin': ["", "Submitted", "Completed", "Cancelled"]
-					}
-				],
-				'onChange': [
-					{
-						'thisFieldIsChecked': 1,
-						'disable': [{ 'fieldName': 'Change Pattern of Repeating Dates', 'inputIDs': ['change-pattern-of-repeating-dates_yes'] }],
-						'enable': [
-							{ 'fieldName': 'Pattern Basis' },
-							{ 'fieldName': 'X Days' },
-							{ 'fieldName': 'X Weeks' },
-							{
-								'fieldName': 'Days of Week for X Weeks', 'inputIDs': [
-									'days-of-week-for-x-weeks_1',
-									'days-of-week-for-x-weeks_2',
-									'days-of-week-for-x-weeks_3',
-									'days-of-week-for-x-weeks_4',
-									'days-of-week-for-x-weeks_5',
-									'days-of-week-for-x-weeks_6',
-									'days-of-week-for-x-weeks_7',
-								]
-							},
-							{ 'fieldName': 'X Months For Same Day' },
-							{ 'fieldName': 'Day of Month for X Months' },
-							{ 'fieldName': 'X Months For Same Week' },
-							{ 'fieldName': 'Ordinal and Day of Week For X Months For Same Week', 'selectIDs': ['Ordinal-For-Day-of-Week-For-X-Months-For-Same-Week', 'Days-of-Week-For-X-Months-For-Same-Week'] },
-							{ 'fieldName': 'Month and Monthly Date for Same Date Each Year', 'selectIDs': ['Months-for-Same-Date-Each-Year'], 'inputIDs': ['Date-for-Same-Date-Each-Year'] },
-							{ 'fieldName': 'Ordinal and Day of Week For Same Week Each Year', 'selectIDs': ['Ordinal-For-Same-Week-Each-Year', 'Days-of-Week-For-Same-Week-Each-Year'] },
-							{ 'fieldName': 'Months for Same Week Each Year' },
-							{ 'fieldName': 'Start Date' },
-							{ 'fieldName': 'Ending Basis' },
-							{ 'fieldName': 'Qty Occurrences' },
-							{ 'fieldName': 'Ending Date' },
-						],
-						'show': [{ 'noteID': "pattern-change-urgent-warning" }],
-						'hide': [{ 'noteID': "pattern-change-warning" }]
-					},
-				], */
-
-
-
-
-
 
 
 			}, {
@@ -2468,13 +2195,15 @@
 								'   $("div#label-and-control_Meal-Time").show("fast").removeClass("hidden"); \n' +
 								'   $("div#label-and-control_Break-Time").show("fast").removeClass("hidden"); \n' +
 								'} \n';
-
-	fData.CustomScriptLast += '$("input#Number-of-Positions").change(function() { \n' +
-		'	$().ValidateInRealTimeForPositiveInteger($("input#Number-of-Positions").val(), "input#Number-of-Positions"); \n' +
+	fData.CustomScriptLast += '$("input#Hours").change(function() { \n' +
+		'	$().ValidateInRealTimeForPositiveFloat($("input#Hours").val(), "input#Hours"); \n' +
 		'}); \n';
 
+	fData.CustomScriptLast += '$("input#Number-of-Positions").change(function() { \n' +
+		'	$().ValidateInRealTimeForPositiveFloat($("input#Number-of-Positions").val(), "input#Number-of-Positions"); \n' +
+		'}); \n';
+	
 
-// Number of Positions
 
 
 
@@ -2486,10 +2215,10 @@
 	// TEMPORARY
 
 	/* // repeats
-	fData.CustomScriptLast += '$().RepeatElement("simple-date");';
-	fData.CustomScriptLast += '$().RepeatElement("simple-date");';
-	fData.CustomScriptLast += '$().RepeatElement("simple-date");';
-	fData.CustomScriptLast += '$().RepeatElement("simple-date");';
+	// fData.CustomScriptLast += '$().RepeatElement("simple-date");';
+	// fData.CustomScriptLast += '$().RepeatElement("simple-date");';
+	// fData.CustomScriptLast += '$().RepeatElement("simple-date");';
+	// fData.CustomScriptLast += '$().RepeatElement("simple-date");';
 	
 	// radios / checks
 	fData.CustomScriptLast += '$("input#shiftlength_35-hours").prop("checked", true).attr("checked", true); \n';
@@ -2498,14 +2227,14 @@
 	
 	// texts
 	fData.CustomScriptLast += '$("input#Request-Nickname").val("Req Nick");';
-	fData.CustomScriptLast += '$("input#id-or-link_GSE-Job-Request-ID").val("215");';
+	fData.CustomScriptLast += '$("input#id-or-link_GSE-Job-Request-ID").val("11");';
 	fData.CustomScriptLast += '$("input#Number-of-Positions").val("3");';
-	fData.CustomScriptLast += '$("input#Location").val("Lobby");';
-	fData.CustomScriptLast += '$("input#Repeating-Date").val("October 1, 2018");';
-	fData.CustomScriptLast += '$("input#Repeating-Date-repeat-1").val("October 2, 2018");';
-	fData.CustomScriptLast += '$("input#Repeating-Date-repeat-2").val("October 3, 2018");';
-	fData.CustomScriptLast += '$("input#Repeating-Date-repeat-3").val("October 4, 2018");';
-	fData.CustomScriptLast += '$("input#Repeating-Date-repeat-4").val("October 5, 2018");';
+	fData.CustomScriptLast += '$("input#Hours").val("0.25");';
+	fData.CustomScriptLast += '$("input#Repeating-Date").val("March 18, 2020");';
+	// fData.CustomScriptLast += '$("input#Repeating-Date-repeat-1").val("March 2, 2019");';
+	// fData.CustomScriptLast += '$("input#Repeating-Date-repeat-2").val("March 3, 2019");';
+	// fData.CustomScriptLast += '$("input#Repeating-Date-repeat-3").val("March 4, 2019");';
+	// fData.CustomScriptLast += '$("input#Repeating-Date-repeat-4").val("March 5, 2019");';
 	
 	// selects
 	fData.CustomScriptLast += '$("select#hours-input_StartTime option[value=\'T09\']").attr("selected","selected"); \n';

@@ -10,10 +10,10 @@
 		// 'mosMainKey': 'devMedium',
 		// 'mosMainKey': 'devLong',
 		'devAdminNotifications': 0,
-		'notifications': 1
+		'notifications': 1,
 	};
 
-	console.log("using settings m5");
+	console.log("using settings m7");
 
 	var oData = {
 
@@ -77,11 +77,11 @@
 				],
 				'tables': [
 					{
-						'tableTitle': 'Pending Approval',
-						'tableID': 'pending-approval',
-						'someColsAreUsers': 1,
-						'basicRSQueryRelevantStatus': 'Pending Approval'
-					}, {
+						// 	'tableTitle': 'Pending Approval',
+						// 	'tableID': 'pending-approval',
+						// 	'someColsAreUsers': 1,
+						// 	'basicRSQueryRelevantStatus': 'Pending Approval'
+						// }, {
 						'tableTitle': 'Approved',
 						'tableID': 'approved',
 						'someColsAreUsers': 1,
@@ -170,12 +170,12 @@
 				],
 				'tables': [
 					{
-						'tableTitle': 'Pending Approval',
-						'tableID': 'pending-approval',
-						'someColsAreUsers': 1,
-						'myRSQueryRelevantStatus': 'Pending Approval',
-						'getRequesterFrom': 'JobAdmin'
-					}, {
+						// 	'tableTitle': 'Pending Approval',
+						// 	'tableID': 'pending-approval',
+						// 	'someColsAreUsers': 1,
+						// 	'myRSQueryRelevantStatus': 'Pending Approval',
+						// 	'getRequesterFrom': 'JobAdmin'
+						// }, {
 						'tableTitle': 'Approved',
 						'tableID': 'approved',
 						'someColsAreUsers': 1,
@@ -267,15 +267,14 @@
 				],
 				'tables': [
 					{
-						'tableTitle': 'Pending Approval',
-						'tableID': 'pending-approval',
-						'someColsAreUsers': 1,
-						'meOrMyDownlineIsRequesterAndRSQuery': {
-							'requestStatus': 'Pending Approval',
-							'getRequesterFrom': 'JobAdmin'
-						}
-						// 'basicRSQueryRelevantStatus': 'Pending Approval'
-					}, {
+						// 	'tableTitle': 'Pending Approval',
+						// 	'tableID': 'pending-approval',
+						// 	'someColsAreUsers': 1,
+						// 	'meOrMyDownlineIsRequesterAndRSQuery': {
+						// 		'requestStatus': 'Pending Approval',
+						// 		'getRequesterFrom': 'JobAdmin'
+						// 	}
+						// }, {
 						'tableTitle': 'Approved',
 						'tableID': 'approved',
 						'someColsAreUsers': 1,
@@ -283,7 +282,6 @@
 							'requestStatus': 'Approved',
 							'getRequesterFrom': 'JobAdmin'
 						}
-						// 'basicRSQueryRelevantStatus': 'Approved'
 					}, {
 						'tableTitle': 'Closed',
 						'tableID': 'closed',
@@ -292,7 +290,6 @@
 							'endOfLfe': 1,
 							'getRequesterFrom': 'JobAdmin'
 						},
-						// 'basicEOLQueryRelevantValue': 1,
 						'customColumns': [
 							{
 								'displayName': 'Request ID',
@@ -321,7 +318,109 @@
 					}
 				]
 			}
-		}
+		},
+
+		/* 
+			CORONAVIRUS MOD
+			This screen created during the coronavirus closure.
+			If GSEs are reverted post-closure, delete this screen
+			and references to 'gseJobsStaff' in the API.
+		 */
+		// screen 1.2
+		'gseJobsStaff': {
+			'buttons': [
+				{
+					"linkType": "newItem",
+					"anchorText": "New Job",
+					"href": "/sites/hr-service-jobs/SitePages/App.aspx?r=0",
+					"target": null
+				}, {
+					"linkType": "goForward",
+					"anchorText": "Schedule Calendar",
+					"href": "/sites/hr-service-schedules/SitePages/App.aspx?f=cal",
+					"target": null
+				}, {
+					"linkType": "goForward",
+					"anchorText": "Schedule List",
+					"href": "/sites/hr-service-schedules/SitePages/App.aspx",
+					"target": null
+				}, {
+					"linkType": "goForward",
+					"anchorText": "My Signups",
+					"href": "/sites/hr-service-signups/SitePages/App.aspx",
+					"target": null
+				}
+			],
+			'sections': {
+				'commonColumns': [
+					{
+						'displayName': 'Request ID',
+						'internalName': 'ID',
+						'formLink': 1
+					}, {
+						'displayName': 'Nickname',
+						'internalName': 'Title'
+					}, {
+						'displayName': 'Job Title',
+						'internalName': 'JobTitle'
+					}, {
+						'displayName': 'Created',
+						'internalName': 'RequestDate',
+						'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+					}, {
+						'displayName': 'Last Modified',
+						'internalName': 'Modified',
+						'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+					},
+				],
+				'tables': [
+					{
+						// 	'tableTitle': 'Pending Approval',
+						// 	'tableID': 'pending-approval',
+						// 	'someColsAreUsers': 1,
+						// 	'myRSQueryRelevantStatus': 'Pending Approval',
+						// 	'getRequesterFrom': 'JobAdmin'
+						// }, {
+						'tableTitle': 'Approved',
+						'tableID': 'approved',
+						'someColsAreUsers': 1,
+						'myRSQueryRelevantStatus': 'Approved',
+						'getRequesterFrom': 'JobAdmin'
+					}, {
+						'tableTitle': 'Closed',
+						'tableID': 'closed',
+						'someColsAreUsers': 1,
+						'basicMyEOLQueryRelevantValue': 1,
+						'getRequesterFrom': 'JobAdmin',
+						'customColumns': [
+							{
+								'displayName': 'Request ID',
+								'internalName': 'ID',
+								'formLink': 1
+							}, {
+								'displayName': 'Request Status',
+								'internalName': 'RequestStatus'
+							}, {
+								'displayName': 'Nickname',
+								'internalName': 'Title'
+							}, {
+								'displayName': 'Job Title',
+								'internalName': 'JobTitle'
+							}, {
+								'displayName': 'Created',
+								'internalName': 'RequestDate',
+								'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+							}, {
+								'displayName': 'Last Modified',
+								'internalName': 'Modified',
+								'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+							}
+						]
+					}
+				]
+			}
+		},
+
 	};
 
 
@@ -348,16 +447,16 @@
 
 		'uniqueElements': [
 			{
-			// 	'elementType': 'field',
-			// 	'controlType': 'url',
-			// 	'fieldName': 'Quark Request',
-			// 	'labelContent': 'On Quark',
-			// 	'editableForNonAdmin': [],
-			// 	'editableForAdmin': [],
-			// }, {
+				// 	'elementType': 'field',
+				// 	'controlType': 'url',
+				// 	'fieldName': 'Quark Request',
+				// 	'labelContent': 'On Quark',
+				// 	'editableForNonAdmin': [],
+				// 	'editableForAdmin': [],
+				// }, {
 
-				
-				
+
+
 				"elementType": "field",
 				"controlType": "check",
 				"fieldName": "Requester Archival",
@@ -412,11 +511,18 @@
 				'controlType': "text",
 				'fieldName': "Location",
 				'listFieldName': "Location",
-				'labelContent': "Location",
+				'labelContent': "Location / Venue",
 				'requiredForNonAdmin': [''],
 				'requiredForAdmin': [''],
 				'disabledForNonAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
-				'disabledForAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"]
+				'disabledForAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
+				"helpNotes": [{
+					"text": "If participation requires people to have more information about your location / venue (e.g., a Microsoft Teams link), please remember to send them that information separately. If you require a physical space, please also reserve that separately.",
+					"htmlID": "job-admin_location-help-note",
+					"emphasis": 1,
+					"hideForNonAdmin": ["Archived", "Disapproved", "Cancelled"],
+					"hideForAdmin": ["Archived", "Disapproved", "Cancelled"]
+				}],
 			}, {
 				'elementType': "field",
 				'controlType': "radio",
@@ -491,30 +597,30 @@
 				// 'requiredForAdmin': [""],
 				'disabledForNonAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
 				'disabledForAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"]
-			
-			
-			
-			
-			
-			// }, {
-			// 	'elementType': 'markup',
-			// 	'tag': 'div',
-			// 	'begin': 1,
-			// 	'htmlID': 'gse-job-duties',
-			// 	'htmlClass': 'repeating-content-container',
-			// 	'hideForNonAdmin': ['Submitted', 'Cancelled'],
-			// 	'hideForAdmin': ['Submitted', 'Cancelled']
-			// }, {
-			// 	'elementType': 'markup',
-			// 	'tag': 'div',
-			// 	'begin': 1,
-			// 	'htmlID': 'gse-job-duty',
-			// 	'htmlClass': 'repeat-container',
-			// 	'repeatable': 1
-			
-			
-			
-			
+
+
+
+
+
+				// }, {
+				// 	'elementType': 'markup',
+				// 	'tag': 'div',
+				// 	'begin': 1,
+				// 	'htmlID': 'gse-job-duties',
+				// 	'htmlClass': 'repeating-content-container',
+				// 	'hideForNonAdmin': ['Submitted', 'Cancelled'],
+				// 	'hideForAdmin': ['Submitted', 'Cancelled']
+				// }, {
+				// 	'elementType': 'markup',
+				// 	'tag': 'div',
+				// 	'begin': 1,
+				// 	'htmlID': 'gse-job-duty',
+				// 	'htmlClass': 'repeat-container',
+				// 	'repeatable': 1
+
+
+
+
 			}, {
 				'elementType': "field",
 				'controlType': "textarea",
@@ -530,53 +636,53 @@
 				'requiredForAdmin': [''],
 				'disabledForNonAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
 				'disabledForAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"]
-			// }, {
-			// 	'elementType': "markup",
-			// 	'tag': "a",
-			// 	'begin': 1,
-			// 	'end': 1,
-			// 	'htmlClass': "remove-section-anchor",
-			// 	'content': "Remove",
-			// 	'removeThisRepeat': 1,
-			// 	'hideForNonAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
-			// 	'hideForAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
-			// }, {
-			// 	'elementType': 'markup',
-			// 	'tag': 'div',
-			// 	'end': 1,
-			// }, {
-			// 	'elementType': 'markup',
-			// 	'tag': 'a',
-			// 	'begin': 1,
-			// 	'end': 1,
-			// 	'htmlID': 'repeat-gse-job-duty',
-			// 	'htmlClass': 'repeat-section-anchor',
-			// 	'content': 'Insert another duty',
-			// 	'repeatSectionID': 'gse-job-duty',
-			// 	'hideForNonAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
-			// 	'hideForAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
-			// }, {
-			// 	'elementType': 'markup',
-			// 	'tag': 'div',
-			// 	'end': 1
-			
-			
-			
-			
-			
-			
-			
-			
-			// }, {
-			// 	'elementType': "field",
-			// 	'controlType': "textarea",
-			// 	'fieldName': "Job Duties",
-			// 	'listFieldName': "JobDuties",
-			// 	'labelContent': "Job Duties",
-			// 	'requiredForNonAdmin': [""],
-			// 	'requiredForAdmin': [""],
-			// 	'disabledForNonAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
-			// 	'disabledForAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"]
+				// }, {
+				// 	'elementType': "markup",
+				// 	'tag': "a",
+				// 	'begin': 1,
+				// 	'end': 1,
+				// 	'htmlClass': "remove-section-anchor",
+				// 	'content': "Remove",
+				// 	'removeThisRepeat': 1,
+				// 	'hideForNonAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
+				// 	'hideForAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
+				// }, {
+				// 	'elementType': 'markup',
+				// 	'tag': 'div',
+				// 	'end': 1,
+				// }, {
+				// 	'elementType': 'markup',
+				// 	'tag': 'a',
+				// 	'begin': 1,
+				// 	'end': 1,
+				// 	'htmlID': 'repeat-gse-job-duty',
+				// 	'htmlClass': 'repeat-section-anchor',
+				// 	'content': 'Insert another duty',
+				// 	'repeatSectionID': 'gse-job-duty',
+				// 	'hideForNonAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
+				// 	'hideForAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
+				// }, {
+				// 	'elementType': 'markup',
+				// 	'tag': 'div',
+				// 	'end': 1
+
+
+
+
+
+
+
+
+				// }, {
+				// 	'elementType': "field",
+				// 	'controlType': "textarea",
+				// 	'fieldName': "Job Duties",
+				// 	'listFieldName': "JobDuties",
+				// 	'labelContent': "Job Duties",
+				// 	'requiredForNonAdmin': [""],
+				// 	'requiredForAdmin': [""],
+				// 	'disabledForNonAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
+				// 	'disabledForAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"]
 			}, {
 				'elementType': "markup",
 				'tag': "h3",
@@ -718,9 +824,9 @@
 	fData.CustomScriptFirst = '';
 
 
-	fData.CustomScriptLast =	'if ($("input#Request-Status").val() == "") { \n' + 
-								'	$().PutCurrentUserInField("Job Admin"); \n' + 
-								'} \n';
+	fData.CustomScriptLast = 'if ($("input#Request-Status").val() == "") { \n' +
+		'	$().PutCurrentUserInField("Job Admin"); \n' +
+		'} \n';
 
 	fData.CustomScriptLast += '$("input#Physical-Demand-Lifting, input#Physical-Demand-Carrying, input#Physical-Demand-Pushing, input#Physical-Demand-Pulling").on("change", function() { \n' +
 		'	$().ProcessGSEJobPhysicalDemandPoundFields();\n' +
@@ -730,14 +836,15 @@
 		'	$().ProcessGSEJobPhysicalDemandTimeFields();\n' +
 		'}); \n';
 
-	fData.CustomScriptLast +=	'if ($("input#Request-Status").val() == "Approved") { \n' + 
-								'	$("div#label-and-control_Requester-Cancellation").hide("fast").addClass("hidden"); \n' + 
-								'} \n';
+	fData.CustomScriptLast += 'if ($("input#Request-Status").val() == "Approved") { \n' +
+		'	$("div#label-and-control_Requester-Cancellation").hide("fast").addClass("hidden"); \n' +
+		'} \n';
 
-	fData.CustomScriptLast +=	'$("div#label-and-control_Requested-For, div#container_about-the-requester").hide("fast").addClass("hidden"); \n';
+	fData.CustomScriptLast += '$("div#label-and-control_Requested-For, div#container_about-the-requester").hide("fast").addClass("hidden"); \n';
 
+	/* // TEMPORARY
 
-	/* // texts
+	// texts
 	fData.CustomScriptLast += '$("input#Request-Nickname").val("Req Nick");';
 	fData.CustomScriptLast += '$("input#Job-Title").val("Job Title");';
 	fData.CustomScriptLast += '$("input#Physical-Demand-Lifting").val("1");';
@@ -755,8 +862,8 @@
 	fData.CustomScriptLast += '$("textarea#Job-Description").val("This is the job description.");';
 	fData.CustomScriptLast += '$("textarea#Training-Requirements").val("These are the training requirements");';
 	fData.CustomScriptLast += '$("textarea#Dress-Requirements").val("These are the dress requirements");';
-	fData.CustomScriptLast += '$("textarea#Job-Duties").val("These are the job duties");';
- */
+	fData.CustomScriptLast += '$("textarea#Job-Duties").val("These are the job duties");'; */
+
 
 
 
