@@ -450,7 +450,9 @@
 			case "gseJobsManager":
 				newTitle = "My and My Staff Members' GSE Jobs";
 				break;
-
+			case "gseJobsStaff":
+				newTitle = "My GSE Jobs";
+				break;
 
 			case "gseSchedulesCalendarHRAdmin":
 			case "gseSchedulesCalendarJobAdmin":
@@ -460,7 +462,12 @@
 				break;
 			case "gseSchedulesCalendarStaff":
 				var fiscalYear = $().ReturnSelectedOrCurrentFourDigitFiscalYear();
-				newTitle = "GSE Signup Opportunities, FY " + fiscalYear;
+				/* 
+					CORONAVIRUS MOD
+					Altered title
+				*/
+				// newTitle = "GSE Signup Opportunities, FY " + fiscalYear;
+				newTitle = "GSE Schedules, FY " + fiscalYear;
 				break;
 
 
@@ -478,7 +485,12 @@
 				break;
 			case "gseSchedulesListStaff":
 				var fiscalYear = $().ReturnSelectedOrCurrentFourDigitFiscalYear();
-				newTitle = "GSE Signup Opportunities, FY " + fiscalYear;
+				/* 
+					CORONAVIRUS MOD
+					Altered title
+				*/
+				// newTitle = "GSE Signup Opportunities, FY " + fiscalYear;
+				newTitle = "GSE Schedules, FY " + fiscalYear;
 				break;
 
 
@@ -553,6 +565,7 @@
 			case "gseJobsHRAdmin":
 			case "gseJobsJobAdmin":
 			case "gseJobsManager":
+			case "gseJobsStaff":
 
 			case "gseSchedulesListHRAdmin":
 			case "gseSchedulesListJobAdmin":
@@ -646,6 +659,7 @@
 			case "gseJobsHRAdmin":
 			case "gseJobsJobAdmin":
 			case "gseJobsManager":
+			case "gseJobsStaff":
 
 			case "gseSchedulesListHRAdmin":
 			case "gseSchedulesListJobAdmin":
@@ -752,6 +766,7 @@
 			case "gseJobsHRAdmin":
 			case "gseJobsJobAdmin":
 			case "gseJobsManager":
+			case "gseJobsStaff":
 
 			case "gseSchedulesListHRAdmin":
 			case "gseSchedulesListJobAdmin":
@@ -857,6 +872,9 @@
 				break;
 			case "gseJobsManager":
 				$().ConfigureOverviewScreen("gseJobsManager");
+				break;
+			case "gseJobsStaff":
+				$().ConfigureOverviewScreen("gseJobsStaff");
 				break;
 
 
@@ -968,6 +986,7 @@
 					"gseJobsHRAdmin",
 					"gseJobsJobAdmin",
 					"gseJobsManager",
+					"gseJobsStaff",
 					"gseSchedulesCalendarHRAdmin",
 					"gseSchedulesCalendarJobAdmin",
 					"gseSchedulesCalendarManager",
@@ -1109,6 +1128,7 @@
 			case "gseJobsHRAdmin":
 			case "gseJobsJobAdmin":
 			case "gseJobsManager":
+			case "gseJobsStaff":
 			case "gseSchedulesCalendarHRAdmin":
 			case "gseSchedulesCalendarJobAdmin":
 			case "gseSchedulesCalendarManager":
@@ -1129,7 +1149,7 @@
 			case "mwProductsTimeline":
 			case "mwProductsTodaysCapacity":
 			case "mwProductsList":
-				$("div#overview-screen-container").empty().removeClass('adminRequests-requests myRequests-requests gpcInitialConceptApprovalViewer-requests gpcSubmissionApprovalViewer-requests adminHubFeedback-requests  myHubFeedback-requests  adminReferrals-requests myReferrals-requests nonAdminInHouseNeedsSheets-requests adminEventAV-requests coffeeTalkCalendar-requests adminCoffeeTalk-requests analyticsHubFeedback-requests analyticsEventAV-requests gseStatsHRAdmin-requests gseJobsHRAdmin-requests gseJobsJobAdmin-requests gseJobsManager-requests gseSchedulesCalendarHRAdmin-requests gseSchedulesCalendarJobAdmin-requests gseSchedulesCalendarManager-requests gseSchedulesCalendarStaff-requests gseSchedulesListHRAdmin-requests gseSchedulesListJobAdmin-requests gseSchedulesListManager-requests gseSchedulesListStaff-requests gseSignupsHRAdmin-requests gseSignupsJobAdmin-requests gseSignupsManager-requests gseSignupsStaff-requests mwBuyoutCalendar-requests mwBuyoutList-requests mwEventCalendar-requests mwEventList-requests mwProductsTimeline-requests mwProductsTodaysCapacity-requests mwProductsList-requests');
+				$("div#overview-screen-container").empty().removeClass('adminRequests-requests myRequests-requests gpcInitialConceptApprovalViewer-requests gpcSubmissionApprovalViewer-requests adminHubFeedback-requests  myHubFeedback-requests  adminReferrals-requests myReferrals-requests nonAdminInHouseNeedsSheets-requests adminEventAV-requests coffeeTalkCalendar-requests adminCoffeeTalk-requests analyticsHubFeedback-requests analyticsEventAV-requests gseStatsHRAdmin-requests gseJobsHRAdmin-requests gseJobsJobAdmin-requests gseJobsStaff-requests gseJobsManager-requests gseSchedulesCalendarHRAdmin-requests gseSchedulesCalendarJobAdmin-requests gseSchedulesCalendarManager-requests gseSchedulesCalendarStaff-requests gseSchedulesListHRAdmin-requests gseSchedulesListJobAdmin-requests gseSchedulesListManager-requests gseSchedulesListStaff-requests gseSignupsHRAdmin-requests gseSignupsJobAdmin-requests gseSignupsManager-requests gseSignupsStaff-requests mwBuyoutCalendar-requests mwBuyoutList-requests mwEventCalendar-requests mwEventList-requests mwProductsTimeline-requests mwProductsTodaysCapacity-requests mwProductsList-requests');
 				$("div#overview-screen-container").append('<div id="overview-table-container" class="table-container"></div>');
 			case "gseSchedulesListHRAdmin":
 				$("div#gse-schedule-card-dialog").remove();
@@ -2015,7 +2035,10 @@
 					userNeedsAlternateOverviewScreen = "gseJobsJobAdmin";
 				} else if (uData.roles.indexOf("gseManager") > -1) {
 					userNeedsAlternateOverviewScreen = "gseJobsManager";
+				} else {
+					userNeedsAlternateOverviewScreen = "gseJobsStaff";
 				}
+
 				break;
 			case "GSE Schedule":
 				if (GetParamFromUrl(location.search, "f") === "cal") {
@@ -5771,7 +5794,13 @@
 					var endOfLife = 0;
 					var endOfLifeIsNew = 0;
 					if (rData.requestStatus == '') {
-						newReqStatus = 'Pending Approval';
+					/* 
+						CORONAVIRUS MOD
+						During closure, all requests are automatically approved.
+					*/
+
+						// newReqStatus = 'Pending Approval';
+						newReqStatus = 'Approved';
 						beginningOfLife = 1;
 					} else if ((rData.requestStatus == 'Pending Approval' || rData.requestStatus == 'Approved') && ($('input#requester-cancellation_cancel:checked').length > 0 || $('select#Change-Request-Status option:selected').val() == 'Cancel')) {
 						newReqStatus = 'Cancelled';
@@ -7850,7 +7879,10 @@
 			$().RenderOverviewScreenButtons(oData.gseJobsManager.buttons, 0);
 			$().RenderAllDataTables(oData.gseJobsManager.sections, "overview-table-container");
 			$().RenderWorkflowContacts();
-
+		} else if (type === "gseJobsStaff") {
+			$().RenderOverviewScreenButtons(oData.gseJobsStaff.buttons, 0);
+			$().RenderAllDataTables(oData.gseJobsStaff.sections, "overview-table-container");
+			$().RenderWorkflowContacts();
 
 		} else if (type === "gseSchedulesCalendarHRAdmin") {
 			$().RenderCommandBarAndCalendarForGSESchedules(oData.gseSchedulesCalendarHRAdmin.buttons, 'gseHRAdmin');
@@ -7878,6 +7910,12 @@
 			$().RenderCommandBarAndDataTablesForGSESchedules(oData.gseSchedulesListStaff.buttons, "overview-table-container", 'gseUserOnly');
 			$().RenderWorkflowContacts();
 		
+		
+
+
+
+
+
 		
 		} else if (type === "mwEventList") {
 			$().RenderCommandBarAndDataTablesForMWEvents(oData.mwEventList.sections);
@@ -9678,6 +9716,7 @@
 	};
 
 
+
 	$.fn.ProcessGSEJobRequestNotifications = function () {
 
 		// ============
@@ -9730,10 +9769,20 @@
 					'emailType': 'Notification',
 					'caller': 'beginningOfLife admin',
 					'to': toAdmin,
-					'subject': eData.subjectPreface + 'new request received',
-					'bodyUnique': '<p>' + eData.requesterName + ' has submitted a new request. Please ' +
-						'<a href="' + eData.uriRequest + '">review this request and approve (or disapprove) it soon</a>. ' +
-						'Alternatively, <a href="mailto:' + eData.requesterEmail + '">contact the requester</a> ' +
+					/*
+						CORONAVIRUS MOD
+						During closure, all requests are automatically approved, so email body and subject are changed.
+					*/
+					// 'subject': eData.subjectPreface + 'new request received',
+					'subject': eData.subjectPreface + 'approved',
+					// 'bodyUnique': '<p>' + eData.requesterName + ' has submitted a new request. Please ' +
+					// 	'<a href="' + eData.uriRequest + '">review this request and approve (or disapprove) it soon</a>. ' +
+					// 	'Alternatively, <a href="mailto:' + eData.requesterEmail + '">contact the requester</a> ' +
+					// 	'with any questions, or <a href="' + eData.uriOverview + '">' +
+					// 	'review other ' + eData.requestName + ' Requests</a>.</p>',
+					'bodyUnique': '<p>' + eData.requesterName + ' has submitted a new request; it\'s been automatically ' +
+						'approved. You can <a href="' + eData.uriRequest + '">review this request</a>, ' +
+						'<a href="mailto:' + eData.requesterEmail + '">contact the requester</a> ' +
 						'with any questions, or <a href="' + eData.uriOverview + '">' +
 						'review other ' + eData.requestName + ' Requests</a>.</p>'
 				});
@@ -9745,14 +9794,22 @@
 					'emailType': 'Notification',
 					'caller': 'beginningOfLife jobCreationAdditionalNotificationRecipient',
 					'to': toAdmin,
-					'subject': eData.subjectPreface + 'new request received',
+					/*
+						CORONAVIRUS MOD
+						During closure, all requests are automatically approved, so email subject is changed.
+					*/
+					// 'subject': eData.subjectPreface + 'new request received',
+					'subject': eData.subjectPreface + 'approved',
 					'bodyUnique': '<p>' + eData.requesterName + ' has submitted a new request. Please ' +
 						'<a href="' + eData.uriRequest + '">review this request</a> and <a href="mailto:' + 
 						eData.adminEmailString + '">' + 'contact the admin</a> with any issues.</p>'
 				});
 			});
-
-			// manager of requester (job admin)
+			/*
+				CORONAVIRUS MOD
+				During closure, all requests are automatically approved, so this email is redundant.
+			*/
+			/* // manager of requester (job admin)
 			$.each(eData.requesterManagerEmailArray, function (i, toManager) {
 				notificationsToSend.push({
 					'emailType': 'Notification',
@@ -9765,9 +9822,12 @@
 						'with any questions, or <a href="' + eData.uriOverview + '">' +
 						'review other ' + eData.requestName + ' Requests</a>.</p>'
 				});
-			});
-
-			// requester (job admin)
+			}); */
+			/*
+				CORONAVIRUS MOD
+				During closure, all requests are automatically approved, so this email is redundant.
+			*/
+			/* // requester (job admin)
 			notificationsToSend.push({
 				'emailType': 'Notification',
 				'caller': 'beginningOfLife jobAdmin',
@@ -9779,7 +9839,7 @@
 					'<p>In the meantime, you can <a href="mailto:' + eData.adminEmailString + '">' +
 					'contact the admin</a> with any questions or <a href="' + eData.uriOverview + '">' +
 					'check up on this and any other ' + eData.requestName + ' requests</a>.</p>'
-			});
+			}); */
 
 		}
 
@@ -9792,18 +9852,6 @@
 
 			console.log('RS = approved');
 
-			// admin
-			/* $.each(eData.adminEmailArray, function (i, toAdmin) {
-				notificationsToSend.push({
-					'emailType': 'Notification',
-					'caller': 'approved admin',
-					'to': toAdmin,
-					'subject': eData.subjectPreface + eData.requestStatus.toLowerCase(),
-					'bodyUnique': '<p>As needed, <a href="' + eData.uriRequest + '">review the request\'s details</a> ' +
-						'and contact ' + eData.requestedForLinkedNamesString + '.'
-				});
-			}); */
-
 			// manager of requester (job admin)
 			$.each(eData.requesterManagerEmailArray, function (i, toManager) {
 				notificationsToSend.push({
@@ -9811,8 +9859,18 @@
 					'caller': 'approved mgr',
 					'to': toManager,
 					'subject': eData.subjectPreface + eData.requestStatus.toLowerCase(),
-					'bodyUnique': '<p>As needed, <a href="' + eData.uriRequest + '">review the request\'s details</a> ' +
-						'and contact ' + eData.requestedForLinkedNamesString + '.'
+					/*
+						CORONAVIRUS MOD
+						During closure, all requests are automatically approved, so email subject is changed.
+					*/
+					// 'bodyUnique': '<p>As needed, <a href="' + eData.uriRequest + '">review the request\'s details</a> ' +
+					// 	'and contact ' + eData.requestedForLinkedNamesString + '.'
+					'bodyUnique': '<p>' + eData.requesterName + ' has created a new job request, which has been automatically ' +
+						'approved. You can <a href="' + eData.uriRequest + '">review this request\'s details</a>, ' +
+						'<a href="mailto:' + eData.requesterEmail + '">contact the requester</a> ' +
+						'with any questions, or <a href="' + eData.uriOverview + '">' +
+						'review other ' + eData.requestName + ' Requests</a>.</p>'
+
 				});
 			});
 
@@ -12890,6 +12948,9 @@
 					case "validPositiveInteger":
 						validPositiveInteger(value, this);
 						break;
+					case "validPositiveFloat":
+						validPositiveFloat(value, this);
+						break;
 					case "validSSN":
 						validSSN(this);
 						break;
@@ -13006,7 +13067,7 @@
 
 	$.fn.ValidateInRealTimeForPositiveFloat = function (value, element) {
 		if (!(/^((\$)?([0-9]{1,3})?(?:,?[0-9]{3})*(?:\.[0-9]{1,2})?)?$/.test(value))) {
-			$().SetErrorMessage(element, 'Please enter a valid positive number');
+			$().SetErrorMessage(element, 'Please enter a valid positive number with up to two decimal places');
 			return 0;
 		} else {
 			$().RemoveErrorMessage(element);
@@ -13275,6 +13336,14 @@
 	}
 
 
+
+	function validPositiveFloat(value, element) {
+		if (!(/^((\$)?([0-9]{1,3})?(?:,?[0-9]{3})*(?:\.[0-9]{1,2})?)?$/.test(value))) {
+			$().SetErrorMessage(element, 'Please enter a valid positive number with up to two decimal places');
+		}
+	}
+
+	
 
 	function validAllVisibleCheckedInSet(checkboxFields, errorField, errorFieldValue, errorMessage) {
 
@@ -23205,6 +23274,15 @@
 
 	// schedules list
 	$.fn.RenderCommandBarAndDataTablesForGSESchedules = function (buttons, targetID, relevantRole) {
+
+		/* 
+			CORONAVIRUS MOD
+			gseUserOnly (relevantRole) is elevated to gseJobAdmin
+		*/
+		if (relevantRole === 'gseUserOnly') {
+			relevantRole = 'gseJobAdmin';
+		}
+
 		var renderPrepStartTime = Date.now();
 
 		var startingYearOfFirstFiscalYear = 2018;
@@ -23230,6 +23308,8 @@
 			'   <div id="container_command-bar"></div> \n' +
 			'   <div id="container_data"></div> \n' +
 			'</div>');
+		console.log('relevantRole');
+		console.log(relevantRole);
 
 		var commandBarContents = '';
 		if (relevantRole === 'gseHRAdmin' || relevantRole === 'gseJobAdmin') {
@@ -23302,6 +23382,9 @@
 		if (relevantRole === 'gseUserOnly') {
 			commandBarContents +=
 				'<div class="container_link">' +
+				'	<a class="button-link button-link_new-item undefined command-bar-button" data-button-type="newRequest" href="https://bmos.sharepoint.com/sites/' + gseSiteTokens.schedules + '/SitePages/App.aspx?r=0">New Schedule</a>' +
+				'</div>' +
+				'<div class="container_link">' +
 				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/' + gseSiteTokens.schedules + '/SitePages/App.aspx?f=cal">GSE Signup Opportunities Calendar</a> \n' +
 				'</div>' +
 				'<div class="container_link">' +
@@ -23348,9 +23431,17 @@
 					}, {
 						'displayName': "Start Time",
 						'dataName': "StartTime",
+					/*
+						CORONAVIRUS MOD
+						schedules no longer half or full days
+					*/
+
+					/* }, {
+						'displayName': "Length",
+						'dataName': "ShiftLength", */
 					}, {
-						'displayName': "Schedule Length",
-						'dataName': "ShiftLength",
+						'displayName': "Hours",
+						'dataName': "Hours",
 					}, {
 						'displayName': "Job Admin",
 						'dataName': "JobAdmin",
@@ -23384,9 +23475,17 @@
 					}, {
 						'displayName': "Start Time",
 						'dataName': "StartTime",
+					/*
+						CORONAVIRUS MOD
+						schedules no longer half or full days
+					*/
+
+					/* }, {
+						'displayName': "Length",
+						'dataName': "ShiftLength", */
 					}, {
-						'displayName': "Schedule Length",
-						'dataName': "ShiftLength",
+						'displayName': "Hours",
+						'dataName': "Hours",
 					}, {
 						'displayName': "Job Admin",
 						'dataName': "JobAdmin",
@@ -23417,9 +23516,17 @@
 					}, {
 						'displayName': "Start Time",
 						'dataName': "StartTime",
+					/*
+						CORONAVIRUS MOD
+						schedules no longer half or full days
+					*/
+
+					/* }, {
+						'displayName': "Length",
+						'dataName': "ShiftLength", */
 					}, {
-						'displayName': "Schedule Length",
-						'dataName': "ShiftLength",
+						'displayName': "Hours",
+						'dataName': "Hours",
 					}, {
 						'displayName': "Job Admin",
 						'dataName': "JobAdmin",
@@ -23449,9 +23556,17 @@
 					}, {
 						'displayName': "Start Time",
 						'dataName': "StartTime",
+					/*
+						CORONAVIRUS MOD
+						schedules no longer half or full days
+					*/
+
+					/* }, {
+						'displayName': "Length",
+						'dataName': "ShiftLength", */
 					}, {
-						'displayName': "Schedule Length",
-						'dataName': "ShiftLength",
+						'displayName': "Hours",
+						'dataName': "Hours",
 					}, {
 						'displayName': "Job Admin",
 						'dataName': "JobAdmin",
@@ -23482,9 +23597,17 @@
 					}, {
 						'displayName': "Start Time",
 						'dataName': "StartTime",
+					/*
+						CORONAVIRUS MOD
+						schedules no longer half or full days
+					*/
+
+					/* }, {
+						'displayName': "Length",
+						'dataName': "ShiftLength", */
 					}, {
-						'displayName': "Schedule Length",
-						'dataName': "ShiftLength",
+						'displayName': "Hours",
+						'dataName': "Hours",
 					}, {
 						'displayName': "Job Admin",
 						'dataName': "JobAdmin",
@@ -23502,7 +23625,7 @@
 				'tableID': 'submitted',
 				'columns': [
 					{
-						'displayName': "Opportunity",
+						'displayName': "Schedule ID",
 						'dataName': "ViewByIDLink",
 					}, {
 						'displayName': "Job Title",
@@ -24209,11 +24332,22 @@
 		}
 		if (relevantRole === 'gseUserOnly') {
 			commandBarContents +=
-				'<div class="container_link">' +
+				/*
+					CORONAVIRUS MOD
+					Altered titles
+				*/
+
+				/* '<div class="container_link">' +
 				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/' + gseSiteTokens.schedules + '/SitePages/App.aspx?f=cal">GSE Signup Opportunities Calendar</a> \n' +
 				'</div>' +
 				'<div class="container_link">' +
 				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/' + gseSiteTokens.schedules + '/SitePages/App.aspx">GSE Signup Opportunities List</a> \n' +
+				'</div>' + */
+				'<div class="container_link">' +
+				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/' + gseSiteTokens.schedules + '/SitePages/App.aspx?f=cal">GSE Schedule Calendar</a> \n' +
+				'</div>' +
+				'<div class="container_link">' +
+				'	<a class="button-link button-link_go-forward command-bar-button" href="/sites/' + gseSiteTokens.schedules + '/SitePages/App.aspx">GSE Schedule List</a> \n' +
 				'</div>' +
 				'<div id="container_filter-controls-and-header"> \n' +
 				'   <div id="text_filter-controls" class="collapsible">Year</div> \n' +
@@ -24398,7 +24532,12 @@
 				row.PositionsAvailable = '<div class="small-in-column">' + 
 					schedule.NumberOfPositions + '</div>';
 			}
-			row.ShiftLength = schedule.formData['shiftlength_35-hours'] ? '3.5 hours' : '7.5 hours'
+			/* 
+				CORONAVIRUS MOD
+				schedules are no longer half or full days
+			*/
+			// row.ShiftLength = schedule.formData['shiftlength_35-hours'] ? '3.5 hours' : '7.5 hours';
+			row.Hours = schedule.formData['Hours'];
 			row.Signups = '<ul>';
 			if (schedule.Signups) {
 				schedule.Signups.forEach((signup) => {
@@ -24738,9 +24877,14 @@
 			});
 
 			var isoStartDatetime = schedule.formData['Date'].slice(0, 10) + schedule.formData['time-storage_StartTime'].slice(10, 19);
-			var isoEndDatetime = schedule.formData['shiftlength_35-hours'] ?
-				moment(isoStartDatetime).add(3.5, 'hours') :
-				moment(isoStartDatetime).add(7, 'hours');
+			/* 
+				CORONAVIRUS MOD
+				schedules are no longer half or full days
+			 */
+			// var isoEndDatetime = schedule.formData['shiftlength_35-hours'] ?
+			// 	moment(isoStartDatetime).add(3.5, 'hours') :
+			// 	moment(isoStartDatetime).add(7, 'hours');
+			var isoEndDatetime = moment(isoStartDatetime).add(schedule.formData['Hours'], 'hours'):
 			var length = schedule.formData['shiftlength_35-hours'] ? '3.5 hours' : '7 hours';
 			var formattedStartTime =
 				$().ReturnFormattedDateTime(isoStartDatetime, null, "h:mma", 0);
@@ -28311,7 +28455,7 @@
 		return hasViewPermission;
 	};
 
-
+	
 
 	$.fn.ReturnGSEScheduleAdditionalViewAccess = function (incomingArgs) {
 		var gseSiteTokens = $().ReturnGSESiteTokens();
@@ -29959,7 +30103,7 @@
 		// wait for all data retrieval / setting promises to complete (pass or fail) 
 		$.when.apply($, allDataRetrievalAndSettingPromises).always(function () {
 
-			console.log('using dev_mos-main_long.1.04 m1');
+			console.log('using dev_mos-main_long.1.04 m22');
 
 			$().ConfigureAndShowScreenContainerAndAllScreens();
 		});

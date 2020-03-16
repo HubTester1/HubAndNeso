@@ -77,11 +77,11 @@
 				],
 				'tables': [
 					{
-						'tableTitle': 'Pending Approval',
-						'tableID': 'pending-approval',
-						'someColsAreUsers': 1,
-						'basicRSQueryRelevantStatus': 'Pending Approval'
-					}, {
+					// 	'tableTitle': 'Pending Approval',
+					// 	'tableID': 'pending-approval',
+					// 	'someColsAreUsers': 1,
+					// 	'basicRSQueryRelevantStatus': 'Pending Approval'
+					// }, {
 						'tableTitle': 'Approved',
 						'tableID': 'approved',
 						'someColsAreUsers': 1,
@@ -170,12 +170,12 @@
 				],
 				'tables': [
 					{
-						'tableTitle': 'Pending Approval',
-						'tableID': 'pending-approval',
-						'someColsAreUsers': 1,
-						'myRSQueryRelevantStatus': 'Pending Approval',
-						'getRequesterFrom': 'JobAdmin'
-					}, {
+					// 	'tableTitle': 'Pending Approval',
+					// 	'tableID': 'pending-approval',
+					// 	'someColsAreUsers': 1,
+					// 	'myRSQueryRelevantStatus': 'Pending Approval',
+					// 	'getRequesterFrom': 'JobAdmin'
+					// }, {
 						'tableTitle': 'Approved',
 						'tableID': 'approved',
 						'someColsAreUsers': 1,
@@ -267,15 +267,14 @@
 				],
 				'tables': [
 					{
-						'tableTitle': 'Pending Approval',
-						'tableID': 'pending-approval',
-						'someColsAreUsers': 1,
-						'meOrMyDownlineIsRequesterAndRSQuery': {
-							'requestStatus': 'Pending Approval',
-							'getRequesterFrom': 'JobAdmin'
-						}
-						// 'basicRSQueryRelevantStatus': 'Pending Approval'
-					}, {
+					// 	'tableTitle': 'Pending Approval',
+					// 	'tableID': 'pending-approval',
+					// 	'someColsAreUsers': 1,
+					// 	'meOrMyDownlineIsRequesterAndRSQuery': {
+					// 		'requestStatus': 'Pending Approval',
+					// 		'getRequesterFrom': 'JobAdmin'
+					// 	}
+					// }, {
 						'tableTitle': 'Approved',
 						'tableID': 'approved',
 						'someColsAreUsers': 1,
@@ -283,7 +282,6 @@
 							'requestStatus': 'Approved',
 							'getRequesterFrom': 'JobAdmin'
 						}
-						// 'basicRSQueryRelevantStatus': 'Approved'
 					}, {
 						'tableTitle': 'Closed',
 						'tableID': 'closed',
@@ -292,7 +290,6 @@
 							'endOfLfe': 1,
 							'getRequesterFrom': 'JobAdmin'
 						},
-						// 'basicEOLQueryRelevantValue': 1,
 						'customColumns': [
 							{
 								'displayName': 'Request ID',
@@ -321,7 +318,109 @@
 					}
 				]
 			}
-		}
+		},
+
+		/* 
+			CORONAVIRUS MOD
+			This screen created during the coronavirus closure.
+			If GSEs are reverted post-closure, delete this screen
+			and references to 'gseJobsStaff' in the API.
+		 */
+		// screen 1.2
+		'gseJobsStaff': {
+			'buttons': [
+				{
+					"linkType": "newItem",
+					"anchorText": "New Job",
+					"href": "/sites/hr-service-jobs/SitePages/App.aspx?r=0",
+					"target": null
+				}, {
+					"linkType": "goForward",
+					"anchorText": "Schedule Calendar",
+					"href": "/sites/hr-service-schedules/SitePages/App.aspx?f=cal",
+					"target": null
+				}, {
+					"linkType": "goForward",
+					"anchorText": "Schedule List",
+					"href": "/sites/hr-service-schedules/SitePages/App.aspx",
+					"target": null
+				}, {
+					"linkType": "goForward",
+					"anchorText": "My Signups",
+					"href": "/sites/hr-service-signups/SitePages/App.aspx",
+					"target": null
+				}
+			],
+			'sections': {
+				'commonColumns': [
+					{
+						'displayName': 'Request ID',
+						'internalName': 'ID',
+						'formLink': 1
+					}, {
+						'displayName': 'Nickname',
+						'internalName': 'Title'
+					}, {
+						'displayName': 'Job Title',
+						'internalName': 'JobTitle'
+					}, {
+						'displayName': 'Created',
+						'internalName': 'RequestDate',
+						'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+					}, {
+						'displayName': 'Last Modified',
+						'internalName': 'Modified',
+						'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+					},
+				],
+				'tables': [
+					{
+					// 	'tableTitle': 'Pending Approval',
+					// 	'tableID': 'pending-approval',
+					// 	'someColsAreUsers': 1,
+					// 	'myRSQueryRelevantStatus': 'Pending Approval',
+					// 	'getRequesterFrom': 'JobAdmin'
+					// }, {
+						'tableTitle': 'Approved',
+						'tableID': 'approved',
+						'someColsAreUsers': 1,
+						'myRSQueryRelevantStatus': 'Approved',
+						'getRequesterFrom': 'JobAdmin'
+					}, {
+						'tableTitle': 'Closed',
+						'tableID': 'closed',
+						'someColsAreUsers': 1,
+						'basicMyEOLQueryRelevantValue': 1,
+						'getRequesterFrom': 'JobAdmin',
+						'customColumns': [
+							{
+								'displayName': 'Request ID',
+								'internalName': 'ID',
+								'formLink': 1
+							}, {
+								'displayName': 'Request Status',
+								'internalName': 'RequestStatus'
+							}, {
+								'displayName': 'Nickname',
+								'internalName': 'Title'
+							}, {
+								'displayName': 'Job Title',
+								'internalName': 'JobTitle'
+							}, {
+								'displayName': 'Created',
+								'internalName': 'RequestDate',
+								'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+							}, {
+								'displayName': 'Last Modified',
+								'internalName': 'Modified',
+								'friendlyFormatOnLoad': { 'incomingFormat': null, 'returnFormat': 'MMMM D, YYYY', 'determineYearDisplayDynamically': 1 }
+							}
+						]
+					}
+				]
+			}
+		},
+	
 	};
 
 
@@ -412,11 +511,18 @@
 				'controlType': "text",
 				'fieldName': "Location",
 				'listFieldName': "Location",
-				'labelContent': "Location",
+				'labelContent': "Location / Venue",
 				'requiredForNonAdmin': [''],
 				'requiredForAdmin': [''],
 				'disabledForNonAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
-				'disabledForAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"]
+				'disabledForAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
+				"helpNotes": [{
+					"text": "If participation requires people to have more information about your location / venue (e.g., a Microsoft Teams link), please remember to send them that information separately. If you require a physical space, please also reserve that separately.",
+					"htmlID": "job-admin_location-help-note",
+					"emphasis": 1,
+					"hideForNonAdmin": ["Archived", "Disapproved", "Cancelled"],
+					"hideForAdmin": ["Archived", "Disapproved", "Cancelled"]
+				}],
 			}, {
 				'elementType': "field",
 				'controlType': "radio",
