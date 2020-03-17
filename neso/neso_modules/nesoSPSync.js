@@ -153,6 +153,8 @@ module.exports = {
 						'JobID',
 						'Date',
 						'StartTime',
+						'ShiftLength',
+						'Hours',
 						'AllRequestData',
 					],
 					spFilters: [

@@ -105,19 +105,19 @@ module.exports = {
 		// return a new promise
 		new Promise((resolve, reject) => {
 			if (process.env.use === 'prod') {
-				// set up vars
+			// set up vars
 				const tomorrowTruncated = moment().add(1, 'day').format('YYYY-MM-DD');
 				const oneWeekOutTruncated = moment().add(1, 'week').format('YYYY-MM-DD');
 				const notificationsToSend = [];
 				// get a promise to retrieve all submitted schedules
 				nesoDBQueries.ReturnAllDocsFromCollection('gseSchedules')
-					// if the promise is resolved with the docs
+				// if the promise is resolved with the docs
 					.then((scheduleQueryResult) => {
-						// set up container for notification retrieval promises
+					// set up container for notification retrieval promises
 						const returnNoticationPromises = [];
 						// for each submitted schedule
 						scheduleQueryResult.docs.forEach((submittedGSESchedule) => {
-							// clone param
+						// clone param
 							const scheduleClone = submittedGSESchedule;
 							// if this schedule is for tomorrow or a week from now
 							const scheduleStartDateTruncated =
@@ -126,7 +126,7 @@ module.exports = {
 								scheduleStartDateTruncated === tomorrowTruncated || 
 								scheduleStartDateTruncated === oneWeekOutTruncated
 							) {
-								// push promise to return signup notifications for it
+							// push promise to return signup notifications for it
 								returnNoticationPromises
 									.push(module.exports.ReturnGSESignupReminderNotificationsForOneSchedule(scheduleClone));
 							}
@@ -134,24 +134,24 @@ module.exports = {
 						// when all notification retrieval promises are resolved
 						Promise.all(returnNoticationPromises)
 							.then((notificationRetrievalResults) => {
-								// extract the emails from the results
-								// for each notification
+							// extract the emails from the results
+							// for each notification
 								notificationRetrievalResults.forEach((notificationRetrievalResult) => {
 									notificationRetrievalResult.forEach((notificationOrError) => {
-										// if this is an email and not an error
+									// if this is an email and not an error
 										if (notificationOrError.emailType) {
-											// push to notifications to send
+										// push to notifications to send
 											notificationsToSend.push(notificationOrError);
 										}
 									});
 								});
 								// send the emails
 								module.exports.SendEmails(notificationsToSend)
-									// if the promise is resolved with a result, then 
-									// 		resolve this promise with the result
+								// if the promise is resolved with a result, then 
+								// 		resolve this promise with the result
 									.then((result) => { resolve(result); })
-									// if the promise is rejected with an error, then 
-									// 		reject this promise with an error
+								// if the promise is rejected with an error, then 
+								// 		reject this promise with an error
 									.catch((error) => { reject(error); });
 							});
 					})
@@ -246,10 +246,14 @@ module.exports = {
 							moment(scheduleStartDatetimeRaw).isDST() ?
 								moment(scheduleStartDatetimeRaw).subtract(1, 'hour') :
 								moment(scheduleStartDatetimeRaw);
-							const scheduleEndDatetime = 
-							(scheduleClone.ShiftLength === '3.5 hours') ?
-								moment(scheduleStartDatetime).add(3.5, 'hours') :
-								moment(scheduleStartDatetime).add(7, 'hours');
+							let scheduleEndDatetime = '';
+							if (scheduleClone.ShiftLength === '3.5 hours') {
+								scheduleEndDatetime = moment(scheduleStartDatetime).add(3.5, 'hours');
+							} else if (scheduleClone.ShiftLength === '7.5 hours') {
+								scheduleEndDatetime = moment(scheduleStartDatetime).add(7.5, 'hours');
+							} else if (scheduleClone.Hours) {
+								scheduleEndDatetime = moment(scheduleStartDatetime).add(scheduleClone.Hours, 'hours');
+							}
 							// if this schedule was yesterday or 
 							// 		both of the following are the case:
 							// 		-- today is Monday, Wednesday, or Friday
