@@ -13,7 +13,7 @@
 		'notifications': 1
 	};
 
-	console.log("using settings m7");
+	console.log("using settings m1");
 
 	var oData = {
 
@@ -479,6 +479,20 @@
 				'content': "Job Basics",
 				'begin': 1,
 				'end': 1
+
+				/* 
+					CORONAVIRUS MOD
+					All jobs will be through Microsoft Teams
+				*/
+
+			}, {
+				'elementType': "markup",
+				'tag': "p",
+				'content': "Please send participants a Microsoft Teams link. For assistance, contact the IT Service Desk: x0130 / (617) 589-0130",
+				'htmlClass': 'urgent',
+				'begin': 1,
+				'end': 1
+				
 			}, {
 				'elementType': "field",
 				'controlType': "text",
@@ -506,23 +520,24 @@
 				'requiredForAdmin': [""],
 				'disabledForNonAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
 				'disabledForAdmin': ["Completed", "Disapproved", "Cancelled"]
+			
 			}, {
 				'elementType': "field",
 				'controlType': "text",
 				'fieldName': "Location",
 				'listFieldName': "Location",
-				'labelContent': "Location / Venue",
+				'labelContent': "Location",
 				'requiredForNonAdmin': [''],
 				'requiredForAdmin': [''],
 				'disabledForNonAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
 				'disabledForAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
-				"helpNotes": [{
-					"text": "If participation requires people to have more information about your location / venue (e.g., a Microsoft Teams link), please remember to send them that information separately. If you require a physical space, please also reserve that separately.",
-					"htmlID": "job-admin_location-help-note",
-					"emphasis": 1,
-					"hideForNonAdmin": ["Archived", "Disapproved", "Cancelled"],
-					"hideForAdmin": ["Archived", "Disapproved", "Cancelled"]
-				}],
+				// "helpNotes": [{
+				// 	"text": "If participation requires people to have more information about your location / venue (e.g., a Microsoft Teams link), please remember to send them that information separately. If you require a physical space, please also reserve that separately.",
+				// 	"htmlID": "job-admin_location-help-note",
+				// 	"emphasis": 1,
+				// 	"hideForNonAdmin": ["Archived", "Disapproved", "Cancelled"],
+				// 	"hideForAdmin": ["Archived", "Disapproved", "Cancelled"]
+				// }],
 			}, {
 				'elementType': "field",
 				'controlType': "radio",
@@ -841,6 +856,18 @@
 								'} \n';
 
 	fData.CustomScriptLast +=	'$("div#label-and-control_Requested-For, div#container_about-the-requester").hide("fast").addClass("hidden"); \n';
+
+	/* 
+		CORONAVIRUS MOD
+		All jobs will be through Microsoft Teams
+	 */
+
+	fData.CustomScriptLast += 	'$("input#Location").val("Microsoft Teams");';
+	fData.CustomScriptLast += 	'$("input#locationisoffsite_yes").prop("checked", true).attr("checked", true); \n';
+	fData.CustomScriptLast +=	'$("div#label-and-control_Location, div#label-and-control_LocationIsOffsite").hide("fast").addClass("hidden"); \n';
+
+
+
 
 
 	/* // TEMPORARY

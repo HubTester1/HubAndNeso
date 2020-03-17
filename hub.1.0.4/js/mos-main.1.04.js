@@ -1657,15 +1657,6 @@
 		});
 		fields += "</ViewFields>";
 
-		console.log('opt.webURL');
-		console.log(opt.webURL);
-		// console.log('value');
-		// console.log(value);
-		// console.log('value');
-		// console.log(value);
-		// console.log('value');
-		// console.log(value);
-
 		$().SPServices({
 			operation: "GetListItems",
 			async: false,
@@ -23164,13 +23155,23 @@
 			if (!distinctJobIDs.includes(schedule.JobID)) {
 				distinctJobIDs.push(schedule.JobID)
 			}
-			var positionsThisSchedule = schedule.formData['Number-of-Positions'];
+			var positionsThisSchedule = parseInt(schedule.formData['Number-of-Positions'], 10);
 			/* 
 				CORONAVIRUS MOD
 				schedules are no longer half or full days
 			*/
+			
 			// var lengthThisSchedule = schedule.formData['shiftlength_35-hours'] ? 3.5 : 7;
-			var lengthThisSchedule = schedule.formData['Hours'] ? 3.5 : 7;
+			var lengthThisSchedule = 0;
+			if (schedule.formData['shiftlength_35-hours']) {
+				lengthThisSchedule = 3.5;
+			}
+			if (schedule.formData['shiftlength_75-hours']) {
+				lengthThisSchedule = 7;
+			}
+			if (schedule.formData['Hours']) {
+				lengthThisSchedule = parseFloat(schedule.formData['Hours']);
+			}
 
 			hoursScheduled += positionsThisSchedule * lengthThisSchedule;
 			gseSignupsArray.forEach((signup) => {
@@ -23178,7 +23179,6 @@
 					hoursGrantedCredit += lengthThisSchedule;
 				}
 			});
-			
 		});
 
 		$("#" + targetID).append('<div id="container_command-bar-and-data"> \n' +
@@ -23301,8 +23301,6 @@
 	// schedules list
 	$.fn.RenderCommandBarAndDataTablesForGSESchedules = function (buttons, targetID, relevantRole) {
 
-
-
 		/* 
 			CORONAVIRUS MOD
 			gseUserOnly (relevantRole) is elevated to gseJobAdmin
@@ -23336,8 +23334,6 @@
 			'   <div id="container_command-bar"></div> \n' +
 			'   <div id="container_data"></div> \n' +
 			'</div>');
-		console.log('relevantRole');
-		console.log(relevantRole);
 
 		var commandBarContents = '';
 		if (relevantRole === 'gseHRAdmin' || relevantRole === 'gseJobAdmin') {
@@ -23436,8 +23432,7 @@
 		$("div#container_command-bar").html(commandBarContents);
 
 		var augmentedSchedules = $().ReturnSelectedAugmentedSchedulesForGSESchedulesOverviews(selectedStartYear);
-		console.log('augmentedSchedules');
-		console.log(augmentedSchedules);
+
 		// determine which tables to render
 		var tablesToRender = [];
 		if (relevantRole === 'gseHRAdmin' || relevantRole === 'gseJobAdmin') {
@@ -24614,7 +24609,7 @@
 				schedules are no longer half or full days
 			*/
 			// row.ShiftLength = schedule.formData['shiftlength_35-hours'] ? '3.5 hours' : '7.5 hours';
-			row.Hours = schedule.formData['Hours'];
+			row.Hours = schedule.formData['Hours'] ? schedule.formData['Hours'] : '';
 			row.Signups = '<ul>';
 			if (schedule.Signups) {
 				schedule.Signups.forEach((signup) => {
@@ -30197,7 +30192,7 @@
 		// wait for all data retrieval / setting promises to complete (pass or fail) 
 		$.when.apply($, allDataRetrievalAndSettingPromises).always(function () {
 
-			console.log('using mos-main.1.04 m3');
+			console.log('using mos-main.1.04 m1');
 
 			$().ConfigureAndShowScreenContainerAndAllScreens();
 		});
