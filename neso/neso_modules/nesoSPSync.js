@@ -224,6 +224,7 @@ module.exports = {
 						'Id',
 						'Date',
 						'ShiftLength',
+						'Hours',
 						'JobID',
 					],
 					spFilters: [
