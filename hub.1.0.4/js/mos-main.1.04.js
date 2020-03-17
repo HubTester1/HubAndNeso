@@ -1657,6 +1657,15 @@
 		});
 		fields += "</ViewFields>";
 
+		console.log('opt.webURL');
+		console.log(opt.webURL);
+		// console.log('value');
+		// console.log(value);
+		// console.log('value');
+		// console.log(value);
+		// console.log('value');
+		// console.log(value);
+
 		$().SPServices({
 			operation: "GetListItems",
 			async: false,
@@ -23292,6 +23301,8 @@
 	// schedules list
 	$.fn.RenderCommandBarAndDataTablesForGSESchedules = function (buttons, targetID, relevantRole) {
 
+
+
 		/* 
 			CORONAVIRUS MOD
 			gseUserOnly (relevantRole) is elevated to gseJobAdmin
@@ -23425,7 +23436,8 @@
 		$("div#container_command-bar").html(commandBarContents);
 
 		var augmentedSchedules = $().ReturnSelectedAugmentedSchedulesForGSESchedulesOverviews(selectedStartYear);
-
+		console.log('augmentedSchedules');
+		console.log(augmentedSchedules);
 		// determine which tables to render
 		var tablesToRender = [];
 		if (relevantRole === 'gseHRAdmin' || relevantRole === 'gseJobAdmin') {
@@ -30185,7 +30197,7 @@
 		// wait for all data retrieval / setting promises to complete (pass or fail) 
 		$.when.apply($, allDataRetrievalAndSettingPromises).always(function () {
 
-			console.log('using mos-main.1.04 m1');
+			console.log('using mos-main.1.04 m3');
 
 			$().ConfigureAndShowScreenContainerAndAllScreens();
 		});
