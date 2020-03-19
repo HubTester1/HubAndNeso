@@ -488,7 +488,7 @@
 			}, {
 				'elementType': "markup",
 				'tag': "p",
-				'content': "Please send participants a Microsoft Teams link. For assistance, contact the IT Service Desk: x0130 / (617) 589-0130",
+				'content': "Please send participants a Microsoft Teams or other online venue link. For assistance, contact the IT Service Desk: x0130 / (617) 589-0130",
 				'htmlClass': 'urgent',
 				'begin': 1,
 				'end': 1
@@ -862,7 +862,7 @@
 		All jobs will be through Microsoft Teams
 	 */
 
-	fData.CustomScriptLast += '$("input#Location").val("Microsoft Teams");';
+	fData.CustomScriptLast += '$("input#Location").val("Online");';
 	fData.CustomScriptLast += '$("input#locationisoffsite_yes").prop("checked", true).attr("checked", true); \n';
 	fData.CustomScriptLast += '$("div#label-and-control_Location, div#label-and-control_LocationIsOffsite").hide("fast").addClass("hidden"); \n';
 
