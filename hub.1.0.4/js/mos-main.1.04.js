@@ -1657,15 +1657,6 @@
 		});
 		fields += "</ViewFields>";
 
-		console.log('opt.webURL');
-		console.log(opt.webURL);
-		// console.log('value');
-		// console.log(value);
-		// console.log('value');
-		// console.log(value);
-		// console.log('value');
-		// console.log(value);
-
 		$().SPServices({
 			operation: "GetListItems",
 			async: false,
@@ -9714,21 +9705,23 @@
 					.done(function (returnedUserData) {
 						// console.log('returnedUserData');
 						// console.log(returnedUserData);
-						var userManagerAccount = returnedUserData.docs.manager.toLowerCase();
-						$.ajax({
-							async: false,
-							method: "GET",
-							dataType: "json",
-							url: 'https://neso.mos.org/activeDirectory/user/' + userManagerAccount,
-						})
-							.done(function (returnedManagerData) {
-								// console.log('returnedManagerData');
-								// console.log(returnedManagerData);
-								if (returnedManagerData.docs.email) {
-									gseJobAdminManagerEmailArray
-											.push(returnedManagerData.docs.email);
-								}
-							});
+						if (returnedUserData && returnedUserData.docs && returnedUserData.docs.manager) {
+							var userManagerAccount = returnedUserData.docs.manager.toLowerCase();
+							$.ajax({
+								async: false,
+								method: "GET",
+								dataType: "json",
+								url: 'https://neso.mos.org/activeDirectory/user/' + userManagerAccount,
+							})
+								.done(function (returnedManagerData) {
+									// console.log('returnedManagerData');
+									// console.log(returnedManagerData);
+									if (returnedManagerData.docs.email) {
+										gseJobAdminManagerEmailArray
+												.push(returnedManagerData.docs.email);
+									}
+								});
+						}
 					});
 			}
 		// }
@@ -10141,11 +10134,13 @@
 		sData.jobAdmin = $().ReturnUserDataFromPersonOrGroupFieldString(gseJobsArray[0].JobAdmin);
 
 		sData.jobTitle = gseJobsArray[0].JobTitle;
-		sData.jobAdminName = sData.jobAdmin[0].name;
-		sData.jobAdminEmail = sData.jobAdmin[0].email;
-		sData.jobAdminLinkedNamesString = 
-			'<a href="mailto:' + sData.jobAdminEmail.toLowerCase() + '">' + sData.jobAdminName + '</a>';
 
+		if (sData.jobAdmin) {
+			sData.jobAdminName = sData.jobAdmin[0].name;
+			sData.jobAdminEmail = sData.jobAdmin[0].email;
+			sData.jobAdminLinkedNamesString = 
+				'<a href="mailto:' + sData.jobAdminEmail.toLowerCase() + '">' + sData.jobAdminName + '</a>';
+		}
 		sData.requesterName = $("input#Requester-Name").val();
 		sData.requesterEmail = $("input#Requester-Email").val();
 		sData.requesterManagerEmailArray = $().ReturnManagerOfUserEmailArray(sData.requesterEmail);
@@ -10184,17 +10179,19 @@
 		if (typeof (eData.beginningOfLife) != 'undefined' && eData.beginningOfLife == 1) {
 
 			// jobAdmin
-			notificationsToSend.push({
-				'emailType': 'Notification',
-				'caller': 'beginningOfLife jobAdmin',
-				'to': sData.jobAdminEmail,
-				'subject': eData.subjectPrefaceJobAdmin + 'new signup',
-				'bodyUnique': '<p>' + eData.requesterName + ' has signed up for the ' + 
-					sData.scheduleDateTime + ' schedule nicknamed "' + 
-					sData.scheduleNickJobAdmin + '", which is for the job titled "' + 
-					sData.jobTitle + '". Feel free to <a href="mailto:' + eData.requesterEmail + '">' +
-					'contact ' + eData.requesterName + '</a> if you need to follow up.</p>'
-			});
+			if (sData.jobAdminEmail) {
+				notificationsToSend.push({
+					'emailType': 'Notification',
+					'caller': 'beginningOfLife jobAdmin',
+					'to': sData.jobAdminEmail,
+					'subject': eData.subjectPrefaceJobAdmin + 'new signup',
+					'bodyUnique': '<p>' + eData.requesterName + ' has signed up for the ' + 
+						sData.scheduleDateTime + ' schedule nicknamed "' + 
+						sData.scheduleNickJobAdmin + '", which is for the job titled "' + 
+						sData.jobTitle + '". Feel free to <a href="mailto:' + eData.requesterEmail + '">' +
+						'contact ' + eData.requesterName + '</a> if you need to follow up.</p>'
+				});
+			}
 
 			// mgr
 			$.each(eData.requesterManagerEmailArray, function (i, toManager) {
@@ -10213,20 +10210,23 @@
 			});
 
 			// staff
+			var staffBeginningOfLifeBodyUnique = '<p>You\'ve signed up for "' + eData.jobTitle + 
+				'", scheduled for ' + eData.scheduleDateTime + '. <a href="' + 
+				eData.uriRequest + '">Revisit your signup</a> to review the details or to cancel. Feel free to ';
+			if (eData.jobAdminEmail && eData.jobAdminName) {
+				staffBeginningOfLifeBodyUnique += '<a href="mailto:' + eData.jobAdminEmail + '">contact ' +
+					eData.jobAdminName + '</a> with any questions, ';
+			}
+			staffBeginningOfLifeBodyUnique += '<a href="' + eData.uriOverview + '">' +
+					'review your other signups</a>, or ' + 
+					'<a href="https://bmos.sharepoint.com/sites/' + eData.gseSiteTokens.schedules + '/SitePages/App.aspx?f=cal">' + 
+					'sign up for another GSE</a>.</p>';
 			notificationsToSend.push({
 				'emailType': 'Notification',
 				'caller': 'beginningOfLife staff',
 				'to': eData.requesterEmail,
 				'subject': eData.subjectPrefaceStaff + 'signup',
-				'bodyUnique': '<p>You\'ve signed up for "' + eData.jobTitle + 
-					'", scheduled for ' + eData.scheduleDateTime + '. <a href="' + 
-					eData.uriRequest + '">Revisit your signup</a> to review the details or to cancel. ' +
-					'Feel free to <a href="mailto:' + eData.jobAdminEmail + '">contact ' + 
-					eData.jobAdminName + '</a> ' +
-					'with any questions, <a href="' + eData.uriOverview + '">' +
-					'review your other signups</a>, or ' + 
-					'<a href="https://bmos.sharepoint.com/sites/' + eData.gseSiteTokens.schedules + '/SitePages/App.aspx?f=cal">' + 
-					'sign up for another GSE</a>.</p>'
+				'bodyUnique': staffBeginningOfLifeBodyUnique
 			});
 		}
 
@@ -10241,52 +10241,59 @@
 			from GSE Schedules so are not handled here. Cancelling a job or schedule will 
 			result in a cancelled signup, but those situations are handled elsewhere, too. 
 			These emails will only be sent when a staff member cancels her/his own signup.
- 		*/
+		*/
 
 		if (typeof (eData.endOfLife) != 'undefined' && eData.endOfLife == 1) {
-
-			// jobAdmin
-			notificationsToSend.push({
-				'emailType': 'Notification',
-				'caller': 'staffCancellation jobAdmin',
-				'to': eData.jobAdminEmail,
-				'subject': eData.subjectPrefaceJobAdmin + 'signup cancelled',
-				'bodyUnique': '<p>' + eData.requesterName + ' is no longer signed up for the ' +
-					eData.scheduleDateTime + ' schedule nicknamed "' +
-					eData.scheduleNickJobAdmin + '", which is for the job titled "' +
-					eData.jobTitle + '". Feel free to <a href="mailto:' + eData.requesterEmail + '">' +
-					'contact ' + eData.requesterName + '</a> if you need to follow up.</p>'
-			});
+			if (sData.jobAdminEmail) {
+				// jobAdmin
+				notificationsToSend.push({
+					'emailType': 'Notification',
+					'caller': 'staffCancellation jobAdmin',
+					'to': eData.jobAdminEmail,
+					'subject': eData.subjectPrefaceJobAdmin + 'signup cancelled',
+					'bodyUnique': '<p>' + eData.requesterName + ' is no longer signed up for the ' +
+						eData.scheduleDateTime + ' schedule nicknamed "' +
+						eData.scheduleNickJobAdmin + '", which is for the job titled "' +
+						eData.jobTitle + '". Feel free to <a href="mailto:' + eData.requesterEmail + '">' +
+						'contact ' + eData.requesterName + '</a> if you need to follow up.</p>'
+				});
+			}
 
 			// mgr
 			$.each(eData.requesterManagerEmailArray, function (i, toManager) {
-				notificationsToSend.push({
-					'emailType': 'Notification',
-					'caller': 'staffCancellation mgr',
-					'to': toManager,
-					'subject': eData.subjectPrefaceJobAdmin + 'signup cancelled',
-					'bodyUnique': '<p>' + eData.requesterName + ' is no longer signed up for "' + 
-						eData.jobTitle + '", scheduled for ' + eData.scheduleDateTime + 
-						'. Feel free to <a href="mailto:' + eData.requesterEmail + '">' +
-						'contact ' + eData.requesterName + '</a> if you need to follow up.</p>'
-				});
+				if (toManager) {
+					notificationsToSend.push({
+						'emailType': 'Notification',
+						'caller': 'staffCancellation mgr',
+						'to': toManager,
+						'subject': eData.subjectPrefaceJobAdmin + 'signup cancelled',
+						'bodyUnique': '<p>' + eData.requesterName + ' is no longer signed up for "' + 
+							eData.jobTitle + '", scheduled for ' + eData.scheduleDateTime + 
+							'. Feel free to <a href="mailto:' + eData.requesterEmail + '">' +
+							'contact ' + eData.requesterName + '</a> if you need to follow up.</p>'
+					});
+				}
 			});
 
 			// staff
+			var staffBeginningOfLifeBodyUnique = '<p>You\'re no longer signed up for "' + eData.jobTitle +
+				'", scheduled for ' + eData.scheduleDateTime + '. <a href="' +
+				eData.uriRequest + '">Revisit your signup</a> to review the details. Feel free to ';
+			if (eData.jobAdminEmail && eData.jobAdminName) {
+				staffBeginningOfLifeBodyUnique += '<a href="mailto:' + eData.jobAdminEmail + '">contact ' +
+					eData.jobAdminName + '</a> with any questions, ';
+			}
+			staffBeginningOfLifeBodyUnique += '<a href="' + eData.uriOverview + '">' +
+					'review your other signups</a>, or ' + 
+					'<a href="https://bmos.sharepoint.com/sites/' + eData.gseSiteTokens.schedules + '/SitePages/App.aspx?f=cal">' + 
+					'sign up for another GSE</a>.</p>';
+
 			notificationsToSend.push({
 				'emailType': 'Notification',
 				'caller': 'staffCancellation staff',
 				'to': eData.requesterEmail,
 				'subject': eData.subjectPrefaceStaff + 'signup cancelled',
-				'bodyUnique': '<p>You\'re no longer signed up for "' + eData.jobTitle +
-					'", scheduled for ' + eData.scheduleDateTime + '. <a href="' +
-					eData.uriRequest + '">Revisit your signup</a> to review the details. ' +
-					'Feel free to <a href="mailto:' + eData.jobAdminEmail + '">contact ' +
-					eData.jobAdminName + '</a> ' +
-					'with any questions, <a href="' + eData.uriOverview + '">' +
-					'review your other signups</a>, or ' +
-					'<a href="https://bmos.sharepoint.com/sites/' + eData.gseSiteTokens.schedules + '/SitePages/App.aspx?f=cal">' +
-					'sign up for another GSE</a>.</p>'
+				'bodyUnique': staffBeginningOfLifeBodyUnique
 			});
 		}
 
@@ -23301,8 +23308,6 @@
 	// schedules list
 	$.fn.RenderCommandBarAndDataTablesForGSESchedules = function (buttons, targetID, relevantRole) {
 
-
-
 		/* 
 			CORONAVIRUS MOD
 			gseUserOnly (relevantRole) is elevated to gseJobAdmin
@@ -23436,8 +23441,7 @@
 		$("div#container_command-bar").html(commandBarContents);
 
 		var augmentedSchedules = $().ReturnSelectedAugmentedSchedulesForGSESchedulesOverviews(selectedStartYear);
-		console.log('augmentedSchedules');
-		console.log(augmentedSchedules);
+
 		// determine which tables to render
 		var tablesToRender = [];
 		if (relevantRole === 'gseHRAdmin' || relevantRole === 'gseJobAdmin') {
@@ -23939,14 +23943,14 @@
 		if (relevantRole === 'gseHRAdmin') {
 			selectedManager = GetParamFromUrl(location.search, "m");
 			if (!selectedManager || selectedManager == '') {
-				selectedManager = 'wbouchard';
+				selectedManager = 'tritchie';
 			}
 		}
 		if (relevantRole === 'gseManager') {
 			selectedManager = ReplaceAll('@mos.org', '', ReplaceAll('i:0#.f\\|membership\\|', '', uData.account));
 		}
 		if (selectedManager === 'sp3') {
-			selectedManager = 'bwilson';
+			selectedManager = 'hsheridan';
 		}
 		var managersWithDownline = $().ReturnManagersWithFullHierarchicalDownline();
 
@@ -24292,9 +24296,9 @@
 					schedules are no longer half or full days
 				 */
 
-				/* }, {
+				}, {
 					'nameHere': 'ShiftLength',
-					'nameInList': 'ShiftLength' */
+					'nameInList': 'ShiftLength'
 				}, {
 					'nameHere': 'Hours',
 					'nameInList': 'Hours'
@@ -24327,6 +24331,13 @@
 			});
 			gseSchedulesArray.forEach((schedule) => {
 				if (schedule.ScheduleID === signup.ScheduleID) {
+					if (schedule.ShiftLength && schedule.ShiftLength === '7.5 hours') {
+						schedule.Hours = '7.5';
+					}
+					if (schedule.ShiftLength && schedule.ShiftLength === '3.5 hours') {
+						schedule.Hours = '3.5';
+					}
+					schedule.Hours = (parseFloat(schedule.Hours).toFixed(2)).toString();
 					signupCopy.Schedule = schedule;
 				}
 			});
@@ -30197,7 +30208,7 @@
 		// wait for all data retrieval / setting promises to complete (pass or fail) 
 		$.when.apply($, allDataRetrievalAndSettingPromises).always(function () {
 
-			console.log('using mos-main.1.04 m3');
+			console.log('using mos-main.1.04 m1');
 
 			$().ConfigureAndShowScreenContainerAndAllScreens();
 		});
