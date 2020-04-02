@@ -146,7 +146,10 @@ module.exports = {
 				.then((scheduleQueryResult) => {
 					// add schedule info to the reconstructed signup
 					reconstructedSignup.date = scheduleQueryResult.docs.Date;
-					reconstructedSignup.length = scheduleQueryResult.docs.ShiftLength;
+					reconstructedSignup.length = 
+						scheduleQueryResult.docs.ShiftLength ? 
+							scheduleQueryResult.docs.ShiftLength : 
+							`${scheduleQueryResult.docs.Hours} hours`;
 					reconstructedSignup.jobID = scheduleQueryResult.docs.JobID;
 					// get a promise to get user info from the db
 					nesoDBQueries.ReturnOneSpecifiedDocFromCollection('adUsers', {

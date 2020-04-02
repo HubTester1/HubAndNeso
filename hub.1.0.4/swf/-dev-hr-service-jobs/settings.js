@@ -13,7 +13,7 @@
 		'notifications': 1
 	};
 
-	console.log("using settings m7");
+	console.log("using settings m1");
 
 	var oData = {
 
@@ -77,11 +77,11 @@
 				],
 				'tables': [
 					{
-					// 	'tableTitle': 'Pending Approval',
-					// 	'tableID': 'pending-approval',
-					// 	'someColsAreUsers': 1,
-					// 	'basicRSQueryRelevantStatus': 'Pending Approval'
-					// }, {
+						// 	'tableTitle': 'Pending Approval',
+						// 	'tableID': 'pending-approval',
+						// 	'someColsAreUsers': 1,
+						// 	'basicRSQueryRelevantStatus': 'Pending Approval'
+						// }, {
 						'tableTitle': 'Approved',
 						'tableID': 'approved',
 						'someColsAreUsers': 1,
@@ -170,12 +170,12 @@
 				],
 				'tables': [
 					{
-					// 	'tableTitle': 'Pending Approval',
-					// 	'tableID': 'pending-approval',
-					// 	'someColsAreUsers': 1,
-					// 	'myRSQueryRelevantStatus': 'Pending Approval',
-					// 	'getRequesterFrom': 'JobAdmin'
-					// }, {
+						// 	'tableTitle': 'Pending Approval',
+						// 	'tableID': 'pending-approval',
+						// 	'someColsAreUsers': 1,
+						// 	'myRSQueryRelevantStatus': 'Pending Approval',
+						// 	'getRequesterFrom': 'JobAdmin'
+						// }, {
 						'tableTitle': 'Approved',
 						'tableID': 'approved',
 						'someColsAreUsers': 1,
@@ -267,14 +267,14 @@
 				],
 				'tables': [
 					{
-					// 	'tableTitle': 'Pending Approval',
-					// 	'tableID': 'pending-approval',
-					// 	'someColsAreUsers': 1,
-					// 	'meOrMyDownlineIsRequesterAndRSQuery': {
-					// 		'requestStatus': 'Pending Approval',
-					// 		'getRequesterFrom': 'JobAdmin'
-					// 	}
-					// }, {
+						// 	'tableTitle': 'Pending Approval',
+						// 	'tableID': 'pending-approval',
+						// 	'someColsAreUsers': 1,
+						// 	'meOrMyDownlineIsRequesterAndRSQuery': {
+						// 		'requestStatus': 'Pending Approval',
+						// 		'getRequesterFrom': 'JobAdmin'
+						// 	}
+						// }, {
 						'tableTitle': 'Approved',
 						'tableID': 'approved',
 						'someColsAreUsers': 1,
@@ -375,12 +375,12 @@
 				],
 				'tables': [
 					{
-					// 	'tableTitle': 'Pending Approval',
-					// 	'tableID': 'pending-approval',
-					// 	'someColsAreUsers': 1,
-					// 	'myRSQueryRelevantStatus': 'Pending Approval',
-					// 	'getRequesterFrom': 'JobAdmin'
-					// }, {
+						// 	'tableTitle': 'Pending Approval',
+						// 	'tableID': 'pending-approval',
+						// 	'someColsAreUsers': 1,
+						// 	'myRSQueryRelevantStatus': 'Pending Approval',
+						// 	'getRequesterFrom': 'JobAdmin'
+						// }, {
 						'tableTitle': 'Approved',
 						'tableID': 'approved',
 						'someColsAreUsers': 1,
@@ -420,7 +420,7 @@
 				]
 			}
 		},
-	
+
 	};
 
 
@@ -447,16 +447,16 @@
 
 		'uniqueElements': [
 			{
-			// 	'elementType': 'field',
-			// 	'controlType': 'url',
-			// 	'fieldName': 'Quark Request',
-			// 	'labelContent': 'On Quark',
-			// 	'editableForNonAdmin': [],
-			// 	'editableForAdmin': [],
-			// }, {
+				// 	'elementType': 'field',
+				// 	'controlType': 'url',
+				// 	'fieldName': 'Quark Request',
+				// 	'labelContent': 'On Quark',
+				// 	'editableForNonAdmin': [],
+				// 	'editableForAdmin': [],
+				// }, {
 
-				
-				
+
+
 				"elementType": "field",
 				"controlType": "check",
 				"fieldName": "Requester Archival",
@@ -479,6 +479,20 @@
 				'content': "Job Basics",
 				'begin': 1,
 				'end': 1
+
+				/* 
+					CORONAVIRUS MOD
+					All jobs will be through Microsoft Teams
+				*/
+
+			}, {
+				'elementType': "markup",
+				'tag': "p",
+				'content': "Please send participants a Microsoft Teams or other online venue link. For assistance, contact the IT Service Desk: x0130 / (617) 589-0130",
+				'htmlClass': 'urgent',
+				'begin': 1,
+				'end': 1
+
 			}, {
 				'elementType': "field",
 				'controlType': "text",
@@ -506,23 +520,24 @@
 				'requiredForAdmin': [""],
 				'disabledForNonAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
 				'disabledForAdmin': ["Completed", "Disapproved", "Cancelled"]
+
 			}, {
 				'elementType': "field",
 				'controlType': "text",
 				'fieldName': "Location",
 				'listFieldName': "Location",
-				'labelContent': "Location / Venue",
+				'labelContent': "Location",
 				'requiredForNonAdmin': [''],
 				'requiredForAdmin': [''],
 				'disabledForNonAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
 				'disabledForAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
-				"helpNotes": [{
-					"text": "If participation requires people to have more information about your location / venue (e.g., a Microsoft Teams link), please remember to send them that information separately. If you require a physical space, please also reserve that separately.",
-					"htmlID": "job-admin_location-help-note",
-					"emphasis": 1,
-					"hideForNonAdmin": ["Archived", "Disapproved", "Cancelled"],
-					"hideForAdmin": ["Archived", "Disapproved", "Cancelled"]
-				}],
+				// "helpNotes": [{
+				// 	"text": "If participation requires people to have more information about your location / venue (e.g., a Microsoft Teams link), please remember to send them that information separately. If you require a physical space, please also reserve that separately.",
+				// 	"htmlID": "job-admin_location-help-note",
+				// 	"emphasis": 1,
+				// 	"hideForNonAdmin": ["Archived", "Disapproved", "Cancelled"],
+				// 	"hideForAdmin": ["Archived", "Disapproved", "Cancelled"]
+				// }],
 			}, {
 				'elementType': "field",
 				'controlType': "radio",
@@ -597,30 +612,30 @@
 				// 'requiredForAdmin': [""],
 				'disabledForNonAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
 				'disabledForAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"]
-			
-			
-			
-			
-			
-			// }, {
-			// 	'elementType': 'markup',
-			// 	'tag': 'div',
-			// 	'begin': 1,
-			// 	'htmlID': 'gse-job-duties',
-			// 	'htmlClass': 'repeating-content-container',
-			// 	'hideForNonAdmin': ['Submitted', 'Cancelled'],
-			// 	'hideForAdmin': ['Submitted', 'Cancelled']
-			// }, {
-			// 	'elementType': 'markup',
-			// 	'tag': 'div',
-			// 	'begin': 1,
-			// 	'htmlID': 'gse-job-duty',
-			// 	'htmlClass': 'repeat-container',
-			// 	'repeatable': 1
-			
-			
-			
-			
+
+
+
+
+
+				// }, {
+				// 	'elementType': 'markup',
+				// 	'tag': 'div',
+				// 	'begin': 1,
+				// 	'htmlID': 'gse-job-duties',
+				// 	'htmlClass': 'repeating-content-container',
+				// 	'hideForNonAdmin': ['Submitted', 'Cancelled'],
+				// 	'hideForAdmin': ['Submitted', 'Cancelled']
+				// }, {
+				// 	'elementType': 'markup',
+				// 	'tag': 'div',
+				// 	'begin': 1,
+				// 	'htmlID': 'gse-job-duty',
+				// 	'htmlClass': 'repeat-container',
+				// 	'repeatable': 1
+
+
+
+
 			}, {
 				'elementType': "field",
 				'controlType': "textarea",
@@ -636,53 +651,53 @@
 				'requiredForAdmin': [''],
 				'disabledForNonAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
 				'disabledForAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"]
-			// }, {
-			// 	'elementType': "markup",
-			// 	'tag': "a",
-			// 	'begin': 1,
-			// 	'end': 1,
-			// 	'htmlClass': "remove-section-anchor",
-			// 	'content': "Remove",
-			// 	'removeThisRepeat': 1,
-			// 	'hideForNonAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
-			// 	'hideForAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
-			// }, {
-			// 	'elementType': 'markup',
-			// 	'tag': 'div',
-			// 	'end': 1,
-			// }, {
-			// 	'elementType': 'markup',
-			// 	'tag': 'a',
-			// 	'begin': 1,
-			// 	'end': 1,
-			// 	'htmlID': 'repeat-gse-job-duty',
-			// 	'htmlClass': 'repeat-section-anchor',
-			// 	'content': 'Insert another duty',
-			// 	'repeatSectionID': 'gse-job-duty',
-			// 	'hideForNonAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
-			// 	'hideForAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
-			// }, {
-			// 	'elementType': 'markup',
-			// 	'tag': 'div',
-			// 	'end': 1
-			
-			
-			
-			
-			
-			
-			
-			
-			// }, {
-			// 	'elementType': "field",
-			// 	'controlType': "textarea",
-			// 	'fieldName': "Job Duties",
-			// 	'listFieldName': "JobDuties",
-			// 	'labelContent': "Job Duties",
-			// 	'requiredForNonAdmin': [""],
-			// 	'requiredForAdmin': [""],
-			// 	'disabledForNonAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
-			// 	'disabledForAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"]
+				// }, {
+				// 	'elementType': "markup",
+				// 	'tag': "a",
+				// 	'begin': 1,
+				// 	'end': 1,
+				// 	'htmlClass': "remove-section-anchor",
+				// 	'content': "Remove",
+				// 	'removeThisRepeat': 1,
+				// 	'hideForNonAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
+				// 	'hideForAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
+				// }, {
+				// 	'elementType': 'markup',
+				// 	'tag': 'div',
+				// 	'end': 1,
+				// }, {
+				// 	'elementType': 'markup',
+				// 	'tag': 'a',
+				// 	'begin': 1,
+				// 	'end': 1,
+				// 	'htmlID': 'repeat-gse-job-duty',
+				// 	'htmlClass': 'repeat-section-anchor',
+				// 	'content': 'Insert another duty',
+				// 	'repeatSectionID': 'gse-job-duty',
+				// 	'hideForNonAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
+				// 	'hideForAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
+				// }, {
+				// 	'elementType': 'markup',
+				// 	'tag': 'div',
+				// 	'end': 1
+
+
+
+
+
+
+
+
+				// }, {
+				// 	'elementType': "field",
+				// 	'controlType': "textarea",
+				// 	'fieldName': "Job Duties",
+				// 	'listFieldName': "JobDuties",
+				// 	'labelContent': "Job Duties",
+				// 	'requiredForNonAdmin': [""],
+				// 	'requiredForAdmin': [""],
+				// 	'disabledForNonAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"],
+				// 	'disabledForAdmin': ["Pending Approval", "Approved", "Archived", "Disapproved", "Cancelled"]
 			}, {
 				'elementType': "markup",
 				'tag': "h3",
@@ -824,9 +839,9 @@
 	fData.CustomScriptFirst = '';
 
 
-	fData.CustomScriptLast =	'if ($("input#Request-Status").val() == "") { \n' + 
-								'	$().PutCurrentUserInField("Job Admin"); \n' + 
-								'} \n';
+	fData.CustomScriptLast = 'if ($("input#Request-Status").val() == "") { \n' +
+		'	$().PutCurrentUserInField("Job Admin"); \n' +
+		'} \n';
 
 	fData.CustomScriptLast += '$("input#Physical-Demand-Lifting, input#Physical-Demand-Carrying, input#Physical-Demand-Pushing, input#Physical-Demand-Pulling").on("change", function() { \n' +
 		'	$().ProcessGSEJobPhysicalDemandPoundFields();\n' +
@@ -836,11 +851,23 @@
 		'	$().ProcessGSEJobPhysicalDemandTimeFields();\n' +
 		'}); \n';
 
-	fData.CustomScriptLast +=	'if ($("input#Request-Status").val() == "Approved") { \n' + 
-								'	$("div#label-and-control_Requester-Cancellation").hide("fast").addClass("hidden"); \n' + 
-								'} \n';
+	fData.CustomScriptLast += 'if ($("input#Request-Status").val() == "Approved") { \n' +
+		'	$("div#label-and-control_Requester-Cancellation").hide("fast").addClass("hidden"); \n' +
+		'} \n';
 
-	fData.CustomScriptLast +=	'$("div#label-and-control_Requested-For, div#container_about-the-requester").hide("fast").addClass("hidden"); \n';
+	fData.CustomScriptLast += '$("div#label-and-control_Requested-For, div#container_about-the-requester").hide("fast").addClass("hidden"); \n';
+
+	/* 
+		CORONAVIRUS MOD
+		All jobs will be through Microsoft Teams
+	 */
+
+	fData.CustomScriptLast += '$("input#Location").val("Online");';
+	fData.CustomScriptLast += '$("input#locationisoffsite_yes").prop("checked", true).attr("checked", true); \n';
+	fData.CustomScriptLast += '$("div#label-and-control_Location, div#label-and-control_LocationIsOffsite").hide("fast").addClass("hidden"); \n';
+
+
+
 
 
 	/* // TEMPORARY
