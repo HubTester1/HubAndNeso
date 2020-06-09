@@ -9803,7 +9803,8 @@
 								.done(function (returnedManagerData) {
 									// console.log('returnedManagerData');
 									// console.log(returnedManagerData);
-									if (returnedManagerData.docs.email) {
+
+									if (returnedManagerData && returnedManagerData.docs && returnedManagerData.docs.email) {
 										gseJobAdminManagerEmailArray
 												.push(returnedManagerData.docs.email);
 									}
@@ -30841,7 +30842,7 @@
 		// wait for all data retrieval / setting promises to complete (pass or fail) 
 		$.when.apply($, allDataRetrievalAndSettingPromises).always(function () {
 
-			console.log('using dev_mos-main.1.04 m1');
+			console.log('using dev_mos-main.1.04 m4');
 
 			$().ConfigureAndShowScreenContainerAndAllScreens();
 		});
