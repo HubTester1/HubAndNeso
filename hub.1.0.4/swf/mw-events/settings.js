@@ -145,6 +145,7 @@
 
 
 	var fData = {
+		'additionalViewPermissionsFunction': 'ReturnOne',
 		'autoTrackSubmissionAndCancellation': 1,
 		'bypassNormalDataSaving': [''],
 		'customDataSavingFunction': {

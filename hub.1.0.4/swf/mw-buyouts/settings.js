@@ -86,6 +86,7 @@
 
 
 	var fData = {
+		'additionalViewPermissionsFunction': 'ReturnOne',
 		'autoTrackSubmissionAndCancellation': 1,
 		'standardElementGroups': {
 			'standardButtonElements': 1,
