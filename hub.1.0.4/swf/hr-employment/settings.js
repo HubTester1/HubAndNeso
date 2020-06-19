@@ -1267,8 +1267,10 @@
 				'begin': 1,
 				'end': 1,
 				'content': '<h2>Process</h2>' +
-					'<a id="standard-printer-button-inside-request" data-print-function="PrintEmploymentAuthorizationRequest">Print Request</a>' +
-					'<p>Print this request, acquire appropriate signatures, and submit it to Human Resources.</p>'
+					'<a id="standard-printer-button-inside-request" data-print-function="PrintEmploymentAuthorizationRequest">Save PDF</a>' +
+					'<p>Use this button to print the document to PDF. Depending on your browser, this ' +
+					'option may be called "Save as PDF", "Microsoft Print to PDF", or "Cute PDF". Email the saved PDF to ' +
+					'<a href="mailto:ear@mos.org">EAR@mos.org</a> with your VP CCed. Once approved, HR will contact you.</p>'
 			}
 		]
 	};
